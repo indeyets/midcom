@@ -1,0 +1,73 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING ANONYMOUS
+Anonymous users
+---STRINGEND
+
+---STRING EVERYONE
+Everyone
+---STRINGEND
+
+---STRING USERS
+All users
+---STRINGEND
+
+---STRING add assignee
+Add group for privilege assignment
+---STRINGEND
+
+---STRING folder
+folder
+---STRINGEND
+
+---STRING group %s
+Group %s
+---STRINGEND
+
+---STRING midcom:approve
+Approve
+---STRINGEND
+
+---STRING midcom:component_config
+Configuration
+---STRINGEND
+
+---STRING midgard.admin.acl
+Access Control Lists editor
+---STRINGEND
+
+---STRING midgard:create
+Create
+---STRINGEND
+
+---STRING midgard:delete
+Delete
+---STRINGEND
+
+---STRING midgard:owner
+Owner
+---STRINGEND
+
+---STRING midgard:read
+Read
+---STRINGEND
+
+---STRING midgard:update
+Update
+---STRINGEND
+
+---STRING permissions for %s %s
+Permissions for %s %s
+---STRINGEND
+
+---STRING privileges
+Permissions
+---STRINGEND
+
+---STRING topic privileges
+Folder permissions
+---STRINGEND
+

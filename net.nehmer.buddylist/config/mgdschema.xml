@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+
+  <type name="net_nehmer_buddylist_entry_db" table="net_nehmer_buddylist_entry_db">
+    <property name="id" type="integer" primaryfield="id" />
+
+    <property name="account" type="text" />
+    <property name="buddy" type="text" />
+
+    <property name="isapproved" type="bool"/>
+    <property name="blacklisted" type="bool"/>
+    <property name="added" type="integer" />
+  </type>
+
+</Schema>

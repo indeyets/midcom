@@ -1,0 +1,85 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING create event
+Skapa händelse
+---STRINGEND
+
+---STRING delete all events
+Radera alla Händelser
+---STRINGEND
+
+---STRING delete event
+Radera Händelse
+---STRINGEND
+
+---STRING edit event
+Ändra Händelse
+---STRINGEND
+
+---STRING enable detail pages
+Slå på detaljerade sidor
+---STRINGEND
+
+---STRING event
+Händelse
+---STRINGEND
+
+---STRING event administration
+Händelse Administration
+---STRINGEND
+
+---STRING events
+Händelse Kalender
+---STRINGEND
+
+---STRING expert settings
+Avancerade inställningar
+---STRINGEND
+
+---STRING revert to default
+Gå tillbaka till standard inställningar
+---STRINGEND
+
+---STRING schema database
+Schema databas
+---STRINGEND
+
+---STRING settings
+Inställningar
+---STRINGEND
+
+---STRING show old events
+Visa gamla händelser
+---STRINGEND
+
+---STRING sort order
+Sorterings ordning
+---STRINGEND
+
+---STRING title
+Titel
+---STRINGEND
+
+---STRING topic schema
+Schema att använda för detta ämne (spara alla ändringar till schema databasen innan du ändra detta!)
+---STRINGEND
+
+---STRING view event
+Visa händelse
+---STRINGEND
+
+---STRING date
+Datum
+---STRINGEND
+
+---STRING de.linkm.events
+Händelse kalender
+---STRINGEND
+
+---STRING location
+Plats
+---STRINGEND
+

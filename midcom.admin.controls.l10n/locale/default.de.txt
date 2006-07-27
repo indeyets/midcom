@@ -1,0 +1,10 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING perm-denied text
+<p>Diese MidCOM Installation is nicht korrekt konfiguriert. Sie erlaubt keinen Schreibzugriff auf die String-Datenbanken.</p>
+<p>Bitte stellen Sie sicher, daß der Apache-Benutzer Schreibberechtigung auf alle locale-Verzeichnisse und -Dateien besitzt. Bitte lesen Sie die Installationsanweisungen für MidCOM für genauere Anweisungen (siehe Datei INSTALL).</p>
+---STRINGEND
+

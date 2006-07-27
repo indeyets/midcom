@@ -1,0 +1,118 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING advanced options
+Advanced options
+---STRINGEND
+
+---STRING change style
+Change the site's style template
+---STRINGEND
+
+---STRING completely empty style
+Empty style to build your own layout on
+---STRINGEND
+
+---STRING configure style
+Configure style
+---STRINGEND
+
+---STRING configure website
+Configure website
+---STRINGEND
+
+---STRING congratulations, your site has been set up to %s
+Congratulations, your site has been set up to %s
+---STRINGEND
+
+---STRING create organization
+Create new organization
+---STRINGEND
+
+---STRING create website
+Create website
+---STRINGEND
+
+---STRING custom
+Custom layout
+---STRINGEND
+
+---STRING every sitegroup can have multiple sites
+Every organization in Midgard CMS can have multiple websites. Select an organization from left to create a new site.
+---STRINGEND
+
+---STRING failed to create organization, reason %s
+Failed to create organization, reason %s
+---STRINGEND
+
+---STRING finish
+Finish
+---STRINGEND
+
+---STRING host name
+Hostname (for example, www.example.com)
+---STRINGEND
+
+---STRING host port
+Port
+---STRINGEND
+
+---STRING host prefix
+Directory prefix (for example, /campaign)
+---STRINGEND
+
+---STRING host template
+Site type
+---STRINGEND
+
+---STRING midgard uses sitegroups for organizing data
+Midgard uses virtual databases, or sitegroups for storing the contents of an organization managed in the system.<br /><br />
+To get started input the basic information about your organization and user account.
+---STRINGEND
+
+---STRING midgard.admin.sitewizard
+Midgard Site Wizard
+---STRINGEND
+
+---STRING modify site setup
+Modify the site setup
+---STRINGEND
+
+---STRING openpsa
+OpenPSA
+---STRINGEND
+
+---STRING organization name
+Organization name
+---STRINGEND
+
+---STRING organization quota
+Disk quota
+---STRINGEND
+
+---STRING select organization
+Select organization
+---STRINGEND
+
+---STRING setup style
+Select style
+---STRINGEND
+
+---STRING template_midcom
+MidCOM website
+---STRINGEND
+
+---STRING to work the site must have been set up in apache configuration and dns
+<em>Please note</em> that to work the site must have been set up in <a href="http://www.midgard-project.org/midcom-permalink-85c5ffbbbe028838508b199f01c0ab63">Apache VirtualHost configuration</a> and Domain Name Service.
+---STRINGEND
+
+---STRING use existing organization
+Use existing organization
+---STRINGEND
+
+---STRING you need to authenticate
+You need to provide your username and password to the application.
+---STRINGEND
+

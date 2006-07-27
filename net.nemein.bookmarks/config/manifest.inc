@@ -1,0 +1,5 @@
+'name' => 'net.nemein.bookmarks',
+'purecode' => false,
+'version' => 1,
+'privileges' =>  Array(),
+'class_definitions' => Array(),

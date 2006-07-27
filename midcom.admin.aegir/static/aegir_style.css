@@ -1,0 +1,199 @@
+/*
+ * Aegir V2 css
+ * Old Aegir colors:
+ * Light table: background-color: #D2DCE5
+ * Dark table: background-color: #006666
+ * Very light table (??) background-color: #EEEEEE;
+
+ * Colors used are from the gnome palette:
+ * dark table: #7590AE
+ * light table: #EAE8E3
+ * */
+
+body {
+    color: rgb(0, 0, 0); 
+    background-color: rgb(255, 255, 255);
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size: 12px;
+    text-decoration: none;      
+}
+
+
+html, body {
+	height: 100%;
+    padding: 0;
+    margin:0;
+} 
+
+a { text-decoration:none; color: #000000;}
+
+
+/* boksplasseringer!  */
+/* top og meny har samme bredde! */
+#ais_container {
+	height:100%;
+	clear:both;
+
+}
+
+#ais_top {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    /*height:1em;*/
+   /* border: solid #ffffff 1px;*/
+    background: #7590AE;
+    display:block; /* was: table */
+}
+#ais_bottom {
+    display:block;
+/*	height:100%;*/
+	width:100%;
+    background: rgb(255, 255, 255); /* #eee;*/
+    border: none;
+}
+#ais_content_admin{
+    background: rgb(255, 255, 255); /* #eee;*/
+    text-align: left;
+    padding:0em;
+    margin-left:16em; /* must be same as ais_bottom_navigation.width! */
+/*    height: 100%;*/
+    border: none;
+  /*  border: solid 1px #000000;*/
+    display:block;
+	padding:0.5em;
+}
+
+
+#ais_top_menu_list {
+	margin: 0px;
+	padding: 0px;
+    text-align: left;
+   	list-style: none;
+    width:16em;
+}
+#ais_top_menu_list li {
+    display:inline; 
+    text-align:center;
+    padding-left:0px;
+    padding-right:0px;
+    padding-top:0;
+    width:5em;
+    background: #7590AE;
+    float:left;
+
+}
+#ais_top_menu_list ul li { display: inline;}
+#ais_top_menu_list li ul {
+	position: absolute;
+	width: 5em; /* must be less than 3 x width of left bar  */
+	left: -999em;
+	
+}
+#ais_top_menu_list li:hover ul {	left: auto; }
+#ais_top_menu_list a { 	
+	display: block;
+/*	height:1em;*/
+	color:#ffffff;
+    text-decoration: none;
+}
+#ais_top_menu_list li ul li {
+    padding-top:2px;
+    position: relative;
+    left: 0em; /* -3 this one should be half of #ais_top_menu_list li ul.width. */
+    border: 1px #7590AE solid; 
+}
+
+#ais_top_menu_list li ul a:hover {
+	background: #ffffff;
+   	color: #7590AE;
+	
+}
+#ais_location_bar {
+margin-left:0em;
+padding-left:0em;
+}
+#aislocation {
+	color:#ffffff;	    
+    display:inline;
+    padding-left:0.5em;
+    margin:0;
+}
+#aislocation a {
+    color:#ffffff;
+}
+
+#aislocation a:hover {
+    text-decoration: underline;
+}
+
+#ais_top_menu {
+/*	border: solid 1px #ffffff;*/
+    border-right: solid 1px #EAE8E3;
+	width:16em;
+	padding:0;
+    float: left;
+    
+}
+/* for simple messages. */
+#ais_content_message {
+	padding: 1em;
+	border: solid black 2px;
+	
+}
+
+#ais_bottom_navigation {
+    background: rgb(255, 255, 255); /*#eee;*/
+    border-right: solid 1px  #7590AE;
+    padding-top: 1em;
+    padding-bottom: 4em;
+    text-align: left;
+	padding-left:0.5em;
+    width: 16em;
+    float:left;
+	overflow:auto;
+}
+
+
+/* navigation menu  */
+/* Turn off list bullets */
+ul.nav_root li { list-style: none; margin-top:1px; margin-bottom: 3px;}
+
+
+ul.nav_root, ul {
+  margin: 0; padding: 0; 
+}
+
+/* This controls the indent for each sublist */
+ul.nav_root ul {
+  padding-left: 5px;
+}
+
+/* Provide space for our own "bullet" inside the link */
+ul.nav_root li a { 
+	margin:0; padding-right:0; 
+	font-size: x-small;
+}
+
+/* Actually show and hide sublists */
+ul.nav_root li.nav_openFolder ul { display: block;  }
+
+ul.nav_root li.nav_closedFolder ul { display: none; margin-bottom: 3px; }
+
+ul.nav_root li.nav_item, ul.nav_root li.nav_folder { padding-top:1px; margin-top:3px; }
+
+
+table.ais {
+	border: solid 1px #7590AE;
+	padding: 0px;
+}
+
+td.ais {
+	border: solid 1px #7590AE;
+}
+
+thead.ais td, td.aishead {
+	background: #7590AE;
+	color:#ffffff;
+	border: solid 1px #7590AE;
+}

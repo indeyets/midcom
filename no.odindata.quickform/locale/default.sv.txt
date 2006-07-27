@@ -1,0 +1,49 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING Message to send to user
+Medelande att visa i epost meddlandets sidhuvud
+---STRINGEND
+
+---STRING Send mail to submitter
+Ska en kopia skickas till avsändaren o formuläret?
+---STRINGEND
+
+---STRING end_message
+Medelande att visa användaren efter formuläret är skickat.
+---STRINGEND
+
+---STRING end_message_help
+Meddelanden som kommer att visas efter formuläret är skickat.
+---STRINGEND
+
+---STRING helptext_message_to_user
+Detta meddelande läggs till i epost huvudet  om "skicka kopia till användare" är avbockad.
+---STRINGEND
+
+---STRING mail_address_to
+Epost adfress att skicka formuläret till
+---STRINGEND
+
+---STRING mail_adress_help_text
+När formuläret är skickat, så skickas det till den här adressen.
+---STRINGEND
+
+---STRING mail_itemgroup
+Formulärets inställningar
+---STRINGEND
+
+---STRING mail_new_item
+Skicka ett epostmedelande för varje nytt inlägg
+---STRINGEND
+
+---STRING topic_introduction
+Text att visa över formuläret
+---STRINGEND
+
+---STRING topic_introduction_help
+Använd detta fältet för att lägga till en text ovanför formuläret som hjälp
+---STRINGEND
+

@@ -1,0 +1,113 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE da
+
+---STRING are you sure to delete
+Er du sikker du vil slette dette emne sammen med alle dets underliggende emner?
+---STRINGEND
+
+---STRING attachments for topic
+Tilføjelser til emnet
+---STRINGEND
+
+---STRING create attachment
+Opret tilføjelse
+---STRINGEND
+
+---STRING create subtopic
+Opret underemne
+---STRINGEND
+
+---STRING create topic
+Opret emne
+---STRINGEND
+
+---STRING delete attachment
+Slet tilføjelse
+---STRINGEND
+
+---STRING delete topic
+Slet emne
+---STRINGEND
+
+---STRING descendants are deleted
+Advarsel: underliggende emner slettes også!
+---STRINGEND
+
+---STRING edit topic
+Redigér emne
+---STRINGEND
+
+---STRING file
+Fil
+---STRINGEND
+
+---STRING filename
+Filnavn
+---STRINGEND
+
+---STRING inherit from parent
+Nedarv fra grundelement
+---STRINGEND
+
+---STRING location
+Sted
+---STRINGEND
+
+---STRING new filename
+Nyt navn
+---STRINGEND
+
+---STRING no attachments found
+Ingen vedhæftninger fundet
+---STRINGEND
+
+---STRING no preview available
+Vis udskrift ikke tilgængeligt
+---STRINGEND
+
+---STRING overview
+Oversigt
+---STRINGEND
+
+---STRING owner
+Ejer
+---STRINGEND
+
+---STRING preview
+Vis udskrift
+---STRINGEND
+
+---STRING score
+Point
+---STRINGEND
+
+---STRING short description
+Kort beskrivelse
+---STRINGEND
+
+---STRING style
+Stil
+---STRINGEND
+
+---STRING title
+Titel
+---STRINGEND
+
+---STRING topic administration
+Administration af emner
+---STRINGEND
+
+---STRING topic attachments
+Vedhæftninger til emne
+---STRINGEND
+
+---STRING type
+Type
+---STRINGEND
+
+---STRING url name
+URL (små bogstaver, alfanumeriske tegn, ingen mellemrum, ingen specielle tegn osv.)
+---STRINGEND
+

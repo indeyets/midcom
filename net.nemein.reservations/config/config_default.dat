@@ -1,0 +1,21 @@
+"schemadb" => "file:/net/nemein/reservations/config/schemadb_default.dat",
+"schema_resource" => "resource",
+"schema_reservation" => "reservation",
+
+"root_group_guid" => null,
+"root_group_name" => "__Calendar Resources",
+"root_event_guid" => null,
+"root_event_name" => "__nemeincalendar",
+
+"event_type_incomplete" => 0,
+"event_type_complete" => 1,
+"event_type_corrupt" => 2,
+"event_buffer_time" => 0, /* Minutes */
+"event_gap_time" => 1440, /* Minutes */
+"event_type" => 3,
+
+"admin_user" => null,
+"admin_password" => "null,
+
+// Keep the additional empty lines below this for safeties sake
+

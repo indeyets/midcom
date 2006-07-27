@@ -1,0 +1,45 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING author
+Nimi
+---STRINGEND
+
+---STRING comments
+Kommentit
+---STRINGEND
+
+---STRING content
+Kommentti
+---STRINGEND
+
+---STRING creator: %s, created %s, source ip %s.
+Kirjoittaja: %x. Kirjoitettu: %s, IP-osoite: %s.
+---STRINGEND
+
+---STRING net.nehmer.comments
+Kommentointi
+---STRINGEND
+
+---STRING no comments found
+Ei kommentteja toistaiseksi.
+---STRINGEND
+
+---STRING permission-denied message
+Sinun täytyy kirjautua sisään kommentoidaksesi.
+---STRINGEND
+
+---STRING post a comment
+Kommentoi
+---STRINGEND
+
+---STRING published by %s on %s.
+Kirjoittanut %s %s
+---STRINGEND
+
+---STRING allow_anonymous
+Salli kommentointi tunnistamattomille käyttäjille
+---STRINGEND
+

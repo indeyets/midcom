@@ -1,0 +1,30 @@
+                   net.nemein.hourview Changelog
+                   -----------------------------
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality. 
+- All items marked with "+" represent completly new features.
+
+2005-08-31 bergie
+  + Fixed bug on wrong lists of approved hours getting sent
+
+2005-05-30 bergie
+  + Hiding numerous PHP notices from OpenPSA 1.x
+
+2005-05-20 bergie
+  + The component should now fail gracefully also in the event that OpenPSA
+    older than 1.12.0 is installed (because nemein_net array is not in
+    global context)
+
+2005-05-17 bergie
+  + Now the component initialization will fail if OpenPSA is not installed
+
+2005-05-12 bergie
+  + Made this component actually functional. It allows user to
+    see hour reports in Projects where they are marked as client
+    and approve them. When approved, email will be sent to project
+    manager
+
+2005-04-22 kaukola
+  - Initial Checkin (the component is NOT operational!)

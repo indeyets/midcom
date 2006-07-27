@@ -1,0 +1,61 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE pl
+
+---STRING %d total votes
+%d głosów
+---STRINGEND
+
+---STRING allow anonymous voting
+Zezwalaj na anonimowe głosy
+---STRINGEND
+
+---STRING anonymous password
+Hasło anonima
+---STRINGEND
+
+---STRING anonymous username
+Użytkownik anonim
+---STRINGEND
+
+---STRING anonymous voting
+Głosy anonimowe
+---STRINGEND
+
+---STRING edit quickpoll
+Edytuj sondę
+---STRINGEND
+
+---STRING net.nemein.quickpoll
+Sondy
+---STRINGEND
+
+---STRING new option
+Nowa opcja
+---STRINGEND
+
+---STRING option no %d
+Opcja #%d
+---STRINGEND
+
+---STRING poll options
+Opcje sondy
+---STRINGEND
+
+---STRING poll subject
+Temat sondy
+---STRINGEND
+
+---STRING quickpoll
+Sondy
+---STRINGEND
+
+---STRING view quickpoll
+Pokaż
+---STRINGEND
+
+---STRING vote
+Głosuj
+---STRINGEND
+

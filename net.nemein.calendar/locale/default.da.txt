@@ -1,0 +1,113 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE da
+
+---STRING create event
+Opret begivenhed
+---STRINGEND
+
+---STRING daily
+Dagligt
+---STRINGEND
+
+---STRING date
+Dato
+---STRINGEND
+
+---STRING description
+Beskrivelse
+---STRINGEND
+
+---STRING end
+Slutdato
+---STRINGEND
+
+---STRING event
+Begivenhed
+---STRINGEND
+
+---STRING from date
+Fra dato
+---STRINGEND
+
+---STRING group calendar
+Gruppekalender
+---STRINGEND
+
+---STRING interval
+kalender
+---STRINGEND
+
+---STRING location
+Sted
+---STRINGEND
+
+---STRING monthly
+Månedlig efter dato
+---STRINGEND
+
+---STRING months starting from
+Måneder fra
+---STRINGEND
+
+---STRING nemein.net calendar
+Gruppe
+---STRINGEND
+
+---STRING no participants
+Ingen deltager
+---STRINGEND
+
+---STRING participants
+Deltagere
+---STRINGEND
+
+---STRING repeat
+Gentag
+---STRINGEND
+
+---STRING repeat times
+Antal gentagelser
+---STRINGEND
+
+---STRING repeat type
+Gentagelsestype
+---STRINGEND
+
+---STRING set repeat
+Selekter gentagelse
+---STRINGEND
+
+---STRING set repeat for %s
+Selekter gentagelse for %s
+---STRINGEND
+
+---STRING show
+Vis
+---STRINGEND
+
+---STRING start
+Start dato
+---STRINGEND
+
+---STRING subscribed - click
+Du er tilmeldt denne begivenhed (klik her for at afmelde)
+---STRINGEND
+
+---STRING title
+Titel
+---STRINGEND
+
+---STRING unsubscribed - click
+Du er ikke tilmeldt denne begivenhed (klik for tilmelding)
+---STRINGEND
+
+---STRING until date
+Indtil dato
+---STRINGEND
+
+---STRING weekly
+Ugentlig
+---STRINGEND
+

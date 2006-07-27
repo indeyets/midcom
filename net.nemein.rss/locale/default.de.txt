@@ -1,0 +1,121 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING net.nemein.rss
+RSS und Atom News Aggregator
+---STRINGEND
+
+---STRING add new feed
+Einen neuen Feed hinzufügen
+---STRINGEND
+
+---STRING aggregator mode
+Aggregator-Modus
+---STRINGEND
+
+---STRING aggregator settings
+Einstellungen
+---STRINGEND
+
+---STRING bloglines
+Bloglines
+---STRINGEND
+
+---STRING bloglines account
+Bloglines-Konto
+---STRINGEND
+
+---STRING cancel
+Abbrechen
+---STRINGEND
+
+---STRING channels
+Einträge nach Kanal sortiert anzeigen
+---STRINGEND
+
+---STRING combined
+Die Einträge aller Kanäle kombinieren und nach Publikations-Datum sortieren.
+---STRINGEND
+
+---STRING details
+Volle details
+---STRINGEND
+
+---STRING display items
+Einträge anzeigen als
+---STRINGEND
+
+---STRING feed icon url
+Feed-Icon URL (optional)
+---STRINGEND
+
+---STRING feed title
+Titel des Feeds
+---STRINGEND
+
+---STRING feed title display
+Anzuzeigender Titel für den Feed
+---STRINGEND
+
+---STRING feed url
+URL des Feeds
+---STRINGEND
+
+---STRING import opml subscriptions
+Abonnements im OPML format importieren
+---STRINGEND
+
+---STRING latest items to show
+Wieviele Einträge sollen in der "latest"-Ansicht angezeigt werden?`
+---STRINGEND
+
+---STRING local
+Lokal speichern
+---STRINGEND
+
+---STRING opml file
+OPML Datei
+---STRINGEND
+
+---STRING remote from feed
+Aus dem Feed
+---STRINGEND
+
+---STRING remove feed
+Feed löschen
+---STRINGEND
+
+---STRING rss aggregator
+RSS und Atom News Aggregator
+---STRINGEND
+
+---STRING rss description
+RSS-Beschreibung
+---STRINGEND
+
+---STRING rss items to show
+Wieviele Einträge sollen angezeigt werden?
+---STRINGEND
+
+---STRING rss output settings
+Einstellungen für die RSS-Ausgabe
+---STRINGEND
+
+---STRING save
+Speichern
+---STRINGEND
+
+---STRING subscription mode
+Abonnement-Modus
+---STRINGEND
+
+---STRING titles
+Nur Titel
+---STRINGEND
+
+---STRING untitled
+Unbenannt
+---STRINGEND
+

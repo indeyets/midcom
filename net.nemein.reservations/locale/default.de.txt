@@ -1,0 +1,269 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING admin_password
+Passwort
+---STRINGEND
+
+---STRING admin_user
+Benutzername
+---STRINGEND
+
+---STRING approved reservations for %s:
+Freigegebene Reservierungen für die Resource %s:
+---STRINGEND
+
+---STRING back to main
+Zurück zur Hauptseite
+---STRINGEND
+
+---STRING cleaned up %d incomplete reservations.
+%d unvollständige Reservierungen wurden entfernt.
+---STRINGEND
+
+---STRING configuration
+Konfiguration
+---STRINGEND
+
+---STRING corrupt reservations
+Beschädigte Reservationen:
+---STRINGEND
+
+---STRING create new reservation
+Eine neue Reservierung erstellen
+---STRINGEND
+
+---STRING create resource
+Resource anlegen
+---STRINGEND
+
+---STRING created root event <em>%s</em>
+Das Wurzel-Ereignis <em>%s</em> wurde erfolgreich angelegt.
+---STRINGEND
+
+---STRING created root group <em>%s</em>
+Die Wurzel-Gruppe <em>%s</em> wurde erfolgreich angelegt.
+---STRINGEND
+
+---STRING data schema settings
+Einstellungen zum Daten-Schema
+---STRINGEND
+
+---STRING delete all incomplete reservations older then one hour
+Alle unvollständigen Reservationen löschen, die älter als eine Stunde sind.
+---STRINGEND
+
+---STRING delete reservation
+Reservation löschen
+---STRINGEND
+
+---STRING delete resource
+Resource löschen
+---STRINGEND
+
+---STRING detected existing root event <em>%s</em>
+Das Wurzel-Ereignis <em>%s</em> war bereits vorhanden und wird jetzt verwendet.
+---STRINGEND
+
+---STRING detected existing root group <em>%s</em>
+Die Wurzel-Gruppe <em>%s</em> war bereits vorhanden und wird jetzt verwendet.
+---STRINGEND
+
+---STRING detected existing root group <em>%s</em>
+Die Wurzel-Gruppe <em>%s</em> war bereits vorhanden und wird jetzt verwendet.
+---STRINGEND
+
+---STRING do you really want to delete this reservation
+Wollen Sie diese Reservation wirklich löschen?
+---STRINGEND
+
+---STRING do you really want to delete this resource
+Wollen Sie diese Ressource wirklich löschen?
+---STRINGEND
+
+---STRING edit reservation
+Reservation bearbeiten
+---STRINGEND
+
+---STRING edit reservation for %s:
+Reservation für Resource %s bearbeiten:
+---STRINGEND
+
+---STRING edit resource
+Resource bearbeiten
+---STRINGEND
+
+---STRING end time before start time.
+Der Endzeitpunkt darf nicht vor dem Startzeitpunkt liegen.
+---STRINGEND
+
+---STRING end time format is YYYY-MM-DD HH:MM
+Bitte geben Sie den gewünschten Endzeitpunkt ein; benutzen Sie dazu das Datumsformat JJJJ-MM-TT HH:MM
+---STRINGEND
+
+---STRING end time is invalid.
+Der Endzeitpunkt ist ungültig.
+---STRINGEND
+
+---STRING event_type
+Type, nach dem die Ereignisse (= Reservierungen) gefiltert und angelegt werden sollen.
+---STRINGEND
+
+---STRING failed to create root event: %s
+Konnte das Wurzel-Ereignis nicht automatisch generieren: %s
+---STRINGEND
+
+---STRING failed to create root group: %s"
+Konnte die Wurzel-Gruppe nicht automatisch generieren: %s
+---STRINGEND
+
+---STRING incomplete/corrupt reservations
+Unvollständige und defekte Reservierungen
+---STRINGEND
+
+---STRING mail templates
+E-Mail Vorlagen
+---STRINGEND
+
+---STRING mail_acceptreservation
+Reservierung angenommen
+---STRINGEND
+
+---STRING mail_acceptreservation_helptext
+Verfügbare Felder: Resource: __RESOURCE__ / __RESOURCE_FELD__; Reservation: __RESERVATION__ / __RESERVATION_FELD__; ISO-formatierte Zeiten: __ISOSTART__, __ISOEND__; Lokalisierte Zeiten: __LOCALSTART__, __LOCALEND__.
+---STRINGEND
+
+---STRING mail_newreservation
+Neue Reservierung
+---STRINGEND
+
+---STRING mail_newreservation_helptext
+Verfügbare Felder: Resource: __RESOURCE__ / __RESOURCE_FELD__; Reservation: __RESERVATION__ / __RESERVATION_FELD__; ISO-formatierte Zeiten: __ISOSTART__, __ISOEND__; Lokalisierte Zeiten: __LOCALSTART__, __LOCALEND__.
+---STRINGEND
+
+---STRING mail_rejectreservation
+Reservierung abgewiesen
+---STRINGEND
+
+---STRING mail_rejectreservation_helptext
+Verfügbare Felder: Resource: __RESOURCE__ / __RESOURCE_FELD__; Reservation: __RESERVATION__ / __RESERVATION_FELD__; ISO-formatierte Zeiten: __ISOSTART__, __ISOEND__; Lokalisierte Zeiten: __LOCALSTART__, __LOCALEND__.
+---STRINGEND
+
+---STRING no corrupt reservations found.
+Keine beschädigten Reservationen gefunden.
+---STRINGEND
+
+---STRING no reservations found
+Es wurden keine Reservierungen gefunden.
+---STRINGEND
+
+---STRING no resources found
+Es wurden keine Resourcen gefunden.
+---STRINGEND
+
+---STRING on-site authentication settings
+Benutzer-Konto unter dem die (anonymen) Operationen auf der Web-Seite durchgeführt werden.
+---STRINGEND
+
+---STRING reject and delete
+Ablehen und löschen
+---STRINGEND
+
+---STRING reservation complete
+Reservierung abgeschlossen
+---STRINGEND
+
+---STRING reservation end time including the buffer:
+Endzeitpunkt der Reservierung inklusive eines Wartungspuffers:
+---STRINGEND
+
+---STRING reservation end time:
+Endzeitpunkt der Reservierung:
+---STRINGEND
+
+---STRING reservation has been approved
+Die Reservation wurde freigegeben.
+---STRINGEND
+
+---STRING reservation start time:
+Startzeitpunkt der Reservierung:
+---STRINGEND
+
+---STRING reservation step 1: select start time
+Reservierung, Schritt 1: Startzeit auswählen
+---STRINGEND
+
+---STRING reservation step 2: select end time
+Reservierung, Schritt 2: Endzeit auswählen
+---STRINGEND
+
+---STRING reservation step 3: details
+Reservierung, Schritt 3: Details
+---STRINGEND
+
+---STRING reservations
+Reservierungen
+---STRINGEND
+
+---STRING reservations configuration
+Reservierungen - Konfiguration
+---STRINGEND
+
+---STRING schema_reservation
+Schama für die Reservierungs-Datensätze
+---STRINGEND
+
+---STRING schema_resource
+Schema für die Ressourcen-Datensätze
+---STRINGEND
+
+---STRING schemadb
+Pfad zur Schema-Datenbank
+---STRINGEND
+
+---STRING start time format is YYYY-MM-DD HH:MM
+Bitte geben Sie den gewünschten Startzeitpunkt ein; benutzen Sie dazu das Datumsformat JJJJ-MM-TT HH:MM
+---STRINGEND
+
+---STRING start time is in the past.
+Der Startzeitpunkt liegt in der Vergangenheit.
+---STRINGEND
+
+---STRING start time is invalid.
+Der Startzeitpunkt ist ungültig.
+---STRINGEND
+
+---STRING this resource is already booked at that time. advanced to next free time gap
+Die Resource ist zum angeforderten Zeitpunkt bereits belegt. Der Startzeitpunkt wurde auf die erste gefundene Lücke vorgerückt.
+---STRINGEND
+
+---STRING this resource is already booked at that time. end time adjusted
+Die Resource ist zum angeforderten Zeitpunkt bereits belegt. Der Endzeitpuntk wurde angepasst.
+---STRINGEND
+
+---STRING unapproved reservations for %s:
+Noch nicht freigegebene Reservierungen für die Resource %s:
+---STRINGEND
+
+---STRING view reservation
+Reservation anzeigen
+---STRINGEND
+
+---STRING view reservation for %s:
+Reservation für Resource %s anzeigen:
+---STRINGEND
+
+---STRING view resource
+Resource anzeigen
+---STRINGEND
+
+---STRING net.nemein.reservations
+Reservierungen
+---STRINGEND
+
+---STRING corrupt reservations for %s:
+Beschädigte Reservierungen für die Resource %s:
+---STRINGEND
+

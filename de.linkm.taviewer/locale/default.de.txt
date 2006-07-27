@@ -1,0 +1,129 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING Only show approved articles
+Sollen nur freigegebene Artikel angezeigt werden?
+---STRINGEND
+
+---STRING activate autoindex
+Soll für diese Rubrik automatisch eine Index-Seite erstellt werden?
+---STRINGEND
+
+---STRING approve
+Freigeben
+---STRINGEND
+
+---STRING auto_approved
+Neue Artikel standardmässig freigegeben
+---STRINGEND
+
+---STRING autoindex-notes
+Die automatische Index-Seite ersetzt den Aritkel mit dem URL-Namen index und besteht aus einer Liste aller Artikel und Dateianhängen der aktuellen Rubrik.
+---STRINGEND
+
+---STRING back to overview
+Zurück zur Übersicht
+---STRINGEND
+
+---STRING create article
+Artikel anlegen
+---STRINGEND
+
+---STRING default_schema
+Default
+---STRINGEND
+
+---STRING delete article
+Artikel löschen
+---STRINGEND
+
+---STRING directory index for %s
+Verzeichnis-Index für %s
+---STRINGEND
+
+---STRING display settings
+Konfiguration der Anzeige
+---STRINGEND
+
+---STRING edit article
+Artikel bearbeiten
+---STRINGEND
+
+---STRING file lastmodified
+Letzte Änderung
+---STRINGEND
+
+---STRING filedescription
+Dateibeschreibung
+---STRINGEND
+
+---STRING filename
+Dateiname
+---STRINGEND
+
+---STRING filesize
+Dateigrösse
+---STRINGEND
+
+---STRING filetype
+Dateiart
+---STRINGEND
+
+---STRING no files in this directory
+In diesem Verzeichnis gibt es keine Dateien
+---STRINGEND
+
+---STRING no index article
+Diese Rubrik hat keinen <strong>index</strong> Artikel. Bitte legen Sie einen Artikel mit dem URL Namen <strong>index</strong> an oder aktivieren Sie den Autoindex-Modus.
+---STRINGEND
+
+---STRING no schemas available
+Keine Schemata verfügbar
+---STRINGEND
+
+---STRING schema settings
+Datenschemata
+---STRINGEND
+
+---STRING schemadb
+Schema-Datenbank, die für diese Rubrik verwendet werden soll
+---STRINGEND
+
+---STRING select schema
+Schema auswählen
+---STRINGEND
+
+---STRING settings
+Einstellungen
+---STRINGEND
+
+---STRING symlink_topic
+Daten aus einer anderen Rubrik nehmen ("Symlink")
+---STRINGEND
+
+---STRING symlink_topic disabled
+Keine Rubrik ausgewählt
+---STRINGEND
+
+---STRING taviewer
+Statische Inhalte
+---STRINGEND
+
+---STRING unapprove
+Freigabe zurücknehmen
+---STRINGEND
+
+---STRING view article
+Artkel anzeigen
+---STRINGEND
+
+---STRING visible
+Soll die Rubrik angezeigt werden
+---STRINGEND
+
+---STRING de.linkm.taviewer
+Statische Inhalte
+---STRINGEND
+

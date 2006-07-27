@@ -1,0 +1,113 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING add a new entry
+Lisää uusi artikkeli
+---STRINGEND
+
+---STRING create article
+Luo artikkeli
+---STRINGEND
+
+---STRING create name from title
+Luo tiedostonimet artikkelien otsikoista
+---STRINGEND
+
+---STRING delete article
+Poista artikkeli
+---STRINGEND
+
+---STRING edit article
+Muokkaa artikkelia
+---STRINGEND
+
+---STRING enable blogging apis
+Salli artikkelien etähallinta MetaWebLog API:lla
+---STRINGEND
+
+---STRING enable date filters get
+Salli päivämäärällä suodatus (GET-parametri)
+---STRINGEND
+
+---STRING enable date filters path
+Salli päivämäärällä suodatus (polussa muodossa /VVVV/KK/PP)
+---STRINGEND
+
+---STRING enable details
+Salli lisätietosivut
+---STRINGEND
+
+---STRING enable filters get
+Salli sisältökentillä suodatus (GET-parametri)
+---STRINGEND
+
+---STRING enable public posting
+Salli avoin artikkelien lisäys ("vieraskirja-tyylisesti")
+---STRINGEND
+
+---STRING enable subdirectories
+Lisää alikansioiden artikkelit listaan (ja RSS-listaan)
+---STRINGEND
+
+---STRING expert settings
+Tehokäyttäjän asetukset
+---STRINGEND
+
+---STRING index count
+Listan määrä
+---STRINGEND
+
+---STRING index settings
+Listan asetukset
+---STRINGEND
+
+---STRING list old items in index
+Näytä vanhat artikkelit listassa
+---STRINGEND
+
+---STRING newsticker
+Uutiskansio
+---STRINGEND
+
+---STRING newsticker administration
+Uutiskansion ylläpito
+---STRINGEND
+
+---STRING no schema available
+Tietokantakuvausta (schema) ei löydy
+---STRINGEND
+
+---STRING public posting
+Avoin artikkelien lisäys ("vieraskirja-tyyliin")
+---STRINGEND
+
+---STRING public posting password
+Midgard-salasana avoimeen artikkelien lisäykseen (tarvitaan vain jos käyttäjätunnus on lisätty)
+---STRINGEND
+
+---STRING public posting schema
+Avoimessa lisäyksessä käytettävä tietokantakuvaus
+---STRINGEND
+
+---STRING public posting user
+Midgard-käyttäjätunnus avoimeen artikkelien lisäykseen (jätä tyhjäksi käyttääksesi kirjautunutta tunnusta)
+---STRINGEND
+
+---STRING schema database
+Tietokantakuvauksen (schema) snippet-tietue
+---STRINGEND
+
+---STRING select article type
+Valitse artikkelin tyyppi
+---STRINGEND
+
+---STRING settings
+Asetukset
+---STRINGEND
+
+---STRING sort order
+Järjestys
+---STRINGEND
+

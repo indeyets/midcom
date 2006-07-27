@@ -1,0 +1,65 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE da
+
+---STRING asis
+som det er
+---STRINGEND
+
+---STRING automatic
+Auto
+---STRINGEND
+
+---STRING delete file
+Slet fil
+---STRINGEND
+
+---STRING description
+Beskrivelse
+---STRINGEND
+
+---STRING filename
+Filnavn
+---STRINGEND
+
+---STRING jpeg
+JPEG billede
+---STRINGEND
+
+---STRING mime type
+MIME type
+---STRINGEND
+
+---STRING no file
+Ingen fil
+---STRINGEND
+
+---STRING no files
+Ingen filer
+---STRINGEND
+
+---STRING no preview available
+Intet eksempel tilgængeligt
+---STRINGEND
+
+---STRING png
+PNG billede
+---STRINGEND
+
+---STRING store type
+Gemt filtype
+---STRINGEND
+
+---STRING thumb type
+Miniaturens filtype
+---STRINGEND
+
+---STRING thumbnail shown
+Miniature som vises
+---STRINGEND
+
+---STRING upload file
+Send fil
+---STRINGEND
+

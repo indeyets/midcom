@@ -1,0 +1,169 @@
+                   net.siriux.photos Changelog
+                   ---------------------------
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+2005-11-20 rambo
+  + forward ported the random viewscale image feature
+
+2005-08-22 torben
+  - Added the missing show handler for sync_article_created.
+  - Added some logging statements
+
+2005-07-26 SmallOne
+  + Added support for /random/n with configurable cache expire for high load 
+    sites
+
+2005-07-21 bergie
+  - Swiched subgallery mode to support deeper hierarchies
+  - Fixed some minor layout bugs
+
+2005-05-05 bergie
+  - Switched subgallery listing also to use NAP
+
+2005-04-26 torben
+  - Adapted to the new caching infrastructure.
+
+2005-04-16 torben
+  - Deprecated the internal configurability of approvals, we now use the
+    site's configuration.
+  - Added support for creating a subgallery for uploaded images
+
+2005-04-15 bergie
+  - Changed AIS frontend to list images in same order as NAP
+
+2005-03-29 torben
+  - Changed the bulk upload to emit status messages during processing
+    using the new live mode. This should avoid the aborts we have 
+    been experiencing during large uploads.
+
+2005-03-04 bergie
+  + Added Flickr-style Flash powered notes viewer and editor to the
+    component. The Flash app was contributed by Joonas Kallioinen
+    from Piippunaakka (www.piippunaakka.fi)
+  + Added support for listing subgalleries in the photo index
+
+2005-02-25 torben
+  - Rewrite the component to use the new base class interface
+  - Added indexer support
+  ! Moved configuriation files to the new default locations
+
+2005-02-11 torben
+  - Adapted to the new Metadata system.
+
+2005-02-10 bergie
+  + Added support for RSS autodetection
+  + Fixed creation of URL names from titles and made it config option
+  - Simplified the default schemas for better user experience
+
+2005-01-25 torben
+  - Fixed bug #147 (change default sort order to created)
+
+2005-01-24 torben
+  - Fixed issue 173 (better thumbnails)
+  - Fixed issue 171 (update thumbnails)
+  - Article name cleanup handler
+  - Synchronize article::created upon updating a taken timestamp using the
+    edit form.
+  - A thumbnail rebuild message is shown when the respective config option
+    is shown.
+
+2005-01-10 torben
+  - Added protection code against user aborts during upload of huge archives.
+
+2004-11-29 torben
+  - Added image rotation capabilites to the AIS interface (90 degree steps).
+  - Added support for compressed uploads with multiple directories in them.
+  - Fixed an attachment-processing bugs related to UTF-8 sites (no more 
+    corrupt images now).
+  - Some more code cleanup and minor fixes/improvements regarding image upload.
+  - Made the filter class more error-resilent, 90° rotation steps now use
+  	the lossless jpegtran instead of Imagemagick if available.
+
+2004-11-26 torben
+  - Upgraded to AIS and NAP toolbars
+  - Fixed Bug #126 (broken navigation)
+  - Code cleanup and minor improvements
+
+20004-11-?? toren
+  - Filesystem conversion
+
+2004-11-04 Henri Bergius <henri.bergius@iki.fi>
+  - Added cleaner URL naming
+
+2004-11-03 Henri Bergius <henri.bergius@iki.fi>
+  - Huge speed improvements, now galleries of 100+ (or even 1000+)
+    are again feasible
+
+2004-09-22 Torben Nehmer <torben@nehmer.net>
+  - Complete rewrite of large parts of the components:
+  - It is now driven by the Datamanager
+  - EXIF Import improved, import into parameters is now
+    possible.
+  - EXIF ReRead function added
+  - Article Created timestamp synchronisation added
+  - Upload post processing feature added. Several basic
+    transforms are already there, see the filter class
+    for details.
+
+2004-08-02 SmallOne <johan@anykey.se>
+  - Added swedish translation
+
+2004-04-14  Nico Kaiser  <nico@siriux.net>
+  - Use "jhead" for EXIF parsing now (PHP's read_exif_data
+    is just broken sometimes)
+
+2004-04-14  Nico Kaiser  <nico@siriux.net>
+  - Updated translations (Henri)
+
+2004-04-14  Nico Kaiser  <nico@siriux.net>
+  - Updated the UI a little bit
+  - No more exif PHP warnings if something goes wrong
+
+2004-03-31  Nico Kaiser  <nico@siriux.net>
+  - Hide Unapproved Photos in navigation (closes: #0000643)
+  - Add proper error messages when uploading
+  - Don't create entries for non-images
+
+2004-03-24  Nico Kaiser  <nico@siriux.net>
+  - Fixed interface problem which prevented topics from
+    being displayed in NAP sometimes
+  - Added internal thumbnail re-calculate functions
+  - Added better internal error handling
+  - Changed ImageMagick calls so resizing is much faster
+    and files are much smaller
+  - No "view" Image is created if the "fullscale" Image is
+    already small enough
+
+2004-03-05  Nico Kaiser  <nico@siriux.net>
+  - Improved RSS export
+  - Improved configuration handling
+  - Added some RSS configuration options
+
+2004-02-25  Nico Kaiser  <nico@siriux.net>
+  - Made the config things work
+  - Added index_rows and index_cols config parameter
+  - Saving / changing config invalidates the Cache now
+
+2004-01-30  Nico Kaiser  <nico@siriux.net>
+  - Changed the default styles
+  - Added the MIDCOM_PROP_PURECODE component property
+
+2003-11-12  Nico Kaiser  <nico@siriux.net>
+  - Fixed the admin interface to prevent warnings because
+    of non-existent config form data
+
+2003-11-09  Nico Kaiser  <nico@siriux.net>
+  - Fixed a HTML form bug which caused a PHP warning on
+    editing images (closes #0000603)	 
+
+2003-11-07  Nico Kaiser  <nico@siriux.net>
+  - Updated AIS layout (for new CSS)
+  - Added RSS feed (.../rss/<count>/)
+  - Added disallow_unapproved config property, which disallows the
+    display of unapproved Photos even if called by URL
+  - Changed the configuration format to match the other
+    components' (use /sitegroup-config, etc.)

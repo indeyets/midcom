@@ -1,0 +1,77 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING aerodrome
+Lentopaikka
+---STRINGEND
+
+---STRING club
+Kerho
+---STRINGEND
+
+---STRING comment
+Muistiinpanoja
+---STRINGEND
+
+---STRING email
+Sähköposti
+---STRINGEND
+
+---STRING fi.mik.lentopaikkakisa
+Lentopaikkakisa
+---STRINGEND
+
+---STRING get csv
+Hae ilmoitukset CSV-muodossa
+---STRINGEND
+
+---STRING get xml
+Hae ilmoitukset XML-muodossa
+---STRINGEND
+
+---STRING latest reports
+Viimeisimmät ilmoitukset
+---STRINGEND
+
+---STRING manage reports
+Hallinnoi ilmoituksia
+---STRINGEND
+
+---STRING pilot
+Lentäjä
+---STRINGEND
+
+---STRING plane registration
+Koneen rekisteritunnus
+---STRINGEND
+
+---STRING report flight
+Ilmoita lento
+---STRINGEND
+
+---STRING score
+Pisteet
+---STRINGEND
+
+---STRING scores by %s
+Pisteet per %s
+---STRINGEND
+
+---STRING scores by organization
+Kerhojen pisteet
+---STRINGEND
+
+---STRING scores by pilot
+Lentäjien pisteet
+---STRINGEND
+
+---STRING total
+Yhteensä
+---STRINGEND
+
+---STRING privilege moderation
+Moderointi
+---STRINGEND
+

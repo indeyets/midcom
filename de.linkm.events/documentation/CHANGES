@@ -1,0 +1,118 @@
+                   de.linkm.events Changelog
+                   -------------------------
+CVS Id: $Id$
+
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality. 
+- All items marked with "+" represent completly new features.
+
+2005-09-29 bergie
+  + Initial quick-and-dirty symlinks patch. Content creation
+    and editing seems broken
+  - Switched navigation.php to use base class
+
+2005-04-26 torben
+  - Adapted to the new caching infrastructure.
+
+2005-02-25 torben
+  - Rewrite the component to use the new base class interface
+  - Added indexer support
+  ! Moved configuriation files to the new default locations. This includes a 
+    small compatibility function in case the old .dat schemadb path is stored
+    anywhere.
+
+2005-02-21 kaukola
+  ! Moved to use mgd_sort_object_array (found in lib/midcom/helper/misc.php)
+    for faster sorting. You must update misc.php in addition to the component.
+  + New "upcoming" listing that displays only not-yet-started events
+    Good for frontpages etc. Usage: $midcom->dynamic_load("/path/to/dir/upcoming/5");
+  + Added configuration key for endtime buffering. Used to remove event from the
+    listings. TODO: Add the field to the configuration UI.
+  - Improved filtering functions
+  - Added some code documentation and cleaned helpers.php and viewer.php
+
+2005-02-18 bergie
+  + Added URL name cleaning code
+
+2005-02-11 torben
+  - Adapted to the new Metadata system.
+
+2005-01-03 torben
+  - Moved to support the Datamanager's creation mode, this fixes
+    #139 for this component.
+  - Did some minor code cleanup.
+
+2004-11-25 torben
+  - NAP and AIS Toolbar rewrite
+  - AIS cleanup, makes heavy use of Relocations now to keep clean URLs.
+
+2004-10-11 torben
+  - Converted to the Filesystem
+
+2004-09-10 bergie
+  - Added support for multi-day events via usage of a start date input
+
+2004-08-26 bergie
+  - Modified schema to use better defaults and the new unixdate widget
+  - Patched viewer to support both old textual dates and unixdates
+  - Patched admin to support both old textual dates and unixdates
+  - Changed NAP to present edit instead of view as the default admin page
+  - On-site NAP current leaf is now set correctly
+  - Expired events are now kept in the NAP array but set to VISIBLE = false
+
+2004-08-16 torben                                                                         
+  - Fixed a bug that prevented substyle switching.
+
+2004-08-02 SmallOne                                                                         
+  - Added swedish translation
+
+2004-06-17
+  - Fixed Bug #57 (NAP information corrupt)
+
+2004-04-14
+  - Major Styles cleanup
+  - referencing by Article name "yyyy-mm-dd-###" instead of ID
+  - AIS enhancements
+
+2004-01-30
+  - The component saves date (yyyy-mm-dd-###) in the name field now
+
+2004-01-24
+  - Updated Danish and Finnish translation
+
+2003-11-06
+  - Adjusted HTML code to fit the new AIS CSS style
+
+2003-08-07
+  - Implemented PAGETITLE setter method. The articles title field is used for 
+    the page title, for the indexes the title config option is used.
+
+2003-07-21
+  - L10n classes were not accessed by reference
+
+2003-06-25
+  - New l10n strings have been added
+
+2003-06-13
+  - Fixed Bug #447 (active leaf not set)
+  ! Changed default layout to utilize HTML WYSIWYG Editor (example)
+  ! Reworked the components configuration mechanism to a more user
+    friendly way. There are now dropdowns that let you choose schemas
+    or sort orders. Renamed every occurence of "layout" to "schema".
+    This change breaks backwards compatiblity against existing topics.
+  - Fixed a bug, that displayed all expired articles in the NAP data
+  + Articles with an empty sorting timestamp will now be displayed
+    always at the top of the list.
+  - Added Substyle selection depending on choosen schema (as defined in 
+    the configuration, not on an per-article basis)
+  - Rewrote a field descriptor in the Admin UI
+  - Admin UI referenced fields from the default layout, this is bad.
+    Removed.
+  - Fixed a bug inside the update preferences code that might lead to
+    errors during update when a unset preference is set to the site
+    default. The code was trying to unset an not existing parameter.
+  - de.linkm.events does now feature an /lates/x syntax displaying
+    the latest x events, events without a date will be omitted in
+    this mode.

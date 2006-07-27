@@ -1,0 +1,497 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING %d copies, %s total, including VAT
+%d kappaletta, yhteensä %s sis. ALV
+---STRINGEND
+
+---STRING Not enough copies available, reduced to %d
+Vain %d kappaletta on nyt saatavilla.
+---STRINGEND
+
+---STRING Not enough copies for %s available, reduced to %d.
+Tuotetta %s ei ole saatavilla riittävän montaa kappaletta, vähennetty %d:n.
+---STRINGEND
+
+---STRING add to cart
+Lisää ostoskoriin
+---STRINGEND
+
+---STRING admin_password
+Käyttäjätunnus tunnistamattomille käyttäjille
+---STRINGEND
+
+---STRING admin_user
+Salasana tunnistamattomille käyttäjille
+---STRINGEND
+
+---STRING auth: need not to be mailing company
+Pääsy estetty: Postitusryhmän jäsenet eivät pääse tälle sivulle.
+---STRINGEND
+
+---STRING auth: need to be admin
+Pääsy estetty: Tälle sivulle pääsy vaatii pääkäyttäjäoikeudet
+---STRINGEND
+
+---STRING auth: need to be mailing company
+Pääsy estetty: Sinun täytyy kuulua postitusryhmään voidaksesi päästä sivulle.
+---STRINGEND
+
+---STRING auth: need to be owner
+Pääsy estetty: Sinun täytyy olla kansion omistaja voidaksesi päästä sivulle.
+---STRINGEND
+
+---STRING auth: need to be poweruser
+Pääsy estetty: Sinun täytyy olla tehokäyttäjä ja kansion omistaja päästäksesi sivulle.
+---STRINGEND
+
+---STRING auto-created order root event <em>%s</em>
+Tapahtuma <em>%s</em> luotu automaattisesti tilauksia varten.
+---STRINGEND
+
+---STRING available
+Kappaletta saatavilla
+---STRINGEND
+
+---STRING back to main
+Takaisin pääsivulle
+---STRINGEND
+
+---STRING back to product overview
+Takaisin tuotelistaan
+---STRINGEND
+
+---STRING billable copies
+Laskutettavia eriä
+---STRINGEND
+
+---STRING billing_address
+Laskutusosoite (jos eri kuin toimitusosoite)
+---STRINGEND
+
+---STRING cart is without free items notice
+Huom! Ostoskori ei ota tuotteiden saatavuutta huomioon. Tilattavat määrät korjataan automaattisesti maksettaessa.
+---STRINGEND
+
+---STRING checkout
+Maksu
+---STRINGEND
+
+---STRING checkout: complete
+Maksu: Tilaus käsitelty.
+---STRINGEND
+
+---STRING checkout: confirm order
+Maksu: Vahvista tilaus
+---STRINGEND
+
+---STRING checkout: shipping information and order details
+Maksu: Syötä toimitusosoite ja tilaustiedot
+---STRINGEND
+
+---STRING cleaned up %d incomplete events.
+%d keskeneräistä tapahtumaa on poistettu.
+---STRINGEND
+
+---STRING code
+Tuotekoodi
+---STRINGEND
+
+---STRING code helptext
+Täytyy olla uniikki kansiossa.
+---STRINGEND
+
+---STRING company
+Yritys
+---STRINGEND
+
+---STRING configuration
+Asetukset
+---STRINGEND
+
+---STRING corrupt orders
+Virheellisiä tilauksia
+---STRINGEND
+
+---STRING could not update storage parameters: %s
+Tallennetun tiedon päivitys epäonnistui: %s
+---STRINGEND
+
+---STRING could not update your order: %s
+Tilaustasi ei voitu päivittää: %s
+---STRINGEND
+
+---STRING create product
+Lisää tuote
+---STRINGEND
+
+---STRING currency_sign
+Sivustolla käytettävä valuuttamerkki
+---STRINGEND
+
+---STRING custom delivered orders query:
+Oma kysely:
+---STRINGEND
+
+---STRING data schema settings
+Tietokantakuvauksen asetukset
+---STRINGEND
+
+---STRING date format: yyyy-mm-dd hh:mm
+Ole hyvä ja käytä päivämäärämuotoa "VVVV-KK-PP TT:MM". Voit jättää kellonajan myös syöttämättä.
+---STRINGEND
+
+---STRING delete all incomplete orders older then one hour
+Poista kaikki yli tunnin ikäiset keskeneräiset tilaukset.
+---STRINGEND
+
+---STRING delete order
+Poista tilaus
+---STRINGEND
+
+---STRING delete product
+Poista tuote
+---STRINGEND
+
+---STRING do you really want to delete this order?
+Oletko varma että haluat poistaa tilauksen?
+---STRINGEND
+
+---STRING do you really want to delete this product?
+Oletko varma että haluat poistaa tuotteen? <em>Huom:</em> Tämä poistaa myös kaikki tuotteen tilaukset!
+---STRINGEND
+
+---STRING do you really want to order?
+Oletko varma että haluat tilata tuotteet?
+---STRINGEND
+
+---STRING edit order
+Muokkaa tilausta
+---STRINGEND
+
+---STRING edit order items
+Muokkaa tilattuja tuotteita
+---STRINGEND
+
+---STRING edit product
+Muokkaa tuotetta
+---STRINGEND
+
+---STRING email
+Sähköposti
+---STRINGEND
+
+---STRING end:
+Päättymispäivä:
+---STRINGEND
+
+---STRING execute query
+Aja kysely
+---STRINGEND
+
+---STRING expert settings
+Tehokäyttäjän asetukset
+---STRINGEND
+
+---STRING failed to auto-create order root event: %s
+Tapahtumakansion automaattinen luonti tilauksille epäonnistui: %s
+---STRINGEND
+
+---STRING fill out the form. after proceeding, max free items will be taken into account.
+Ole hyvä ja täytä tämä lomake jotta tilauksesi voidaan käsitellä. Tallennettuasi ostoskoriin päivittyvät tuotteiden oikeat määrät saatavuuden mukaan.
+---STRINGEND
+
+---STRING free copies
+Ilmaisia kappaleita
+---STRINGEND
+
+---STRING grand total:
+Yhteensä:
+---STRINGEND
+
+---STRING gross sum
+Bruttosumma
+---STRINGEND
+
+---STRING incomplete/corrupt orders
+Keskeneräisiä tai virheellisiä tilauksia
+---STRINGEND
+
+---STRING last 24 hrs
+Viimeiset 24 tuntia
+---STRINGEND
+
+---STRING last month
+Viime kuukausi
+---STRINGEND
+
+---STRING last week
+Viime viikko
+---STRINGEND
+
+---STRING mail templates
+Sähköpostipohjat
+---STRINGEND
+
+---STRING mail_orderconfirm
+Uuden tilauksen vahvistaminen
+---STRINGEND
+
+---STRING mail_ordersent
+Tiedotus toimitetusta tilauksesta
+---STRINGEND
+
+---STRING mailing_company_group
+Postitusryhmä jolla on rajatut käyttöoikeudet
+---STRINGEND
+
+---STRING mailing_company_group_helptext
+Jätä tämä tyhjäksi jos sinulla ei ole erillistä postituksia hoitavaa ryhmää tai yritystä. Älä missään tapauksessa laita kansion omistajaryhmää postitusryhmäksi!
+---STRINGEND
+
+---STRING mark as sent
+Merkkaa lähetetyksi
+---STRINGEND
+
+---STRING mark as unsent
+Merkkaa lähettämättömäksi
+---STRINGEND
+
+---STRING maxfreecopies
+Saatavilla olevien tuotteiden maksimimäärä
+---STRINGEND
+
+---STRING maxperorder
+Tuotteen maksimimäärä per tilaus
+---STRINGEND
+
+---STRING maxperorder limit for product %s exceeded
+Tuotteen %s maksimi kappalemäärä per tilaus ylitetty.
+---STRINGEND
+
+---STRING name
+Koko nimi
+---STRINGEND
+
+---STRING net sum
+Nettosumma
+---STRINGEND
+
+---STRING net.nemein.orders
+Verkkokauppa
+---STRINGEND
+
+---STRING new product
+Uusi tuote
+---STRINGEND
+
+---STRING new query
+Uusi kysely
+---STRINGEND
+
+---STRING no orders found.
+Ei tilauksia
+---STRINGEND
+
+---STRING no, i changed my mind
+Ei, muutin mieleni
+---STRINGEND
+
+---STRING not enough items available, %i requested, %i available.
+Ei riittävästi tuotetta saatavilla. %i pyydetty mutta vain %i on saatavilla.
+---STRINGEND
+
+---STRING not enough items in stock, %i requested, %i available.
+Ei riittävästi tuotetta varastossa. %i pyydetty mutta vain %i on saatavilla.
+---STRINGEND
+
+---STRING optional content
+Valinnainen sisältö
+---STRINGEND
+
+---STRING order %s copies of this product
+Tilaa %s kappaletta tuotetta
+---STRINGEND
+
+---STRING order cancelled
+Peruutettu
+---STRINGEND
+
+---STRING order corrupt
+Tilaus on virheellinen, ole hyvä ja tarkista sen sisältö
+---STRINGEND
+
+---STRING order delivered
+Toimitettu
+---STRINGEND
+
+---STRING order empty.
+Tilaus on tyhjä
+---STRINGEND
+
+---STRING order incomplete
+Keskeneräinen
+---STRINGEND
+
+---STRING order pending
+Jonossa
+---STRINGEND
+
+---STRING order_date
+Tilaus luoto
+---STRINGEND
+
+---STRING order_sent
+Tilaus lähetetty
+---STRINGEND
+
+---STRING orders
+Tilaukset
+---STRINGEND
+
+---STRING pending orders
+Jonottavia tilauksia
+---STRINGEND
+
+---STRING permissions
+Käyttöoikeudet
+---STRINGEND
+
+---STRING preset delivered order queries:
+Esiaseta kyselyt:
+---STRINGEND
+
+---STRING price
+Hinta ALV 0%
+---STRINGEND
+
+---STRING prodcuct abstract helptext
+HTML-merkinnät ovat sallittuja
+---STRINGEND
+
+---STRING product abstract
+Kuvaus
+---STRINGEND
+
+---STRING product cannot be ordered
+Tuote ei tällä hetkellä ole saatavilla.
+---STRINGEND
+
+---STRING product description
+Lisätiedot
+---STRINGEND
+
+---STRING product details
+Tuotteen tiedot ja tilaus
+---STRINGEND
+
+---STRING product offline
+Poissa käytöstä
+---STRINGEND
+
+---STRING product online
+Käytössä
+---STRINGEND
+
+---STRING product outside link
+Käytössä, käyttää ulkoista tilauslinkkiä
+---STRINGEND
+
+---STRING product status
+Tuotteen tila
+---STRINGEND
+
+---STRING product title
+Tuotteen nimi
+---STRINGEND
+
+---STRING quantity
+Määrä
+---STRINGEND
+
+---STRING query delivered orders
+Katso toimitettuja tilauksia
+---STRINGEND
+
+---STRING received and processed message
+Tilauksesi on käsitelty, saat sähköpostivahvistuksen piakkoin.
+---STRINGEND
+
+---STRING remove all from cart
+Poista kaikki tuotteet ostoskorista.
+---STRINGEND
+
+---STRING remove from cart
+Poista ostoskorista.
+---STRINGEND
+
+---STRING required fields
+Pakolliset kentät
+---STRINGEND
+
+---STRING root_order_event
+Ylimmän tason tilaus-tapahtuman GUID
+---STRINGEND
+
+---STRING schema_order
+Tilausten tietokantakuvaus
+---STRINGEND
+
+---STRING schema_product
+Tuotteiden tietokantakuvaus
+---STRINGEND
+
+---STRING schemadb
+Tietokantakuvausten polku
+---STRINGEND
+
+---STRING shipping_address
+Toimitusosoite
+---STRINGEND
+
+---STRING shopping cart empty
+Ostoskori on tyhjä.
+---STRINGEND
+
+---STRING start:
+Alkupäivämäärä:
+---STRINGEND
+
+---STRING status
+Tilauksen tila
+---STRINGEND
+
+---STRING topic settings
+Kansion asetukset
+---STRINGEND
+
+---STRING topic_introduction
+Kansion esittelyteksti (näytetään ennen tuotelistaa)
+---STRINGEND
+
+---STRING vat
+ALV
+---STRINGEND
+
+---STRING view product
+Näytä tuote
+---STRINGEND
+
+---STRING yes, i want to order these product
+Kyllä, haluan tilata tuotteet
+---STRINGEND
+
+---STRING you must enter a positive quantity for product %s.
+Sinun täytyy syöttää positiivinen kappalemäärä tuotteelle %s.
+---STRINGEND
+
+---STRING you must enter a positive quantity.
+Sinun täytyy syöttää positiivinen kappalemäärä.
+---STRINGEND
+
+---STRING your shopping cart
+Ostoskorisi
+---STRINGEND
+

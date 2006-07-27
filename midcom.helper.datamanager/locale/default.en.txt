@@ -1,0 +1,185 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING <em>%s</em> could not be converted into a number, ignored.
+<em>%s</em> was no valid number, ignored this field.
+---STRINGEND
+
+---STRING a file with this name already exists
+A file with this name already exists.
+---STRINGEND
+
+---STRING anonymous user
+Anonymous User
+---STRINGEND
+
+---STRING asis
+as is
+---STRINGEND
+
+---STRING automatic
+Auto
+---STRINGEND
+
+---STRING break lock
+Break the lock
+---STRINGEND
+
+---STRING could not clear lock: insufficient privilegs
+Could not clear the lock, your privileges are insufficient.
+---STRINGEND
+
+---STRING could not open file for writing
+Could not open the file for writing.
+---STRINGEND
+
+---STRING could not open uploaded file for reading
+Could not open uploaded file for reading.
+---STRINGEND
+
+---STRING delete file
+Delete file
+---STRINGEND
+
+---STRING description
+Description
+---STRINGEND
+
+---STRING failed saving field %s: %s
+Failed to save field <em>%s</em>: %s
+---STRINGEND
+
+---STRING failed to delete file %s: %s
+Failed to delete file <em>%s</em>: %s
+---STRINGEND
+
+---STRING failed to update the storage object
+Failed to update the storage object.
+---STRINGEND
+
+---STRING filename
+Filename
+---STRINGEND
+
+---STRING jpeg
+JPEG Image
+---STRINGEND
+
+---STRING mailtemplate bcc
+BCC addresses
+---STRINGEND
+
+---STRING mailtemplate body
+Body
+---STRINGEND
+
+---STRING mailtemplate body_mime_type
+Body MIME Type
+---STRINGEND
+
+---STRING mailtemplate cc
+CC addresses
+---STRINGEND
+
+---STRING mailtemplate charset
+Character set
+---STRINGEND
+
+---STRING mailtemplate from
+Sender address
+---STRINGEND
+
+---STRING mailtemplate reply-to
+Reply-To address
+---STRINGEND
+
+---STRING mailtemplate subject
+Subject
+---STRINGEND
+
+---STRING mailtemplate x-mailer
+X-Mailer name
+---STRINGEND
+
+---STRING mime type
+MIME type
+---STRINGEND
+
+---STRING no file
+No file
+---STRINGEND
+
+---STRING no files
+No files
+---STRINGEND
+
+---STRING no preview available
+No preview available
+---STRINGEND
+
+---STRING no selection
+No selection
+---STRINGEND
+
+---STRING object locked
+Object is locked
+---STRINGEND
+
+---STRING object locked by %s from %s at %s, cannot edit.
+The object is locked by the user %s (IP: %s) since %s. Cannot edit the item.
+---STRINGEND
+
+---STRING png
+PNG Image
+---STRINGEND
+
+---STRING preview
+Preview
+---STRINGEND
+
+---STRING required field missing
+Please fill in the required field <em>%s</em>.
+---STRINGEND
+
+---STRING save_to_storage failed
+Could not save data for Field <em>%s</em>: %s
+---STRINGEND
+
+---STRING schema error: the field %s is no member of the storage object
+Data schema error: schema error: The field <em>%s</em> is no member of the storage object.
+---STRINGEND
+
+---STRING storage object or data schema not set
+Internal Error: Either the storage object or the data schema is not set.
+---STRINGEND
+
+---STRING store type
+stored file type
+---STRINGEND
+
+---STRING thumb type
+Thumbnail file type
+---STRINGEND
+
+---STRING thumbnail shown
+Thumbnail shown
+---STRINGEND
+
+---STRING tryagain
+Try again
+---STRINGEND
+
+---STRING upload file
+Upload file
+---STRINGEND
+
+---STRING yes
+Yes
+---STRINGEND
+
+---STRING no
+No
+---STRINGEND
+

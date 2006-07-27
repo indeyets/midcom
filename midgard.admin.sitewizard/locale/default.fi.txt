@@ -1,0 +1,117 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING advanced options
+Tehokäyttäjän asetukset
+---STRINGEND
+
+---STRING change style
+Vaihda sivuston käyttämää ulkoasupohjaa
+---STRINGEND
+
+---STRING completely empty style
+Tyhjä tyylipohja jolle voit rakentaa oman ulkoasusi
+---STRINGEND
+
+---STRING configure style
+Ulkoasun asetukset
+---STRINGEND
+
+---STRING configure website
+Sivuston asetukset
+---STRINGEND
+
+---STRING congratulations, your site has been set up to %s
+Sivustosi on asetettu toimimaan osoitteessa %s
+---STRINGEND
+
+---STRING create organization
+Luo uusi organisaatio
+---STRINGEND
+
+---STRING create website
+Luo sivusto
+---STRINGEND
+
+---STRING custom
+Oma ulkoasupohja
+---STRINGEND
+
+---STRING every sitegroup can have multiple sites
+Yrityksillä voi Midgard-julkaisujärjestelmässä olla useita sivustoja. Valitse yritys vasemmalta luodaksesi uusi sivusto.
+---STRINGEND
+
+---STRING failed to create organization, reason %s
+Yrityksen luonti epäonnistui, syy %s
+---STRINGEND
+
+---STRING finish
+Valmis
+---STRINGEND
+
+---STRING host name
+Sivuston osoite (esimerkiksi www.yritys.fi)
+---STRINGEND
+
+---STRING host port
+Portti
+---STRINGEND
+
+---STRING host prefix
+Hakemistopolku (esimerksi /kampanja)
+---STRINGEND
+
+---STRING host template
+Sivuston tyyppi
+---STRINGEND
+
+---STRING midgard uses sitegroups for organizing data
+Midgard käyttää virtuaalisia Sitegroup-tietokantoja yritysten sisällön hallintaan.<br /><br /> Aloittaaksesi syötä vasemmalle yrityksen perustiedot ja käyttäjätunnus.
+---STRINGEND
+
+---STRING midgard.admin.sitewizard
+Midgard-sivustojen avaus
+---STRINGEND
+
+---STRING modify site setup
+Muokkaa sivuston asetuksia
+---STRINGEND
+
+---STRING openpsa
+OpenPSA
+---STRINGEND
+
+---STRING organization name
+Organisaation nimi
+---STRINGEND
+
+---STRING organization quota
+Levytila
+---STRINGEND
+
+---STRING select organization
+Valitse organisaatio
+---STRINGEND
+
+---STRING setup style
+Määrittele ulkoasu
+---STRINGEND
+
+---STRING template_midcom
+MidCOM-sivusto
+---STRINGEND
+
+---STRING to work the site must have been set up in apache configuration and dns
+<em>Huomaa</em> että toimiakseen sivusto täytyy olla lisätty <a href="http://www.midgard-project.org/midcom-permalink-85c5ffbbbe028838508b199f01c0ab63">Apachen VirtualHost-asetuksiin</a> ja DNS-nimipalveluun.
+---STRINGEND
+
+---STRING use existing organization
+Käytä olemassaolevaa organisaatiota
+---STRINGEND
+
+---STRING you need to authenticate
+Sovellus tarvitsee käyttäjätunnuksesi ja salasanasi.
+---STRINGEND
+

@@ -1,0 +1,53 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING create entry
+Skapa inlägg
+---STRINGEND
+
+---STRING database administration
+Databas administration
+---STRINGEND
+
+---STRING entry
+Inlägg
+---STRINGEND
+
+---STRING go
+Gå
+---STRINGEND
+
+---STRING no entries
+Inga inlägg i databasen
+---STRINGEND
+
+---STRING no matches
+Inga matchande inlägg funna
+---STRINGEND
+
+---STRING search
+Sök
+---STRINGEND
+
+---STRING select database schema
+Välj databas schema
+---STRINGEND
+
+---STRING set database schema
+Sätt databas schema
+---STRINGEND
+
+---STRING simple database
+Enkel databas
+---STRINGEND
+
+---STRING view entry
+Visa inlägg
+---STRINGEND
+
+---STRING net.nemein.simpledb
+Enkel databas
+---STRINGEND
+

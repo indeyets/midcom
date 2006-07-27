@@ -1,0 +1,85 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE pl
+
+---STRING create event
+Dodaj wydarzenie
+---STRINGEND
+
+---STRING date
+Data
+---STRINGEND
+
+---STRING de.linkm.events
+Kalendarz
+---STRINGEND
+
+---STRING delete all events
+Usuń wszystkie wydarzenia
+---STRINGEND
+
+---STRING delete event
+Usuń
+---STRINGEND
+
+---STRING edit event
+Edytuj
+---STRINGEND
+
+---STRING enable detail pages
+Włącz szczegóły
+---STRINGEND
+
+---STRING event
+Wydarzenie
+---STRINGEND
+
+---STRING event administration
+Administracja wydarzeniami
+---STRINGEND
+
+---STRING events
+Kalendarz
+---STRINGEND
+
+---STRING expert settings
+Zaawansowane
+---STRINGEND
+
+---STRING location
+Lokalizacja
+---STRINGEND
+
+---STRING revert to default
+Przywróć domyślne
+---STRINGEND
+
+---STRING schema database
+Baza schematów
+---STRINGEND
+
+---STRING settings
+Ustawienia
+---STRINGEND
+
+---STRING show old events
+Pokaz stare wydarzenia
+---STRINGEND
+
+---STRING sort order
+Sortowanie
+---STRINGEND
+
+---STRING title
+Tytuł
+---STRINGEND
+
+---STRING topic schema
+Schemat danych (zapisz wszystkie zmiany w bazie schematow zanim zmienisz to pole)
+---STRINGEND
+
+---STRING view event
+Pokaż
+---STRINGEND
+

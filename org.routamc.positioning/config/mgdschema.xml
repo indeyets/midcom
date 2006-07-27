@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+
+    <!-- City is used for mapping log entries to "real-world places" -->
+    <type name="org_routamc_positioning_city" table="org_routamc_positioning_city">
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="city" type="text"/>
+        <!-- Country in ISO 3166-1 alpha-2 two letter format -->
+        <property name="country" type="text"/>
+        <property name="region" type="text"/>
+        <!-- TODO: Alternate names should probably be a MultiLang table -->
+        <property name="alternatenames" type="text"/>                
+        <property name="population" type="integer"/>
+        <!-- Coordinates in decimal format -->
+        <property name="latitude" type="double"/>
+        <property name="longitude" type="double"/>
+        <property name="altitude" type="integer"/>
+                
+        <!-- required metadata -->        
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->        
+    </type>
+    
+    <!-- Airports are primarily used for getting METAR weather for users -->
+    <type name="org_routamc_positioning_aerodrome" table="org_routamc_positioning_aerodrome">
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="icao" type="text"/>
+        <property name="iata" type="text"/>
+        <property name="name" type="text"/>
+        <property name="city" link="org_routamc_positioning_city:id" reverse="no" type="integer" />
+        <!-- Coordinates in decimal format -->
+        <property name="latitude" type="float"/>
+        <property name="longitude" type="float"/>
+
+        <!-- Runway altitude in meters -->
+        <property name="altitude" type="float"/>
+        
+        <!-- required metadata -->        
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->        
+    </type>
+
+    <!-- Log entries are user's position entries -->
+    <type name="org_routamc_positioning_log" table="org_routamc_positioning_log">
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="person" link="midgard_person:id" reverse="no" type="integer"/>        
+        <property name="date" type="integer"/>
+        
+        <!--
+        Source is the name of the position source module log entry comes from. These
+        correspond to org_routamc_positioning_importer_X classes
+            gpx: GPS track log entry imported in GPX format
+            plazes: Plazes information
+            manual: Manually entered position
+            objectlocation: Location acquired through an object's location
+        -->
+        <property name="importer" type="text"/>
+
+        <!-- 
+        Accuracy options:
+            10: Position is accurate down to a few meters (for example from GPS)
+            20: Position is accurate down to few hundred meters (for example from a Google Maps click)
+            30: Position is approximate based on a city name
+        -->
+        <property name="accuracy" type="integer"/>   
+
+        <!-- Coordinates in decimal format -->
+        <property name="latitude" type="float"/>
+        <property name="longitude" type="float"/>        
+
+        <!-- Altitude in meters -->
+        <property name="altitude" type="integer"/>
+        
+        <!-- Bearing in degrees -->
+        <property name="bearing" type="integer"/>        
+        
+        <!-- required metadata -->        
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->        
+    </type>
+    
+    <!-- Locations are used for connecting any Midgard object into real-world positions -->
+    <type name="org_routamc_positioning_location" table="org_routamc_positioning_location">
+        <property name="id" type="integer" primaryfield="id"/>
+
+        <!-- Parent object GUID -->
+        <property name="parent" type="text"/>
+        <!-- Parent object class -->
+        <property name="parentclass" type="text"/>
+        <!-- Parent component -->
+        <property name="parentcomponent" type="text"/>
+        
+        <!-- Log entry this position information is based on -->
+        <property name="log" link="org_routamc_positioning_log:id" reverse="no" type="integer"/>
+        <property name="date" type="integer"/>
+                
+        <!-- 
+        Type options:
+            10: Entry is made at location
+            20: Entry is about location
+        -->
+        <property name="relation" type="integer"/>        
+
+        <!-- Coordinates in decimal format -->
+        <property name="latitude" type="float"/>
+        <property name="longitude" type="float"/>
+
+        <!-- Altitude in meters -->
+        <property name="altitude" type="float"/>
+        
+        <!-- required metadata -->        
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->        
+    </type>
+</Schema>

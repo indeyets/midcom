@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.4.5" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+http://pear.php.net/dtd/tasks-1.0.xsd
+http://pear.php.net/dtd/package-2.0
+http://pear.php.net/dtd/package-2.0.xsd">
+    <name>midcom_admin_content2</name>
+    <channel>pear.midcom-project.org</channel>
+    <summary>
+        MidCOM component midcom.admin.content2
+    </summary>
+    <description>
+        MidCOM component midcom.admin.content2
+    </description>
+    
+    <lead>
+        <name>Tarjei Huse</name>    
+        <user>tarjei</user>
+        <email>tarjei@nu.no</email>
+        <active>yes</active>
+    </lead>
+        
+    <date>2006-07-26</date>
+    <time>11:22:52</time>
+    <version>
+        <release>0.4.0</release>
+        <api>0.4.0</api>
+    </version>
+    <stability>
+        <release>stable</release>
+        <api>stable</api>
+    </stability>
+    <license>GPL</license>
+    <notes>0.4.0 stable</notes>        
+    <contents>
+        <dir name="content2">
+            <file baseinstalldir="midcom/lib/midcom/admin/content2" name="admincontext.php" role="php" />
+            <file baseinstalldir="midcom/lib/midcom/admin/content2" name="aegir_handler.php" role="php" />
+            <file baseinstalldir="midcom/lib/midcom/admin/content2" name="aegir_navigation.php" role="php" />
+            <dir name="base_style">
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="navigation.php" role="php" />
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="style-init.php" role="php" />
+            </dir>
+            <dir name="callbacks">
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="componentselector.php" role="php" />
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="styleselector.php" role="php" />
+            </dir>
+            <file baseinstalldir="midcom/lib/midcom/admin/content2" name="component.php" role="php" />
+            <dir name="config">
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="config.inc" role="php" />
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="manifest.inc" role="php" />
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="schemadb_component.inc" role="php" />
+            </dir>
+            <file baseinstalldir="midcom/lib/midcom/admin/content2" name="config.php" role="php" />
+            <file baseinstalldir="midcom/lib/midcom/admin/content2" name="context.php" role="php" />
+            <dir name="documentation">
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="create_topic.en.txt" role="php" />
+            </dir>
+            <dir name="locale">
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="default.da.txt" role="php" />
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="default.de.txt" role="php" />
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="default.en.txt" role="php" />
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="default.fi.txt" role="php" />
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="default.no.txt" role="php" />
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="default.pl.txt" role="php" />
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="default.sv.txt" role="php" />
+            </dir>
+            <dir name="midcom">
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="interfaces.php" role="php" />
+            </dir>
+            <file baseinstalldir="midcom/lib/midcom/admin/content2" name="navigation.php" role="php" />
+            <dir name="style">
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="admin_deletecheck.php" role="php" />
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="topic-edit.php" role="php" />
+            </dir>
+            <dir name="tests">
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="run_tests.php" role="php" />
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="test_config.php" role="php" />
+                <file baseinstalldir="midcom/lib/midcom/admin/content2" name="test_navigation.php" role="php" />
+            </dir>
+            <file baseinstalldir="midcom/lib/midcom/admin/content2" name="view.php" role="php" />
+        </dir>
+    </contents>        
+    <dependencies>
+        <required>
+            <php>
+                <min>4.3.0</min>
+            </php>
+            <pearinstaller>
+                <min>1.4.0</min>
+            </pearinstaller>        
+            
+            <package>
+                <name>midcom_admin_aegir</name>
+                <channel>pear.midcom-project.org</channel>
+                
+            </package>            
+        
+            <package>
+                <name>midcom_admin_simplecontent</name>
+                <channel>pear.midcom-project.org</channel>
+                
+            </package>            
+        
+            <package>
+                <name>no_bergfald_rcs</name>
+                <channel>pear.midcom-project.org</channel>
+                
+            </package>            
+        
+            <package>
+                <name>midcom_helper_datamanager</name>
+                <channel>pear.midcom-project.org</channel>
+                
+            </package>            
+        
+            <package>
+                <name>midcom_helper_datamanager2</name>
+                <channel>pear.midcom-project.org</channel>
+                
+            </package>            
+          </required>
+    </dependencies>
+    <phprelease /> 
+</package>
+    

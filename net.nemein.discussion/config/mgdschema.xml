@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    <type name="net_nemein_discussion_thread" table="net_nemein_discussion_thread">
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="title" type="text"/>
+        <property name="name" type="text"/>
+        <property name="node" link="midgard_topic:id" reverse="no" type="integer"/>
+
+        <!-- cached data -->
+        <property name="posts" type="integer"/>
+        <property name="latestpost" link="net_nemein_discussion_post:id" reverse="no" type="integer"/>
+        <property name="latestposttime" type="integer"/>
+        <!-- /cached data -->
+        
+        <!-- required metadata -->        
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->        
+    </type>
+    
+    <type name="net_nemein_discussion_post" table="net_nemein_discussion_post">
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="subject" type="text"/>
+        <property name="thread" link="net_nemein_discussion_thread:id" reverse="no" type="integer"/>
+        <property name="replyto" link="net_nemein_discussion_post:id" reverse="no" type="integer"/>
+        <property name="content" type="text"/>
+        <property name="status" type="integer"/>
+                
+        <!-- poster metadata -->
+        <property name="sendername" type="text"/>
+        <property name="senderip" type="text"/>
+        <property name="senderurl" type="text"/>        
+        <property name="senderemail" type="text"/>
+        <property name="sender" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /poster metadata -->
+        
+        <!-- required metadata -->        
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->        
+    </type>
+</Schema>

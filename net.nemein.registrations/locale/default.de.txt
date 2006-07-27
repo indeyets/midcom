@@ -1,0 +1,477 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING (note: schema in use for registrars)
+(Anmerkung: Dieses Layout wird für Teilnehmer verwendet)
+---STRINGEND
+
+---STRING Click here to register for the above event.
+Hier können Sie sich für den obigen Termin registrieren.
+---STRINGEND
+
+---STRING access denied
+Zugriff verweigert
+---STRINGEND
+
+---STRING account activation
+Freischalten des Benutzerkontos
+---STRINGEND
+
+---STRING account creation
+Ein Benutzerkonto erstellen
+---STRINGEND
+
+---STRING account group
+Neue Personen in diese Gruppe (GUID) hinzufügen
+---STRINGEND
+
+---STRING additional questions
+Zusätzliche Fragen
+---STRINGEND
+
+---STRING additional questions schema
+Datenschema zur Eingabe der zusätzlichen Fragen
+---STRINGEND
+
+---STRING admin pass
+Passwort für Aufgaben für die Administratorrechte notwendig sind
+---STRINGEND
+
+---STRING admin user
+Benutzername für Aufgaben für die Administratorrechte notwendig sind
+---STRINGEND
+
+---STRING already registered to this event
+Bereits für diesen Termin registriert
+---STRINGEND
+
+---STRING already registered using the following information
+Sie haben sich bereits für den Termin angemeldet und dabei die untenstehenden Daten verwendet. Bitte kontaktieren Sie die Organisatoren des Termins im Falle einer Änderung.
+---STRINGEND
+
+---STRING an event with the name %s already exists
+Ein Termin mit dem URL-Namen <em>%s</em> existiert bereits, bitte wählen Sie einen anderen Namen.
+---STRINGEND
+
+---STRING anonymous_registration
+Anonyme Anmeldungen erlauben
+---STRINGEND
+
+---STRING approve registration
+Anmeldung freigeben
+---STRINGEND
+
+---STRING approved by %s on %s
+Freigegeben von %s um %s
+---STRINGEND
+
+---STRING back to event overview
+Zurück zur Terminübersicht
+---STRINGEND
+
+---STRING body for account created mails
+Pfad zu einem MidgardSnippet mit dem Inhalt der Benachrichtigungen über neue Benutzerkonten
+---STRINGEND
+
+---STRING body for registration mails
+Pfad zu einem MidgardSnippet mit dem Inhalt der Registrierungs-Benachrichtigungen
+---STRINGEND
+
+---STRING cc's for account created mails
+Weitere Empfänger für Benachrichtigungen über neue Benuterkonten ausser dem Benutzer selbst (durch Kommata getrennt)
+---STRINGEND
+
+---STRING cc's for registration mails
+Weitere Empfänger für Registrierungs-Benachrichtigungen ausser dem Teilnehmer selbst (durch Kommata getrennt)
+---STRINGEND
+
+---STRING click here to log out.
+Hier können Sie sich abmelden.
+---STRINGEND
+
+---STRING close the event for registration now
+Das Ereignis jetzt für Anmeldungen schliessen
+---STRINGEND
+
+---STRING closed
+Anmeldung nicht möglich
+---STRINGEND
+
+---STRING confirmation email sent.
+Eine Bestätigung per E-Mail wurde soeben an Sie verschickt.
+---STRINGEND
+
+---STRING create a new account
+Ein neues Benutzerkonto erstellen
+---STRINGEND
+
+---STRING create a new account based on an existing account
+Ein neues Benutzerkonto auf der Basis eines bereits existierenden Kontos erstellen
+---STRINGEND
+
+---STRING create an event
+Einen neuen Termin anlegen
+---STRINGEND
+
+---STRING created root event <em>%s</em>
+Das Wurzel-Ereignis <em>%s</em> wurde erfolgreich angelegt.
+---STRINGEND
+
+---STRING creation procedure notes
+Bitte geben Sie Ihre E-Mail Adresse an. Sie erhalten daraufhin ein Passwort, mit dem Sie sich am System anmelden können.
+---STRINGEND
+
+---STRING csv export
+Export der Anmeldungen in eine kommaseparierte Datei (<abbr title="Comma-Separated Value, MS Excel kompatibles Format">CSV</abbr>)
+---STRINGEND
+
+---STRING csv field separator
+Feldtrennzeichen
+---STRINGEND
+
+---STRING csv line separator
+Zeilentrennzeichen
+---STRINGEND
+
+---STRING current configuration
+Aktuelle Konfiguration
+---STRINGEND
+
+---STRING default notification email
+Standard E-Mail Adresse für die Benachrichtigungen
+---STRINGEND
+
+---STRING delete event
+Termin löschen
+---STRINGEND
+
+---STRING delete registration
+Anmeldung löschen
+---STRINGEND
+
+---STRING edit registration
+Anmeldung bearbeiten
+---STRINGEND
+
+---STRING email adress invalid
+Bitte geben Sie eine gültige E-Mail Adresse ein.
+---STRINGEND
+
+---STRING email with password sent to %s<br>please login to activate your account.
+Eine E-Mail mit Ihrem Passwort wurde an %s versendet. Bitte geben Sie dieses Passwort hier ein um Ihr Benutzerkonto zu aktivieren.
+---STRINGEND
+
+---STRING emailadress
+E-Mail Adresse
+---STRINGEND
+
+---STRING event
+Termin
+---STRINGEND
+
+---STRING event description
+Beschreibung des Termins
+---STRINGEND
+
+---STRING event name must not be empty
+Der URL-Name des Termins darf nicht leer sein.
+---STRINGEND
+
+---STRING event registration
+Anmeldung für den Termin
+---STRINGEND
+
+---STRING event registration complete
+Anmeldung für den Termin vollständig
+---STRINGEND
+
+---STRING event schema
+Schema zur Verwendung für die Termine
+---STRINGEND
+
+---STRING event type
+Anzuzeigender Ereignistyp (keine Angabe zeigt alle Ereignisse an)
+---STRINGEND
+
+---STRING event url name
+URL-Adresse des Termins; muß eindeutig sein
+---STRINGEND
+
+---STRING events open for registrations
+Termine, die derzeit zur Anmeldung freigegeben sind
+---STRINGEND
+
+---STRING export
+Exportieren
+---STRINGEND
+
+---STRING failed to create root event: %s
+Konnte das Wurzel-Ereignis nicht anlegen: %s
+---STRINGEND
+
+---STRING failed to delete registration: %s
+Konnte die Anmeldung nicht löschen: %s
+---STRINGEND
+
+---STRING failed to open event %s: %s
+Konnte den Termin %s nicht öffnen: %s
+---STRINGEND
+
+---STRING failed to open event %u: %s
+Konnte den Termin %u nicht öffnen: %s
+---STRINGEND
+
+---STRING failed to open registrar %u: %s
+Konnte den Teilnehmer %u nicht öffnen: %s
+---STRINGEND
+
+---STRING failed to open registration %u: %s
+Konnte die Anmeldung %u nicht öffnen: %s
+---STRINGEND
+
+---STRING failed to open root event %s: %s
+Konnte das Wurzel-Ereignis %s nicht öffnen: %s
+---STRINGEND
+
+---STRING group for active accounts
+Midgard Benutzergruppe für noch nicht aktivierte BenutzerkontenMidgard Benutzergruppe für aktivierte Benutzerkonten
+---STRINGEND
+
+---STRING group for pending accounts
+Midgard Benutzergruppe für noch nicht aktivierte Benutzerkonten
+---STRINGEND
+
+---STRING list all events
+Alle Termine anzeigen
+---STRINGEND
+
+---STRING list registrations
+Anmeldungen anzeigen
+---STRINGEND
+
+---STRING list registrations of %s
+Anmeldungen für %s anzeigen
+---STRINGEND
+
+---STRING login using an existing account
+Ein existierendes Benutzerkonto verwenden
+---STRINGEND
+
+---STRING manage root event
+Root Event verwalten
+---STRINGEND
+
+---STRING net.nemein.registrations
+Anmeldungen
+---STRINGEND
+
+---STRING new registration pending for approval
+Eine neue Registrierung muß freigegeben werden.
+---STRINGEND
+
+---STRING no events found
+Keine Termine gefunden
+---STRINGEND
+
+---STRING no registrations found
+Keine Anmeldungen gefunden
+---STRINGEND
+
+---STRING no root event selected
+Kein Root Event ausgewählt
+---STRINGEND
+
+---STRING no root event warning
+Warnung: Für diese Rubrik wurde kein Root Event ausgewählt. Ohne ein Root Event kann diese Komponente nicht benutzt werden. Sie müssen entweder ein existierendes Root Event auswählen oder ein neues erstellen.
+---STRINGEND
+
+---STRING no selection, first defined schema will be used by default
+Keine Auswahl getroffen, das erste Schema wird standardmässig verwendet.
+---STRINGEND
+
+---STRING no, do not delete the registration
+Nein, ich will diese Anmeldung nicht löschen.
+---STRINGEND
+
+---STRING notification email
+E-Mail Adresse für die Benachrichtigungen (keine Eingabe um den Standardwert zu verwenden)
+---STRINGEND
+
+---STRING open
+Anmeldung möglich
+---STRINGEND
+
+---STRING open for registration
+Den Termin für Anmeldungen freigeben
+---STRINGEND
+
+---STRING open the even for registration now
+Den Termin jetzt für Anmeldungen öffnen
+---STRINGEND
+
+---STRING please answer these questions to complete registration
+Bitte beantworten Sie folgende Fragen um den Anmeldevorgang zu vervollständigen
+---STRINGEND
+
+---STRING please login to activate your account
+Bitte melden Sie sich an um Ihr Benutzerkonto zu aktivieren
+---STRINGEND
+
+---STRING please login using a valid account.
+Bitte benutzen Sie ein gültiges Benutzerkonto.
+---STRINGEND
+
+---STRING register for %s
+Für %s anmelden
+---STRINGEND
+
+---STRING register for this event
+Für diesen Termin anmelden.
+---STRINGEND
+
+---STRING registrar
+Teilnehmer
+---STRINGEND
+
+---STRING registrar identification
+Telinehmer identifizieren
+---STRINGEND
+
+---STRING registrar schema
+Schema zur Verwendung für die Teilnehmer
+---STRINGEND
+
+---STRING registration event
+Termin
+---STRINGEND
+
+---STRING registration event configuration
+Konfiguration für den Termin
+---STRINGEND
+
+---STRING registration for %s
+Anmeldung für %s
+---STRINGEND
+
+---STRING registration is beeing processed, you will get a mail
+Ihre Anmeldung wird bearbeitet, Sie werden in Kürze eine Bestätigung per E-Mail erhalten.
+---STRINGEND
+
+---STRING registrations
+Anmeldungen
+---STRINGEND
+
+---STRING registrations for event %s
+Anmeldungen für das Ereignis <em>%s</em>
+---STRINGEND
+
+---STRING reject reason
+Grund für die Ablehnung der Anmeldung
+---STRINGEND
+
+---STRING reject registration
+Anmeldung ablehnen und löschen
+---STRINGEND
+
+---STRING reject registration and delete registrar
+Anmeldung und Teilnehmer ablehnen und löschen
+---STRINGEND
+
+---STRING root_event_guid
+Die GUID des Root Events
+---STRINGEND
+
+---STRING save schemadb first to get the current list of available schemas
+Alle Änderungen an dem Pfad zur Schema-Datenbank müssen zunächst gespeichert werden, um hier eine aktuelle Liste zu erhalten.
+---STRINGEND
+
+---STRING schemadb path
+Pfad zur Datenschema-Datenbank
+---STRINGEND
+
+---STRING sender for account created mails
+Absenderadresse für Benachrichtigungen über neue Benutzerkonten
+---STRINGEND
+
+---STRING sender for registration mails
+Absenderadresse für Registrierungs-Benachrichtigungen
+---STRINGEND
+
+---STRING subject for account created mails
+Betreff für Benachrichtigungen über neue Benutzerkonten
+---STRINGEND
+
+---STRING subject for registration mails
+Betreff für Registrierungs-Benachrichtigungen
+---STRINGEND
+
+---STRING this email adress is already registered
+Zu dieser E-Mail Adresse existiert bereits ein Benutzerkonto.
+---STRINGEND
+
+---STRING upcoming events
+Termine
+---STRINGEND
+
+---STRING use existing root event
+Bereits vorhandenes Root Event verwenden:
+---STRINGEND
+
+---STRING username
+Benutzername
+---STRINGEND
+
+---STRING userpassword
+Passwort
+---STRINGEND
+
+---STRING view additional questions
+Zusätzliche Fragen anzeigen
+---STRINGEND
+
+---STRING view registrar
+Teilnehmer anzeigen
+---STRINGEND
+
+---STRING view registration
+Anmeldung anzeigen
+---STRINGEND
+
+---STRING view your registration
+Ihre Anmeldung anzeigen
+---STRINGEND
+
+---STRING welcome to registrations admin
+Willkommen zur Administration der net.nemein.registrations Anmeldungs-Verwaltung.
+---STRINGEND
+
+---STRING welcome_page_list_closed
+Geschlossene Termine auf der Einstiegsseite anzeigen
+---STRINGEND
+
+---STRING yes, delete the registration
+Ja, ich will diese Anmeldung löschen.
+---STRINGEND
+
+---STRING you are currently logged in as:
+Sie sind derzeit unter dieser E-Mail Adresse angemeldet:
+---STRINGEND
+
+---STRING you do not have the permissions to register for this event.
+Sie haben keine ausreichenden Berechtigungen um sich für diesen Termin anzumelden.
+---STRINGEND
+
+---STRING you have already registered for this event.
+Sie haben sich für diesen Termin bereits angemeldet.
+---STRINGEND
+
+---STRING your account has been activated successfully.
+Ihr Benutzerkonto wurde erfolgreich aktiviert.
+---STRINGEND
+
+---STRING auto_approve
+Alle Anmeldungen automatisch freigeben
+---STRINGEND
+

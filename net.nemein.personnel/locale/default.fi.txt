@@ -1,0 +1,93 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING create person
+Luo henkilö
+---STRINGEND
+
+---STRING delete person
+Poista henkilö
+---STRINGEND
+
+---STRING delete person confirmation message
+Oletko varma että haluat poistaa henkilön?
+---STRINGEND
+
+---STRING edit person
+Muokkaa henkilöä
+---STRINGEND
+
+---STRING email
+Sähköposti
+---STRINGEND
+
+---STRING firstname
+Etunimi
+---STRINGEND
+
+---STRING job title
+Titteli
+---STRINGEND
+
+---STRING lastname
+Sukunimi
+---STRINGEND
+
+---STRING list settings
+Listan asetukset
+---STRINGEND
+
+---STRING net.nemein.personnel
+Henkilöstö
+---STRINGEND
+
+---STRING no permissions for
+Ei oikeuksia
+---STRINGEND
+
+---STRING no persons found.
+Ei henkilöitä tässä ryhmässä
+---STRINGEND
+
+---STRING none
+Ei kukaan
+---STRINGEND
+
+---STRING personnel
+Henkilöstö
+---STRINGEND
+
+---STRING personnel folder
+Henkilöstökansio
+---STRINGEND
+
+---STRING select
+Valitse
+---STRINGEND
+
+---STRING select group to display
+Valitse näytettävä ryhmä
+---STRINGEND
+
+---STRING select member to display first
+Valitse ensimmäiseksi näytettävä henkilö
+---STRINGEND
+
+---STRING view person
+Katso henkilöä
+---STRINGEND
+
+---STRING work phone
+Työpuhelin
+---STRINGEND
+
+---STRING your account has insufficient permissions
+Sinun käyttöoikeutesi eivät riitä henkilön tietojen käsittelyyn
+---STRINGEND
+
+---STRING group
+Näytettävä ryhmä
+---STRINGEND
+

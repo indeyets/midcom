@@ -1,0 +1,121 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING add new feed
+Add new feed
+---STRINGEND
+
+---STRING aggregator mode
+Aggregator mode
+---STRINGEND
+
+---STRING aggregator settings
+Aggregator settings
+---STRINGEND
+
+---STRING bloglines
+Bloglines
+---STRINGEND
+
+---STRING bloglines account
+Bloglines account
+---STRINGEND
+
+---STRING cancel
+Cancel
+---STRINGEND
+
+---STRING channels
+Display items sorted by channel
+---STRINGEND
+
+---STRING combined
+Combine items from all channels by publication date
+---STRINGEND
+
+---STRING details
+Full details
+---STRINGEND
+
+---STRING display items
+Display items as
+---STRINGEND
+
+---STRING feed icon url
+Feed icon's URL (optional)
+---STRINGEND
+
+---STRING feed title
+Feed title
+---STRINGEND
+
+---STRING feed title display
+Feed title display
+---STRINGEND
+
+---STRING feed url
+Feed URL
+---STRINGEND
+
+---STRING import opml subscriptions
+Import subscriptions in OPML format
+---STRINGEND
+
+---STRING latest items to show
+How many latest items to show?
+---STRINGEND
+
+---STRING local
+Local storage
+---STRINGEND
+
+---STRING opml file
+OPML file
+---STRINGEND
+
+---STRING remote from feed
+Remote from feed
+---STRINGEND
+
+---STRING remove feed
+Remove feed
+---STRINGEND
+
+---STRING rss aggregator
+RSS and Atom news aggregator
+---STRINGEND
+
+---STRING rss description
+RSS description
+---STRINGEND
+
+---STRING rss items to show
+How many news items to show?
+---STRINGEND
+
+---STRING rss output settings
+RSS output settings
+---STRINGEND
+
+---STRING save
+Save
+---STRINGEND
+
+---STRING subscription mode
+Subscription mode
+---STRINGEND
+
+---STRING titles
+Titles only
+---STRINGEND
+
+---STRING untitled
+Untitled
+---STRINGEND
+
+---STRING net.nemein.rss
+RSS and Atom news aggregator
+---STRINGEND
+

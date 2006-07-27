@@ -1,0 +1,12 @@
+                   net.nehmer.publications Changelog
+                   ---------------------------------
+CVS Id: $Id$
+
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+2006-03-13 torben
+  - Initial commit (yet work-in-progress)

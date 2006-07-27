@@ -1,0 +1,173 @@
+<?php
+/**
+ * @package net.nehmer.blog
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @version $Id$
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
+ * Blog Index handler page handler
+ *
+ * Shows the configured number of postings with their abstracts.
+ *
+ * @package net.nehmer.blog
+ */
+
+class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handler
+{
+    /**
+     * The content topic to use
+     *
+     * @var midcom_db_topic
+     * @access private
+     */
+    var $_content_topic = null;
+
+    /**
+     * The articles to display
+     *
+     * @var Array
+     * @access private
+     */
+    var $_articles = null;
+
+    /**
+     * The datamanager for the currently displayed article.
+     *
+     * @var midcom_helper_datamanger2_datamanager
+     */
+    var $_datamanager = null;
+
+    /**
+     * Simple default constructor.
+     */
+    function net_nehmer_blog_handler_index()
+    {
+        parent::midcom_baseclasses_components_handler();
+    }
+
+    /**
+     * Maps the content topic from the request data to local member variables.
+     */
+    function _on_initialize()
+    {
+        $this->_content_topic =& $this->_request_data['content_topic'];
+    }
+
+    /**
+     * Simple helper which references all important members to the request data listing
+     * for usage within the style listing.
+     */
+    function _prepare_request_data()
+    {
+        $this->_request_data['datamanager'] =& $this->_datamanager;
+    }
+
+
+    /**
+     * Shows the autoindex list. Nothing to do in the handle phase except setting last modified
+     * dates.
+     */
+    function _handler_index ($handler_id, $args, &$data)
+    {
+        $qb = midcom_db_article::new_query_builder();
+        $qb->add_constraint('topic', '=', $this->_content_topic->id);
+        $qb->add_constraint('up', '=', 0);
+
+        // Set default page title
+        $this->_request_data['page_title'] = $this->_topic->extra;
+
+        // Filter by categories
+        if (   $handler_id == 'index-category'
+            || $handler_id == 'latest-category')
+        {
+            if (!in_array($args[0], $this->_request_data['categories']))
+            {
+                // TODO: In some cases we might want to allow displaying by custom categories
+                return false;
+            }
+            $qb->add_constraint('extra1', 'LIKE', "%|{$args[0]}|%");
+
+            // Add category to title
+            $this->_request_data['page_title'] = sprintf($this->_request_data['l10n']->get('%s category %s'), $this->_topic->extra, $args[0]);
+        }
+
+        // TODO: 1.7 support is only temporary, I'd rather drop it as soon as 1.8 goes somehting like RC.
+        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
+        {
+            $qb->add_order('metadata.published', 'DESC');
+        }
+        else
+        {
+            $qb->add_order('created', 'DESC');
+        }
+        if (   $handler_id == 'index'
+            || $handler_id == 'index-category')
+        {
+            $qb->set_limit($this->_config->get('index_entries'));
+        }
+        else if ($handler_id == 'latest')
+        {
+            $qb->set_limit($args[0]);
+        }
+        else if ($handler_id == 'latest-category')
+        {
+            $qb->set_limit($args[1]);
+        }
+        $this->_articles = $qb->execute_unchecked();
+        $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
+
+        $this->_prepare_request_data();
+        $_MIDCOM->set_26_request_metadata(net_nehmer_blog_viewer::get_last_modified($this->_topic, $this->_content_topic), $this->_topic->guid);
+        return true;
+    }
+
+    /**
+     * Displays the index page
+     *
+     */
+    function _show_index($handler_id, &$data)
+    {
+        midcom_show_style('index-start');
+
+        if ($this->_config->get('comments_enable'))
+        {
+            $_MIDCOM->componentloader->load('net.nehmer.comments');
+            $this->_request_data['comments_enable'] = true;
+        }
+
+        if ($this->_articles)
+        {
+            $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+            foreach ($this->_articles as $article)
+            {
+                if (! $this->_datamanager->autoset_storage($article))
+                {
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("The datamanager for article {$article->id} could not be initialized, skipping it.");
+                    debug_print_r('Object was:', $article);
+                    debug_pop();
+                    continue;
+                }
+
+                $data['article'] =& $article;
+                $arg = $article->name ? $article->name : $article->guid;
+                $data['view_url'] = "{$prefix}view/{$arg}.html";
+
+                midcom_show_style('index-item');
+            }
+        }
+        else
+        {
+            midcom_show_style('index-empty');
+        }
+
+        midcom_show_style('index-end');
+        return true;
+    }
+
+}
+
+?>

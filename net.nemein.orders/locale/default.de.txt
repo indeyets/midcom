@@ -1,0 +1,580 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING %d copies, %s total, including VAT
+%d Kopien, %s Gesamtbetrag, inklusive MwSt
+---STRINGEND
+
+---STRING Not enough copies available, reduced to %d
+Momentan können nicht mehr als %d Kopien bestellt werden.
+---STRINGEND
+
+---STRING Not enough copies for %s available, reduced to %d.
+Für %s sind nicht genügend Artikel verfügbar, die Anzahl wurde auf %d reduziert.
+---STRINGEND
+
+---STRING add to cart
+In den Warenkorb legen
+---STRINGEND
+
+---STRING admin_password
+Benutzername für den anonymen Zugriff aus der Website
+---STRINGEND
+
+---STRING admin_user
+Passwort für den anonymen Zugriff aus der Website
+---STRINGEND
+
+---STRING auth: need not to be mailing company
+Zugriff verweigert: Mitglieder der Benutzergruppe des Versandunternehmens dürfen nicht auf diese Seite zuzugreifen.
+---STRINGEND
+
+---STRING auth: need to be admin
+Zugriff verweigert: Sie benötigen Administrator-Rechte, um auf diese Seite zuzugreifen.
+---STRINGEND
+
+---STRING auth: need to be mailing company
+Zugriff verweigert: Sie müssen ein Mitglied der Benutzergruppe des Versandunternehmens sein, um auf diese Seite zuzugreifen.
+---STRINGEND
+
+---STRING auth: need to be owner
+Zugriff verweigert: Sie müssen ein Besitzer dieser Rubrik sein, um auf diese Seite zuzugreifen.
+---STRINGEND
+
+---STRING auth: need to be poweruser
+Zugriff verweigert: Sie müssen sowohl ein "Power User" als auch Besitzer dieser Rubrik sein, um auf diese Seite zuzugreifen.
+---STRINGEND
+
+---STRING auto-created order root event <em>%s</em>
+Das Wurzel-Ereignis <em>%s</em> für alle Bestellungen wurde automatisch erstellt.
+---STRINGEND
+
+---STRING available
+Anzahl der verfügbaren Artikel
+---STRINGEND
+
+---STRING back to main
+Zurück zur Übersichtsseite
+---STRINGEND
+
+---STRING back to product overview
+Zurück zur Artikelübersicht
+---STRINGEND
+
+---STRING billable copies
+Kostenpflichtige Artikel
+---STRINGEND
+
+---STRING billing_address
+Rechnungsadresse (falls von der Versandsadresse abweichend)
+---STRINGEND
+
+---STRING cannot order, no items available
+Dieses Produkt kann derzeit nicht bestellt werden, es ist nicht verfügbar.
+---STRINGEND
+
+---STRING cart is without free items notice
+Anmerkung: Der angezeigte Warenkorb berücksichtigt noch nicht die für Sie noch verfügbaren kostenlosen Artikel. Dies wird während des Bestellvorgangs entsprechend korrigiert.
+---STRINGEND
+
+---STRING checkout
+Bestellen
+---STRINGEND
+
+---STRING checkout: complete
+Bestellung erfolgreich erfasst
+---STRINGEND
+
+---STRING checkout: confirm order
+Bestellung prüfen und bestätigen
+---STRINGEND
+
+---STRING checkout: payment options
+Bestellung: Zahlungsart auswählen
+---STRINGEND
+
+---STRING checkout: shipping information and order details
+Bestellung: Eingabe der Adressdaten und der Detailinformationen zur Bestellung
+---STRINGEND
+
+---STRING cleaned up %d incomplete events.
+%d unvollständige Bestellungen wurden entfernt.
+---STRINGEND
+
+---STRING code
+Artikelnummer
+---STRINGEND
+
+---STRING code helptext
+Muß innerhalb dieser Rubrik eindeutig sein.
+---STRINGEND
+
+---STRING company
+Firma
+---STRINGEND
+
+---STRING configuration
+Konfiguration
+---STRINGEND
+
+---STRING corrupt orders
+Defekte Bestellungen
+---STRINGEND
+
+---STRING could not update storage parameters: %s
+Konnte den Lagerbestand nicht aktualisieren: %s
+---STRINGEND
+
+---STRING could not update your order: %s
+Ihre Bestellung konnte nicht aktualisiert werden: %s
+---STRINGEND
+
+---STRING create product
+Artikel erstellen
+---STRINGEND
+
+---STRING create subcategory
+Eine Unterkategorie anlegen
+---STRINGEND
+
+---STRING currency_sign
+Währungssymbol für die Website
+---STRINGEND
+
+---STRING custom delivered orders query:
+Benutzerdefinierte Abfrage:
+---STRINGEND
+
+---STRING data schema settings
+Konfiguration der Datenschemata
+---STRINGEND
+
+---STRING date format: yyyy-mm-dd hh:mm
+Bitte benutzen Sie das Datumsformat "JJJJ-MM-TT SS:MM" (die Uhrzeitangabe kann weggelassen werden und wird dann als 00:00 angenommen).
+---STRINGEND
+
+---STRING delete all incomplete orders older then one hour
+Alle unvollständigen Bestellungen löschen, die älter als eine Stunde sind.
+---STRINGEND
+
+---STRING delete order
+Bestellung löschen
+---STRINGEND
+
+---STRING delete product
+Artikel löschen
+---STRINGEND
+
+---STRING delivery amount
+Liefermenge
+---STRINGEND
+
+---STRING do you really want to delete this order?
+Sind Sie sicher, daß Sie diese Bestellung löschen wollen?
+---STRINGEND
+
+---STRING do you really want to delete this product?
+Sind Sie sicher, daß Sie diesen Artikel löschen wollen? <em>Warnung:</em> Dies wird auch alle Bestellung löschen, die diesen Artikel enthalten!
+---STRINGEND
+
+---STRING do you really want to order?
+Wollen Sie die oben angegebenen Artikel wirklich bestellen?
+---STRINGEND
+
+---STRING edit order
+Bestellung bearbeiten
+---STRINGEND
+
+---STRING edit order items
+Bestellte Artikel bearbeiten
+---STRINGEND
+
+---STRING edit product
+Artikel bearbeiten
+---STRINGEND
+
+---STRING email
+E-Mail Adresse
+---STRINGEND
+
+---STRING enable_net_nemein_payment_integration
+Elektronische Zahlungen mit Hilfe von net.nemein.payment aktivieren
+---STRINGEND
+
+---STRING enable_payment_management
+Zahlungsverwaltung aktivieren
+---STRINGEND
+
+---STRING end:
+Endzeitpunkt:
+---STRINGEND
+
+---STRING epayment_data
+Maschinenlesbare Informationen zur elektronischen Zahlung
+---STRINGEND
+
+---STRING epayment_state
+Status der elektronischen Zahlung
+---STRINGEND
+
+---STRING execute query
+Abfrage ausführen
+---STRINGEND
+
+---STRING expert settings
+Erweiterte Einstellungen
+---STRINGEND
+
+---STRING failed to auto-create order root event: %s
+Konnte das Wurzel-Ereigniss für die Bestellungen nicht automatisch erstellen: %s
+---STRINGEND
+
+---STRING failed to update article %s: invalid delivery amount %s
+Konnte den Artikel <em>%s</em> nicht aktualisieren, die Liefermenge '%s' war ungültig.
+---STRINGEND
+
+---STRING fill out the form. after proceeding, max free items will be taken into account.
+Bitte füllen Sie dieses Formular aus, damit Ihre Bestellung bearbeitet werden kann. Danach wird Ihr Warenkorb mit den für Sie noch kostenlos verfügbaren Artikeln aktualisiert. Bitte beachten Sie, dass mindestens alle mit einem Stern markierten Felder ausgefüllt werden müssen.
+---STRINGEND
+
+---STRING free copies
+Kostenfreie Artikel
+---STRINGEND
+
+---STRING grand total:
+Gesamtsumme:
+---STRINGEND
+
+---STRING gross sum
+Bruttobetrag
+---STRINGEND
+
+---STRING incomplete/corrupt orders
+Unvollständige und defekte Bestellungen
+---STRINGEND
+
+---STRING instock
+Aktueller Lagerbestand
+---STRINGEND
+
+---STRING last 24 hrs
+Die letzen 24 Stunden
+---STRINGEND
+
+---STRING last month
+Der letzte Monat
+---STRINGEND
+
+---STRING last week
+Die letzte Woche
+---STRINGEND
+
+---STRING mail templates
+E-Mail Vorlagen
+---STRINGEND
+
+---STRING mail_order_helptext
+__ORDER__ gibt die gesamten Daten zur Bestellung (ohne die bestellten Artikel) aus, __ORDER_FELDNAME__ gibt ein einzelnes Feld der Order zurück, __ITEMS__ listet die bestellten Publikationen inklusive einer Gesamtsumme auf.
+---STRINGEND
+
+---STRING mail_orderconfirm
+Bestätigung einer neuen Bestellung
+---STRINGEND
+
+---STRING mail_ordersent
+Benachrichtigung über die Auslieferung einer Bestellung.
+---STRINGEND
+
+---STRING mailing_company_group
+Benutzergruppe mit eingeschränkten Berechtiungen des Versand-Unternehmens
+---STRINGEND
+
+---STRING mailing_company_group_helptext
+Lassen Sie diese Einstellung leer, falls Sie keine ausdrückliche Benutzergruppe für das Versands-Unternehmen haben. Insbesondere darf nicht die Eigentümer-Gruppe der Rubrik gesetzt werden.
+---STRINGEND
+
+---STRING mark as paid
+Als bezahlt markieren
+---STRINGEND
+
+---STRING mark as sent
+Als versandt markieren
+---STRINGEND
+
+---STRING mark as unpaid
+Als nicht bezahlt markieren
+---STRINGEND
+
+---STRING mark as unsent
+Als nicht ausgeliefert markieren
+---STRINGEND
+
+---STRING maxfreecopies
+Anzahl der kostenlosen Artikel
+---STRINGEND
+
+---STRING maxperorder
+Maxmimal mögliche Anzahl pro Bestellung
+---STRINGEND
+
+---STRING maxperorder limit for product %s exceeded
+Für den Artikel %s wurde die maximal mögliche Anzahl pro Bestellung überschritten.
+---STRINGEND
+
+---STRING name
+Vollständiger Name
+---STRINGEND
+
+---STRING net sum
+Nettobetrag
+---STRINGEND
+
+---STRING net.nemein.orders
+Bestellungen
+---STRINGEND
+
+---STRING new product
+Artikel anlegen
+---STRINGEND
+
+---STRING new query
+Neue Abfrage
+---STRINGEND
+
+---STRING no orders found.
+Keine Bestellungen gefunden.
+---STRINGEND
+
+---STRING no, i changed my mind
+Nein, ich habe es mir anders überlegt.
+---STRINGEND
+
+---STRING not enough items available, %i requested, %i available.
+Nicht genügend Artikel verfügbar, %i wurden angefordert, es sind aber nur %i verfügbar.
+---STRINGEND
+
+---STRING not enough items in stock, %i requested, %i available.
+Nicht genügend Artikel am Lager, %i wurden angefordert, es sind aber nur %i verfügbar.
+---STRINGEND
+
+---STRING optional content
+Optionale Felder
+---STRINGEND
+
+---STRING order %s copies of this product
+%s Stück dieses Artikels bestellen
+---STRINGEND
+
+---STRING order cancelled
+Storniert
+---STRINGEND
+
+---STRING order corrupt
+Die Bestellung ist beschädigt, bitte prüfen Sie die Datenintegrität
+---STRINGEND
+
+---STRING order delivered
+Ausgeliefert
+---STRINGEND
+
+---STRING order empty.
+Diese Bestellung ist leer.
+---STRINGEND
+
+---STRING order incomplete
+Unvollständig
+---STRINGEND
+
+---STRING order pending
+Nicht ausgeliefert
+---STRINGEND
+
+---STRING order_date
+Bestellung aufgenomman am
+---STRINGEND
+
+---STRING order_sent
+Bestellung versandt am
+---STRINGEND
+
+---STRING orders
+Bestellungen
+---STRINGEND
+
+---STRING paid
+Bezahlt am
+---STRINGEND
+
+---STRING payment settings
+Einstellungen zur Zahlung
+---STRINGEND
+
+---STRING pending orders
+Noch nicht ausgelieferte Bestellungen
+---STRINGEND
+
+---STRING permissions
+Zugriffsberechtigungen
+---STRINGEND
+
+---STRING preset delivered order queries:
+Vorbereitete Abfragen:
+---STRINGEND
+
+---STRING price
+Preis ohne Mehrwertsteuer
+---STRINGEND
+
+---STRING prodcuct abstract helptext
+HTML-Inline-Tags sind erlaubt.
+---STRINGEND
+
+---STRING product abstract
+Zusammenfassung
+---STRINGEND
+
+---STRING product cannot be ordered
+Momentan kann dieser Artikel nicht bestellt werden.
+---STRINGEND
+
+---STRING product description
+Beschreibung
+---STRINGEND
+
+---STRING product details
+Details zum Artikel anzeigen (hier kann auch bestellt werden)
+---STRINGEND
+
+---STRING product image
+Bild des Artikels
+---STRINGEND
+
+---STRING product offline
+Offline
+---STRINGEND
+
+---STRING product online
+Online
+---STRINGEND
+
+---STRING product outside link
+Online, mit Link zu externem Bestellformular
+---STRINGEND
+
+---STRING product status
+Status des Artikels
+---STRINGEND
+
+---STRING product title
+Artikelname
+---STRINGEND
+
+---STRING quantity
+Anzahl
+---STRINGEND
+
+---STRING query delivered orders
+Ausgelieferte Bestellungen abfragen
+---STRINGEND
+
+---STRING received and processed message
+Ihre Bestellung wurde verarbeitet, Sie werden in Kürze eine Bestätigung per E-Mail erhalten.
+---STRINGEND
+
+---STRING remove all from cart
+Alle Artikel aus dem Warenkorb entfernen.
+---STRINGEND
+
+---STRING remove from cart
+Aus dem Warenkorb nehmen
+---STRINGEND
+
+---STRING required fields
+Erforderliche Felder
+---STRINGEND
+
+---STRING root_order_event
+GUID des Wurzel-Ereignisses für die Bestellungen
+---STRINGEND
+
+---STRING schema_order
+Datenschema für die Bestellungen
+---STRINGEND
+
+---STRING schema_product
+Datenschema für die Artikel
+---STRINGEND
+
+---STRING schemadb
+Pfad zur Schemadatenbank
+---STRINGEND
+
+---STRING shipping_address
+Versandsadresse
+---STRINGEND
+
+---STRING shopping cart empty
+Der Warenkorb ist leer.
+---STRINGEND
+
+---STRING start:
+Startzeitpunkt:
+---STRINGEND
+
+---STRING status
+Status der Bestellung
+---STRINGEND
+
+---STRING stockmin
+Mindestbestand
+---STRINGEND
+
+---STRING topic settings
+Einstellungen zur Rubrik
+---STRINGEND
+
+---STRING topic_introduction
+Einführender Text für die Rubrik (wird vor der Publikationsliste angezeigt)
+---STRINGEND
+
+---STRING update storage amount
+Lagerbestände aktualisieren
+---STRINGEND
+
+---STRING update storage amount helptext
+Bitte geben Sie die Änderung des Lagerbestandes, nicht den neuen Lagerbestand ein. Wenn Sie beispielsweise eine Lieferung von 100 Stück für einen Artikel mit einem aktuellen Lagerbestand von 20 erhalten haben, geben Sie 100, nicht 120, ein.
+---STRINGEND
+
+---STRING vat
+MwSt
+---STRINGEND
+
+---STRING view product
+Artikel anzeigen
+---STRINGEND
+
+---STRING yes, i want to order these product
+Ja, ich will diese Artikel wirklich bestellen.
+---STRINGEND
+
+---STRING you must enter a positive quantity for product %s.
+Sie müssen für den Artikel %s eine positive Anzahl eingeben.
+---STRINGEND
+
+---STRING you must enter a positive quantity.
+Sie müssen eine positive Anzahl eingeben.
+---STRINGEND
+
+---STRING your shopping cart
+Ihr Warenkorb
+---STRINGEND
+
+---STRING enter category name
+Bitte geben Sie den Namen der Kategorie ein
+---STRINGEND
+
+---STRING shipping:
+Versandskosten (inkl. MwSt):
+---STRINGEND

@@ -1,0 +1,117 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING add new feed
+Lisää uusi RSS-lähde
+---STRINGEND
+
+---STRING aggregator mode
+Aggregaattorin moodi
+---STRINGEND
+
+---STRING aggregator settings
+Aggregaattorin asetukset
+---STRINGEND
+
+---STRING bloglines
+Bloglines-palvelu
+---STRINGEND
+
+---STRING bloglines account
+Bloglines-tunnus
+---STRINGEND
+
+---STRING cancel
+Peruuta
+---STRINGEND
+
+---STRING channels
+Järjestele uutiset lähteen mukaan
+---STRINGEND
+
+---STRING combined
+Järjestele uutiset yhteen julkaisuajan mukaan
+---STRINGEND
+
+---STRING details
+Koko uutinen
+---STRINGEND
+
+---STRING display items
+Näytä uutiset muodossa
+---STRINGEND
+
+---STRING feed icon url
+Lähteen kuvakkeen osoite (valinnainen)
+---STRINGEND
+
+---STRING feed title
+Lähteen otsikko
+---STRINGEND
+
+---STRING feed title display
+Lähteen otsikon näyttö
+---STRINGEND
+
+---STRING feed url
+Lähteen URL-osoite
+---STRINGEND
+
+---STRING import opml subscriptions
+Lisää lähteitä OPML-muodossa
+---STRINGEND
+
+---STRING latest items to show
+Kuinka monta viimeisintä uutista näytetään?
+---STRINGEND
+
+---STRING local
+Paikallinen tietokanta
+---STRINGEND
+
+---STRING opml file
+OPML-tiedosto
+---STRINGEND
+
+---STRING remote from feed
+Luetaan lähteestä
+---STRINGEND
+
+---STRING remove feed
+Poista lähde
+---STRINGEND
+
+---STRING rss aggregator
+RSS- ja Atom-uutisaggregaattori
+---STRINGEND
+
+---STRING rss description
+RSS:n kuvaus
+---STRINGEND
+
+---STRING rss items to show
+Kuinka monta uutista näytetään RSS:ssä?
+---STRINGEND
+
+---STRING rss output settings
+RSS-tulosteen asetukset
+---STRINGEND
+
+---STRING save
+Tallenna
+---STRINGEND
+
+---STRING subscription mode
+Tilausten hallinta
+---STRINGEND
+
+---STRING titles
+Pelkkä otsikko
+---STRINGEND
+
+---STRING untitled
+Nimetön
+---STRINGEND
+

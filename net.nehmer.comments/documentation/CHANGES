@@ -1,0 +1,20 @@
+                   net.nehmer.comments Changelog
+                   -----------------------------
+CVS Id: $Id$
+
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+2006-07-12 rambo
+  - fixed the version compares for true 1.7 support
+  - version bump for packaging
+
+2006-06-23 bergie
+
+  + Midgard 1.7 support
+
+2006-05-05 torben
+  - Initial version

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+
+  <type name="net_nehmer_jobmarket_entry_db" table="net_nehmer_jobmarket_entry_db">
+    <property name="id" type="integer" primaryfield="id" />
+
+    <property name="offer" type="bool" />
+    <property name="type" type="text" />
+    <property name="sector" type="text" />
+    <property name="location" type="text" />
+    <property name="account" type="text" />
+    <property name="published" type="integer" />
+
+    <property name="title" type="text" />
+    <property name="abstract" type="text" />
+    <property name="description" type="text" />
+
+    <property name="contact" type="text" />
+    <property name="company" type="text" />
+    <property name="address" type="text" />
+    <property name="postcode" type="text" />
+    <property name="city" type="text" />
+    <property name="homepage" type="text" />
+    <property name="email" type="text" />
+    <property name="workphone" type="text" />
+    <property name="mobilephone" type="text" />
+  </type>
+
+</Schema>

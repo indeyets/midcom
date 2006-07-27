@@ -1,0 +1,4 @@
+# Needs a pear package Services_Delicious
+
+# If Delicious account is empty
+	*Warning: Invalid argument supplied for foreach() in /usr/local/php/lib/php/	*Services/Delicious.php on line 255

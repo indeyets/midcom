@@ -1,0 +1,29 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING net.nemein.hourview
+Tuntiraporttien hyväksyntä
+---STRINGEND
+
+---STRING approval
+Hyväksyntä
+---STRINGEND
+
+---STRING comments
+Kommentit
+---STRINGEND
+
+---STRING hours
+Tuntia
+---STRINGEND
+
+---STRING reporter
+Raportoija
+---STRINGEND
+
+---STRING send
+Lähetä
+---STRINGEND
+

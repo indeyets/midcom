@@ -1,0 +1,121 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING add new feed
+Lägg till ny kanal
+---STRINGEND
+
+---STRING aggregator mode
+Aggregator läge
+---STRINGEND
+
+---STRING aggregator settings
+Aggregator inställningar
+---STRINGEND
+
+---STRING cancel
+Avbryt
+---STRINGEND
+
+---STRING channels
+Visa objekt sortterade per kanal
+---STRINGEND
+
+---STRING combined
+Kombinera objekt från alla kanaler efter publiceringsdatum
+---STRINGEND
+
+---STRING details
+Alla detaljer
+---STRINGEND
+
+---STRING display items
+Visa objekt som
+---STRINGEND
+
+---STRING feed title
+Kanalens titel
+---STRINGEND
+
+---STRING feed url
+Kanalens URL
+---STRINGEND
+
+---STRING import opml subscriptions
+Importera prenumerationer i OPML
+---STRINGEND
+
+---STRING latest items to show
+Hur många senaste objekt ska visas?
+---STRINGEND
+
+---STRING opml file
+OPML fil
+---STRINGEND
+
+---STRING remove feed
+Radera kanal
+---STRINGEND
+
+---STRING rss aggregator
+RSS nyhets aggregator
+---STRINGEND
+
+---STRING rss description
+RSS beskrivning
+---STRINGEND
+
+---STRING rss items to show
+Hur många RSS objekt ska visas?
+---STRINGEND
+
+---STRING rss output settings
+RSS vinsings inställningar
+---STRINGEND
+
+---STRING save
+Spara
+---STRINGEND
+
+---STRING titles
+Endast titlar
+---STRINGEND
+
+---STRING untitled
+Har ingen titel
+---STRINGEND
+
+---STRING bloglines
+Bloglines
+---STRINGEND
+
+---STRING bloglines account
+Bloglines konto
+---STRINGEND
+
+---STRING feed icon url
+Kanalens icon url
+---STRINGEND
+
+---STRING feed title display
+Kanalens titel
+---STRINGEND
+
+---STRING local
+Spara lokalt
+---STRINGEND
+
+---STRING net.nemein.rss
+RSS och Atom nyhets samlare
+---STRINGEND
+
+---STRING remote from feed
+Från kanal
+---STRINGEND
+
+---STRING subscription mode
+Prenumerations läge
+---STRINGEND
+

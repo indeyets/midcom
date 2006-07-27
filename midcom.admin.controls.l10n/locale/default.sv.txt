@@ -1,0 +1,9 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING perm-denied text
+<p>Den är MidCOM installationen är inte rätt konfigurerad för att skriva till översättnings tabellen.</p><p>Se till att Apache användaren kan skriva i alla locale mappar och filer som finns beskrivna i MidComs installations instruktioner (se INSTALL).</p>
+---STRINGEND
+

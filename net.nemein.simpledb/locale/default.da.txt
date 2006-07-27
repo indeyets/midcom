@@ -1,0 +1,49 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE da
+
+---STRING create entry
+Opret post
+---STRINGEND
+
+---STRING database administration
+Databaseadministration
+---STRINGEND
+
+---STRING entry
+post
+---STRINGEND
+
+---STRING go
+Gå til
+---STRINGEND
+
+---STRING no entries
+Ingen poster i databasen
+---STRINGEND
+
+---STRING no matches
+Ingen poster matchede søgningen
+---STRINGEND
+
+---STRING search
+Søg
+---STRINGEND
+
+---STRING select database schema
+Vælg databaseskema
+---STRINGEND
+
+---STRING set database schema
+Vælg databaseskema
+---STRINGEND
+
+---STRING simple database
+Enkel database
+---STRINGEND
+
+---STRING view entry
+Se post
+---STRINGEND
+

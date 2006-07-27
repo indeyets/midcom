@@ -1,0 +1,364 @@
+<?php
+/**
+ * @package net.nehmer.account
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @version $Id$
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
+ * Account Management site interface class
+ *
+ * This class has a plugin mechanism, which allows you to dynamically add additional,
+ * site-specific features to the on-site interface.
+ *
+ * <b>Plugin API</b>
+ *
+ * Plugins are basically simple request handler instances which can be configured
+ * by the sites administrator in the component config.
+ *
+ * A valid plugin must consist of a class derived from midcom_baseclasses_components_handler.
+ * The only additional rule is that you have to define a static function called
+ * get_plugin_handlers(). It must return the information that should be added to the
+ * request switch if the plugin is activated:
+ *
+ * <code>
+ * function get_plugin_handlers()
+ * {
+ *     return Array
+ *     (
+ *         'index' => Array
+ *         (
+ *             'handler' => Array('nna_test_plugin_motto', 'motto'),
+ *         ),
+ *         // ...
+ *     );
+ * }
+ * </code>
+ *
+ * The entries you return here follow the same rules you already know from the request
+ * wide configuration.
+ *
+ * To actually activate a plugin, a site mainatainer must register it in the components
+ * plugin listing. There he must add two pieces of information: The main plugin class (which
+ * is used to read the handler list) and an URL to the snippet/file that contains that class.
+ * For example, written in the snippet /sitegroup-config/net.nehmer.account/config:
+ *
+ * <code>
+ * 'plugins' => Array
+ * (
+ *     'motto' => Array
+ *     (
+ *         'class' => 'nna_test_plugin_motto',
+ *         'src' => '/sitegroup-config/net.nehmer.account/test_plugin_motto',
+ *         'name' => 'Test Plugin Name',
+ *         'config' => null,
+ *     ),
+ * ),
+ * </code>
+ *
+ * The key of each entry is the name of the plugin, with which it is referenced in the URL
+ * of the component. The above example would be .../path/to/account/plugin/motto/...
+ * The full URL "space" starting off that point is reserved for the plugin with the above
+ * declaration. Note, that the name entry is purely optional, if no name is specified, the
+ * plugin identifier is taken instead.
+ *
+ * This is a little fact important to understand for plugin developers: When you design your
+ * plugin, you *always* operate in the namespace assigned to you by the administrator. Your
+ * plugin name is only deduced during runtime, not ahead of it. So, for our motto component,
+ * the above "index" handler will actually listen to .../account/plugin/motto.html.
+ *
+ * Each plugin should implement that root page always, as at a later time the plugin system
+ * will add the plugins to the NAP leaf information.
+ *
+ * Additional handlers can be implemented at will, by adding their correpsonding declarations
+ * to the request switch. You can even add additional classes, in different files, if you ensure
+ * their availablility to the request handler without problems (this currently mostly precludes
+ * the use of the autoloading feature, as handlers can only be autoloaded from the midcom
+ * installation directory, not from arbitary locations or snippets. (This might also change in
+ * the future.)
+ *
+ * Site administrators should also be aware of this general workings, so that they can put
+ * the plugin into the right "place" in the URL space where they want to have it. By definition,
+ * a plugin must be "movable", that is, it must not be tied to a given plugin name. If you need
+ * to construct URLs, you should use relative URLs.
+ *
+ * The 'config' option allows you pass configuration options to the plugin instance. It is
+ * optional and defaults to null. The information in this field will be available in the
+ * request data entry 'plugin_config'.
+ *
+ * I'll try to make the current plugin name available in the system somehow as soon as I can to
+ * make it easier to write plugins.
+ *
+ * @todo Factor this out into a pluggable base class with more advanced interfacing.
+ * @package net.nehmer.account
+ */
+
+class net_nehmer_account_viewer extends midcom_baseclasses_components_request
+{
+    function net_nehmer_account_viewer($topic, $config)
+    {
+        parent::midcom_baseclasses_components_request($topic, $config);
+    }
+
+    function _on_initialize()
+    {
+        // VIEW LINKS
+        $this->_request_switch['self'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_view', 'view'),
+        );
+        $this->_request_switch['self_quick'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_view', 'view'),
+            'fixed_args' => Array('quick'),
+        );
+        $this->_request_switch['other'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_view', 'view'),
+            'fixed_args' => 'view',
+            'variable_args' => 1,
+        );
+        $this->_request_switch['other_quick'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_view', 'view'),
+            'fixed_args' => Array('view', 'quick'),
+            'variable_args' => 1,
+        );
+
+        // EDIT LINKS
+        $this->_request_switch['edit'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_edit', 'edit'),
+            'fixed_args' => Array('edit'),
+        );
+
+        if ($this->_config->get('allow_publish'))
+        {
+            $this->_request_switch['publish'] = Array
+            (
+                'handler' => Array('net_nehmer_account_handler_publish', 'publish'),
+                'fixed_args' => Array('publish'),
+            );
+            $this->_request_switch['publish_ok'] = Array
+            (
+                'handler' => Array('net_nehmer_account_handler_publish', 'publish_ok'),
+                'fixed_args' => Array('publish', 'ok'),
+            );
+        }
+
+        $this->_request_switch['password'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_maintain', 'password'),
+            'fixed_args' => Array('password'),
+        );
+
+        if ($this->_config->get('allow_change_username'))
+        {
+            $this->_request_switch['username'] = Array
+            (
+                'handler' => Array('net_nehmer_account_handler_maintain', 'username'),
+                'fixed_args' => Array('username'),
+            );
+        }
+        $this->_request_switch['lostpassword'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_maintain', 'lostpassword'),
+            'fixed_args' => Array('lostpassword'),
+        );
+
+        if ($this->_config->get('allow_cancel_membership'))
+        {
+            $this->_request_switch['cancel_membership'] = Array
+            (
+                'handler' => Array('net_nehmer_account_handler_maintain', 'cancel_membership'),
+                'fixed_args' => Array('cancel_membership'),
+            );
+        }
+
+        // ADMIN LINKS
+        $this->_request_switch['admin_edit'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_edit', 'edit'),
+            'fixed_args' => Array('admin', 'edit'),
+            'variable_args' => 1,
+        );
+
+        if ($this->_config->get('allow_register'))
+        {
+            // REGISTRATION LINKS
+            $this->_request_switch['register_select_type'] = Array
+            (
+                'handler' => Array('net_nehmer_account_handler_register', 'select_type'),
+                'fixed_args' => Array('register'),
+            );
+            $this->_request_switch['register'] = Array
+            (
+                'handler' => Array('net_nehmer_account_handler_register', 'register'),
+                'fixed_args' => Array('register'),
+                'variable_args' => 1,
+            );
+            $this->_request_switch['register_activate'] = Array
+            (
+                'handler' => Array('net_nehmer_account_handler_register', 'activate'),
+                'fixed_args' => Array('register', 'activate'),
+                'variable_args' => 2,
+            );
+        }
+    }
+
+    /**
+     * This event hook will load any on-site plugin that has been recognized in the configuration.
+     * Regardless of success, we always return true; the plugin simply won't start up if, for example,
+     * the name is unknown.
+     *
+     * @access protected
+     */
+    function _on_can_handle($argc, $argv)
+    {
+        if (   $argc >= 2
+            && $argv[0] == 'plugin')
+        {
+            $this->_load_plugin($argv[1]);
+        }
+
+        return true;
+    }
+
+    /**
+     * Loads the plugin identified by $name. Only the on-site listing is loaded.
+     * If the plugin has no on-site interface, no changes are made to the request switch.
+     *
+     * Each request handler of the plugin is automatically adjusted as follows:
+     *
+     * - 1st, the registered names of the registered handlers (array keys) are prefixed by
+     *   "plugin-{$name}-".
+     * - 2nd, all registered handlers are automatically prefixed by the fixed arguments
+     *   ("plugin", $name).
+     *
+     * @param string $name The plugin name as registered in the plugins configuration
+     *     option.
+     * @access private
+     */
+    function _load_plugin($name)
+    {
+        // Validate the plugin name and load the accociated configuration
+        $plugins = $this->_config->get('plugins');
+        if (   ! $plugins
+            || ! array_key_exists($name, $plugins))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Failed to load the plugin {$name}, no plugins are configured or plugin not activated.");
+            debug_pop();
+            return;
+        }
+        $plugin_config = $plugins[$name];
+
+        // Load the plugin class, errors are logged by the callee
+        if (! $this->_load_plugin_class($name, $plugin_config))
+        {
+            return;
+        }
+
+        // Load the configuration into the request data, add the configured plugin name as
+        // well so that URLs can be built.
+        if (array_key_exists('config', $plugin_config))
+        {
+            $this->_request_data['plugin_config'] = $plugin_config['config'];
+        }
+        else
+        {
+            $this->_request_data['plugin_config'] = null;
+        }
+        $this->_request_data['plugin_name'] = $name;
+
+        // Load remaining configuration, and prepare the plugin, errors are logged by the callee.
+        $handlers = call_user_func(array($plugin_config['class'], 'get_plugin_handlers'));
+        if (! $this->_prepare_plugin($name, $plugin_config, $handlers))
+        {
+            return;
+        }
+    }
+
+    /**
+     * Prepares the actual plugin by adding all neccessary information to the request
+     * switch.
+     *
+     * @param string $name The plugin name as registered in the plugins configuration
+     *     option.
+     * @param Array $plugin_config The configuration accociated with the plugin.
+     * @param Array $handlers The plugin specific handlers without the appropriate prefixes.
+     * @access private
+     * @return bool Indicating Success
+     */
+    function _prepare_plugin ($name, $plugin_config, $handlers)
+    {
+        foreach ($handlers as $identifier => $handler_config)
+        {
+            // First, update the fixed args list (be tolarent here)
+            if (! array_key_exists('fixed_args', $handler_config))
+            {
+                $handler_config['fixed_args'] = Array('plugin', $name);
+            }
+            else if (! is_array($handler_config['fixed_args']))
+            {
+                $handler_config['fixed_args'] = Array('plugin', $name, $handler_config['fixed_args']);
+            }
+            else
+            {
+                $handler_config['fixed_args'] = array_merge
+                (
+                    Array('plugin', $name),
+                    $handler_config['fixed_args']
+                );
+            }
+
+            $this->_request_switch["plugin-{$name}-{$identifier}"] = $handler_config;
+        }
+
+        return true;
+    }
+
+    /**
+     * Loads the file/snippet neccessary for a given plugin, according to its configuration.
+     *
+     * @param string $name The plugin name as registered in the plugins configuration
+     *     option.
+     * @param Array $plugin_config The configuration accociated with the plugin.
+     * @access private
+     * @return bool Indicating Success
+     */
+    function _load_plugin_class($name, $plugin_config)
+    {
+        // Sanity check, we return directly if the configured class name is already
+        // available (dynamic_load could trigger this).
+        if (class_exists($plugin_config['class']))
+        {
+            return true;
+        }
+
+        if (substr($plugin_config['src'], 0, 5) == 'file:')
+        {
+            // Load from file
+            require(substr($plugin_config['src'], 5));
+        }
+        else
+        {
+            // Load from snippet
+            mgd_include_snippet_php($plugin_config['src']);
+        }
+
+        if (! class_exists($plugin_config['class']))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Failed to load the plugin {$name}, implementation class not available.");
+            debug_pop();
+            return false;
+        }
+
+        return true;
+    }
+}
+
+?>

@@ -1,0 +1,261 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING %s category %s
+%s: kategoria "%s"
+---STRINGEND
+
+---STRING add a new entry
+Lisää uusi artikkeli
+---STRINGEND
+
+---STRING advanced schema and data settings
+Tehokäyttäjän asetukset
+---STRINGEND
+
+---STRING ajax_enable
+Salli sisällön muokkaaminen AJAXilla suoraan sivulla
+---STRINGEND
+
+---STRING archive
+Arkisto
+---STRINGEND
+
+---STRING archive_enable
+Salli arkistojen käyttö
+---STRINGEND
+
+---STRING article
+Artikkeli
+---STRINGEND
+
+---STRING atom feed
+Atom-syöte
+---STRINGEND
+
+---STRING available feeds
+Uutissyötteet
+---STRINGEND
+
+---STRING available feeds introduction
+Seuraavat sisällön syndikointiformaatit ovat saatavilla:
+---STRINGEND
+
+---STRING back to overview
+Takaisin etusivulle
+---STRINGEND
+
+---STRING blog settings
+Blogin asetukset
+---STRINGEND
+
+---STRING categories
+Kategoriat
+---STRINGEND
+
+---STRING content
+Sisältö
+---STRINGEND
+
+---STRING create article
+Luo artikkeli
+---STRINGEND
+
+---STRING create name from title
+Luo tiedostonimet artikkelien otsikoista
+---STRINGEND
+
+---STRING create news article
+Luo uutisartikkeli
+---STRINGEND
+
+---STRING delete article
+Poista artikkeli
+---STRINGEND
+
+---STRING display settings
+Uutisten näyttöasetukset
+---STRINGEND
+
+---STRING edit article
+Muokkaa artikkelia
+---STRINGEND
+
+---STRING enable blogging apis
+Salli artikkelien etähallinta MetaWebLog API:lla
+---STRINGEND
+
+---STRING enable date filters get
+Salli päivämäärällä suodatus (GET-parametri)
+---STRINGEND
+
+---STRING enable date filters path
+Salli päivämäärällä suodatus (polussa muodossa /VVVV/KK/PP)
+---STRINGEND
+
+---STRING enable details
+Salli lisätietosivut
+---STRINGEND
+
+---STRING enable filters get
+Salli sisältökentillä suodatus (GET-parametri)
+---STRINGEND
+
+---STRING enable public posting
+Salli avoin artikkelien lisäys ("vieraskirja-tyylisesti")
+---STRINGEND
+
+---STRING enable subdirectories
+Lisää alikansioiden artikkelit listaan (ja RSS-listaan)
+---STRINGEND
+
+---STRING expert settings
+Tehokäyttäjän asetukset
+---STRINGEND
+
+---STRING first post was made on %s.
+Julkaistu %s.
+---STRINGEND
+
+---STRING index count
+Listan määrä
+---STRINGEND
+
+---STRING index settings
+Listan asetukset
+---STRINGEND
+
+---STRING index_entries
+Näytä näin monta artikkelia etusivulla
+---STRINGEND
+
+---STRING list old items in index
+Näytä vanhat artikkelit listassa
+---STRINGEND
+
+---STRING net.nehmer.blog
+Uutiskansio
+---STRINGEND
+
+---STRING newsticker
+Uutiskansio
+---STRINGEND
+
+---STRING newsticker administration
+Uutiskansion ylläpito
+---STRINGEND
+
+---STRING no news found.
+Ei uutisia.
+---STRINGEND
+
+---STRING no schema available
+Tietokantakuvausta (schema) ei löydy
+---STRINGEND
+
+---STRING not enough privileges to create articles
+Sinulla ei ole riittäviä oikeuksia artikkelien luontiin.
+---STRINGEND
+
+---STRING posted on %s.
+Julkaisu %s.
+---STRINGEND
+
+---STRING public posting
+Avoin artikkelien lisäys ("vieraskirja-tyyliin")
+---STRINGEND
+
+---STRING public posting password
+Midgard-salasana avoimeen artikkelien lisäykseen (tarvitaan vain jos käyttäjätunnus on lisätty)
+---STRINGEND
+
+---STRING public posting schema
+Avoimessa lisäyksessä käytettävä tietokantakuvaus
+---STRINGEND
+
+---STRING public posting user
+Midgard-käyttäjätunnus avoimeen artikkelien lisäykseen (jätä tyhjäksi käyttääksesi kirjautunutta tunnusta)
+---STRINGEND
+
+---STRING rss 0.91 feed
+RSS 0.91 -syöte
+---STRINGEND
+
+---STRING rss 1.0 feed
+RSS 1.0 -syöte
+---STRINGEND
+
+---STRING rss 2.0 feed
+RSS 2.0 -syöte
+---STRINGEND
+
+---STRING rss export settings
+RSS-asetukset
+---STRINGEND
+
+---STRING rss feed
+RSS-syöte
+---STRINGEND
+
+---STRING rss_count
+Näytä näin monta uutista RSS-syötteessä
+---STRINGEND
+
+---STRING rss_description
+Kuvaus
+---STRINGEND
+
+---STRING rss_enable
+Salli RSS-syöte
+---STRINGEND
+
+---STRING rss_language
+Kieli
+---STRINGEND
+
+---STRING rss_title
+RSS-syötteen otsikko
+---STRINGEND
+
+---STRING rss_webmaster
+Ylläpitäjän sähköpostiosoite
+---STRINGEND
+
+---STRING schema database
+Tietokantakuvauksen (schema) snippet-tietue
+---STRINGEND
+
+---STRING schema settings
+Tietokanta-asetukset
+---STRINGEND
+
+---STRING select article type
+Valitse artikkelin tyyppi
+---STRINGEND
+
+---STRING settings
+Asetukset
+---STRINGEND
+
+---STRING sort order
+Järjestys
+---STRINGEND
+
+---STRING symlink_topic
+Hae sisältö toisesta ("symlink"-) kansiosta
+---STRINGEND
+
+---STRING symlink_topic disabled
+Kansiota ei valittu
+---STRINGEND
+
+---STRING there is a total of %d posts.
+Yhteensä %s uutista.
+---STRINGEND
+
+---STRING schemadb
+Artikkeleille käytettävä tietokantakuvaus
+---STRINGEND
+

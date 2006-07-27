@@ -1,0 +1,70 @@
+<?php
+/**
+ * @package net.nehmer.account
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @version $Id$
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
+ * Cleanup Cronjob Handler
+ *
+ * - Invoked by daily by the MidCOM Cron Service
+ * - Cleans up all not yet activated accounts, using the global configuration settings (obviously).
+ *
+ * @package net.nehmer.account
+ */
+class net_nehmer_account_cron_cleanup extends midcom_baseclasses_components_cron_handler
+{
+    function _on_initialize()
+    {
+        return true;
+    }
+
+    function _on_execute()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $timeout_days = $this->_config->get('account_activation_timeout');
+        $timeout_stamp = time() - ($timeout_days * 86400);
+        $timeout = strftime('%Y-%m-%d', $timeout_stamp);
+
+        debug_add("Searching for records with an activation hash creation before {$timeout}.");
+
+        // We need to query the parameters table explicitly, as otherwise we'd have to
+        // check all persons manually. We need to use a pure Midgard QB here,
+        // as Parameter Query support is not yet supported in MidCOM/Midgard
+        $query = new MidgardQueryBuilder('midgard_parameter');
+        $query->add_constraint('tablename', '=', 'person');
+        $query->add_constraint('domain', '=', 'net.nehmer.account');
+        $query->add_constraint('name', '=', 'activation_hash_created');
+        $query->add_constraint('value', '<', $timeout);
+        $result = @$query->execute();
+
+        if ($result)
+        {
+            foreach ($result as $parameter)
+            {
+                $person = new midcom_db_person($parameter->oid);
+                if (! $person)
+                {
+                    debug_add("Failed to open the Person record ID {$parameter->oid}, skipping it.", MIDCOM_LOG_WARN);
+                    continue;
+                }
+                debug_add("Dropping not activated account ID {$person->id}", MIDCOM_LOG_INFO);
+                debug_print_r('Object Dump:', $person);
+                if (! $person->delete())
+                {
+                    debug_add("Failed to delete the Person record ID {$parameter->oid}.", MIDCOM_LOG_WARN);
+                }
+            }
+        }
+        else
+        {
+            debug_add('Found none.');
+        }
+
+        debug_pop();
+    }
+}
+?>

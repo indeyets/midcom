@@ -1,0 +1,34 @@
+/* Ticket list view */
+div.net_nemein_supportview table {
+    border-spacing: 0px;
+}
+div.net_nemein_supportview thead th {
+    text-align: left;
+    border-bottom: 1px dashed #807D74;
+}
+div.net_nemein_supportview th, div.net_nemein_supportview td {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+div.net_nemein_supportview tr.even {
+    background-color: #EAE8E3;
+    color: #000000;
+}
+
+/* Single ticket view */
+div.note {
+  border-top: 1px dotted #000000;
+  padding-top: 10px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+div.note .noteInfo, div.note .noteFooter {
+  font-style: italic;
+  font-size: smaller;
+}
+div.note h3.formTitle {
+  margin-bottom: 0px;
+}
+div.note .noteInfo p {
+  margin-top: 0px;
+}

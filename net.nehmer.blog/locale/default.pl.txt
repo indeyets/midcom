@@ -1,0 +1,177 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE pl
+
+---STRING add a new entry
+Dodaj
+---STRINGEND
+
+---STRING advanced schema and data settings
+Zaawansowane
+---STRINGEND
+
+---STRING back to overview
+Powrót
+---STRINGEND
+
+---STRING create article
+Dodaj artykuł
+---STRINGEND
+
+---STRING create name from title
+Generuj URL'e na podstawie tytulów
+---STRINGEND
+
+---STRING create news article
+Dodaj news
+---STRINGEND
+
+---STRING net.nehmer.blog
+Newsy
+---STRINGEND
+
+---STRING delete article
+Usuń
+---STRINGEND
+
+---STRING display settings
+Ustawienia wyświetlania
+---STRINGEND
+
+---STRING edit article
+Edytuj
+---STRINGEND
+
+---STRING enable blogging apis
+Włącz zdalną edycje poprzez MetaWebLog
+---STRINGEND
+
+---STRING enable date filters get
+Włącz filtry daty jako paramatry GET
+---STRINGEND
+
+---STRING enable date filters path
+Włącz filtry daty w URL (format /YYYY/MM/DD)
+---STRINGEND
+
+---STRING enable details
+Włącz szczegóły
+---STRINGEND
+
+---STRING enable filters get
+Włącz filtry pola (jako parametry GET)
+---STRINGEND
+
+---STRING enable public posting
+Włącz publikacje anonimowe ("Książka gosci")
+---STRINGEND
+
+---STRING enable subdirectories
+Dołącz podkategorie do Indeksu oraz RSS
+---STRINGEND
+
+---STRING expert settings
+Zaawansowane
+---STRINGEND
+
+---STRING index count
+Ilość pozycji w indeksie
+---STRINGEND
+
+---STRING index settings
+Ustawienia indeksu
+---STRINGEND
+
+---STRING list old items in index
+Pokaż stare elementy w indeksie
+---STRINGEND
+
+---STRING newsticker
+Aktualności
+---STRINGEND
+
+---STRING newsticker administration
+Zarządzanie aktualnościami
+---STRINGEND
+
+---STRING no schema available
+Brak schematów
+---STRINGEND
+
+---STRING public posting
+Tryb "Książki gości"
+---STRINGEND
+
+---STRING public posting password
+Hasło Midgarda w trybie "Książki gości"
+---STRINGEND
+
+---STRING public posting schema
+Schemat danych w trybie "Książki gości"
+---STRINGEND
+
+---STRING public posting user
+Użytkownik Midgarda w trybie "Książki gości"
+---STRINGEND
+
+---STRING rss export settings
+Ustawienia RSS
+---STRINGEND
+
+---STRING rss_count
+Ilość elementów w rss.xml
+---STRINGEND
+
+---STRING rss_description
+Opis
+---STRINGEND
+
+---STRING rss_enable
+Włącz eksport RSS (włącza URL'e rss.xml oraz rss/$ilosc.xml
+---STRINGEND
+
+---STRING rss_include_image
+Dołącz pełnowymiarowy obraz z pola "obraz" do elementów RSS
+---STRINGEND
+
+---STRING rss_language
+Język
+---STRINGEND
+
+---STRING rss_title
+Tytul RSS (puste - tytuł kategorii)
+---STRINGEND
+
+---STRING rss_webmaster
+Adres email webmastera
+---STRINGEND
+
+---STRING schema database
+Ścieżka bazy schematów
+---STRINGEND
+
+---STRING select article type
+Wybierz typ artykułów
+---STRINGEND
+
+---STRING settings
+Ustawienia
+---STRINGEND
+
+---STRING sort order
+Sortowanie
+---STRINGEND
+
+---STRING symlink_topic
+Link do innej kategorii ("symlink")
+---STRINGEND
+
+---STRING symlink_topic disabled
+Nie wybrano kategorii
+---STRINGEND
+
+---STRING visible
+Widoczny?
+---STRINGEND
+

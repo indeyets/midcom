@@ -1,0 +1,15 @@
+                   net.nehmer.buddylist Changelog
+                   ------------------------------
+CVS Id: $Id$
+
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+2006-05-11 bergie
+  + Added "blacklisted" property to the data model
+
+2005-12-29 torben
+  - Initial version

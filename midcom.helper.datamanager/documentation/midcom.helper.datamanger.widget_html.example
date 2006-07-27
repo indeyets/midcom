@@ -1,0 +1,63 @@
+<?php
+/* This is an example setup with the Aegir imagepopup. May it help you.
+ *
+ * */
+
+$nav = new midcom_helper_nav($GLOBALS["view_contentmgr"]->viewdata["context"]);
+$leafid = $nav->get_current_leaf();
+$leaf = $nav->get_leaf($leafid);
+$leaftrueid = explode('/',$leaf[MIDCOM_NAV_URL]);
+$leaftrueid = $leaftrueid[1];
+$topicid = $GLOBALS['midcom_site']['root_topic']->id;
+$siteprefix = $GLOBALS['midcom_site']['host']->prefix;
+$result = <<<EOF
+// FIELD {$this->_fieldname} HTMLAREA init script START
+var {$this->_fieldname} = null;
+function {$this->_fieldname}_init() {
+    if (!document.getElementById("{$this->_fieldname}")) {
+        return;
+    }
+    config = new HTMLArea.Config();
+    config.bodyStyle = "background-color: #fff;";
+    config.statusBar = false;
+    config.formatblock = {
+        "Heading 2": "h2",
+        "Heading 3": "h3",
+        "Normal": "p",
+        "Formatted": "pre"
+    };
+
+    config.registerButton("insertimage2", "Insert image or attachment","/midcom-static/midcom.helper.datamanager/htmlarea/images/ed_image.gif", false,
+function(editor, id) {
+        chooser = window.open("$siteprefix/rcs/image/popup/?type=topic&id=$topicid&htmlarea=Y&hostid=","chooser","height=450,width=450,modal=yes");
+        chooser.ifield = editor;
+      }
+    );
+
+    config.toolbar = [
+        [ "formatblock", "space",
+          "bold", "italic", "separator","underline",
+          "strikethrough", "subscript", "superscript", "separator",
+          "copy", "cut", "paste", "space", "undo", "redo" ],
+        [ "justifyleft", "justifycenter", "justifyright", "justifyfull",
+"separator",
+          "insertorderedlist", "insertunorderedlist", "outdent", "indent",
+"separator",
+          "inserthorizontalrule", "createlink", "insertimage2",
+"inserttable", "htmlmode", "separator",
+          "popupeditor", "separator", "showhelp", "about" ]
+    ];
+
+    {$this->_customconfig}
+    {$this->_fieldname} = new HTMLArea("{$this->_fieldname}",config);
+    {$this->_fieldname}.registerPlugin("TableOperations");
+    {$this->_fieldname}.registerPlugin("ContextMenu");
+    {$this->_fieldname}.generate();
+
+};
+// FIELD {$this->_fieldname} HTMLAREA init script END
+EOF;
+// todo insert this as well
+// {$this->_fieldname}.registerPlugin("TableOperations");
+
+?>

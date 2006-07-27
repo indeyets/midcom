@@ -1,0 +1,83 @@
+div#node_toolbars {
+	position:absolute; 
+	top:0;
+	left:0;
+	float:left;
+	z-index:30;
+	display:block;
+	margin-left:2em;
+	color: #000000;
+	width: 100%;	
+}
+
+#node_toolbars ul.midcom_toolbar {
+/*	border: 1px solid #666666;*/
+	background: #EAE8E3;
+	padding: 7px;
+	margin: 0;
+}
+
+#node_toolbars ul.midcom_toolbar li {
+	list-style: none;
+	display: inline;
+	padding: 0px 0.4em 0px 0.7em;
+	margin: 3px 0;
+	border-right: 1px solid #666666;
+	font-size: 11px;
+	line-height: 16px;
+	white-space: nowrap !important; 
+	
+	/* The following is for IE, it will override the !important lines */
+	white-space: normal;
+}
+
+#node_toolbars ul.midcom_toolbar li img {
+	vertical-align: top;
+	padding: 0 0.25em 0 0;
+	border: none;
+}
+
+#node_toolbars ul.midcom_toolbar li abbr {
+	border: none;
+}
+
+#node_toolbars ul.midcom_toolbar li a {
+	text-decoration: none;
+	border: none;
+	white-space: nowrap;
+	padding: 4px;
+	color: #000000;
+}
+
+#node_toolbars ul.midcom_toolbar li.enabled {
+	/* no special rules yet */
+}
+
+#node_toolbars ul.midcom_toolbar li a:hover {
+	background-color: #BAB5AB;
+	color: #EEEEEE;
+	text-decoration: none;
+	-moz-border-radius: 6px;
+}
+
+#node_toolbars ul.midcom_toolbar li.disabled {
+	color: #666666;
+	white-space: nowrap;
+}
+
+#node_toolbars ul.midcom_toolbar li.only_item {
+	border: none;
+	padding-left: 0px;
+}
+
+#node_toolbars ul.midcom_toolbar li.first_item {
+	padding-left: 0px;
+}
+
+#node_toolbars ul.midcom_toolbar li.last_item {
+	border: none;
+}
+#node_toolbars ul.midcom_toolbar li a.accesskey:hover:after, #menu li a.accesskey:focus:after {
+     content: " [" attr(accesskey) "] ";
+}
+

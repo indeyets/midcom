@@ -1,0 +1,25 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING images
+Kuvat
+---STRINGEND
+
+---STRING midcom.helper.imagepopup
+Kuvien lisäysikkuna
+---STRINGEND
+
+---STRING page attachments
+Sivun liitetiedostot
+---STRINGEND
+
+---STRING folder attachments
+Kansion liitetiedostot
+---STRINGEND
+
+---STRING files
+Liitetiedostot
+---STRINGEND
+

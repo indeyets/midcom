@@ -1,0 +1,49 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE pl
+
+---STRING edit person
+Edytuj osobę
+---STRINGEND
+
+---STRING net.nemein.personnel
+Personel
+---STRINGEND
+
+---STRING no permissions for
+Brak uprawnień do
+---STRINGEND
+
+---STRING none
+Żaden
+---STRINGEND
+
+---STRING personnel
+Personel
+---STRINGEND
+
+---STRING personnel folder
+Folder personelu
+---STRINGEND
+
+---STRING select
+Wybierz
+---STRINGEND
+
+---STRING select group to display
+Wybierz grupę
+---STRINGEND
+
+---STRING select member to display first
+Pierwsza osoba na liście
+---STRINGEND
+
+---STRING view person
+Pokaż osobę
+---STRINGEND
+
+---STRING your account has insufficient permissions
+Nie masz wystarczających uprawnień dostępu do danych tej osoby
+---STRINGEND
+

@@ -1,0 +1,65 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING edit person
+Person bearbeiten
+---STRINGEND
+
+---STRING no permissions for
+Keine Berechtigung für
+---STRINGEND
+
+---STRING none
+Keine
+---STRINGEND
+
+---STRING personnel
+Personen
+---STRINGEND
+
+---STRING personnel folder
+Personen-Rubrik
+---STRINGEND
+
+---STRING select
+Auswählen
+---STRINGEND
+
+---STRING select group to display
+Anzuzeigende Gruppe auswählen
+---STRINGEND
+
+---STRING select member to display first
+Erstes, anzuzeigendes Mitglies auswählen
+---STRINGEND
+
+---STRING view person
+Person anzeigen
+---STRINGEND
+
+---STRING your account has insufficient permissions
+Sie haben keine ausreichenden Berechtigungen um die Details zu dieser Person anzusehen
+---STRINGEND
+
+---STRING net.nemein.personnel
+Personen
+---STRINGEND
+
+---STRING no persons found.
+In dieser Gruppe wurden keine Personen gefunden.
+---STRINGEND
+
+---STRING delete person
+Person löschen
+---STRINGEND
+
+---STRING delete person confirmation message
+Sind Sie sicher, daß Sie diese Person löschen wollen?
+---STRINGEND
+
+---STRING create person
+Person erstellen
+---STRINGEND
+

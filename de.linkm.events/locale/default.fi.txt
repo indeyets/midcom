@@ -1,0 +1,81 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING create event
+Luo tapahtuma
+---STRINGEND
+
+---STRING date
+Päivämäärä
+---STRINGEND
+
+---STRING delete all events
+Poista kaikki tapahtumat
+---STRINGEND
+
+---STRING delete event
+Poista tapahtuma
+---STRINGEND
+
+---STRING edit event
+Muokkaa tapahtumaa
+---STRINGEND
+
+---STRING enable detail pages
+Näytä tapahtuman sivu
+---STRINGEND
+
+---STRING event
+Tapahtuma
+---STRINGEND
+
+---STRING event administration
+Tapahtumien hallinta
+---STRINGEND
+
+---STRING events
+Tapahtumakalenteri
+---STRINGEND
+
+---STRING expert settings
+Tehokäyttäjän asetukset
+---STRINGEND
+
+---STRING location
+Sijainti
+---STRINGEND
+
+---STRING revert to default
+Palauta alkuperäiset asetukset
+---STRINGEND
+
+---STRING schema database
+Tietokantakuvaus (schema)
+---STRINGEND
+
+---STRING settings
+Asetukset
+---STRINGEND
+
+---STRING show old events
+Näytä menneet
+---STRINGEND
+
+---STRING sort order
+Järjestys
+---STRINGEND
+
+---STRING title
+Otsikko
+---STRINGEND
+
+---STRING topic schema
+Kansiossa käytettävä tietokantakuvaus (schema)
+---STRINGEND
+
+---STRING view event
+Näytä tapahtuma
+---STRINGEND
+

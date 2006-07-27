@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+
+  <type name="net_nehmer_mail_mailbox_db" table="net_nehmer_mail_mailbox_db">
+    <property name="id" type="integer" primaryfield="id" />
+    <property name="owner" type="text" />
+    <property name="name" type="text" />
+    <property name="quota" type="integer" />
+  </type>
+
+  <type name="net_nehmer_mail_mail_db" table="net_nehmer_mail_mail_db">
+    <property name="id" type="integer" primaryfield="id" />
+    <property name="mailbox" type="text" />
+    <property name="sender" type="text" />
+    <property name="subject" type="text" />
+    <property name="body" type="text" />
+    <property name="received" type="integer" />
+    <property name="isread" type="bool" />
+    <property name="isreplied" type="bool" />
+  </type>
+
+</Schema>

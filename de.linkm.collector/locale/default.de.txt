@@ -1,0 +1,65 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING move failed
+Das Element konnte nicht verschoben werden
+---STRINGEND
+
+---STRING available categories
+Verfügbare Kateogien
+---STRINGEND
+
+---STRING category
+Kategorie
+---STRINGEND
+
+---STRING category name
+Name
+---STRINGEND
+
+---STRING category url
+URL-Name
+---STRINGEND
+
+---STRING collector
+Kategorien
+---STRINGEND
+
+---STRING could not create catgegory
+Die Kategorie konnte nicht erstellt werden
+---STRINGEND
+
+---STRING create category
+Kategorie erstellen
+---STRINGEND
+
+---STRING element id
+Element-ID
+---STRINGEND
+
+---STRING meta information
+Metadaten
+---STRINGEND
+
+---STRING move element
+Element in eine andere Kategorie verschieben
+---STRINGEND
+
+---STRING move source element in unkown category
+Das Element ist keiner bekannten Kategorie zugeordnet
+---STRINGEND
+
+---STRING move source element not found
+Das Element konnte nicht gefunden werden.
+---STRINGEND
+
+---STRING move successful
+Das Element wurde erfolgreich verschoben.
+---STRINGEND
+
+---STRING de.linkm.collector
+Kategorien
+---STRINGEND
+

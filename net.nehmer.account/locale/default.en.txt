@@ -1,0 +1,241 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING change email
+Change E-Mail
+---STRINGEND
+
+---STRING new email
+New E-Mail
+---STRINGEND
+
+---STRING account details not published.
+Account details have not yet been published.
+---STRINGEND
+
+---STRING account details published on %s.
+Account details have been published on %s.
+---STRINGEND
+
+---STRING account registration
+Account registration
+---STRINGEND
+
+---STRING activation successful
+Activation successful
+---STRINGEND
+
+---STRING activation_mail_body
+Your password is: __PASSWORD__
+
+Before you can log into the system, you need to activate your account. To do
+this please visit the following web page:
+
+__ACTIVATIONLINK__
+---STRINGEND
+
+---STRING activation_mail_subject
+Your account registration
+---STRINGEND
+
+---STRING avatar
+Avatar
+---STRINGEND
+
+---STRING cancel membership
+cancel membership
+---STRINGEND
+
+---STRING cancel membership message
+Do you really want to cancel your membership?
+---STRINGEND
+
+---STRING change password
+Change Password
+---STRINGEND
+
+---STRING change username
+Change username
+---STRINGEND
+
+---STRING confirm account details
+Confirm account details
+---STRINGEND
+
+---STRING confirm account details explaination
+Please verify that all information entered into the form is correct. If you want to change anything, please go back before continuing with the registration.
+---STRINGEND
+
+---STRING edit account
+Edit account
+---STRINGEND
+
+---STRING enter account details
+Enter account Details
+---STRINGEND
+
+---STRING first login
+First login
+---STRINGEND
+
+---STRING last login
+Last login
+---STRINGEND
+
+---STRING lost password
+Lost password
+---STRINGEND
+
+---STRING lost password helptext
+If you cannot remember your password, please enter your username in the form below. A new random password will be set and sent to the E-Mail address registered in your account.
+---STRINGEND
+
+---STRING make online state visible to other users
+Make your online state visible to other users
+---STRINGEND
+
+---STRING membership cancelled
+Membership cancelled
+---STRINGEND
+
+---STRING net.nehmer.account
+Account Management Component
+---STRINGEND
+
+---STRING new password
+New password
+---STRINGEND
+
+---STRING new username
+New username
+---STRINGEND
+
+---STRING old password
+Old password
+---STRINGEND
+
+---STRING old password invalid.
+The old password supplied is invalid.
+---STRINGEND
+
+---STRING online state
+Online state
+---STRINGEND
+
+---STRING password changed.
+Your password has been changed.
+---STRINGEND
+
+---STRING password minlength %d characters
+The password must be at least %d characters long.
+---STRINGEND
+
+---STRING password reset, mail sent.
+Your password has been reset. The new password has been sent to you by E-Mail.
+---STRINGEND
+
+---STRING password_minlength
+Minimum allowed password length
+---STRINGEND
+
+---STRING password_reset_mail_body
+Your password has been reset to:
+
+__PASSWORD__
+---STRINGEND
+
+---STRING password_reset_mail_subject
+Your password has been reset.
+---STRINGEND
+
+---STRING publish
+Publish
+---STRINGEND
+
+---STRING publish account details
+Publish account details
+---STRINGEND
+
+---STRING publish_all_on_activation
+Automatically publish all fields (including online state) on account activation
+---STRINGEND
+
+---STRING publishing successful.
+Your account details have been published.
+---STRINGEND
+
+---STRING registration successful
+Registration was successful
+---STRINGEND
+
+---STRING registration successful message
+Your registration was successful. An E-Mail with instructions to activate your account has been sent to you. Your account will not be usable until you follow these instructions.
+---STRINGEND
+
+---STRING schemadb_account
+Schema database to use for accounts after creation
+---STRINGEND
+
+---STRING schemadb_account_creation
+Schema database to use for accounts during creation
+---STRINGEND
+
+---STRING select account type
+Select account type
+---STRINGEND
+
+---STRING select an account type
+Please select an account type
+---STRINGEND
+
+---STRING the user is offline.
+The user is offline.
+---STRINGEND
+
+---STRING the user is online.
+The user is online.
+---STRINGEND
+
+---STRING the username is already in use.
+The username is already in use. Please choose a different one.
+---STRINGEND
+
+---STRING the username is unknown.
+The username is unknown
+---STRINGEND
+
+---STRING username changed.
+Your username has been changed.
+---STRINGEND
+
+---STRING welcome_mail_body
+Welcome to the community. Your account has been activated and is now fully operational.
+
+The Administration.
+---STRINGEND
+
+---STRING welcome_mail_subject
+Welcome!
+---STRINGEND
+
+---STRING you may now log in to the system.
+You may now log in to the system.
+---STRINGEND
+
+---STRING you must enter a new username.
+You must enter a new username.
+---STRINGEND
+
+---STRING your account has already been activated.
+Your account has already been activated.
+---STRINGEND
+
+---STRING invalid username
+The username must be at least one character long and must not contain the characters +, * and !.
+---STRINGEND
+
+---STRING invalid username email
+The username must be a valid E-Mail Address.
+---STRINGEND

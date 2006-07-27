@@ -1,0 +1,5 @@
+"display_root"  => false,
+"hide_leaves"   => true,
+"leaves_first"  => true,
+"root_topic"    => null,
+"hide_index_articles" => true,

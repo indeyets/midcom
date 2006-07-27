@@ -1,0 +1,65 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING available categories
+Tillgängliga kategorier
+---STRINGEND
+
+---STRING category
+Kategori
+---STRINGEND
+
+---STRING category name
+Namn
+---STRINGEND
+
+---STRING category url
+URL-Namn
+---STRINGEND
+
+---STRING collector
+Kollektor (Med kategorier)
+---STRINGEND
+
+---STRING could not create catgegory
+Kunde inte skapa kategori
+---STRINGEND
+
+---STRING create category
+Skapa kategori
+---STRINGEND
+
+---STRING element id
+Objekt ID
+---STRINGEND
+
+---STRING meta information
+Meta information
+---STRINGEND
+
+---STRING move element
+Flytta objekt till en annan kategori
+---STRINGEND
+
+---STRING move failed
+Kunde inte flytta objekt
+---STRINGEND
+
+---STRING move source element in unkown category
+Källobjekt är inte i en känd kategori
+---STRINGEND
+
+---STRING move source element not found
+Källobjekt kunde inte hittas
+---STRINGEND
+
+---STRING move successful
+Objektet flyttat
+---STRINGEND
+
+---STRING de.linkm.collector
+Kategorier
+---STRINGEND
+

@@ -1,0 +1,21 @@
+                   net.nehmer.static Changelog
+                   ---------------------------
+CVS Id: $Id$
+
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+2006-07-25 bergie
+  + Fixed somebody's half-done automatic URL name generation
+
+2006-05-30 bergie
+  + Added configurable support for on-site AJAX editing
+
+2006-02-15 torben
+  ! Initial revision, built from de.linkm.taviewer using newest
+    technology. No 100% compatibility to old components is possible
+    at this point.
+

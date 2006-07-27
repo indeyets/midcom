@@ -1,0 +1,1 @@
+<?php die ("/de/linkm/sitemap/_style/sitemap-leaf: This snippet is depracted"); ?>

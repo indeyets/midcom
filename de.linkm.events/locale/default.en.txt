@@ -1,0 +1,85 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING create event
+Create Event
+---STRINGEND
+
+---STRING date
+Date
+---STRINGEND
+
+---STRING delete all events
+Delete all Events
+---STRINGEND
+
+---STRING delete event
+Delete Event
+---STRINGEND
+
+---STRING edit event
+Edit Event
+---STRINGEND
+
+---STRING enable detail pages
+Enable detail pages
+---STRINGEND
+
+---STRING event
+Event
+---STRINGEND
+
+---STRING event administration
+Event Administration
+---STRINGEND
+
+---STRING events
+Event Calendar
+---STRINGEND
+
+---STRING expert settings
+Expert settings
+---STRINGEND
+
+---STRING location
+Location
+---STRINGEND
+
+---STRING revert to default
+Revert to default settings
+---STRINGEND
+
+---STRING schema database
+Schema database
+---STRINGEND
+
+---STRING settings
+Settings
+---STRINGEND
+
+---STRING show old events
+Show old Events
+---STRINGEND
+
+---STRING sort order
+Sort order
+---STRINGEND
+
+---STRING title
+Title
+---STRINGEND
+
+---STRING topic schema
+Schema to use for this topic (save any change to the schema database setting before changing this!)
+---STRINGEND
+
+---STRING view event
+View Event
+---STRINGEND
+
+---STRING de.linkm.events
+Event Calendar
+---STRINGEND
+

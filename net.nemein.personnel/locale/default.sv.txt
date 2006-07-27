@@ -1,0 +1,49 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING edit person
+Ändra person
+---STRINGEND
+
+---STRING no permissions for
+Inga rättigheter för
+---STRINGEND
+
+---STRING none
+Inga
+---STRINGEND
+
+---STRING personnel
+Personal
+---STRINGEND
+
+---STRING personnel folder
+Personal katalog
+---STRINGEND
+
+---STRING select
+Välj
+---STRINGEND
+
+---STRING select group to display
+Välj grupp att visa
+---STRINGEND
+
+---STRING select member to display first
+Välj medlem att visa först
+---STRINGEND
+
+---STRING view person
+Visa person
+---STRINGEND
+
+---STRING your account has insufficient permissions
+Ditt konto har inte tillräckligt med rättigheter för att ta del av information om det här personen
+---STRINGEND
+
+---STRING net.nemein.personnel
+Personal
+---STRINGEND
+

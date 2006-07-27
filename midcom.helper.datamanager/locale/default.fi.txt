@@ -1,0 +1,185 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING <em>%s</em> could not be converted into a number, ignored.
+<em>%s</em> ei ole oikea numero, ei tallennettu.
+---STRINGEND
+
+---STRING a file with this name already exists
+Tämän niminen tiedosto on jo olemassa.
+---STRINGEND
+
+---STRING anonymous user
+Nimetön käyttäjä
+---STRINGEND
+
+---STRING asis
+sellaisenaan
+---STRINGEND
+
+---STRING automatic
+Automaattinen
+---STRINGEND
+
+---STRING break lock
+Avaa lukko
+---STRINGEND
+
+---STRING could not clear lock: insufficient privilegs
+Lukon poistaminen epäonnistui, riittämättömät oikeudet.
+---STRINGEND
+
+---STRING could not open file for writing
+Tiedoston avaaminen kirjoittamista varten epäonnistui.
+---STRINGEND
+
+---STRING could not open uploaded file for reading
+Ladatun tiedoston lukeminen epäonnistui.
+---STRINGEND
+
+---STRING delete file
+Poista tiedosto
+---STRINGEND
+
+---STRING description
+Kuvaus
+---STRINGEND
+
+---STRING failed saving field %s: %s
+Kentän <em>%s</em> tallennus epäonnistui: %s
+---STRINGEND
+
+---STRING failed to delete file %s: %s
+Tiedoston <em>%s</em> poistaminen epäonnistui, %s
+---STRINGEND
+
+---STRING failed to update the storage object
+Tallennus epäonnistui.
+---STRINGEND
+
+---STRING filename
+Tiedostonimi
+---STRINGEND
+
+---STRING jpeg
+JPEG-kuva
+---STRINGEND
+
+---STRING mailtemplate bcc
+Bcc-osoitteet
+---STRINGEND
+
+---STRING mailtemplate body
+Sisältö
+---STRINGEND
+
+---STRING mailtemplate body_mime_type
+Sisällön MIME-tyyppi
+---STRINGEND
+
+---STRING mailtemplate cc
+Cc-osoitteet
+---STRINGEND
+
+---STRING mailtemplate charset
+Kirjasintyyppi
+---STRINGEND
+
+---STRING mailtemplate from
+Lähettäjän osoite
+---STRINGEND
+
+---STRING mailtemplate reply-to
+Vastausosoite (Reply-To)
+---STRINGEND
+
+---STRING mailtemplate subject
+Otsikko
+---STRINGEND
+
+---STRING mailtemplate x-mailer
+Sähköpostiohjelman nimi (X-Mailer)
+---STRINGEND
+
+---STRING mime type
+MIME-tyyppi
+---STRINGEND
+
+---STRING no file
+Ei tiedostoa
+---STRINGEND
+
+---STRING no files
+Ei tiedostoja
+---STRINGEND
+
+---STRING no preview available
+Ei esikatselua
+---STRINGEND
+
+---STRING no selection
+Ei valintaa
+---STRINGEND
+
+---STRING object locked
+Tietue on lukittu
+---STRINGEND
+
+---STRING object locked by %s from %s at %s, cannot edit.
+Käyttäjä %s (IP: %s) on lukinnut tietueen %s. Muokkaaminen estetty.
+---STRINGEND
+
+---STRING png
+PNG-kuva
+---STRINGEND
+
+---STRING preview
+Esikatselu
+---STRINGEND
+
+---STRING required field missing
+Täytä pakollinen kenttä <em>%s</em>
+---STRINGEND
+
+---STRING save_to_storage failed
+Kentän <em>%s</em> tallennus epäonnistui: %s
+---STRINGEND
+
+---STRING schema error: the field %s is no member of the storage object
+Tietokantakuvauksen virhe: kenttä <em>%s</em> ei kuulu tallennettavaan tietueeseen.
+---STRINGEND
+
+---STRING storage object or data schema not set
+Sisäinen virhe: tallennettava tietue tai tietokantakuvaus puuttuu.
+---STRINGEND
+
+---STRING store type
+tallennettu tiedostotyyppi
+---STRINGEND
+
+---STRING thumb type
+Esikatselukuvan tyyppi
+---STRINGEND
+
+---STRING thumbnail shown
+Esikatselukuva näytetty
+---STRINGEND
+
+---STRING tryagain
+Yritä uudestaan
+---STRINGEND
+
+---STRING upload file
+Lataa tiedosto
+---STRINGEND
+
+---STRING yes
+Kyllä
+---STRINGEND
+
+---STRING no
+Ei
+---STRINGEND
+

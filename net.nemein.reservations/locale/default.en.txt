@@ -1,0 +1,265 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING admin_password
+Password
+---STRINGEND
+
+---STRING admin_user
+Username
+---STRINGEND
+
+---STRING approved reservations for %s:
+Approved reservations for resource %s:
+---STRINGEND
+
+---STRING back to main
+Back to main page
+---STRINGEND
+
+---STRING cleaned up %d incomplete reservations.
+%d incomplete reservations have been cleaned up.
+---STRINGEND
+
+---STRING configuration
+Configuration
+---STRINGEND
+
+---STRING corrupt reservations
+Damaged reservations:
+---STRINGEND
+
+---STRING corrupt reservations for %s:
+Damaged reservations for resource %s:
+---STRINGEND
+
+---STRING create new reservation
+Create a new reservation
+---STRINGEND
+
+---STRING create resource
+Create resource
+---STRINGEND
+
+---STRING created root event <em>%s</em>
+Root event <em>%s</em> has been successfully auto-created.
+---STRINGEND
+
+---STRING created root group <em>%s</em>
+Root group <em>%s</em> has been successfully auto-created.
+---STRINGEND
+
+---STRING data schema settings
+Schema database settings
+---STRINGEND
+
+---STRING delete all incomplete reservations older then one hour
+Delete all incomplete reservations which are older than one hour.
+---STRINGEND
+
+---STRING delete reservation
+Delete reservation
+---STRINGEND
+
+---STRING delete resource
+Delete resoruce
+---STRINGEND
+
+---STRING detected existing root event <em>%s</em>
+Detected existing root event <em>%s</em>, will use this one.
+---STRINGEND
+
+---STRING detected existing root group <em>%s</em>
+Detected existing root group <em>%s</em>, will use this one.
+---STRINGEND
+
+---STRING do you really want to delete this reservation
+Do you really want to delete this reservation?
+---STRINGEND
+
+---STRING do you really want to delete this resource
+Do you really want to delete this resource?
+---STRINGEND
+
+---STRING edit reservation
+Edit reservation
+---STRINGEND
+
+---STRING edit reservation for %s:
+Edit reservation for resoruce %s:
+---STRINGEND
+
+---STRING edit resource
+Edit resource
+---STRINGEND
+
+---STRING end time before start time.
+The end time must not be before the start time.
+---STRINGEND
+
+---STRING end time format is YYYY-MM-DD HH:MM
+Please enter the end time of your reservation. Use the format YYYY-MM-DD HH:MM as input format.
+---STRINGEND
+
+---STRING end time is invalid.
+The end time is invalid.
+---STRINGEND
+
+---STRING event_type
+Event (= Reservation) type for filtering and creation of events
+---STRINGEND
+
+---STRING failed to create root event: %s
+Failed to auto-create the root event: %s
+---STRINGEND
+
+---STRING failed to create root group: %s"
+Failed to auto-create the root group: %s
+---STRINGEND
+
+---STRING incomplete/corrupt reservations
+Incomplete and corrupt reservations
+---STRINGEND
+
+---STRING mail templates
+E-Mail templates
+---STRINGEND
+
+---STRING mail_acceptreservation
+Reservation accepted
+---STRINGEND
+
+---STRING mail_acceptreservation_helptext
+Available Fields: Resource: __RESOURCE__ / __RESOURCE_FIELD__; Reservation: __RESERVATION__ / __RESERVATION_FIELD__; ISO-Formatted Times: __ISOSTART__, __ISOEND__; Local-Formatted Times: __LOCALSTART__, __LOCALEND__.
+---STRINGEND
+
+---STRING mail_newreservation
+New Reservation
+---STRINGEND
+
+---STRING mail_newreservation_helptext
+Available Fields: Resource: __RESOURCE__ / __RESOURCE_FIELD__; Reservation: __RESERVATION__ / __RESERVATION_FIELD__; ISO-Formatted Times: __ISOSTART__, __ISOEND__; Local-Formatted Times: __LOCALSTART__, __LOCALEND__.
+---STRINGEND
+
+---STRING mail_rejectreservation
+Reservation rejected
+---STRINGEND
+
+---STRING mail_rejectreservation_helptext
+Available Fields: Resource: __RESOURCE__ / __RESOURCE_FIELD__; Reservation: __RESERVATION__ / __RESERVATION_FIELD__; ISO-Formatted Times: __ISOSTART__, __ISOEND__; Local-Formatted Times: __LOCALSTART__, __LOCALEND__.
+---STRINGEND
+
+---STRING net.nemein.reservations
+Reservations
+---STRINGEND
+
+---STRING no corrupt reservations found.
+No corrupt reservations found.
+---STRINGEND
+
+---STRING no reservations found
+No reservations have been found.
+---STRINGEND
+
+---STRING no resources found
+No resources have been found.
+---STRINGEND
+
+---STRING on-site authentication settings
+User account to use for (anonymous) on-site work
+---STRINGEND
+
+---STRING reject and delete
+Reject and delete
+---STRINGEND
+
+---STRING reservation complete
+Reservation complete
+---STRINGEND
+
+---STRING reservation end time including the buffer:
+Reservation end time including a maintenance buffer:
+---STRINGEND
+
+---STRING reservation end time:
+Reservation end time:
+---STRINGEND
+
+---STRING reservation has been approved
+The reservation has been approved.
+---STRINGEND
+
+---STRING reservation start time:
+Reservation start time:
+---STRINGEND
+
+---STRING reservation step 1: select start time
+Reservation step 1: Select start time
+---STRINGEND
+
+---STRING reservation step 2: select end time
+Reservation step 2: Select end time
+---STRINGEND
+
+---STRING reservation step 3: details
+Reservation step 3: Details
+---STRINGEND
+
+---STRING reservations
+Reservations
+---STRINGEND
+
+---STRING reservations configuration
+Reservations configuration
+---STRINGEND
+
+---STRING schema_reservation
+Schema to use for Reservation records
+---STRINGEND
+
+---STRING schema_resource
+Schema to use for Resouce records
+---STRINGEND
+
+---STRING schemadb
+Path to the schema database
+---STRINGEND
+
+---STRING start time format is YYYY-MM-DD HH:MM
+Please enter the start time of your reservation. Use the format YYYY-MM-DD HH:MM as input format.
+---STRINGEND
+
+---STRING start time is in the past.
+The start time lies in the past.
+---STRINGEND
+
+---STRING start time is invalid.
+The start time is invalid.
+---STRINGEND
+
+---STRING this resource is already booked at that time. advanced to next free time gap
+The resource is already booked at the given time. The start time has been advanced to the first free gap.
+---STRINGEND
+
+---STRING this resource is already booked at that time. end time adjusted
+The resource is already booked at the given time. The end time has been adjusted.
+---STRINGEND
+
+---STRING unapproved reservations for %s:
+Unapproved reservations for resource %s:
+---STRINGEND
+
+---STRING view reservation
+View reservation
+---STRINGEND
+
+---STRING view reservation for %s:
+View reservation for resoruce %s:
+---STRINGEND
+
+---STRING view resource
+View resource
+---STRINGEND
+

@@ -1,0 +1,61 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING %s replies, latest post by %s on %s
+%s vastausta, viimeisimmän kirjoittanut %s %s
+---STRINGEND
+
+---STRING %s: %s by %s (from %s)
+%s: %s %s (osoitteesta %s)
+---STRINGEND
+
+---STRING back to forum
+Takaisin foorumiin
+---STRINGEND
+
+---STRING content
+Sisältö
+---STRINGEND
+
+---STRING create thread
+Uusi keskustelu
+---STRINGEND
+
+---STRING moderation history
+Moderaatiohistoria
+---STRINGEND
+
+---STRING post to
+Kirjoita alueelle:
+---STRINGEND
+
+---STRING reply
+Vastaa
+---STRINGEND
+
+---STRING reply to
+Vastaa kirjoitukseen
+---STRINGEND
+
+---STRING report abuse
+Ilmoita väärinkäytös
+---STRINGEND
+
+---STRING reported_abuse
+Ilmoitettu väärinkäytökseksi
+---STRINGEND
+
+---STRING sender
+Lähettäjä
+---STRINGEND
+
+---STRING subject
+Aihe
+---STRINGEND
+
+---STRING net.nemein.discussion
+Keskustelufoorumi
+---STRINGEND
+

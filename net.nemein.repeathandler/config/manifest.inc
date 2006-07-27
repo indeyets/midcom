@@ -1,0 +1,5 @@
+'name' => 'net.nemein.repeathandler',
+'purecode' => true,
+'version' => 1,
+'privileges' =>  Array(),
+'class_definitions' => Array(),

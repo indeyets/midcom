@@ -1,0 +1,46 @@
+                   midcom.helper.datamanager2 Changelog
+                   ------------------------------------
+CVS Id: $Id$
+
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+2006-07-21 rambo
+  + universalchooser search backend and frontend to working order
+
+2006-07-20 rambo
+  + started work on "universal chooser" which can drive the array (select)
+    datatypes, does nothing usable yet.
+
+2006-06-28 torben
+  - Moved the TinyMCE default settings into the DM2 config file, so
+    that they can be set sitewide.
+
+2006-06-12 torben
+  ! sync_type_with_widget is now called always. If the entry was
+    missing in the resultset, null is added by the formmanager
+    implicitly.
+
+2006-05-30 torben
+  + Added Captcha verification widget
+  - The URL of the attachment server used for the blob type and its
+    subclasses is now configurable.
+
+2006-05-24 bergie
+  + Implemented first version of the AJAX edit-in-place controller
+
+2006-05-23 torben
+  + Made the storage format for multiselect configurable, currently
+    supportd is the original serialized storage and two forms of
+    storage using implode().
+
+2006-05-12 bergie
+  + Connected accesskey "S" to saving form
+
+2006-05-10 torben
+  ! Renamed the "privilege" type to "privilegeset"
+  + Added the "privilege" type and widget designed to manage a
+    single privilege.

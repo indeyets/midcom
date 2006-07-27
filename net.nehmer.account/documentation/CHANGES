@@ -1,0 +1,32 @@
+                   net.nehmer.account Changelog
+                   ----------------------------
+CVS Id: $Id$
+
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+2006-07-17 torben
+  - The change username form now changes its names/headings when
+    the E-Mail is used as username.
+
+2006-06-07 torben
+  + Added username->email synchronization which uses only emails
+    as usernames. Note, that there is no reverse sync from the
+    email field into the username field (yet).
+  - Made the URL of the account activated screen configurable
+    using a HTTP request arg. (Useful to send users back from
+    where they accessed the account registration.)
+  + The config option register_allow_types can now be used to
+    limit the account types that are open for registration. This
+    is independant of the account definitons.
+
+2006-04-06 (1.0.1) torben
+  - Moved username regex checks to the handler classes, so that
+    schema authors don't have to worry about it.
+  - Minor Bugfixing.
+
+2005-10-25 torben
+  - Initial version

@@ -1,0 +1,473 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING Successfully reread EXIF data.
+Die EXIF-Informationen wurden erfolgreich neu eingelesen.
+---STRINGEND
+
+---STRING Successfully synchronized article created timestamps.
+Artikel-Metadaten wurden erfolgreich abgeglichen.
+---STRINGEND
+
+---STRING abstract
+Zusammenfassung
+---STRINGEND
+
+---STRING approval
+Freigabe
+---STRINGEND
+
+---STRING approve
+Freigeben
+---STRINGEND
+
+---STRING approved
+Datum der Freigabe
+---STRINGEND
+
+---STRING are you sure to delete
+Dieses Bild wirklich löschen?
+---STRINGEND
+
+---STRING available exif parsers
+Verfügbare EXIF-Parser
+---STRINGEND
+
+---STRING back to index
+Zurück zur Übersicht
+---STRINGEND
+
+---STRING cleaned up all names
+Alle URL-Namen wurden gesäubert.
+---STRINGEND
+
+---STRING cleanup article names
+URL-Namen der Artikel säubern
+---STRINGEND
+
+---STRING cleanup article names confirmation msg
+Aus den URL-Namen aller Detail-Seiten werden alle ungültigen Zeichen herausgefiltert. Die eigentlichen Bilder werden nicht verändert.
+---STRINGEND
+
+---STRING cleanup article names heading
+URL-Namen der Artikel säubern
+---STRINGEND
+
+---STRING data schema settings
+Datenschemata (Bitte unbedingt die Dokumentation beachten!)
+---STRINGEND
+
+---STRING delete
+Löschen
+---STRINGEND
+
+---STRING delete photo
+Bild löschen
+---STRINGEND
+
+---STRING description
+Beschreibung
+---STRINGEND
+
+---STRING disable_autosync_created
+Die automatische Synchronisation zwischen   Aufnahme-Datum und dem Erzeugungs-Datum des Artikels abschalten
+---STRINGEND
+
+---STRING disallow unapproved
+Zugriff auf nicht freigegevbene Bilder vollständig sperren (damit wird auch der direkte Zugriff über die URL unmöglich)
+---STRINGEND
+
+---STRING display settings
+Konfiguration der Galerie
+---STRINGEND
+
+---STRING edit
+Bearbeiten
+---STRINGEND
+
+---STRING edit photo
+Bild bearbeiten
+---STRINGEND
+
+---STRING exif data
+EXIF-Daten
+---STRINGEND
+
+---STRING exif settings
+EXIF-Einstellungen
+---STRINGEND
+
+---STRING exif_custom_fields
+Zuordnung der EXIF-Felder auf das Datenschema (Format: exiftag:feldname,...)
+---STRINGEND
+
+---STRING exif_exposure
+Belichtungszeit
+---STRINGEND
+
+---STRING exif_fnumber
+Blende
+---STRINGEND
+
+---STRING exif_iso
+Empfindlichkeit (ISO)
+---STRINGEND
+
+---STRING exif_make
+Kamera-Hersteller
+---STRINGEND
+
+---STRING exif_model
+Kamera-Modellbezeichnung
+---STRINGEND
+
+---STRING file
+Datei
+---STRINGEND
+
+---STRING filter_chain
+Filter-Kette für die automatische Nachbearbeitung der hochgeladenen Bilder
+---STRINGEND
+
+---STRING force_exif_reader
+Folgendes EXIF-Leseverfahren anstelle des automatisch erkannten verwenden
+---STRINGEND
+
+---STRING force_exif_reader autodetect
+Automatische Erkennung
+---STRINGEND
+
+---STRING force_exif_reader jhead
+JHead (falls verfügbar, sonst automatische Erkennung)
+---STRINGEND
+
+---STRING force_exif_reader php
+PHP (falls verfügbar, sonst automatische Erkennung)
+---STRINGEND
+
+---STRING force_exif_reader system default
+Systemweite Standardeinstellung verwenden
+---STRINGEND
+
+---STRING full scale version
+Hohe Auflösung
+---STRINGEND
+
+---STRING gallery description
+Galerie-Beschreibung
+---STRINGEND
+
+---STRING gallery is empty
+Diese Galerie ist leer.
+---STRINGEND
+
+---STRING gallery keywords
+Galerie-Keywords
+---STRINGEND
+
+---STRING generated image settings
+Automatisch erzeugte Bilder
+---STRINGEND
+
+---STRING image data
+Allgemeine Daten
+---STRINGEND
+
+---STRING index dimensions
+Übersichts-Dimensionen
+---STRINGEND
+
+---STRING index_cols
+Anzahl der Spalten im Thumbnail-Index
+---STRINGEND
+
+---STRING index_rows
+Anzahl der Zeilen im Thumbnail-Index
+---STRINGEND
+
+---STRING jhead not found
+Warnung: jhead konnte nicht gefunden werden. EXIF-Daten werden mit PHP-internen Funktionen gelesen, was manchmal zu Problemen führen kann.
+---STRINGEND
+
+---STRING keywords
+Schlüsselwörter
+---STRINGEND
+
+---STRING meta data
+Metadaten
+---STRINGEND
+
+---STRING metadata settings
+Metadaten zur Gallerie
+---STRINGEND
+
+---STRING name
+Name
+---STRINGEND
+
+---STRING net.siriux.photos
+Photo-Galerie
+---STRINGEND
+
+---STRING next
+Nächste
+---STRINGEND
+
+---STRING next page
+Nächste Seite
+---STRINGEND
+
+---STRING page
+Seite
+---STRINGEND
+
+---STRING photo gallery administration
+Photo-Galerie Verwaltung
+---STRINGEND
+
+---STRING photographer
+Fotograf
+---STRINGEND
+
+---STRING photos
+Photo-Galerie
+---STRINGEND
+
+---STRING php read_exif_data not found
+PHP EXIF-Funktionen wurden nicht gefunden. EXIF-Daten werden nicht eingelesen.
+---STRINGEND
+
+---STRING pictures in gallery
+Bilder in der Galerie
+---STRINGEND
+
+---STRING post processing
+Nachbearbeitung der hochgeladenen Bilder
+---STRINGEND
+
+---STRING previous
+Vorherige
+---STRINGEND
+
+---STRING previous page
+Vorherige Seite
+---STRINGEND
+
+---STRING processing upload, please wait
+Daten werden verarbeitet, bitte warten
+---STRINGEND
+
+---STRING re-read exif
+EXIF-Daten neu einlesen
+---STRINGEND
+
+---STRING rebuild thumbnails
+Alle Vorschau-Bilder neu erzeugen
+---STRINGEND
+
+---STRING rebuild thumbnails confirmation msg
+Dieser Vorgang erstellt alle Thumbnail- und Vorschau-Bilder auf Grund der aktuellen Konfiguration neu. Die Filter-Kette wird dabei nicht noch einmal ausgeführt, sie finde nur beim Upload für das Vollbild Verwendung. Dieser Vorgang kann einige Zeit dauern, vor allem bei großen Galerien.
+---STRINGEND
+
+---STRING rebuild thumbnails heading
+Alle Vorschau-Bilder neu erzeugen
+---STRINGEND
+
+---STRING rebuild thumbnails start
+Vorgang starten
+---STRINGEND
+
+---STRING regenerated thumbs.
+Thumbnails neu generiert.
+---STRINGEND
+
+---STRING reread exif confirmation msg
+Die EXIF-Daten aller Bilder in dieser Gallerie wird neu ausgelesen, jegliche alten EXIF-Daten werden dabei überschrieben. Bitte beachten Sie, daß dies einige Zeit dauern kann.
+---STRINGEND
+
+---STRING reread exif heading
+EXIF-Informationen neu einlesen
+---STRINGEND
+
+---STRING reread exif start
+Vorgang Starten
+---STRINGEND
+
+---STRING rotate left
+Nach links drehen
+---STRINGEND
+
+---STRING rotate right
+Nach rechts drehen
+---STRINGEND
+
+---STRING rss export settings
+RSS Export
+---STRINGEND
+
+---STRING rss_count
+Anzahl der Bilder, die in rss.xml gelistet werden sollen
+---STRINGEND
+
+---STRING rss_description
+Beschreibung
+---STRINGEND
+
+---STRING rss_enable
+RSS Export aktivieren (stellt die URLs rss.xml und rss/$anzahl.xml bereit)
+---STRINGEND
+
+---STRING rss_language
+Sprache
+---STRINGEND
+
+---STRING rss_title
+Titel des RSS-Feeds (keine Eingabe verwendet den Titel der Rubrik als Standardwert)
+---STRINGEND
+
+---STRING rss_webmaster
+Webmaster
+---STRINGEND
+
+---STRING schema_picture
+Schema für Bilder
+---STRINGEND
+
+---STRING schema_upload
+Schama für den Upload
+---STRINGEND
+
+---STRING schemadb
+Schema-Datenbank (keine Eingabe für die Standard-Datenbank)
+---STRINGEND
+
+---STRING score
+Rangfolge (für "score"-Sortierung)
+---STRINGEND
+
+---STRING settings
+Einstellungen
+---STRINGEND
+
+---STRING show all
+Alle anzeigen
+---STRINGEND
+
+---STRING show only approved
+Nur freigegebene Bilder im Index anzeigen
+---STRINGEND
+
+---STRING showing thumbnails for images
+Übersicht der Bilder
+---STRINGEND
+
+---STRING size of thumbnails and views modified
+Sie haben die Größe sowohl der Thumbnails als auch der Vorschau-Bilder verändert. Die Bilder müssen daher neu generiert werden.
+---STRINGEND
+
+---STRING size of thumbnails modified
+Sie haben die Größe der Thumbnails verändert. Die Bilder müssen daher neu generiert werden.
+---STRINGEND
+
+---STRING size of views modified
+Sie haben die Größe der Vorschau-Bilder verändert. Die Bilder müssen daher neu generiert werden.
+---STRINGEND
+
+---STRING sort order
+Sortierreihenfolge
+---STRINGEND
+
+---STRING supported archive formats
+Unterstütze Archiv-Formate
+---STRINGEND
+
+---STRING sync article created confirmation msg
+Diese Funktion synchronisiert das Erzeugungs-Datum des Artikels mit dem EXIF-Aufnahmedatum. Bitte beachten Sie, daß dies einige Zeit dauern kann.
+---STRINGEND
+
+---STRING sync article created heading
+Artikel-Metadaten mit EXIF-Aufnahmedatum abgleichen
+---STRINGEND
+
+---STRING sync article created start
+Vorgang starten
+---STRINGEND
+
+---STRING taken
+Aufnahmedatum
+---STRINGEND
+
+---STRING taken by
+Aufgenommen von:
+---STRINGEND
+
+---STRING thumb_x
+Breite des Thumbnail-Bildes
+---STRINGEND
+
+---STRING thumb_y
+Höhe des Thumbnail-Bildes
+---STRINGEND
+
+---STRING thumbnail size
+Thumbnail-Größe
+---STRINGEND
+
+---STRING title
+Titel
+---STRINGEND
+
+---STRING total
+Insgesamt
+---STRINGEND
+
+---STRING unapprove
+Freigabe zurücknehmen
+---STRINGEND
+
+---STRING upload
+Hochladen
+---STRINGEND
+
+---STRING upload can take time
+Hinweis: der Upload-Vorgang kann mehrere Minuten dauern, bitte haben Sie etwas Geduld.
+---STRINGEND
+
+---STRING upload file
+Dateiupload (einzelnes Bild oder ein Archiv)
+---STRINGEND
+
+---STRING upload is archive
+Datei ist ein Archiv (zip, tgz), entpacken und alle enthaltenen Bilder verarbeiten
+---STRINGEND
+
+---STRING upload photos
+Bilder hochladen
+---STRINGEND
+
+---STRING upload size limit
+Maximale Größe des Uploads
+---STRINGEND
+
+---STRING upload status
+Upload-Status
+---STRINGEND
+
+---STRING view size
+Ansichts-Größe
+---STRINGEND
+
+---STRING view_x
+Breite des Vorschau-Bildes
+---STRINGEND
+
+---STRING view_y
+Höhe des Vorschau-Bildes
+---STRINGEND
+
+---STRING click here to continue
+Bitte klicken Sie hier
+---STRINGEND
+

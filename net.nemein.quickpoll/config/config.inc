@@ -1,0 +1,5 @@
+"allow_anonymous" => false,
+"anonymous_username" => "",
+"anonymous_password" => "",
+"allow_user_supplied_options" => false,
+"allow_multiple_votes" => false,

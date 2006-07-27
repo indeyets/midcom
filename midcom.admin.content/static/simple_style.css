@@ -1,0 +1,116 @@
+#ais_container 
+{
+    clear: both;
+    position: relative;
+    padding: 4px;
+    background-color: #ffffff;
+/*    background-image: url("grey-fade.jpg");
+    background-repeat: repeat-x;*/
+}
+#ais_container a
+{
+    text-decoration: none;
+}
+
+#ais_top 
+{
+    background-color: #ffffff;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 4px;
+    font-family: "Trebuchet MS", "Trebuchet", "Helvetica", "Arial", sans-serif;
+}
+#aistitlebar
+{
+    font-size: 70%;
+}
+#aistitlebar h1, #aistitlebar p
+{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: right;
+    color: #000000;
+}
+#aistitlebar h1 abbr
+{
+    border: none;
+}
+#aistitlebar p a
+{
+    color: #565248;
+}
+#aistitlebar p a:hover
+{
+    text-decoration: underline;
+}
+
+#aislocation
+{
+    vertical-align: middle;
+}
+
+#ais_bottom {
+    width: 100%;
+    min-height: 300px;
+    position: relative;
+}
+#ais_toolbar ul.midcom_toolbar
+{
+    /*border-bottom: 1px solid #807D74;
+    border-left: 1px solid #807D74;
+    border-right: 1px solid #807D74;        */
+    -moz-border-radius-bottomleft: 8px;    
+    -moz-border-radius-bottomright: 8px;        
+}
+#ais_toolbar ul.midcom_toolbar_ais_main, #ais_toolbar ul.midcom_toolbar_ais_meta
+{
+    border-bottom: none;
+    -moz-border-radius-bottomleft: 0px;    
+    -moz-border-radius-bottomright: 0px;
+}
+#ais_toolbar ul.midcom_toolbar_ais_main
+{
+    background-color: #BAB5AB;
+    /*border-top: 1px solid #807D74;
+    border-left: 1px solid #807D74;
+    border-right: 1px solid #807D74;*/
+    -moz-border-radius-topleft: 8px;
+    -moz-border-radius-topright: 8px;      
+}
+#ais_toolbar ul.midcom_toolbar_ais_main li a:hover 
+{
+	background-color: #807D74;
+}
+
+#aisfooter
+{
+    clear: both;
+    color: #807D74;
+    background-color: transparent;
+    font-family: "Trebuchet MS", "Trebuchet", "Helvetica", "Arial", sans-serif;
+    font-size: 90%;    
+}
+#aisfooter a
+{
+    color: #807D74;
+}
+
+#aislocation a, #ais_bottom_navigation a
+{
+    background-color: transparent;
+    color: #807D74;
+}
+#ais_bottom_navigation {
+    background-color: #ffffff;
+    padding: 4px;
+    border: solid 1px #807D74;
+    border-top: none;
+    -moz-border-radius-bottomleft: 8px;
+    -moz-border-radius-bottomright: 8px;    
+    text-align: left;
+    width: 30%;
+    overflow: hidden;
+    display: none;
+    position: absolute;
+    font-family: "Trebuchet MS", "Trebuchet", "Helvetica", "Arial", sans-serif;        
+}

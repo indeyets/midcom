@@ -1,0 +1,5 @@
+'name' => 'net.nemein.payment',
+'purecode' => true,
+'version' => 1,
+'privileges' =>  Array(),
+'class_definitions' => Array(),

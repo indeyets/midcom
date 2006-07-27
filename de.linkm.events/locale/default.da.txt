@@ -1,0 +1,69 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE da
+
+---STRING create event
+Opret begivenhed
+---STRINGEND
+
+---STRING delete all events
+Slet alle begivenheder
+---STRINGEND
+
+---STRING delete event
+Slet begivenhed
+---STRINGEND
+
+---STRING edit event
+Rediger begivenhed
+---STRINGEND
+
+---STRING enable detail pages
+Tillad detaljerede infosider
+---STRINGEND
+
+---STRING event
+Begivenhed
+---STRINGEND
+
+---STRING event administration
+Administration af begivenheder
+---STRINGEND
+
+---STRING events
+Begivenhedskalender
+---STRINGEND
+
+---STRING expert settings
+Ekspertindstilling
+---STRINGEND
+
+---STRING revert to default
+Returner til standardindstilling
+---STRINGEND
+
+---STRING schema database
+Skemadatabase
+---STRINGEND
+
+---STRING settings
+Indstilling
+---STRINGEND
+
+---STRING show old events
+Vis forhenværende begivenheder
+---STRINGEND
+
+---STRING sort order
+Sorteringsnøgle
+---STRINGEND
+
+---STRING title
+Titel
+---STRINGEND
+
+---STRING topic schema
+Skema til brug for dette emne (gem først enhver ændring af skemadatabasen før du ændrer dette)
+---STRINGEND
+

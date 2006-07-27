@@ -1,0 +1,41 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING create incident
+Vorfall erstellen: %s
+---STRINGEND
+
+---STRING create new incident
+Einen neuen Vorfall erstellen
+---STRINGEND
+
+---STRING created root event
+Root Event "%s" wurde erstellt
+---STRINGEND
+
+---STRING edit incident
+Vorfall bearbeiten: %s
+---STRINGEND
+
+---STRING failed to create root event
+Root-Event konnte nicht erstellt werden: %s
+---STRINGEND
+
+---STRING failed to open root event
+Root-Event %s konnte nicht geöffnet werden: %s
+---STRINGEND
+
+---STRING incidentdb
+Vorfälle
+---STRINGEND
+
+---STRING root event not yet present
+Das Root-Event wurde noch nicht erstellt. Gehen Sie bitte in das AIS um es zu erstellen.
+---STRINGEND
+
+---STRING view incident
+Vorfall anzeigen
+---STRINGEND
+

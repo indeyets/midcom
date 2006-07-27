@@ -1,0 +1,196 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING %d unread
+%d ungelesene Nachrichten
+---STRINGEND
+
+---STRING %d user(s) have been found.
+%d Benutzer wurde(n) gefunden.
+---STRINGEND
+
+---STRING 1 unread
+eine ungelesene Nachricht
+---STRINGEND
+
+---STRING autocreate_inbox
+Fehlende Posteingänge automatisch mit Hilfe des MidCOM SUDO Dienstes erstellen
+---STRINGEND
+
+---STRING body
+Text
+---STRINGEND
+
+---STRING create mailbox
+Postfach erstellen
+---STRINGEND
+
+---STRING date
+Datum
+---STRINGEND
+
+---STRING default_quota
+Standard Quota für neu erstellte Postfächer
+---STRINGEND
+
+---STRING delete selected
+Ausgewählte löschen
+---STRINGEND
+
+---STRING edit mailbox
+Postfach bearbeiten
+---STRINGEND
+
+---STRING inbox
+Posteingang
+---STRINGEND
+
+---STRING lookup username
+Benutzernamen nachschlagen
+---STRINGEND
+
+---STRING mail sent successfully
+Nachricht erfolgreich versandt
+---STRINGEND
+
+---STRING mailbox
+Postfach
+---STRINGEND
+
+---STRING mailbox empty.
+Dieses Postfach ist leer.
+---STRINGEND
+
+---STRING mailbox full.
+Die Mailbox ist voll.
+---STRINGEND
+
+---STRING messages
+Nachrichten
+---STRINGEND
+
+---STRING name
+Name
+---STRINGEND
+
+---STRING net.nehmer.mail
+Website Mailsystem
+---STRINGEND
+
+---STRING new mail to user
+Neue Nachricht an den Benutzer schreiben
+---STRINGEND
+
+---STRING no limit
+Kein Limit
+---STRINGEND
+
+---STRING no mailboxes found.
+Es wurden keine Postfächer gefunden.
+---STRINGEND
+
+---STRING original message:
+Ursprüngliche Nachricht:
+---STRINGEND
+
+---STRING outbox
+Postausgang
+---STRINGEND
+
+---STRING owner
+Eigentümer
+---STRINGEND
+
+---STRING please enter at least three characters.
+Bitte geben Sie mindestens drei Zeichen ein.
+---STRINGEND
+
+---STRING quota
+Quota
+---STRINGEND
+
+---STRING read mail
+Gelesene Nachricht
+---STRINGEND
+
+---STRING replied mail
+Beantwortete Nachricht
+---STRINGEND
+
+---STRING reply mail
+Nachricht beantworten
+---STRINGEND
+
+---STRING search mailboxes
+Postfächer suchen
+---STRINGEND
+
+---STRING send mail
+Nachricht versenden
+---STRINGEND
+
+---STRING sender
+Absender
+---STRINGEND
+
+---STRING subject
+Betreff
+---STRINGEND
+
+---STRING to
+An
+---STRINGEND
+
+---STRING unread mail
+Ungelesene Nachricht
+---STRINGEND
+
+---STRING write mail to %s:
+Eine neue Nachricht an %s schreiben:
+---STRINGEND
+
+---STRING write new mail
+Neue Nachricht schreiben
+---STRINGEND
+
+---STRING write reply to %s:
+Eine Nachricht von %s beantworten:
+---STRINGEND
+
+---STRING your mailboxes
+Meine Postfächer
+---STRINGEND
+
+---STRING legend:
+Legende:
+---STRINGEND
+
+---STRING notification_mail_subject
+__SENDER_NAME__ hat Ihnen eine neue Mail geschickt.
+---STRINGEND
+
+---STRING notification_mail_body
+Hallo __RECEIVER_NAME__,
+
+__SENDER_NAME__ hat Ihnen zum Thema
+
+  __SUBJECT__
+
+eine neue E-Mail geschickt. Klicken Sie auf diesen Link, um
+die Mail zu lesen:
+
+  __MAILURL__
+
+Dies ist eine automatische erstellte Nachricht, auf die nicht
+geantwortet werden kann.
+---STRINGEND
+
+---STRING failed to send mail
+Die Mail konnte nicht versandt werden
+---STRINGEND
+
+---STRING cannot send mail, mailbox full.
+An diesen Benutzer kann momentan keine Mail versandt werden, seine Mailbox ist voll.
+---STRINGEND

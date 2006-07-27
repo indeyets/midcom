@@ -1,0 +1,129 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE pl
+
+---STRING create event
+Dodaj wydarzenie
+---STRINGEND
+
+---STRING daily
+Dzienny
+---STRINGEND
+
+---STRING date
+Data
+---STRINGEND
+
+---STRING description
+Opis
+---STRINGEND
+
+---STRING end
+Koniec
+---STRINGEND
+
+---STRING event
+Wydarzenie
+---STRINGEND
+
+---STRING from date
+Od
+---STRINGEND
+
+---STRING group calendar
+Kalendarz grupowy
+---STRINGEND
+
+---STRING interval
+Interwał
+---STRINGEND
+
+---STRING location
+Lokalizacja
+---STRINGEND
+
+---STRING monthly
+Miesięczny wg dat
+---STRINGEND
+
+---STRING months starting from
+miesiące od
+---STRINGEND
+
+---STRING nemein.net calendar
+Kalendarz grupowy
+---STRINGEND
+
+---STRING nemeincalendar not found
+Klasy <strong>NemeinCalendar</strong> nie zostały zainstalowane. Zainstaluj <a href="http://www.openpsa.org/">OpenPSA</a> lub <a href="http://www.midgard-project.org/projects/townportal/">TownPortal</a> aby uzyskać potrzebne biblioteki.
+---STRINGEND
+
+---STRING net.nemein.calendar
+Kalendarz grupowy
+---STRINGEND
+
+---STRING no participants
+Brak uczestników
+---STRINGEND
+
+---STRING participants
+Uczestnicy
+---STRINGEND
+
+---STRING public
+Publiczne
+---STRINGEND
+
+---STRING repeat
+Powtórz
+---STRINGEND
+
+---STRING repeat times
+Ilość powtórzeń
+---STRINGEND
+
+---STRING repeat type
+Typ powtórzeń
+---STRINGEND
+
+---STRING set repeat
+Ustaw powtórzenia
+---STRINGEND
+
+---STRING set repeat for %s
+Ustaw powtórzenia dla %s
+---STRINGEND
+
+---STRING show
+Pokaż
+---STRINGEND
+
+---STRING start
+Start
+---STRINGEND
+
+---STRING subscribed - click
+Wydarzenia zapisane - kliknij by wypisać
+---STRINGEND
+
+---STRING title
+Tytuł
+---STRINGEND
+
+---STRING type
+Typ
+---STRINGEND
+
+---STRING unsubscribed - click
+Niezapisane wydarzenia - kliknij by zapisać
+---STRINGEND
+
+---STRING until date
+Do
+---STRINGEND
+
+---STRING weekly
+Tygodniowo
+---STRINGEND
+

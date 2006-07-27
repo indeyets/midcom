@@ -1,0 +1,377 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING (note: schema in use for registrars)
+(Notera: Detta schema används för registrerare)
+---STRINGEND
+
+---STRING Click here to register for the above event.
+Klicka här för att boka ovanstånde händelse.
+---STRINGEND
+
+---STRING access denied
+Access är inte tillåten
+---STRINGEND
+
+---STRING account activation
+Aktivering av konto
+---STRINGEND
+
+---STRING account creation
+Skapa användarkonto
+---STRINGEND
+
+---STRING additional questions
+Övriga frågor
+---STRINGEND
+
+---STRING additional questions schema
+Schema att använda för övriga frågor
+---STRINGEND
+
+---STRING admin pass
+Lösenord för saker som kräver administrativa rättigheter
+---STRINGEND
+
+---STRING admin user
+Användarnamn för saker som kräver administrativa rättigheter
+---STRINGEND
+
+---STRING already registered to this event
+Reda bokad för denna händelse
+---STRINGEND
+
+---STRING already registered using the following information
+Du har bokat denna händelse redan, med infromation visad nedan. Var god kontakta dom som organiserar händelsen om något skulle ändras.
+---STRINGEND
+
+---STRING an event with the name %s already exists
+En händelse med URL-namnet <em>%s</em> finns redan, Var god välj ett aannat namn.
+---STRINGEND
+
+---STRING approve registration
+Godkänn bokning
+---STRINGEND
+
+---STRING back to event overview
+Tillbaka till händelse översikten
+---STRINGEND
+
+---STRING body for account created mails
+Väg till MidgardKodsnutt som innehåller body för skapande av konto
+---STRINGEND
+
+---STRING body for registration mails
+Väg till MidgardKodsnutt som innehåller body för boknings bekräftelse
+---STRINGEND
+
+---STRING cc's for account created mails
+Extra mottagare för konto skapande förutom den som bokar (komma separerad lista)
+---STRINGEND
+
+---STRING cc's for registration mails
+Extra mottagare för bokningsbekräftelse förutom den som bokar (komma separerad lista)
+---STRINGEND
+
+---STRING click here to log out.
+Klicka här för att logga ut.
+---STRINGEND
+
+---STRING close the event for registration now
+Stäng bokningar för händelsen nu
+---STRINGEND
+
+---STRING closed
+Stängd för bokningar
+---STRINGEND
+
+---STRING confirmation email sent.
+En bekräftelse på bokningar har blivigt skickad till dig via E-post
+---STRINGEND
+
+---STRING create a new account
+Skapa nytt konto
+---STRINGEND
+
+---STRING create a new account based on an existing account
+Skapa nytt konto baserat på ett existerande konto
+---STRINGEND
+
+---STRING create an event
+Skapa ny händelse
+---STRINGEND
+
+---STRING created root event <em>%s</em>
+Huvud händelsen <em>%s</em> skapades utan problem.
+---STRINGEND
+
+---STRING creation procedure notes
+Var god skriv in din E-post adress. Du kommer att få ett lösenord via e-post så att du kan logga in.
+---STRINGEND
+
+---STRING csv export
+Exportera bokningar till et komma separerat värde (<abbr title="Komma separerat värde, MS Excel kompatibelt format">CSV</abbr> fil
+---STRINGEND
+
+---STRING csv field separator
+Fält separator
+---STRINGEND
+
+---STRING csv line separator
+Rad separator
+---STRINGEND
+
+---STRING current configuration
+Nuvarande konfiguration
+---STRINGEND
+
+---STRING default notification email
+Standard e-post adress för notifiering av bokningar
+---STRINGEND
+
+---STRING delete registration
+radera bokningen
+---STRINGEND
+
+---STRING edit registration
+ändra bokningen
+---STRINGEND
+
+---STRING email adress invalid
+Var god fyll i en giltig E-post address
+---STRINGEND
+
+---STRING email with password sent to %s<br>please login to activate your account.
+Ett E-post medelande som innehåller ditt lösenord har skickats till %s. <br> Var god fyll i lösenordet nedan för att aktivera ditt konto.
+---STRINGEND
+
+---STRING emailadress
+E-post address
+---STRINGEND
+
+---STRING event description
+Beskrivning av händelsen
+---STRINGEND
+
+---STRING event name must not be empty
+Händelsens URL-Namn får inte vara tomt!
+---STRINGEND
+
+---STRING event registration
+Bokning av händelse:
+---STRINGEND
+
+---STRING event registration complete
+Bokning av händelse avslutad
+---STRINGEND
+
+---STRING event type
+Händelsens typ som sak visas (lämna tomt för att visa allt)
+---STRINGEND
+
+---STRING event url name
+URL-Namn för händelsen; måste vara unik
+---STRINGEND
+
+---STRING events open for registrations
+Händelser som fortfarande är öppna för bokningar
+---STRINGEND
+
+---STRING export
+Exportera
+---STRINGEND
+
+---STRING failed to create root event: %s
+Kunde inte skapa huvudhändelse: %s
+---STRINGEND
+
+---STRING failed to delete registration: %s
+Kunde inte radera bokning: %s
+---STRINGEND
+
+---STRING failed to open event %s: %s
+Kunde inte öppna händelse %s: %s
+---STRINGEND
+
+---STRING failed to open event %u: %s
+Kunde inte öppna händelse %u: %s
+---STRINGEND
+
+---STRING failed to open registrar %u: %s
+Kunde inte öppna användaren %u: %s
+---STRINGEND
+
+---STRING failed to open registration %u: %s
+Kunde inte öppna bokningen %u: %s
+---STRINGEND
+
+---STRING failed to open root event %s: %s
+Kunde inte öppna huvudhändelse %s: %s
+---STRINGEND
+
+---STRING group for active accounts
+Midgard grupp för aktiva konton
+---STRINGEND
+
+---STRING group for pending accounts
+Midgard grupp för väntande konton
+---STRINGEND
+
+---STRING login using an existing account
+Använd ett existerande konto
+---STRINGEND
+
+---STRING net.nemein.registrations
+Administrera bokningar
+---STRINGEND
+
+---STRING no events found
+Inga händelser funna
+---STRINGEND
+
+---STRING no selection, first defined schema will be used by default
+Inga val gjorda än, det första schemat kommer att användas som standard.
+---STRINGEND
+
+---STRING no, do not delete the registration
+Nej, Jag vill inte radera den här bokningen.
+---STRINGEND
+
+---STRING notification email
+E-post address att använda för notifiering av bokningar (lämna tomt för att använda standard addressen.)
+---STRINGEND
+
+---STRING open
+Bokning öppen
+---STRINGEND
+
+---STRING open for registration
+Öppna händelse för bokningar
+---STRINGEND
+
+---STRING open the even for registration now
+Öppna händelsen för bokningar nu
+---STRINGEND
+
+---STRING please answer these questions to complete registration
+Var snäll och svara på dessa frågor för att avsluta din bokning till ovanstående händelse
+---STRINGEND
+
+---STRING please login to activate your account
+Var snäll och logga in för att aktivera ditt konto
+---STRINGEND
+
+---STRING please login using a valid account.
+Var snäll och använd ett giltigt konto.
+---STRINGEND
+
+---STRING register for this event
+Boka denna händelse
+---STRINGEND
+
+---STRING registrar identification
+Identifikation av den som bokat
+---STRINGEND
+
+---STRING registrar schema
+Namn av schema att anvönda för dom som bokar
+---STRINGEND
+
+---STRING registration event
+Händelse
+---STRINGEND
+
+---STRING registration event configuration
+Boknings konfiguration för händelsen
+---STRINGEND
+
+---STRING registration is beeing processed, you will get a mail
+Din bokning håller på att hanteras, du kommer att få en bekräftelse via e-post inom kort.
+---STRINGEND
+
+---STRING registrations
+Bokningar
+---STRINGEND
+
+---STRING registrations for event %s
+Bokningar för händelsen <em>%s</em>
+---STRINGEND
+
+---STRING reject registration
+Avslå och radera bokning
+---STRINGEND
+
+---STRING reject registration and delete registrar
+Avslå och ardera bokning och anvöndare
+---STRINGEND
+
+---STRING save schemadb first to get the current list of available schemas
+För att få nuvarande listan över alla scheman så måste du spara alla ändringar i schema databasens sökväg före.
+---STRINGEND
+
+---STRING schemadb path
+Sökvög till Schema Databasen
+---STRINGEND
+
+---STRING sender for account created mails
+Avsändar address för skapande av konto (E-post meddelanden)
+---STRINGEND
+
+---STRING sender for registration mails
+Avsändar address för boknings berkäftelse (E-post meddelanden))
+---STRINGEND
+
+---STRING subject for account created mails
+Ämne för skapande av konto (E-post meddelande)
+---STRINGEND
+
+---STRING subject for registration mails
+Ämne för boknings bekräftelse (E-post meddelande)
+---STRINGEND
+
+---STRING this email adress is already registered
+Ett konto har redans skapats med den här e-post addressen.
+---STRINGEND
+
+---STRING username
+Användanamn
+---STRINGEND
+
+---STRING userpassword
+Lösenord
+---STRINGEND
+
+---STRING view additional questions
+Visa övriga frågor
+---STRINGEND
+
+---STRING view registrar
+Visa den som bokar
+---STRINGEND
+
+---STRING view registration
+Visa bokning
+---STRINGEND
+
+---STRING welcome to registrations admin
+Välkommen till administration för bokning av händelser
+---STRINGEND
+
+---STRING yes, delete the registration
+Ja, Jag vill radera den här bokningen.
+---STRINGEND
+
+---STRING you are currently logged in as:
+Du är just nu inloggad som:
+---STRINGEND
+
+---STRING you have already registered for this event.
+Du har redan bokat denna händelse.
+---STRINGEND
+
+---STRING your account has been activated successfully.
+Ditt konto är nu aktiverat.
+---STRINGEND
+

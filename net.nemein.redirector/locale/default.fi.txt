@@ -1,0 +1,33 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING first subfolder
+Ensimmäinen tämän kansion alapuolinen kansio
+---STRINGEND
+
+---STRING net.nemein.redirector
+Uudelleenohjauskansio
+---STRINGEND
+
+---STRING redirection settings
+Uudelleenohjauksen asetukset
+---STRINGEND
+
+---STRING redirection type
+Ohjauksen tyyppi
+---STRINGEND
+
+---STRING redirection url
+URL-osoite johon ohjataan
+---STRINGEND
+
+---STRING url entered below
+Alle kirjoitettu URL-osoite
+---STRINGEND
+
+---STRING redirection http code
+Uudelleenohjaukseen käytetty HTTP-vastaus
+---STRINGEND
+

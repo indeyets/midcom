@@ -1,0 +1,5 @@
+'name' => 'net.nemein.rss',
+'purecode' => false,
+'version' => 1,
+'privileges' =>  Array(),
+'class_definitions' => Array(),

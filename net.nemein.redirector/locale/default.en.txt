@@ -1,0 +1,33 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING first subfolder
+First sub-folder of this folder
+---STRINGEND
+
+---STRING net.nemein.redirector
+Redirection folder
+---STRINGEND
+
+---STRING redirection settings
+Redirection settings
+---STRINGEND
+
+---STRING redirection type
+Redirection type
+---STRINGEND
+
+---STRING redirection url
+Redirection URL
+---STRINGEND
+
+---STRING url entered below
+URL entered below
+---STRINGEND
+
+---STRING redirection http code
+HTTP return code used for redirect
+---STRINGEND
+

@@ -1,0 +1,29 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE pl
+
+---STRING approval
+Zatwierdzanie
+---STRINGEND
+
+---STRING comments
+Komentarze
+---STRINGEND
+
+---STRING hours
+Godziny
+---STRINGEND
+
+---STRING net.nemein.hourview
+Raport godzinowy
+---STRINGEND
+
+---STRING reporter
+Autor
+---STRINGEND
+
+---STRING send
+Wyślij
+---STRINGEND
+

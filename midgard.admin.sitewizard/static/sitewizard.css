@@ -1,0 +1,91 @@
+#midgard_admin_sitewizard ul.wizard_steps {
+	margin: 0px;
+	float: right;
+}
+#midgard_admin_sitewizard ul.wizard_steps li {
+	display: inline;
+	margin-right: 15px;
+}
+#midgard_admin_sitewizard ul.wizard_steps li.current {
+	font-weight: bold;
+}
+#midgard_admin_sitewizard ul.wizard_steps li.disabled {
+    color: #BAB5AB;
+    background-color: transparent;
+}
+#midgard_admin_sitewizard div.explanation {
+    float: right;
+    width: 40%;
+    font-size: larger;
+    font-style: italic;
+    padding: 10px;
+    padding-left: 30px;
+}
+#midgard_admin_sitewizard fieldset {
+    border: 2px solid #826647;
+    -moz-border-radius: 7px;
+    clear: both;
+    margin-bottom: 4px;
+}
+#midgard_admin_sitewizard label {
+	display: block;
+	font-weight: bold;
+}
+#midgard_admin_sitewizard label.action_select {
+	font-size: larger;
+	margin-bottom: 4px;
+}
+#midgard_admin_sitewizard input.shorttext {
+	width: 20em;
+	display: block;
+}
+#midgard_admin_sitewizard input.long {
+    width: 40em;
+}
+#midgard_admin_sitewizard input.short {
+    width: 5em;
+}
+#midgard_admin_sitewizard input.inline {
+    display: inline;
+}
+#midgard_admin_sitewizard h2 {
+	margin: 0px;
+	clear: right;
+}
+#midgard_admin_sitewizard input.next {
+	font-size: larger;
+}
+#midgard_admin_sitewizard fieldset.style div {
+    margin-left: 20px;
+}
+#midgard_admin_sitewizard fieldset.style img {
+    float: left;
+    margin-right: 5px;
+    border: 1px solid #000000;
+}
+#midgard_admin_sitewizard fieldset.style div.credits {
+    font-weight: bold;
+}
+#midgard_admin_sitewizard fieldset.style div.description {
+    font-size: larger;
+}
+#midgard_admin_sitewizard_message {
+    width: 80%;
+    border: 1px solid #BAB5AB;
+    background-color: #EAE8E3;
+    color: #565248;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#midgard_admin_sitewizard_message {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+#midgard_admin_sitewizard_message .crit {
+    color: #990000;
+    font-weight: bold;
+    background-color: transparent;
+}

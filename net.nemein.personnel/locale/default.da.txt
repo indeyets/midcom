@@ -1,0 +1,33 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE da
+
+---STRING edit person
+Redigér person
+---STRINGEND
+
+---STRING none
+Ingen
+---STRINGEND
+
+---STRING personnel
+Personale
+---STRINGEND
+
+---STRING personnel folder
+Personalemappe
+---STRINGEND
+
+---STRING select
+Vælg
+---STRINGEND
+
+---STRING select group to display
+Vælg hvilken gruppe du vil se
+---STRINGEND
+
+---STRING select member to display first
+Vælg hvilket medlem som skal vises først
+---STRINGEND
+

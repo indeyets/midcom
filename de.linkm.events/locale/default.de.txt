@@ -1,0 +1,85 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING create event
+Termin anlegen
+---STRINGEND
+
+---STRING delete all events
+Alle Termine löschen
+---STRINGEND
+
+---STRING delete event
+Termin löschen
+---STRINGEND
+
+---STRING edit event
+Termin bearbeiten
+---STRINGEND
+
+---STRING enable detail pages
+Detail-Seiten anzeigen
+---STRINGEND
+
+---STRING event
+Termin
+---STRINGEND
+
+---STRING event administration
+Termin-Verwaltung
+---STRINGEND
+
+---STRING events
+Terminkalender
+---STRINGEND
+
+---STRING expert settings
+Experteneinstellungen
+---STRINGEND
+
+---STRING revert to default
+Auf Standardwerte zurücksetzen
+---STRINGEND
+
+---STRING schema database
+Schema-Datenbank
+---STRINGEND
+
+---STRING settings
+Einstellungen
+---STRINGEND
+
+---STRING show old events
+Alte Termine anzeigen
+---STRINGEND
+
+---STRING sort order
+Sortierreihenfolge
+---STRINGEND
+
+---STRING title
+Titel
+---STRINGEND
+
+---STRING topic schema
+Schema für diese Rubrik (Änderungen bei der Schema-Datenbank speichern bevor dieses Feld geändert wird!)
+---STRINGEND
+
+---STRING view event
+Termin anzeigen
+---STRINGEND
+
+---STRING de.linkm.events
+Terminkalender
+---STRINGEND
+
+---STRING date
+Datum
+---STRINGEND
+
+---STRING location
+Ort
+---STRINGEND
+

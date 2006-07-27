@@ -1,0 +1,105 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING allow anonymous posting
+Allow anonymous posting
+---STRINGEND
+
+---STRING anonymous password
+Anonymous user's password
+---STRINGEND
+
+---STRING anonymous posting
+Anonymous posting
+---STRINGEND
+
+---STRING anonymous username
+Anonymous user's username
+---STRINGEND
+
+---STRING author
+Author
+---STRINGEND
+
+---STRING click to create
+Click to create Wiki page
+---STRINGEND
+
+---STRING content
+Content
+---STRINGEND
+
+---STRING create note
+Create note
+---STRINGEND
+
+---STRING create pages by linking
+You can add pages to this <a href="http://en.wikipedia.org/wiki/Wiki">Wiki</a>  by linking to non-existing pages using <a href="http://www.midgard-project.org/midcom-permalink-7276f817dcdefcf40d30a9ec69a7241f">Wiki linking</a> format. Start by editing the wiki front page.
+---STRINGEND
+
+---STRING edit wikipage
+Edit Wiki page
+---STRINGEND
+
+---STRING login to create
+Login to create this missing page
+---STRINGEND
+
+---STRING net.nemein.wiki
+Wiki
+---STRINGEND
+
+---STRING no links to page
+No links to this Wiki page
+---STRINGEND
+
+---STRING pages linking to %s
+Wiki pages linking to %s
+---STRINGEND
+
+---STRING really delete page
+Really delete page?
+---STRINGEND
+
+---STRING related notes
+Related notes
+---STRINGEND
+
+---STRING related to
+Related to
+---STRINGEND
+
+---STRING sender
+Sender
+---STRINGEND
+
+---STRING this page is stub
+This Wiki page does not have any content yet. Please click edit to add information.
+---STRINGEND
+
+---STRING what links
+What links here
+---STRINGEND
+
+---STRING wiki
+Wiki
+---STRINGEND
+
+---STRING wiki default page content
+This is the front page of your [Midgard CMS][1] powered [wiki: Wiki]. Wikis are useful online scratchpads for writing documentation or quick notes in a collaborative fashion.
+
+Content on this wiki is edited using the [Markdown syntax][2], with links to pages made using `[!!Square brackets]`. New pages are created by linking to their name and then clicking the link.
+
+Please read the [linking instructions][3] for more information.
+
+[1]: http://www.midgard-project.org/
+[2]: http://daringfireball.net/projects/markdown/syntax
+[3]: http://www.midgard-project.org/midcom-permalink-7276f817dcdefcf40d30a9ec69a7241f
+---STRINGEND
+
+---STRING recipients
+Recipients
+---STRINGEND
+

@@ -1,0 +1,201 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING Select arrow up or down and click on the element you want to move
+Choose the direction by selecting up or down arrow and click on the element you want to move.
+---STRINGEND
+
+---STRING Set order
+Set order
+---STRINGEND
+
+---STRING Sort articles
+Sort articles
+---STRINGEND
+
+---STRING Sort topics
+Sort topics
+---STRINGEND
+
+---STRING The objects in this topic cannot be sorted
+The articles in this topic cannot be sorted
+---STRINGEND
+
+---STRING are you sure to delete
+Are you sure you want to delete this Topic with all its descendants?
+---STRINGEND
+
+---STRING articles first
+Articles first, then topics (by score)
+---STRINGEND
+
+---STRING attachments for topic
+Attachments for Topic
+---STRINGEND
+
+---STRING by score
+by Score
+---STRINGEND
+
+---STRING create attachment
+Create Attachment
+---STRINGEND
+
+---STRING create subtopic
+Create Subtopic
+---STRINGEND
+
+---STRING create topic
+Create Topic
+---STRINGEND
+
+---STRING default
+Default for component
+---STRINGEND
+
+---STRING default sort order
+Default component sort order
+---STRINGEND
+
+---STRING delete attachment
+Delete Attachment
+---STRINGEND
+
+---STRING delete topic
+Delete Topic
+---STRINGEND
+
+---STRING descendants are deleted
+Warning: descendants are also deleted.
+---STRINGEND
+
+---STRING edit metadata
+Edit metadata
+---STRINGEND
+
+---STRING edit order
+Edit topic order
+---STRINGEND
+
+---STRING edit topic
+Edit Topic
+---STRINGEND
+
+---STRING file
+File
+---STRINGEND
+
+---STRING filename
+Filename
+---STRINGEND
+
+---STRING inherit from parent
+Inherit from parent element
+---STRINGEND
+
+---STRING inherit style
+Make style inheritable
+---STRINGEND
+
+---STRING location
+Location
+---STRINGEND
+
+---STRING metadata for %s
+Metadata for '%s'
+---STRINGEND
+
+---STRING midcom.admin.content
+MidCOM AIS
+---STRINGEND
+
+---STRING nav order
+Sorting order of child elements
+---STRINGEND
+
+---STRING new filename
+New filename
+---STRINGEND
+
+---STRING no access restriction
+No access restriction
+---STRINGEND
+
+---STRING no attachments found
+No Attachments found
+---STRINGEND
+
+---STRING no preview available
+No preview available
+---STRINGEND
+
+---STRING overview
+Overview
+---STRINGEND
+
+---STRING owner
+Owner
+---STRINGEND
+
+---STRING preview
+Preview
+---STRINGEND
+
+---STRING score
+Score
+---STRINGEND
+
+---STRING short description
+Short description
+---STRINGEND
+
+---STRING sorting position
+Sorting position
+---STRINGEND
+
+---STRING style
+Style
+---STRINGEND
+
+---STRING title
+Title
+---STRINGEND
+
+---STRING topic administration
+Topic Administration
+---STRINGEND
+
+---STRING topic attachments
+Topic Attachments
+---STRINGEND
+
+---STRING topics first
+Topics first, then articles (by score)
+---STRINGEND
+
+---STRING type
+Type
+---STRINGEND
+
+---STRING url name
+URL Name (lowercase, alphanumeric, no spaces, no special characters, etc.)
+---STRINGEND
+
+---STRING view this page
+Go to page
+---STRINGEND
+
+---STRING view this page link unavailable
+Go to page not allowed
+---STRINGEND
+
+---STRING viewer groups
+Groups which have the permission to view this topic
+---STRINGEND
+
+---STRING topics to delete
+Topic tree to delete
+---STRINGEND
+

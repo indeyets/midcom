@@ -1,0 +1,11 @@
+'schemadb' => 'file:/net/nemein/discussion/config/schemadb_default.inc',
+'schemadbs' => Array (
+    'file:/net/nemein/discussion/config/schemadb_default.inc' => 'Discussion Default Schema Database',
+),
+'display_threads' => 15,
+'display_posts'   => 10,
+'display_pages'   => 10,
+'new_message_status_anon' => 4,
+'new_message_status_user' => 5,
+'latest_item_count' => 10,
+'order_threads_by' => 'latestposttime',

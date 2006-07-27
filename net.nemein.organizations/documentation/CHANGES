@@ -1,0 +1,43 @@
+                   net.nemein.organizations Changelog
+                   ----------------------------------
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+2005-08-08 torben
+  - Moved the component to use DBA and ACL.
+
+2005-02-25 torben
+  - Rewrite the component to use the new base class interface
+  ! Moved configuriation files to the new default locations
+
+2005-02-11 torben
+  - Adapted to the new Metadata system.
+
+2004-11-27 torben
+  - NAP/AIS toolbar upgrade
+  - Minor code cleanup
+  - Added a missing configuration variable (as null-value); there are more 
+    bugs in it though.
+  - Added German translation
+
+2004-11-08 torben
+  - Filesystem conversion
+
+2004-10-13 Kaukola
+  - Changed random listing to use specific variable (see config_default) stored in groups
+  - Added styles for random listings
+
+2004-10-12 Kaukola
+  + Added support for random group display (useful in carousels)
+  - Some code cleaning done
+
+2004-08-30
+  - Migrated to use AIS-style tree group selector
+  - Added some localizations
+
+2004-06-22
+  + Added support for reading the serialized OpenPSA extra fields
+  - First ChangeLog entry

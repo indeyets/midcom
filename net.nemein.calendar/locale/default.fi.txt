@@ -1,0 +1,165 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING create event
+Luo tapahtuma
+---STRINGEND
+
+---STRING daily
+Päivittäin
+---STRINGEND
+
+---STRING date
+Aika
+---STRINGEND
+
+---STRING description
+Kuvaus
+---STRINGEND
+
+---STRING display settings
+Näyttöasetukset
+---STRINGEND
+
+---STRING edit event
+Muokkaa tapahtumaa
+---STRINGEND
+
+---STRING enable GET filters
+Salli kenttien perusteella suodattaminen
+---STRINGEND
+
+---STRING end
+Päättymisaika
+---STRINGEND
+
+---STRING event
+Tapahtuma
+---STRINGEND
+
+---STRING from date
+Alkaen päivämäärästä
+---STRINGEND
+
+---STRING group calendar
+Tapahtumakalenteri
+---STRINGEND
+
+---STRING index count
+Kuinka monta tapahtumaa näytetään pääsivulla
+---STRINGEND
+
+---STRING interval
+Toiston väli
+---STRINGEND
+
+---STRING list events from master event
+Listaa kaikki päätapahtuman alla olevat tapahtumat
+---STRINGEND
+
+---STRING location
+Sijainti
+---STRINGEND
+
+---STRING master event guid
+Kaikkien kansioiden päätapahtuman GUID
+---STRINGEND
+
+---STRING monthly
+Kuukausittain pvm:n mukaan
+---STRINGEND
+
+---STRING months starting from
+kuukautta alkaen
+---STRINGEND
+
+---STRING nemein.net calendar
+Ryhmäkalenteri
+---STRINGEND
+
+---STRING nemeincalendar not found
+<strong>NemeinCalendar</strong>-kirjasto puuttu palvelimelta. Asenna joko <a href="http://www.openpsa.org/">OpenPSA</a> tai <a href="http://www.midgard-project.org/projects/townportal/">TownPortal</a> saadaksesi tarvittavat kirjastot.
+---STRINGEND
+
+---STRING no participants
+Ei osallistujia
+---STRINGEND
+
+---STRING participants
+Osallistujat
+---STRINGEND
+
+---STRING public
+Julkinen
+---STRINGEND
+
+---STRING repeat
+Toistuvuus
+---STRINGEND
+
+---STRING repeat times
+Toistokertoja
+---STRINGEND
+
+---STRING repeat type
+Toistuvuus
+---STRINGEND
+
+---STRING root event guid
+Kansion päätapahtuman GUID
+---STRINGEND
+
+---STRING set repeat
+Aseta toisto
+---STRINGEND
+
+---STRING set repeat for %s
+Merkkaa %s toistuvaksi
+---STRINGEND
+
+---STRING show
+Näytä
+---STRINGEND
+
+---STRING start
+Alkamisaika
+---STRINGEND
+
+---STRING subscribed - click
+Varaamasi tapahtuma - Klikkaa poistaaksesi varaus
+---STRINGEND
+
+---STRING syndicated
+Näytettävissä muualla
+---STRINGEND
+
+---STRING title
+Nimi
+---STRINGEND
+
+---STRING type
+Tyyppi
+---STRINGEND
+
+---STRING type filter for upcoming
+Tyyppisuodatin tapahtumalistoille
+---STRINGEND
+
+---STRING unsubscribed - click
+Varaamaton tapahtuma - Klikkaa varataksesi
+---STRINGEND
+
+---STRING until date
+Päivämäärään asti
+---STRINGEND
+
+---STRING weekly
+Viikottain
+---STRINGEND
+
+---STRING show events locally
+Näytä kaikki tapahtumat paikallisesti
+---STRINGEND
+

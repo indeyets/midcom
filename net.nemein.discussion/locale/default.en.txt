@@ -1,0 +1,61 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING %s replies, latest post by %s on %s
+%s replies, latest post by %s on %s
+---STRINGEND
+
+---STRING %s: %s by %s (from %s)
+%s: %s by %s (from %s)
+---STRINGEND
+
+---STRING back to forum
+Back to forum
+---STRINGEND
+
+---STRING content
+Content
+---STRINGEND
+
+---STRING create thread
+Create thread
+---STRINGEND
+
+---STRING moderation history
+Moderation history
+---STRINGEND
+
+---STRING net.nemein.discussion
+Discussion forum
+---STRINGEND
+
+---STRING post to
+Post to
+---STRINGEND
+
+---STRING reply
+Reply
+---STRINGEND
+
+---STRING reply to
+Reply to
+---STRINGEND
+
+---STRING report abuse
+Report abuse
+---STRINGEND
+
+---STRING reported_abuse
+Reported as abuse
+---STRINGEND
+
+---STRING sender
+Sender
+---STRINGEND
+
+---STRING subject
+Subject
+---STRINGEND
+

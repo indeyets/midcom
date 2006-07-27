@@ -1,0 +1,33 @@
+                   net.nemein.quickpoll Changelog
+                   ------------------------------
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+2005-09-30 rambo
+  - added option for allowing multiple votes per user/ip
+
+2005-04-26 torben
+  - Adapted to the new caching infrastructure.
+
+2005-04-15 bergie
+  - Added better cache handling
+
+2005-03-16 torben
+  - Adatpted to the new Component base class and configuration mechanism.
+    No indexing at this point.
+
+2005-02-11 torben
+  - Adapted to the new Metadata system.
+
+2004-12-20 torben
+  - AIS/NAP toolbar updates (these changes were done earlier, but
+    appearantly got lost somehow)
+
+2004-11-10 torben
+  - Filesystem Conversion
+
+2004-11-05 Henri Bergius
+  + Initially created

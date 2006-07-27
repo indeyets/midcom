@@ -1,0 +1,185 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE da
+
+---STRING abstract
+Resumé
+---STRINGEND
+
+---STRING approval
+Godkendelse
+---STRINGEND
+
+---STRING approve
+Godkend
+---STRINGEND
+
+---STRING are you sure to delete
+Er du sikker du vil slette dette billede?
+---STRINGEND
+
+---STRING back to index
+Tilbage til billedgallerioversigten
+---STRINGEND
+
+---STRING delete
+Slet
+---STRINGEND
+
+---STRING delete photo
+Slet billede
+---STRINGEND
+
+---STRING description
+Beskrivelse
+---STRINGEND
+
+---STRING disallow unapproved
+Vis ikke ej godkendte (heller ikke via URL)
+---STRINGEND
+
+---STRING edit
+Redigér
+---STRINGEND
+
+---STRING edit photo
+Redigér billede
+---STRINGEND
+
+---STRING file
+Fil
+---STRINGEND
+
+---STRING full scale version
+Visning i fuld størrelse
+---STRINGEND
+
+---STRING gallery description
+Beskrivelse af billedgalleri
+---STRINGEND
+
+---STRING gallery is empty
+Dette billedgalleri er tomt
+---STRINGEND
+
+---STRING gallery keywords
+Stikord til billedgalleri
+---STRINGEND
+
+---STRING keywords
+Stikord
+---STRINGEND
+
+---STRING name
+Navn
+---STRINGEND
+
+---STRING next
+Næste
+---STRINGEND
+
+---STRING next page
+Næste side
+---STRINGEND
+
+---STRING page
+Side
+---STRINGEND
+
+---STRING photo gallery administration
+Administration af billedgalleri
+---STRINGEND
+
+---STRING photographer
+Fotograf
+---STRINGEND
+
+---STRING photos
+Billedgalleri
+---STRINGEND
+
+---STRING pictures in gallery
+Billeder i billedgalleriet
+---STRINGEND
+
+---STRING previous
+Forrige
+---STRINGEND
+
+---STRING previous page
+Forrige side
+---STRINGEND
+
+---STRING re-read exif
+Gendindlæs metadata (EXIF) fra billede
+---STRINGEND
+
+---STRING settings
+Indstillinger
+---STRINGEND
+
+---STRING show all
+Vis alle
+---STRINGEND
+
+---STRING show only approved
+Vis kun godkendte
+---STRINGEND
+
+---STRING showing thumbnails for images
+Visning af billedminiaturer
+---STRINGEND
+
+---STRING sort order
+Sorteringsorden
+---STRINGEND
+
+---STRING taken
+Knipset
+---STRINGEND
+
+---STRING taken by
+Taget af:
+---STRINGEND
+
+---STRING thumbnail size
+Størrelse af miniature
+---STRINGEND
+
+---STRING title
+Titel
+---STRINGEND
+
+---STRING total
+Total
+---STRINGEND
+
+---STRING unapprove
+Fjern godkendelse
+---STRINGEND
+
+---STRING upload
+Send
+---STRINGEND
+
+---STRING upload can take time
+Vær opmærksom på at overførslen kan tage adskillige minutter. Vær tålmodig.
+---STRINGEND
+
+---STRING upload is archive
+Modtaget fil er komprimeret (zip, tgz), pak ud og processér alle billeder
+---STRINGEND
+
+---STRING upload photos
+Send billeder
+---STRINGEND
+
+---STRING upload status
+Status for overførsel
+---STRINGEND
+
+---STRING view size
+Størrelse af visning
+---STRINGEND
+

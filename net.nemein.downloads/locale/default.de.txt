@@ -1,0 +1,41 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING net.nemein.downloads
+Download-Verwaltung
+---STRINGEND
+
+---STRING %s, updated %s
+%s, %s wurde aktualisiert
+---STRINGEND
+
+---STRING create new release
+Neue Version erstellen
+---STRINGEND
+
+---STRING download management
+Download-Verwaltung
+---STRINGEND
+
+---STRING downloads
+Downloads
+---STRINGEND
+
+---STRING edit release
+Version bearbeiten
+---STRINGEND
+
+---STRING license
+Lizenz
+---STRINGEND
+
+---STRING set current release
+Aktuelle Version auswählen
+---STRINGEND
+
+---STRING view release
+Version ansehen
+---STRINGEND
+

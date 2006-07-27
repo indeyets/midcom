@@ -1,0 +1,41 @@
+                   net.nemein.reservations Changelog
+                   ---------------------------------
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+2006-06-27/28/29 rambo
+  - made workable in 1.6 midgard as well (dont ask)
+  - onsite reservation details and print views
+  - 5min grace period to "start in past" check
+  - display past reservations for 2h
+  - edit/delete buttons for visible reservations to NAP toolbar (TODO: check how to notify NAP cache about this)
+
+2005-09-15 torben
+  - Fixed error reporting during reservation cycle.
+
+2005-10-07 bergie
+  + Made date inputs use JScalendar
+  + Added sensible defaults to start and end dates
+  + More WAI compatibility
+  + Skipped "sudo" if user already has ownership of root event
+  + Implemented hCalendar for reservation listings
+
+2005-02-11 torben
+  - Adapted to the new Metadata system.
+
+2004-11-30 torben
+  - NAP/AIS toolbar upgrade
+  - Minor code cleanup
+
+2004-11-10 torben
+  - Filesystem conversion
+  - Fixed incomplete default configuration
+
+2004-08-25 torben
+  - First working version
+
+2004-07-13 torben
+  - Initial Checkin

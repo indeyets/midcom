@@ -1,0 +1,41 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING create incident
+Raportoi tapaus: %s
+---STRINGEND
+
+---STRING create new incident
+Raportoi tapaus
+---STRINGEND
+
+---STRING created root event
+Juuritason tapaus "%s" luotu
+---STRINGEND
+
+---STRING edit incident
+Muokkaa tapausta %s
+---STRINGEND
+
+---STRING failed to create root event
+Juuritason tapauksen luonti epäonnistui, syy %s
+---STRINGEND
+
+---STRING failed to open root event
+Juuritason tapauksen avaus epäonnistui, syy %s
+---STRINGEND
+
+---STRING incidentdb
+Tapaustietokanta
+---STRINGEND
+
+---STRING root event not yet present
+Juuritason tapausta ei ole vielä luotu, kirjaudu AIS:iin luodaksesi se
+---STRINGEND
+
+---STRING view incident
+Näytä tapaus
+---STRINGEND
+

@@ -1,0 +1,28 @@
+<?php
+/**
+ * RSS and Atom feed generator library
+ * http://www.bitfolge.de/rsscreator-en.html
+ * Available under LGPL license
+ * 
+ * Startup loads main class, which is used for all operations.
+ * 
+ * @package de.bitfolge.feedcreator
+ */
+class de_bitfolge_feedcreator_interface extends midcom_baseclasses_components_interface
+{
+    
+    function de_bitfolge_feedcreator_interface()
+    {
+        parent::midcom_baseclasses_components_interface();
+        
+        $this->_component = 'de.bitfolge.feedcreator';
+        $this->_purecode = true;
+        $this->_autoload_files = Array('feedcreator.php');
+    }
+    
+    function _on_initialize()
+    {
+        return true;
+    }
+}
+?>

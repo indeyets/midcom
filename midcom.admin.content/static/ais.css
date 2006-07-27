@@ -1,0 +1,319 @@
+/* Include this file in your CSS definitions in the html head section */
+
+
+/************************ External References ******************************
+ * These must go first, so that CSS is happy.
+ * Dont use any media Tags, IE will ignore it.
+ */
+
+@import "../midcom.helper.datamanager/datamanager.css";
+
+/* ********** General elements */
+html, body {
+	height:100%;
+}
+
+img {
+  border: none;
+}
+
+/* Attachment Table Cells and Divs */
+
+table.contentadm_attachments {
+    border-collapse: collapse;
+    empty-cells: show;
+    margin: 0px;
+    padding: 7px;
+    width: 100%;
+}
+
+td.contentadm_attachments_heading {
+    border: none;
+    border-bottom: 1px solid black;
+    font-size: 11px;
+    padding: 7px;
+}
+
+td.contentadm_attachments_filename {
+    font-family: monospace;
+    font-size: 13px;
+    border: none;
+    border-top: 1px solid black;
+    padding: 7px;
+}
+
+td.contentadm_attachments_title {
+    border: none;
+    border-top: 1px solid black;
+    font-size: 13px;
+    padding: 7px;
+}
+
+td.contentadm_attachments_mimetype {
+    font-size: 13px;
+    border: none;
+    border-top: 1px solid black;
+    padding: 7px;
+}
+
+td.contentadm_attachments_preview {
+    font-size: 13px;
+    border: none;
+    border-top: 1px solid black;
+    padding: 2px;
+    width: 180px;
+}
+
+div.contentadm_attachments_preview {
+    width: 175px;
+    max-height: 125px;
+    overflow: scroll;
+}
+
+img.contentadm_attachments_preview {
+    border: 1px outset black;
+    padding: 2px;
+    background-color: white;
+}
+
+td.contentadm_attachments_commands {
+    font-size: 13px;
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 7px;
+}
+
+td.contentadm_attachments_toolbar {
+    font-size: 13px;
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+}
+
+
+/* ********** Navigation Links */
+
+/* Current Node, selected */
+div.contentadm_nav_curnode_active {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Current Node, unselected */
+div.contentadm_nav_curnode_inactive {
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+/* The Uplink */
+div.contentadm_nav_uplink {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* All subnodes */
+div.contentadm_nav_subnodes {
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-left: 20px;
+}
+
+/* On specific Subnodes within the all subnodes div */
+div.contentadm_nav_subnode { }
+
+/* All Leaves */
+div.contentadm_nav_leaves {
+  margin-bottom: 10px;
+}
+
+/* A selected leaf withhin the leaves div */
+div.contentadm_nav_leaf_inactive { }
+
+/* An unselected leaf withhin the leaves div */
+div.contentadm_nav_leaf_active {
+  font-weight: bold;
+}
+
+
+
+/* ********** Misc Constructs */
+
+/* Button */
+
+.aisbutton {
+  background: #eee;
+  color: black;
+
+  border-top: 1px solid #999;
+  border-bottom: 1px solid #333;
+  border-left: 1px solid #999;
+  border-right: 1px solid #333;
+ 
+  padding: 3px 5px;
+  margin: 2px 2px;
+  text-decoration: none;
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: 11px;
+}
+
+.aisbutton img {
+  vertical-align: middle;
+}
+
+.aisbutton:hover {
+  color: #900;
+  background: white;
+  text-decoration: none;
+}
+
+div.processing_message {
+  background-color: white;
+  border: 1px solid #990000;
+  -moz-border-radius: 8px;
+  padding: 5px;
+  margin: 0.5ex 0;
+}
+
+/* ********** Form elements
+
+/* Form description elements 
+   TODO: Shouldn't this stuff be in DM?
+*/
+
+form {
+  /*
+  border-left: 1px solid #333;
+  border-top: 1px solid #333;
+  border-right: 1px solid #999;
+  border-bottom: 1px solid #999;
+  border: 1px solid #ccc;
+  padding: 15px;
+  */
+  margin: 5px 0;
+}
+
+div.form_fieldgroup {
+  margin: 10px 0 0 0;
+  padding: 0 0 10px 5px;
+  border: 1px solid black;
+}
+
+div.form_fieldgroup_title {
+  background-color: navy; /* dark blue */
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+  margin: 0 0 5px 0px; /* Neutralize the default padding-left from the fieldgroup tag */
+}
+
+div.form_description {
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+div.form_description_requiredfield {
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  /* TODO: Add "exclamation mark" icon */
+}
+
+div.form_description_missingrequiredfield {
+  font-weight: bold;
+  color: red;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+div.form_viewfield {
+  padding-left: 5em;
+}
+
+/* The descriptive Text of a Radio-Button including the Radiobutton itself */
+span.form_description_radiobutton {
+  margin-right: 4px;
+  margin-left: 2px;
+}
+
+/* A list of Radiobuttons */
+div.form_field_radiobutton {
+  /* border: 1px solid #bbb; */
+}
+
+div.form_field {
+  text-align: left;
+}
+
+div.form_toolbar {
+    margin-top: 15px;
+}
+
+div.form_shorttext {
+}
+
+div.form_longtext {
+  width: 40em;
+}
+
+pre.form_longtext_preformatted {
+}
+
+div.form_htmleditor {
+  margin-right: 5em;
+}
+
+div.form_select {
+}
+
+
+/* Form input elements 
+ * TODO: Move these to datamanager.css
+ */
+/* note: to work in aegir layout, the width cannot be 100%!  */
+input.shorttext {
+    
+  width: 500px;
+}
+
+textarea.longtext {
+  width: 500px;
+  height: 250px;
+}
+
+textarea.longtext_preformatted {
+  font-family: monospace;
+  width: 100%;
+  height: 30em;
+}
+
+textarea.htmleditor {
+  width: 100%;
+  height: 400px;
+  border: 1px solid black;
+}
+
+input.fileselector {
+  width: 500px;
+}
+
+input.radiobutton {
+  margin-right: 2px;
+}
+
+select.dropdown {
+  width: 40em;
+}
+
+select.list {
+  width: 40em;
+}
+
+select, select:hover, select:active {
+  background: FieldFace;
+  color: ButtonText; 
+}
+
+
+

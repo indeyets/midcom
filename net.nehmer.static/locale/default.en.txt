@@ -1,0 +1,132 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING Only show approved articles
+Only show approved articles
+---STRINGEND
+
+---STRING activate autoindex
+Automatically create an index page for this topic?
+---STRINGEND
+
+---STRING approve
+Approve
+---STRINGEND
+
+---STRING auto_approved
+Approve new articles by default
+---STRINGEND
+
+---STRING autoindex-notes
+The index page replaces the article with the URL name index and consists of a list of all articles and attachments of the current topic.
+---STRINGEND
+
+---STRING back to overview
+Back to overview
+---STRINGEND
+
+---STRING create article
+Create Article
+---STRINGEND
+
+---STRING default_schema
+Default schema for new articles
+---STRINGEND
+
+---STRING delete article
+Delete Article
+---STRINGEND
+
+---STRING directory index for %s
+Directory index for %s
+---STRINGEND
+
+---STRING display settings
+Article display configuration
+---STRINGEND
+
+---STRING edit article
+Edit Article
+---STRINGEND
+
+---STRING file lastmodified
+Last modified date
+---STRINGEND
+
+---STRING filedescription
+File Description
+---STRINGEND
+
+---STRING filename
+File Name
+---STRINGEND
+
+---STRING filesize
+File Size
+---STRINGEND
+
+---STRING filetype
+File Type
+---STRINGEND
+
+---STRING net.nehmer.static
+Static content
+---STRINGEND
+
+---STRING no files in this directory
+There are no files in this directory
+---STRINGEND
+
+---STRING no index article
+This folder does not have an <strong>index</strong> article. Please create an article with URL name <strong>index</strong> or activate the autoindex mode to get started.
+---STRINGEND
+
+---STRING no schemas available
+No Schemas available
+---STRINGEND
+
+---STRING schema settings
+Data schema settings
+---STRINGEND
+
+---STRING schemadb
+Schema database to use for this topic
+---STRINGEND
+
+---STRING select schema
+Select Schema
+---STRINGEND
+
+---STRING settings
+Settings
+---STRINGEND
+
+---STRING symlink_topic
+Link to another content topic ("symlink")
+---STRINGEND
+
+---STRING symlink_topic disabled
+No topic selected
+---STRINGEND
+
+---STRING taviewer
+Static Content
+---STRINGEND
+
+---STRING unapprove
+Unapprove
+---STRINGEND
+
+---STRING view article
+View Article
+---STRINGEND
+
+---STRING visible
+Should the topic be visible
+---STRINGEND
+
+---STRING indexinnav
+If autonindex is disabled, should the index article be shown in the navigation?
+---STRINGEND

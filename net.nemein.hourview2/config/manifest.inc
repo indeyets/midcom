@@ -1,0 +1,5 @@
+'name' => 'net.nemein.hourview2',
+'purecode' => false,
+'version' => '0.0.1',
+'privileges' =>  Array(),
+'class_definitions' => Array(),

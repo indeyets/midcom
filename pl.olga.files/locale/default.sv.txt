@@ -1,0 +1,29 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING create article
+Skapa artikel
+---STRINGEND
+
+---STRING delete article
+Radera artikel
+---STRINGEND
+
+---STRING edit article
+Ändra artikel
+---STRINGEND
+
+---STRING no schemas available
+Inga scheman tillgängliga
+---STRINGEND
+
+---STRING select schema
+Välj schema
+---STRINGEND
+
+---STRING taviewer
+Statiskt innehåll
+---STRINGEND
+

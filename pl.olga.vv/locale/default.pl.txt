@@ -1,0 +1,21 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE pl
+
+---STRING activate antispam
+Włącz filtr antyspamowy
+---STRINGEND
+
+---STRING allow create by uri
+Automatyczne tworzenie licznika
+---STRINGEND
+
+---STRING setup
+Konfiguracja
+---STRINGEND
+
+---STRING views & votes
+Licznik odwiedzin i ocen
+---STRINGEND
+

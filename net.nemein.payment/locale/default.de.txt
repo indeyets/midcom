@@ -1,0 +1,29 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING net.nemein.payment
+Bibliothek zur elektronischen Abwicklung von Zahlungen
+---STRINGEND
+
+---STRING pay by invoice
+Per Rechnung zahlen
+---STRINGEND
+
+---STRING payment cancelled
+Die Zahlung wurde vom Benutzer abgebrochen.
+---STRINGEND
+
+---STRING payment ok
+Die Zahlung war erfolgreich.
+---STRINGEND
+
+---STRING payment ok but unpaid
+Die Zahlung wurde akzeptiert aber noch nicht ausgeführt.
+---STRINGEND
+
+---STRING payment rejected
+Die Zahlung wurde vom Dienstleister abgelehnt.
+---STRINGEND
+

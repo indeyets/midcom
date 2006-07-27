@@ -1,0 +1,81 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING are you sure you want to delete this entry?
+Are you sure you want to delete this entry?
+---STRINGEND
+
+---STRING ask
+Ask
+---STRINGEND
+
+---STRING asks
+Asks
+---STRINGEND
+
+---STRING back to category
+Back to category
+---STRINGEND
+
+---STRING bid
+Bid
+---STRINGEND
+
+---STRING bids
+Bids
+---STRINGEND
+
+---STRING entry created, expires in %d days.
+The entry was created, it will expire in %d days.
+---STRINGEND
+
+---STRING found %d entries.
+Found %d entries.
+---STRINGEND
+
+---STRING latest asks
+Latest asks
+---STRINGEND
+
+---STRING latest bids
+Latest bids
+---STRINGEND
+
+---STRING net.nehmer.marketplace
+Marketplace
+---STRINGEND
+
+---STRING none found
+None found.
+---STRINGEND
+
+---STRING show entry
+Show entry
+---STRINGEND
+
+---STRING submit ask
+Submit ask
+---STRINGEND
+
+---STRING submit bid
+Submit bid
+---STRINGEND
+
+---STRING submit new entry
+Submit new Entry
+---STRINGEND
+
+---STRING your asks
+Your asks
+---STRINGEND
+
+---STRING your bids
+Your bids
+---STRINGEND
+
+---STRING update images
+Update images
+---STRINGEND
+

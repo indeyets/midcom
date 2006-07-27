@@ -1,0 +1,25 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING images
+Images
+---STRINGEND
+
+---STRING midcom.helper.imagepopup
+Image addition pop-up
+---STRINGEND
+
+---STRING page attachments
+Page attachments
+---STRINGEND
+
+---STRING folder attachments
+Folder attachments
+---STRINGEND
+
+---STRING files
+Files
+---STRINGEND
+

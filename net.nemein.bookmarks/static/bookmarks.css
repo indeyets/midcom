@@ -1,0 +1,18 @@
+div.net_nemein_bookmarks_list div.bookmark h2 {
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+div.net_nemein_bookmarks_list div.bookmark h2 a {
+	text-decoration: none;
+}
+div.net_nemein_bookmarks_list div.bookmark-metadata {
+	font-size: smaller;
+	color: #c0c0c0;
+	background-color: transparent;
+}
+div.net_nemein_bookmarks_list div.bookmark-metadata a {
+	text-decoration: none;
+}
+div.net_nemein_bookmarks_list div.bookmark-metadata a:hover, div.net_nemein_bookmarks_list div.bookmark h2 a:hover {
+	text-decoration: underline;
+}

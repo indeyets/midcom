@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+
+  <type name="net_nehmer_comments_comment_db" table="net_nehmer_comments_comment_db">
+    <property name="id" type="integer" primaryfield="id" />
+
+    <!-- Additional Metadata -->
+    <property name="author" type="text" />
+    <property name="objectguid" type="text" dbtype="varchar(80)" />
+
+    <property name="title" type="text" />
+    <property name="content" type="longtext" />
+
+	<!-- Audit Trail -->
+	<property name="ip" type="text" dbtype="varchar(15)" />
+    <property name="status" type="integer" />
+    
+    <!-- 1.7 required metadata -->        
+    <property name="revised" type="string"/>
+    <property name="revision" type="integer"/>
+    <property name="created" type="string"/>
+    <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+    <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+    <!-- /required metadata -->     
+  </type>
+
+</Schema>

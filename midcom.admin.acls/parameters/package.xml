@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.4.5" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+http://pear.php.net/dtd/tasks-1.0.xsd
+http://pear.php.net/dtd/package-2.0
+http://pear.php.net/dtd/package-2.0.xsd">
+    <name>midcom_admin_acls</name>
+    <channel>pear.midcom-project.org</channel>
+    <summary>
+        MidCOM component midcom.admin.acls
+    </summary>
+    <description>
+        MidCOM component midcom.admin.acls
+    </description>
+    
+    <lead>
+        <name>Tarjei Huse</name>    
+        <user>tarjei</user>
+        <email>tarjei@nu.no</email>
+        <active>yes</active>
+    </lead>
+        
+    <date>2006-02-19</date>
+    <time>16:16:26</time>
+    <version>
+        <release>0.7</release>
+        <api>0.7</api>
+    </version>
+    <stability>
+        <release>stable</release>
+        <api>stable</api>
+    </stability>
+    <license>GPL</license>
+    <notes>0.7 stable</notes>        
+    <contents>
+       <dir name="">
+           <dir name="style">
+               <file baseinstalldir="midcom/lib/midcom/admin/acls" name="parameter-edit.php" role="php" />
+           </dir>
+           <dir name="config">
+               <file baseinstalldir="midcom/lib/midcom/admin/acls" name="config.inc" role="php" />
+               <file baseinstalldir="midcom/lib/midcom/admin/acls" name="manifest.inc" role="php" />
+               <file baseinstalldir="midcom/lib/midcom/admin/acls" name="schemadb_parameters.inc" role="php" />
+           </dir>
+           <dir name="documentation">
+               <file baseinstalldir="midcom/lib/midcom/admin/acls" name="CHANGES" role="php" />
+           </dir>
+           <dir name="midcom">
+               <file baseinstalldir="midcom/lib/midcom/admin/acls" name="interfaces.php" role="php" />
+           </dir>
+           <file baseinstalldir="midcom/lib/midcom/admin/acls" name="parameters.php" role="php" />
+       </dir>
+    </contents>        
+    <dependencies>
+        <required>
+            <php>
+                <min>4.3.0</min>
+            </php>
+            <pearinstaller>
+                <min>1.4.0</min>
+            </pearinstaller>        
+            
+            <package>
+                <name>midcom_admin_aegir</name>
+                <channel>pear.midcom-project.org</channel>
+                
+            </package>            
+        
+            <package>
+                <name>midcom_helper_datamanager2</name>
+                <channel>pear.midcom-project.org</channel>
+                
+            </package>            
+          </required>
+    </dependencies>
+    <phprelease /> 
+</package>
+    

@@ -1,0 +1,53 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING create entry
+Luo tietue
+---STRINGEND
+
+---STRING database administration
+Tietokannan ylläpito
+---STRINGEND
+
+---STRING entry
+tietue
+---STRINGEND
+
+---STRING go
+Hae
+---STRINGEND
+
+---STRING no entries
+Tietokanta on tyhjä
+---STRINGEND
+
+---STRING no matches
+Hakua vastaavia tietueita ei löytynyt
+---STRINGEND
+
+---STRING search
+Haku
+---STRINGEND
+
+---STRING select database schema
+Valitse tietokannan määritys
+---STRINGEND
+
+---STRING set database schema
+Aseta tietokannan määritys
+---STRINGEND
+
+---STRING simple database
+Yksinkertainen tietokanta
+---STRINGEND
+
+---STRING view entry
+Tietue
+---STRINGEND
+
+---STRING net.nemein.simpledb
+Yksinkertainen tietokanta
+---STRINGEND
+

@@ -1,0 +1,25 @@
+                   net.nemein.payment Changelog
+                   ----------------------------
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+2006-06-29 torben
+  - The PayPal payment info which is stored as machine readable data is
+    now converted to the site charset before passing on.
+
+2006-06-06 torben
+  + Added a PayPal Backend
+
+2005-06-22 torben
+  - Added a new payment state, NET_NEMEIN_PAYMENT_OK_BUT_PENDING, which
+    indicates that a payment has been accepted but not yet executed. This
+    is used by the pay-by-invoice handler for example.
+  - Added a invoice payment handler.
+  - Fixed a problem when $_config of the purecode baseclass was overwritten
+    by the handler config.
+
+2005-04-05 torben
+  - Initial Checkin

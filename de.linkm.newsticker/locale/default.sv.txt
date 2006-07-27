@@ -1,0 +1,181 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING add a new entry
+Lägg till nytt inlägg
+---STRINGEND
+
+---STRING create article
+Skapa Artikel
+---STRINGEND
+
+---STRING delete article
+Radera Artikel
+---STRINGEND
+
+---STRING edit article
+Ändra Artikel
+---STRINGEND
+
+---STRING enable details
+Slå på detaljerade sidor
+---STRINGEND
+
+---STRING enable public posting
+Slå på publik postning ("Gästbok och liknande")
+---STRINGEND
+
+---STRING enable subdirectories
+Inkludera alla underämnenas Nyhets Artiklar i Index (och RSS)
+---STRINGEND
+
+---STRING expert settings
+Avancerade inställningar
+---STRINGEND
+
+---STRING index count
+Antal som ska visas i Index
+---STRINGEND
+
+---STRING index settings
+Index inställningar
+---STRINGEND
+
+---STRING list old items in index
+Lista gamla artiklar i Index
+---STRINGEND
+
+---STRING newsticker
+Nyhets lista
+---STRINGEND
+
+---STRING newsticker administration
+Administrera nyheter
+---STRINGEND
+
+---STRING no schema available
+Inget Schema tillgängligt
+---STRINGEND
+
+---STRING public posting
+Publik postning ("Gästbok och liknande")
+---STRINGEND
+
+---STRING public posting password
+Midgard Lösenord att använda för publik access (endast nödvändigt om ett användarnamn har angivits)
+---STRINGEND
+
+---STRING public posting schema
+Datamanager schema att abvända för publik postning
+---STRINGEND
+
+---STRING public posting user
+Midgard användarnamn att använda för publik postning (lämna tomt för att använda inloggad användare)
+---STRINGEND
+
+---STRING schema database
+Sökväg till schema databas
+---STRINGEND
+
+---STRING select article type
+Välj artikel typ
+---STRINGEND
+
+---STRING settings
+Inställningar
+---STRINGEND
+
+---STRING sort order
+Sorterings ordning
+---STRINGEND
+
+---STRING advanced schema and data settings
+Avancerade schema och data inställningar
+---STRINGEND
+
+---STRING back to overview
+Tillbaka till överblick
+---STRINGEND
+
+---STRING create name from title
+Skapa URL-namn från artikel titlar
+---STRINGEND
+
+---STRING create news article
+Skapa nyhets artikel
+---STRINGEND
+
+---STRING de.linkm.newsticker
+Nyhets listning
+---STRINGEND
+
+---STRING display settings
+Nyhets inlägg visnings konfiguration
+---STRINGEND
+
+---STRING enable blogging apis
+Slå på fjärrändring via MetaWebLog API
+---STRINGEND
+
+---STRING enable date filters get
+Slå på datum filer (GET parameter)
+---STRINGEND
+
+---STRING enable date filters path
+Slå på datum filer (i sökväg, format /YYYY/MM/DD)
+---STRINGEND
+
+---STRING enable filters get
+Slå på fält filter (GET parameter)
+---STRINGEND
+
+---STRING not enough privileges to create articles
+Du saknar rättigheter för att skapa nya artiklar
+---STRINGEND
+
+---STRING rss export settings
+RSS export
+---STRINGEND
+
+---STRING rss_count
+Lista så är många artiklar i rss.xml
+---STRINGEND
+
+---STRING rss_description
+Beskrivning
+---STRINGEND
+
+---STRING rss_enable
+Slå på RSS export (aktiverar rss.xml och rss/$siffra.xml)
+---STRINGEND
+
+---STRING rss_include_image
+Inkludera orginalstorlek på bilder från schema fält "image" till rss artiklar
+---STRINGEND
+
+---STRING rss_language
+Språk
+---STRINGEND
+
+---STRING rss_title
+RSS titel (lämna tomt för att använda ämnets titel)
+---STRINGEND
+
+---STRING rss_webmaster
+Webmasters epost adress
+---STRINGEND
+
+---STRING symlink_topic
+Länk till annat ämne ("mjuk länk")
+---STRINGEND
+
+---STRING symlink_topic disabled
+Inget ämne valt
+---STRINGEND
+
+---STRING visible
+Ska ämnet vara synligt?
+---STRINGEND
+

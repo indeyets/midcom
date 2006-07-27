@@ -1,0 +1,3 @@
+pl.olga.vv provides ability for adding views and voting feature for any artice/topic 
+based component. As for now it is only embedded compnonet - you can only add it to
+existing topic by adding a <[view-result]> and/or <[vote-widget]> style elements.

@@ -1,0 +1,43 @@
+                   net.nehmer.blog Changelog
+                   -------------------------
+CVS Id: $Id$
+
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+2006-07-14 rambo
+  - made permalink resolution return the article name instead of guid if available
+
+2006-07-12 rambo
+  - made getting article via name and guid both work in both 1.7 and 1.8
+  - version bump for packaging
+
+2006-06-29 bergie
+  + Added email importing system
+
+2006-06-23 bergie
+  + Added support for blog commenting via net.nehmer.comments
+
+2006-06-21 bergie
+  + Added optional geopositioning support for feeds and HTML pages
+
+2006-06-16 bergie
+  + Added categories support in both lists, editor and feeds
+  ! Moved RSS 2.0 feed to /rss.xml for better d.l.newsticker compatibility
+  ! Switched to using "readable" URL names for articles
+
+2006-06-13 bergie
+  + Added Midgard 1.7 compatibility
+  + Added support for inline AJAX editing
+
+2006-05-26 bergie
+  + Made archiving and RSS feeds configurable
+
+2006-02-20 torben
+  ! Initial revision, built from de.linkm.newsticker using newest
+    technology. No 100% compatibility to old components is possible
+    at this point.
+

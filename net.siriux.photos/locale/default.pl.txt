@@ -1,0 +1,521 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE pl
+
+---STRING Successfully reread EXIF data.
+Dane EXIF zostały odczytane.
+---STRINGEND
+
+---STRING Successfully synchronized article created timestamps.
+Daty artykułów zostały zsynchronizowane.
+---STRINGEND
+
+---STRING abstract
+Skrót
+---STRINGEND
+
+---STRING approval
+Zatwierdzanie
+---STRINGEND
+
+---STRING approve
+Zatwierdź
+---STRINGEND
+
+---STRING approved
+Data zatwierdzenia
+---STRINGEND
+
+---STRING are you sure to delete
+Na pewno usunąć to zdjęcie?
+---STRINGEND
+
+---STRING are you sure you want to delete note
+Na pewno usunąć tą notatkę?
+---STRINGEND
+
+---STRING available exif parsers
+Dostępne parsery EXIF
+---STRINGEND
+
+---STRING back to index
+Powrót
+---STRINGEND
+
+---STRING cleaned up all names
+Nazwy URL zostały wyczyszczone.
+---STRINGEND
+
+---STRING cleanup article names
+Wyczyść nazwy URL artykułów
+---STRINGEND
+
+---STRING cleanup article names confirmation msg
+Ta opcja usunie niepoprawne znaki z nazw URL dotyczących zdjęć. Zdjęcia jako takie nie zostaną zmienione.
+---STRINGEND
+
+---STRING cleanup article names heading
+Wyczyść nazwy URL artykułów
+---STRINGEND
+
+---STRING create note
+Dodaj notatkę
+---STRINGEND
+
+---STRING create url names from titles
+Utwórz nazwy URL z tytułów
+---STRINGEND
+
+---STRING data schema settings
+Schematy danych (Przeczytaj dokumentację przed dokonaniem zmian)
+---STRINGEND
+
+---STRING delete
+Usuń
+---STRINGEND
+
+---STRING delete note
+Usuń notatkę
+---STRINGEND
+
+---STRING delete photo
+Usuń zdjęcie
+---STRINGEND
+
+---STRING delete selected note
+Usuń wybraną notatkę
+---STRINGEND
+
+---STRING description
+Opis
+---STRINGEND
+
+---STRING disable_autosync_created
+Wyłącz automatyczną synchronizację dat artykułów z datami zdjęć
+---STRINGEND
+
+---STRING disallow unapproved
+Zablokuj całkowicie dostęp do niezatwierdzonych elementów.
+---STRINGEND
+
+---STRING display settings
+ustawienia wyświetlania
+---STRINGEND
+
+---STRING drag into place
+Przenieś w wybrane miejsce
+---STRINGEND
+
+---STRING edit
+Edytuj
+---STRINGEND
+
+---STRING edit photo
+Edytuj zdjęcie
+---STRINGEND
+
+---STRING enable flash notes
+Włącz notatki w formacie Flash
+---STRINGEND
+
+---STRING exif data
+Dane EXIF
+---STRINGEND
+
+---STRING exif settings
+Ustawienia EXIF
+---STRINGEND
+
+---STRING exif_custom_fields
+Własna mapa pól EXIF
+---STRINGEND
+
+---STRING exif_exposure
+Czas naświetlania
+---STRINGEND
+
+---STRING exif_fnumber
+Numer przysłony
+---STRINGEND
+
+---STRING exif_iso
+Czułość ISO
+---STRINGEND
+
+---STRING exif_make
+Producent aparatu
+---STRINGEND
+
+---STRING exif_model
+Model aparatu
+---STRINGEND
+
+---STRING file
+Plik
+---STRINGEND
+
+---STRING filter_chain
+Proces przetwarzania zdjęć
+---STRINGEND
+
+---STRING force_exif_reader
+Wymuś użycie wskazanego parsera EXIF zamiast wykrytego.
+---STRINGEND
+
+---STRING force_exif_reader autodetect
+Autodetekcja
+---STRINGEND
+
+---STRING force_exif_reader jhead
+JHead (jeśli niedostępne - autowykrywanie)
+---STRINGEND
+
+---STRING force_exif_reader php
+PHP (jeśli niedostępne - autowykrywanie)
+---STRINGEND
+
+---STRING force_exif_reader system default
+Użyj wartości systemowej
+---STRINGEND
+
+---STRING full scale version
+Wersja pełnowymiarowa
+---STRINGEND
+
+---STRING gallery description
+Opis galerii
+---STRINGEND
+
+---STRING gallery is empty
+Ta galeria jest pusta
+---STRINGEND
+
+---STRING gallery keywords
+Słowa kluczowe
+---STRINGEND
+
+---STRING generated image settings
+Utworzone obrazy
+---STRINGEND
+
+---STRING image data
+Dane obrazów
+---STRINGEND
+
+---STRING index dimensions
+Rozmiary indeksu
+---STRINGEND
+
+---STRING index_cols
+Ilość kolumn z miniaturami
+---STRINGEND
+
+---STRING index_rows
+Ilość wierszy z miniaturami
+---STRINGEND
+
+---STRING jhead not found
+Uwaga: jhead nie jest zainstaowany. Spróbuję użyć funkcji EXIF PHP.
+---STRINGEND
+
+---STRING keywords
+Słowa kluczowe
+---STRINGEND
+
+---STRING list subgalleries in index
+Pokaż podgalerie w indeksie
+---STRINGEND
+
+---STRING loading
+Ładowanie...
+---STRINGEND
+
+---STRING meta data
+Metadane
+---STRINGEND
+
+---STRING metadata settings
+Metadane galerii
+---STRINGEND
+
+---STRING name
+Nazwa
+---STRINGEND
+
+---STRING net.siriux.photos
+Galeria zdjęć
+---STRINGEND
+
+---STRING next
+Dalej
+---STRINGEND
+
+---STRING next page
+Następna strona
+---STRINGEND
+
+---STRING page
+Strona
+---STRINGEND
+
+---STRING photo gallery administration
+Zarządzanie Galerią zdjęć
+---STRINGEND
+
+---STRING photographer
+Autor
+---STRINGEND
+
+---STRING photos
+Galeria zdjęć
+---STRINGEND
+
+---STRING php read_exif_data not found
+Uwaga: Moduł PHP EXIF nie został zainstalowany. Dane EXIF nie zostaną odczytane.
+---STRINGEND
+
+---STRING pictures in gallery
+zdjęć w galerii
+---STRINGEND
+
+---STRING post processing
+Przetwarzanie załadowanych zdjęć
+---STRINGEND
+
+---STRING previous
+Wstecz
+---STRINGEND
+
+---STRING previous page
+Poprzednia strona
+---STRINGEND
+
+---STRING re-read exif
+Odczytaj dane EXIF
+---STRINGEND
+
+---STRING rebuild thumbnails
+Odbuduj miniatury
+---STRINGEND
+
+---STRING rebuild thumbnails confirmation msg
+Ta opcja spowoduje odbudowanie miniatur oraz rozmiarów zdjęć zgodnie z bieżącą konfiguracją. Filtry nie zostaną ponownie wykonane. To może potrwać kilka minut.
+---STRINGEND
+
+---STRING rebuild thumbnails heading
+Odbuduj miniatury
+---STRINGEND
+
+---STRING rebuild thumbnails start
+Start
+---STRINGEND
+
+---STRING regenerated thumbs.
+Miniatury zostały odbudowane
+---STRINGEND
+
+---STRING reread exif confirmation msg
+Ta opcja spowoduje ponowne odczytanie danych EXIF z oryginalnych zdjęć. To może potrwać kilka minut.
+---STRINGEND
+
+---STRING reread exif heading
+Odczytaj dane EXIF
+---STRINGEND
+
+---STRING reread exif start
+Start
+---STRINGEND
+
+---STRING rotate left
+Obróć w lewo
+---STRINGEND
+
+---STRING rotate right
+Obróć w prawo
+---STRINGEND
+
+---STRING rss export settings
+Eksport RSS
+---STRINGEND
+
+---STRING rss_count
+Ilość zdjęć do dołączenia w rss.xml
+---STRINGEND
+
+---STRING rss_description
+Opis
+---STRINGEND
+
+---STRING rss_enable
+Włącz eksport RSS (włącza URLe rss.xml oraz rss/$ilosc.xml)
+---STRINGEND
+
+---STRING rss_language
+Język
+---STRINGEND
+
+---STRING rss_title
+Tytuł eksportu RSS (puste - tytuł galerii)
+---STRINGEND
+
+---STRING rss_webmaster
+Webmaster
+---STRINGEND
+
+---STRING save notes
+Zapisz notatki
+---STRINGEND
+
+---STRING schema_picture
+Schemat zdjęć
+---STRINGEND
+
+---STRING schema_upload
+Schemat wysyłania plików
+---STRINGEND
+
+---STRING schemadb
+Baza schematów (puste - domyślna)
+---STRINGEND
+
+---STRING score
+Waga (do sortowania)
+---STRINGEND
+
+---STRING settings
+Ustawienia
+---STRINGEND
+
+---STRING show all
+Pokaż wszystko
+---STRINGEND
+
+---STRING show only approved
+W indeksie pokaż tylko zatwierdzone
+---STRINGEND
+
+---STRING showing thumbnails for images
+Miniatury zdjęć
+---STRINGEND
+
+---STRING size of thumbnails and views modified
+Zmieniłeś wymiary zarówno miniatur jak i zdjęć poglądowych. Zdjęcia wymagają przeskalowania.
+---STRINGEND
+
+---STRING size of thumbnails modified
+Zmieniłeś wymiary miniatur. Zdjęcia wymagają przeskalowania.
+---STRINGEND
+
+---STRING size of views modified
+Zmieniłeś wymiary zdjęć poglądowych. Zdjęcia wymagają przeskalowania.
+---STRINGEND
+
+---STRING sort order
+Kolejność sortowania
+---STRINGEND
+
+---STRING supported archive formats
+Obsługiwane formaty
+---STRINGEND
+
+---STRING sync article created confirmation msg
+Ta opcja ustawi daty artykułów na zgodne z datami wykonania zdjęć odczytanymi z pół EXIF. To może potrwać kilka minut.
+---STRINGEND
+
+---STRING sync article created heading
+Synchronizuj daty z EXIF
+---STRINGEND
+
+---STRING sync article created start
+Start
+---STRINGEND
+
+---STRING taken
+Wykonano dnia
+---STRINGEND
+
+---STRING taken by
+Autor:
+---STRINGEND
+
+---STRING thumb_x
+Szerokość miniatury
+---STRINGEND
+
+---STRING thumb_y
+Wysokość miniatury
+---STRINGEND
+
+---STRING thumbnail size
+Rozmiar miniatury
+---STRINGEND
+
+---STRING title
+Tytuł
+---STRINGEND
+
+---STRING total
+Razem
+---STRINGEND
+
+---STRING unapprove
+Odtwierdź
+---STRINGEND
+
+---STRING update note text
+Zapisz notatkę
+---STRINGEND
+
+---STRING upload
+Wyślij
+---STRINGEND
+
+---STRING upload can take time
+Uwaga: wysyłanie zdjęć może potrwać kilka minut.
+---STRINGEND
+
+---STRING upload file
+Wyślij plik (pojedyńcze zdjęcie lub archiwum)
+---STRINGEND
+
+---STRING upload is archive
+Wysyłany plik to archiwum (zip,tgz). Rozpakuj i przetwórz całe archiwum
+---STRINGEND
+
+---STRING upload photos
+Wyślij zdjęcia
+---STRINGEND
+
+---STRING upload size limit
+Limit rozmiaru plików
+---STRINGEND
+
+---STRING upload status
+Stan wysyłania
+---STRINGEND
+
+---STRING view size
+Rozmiar podglądu
+---STRINGEND
+
+---STRING view_x
+Szerokość podglądu
+---STRINGEND
+
+---STRING view_y
+Wysokość podglądu
+---STRINGEND
+
+---STRING click here to continue
+Kontynuuj
+---STRINGEND
+
+---STRING create subgallery
+Utwórz podgalerię
+---STRINGEND
+
+---STRING processing upload, please wait
+Ładowanie zdjęc na serwer w toku... Proszę czekać... Cierpliwie...
+---STRINGEND
+

@@ -1,0 +1,18 @@
+                   pl.olga.vv Changelog
+                   --------------------
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+
+2004-11-10 torben
+  - Filesystem conversion
+
+2004-08-02 SmallOne
+  - Added swedish translation
+
+2004-01-09 Marcin Soltysiak
+  - Fixed some explicit array indexes calls and unsed variables and properites
+

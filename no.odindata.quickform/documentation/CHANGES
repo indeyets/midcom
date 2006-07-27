@@ -1,0 +1,28 @@
+                   no.odindata.quickform Changelog
+                   ---------------------------
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+2006-03--06 bergie
+ + Removed debug output from forms left there by somebody
+
+2005-12-16 Oskari Kokko
+ - bug-fix to earlier fix
+
+2005-12-15 Oskari Kokko
+ - fixed checkbox synchronize-problem
+
+2005-10-25 rambo
+ - backported to branch-2_4
+
+2005-09-28 Rambo
+ - Added charset as configuration option
+
+2005-05-17 Tarjei Huse
+ - Lots and lots of fixes. Still not perfect but now it works :)
+
+2005-02-02 Tarjei Huse
+ - initial checking

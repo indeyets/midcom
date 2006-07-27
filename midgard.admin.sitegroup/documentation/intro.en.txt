@@ -1,0 +1,6 @@
+
+## This simple component creates a sitegroup. 
+
+# Commandline usage
+In the bin directory there is a simple commandline application 
+create_sitegroup.php that creates a sitegroup with an admingroup.

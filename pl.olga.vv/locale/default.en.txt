@@ -1,0 +1,21 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING activate antispam
+Use anti-spam rule
+---STRINGEND
+
+---STRING allow create by uri
+Allow create views automatically
+---STRINGEND
+
+---STRING setup
+Setup
+---STRINGEND
+
+---STRING views & votes
+Views & Votes
+---STRINGEND
+

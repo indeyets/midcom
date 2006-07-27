@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    <type name="fi_mik_lentopaikkakisa_report" table="fi_mik_lentopaikkakisa_report">
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="date" type="integer"/>
+        <property name="organization" type="text"/>
+        <property name="aerodrome" type="text"/>
+        <property name="plane" type="text"/>
+        <property name="score" type="float"/>
+        <property name="comment" type="text"/>
+                
+        <!-- poster metadata -->
+        <property name="sendername" type="text"/>
+        <property name="senderemail" type="text"/>        
+        <property name="senderip" type="text"/>
+        <property name="sender" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /poster metadata -->
+        
+        <!-- required metadata -->        
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->        
+    </type>
+</Schema>

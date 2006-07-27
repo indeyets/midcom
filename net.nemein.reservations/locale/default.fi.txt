@@ -1,0 +1,225 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING admin_password
+Salasana
+---STRINGEND
+
+---STRING admin_user
+Käyttäjätunnus
+---STRINGEND
+
+---STRING approved reservations for %s:
+Resurssin %s hyväksytyt varaukset:
+---STRINGEND
+
+---STRING back to main
+Palaa pääsivulle
+---STRINGEND
+
+---STRING cleaned up %d incomplete reservations.
+Korjattu %d viallista varausta
+---STRINGEND
+
+---STRING configuration
+Konfiguraatio
+---STRINGEND
+
+---STRING corrupt reservations
+Vialliset varaukset:
+---STRINGEND
+
+---STRING corrupt reservations for %s:
+Resurssin %s vialliset varaukset:
+---STRINGEND
+
+---STRING create new reservation
+Tee varaus
+---STRINGEND
+
+---STRING create resource
+Luo resurssi
+---STRINGEND
+
+---STRING data schema settings
+Schema-asetukset
+---STRINGEND
+
+---STRING delete all incomplete reservations older then one hour
+Poista kaikki vaillinaiset varaukset, jotka ovat yhtä tuntia vanhempia.
+---STRINGEND
+
+---STRING delete reservation
+Poista varaus
+---STRINGEND
+
+---STRING delete resource
+Poista resurssi
+---STRINGEND
+
+---STRING do you really want to delete this reservation
+Haluatko varmasti poistaa tämän varauksen?
+---STRINGEND
+
+---STRING do you really want to delete this resource
+Haluatko varmasti poistaa tämän resurssin?
+---STRINGEND
+
+---STRING edit reservation
+Muokkaa varausta
+---STRINGEND
+
+---STRING edit reservation for %s:
+Muokkaa resurssin %s varausta:
+---STRINGEND
+
+---STRING edit resource
+Muokkaa resurssia
+---STRINGEND
+
+---STRING end time before start time.
+Päättymisaika ei voi olla ennen alkamisaikaa.
+---STRINGEND
+
+---STRING end time format is YYYY-MM-DD HH:MM
+Syötä varauksen päättymisaika (VVVV-KK-PP TT:MM).
+---STRINGEND
+
+---STRING end time is invalid.
+Päättymisaika on viallinen.
+---STRINGEND
+
+---STRING event_type
+Varauksen tyyppi (käytetään varauksien luomiseen ja suodatukseen).
+---STRINGEND
+
+---STRING incomplete/corrupt reservations
+Vialliset varaukset
+---STRINGEND
+
+---STRING mail templates
+Sähköpostiviestien tyylipohjat
+---STRINGEND
+
+---STRING mail_acceptreservation
+Varaus on hyväksytty
+---STRINGEND
+
+---STRING mail_newreservation
+Uusi varaus
+---STRINGEND
+
+---STRING mail_rejectreservation
+Varaus on hylätty
+---STRINGEND
+
+---STRING net.nemein.reservations
+Varauskalenteri
+---STRINGEND
+
+---STRING no corrupt reservations found.
+Ei viallisia varauksia.
+---STRINGEND
+
+---STRING no reservations found
+Ei varauksia.
+---STRINGEND
+
+---STRING no resources found
+Ei resursseja.
+---STRINGEND
+
+---STRING reject and delete
+Hylkää ja poista
+---STRINGEND
+
+---STRING reservation complete
+Varaus on valmis
+---STRINGEND
+
+---STRING reservation end time including the buffer:
+Varauksen päättymisaika (HUOM! sisältää toimitusajat):
+---STRINGEND
+
+---STRING reservation end time:
+Varauksen päättymisaika
+---STRINGEND
+
+---STRING reservation has been approved
+Varaus on hyväksytty
+---STRINGEND
+
+---STRING reservation start time:
+Varauksen alkamisaika
+---STRINGEND
+
+---STRING reservation step 1: select start time
+Varausvaihe 1: valitse alkamisaika
+---STRINGEND
+
+---STRING reservation step 2: select end time
+Varausvaihe 2: valitse päättymisaika
+---STRINGEND
+
+---STRING reservation step 3: details
+Varausvaihe 3: yhteystiedot
+---STRINGEND
+
+---STRING reservations
+Varaustilanne
+---STRINGEND
+
+---STRING reservations configuration
+Varauksien konfiguraatio
+---STRINGEND
+
+---STRING schema_reservation
+Varauksissa käytettävä schema
+---STRINGEND
+
+---STRING schema_resource
+Resursseissa käytettävä schema
+---STRINGEND
+
+---STRING schemadb
+Polku schema-tietokantaan
+---STRINGEND
+
+---STRING start time format is YYYY-MM-DD HH:MM
+Syötä alkamisaika (VVVV-KK-PP TT:MM).
+---STRINGEND
+
+---STRING start time is in the past.
+Alkamisaika on jo mennyt, korjaa alkamisaika.
+---STRINGEND
+
+---STRING start time is invalid.
+Alkamisaika on viallinen.
+---STRINGEND
+
+---STRING this resource is already booked at that time. advanced to next free time gap
+Resurssi on jo varattu haluttuna aikana. Alkamisaikaa on siirretty ensimmäiseen vapaaseen ajankohtaan.
+---STRINGEND
+
+---STRING this resource is already booked at that time. end time adjusted
+Resurssi on jo varattu haluttuna aikana. Päättymisaika on siirretty vapaaseen ajankohtaan.
+---STRINGEND
+
+---STRING unapproved reservations for %s:
+Resurssin %s hyväksymättömät varaukset:
+---STRINGEND
+
+---STRING view reservation
+Näytä varauksen tiedot
+---STRINGEND
+
+---STRING view reservation for %s:
+Näytä resurssin %s varaustiedot:
+---STRINGEND
+
+---STRING view resource
+Näytä resurssi
+---STRINGEND
+

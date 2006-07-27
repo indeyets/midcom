@@ -1,0 +1,45 @@
+"default" => array (
+
+    "name"        => "default",
+    "description" => "Download package",
+    "fields"      => array (
+        "id" => array (
+            "description" => "Database ID",
+            "datatype"    => "text",
+            "location"    => "id",
+            "hidden"      => true,
+            "readonly"     => true
+        ),
+        "name" => array (
+            "description" => "URL name",
+            "datatype"    => "text",
+            "helptext"    => "Lowercase, no special characters or spaces",
+            "location"    => "name",
+            "required"    => true,
+        ),
+        "title" => array (
+            "description" => "Release name",
+            "datatype"    => "text",
+            "location"    => "title",
+            "required"    => true,
+        ),
+        "license" => array (
+            "description" => "License",
+            "datatype"    => "text",
+            "location"    => "parameter",
+        ),
+        "content" => array (
+            "description" => "Text",
+            "datatype"    => "text",
+            "location"    => "content",
+            "widget"      => "html"
+        ),
+        "download" => array (
+            "description" => "Downloadable files",
+            "helptext"    => "You must save the form between uploading multiple files",
+            "datatype"    => "collection",
+            "widget_blob_simple" => true,
+        )
+    )
+
+)

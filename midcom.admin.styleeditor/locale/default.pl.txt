@@ -1,0 +1,189 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE pl
+
+---STRING Select arrow up or down and click on the element you want to move
+Ustal kolejność wybierając strzałkę oznaczającą kierunek i klikając na element z listy.
+---STRINGEND
+
+---STRING Set order
+Ustaw kolejność
+---STRINGEND
+
+---STRING Sort articles
+Sortuj artykuły
+---STRINGEND
+
+---STRING Sort topics
+Sortuj foldery
+---STRINGEND
+
+---STRING The objects in this topic cannot be sorted
+Artykuły w tym folderze nie mogą być sortowane
+---STRINGEND
+
+---STRING are you sure to delete
+Na pewno chcesz usunąć ten folder wraz z zawartością?
+---STRINGEND
+
+---STRING articles first
+Najpierw artykuły potem foldery (wg wag)
+---STRINGEND
+
+---STRING attachments for topic
+Załączniki w folderze
+---STRINGEND
+
+---STRING by score
+wg Wag
+---STRINGEND
+
+---STRING create attachment
+Utwórz załącznik
+---STRINGEND
+
+---STRING create subtopic
+Utwórz podfolder
+---STRINGEND
+
+---STRING create topic
+Utwórz folder
+---STRINGEND
+
+---STRING default
+Domyślne dla modułu
+---STRINGEND
+
+---STRING delete attachment
+Usuń załącznik
+---STRINGEND
+
+---STRING delete topic
+Usuń folder
+---STRINGEND
+
+---STRING descendants are deleted
+Uwaga: cała zawartość zostanie usunięta.
+---STRINGEND
+
+---STRING edit metadata
+Edytuj metadane
+---STRINGEND
+
+---STRING edit order
+Sortowanie
+---STRINGEND
+
+---STRING edit topic
+Edytuj folder
+---STRINGEND
+
+---STRING file
+Plik
+---STRINGEND
+
+---STRING filename
+Nazwa pliku
+---STRINGEND
+
+---STRING inherit from parent
+Dziedziczone
+---STRINGEND
+
+---STRING inherit style
+Styl dziedziczony
+---STRINGEND
+
+---STRING location
+Lokalizacja
+---STRINGEND
+
+---STRING metadata for %s
+Metadane %s
+---STRINGEND
+
+---STRING nav order
+Sortowanie obiektów podrzędnych
+---STRINGEND
+
+---STRING new filename
+Nowa nazwa pliku
+---STRINGEND
+
+---STRING no access restriction
+Brak restrykcji
+---STRINGEND
+
+---STRING no attachments found
+Brak załączników
+---STRINGEND
+
+---STRING no preview available
+Brak podglądu
+---STRINGEND
+
+---STRING overview
+Podsumowanie
+---STRINGEND
+
+---STRING owner
+Właściciel
+---STRINGEND
+
+---STRING preview
+Podgląd
+---STRINGEND
+
+---STRING score
+Waga
+---STRINGEND
+
+---STRING short description
+Krótki opis
+---STRINGEND
+
+---STRING sorting position
+Pozycja sortowania
+---STRINGEND
+
+---STRING style
+Styl
+---STRINGEND
+
+---STRING title
+Tytuł
+---STRINGEND
+
+---STRING topic administration
+Administracja folderem
+---STRINGEND
+
+---STRING topic attachments
+Załączniki
+---STRINGEND
+
+---STRING topics first
+Najpierw foldery, potem artykuły
+---STRINGEND
+
+---STRING type
+Typ
+---STRINGEND
+
+---STRING url name
+URL (male litery i cyfry, bez spacji i znaków specjalnych)
+---STRINGEND
+
+---STRING view this page
+Pokaż stronę
+---STRINGEND
+
+---STRING viewer groups
+Grupy mogące oglądać ten folder
+---STRINGEND
+
+---STRING view this page link unavailable
+"Pokaż stronę" niedostępne
+---STRINGEND
+

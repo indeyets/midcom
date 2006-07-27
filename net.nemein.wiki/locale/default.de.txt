@@ -1,0 +1,61 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING allow anonymous posting
+Anonymen Zugriff erlauben
+---STRINGEND
+
+---STRING anonymous password
+Passwort für den anonymen Zugriff
+---STRINGEND
+
+---STRING anonymous posting
+Anonymen Zugriff
+---STRINGEND
+
+---STRING anonymous username
+Benutzername für den anonymen Zugriff
+---STRINGEND
+
+---STRING click to create
+Eine Wiki-Seite erstellen
+---STRINGEND
+
+---STRING create pages by linking
+Sie können Seiten in das Wiki einfügen, in dem Sie auf nicht-existente Seiten mit Hilfe der <a href="http://en.wikipedia.org/wiki/CamelCase">CamelCase-Notation</a> verweisen.
+---STRINGEND
+
+---STRING edit wikipage
+Wiki-Seite editieren
+---STRINGEND
+
+---STRING login to create
+Um diese fehlende Seite zu erstellen müssen Sie sich anmelden
+---STRINGEND
+
+---STRING no links to page
+Keine Verweise zu dieser Wiki-Seite
+---STRINGEND
+
+---STRING pages linking to %s
+Wiki-Seiten, die auf %s verweisen
+---STRINGEND
+
+---STRING this page is stub
+Diese Wiki-Seite hat noch keinen Inhalt. Bitte klicken Sie auf "editieren" um Inhalte einzugeben.
+---STRINGEND
+
+---STRING what links
+Welche Seiten verweisen hierher
+---STRINGEND
+
+---STRING wiki
+Wiki
+---STRINGEND
+
+---STRING net.nemein.wiki
+Wiki
+---STRINGEND
+

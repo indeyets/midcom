@@ -1,0 +1,201 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING are you sure to delete
+Är du säker på att du vill ardera det här Ämnet med allting under?
+---STRINGEND
+
+---STRING articles first
+Artiklar först sen ämnen (efter Nivå)
+---STRINGEND
+
+---STRING attachments for topic
+Bifogade filer för Ämne
+---STRINGEND
+
+---STRING by score
+efter Nivå
+---STRINGEND
+
+---STRING create attachment
+Skapa Bifogad fil
+---STRINGEND
+
+---STRING create subtopic
+Skapa Underämne
+---STRINGEND
+
+---STRING create topic
+Skapa Ämne
+---STRINGEND
+
+---STRING delete attachment
+Radera Bifogad fil
+---STRINGEND
+
+---STRING delete topic
+Radera Ämne
+---STRINGEND
+
+---STRING descendants are deleted
+Varning: alla underkataloger kommer också att raderas
+---STRINGEND
+
+---STRING edit topic
+Ändra Ämne
+---STRINGEND
+
+---STRING file
+Fil
+---STRINGEND
+
+---STRING filename
+Filnamn
+---STRINGEND
+
+---STRING inherit from parent
+Ärvd från tidigare objekt
+---STRINGEND
+
+---STRING location
+Plats
+---STRINGEND
+
+---STRING nav order
+Sorterings ordning av underobjekt
+---STRINGEND
+
+---STRING new filename
+Nytt filnamn
+---STRINGEND
+
+---STRING no attachments found
+Inga bifogade filer funna
+---STRINGEND
+
+---STRING no preview available
+Ingen förhandsvisning tillgänglig
+---STRINGEND
+
+---STRING overview
+Översikt
+---STRINGEND
+
+---STRING owner
+Ägare
+---STRINGEND
+
+---STRING preview
+Förhandsvisning
+---STRINGEND
+
+---STRING score
+Nivå
+---STRINGEND
+
+---STRING short description
+Kort beskrivning
+---STRINGEND
+
+---STRING sorting position
+Sorterings ordning
+---STRINGEND
+
+---STRING style
+Stil
+---STRINGEND
+
+---STRING title
+Titel
+---STRINGEND
+
+---STRING topic administration
+Ämnes Administration
+---STRINGEND
+
+---STRING topic attachments
+Bifogade filer för Ämne
+---STRINGEND
+
+---STRING topics first
+Ämnen förs, Sen artiklar (efter nivå)
+---STRINGEND
+
+---STRING type
+Typ
+---STRINGEND
+
+---STRING url name
+URL Namn (gemener, siffror, inga mellanslag, inga specialtecken, etc)
+---STRINGEND
+
+---STRING view this page
+Visa den här sidan
+---STRINGEND
+
+---STRING view this page link unavailable
+Visning av den här sidan är inte tillåten
+---STRINGEND
+
+---STRING Select arrow up or down and click on the element you want to move
+Välj ordning genim att välja upp eller ner pik och klicka på det elementet du vill flytta.
+---STRINGEND
+
+---STRING Set order
+Sätt ordning
+---STRINGEND
+
+---STRING Sort articles
+Sortera artiklar
+---STRINGEND
+
+---STRING Sort topics
+Sortera ämnen
+---STRINGEND
+
+---STRING The objects in this topic cannot be sorted
+Artiklarna i detta ämne kan inte sorteras
+---STRINGEND
+
+---STRING default
+Standard för komponent
+---STRINGEND
+
+---STRING default sort order
+Standard sorterings ordning för komponent
+---STRINGEND
+
+---STRING edit metadata
+Ändra metadata
+---STRINGEND
+
+---STRING edit order
+Ändra ämnes ordning
+---STRINGEND
+
+---STRING inherit style
+Gör stilen ärvbar
+---STRINGEND
+
+---STRING metadata for %s
+Metadata för '%s'
+---STRINGEND
+
+---STRING midcom.admin.content
+MidCOM AIS
+---STRINGEND
+
+---STRING no access restriction
+Inga åtkomst restriktioner
+---STRINGEND
+
+---STRING topics to delete
+Ämnes träd att radera
+---STRINGEND
+
+---STRING viewer groups
+GRupper som får se det här ämnet
+---STRINGEND
+

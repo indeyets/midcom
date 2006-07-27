@@ -1,0 +1,18 @@
+                   fi.mik.lentopaikkakisa Changelog
+                   --------------------------------
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+2006-05-26 bergie
+  + Fixed minor ACL settings as for some reason require_user_do doesn't seem to work
+
+2005-05-10 bergie
+  + Downloadable reports in CSV and XML formats
+  + Added high score lists for pilots and clubs
+  + Bugfixes
+
+2006-03-13 bergie
+  + Initial working version

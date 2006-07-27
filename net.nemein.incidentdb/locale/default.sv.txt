@@ -1,0 +1,45 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING create incident
+Skapa problem: %s
+---STRINGEND
+
+---STRING create new incident
+Skapa ett nytt problem
+---STRINGEND
+
+---STRING created root event
+Skapa ett huvud problem "%s"
+---STRINGEND
+
+---STRING edit incident
+Ändra händelse: %s
+---STRINGEND
+
+---STRING failed to create root event
+Kunde inte skapa huvud problem: %s
+---STRINGEND
+
+---STRING failed to open root event
+Kunde inte öppna huvud problem %s: %s
+---STRINGEND
+
+---STRING incidentdb
+Problem databas
+---STRINGEND
+
+---STRING root event not yet present
+Huvud problem har inte skapats än. Gå till AIS för att skapa det.
+---STRINGEND
+
+---STRING view incident
+Visa problem
+---STRINGEND
+
+---STRING net.nemein.incidentdb
+Problem databas
+---STRINGEND
+

@@ -1,0 +1,580 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING %d copies, %s total, including VAT
+%d copies, %s total, including VAT
+---STRINGEND
+
+---STRING Not enough copies available, reduced to %d
+No more then %d copies can be ordered right now.
+---STRINGEND
+
+---STRING Not enough copies for %s available, reduced to %d.
+Not enough copies available for publication %s, reduced to %d.
+---STRINGEND
+
+---STRING add to cart
+Add to shopping cart
+---STRINGEND
+
+---STRING admin_password
+Username for anonymous on-site access
+---STRINGEND
+
+---STRING admin_user
+Password for anonymous on-site access
+---STRINGEND
+
+---STRING auth: need not to be mailing company
+Access denied: Members of the mailing company user group may not access this page.
+---STRINGEND
+
+---STRING auth: need to be admin
+Access denied: You need to be an administrator to access this page.
+---STRINGEND
+
+---STRING auth: need to be mailing company
+Access denied: You need to be a member of the mailing company group to access this page.
+---STRINGEND
+
+---STRING auth: need to be owner
+Access denied: You need to be an owner of the topic to access this page.
+---STRINGEND
+
+---STRING auth: need to be poweruser
+Access denied: You need to be both a power user and owner of this topic to access this page.
+---STRINGEND
+
+---STRING auto-created order root event <em>%s</em>
+Automatically created the root event for all orders <em>%s</em>.
+---STRINGEND
+
+---STRING available
+Number of items available
+---STRINGEND
+
+---STRING back to main
+Back to the main page
+---STRINGEND
+
+---STRING back to product overview
+Return to the product overview
+---STRINGEND
+
+---STRING billable copies
+Billable items
+---STRINGEND
+
+---STRING billing_address
+Billing address (if different from the shipping address)
+---STRINGEND
+
+---STRING cannot order, no items available
+Cannot order this product currently, there are no items available.
+---STRINGEND
+
+---STRING cart is without free items notice
+Note: The cart shown above does not yet take the number of free items left into account. This will be corrected during the checkout.
+---STRINGEND
+
+---STRING checkout
+Checkout
+---STRINGEND
+
+---STRING checkout: complete
+Checkout: Order processed.
+---STRINGEND
+
+---STRING checkout: confirm order
+Checkout: Check and confirm the order
+---STRINGEND
+
+---STRING checkout: payment options
+Checkout: Choose a payment option
+---STRINGEND
+
+---STRING checkout: shipping information and order details
+Checkout: Enter shipping information and order details.
+---STRINGEND
+
+---STRING cleaned up %d incomplete events.
+%d incomplete events have been cleaned up.
+---STRINGEND
+
+---STRING code
+Product code
+---STRINGEND
+
+---STRING code helptext
+Must be unique within this topic.
+---STRINGEND
+
+---STRING company
+Company
+---STRINGEND
+
+---STRING configuration
+Configuration
+---STRINGEND
+
+---STRING corrupt orders
+Corrupt orders
+---STRINGEND
+
+---STRING could not update storage parameters: %s
+Could not update the storage data: %s
+---STRINGEND
+
+---STRING could not update your order: %s
+Your order could not be updated: %s
+---STRINGEND
+
+---STRING create product
+Create product
+---STRINGEND
+
+---STRING create subcategory
+Create a subcategory
+---STRINGEND
+
+---STRING currency_sign
+Curreny sign to use on-site
+---STRINGEND
+
+---STRING custom delivered orders query:
+Custom query:
+---STRINGEND
+
+---STRING data schema settings
+Data schema configuration
+---STRINGEND
+
+---STRING date format: yyyy-mm-dd hh:mm
+Please use the following date format: "YYYY-MM-DD HH:MM", you can omit the time, which will default to 00:00 in that case.
+---STRINGEND
+
+---STRING delete all incomplete orders older then one hour
+Delete all incomplete orders which are older then one hour.
+---STRINGEND
+
+---STRING delete order
+Delete order
+---STRINGEND
+
+---STRING delete product
+Delete product
+---STRINGEND
+
+---STRING delivery amount
+Delivery amount
+---STRINGEND
+
+---STRING do you really want to delete this order?
+Do you really want to delete this order?
+---STRINGEND
+
+---STRING do you really want to delete this product?
+Do you really want to delete this product? <em>Warning:</em> This will also delete all orders which contain this product!
+---STRINGEND
+
+---STRING do you really want to order?
+Do you really want to order the above products?
+---STRINGEND
+
+---STRING edit order
+Edit order
+---STRINGEND
+
+---STRING edit order items
+Edit ordered products
+---STRINGEND
+
+---STRING edit product
+Edit product
+---STRINGEND
+
+---STRING email
+E-Mail address
+---STRINGEND
+
+---STRING enable_net_nemein_payment_integration
+Enable electronic payment through net.nemein.payment
+---STRINGEND
+
+---STRING enable_payment_management
+Enable payment management functions
+---STRINGEND
+
+---STRING end:
+Ending date:
+---STRINGEND
+
+---STRING epayment_data
+Machine-readable data about the ePayment
+---STRINGEND
+
+---STRING epayment_state
+State of the electronic payment
+---STRINGEND
+
+---STRING execute query
+Execute query
+---STRINGEND
+
+---STRING expert settings
+Advanced settings
+---STRINGEND
+
+---STRING failed to auto-create order root event: %s
+Failed to automatically create the root event for all orders: %s
+---STRINGEND
+
+---STRING failed to update article %s: invalid delivery amount %s
+Failed to update article <em>%s</em>, the delivery amount '%s' was invalid.
+---STRINGEND
+
+---STRING fill out the form. after proceeding, max free items will be taken into account.
+Please fill out this form, so that your order can be processed. After proceeding, the cart will be updated with the number of free items you still have available. Note, that all fields marked with an asterisk are mandatory.
+---STRINGEND
+
+---STRING free copies
+Free items
+---STRINGEND
+
+---STRING grand total:
+Grand total:
+---STRINGEND
+
+---STRING gross sum
+Gross sum
+---STRINGEND
+
+---STRING incomplete/corrupt orders
+Incomplete or corrupt orders
+---STRINGEND
+
+---STRING instock
+Number of items in stock
+---STRINGEND
+
+---STRING last 24 hrs
+The last 24 hours
+---STRINGEND
+
+---STRING last month
+Last month
+---STRINGEND
+
+---STRING last week
+Last week
+---STRINGEND
+
+---STRING mail templates
+E-Mail templates
+---STRINGEND
+
+---STRING mail_order_helptext
+__ORDER__ will dump the complete order data (except the items), __ORDER_FIELDNAME__ gives you a specific field, __ITEMS__ lists the actual ordered items including sums.
+---STRINGEND
+
+---STRING mail_orderconfirm
+Confirmation of a new order
+---STRINGEND
+
+---STRING mail_ordersent
+Notification of a delivered order.
+---STRINGEND
+
+---STRING mailing_company_group
+Group with the restricted users from the mailing company
+---STRINGEND
+
+---STRING mailing_company_group_helptext
+Leave this empty if you don't have an explicit mailing company group, especially do not set this to the topic owner group.
+---STRINGEND
+
+---STRING mark as paid
+Mark as paid
+---STRINGEND
+
+---STRING mark as sent
+Mark as sent
+---STRINGEND
+
+---STRING mark as unpaid
+Mark as not paid
+---STRINGEND
+
+---STRING mark as unsent
+Mark as unsent
+---STRINGEND
+
+---STRING maxfreecopies
+Maximum number of free items
+---STRINGEND
+
+---STRING maxperorder
+Maximum number of items per order
+---STRINGEND
+
+---STRING maxperorder limit for product %s exceeded
+Maximum copies per order limit for product %s exceeded.
+---STRINGEND
+
+---STRING name
+Full Name
+---STRINGEND
+
+---STRING net sum
+Net sum
+---STRINGEND
+
+---STRING net.nemein.orders
+Orders
+---STRINGEND
+
+---STRING new product
+New product
+---STRINGEND
+
+---STRING new query
+New query
+---STRINGEND
+
+---STRING no orders found.
+No orders found.
+---STRINGEND
+
+---STRING no, i changed my mind
+No, I changed my mind.
+---STRINGEND
+
+---STRING not enough items available, %i requested, %i available.
+Not enough items available, %i were requested, but only %i are available.
+---STRINGEND
+
+---STRING not enough items in stock, %i requested, %i available.
+Not enough items in stock, %i were requested, but only %i are available.
+---STRINGEND
+
+---STRING optional content
+Optional content
+---STRINGEND
+
+---STRING order %s copies of this product
+Order %s items of this product.
+---STRINGEND
+
+---STRING order cancelled
+Cancelled
+---STRINGEND
+
+---STRING order corrupt
+The order is corrupt, please check the integrity of the data
+---STRINGEND
+
+---STRING order delivered
+Delivered
+---STRINGEND
+
+---STRING order empty.
+This order is empty.
+---STRINGEND
+
+---STRING order incomplete
+Incomplete
+---STRINGEND
+
+---STRING order pending
+Pending
+---STRINGEND
+
+---STRING order_date
+Order created on
+---STRINGEND
+
+---STRING order_sent
+Order sent on
+---STRINGEND
+
+---STRING orders
+Orders
+---STRINGEND
+
+---STRING paid
+Paid on
+---STRINGEND
+
+---STRING payment settings
+Payment settings
+---STRINGEND
+
+---STRING pending orders
+Pending orders
+---STRINGEND
+
+---STRING permissions
+Access permissions
+---STRINGEND
+
+---STRING preset delivered order queries:
+Preset queries:
+---STRINGEND
+
+---STRING price
+Item price excluding VAT
+---STRINGEND
+
+---STRING prodcuct abstract helptext
+HTML inline tags are allowed.
+---STRINGEND
+
+---STRING product abstract
+Abstract
+---STRINGEND
+
+---STRING product cannot be ordered
+This product cannot be ordered currently.
+---STRINGEND
+
+---STRING product description
+Description
+---STRINGEND
+
+---STRING product details
+View the product details (order here)
+---STRINGEND
+
+---STRING product image
+Product Image
+---STRINGEND
+
+---STRING product offline
+Offline
+---STRINGEND
+
+---STRING product online
+Online
+---STRINGEND
+
+---STRING product outside link
+Online, using external order link
+---STRINGEND
+
+---STRING product status
+Product status
+---STRINGEND
+
+---STRING product title
+Product title
+---STRINGEND
+
+---STRING quantity
+Quantity
+---STRINGEND
+
+---STRING query delivered orders
+Query delivered orders
+---STRINGEND
+
+---STRING received and processed message
+Your order has been processed, you will receive a confirmation via E-Mail shortly.
+---STRINGEND
+
+---STRING remove all from cart
+Remove all items from the shopping cart.
+---STRINGEND
+
+---STRING remove from cart
+Remove from the cart
+---STRINGEND
+
+---STRING required fields
+Required fields
+---STRINGEND
+
+---STRING root_order_event
+GUID of the root order event
+---STRINGEND
+
+---STRING schema_order
+Data schema to use for orders
+---STRINGEND
+
+---STRING schema_product
+Data schema to use for products
+---STRINGEND
+
+---STRING schemadb
+Path to the schema database
+---STRINGEND
+
+---STRING shipping_address
+Shipping Address
+---STRINGEND
+
+---STRING shopping cart empty
+The shopping cart is empty.
+---STRINGEND
+
+---STRING start:
+Starting date:
+---STRINGEND
+
+---STRING status
+Order status
+---STRINGEND
+
+---STRING stockmin
+Minimum stock level
+---STRINGEND
+
+---STRING topic settings
+Topic settings
+---STRINGEND
+
+---STRING topic_introduction
+Topic introduction text (shown before the product listing)
+---STRINGEND
+
+---STRING update storage amount
+Update storage amounts
+---STRINGEND
+
+---STRING update storage amount helptext
+Enter the quantity change for each item, not the new total. For example, if you got a delivery with 100 items of a product which has 20 items in storage, enter 100 not 120 into this form.
+---STRINGEND
+
+---STRING vat
+VAT
+---STRINGEND
+
+---STRING view product
+View product
+---STRINGEND
+
+---STRING yes, i want to order these product
+Yes, I really want to order these products.
+---STRINGEND
+
+---STRING you must enter a positive quantity for product %s.
+You must enter a positive quantity for product %s.
+---STRINGEND
+
+---STRING you must enter a positive quantity.
+You must enter a positive quantity.
+---STRINGEND
+
+---STRING your shopping cart
+Your shopping cart
+---STRINGEND
+
+---STRING enter category name
+Please enter the name of the category
+---STRINGEND
+
+---STRING shipping:
+Shipping (including VAT):
+---STRINGEND

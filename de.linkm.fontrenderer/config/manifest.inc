@@ -1,0 +1,5 @@
+'name' => 'de.linkm.fontrenderer',
+'purecode' => true,
+'version' => 0,
+'privileges' =>  Array(),
+'class_definitions' => Array(),

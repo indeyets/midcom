@@ -1,0 +1,182 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING (confirm)
+(confirm)
+---STRINGEND
+
+---STRING (repeat)
+(repeat)
+---STRINGEND
+
+---STRING captcha image alt text
+This is a Captcha (http://en.wikipedia.org/wiki/Captcha), you need a graphical browser to display it.
+---STRINGEND
+
+---STRING captcha message
+This is a <a target='_new' href="http://en.wikipedia.org/wiki/Captcha">Captcha.</a> You have to enter the
+characters displayed in the image <em>taking case sensitivity into account.</em>
+---STRINGEND
+
+---STRING captcha validation failed
+The characters entered do not match the image.
+---STRINGEND
+
+---STRING delete file
+Delete file
+---STRINGEND
+
+---STRING delete image
+Delete image
+---STRINGEND
+
+---STRING denotes required field
+denotes required field
+---STRINGEND
+
+---STRING field %s is required
+The field %s is required, please fill it out.
+---STRINGEND
+
+---STRING form submit: cancel
+Cancel
+---STRINGEND
+
+---STRING form submit: next
+Next
+---STRINGEND
+
+---STRING form submit: previous
+Previous
+---STRINGEND
+
+---STRING form submit: save
+Save
+---STRINGEND
+
+---STRING midcom.helper.datamanager2
+Data management and form rendering library
+---STRINGEND
+
+---STRING no file uploaded
+No file uploaded
+---STRINGEND
+
+---STRING passwords do not match
+The passwords do not match.
+---STRINGEND
+
+---STRING replace file
+Replace file
+---STRINGEND
+
+---STRING replace image
+Replace image
+---STRINGEND
+
+---STRING type blobs: file size
+File size
+---STRINGEND
+
+---STRING type image: available sizes
+Available Sizes
+---STRINGEND
+
+---STRING type image: thumbnail
+Thumbnail
+---STRINGEND
+
+---STRING type number: value must not be larger then %s
+The value of this field may not be larger then %s.
+---STRINGEND
+
+---STRING type number: value must not be smaller then %s
+The value of this field may not be smaller then %s.
+---STRINGEND
+
+---STRING type select: multiselect not allowed
+No multiple selection allowed for this field.
+---STRINGEND
+
+---STRING type select: no selection
+No selection
+---STRINGEND
+
+---STRING type select: other selection not allowed
+You can only select values from the list for this field.
+---STRINGEND
+
+---STRING type text: value is longer then %d characters
+The value of this field may not be longer then %d characters.
+---STRINGEND
+
+---STRING type text: value may not be array or object
+The value of a text type may not be an array or an object.
+---STRINGEND
+
+---STRING upload file
+Upload file
+---STRINGEND
+
+---STRING upload image
+Upload image
+---STRINGEND
+
+---STRING validation failed: alphanumeric
+Only alphanumeric characters are allowed in this field
+---STRINGEND
+
+---STRING validation failed: email
+This is not a valid E-Mail address
+---STRINGEND
+
+---STRING validation failed: lettersonly
+Only letters are allowed in this field
+---STRINGEND
+
+---STRING validation failed: maxlength
+Maximum field length exceeded
+---STRINGEND
+
+---STRING validation failed: minlength
+Field is too short.
+---STRINGEND
+
+---STRING validation failed: nonzero
+This field must be nonzero.
+---STRINGEND
+
+---STRING validation failed: nopunctuation
+No punctuation characters are allowed in this field.
+---STRINGEND
+
+---STRING validation failed: numeric
+This is no valid number.
+---STRINGEND
+
+---STRING validation failed: regex
+Invalid Input
+---STRINGEND
+
+---STRING widget privilege: allow
+Allow
+---STRINGEND
+
+---STRING widget privilege: deny
+Deny
+---STRINGEND
+
+---STRING widget privilege: inherit
+Not set (inherited)
+---STRINGEND
+
+---STRING widget select: other value
+Other
+---STRINGEND
+
+---STRING double click to edit
+Double click to edit
+---STRINGEND
+

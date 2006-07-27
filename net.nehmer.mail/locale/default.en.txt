@@ -1,0 +1,198 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING %d unread
+%d unread mails
+---STRINGEND
+
+---STRING %d user(s) have been found.
+%d user(s) have been found.
+---STRINGEND
+
+---STRING 1 unread
+one unread mail
+---STRINGEND
+
+---STRING autocreate_inbox
+Automatically create missing user inboxes using MidCOM SUDO privileges
+---STRINGEND
+
+---STRING body
+Message Body
+---STRINGEND
+
+---STRING create mailbox
+Create Mailbox
+---STRINGEND
+
+---STRING date
+Date
+---STRINGEND
+
+---STRING default_quota
+Default Quota to use for newly created mailboxes
+---STRINGEND
+
+---STRING delete selected
+Delete selected
+---STRINGEND
+
+---STRING edit mailbox
+Edit Mailbox
+---STRINGEND
+
+---STRING inbox
+Inbox
+---STRINGEND
+
+---STRING lookup username
+Lookup username
+---STRINGEND
+
+---STRING mail sent successfully
+Mail sent successfully
+---STRINGEND
+
+---STRING mailbox
+Mailbox
+---STRINGEND
+
+---STRING mailbox empty.
+This mailbox is empty.
+---STRINGEND
+
+---STRING mailbox full.
+The Mailbox is full.
+---STRINGEND
+
+---STRING mailbox index
+Mailbox index
+---STRINGEND
+
+---STRING messages
+Messages
+---STRINGEND
+
+---STRING name
+Name
+---STRINGEND
+
+---STRING net.nehmer.mail
+Community Mailing System
+---STRINGEND
+
+---STRING new mail to user
+Write new mail to user
+---STRINGEND
+
+---STRING no limit
+No limit
+---STRINGEND
+
+---STRING no mailboxes found.
+No Mailboxes have been found.
+---STRINGEND
+
+---STRING original message:
+Original message:
+---STRINGEND
+
+---STRING outbox
+Sent Mail
+---STRINGEND
+
+---STRING owner
+Owner
+---STRINGEND
+
+---STRING please enter at least three characters.
+Please enter at least three characters.
+---STRINGEND
+
+---STRING quota
+Quota
+---STRINGEND
+
+---STRING read mail
+Read mail
+---STRINGEND
+
+---STRING replied mail
+Replied mail
+---STRINGEND
+
+---STRING reply mail
+Reply to mail
+---STRINGEND
+
+---STRING search mailboxes
+Search mailboxes
+---STRINGEND
+
+---STRING send mail
+Send mail
+---STRINGEND
+
+---STRING sender
+Sender
+---STRINGEND
+
+---STRING subject
+Subject
+---STRINGEND
+
+---STRING to
+To
+---STRINGEND
+
+---STRING unread mail
+Unread mail
+---STRINGEND
+
+---STRING write mail to %s:
+Write a new mail to %s:
+---STRINGEND
+
+---STRING write new mail
+Write new mail
+---STRINGEND
+
+---STRING write reply to %s:
+Write a reply to %s:
+---STRINGEND
+
+---STRING your mailboxes
+Your Mailboxes
+---STRINGEND
+
+---STRING legend:
+Legend:
+---STRINGEND
+
+---STRING notification_mail_subject
+__SENDER_NAME__ has sent you a new mail.
+---STRINGEND
+
+---STRING notification_mail_body
+Dear __RECEIVER_NAME__,
+
+__SENDER_NAME__ has sent you a new E-Mail regarding
+
+  __SUBJECT__
+
+Click this link to read the mail:
+
+  __MAILURL__
+
+This is an automated message, do not reply to it.
+---STRINGEND
+
+---STRING failed to send mail
+Failed to send the mail
+---STRINGEND
+
+---STRING cannot send mail, mailbox full.
+You cannot send a mail to that user at this time, the mailbox is full.
+---STRINGEND

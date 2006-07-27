@@ -1,0 +1,45 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING author
+Name
+---STRINGEND
+
+---STRING comments
+Comments
+---STRINGEND
+
+---STRING content
+Comment
+---STRINGEND
+
+---STRING creator: %s, created %s, source ip %s.
+Creator: %s, Created: %s, Source IP: %s.
+---STRINGEND
+
+---STRING net.nehmer.comments
+Comments
+---STRINGEND
+
+---STRING no comments found
+There have been no comments so far.
+---STRINGEND
+
+---STRING permission-denied message
+You need to be logged in to publish comments.
+---STRINGEND
+
+---STRING post a comment
+Post a comment
+---STRINGEND
+
+---STRING published by %s on %s.
+Published by %s on %s.
+---STRINGEND
+
+---STRING allow_anonymous
+Allow commenting by anonymous users
+---STRINGEND
+

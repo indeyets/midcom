@@ -1,0 +1,5 @@
+'name' => 'se.anykey.mmslib',
+'purecode' => true,
+'version' => 1,
+'privileges' =>  Array(),
+'class_definitions' => Array(),

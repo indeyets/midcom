@@ -1,0 +1,33 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING edit organization
+Organisation bearbeiten
+---STRINGEND
+
+---STRING none
+Keine
+---STRINGEND
+
+---STRING organizations
+Organisationen
+---STRINGEND
+
+---STRING select group to display
+Anzuzeigende Gruppe auswählen
+---STRINGEND
+
+---STRING select organization to display first
+Zuerst anzuzeigende Organisation auswählen
+---STRINGEND
+
+---STRING view organization
+Organisation anzeigen
+---STRINGEND
+
+---STRING net.nemein.organizations
+Organisationen
+---STRINGEND
+

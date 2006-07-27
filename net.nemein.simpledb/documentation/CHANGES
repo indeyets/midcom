@@ -1,0 +1,66 @@
+                   net.nemein.simpledb Changelog
+                   -----------------------------
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+2005-09-22 bergie
+  + Added new search filters: "less than" and "greater than" for numerical
+    comparison of entries
+
+2005-08-04 torben
+  - Moved the component to DBA and added ACL support
+
+2005-07-12 torben
+  - Did some code cleanup in the component interface class
+
+2005-03-12 torben
+  - Adapted to the new Component Interface
+  - Added indexer support (The search function does not yet use the indexer)
+  - Did a bit of code cleanup.
+
+2005-02-11 torben
+  - Adapted to the new Metadata system.
+
+2004-11-27 torben
+  - NAP/AIS toolbar upgrade
+  - Code cleanup
+  - Added German translation
+
+2004-11-10 torben
+  - Filesystem conversion
+
+2004-11-09
+  + Better deletion support
+
+2004-08-02
+  - Added swedish translation
+
+2004-06-01
+  + Filtering supports also multiselect fields now
+
+2004-05-30
+  + Added filtering support for searches
+  - Filtering can be disabled via boolean configuration key enable_filtering
+  + Switched to using datamanager display_view_field() method for listing
+    entries in search results
+  - Longtext fields are not hidden automatically from search results any
+    more
+
+2004-05-19
+  - Some mRFC 0003 compatibility fixes to UI
+  - Bug #34 compatibility
+
+2004-04-27
+  + On-site editing of entries is now disabled by default
+  - Fixed bug with loading global component configs
+
+2004-03-29
+  + Added new configuration parameter "create_returnuri" for returning
+    from creation to actual view page
+  - Fixed parameter deletion
+
+2003-11-25
+  - First ChangeLog entry

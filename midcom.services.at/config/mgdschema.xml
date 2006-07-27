@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    <type name="midcom_services_at_entry_db" table="midcom_services_at_entry_db">
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="status" type="integer"/>
+        <property name="start" type="integer"/>
+        <property name="component" type="string"/>
+        <property name="method" type="string"/>
+        <!-- arguments array is stored serialized -->
+        <property name="argumentsstore" type="text"/>
+        <!-- required metadata -->
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->
+    </type>
+</Schema>

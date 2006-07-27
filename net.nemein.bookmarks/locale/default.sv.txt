@@ -1,0 +1,73 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING add bookmarks
+Lägg till bokmärke
+---STRINGEND
+
+---STRING back to page
+Tillbaka till sida
+---STRINGEND
+
+---STRING bookmarks
+Bookmärken
+---STRINGEND
+
+---STRING create bookmark
+Skapa bokmärke
+---STRINGEND
+
+---STRING delicious password
+Delicious lösenord:
+---STRINGEND
+
+---STRING delicious username
+Delicious användarnamn:
+---STRINGEND
+
+---STRING extended
+Utökad
+---STRINGEND
+
+---STRING failed to create bookmark!
+kunde inte skapa bokmärke!
+---STRINGEND
+
+---STRING invalid username or password
+Fel användarnamn eller lösenord
+---STRINGEND
+
+---STRING net.nemein.bookmarks
+Bokmärken
+---STRINGEND
+
+---STRING posting bookmarks
+Lägger till bokmärken
+---STRINGEND
+
+---STRING submit
+Skicka
+---STRINGEND
+
+---STRING tags
+Taggar
+---STRINGEND
+
+---STRING title
+Titel
+---STRINGEND
+
+---STRING unify
+Synkronisera
+---STRINGEND
+
+---STRING unify bookmarks with http://del.icio.us
+Synkronisera bokmärken med http://del.icio.us
+---STRINGEND
+
+---STRING use this link to create a bookmark.
+Använd denna länk för att skapa bokmärken.
+---STRINGEND
+
