@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<project name="MidCOM" default="dummy" basedir=".">
+	<!-- edit the properties in this file to your liking.
+	-->
+	<property file="build.properties"  />	
+	<property name="absolute_basedir" value="" />
+	<resolvepath propertyName="absolute_basedir" file="${project.basedir}"/>
+	
+	<taskdef classname="build.makeProjectDir" 
+		     name="makeProjectDir" 
+			 classpath="/${project.basedir}"
+	/>
+	<taskdef classname="build.makeProjectList" 
+				     name="makeProjectList" 
+					 classpath="/${project.basedir}"
+			/>
+	<target name="dummy">
+		<echo>
+		phing install -Dinstall_dir="somedir"
+		You can also set install_dir in build.xml.
+		</echo>
+	</target>
+
+	<target name="install">
+		<mkdir dir="${install_dir}" />
+		<mkdir dir="${lib_dir}" />			
+		<mkdir dir="${static_dir}" />
+		
+		<makeProjectList path="${project.basedir}" returnProperty="projects" />
+		<foreach list="${projects}" param="project" target="install_module_symlink"/>		
+	</target>
+	<target name="install_midcom">
+		<mkdir dir="${lib_dir}/midcom" />
+		
+	</target>
+	<target name="install_module_symlink">
+		<echo>Installing to ${install_dir} </echo>	
+		<makeProjectDir install_dir="${lib_dir}" 
+						project_dir="${absolute_basedir}"
+						module="${project}" 
+						umask="${install_umask}" />
+		<exec command="ln -s ${absolute_basedir}/${project} ${static_dir}/${project}" />
+		
+	</target>
+	
+	<target name="scaffold" >
+		<phing phingfile="scaffold/build.xml" target="scaffold"/>
+	</target>
+</project>
+	
