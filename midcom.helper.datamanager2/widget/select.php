@@ -131,6 +131,13 @@ class midcom_helper_datamanager2_widget_select extends midcom_helper_datamanager
         {
             $this->_select_element =& $this->_form->addElement($select_element);
         }
+        /*
+         *  todo: check if this code is needed.
+         *  if ($this->get_default() !== null) {
+         *                  $selected = array_shift($this->get_default());
+         *                  $this->_select_element->setSelected($selected);
+         *  }
+         */
 
 
     }

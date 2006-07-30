@@ -33,6 +33,7 @@
             'type' => 'text',
             'widget' => 'textarea',
             
+            
     ),
     
     ), // fields

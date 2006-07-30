@@ -64,18 +64,40 @@ class makeProjectDir extends Task {
         $dirs = explode('.', $this->module);
         $module_dir = array_pop($dirs);
         $module_path = $this->install_dir . "/" . implode('/',$dirs);
+        echo "module_path: " .  $module_path . "\n";
         
         if (!file_exists($module_path) && !mkdir ($module_path,0777, true)) {
             echo "Failed to create directory {$module_path}\n";
         }
-        
-        $command = sprintf("ln -s %s/%s %s/%s", $this->project_dir,$this->module, $module_path, $module_dir); 
+        $link = "{$module_path}/{$module_dir}";
+        if (is_link($link))
+        { 
+            return;
+        }
+        $command = sprintf("ln -s %s/%s %s", 
+                            $this->project_dir,$this->module, 
+                            $link); 
         $ret = "";
         exec ($command, &$output, $ret);
+        if ($ret !== 0)
+        {
+            throw new Exception("Exec of $command returned non zero code $ret");
+        }
         
-        
-        echo "$command returned $ret\n";
-        
+    }
+    
+    /**
+     * Creates a symlink to the file or directory
+     * @param string  paramname
+     */
+    private function make_symlink($from , $link)
+    {
+        if (is_link($link)) 
+        {
+            return;
+        }   
+        $command = sprintf("ln -s %s %s", $from, $link);
+        $this->exec_command($command);
     }
 }
 

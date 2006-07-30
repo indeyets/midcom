@@ -46,7 +46,7 @@ class makeProjectList extends Task {
     {
         
         // dirs to skipp
-        $skipp = array ( '.' , '..', 'scaffold' );
+        $skipp = array ( '.' , '..', 'scaffold', 'midcom.core' );
         $skipp = array_flip($skipp);
         $modules = array();    
     
@@ -73,8 +73,6 @@ class makeProjectList extends Task {
             
             
         }
-        
-        //$this->returnProperty = $modules;
         $this->project->setProperty($this->returnProperty, implode(",", $modules));
         
     }
