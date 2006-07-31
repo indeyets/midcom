@@ -1,0 +1,90 @@
+/* Growl windows */
+
+div.midcom-service-uimessages-protogrowl {
+	display: block;
+	width: 350px;
+	height: 80px;
+}
+	div.midcom-service-uimessages-protogrowl-type-info {
+		-moz-border-radius: 0.6em 0.6em 0.6em 0.6em;
+		border-right: 3px solid #A19981;
+		border-bottom: 3px solid #A19981;
+	}
+	div.midcom-service-uimessages-protogrowl-contenthelper-type-info {
+		height: 74px;
+		border: 1px solid #CCCCCC;
+		-moz-border-radius: 0.5em 0.5em 0.5em 0.5em;
+		padding: 2px 2px 2px 2px;
+		background-color: #FFFFFF;
+	}
+
+	div.midcom-service-uimessages-protogrowl-type-ok {
+		-moz-border-radius: 0.6em 0.6em 0.6em 0.6em;
+		border-right: 3px solid #A19981;
+		border-bottom: 3px solid #A19981;
+		background-color: #FFFFFF;
+	}
+	div.growl-window-contenthelper-type-ok {
+		height: 74px;
+		border: 1px solid #CCCCCC;
+		-moz-border-radius: 0.5em 0.5em 0.5em 0.5em;
+		padding: 2px 2px 2px 2px;
+		background-color: #F57900;
+	}
+	
+	div.midcom-service-uimessages-protogrowl-type-warning {
+		-moz-border-radius: 0.6em 0.6em 0.6em 0.6em;
+		border-right: 3px solid #A19981;
+		border-bottom: 3px solid #A19981;
+		background-color: #FFFFFF;
+	}
+	div.growl-window-contenthelper-type-warning {
+		height: 74px;
+		border: 1px solid #CCCCCC;
+		-moz-border-radius: 0.5em 0.5em 0.5em 0.5em;
+		padding: 2px 2px 2px 2px;
+		background-color: #F57900;
+	}
+	
+	div.midcom-service-uimessages-protogrowl-type-error {
+		-moz-border-radius: 0.6em 0.6em 0.6em 0.6em;
+		border-right: 3px solid #A19981;
+		border-bottom: 3px solid #A19981;
+		background-color: #FFFFFF;
+	}
+	div.growl-window-contenthelper-type-error {
+		height: 74px;
+		border: 1px solid #CCCCCC;
+		-moz-border-radius: 0.5em 0.5em 0.5em 0.5em;
+		padding: 2px 2px 2px 2px;
+		background-color: #F57900;
+	}
+
+	div.midcom-service-uimessages-protogrowl-closebutton {
+		float: right;
+		width: 12px;
+		height: 12px;
+		line-height: 12px;
+		font-size: 10px;
+		cursor: pointer;
+	}
+
+	div.midcom-service-uimessages-protogrowl-title {
+		margin: 0;
+		padding: 0;
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+		font-size: 12px;
+		font-weight: 800;
+	}
+
+	div.midcom-service-uimessages-protogrowl-content {
+		text-align: left;
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+		font-size: 10px;
+		font-weight: normal;
+		padding-left: 5px;
+		padding-top: 5px;
+		background-color: #FFFFFF;		
+	}
+
+/* Growl windows ends */

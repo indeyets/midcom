@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+
+  <type name="midcom_core_group_virtual_db" table="midcom_group_virtual">
+    <property name="id" type="integer" primaryfield="id" />
+    <property name="component" type="text" />
+    <property name="identifier" type="text" />
+    <property name="name" type="text" />
+  </type>
+
+  <type name="midcom_core_privilege_db" table="midcom_core_privilege">
+    <property name="id" type="integer" primaryfield="id" />
+    <property name="objectguid" type="text" />
+    <property name="name" type="text" />
+    <property name="assignee" type="text" />
+    <property name="classname" type="text" />
+    <property name="value" type="integer" />
+  </type>
+
+  <type name="midcom_core_login_session_db" table="midcom_core_login_session">
+    <property name="id" type="integer" primaryfield="id" />
+    <property name="userid" type="text" />
+    <property name="username" type="text" />
+    <property name="password" type="text" />
+    <property name="clientip" type="text" />
+    <property name="timestamp" type="integer" />
+  </type>
+
+  <type name="midcom_core_temporary_object_db" table="midcom_core_temporary_object_db">
+    <property name="id" type="integer" primaryfield="id" />
+    <property name="timestamp" type="integer" />
+
+    <property name="name" type="text" />
+    <property name="text1" type="text" />
+    <property name="text2" type="text" />
+    <property name="text3" type="text" />
+    <property name="integer1" type="integer" />
+    <property name="integer2" type="integer" />
+    <property name="integer3" type="integer" />
+    <property name="integer4" type="integer" />
+  </type>
+
+
+</Schema>

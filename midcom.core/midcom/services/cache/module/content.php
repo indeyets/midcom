@@ -1,0 +1,948 @@
+<?php
+/**
+ * @package midcom.services
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @version $Id:content.php 3765 2006-07-31 08:51:39 +0000 (Mon, 31 Jul 2006) tarjei $
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
+ * This is the Output Caching Engine of MidCOM. It will intercept page output,
+ * map it using the currently used URL and use the cached output on subsequent
+ * requests.
+ *
+ * <b>Important note for application developers</b>
+ *
+ * Please read the documentation of the following functions throughoutly:
+ *
+ * - midcom_services_cache_module_content::no_cache();
+ * - midcom_services_cache_module_content::uncached();
+ * - midcom_services_cache_module_content::expires();
+ * - midcom_services_cache_module_content::invalidate_all();
+ * - midcom_services_cache_module_content::content_type();
+ * - midcom_services_cache_module_content::enable_live_mode();
+ *
+ * You have to use these functions everywhere where it is applicable or the cache
+ * will not work reliably.
+ *
+ * <b>Caching strategy</b>
+ *
+ * The cache takes three parameters into account when storing in or retrieving from
+ * the cache: The current User ID, the current language and the request's URL.
+ *
+ * Only on a complete mach a cached page is displayed, which should take care of any
+ * permission check done on the page. When you change the permissions of users, you
+ * need to manually invalidate the cache though, as MidCOM currently cannot detect
+ * changes like this (of course, this is true if and only if you are not using a
+ * MidCOM to change permissions).
+ *
+ * Special care is taken when HTTP POST request data is present. In that case, the
+ * caching engine will automatically and transparently go into no_cache mode for
+ * that request only, allowing your application to process form data. This feature
+ * does neither invalidate the cache or drop the page that would have been delivered
+ * normally from the cache. If you change the content, you need to do that yourself.
+ *
+ * HTTP 304 Not Modified support is built into this module, and it will kill the
+ * output buffer and send a 304 reply if applicable.
+ *
+ * <b>Internal notes</b>
+ *
+ * This module is the first cache module which is initialized, and it will be the
+ * last one in the shutdown sequence. Its startup code will exit with exit() in case of
+ * a cache hit, and it will enclose the entire request using PHPs output buffering.
+ *
+ * <b>Module configuration (see also midcom_config.php)</b>
+ *
+ * - <i>string cache_module_content_name</i>: The name of the cache database to use. This should usually be tied to the actual
+ *   MidCOM site to have exactly one cache per site. This is mandatory (and populated by a sensible default
+ *   by midcom_config.php, see there for details).
+ * - <i>bool cache_module_content_multilang</i>: Set this to true (the default) if you want to have a cache which
+ *   distinguishes between languages on each request.
+ * - <i>bool cache_module_content_uncached</i>: Set this to true to prevent the saving of cached pages. This is useful
+ *   for development work, as all other headers (like E-Tag or Last-Modified) are generated
+ *   normally. See the uncached() and _uncached members.
+ *
+ * @package midcom.services
+ */
+class midcom_services_cache_module_content extends midcom_services_cache_module
+{
+    /**#@+
+     * Internal runtime state variable.
+     *
+     * @access private
+     */
+
+    /**
+     * Flag, indicating wether the current page may be cached. If
+     * false, the usual no-cache headers will be generated.
+     *
+     * @var bool
+     */
+    var $_no_cache = false;
+
+    /**
+     * Page expiration in seconds. If NULL (unset), the page does
+     * not expire.
+     *
+     * @var int
+     */
+    var $_expires = null;
+
+    /**
+     * The time of the last modification, set during auto-header-completion.
+     *
+     * @var int
+     */
+    var $_last_modified = 0;
+
+    /**
+     * An array storing all HTTP headers registered through register_sent_header().
+     * They will be sent when a cached page is delivered.
+     *
+     * @var array
+     */
+    var $_sent_headers = Array();
+
+    /**
+     * The MIME content-type of the current request. It defaults to text/html, but
+     * must be set correctly, so that the client gets the correct type delivered
+     * upon cache deliveries.
+     *
+     * @var string
+     */
+    var $_content_type = 'text/html';
+
+    /**
+     * Internal flag indicating wether the output buffering is active.
+     *
+     * @var bool
+     */
+    var $_obrunning = false;
+
+    /**
+     * This flag is true if the live mode has been activiated. This prevents the
+     * cache processing at the end of the request.
+     *
+     * @var bool
+     */
+    var $_live_mode = false;
+
+    /**#@-*/
+
+    /**#@+
+     * Module configuration variable.
+     *
+     * @access private
+     */
+
+    /**
+     * True, if the cache should honor the language settings.
+     *
+     * @var bool
+     */
+    var $_multilang = true;
+
+    /**
+     * Set this to true, if you want to inhibit storage of the generated pages in
+     * the cache database. All other headers will be created as usual though, so
+     * 304 processing will kick in for example.
+     *
+     * @var bool
+     */
+    var $_uncached = false;
+
+    /**#@-*/
+
+    /**#@+
+     * Cache backend instance.
+     *
+     * @access private
+     */
+
+    /**
+     * This is true, if the pages produced by the cache should not be
+     * stored in the cache database. Use this f.x. during development for
+     * a quasi-uncached behvoir (all headers are generated, the content just
+     * is not stored in the cache database, and all header processing is
+     * done nevertheless).
+     *
+     * @var midcom_services_cache_backend
+     */
+    var $_meta_cache = null;
+
+    /**
+     * An cache backend used to store the actual cached pages.
+     *
+     * @var midcom_services_cache_backend
+     */
+    var $_data_cache = null;
+
+    /**#@-*/
+
+
+    /**
+     * Module constructor, relay to base class.
+     */
+    function midcom_services_cache_module_content()
+    {
+        parent::midcom_services_cache_module();
+    }
+
+    /**
+     * This function is responsible for initializing the cache.
+     *
+     * The first step is to initialize the cache backends. The names of the
+     * cache backends used for meta and data storage are derived from the name
+     * defined for this module (see the 'name' configuration parameter above).
+     * The name is used directly for the meta data cache, while the actual data
+     * is stored in a backend postfixed with '_data'.
+     *
+     * After core initialization, the module checks for a cache hit (which might
+     * trigger the delivery of the cached page and exit) and start the output buffer
+     * afterwards.
+     */
+    function _on_initialize()
+    {
+        $backend_config = $GLOBALS['midcom_config']['cache_module_content_backend'];
+        if (! array_key_exists('directory', $backend_config))
+        {
+            $backend_config['directory'] = 'content/';
+        }
+        if (! array_key_exists('driver', $backend_config))
+        {
+            $backend_config['driver'] = 'dba';
+        }
+
+        $name = $GLOBALS['midcom_config']['cache_module_content_name'];
+        $meta_backend_name = "{$name}";
+        $data_backend_name = "{$name}_data";
+
+        $backend_config['auto_serialize'] = true;
+        $this->_meta_cache =& $this->_create_backend($meta_backend_name, $backend_config);
+        $backend_config['auto_serialize'] = false;
+        $this->_data_cache =& $this->_create_backend($data_backend_name, $backend_config);
+
+        if (array_key_exists('cache_module_content_multilang', $GLOBALS['midcom_config']))
+        {
+            $this->_multilang = $GLOBALS['midcom_config']['cache_module_content_multilang'];
+        }
+        if (array_key_exists('cache_module_content_uncached', $GLOBALS['midcom_config']))
+        {
+            $this->_uncached = $GLOBALS['midcom_config']['cache_module_content_uncached'];
+        }
+
+        // Init complete, now check for a cache hit and start up caching.
+        // Note, that check_hit might exit().
+        $this->_check_hit();
+        $this->_start_caching();
+    }
+
+    /**
+     * The shutdown event handler will finish the caching sequence by storing the cached data,
+     * if required.
+     */
+    function _on_shutdown()
+    {
+        $this->_finish_caching();
+    }
+
+    /**
+     * This function holds the cache hit check meachnism. It seraches the requested
+     * URL in the cache database. If found, it checks, wether the cache page has
+     * expired. If not, the cached page is delivered to the client and processing
+     * ends. In all other cases this method simply returns.
+     *
+     * The midcom-cache URL methods are handled before checking for a cache hit.
+     *
+     * Also, any HTTP POST request will automatically circumvent the cache so that
+     * any component can process the request. It will set no_cache automatically
+     * to avoid any cache pages being overwritten by, for example, search results.
+     *
+     * Note, that HTTP GET is <b>not</b> checked this way, as GET requests can be
+     * safely distinguished by their URL.
+     *
+     * @access private
+     */
+    function _check_hit()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+
+        foreach ($GLOBALS["argv"] as $arg)
+        {
+            switch ($arg)
+            {
+                case "midcom-cache-invalidate":
+                case "midcom-cache-nocache":
+                case "midcom-cache-stats":
+                    // Don't cache these.
+                    debug_pop();
+                    return;
+            }
+        }
+
+        // Check for POST variables, if any is found, go for no_cache.
+        if (count($_POST) > 0)
+        {
+            debug_add("POST variables have been found, setting no_cache and not checking for a hit.");
+            $this->no_cache();
+            debug_pop();
+            return;
+        }
+
+        // Check for uncached operation
+        if ($this->_uncached)
+        {
+            debug_add("We are in uncached operation, skipping check_hit detection.");
+            debug_pop();
+            return;
+        }
+
+        // Construct cache identifier
+        if ($this->_multilang)
+        {
+            $i18n = new midcom_services_i18n("en");
+            $entry_name = 'LANG=' . $i18n->get_current_language() . ";" ;
+        }
+        else
+        {
+            $entry_name = 'LANG=ALL;';
+        }
+        $midgard = mgd_get_midgard();
+        $entry_name .= "USER={$midgard->user};";
+        $entry_name .= "URL=" . $_SERVER["REQUEST_URI"];
+
+        $this->_meta_cache->open();
+
+        if ($this->_meta_cache->exists($entry_name))
+        {
+            $data = $this->_meta_cache->get($entry_name);
+
+            if (!is_null($data["expires"]))
+            {
+                if ($data["expires"] < time())
+                {
+                    debug_add("Current page is in cache, but has expired.", MIDCOM_LOG_INFO);
+                    debug_pop();
+                    return;
+                }
+            }
+
+            debug_add("Cache hit for URI " . $entry_name, MIDCOM_LOG_INFO);
+
+            // Check If-Modified-Since and If-None-Match, do content output only if
+            // we have a not modified match.
+            if (! $this->_check_not_modified($data['last_modified'], $data['etag']))
+            {
+                $this->_data_cache->open();
+                if (! $this->_data_cache->exists($entry_name))
+                {
+                    $this->_data_cache->close();
+                    debug_add("Current page is in not in the data cache, (possible ghost read).");
+                    debug_pop();
+                    return;
+                }
+                $content = $this->_data_cache->get($entry_name);
+                $this->_data_cache->close();
+                $this->_meta_cache->close();
+
+                foreach ($data["sent_headers"] as $header)
+                {
+                    header($header);
+                }
+
+                // Echo the content to the client.
+                echo $content;
+            }
+            else
+            {
+                $this->_meta_cache->close();
+            }
+
+            debug_add("Exiting", MIDCOM_LOG_INFO);
+            exit();
+        }
+
+        $this->_meta_cache->close();
+
+        debug_add("Cache miss for URI {$entry_name}", MIDCOM_LOG_INFO);
+        debug_pop();
+    }
+
+    /**
+     * This function will start the output cache. Call this before any output
+     * is made. MidCOM's startup sequence will automatically do this.
+     */
+    function _start_caching()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add('Starting output buffering with disabled implicit flush...');
+        ob_implicit_flush(false);
+        ob_start();
+        $this->_obrunning = true;
+        debug_pop();
+    }
+
+    /**
+     * Call this, if the currently processed output must not be cached for any
+     * reason. Dynamic pages with sensitive content are a candidate for this
+     * function.
+     *
+     * Note, that this will prevent <i>any</i> content invalidation related headers
+     * like E-Tag to be generated automatically, and that the appropriate
+     * no-store/no-cache headers from HTTP 1.1 and HTTP 1.0 will be sent automatically.
+     * This means that there will also be no 304 processing.
+     *
+     * You should use this only for sensitive content. For simple dynamic output,
+     * you are strongly encouraged to use the less strict uncached() function.
+     *
+     * @see uncached()
+     */
+    function no_cache()
+    {
+        if ($this->_no_cache)
+        {
+            return;
+        }
+
+        debug_push_class(__CLASS__, __FUNCTION__);
+
+        $this->_no_cache = true;
+
+        if (headers_sent())
+        {
+            // Whatever is wrong here, we return.
+            debug_add('Warning, we should move to no_cache but headers have already been sent, skipping header transmission.', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return;
+        }
+
+        debug_add('Caching disabled by no_cache() method, sending appropriate headers.', MIDCOM_LOG_INFO);
+        header('Cache-Control: no-store, no-cache, must-revalidate');
+        header('Cache-Control: post-check=0, pre-check=0', false);
+        header('Pragma: no-cache');
+        debug_pop();
+    }
+
+    /**
+     * Call this, if the currently processed output must not be cached for any
+     * reason. Dynamic pages or form processing results are the usual candidates
+     * for this mode.
+     *
+     * Note, that this will still keep the caching engine active so that it can
+     * add the usual headers (ETag, Expires ...) in respect to the no_cache flag.
+     * As well, at the end of the processing, the usual 304 checks are done, so if
+     * your page doesn't change in respect of E-Tag and Last-Modified, only a 304
+     * Not Modified reaches the client.
+     *
+     * Essentially, no_cache behaves the same way as if the uncached configuration
+     * directive is set to true, it is just limited to a single request.
+     *
+     * If you need a higher level of client side security, to avoid storage of sensitive
+     * information on the client side, you should use no_cache instead.
+     *
+     * @see no_cache()
+     */
+    function uncached()
+    {
+        if ($this->_uncached)
+        {
+            return;
+        }
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Caching disabled by uncached() method.", MIDCOM_LOG_INFO);
+        debug_pop();
+        $this->_uncached = true;
+    }
+
+    /**
+     * Sets the expiration time of the current page (Unix (GMT) Timestamp).
+     *
+     * <b>Note:</B> This generate error call will add browser-side cache control
+     * headers as well to force a browser to revalidate a page after the set
+     * expiry.
+     *
+     * You should call this at all places where you have timed content in your
+     * output, so that the page will be regenerated once a certain article has
+     * expired.
+     *
+     * Multiple calls to expires will only save the
+     * "youngest" timestamp, so you can safely call expires where appropriate
+     * without respect to other values.
+     *
+     * The cache's default (null) will disable the expires header. Note, that once
+     * an expiry time on a page has been set, it is not possible, to reset it again,
+     * this is for dynamic_load situation, where one component might depend on a
+     * set expiry.
+     *
+     * @param int $timestamp The UNIX timestamp from which the cached page should be invalidated.
+     */
+    function expires($timestamp)
+    {
+        if (   is_null($this->_expires)
+            || $this->_expires > $timestamp)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Setting expired to {$timestamp}.", MIDCOM_LOG_INFO);
+            $this->_expires = $timestamp;
+            debug_pop();
+        }
+    }
+
+    /**
+     * Sets the content type for the current page. The required HTTP Headers for
+     * are automatically generated, so, to the contratry of expires, you just have
+     * to set this header accordingly.
+     *
+     * This is usually set automatically by MidCOM for all regular HTML output and
+     * for all attachment deliveries. You have to adapt it only for things like RSS
+     * output.
+     *
+     * @param string $type    The content type to use.
+     */
+    function content_type($type)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Setting Content-Type to {$type}.", MIDCOM_LOG_INFO);
+        $this->_content_type = $type;
+
+        // Send header (don't register yet to avoid duplicates, this is done during finish
+        // caching).
+        $header = "Content-type: " . $this->_content_type;
+        header($header);
+        debug_pop();
+    }
+
+    /**
+     * Use this funciton to put the cache into a "live mode". This will disable the
+     * cache during runtime, correctly flushing the output buffer and sending cache
+     * control headers. You will not be able to send any additional headers after
+     * executing this call therefore you should adjust the headers in advance.
+     *
+     * The midcom-exec URL handler of the core will automatically enable live mode.
+     *
+     * @see midcom_application::_exec_file()
+     */
+    function enable_live_mode()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+
+        if ($this->_live_mode)
+        {
+            debug_add('Cannot enter live mode twice, ignoring request.', MIDCOM_LOG_WARN);
+            debug_pop();
+            return;
+        }
+
+        debug_add('Disabling output cache, entering live-mode.', MIDCOM_LOG_INFO);
+
+        $this->_live_mode = true;
+        $this->_no_cache = true;
+        header("Cache-Control: no-store, no-cache, must-revalidate");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
+
+        if ($this->_obrunning)
+        {
+            // Flush any remaining output buffer.
+            // Ignore errors in case _obrunning is wrong, we are in the right state then anyway.
+            // We do this only if there is actually content in the output buffer. If not, we won't
+            // send anything, so that you can still send HTTP Headers after enabling the live mode.
+            // Check is for nonzero and non-false
+            if (ob_get_length())
+            {
+                @ob_end_flush();
+            }
+            else
+            {
+                @ob_end_clean();
+            }
+            $this->_obrunning = false;
+        }
+
+        debug_pop();
+    }
+
+    /**
+     * This method stores a sent header into the cache database, so that it will
+     * be resent when the cache page is delivered. midcom_application::header()
+     * will automatically call this function, you need to do this only if you use
+     * the PHP header function.
+     *
+     * @param string $header The header that was sent.
+     */
+    function register_sent_header($header)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Registering sent header '{$header}'");
+        $this->_sent_headers[] = $header;
+        debug_pop();
+    }
+
+    /**
+     * This function currently maps to invalidate_all unconditionally, as there is no
+     * leaf-level invalidation of content cache objects yet.
+     */
+    function invalidate($guid)
+    {
+        $this->invalidate_all();
+    }
+
+    /**
+     * Checks, wether the browser supplied if-modified-since or if-none-match headers
+     * match the passed etag/last modified timestamp. If yes, a 304 not modified header
+     * is emitted and true is returned. Otherwise the function will return false
+     * without modifications to the current runtime state.
+     *
+     * If the headers have already been sent, something is definitly wrong, so we
+     * ignore the request silently returning false.
+     *
+     * Note, that if both If-Modified-Since and If-None-Match are present, both must
+     * actually match the given stamps to allow for a 304 Header to be emitted.
+     *
+     * @param int $last_modified The last modified timestamp of the current document. This timestamp
+     *     is assumed to be in <i>local time</i>, and will be implicitly converted to a GMT time for
+     *     correct HTTP header comparisons.
+     * @param string $etag The etag header accociated with the current document.
+     * @return bool True, if an 304 match was detected and the appropriate headers were sent.
+     */
+    function _check_not_modified($last_modified, $etag)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        if (headers_sent())
+        {
+            debug_add("The headers have already been sent, cannot do a not modified check.", MIDCOM_LOG_INFO);
+            debug_pop();
+            return false;
+        }
+
+        debug_print_r('Checking this $_SERVER for 304 if-modified headers:', $_SERVER);
+        debug_add("Checking HTTP headers against last modified date {$last_modified} (" . gmdate("D, d M Y H:i:s", $last_modified) . " GMT) and E-Tag {$etag}");
+
+        // These variables are set to true if the corresponding header indicates a 403 is
+        // possible.
+        $if_modified_since = false;
+        $if_none_match = false;
+        if (array_key_exists('HTTP_IF_NONE_MATCH', $_SERVER))
+        {
+            if ($_SERVER['HTTP_IF_NONE_MATCH'] != $etag)
+            {
+                // The E-Tag is different, so we cannot 304 here.
+                debug_add("The HTTP supplied E-Tag requirement does not match: {$_SERVER['HTTP_IF_NONE_MATCH']} (!= {$etag})");
+                debug_pop();
+                return false;
+            }
+            debug_add("If-none-match against {$_SERVER['HTTP_IF_NONE_MATCH']}.");
+            $if_none_match = true;
+        }
+        if (array_key_exists('HTTP_IF_MODIFIED_SINCE', $_SERVER))
+        {
+            $tmp = $_SERVER['HTTP_IF_MODIFIED_SINCE'];
+            if (strpos($tmp, 'GMT') === false)
+            {
+                $tmp .= ' GMT';
+            }
+            $modified_since = strtotime($tmp);
+            if ($modified_since < $last_modified)
+            {
+                // Last Modified does not match, so we cannot 304 here.
+                debug_add("The supplied HTTP Last Modified requirement does not match: {$_SERVER['HTTP_IF_MODIFIED_SINCE']}.");
+                debug_add("If-Modified-Since: ({$modified_since}) " . gmdate("D, d M Y H:i:s", $modified_since) . ' GMT');
+                debug_add("Last-Modified: ({$last_modified})" . gmdate("D, d M Y H:i:s", $last_modified) . ' GMT');
+                debug_pop();
+                return false;
+            }
+            debug_add("If-modified-since match against {$_SERVER['HTTP_IF_MODIFIED_SINCE']}, parsed time was {$modified_since}.");
+            $if_modified_since = true;
+        }
+
+        if (! $if_modified_since && ! $if_none_match)
+        {
+            debug_add('No If-Header was detected, we cannot 304 therefore.');
+            debug_pop();
+            return false;
+        }
+
+        debug_add("We have a 304 match, sending the appropriate header and exitting afterwards.");
+
+        if ($this->_obrunning)
+        {
+            // Drop the output buffer, if any.
+            ob_end_clean();
+        }
+
+        // Emit the 304 header, then exit.
+        header('HTTP/1.0 304 Not Modified');
+        return true;
+    }
+
+    /**
+     * This helper will be called during module shutdown, it completes the output caching,
+     * post-processes it and updates the cache databases accordingly.
+     *
+     * The first step is to check against _no_cache pages, which will be delivered immediately
+     * without any further post processing. Afterwards, the system will complete the sent
+     * headers by adding all missing headers. Note, that E-Tag will be generated always
+     * automatically, you must not set this in your component.
+     *
+     * If the midcom configuration option cache_uncached is set or the corresponding runtime function
+     * has been called, the cache file will not be written, but the header stuff will be added like
+     * usual to allow for browser-side caching.
+     */
+    function _finish_caching()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+
+        if (   $this->_no_cache
+            || $this->_live_mode)
+        {
+            if ($this->_obrunning)
+            {
+                debug_add("We are on no_cache/live mode, flushing output buffer and exitting");
+                ob_end_flush();
+            }
+            else
+            {
+                debug_add("We don't had an outputbuffer running though the caching system was active, ignoring this as we are in no_cache/live mode!",
+                    MIDCOM_LOG_WARN);
+            }
+            debug_pop();
+            return;
+        }
+
+        $cache_data = ob_get_contents();
+
+        // Generate E-Tag header.
+        if (strlen($cache_data) == 0)
+        {
+            $etag = md5(serialize($this->_sent_headers));
+        }
+        else
+        {
+            $etag = md5($cache_data);
+        }
+
+        $etag_header = "ETag: {$etag}";
+        header($etag_header);
+        $this->register_sent_header($etag_header);
+        debug_add("Sent HEader: {$etag_header}");
+
+        // Register additional Headers around the current output request
+        // It has been sent already during calls to conent_type
+        $header = "Content-type: " . $this->_content_type;
+        $this->register_sent_header($header);
+        $this->_complete_sent_headers($cache_data);
+
+        if ($this->_uncached)
+        {
+            debug_add("Not writing cache file, we are in uncached operation mode.");
+        }
+        else
+        {
+            // Construct cache identifier
+            if ($this->_multilang)
+            {
+                $i18n = new midcom_services_i18n("en");
+                $entry_name = 'LANG=' . $i18n->get_current_language() . ";" ;
+            }
+            else
+            {
+                $entry_name = 'LANG=ALL;';
+            }
+            $midgard = mgd_get_midgard(); // Reget, to have latest authentication information.
+            $entry_name .= "USER={$midgard->user};";
+            $entry_name .= "URL=" . $_SERVER["REQUEST_URI"];
+
+            debug_add("Creating cache entry for $entry_name", MIDCOM_LOG_INFO);
+
+            $entry_data["expires"] = $this->_expires;
+            $entry_data["etag"] = $etag;
+            $entry_data["last_modified"] = $this->_last_modified;
+            $entry_data["sent_headers"] = $this->_sent_headers;
+
+            $this->_meta_cache->open(true);
+            $this->_meta_cache->put($entry_name, $entry_data);
+            $this->_data_cache->put($entry_name, $cache_data);
+            $this->_meta_cache->close();
+        }
+
+        // Finish caching.
+        // If-Modified-Since / If-None-Match checks, if no match, flush the output.
+        if (! $this->_check_not_modified($this->_last_modified, $etag))
+        {
+            ob_end_flush();
+            $this->_obrunning = false;
+        }
+        debug_add("Cache run complete.");
+        debug_pop();
+    }
+
+    /**
+     * This little helper ensures that the headers Accept-Ranges, Content-Length
+     * and Last-Modified are present. The lastmod timestamp is taken out of the
+     * component context information if it is populated correctly there; if not, the
+     * system time is used instead.
+     *
+     * To force browsers to revalidate the page on every request (login changes would
+     * go unnoticed otherwise), the Cache-Control header max-age=0 is added automatically.
+     *
+     * @param Array& $cache_data The current cache data that will be written to the database.
+     * @access private
+     */
+    function _complete_sent_headers(& $cache_data)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+
+        // Detected headers flags
+        $ranges = false;
+        $size = false;
+        $lastmod = false;
+
+        foreach ($this->_sent_headers as $header)
+        {
+            if (strncasecmp($header, "Accept-Ranges", 13) == 0)
+            {
+                $ranges = true;
+            }
+            else if (strncasecmp($header, "Content-Length", 14) == 0)
+            {
+                $size = true;
+            }
+            else if (strncasecmp($header, "Last-Modified", 13) == 0)
+            {
+                $lastmod = true;
+                // Populate last modified timestamp (force GMT):
+                $tmp = substr($header, 15);
+                if (strpos($tmp, 'GMT') === false)
+                {
+                    $tmp .= ' GMT';
+                }
+                $this->_last_modified = strtotime($tmp);
+                if ($this->_last_modified == -1)
+                {
+-                    debug_add("Failed to extract the timecode from the last modified header '{$header}', defaulting to the current time.", MIDCOM_LOG_WARN);
+                    $this->_last_modified = time();
+                }
+            }
+        }
+
+        if (! $ranges)
+        {
+            $header = "Accept-Ranges: none";
+            header ($header);
+            $this->_sent_headers[] = $header;
+            debug_add("Added Header '$header'");
+        }
+        if (! $size)
+        {
+            $header = "Content-Length: " . ob_get_length();
+            header ($header);
+            $this->_sent_headers[] = $header;
+            debug_add("Added Header '$header'");
+        }
+        if (! $lastmod)
+        {
+            /* Determine Last-Modified using MidCOM's component context,
+             * Fallback to time() if this fails.
+             */
+            $time = 0;
+            foreach ($GLOBALS["midcom"]->_context as $id => $context)
+            {
+                $meta = $_MIDCOM->get_26_request_metadata($id);
+                debug_add("SCANNING context {$id}, edited time is {$meta['lastmodified']} -- {$context[MIDCOM_CONTEXT_COMPONENT]}");
+                if ($meta['lastmodified'] > $time)
+                {
+                    $time = $meta['lastmodified'];
+                }
+            }
+            if ($time == 0)
+            {
+                $time = time();
+            }
+            debug_add("Setting last modified to the timestamp {$time} which is: " . gmdate("D, d M Y H:i:s", $time) . ' GMT');
+            $header = "Last-Modified: " . gmdate("D, d M Y H:i:s", $time) . ' GMT';
+            header ($header);
+            $this->_sent_headers[] = $header;
+            $this->_last_modified = $time;
+            debug_add("Added Header '$header'");
+        }
+
+        // Add Expiration and Cache Control headers
+        // Currently, we *force* a cache client to revalidate the copy every time.
+        // I hope that this fixes most of the problems outlined in #297 for the time being.
+        // The timeout of a content cache entry is not affected by this.
+        $header = "Cache-Control: max-age=0 must-revalidate";
+        header ($header);
+        $this->_sent_headers[] = $header;
+        debug_add("Added Header '$header'");
+
+        $header = "Expires: " . gmdate("D, d M Y H:i:s", time()) . " GMT";
+        header ($header);
+        $this->_sent_headers[] = $header;
+        debug_add("Added Header '$header'");
+
+        debug_pop();
+    }
+
+    /**
+     * Wrapper for number_format(number, 0, "", "."), used in the cache_stats call.
+     *
+     * @param int $number    Number to be formatted
+     * @return string        The formatted number
+     * @access private
+     */
+    function _format_filesize ($number)
+    {
+        return number_format($number, 0, '', '.');
+    }
+
+    /**
+     * Cache statistic dump to stdout.
+     *
+     * @todo implement print_statistics in the backends.
+     */
+    function print_statistics()
+    {
+        die ("Not yet implemented for the backend interface, should be there");
+        $cache_db = Array();
+        $entry_count = 0;
+        $file_list = Array();
+        $cache_size = 0;
+
+        $db = dba_open($this->_dbname, "r", $this->_handler);
+        if (!$db)
+            die("Could not open dbm File");
+
+        $key = dba_firstkey($db);
+        while ($key != false) {
+            $control = unserialize(dba_fetch($key, $db));
+            $stat = stat ($this->_cachedir . $control["filename"]);
+            $cache_db[$key] = $control;
+            $entry_count++;
+            $cache_size += $stat[7];
+            $key = dba_nextkey($db);
+        }
+        dba_close($db);
+
+        $cache_size = $this->_format_filesize($cache_size);
+        $stat = stat($this->_dbname);
+        $db_size = $this->_format_filesize($stat[7]);
+
+        ?>
+<pre>
+================= MIDCOM CACHE STATISTICS ====================
+Cache Database       : <?php echo htmlspecialchars($this->_dbname);?> (Type: <?php echo htmlspecialchars($this->_handler);?>)
+Cache Data Directory : <?php echo htmlspecialchars($this->_cachedir);?>
+Cache Entry Count    : <?php echo htmlspecialchars($entry_count);?>
+Cache Database Size  : <?php echo htmlspecialchars($db_size);?> Bytes
+Cache Data Size      : <?php echo htmlspecialchars($cache_size);?> Bytes
+
+Cache Database Dump  :
+<?php print_r ($cache_db); ?>
+</pre>
+
+        <?php
+    }
+}
+
+?>

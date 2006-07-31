@@ -1,0 +1,25 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id:default.ka.txt 3765 2006-07-31 08:51:39 +0000 (Mon, 31 Jul 2006) tarjei $
+---LANGUAGE ka
+
+---STRING component configuration
+კომპონენტის კონფიგურაცია
+---STRINGEND
+
+---STRING create %s
+თემის %s
+---STRINGEND
+
+---STRING create page
+თემის შექმნა
+---STRINGEND
+
+---STRING delete
+წაშლა
+---STRINGEND
+
+---STRING logout
+გამოსვლა
+---STRINGEND
+
