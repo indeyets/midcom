@@ -1391,7 +1391,7 @@ class AtomCreator03 extends FeedCreator {
 			if ($this->items[$i]->description!="") {
 				$feed.= "        <summary>".htmlspecialchars($this->items[$i]->description)."</summary>\n";
 			}
-			if ($this->items[$i]->thumbdata) {
+			if (isset($this->items[$i]->thumbdata)) {
 				$feed.= "        <gtb:icon mode=\"base64\" type=\"image/jpeg\">\n";
 				$feed.= chunk_split(base64_encode($this->items[$i]->thumbdata))."\n";
 				$feed.= "        </gtb:icon>\n";
