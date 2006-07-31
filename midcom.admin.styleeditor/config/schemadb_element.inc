@@ -23,6 +23,7 @@
             'storage' => 'value',
             'type' => 'text',
             'widget' => 'textarea',
+            'widget_config' => array ('expand' => true),
             
     ),
     

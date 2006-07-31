@@ -15,6 +15,18 @@
             'type' => 'text',
             'widget' => 'text',
         ),
+        'id' => Array
+        (
+            'title' => 'ID: ',
+            'description' => ' ',
+            'helptext' => ' ',
+            'storage' => 'id',
+            'required' => false,
+            'hidden' => false,
+            'widget' => 'text',
+            'type' => 'number',
+            'readonly' => true,
+        ),  
         'up' => Array
         (
             'title' => 'Parent style',

@@ -135,7 +135,7 @@ class midcom_admin_styleeditor_handler_style extends midcom_admin_styleeditor_ha
      * 
      */
     function _show_create_root () {
-        $this->_request_data['title'] = $this->_l10n->get('Create style');
+        $this->_request_data['title'] = $this->_l10n->get('Create new root style');
     
         $this->_show_create();
     }
@@ -144,6 +144,7 @@ class midcom_admin_styleeditor_handler_style extends midcom_admin_styleeditor_ha
      * Simple callback to generate defaults for the object 
      */
     function get_create_defaults() {
+
         return array ('up' => $this->_current->id);   
     }
     /**
@@ -170,7 +171,7 @@ class midcom_admin_styleeditor_handler_style extends midcom_admin_styleeditor_ha
         $toolbar = &midcom_helper_toolbars::get_instance();
         
         $toolbar->top->add_item(Array(
-            MIDCOM_TOOLBAR_URL => "styleeditor/style/edit/{$this->_current->guid}/{$this->_current->name}.html",
+            MIDCOM_TOOLBAR_URL => "styleeditor/style/edit/{$this->_current->guid}.html",
             MIDCOM_TOOLBAR_LABEL => $this->_request_data["l10n"]->get("edit"),
             MIDCOM_TOOLBAR_HELPTEXT => null,
             MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit-folder.png',
@@ -178,7 +179,7 @@ class midcom_admin_styleeditor_handler_style extends midcom_admin_styleeditor_ha
             MIDCOM_TOOLBAR_HIDDEN => (($_MIDCOM->auth->can_do('midgard:update', $this->_current->guid) == false))
         )); 
         $toolbar->top->add_item(Array(
-            MIDCOM_TOOLBAR_URL => "styleeditor/style/delete/{$this->_current->guid}/{$this->_current->name}.html",
+            MIDCOM_TOOLBAR_URL => "styleeditor/style/delete/{$this->_current->guid}.html",
             MIDCOM_TOOLBAR_LABEL => $this->_request_data["l10n"]->get("delete"),
             MIDCOM_TOOLBAR_HELPTEXT => null,
             MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',

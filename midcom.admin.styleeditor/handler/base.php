@@ -86,6 +86,7 @@ class midcom_admin_styleeditor_handler_base extends midcom_baseclasses_component
         $this->{"_run_datamanager_$type"}();
         $this->_controller->defaults = $defaults;
         $this->_controller->initialize();
+        
         $this->_request_data['datamanager'] = & $this->_controller;
         return $this->_controller->process_form();
     }
@@ -198,7 +199,7 @@ class midcom_admin_styleeditor_handler_base extends midcom_baseclasses_component
     {
         $this->_set_current_object($args);
         $this->_request_data['object_guid'] = $this->_current->guid;
-        
+        $this->_generate_toolbar();
         $_MIDCOM->auth->require_do('midgard:delete', $this->_current->guid);
         //var_dump($_REQUEST);
         if (array_key_exists('styleeditor_deleteok', $_REQUEST)  )
@@ -297,10 +298,9 @@ class midcom_admin_styleeditor_handler_base extends midcom_baseclasses_component
 
     function _handler_create($handler_id, $args, & $data)
     {
-       
         $this->_set_schema($handler_id);
         $this->_set_current_object($args);
-        $defaults = $this->get_create_defaults();        
+        $defaults = $this->get_create_defaults();
         $result = $this->_run_datamanager( 'nullstorage', $defaults);
         $this->_on_create();
         if ($result == 'save' ) 
@@ -314,6 +314,7 @@ class midcom_admin_styleeditor_handler_base extends midcom_baseclasses_component
                     $_MIDCOM->generate_error("Could not update created topic with id $id!");
                     // this will exit.
                 }
+                $this->_reload_cache();
                 $_MIDCOM->relocate($this->get_creation_relocate($object));
             } 
             else 
@@ -330,8 +331,7 @@ class midcom_admin_styleeditor_handler_base extends midcom_baseclasses_component
      */
     function get_creation_relocate($object ) {
         $type = is_a($this, 'midcom_admin_styleeditor_handler_style') ? 'style' : 'element';    
-    
-        return "/styleeditor/{$type}/{$object->guid}/{$object->name}.html";
+        return "styleeditor/{$type}/{$object->guid}/{$object->name}.html";
     }
     
     function _show_create()
@@ -349,16 +349,10 @@ class midcom_admin_styleeditor_handler_base extends midcom_baseclasses_component
      * template
      */
     function _on_create() {}
-    
+    /**
+     * Reloads the midcom cache.
+     */
     function _reload_cache() {
-        
-        $cache = $_MIDGARD['config']['prefix'] . '/var/cache/midgard/midgard';
-        if (file_exists($cache) && is_writable($cache) && is_dir($cache)) 
-        {
-            $cache .= '/*.php';
-            foreach (glob($cache) as $filename) {
-                unlink($filename);
-            }
-        }
+        mgd_cache_invalidate();
     }
 }

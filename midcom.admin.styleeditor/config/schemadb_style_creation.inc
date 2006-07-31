@@ -32,7 +32,23 @@
                 'allow_multiple' => false,
                 'allow_other' => false,
             ),
-        ),   
+        ),
+        /*
+        'create_elements' => Array
+        (
+            'title' => 'Create the following elements:',
+            'description' => 'Choose what elements you want to be autocreated in the new style',
+            'helptext' => '',
+            'storage' => null,
+            'type' => 'select',
+            'type_config' => Array
+            (
+            // note these options are not in use!!!
+                'options' => array (),
+            ),
+            'widget' => 'checkbox',
+        ),
+        */
         /*     
         'shared' => Array
         (
@@ -51,7 +67,8 @@
                 'options' => array ("YES" => "Yes", "NO" => "NO"),
             ),
             'widget' => 'checkbox',
-    ),*/
+       ),
+       */
     
     ), // fields
 ),

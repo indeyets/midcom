@@ -76,15 +76,21 @@ class midcom_admin_styleeditor_aegir extends midcom_admin_aegir_module {
             'handler' => array('midcom_admin_styleeditor_handler_style','delete'),
             'variable_args' => 1, // style guid and name.
         );
-        
+        $request_switch['edit_style'] = Array
+        (
+            'fixed_args' => array('styleeditor', 'style', 'edit'),
+            'handler' => array('midcom_admin_styleeditor_handler_style','edit'),
+            'variable_args' => 1, // style guid and name.
+        );
+        /*
         $request_switch['edit_style'] = Array
         (
             'fixed_args' => array('styleeditor', 'style'),
             'handler' => array('midcom_admin_styleeditor_handler_style','edit'),
             'variable_args' => 2, // style guid and name.
         );
-        
-        $request_switch[] = Array
+        */
+        $request_switch['style_index'] = Array
         (
             'fixed_args' => array('styleeditor', 'style'),
             'handler' => array('midcom_admin_styleeditor_handler_style','edit'),
