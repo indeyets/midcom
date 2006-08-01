@@ -135,7 +135,7 @@ class installMidcomCore extends Task
         foreach ($dirs as $dir => $value) {
             $from =  "{$this->from}/static/$dir";
             $to   =  "{$this->static_dir}/$dir";   
-            $this->make_symlink($from, $to, true);
+            $this->make_symlink($from, $to);
         }
         
     }
