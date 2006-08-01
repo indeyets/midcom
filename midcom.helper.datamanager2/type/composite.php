@@ -40,6 +40,7 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
     var $child_constraints = Array();
     var $style_element_name = 'child';
     var $window_mode = false;
+    var $maximum_items = null;
 
     /**
      * The schema database in use for the child elements
@@ -122,9 +123,6 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
             // We don't have a storage object, skip the rest of the operations.
             return;
         }
-        
-        // Load a creation controller per each schema in the database
-        $this->_load_creation_controllers();        
 
         $qb = $_MIDCOM->dbfactory->new_query_builder($this->child_class);
         $parent_key = $this->parent_key_fieldname;
@@ -143,6 +141,9 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
         {
             $this->objects[$object->guid] = $object;
         }
+        
+        // Load a creation controller per each schema in the database
+        $this->_load_creation_controllers();        
     }
 
     function convert_to_storage()
@@ -249,7 +250,13 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
     }
     
     function _load_creation_controllers()
-    {
+    {   
+        if (   !is_null($this->maximum_items)
+            && count($this->objects) >= $this->maximum_items)
+        {
+            return false;
+        }
+            
         if ($this->storage->object->can_do('midgard:create'))
         {
             foreach (array_keys($this->_schemadb) as $name)
@@ -278,6 +285,12 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
 
     function add_creation_data()
     {
+        if (   !is_null($this->maximum_items)
+            && count($this->objects) >= $this->maximum_items)
+        {
+            return false;
+        }
+            
         if ($this->storage->object->can_do('midgard:create'))
         {
             foreach (array_keys($this->_schemadb) as $name)
