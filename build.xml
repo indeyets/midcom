@@ -49,7 +49,9 @@
 	<target name="install_midcom">
 		<mkdir dir="${lib_dir}/midcom" />
 		<installMidcomCore  install_dir="${lib_dir}" 
-						project_dir="${absolute_basedir}" />
+						project_dir="${absolute_basedir}" 
+		static_dir="${static_dir}" 
+		/>
 	</target>
 	<target name="install_module_symlink">
 		<echo>Installing to ${install_dir} </echo>	
