@@ -6,12 +6,16 @@ var dm2AjaxEditor = Class.create();
 
 dm2AjaxEditor.prototype = {
 
-    initialize: function(formId, creationMode)
+    initialize: function(formId, creationMode, windowMode)
     {
-        // This is the constructor    
+        // This is the constructor
+        
+        // Set sensible defaults    
         this.oldState = 'view';
         this.newState = 'view';
+        
         this.formId = formId;
+        this.windowMode = windowMode;
         
         // Temporary storage for form values
         this.formValues = new Object();
@@ -90,27 +94,6 @@ dm2AjaxEditor.prototype = {
     },
     
     /**
-     * Hide and show the delete button as requested
-     */
-    toggleButtons: function()
-    {
-        if (   !this.deleteButtonShown
-            && this.newState == 'view')
-        {
-            if ($(this.formId + '_delete').style.display == 'none')
-            {
-                Effect.Appear(this.formId + '_delete');
-                this.deleteButtonShown = true;
-            }
-        }
-        else
-        {            
-            eval("setTimeout(\"Effect.Fade('" + this.formId + "' + '_delete');\", 2000)");
-            this.deleteButtonShown = false;
-        }
-    },
-    
-    /**
      * Clone the creation form into reserve
      */
     cloneCreationFields: function()
@@ -148,7 +131,7 @@ dm2AjaxEditor.prototype = {
         }
         
         // And register a new AJAX handler for it
-        eval("var dm2AjaxEditor_" + newIdentifier + " = new dm2AjaxEditor('" + newIdentifier + "');");
+        eval("var dm2AjaxEditor_" + newIdentifier + " = new dm2AjaxEditor('" + newIdentifier + "', false, " + this.windowMode + ");");
 
         // Change the reserve form into a creation form
         reserveArea = $(this.reserveIdentifier + '_area');
@@ -200,22 +183,7 @@ dm2AjaxEditor.prototype = {
         if (   this.formArea
             && !this.creationMode)
         {   
-            // We're making a composite editable, add delete button
-            var button = '<button id="' + this.formId + '_delete" class="midcom_helper_datamanager2_composite_delete_button" title="Delete"><img src="/midcom-static/stock-icons/16x16/trash.png" alt="Delete" /></button>';
-            new Insertion.Top(this.formArea, button);
-            button = $(this.formId + '_delete');
-            button.onclick = this.deleteFields.bindAsEventListener(this); 
-            this.deleteButtonShown = false;
-            this.formArea.onmouseover = this.toggleButtons.bindAsEventListener(this);
-            this.formArea.onmouseout = this.toggleButtons.bindAsEventListener(this);
-            buttonStyles = { 
-                'position' : 'absolute',
-                'left'      : this.formDimensions.x1 + 'px',
-                'top'       : this.formDimensions.y1 + 'px',
-                'display'  : 'none'
-            };
-            stylesHash = $H(buttonStyles);
-            Element.setStyle(button, stylesHash);
+            // We're making a composite editable, we could add styling here
         }
         
         var formBlinder = '<div id="' + this.formId + '_blind" />';
@@ -418,6 +386,13 @@ dm2AjaxEditor.prototype = {
      */
     previewFields: function()
     {
+        this.removeToolbar();
+            
+        if (this.windowMode)
+        {
+            Element.removeClassName(this.formId + '_area', 'ajax_editable_window');
+        }
+            
         this.blinder.innerHTML = 'Rendering preview...';  
         Effect.Appear(this.blinder);    
         
@@ -443,6 +418,13 @@ dm2AjaxEditor.prototype = {
      */
     saveFields: function()
     {
+        this.removeToolbar();
+            
+        if (this.windowMode)
+        {
+            Element.removeClassName(this.formId + '_area', 'ajax_editable_window');
+        }
+            
         this.blinder.innerHTML = 'Saving...';
         Effect.Appear(this.blinder); 
 
@@ -474,6 +456,12 @@ dm2AjaxEditor.prototype = {
      */
     cancelFields: function()
     {
+        this.removeToolbar();
+        if (this.windowMode)
+        {
+            Element.removeClassName(this.formId + '_area', 'ajax_editable_window');
+        }
+    
         this.blinder.innerHTML = 'Restoring content...';
             
         Effect.Appear(this.blinder);    
@@ -526,13 +514,6 @@ dm2AjaxEditor.prototype = {
                 new protoGrowl({type: 'warning', title: 'Datamanager', message: errors[i].firstChild.nodeValue});
             }
         }
-        
-        // Remove old toolbars
-        oldToolbar = $(formIdentifier + '_toolbar');
-        if (oldToolbar)
-        {
-            Element.remove(oldToolbar);
-        }
 
         // Process fields
         fields = form.getElementsByTagName('field');    
@@ -578,8 +559,15 @@ dm2AjaxEditor.prototype = {
                     switch (formField.childNodes[ii].tagName)
                     {
                         case 'TEXTAREA':
-                            formField.childNodes[ii].style.width = dimensions.width + 'px;';
-                            //formField.childNodes[ii].style.height = dimensions.height + 'px;';
+                            if (this.windowMode)
+                            {
+                                formField.childNodes[ii].style.width = 460 + 'px;';
+                            }
+                            else
+                            {
+                                formField.childNodes[ii].style.width = dimensions.width + 'px;';
+                                //formField.childNodes[ii].style.height = dimensions.height + 'px;';
+                            }
                             formField.childNodes[ii].cols = '';
                             break;
                         case 'INPUT':
@@ -618,9 +606,9 @@ dm2AjaxEditor.prototype = {
             {
                 case 'preview':      
                     // We're in preview state, options are "Edit" and "Save
-                    var buttons = '<div class="form_toolbar" id="' + formIdentifier + '_toolbar">';
-                    buttons    += '  <input id="' + formIdentifier + '_edit" type="button" value="Edit" />';
-                    buttons    += '  <input id="' + formIdentifier + '_save" type="button" value="Save" />';
+                    var buttons = '<div class="midcom_helper_datamanager2_ajax_toolbar" id="' + formIdentifier + '_toolbar">';
+                    buttons    += '  <input id="' + formIdentifier + '_edit" class="edit" type="button" value="Edit" />';
+                    buttons    += '  <input id="' + formIdentifier + '_save" class="save" type="button" value="Save" />';
                     buttons    += '</div>';
                     new Insertion.After(lastFormField, buttons);    
                     $(formIdentifier + '_edit').onclick = this.fetchFields.bindAsEventListener(this);
@@ -646,23 +634,45 @@ dm2AjaxEditor.prototype = {
                     // We're in edit state, options are "Preview" and "Save"
                     if (this.creationMode)
                     {
-                        var buttons = '<div class="form_toolbar" id="' + formIdentifier + '_toolbar">';
-                        buttons    += '  <input id="' + formIdentifier + '_save" type="button" value="Save" />';
+                        var buttons = '<div class="midcom_helper_datamanager2_ajax_toolbar" id="' + formIdentifier + '_toolbar">';
+                        buttons    += '  <input id="' + formIdentifier + '_save" class="save" type="button" value="Save" />';
                         buttons    += '</div>';
-                        new Insertion.Bottom(document.lastChild.lastChild, buttons);
+                        
+                        if (this.windowMode)
+                        {
+                            // With windows insert the toolbar in the area
+                            new Insertion.Top(this.formId + '_area', buttons);
+                        }
+                        else
+                        {                        
+                            new Insertion.Bottom(document.lastChild.lastChild, buttons);
+                        }
                         $(formIdentifier + '_save').onclick = this.saveFields.bindAsEventListener(this);
                     }
                     else
                     {
-                        var buttons = '<div class="form_toolbar" id="' + formIdentifier + '_toolbar">';
-                        buttons    += '  <input id="' + formIdentifier + '_preview" type="button" value="Preview" />';
-                        buttons    += '  <input id="' + formIdentifier + '_save" type="button" value="Save" />';
-                        buttons    += '  <input id="' + formIdentifier + '_cancel" type="button" value="Cancel" />';
+                        var buttons = '<div class="midcom_helper_datamanager2_ajax_toolbar" id="' + formIdentifier + '_toolbar">';
+                        buttons    += '  <input id="' + formIdentifier + '_preview" class="preview" type="button" value="Preview" />';
+                        buttons    += '  <input id="' + formIdentifier + '_save" class="save" type="button" value="Save" />';
+                        buttons    += '  <input id="' + formIdentifier + '_cancel" class="cancel" type="button" value="Cancel" />';
+                        buttons    += '  <input id="' + formIdentifier + '_delete" class="delete" type="button" value="Delete" />';                        
                         buttons    += '</div>';
-                        new Insertion.Bottom(document.lastChild.lastChild, buttons);
+                        
+                        if (this.windowMode)
+                        {
+                            // With windows insert the toolbar in the area
+                            new Insertion.Top(this.formId + '_area', buttons);
+                        }
+                        else
+                        {
+                            // Insert the toolbar after last form element
+                            new Insertion.Bottom(document.lastChild.lastChild, buttons);
+                        }
+
                         $(formIdentifier + '_preview').onclick = this.previewFields.bindAsEventListener(this);
                         $(formIdentifier + '_save').onclick = this.saveFields.bindAsEventListener(this);
                         $(formIdentifier + '_cancel').onclick = this.cancelFields.bindAsEventListener(this);
+                        $(formIdentifier + '_delete').onclick = this.deleteFields.bindAsEventListener(this); 
                     }
                     
                     // We got here from preview, set form values from previewed content instead of content fetched from DM2
@@ -676,12 +686,21 @@ dm2AjaxEditor.prototype = {
                     toolbar = $(formIdentifier + '_toolbar');
                     if (toolbar)
                     {
-                        toolbarStyles = { 
-                            'position': 'absolute',
-                            'left'    : this.formDimensions.x1 + 'px',
-                            'top'     : this.formDimensions.y1 - (toolbar.offsetHeight + 6) +  'px',
-                            'display' : 'none'
-                        };
+                        if (this.windowMode)
+                        {
+                            toolbarStyles = { 
+                                'display' : 'none'
+                            };                        
+                        }
+                        else
+                        {
+                            toolbarStyles = { 
+                                'position': 'absolute',
+                                'left'    : this.formDimensions.x1 + 'px',
+                                'top'     : this.formDimensions.y1 - (toolbar.offsetHeight + 6) +  'px',
+                                'display' : 'none'
+                            };
+                        }
                         stylesHash = $H(toolbarStyles);
                         Element.setStyle(toolbar, stylesHash);
                         Effect.Appear(toolbar);
@@ -692,6 +711,26 @@ dm2AjaxEditor.prototype = {
                     {
                         this.enableTinyMCE();
                     }
+                    
+                    // Make the editor a window if needed
+                    if (this.windowMode)
+                    {
+                        Element.addClassName(this.formId + '_area', 'ajax_editable_window');
+                        /*
+                        contentWin = new Window('content_win', {
+                            className: 'alphacube',
+                            resizable: true, 
+                            hideEffect: Element.hide, 
+                            showEffect: Element.show, 
+                            minWidth: 10
+                        });
+                        contentWin.setContent(formIdentifier, true, true);
+                        contentWin.toFront(); 
+                        contentWin.setDestroyOnClose(); 
+                        contentWin.show();
+                        */                   
+                    }
+                    
                     break         
             }
         }
@@ -705,6 +744,13 @@ dm2AjaxEditor.prototype = {
      */
     deleteFields: function()
     {
+        this.removeToolbar();
+            
+        if (this.windowMode)
+        {
+            Element.removeClassName(this.formId + '_area', 'ajax_editable_window');
+        }
+            
         this.blinder.innerHTML = 'Deleting...';
             
         Effect.Appear(this.blinder);    
@@ -731,6 +777,19 @@ dm2AjaxEditor.prototype = {
     },
 
     /**
+     * Remove old toolbar
+     */
+    removeToolbar: function()
+    {
+        // Remove old toolbars
+        oldToolbar = $(formIdentifier + '_toolbar');
+        if (oldToolbar)
+        {
+            Element.remove(oldToolbar);
+        }    
+    },
+    
+    /**
      * Start up TinyMCE editors for all fields that need them
      */
     enableTinyMCE: function()
@@ -739,17 +798,24 @@ dm2AjaxEditor.prototype = {
         for (i = 0; i < tinyFields.length; i++) 
         {
             parent = tinyFields[i].parentNode;
-            dimensions = this.getFieldDimensions(parent);
-            tinyMCE.settings['width'] = dimensions.width;
+            
+            if (!this.windowMode)
+            {
+                dimensions = this.getFieldDimensions(parent);
+                tinyMCE.settings['width'] = dimensions.width;
+            }
             //tinyMCE.settings['theme'] = 'simple';
             tinyMCE.addMCEControl(tinyFields[i], tinyFields[i].getAttribute('id'));
 
-            editors = document.getElementsByClassName('mceEditor');
-            for (ii = 0; ii < editors.length; ii++) 
-            {            
-                editors[ii].width = dimensions.width;
-                editors[ii].width = dimensions.width+'px';
-            }            
+            if (!this.windowMode)
+            {
+                editors = document.getElementsByClassName('mceEditor');
+                for (ii = 0; ii < editors.length; ii++) 
+                {            
+                    editors[ii].width = dimensions.width;
+                    editors[ii].width = dimensions.width+'px';
+                }            
+            }
         }    
     },
 

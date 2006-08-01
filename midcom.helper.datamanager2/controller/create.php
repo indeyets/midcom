@@ -69,6 +69,14 @@ class midcom_helper_datamanager2_controller_create extends midcom_helper_dataman
      * @access public
      */
     var $ajax_mode = false;
+    
+    /**
+     * Options to pass for the AJAX controller
+     *
+     * @param Array
+     * @access public
+     */
+    var $ajax_options = Array();     
 
     /**
      * The defaults to initialize the form manager with. This array is indexed
@@ -186,7 +194,16 @@ class midcom_helper_datamanager2_controller_create extends midcom_helper_dataman
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Prototype/prototype.js");
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Scriptaculous/scriptaculous.js?effects");
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/midcom.helper.datamanager2/ajax.js");
-        $_MIDCOM->add_jsonload("var dm2AjaxEditor_{$this->form_identifier} = new dm2AjaxEditor('{$this->form_identifier}', true);");
+        
+        if (   array_key_exists('window_mode', $this->ajax_options)
+            && $this->ajax_options['window_mode'])
+        {
+            $_MIDCOM->add_jsonload("var dm2AjaxEditor_{$this->form_identifier} = new dm2AjaxEditor('{$this->form_identifier}', true, true);");
+        }
+        else
+        {
+            $_MIDCOM->add_jsonload("var dm2AjaxEditor_{$this->form_identifier} = new dm2AjaxEditor('{$this->form_identifier}', true);");
+        }
 
         $this->formmanager = new midcom_helper_datamanager2_formmanager_ajax($this->datamanager->schema, $this->datamanager->types);
 

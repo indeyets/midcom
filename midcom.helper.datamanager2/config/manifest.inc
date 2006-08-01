@@ -1,6 +1,6 @@
 'name' => 'midcom.helper.datamanager2',
-'version' => '0.8.10',
-'state'   => 'devel',
+'version' => '0.8.12',
+'state'   => 'beta',
 'purecode' => true,
 'package.xml' => Array(
     'summary' => 'Data abstraction and form rendering library',

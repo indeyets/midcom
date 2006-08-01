@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 composite object management type.
+ * Datamanager 2 composite object management type.
  *
  * This type allows you to control an arbitary number of "child objects" on a given object.
  * It can only operate if the storage implementation provides it with a Midgard Object.
@@ -28,6 +28,7 @@
  * - <b>parent_key_fieldname</b>: field of the parent used as identifier in child objects. Typically <i>id</i> or <i>guid</i>.
  * - Array <b>child_constraints</b>: Other query constraints for the child objects as arrays containing field, constraint type and value suitable for QB add_constraint usage. 
  * - <b>style_element_name</b>: Name used for the header, footer and item elements of the object list
+ * - <b>window_mode</b>: Whether the composites should be edited in a modal pop-up window instead of in-place. Useful for tight spaces.
  * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanager2_type
@@ -38,7 +39,7 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
     var $parent_key_fieldname = 'id';
     var $child_constraints = Array();
     var $style_element_name = 'child';
-    
+    var $window_mode = false;
 
     /**
      * The schema database in use for the child elements
@@ -236,6 +237,12 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
     {
         $object = $this->objects[$identifier];
         $this->_controllers[$identifier] =& midcom_helper_datamanager2_controller::create('ajax');
+        
+        if ($this->window_mode)
+        {
+            $this->_controllers[$identifier]->window_mode = $this->window_mode;
+        }
+        
         $this->_controllers[$identifier]->schemadb =& $this->_schemadb;
         $this->_controllers[$identifier]->set_storage($object);
         $this->_controllers[$identifier]->process_ajax();
@@ -250,6 +257,12 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
                 $this->_creation_controllers[$name] =& midcom_helper_datamanager2_controller::create('create');
                 $this->_creation_controllers[$name]->form_identifier = "midcom_helper_datamanager2_controller_create_{$this->name}_{$this->storage->object->guid}_{$name}";
                 $this->_creation_controllers[$name]->ajax_mode = true;
+                $this->_creation_controllers[$name]->ajax_options = Array();                
+                if ($this->window_mode)
+                {
+                    $this->_creation_controllers[$name]->ajax_options['window_mode'] = $this->window_mode;
+                }            
+                
                 $this->_creation_controllers[$name]->schemadb =& $this->_schemadb;
                 $this->_creation_controllers[$name]->schemaname = $name;
                 $this->_creation_controllers[$name]->callback_object =& $this;

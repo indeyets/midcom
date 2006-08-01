@@ -22,6 +22,7 @@
 class midcom_helper_datamanager2_controller_ajax extends midcom_helper_datamanager2_controller
 {
     var $form_identifier = '';
+    var $window_mode = false;
     var $_editable = null;
     
     /**
@@ -99,14 +100,22 @@ class midcom_helper_datamanager2_controller_ajax extends midcom_helper_datamanag
         }
 
         // Debug helpers
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/messages.js");
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/ajaxutils.js");
+        //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/messages.js");
+        //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/ajaxutils.js");
 
         // Add the required JavaScript
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Prototype/prototype.js");
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Scriptaculous/scriptaculous.js?effects");
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/midcom.helper.datamanager2/ajax.js");
-        $_MIDCOM->add_jsonload("var dm2AjaxEditor_{$this->form_identifier} = new dm2AjaxEditor('{$this->form_identifier}');");
+        
+        if ($this->window_mode)
+        {
+            $_MIDCOM->add_jsonload("var dm2AjaxEditor_{$this->form_identifier} = new dm2AjaxEditor('{$this->form_identifier}', false, true);");
+        }
+        else
+        {
+            $_MIDCOM->add_jsonload("var dm2AjaxEditor_{$this->form_identifier} = new dm2AjaxEditor('{$this->form_identifier}');");
+        }
 
         $_MIDCOM->add_link_head(
             array
@@ -116,7 +125,7 @@ class midcom_helper_datamanager2_controller_ajax extends midcom_helper_datamanag
                 'media' => 'screen',
                 'href'  => MIDCOM_STATIC_URL."/midcom.helper.datamanager2/ajax.css",
             )
-        );
+        );    
 
         if (array_key_exists("{$this->form_identifier}_edit", $_REQUEST))
         {
