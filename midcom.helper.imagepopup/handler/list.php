@@ -137,7 +137,7 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Prototype/prototype.js");
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/midcom.helper.imagepopup/functions.js");
         $_MIDCOM->add_jscript($this->_image_info);
-        $_MIDCOM->add_jsonload("tinyMCEPopup.executeOnLoad('tinyMCEPopup.resizeToContent()');");
+        //$_MIDCOM->add_jsonload("tinyMCEPopup.executeOnLoad('tinyMCEPopup.resizeToContent()');");
         $_MIDCOM->add_jsonload("imagePopupConvertImagesForAddition();imagePopupConvertFilesForAddition();");
         
         return true;
