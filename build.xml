@@ -6,8 +6,8 @@
 	<property name="absolute_basedir" value="" />
 	<resolvepath propertyName="absolute_basedir" file="${project.basedir}"/>
 	
-	<taskdef classname="build.installMidcom" 
-		     name="installMidcom" 
+	<taskdef classname="build.installMidcomDir" 
+		     name="installMidcomDir" 
 			 classpath="/${project.basedir}"
 	/>
 	<taskdef classname="build.makeProjectList" 
@@ -53,7 +53,7 @@
 	</target>
 	<target name="install_module_symlink">
 		<echo>Installing to ${install_dir} </echo>	
-		<installMidcom install_dir="${lib_dir}" 
+		<installMidcomDir install_dir="${lib_dir}" 
 						project_dir="${absolute_basedir}"
 						module="${project}" 
 						static_dir="${static_dir}" 
