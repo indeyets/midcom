@@ -6,16 +6,16 @@
 	<property name="absolute_basedir" value="" />
 	<resolvepath propertyName="absolute_basedir" file="${project.basedir}"/>
 	
-	<taskdef classname="build.makeProjectDir" 
-		     name="makeProjectDir" 
+	<taskdef classname="build.installMidcom" 
+		     name="installMidcom" 
 			 classpath="/${project.basedir}"
 	/>
 	<taskdef classname="build.makeProjectList" 
 				     name="makeProjectList" 
 					 classpath="/${project.basedir}"
 			/>
-	<taskdef classname="build.installMidcom" 
-				     name="installMidcom" 
+	<taskdef classname="build.installMidcomCore" 
+				     name="installMidcomCore" 
 					 classpath="/${project.basedir}"
 			/>
 	<target name="dummy">
@@ -48,14 +48,15 @@
 	-->
 	<target name="install_midcom">
 		<mkdir dir="${lib_dir}/midcom" />
-		<installMidcom  install_dir="${lib_dir}" 
+		<installMidcomCore  install_dir="${lib_dir}" 
 						project_dir="${absolute_basedir}" />
 	</target>
 	<target name="install_module_symlink">
 		<echo>Installing to ${install_dir} </echo>	
-		<makeProjectDir install_dir="${lib_dir}" 
+		<installMidcom install_dir="${lib_dir}" 
 						project_dir="${absolute_basedir}"
 						module="${project}" 
+						static_dir="${static_dir}" 
 						umask="${install_umask}" />
 		<!--
 		<exec command="ln -s ${absolute_basedir}/${project}/static ${static_dir}/${project}" />
