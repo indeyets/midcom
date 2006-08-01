@@ -48,6 +48,13 @@ class installMidcomCore extends Task
         $this->project_dir = $str;
     }
     /**
+     * @var string path to where static files should be installed
+     */
+    protected $static_dir = null;
+    public function setStatic_dir($dir) {
+        $this->static_dir = $dir;
+    }
+    /**
      * Directories that we make so that packages may be installed 
      * bellow them.
      */
@@ -63,8 +70,12 @@ class installMidcomCore extends Task
     protected $skip_dirs = array (
         '.svn',
         '.',
-        '..'
+        '..',
+        'static'
     );
+    
+    
+    
     /**
      * The installdir/midcom path
      */
@@ -115,6 +126,18 @@ class installMidcomCore extends Task
                 $this->make_symlink("{$this->from}/$dir","{$this->to}/$dir");
             }
         }
+        
+        /**
+         * Make symlinks for the static files
+         */
+        $dirs = $this->get_module_dirs($this->from . "/static");
+        
+        foreach ($dirs as $dir => $value) {
+            $from =  "{$this->from}/static/$dir";
+            $to   =  "{$this->static_dir}/$dir";   
+            $this->make_symlink($from, $to, true);
+        }
+        
     }
     /**
      * Creates the subdir and symlinks the files in it
@@ -158,14 +181,14 @@ class installMidcomCore extends Task
      * Creates a symlink to the file or directory
      * @param string  paramname
      */
-    private function make_symlink($from , $link)
+    private function make_symlink($from , $link, $debug = false)
     {
         if (is_link($link)) 
         {
             return;
         }   
         $command = sprintf("ln -s %s %s", $from, $link);
-        $this->exec_command($command);
+        $this->exec_command($command, $debug);
     }
     /**
      * returns a list of subdirectories and files as a assosiative 
