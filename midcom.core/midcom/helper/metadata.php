@@ -58,7 +58,7 @@
  *
  * <code>
  * <?php
- * $article = mgd_get_article($my_article_created_id);
+ * $article = new midcom_db_article($my_article_created_id);
  *
  * $meta =& midcom_helper_metadata::retrieve($article);
  * $article->approve();
@@ -199,17 +199,17 @@ class midcom_helper_metadata
         }
          */
 
-        $GLOBALS['midcom']->load_library("midcom.helper.datamanager");
+        $_MIDCOM->load_library("midcom.helper.datamanager");
         $this->_datamanager = new midcom_helper_datamanager($this->_schemadb);
         if (! $this->_datamanager)
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 'Failed to create the metadata datamanager instance, see the Debug Log for details.');
             // This will exit()
         }
         if (! $this->_datamanager->init($this->object, 'metadata'))
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 'Failed to initialize the metadata datamanager instance, see the Debug Log for details.');
             // This will exit()
         }
@@ -252,11 +252,11 @@ class midcom_helper_metadata
                 {
                      if (!mgd_update_article_created($this->object->id, $value))
                      {
-                        $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+                        $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                             "Failed to set the created timestamp to {$value} on article ID {$this->object->id}.");
                         // This will exit.
                      }
-                     $this->object = mgd_get_article($this->object->id);
+                     $this->object = new midcom_db_article($this->object->id);
                      $this->on_update($key);
 
                      // Explicitly return here, we mustn't set a parameter.
@@ -265,7 +265,7 @@ class midcom_helper_metadata
                 }
                 else
                 {
-                    $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                         "Cannot update the created fields of non-articles using the Metadata interface.");
                     // This will exit.
                 }
@@ -274,7 +274,7 @@ class midcom_helper_metadata
             case 'creator':
             case 'edited':
             case 'editor':
-                $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     "Cannot update the creator, edited and editor fields using the Metadata interface.");
                 // This will exit.
                 break;
@@ -295,10 +295,10 @@ class midcom_helper_metadata
                 else if (is_numeric($value))
                 {
                     // This seems to be an ID
-                    $person = mgd_get_person($value);
+                    $person = new midcom_db_person($value);
                     if (! $person)
                     {
-                        $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+                        $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                             "Could not load the Person with the ID {$value} while setting the approver.");
                         // This will exit.
                     }
@@ -306,7 +306,7 @@ class midcom_helper_metadata
                 }
                 else
                 {
-                    $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                         "{$value} does not look like a GUID while setting the approver.");
                     // This will exit.
                 }
@@ -350,7 +350,7 @@ class midcom_helper_metadata
         // so that we don't loose the cache of the metadata already in place.
         // Just be intelligent here :)
 
-        $GLOBALS['midcom']->cache->invalidate($this->guid);
+        $_MIDCOM->cache->invalidate($this->guid);
     }
 
     /* ------- METADATA I/O INTERFACE -------- */
@@ -456,7 +456,7 @@ class midcom_helper_metadata
                     // Person IDs
                   case 'creator':
                   case 'revisor':
-                      $obj = mgd_get_person($value);
+                      $obj = new midcom_db_person($value);
                         if (! $obj)
                         {
                             debug_push_class(__CLASS__, __FUNCTION__);
