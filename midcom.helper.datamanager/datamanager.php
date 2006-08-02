@@ -527,7 +527,8 @@ class midcom_helper_datamanager {
 
         if (is_null($layoutdb))
         {
-            $this = false;
+            $x =& $this;
+            $x = false;
             $midcom_errstr = "Default Constructor not allowed";
             debug_add($midcom_errstr);
             debug_pop();

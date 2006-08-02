@@ -34,7 +34,8 @@ class net_nemein_incidentdb_typedb {
         
         if ($this->_datamanager === false) {
             debug_add("INCIDENTDB::TYPEDB Constructor: Could not create datamanager.");
-            $this = false;
+            $x =& $this;
+            $x = false;
             return false;
         }
         

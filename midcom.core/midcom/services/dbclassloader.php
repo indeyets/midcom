@@ -599,7 +599,8 @@ EOF;
         if (   ! is_null(\$id)
             && ! \$this->_load_from_database(\$id))
         {
-            \$this = false;
+            \$x =& \$this;
+            \$x = false;
             return false;
         }
     }

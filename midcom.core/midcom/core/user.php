@@ -186,7 +186,8 @@ class midcom_core_user extends midcom_baseclasses_core_object
         if (! $this->_load($id))
         {
             debug_pop();
-            $this = false;
+            $x =& $this;
+            $x = false;
             return false;
         }
         debug_pop();

@@ -19,7 +19,8 @@ class net_nemein_reservations_resource extends net_nemein_reservations__base {
             {
                 debug_add("Could not load person [$id], invalid GUID: " . mgd_errstr(), MIDCOM_LOG_ERROR);
                 debug_print_r("Retrieved object was:", $this->person);
-                $this = false;
+                $x =& $this;
+            	$x = false;
                 debug_pop();
                 return false;
             }
@@ -27,7 +28,8 @@ class net_nemein_reservations_resource extends net_nemein_reservations__base {
             $this->person = mgd_get_person($id);
             if (! $this->person) {
                 debug_add("Could not load person [$id]: " . mgd_errstr(), MIDCOM_LOG_ERROR);
-                $this = false;
+                $x =& $this;
+            	$x = false;
                 debug_pop();
                 return false;
             }
@@ -37,7 +39,8 @@ class net_nemein_reservations_resource extends net_nemein_reservations__base {
         } else {
             debug_add("Unknown constructor argument.", MIDCOM_LOG_ERROR);
             debug_print_r("Argument was:", $id);
-            $this = false;
+            $x =& $this;
+            $x = false;
             debug_pop();
             return false;
         }
@@ -46,7 +49,8 @@ class net_nemein_reservations_resource extends net_nemein_reservations__base {
             if (! mgd_is_member($this->_root_group->id, $this->person->id)) {
                 debug_add("The person " . $this->person->id . " is not member of the group "
                           . $this->_root_group->id . ", aborting object creation.", MIDCOM_LOG_ERROR);
-                $this = false;
+                $x =& $this;
+            	$x = false;
                 debug_pop();
                 return false;
             }
@@ -54,7 +58,8 @@ class net_nemein_reservations_resource extends net_nemein_reservations__base {
 
         if (!$this->_init_datamanager()) {
             debug_pop();
-            $this = false;
+            $x =& $this;
+            $x = false;
             return false;
         }
 

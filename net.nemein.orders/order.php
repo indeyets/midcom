@@ -30,13 +30,15 @@ class net_nemein_orders_order extends net_nemein_orders__base {
         if (is_null($event)) {
             $this->storage = null;
             if (! $this->_init_creation_mode()) {
-                $this = false;
+                $x =& $this;
+            	$x = false;
                 return false;
             }
         } else {
             $this->storage = $event;
             if (! $this->_load_from_storage()) {
-                $this = false;
+                $x =& $this;
+            	$x = false;
                 return false;
             }
         }

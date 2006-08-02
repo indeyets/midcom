@@ -42,7 +42,8 @@ class net_nemein_incidentdb_eventlist {
         
         if ($this->_datamanager === false) {
             debug_add("INCIDENTDB::EVENTLIST Constructor: Could not create datamanager.");
-            $this = false;
+            $x =& $this;
+            $x = false;
             return false;
         }
         

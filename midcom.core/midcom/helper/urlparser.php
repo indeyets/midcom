@@ -159,7 +159,8 @@ class midcom_helper_urlparser {
         if ($topicid == NULL) {
             $midcom_errstr = "Constructed without root Topic Reference";
             debug_add ($midcom_errstr);
-            $this = 0;
+            $x =& $this;
+            $x = 0;
             debug_pop();
             return false;
         }
@@ -168,7 +169,8 @@ class midcom_helper_urlparser {
         if (! $this->_roottopic) {
             $midcom_errstr = "Could not load root topic: " . mgd_errstr();
             debug_add($midcom_errstr);
-            $this = 0;
+            $x =& $this;
+            $x = 0;
             debug_pop();
             return false;
         }

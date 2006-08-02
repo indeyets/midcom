@@ -37,7 +37,8 @@ class midcom_helper_datamanager_datatype_collection extends midcom_helper_datama
             debug_add("Leaving");
             debug_pop();
             return false;
-            $this = false;
+            $x =& $this;
+            $x = false;
         } 
         
         $classname = "midcom_helper_datamanager_widget_{$this->_field['widget']}";

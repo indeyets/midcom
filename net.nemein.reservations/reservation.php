@@ -21,7 +21,8 @@ class net_nemein_reservations_reservation extends net_nemein_reservations__base 
             {
                 debug_add("Could not load event [$id], invalid GUID: " . mgd_errstr(), MIDCOM_LOG_ERROR);
                 debug_print_r("Retrieved object was:", $this->event);
-                $this = false;
+                $x =& $this;
+           		$x = false;
                 debug_pop();
                 return false;
             }
@@ -29,7 +30,8 @@ class net_nemein_reservations_reservation extends net_nemein_reservations__base 
             $this->event = mgd_get_event($id);
             if (! $this->event) {
                 debug_add("Could not load event [$id]: " . mgd_errstr(), MIDCOM_LOG_ERROR);
-                $this = false;
+                $x =& $this;
+            	$x = false;
                 debug_pop();
                 return false;
             }
@@ -40,7 +42,8 @@ class net_nemein_reservations_reservation extends net_nemein_reservations__base 
             $this->event = mgd_get_event($id);
             debug_add("Unknown constructor argument.", MIDCOM_LOG_ERROR);
             debug_print_r("Argument was:", $id);
-            $this = false;
+            $x =& $this;
+            $x = false;
             debug_pop();
             return false;
         }
@@ -50,7 +53,8 @@ class net_nemein_reservations_reservation extends net_nemein_reservations__base 
                 debug_add("The event " . $this->event->id . " is not a child of the root event "
                           . $this->_root_event->id . ", aborting object creation.", MIDCOM_LOG_ERROR);
                 debug_print_r("Event record was: ", $this->event);
-                $this = false;
+                $x =& $this;
+            	$x = false;
                 debug_pop();
                 return false;
             }
@@ -61,7 +65,8 @@ class net_nemein_reservations_reservation extends net_nemein_reservations__base 
                           . mgd_errstr(), MIDCOM_LOG_ERROR);
 
                 debug_print_r("Event record was: ", $this->event);
-                $this = false;
+                $x =& $this;
+            	$x = false;
                 debug_pop();
                 return false;
             }
@@ -72,7 +77,8 @@ class net_nemein_reservations_reservation extends net_nemein_reservations__base 
                           MIDCOM_LOG_ERROR);
                 debug_print_r("Event record was: ", $this->event);
                 debug_print_r("Last membership fetchable state: ", $members);
-                $this = false;
+                $x =& $this;
+            	$x = false;
                 debug_pop();
                 return false;
             }
@@ -81,7 +87,8 @@ class net_nemein_reservations_reservation extends net_nemein_reservations__base 
                           MIDCOM_LOG_ERROR);
                 debug_print_r("Event record was: ", $this->event);
                 debug_print_r("Last membership fetchable state: ", $members);
-                $this = false;
+                $x =& $this;
+            	$x = false;
                 debug_pop();
                 return false;
             }
@@ -89,7 +96,8 @@ class net_nemein_reservations_reservation extends net_nemein_reservations__base 
 
         if (!$this->_init_datamanager()) {
             debug_pop();
-            $this = false;
+            $x =& $this;
+            $x = false;
             return false;
         }
 

@@ -27,7 +27,8 @@ class de_linkm_fontrenderer {
         if (is_null($config) ) {
             debug_add("Default Constructor is not allowed. Aborting", MIDCOM_LOG_ERROR);
             debug_pop();
-            $this = false;
+            $x =& $this;
+            $x = false;
             return false;
         }
         
@@ -35,7 +36,8 @@ class de_linkm_fontrenderer {
         if ($this->_font === false) {
             debug_add("Could not load font. Aborting", MIDCOM_LOG_ERROR);
             debug_pop();
-            $this = false;
+            $x =& $this;
+            $x = false;
             return false;
         }
         
@@ -61,7 +63,8 @@ class de_linkm_fontrenderer {
                       . "does not exists. Aborting",
                       MIDCOM_LOG_ERROR);
             debug_pop();
-            $this = false;
+            $x =& $this;
+            $x = false;
             return false;
         }
         
@@ -85,7 +88,8 @@ class de_linkm_fontrenderer {
         } else {
             debug_add("A cache-dir directive without a cache-prefix directive was present. This is illegal, aborting.", MIDCOM_LOG_ERROR);
             debug_pop();
-            $this = false;
+            $x =& $this;
+            $x = false;
             return false;
         }
         
@@ -96,7 +100,8 @@ class de_linkm_fontrenderer {
         if ($this->_serial == -1) {
             debug_add("Could not parse Serial, aborting.", MIDCOM_LOG_ERROR);
             debug_pop();
-            $this = false;
+            $x =& $this;
+            $x = false;
             return false;
         }
         
