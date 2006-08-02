@@ -223,12 +223,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
                     <file baseinstalldir="midcom/lib" name="uimessages.php" role="php" />
                 </dir> <!-- //midcom/services -->
                 <dir name="static">
-                    <dir name="midcom.services.toolbars">
-                        <file baseinstalldir="/" name="drag-grid.gif" install-as="/midcom.services.toolbars/drag-grid.gif" role="web" />
-                        <file baseinstalldir="/" name="midgard-logo.png" install-as="/midcom.services.toolbars/midgard-logo.png" role="web" />
-                        <file baseinstalldir="/" name="toolbar.css" install-as="/midcom.services.toolbars/toolbar.css" role="web" />
-                        <file baseinstalldir="/" name="toolbar.js" install-as="/midcom.services.toolbars/toolbar.js" role="web" />
-                    </dir> <!-- //midcom/static/midcom.services.toolbars -->
                     <dir name="midcom.services.uimessages">
                         <file baseinstalldir="/" name="protoGrowl.css" install-as="/midcom.services.uimessages/protoGrowl.css" role="web" />
                         <file baseinstalldir="/" name="protoGrowl.js" install-as="/midcom.services.uimessages/protoGrowl.js" role="web" />
@@ -274,8 +268,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
                 <channel>pearified.com</channel>
             </package>
             <package>
-                <name>Javascript_Scriptaculous</name>
-                <channel>pearified.com</channel>
+                <name>Javascript_protoToolkit</name>
+                <channel>pear.midcom-project.org</channel>
             </package>            
             <package>
                 <name>midcom_admin_content</name>

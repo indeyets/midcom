@@ -397,7 +397,7 @@ $GLOBALS['midcom_config_default']['toolbars_node_style_id'] = null;
 $GLOBALS['midcom_config_default']['toolbars_view_style_class'] = 'midcom_toolbar view_toolbar';
 $GLOBALS['midcom_config_default']['toolbars_view_style_id'] = null;
 $GLOBALS['midcom_config_default']['toolbars_object_style_class'] = 'midcom_toolbar object_toolbar';
-$GLOBALS['midcom_config_default']['toolbars_css_path'] = MIDCOM_STATIC_URL . "/midcom.services.toolbars/toolbar.css";
+$GLOBALS['midcom_config_default']['toolbars_css_path'] = MIDCOM_STATIC_URL . "/Javascript_protoToolkit/styles/protoToolbar.css";
 $GLOBALS['midcom_config_default']['toolbars_enable_centralized'] = true;
 
 // Utilities

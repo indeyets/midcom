@@ -109,7 +109,9 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
 
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Prototype/prototype.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Scriptaculous/scriptaculous.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.toolbars/toolbar.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Javascript_protoToolkit/protoToolkit.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Javascript_protoToolkit/protoMemory.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Javascript_protoToolkit/protoToolbar.js');        
 
         $_MIDCOM->add_link_head(
             array
@@ -120,6 +122,20 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 'href'  => $GLOBALS['midcom_config']['toolbars_css_path'],
             )
         );
+
+        $this->type = 'palette';
+
+        // Compute the final script:
+        $script = "
+            function protoToolbarOnload() {
+            	protoToolbar = new protoToolbar({
+            	   type: '{$this->type}'
+                });
+            }
+        ";
+
+        $_MIDCOM->add_jscript($script);
+        $_MIDCOM->add_jsonload('protoToolbarOnload();');
 
         // We've included CSS and JS, path is clear for centralized mode
         $this->_enable_centralized = true;
@@ -524,23 +540,23 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
 
         $this->_centralized_mode = true;
 
-        echo "<div id='midcom_services_toolbars_toolbar' style='display: none;'>\n";
-        echo "    <div class='logo'>\n";
+        echo "<div id='protoToolbar-".$this->type."' style='display: none;'>\n";
+        echo "    <div id='protoToolbar-".$this->type."-logos'>\n";
         echo "        <a href=\"" . $_MIDCOM->get_page_prefix() . "midcom-exec-midcom/about.php\">\n";
-        echo "            <img src='" . MIDCOM_STATIC_URL . "/midcom.services.toolbars/midgard-logo.png' width='18' height='18' alt='Midgard' />\n";
+        echo "            <img src='" . MIDCOM_STATIC_URL . "/Javascript_protoToolkit/images/midgard-logo.png' width='16' height='16' alt='Midgard' />\n";
         echo "        </a>\n";
         echo "    </div>\n";
-        echo "    <div class='content'>\n";
-        echo "        <div class='item' onmouseover=\"javascript:midcom_services_toolbars_toolbar_root_toggle(this, 'block');\" onmouseout=\"javascript:midcom_services_toolbars_toolbar_root_toggle(this, 'none');\">\n";
-        echo "            <h3><a href='#'>". $_MIDCOM->i18n->get_string('page', 'midcom') . "</a></h3>\n";
+        echo "    <div id='protoToolbar-".$this->type."-content'>\n";
+        echo "        <div id='item-page' class='item'>\n";
+        echo "            <h1><a href='#'>". $_MIDCOM->i18n->get_string('page', 'midcom') . "</a></h1>\n";
         echo $this->render_view_toolbar();
         echo "        </div>\n";
-        echo "        <div class='item' onmouseover=\"javascript:midcom_services_toolbars_toolbar_root_toggle(this, 'block');\" onmouseout=\"javascript:midcom_services_toolbars_toolbar_root_toggle(this, 'none');\">\n";
-        echo "            <h3><a href='#'>". $_MIDCOM->i18n->get_string('folder', 'midcom') . "</a></h3>\n";
+        echo "        <div id='item-folder' class='item'>\n";
+        echo "            <h1><a href='#'>". $_MIDCOM->i18n->get_string('folder', 'midcom') . "</a></h1>\n";
         echo $this->render_node_toolbar();
         echo "        </div>\n";
-        echo "        <div class='item'>\n";
-        echo "            <h3><a href='" . $_MIDCOM->get_page_prefix() . "midcom-logout-'>". $_MIDCOM->i18n->get_string('logout', 'midcom') . "</a></h3>\n";
+        echo "        <div id='item-logout' class='item'>\n";
+        echo "            <h1><a href='" . $_MIDCOM->get_page_prefix() . "midcom-logout-'>". $_MIDCOM->i18n->get_string('logout', 'midcom') . "</a></h1>\n";
         echo "        </div>\n";
         echo "    </div>\n";
         echo "     <div class='dragbar'></div>\n";
