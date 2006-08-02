@@ -53,9 +53,9 @@ class midcom_helper_nav {
     {
         if ($contextid == -1)
         {
-            $contextid = $GLOBALS['midcom']->get_current_context();
+            $contextid = $_MIDCOM->get_current_context();
         }
-        $this->_basicnav =& $GLOBALS["midcom"]->get_basic_nav($contextid);
+        $this->_basicnav =& $_MIDCOM->get_basic_nav($contextid);
         $this->_contextid = $contextid;
     }
 
@@ -239,7 +239,7 @@ class midcom_helper_nav {
             return false;
         }
 
-        $parent_topic = mgd_get_topic($parent_node_id);
+        $parent_topic = new midcom_db_topic($parent_node_id);
         if (! $parent_topic)
         {
             return FALSE;
@@ -350,10 +350,10 @@ class midcom_helper_nav {
                 return false;
             }
 
-            $topic = mgd_get_topic($object->topic);
+            $topic = new midcom_db_topic($object->topic);
             if (! $topic)
             {
-                $GLOBALS['midcom']->generate_error(
+                $_MIDCOM->generate_error(
                     MIDCOM_ERRCRIT,
                     "Data inconsistency, the topic ID ({$object->topic}) of the article {$object->id} is invalid. "
                         . 'Last error was: ' . mgd_errstr());
@@ -520,7 +520,7 @@ class midcom_helper_nav {
         }
         else if (! is_array($node))
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, 'get_node_toolbar: The parameter $node could not be verified as a NAP node.');
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'get_node_toolbar: The parameter $node could not be verified as a NAP node.');
         }
 
         // Check permissions first
@@ -623,7 +623,7 @@ class midcom_helper_nav {
         }
         else if (! is_array($leaf))
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, 'get_leaf_toolbar: The parameter $leaf could not be verified as a NAP leaf.');
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'get_leaf_toolbar: The parameter $leaf could not be verified as a NAP leaf.');
         }
 
         // Check permissions first
@@ -728,7 +728,7 @@ class midcom_helper_nav {
         }
         else if (! is_array($leaf))
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, 'get_leaf_toolbar: The parameter $leaf could not be verified as a NAP leaf.');
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'get_leaf_toolbar: The parameter $leaf could not be verified as a NAP leaf.');
         }
 
         // Retrieve corresponding node

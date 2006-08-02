@@ -461,7 +461,8 @@ class midcom_helper__basicnav
                     // There is an "all" value, everybody can access this topic for sure.
                     break;
                 }
-                $groups[] = $topic_viewers->name;            }
+                $groups[] = $topic_viewers->name;
+            }
             $nodedata[MIDCOM_NAV_VIEWERGROUPS] = $groups;
         }
         */
@@ -876,7 +877,7 @@ class midcom_helper__basicnav
         if ($idmode)
         {
             $topic_id = $param;
-            $topic = mgd_get_topic($topic_id);
+            $topic = new midcom_db_topic($topic_id);
             if (!$topic)
             {
                 $midcom_errstr = "Could not open Topic: " . mgd_errstr();
@@ -997,7 +998,7 @@ class midcom_helper__basicnav
             return MIDCOM_ERRNOTFOUND;
         }
 
-        $topic = mgd_get_topic ($node_id);
+        $topic = new midcom_db_topic($node_id);
         if (!$topic)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -1014,7 +1015,7 @@ class midcom_helper__basicnav
 
             do
             {
-                $uplink = mgd_get_topic($uplink->up);
+                $uplink = new midcom_db_topic($uplink->up);
                 if (!$uplink)
                 {
                     debug_push_class(__CLASS__, __FUNCTION__);

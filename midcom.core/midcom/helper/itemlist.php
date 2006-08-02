@@ -53,7 +53,7 @@ class midcom_helper_itemlist
     /** Initialize the object, used by the factory function.  
      * 
      * @param midcom_helper_nav $basicnav A reference to a NAP object to use.
-     * @param MidgardTopic $parent_topic A reference to the topic in which we operate.
+     * @param midcom_db_topic $parent_topic A reference to the topic in which we operate.
      * @access private
      */
     function _init (&$basicnav, &$parent_topic) 
@@ -112,9 +112,9 @@ class midcom_helper_itemlist
   /** @ignore */
   function factory ($sorting, &$_basicnav ,&$parent_topic) 
   {
-     if (! is_a($parent_topic, 'MidgardTopic' )) 
+     if (! is_a($parent_topic, 'midgard_topic' )) 
      {
-        $GLOBALS['midcom']->generate_error("midcom_helper_itemlist::factory: parent topic not a MidgardTopic object", MIDCOM_LOG_WARN); 
+        $_MIDCOM->generate_error("midcom_helper_itemlist::factory: parent topic not a midgard_topic object", MIDCOM_LOG_WARN); 
      }
   
      $class = basename($sorting);
