@@ -297,31 +297,3 @@ form.datamanager table.datamanager_table td input.shorttext
     background-color: #EAE8E3;
        text-align: left;
 }
-
-form.datamanager input.universalchooser_search
-{
-    background-position: right !important;
-    background-repeat: no-repeat !important;
-    background-image: url('../stock-icons/16x16/view.png') !important;
-}
-
-form.datamanager input.universalchooser_searching
-{
-    /* TODO: Do not require openpsa2 */
-    background-image: url('../org.openpsa.helpers/ajax-loading.gif') !important;
-}
-
-form.datamanager input.universalchooser_search_ok
-{
-    background-image: url('../stock-icons/16x16/approved.png') !important;
-}
-
-form.datamanager input.universalchooser_search_fail
-{
-    background-image: url('../stock-icons/16x16/cancel.png') !important;
-}
-
-.hidden
-{
-    display: none !important;
-}

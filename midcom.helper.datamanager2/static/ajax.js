@@ -33,15 +33,18 @@ dm2AjaxEditor.prototype = {
         this.blinder = false;
         this.formArea = $(this.formId + '_area');
         
-        if (creationMode)
+        if (this.formArea)
         {
-            this.creationMode = true;
-            this.reserveIdentifier = this.formId + '_reserve';
-            this.enableCreation();
-        }  
-        else
-        {
-            this.makeEditable();
+            if (creationMode)
+            {
+                this.creationMode = true;
+                this.reserveIdentifier = this.formId + '_reserve';
+                this.enableCreation();
+            }  
+            else
+            {
+                this.makeEditable();
+            }
         }
     },
 

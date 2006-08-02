@@ -94,7 +94,7 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
         /* Set the class which should give us a "loading" icon */
         Element.addClassName(this.input_element, 'universalchooser_searching');
         geturl = this.url + '?' + this.constraints + '&search=' + this.search;
-        // alert ('getting url: ' + geturl);
+        //alert ('getting url: ' + geturl);
         this.ajax_request = new Ajax.Request(geturl, {
             method: 'get', 
             onSuccess: this.ajax_success.bind(this), 
@@ -156,7 +156,7 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
         result_li = this.create_element('li', null, false);
         result_link = this.create_element('a', 
                             {
-                                'onClick': jsCall,
+                                //'onClick': jsCall,
                                 'href': jsCall
                             }, 
                             {'display': 'block'},
@@ -194,7 +194,7 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
         switch (this.mode)
         {
             case 'single':
-                new protoGrowl({type: 'error', title: 'Universal Chooser', message: 'Single mode not yet supported'})
+                html += '<input type="radio" id="' + input_id + '" value="1" name="' + input_name + '" class="radio" />\n';
                 break;
             case 'multiple':
                 html += '<input type="checkbox" id="' + input_id + '" value="1" name="' + input_name + '" class="checkbox" />\n';
