@@ -135,7 +135,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         ";
 
         $_MIDCOM->add_jscript($script);
-        $_MIDCOM->add_jsonload('protoToolbarOnload();');
+        $_MIDCOM->add_jsonload('protoToolbarOnload()');
 
         // We've included CSS and JS, path is clear for centralized mode
         $this->_enable_centralized = true;

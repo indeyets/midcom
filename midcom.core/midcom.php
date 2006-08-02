@@ -158,6 +158,7 @@ require('midcom/services/permalinks.php');
 require('midcom/services/tmp.php');
 require('midcom/services/toolbars.php');
 require('midcom/services/uimessages.php');
+require('midcom/services/metadata.php');
 
 /////////////////////////////////////
 // Instantinate the MidCOM main class

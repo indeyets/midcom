@@ -266,6 +266,13 @@ class midcom_application {
     var $uimessages = null;
 
     /**
+     * The metadata service.
+     *
+     * @var midcom_services_metadata
+     */
+    var $metadata = null;
+
+    /**
      * String with all JavaScript declarations for the page's head.
      *
      * @var string
@@ -423,7 +430,8 @@ class midcom_application {
         $this->tmp = new midcom_services_tmp();
         $this->toolbars = new midcom_services_toolbars();
         $this->uimessages = new midcom_services_uimessages();
-
+        $this->metadata = new midcom_services_metadata();
+        
         $this->componentloader->load_all_manifests();
 
         // Load DBA legacy classes required for core operation
@@ -533,6 +541,9 @@ class midcom_application {
         $this->_codeinit = false;
 
         $this->_currentcontext = $oldcontext;
+        
+        // Let metadata service add its meta tags
+        $this->metadata->populate();
 
         debug_add("code-init finished", MIDCOM_LOG_INFO);
         debug_pop();
