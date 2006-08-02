@@ -12,17 +12,25 @@ ini_set('include_path','..:'.ini_get('include_path'));
  * this isn't perfect, but a start, I would like to be able to have
  * MIDCOM_ROOT set somewhere else. 
  */
-define ('MIDCOM_ROOT' , realpath ("../../../../"));
 
+if (strstr(dirname(__FILE__), 'src/midgard.admin.sitegroup'))
+{
+    // This is a bootstrapped SVN checkout
+    define ('MIDCOM_ROOT', dirname(__FILE__). "/../../midcom.core");
+}
+else
+{
+    define ('MIDCOM_ROOT' , realpath ("../../../../"));
+}
 
 require_once 'Console/Getargs.php';
-require_once MIDCOM_ROOT .'/midgard/admin/sitegroup/creation/base.php';
-require_once MIDCOM_ROOT .'/midgard/admin/sitegroup/creation/host.php';
-require_once MIDCOM_ROOT .'/midgard/admin/sitegroup/hostconfig.php';
-require_once MIDCOM_ROOT .'/midgard/admin/sitegroup/creation/config/config.php';
+require_once dirname(__FILE__) .'/../creation/base.php';
+require_once dirname(__FILE__) .'/../creation/host.php';
+require_once dirname(__FILE__) .'/../hostconfig.php';
+require_once dirname(__FILE__) .'/../creation/config/config.php';
 require_once MIDCOM_ROOT . '/constants.php';
 require_once MIDCOM_ROOT . '/midcom/debug.php';
-require_once MIDCOM_ROOT . '/midgard/admin/sitegroup/debug.php';
+require_once dirname(__FILE__) .'/../debug.php';
 
 
 
