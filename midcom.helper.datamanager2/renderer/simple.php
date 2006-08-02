@@ -164,13 +164,6 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     */
     var $_groupWrap = '';
 
-   /**
-    * HTML for the current group
-    * @var      string
-    * @access   private
-    */
-    var $_groupTemplate = '';
-    
     /**
      * The current group running
      * @var string

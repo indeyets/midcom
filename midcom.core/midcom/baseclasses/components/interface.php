@@ -291,10 +291,6 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      */
     var $_purecode = false;
 
-    /**
-     * @deprecated This has been superseeded by the component manifest as of 2005-09-08
-     */
-    var $_version = 0;
 
 
     // START OF COMPONENT STATE VARIABLES
