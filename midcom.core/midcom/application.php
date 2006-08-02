@@ -374,6 +374,7 @@ class midcom_application {
         $this->_jsfiles = Array();
         $this->_jshead = Array();
         $this->_jsonload = Array();
+        $this->_linkhrefs = Array();
 
         // set prefix for "new" midgard->self
         $this->_prefix = $GLOBALS['midcom_config']['midcom_prefix'];
@@ -2612,12 +2613,30 @@ class midcom_application {
      */
     function add_link_head( $attributes = null )
     {
-        $output = "";
-        if (!is_null($attributes) ) foreach ($attributes as $key => $val)
+        if (   is_null($attributes)
+            || !is_array($attributes))
         {
-            $output .= " $key=\"$val\" ";
+            return false;
         }
-        $this->_link_head .= '<link '. $output . ' />'."\n";
+        
+        if (!array_key_exists('href', $attributes))
+        {
+            return false;
+        }
+        
+        // Register each URL only once
+        if (in_array($attributes['href'], $this->_linkhrefs))
+        {
+            return false;
+        }
+        $this->_linkhrefs[] = $attributes['href'];
+        
+        $output = '';        
+        foreach ($attributes as $key => $val)
+        {
+            $output .= " {$key}=\"{$val}\" ";
+        }
+        $this->_link_head .= "<link{$output}/>\n";
     }
 
     /**
