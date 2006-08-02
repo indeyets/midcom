@@ -2,5 +2,5 @@
 
 /* MidCOM Version information */
 
-$GLOBALS['midcom_version'] = '2.5.8';
+$GLOBALS['midcom_version'] = '@package_version@';
 ?>
