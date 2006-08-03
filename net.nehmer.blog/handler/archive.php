@@ -212,7 +212,8 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
 
         $month_names = Date_Calc::getMonthNames();
 
-        for ($year = $first_year; $year <= $last_year; $year++)
+        //for ($year = $first_year; $year <= $last_year; $year++)
+        for ($year = $last_year; $year >= $first_year; $year--)
         {
             $year_url = "{$prefix}year/{$year}.html";
             $year_count = 0;
