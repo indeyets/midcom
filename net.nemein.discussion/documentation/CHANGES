@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2006-08-03 bergie
+  + Preliminary indexing support
+
 2006-04-12 bergie
   + Made thread ordering and pager page display count configurable
 

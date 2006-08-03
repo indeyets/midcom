@@ -118,5 +118,50 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
         );
         return true;
     }
+    
+    /**
+     * Indexes an article.
+     *
+     * This function is usually called statically from various handlers.
+     *
+     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encaspulating the event.
+     * @param midcom_services_indexer $indexer The indexer instance to use.
+     * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
+     *     tries to load a new topic instance from the database identified by this parameter.
+     */
+    function index(&$dm, &$indexer, $topic)
+    {
+        if (is_object($topic))
+        {
+            $tmp = new midcom_db_topic($topic);
+            if (! $tmp)
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
+                    "Failed to load the topic referenced by {$topic} for indexing, this is fatal.");
+                // This will exit.
+            }
+            $topic = $tmp;
+        }
+        
+        // Ensure the post is in a thread that is in the given topic
+        $thread = new net_nemein_discussion_thread_dba($dm->storage->object->thread);
+        if ($thread->node != $topic->id)
+        {
+            return false;
+        }
+
+        // Don't index directly, that would loose a reference due to limitations
+        // of the index() method. Needs fixes there.
+        $nav = new midcom_helper_nav();
+        $node = $nav->get_node($topic->id);
+
+        $document = $indexer->new_document($dm);
+        $document->topic_guid = $topic->guid;
+        $document->topic_url = $node[MIDCOM_NAV_FULLURL];
+        $document->author = $dm->storage->object->sendername;
+        $document->created = $dm->storage->object->created;
+        $document->edited = $dm->storage->object->revised;
+        $indexer->index($document);
+    }    
 }
 ?>

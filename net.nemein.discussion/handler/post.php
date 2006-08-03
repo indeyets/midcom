@@ -111,7 +111,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
         // TODO: Be extra smart here about populating/hiding fields
         if ($_MIDCOM->auth->user)
         {
-            $user =& $_MIDCOM->auth->user->get_storage();
+            $user = $_MIDCOM->auth->user->get_storage();
             foreach (array_keys($this->_schemadb) as $name)
             {
                 $this->_schemadb[$name]->fields['sendername']['readonly'] = true;

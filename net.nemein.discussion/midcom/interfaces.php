@@ -58,40 +58,47 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
      */
     function _on_reindex($topic, $config, &$indexer)
     {
-        return;
-
-        debug_push_class(__CLASS__, __FUNCTION__);
-
-        $qb = midcom_db_article::new_query_builder();
-        $qb->add_constraint('topic', '=', $topic->id);
-        $qb->add_constraint('up', '=', 0);
-        $articles = $qb->execute();
-        if (! $articles)
+        if (is_null($config->get('symlink_topic')))
         {
-            return true;
+            $thread_qb = net_nemein_discussion_thread_dba::new_query_builder();
+            $thread_qb->add_constraint('node', '=', $topic->id);
+            $threads = $qb->execute();
+            
+            $qb = net_nemein_discussion_post_dba::new_query_builder();
+            $qb->begin_group('OR');
+            foreach ($threads as $thread)
+            {
+                $qb->add_constraint('thread', '=', $thread->id);
+            }
+            $qb->end_group();
+            $posts = $qb->execute();
+            
+            if ($posts)
+            {
+                $schemadb = midcom_helper_datamanager2_schema::load_database($config->get('schemadb'));
+                $datamanager = new midcom_helper_datamanager2_datamanager($schemadb);
+                if (! $datamanager)
+                {
+                    debug_add('Warning, failed to create a datamanager instance with this schemapath:' . $config->get('schemadb'),
+                        MIDCOM_LOG_WARN);
+                    continue;
+                }
+
+                foreach ($posts as $post)
+                {
+                    if (! $datamanager->autoset_storage($post))
+                    {
+                        debug_add("Warning, failed to initialize datamanager for Post {$post->id}. Skipping it.", MIDCOM_LOG_WARN);
+                        continue;
+                    }
+
+                    net_nehmer_static_viewer::index($datamanager, $indexer, $topic);
+                }
+            }
         }
-
-        foreach ($articles as $article)
+        else
         {
-            $datamanager = new midcom_helper_datamanager($config->get('schemadb'));
-            if (! $datamanager)
-            {
-                debug_add('Warning, failed to create a datamanager instance with this schemapath:' . $this->_config->get('schemadb'),
-                    MIDCOM_LOG_WARN);
-                continue;
-            }
-
-            if (! $datamanager->init($article))
-            {
-                debug_add("Warning, failed to initialize datamanager for Article {$article->id}. See Debug Log for details.", MIDCOM_LOG_WARN);
-                debug_print_r('Article dump:', $article);
-                continue;
-            }
-
-            $document = net_nemein_discussion_thread2document ($datamanager, &$indexer);
-            $indexer->index($document);
-
-            $datamanager->destroy();
+            debug_add("The topic {$topic->id} is symlinked to another topic, skipping indexing.");
         }
 
         debug_pop();
@@ -99,19 +106,32 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
     }
 
     /**
-     * Simple lookup method which tries to map the guid to an article of out topic. Reply-Articles
-     * are filtered out of the list, as they are not (yet) permalinked.
+     * Simple lookup method which tries to map the guid to an post of out topic.
      */
     function _on_resolve_permalink($topic, $config, $guid)
     {
-        $article = new midcom_db_article($guid);
-        if (   ! $article
-            || $article->topic != $topic->id
-            || $article->up != 0)
+        $thread = new net_nemein_discussion_thread_dba($guid);
+        if ($thread)
         {
-            return null;
+            if ($thread->node != $topic->id)
+            {
+                return null;
+            }
+            return "{$thread->name}/";
         }
-        return "{$article->name}.html";
+        
+        $post = new net_nemein_discussion_post_dba($guid);
+        if ($post)
+        {
+            $thread = new net_nemein_discussion_thread_dba($post->thread);
+            if ($thread->node != $topic->id)
+            {
+                return null;
+            }
+            return "read/{$post->guid}.html";
+        }
+        
+        return null;
     }
 
 }

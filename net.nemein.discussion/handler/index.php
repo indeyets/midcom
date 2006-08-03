@@ -22,14 +22,13 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
     function net_nemein_discussion_handler_index()
     {
         parent::midcom_baseclasses_components_handler();
-        $this->_toolbars =& midcom_helper_toolbars::get_instance();
     }
 
     function _handler_index($handler_id, $args, &$data)
     {
         $this->_request_data['forum'] =& $this->_topic;   
         
-        $this->_toolbars->top->add_item(
+        $this->_node_toolbar->add_item(
             array
             (
                 MIDCOM_TOOLBAR_URL => 'post.html',
