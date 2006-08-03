@@ -152,7 +152,9 @@ class midcom_helper_datamanager2_widget_tinymce extends midcom_helper_datamanage
              $language = 'nb';
         }
 
-        if ($this->use_imagepopup)
+        $imagepopup_url = '';
+        if (   $this->use_imagepopup
+            && $this->_type->storage->object)
         {
             $nap = new midcom_helper_nav();
             $root_node = $nap->get_node($nap->get_root_node());
