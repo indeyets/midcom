@@ -297,3 +297,8 @@ form.datamanager table.datamanager_table td input.shorttext
     background-color: #EAE8E3;
        text-align: left;
 }
+
+form.datamanager img.captcha
+{
+    display: block;
+}
