@@ -8,31 +8,12 @@
  * 
  */
 ini_set('include_path','..:'.ini_get('include_path'));
-/*
- * this isn't perfect, but a start, I would like to be able to have
- * MIDCOM_ROOT set somewhere else. 
- */
-
-if (strstr(dirname(__FILE__), 'src/midgard.admin.sitegroup'))
-{
-    // This is a bootstrapped SVN checkout
-    define ('MIDCOM_ROOT', dirname(__FILE__). "/../../midcom.core");
-}
-else
-{
-    define ('MIDCOM_ROOT' , realpath ("../../../../"));
-}
 
 require_once 'Console/Getargs.php';
-require_once dirname(__FILE__) .'/../creation/base.php';
-require_once dirname(__FILE__) .'/../creation/host.php';
-require_once dirname(__FILE__) .'/../hostconfig.php';
-require_once dirname(__FILE__) .'/../creation/config/config.php';
-require_once MIDCOM_ROOT . '/constants.php';
-require_once MIDCOM_ROOT . '/midcom/debug.php';
-require_once dirname(__FILE__) .'/../debug.php';
-
-
+require_once dirname(__FILE__).'/../creation/base.php';
+require_once dirname(__FILE__).'/../creation/host.php';
+require_once dirname(__FILE__).'/../hostconfig.php';
+require_once dirname(__FILE__).'/../creation/config/config.php';
 
 $default_hostname = @system('hostname -f');
 if (empty($default_hostname))
@@ -84,12 +65,6 @@ error_reporting(E_ALL);
                 'min'   => 0,
                 'desc'  => 'Hostname',
                 'default' => $default_hostname,
-                );
-    $opts_config['style_name'] = array (
-                'max'   => 1,
-                'min'   => 0,
-                'desc'  => 'Name of the style that will be created',
-                'default' => -1,
                 );
     $opts_config['host_prefix'] = array (
                 'short' => 'pr',
@@ -148,19 +123,13 @@ error_reporting(E_ALL);
         {
             if ($args->isDefined($key)) 
             {
-                if ( is_array( $args->getValue($key) )) {
-                     $config->$key = array_pop($args->getValue($key));
-                } else {
-                    $config->$key = $args->getValue($key);
-                }
+                echo "Setting $key to " . $args->getValue($key) . "\n";
+                $config->$key = $args->getValue($key);
             } 
             elseif ( array_key_exists('default', $value) ) 
             {
                 echo "Setting $key to default value " . $value['default'] . "\n";
                 $config->$key = $value['default'];
-                if ($key == 'style_name' ) {
-                    $config->$key = $config->get_value('host_name') .$config->get_value('host_prefix') . " style"; 
-                }
             }
         } 
         if (!array_key_exists('default', $value) && !$args->isDefined($key)) 
@@ -172,7 +141,7 @@ error_reporting(E_ALL);
     }
 
     $configfile = $args->isDefined('configuration') ? $args->getValue('configuration') : 'midgard';
-    debug_add( "Starting midgard with config file: " . $configfile. "\n");
+    echo "Starting midgard with config file: " . $configfile. "\n";
     mgd_config_init($configfile);
     
     $config->set_password($args->getValue('password'));

@@ -158,7 +158,7 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
             {
                 if ($this->verbose)
                 {            
-                    echo "Could not create style {$this->style->name} :" .mgd_errstr()."\n";
+                    echo "Could not create style: ".mgd_errstr()."\n";
                 }
                 $this->_clean();                
                 return false;
@@ -198,23 +198,23 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
     {
         if ($this->host)
         {
-            $this->host->delete();
+            midcom_helper_purge_object($this->host->guid);
         }
 
         if ($this->page)
         {
-            $this->page->delete();
+            midcom_helper_purge_object($this->page->guid);
         }
 
         if ($this->style)
         {
-            $this->style->delete();
+            midcom_helper_purge_object($this->style->guid);
         } 
             
         if ($this->topic)
         {
-            $this->topic->delete();
-        }      
+            midcom_helper_purge_object($this->topic->guid);
+        }     
     }
     
     /**
@@ -280,22 +280,10 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
      *  @access private
      */
     function _create_topic()
-    {
-        $name = sprintf( "%s_%s %s", $this->config->get_value('hostname') , 
-                                     $this->config->get_value('host_prefix') , 
-                                     " root_topic");
-        var_dump($this->config->get_value('host_prefix'));                                  
-        echo "Creating name : $name";                                  
-        $qb = new MidgardQueryBuilder("midgard_topic");
-        $qb->add_constraint('name', '=', $name );
-        $qb->add_constraint('up', '=', 0);
-        $res = $qb->execute();            
-        if (count($res) > 0 ) {
-            $name .= "_" . count($res);
-        }
-         
-        $attributes  = array  (
-            'name' => $name ,
+    {                
+        $attributes  = Array  
+        (
+            'name' => $this->config->get_value('hostname') . $this->config->get_value('host_prefix') . " root topic",
             'extra' => $this->config->get_value('topic_name') 
         );
         
@@ -303,48 +291,17 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
         if (!$this->_create_object("topic", $attributes, $this->sitegroup_id, "topic"))
         {
             return false;
-      
         }
 
         $this->topic->parameter('midcom', 'component', $this->config->get_value('topic_midcom'));
         return true;
     }
-    
-    function print_stack() {
-        $stack = xdebug_get_function_stack();
-        $stacktrace = "";
-        foreach ($stack as $number => $frame)
-        {
-            $stacktrace .= $number + 1;
-            $stacktrace .= ": {$frame['file']}:{$frame['line']} ";
-            if (array_key_exists('class', $frame))
-            {
-                $stacktrace .= "{$frame['class']}::{$frame['function']}";
-            }
-            else if (array_key_exists('function', $frame))
-            {
-                $stacktrace .= $frame['function'];
-            }
-            else
-            {
-                $stacktrace .= 'require, include or eval';
-            }
-            $stacktrace .= "\n";
-        }
-        return $stacktrace;
-    }
-    
     /**
      * Creates a basic style
      * @access private 
      **/
     function _create_style()
     {
-        $this->style = new midgard_style();
-        $this->style->sitegroup = $this->sitegroup_id;
-        $this->style->name = sprintf('%s for %s', $this->config->get_value('style_name'), $this->config->get_value('hostname').$this->config->get_value('host_prefix'));
-        $this->style->up = 0;
-        
         if ($this->config->get_value('extend_style') != 'none')
         {
             // Extend existing style template
@@ -352,50 +309,27 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
             $qb->add_constraint('up', '=', 0);
             $qb->add_constraint('name', '=', $this->config->get_value('extend_style'));
             $styles = @$qb->execute();
+            
             if (count($styles) > 0)
             {
-                
-                
+                $this->style = new midgard_style();
                 $this->style->up = $styles[0]->id;
-                /*
-        $this->style->name = sprintf('%s for %s', 
-                                $this->config->get_value('extend_style'), 
-                                $this->config->get_value('hostname').
-                                $this->config->get_value('host_prefix'));
-                                */
+                $this->style->sitegroup = $this->sitegroup_id;
+                $this->style->name = sprintf('%s for %s', $this->config->get_value('extend_style'), $this->config->get_value('hostname').$this->config->get_value('host_prefix'));
+                return $this->style->create();
             }
         }
         
-        $qb = new MidgardQueryBuilder('midgard_style');
-        $qb->add_constraint('up', '=', $this->style->up);
-        $qb->add_constraint('name', '=', $this->style->name);
-        $styles = $qb->execute();
-        if (count($styles) > 0 ) {
-            echo "Style {$this->style->name} ({$this->style->up}) allready created!<br>";
-            //echo $this->print_stack();
-        } else {
-            echo "Style not created yet!<br>";
-            //echo $this->print_stack();
-               
-        }
-        // If no style to extend was found, then we just create an empty style.
-        $ret = $this->style->create();
-        if (!$ret)
+        // Fallback, generate empty Midgard style
+        $this->style = new midgard_style();
+        $this->style->name = sprintf('%s for %s', $this->config->get_value('style_name'), $this->config->get_value('hostname').$this->config->get_value('host_prefix'));
+        $this->style->sitegroup = $this->sitegroup_id;
+        if (!$this->style->create())
         {
-            if ($this->style->id != 0) {
-                
-                echo "Style created but returned "  ;
-                var_dump($ret);
-                return true;
-            }   
-            echo mgd_errstr();
             return false;
         }
-        if ($this->config->get_value('extend_style') == 'none') 
-        {
-            return $this->_create_styleelements();
-        }
-        return true;
+        
+        return $this->_create_styleelements();
     }
     
     /**
@@ -450,11 +384,10 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
         $this->page->style = $this->style->id;
         $this->page->info = 'active';
         $this->page->content = $this->config->get_value('root_page_content');
+        $this->page->sitegroup = $this->sitegroup_id;
 
-        if (!$this->page->create() && $this->page->id == 0)
+        if (!$this->page->create())
         {
-                
-        
             if ($this->verbose)
             {
                 echo "Could not create root page!\n";
@@ -464,7 +397,6 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
         $id = $this->page->id;
         $this->page = new midgard_page();
         $this->page->get_by_id($id);
-        $this->page->sitegroup = $this->sitegroup_id;
         
         // FIXME: Aegir 1 won't display page unless author is set
         // $this->page->author = 1;
@@ -508,6 +440,9 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
 
         $this->codeinit->page = $this->page->id;
         $this->codeinit->info = 'inherit';
+
+        $this->codeinit->sitegroup = $this->sitegroup_id;
+
         if (!$this->codeinit->create())
         {
             return false;
@@ -526,6 +461,8 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
         $this->codefinish->value = "<? \$_MIDCOM->finish(); ?>";
         $this->codefinish->page = $this->page->id;
         $this->codefinish->info = 'inherit';
+
+        $this->codefinish->sitegroup = $this->sitegroup_id;
 
         if (!$this->codefinish->create())
         {
@@ -575,7 +512,7 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
         {
             if ($this->verbose)
             {
-                $this->validation_messages[] = "User cannot create sitegroup!\n";
+                printf("User cannot create sitegroup!\n");
             }
 
             return false;
@@ -592,9 +529,9 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
 
         if (!$this->validate_configuration_variables())
         {
+
             return false;
         }
-        
         if ($this->sitegroup_id != 0) 
         {
             //$sg = new midgard_sitegroup();
@@ -605,24 +542,13 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
             //}
             if (!$sg  && $this->verbose)
             {
-                $this->validation_messages[] = "Sitegroup_id does not exist!! You must use an existing sitegroup.\n";
+                printf("Sitegroup_id does not exist!! You must use an existing sitegroup.\n");
             }
             
         }
         
-        if (!$this->_can_create_style()) {
-            return false;
-        }
 
         return true;
-    }
-
-    /**
-     * Checks if the stylename exists.
-     */
-    function _can_create_style() {
-        //$this->validation_messages[] = "";
-        return true;   
     }
 
     /**
@@ -655,7 +581,7 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
             {
                 if ($this->verbose)
                 {
-                    $this->validation_messages[] = "$name is missing value! This must be set to work.\n";
+                    print "$name is missing value! This must be set to work.\n";
                 }
                 return false;
             }

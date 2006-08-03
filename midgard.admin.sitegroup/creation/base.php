@@ -25,10 +25,6 @@ class midgard_admin_sitegroup_creation_base
     var $config = null;
     
     var $verbose = false;
-    /**
-     * Validation messages.
-     */
-    var $validation_messages = array();
 
     function midgard_admin_sitegroup_creation_base($config) 
     {
