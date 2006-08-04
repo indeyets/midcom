@@ -1,0 +1,59 @@
+/* hCard rendering */
+div.vcard div.n {    font-weight: bold;}
+div.vcard div.n a {    text-decoration: none;}
+div.vcard ul {
+    padding: 0px;
+    margin: 0px;
+}
+div.vcard ul li {
+    padding-left: 20px;
+    background-position: left;
+    background-repeat: no-repeat;
+    list-style: none;
+    min-height: 18px;
+}
+div.vcard ul li a {
+    text-decoration: none;
+}
+div.vcard ul li.org {
+    background-image: url("../stock-icons/16x16/stock_people.png");
+}
+div.vcard ul li.email {
+    background-image: url("../stock-icons/16x16/stock_mail.png");
+}
+div.vcard ul li.url {
+    background-image: url("../stock-icons/16x16/stock_internet.png");
+}
+div.vcard ul li.tel {
+    background-image: url("../stock-icons/16x16/stock_landline-phone.png");
+}
+div.vcard ul li.cell {
+    background-image: url("../stock-icons/16x16/stock_cell-phone.png");
+}
+div.vcard ul li.jabber {
+    background-image: url("../stock-icons/16x16/im-jabber.png");
+}
+div.vcard ul li.dbe {
+    background-image: url("../org.openpsa.core/dbe_16x16.png");
+}
+div.vcard ul li.dbe-unsynchronized {
+    background-image: url("../org.openpsa.core/dbe_unsynchronized_16x16.png");
+}
+
+/* Styles for inline persons */
+span.vcard {
+    padding-left: 20px;
+    background-position: top left;
+    background-repeat: no-repeat;
+    min-height: 22px;
+    background-image: url("../stock-icons/16x16/stock_person.png");
+}
+span.vcard-dbe {
+    background-image: url("../org.openpsa.core/dbe_16x16.png");
+}
+span.vcard-dbe-unsynchronized {
+    background-image: url("../org.openpsa.core/dbe_unsynchronized_16x16.png");
+}
+span.vcard a {
+    text-decoration: none;
+}

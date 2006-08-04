@@ -1,0 +1,74 @@
+table.org_openpsa_projects_hourlist_table {
+    display: none;
+    border-collapse: collapse;    border-spacing: 0px;    
+    border-right: 1px solid #c0c0c0;
+}
+table.org_openpsa_projects_hourlist_table tr {
+    vertical-align: top;    
+}
+table.org_openpsa_projects_hourlist_table tfoot {
+    border-top: 1px dashed #c0c0c0;
+    color: #333333;
+}
+#org_openpsa_projects_hourlist_editor {
+    /* display: none;*/
+}
+tr.ajax_editable_row:hover, tr.ajax_editable_row:hover td
+{
+    background-color: #EFE0CD;
+}
+tr.ajax_editable_row td:hover
+{
+    cursor: pointer;
+}
+tr.ajax_editable_row {
+}
+tr.ajax_editable_row_editing {
+    color: #E0C39E;
+}
+table.org_openpsa_projects_hourlist_table td {
+    padding: 2px;
+    border-left: 1px solid #c0c0c0;
+}
+table.org_openpsa_projects_hourlist_table th {
+    color: #000000;
+    text-align: left;
+    padding: 2px;
+    border-left: 1px solid #c0c0c0; 
+    border-bottom: 2px solid #c0c0c0;
+    background-color: #eeeeee;     
+}
+table.org_openpsa_projects_hourlist_table td.hours, table.org_openpsa_projects_hourlist_table th.hours {
+    text-align: right;
+}
+table.org_openpsa_projects_hourlist_table td.description {
+    width: 150px;
+    overflow: hidden;
+}
+table.org_openpsa_projects_hourlist_table tr {
+    background-position: right;    background-repeat: no-repeat;
+    padding-right: 16px;
+}
+/* TODO: Figure out the real midcom static directory */
+table.org_openpsa_projects_hourlist_table tr.ajax_saving {    background-image: url("/midcom-static/stock-icons/16x16/new-html.png");    padding-right: 18px;}table.org_openpsa_projects_hourlist_table tr.ajax_save_failed {    color: red;    background-image: url("/midcom-static/stock-icons/16x16/not_approved.png");    padding-right: 18px;}table.org_openpsa_projects_hourlist_table tr.ajax_saved_fade  {    background-image: url("/midcom-static/stock-icons/16x16/approved_fade_50.png");    padding-right: 18px;}table.org_openpsa_projects_hourlist_table tr.ajax_saved {    background-image: url("/midcom-static/stock-icons/16x16/approved.png");    padding-right: 18px;}
+
+/* extend DM values to outside form.datamanager */
+div.form_toolbar
+{
+    /* As default try to avoid getting the toolbar into funny location even if the site CSS is a bit crooked */
+    clear: both;
+}
+div.form_toolbar input.save, div.form_toolbar input.org_openpsa_projects_savebutton
+{
+    padding-left: 18px;
+    background-image: url('../stock-icons/16x16/save.png');
+    background-repeat: no-repeat;
+    background-position: left;
+}
+div.form_toolbar input.cancel, div.form_toolbar input.org_openpsa_projects_cancelbutton
+{
+    padding-left: 18px;
+    background-image: url('../stock-icons/16x16/cancel.png');
+    background-repeat: no-repeat;
+    background-position: left;
+}

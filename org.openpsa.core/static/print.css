@@ -1,0 +1,11 @@
+ul.midcom_toolbar, #org_openpsa_content div.area ul.midcom_toolbar
+{
+    display: none;
+}
+#org_openpsa_content div.area
+{
+    border: none;
+}
+#org_openpsa_header {
+    display: none;
+}
