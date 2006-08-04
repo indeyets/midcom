@@ -1,0 +1,173 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id: default.fi.txt,v 1.3 2006/05/08 13:56:38 rambo Exp $
+---LANGUAGE fi
+
+---STRING %d members
+%d jäsentä
+---STRINGEND
+
+---STRING , (comma)
+, (pilkku)
+---STRINGEND
+
+---STRING \n (newline)
+\n (rivinvaihto)
+---STRINGEND
+
+---STRING add
+Lisää
+---STRINGEND
+
+---STRING add to campaign
+Lisää kampanjaan
+---STRINGEND
+
+---STRING address separator
+Osoitteiden erotin
+---STRINGEND
+
+---STRING archival
+Arkistointi
+---STRINGEND
+
+---STRING archived on
+Arkistoitu
+---STRINGEND
+
+---STRING campaign
+Kampanja
+---STRINGEND
+
+---STRING campaigns
+Kampanjat
+---STRINGEND
+
+---STRING content
+Sisältö
+---STRINGEND
+
+---STRING create campaign
+Luo kampanja
+---STRINGEND
+
+---STRING created on %s
+Luotu %s
+---STRINGEND
+
+---STRING email message
+Sähköposti
+---STRINGEND
+
+---STRING file to import
+Tuotava tiedosto
+---STRINGEND
+
+---STRING from address
+Lähettäjän osoite
+---STRINGEND
+
+---STRING html email
+HTML-sähköposti
+---STRINGEND
+
+---STRING import
+Tuo
+---STRINGEND
+
+---STRING import email addresses
+Tuo lista sähköpostiosoitteita
+---STRINGEND
+
+---STRING import subscribers
+Lisää tilaajia tiedostona
+---STRINGEND
+
+---STRING import subscribers to "%s"
+Tuo henkilöitä kampanjaan "%s"
+---STRINGEND
+
+---STRING import vcards
+Tuo vCard-tiedostossa
+---STRINGEND
+
+---STRING message
+Viesti
+---STRINGEND
+
+---STRING messages
+Viestit
+---STRINGEND
+
+---STRING messages sent
+Viestejä lähetetty
+---STRINGEND
+
+---STRING new message
+Uusi viesti
+---STRINGEND
+
+---STRING normal campaign
+Normaali kampanja
+---STRINGEND
+
+---STRING org.openpsa.directmarketing
+Suoramarkkinointi ja postitus
+---STRINGEND
+
+---STRING preview message
+Esikatselu
+---STRINGEND
+
+---STRING recipients
+Vastaanottajat
+---STRINGEND
+
+---STRING send message
+Lähetä viesti
+---STRINGEND
+
+---STRING send message to testers
+Lähetä viesti koeryhmälle
+---STRINGEND
+
+---STRING send message to whole campaign
+Lähetä viesti kampanjalle
+---STRINGEND
+
+---STRING sent on %s
+Lähetetty %s
+---STRINGEND
+
+---STRING smart campaign
+Älykäs kampanja
+---STRINGEND
+
+---STRING sms message
+Tekstiviesti
+---STRINGEND
+
+---STRING subject
+Aihe
+---STRINGEND
+
+---STRING testers
+Koeryhmä
+---STRINGEND
+
+---STRING text email
+Sähköposti
+---STRINGEND
+
+---STRING type
+Tyyppi
+---STRINGEND
+
+---STRING you can import vcards here
+Voit lisätä täällä henkilöitä kampanjaan vCard-muodossa
+---STRINGEND
+
+---STRING you can import simple lists of email addresses here
+Voit lisätä täällä henkilöitä kampanjaan listana sähköpostiosoitteita
+---STRINGEND
+

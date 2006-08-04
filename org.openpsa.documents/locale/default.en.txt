@@ -1,0 +1,61 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id: default.en.txt,v 1.4 2006/05/12 16:51:05 rambo Exp $
+---LANGUAGE en
+
+---STRING %s document
+%s document
+---STRINGEND
+
+---STRING application/vnd.ms-powerpoint
+Powerpoint
+---STRINGEND
+
+---STRING document search
+Document search
+---STRINGEND
+
+---STRING documents
+Documents
+---STRINGEND
+
+---STRING edit directory
+Edit directory
+---STRINGEND
+
+---STRING folder
+Folder
+---STRINGEND
+
+---STRING folders
+Folders
+---STRINGEND
+
+---STRING new directory
+New directory
+---STRINGEND
+
+---STRING new document
+New document
+---STRINGEND
+
+---STRING older versions
+Older versions
+---STRINGEND
+
+---STRING org.openpsa.documents
+Document management
+---STRINGEND
+
+---STRING search
+Search
+---STRINGEND
+
+---STRING text/plain
+Text
+---STRINGEND
+
+---STRING create document
+Create document
+---STRINGEND
+

@@ -1,0 +1,81 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id: default.fi.txt,v 1.3 2006/05/12 16:50:32 rambo Exp $
+---LANGUAGE fi
+
+---STRING active
+Käynnissä
+---STRINGEND
+
+---STRING active salesprojects
+Käynnissä olevat myyntiprojektit
+---STRINGEND
+
+---STRING contacts
+Yhteyshenkilöt
+---STRINGEND
+
+---STRING create document
+Luo dokumentti
+---STRINGEND
+
+---STRING create event
+Luo tapahtuma
+---STRINGEND
+
+---STRING create note
+Luo muistio
+---STRINGEND
+
+---STRING create salesproject
+Luo myyntiprojekti
+---STRINGEND
+
+---STRING create task
+Luo tehtävä
+---STRINGEND
+
+---STRING customer
+Asiakas
+---STRINGEND
+
+---STRING lost
+Hävitty
+---STRINGEND
+
+---STRING next action
+Seuraava toimenpide
+---STRINGEND
+
+---STRING no action
+Ei toimenpidettä
+---STRINGEND
+
+---STRING org.openpsa.sales
+Myyntiprojektit
+---STRINGEND
+
+---STRING previous action
+Edellinen toimenpide
+---STRINGEND
+
+---STRING status
+Tila
+---STRINGEND
+
+---STRING title
+Otsikko
+---STRINGEND
+
+---STRING value
+Arvo
+---STRINGEND
+
+---STRING won
+Voitettu
+---STRINGEND
+
+---STRING no customer
+Ei asiakasta
+---STRINGEND
+

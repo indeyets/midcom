@@ -1,0 +1,29 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id: default.fi.txt,v 1.1 2006/05/12 16:51:29 rambo Exp $
+---LANGUAGE fi
+
+---STRING confirm relation
+Vahvista liitos
+---STRINGEND
+
+---STRING deny relation
+Poista liitos
+---STRINGEND
+
+---STRING details
+Lisätietoja
+---STRINGEND
+
+---STRING org.openpsa.relatedto
+Olioiden välisten liitosten hallinta
+---STRINGEND
+
+---STRING this is related to
+Tämä liittyy seuraaviin
+---STRINGEND
+
+---STRING related to this
+Tähän liittyy
+---STRINGEND
+

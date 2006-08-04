@@ -1,0 +1,181 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id: default.en.txt,v 1.6 2006/05/08 13:56:38 rambo Exp $
+---LANGUAGE en
+
+---STRING %d members
+%d members
+---STRINGEND
+
+---STRING , (comma)
+, (comma)
+---STRINGEND
+
+---STRING \n (newline)
+\n (newline)
+---STRINGEND
+
+---STRING add
+Add
+---STRINGEND
+
+---STRING add to campaign
+Add to campaign
+---STRINGEND
+
+---STRING address separator
+Address separator
+---STRINGEND
+
+---STRING archival
+Archival
+---STRINGEND
+
+---STRING archived on
+Archived on
+---STRINGEND
+
+---STRING campaign
+Campaign
+---STRINGEND
+
+---STRING campaigns
+Campaigns
+---STRINGEND
+
+---STRING content
+Content
+---STRINGEND
+
+---STRING create campaign
+Create campaign
+---STRINGEND
+
+---STRING created on %s
+Created on %s
+---STRINGEND
+
+---STRING email message
+Email message
+---STRINGEND
+
+---STRING file to import
+File to import
+---STRINGEND
+
+---STRING from address
+From -address
+---STRINGEND
+
+---STRING html email
+HTML email
+---STRINGEND
+
+---STRING import
+Import
+---STRINGEND
+
+---STRING import email addresses
+Import email addresses
+---STRINGEND
+
+---STRING import subscribers
+Import subscribers
+---STRINGEND
+
+---STRING import subscribers to "%s"
+Import subscribers to "%s"
+---STRINGEND
+
+---STRING import vcards
+Import vCards
+---STRINGEND
+
+---STRING instructions for new campaign
+Instructions for new campaign
+---STRINGEND
+
+---STRING instructions for new message
+Instructions for new message
+---STRINGEND
+
+---STRING message
+Message
+---STRINGEND
+
+---STRING messages
+Messages
+---STRINGEND
+
+---STRING messages sent
+Messages sent
+---STRINGEND
+
+---STRING new message
+New message
+---STRINGEND
+
+---STRING normal campaign
+Normal campaign
+---STRINGEND
+
+---STRING org.openpsa.directmarketing
+Mass mailing and direct marketing
+---STRINGEND
+
+---STRING preview message
+Preview message
+---STRINGEND
+
+---STRING recipients
+Recipients
+---STRINGEND
+
+---STRING send message
+Send message
+---STRINGEND
+
+---STRING send message to testers
+Send message to testers
+---STRINGEND
+
+---STRING send message to whole campaign
+Send message to whole campaign
+---STRINGEND
+
+---STRING sent on %s
+Sent on %s
+---STRINGEND
+
+---STRING smart campaign
+Smart campaign
+---STRINGEND
+
+---STRING sms message
+SMS message
+---STRINGEND
+
+---STRING subject
+Subject
+---STRINGEND
+
+---STRING testers
+Testers
+---STRINGEND
+
+---STRING text email
+Text email
+---STRINGEND
+
+---STRING type
+Type
+---STRINGEND
+
+---STRING you can import vcards here
+Here you can import vCards to the campaign
+---STRINGEND
+
+---STRING you can import simple lists of email addresses here
+You can import simple lists of email addresses here
+---STRINGEND
+

@@ -1,0 +1,31 @@
+'name' => 'org.openpsa.contacts',
+'purecode' => false,
+'privileges' =>  Array(),
+'class_definitions' => Array('midcom_dba_classes.inc'),
+'version' => '2.0.5',
+'package.xml' => Array(
+    'summary' => 'Contact and user manager',
+    'description' => 'Application for managing contacts and users inside Midgard groups',
+    'maintainers' => Array(
+        'rambo' => Array(
+            'name' => 'Eero af Heurlin',
+            'email' => 'eero.afheurlin@iki.fi',
+            'role' => 'lead',
+        ),
+        'bergie' => Array(
+            'name' => 'Henri Bergius',
+            'email' => 'henri.bergius@iki.fi',
+            'role' => 'lead',
+        ),  
+    ),
+    'dependencies' => Array(
+        'midcom.helper.datamanager' => Array(),
+        'org.openpsa.core'          => Array(),
+        'org.openpsa.helpers'       => Array(),
+        'org.openpsa.contactwidget' => Array(),
+        'org.openpsa.qbpager'       => Array(),
+        'org.openpsa.relatedto'     => Array(),
+        'org.openpsa.notifications' => Array(),        
+        'net.nehmer.buddylist'      => Array(),
+    ),    
+),

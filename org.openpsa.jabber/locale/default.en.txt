@@ -1,0 +1,17 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id: default.en.txt,v 1.3 2005/07/04 13:05:38 rambo Exp $
+---LANGUAGE en
+
+---STRING open jabber applet
+Open Jabber in new window
+---STRINGEND
+
+---STRING org.openpsa.jabber
+Jabber Instant Messaging
+---STRINGEND
+
+---STRING instructions for jabber
+To use the Jabber instant messaging system as your OpenPSA, your OpenPSA server must be running a Jabber server.
+---STRINGEND
+

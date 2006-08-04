@@ -1,0 +1,237 @@
+<?php
+/**
+ * @package org.openpsa.calendar
+ * @author The Midgard Project, http://www.midgard-project.org 
+ * @version $Id: ical.php,v 1.1 2006/06/06 20:05:30 rambo Exp $
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
+ * Calendar ical handler
+ * 
+ * @package org.openpsa.calendar
+ */
+class org_openpsa_calendar_handler_ical extends midcom_baseclasses_components_handler
+{
+    function org_openpsa_calendar_handler_ical() 
+    {
+        parent::midcom_baseclasses_components_handler();
+    }
+
+    /**
+     * Fetches current sitegroup object from database
+     */
+    function _get_sg()
+    {
+        // TODO: convert to MidCOM DBA API
+        $this->_request_data['sitegroup'] = mgd_get_sitegroup($_MIDGARD['sitegroup']);
+    }
+    
+    /**
+     * Strips last "file extension" from given string
+     */
+    function _strip_extension($str)
+    {
+        return preg_replace('/\.(.*?)$/', '', $str);
+    }
+
+    /**
+     * If we have person defined populate $this->_request_data['events']
+     */
+    function _get_events()
+    {
+        $this->_request_data['events'] = array();
+        if (!is_object($this->request_data['person']))
+        {
+            return;
+        }
+        $qb = midcom_org_openpsa_eventmember::new_query_builder();
+        $qb->add_constraint('eid.up', '=', $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']->id);
+        // Display events two weeks back
+        $qb->add_constraint('eid.start', '>', mktime(0, 0, 0, date('n'), date('j')-14, date('Y')));
+        $qb->add_constraint('uid', '=', $this->request_data['person']->id);
+        $members = $qb->execute();
+        if (is_array($members))
+        {
+            foreach($members as $member)
+            {
+                $this->_request_data['events'][] = new org_openpsa_calendar_event($member->eid);
+            }
+        }
+    }
+
+    /**
+     * Set Content-Type headers
+     */
+    function _content_type()
+    {
+        $_MIDCOM->skip_page_style = true;
+        $_MIDCOM->cache->content->content_type('text/calendar');
+        // Debugging
+        //$_MIDCOM->cache->content->content_type('text/plain');
+    }
+
+    /**
+     * iCal feed of uses events
+     *
+     * HTTP-Basic authenticated, requires valid user, normal ACL restrictions apply
+     */
+    function _handler_user_events($handler_id, $args, &$data)
+    {
+        $this->_http_basic_auth();
+        
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        $username = $this->_strip_extension($args[0]);
+        $this->request_data['person'] = $this->_find_person_by_name($username);
+        if (!is_object($this->request_data['person']))
+        {
+            debug_pop();
+            return false;
+        }
+
+        $this->_get_events();
+        
+        $this->_content_type();
+        
+        debug_pop();
+        return true;
+    }
+    
+    function _show_user_events($handler_id, &$data)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+
+        $event = new org_openpsa_calendar_event();
+        echo $event->vcal_headers();
+        foreach ($this->_request_data['events'] as $event)
+        {
+            echo $event->vcal_export();
+        }
+        echo $event->vcal_footers();
+
+        debug_pop();
+    }
+
+    /**
+     * handles http-basic authentication
+     *
+     * NOTE: Deprecate in favour of MidCOM core solution once it is implemented
+     *
+     */
+    function _http_basic_auth()
+    {
+        $this->_get_sg();
+        if (!isset($_SERVER['PHP_AUTH_USER']))
+        {
+            header("WWW-Authenticate: Basic realm=\"{$this->_request_data['sitegroup']->name}\"");
+            header('HTTP/1.0 401 Unauthorized');
+            echo "<h1>Authorization required</h1>\n";
+            exit();
+        }
+        else
+        {
+            if (!mgd_auth_midgard("{$_SERVER['PHP_AUTH_USER']}+{$this->_request_data['sitegroup']->name}", $_SERVER['PHP_AUTH_PW']))
+            {
+                // Wrong password: Recurse untill auth ok or user gives up
+                unset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+                $this->_http_basic_auth();
+            }
+            // Figure out how to update midcom auth status
+            $_MIDCOM->auth->_initialize_user_from_midgard();
+        }
+    }
+
+    /**
+     * Finds a person by username
+     *
+     * Returns full object or false in case of failure.
+     *
+     * @param string username
+     * @return object person
+     */
+    function _find_person_by_name($username)
+    {
+        if (empty($username))
+        {
+            return false;
+        }
+        $_MIDCOM->auth->request_sudo();
+        $qb = org_openpsa_contacts_person::new_query_builder();
+        $qb->add_constraint('username', '=', $username);
+        $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
+        $persons = $qb->execute();
+        $_MIDCOM->auth->drop_sudo();
+        if (   !is_array($persons)
+            || count($persons) == 0)
+        {
+            // Error getting user object
+            return false;
+        }
+        return $persons[0];
+    }
+
+    /**
+     * Publicly available iCal feed indicating user when is busy
+     *
+     * Most values are stripped before display
+     */
+    function _handler_user_busy($handler_id, $args, &$data)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $username = $this->_strip_extension($args[0]);
+        $this->request_data['person'] = $this->_find_person_by_name($username);
+
+        $this->_get_events();
+        
+        $this->_content_type();
+        debug_pop();
+        return true;
+    }
+
+    function _show_user_busy($handler_id, &$data)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+
+        $event = new org_openpsa_calendar_event();
+        echo $event->vcal_headers();
+        foreach ($this->_request_data['events'] as $event)
+        {
+            // clear all data not absolutely required for busy listing
+            foreach($event as $k => $v)
+            {
+                switch(true)
+                {
+                    case ($k == 'title'):
+                        $event->title = 'busy';
+                        break;
+                    case ($k == 'guid'):
+                    case ($k == 'created'):
+                    case ($k == 'revised'):
+                    case ($k == 'start'):
+                    case ($k == 'end'):
+                        $event->$k = $v;
+                        break;
+                    case is_array($v):
+                        $event->$k = array();
+                        break;
+                    case is_string($v):
+                    default:
+                        $event->$k = '';
+                        break;
+                }
+            }
+            // Only display the requested user as participant
+            $event->participants[$this->request_data['person']->id] =  true;
+            // Always force busy in this view
+            $event->busy = true;
+            echo $event->vcal_export();
+        }
+        echo $event->vcal_footers();
+
+        debug_pop();
+    }
+
+}
+?>

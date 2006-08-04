@@ -1,0 +1,81 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id: default.en.txt,v 1.3 2006/05/12 16:50:32 rambo Exp $
+---LANGUAGE en
+
+---STRING active
+Active
+---STRINGEND
+
+---STRING active salesprojects
+Active sales projects
+---STRINGEND
+
+---STRING contacts
+Contacts
+---STRINGEND
+
+---STRING create document
+Create document
+---STRINGEND
+
+---STRING create event
+Create event
+---STRINGEND
+
+---STRING create note
+Create note
+---STRINGEND
+
+---STRING create salesproject
+Create sales project
+---STRINGEND
+
+---STRING create task
+Create task
+---STRINGEND
+
+---STRING customer
+Customer
+---STRINGEND
+
+---STRING lost
+Lost
+---STRINGEND
+
+---STRING next action
+Next action
+---STRINGEND
+
+---STRING no action
+No action
+---STRINGEND
+
+---STRING org.openpsa.sales
+Sales projects
+---STRINGEND
+
+---STRING previous action
+Previous action
+---STRINGEND
+
+---STRING status
+Status
+---STRINGEND
+
+---STRING title
+Title
+---STRINGEND
+
+---STRING value
+Value
+---STRINGEND
+
+---STRING won
+Won
+---STRINGEND
+
+---STRING no customer
+No customer
+---STRINGEND
+

@@ -1,0 +1,265 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id: default.en.txt,v 1.14 2006/06/13 10:50:53 rambo Exp $
+---LANGUAGE en
+
+---STRING %s projects
+%s projects
+---STRINGEND
+
+---STRING accept
+Accept
+---STRINGEND
+
+---STRING approve
+Approve
+---STRINGEND
+
+---STRING back to task
+Back to task
+---STRINGEND
+
+---STRING basic information
+Basic information
+---STRINGEND
+
+---STRING closed
+Closed
+---STRINGEND
+
+---STRING closed tasks
+Closed tasks
+---STRINGEND
+
+---STRING completed
+Completed
+---STRINGEND
+
+---STRING completed tasks
+Completed tasks
+---STRINGEND
+
+---STRING contacts
+Contacts
+---STRINGEND
+
+---STRING create project
+Create project
+---STRINGEND
+
+---STRING create task
+Create task
+---STRINGEND
+
+---STRING current tasks
+Current tasks
+---STRINGEND
+
+---STRING customer
+Customer
+---STRINGEND
+
+---STRING date
+Date
+---STRINGEND
+
+---STRING deadline
+Deadline
+---STRINGEND
+
+---STRING decline
+Decline
+---STRINGEND
+
+---STRING description
+Description
+---STRINGEND
+
+---STRING dont approve
+Don't approve
+---STRINGEND
+
+---STRING edit
+Edit
+---STRINGEND
+
+---STRING edit task %s
+Edit task %s
+---STRINGEND
+
+---STRING end
+End
+---STRINGEND
+
+---STRING from %s
+From %s
+---STRINGEND
+
+---STRING hour reports
+Hour reports
+---STRINGEND
+
+---STRING hours
+Hours
+---STRINGEND
+
+---STRING hours are invoiceable by default
+Hours are invoiceable by default
+---STRINGEND
+
+---STRING invoiceable
+Invoiceable
+---STRINGEND
+
+---STRING manager
+Manager
+---STRINGEND
+
+---STRING mark completed
+Mark completed
+---STRINGEND
+
+---STRING my_tasks
+My tasks
+---STRINGEND
+
+---STRING new project
+New project
+---STRINGEND
+
+---STRING new task
+New task
+---STRINGEND
+
+---STRING new task to project %s
+New task to project %s
+---STRINGEND
+
+---STRING not_started
+Not started
+---STRINGEND
+
+---STRING notes for task %s on %s
+Notes for task %s on %s
+---STRINGEND
+
+---STRING ongoing
+Ongoing
+---STRINGEND
+
+---STRING org.openpsa.projects
+Project management
+---STRINGEND
+
+---STRING overtime
+Overtime
+---STRINGEND
+
+---STRING pending approval by %s
+Waiting for approval by %s
+---STRINGEND
+
+---STRING project
+Project
+---STRINGEND
+
+---STRING project status
+Project status
+---STRINGEND
+
+---STRING project_tasks
+Project's tasks
+---STRINGEND
+
+---STRING proposed tasks
+Proposed tasks
+---STRINGEND
+
+---STRING reopen
+Re-open
+---STRINGEND
+
+---STRING report hours
+Report hours
+---STRINGEND
+
+---STRING reporter
+Reporter
+---STRINGEND
+
+---STRING resources
+Resources
+---STRINGEND
+
+---STRING start
+Start
+---STRINGEND
+
+---STRING start time
+Start time
+---STRINGEND
+
+---STRING status
+Status
+---STRINGEND
+
+---STRING status history
+Status history
+---STRINGEND
+
+---STRING subscribe
+Subscribe
+---STRINGEND
+
+---STRING synchronization
+Synchronization
+---STRINGEND
+
+---STRING task
+Task
+---STRINGEND
+
+---STRING task %s
+Task %s
+---STRINGEND
+
+---STRING task in
+Task in
+---STRINGEND
+
+---STRING task status
+Task status
+---STRINGEND
+
+---STRING tasks pending approval
+Tasks pending approval
+---STRINGEND
+
+---STRING type
+Type
+---STRINGEND
+
+---STRING unsubscribe
+Unsubscribe
+---STRINGEND
+
+---STRING view related information
+View related information
+---STRINGEND
+
+---STRING you are not subscribed to project
+You are not subscribed to project
+---STRINGEND
+
+---STRING you are project participant
+You are project participant
+---STRINGEND
+
+---STRING you are project subscriber
+You are project subscriber
+---STRINGEND
+
+---STRING tasks pending acceptance
+Tasks pending acceptance
+---STRINGEND
+

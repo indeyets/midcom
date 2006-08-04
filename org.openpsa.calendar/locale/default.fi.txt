@@ -1,0 +1,137 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id: default.fi.txt,v 1.7 2006/06/08 16:24:37 rambo Exp $
+---LANGUAGE fi
+
+---STRING choose calendars
+Valitse näytettävät kalenterit
+---STRINGEND
+
+---STRING create event
+Luo tapahtuma
+---STRINGEND
+
+---STRING create note
+Luo muistiinpanot
+---STRINGEND
+
+---STRING day view
+Päivänäkymä
+---STRINGEND
+
+---STRING delete event
+Poista tapahtuma
+---STRINGEND
+
+---STRING dont allow overlapping
+Älä salli päällekkäisiä
+---STRINGEND
+
+---STRING edit %s
+Muokkaa %s
+---STRINGEND
+
+---STRING end time
+Päättyy
+---STRINGEND
+
+---STRING event %s
+Tapahtuma %s
+---STRINGEND
+
+---STRING event %s deleted
+Tapahtuma %s poistettu
+---STRINGEND
+
+---STRING event deleted
+Tapahtuma poistettu
+---STRINGEND
+
+---STRING event information
+Tapahtuman tiedot
+---STRINGEND
+
+---STRING failed to delete event, reason
+Tapahtuman poistaminen epäonnistui, syy
+---STRINGEND
+
+---STRING go to
+Mene ajankohtaan
+---STRINGEND
+
+---STRING location
+Paikka
+---STRINGEND
+
+---STRING me
+Minä
+---STRINGEND
+
+---STRING meeting note for %s on %s by %s
+Palaverin %s muistio, kirjoittanut %s %s
+---STRINGEND
+
+---STRING month view
+Kuukausinäkymä
+---STRINGEND
+
+---STRING next
+Seuraava
+---STRINGEND
+
+---STRING org.openpsa.calendar
+Kalenteri
+---STRINGEND
+
+---STRING participants
+Osallistujat
+---STRINGEND
+
+---STRING popup
+Pop-up -ikkuna
+---STRINGEND
+
+---STRING previous
+Edellinen
+---STRINGEND
+
+---STRING print
+Tulosta
+---STRINGEND
+
+---STRING private event
+Yksityinen tapahtuma
+---STRINGEND
+
+---STRING privilege read
+Yksityisen tapahtuman luku
+---STRINGEND
+
+---STRING really delete event
+Oletko varma että haluat poistaa tapahtuman?
+---STRINGEND
+
+---STRING start time
+Alkaa
+---STRINGEND
+
+---STRING time
+klo
+---STRINGEND
+
+---STRING today
+Tänään
+---STRINGEND
+
+---STRING week #%s %s
+Viikko %s. %s
+---STRINGEND
+
+---STRING week view
+Viikkonäkymä
+---STRINGEND
+
+---STRING back to calendar
+Takaisin kalenteriin
+---STRINGEND
+

@@ -1,0 +1,10 @@
+                   org.openpsa.notifications Changelog
+                   -----------------------------------
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guaranteed to be backwards compatible to previous versions
+  which might even break existing functionality. 
+- All items marked with "+" represent completely new features.
+
+2006-05-24 bergie
+  + Initial version supporting only calendar events and emails

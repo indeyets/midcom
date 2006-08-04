@@ -1,0 +1,38 @@
+                   org.openpsa.calendarwidget Changelog
+                   ------------------------------------
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality. 
+- All items marked with "+" represent completly new features.
+
+2006-02-15 rambo & bergie
+  - added PEAR packaging information to manifest
+  + Used old-style HTML width attributes for THs to prevent Firefox 
+    collapsing bug
+
+2005-12-21 bergie
+  + Events in the lists now have title and time as a tooltip
+  + Added top margin to events in horizontal lists in case of overlap
+
+2005-10-31 rambo
+  - added extra sanity check to _get_reservations_between()
+
+2005-08-29 bergie
+  - Fixed unterminated div causing issues on horizontal view
+
+2005-08-25 bergie
+  + New horizontal weekly view powered by hCalendar
+
+2005-06-17 bergie
+  + Support for additional HTML attributes in reservation and free cells,
+    enabling calendars to add JS popup commands etc.
+  + Fixed rendering bug with reservation ending before the slot's end
+  + Created functioning month view
+
+2005-06-15 bergie
+  + Some bug fixes
+
+2005-06-06 bergie
+  + Initially created the calendar viewer class
+  + Currently the widget is able to show week calendars using CSS

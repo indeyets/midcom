@@ -1,0 +1,57 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id: default.fi.txt,v 1.3 2006/05/12 16:51:05 rambo Exp $
+---LANGUAGE fi
+
+---STRING %s document
+%s dokumentti
+---STRINGEND
+
+---STRING document search
+Hae dokumenteista
+---STRINGEND
+
+---STRING documents
+Dokumentit
+---STRINGEND
+
+---STRING edit directory
+Muokkaa kansiota
+---STRINGEND
+
+---STRING folder
+Kansio
+---STRINGEND
+
+---STRING folders
+Kansiot
+---STRINGEND
+
+---STRING new directory
+Luo kansio
+---STRINGEND
+
+---STRING new document
+Luo dokumentti
+---STRINGEND
+
+---STRING older versions
+Aiemmat versiot
+---STRINGEND
+
+---STRING org.openpsa.documents
+Dokumenttien hallinta
+---STRINGEND
+
+---STRING search
+Hae
+---STRINGEND
+
+---STRING text/plain
+Teksti
+---STRINGEND
+
+---STRING create document
+Luo dokumentti
+---STRINGEND
+

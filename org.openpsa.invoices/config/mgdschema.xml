@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    <type name="org_openpsa_invoice" table="org_openpsa_invoice">
+        <property name="id" type="integer" primaryfield="id"/>
+        
+        <!-- Time related fields -->
+        <property name="sent" type="integer"/>
+        <property name="due" type="integer"/>
+        <property name="paid" type="integer"/>
+
+        <!-- The invoice itself, comment, sum and VAT % -->
+        <property name="invoiceNumber" type="text"/>
+        <property name="description" type="text"/>
+        <property name="sum" type="float"/>
+        <property name="vat" type="integer"/>
+
+        <!-- Customer contacts -->
+        <property name="customer" link="midgard_group:id" reverse="no" type="integer"/>
+        <property name="customerContact" link="midgard_person:id" reverse="no" type="integer"/>
+
+        <!-- Sender of the invoice -->
+        <property name="owner" link="midgard_person:id" reverse="no" type="integer"/>
+
+        <!-- required metadata -->
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->
+    
+    </type>
+    <type name="org_openpsa_invoice_hour" table="org_openpsa_invoice_hour">
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="invoice" link="org_openpsa_invoice:id" reverse="no" type="integer"/>
+        <property name="hourReport" link="org_openpsa_hour_report:id" reverse="no" type="integer"/>
+
+        <!-- required metadata -->
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->
+
+    </type>
+</Schema>

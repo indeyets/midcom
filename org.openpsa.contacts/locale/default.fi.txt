@@ -1,0 +1,305 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id: default.fi.txt,v 1.7 2006/06/08 14:17:53 rambo Exp $
+---LANGUAGE fi
+
+---STRING <title>
+<titteli>
+---STRINGEND
+
+---STRING add buddy
+Lisää omiin yhteyshenkilöihin
+---STRINGEND
+
+---STRING back to person
+Takaisin henkilöön
+---STRINGEND
+
+---STRING basic information
+Perustiedot
+---STRINGEND
+
+---STRING categories
+Tyyppi
+---STRINGEND
+
+---STRING cell %s
+matkapuhelin %s
+---STRINGEND
+
+---STRING city
+Kaupunki
+---STRINGEND
+
+---STRING client
+Asiakas
+---STRINGEND
+
+---STRING company id
+Y-tunnus
+---STRINGEND
+
+---STRING contact information
+Yhteystiedot
+---STRINGEND
+
+---STRING contact search
+Yhteystietojen haku
+---STRINGEND
+
+---STRING contacts
+Yhteyshenkilöt
+---STRINGEND
+
+---STRING country
+Maa
+---STRINGEND
+
+---STRING create event
+Luo tapahtuma
+---STRINGEND
+
+---STRING create organization
+Luo yritys
+---STRINGEND
+
+---STRING create person
+Luo henkilö
+---STRINGEND
+
+---STRING create suborganization
+Luo aliorganisaatio
+---STRINGEND
+
+---STRING daughter organization
+Tytäryhtiö
+---STRINGEND
+
+---STRING department
+Osasto
+---STRINGEND
+
+---STRING edit
+Muokkaa
+---STRINGEND
+
+---STRING edit account
+Muokkaa käyttäjätunnusta
+---STRINGEND
+
+---STRING edit user account: %s %s
+Muokkaa käyttäjätunnusta: %s %s
+---STRINGEND
+
+---STRING email
+Sähköposti
+---STRINGEND
+
+---STRING email %s
+sähköposti %s
+---STRINGEND
+
+---STRING enable calendar
+Salli tapahtumien luonti ryhmäkalenteriin
+---STRINGEND
+
+---STRING enable contact creation
+Salli yhteyshenkilöiden luonti
+---STRINGEND
+
+---STRING enable editing contacts created by others
+Salli muiden luomien yhteyshenkilöiden muokkaus
+---STRINGEND
+
+---STRING enable project creation
+Salli juuritason projektien luonti
+---STRINGEND
+
+---STRING failed to create user account, reason
+Käyttäjätunnuksen luonti epäonnistui, syy
+---STRINGEND
+
+---STRING fax
+Faksi
+---STRINGEND
+
+---STRING firstname
+Etunimi
+---STRINGEND
+
+---STRING homepage
+Kotisivu
+---STRINGEND
+
+---STRING homephone
+Kotipuhelin
+---STRINGEND
+
+---STRING invoicing address
+Laskutusosoite
+---STRINGEND
+
+---STRING jabber id
+Jabber-tunnus
+---STRINGEND
+
+---STRING lastname
+Sukunimi
+---STRINGEND
+
+---STRING logo
+Logo
+---STRINGEND
+
+---STRING me
+Minä
+---STRINGEND
+
+---STRING mobile phone
+Matkapuhelin
+---STRINGEND
+
+---STRING my contacts
+Omat yhteyshenkilöt
+---STRINGEND
+
+---STRING new organization
+Uusi organisaatio
+---STRINGEND
+
+---STRING new person
+Uusi henkilö
+---STRINGEND
+
+---STRING no account
+Ei käyttäjätunnusta
+---STRINGEND
+
+---STRING notes
+Lisätietoja
+---STRINGEND
+
+---STRING notification settings
+Ilmoitusten asetukset
+---STRINGEND
+
+---STRING official name
+Virallinen nimi
+---STRINGEND
+
+---STRING org.openpsa.contacts
+Kontaktien hallinta
+---STRINGEND
+
+---STRING organization
+Organisaatio
+---STRINGEND
+
+---STRING organization type
+Organisaation tyyppi
+---STRINGEND
+
+---STRING organizations
+Organisaatiot
+---STRINGEND
+
+---STRING partner
+Kumppani
+---STRINGEND
+
+---STRING password repeat
+Salasana (uudestaan)
+---STRINGEND
+
+---STRING passwords don't match
+Salasanat eivät täsmää!
+---STRINGEND
+
+---STRING permissions
+Käyttöoikeudet
+---STRINGEND
+
+---STRING persons
+Henkilöt
+---STRINGEND
+
+---STRING phone
+Puhelin
+---STRINGEND
+
+---STRING photo
+Valokuva
+---STRINGEND
+
+---STRING postal address
+Postiosoite
+---STRINGEND
+
+---STRING postcode
+Postinumero
+---STRINGEND
+
+---STRING project management
+Projektinhallinta
+---STRINGEND
+
+---STRING related notes
+Muistiinpanot
+---STRINGEND
+
+---STRING remove buddy
+Poista omista yhteyshenkilöistäni
+---STRINGEND
+
+---STRING search
+Hae
+---STRINGEND
+
+---STRING skype name
+Skype-tunnus
+---STRINGEND
+
+---STRING street address
+Katuosoite
+---STRINGEND
+
+---STRING sub organizations
+Aliorganisaatiot
+---STRINGEND
+
+---STRING tel %s
+puh %s
+---STRINGEND
+
+---STRING treat as workgroup
+Käytä työryhmänä
+---STRINGEND
+
+---STRING user account
+Käyttäjätunnus
+---STRINGEND
+
+---STRING vendor
+Toimittaja
+---STRINGEND
+
+---STRING view related information
+Näytä liittyvät tiedot
+---STRINGEND
+
+---STRING visiting address
+Käyntiosoite
+---STRINGEND
+
+---STRING weekly workhours
+Viikottaiset työtunnit
+---STRINGEND
+
+---STRING work phone
+Työpuhelin
+---STRINGEND
+
+---STRING invoicing target percentage
+Tavoiteltu laskutusprosentti
+---STRINGEND
+

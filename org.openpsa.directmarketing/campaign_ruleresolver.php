@@ -1,0 +1,360 @@
+<?php
+/**
+ * Resolves smart-campaign rules array to one or more QB instances
+ * with correct constraints, and merges the results.
+ *
+ * Rules array structure:
+ * <code>
+ * array(
+ *    'type' => 'AND',
+ *    'classes' => array(
+ *        array (
+ *            'type' => 'OR',
+ *            'class' => 'org_openpsa_contacts_person',
+ *            'rules' => array(
+ *                array(
+ *                    'property' => 'email',
+ *                    'match' => 'LIKE',
+ *                    'value' => '%@%'
+ *                ),
+ *                array(
+ *                    'property' => 'handphone',
+ *                    'match' => '<>',
+ *                    'value' => ''
+ *                ),
+ *            ),
+ *        ),
+ *        array (
+ *            'type' => 'AND',
+ *            'class' => 'midgard_parameter',
+ *            'rules' => array(
+ *                array(
+ *                    'property' => 'tablename',
+ *                    'match' => '=',
+ *                    'value' => 'person'
+ *                ),
+ *                array(
+ *                    'property' => 'domain',
+ *                    'match' => '=',
+ *                    'value' => 'openpsa_test'
+ *                ),
+ *                array(
+ *                    'property' => 'name',
+ *                    'match' => '=',
+ *                    'value' => 'param_match'
+ *                ),
+ *                array(
+ *                    'property' => 'value',
+ *                    'match' => '=',
+ *                    'value' => 'bar'
+ *                ),
+ *            ),
+ *        ),
+ *    ),
+ * ),
+ * </code> 
+ *
+ * NOTE: subgroups are processed before rules, subgroups must match class of parent group
+ * untill midgard core has the new infinite JOINs system. The root level group array is
+ * named 'classes' because there should never be be two groups on this level using the same class
+ * @package org.openpsa.directmarketing
+ */
+class org_openpsa_directmarketing_campaign_ruleresolver
+{
+    var $_qbs = array(); //QB instaces used by class
+    var $_results =  array(); //Resultsets from said QBs
+    var $_rules = null; //Copy of rules as received
+    var $_seek =  array(); //index for quickly finding out which persons are found via which classes
+
+    function org_openpsa_directmarketing_campaign_ruleresolver($rules = false)
+    {
+        if ($rules)
+        {
+            return $this->resolve($rules);
+        }
+    }
+
+    /**
+     * Recurses trough the rules array and creates QB instaces & constraints as needed
+     * @param array $rules rules array
+     * @ret bool indicating success/failure
+     */
+    function resolve($rules)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $this->_rules = $rules;
+        if (!is_array($rules))
+        {
+            debug_add('rules is not an array', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        if (!array_key_exists('classes', $rules))
+        {
+            debug_add('rules[classes] is defined', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        if (!is_array($rules['classes']))
+        {
+            debug_add('rules[classes] is not an array', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        reset ($rules['classes']);
+        foreach ($rules['classes'] as $group)
+        {
+            $this->_resolve_rule_group($group);
+        }
+        
+        return true;
+    }
+
+    /**
+     * Executes the QBs instanced via resolve, merges results and returns
+     * single array of persons (or false in case of failure)
+     */
+    function execute()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        if (!is_array($this->_rules))
+        {
+            debug_add('this->_rules is not an array', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        if (!array_key_exists('type', $this->_rules))
+        {
+            $this->_rules['type'] = 'AND';
+        }
+        reset ($this->_qbs);
+        foreach ($this->_qbs as $class => $qb)
+        {
+            //We're only interested in results from current SG
+            $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
+            if (is_a($qb, 'midcom_core_querybuilder'))
+            {
+                $this->_results[$class] = $qb->execute();
+            }
+            else
+            {
+                //Standard midgard QB, silence due to unneccessary notice
+                $this->_results[$class] = @$qb->execute();
+            }
+            $this->_normalize_to_persons(&$this->_results[$class], $class);
+        }
+        
+        $ret = array();
+        switch (strtoupper($this->_rules['type']))
+        {
+            case 'OR':
+                reset ($this->_results);
+                foreach ($this->_results as $class_persons)
+                {
+                    foreach ($class_persons as $person)
+                    {
+                        $ret[$person->guid] = $person;
+                    }
+                }
+                break;
+            case 'AND':
+                reset($this->_seek);
+                foreach ($this->_seek as $guid => $result_tables)
+                {
+                    //debug_add("checking {$guid} is present in all classes");
+                    reset($this->_qbs);
+                    foreach ($this->_qbs as $class => $qb)
+                    {
+                        if (!array_key_exists($class, $result_tables))
+                        {
+                            //debug_add("not found in class {$class}, skipping");
+                            continue 2;
+                        }
+                        //debug_add("found in class {$class}"); 
+                    }
+                    //debug_add('found in all classes, adding to array to be returned');
+                    $ret[$guid] = $this->_seek[$guid][$class];
+                }
+                break;
+            default:
+                debug_add('invalid group type', MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;
+                break;
+        }
+        
+        debug_pop();
+        return $ret;
+    }
+    
+    /**
+     * Normalizes the various intermediate classes to org_openpsa_contacts_persons
+     * for final results merging. Removes those entries which cannot be normalized.
+     */
+    function _normalize_to_persons(&$array, $from_class)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        debug_add("called with from_class: {$from_class}, array count: " . count($array));
+        reset($array);
+        foreach ($array as $k => $obj)
+        {
+            //debug_add("processing key #{$k}, object id #{$obj->id}, class: " . get_class($obj));
+            switch (true)
+            {
+                //We need to fill the seek table, thus this no-op here (matches org_openpsa_contacts_person as well)
+                case is_a($obj, 'midcom_org_openpsa_person'):
+                    break;
+                //Make all other persons org_openpsa_contacts_persons
+                case is_a($obj, 'midgard_person'):
+                    $array[$k] = new org_openpsa_contacts_person($obj->id);
+                    break;
+                //Expand member to org_openpsa_contacts_person
+                case is_a($obj, 'midgard_member'):
+                case is_a($obj, 'midgard_eventmember'):
+                    $array[$k] = new org_openpsa_contacts_person($obj->uid);
+                    break;
+                //Expand various parameters to correctpondig org_openpsa_contacts_person(s)
+                case is_a($obj, 'midgard_parameter'):
+                    switch ($obj->tablename)
+                    {
+                        case 'person':
+                            $array[$k] = new org_openpsa_contacts_person($obj->oid);
+                            break;
+                        //TODO: parameters of groups (which need to be expanded to persons via members)
+                        default:
+                            debug_add("parameters for table {$obj->tablename} not supported");
+                            unset ($array[$k]);
+                            break;
+                    }
+                    break;
+                default:
+                    debug_add("class " . get_class($obj) . " not supported", MIDCOM_LOG_WARN);
+                    unset ($array[$k]);
+                    break;
+            }
+            if (array_key_exists($k, $array))
+            {
+                if (   !array_key_exists($array[$k]->guid, $this->_seek)
+                    || !is_array($this->_seek[$array[$k]->guid]))
+                {
+                    $this->_seek[$array[$k]->guid] = array();
+                }
+                //debug_add("referring \"{$array[$k]->rname}\" via this->_seek[{$array[$k]->guid}][{$from_class}]");
+                $this->_seek[$array[$k]->guid][$from_class] =& $array[$k];
+            }
+        }
+        debug_pop();
+    }
+    
+    /**
+     * Resolves the rules in a single rule group
+     * @param array $group single group from rules array
+     * @param object $qb related QB object
+     * @ret bool indicating success/failure
+     */
+    function _resolve_rule_group($group, $match_class = false)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        if (!is_array($group))
+        {
+            debug_add('group is not an array', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        if (!array_key_exists('rules', $group))
+        {
+            debug_add('group[rules] is not defined', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        if (!is_array($group['rules']))
+        {
+            debug_add('group[rules] is not an array', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        if (   !array_key_exists('class', $group)
+            || empty($group['class']))
+        {
+            debug_add('group[class] is not defined', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        if (   $match_class
+            && (
+                $group['class'] != $match_class
+                )
+            )
+        {
+            debug_add("{$group['class']} != {$match_class}, unmatched classes where match required", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        if (!array_key_exists($group['class'], $this->_qbs))
+        {
+            $tmpObj = new $group['class']();
+            if (!method_exists($tmpObj, 'new_query_builder'))
+            {
+                $this->_qbs[$group['class']] = new MidgardQueryBuilder($group['class']);
+            }
+            else
+            {
+                $this->_qbs[$group['class']] = call_user_func(array($group['class'], 'new_query_builder'));
+            }
+        }
+        $qb =& $this->_qbs[$group['class']];
+        if (!array_key_exists('type', $group))
+        {
+            $group['type'] = 'AND';
+        }
+        $qb->begin_group(strtoupper($group['type']));
+        if (array_key_exists('groups', $group))
+        {
+            foreach ($group['groups'] as $subgroup)
+            {
+                $this->_resolve_rule_group($subgroup, $group['class']);
+            }
+        }
+        foreach ($group['rules'] as $rule)
+        {
+            $this->_parse_rule($rule, $qb);
+        }
+        $qb->end_group();
+        debug_pop();
+        return true;
+    }
+    
+    /**
+     * Parses a rule definition array, and adds QB constraints accordingly
+     * @param array $rule rule definition array
+     * @param object $qb reference to groups QB instance
+     * @ret bool indicating success/failure
+     */
+    function _parse_rule($rule, &$qb)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        if (!is_array($rule))
+        {
+            debug_add('rule is not an array', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        if (   !array_key_exists('property', $rule)
+            || !array_key_exists('match', $rule)
+            || !array_key_exists('value', $rule)
+            )
+        {
+            debug_add('rule array does not have required keys present', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        
+        $qb->add_constraint($rule['property'], $rule['match'], $rule['value']);
+        
+        debug_pop();
+        return true;
+    }
+}
+
+?>

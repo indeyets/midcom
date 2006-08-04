@@ -1,0 +1,37 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id: default.en.txt,v 1.4 2006/05/03 19:04:56 rambo Exp $
+---LANGUAGE en
+
+---STRING create event
+Create event
+---STRINGEND
+
+---STRING create task
+Create task
+---STRINGEND
+
+---STRING my summary
+My summary
+---STRINGEND
+
+---STRING org.openpsa.mypage
+Personal Summary
+---STRINGEND
+
+---STRING updated %s
+Updated %s
+---STRINGEND
+
+---STRING updated today
+Updated today
+---STRINGEND
+
+---STRING updated yesterday
+Updated yesterday
+---STRINGEND
+
+---STRING create person
+Create person
+---STRINGEND
+

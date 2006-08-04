@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    <type name="org_openpsa_salesproject" table="org_openpsa_salesproject" parent="org_openpsa_salesproject" parentfield="up">
+        <property name="id" type="integer" primaryfield="id"/>
+        <!-- in practise all salesprojects will have up of 0 but in case we someday wish to divide a huge salesproject to subprojects this is here -->
+        <property name="up" upfield="up" type="integer"/>
+
+        <property name="start" type="integer"/>
+        <property name="end" type="integer"/>
+        <property name="title" type="text"/>
+        <property name="description" type="text"/>
+        <property name="status" type="integer"/>
+
+        <property name="customer" link="midgard_group:id" reverse="no" type="integer"/>
+        <!-- Customer contacts are handled as members to project -->
+
+        <property name="owner" link="midgard_person:id" reverse="no" type="integer"/>
+
+        <!-- Common OpenPSA properties -->
+        
+        <!-- Used to a) distinguish OpenPSA objects in QB b) store object "subtype" (project vs task etc) -->
+        <property name="orgOpenpsaObtype" type="integer"/>
+        
+        <!-- /Common OpenPSA properties -->
+
+        <!-- required metadata -->
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->
+    
+    </type>
+
+    <type name="org_openpsa_salesproject_member" table="org_openpsa_salesproject_member" parent="org_openpsa_salesproject" parentfield="salesproject">
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="person" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="salesproject" link="org_openpsa_salesproject:id" type="integer"/>
+        <property name="extra" type="text" />
+        <!-- Common OpenPSA properties -->
+        
+        <!-- Used to a) distinguish OpenPSA objects in QB b) store object "subtype" (project vs task etc) -->
+        <property name="orgOpenpsaObtype" type="integer"/>
+        
+        <!-- /Common OpenPSA properties -->
+
+        <!-- required metadata -->
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->
+    </type>
+</Schema>

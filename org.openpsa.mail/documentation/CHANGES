@@ -1,0 +1,71 @@
+                   org.openpsa.mail Changelog
+                   ----------------------------
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guaranteed to be backwards compatible to previous versions
+  which might even break existing functionality. 
+- All items marked with "+" represent completly new features.
+
+2006-06-30 rambo
+  - cleaned line endings in files
+  - more robust error handling in mime_decode()
+  - added extra sanity check to mime boundary (for example single quotes
+    inside the boundary choke mail_mimedecode() since it has a bug in its
+    header parsing), we fix the boundary if it would break mail_mimedecode.
+  - some code cleanup
+  - version bump for packaging
+
+2006-04-05 rambo
+  - some refactoring (more to come) in mime_decode and related methods
+  - better body vs attachment recognition
+  - moved the "braindead sender domains" to configuration where they belong
+
+2006-03-27 rambo
+  - attempt to support inline CSS images as mime embeds, seems not to work even
+    though the message source is generated with correct content-ids
+
+2006-03-23 rambo
+  - Cleaner html2text conversion
+  - extra header to bouncer meta-backend to see the actual backend
+  + possibility to send only HTML body
+
+2006-03-21 rambo
+  - minor cleanup
+
+2006-03-10 rambo
+  - added extra !empty() check to address merge to avoid copies to ""@localhost
+
+2006-02-27 rambo
+  + new backend: mail_sendmail (PEAR Mail_sendmail) and related configuration options
+  - completed the bouncer "meta backend" (uses whatever backend available that supports
+    the required feature set, ATM mail_smtp and mail_sendmail)
+
+2006-02-16 rambo
+  + refactored send backends to their own classes
+  - other minor code cleanup
+
+2006-02-10 rambo
+  + added pear channels to dependencies in manifest
+
+2005-09-22 rambo
+  - fixed a "feature" that caused multiple same images in messsage to be embedded
+    multiple times.
+  - minor code cleanup
+
+2005-08-11 rambo
+  + get_html_embeds caches embedded image data so that when sending multiple
+    similar messages (like with directmarketing component) overlapping
+    embeds are only read once.
+
+2005-08-09 rambo
+  - Fixed get_html_embeds method to support a special case I ran into
+    when testing.
+
+2005-08-08 rambo
+  ! more code cleanup, renamed rest of camelCase methods to underscore form.
+
+2005-08-05 rambo
+  ! code cleanup, renamed some methods.
+
+2005-xx-xx rambo
+  - Created component based on old OpenPSA mailer class

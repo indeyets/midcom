@@ -1,0 +1,7 @@
+'schemadb_group' => 'file:/org/openpsa/contacts/config/schemadb_default_group_mgdschema.inc',
+'schemadb_person' => 'file:/org/openpsa/contacts/config/schemadb_default_person_mgdschema.inc',
+'schemadb_acl' => 'file:/org/openpsa/contacts/config/schemadb_default_acl.inc',
+'schemadb_notifications' => 'file:/org/openpsa/notifications/config/schemadb_default.inc',
+'enable_dbe' => false,
+'person_search_fields' => 'username,firstname,lastname,email',
+'organization_search_fields' => 'official,email,name,customerId',
