@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality. 
 - All items marked with "+" represent completly new features.
 
+2006-08-07 bergie
+  + Switched organization creation to use correct ACL check
+
 2006-05-06 rambo
   + added campaign create/edit privileges to person/group acl editor
   - fixed create/edit contacts privilege handling in person/group acl editor

@@ -245,7 +245,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
                 )
             );
         }
-        if ($_MIDCOM->auth->can_do('midgard:create', $GLOBALS['midcom_component_data']['org.openpsa.contacts']['contacts_root_group']))
+        if ($_MIDCOM->auth->can_user_do('midgard:create', null, 'org_openpsa_contacts_group'))
         {
             $this->_toolbars->top->add_item(
                 Array(

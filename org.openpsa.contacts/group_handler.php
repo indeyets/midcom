@@ -107,7 +107,7 @@ class org_openpsa_contacts_group_handler
         else
         {
             // This is a root level organization, require creation permissions under the component root group
-            $_MIDCOM->auth->require_do('midgard:create', $GLOBALS['midcom_component_data']['org.openpsa.contacts']['contacts_root_group']);        
+            $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_contacts_group');
         }
         
         if (!$this->_datamanagers['group']->init_creation_mode("newgroup",$this,"_creation_dm_callback"))
