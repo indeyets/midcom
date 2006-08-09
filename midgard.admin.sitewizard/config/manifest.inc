@@ -1,6 +1,6 @@
 'name' => 'midgard.admin.sitewizard',
 'purecode' => false,
-'version' => '2.0.0alpha',
+'version' => '2.0.0beta',
 'privileges' =>  Array(),
 'class_definitions' => Array(),
 'package.xml' => Array

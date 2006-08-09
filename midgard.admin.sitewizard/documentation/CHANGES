@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2006-08-09 bergie
+  + Fixed Midgard 1.7 compatibility, releasing 2.0.0beta
+
 2006-06-17 bergie
   ! Refactored sitewizard to MidCOM 2.5 technology
 
