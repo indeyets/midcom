@@ -1,0 +1,32 @@
+'default' => array
+(
+    'description' => 'product group',
+    'fields'      => array
+    (
+        'code' => Array
+        (
+            // COMPONENT-REQUIRED
+            'title'   => 'code',
+            'storage' => 'code',
+            'type'    => 'text',
+            'widget'  => 'text',
+            'required' => true,
+        ),    
+        'title' => Array
+        (
+            // COMPONENT-REQUIRED
+            'title' => 'title',
+            'storage' => 'title',
+            'required' => true,
+            'type' => 'text',
+            'widget'  => 'text',
+        ),
+        'description' => Array
+        (
+            'title' => 'description',
+            'storage' => 'description',
+            'type' => 'text',
+            'widget' => 'textarea',
+        ),
+    )
+),

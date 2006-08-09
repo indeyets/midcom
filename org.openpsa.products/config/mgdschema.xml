@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    <type name="org_openpsa_products_product" table="org_openpsa_products_product" parent="org_openpsa_products_product_group" parentfield="group">
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="productGroup" link="org_openpsa_products_product_group:id" reverse="no" type="integer"/>
+
+        <property name="code" type="text"/>
+        
+        <property name="title" type="text"/>
+        <property name="description" type="text"/>
+        <property name="price" type="integer"/>
+                
+        <!-- When product is "on market" -->
+        <property name="start" type="integer"/>
+        <property name="end" type="integer"/>
+
+        <property name="owner" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="supplier" link="org_openpsa_organization:id" reverse="no" type="integer"/>
+
+        <!-- Common OpenPSA properties -->
+
+        <!-- Used to a) distinguish OpenPSA objects in QB b) store object "subtype" (product on sale or product to buy) -->
+        <property name="orgOpenpsaObtype" type="integer"/>
+
+        <!-- /Common OpenPSA properties -->
+        
+        <!-- required metadata -->
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->
+    
+    </type>
+
+    <type name="org_openpsa_products_product_group" table="org_openpsa_products_product_group" parent="org_openpsa_products_product_group" parentfield="up">
+        <property name="id" type="integer" primaryfield="id"/>
+
+        <property name="up" link="org_openpsa_products_product_group:id" reverse="no" type="integer"/>
+
+        <property name="code" type="text"/>
+        
+        <property name="title" type="text"/>
+        <property name="description" type="text"/>
+
+        <!-- Common OpenPSA properties -->
+        
+        <!-- Used to a) distinguish OpenPSA objects in QB b) store object "subtype" (project vs task etc) -->
+        <property name="orgOpenpsaObtype" type="integer"/>
+        
+        <!-- /Common OpenPSA properties -->
+
+        <!-- required metadata -->
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->
+    </type>
+    
+    <type name="org_openpsa_products_product_member" table="org_openpsa_products_product_member" parent="org_openpsa_products_product" parentfield="product">
+        <property name="id" type="integer" primaryfield="id"/>
+
+        <property name="product" link="org_openpsa_products_product:id" reverse="no" type="integer"/>
+        <property name="component" link="org_openpsa_products_product:id" reverse="no" type="integer"/>
+
+        <property name="pieces" type="integer"/>
+        
+        <property name="description" type="text"/>
+
+        <!-- Common OpenPSA properties -->
+        
+        <!-- Used to a) distinguish OpenPSA objects in QB b) store object "subtype" (project vs task etc) -->
+        <property name="orgOpenpsaObtype" type="integer"/>
+        
+        <!-- /Common OpenPSA properties -->
+
+        <!-- required metadata -->
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->
+    </type>
+</Schema>

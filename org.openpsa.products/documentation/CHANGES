@@ -1,0 +1,10 @@
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guaranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+2006-08-09 bergie
+  + Initial version of the product database
+  + Support for a product group hierarchy
+  + Support for adding subcomponents to a product
