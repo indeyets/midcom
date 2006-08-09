@@ -39,7 +39,7 @@ class midgard_admin_sitewizard_handler_sitegroup extends midcom_baseclasses_comp
         }
         
         // FIXME: Midgard 1.7 compatibility hack
-        if (version_compare(mgd_version(), '1.7', '>'))
+        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
         {
             $this->_request_data['17_compatibility'] = false;
         }

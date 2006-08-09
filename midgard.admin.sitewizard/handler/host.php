@@ -224,12 +224,12 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
 
         ob_start();
         $runner = midgard_admin_sitegroup_creation_host::factory($config);
-        if ($runner->validate()) {
+        if ($runner->validate()) 
+        {
             $runner->run();
         }
         $host_errors = ob_get_contents();
         ob_end_clean();
-        
         
         if ($runner->host->id)
         {
