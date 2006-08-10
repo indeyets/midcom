@@ -224,6 +224,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
                 </dir> <!-- //midcom/services -->
                 <dir name="static">
                     <dir name="midcom.services.uimessages">
+	                    <dir name="images">
+							<file baseinstalldir="/" name="bg.gif" install-as="/midcom.services.uimessages/images/bg.gif" role="web" />
+							<file baseinstalldir="/" name="close-btn.gif" install-as="/midcom.services.uimessages/images/close-btn.gif" role="web" />
+	                    </dir>
                         <file baseinstalldir="/" name="protoGrowl.css" install-as="/midcom.services.uimessages/protoGrowl.css" role="web" />
                         <file baseinstalldir="/" name="protoGrowl.js" install-as="/midcom.services.uimessages/protoGrowl.js" role="web" />
                     </dir> <!-- //midcom/static/midcom.services.uimessages -->
