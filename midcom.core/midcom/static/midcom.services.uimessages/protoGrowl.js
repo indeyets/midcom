@@ -40,7 +40,7 @@ protoGrowl.prototype = {
         id:     growl id (this you don't need to set, but can be overrided if wanted)
         type:   growl type (notfication, warning, error, message)
         title:  growls title (this gets populated to div with class $className+'-title')
-        content: growls content (Can be html or just plain text. $className+'-content')
+        message: growls content (Can be html or just plain text. $className+'-content')
 
         width:   growl width (defaults to 350 (px))
         height:  growl height (defaults to 80 (px))
@@ -74,8 +74,8 @@ protoGrowl.prototype = {
         this.title = parameters.title;
         this.content = parameters.message;
 
-        this.minWidth = parameters.minWidth || 350;
-        this.minHeight = parameters.minHeight || 80;
+        this.minWidth = parameters.minWidth || 312;
+        this.minHeight = parameters.minHeight || 108;
         this.maxWidth = parameters.maxWidth;
         this.maxHeight = parameters.maxHeight;
 
@@ -121,8 +121,8 @@ protoGrowl.prototype = {
 
         var offset = [0,0];
         this.padding = parameters.padding || [10,0,0,0];
-        var width = parseFloat(parameters.width) || 350;
-        var height = parseFloat(parameters.height) || 80;
+        var width = parseFloat(parameters.width) || this.minWidth;
+        var height = parseFloat(parameters.height) || this.minHeight;
 
         if (parameters.left != null) {
             this.setStyle({left: parseFloat(parameters.left) + offset[0] + 'px'});
@@ -175,7 +175,7 @@ protoGrowl.prototype = {
         //debug("id: "+growl_id);
         growl_div.innerHTML = "\
         <div class='"+ this.className +"-contenthelper-type-"+this.type+"'>\
-         <div class='"+ this.className +"-closebutton' id='"+ this.className +"-closebutton' onclick='protoGrowls.close(\""+ growl_id +"\");'>X</div>\
+         <div class='"+ this.className +"-closebutton' id='"+ this.className +"-closebutton' onclick='protoGrowls.close(\""+ growl_id +"\");'></div>\
          <div class='"+ this.className +"-title' id='"+ this.className +"-title'>"+ this.title +"</div>\
          <div class='"+ this.className +"-content' id='"+ this.className +"-content-" + this.id +"'> </div>\
         </div>\
