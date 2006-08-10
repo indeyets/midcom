@@ -381,6 +381,15 @@ dm2AjaxEditor.prototype = {
         var h = $H(this.formValues);
         return h.toQueryString();
     },
+    
+    /**
+     * Handle a failed AJAX request
+     */
+    failedRequest: function()
+    {
+        new protoGrowl({type: 'ok', title: 'Datamanager', message: 'HTTP request failed'});                    
+        this.cancelFields();
+    },
 
     /**
      * Post contents to server and get the preview version back. Content is not saved at this point so we must keep the temp storage
@@ -447,7 +456,8 @@ dm2AjaxEditor.prototype = {
             {
                 method: 'post', 
                 parameters: queryString, 
-                onComplete: this.renderFields.bind(this)
+                onComplete: this.renderFields.bind(this),
+                onFailure: this.failedRequest.bind(this),
             }
         );    
     },
@@ -581,6 +591,10 @@ dm2AjaxEditor.prototype = {
                             }
                             else
                             {
+                                if (dimensions.width < 10)
+                                {
+                                    dimensions.width = 40;
+                                }
                                 formField.childNodes[ii].style.width = dimensions.width + 'px;';
                             }
                             break;

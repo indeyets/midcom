@@ -148,7 +148,10 @@ class midcom_helper_datamanager2_controller_ajax extends midcom_helper_datamanag
             $state = 'ajax_preview';            
         }
         elseif (array_key_exists("{$this->form_identifier}_save", $_REQUEST))
-        {        
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Save called for {$this->form_identifier}", MIDCOM_LOG_DEBUG);
+        
             // User has requested editor
             require_once(MIDCOM_ROOT . "/midcom/helper/datamanager2/formmanager/ajax.php");
             $this->formmanager = new midcom_helper_datamanager2_formmanager_ajax($this->datamanager->schema, $this->datamanager->types);
@@ -165,6 +168,8 @@ class midcom_helper_datamanager2_controller_ajax extends midcom_helper_datamanag
                 $this->formmanager->display_form($this->form_identifier);
                 $state = 'ajax_editing';
             }
+            debug_add("Datamanager process_form returned \"{$exitcode}\" for AJAX form {$this->form_identifier}", MIDCOM_LOG_DEBUG);
+            debug_pop();
         }
         elseif (array_key_exists("{$this->form_identifier}_cancel", $_REQUEST))
         {

@@ -41,6 +41,7 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
     var $style_element_name = 'child';
     var $window_mode = false;
     var $maximum_items = null;
+    var $enable_creation = true;
 
     /**
      * The schema database in use for the child elements
@@ -251,6 +252,11 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
     
     function _load_creation_controllers()
     {   
+        if (!$this->enable_creation)
+        {
+            return false;
+        }
+        
         if (   !is_null($this->maximum_items)
             && count($this->objects) >= $this->maximum_items)
         {
@@ -285,6 +291,11 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
 
     function add_creation_data()
     {
+        if (!$this->enable_creation)
+        {
+            return false;
+        }
+            
         if (   !is_null($this->maximum_items)
             && count($this->objects) >= $this->maximum_items)
         {
