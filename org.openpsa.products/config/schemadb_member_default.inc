@@ -13,7 +13,7 @@
             // TODO: Switch to universalchooser when it is ready
             'type_config' => Array
             (
-                'options' => org_openpsa_products_product_dba::list_components(),
+                'options' => org_openpsa_products_product_dba::list_products(true),
             ),
             'widget' => 'select',
         ),    

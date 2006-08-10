@@ -19,11 +19,29 @@ if (count($data['groups']) > 0)
 if (count($data['products']) > 0)
 {
     echo "<h2>". $data['l10n']->get('products') ."</h2>\n";
-    echo "<ul class=\"products\">\n";
-    foreach ($data['products'] as $product)
-    {
-        echo "<li><a href=\"{$prefix}product/{$product->guid}.html\">{$product->code}: {$product->title}</a></li>\n";
-    }
-    echo "</ul>\n";
+    ?>
+    <table>
+        <thead>
+            <tr>
+                <th><?php echo $data['l10n']->get('code'); ?></th>
+                <th><?php echo $data['l10n_midcom']->get('title'); ?></th>
+                <!-- TODO: Show supplier etc -->
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        foreach ($data['products'] as $product)
+        {
+            ?>
+            <tr>
+                <td><a href="&(prefix);product/&(product.guid);.html">&(product.code:h);</a></td>
+                <td><a href="&(prefix);product/&(product.guid);.html">&(product.title:h);</a></td>
+            </tr>
+            <?php
+        }
+        ?>
+        </tbody>
+    </table>
+    <?php
 }
 ?>

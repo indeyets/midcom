@@ -26,6 +26,9 @@
             'title' => 'description',
             'storage' => 'description',
             'type' => 'text',
+            'type_config' => Array ( 
+                'output_mode' => 'markdown' 
+            ),
             'widget' => 'textarea',
         ),
     )

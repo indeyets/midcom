@@ -78,15 +78,16 @@ class org_openpsa_products_handler_group_create extends midcom_baseclasses_compo
     /**
      * Loads and prepares the schema database.
      *
-     * Special treatement is done for the name field, which is set readonly for non-creates
-     * if the simple_name_handling config option is set. (using an auto-generated urlname based
-     * on the title, if it is missing.)
-     *
      * The operations are done on all available schemas within the DB.
      */
     function _load_schemadb()
     {
         $this->_schemadb =& $this->_request_data['schemadb_group'];
+        
+        $qb = org_openpsa_products_product_group_dba::new_query_builder();
+        $qb->add_constraint('up', '=', $this->_request_data['up']);
+        $existing_groups = $qb->count_unchecked();
+        $this->_defaults['code'] = $existing_groups + 1;
     }
 
     /**

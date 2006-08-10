@@ -8,8 +8,16 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 <table>
     <tbody>
         <tr>
+            <td><?php echo $data['l10n']->get('delivery type'); ?></td>
+            <td>&(view['delivery']:h);</td>
+        </tr>
+        <tr>
+            <td><?php echo $data['l10n']->get('type'); ?></td>
+            <td>&(view['orgOpenpsaObtype']:h);</td>
+        </tr>
+        <tr>
             <td><?php echo $data['l10n']->get('price'); ?></td>
-            <td>&(view['price']:h);</td>
+            <td>&(view['price']:h); / &(view['unit']:h);</td>
         </tr>
         <!-- TODO: Show supplier, etc -->
     </tbody>

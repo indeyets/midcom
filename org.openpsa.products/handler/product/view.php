@@ -44,6 +44,37 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
             $this->_request_data['enable_components'] = false;
         }
 
+        if ($this->_request_data['product']->productGroup == 0)
+        {
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => '',
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('product database'),
+                    MIDCOM_TOOLBAR_HELPTEXT => null,
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_left.png',
+                    MIDCOM_TOOLBAR_ENABLED => true,
+                )
+            );
+        }
+        else
+        {
+            $parent = new org_openpsa_products_product_group_dba($this->_request_data['product']->productGroup);
+            
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "{$parent->id}/",
+                    MIDCOM_TOOLBAR_LABEL => $parent->title,
+                    MIDCOM_TOOLBAR_HELPTEXT => null,
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_left.png',
+                    MIDCOM_TOOLBAR_ENABLED => true,
+                )
+            );
+        }
+
         /*
         // Populate the toolbar
         if ($this->_product->can_do('midgard:update'))

@@ -34,11 +34,15 @@ class org_openpsa_products_interface extends midcom_baseclasses_components_inter
         // We need the contacts organization class available.
         $_MIDCOM->componentloader->load('org.openpsa.contacts');
         
-        // Define product states
-        // Active product that is currently in market
-        define('ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_ACTIVE', 1000);
-        // Inactive product that may become active later
-        define('ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_INACTIVE', 2000);
+        // Define delivery types
+        define('ORG_OPENPSA_PRODUCTS_DELIVERY_SINGLE', 1000);
+        define('ORG_OPENPSA_PRODUCTS_DELIVERY_SUBSCRIPTION', 2000);
+        
+        // Define product types
+        // Professional services
+        define('ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_SERVICE', 1000);
+        // Material goods
+        define('ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_GOODS', 2000);
         // Component that a product is based on, usually something
         // acquired from a supplier
         define('ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_COMPONENT', 3000);

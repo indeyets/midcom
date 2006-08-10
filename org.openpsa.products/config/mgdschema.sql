@@ -5,11 +5,14 @@ CREATE TABLE org_openpsa_products_product (
   code varchar(255) NOT NULL default '',
   title varchar(255) NOT NULL default '',
   description text NOT NULL default '',
-  price int(11) NOT NULL default 0,
+  price float NOT NULL default '0',
+  unit varchar(255) NOT NULL default '',
   start int(11) NOT NULL default 0,
   end int(11) NOT NULL default 0,  
   owner int(11) NOT NULL default 0,
   supplier int(11) NOT NULL default 0,
+
+  delivery int(11) NOT NULL default '0',
 
   orgOpenpsaObtype int(11) NOT NULL default 0,
   sitegroup int(11) NOT NULL default 0,

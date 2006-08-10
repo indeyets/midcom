@@ -28,12 +28,51 @@
             'type' => 'number',
             'widget'  => 'text',
         ),
+        'unit' => Array
+        (
+            'title' => 'unit',
+            'storage' => 'unit',
+            'type' => 'select',
+            'type_config' => Array
+            (
+                'options' => Array
+                (
+                    'p' => 'unit',       // per piece
+                    'h' => 'hour',    // per hour
+                    'd' => 'day',     // per day
+                    'm' => 'month',   // per month
+                    'q' => 'quarter', // per quarter
+                    'y' => 'year',    // per annum
+                ),
+            ),
+            'widget' => 'select',
+        ),
         'description' => Array
         (
             'title' => 'description',
             'storage' => 'description',
             'type' => 'text',
+            'type_config' => Array ( 
+                'output_mode' => 'markdown' 
+            ),
             'widget' => 'textarea',
+        ),
+        'delivery' => Array
+        (
+            // COMPONENT-REQUIRED
+            'title' => 'delivery type',
+            'storage' => 'delivery',
+            'type' => 'select',
+            'required' => true,
+            'type_config' => Array
+            (
+                'options' => Array
+                (
+                    ORG_OPENPSA_PRODUCTS_DELIVERY_SINGLE       => 'single delivery',
+                    ORG_OPENPSA_PRODUCTS_DELIVERY_SUBSCRIPTION => 'subscription',
+                ),
+            ),
+            'widget' => 'select',
         ),
         'orgOpenpsaObtype' => Array
         (
@@ -41,13 +80,13 @@
             'title' => 'type',
             'storage' => 'orgOpenpsaObtype',
             'type' => 'select',
-            //'required' => true,
+            'required' => true,
             'type_config' => Array
             (
                 'options' => Array
                 (
-                    ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_ACTIVE => 'active',
-                    ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_INACTIVE => 'inactive',
+                    ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_SERVICE   => 'service',
+                    ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_GOODS     => 'material goods',
                     ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_COMPONENT => 'component',
                 ),
             ),

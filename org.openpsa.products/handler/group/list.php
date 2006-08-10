@@ -90,11 +90,22 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
         $group_qb = org_openpsa_products_product_group_dba::new_query_builder();
         $group_qb->add_constraint('up', '=', $parent_group);
         $group_qb->add_order('code');
+        $group_qb->add_order('title');
         $this->_request_data['groups'] = $group_qb->execute();
 
         $product_qb = org_openpsa_products_product_dba::new_query_builder();
         $product_qb->add_constraint('productGroup', '=', $parent_group);
         $product_qb->add_order('code');
+        $product_qb->add_order('title');
+        $product_qb->add_constraint('start', '<=', time());
+        $product_qb->begin_group('OR');
+            /*
+             * List products that either have no defined end-of-market dates
+             * or are still in market
+             */
+            $product_qb->add_constraint('end', '=', 0);
+            $product_qb->add_constraint('end', '>=', time());
+        $product_qb->end_group();
         $this->_request_data['products'] = $product_qb->execute();
     
         // Populate toolbar
