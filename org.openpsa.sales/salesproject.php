@@ -25,6 +25,25 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
     {
         return parent::__midcom_org_openpsa_salesproject($id);
     }
+    
+    /**
+     * Calculates the prices of deliverables and adds them up to the salesproject
+     * value
+     */
+    function calculate_price()
+    {
+        $value = 0;
+        
+        $deliverable_qb = org_openpsa_sales_salesproject_deliverable::new_query_builder();
+        $deliverable_qb->add_constraint('salesproject', '=', $this->id);
+        $deliverable_qb->add_constraint('up', '=', 0);
+        $deliverables = $deliverable_qb->execute();
+        foreach ($deliverables as $deliverable)
+        {
+            $value = $value + $deliverable->price;
+        }
+        $this->parameter('org.openpsa.sales', 'value', $value);
+    }
 
     /**
      * Fills the next and previous action properties

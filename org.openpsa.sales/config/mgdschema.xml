@@ -53,4 +53,44 @@
         <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
         <!-- /required metadata -->
     </type>
+
+    <type name="org_openpsa_salesproject_deliverable" table="org_openpsa_salesproject_deliverable" parent="org_openpsa_salesproject" parentfield="salesproject">
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="up" link="org_openpsa_salesproject_deliverable:id" reverse="no" type="integer"/>
+        <property name="product" link="org_openpsa_products_product:id" reverse="no" type="integer"/>
+        <property name="salesproject" link="org_openpsa_salesproject:id" type="integer"/>
+        <property name="title" type="text"/>
+        <property name="description" type="text"/>
+        
+        <!-- Pricing information. pricePerUnit and unit are the source of calculations but price is the
+        definitive price of this deliverable -->
+        <property name="price" type="float"/>
+        <property name="invoiced" type="float"/>
+        <property name="units" type="integer"/>
+        <property name="unit" type="text"/>
+        <property name="pricePerUnit" type="float"/>
+        
+        <!-- Start and end can have two different meanings: a) for single deliveries, they are the time when
+        delivery can start, and the deadline for it. b) for subscriptions they are the subscription period -->
+        <property name="start" type="integer"/>
+        <property name="end" type="integer"/>
+
+        <!-- State of the proposal/order -->
+        <property name="state" type="integer"/>
+
+        <!-- Common OpenPSA properties -->
+        
+        <!-- Used to a) distinguish OpenPSA objects in QB b) store object "subtype" (project vs task etc) -->
+        <property name="orgOpenpsaObtype" type="integer"/>
+        
+        <!-- /Common OpenPSA properties -->
+
+        <!-- required metadata -->
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->
+    </type>
 </Schema>

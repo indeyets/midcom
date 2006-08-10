@@ -20,5 +20,6 @@
         'net.nemein.wiki' => Array(),
         'org.openpsa.calendar' => Array(),
         'org.openpsa.projects' => Array(),
+        'org.openpsa.products' => Array(),
     ),
 ),

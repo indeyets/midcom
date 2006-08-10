@@ -48,3 +48,35 @@ ALTER TABLE org_openpsa_salesproject_member ADD COLUMN creator int(11) NOT NULL 
 ALTER TABLE org_openpsa_salesproject_member ADD COLUMN revisor int(11) NOT NULL default '0';
 ALTER TABLE org_openpsa_salesproject_member ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
 ALTER TABLE org_openpsa_salesproject_member ADD COLUMN revision int(11) NOT NULL default '0';
+
+#SalesProject Deliverable
+CREATE TABLE org_openpsa_salesproject_deliverable (
+  id int(11) NOT NULL auto_increment,
+  up int(11) NOT NULL default '0',
+  product int(11) NOT NULL default '0',
+  salesproject int(11) NOT NULL default '0',
+  title varchar(255) NOT NULL default '',
+  description text NOT NULL default '',
+  price float NOT NULL default '0',
+  invoiced float NOT NULL default '0',
+  units int(11) NOT NULL default '0',
+  unit varchar(255) NOT NULL default '',
+  pricePerUnit float NOT NULL default '0',
+  start int(11) NOT NULL default '0',
+  end int(11) NOT NULL default '0',
+  state int(11) NOT NULL default '0',
+  orgOpenpsaObtype int(11) NOT NULL default '0',
+  sitegroup int(11) NOT NULL default '0',
+  guid varchar(80) NOT NULL default '',
+  PRIMARY KEY (id),
+  KEY org_openpsa_salesproject_deliverable_sitegroup_idx(sitegroup),
+  KEY org_openpsa_salesproject_deliverable_product_idx(product),
+  KEY org_openpsa_salesproject_deliverable_salesproject_idx(salesproject),
+  KEY org_openpsa_salesproject_deliverable_state_idx(state)
+);
+#metadata fields
+ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN creator int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN revisor int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN revision int(11) NOT NULL default '0';

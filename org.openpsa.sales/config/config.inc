@@ -1,2 +1,4 @@
 'schemadb_salesproject' => 'file:/org/openpsa/sales/config/schemadb_default.inc',
+'schemadb_salesproject_dm2' => 'file:/org/openpsa/sales/config/schemadb_default_dm2.inc',
+'schemadb_deliverable' => 'file:/org/openpsa/sales/config/schemadb_deliverable_default.inc',
 'new_wikinote_wikiword_format' => 'note to "%s" on %s',

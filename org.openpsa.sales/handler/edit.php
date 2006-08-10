@@ -15,6 +15,15 @@
 class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handler
 {
     var $_datamanagers;
+    var $_schemadb_deliverable;
+    
+    /**
+     * Array of Datamanager 2 controllers for deliverable display and management
+     *
+     * @var array
+     * @access private
+     */
+    var $_controllers = array();
 
     function org_openpsa_sales_handler_edit()
     {
@@ -124,6 +133,24 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
         );
         
         $this->_view_toolbar->bind_to($this->_request_data['salesproject']);
+        
+        // List deliverables
+        $this->_schemadb_deliverable = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_deliverable'));
+        $deliverable_qb = org_openpsa_sales_salesproject_deliverable::new_query_builder();
+        $deliverable_qb->add_constraint('salesproject', '=', $this->_request_data['salesproject']->id);
+        $deliverable_qb->add_constraint('up', '=', 0);
+        $deliverable_qb->add_order('created', 'DESC');
+        $deliverables = $deliverable_qb->execute();
+        foreach ($deliverables as $deliverable)
+        {
+            $this->_controllers[$deliverable->id] =& midcom_helper_datamanager2_controller::create('ajax');
+            // TODO: Modify schema's "price per unit" to readonly if the product has components
+            $this->_controllers[$deliverable->id]->schemadb =& $this->_schemadb_deliverable;
+            $this->_controllers[$deliverable->id]->set_storage($deliverable);
+            $this->_controllers[$deliverable->id]->process_ajax();
+            $this->_request_data['deliverables'][$deliverable->guid] = $this->_controllers[$deliverable->id]->get_content_html();
+            $this->_request_data['deliverables_objects'][$deliverable->guid] = $deliverable;
+        }
 
         $relatedto_button_settings = org_openpsa_relatedto_handler::common_toolbar_buttons_defaults();
         $relatedto_button_settings['wikinote']['wikiword'] = sprintf($this->_request_data['l10n']->get($this->_config->get('new_wikinote_wikiword_format')), $this->_request_data['salesproject']->title, date('Y-m-d H:i'));

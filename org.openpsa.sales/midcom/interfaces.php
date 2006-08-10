@@ -20,7 +20,6 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
         parent::midcom_baseclasses_components_interface();
         
         $this->_component = 'org.openpsa.sales';
-        $this->_autoload_class_definitions = array('midcom_dba_classes.inc');
         $this->_autoload_files = array(
             'sort_helper.php',
             'viewer.php',
@@ -28,6 +27,7 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
             'navigation.php',
             'salesproject.php',
             'salesproject_member.php',
+            'salesproject_deliverable.php',
         );
         $this->_autoload_libraries = array(
             'org.openpsa.core', 
@@ -42,10 +42,8 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
     {
         //We need the contacts person class available.
         $_MIDCOM->componentloader->load('org.openpsa.contacts');
-        //And task (do we ?)
-        //$_MIDCOM->componentloader->load('org.openpsa.projects');
-        //And wiki (do we ?)
-        //$_MIDCOM->componentloader->load('net.nemein.wiki');
+        // And the product class
+        $_MIDCOM->componentloader->load('org.openpsa.products');
         
         //TODO: Check that the loads actually succeeded
         

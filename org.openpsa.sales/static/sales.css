@@ -1,0 +1,48 @@
+div.salesproject_deliverables ol.deliverable_list
+{
+    list-style: none;
+    margin: 0px;
+    padding: 4px;
+}
+div.salesproject_deliverables ol.deliverable_list li
+{
+    margin-bottom: 1em;
+    padding-left: 24px;
+    list-style: none;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #babdb6;
+    -moz-border-radius: 8px;
+    background-position: 4px 4px;
+    background-repeat: no-repeat;
+}
+div.salesproject_deliverables ol.deliverable_list li h3
+{
+    background-color: #e9ede4;
+    padding: 0 0.5em;
+    margin: 0;
+    border-left: solid 1px #babdb6;
+    border-bottom: solid 1px #babdb6;
+    -moz-border-radius-bottomleft: 8px;
+    display: block;
+    line-height: 24px;
+    font-weight: bold;
+}
+div.salesproject_deliverables ol.deliverable_list li div.description
+{
+    width: 65%;
+}
+div.salesproject_deliverables ol.deliverable_list li table.details
+{
+    float: right;
+    width: 30%;
+    font-size: smaller;
+}
+div.salesproject_deliverables ol.deliverable_list li table.details th
+{
+    text-align: left;
+}
+div.salesproject_deliverables ol.deliverable_list li div.components
+{
+    clear: right;
+}

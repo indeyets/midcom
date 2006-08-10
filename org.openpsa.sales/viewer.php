@@ -48,37 +48,39 @@ class org_openpsa_sales_viewer extends midcom_baseclasses_components_request
         $this->_request_switch[] = array(
             'fixed_args' => array('salesproject'),
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_sales_handler_edit', 'view_salesproject'),
+            'handler' => Array('org_openpsa_sales_handler_view', 'view'),
         );
 
-
-        // Match /debug
+        // Match /deliverable/add/<salesproject>/
         $this->_request_switch[] = array(
-            'fixed_args' => 'debug',
-            'handler' => 'debug'
+            'fixed_args' => array('deliverable', 'add'),
+            'variable_args' => 1,
+            'handler' => Array('org_openpsa_sales_handler_deliverable_add', 'add'),
+        );
+
+        // Match /deliverable/process/<deliverable>/
+        $this->_request_switch[] = array(
+            'fixed_args' => array('deliverable', 'process'),
+            'variable_args' => 1,
+            'handler' => Array('org_openpsa_sales_handler_deliverable_process', 'process'),
+        );
+
+        // Match /
+        $this->_request_switch[] = array(
+            'handler' => Array('org_openpsa_sales_handler_list', 'active'),
         );
         
         //Add common relatedto request switches
         org_openpsa_relatedto_handler::common_request_switches($this->_request_switch, 'org.openpsa.sales');
         //If you need any custom switches add them here
-        
-        // Match /
-        $this->_request_switch[] = array(
-            'handler' => Array('org_openpsa_sales_handler_list', 'active'),
-        );
-    }
 
-    function _handler_debug($handler_id, $args, &$data)
-    {
-        $_MIDCOM->auth->require_valid_user();
-        $this->_request_data['config'] =& $this->_config;
-        $this->_request_data['datamanagers'] =& $this->_datamanagers;
-        return true;
-    }
-    
-    function _show_debug($handler_id, &$data)
-    {
-        midcom_show_style("show-debug");
+        $_MIDCOM->add_link_head(array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL."/org.openpsa.sales/sales.css",
+            )
+        );   
     }
 }
 
