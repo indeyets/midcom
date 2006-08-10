@@ -1,5 +1,5 @@
 /**
- * This is the configuråtion file for the module.
+ * This is the configuration file for the module.
  * This is where you set default values for different configuration variables
  */
 /* The sort order to use */
