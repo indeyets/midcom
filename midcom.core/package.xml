@@ -10,9 +10,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         MidCOM is component framework for PHP running on top of the Midgard framework. MidCOM provides a full content management system based on a series of components. MidCOM users can build their websites by &quot;clicking together&quot; a directory hierarchy, each folder being managed by the appropriate component.
     </description>
     <lead>
-        <name>Torben Nehmer</name>
-        <user>torben</user>
-        <email>torben@nehmer.net</email>
+        <name>Tarjei Huse</name>
+        <user>tarjei</user>
+        <email>tarjei@nu.no</email>
         <active>yes</active>
     </lead>
     <developer>
@@ -22,9 +22,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <active>yes</active>
     </developer>
     <developer>
-        <name>Tarjei Huse</name>
-        <user>tarjei</user>
-        <email>tarjei@nu.no</email>
+        <name>Torben Nehmer</name>
+        <user>torben</user>
+        <email>torben@nehmer.net</email>
         <active>yes</active>
     </developer>
     <date>2006-08-11</date>
@@ -88,7 +88,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
                     <file baseinstalldir="midcom/lib" name="legacy_classes.inc" role="php" />
                     <file baseinstalldir="midcom/lib" name="metadata_default.inc" role="php" />
                     <file baseinstalldir="midcom/lib" name="midcom_config.php" role="php" />
-                    <file baseinstalldir="midcom/lib" name="package.xml" role="php" />
                 </dir> <!-- //midcom/config -->
                 <dir name="core">
                     <dir name="handler">
@@ -216,6 +215,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
                         <file baseinstalldir="midcom/lib" name="filter.php" role="php" />
                     </dir> <!-- //midcom/services/indexer -->
                     <file baseinstalldir="midcom/lib" name="indexer.php" role="php" />
+                    <file baseinstalldir="midcom/lib" name="metadata.php" role="php" />
                     <file baseinstalldir="midcom/lib" name="permalinks.php" role="php" />
                     <file baseinstalldir="midcom/lib" name="session.php" role="php" />
                     <file baseinstalldir="midcom/lib" name="tmp.php" role="php" />
