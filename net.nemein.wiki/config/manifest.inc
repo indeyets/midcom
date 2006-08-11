@@ -1,6 +1,6 @@
 'name' => 'net.nemein.wiki',
 'purecode' => false,
-'version' => '2.0.3',
+'version' => '2.0.4',
 'privileges' =>  Array(),
 'class_definitions' => Array(),
 'package.xml' => Array(
