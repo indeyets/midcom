@@ -574,7 +574,7 @@ class midcom_helper__styleloader {
  * @see midcom_helper__styleloader::show()
  */
 function midcom_show_style($param) {
-    return $GLOBALS["midcom"]->style->show($param);
+    return $_MIDCOM->style->show($param);
 }
 
 ?>

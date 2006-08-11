@@ -543,7 +543,7 @@ class midcom_application {
         $this->_currentcontext = $oldcontext;
         
         // Let metadata service add its meta tags
-        $this->metadata->populate();
+        $this->metadata->populate_meta_head();
 
         debug_add("code-init finished", MIDCOM_LOG_INFO);
         debug_pop();

@@ -770,13 +770,13 @@ class midcom_helper_toolbar {
         }
         if ($index >= count($this->items))
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "midcom_helper_toolbar::check_index - Invalid index {$index}, it is off-the-end.");
             // This will exit.
         }
         if ($index < 0)
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "midcom_helper_toolbar::check_index - Invalid index {$index}, it is negative.");
             // This will exit.
         }

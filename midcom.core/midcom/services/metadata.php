@@ -134,7 +134,11 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
         }
     }
     
-    function populate()
+    /**
+     * Populates appropriate metadata into XHTML documents based on metadata information
+     * available to MidCOM for the request.
+     */
+    function populate_meta_head()
     {
         // Populate the 2.6 request metadata into view
         $request_metadata = $_MIDCOM->get_26_request_metadata();

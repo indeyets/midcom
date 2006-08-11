@@ -27,19 +27,19 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <email>tarjei@nu.no</email>
         <active>yes</active>
     </developer>
-    <date>2006-06-06</date>
+    <date>2006-08-11</date>
     <time>19:37:53</time>
     <version>
-        <release>2.5.8</release>
-        <api>2.5.1cvs</api>
+        <release>2.6.0beta1</release>
+        <api>2.6.0</api>
     </version>
     <stability>
-        <release>devel</release>
+        <release>beta</release>
         <api>stable</api>
     </stability>
     <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
     <notes>
-        Added new UI message and floating toolbar services
+        Updated beta packages with new protoGrowl styling
     </notes>
     <contents>
         <dir name="/">
