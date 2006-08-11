@@ -101,12 +101,18 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
         {
             case 'basic':
                 $data['query'] = trim($_REQUEST['query']);
-                $result = $indexer->query($data['query']);
+                
+				if( count(explode(" ", $data['query'])) == 1 ) $data['query'] .= "*";
+				
+				$result = $indexer->query($data['query']);
                 break;
             
             case 'advanced':
                 $data['query'] = trim($_REQUEST['query']);
-                $data['topic'] = trim($_REQUEST['topic']);
+                
+				if( count(explode(" ", $data['query'])) == 1 ) $data['query'] .= "*";
+				
+				$data['topic'] = trim($_REQUEST['topic']);
                 // $data['topic2'] = trim($_REQUEST['topic2']);
                 $data['component'] = trim($_REQUEST['component']);
                 $data['lastmodified'] = (integer) (trim($_REQUEST['lastmodified']));
