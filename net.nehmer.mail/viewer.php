@@ -715,6 +715,9 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
             }
         }
 
+        // Send notification Mail
+        $this->_send_notification_mail($result, &$data);
+    
         // Relocate to the selected target
         if ($data['relocate_to'] === null)
         {
@@ -886,6 +889,7 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
         (
             'SENDER' => & $_MIDCOM->auth->user,
             'RECEIVER' => & $data['receiver'],
+            'USERNAME' => $data['receiver']->username,
             'MAILURL' => $url,
             'SUBJECT' => $data['datamanager']->types['subject']->value,
         );
