@@ -28,6 +28,16 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
      * @access private
      */
     var $_metadata = Array();
+    
+    /**
+     * Class of the current page per each context. 
+     * Typically these are thesame as the schema name of the current object's Datamanager schema. 
+     * This can be used for changing site styling based on body class="" etc.
+     *
+     * @var Array
+     * @access private
+     */
+    var $_page_classes = Array();
 
     /**
      * Simple constructor, calls base class.
@@ -84,7 +94,7 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
     /**
      * Creates the node and view metadata for a given context ID.
      *
-     * @param int $context_id The context ID for whicht the metadata should be created.
+     * @param int $context_id The context ID for which the metadata should be created.
      */
     function _create_metadata ($context_id)
     {
@@ -106,6 +116,45 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
     
         $this->_metadata[$context_id][MIDCOM_METADATA_NODE] =& midcom_helper_metadata::retrieve($topic);
         $this->_metadata[$context_id][MIDCOM_METADATA_VIEW] = null;
+    }
+
+    /**
+     * Sets the class of the current page for a context
+     *
+     * @param string $page_class The class that should be used for the page
+     * @param int $context_id The context ID for which the page class should be set.
+     */
+    function set_page_class($page_class, $context_id = null)
+    {
+        if ($context_id === null)
+        {
+            $context_id = $_MIDCOM->get_current_context();
+        }
+
+        $this->_page_classes[$context_id] = $page_class;
+    }
+
+    /**
+     * Gets the class of the current page of a context
+     *
+     * @param int $context_id The context ID for the page class.
+     * @return string The page class
+     */
+    function get_page_class($context_id = null)
+    {
+        if ($context_id === null)
+        {
+            $context_id = $_MIDCOM->get_current_context();
+        }
+
+        if (array_key_exists($context_id, $this->_page_classes))
+        {
+            return $this->_page_classes[$context_id];
+        }
+        else
+        {
+            return 'default';
+        }
     }
     
     /**

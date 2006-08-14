@@ -175,10 +175,9 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
 
-        $_MIDCOM->substyle_append($this->_datamanager->schema->name);
         $this->_prepare_request_data();
 
-        $_MIDCOM->bind_view_to_object($this->_article);
+        $_MIDCOM->bind_view_to_object($this->_article, $this->_datamanager->schema->name);
         $_MIDCOM->set_26_request_metadata($this->_article->revised, $this->_article->guid);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_article->title}");
 

@@ -162,10 +162,9 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
             $this->_request_data['controller']->process_ajax();
         }
 
-        $_MIDCOM->substyle_append($this->_datamanager->schema->name);
         $this->_prepare_request_data();
         $_MIDCOM->set_26_request_metadata($this->_article->revised, $this->_article->guid);
-        $_MIDCOM->bind_view_to_object($this->_article);
+        $_MIDCOM->bind_view_to_object($this->_article, $this->_datamanager->schema->name);
 
         if (   $this->_config->get('indexinnav')
             || $this->_config->get('autoindex')

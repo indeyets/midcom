@@ -2903,8 +2903,9 @@ class midcom_application {
      * metadata and toolbars to the correct object.
      *
      * @param DBAObject $object The DBA class instance to bind to.
+     * @param string $page_type String describing page type, will be used for substyling
      */
-    function bind_view_to_object(&$object)
+    function bind_view_to_object(&$object, $page_class = 'default')
     {
         // Bind the object into the view toolbar
         $view_toolbar =& $this->toolbars->get_view_toolbar($this->_currentcontext);
@@ -2912,6 +2913,12 @@ class midcom_application {
         
         // Bind the object to the metadata service
         $this->metadata->bind_metadata_to_object(MIDCOM_METADATA_VIEW, $object, $this->_currentcontext);
+        $this->metadata->set_page_class($page_class, $this->_currentcontext);
+        
+        if ($page_class != 'default')
+        {
+            $this->substyle_append($page_class);
+        }
     }
 
     /**
