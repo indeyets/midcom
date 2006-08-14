@@ -187,7 +187,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
         {
             if ($arg != 'rootevent')
             {
-                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "rootevent.html");
+                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$this->_topic->name}/rootevent.html");
             }
         }
         else
