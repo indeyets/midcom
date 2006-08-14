@@ -207,6 +207,19 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
                     'content' => gmdate('Y-m-d', $view_metadata->get('created'))
                 )
             );
+            
+            if ($GLOBALS['midcom_config']['positioning_enable'])
+            {
+                if (!class_exists('org_routamc_positioning_object'))
+                {
+                    // Load the positioning library
+                    $_MIDCOM->load_library('org.routamc.positioning');
+                }
+
+                // Display position metadata
+                $object_position = new org_routamc_positioning_object($view_metadata->object);
+                $object_position->set_metadata();
+            }   
         }
     }
 }

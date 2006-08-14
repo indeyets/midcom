@@ -177,15 +177,8 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
 
         $_MIDCOM->substyle_append($this->_datamanager->schema->name);
         $this->_prepare_request_data();
-        $this->_view_toolbar->bind_to($this->_article);
 
-        if ($GLOBALS['midcom_config']['positioning_enable'])
-        {
-            // Display position metadata
-            $object_position = new org_routamc_positioning_object($this->_article);
-            $object_position->set_metadata();
-        }
-
+        $_MIDCOM->bind_view_to_object($this->_article);
         $_MIDCOM->set_26_request_metadata($this->_article->revised, $this->_article->guid);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_article->title}");
 
