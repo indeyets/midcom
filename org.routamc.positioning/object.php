@@ -73,7 +73,7 @@ class org_routamc_positioning_object extends midcom_baseclasses_components_purec
         // TODO: Switch to metadata
         if (isset($this->_object->author))
         {
-            $author = $this->_object->author;
+            $creator = $this->_object->author;
         }
         elseif ($this->_object->creator)
         {
@@ -83,7 +83,7 @@ class org_routamc_positioning_object extends midcom_baseclasses_components_purec
         {
             return null;
         }
-        $qb->add_constraint('person', '=', $author);
+        $qb->add_constraint('person', '=', $creator);
         $qb->add_constraint('date', '<=', $this->_object->created);
         $qb->add_order('date', 'DESC');
         $qb->set_limit(1);
