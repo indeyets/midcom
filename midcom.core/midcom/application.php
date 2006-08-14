@@ -2899,6 +2899,22 @@ class midcom_application {
     }
 
     /**
+     * Binds the current page view to a particular object. This will automatically connect such things like
+     * metadata and toolbars to the correct object.
+     *
+     * @param DBAObject $object The DBA class instance to bind to.
+     */
+    function bind_view_to_object(&$object)
+    {
+        // Bind the object into the view toolbar
+        $view_toolbar =& $this->toolbars->get_view_toolbar($this->_currentcontext);
+        $view_toolbar->bind_to($object);
+        
+        // Bind the object to the metadata service
+        $this->metadata->bind_metadata_to_object(MIDCOM_METADATA_VIEW, $object, $this->_currentcontext);
+    }
+
+    /**
      * This is a temporary tranisition function used to set the currently known and required
      * Request Metadata: The last modified timestamp and the permalink GUID.
      *

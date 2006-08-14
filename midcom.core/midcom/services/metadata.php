@@ -118,6 +118,9 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
         $this->bind_metadata_to_object(MIDCOM_METADATA_VIEW, $object);
     }
     
+    /*
+     * Binds object to given metadata type.
+     */
     function bind_metadata_to_object($metadata_type, &$object, $context_id = null)
     {
         if ($context_id === null)
@@ -129,8 +132,10 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
         
         // Update MidCOM 2.6 request metadata if appropriate
         $request_metadata = $_MIDCOM->get_26_request_metadata($context_id);
-        if ($this->_metadata[$context_id][$metadata_type]->get('edited') > $request_metadata['lastmodified'])
+        $edited = $this->_metadata[$context_id][$metadata_type]->get('edited');
+        if ($edited > $request_metadata['lastmodified'])
         {
+            $_MIDCOM->set_26_request_metadata($edited, $request_metadata['permalinkguid']);
         }
     }
     
@@ -147,7 +152,7 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
         $_MIDCOM->add_meta_head(
             array(
                 'name' => 'generator',
-                'content' => 'Midgard/'.mgd_version().' MidCOM/'.$GLOBALS['midcom_version'].' PHP/'.phpversion()
+                'content' => 'Midgard/' . mgd_version() . ' MidCOM/' . $GLOBALS['midcom_version'] . ' PHP/' . phpversion()
             )
         );
         
@@ -163,13 +168,45 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
         $_MIDCOM->add_meta_head(
             array(
                 'name' => 'lastupdated',
-                'content' => gmdate('Y-m-d H:i\Z', $request_metadata['lastmodified'])
+                'content' => gmdate('Y-m-d H:i:s\Z', $request_metadata['lastmodified'])
             )
         );
         
+        // If an object has been bound we have more information available
         $view_metadata =& $this->get_view_metadata();
         if ($view_metadata)
         {
+            // TODO: Add support for tags here
+            $keywords = $view_metadata->get('keywords');
+            if ($keywords != '')
+            {
+                $_MIDCOM->add_meta_head(
+                    array(
+                        'name' => 'keywords',
+                        'content' => $keywords
+                    )
+                );
+            }
+            
+            // Description
+            $description = $view_metadata->get('description');
+            if ($description != '')
+            {
+                $_MIDCOM->add_meta_head(
+                    array(
+                        'name' => 'dc.description',
+                        'content' => $description
+                    )
+                );
+            }
+            
+            // Creation date
+            $_MIDCOM->add_meta_head(
+                array(
+                    'name' => 'dc.date',
+                    'content' => gmdate('Y-m-d', $view_metadata->get('created'))
+                )
+            );
         }
     }
 }
