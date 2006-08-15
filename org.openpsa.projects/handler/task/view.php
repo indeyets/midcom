@@ -84,7 +84,13 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
                 $parent_url = "{$prefix}task/{$parent->guid}/";
             }
             $this->_view_toolbar->add_item(
-                Array(                    MIDCOM_TOOLBAR_URL => $parent_url,                    MIDCOM_TOOLBAR_LABEL => $parent->title,                    MIDCOM_TOOLBAR_HELPTEXT => null,                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_left.png',                    MIDCOM_TOOLBAR_ENABLED => true,                )
+                Array(
+                    MIDCOM_TOOLBAR_URL => $parent_url,
+                    MIDCOM_TOOLBAR_LABEL => $parent->title,
+                    MIDCOM_TOOLBAR_HELPTEXT => null,
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_left.png',
+                    MIDCOM_TOOLBAR_ENABLED => true,
+                )
             );
         }
         
@@ -93,21 +99,39 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
         {
             $this->_initialize_hours_widget(&$this->_request_data['task']);
             $this->_view_toolbar->add_item(
-                Array(                    MIDCOM_TOOLBAR_URL => 'task/'.$this->_request_data['task']->guid().'/edit/',                    MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('edit'),                    MIDCOM_TOOLBAR_HELPTEXT => null,                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',                    MIDCOM_TOOLBAR_ENABLED => true,                )
+                Array(
+                    MIDCOM_TOOLBAR_URL => 'task/'.$this->_request_data['task']->guid().'/edit/',
+                    MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('edit'),
+                    MIDCOM_TOOLBAR_HELPTEXT => null,
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                    MIDCOM_TOOLBAR_ENABLED => true,
+                )
             );
             
             if ($this->_request_data['task']->status == ORG_OPENPSA_TASKSTATUS_CLOSED)
             {
                 // TODO: Make POST request
                 $this->_view_toolbar->add_item(
-                    Array(                        MIDCOM_TOOLBAR_URL => "task/{$this->_request_data['task']->guid}/reopen/",                        MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('reopen'),                        MIDCOM_TOOLBAR_HELPTEXT => null,                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/folder-expanded.png',                        MIDCOM_TOOLBAR_ENABLED => true,                    )
+                    Array(
+                        MIDCOM_TOOLBAR_URL => "task/{$this->_request_data['task']->guid}/reopen/",
+                        MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('reopen'),
+                        MIDCOM_TOOLBAR_HELPTEXT => null,
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/folder-expanded.png',
+                        MIDCOM_TOOLBAR_ENABLED => true,
+                    )
                 );
             }
             elseif ($this->_request_data['task']->status_type == 'ongoing')
             {
                 // TODO: Make POST request
                 $this->_view_toolbar->add_item(
-                    Array(                        MIDCOM_TOOLBAR_URL => "task/{$this->_request_data['task']->guid}/complete/",                        MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('mark completed'),                        MIDCOM_TOOLBAR_HELPTEXT => null,                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new_task.png',                        MIDCOM_TOOLBAR_ENABLED => true,                    )
+                    Array(
+                        MIDCOM_TOOLBAR_URL => "task/{$this->_request_data['task']->guid}/complete/",
+                        MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('mark completed'),
+                        MIDCOM_TOOLBAR_HELPTEXT => null,
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new_task.png',
+                        MIDCOM_TOOLBAR_ENABLED => true,
+                    )
                 );
             }
         }
@@ -115,13 +139,25 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
         if ($handler_id == 'task_view')
         {
             $this->_view_toolbar->add_item(
-                Array(                    MIDCOM_TOOLBAR_URL => "task/related/{$this->_request_data['task']->guid}/",                    MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('view related information'),                    MIDCOM_TOOLBAR_HELPTEXT => null,                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',                    MIDCOM_TOOLBAR_ENABLED => true,                )
+                Array(
+                    MIDCOM_TOOLBAR_URL => "task/related/{$this->_request_data['task']->guid}/",
+                    MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('view related information'),
+                    MIDCOM_TOOLBAR_HELPTEXT => null,
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
+                    MIDCOM_TOOLBAR_ENABLED => true,
+                )
             );
         }
         else
         {
             $this->_view_toolbar->add_item(
-                Array(                    MIDCOM_TOOLBAR_URL => "task/{$this->_request_data['task']->guid}/",                    MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('back to task'),                    MIDCOM_TOOLBAR_HELPTEXT => null,                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_left.png',                    MIDCOM_TOOLBAR_ENABLED => true,                )
+                Array(
+                    MIDCOM_TOOLBAR_URL => "task/{$this->_request_data['task']->guid}/",
+                    MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('back to task'),
+                    MIDCOM_TOOLBAR_HELPTEXT => null,
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_left.png',
+                    MIDCOM_TOOLBAR_ENABLED => true,
+                )
             );
             
             // Load "Create X" buttons for all the related info

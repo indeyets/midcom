@@ -117,8 +117,38 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.sales');
+        
         //With the plentyness of typecasting around any other numeric locale calls for trouble with floats
         setlocale(LC_NUMERIC, 'C');
+        
+        //org.openpsa.projects object types
+        define('ORG_OPENPSA_OBTYPE_PROJECT', 6000);
+        define('ORG_OPENPSA_OBTYPE_PROCESS', 6001);
+        define('ORG_OPENPSA_OBTYPE_TASK', 6002);
+        define('ORG_OPENPSA_OBTYPE_HOUR_REPORT', 6003);
+        define('ORG_OPENPSA_OBTYPE_EXPENSE', 6004);
+        define('ORG_OPENPSA_OBTYPE_MILEAGE', 6005);
+        define('ORG_OPENPSA_OBTYPE_PROJECTRESOURCE', 6006);
+        define('ORG_OPENPSA_OBTYPE_PROJECTCONTACT', 6007);
+        //org.openpsa.projects status types
+        //Templates/Drafts
+        define('ORG_OPENPSA_TASKSTATUS_DRAFT', 6450);
+        define('ORG_OPENPSA_TASKSTATUS_TEMPLATE', 6451);
+        define('ORG_OPENPSA_TASKSTATUS_PROPOSED', 6500);
+        define('ORG_OPENPSA_TASKSTATUS_DECLINED', 6510);
+        define('ORG_OPENPSA_TASKSTATUS_ACCEPTED', 6520);
+        define('ORG_OPENPSA_TASKSTATUS_ONHOLD', 6530);
+        define('ORG_OPENPSA_TASKSTATUS_STARTED', 6540);
+        define('ORG_OPENPSA_TASKSTATUS_REJECTED', 6545);
+        define('ORG_OPENPSA_TASKSTATUS_REOPENED', 6550);
+        define('ORG_OPENPSA_TASKSTATUS_COMPLETED', 6560);
+        define('ORG_OPENPSA_TASKSTATUS_APPROVED', 6570);
+        define('ORG_OPENPSA_TASKSTATUS_CLOSED', 6580);
+        //org.openpsa.projects acceptance negotiation types
+        define('ORG_OPENPSA_TASKACCEPTANCE_ALLACCEPT', 6700);
+        define('ORG_OPENPSA_TASKACCEPTANCE_ONEACCEPT', 6701);
+        define('ORG_OPENPSA_TASKACCEPTANCE_ONEACCEPTDROP', 6702);
                 
         debug_pop();
         return true;

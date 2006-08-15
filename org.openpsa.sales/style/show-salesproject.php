@@ -3,18 +3,36 @@ $view_data =& $_MIDCOM->get_custom_context_data('request_data');
 $view = $view_data['controller']->datamanager;
 $nap = new midcom_helper_nav();
 $node = $nap->get_node($nap->get_current_node());
+
+$invoices_node = midcom_helper_find_node_by_component('org.openpsa.invoices');
 ?>
-<div class="main">
-    <?php 
-    // Display sales project metadata
-    $view->display_view();
-    echo "<div style=\"clear: both;\"></div>\n";
-    
+<div class="main salesproject">
+    <div class="contacts">
+        <?php
+        $customer = new midcom_db_group($view_data['salesproject']->customer);
+        echo "<h2>{$customer->official}</h2>\n";
+        
+        foreach ($view_data['salesproject']->contacts as $contact_id => $active)
+        {
+            $person = new midcom_db_person($contact_id);
+            $person_card = new org_openpsa_contactwidget($person);
+            $person_card->show();
+        }
+        ?>
+    </div>
+    <div class="info">
+        <?php 
+        // Display sales project metadata
+        $view->display_view();
+        ?>
+    </div
+    <div style="clear: both;"></div>
+    <?php
     $products = org_openpsa_products_product_dba::list_products();
     if (count($products) > 0)
     {
         ?>
-        <div class="salesproject_deliverables">
+        <div class="deliverables">
             <h2><?php echo $view_data['l10n']->get('deliverables'); ?></h2>
             <?php
             if ($view_data['salesproject']->can_do('midgard:create'))
@@ -37,7 +55,8 @@ $node = $nap->get_node($nap->get_current_node());
                     </label>
                 </form>
                 <?php
-                }
+            }
+            
             if (array_key_exists('deliverables', $view_data))
             {
                 ?>
@@ -75,7 +94,15 @@ $node = $nap->get_node($nap->get_current_node());
     
                         <div class="components">                    
                             &(deliverable['components']:h);
-                        </div>                    
+                        </div>
+                        <div class="invoices">
+                            <?php
+                            if ($invoices_node)
+                            {
+                                $_MIDCOM->dynamic_load($invoices_node[MIDCOM_NAV_RELATIVEURL] . "list/deliverable/{$deliverable_guid}");
+                            }
+                            ?>
+                        </div>                 
                         <div class="toolbar">
                             <form method="post" action="&(node[MIDCOM_NAV_FULLURL]);deliverable/process/&(deliverable_guid);">
                             <?php
@@ -120,6 +147,4 @@ $node = $nap->get_node($nap->get_current_node());
     //TODO: Configure whether to show in/both and reverse vs normal sorting ?
     $_MIDCOM->dynamic_load("{$node[MIDCOM_NAV_RELATIVEURL]}relatedto/render/{$view_data['salesproject']->guid}/both/normal"); 
     ?>
-</div>
-<div class="sidebar">
 </div>

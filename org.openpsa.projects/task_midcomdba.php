@@ -856,7 +856,33 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         $this->status = ORG_OPENPSA_TASKSTATUS_CLOSED;
         debug_pop();
         $this->_skip_acl_refresh = true;
-        return $this->update();
+        if ($this->update())
+        {
+            $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('org.openpsa.projects', 'org.openpsa.projects'), sprintf($_MIDCOM->i18n->get_string('marked task "%s" closed', 'org.openpsa.projects'), $this->title), 'ok');
+            if ($this->agreement)
+            {
+                $agreement = new org_openpsa_sales_salesproject_deliverable($this->agreement);
+                
+                // Set agreement delivered if this is the only open task for it
+                $task_qb = org_openpsa_projects_task::new_query_builder();
+                $task_qb->add_constraint('agreement', '=', $this->agreement);
+                $task_qb->add_constraint('status', '<', ORG_OPENPSA_TASKSTATUS_CLOSED);
+                $task_qb->add_constraint('id', '<>', $this->id);
+                $task_qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
+                $tasks = $task_qb->execute();
+                if (count($status) == 0)
+                {
+                    // No other open tasks, mark as delivered
+                    $agreement->deliver(false);
+                }
+                else
+                {
+                    $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('org.openpsa.projects', 'org.openpsa.projects'), sprintf($_MIDCOM->i18n->get_string('did not mark deliverable "%s" delivered due to other tasks', 'org.openpsa.sales'), $agreement->title), 'info');
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     /**

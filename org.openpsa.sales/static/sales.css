@@ -1,10 +1,16 @@
-div.salesproject_deliverables ol.deliverable_list
+div.salesproject div.contacts
+{
+    float: right;
+    width: 160px;
+    margin-right: 10px;
+}
+div.salesproject div.deliverables ol.deliverable_list
 {
     list-style: none;
     margin: 0px;
     padding: 4px;
 }
-div.salesproject_deliverables ol.deliverable_list li
+div.salesproject div.deliverables ol.deliverable_list li
 {
     margin-bottom: 1em;
     padding-left: 24px;
@@ -16,7 +22,7 @@ div.salesproject_deliverables ol.deliverable_list li
     background-position: 4px 4px;
     background-repeat: no-repeat;
 }
-div.salesproject_deliverables ol.deliverable_list li h3
+div.salesproject div.deliverables ol.deliverable_list li h3
 {
     background-color: #e9ede4;
     padding: 0 0.5em;
@@ -28,21 +34,21 @@ div.salesproject_deliverables ol.deliverable_list li h3
     line-height: 24px;
     font-weight: bold;
 }
-div.salesproject_deliverables ol.deliverable_list li div.description
+div.salesproject div.deliverables ol.deliverable_list li div.description
 {
     width: 65%;
 }
-div.salesproject_deliverables ol.deliverable_list li table.details
+div.salesproject div.deliverables ol.deliverable_list li table.details
 {
     float: right;
     width: 30%;
     font-size: smaller;
 }
-div.salesproject_deliverables ol.deliverable_list li table.details th
+div.salesproject div.deliverables ol.deliverable_list li table.details th
 {
     text-align: left;
 }
-div.salesproject_deliverables ol.deliverable_list li div.components
+div.salesproject div.deliverables ol.deliverable_list li div.components
 {
     clear: right;
 }

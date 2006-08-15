@@ -40,12 +40,29 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
 
     function _on_initialize()
     {
-        //We need the contacts person class available.
-        $_MIDCOM->componentloader->load('org.openpsa.contacts');
-        // And the product class
-        $_MIDCOM->componentloader->load('org.openpsa.products');
+        // Load needed data classes
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.contacts');
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.products');
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.projects');
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.invoices');
         
         //TODO: Check that the loads actually succeeded
+
+        //org.openpsa.sales object types
+        define('ORG_OPENPSA_OBTYPE_SALESPROJECT', 10000);
+        define('ORG_OPENPSA_OBTYPE_SALESPROJECT_MEMBER', 10500);
+        //org.openpsa.sales salesproject statuses
+        define('ORG_OPENPSA_SALESPROJECTSTATUS_LOST', 11000);
+        define('ORG_OPENPSA_SALESPROJECTSTATUS_ACTIVE', 11050);
+        define('ORG_OPENPSA_SALESPROJECTSTATUS_WON', 11100);
+        //org.openpsa.sales salesproject deliverable statuses
+        define('ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_NEW', 100);
+        define('ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_PROPOSED', 200);
+        define('ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_DECLINED', 300);
+        define('ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_ORDERED', 400);
+        define('ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_STARTED', 450);
+        define('ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_DELIVERED', 500);
+        define('ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_INVOICED', 600);
         
         return true;
     }

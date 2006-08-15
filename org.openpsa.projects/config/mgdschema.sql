@@ -42,8 +42,9 @@ ALTER TABLE org_openpsa_task ADD COLUMN orgOpenpsaOwnerWg VARCHAR(255);
 ALTER TABLE org_openpsa_task ADD COLUMN newsTopic int(11) NOT NULL default '0';
 ALTER TABLE org_openpsa_task ADD COLUMN forumTopic int(11) NOT NULL default '0';
 ALTER TABLE org_openpsa_task ADD COLUMN acceptanceType int(11) NOT NULL default '0';
-alter table org_openpsa_task add column guid varchar(80) NOT NULL default '';
+ALTER TABLE org_openpsa_task add column guid varchar(80) NOT NULL default '';
 ALTER TABLE org_openpsa_task ADD COLUMN hoursInvoiceableDefault int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_task ADD COLUMN agreement int(11) NOT NULL default '0';
 
 CREATE TABLE org_openpsa_task_resource (
   id int(11) NOT NULL auto_increment,

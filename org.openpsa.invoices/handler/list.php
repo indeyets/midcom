@@ -223,6 +223,55 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
     {
         $this->_show_invoice_list();
     }
+
+    function _handler_deliverable($handler_id, $args, &$data)
+    {
+        $_MIDCOM->auth->require_valid_user();
+        
+        if (count($args) != 1)
+        {
+            return false;
+        }
+
+        // We're displaying invoices of a specific deliverable
+        $this->_request_data['deliverable'] = new org_openpsa_sales_salesproject_deliverable($args[0]);
+        if (!$this->_request_data['deliverable'])
+        {
+            return false;
+        }
+        $this->_request_data['salesproject'] = new org_openpsa_sales_salesproject($this->_request_data['deliverable']->salesproject);
+        
+        $this->_request_data['list_label'] = sprintf($this->_request_data['l10n']->get('all invoices for deliverable %s in sales project %s'), $this->_request_data['deliverable']->title, $this->_request_data['salesproject']->title);        
+
+        $this->_request_data['invoices'] = Array();
+        $this->_request_data['totals'] = Array();
+        $this->_request_data['totals']['overdue'] = 0;
+        $this->_request_data['totals']['totals'] = 0;
+        $this->_request_data['list_type'] = 'all';
+                    
+        $relation_qb = org_openpsa_relatedto_relatedto::new_query_builder();
+        $relation_qb->add_constraint('toGuid', '=', $this->_request_data['deliverable']->guid);
+        $relation_qb->add_constraint('fromComponent', '=', 'org.openpsa.invoices');
+        $relation_qb->add_constraint('fromClass', '=', 'org_openpsa_invoices_invoice');        
+        $relations = $relation_qb->execute();
+        $invoices = Array();
+        foreach ($relations as $relation)
+        {
+            $invoices[] = new org_openpsa_invoices_invoice($relation->fromGuid);
+        }
+        
+        $this->_process_invoice_list($invoices);
+
+        $_MIDCOM->set_pagetitle($this->_request_data['list_label']);
+
+        return true;
+    }
+
+    function _show_deliverable($handler_id, &$data)
+    {
+        $this->_request_data['header-size'] = 4;
+        $this->_show_invoice_list();
+    }
     
     function _show_invoice_list()
     {

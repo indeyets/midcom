@@ -13,7 +13,8 @@
             'role' => 'lead',
         ),
     ),
-    'dependencies' => Array(
+    'dependencies' => Array
+    (
         'midcom.helper.datamanager' => Array(),
         'org.openpsa.contacts' => Array(),
         'org.openpsa.contactwidget' => Array(),
@@ -21,5 +22,10 @@
         'org.openpsa.calendar' => Array(),
         'org.openpsa.projects' => Array(),
         'org.openpsa.products' => Array(),
+        'org.openpsa.invoices' => Array(),
+        'Calendar' => Array
+        (
+            'channel' => 'pear.php.net',
+        ),
     ),
 ),

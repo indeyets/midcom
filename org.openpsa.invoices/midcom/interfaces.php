@@ -42,8 +42,9 @@ class org_openpsa_invoices_interface extends midcom_baseclasses_components_inter
     {
 
         //We need the contacts person class available.
-        $_MIDCOM->componentloader->load('org.openpsa.contacts');
-        $_MIDCOM->componentloader->load('org.openpsa.projects');        
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.contacts');
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.projects');
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.sales');
         return true;
     }
 }
