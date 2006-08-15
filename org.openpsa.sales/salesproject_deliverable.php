@@ -90,7 +90,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         $invoice = new org_openpsa_invoices_invoice();
         $invoice->customer = $salesproject->customer;
         $invoice->invoiceNumber = org_openpsa_invoices_invoice::generate_invoice_number();
-        $invoice->owner = $this->owner;
+        $invoice->owner = $salesproject->owner;
         // TODO: Get from invoices configuration
         $invoice->due = 14 * 3600 * 24 + time();
         $invoice->description = $description;
@@ -106,13 +106,19 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
     
     /**
      * Initiates a new subscription cycle and registers a midcom.services.at call for the next cycle.
+     *
+     * The subscription cycles rely on midcom.services.at. I'm not sure if it is wise to rely on it for such
+     * a totally mission critical part of OpenPsa. Some safeguards might be wise to add.
      */
-    function new_subscription_cycle($send_invoice = true)
+    function new_subscription_cycle($cycle_number, $send_invoice = true)
     {
         $this_cycle = time();
-        $this_cycle_identifier = $this->_get_cycle_identifier();
+        $this_cycle_identifier = $cycle_number;
         $this_cycle_amount = $this->price;
         $next_cycle = $this->_calculate_cycle_next($this_cycle);
+        // TODO: Should we use a more meaninful label for invoices and tasks than just the cycle number?
+        
+        $product = new org_openpsa_products_product_dba($this->product);
         
         if ($send_invoice)
         {
@@ -133,7 +139,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
                 }
                 
                 // Create task for the duration of this cycle
-                $this->_create_task($this_cycle, $next_cycle - 1);
+                $this->_create_task($this_cycle, $next_cycle - 1, sprintf('%s %s', $this->title, $this_cycle_identifier));
                 break;
                 
             case ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_GOODS:
@@ -156,7 +162,13 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
             return false;
         }
         
-        // TODO: Register midcom.services.at event
+        // Register next cycle with midcom.services.at
+        $args = array(
+            'deliverable' => $this->guid,
+            'cycle'       => $this_cycle_identifier + 1,
+        );
+        $atstat = midcom_services_at_interface::register($next_cycle, 'org.openpsa.sales', 'new_subscription_cycle', $args);
+        return $atstat;
     }
     
     function _calculate_cycle_next($time)
@@ -259,11 +271,12 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         return false;
     }
     
-    function _create_task($start, $end)
+    function _create_task($start, $end, $title)
     {
         $project = false;
         $task = false;
         $salesproject = new org_openpsa_sales_salesproject($this->salesproject);
+        $product = new org_openpsa_products_product_dba($this->product);
         
         // TODO: Check if we already have an open task for this delivery?
         
@@ -274,7 +287,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         $task = new org_openpsa_projects_task();
         $task->agreement = $this->id;
         $task->customer = $salesproject->customer;
-        $task->title = $this->title;
+        $task->title = $title;
         $task->description = $this->description;
         $task->start = $start;
         $task->end = $end;
@@ -313,7 +326,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         if ($product->delivery == ORG_OPENPSA_PRODUCTS_DELIVERY_SUBSCRIPTION)
         {
             // This is a new subscription, initiate the cycle
-            $this->new_subscription_cycle();
+            $this->new_subscription_cycle(1);
         }
         else
         {
@@ -321,7 +334,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
             switch ($product->orgOpenpsaObtype)
             {
                 case ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_SERVICE:
-                    $this->_create_task($this->start, $this->end);
+                    $this->_create_task($this->start, $this->end, $this->title);
                     break;
                 case ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_GOODS:
                     // TODO: Warehouse management: create new order

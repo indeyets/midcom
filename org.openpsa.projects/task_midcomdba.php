@@ -200,27 +200,27 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
     function _update_members()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $ret['resources'] = array();
-        $ret['resources']['added'] = array();
-        $ret['resources']['removed'] = array();
-        $ret['contacts'] = array();
-        $ret['contacts']['added'] = array();
-        $ret['contacts']['removed'] = array();
+        $ret['resources'] = Array();
+        $ret['resources']['added'] = Array();
+        $ret['resources']['removed'] = Array();
+        $ret['contacts'] = Array();
+        $ret['contacts']['added'] = Array();
+        $ret['contacts']['removed'] = Array();
         if (!is_array($this->resources))
         {
-            $this->resources = array();
+            $this->resources = Array();
         }
         if (!is_array($this->contacts))
         {
-            $this->contacts = array();
+            $this->contacts = Array();
         }
         if (!is_array($this->old_resources))
         {
-            $this->old_resources = array();
+            $this->old_resources = Array();
         }
         if (!is_array($this->old_contacts))
         {
-            $this->old_contacts = array();
+            $this->old_contacts = Array();
         }
 
         // ** Start with resources
@@ -870,7 +870,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
                 $task_qb->add_constraint('id', '<>', $this->id);
                 $task_qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
                 $tasks = $task_qb->execute();
-                if (count($status) == 0)
+                if (count($tasks) == 0)
                 {
                     // No other open tasks, mark as delivered
                     $agreement->deliver(false);

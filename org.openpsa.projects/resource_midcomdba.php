@@ -35,9 +35,13 @@ class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resourc
     
     function _add_to_buddylist_of($account)
     {
+        if (!$_MIDCOM->auth->user)
+        {
+            return false;
+        }
         $account = new midcom_db_person($account);
         $qb = org_openpsa_contacts_buddy::new_query_builder();
-        $user =& $_MIDCOM->auth->user->get_storage();
+        $user = $_MIDCOM->auth->user->get_storage();
         $qb->add_constraint('account', '=', $account->guid);
         $qb->add_constraint('buddy', '=', $this->_personobject->guid);
         $qb->add_constraint('blacklisted', '=', false);

@@ -33,6 +33,8 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
             'org.openpsa.core', 
             'org.openpsa.helpers',
             'midcom.helper.datamanager',
+            'midcom.helper.datamanager2',
+            'midcom.services.at',
             'org.openpsa.contactwidget',
             'org.openpsa.relatedto',
         );
@@ -158,5 +160,36 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
         return;
     }
 
+    /**
+     * AT handler for handling subscription cycles.
+     * @param array $args handler arguments
+     * @param object $handler reference to the cron_handler object calling this method.
+     * @return bool indicating success/failure
+     */
+    function new_subscription_cycle($args, &$handler)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        if (   !isset($args['deliverable'])
+            || !isset($args['cycle']))
+        {
+            $msg = 'deliverable GUID or cycle number not set, aborting';
+            debug_add($msg, MIDCOM_LOG_ERROR);
+            $handler->print_error($msg);
+            debug_pop();
+            return false;
+        }
+        
+        $deliverable = new org_openpsa_sales_salesproject_deliverable($args['deliverable']);
+        if (!$deliverable)
+        {
+            $msg = "Deliverable {$args['deliverable']} not found, error " . mgd_errstr();
+            debug_add($msg, MIDCOM_LOG_ERROR);
+            $handler->print_error($msg);
+            debug_pop();
+            return false;
+        }
+        
+        return $deliverable->new_subscription_cycle($args['cycle']);
+    }
 }
 ?>

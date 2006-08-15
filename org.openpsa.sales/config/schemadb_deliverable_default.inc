@@ -143,6 +143,7 @@
             (
                 'options' => Array
                 (
+                    'd' => 'day',     // per day
                     'm' => 'month',   // per month
                     'q' => 'quarter', // per quarter
                     'y' => 'year',    // per annum
