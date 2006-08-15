@@ -426,11 +426,25 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
      * Prepares an entry datamanager, based off the type we're currently viewing.
      * The DM will not be initialized to any storage object, this has to be done
      * by the viewer code iterating over the entries to show.
+     *
+     * @param bool $load_all_schemas Set this to true to load the schemas for all account types,
+     *     mainly used for self account listings.
      */
-    function _prepare_entry_dm()
+    function _prepare_entry_dm($load_all_schemas = false)
     {
         $this->_schemamgr = new net_nehmer_branchenbuch_schemamgr($this->_topic);
-        $schemadb = Array($this->_type->type => $this->_schemamgr->get_account_schema($this->_type->type));
+        if ($load_all_schemas)
+        {
+            $schemadb = Array();
+            foreach ($this->_schemamgr->remote->list_account_types() as $name => $description)
+            {
+                $schemadb[$name] = $this->_schemamgr->get_account_schema($name);
+            }
+        }
+        else
+        {
+            $schemadb = Array($this->_type->type => $this->_schemamgr->get_account_schema($this->_type->type));
+        }
         $this->_entry_dm = new midcom_helper_datamanager2_datamanager($schemadb);
         $this->_entry_dm->set_schema($this->_type->type);
     }
@@ -654,7 +668,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
 
         $this->_entries = net_nehmer_branchenbuch_entry::list_by_user();
         $this->_total = count($this->_entries);
-        $this->_prepare_entry_dm();
+        $this->_prepare_entry_dm(true);
 
         $_MIDCOM->componentloader->load('net.nehmer.account');
         $interface =& $_MIDCOM->componentloader->get_interface_class('net.nehmer.account');
@@ -684,6 +698,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
         foreach ($this->_entries as $guid => $entry)
         {
             $this->_entry =& $this->_entries[$guid];
+            $this->_entry_dm->set_schema($this->_entry->type);
             $this->_entry_dm->set_storage($this->_entry);
             $this->_branche = $this->_entry->get_branche();
             $this->_type = $this->_branche->get_root_category();
