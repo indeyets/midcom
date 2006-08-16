@@ -15,7 +15,7 @@ require_once('radiocheckselect.php');
  *
  * Based on the radiocheckselect widget
  *
- * It can only be bound to a select type (or subclass thereoff), and inherits the confguration
+ * It can only be bound to a select type (or subclass thereoff), and inherits the configuration
  * from there as far as possible.
  *
  * <b>Available configuration options:</b>
@@ -150,11 +150,20 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/Javascript/Prototype/prototype.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/universalchooser.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/protoGrowl.js');
-        $_MIDCOM->add_link_head(array(
-                    'rel' => 'stylesheet',
-                    'type' => 'text/css',
-                    'href' => MIDCOM_STATIC_URL . '/midcom.services.uimessages/protoGrowl.css'
-                ));
+        $_MIDCOM->add_link_head(
+            array(
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . '/midcom.services.uimessages/protoGrowl.css'
+            )
+        );
+        $_MIDCOM->add_link_head(
+            array(
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/universalchooser.css'
+            )
+        );
 
         debug_pop();
         return true;
@@ -355,6 +364,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
      * Creates random string of 8 characters
      *
      * Used to generate the random suffix to distinguish between instances
+     * TODO: Use together with hashed "password" to secure the searching interface
      * @return string random string
      */
     function _create_random_suffix()

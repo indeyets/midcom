@@ -181,6 +181,11 @@ dm2AjaxEditor.prototype = {
             */
         }
         
+            if (this.formId == 'midcom_helper_datamanager2_controller_ajax_4b2ac795e1dfc64ff11af56337840b5f')
+            {
+                console.info("x1: " + this.formDimensions.x1 + " y1: " + this.formDimensions.y1 + ", x2: " + this.formDimensions.x2 + " y2: " + this.formDimensions.y2);
+            }
+        
         if (   this.formArea
             && !this.creationMode)
         {   
@@ -199,13 +204,14 @@ dm2AjaxEditor.prototype = {
             'background-color': '#000000',
             'color'     : 'white',
             'text-align': 'center',
-            'display'   : 'none',
             'font-family': 'Helvetica, sans-serif',
             'padding-top'           : '40px',
             'background-image'  : 'url("/midcom-static/midcom.helper.datamanager2/ajax-loading.gif")',
             'background-repeat' : 'no-repeat',
             'background-position': 'top center',
             '-moz-border-radius': '8px',
+            'z-index'   : '999999',
+            'display'   : 'none'            
         };
         stylesHash = $H(blinderStyles);
         Element.setStyle(this.blinder, stylesHash);
@@ -589,7 +595,7 @@ dm2AjaxEditor.prototype = {
                                     formField.childNodes[ii].style.width = dimensions.width - 30 + 'px;';
                                 }
                             }
-                            else
+                            else if (formField.childNodes[ii].className != 'checkbox')
                             {
                                 if (dimensions.width < 10)
                                 {
@@ -637,7 +643,8 @@ dm2AjaxEditor.prototype = {
                             'position': 'absolute',
                             'left'    : this.formDimensions.x1 + 'px',
                             'top'     : this.formDimensions.y1 - (toolbar.offsetHeight + 6) +  'px',
-                            'display' : 'none'
+                            'display' : 'none',
+                            'z-index' : '999999'
                         };
                         stylesHash = $H(toolbarStyles);
                         Element.setStyle(toolbar, stylesHash);
@@ -713,7 +720,8 @@ dm2AjaxEditor.prototype = {
                                 'position': 'absolute',
                                 'left'    : this.formDimensions.x1 + 'px',
                                 'top'     : this.formDimensions.y1 - (toolbar.offsetHeight + 6) +  'px',
-                                'display' : 'none'
+                                'display' : 'none',
+                                'z-index' : '999999'
                             };
                         }
                         stylesHash = $H(toolbarStyles);
