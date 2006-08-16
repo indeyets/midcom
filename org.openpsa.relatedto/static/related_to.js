@@ -65,9 +65,5 @@ function ooRelatedDenyConfirm(prefix, mode, guid)
 
 function ooRelatedDenyConfirm_callback(response, element)
 {
-    /* TODO: effect ?? */
-    /*
-    element.style.display = 'none';
-    */
     Effect.BlindUp(element);
 }

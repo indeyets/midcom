@@ -237,7 +237,11 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
                 $this->_show_render_line_event();
                 break;
             case is_a($this->_request_data['link_other_obj'], 'midcom_org_openpsa_task'):
-                $this->_show_render_line_task();
+                if ($this->_request_data['link_other_obj']->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_TASK)
+                {
+                    $this->_show_render_line_task();
+                }
+                // TODO: Show related projects too
                 break;
             case is_a($this->_request_data['link_other_obj'], 'midcom_org_openpsa_document'):
                 $this->_show_render_line_document();
