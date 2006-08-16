@@ -1,113 +1,113 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE fi
 
 ---STRING code
-Code
+Koodi
 ---STRINGEND
 
 ---STRING component
-Component
+Komponentti
 ---STRINGEND
 
 ---STRING cost
-Cost
+Kulu
 ---STRINGEND
 
 ---STRING cost type
-cost type
+kulutyyppi
 ---STRINGEND
 
 ---STRING day
-day
+päivä
 ---STRINGEND
 
 ---STRING delivery type
-Delivery type
+Toimitustapa
 ---STRINGEND
 
 ---STRING groups
-Product groups
+Tuoteryhmät
 ---STRINGEND
 
 ---STRING hour
-hour
+tunti
 ---STRINGEND
 
 ---STRING material goods
-Material goods
+Tavara
 ---STRINGEND
 
 ---STRING month
-month
+kuukausi
 ---STRINGEND
 
 ---STRING org.openpsa.products
-Product database
+Tuotetietokanta
 ---STRINGEND
 
 ---STRING per unit
-per unit
+per kappale
 ---STRINGEND
 
 ---STRING piece
-piece
+kappale
 ---STRINGEND
 
 ---STRING pieces
-Pieces
+Kappaletta
 ---STRINGEND
 
 ---STRING price
-Price
+Hinta
 ---STRINGEND
 
 ---STRING product
-Product
+Tuote
 ---STRINGEND
 
 ---STRING product database
-Product database
+Tuotetietokanta
 ---STRINGEND
 
 ---STRING product group
-Product group
+Tuoteryhmä
 ---STRINGEND
 
 ---STRING products
-Products
+Tuotteet
 ---STRINGEND
 
 ---STRING quarter
-quarter
+kvartaali
 ---STRINGEND
 
 ---STRING service
-Service
+Palvelu
 ---STRINGEND
 
 ---STRING single delivery
-Single delivery
+Kertatoimitus
 ---STRINGEND
 
 ---STRING subscription
-Subscription
+Toistuva tilaus
 ---STRINGEND
 
 ---STRING type
-Type
+Tyyppi
 ---STRINGEND
 
 ---STRING unit
-Unit
+Yksikkö
 ---STRINGEND
 
 ---STRING year
-year
+vuosi
 ---STRINGEND
 
 ---STRING product components
-Product components
+Tuotteen komponentit
 ---STRINGEND
 

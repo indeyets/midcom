@@ -19,6 +19,10 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             <td><?php echo $data['l10n']->get('price'); ?></td>
             <td>&(view['price']:h); / &(view['unit']:h);</td>
         </tr>
+        <tr>
+            <td><?php echo $data['l10n']->get('cost'); ?></td>
+            <td>&(view['cost']:h); &(view['costType']:h);</td>
+        </tr>
         <!-- TODO: Show supplier, etc -->
     </tbody>
 </table>

@@ -1,6 +1,6 @@
 'default' => array
 (
-    'description' => 'product component',
+    'description' => 'component',
     'fields'      => array
     (
         'component' => Array

@@ -27,6 +27,8 @@ CREATE TABLE org_openpsa_products_product (
   KEY org_openpsa_products_product_end_idx(end),
   KEY org_openpsa_products_product_owner_idx(owner)
 );
+ALTER TABLE org_openpsa_products_product ADD COLUMN cost varchar(255) NOT NULL default '';
+ALTER TABLE org_openpsa_products_product ADD COLUMN costType varchar(1) NOT NULL default '';
 #metadata fields
 ALTER TABLE org_openpsa_products_product ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
 ALTER TABLE org_openpsa_products_product ADD COLUMN creator int(11) NOT NULL default 0;

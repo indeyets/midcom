@@ -47,6 +47,28 @@
             ),
             'widget' => 'select',
         ),
+        'cost' => Array
+        (
+            'title' => 'cost',
+            'storage' => 'cost',
+            'type' => 'number',
+            'widget'  => 'text',
+        ),
+        'costType' => Array
+        (
+            'title' => 'cost type',
+            'storage' => 'costType',
+            'type' => 'select',
+            'type_config' => Array
+            (
+                'options' => Array
+                (
+                    'm' => 'per unit',
+                    '%' => '%',
+                ),
+            ),
+            'widget' => 'select',
+        ),
         'description' => Array
         (
             'title' => 'description',

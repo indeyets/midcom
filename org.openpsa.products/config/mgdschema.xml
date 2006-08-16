@@ -8,8 +8,12 @@
         
         <property name="title" type="text"/>
         <property name="description" type="text"/>
+        
+        <!-- Pricing information -->
         <property name="price" type="float"/>
         <property name="unit" type="text"/>
+        <property name="cost" type="text"/>
+        <property name="costType" type="text"/>
                 
         <!-- When product is "on market" -->
         <property name="start" type="integer"/>
