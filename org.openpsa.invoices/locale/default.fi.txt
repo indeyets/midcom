@@ -1,6 +1,6 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.fi.txt,v 1.3 2006/06/14 15:01:43 rambo Exp $
+---CVS $Id$
 ---LANGUAGE fi
 
 ---STRING all invoices
@@ -9,6 +9,10 @@ Kaikki laskut
 
 ---STRING all invoices for customer %s
 Asiakkaan %s kaikki laskut
+---STRINGEND
+
+---STRING all invoices for deliverable %s in sales project %s
+Kaikki laskut toimitukselle %s myyntiprojektissa %s
 ---STRINGEND
 
 ---STRING basic information
@@ -107,6 +111,10 @@ Hinta
 Projektilaskutus
 ---STRINGEND
 
+---STRING recently paid invoices
+Viimeisimmät maksetut laskut
+---STRINGEND
+
 ---STRING sent
 Lähetyspäivä
 ---STRINGEND
@@ -126,8 +134,3 @@ Lähettämättömät laskut
 ---STRING vat
 ALV
 ---STRINGEND
-
----STRING recently paid invoices
-Viimeisimmät maksetut laskut
----STRINGEND
-

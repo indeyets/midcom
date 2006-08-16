@@ -1,6 +1,6 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.en.txt,v 1.3 2006/05/12 16:50:32 rambo Exp $
+---CVS $Id$
 ---LANGUAGE en
 
 ---STRING active
@@ -11,8 +11,20 @@ Active
 Active sales projects
 ---STRINGEND
 
+---STRING add deliverable
+Add deliverable
+---STRINGEND
+
 ---STRING contacts
 Contacts
+---STRINGEND
+
+---STRING cost
+Cost
+---STRINGEND
+
+---STRING cost per unit
+Cost per unit
 ---STRINGEND
 
 ---STRING create document
@@ -39,8 +51,36 @@ Create task
 Customer
 ---STRINGEND
 
+---STRING deliverables
+Deliverables
+---STRINGEND
+
+---STRING estimated closing date
+Estimated closing date
+---STRINGEND
+
+---STRING estimated delivery
+Estimated delivery
+---STRINGEND
+
+---STRING invoice
+Invoice
+---STRINGEND
+
+---STRING invoice by actual units
+Invoice by actual units
+---STRINGEND
+
 ---STRING lost
 Lost
+---STRINGEND
+
+---STRING mark declined
+Mark declined
+---STRINGEND
+
+---STRING mark ordered
+Mark ordered
 ---STRINGEND
 
 ---STRING next action
@@ -51,20 +91,72 @@ Next action
 No action
 ---STRINGEND
 
+---STRING no customer
+No customer
+---STRINGEND
+
 ---STRING org.openpsa.sales
 Sales projects
+---STRINGEND
+
+---STRING owner
+Owner
 ---STRINGEND
 
 ---STRING previous action
 Previous action
 ---STRINGEND
 
+---STRING price
+Price
+---STRINGEND
+
+---STRING price per unit
+Price per unit
+---STRINGEND
+
+---STRING probability
+Probability
+---STRINGEND
+
+---STRING product
+Product
+---STRINGEND
+
+---STRING sales report
+Sales report
+---STRINGEND
+
+---STRING select product
+Select product
+---STRINGEND
+
 ---STRING status
 Status
 ---STRINGEND
 
+---STRING subscription ends
+Subscription ends
+---STRINGEND
+
+---STRING subscription starts
+Subscription starts
+---STRINGEND
+
 ---STRING title
 Title
+---STRINGEND
+
+---STRING total
+Total
+---STRINGEND
+
+---STRING total cost
+Total cost
+---STRINGEND
+
+---STRING units
+Units
 ---STRINGEND
 
 ---STRING value
@@ -75,7 +167,7 @@ Value
 Won
 ---STRINGEND
 
----STRING no customer
-No customer
+---STRING mark delivered
+Mark delivered
 ---STRINGEND
 

@@ -1,6 +1,6 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.fi.txt,v 1.3 2006/05/12 16:50:32 rambo Exp $
+---CVS $Id$
 ---LANGUAGE fi
 
 ---STRING active
@@ -11,8 +11,20 @@ Käynnissä
 Käynnissä olevat myyntiprojektit
 ---STRINGEND
 
+---STRING add deliverable
+Lisää tuote
+---STRINGEND
+
 ---STRING contacts
 Yhteyshenkilöt
+---STRINGEND
+
+---STRING cost
+Kulu
+---STRINGEND
+
+---STRING cost per unit
+Yksikkökulu
 ---STRINGEND
 
 ---STRING create document
@@ -39,8 +51,36 @@ Luo tehtävä
 Asiakas
 ---STRINGEND
 
+---STRING deliverables
+Toimitukset
+---STRINGEND
+
+---STRING estimated closing date
+Arvioitu kaupantekopäivä
+---STRINGEND
+
+---STRING estimated delivery
+Arvioitu toimituspäivä
+---STRINGEND
+
+---STRING invoice
+Laskuta
+---STRINGEND
+
+---STRING invoice by actual units
+Laskuta toteutuneen mukaan
+---STRINGEND
+
 ---STRING lost
 Hävitty
+---STRINGEND
+
+---STRING mark declined
+Merkkaa hylätyksi
+---STRINGEND
+
+---STRING mark ordered
+Merkkaa tilatuksi
 ---STRINGEND
 
 ---STRING next action
@@ -51,20 +91,72 @@ Seuraava toimenpide
 Ei toimenpidettä
 ---STRINGEND
 
+---STRING no customer
+Ei asiakasta
+---STRINGEND
+
 ---STRING org.openpsa.sales
 Myyntiprojektit
+---STRINGEND
+
+---STRING owner
+Omistaja
 ---STRINGEND
 
 ---STRING previous action
 Edellinen toimenpide
 ---STRINGEND
 
+---STRING price
+Hinta
+---STRINGEND
+
+---STRING price per unit
+Yksikköhinta
+---STRINGEND
+
+---STRING probability
+Todennäköisyys
+---STRINGEND
+
+---STRING product
+Tuote
+---STRINGEND
+
+---STRING sales report
+Myyntiraportti
+---STRINGEND
+
+---STRING select product
+Valitse tuote
+---STRINGEND
+
 ---STRING status
 Tila
 ---STRINGEND
 
+---STRING subscription ends
+Tilaus päättyy
+---STRINGEND
+
+---STRING subscription starts
+Tilaus alkaa
+---STRINGEND
+
 ---STRING title
 Otsikko
+---STRINGEND
+
+---STRING total
+Yhteensä
+---STRINGEND
+
+---STRING total cost
+Kulu yhteensä
+---STRINGEND
+
+---STRING units
+Yksiköitä
 ---STRINGEND
 
 ---STRING value
@@ -75,7 +167,7 @@ Arvo
 Voitettu
 ---STRINGEND
 
----STRING no customer
-Ei asiakasta
+---STRING mark delivered
+Merkkaa toimitetuksi
 ---STRINGEND
 

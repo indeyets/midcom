@@ -28,9 +28,9 @@
             ),
             'widget' => 'select',
         ),
-        'propability' => Array
+        'probability' => Array
         (
-            'title' => 'propability',
+            'title' => 'probability',
             'storage' => Array(
                 'location' => 'configuration',
                 'domain'   => 'org.openpsa.sales',
