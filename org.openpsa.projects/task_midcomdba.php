@@ -339,6 +339,12 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
                 $salesproject = new org_openpsa_sales_salesproject($agreement->salesproject);
                 $this->customer = $salesproject->customer;
             }
+            $this->hoursInvoiceableDefault = true;
+        }
+        else
+        {
+            // No agreement, we can't be invoiceable
+            $this->hoursInvoiceableDefault = false;
         }
         
         // Update hour caches in this and agreement

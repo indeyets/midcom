@@ -27,6 +27,49 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
             return null;
         }
     }
+    
+    function list_task_agreements($task)
+    {
+        $ret = Array(
+            0 => 'no agreement',
+        );
+        
+        if (count($task->contacts) == 0)
+        {
+            return $ret;
+        }
+        
+        $companies = Array();
+
+        $member_qb = org_openpsa_sales_salesproject_member::new_query_builder();
+        $member_qb->begin_group('OR');        
+        foreach ($task->contacts as $contact_id => $active)
+        {
+            $member_qb->add_constraint('person', '=', $contact_id);
+        }
+        $member_qb->end_group();
+        
+        $members = $member_qb->execute();
+
+        $deliverable_qb = org_openpsa_sales_salesproject_deliverable::new_query_builder();
+        $deliverable_qb->add_constraint('state', '>=', ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_ORDERED);
+        $deliverable_qb->add_constraint('state', '<', ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_DELIVERED);
+        $deliverable_qb->begin_group('OR');
+        foreach ($members as $member)
+        {
+            $deliverable_qb->add_constraint('salesproject', '=', $member->salesproject);
+        }
+        $deliverable_qb->end_group();
+        $deliverables = $deliverable_qb->execute();
+        
+        foreach ($deliverables as $deliverable)
+        {
+            $salesproject = new org_openpsa_sales_salesproject($deliverable->salesproject);
+            $customer = new midcom_db_group($salesproject->customer);
+            $ret[$deliverable->id] = "{$deliverable->title} ({$customer->official}: {$salesproject->title})";
+        }
+        return $ret;
+    }
 
     function _on_creating()
     {

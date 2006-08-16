@@ -39,10 +39,10 @@
             'location'    => 'contacts',
             'widget'      => 'contactchooser',
         ),        
-        'customer' => array (
-            'description' => 'customer',
+        'agreement' => array (
+            'description' => 'agreement',
             'datatype'    => 'integer',
-            'location'    => 'customer',
+            'location'    => 'agreement',
         ),
         'start' => array (
             'description' => 'start time',
@@ -56,11 +56,6 @@
             'location'    => 'end',
             'widget_date_enable_outside_ais' => true,
         ), 
-        'invoiceable_default' => array (
-            'description' => 'hours are invoiceable by default',
-            'datatype'    => 'boolean',
-            'location'    => 'hoursInvoiceableDefault',
-        ),
         'description' => array (
             'description' => 'description',
             'datatype'    => 'markdown',
@@ -132,12 +127,6 @@
             'location'    => 'end',
             'widget_date_enable_outside_ais' => true,
         ), 
-        'invoiceable_default' => array (
-            'description' => 'hours are invoiceable by default',
-            'datatype'    => 'boolean',
-            'location'    => 'hoursInvoiceableDefault',
-            'end_fieldgroup' => '',
-        ),
         'orgOpenpsaAccesstype' => array (
             'description' => 'access type',
             'location'    => 'orgOpenpsaAccesstype',

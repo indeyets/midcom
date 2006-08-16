@@ -1,6 +1,6 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.fi.txt,v 1.7 2006/06/13 10:50:53 rambo Exp $
+---CVS $Id$
 ---LANGUAGE fi
 
 ---STRING %s projects
@@ -231,6 +231,10 @@ Tehtävä projektissa
 Tehtävän tila
 ---STRINGEND
 
+---STRING tasks pending acceptance
+Hyväksyntää odottavat tehtävät
+---STRINGEND
+
 ---STRING tasks pending approval
 Hyväksyntää odottavat tehtävät
 ---STRINGEND
@@ -259,7 +263,7 @@ Olet projektin osallistuja
 Olet projektin yhteyshenkilö
 ---STRINGEND
 
----STRING tasks pending acceptance
-Hyväksyntää odottavat tehtävät
+---STRING agreement
+Sopimus
 ---STRINGEND
 

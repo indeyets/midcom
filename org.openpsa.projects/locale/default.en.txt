@@ -1,6 +1,6 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.en.txt,v 1.14 2006/06/13 10:50:53 rambo Exp $
+---CVS $Id$
 ---LANGUAGE en
 
 ---STRING %s projects
@@ -231,6 +231,10 @@ Task in
 Task status
 ---STRINGEND
 
+---STRING tasks pending acceptance
+Tasks pending acceptance
+---STRINGEND
+
 ---STRING tasks pending approval
 Tasks pending approval
 ---STRINGEND
@@ -259,7 +263,7 @@ You are project participant
 You are project subscriber
 ---STRINGEND
 
----STRING tasks pending acceptance
-Tasks pending acceptance
+---STRING agreement
+Agreement
 ---STRINGEND
 

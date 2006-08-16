@@ -35,10 +35,10 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
             return false;
         }
         
-        //Fill the customer field to DM
+        //Fill the agreement field to DM
         debug_add("schema before \n===\n" . sprint_r($this->_datamanagers['task']->_layoutdb['default']) . "===\n");
-        org_openpsa_helpers_schema_modifier($this->_datamanagers['task'], 'customer', 'widget', 'select', 'default', false);
-        org_openpsa_helpers_schema_modifier($this->_datamanagers['task'], 'customer', 'widget_select_choices', org_openpsa_helpers_task_groups($task), 'default', false);
+        org_openpsa_helpers_schema_modifier($this->_datamanagers['task'], 'agreement', 'widget', 'select', 'default', false);
+        org_openpsa_helpers_schema_modifier($this->_datamanagers['task'], 'agreement', 'widget_select_choices', org_openpsa_sales_salesproject_deliverable::list_task_agreements($task), 'default', false);
         debug_add("schema after \n===\n" . sprint_r($this->_datamanagers['task']->_layoutdb['default']) . "===\n");
 
         // Load the task to datamanager
