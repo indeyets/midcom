@@ -329,6 +329,20 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         }
 
         $this->orgOpenpsaWgtype = ORG_OPENPSA_WGTYPE_NONE;
+        
+        if ($this->agreement)
+        {
+            // Get customer company into cache from agreement's sales project
+            $agreement = new org_openpsa_sales_salesproject_deliverable($this->agreement);
+            if ($agreement)
+            {
+                $salesproject = new org_openpsa_sales_salesproject($agreement->salesproject);
+                $this->customer = $salesproject->customer;
+            }
+        }
+        
+        // Update hour caches in this and agreement
+        $this->update_cache(false);
 
         debug_pop();
         return true;
@@ -343,6 +357,61 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
     function _locale_restore()
     {
         setlocale(LC_NUMERIC, $this->_locale_backup);
+    }
+    
+    /**
+     * Update hour report caches
+     */
+    function update_cache($update = true)
+    {
+        if (!$this->id)
+        {
+            return false;
+        }
+        
+        $reported_hours = 0;
+        $approved_hours = 0;
+        $invoiced_hours = 0;
+        $invoiceable_hours = 0;
+        
+        $report_qb = org_openpsa_projects_hour_report::new_query_builder();
+        $report_qb->add_constraint('task', '=', $this->id);
+        $reports = $report_qb->execute();
+        foreach ($reports as $report)
+        {
+            $reported_hours += $report->hours;
+            
+            if ($report->approved)
+            {
+                $approved_hours += $report->hours;
+            }
+            
+            //if ($report->invoiced)
+            //{
+            //    $invoiced_hours += $report->hours;
+            //}
+            if ($report->invoiceable)
+            {
+                $invoiceable_hours += $report->hours;
+            }
+        }
+        
+        $this->hourCache = $reported_hours;
+        
+        if ($this->agreement)
+        {
+            $agreement = new org_openpsa_sales_salesproject_deliverable($this->agreement);
+            if ($agreement)
+            {
+                $agreement->units = $invoiceable_hours;
+            }
+            $agreement->update();
+        }
+        
+        if ($update)
+        {
+            $this->update();
+        }
     }
     
     function _update_parent()

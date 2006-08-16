@@ -29,13 +29,6 @@
             'type' => 'number',
             'widget'  => 'text',
         ),
-        'units' => Array
-        (
-            'title' => 'units',
-            'storage' => 'units',
-            'type' => 'number',
-            'widget'  => 'text',
-        ),
         'unit' => Array
         (
             'title' => 'unit',
@@ -56,10 +49,55 @@
             'readonly' => true,
             'widget' => 'select',
         ),
+        'units' => Array
+        (
+            'title' => 'units',
+            'storage' => 'units',
+            'type' => 'number',
+            'widget'  => 'text',
+        ),
         'price' => Array
         (
             'title' => 'price',
             'storage' => 'price',
+            'type' => 'number',
+            'widget'  => 'text',
+            'readonly' => true,
+        ),
+        'invoiceByActualUnits' => Array
+        (
+            'title'   => 'invoice by actual units',
+            'storage' => 'invoiceByActualUnits',
+            'type'    => 'boolean',
+            'widget'  => 'checkbox',
+        ),
+        'costPerUnit' => Array
+        (
+            'title' => 'cost per unit',
+            'storage' => 'costPerUnit',
+            'type' => 'number',
+            'widget'  => 'text',
+        ),
+        'costType' => Array
+        (
+            'title' => 'cost type',
+            'storage' => 'costType',
+            'type' => 'select',
+            'type_config' => Array
+            (
+                'options' => Array
+                (
+                    'm' => 'per unit',
+                    '%' => '%',
+                ),
+            ),
+            'widget' => 'select',
+            'readonly' => true,
+        ),
+        'cost' => Array
+        (
+            'title' => 'cost',
+            'storage' => 'cost',
             'type' => 'number',
             'widget'  => 'text',
             'readonly' => true,
@@ -156,6 +194,44 @@
         (
             'title' => 'price',
             'storage' => 'price',
+            'type' => 'number',
+            'widget'  => 'text',
+            'readonly' => true,
+        ),
+        'invoiceByActualUnits' => Array
+        (
+            'title'   => 'invoice by actual units',
+            'storage' => 'invoiceByActualUnits',
+            'type'    => 'boolean',
+            'widget'  => 'checkbox',
+        ),
+        'costPerUnit' => Array
+        (
+            'title' => 'cost per unit',
+            'storage' => 'costPerUnit',
+            'type' => 'number',
+            'widget'  => 'text',
+        ),
+        'costType' => Array
+        (
+            'title' => 'cost type',
+            'storage' => 'costType',
+            'type' => 'select',
+            'type_config' => Array
+            (
+                'options' => Array
+                (
+                    'm' => 'per unit',
+                    '%' => '%',
+                ),
+            ),
+            'widget' => 'select',
+            'readonly' => true,
+        ),
+        'cost' => Array
+        (
+            'title' => 'cost',
+            'storage' => 'cost',
             'type' => 'number',
             'widget'  => 'text',
             'readonly' => true,

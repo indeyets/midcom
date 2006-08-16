@@ -19,6 +19,23 @@ class org_openpsa_invoices_invoice extends __org_openpsa_invoices_invoice
         return parent::__org_openpsa_invoices_invoice($id);
     }
     
+    function get_invoice_class()
+    {
+        if ($this->sent == 0)
+        {
+            return 'unsent';
+        }
+        elseif ($this->paid > 0)
+        {
+            return 'paid';
+        }
+        elseif ($this->due < time())
+        {
+            return 'overdue';
+        }
+        return 'open';
+    }
+    
     function generate_invoice_number()
     {
         // TODO: Make configurable

@@ -37,6 +37,7 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
         $deliverable_qb = org_openpsa_sales_salesproject_deliverable::new_query_builder();
         $deliverable_qb->add_constraint('salesproject', '=', $this->id);
         $deliverable_qb->add_constraint('up', '=', 0);
+        $deliverable_qb->add_constraint('state', '<>', ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_DECLINED);
         $deliverables = $deliverable_qb->execute();
         foreach ($deliverables as $deliverable)
         {

@@ -7,7 +7,9 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         <tr>
             <td>&(view['title']:h);</td>
             <td>&(view['pricePerUnit']:h); / &(view['unit']:h);</td>
+            <td>&(view['costPerUnit']:h); &(view['costType']:h);</td>
             <td>&(view['units']:h);</td>
             <td>&(view['price']:h);</td>
+            <td>&(view['cost']:h);</td>
             <!-- TODO: Show supplier, etc -->
         </tr>

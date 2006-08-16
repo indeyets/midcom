@@ -40,32 +40,74 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         return parent::_on_updating();
     }
     
+    function _on_deleted()
+    {
+        $parent = $this->get_parent_guid_uncached();
+        if (is_object($parent))
+        {
+            $parent->calculate_price();
+        }
+    }
+    
     function calculate_price($update = true)
     {
         if ($this->id)
         {
             $pricePerUnit = 0;
+            $costPerUnit = 0;
+            
+            // Check if we have subcomponents
             $deliverable_qb = org_openpsa_sales_salesproject_deliverable::new_query_builder();
             $deliverable_qb->add_constraint('salesproject', '=', $this->salesproject);
             $deliverable_qb->add_constraint('up', '=', $this->id);
             $deliverables = $deliverable_qb->execute();
-                        
-            foreach ($deliverables as $deliverable)
-            {
-                $pricePerUnit = $pricePerUnit + $deliverable->price;
-            }
             
             if (count($deliverables) > 0)
             {
+                // If subcomponents exist, the price and cost per unit default to the
+                // sum of price and cost of all subcomponents
+                foreach ($deliverables as $deliverable)
+                {
+                    $pricePerUnit = $pricePerUnit + $deliverable->price;
+                    $costPerUnit = $costPerUnit + $deliverable->cost;
+                }
+                
                 $this->pricePerUnit = $pricePerUnit;
+                $this->costPerUnit = $costPerUnit;
             }
         }
     
-        $price = $this->units * $this->pricePerUnit;
+        if (   $this->invoiceByActualUnits
+            || $this->plannedUnits == 0)
+        {
+            // In most cases we calculate the price based on the actual units entered
+            $price = $this->units * $this->pricePerUnit;
+        }
+        else
+        {
+            // But in some deals we use the planned units instead
+            $price = $this->plannedUnits * $this->pricePerUnit;
+        }
         
-        if ($price != $this->price)
+        // Count cost based on the cost type
+        switch ($this->costType)
+        {
+            case '%':
+                // The cost is a percentage of the price
+                $cost = $price / 100 * $this->costPerUnit;
+                break;
+            default:
+            case 'm':
+                // The cost is a fixed sum per unit
+                $cost = $this->units * $this->costPerUnit;
+                break;
+        }
+        
+        if (   $price != $this->price
+            || $cost != $this->cost)
         {
             $this->price = $price;
+            $this->cost = $cost;
             
             if ($update)
             {
@@ -79,11 +121,12 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         }
     }
     
+    /**
+     * Send an invoice from the deliverable. Creates a new, unsent org.openpsa.invoices item
+     * and adds a relation between it and the deliverable.
+     */
     function _send_invoice($sum, $description)
-    {
-        // Recalculate price, just to be sure
-        $this->calculate_price();
-        
+    {        
         $salesproject = new org_openpsa_sales_salesproject($this->salesproject);
         
         // Send invoice
@@ -114,8 +157,13 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
     {
         $this_cycle = time();
         $this_cycle_identifier = $cycle_number;
-        $this_cycle_amount = $this->price;
         $next_cycle = $this->_calculate_cycle_next($this_cycle);
+
+        // Recalculate price to catch possible unit changes
+        $this->calculate_price();
+
+        $this_cycle_amount = $this->price;
+
         // TODO: Should we use a more meaninful label for invoices and tasks than just the cycle number?
         
         $product = new org_openpsa_products_product_dba($this->product);
@@ -291,9 +339,12 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         $task->description = $this->description;
         $task->start = $start;
         $task->end = $end;
+        $task->plannedHours = $this->plannedUnits;
 
         $task->manager = $salesproject->owner;
         $task->contacts = $salesproject->contacts;
+        $task->resources[$salesproject->owner] = true;
+
         // TODO: Initiate automated resourcing seek when project broker is done
         
         if ($project)
@@ -302,7 +353,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         }
         
         // TODO: Figure out if we really want to keep this
-        $task->invoiceable_default = true;
+        $task->hoursInvoiceableDefault = true;
         
         if ($task->create())
         {
@@ -312,13 +363,31 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         }
         return false;
     }
-    
+
+    function decline()
+    {
+        if ($this->state >= ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_DECLINED)
+        {
+            return false;
+        }
+        
+        // TODO: Check if salesproject has other open deliverables. If not, mark
+        // as lost
+        
+        $this->state = ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_DECLINED;
+        return $this->update();
+    }
+
     function order()
     {
         if ($this->state >= ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_ORDERED)
         {
             return false;
         }
+        
+        // Cache the original price and cost values intended
+        $this->plannedUnits = $this->units;
+        $this->plannedCost = $this->cost;        
         
         // Check what kind of order this is
         $product = new org_openpsa_products_product_dba($this->product);
@@ -342,6 +411,9 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
                     break;
             }
         }
+        
+        // TODO: Check if salesproject has other non-ordered deliverables. If not, mark
+        // as won
         
         $this->state = ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_ORDERED;
         return $this->update();

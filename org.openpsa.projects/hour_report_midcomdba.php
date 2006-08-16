@@ -54,6 +54,7 @@ class midcom_org_openpsa_hour_report extends __midcom_org_openpsa_hour_report
         {
             return false;
         }
+        
         return true;
     }
 
@@ -82,6 +83,7 @@ class midcom_org_openpsa_hour_report extends __midcom_org_openpsa_hour_report
         if (is_object($parent))
         {
             $parent->start();
+            $parent->update_cache();
         }
         return true;
     }
@@ -95,6 +97,13 @@ class midcom_org_openpsa_hour_report extends __midcom_org_openpsa_hour_report
     function _on_updated()
     {
         $this->_locale_restore();
+        
+        $parent = $this->get_parent();
+        if ($parent)
+        {
+            $parent->update_cache();
+        }
+        
         return true;
     }
 

@@ -158,6 +158,7 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
         foreach ($this->_request_data['hour_reports'] as $customer => $tasks)
         {
             $this->_request_data['customer'] = $customer;
+            $this->_request_data['invoice_unapproved'] = true;
             if ($customer == 'no')
             {
                 $this->_request_data['customer_label'] = $this->_request_data['l10n']->get('no customer');
@@ -167,6 +168,11 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
             {
                 $this->_request_data['customer_label'] = $this->_request_data['customers'][$customer]->official;
                 $this->_request_data['disabled'] = '';
+                $invoice_param = $this->_request_data['customers'][$customer]->parameter('org.openpsa.projects', 'require_hour_report_approval');
+                if ($invoice_param == 1)
+                {
+                    $this->_request_data['invoice_unapproved'] = false;
+                }
             }
             midcom_show_style('show-projects-customer-header');
 
@@ -175,9 +181,14 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
                 $this->_request_data['task'] = $this->_request_data['tasks'][$task];
                 $this->_request_data['hour_reports'] = $hour_reports;
                 $this->_request_data['invoiceable_hours'] = 0;
+                $this->_request_data['approved_hours'] = 0;
                 foreach ($hour_reports as $hour_report)
                 {
-                    $this->_request_data['invoiceable_hours'] += $hour_report->hours;
+                    if (   $this->_request_data['invoice_unapproved']
+                        || $hour_report->approved)
+                    {
+                        $this->_request_data['invoiceable_hours'] += $hour_report->hours;
+                    }
                 }
                 
                 if ($this->_config->get('default_hourly_price'))

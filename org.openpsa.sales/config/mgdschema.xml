@@ -66,9 +66,19 @@
         definitive price of this deliverable -->
         <property name="price" type="float"/>
         <property name="invoiced" type="float"/>
-        <property name="units" type="integer"/>
+        <property name="units" type="float"/>
+        <property name="plannedUnits" type="float"/>
         <property name="unit" type="text"/>
         <property name="pricePerUnit" type="float"/>
+        <property name="invoiceByActualUnits" type="boolean"/>
+
+        <!-- Actual cost of the delivery -->
+        <property name="cost" type="float"/>
+        <!-- Original planned cost -->
+        <property name="plannedCost" type="float"/>
+        <!-- Cost per unit, used as basis of calculations for the fields above -->
+        <property name="costPerUnit" type="float"/>        
+        <property name="costType" type="text"/>
         
         <!-- Start and end can have two different meanings: a) for single deliveries, they are the time when
         delivery can start, and the deadline for it. b) for subscriptions they are the subscription period -->

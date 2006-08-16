@@ -59,7 +59,7 @@ CREATE TABLE org_openpsa_salesproject_deliverable (
   description text NOT NULL default '',
   price float NOT NULL default '0',
   invoiced float NOT NULL default '0',
-  units int(11) NOT NULL default '0',
+  units float NOT NULL default '0',
   unit varchar(255) NOT NULL default '',
   pricePerUnit float NOT NULL default '0',
   start int(11) NOT NULL default '0',
@@ -74,6 +74,12 @@ CREATE TABLE org_openpsa_salesproject_deliverable (
   KEY org_openpsa_salesproject_deliverable_salesproject_idx(salesproject),
   KEY org_openpsa_salesproject_deliverable_state_idx(state)
 );
+ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN plannedUnits float NOT NULL default '0';
+ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN cost float NOT NULL default '0';
+ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN plannedCost float NOT NULL default '0';
+ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN costPerUnit float NOT NULL default '0';
+ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN costType varchar(1) NOT NULL default '';
+ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN invoiceByActualUnits int(11) NOT NULL default '0';
 #metadata fields
 ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
 ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN creator int(11) NOT NULL default '0';

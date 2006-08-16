@@ -30,6 +30,7 @@ class org_openpsa_invoices_navigation extends midcom_baseclasses_components_navi
     {
         $leaves = array();
         
+        /*
         $leaves[$this->_topic->id.':from_projects'] = array
         (
             MIDCOM_NAV_SITE => Array
@@ -43,6 +44,7 @@ class org_openpsa_invoices_navigation extends midcom_baseclasses_components_navi
             MIDCOM_META_CREATED => $this->_topic->created,
             MIDCOM_META_EDITED => $this->_topic->revised
         );
+        */
 
         return $leaves;
     }

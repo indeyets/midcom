@@ -15,39 +15,27 @@
 class org_openpsa_sales_navigation extends midcom_baseclasses_components_navigation
 {
 
+    /**
+     * Returns a static leaf list with access to the archive.
+     */
     function get_leaves()
     {
         $leaves = array();
-/* TODO: Adapt for salesprojects
-        $qb = org_openpsa_directmarketing_campaign::new_query_builder();
-        $qb->add_constraint('archived', '=', 0);
-        $campaigns = $qb->execute();
-        if (empty($campaigns))
-        {
-            return $leaves;
-        }
-        foreach ($campaigns as $campaign)
-        {
-            $leaves[$campaign->id] = array
+        
+        $leaves[$this->_topic->id.':deliverable_report'] = array
+        (
+            MIDCOM_NAV_SITE => Array
             (
-                MIDCOM_NAV_SITE => array
-                (
-                    MIDCOM_NAV_URL => "campaign/{$campaign->guid}",
-                    MIDCOM_NAV_NAME => $campaign->title
-                ),
-                MIDCOM_NAV_ADMIN => array
-                (
-                    MIDCOM_NAV_URL => "campaign/{$campaign->guid}",
-                    MIDCOM_NAV_NAME => $campaign->title
-                ),
-                MIDCOM_NAV_GUID => $campaign->guid,
-                MIDCOM_META_CREATOR => $campaign->creator,
-                MIDCOM_META_EDITOR => $campaign->revisor,
-                MIDCOM_META_CREATED => $campaign->created,
-                MIDCOM_META_EDITED => $campaign->revised
-            );
-        }
-*/
+                MIDCOM_NAV_URL => "deliverable/report/",
+                MIDCOM_NAV_NAME => $this->_l10n->get('sales report'),
+            ),
+            MIDCOM_NAV_ADMIN => null,
+            MIDCOM_META_CREATOR => $this->_topic->creator,
+            MIDCOM_META_EDITOR => $this->_topic->revisor,
+            MIDCOM_META_CREATED => $this->_topic->created,
+            MIDCOM_META_EDITED => $this->_topic->revised
+        );
+
         return $leaves;
     }
 }

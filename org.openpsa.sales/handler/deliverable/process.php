@@ -94,6 +94,15 @@ class org_openpsa_sales_handler_deliverable_process extends midcom_baseclasses_c
                 // This will exit.
             }
         }
+        elseif (array_key_exists('mark_declined', $_POST))
+        {
+            if (!$this->_deliverable->decline())
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
+                    'Failed to mark the deliverable as declined, cannot continue. Last Midgard error was: '. mgd_errstr());
+                // This will exit.
+            }
+        }
         elseif (array_key_exists('mark_ordered', $_POST))
         {
             if (!$this->_deliverable->order())

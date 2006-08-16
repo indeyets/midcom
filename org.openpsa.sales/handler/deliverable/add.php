@@ -56,7 +56,7 @@ class org_openpsa_sales_handler_deliverable_add extends midcom_baseclasses_compo
         $this->_request_data['enable_components'] = $this->_config->get('enable_components');
     }
     
-    function _create_deliverable($product, $up = 0)
+    function _create_deliverable($product, $up = 0, $units = 1)
     {
         $deliverable = new org_openpsa_sales_salesproject_deliverable();
         $deliverable->product = $product->id;
@@ -64,13 +64,17 @@ class org_openpsa_sales_handler_deliverable_add extends midcom_baseclasses_compo
         $deliverable->up = $up;
         
         // Copy values from product
-        $deliverable->units = 1;
+        $deliverable->units = $units;
         $deliverable->unit = $product->unit;
         $deliverable->pricePerUnit = $product->price;
+        $deliverable->costPerUnit = $product->cost;
+        $deliverable->costType = $product->costType;
         $deliverable->title = $product->title;
         $deliverable->description = $product->description;
         
         $deliverable->state = ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_NEW;
+        
+        $deliverable->orgOpenpsaObtype = $product->delivery;
         
         if (!$deliverable->create())
         {
@@ -83,7 +87,7 @@ class org_openpsa_sales_handler_deliverable_add extends midcom_baseclasses_compo
         }
         
         // Set schema based on product type
-        if ($this->_product->delivery == ORG_OPENPSA_PRODUCTS_DELIVERY_SUBSCRIPTION)
+        if ($product->delivery == ORG_OPENPSA_PRODUCTS_DELIVERY_SUBSCRIPTION)
         {
             $deliverable->parameter('midcom.helper.datamanager2', 'schema_name', 'subscription');
         }
@@ -98,7 +102,7 @@ class org_openpsa_sales_handler_deliverable_add extends midcom_baseclasses_compo
             if ($component_product)
             {
                 // Create a sub-deliverable for each
-                $this->_create_deliverable($component_product, $deliverable->id);
+                $this->_create_deliverable($component_product, $deliverable->id, $component->pieces);
             }
         }
         

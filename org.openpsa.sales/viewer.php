@@ -65,6 +65,20 @@ class org_openpsa_sales_viewer extends midcom_baseclasses_components_request
             'handler' => Array('org_openpsa_sales_handler_deliverable_process', 'process'),
         );
 
+        // Match /deliverable/report/all/
+        $this->_request_switch['deliverable_report_all'] = array
+        (
+            'fixed_args' => array('deliverable', 'report', 'all'),
+            'handler' => Array('org_openpsa_sales_handler_deliverable_report', 'report'),
+        );
+
+        // Match /deliverable/report/
+        $this->_request_switch['deliverable_report'] = array
+        (
+            'fixed_args' => array('deliverable', 'report'),
+            'handler' => Array('org_openpsa_sales_handler_deliverable_report', 'report'),
+        );
+
         // Match /
         $this->_request_switch[] = array(
             'handler' => Array('org_openpsa_sales_handler_list', 'active'),
