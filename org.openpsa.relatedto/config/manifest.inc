@@ -2,7 +2,7 @@
 'purecode' => true,
 'privileges' =>  Array(),
 'class_definitions' => Array('midcom_dba_classes.inc'),
-'version' => '1.0.0',
+'version' => '1.0.1',
 'package.xml' => Array(
     'summary' => 'Library for handling "related to" links',
     'maintainers' => Array(
