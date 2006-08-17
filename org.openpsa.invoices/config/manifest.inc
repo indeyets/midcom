@@ -1,6 +1,6 @@
 'name' => 'org.openpsa.invoices',
 'purecode' => false,
-'version' => '1.0.1',
+'version' => '1.0.2',
 'privileges' =>  Array(),
 'class_definitions' => Array('midcom_dba_classes.inc'),
 'package.xml' => Array(
