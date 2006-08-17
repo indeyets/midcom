@@ -2,7 +2,7 @@
 'purecode' => true,
 'privileges' =>  Array(),
 'class_definitions' => Array(),
-'version' => '2.0.1',
+'version' => '2.0.2',
 'package.xml' => Array(
     'summary' => 'OpenPsa core library',
     'description' => 'OpenPsa core library',
