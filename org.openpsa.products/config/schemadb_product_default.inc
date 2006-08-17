@@ -37,7 +37,7 @@
             (
                 'options' => Array
                 (
-                    'p' => 'unit',       // per piece
+                    'p' => 'piece',       // per piece
                     'h' => 'hour',    // per hour
                     'd' => 'day',     // per day
                     'm' => 'month',   // per month
