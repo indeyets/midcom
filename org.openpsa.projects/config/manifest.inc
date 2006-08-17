@@ -2,7 +2,7 @@
 'purecode' => false,
 'privileges' =>  Array(),
 'class_definitions' => Array('midcom_dba_classes.inc'),
-'version' => '2.0.2',
+'version' => '2.1.0',
 'package.xml' => Array(
     'summary' => 'Project/Task management and hour reporting',
     'description' => 'Manage tasks and projects, report hours towards them.',
