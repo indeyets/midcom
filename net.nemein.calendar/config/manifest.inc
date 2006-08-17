@@ -1,6 +1,6 @@
 'name' => 'net.nemein.calendar',
 'purecode' => false,
-'version' => '1.0.1',
+'version' => '1.0.3',
 'privileges' =>  Array(),
 'class_definitions' => Array(),
 'package.xml' => Array(
