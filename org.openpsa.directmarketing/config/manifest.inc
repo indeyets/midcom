@@ -2,7 +2,7 @@
 'purecode' => false,
 'privileges' =>  Array(),
 'class_definitions' => Array('midcom_dba_classes.inc'),
-'version' => '2.0.3',
+'version' => '2.0.4',
 'package.xml' => Array(
     'summary' => 'Direct marketing and mailing lists',
     'description' => 'Application for sending emails, newsletters and SMS messages to registered users.',

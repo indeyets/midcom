@@ -8,9 +8,10 @@
                 'datatype'      => 'text',
                 'widget'        => 'select',
                 'widget_select_choices' => array (
-                        'tambur'        => 'Tambur (HTTP)',
                         'clickatell'    => 'Clickatell (HTTP)',
                         'email2sms'     => 'Email -> SMS',
+                        'messto'        => 'Messto (HTTP)',
+                        'tambur'        => 'Tambur (HTTP)',
                     ),
                 'location'      => 'config',
                 'config_domain' => 'org.openpsa.directmarketing',
