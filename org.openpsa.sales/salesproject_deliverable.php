@@ -198,6 +198,17 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
      */
     function new_subscription_cycle($cycle_number, $send_invoice = true)
     {
+        if (time() < $this->start)
+        {
+            // Subscription hasn't started yet, register the start-up event to $start
+            $args = array(
+                'deliverable' => $this->guid,
+                'cycle'       => $cycle_number,
+            );
+            $atstat = midcom_services_at_interface::register($this->start, 'org.openpsa.sales', 'new_subscription_cycle', $args);
+            return $atstat;
+        }
+    
         $this_cycle = time();
         $this_cycle_identifier = $cycle_number;
         $next_cycle = $this->_calculate_cycle_next($this_cycle);
@@ -250,7 +261,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         if ($this->end < $next_cycle)
         {
             // Do not generate next cycle, the contract ends before
-            return false;
+            return true;
         }
         
         // Register next cycle with midcom.services.at
