@@ -34,7 +34,7 @@ class midcom_helper_imagepopup_runner
         $_MIDCOM->_context[$_MIDCOM->_currentcontext][MIDCOM_CONTEXT_CONTENTTOPIC] =$nulltopic;
         //didn't work: '$_MIDCOM->set_custom_context_data(MIDCOM_CONTEXT_CONTENTTOPIC, $nulltopic);
         //$_MIDCOM->set_custom_context_data(MIDCOM_CONTEXT_REQUESTTYPE, MIDCOM_REQUEST_CONTENT);
-        $_MIDCOM->set_custom_context_data('request_data', &$this->handler->_request_data);
+        $_MIDCOM->set_custom_context_data('request_data', $this->handler->_request_data);
         
     }
     

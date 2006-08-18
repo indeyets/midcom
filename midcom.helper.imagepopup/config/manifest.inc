@@ -1,7 +1,7 @@
 'name' => 'midcom.helper.imagepopup',
 'description' => 'A simple filelister and editor',
 'purecode' => true,
-'version' => '0.0.5',
+'version' => '0.0.6',
 'privileges' =>  Array(),
 'class_definitions' => Array(),
 'package.xml' => Array(  

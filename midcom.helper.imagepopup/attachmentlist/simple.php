@@ -52,7 +52,7 @@ class midcom_helper_imagepopup_attachmentlist_simple {
         }
         while ($files->fetch()) 
         {
-            $this->files[] = $this->make_wrapper(&$files);
+            $this->files[] = $this->make_wrapper($files);
         }
     }
     /**

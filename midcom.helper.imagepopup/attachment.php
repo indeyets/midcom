@@ -91,9 +91,9 @@ class midcom_helper_imagepopup_image extends midcom_helper_imagepopup_attachment
     var $x = 0;
     var $y = 0;
 
-    function midcom_helper_imagepopup_image (&$attachment)
+    function midcom_helper_imagepopup_image(&$attachment)
     {
-        parent::midcom_helper_imagepopup_attachment(&$attachment);
+        parent::midcom_helper_imagepopup_attachment($attachment);
         $this->set_size();        
     }
     /**
