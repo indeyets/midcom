@@ -244,13 +244,57 @@ class org_openpsa_reports_projects_handler
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         //Create queries to get data
-        $qb_hr = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_hour_report');
+        $qb_hr = org_openpsa_projects_hour_report::new_query_builder();
         $qb_hr->add_constraint('date', '<=', $this->_request_data['query_data']['end']['timestamp']);
         $qb_hr->add_constraint('date', '>=', $this->_request_data['query_data']['start']['timestamp']);
         if (   array_key_exists('invoiceable_filter', $this->_request_data['query_data'])
             && $this->_request_data['query_data']['invoiceable_filter'] != -1)
         {
             $qb_hr->add_constraint('invoiceable', '=', (int)$this->_request_data['query_data']['invoiceable_filter']);
+        }
+        debug_add('checking for approved_filter');
+        if (array_key_exists('approved_filter', $this->_request_data['query_data']))
+        {
+            debug_add('approved_filter detected, raw value: ' . $this->_request_data['query_data']['approved_filter']);
+            if ($this->_request_data['query_data']['approved_filter'] != -1)
+            {
+                if ((int)$this->_request_data['query_data']['approved_filter'])
+                {
+                    debug_add('approved_filter parsed as only approved, adding constraint');
+                    $qb_hr->add_constraint('approved', '<>', '0000-00-00 00:00:00');
+                }
+                else
+                {
+                    debug_add('approved_filter parsed as only NOT approved, adding constraint');
+                    $qb_hr->add_constraint('approved', '=', '0000-00-00 00:00:00');
+                }
+            }
+            else
+            {
+                debug_add('approved_filter parsed as BOTH, do not add any constraints');
+            }
+        }
+        debug_add('checking for invoiced_filter');
+        if (array_key_exists('invoiced_filter', $this->_request_data['query_data']))
+        {
+            debug_add('invoiced_filter detected, raw value: ' . $this->_request_data['query_data']['invoiced_filter']);
+            if ($this->_request_data['query_data']['invoiced_filter'] != -1)
+            {
+                if ((int)$this->_request_data['query_data']['invoiced_filter'])
+                {
+                    debug_add('invoiced_filter parsed as only invoiced, adding constraint');
+                    $qb_hr->add_constraint('invoiced', '<>', '0000-00-00 00:00:00');
+                }
+                else
+                {
+                    debug_add('invoiced_filter parsed as only NOT invoiced, adding constraint');
+                    $qb_hr->add_constraint('invoiced', '=', '0000-00-00 00:00:00');
+                }
+            }
+            else
+            {
+                debug_add('invoiced_filter parsed as BOTH, do not add any constraints');
+            }
         }
         if ($this->_request_data['query_data']['resource'] != 'all')
         {
@@ -546,7 +590,8 @@ EOF;
         {
             debug_add('No match and we\'re in recursive mode, returning false');
             debug_pop();
-            return false;
+            $x = false;
+            return $x;
         }
         else
         {

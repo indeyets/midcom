@@ -2,7 +2,7 @@
 'purecode' => false,
 'privileges' =>  Array(),
 'class_definitions' => Array(),
-'version' => '2.0.2',
+'version' => '2.0.3',
 'package.xml' => Array(
     'summary' => 'OpenPSA reporting module',
     'description' => 'Run reports on data from various other modules',

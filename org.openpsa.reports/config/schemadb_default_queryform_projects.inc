@@ -71,7 +71,8 @@
             ),
             'start' => array (
                 'description'   => 'Start time',
-                'default'       => mktime(0,0,1,date('n')-1,1,date('Y')),
+                /* 'default'       => mktime(0,0,1,date('n')-1,1,date('Y')), */
+                'default'       => mktime(0,0,1,date('n'),1,date('Y')),
                 'datatype'      => 'unixdate',
                 'location'      => 'start',
                 'date_withtime' => false,
@@ -83,7 +84,8 @@
             ),
             'end' => array (
                 'description'   => 'End time',
-                'default'       => mktime(0,0,1,date('n'),0,date('Y')),
+                /* 'default'       => mktime(0,0,1,date('n'),0,date('Y')), */
+                'default'       => mktime(0,0,1,date('n')+1,0,date('Y')),
                 'datatype'      => 'unixdate',
                 'location'      => 'end',
                 'date_withtime' => false,
@@ -133,6 +135,30 @@
                         -1    => 'both',
                         0     => 'only uninvoiceable',
                         1     => 'only invoiceable',
+                    ),
+            ),
+            'approved_filter' => array(
+                'description'   => 'show approved',
+                'location'      => 'parameter',
+                'datatype'      => 'integer',
+                'widget'        => 'select',
+                'default'       => -1,
+                'widget_select_choices' => array(
+                        -1    => 'both',
+                        0     => 'only not approved',
+                        1     => 'only approved',
+                    ),
+            ),
+            'invoiced_filter' => array(
+                'description'   => 'show invoiced',
+                'location'      => 'parameter',
+                'datatype'      => 'integer',
+                'widget'        => 'select',
+                'default'       => -1,
+                'widget_select_choices' => array(
+                        -1    => 'both',
+                        0     => 'only not invoiced',
+                        1     => 'only invoiced',
                     ),
                 'end_fieldgroup'    => '',
             ),
@@ -282,6 +308,30 @@
                         -1    => 'both',
                         0     => 'only uninvoiceable',
                         1     => 'only invoiceable',
+                    ),
+            ),
+            'approved_filter' => array(
+                'description'   => 'show approved',
+                'location'      => 'parameter',
+                'datatype'      => 'integer',
+                'widget'        => 'select',
+                'default'       => -1,
+                'widget_select_choices' => array(
+                        -1    => 'both',
+                        0     => 'only not approved',
+                        1     => 'only approved',
+                    ),
+            ),
+            'invoiced_filter' => array(
+                'description'   => 'show invoiced',
+                'location'      => 'parameter',
+                'datatype'      => 'integer',
+                'widget'        => 'select',
+                'default'       => -1,
+                'widget_select_choices' => array(
+                        -1    => 'both',
+                        0     => 'only not invoiced',
+                        1     => 'only invoiced',
                     ),
                 'end_fieldgroup'    => '',
             ),

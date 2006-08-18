@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality. 
 - All items marked with "+" represent completly new features.
 
+2006-08-18 rambo
+  + Added filters for invoiced and approved hours into project reports
+
 2006-06-08 rambo
   - added customer sorting to weekly report
 
