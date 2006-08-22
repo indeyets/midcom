@@ -29,6 +29,10 @@
  * - Array <b>child_constraints</b>: Other query constraints for the child objects as arrays containing field, constraint type and value suitable for QB add_constraint usage. 
  * - <b>style_element_name</b>: Name used for the header, footer and item elements of the object list
  * - <b>window_mode</b>: Whether the composites should be edited in a modal pop-up window instead of in-place. Useful for tight spaces.
+ * - <b>maximum_items</b>: How many items are allowed into the composite. After this creation is disabled.
+ * - <b>enable_creation</b>: Whether creation of new items is allowed
+ * - <b>area_element</b>: The HTML element surrounding the composites. By default div.
+ *
  * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanager2_type
@@ -42,6 +46,7 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
     var $window_mode = false;
     var $maximum_items = null;
     var $enable_creation = true;
+    var $area_element = 'div';
 
     /**
      * The schema database in use for the child elements
@@ -320,9 +325,9 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
                     'item_total' => null,
                 );
                 $_MIDCOM->set_custom_context_data('midcom_helper_datamanager2_widget_composite', $request_data);
-                echo "<div id=\"{$form_identifier}_area\" style=\"display: none;\">\n";
+                echo "<{$this->area_element} id=\"{$form_identifier}_area\" style=\"display: none;\">\n";
                 midcom_show_style("_dm2_composite_{$this->style_element_name}_item");            
-                echo "</div>\n";
+                echo "</{$this->area_element}>\n";
             }
             foreach (array_keys($this->_schemadb) as $name)
             {            
@@ -371,9 +376,9 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
                 'item_total' => $item_total,
             );
             $_MIDCOM->set_custom_context_data('midcom_helper_datamanager2_widget_composite', $request_data);
-            echo "<div id=\"{$this->_controllers[$identifier]->form_identifier}_area\">\n";
+            echo "<{$this->area_element} id=\"{$this->_controllers[$identifier]->form_identifier}_area\">\n";
             midcom_show_style("_dm2_composite_{$this->style_element_name}_item");
-            echo "</div>\n";
+            echo "</{$this->area_element}>\n";
         } 
 
         $this->add_creation_data();

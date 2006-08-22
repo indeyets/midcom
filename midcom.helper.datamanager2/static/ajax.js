@@ -71,7 +71,14 @@ dm2AjaxEditor.prototype = {
         }
         //Effect.Appear(area);
         this.cloneCreationFields();
-        this.formArea.style.display = 'block';
+        if (this.formArea.tagName == 'div')
+        {
+            this.formArea.style.display = 'block';
+        }
+        else
+        {
+            this.formArea.style.display = '';
+        }
         this.makeEditable();
         this.fetchFields();
     },
@@ -111,8 +118,15 @@ dm2AjaxEditor.prototype = {
             editableFields[i].className = this.reserveIdentifier;
             eval("editableFields[i].id = id.replace(/" + this.formId + "/, this.reserveIdentifier);");
         }
-        button = $(this.formId + '_button');
-        this.formArea.parentNode.insertBefore(newArea, button);
+
+        try
+        {
+            this.formArea.parentNode.insertBefore(newArea, button);
+        }
+        catch (error)
+        {
+            console.log(error);
+        }
     },
     
     /**
