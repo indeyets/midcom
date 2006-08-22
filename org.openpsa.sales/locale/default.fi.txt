@@ -79,6 +79,10 @@ Hävitty
 Merkkaa hylätyksi
 ---STRINGEND
 
+---STRING mark delivered
+Merkkaa toimitetuksi
+---STRINGEND
+
 ---STRING mark ordered
 Merkkaa tilatuksi
 ---STRINGEND
@@ -167,7 +171,7 @@ Arvo
 Voitettu
 ---STRINGEND
 
----STRING mark delivered
-Merkkaa toimitetuksi
+---STRING weighted value
+Painotettu arvo
 ---STRINGEND
 

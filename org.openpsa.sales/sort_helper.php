@@ -155,6 +155,21 @@ function org_openpsa_sales_sort_by_value($a, $b)
     return 0;
 }
 
+function org_openpsa_sales_sort_by_weighted_value($a, $b)
+{
+    $a = (float)$a['value'] / 100 * $a['probability'];
+    $b = (float)$b['value'] / 100 * $b['probability'];
+    if ($a > $b)
+    {
+        return 1;
+    }
+    if ($b > $a)
+    {
+        return -1;
+    }
+    return 0;
+}
+
 function org_openpsa_sales_sort_by_next_action($a, $b)
 {
     $aproject = $GLOBALS['org_openpsa_sales_project_cache'][$GLOBALS['org_openpsa_sales_project_map'][$a['_storage_id']]];

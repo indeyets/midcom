@@ -101,6 +101,9 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
                 case 'value':
                     uasort($this->_request_data['salesprojects_dm'], 'org_openpsa_sales_sort_by_value');
                     break;
+                case 'weighted_value':
+                    uasort($this->_request_data['salesprojects_dm'], 'org_openpsa_sales_sort_by_weighted_value');
+                    break;
                 case 'close_est':
                     uasort($this->_request_data['salesprojects_dm'], 'org_openpsa_sales_sort_by_close_est');
                     break;

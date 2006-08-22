@@ -31,7 +31,8 @@ $view_data['owner_widget'] = new org_openpsa_contactwidget($view_data['owner']);
         }
         ?></td>
     <td><?php echo $view_data['salesproject_dmdata']['probability'] . '%'; ?></td>    
-    <td><?php echo $view_data['salesproject_dmdata']['value']; ?></td>    
+    <td><?php echo $view_data['salesproject_dmdata']['value']; ?></td>
+    <td><?php echo $view_data['salesproject_dmdata']['value'] / 100 * $view_data['salesproject_dmdata']['probability']; ?></td>
     <td><?php 
         $view_data['action'] = $view_data['salesproject']->prev_action;
         midcom_show_style('show-action-simple');

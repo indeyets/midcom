@@ -79,6 +79,10 @@ Lost
 Mark declined
 ---STRINGEND
 
+---STRING mark delivered
+Mark delivered
+---STRINGEND
+
 ---STRING mark ordered
 Mark ordered
 ---STRINGEND
@@ -167,7 +171,7 @@ Value
 Won
 ---STRINGEND
 
----STRING mark delivered
-Mark delivered
+---STRING weighted value
+Weighted value
 ---STRINGEND
 
