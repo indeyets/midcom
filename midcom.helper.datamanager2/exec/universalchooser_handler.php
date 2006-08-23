@@ -19,6 +19,12 @@ $_MIDCOM->header('Content-type: text/xml; charset=' . $encoding);
 echo '<?xml version="1.0" encoding="' . $encoding . '" standalone="yes"?>' . "\n";
 echo "<response>\n";
 
+/*
+TODO: Add shared secret based hash checking to make sure the request actually
+comes from universalchooser (or someone who A: is competent B: has access to the secret)
+*/
+
+
 // Make sure we have search term
 if (!isset($_REQUEST['search']))
 {
