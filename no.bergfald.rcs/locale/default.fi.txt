@@ -1,0 +1,49 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING changes done in revision %s to %s
+Tietueen %s muutokset versiossa %s
+---STRINGEND
+
+---STRING no.bergfald.rcs
+Versionhallinta
+---STRINGEND
+
+---STRING restore this revision (%s)
+Palauta tähän versioon (%s)
+---STRINGEND
+
+---STRING restore to version %s failed, reason %s
+Palautus versioon %s epäonnistui, syy %s
+---STRINGEND
+
+---STRING restore to version %s successful
+Palautus versioon %s onnistui
+---STRINGEND
+
+---STRING revision history of %s
+Muutoshistoria tietueelle %s
+---STRINGEND
+
+---STRING show history
+Näytä versiohistoria
+---STRINGEND
+
+---STRING view %s differences with next (%s)
+Näytä version %s erot seuraavaan (%s)
+---STRINGEND
+
+---STRING view %s differences with previous (%s)
+Näytä version %s erot edelliseen (%s)
+---STRINGEND
+
+---STRING view this revision (%s)
+Näytä tämä versio (%s)
+---STRINGEND
+
+---STRING viewing version %s of %s
+Versio %s tietueesta %s
+---STRINGEND
+

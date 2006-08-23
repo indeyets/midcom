@@ -1,0 +1,49 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING changes done in revision %s to %s
+Changes done in revision %s to %s
+---STRINGEND
+
+---STRING no.bergfald.rcs
+Revision control
+---STRINGEND
+
+---STRING restore this revision (%s)
+Restore to this revision (%s)
+---STRINGEND
+
+---STRING restore to version %s failed, reason %s
+Restore to version %s failed, reason %s
+---STRINGEND
+
+---STRING restore to version %s successful
+Restore to version %s was successful
+---STRINGEND
+
+---STRING revision history of %s
+Revision history of %s
+---STRINGEND
+
+---STRING show history
+Show revision history
+---STRINGEND
+
+---STRING view %s differences with next (%s)
+View differences of version %s with next (%s)
+---STRINGEND
+
+---STRING view %s differences with previous (%s)
+View differences of version %s with previous (%s)
+---STRINGEND
+
+---STRING view this revision (%s)
+View this revision (%s)
+---STRINGEND
+
+---STRING viewing version %s of %s
+Version %s of %s
+---STRINGEND
+

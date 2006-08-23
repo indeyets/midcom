@@ -77,6 +77,11 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         parent::midcom_baseclasses_components_handler();
     }
     
+    function _l10n_get($string_id)
+    {
+        return $_MIDCOM->i18n->get_string($string_id, 'no.bergfald.rcs');
+    }
+    
     /**
      * Static function, returns the request array for the rcs functions.
      * Add this to your _on_initialize function in the calling request:
@@ -252,7 +257,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
             array
             (
                 MIDCOM_TOOLBAR_URL => "rcs/{$this->_source}/{$this->_guid}/",
-                MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('show history'),
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n_get('show history'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
                 MIDCOM_TOOLBAR_ENABLED => true,
@@ -286,7 +291,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
                 array
                 (
                     MIDCOM_TOOLBAR_URL => "rcs/diff/{$this->_source}/{$this->_guid}/{$first}/{$second}.html",
-                    MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_midcom->get("view %s differences with previous (%s)"), $second, $first),
+                    MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_get('view %s differences with previous (%s)'), $second, $first),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_left.png',
                     MIDCOM_TOOLBAR_ENABLED => true,
@@ -298,7 +303,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
             array
             (
                 MIDCOM_TOOLBAR_URL => "rcs/preview/{$this->_source}/{$this->_guid}/{$revision}.html",
-                MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_midcom->get('view this revision (%s)'), $revision),
+                MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_get('view this revision (%s)'), $revision),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/search.png',
                 MIDCOM_TOOLBAR_ENABLED => true,
@@ -312,7 +317,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
                 array
                 (
                     MIDCOM_TOOLBAR_URL => "rcs/restore/{$this->_source}/{$this->_guid}/{$revision}.html",
-                    MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_midcom->get('restore this revision (%s)'), $revision),
+                    MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_get('restore this revision (%s)'), $revision),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_task-recurring.png',
                     MIDCOM_TOOLBAR_ENABLED => $this->_object->can_do('midgard:update'),
@@ -323,7 +328,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
                 array
                 (
                     MIDCOM_TOOLBAR_URL => "rcs/diff/{$this->_source}/{$this->_guid}/{$revision}/{$after}.html",
-                    MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_midcom->get("view %s differences with next (%s)"), $revision, $after),
+                    MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_get('view %s differences with next (%s)'), $revision, $after),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_right.png',
                     MIDCOM_TOOLBAR_ENABLED => true,
@@ -351,7 +356,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('no.bergfald.rcs');
         
-        $this->_request_data['view_title'] = sprintf($this->_request_data['l10n']->get('revision history of %s'), $this->_resolve_object_title());
+        $this->_request_data['view_title'] = sprintf($this->_l10n_get('revision history of %s'), $this->_resolve_object_title());
         $_MIDCOM->set_pagetitle($this->_request_data['view_title']);
         
         debug_pop();
@@ -435,7 +440,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
                 
         $this->_request_data['latest_revision'] = $args[3]; 
 
-        $this->_request_data['view_title'] = sprintf($this->_request_data['l10n']->get('changes done in revision %s to %s'), $this->_request_data['latest_revision'], $this->_resolve_object_title());
+        $this->_request_data['view_title'] = sprintf($this->_l10n_get('changes done in revision %s to %s'), $this->_request_data['latest_revision'], $this->_resolve_object_title());
         $_MIDCOM->set_pagetitle($this->_request_data['view_title']);
         
         debug_pop();
@@ -505,7 +510,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         
         $this->_view_toolbar->disable_item("rcs/preview/{$this->_source}/{$this->_guid}/{$revision}.html");
         
-        $this->_request_data['view_title'] = sprintf($this->_request_data['l10n']->get('viewing version %s of %s'), $revision, $this->_resolve_object_title());
+        $this->_request_data['view_title'] = sprintf($this->_l10n_get('viewing version %s of %s'), $revision, $this->_resolve_object_title());
         $_MIDCOM->set_pagetitle($this->_request_data['view_title']);        
         
         debug_pop();
