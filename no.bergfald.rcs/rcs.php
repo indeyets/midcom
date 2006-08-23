@@ -80,12 +80,12 @@ class no_bergfald_rcs {
      * @return array array with the original value, the new value and a diff -u
      */
     
-    function get_diff($oldest_revision, $latest_revison) 
+    function get_diff($oldest_revision, $latest_revision) 
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         
         $oldest = $this->get_revision($oldest_revision);
-        $newest = $this->get_revision($latest_revison);
+        $newest = $this->get_revision($latest_revision);
         
         $return = array();
        
@@ -111,11 +111,18 @@ class no_bergfald_rcs {
                 
                     $diff = &new Text_Diff($lines1, $lines2);
                     
-                    $renderer = &new Text_Diff_Renderer_unified();
+                    $renderer = &new Text_Diff_Renderer_inline();
                 
                     if (!$diff->isEmpty()) 
                     {
+                        // Run the diff
                         $return[$attribute]['diff'] = $renderer->render($diff);
+                        
+                        // Mofify the output for nicer rendering
+                        $return[$attribute]['diff'] = str_replace('<del>', "<span class=\"deleted\" title=\"removed in {$latest_revision}\">", $return[$attribute]['diff']);
+                        $return[$attribute]['diff'] = str_replace('</del>', '</span>', $return[$attribute]['diff']);
+                        $return[$attribute]['diff'] = str_replace('<ins>', "<span class=\"inserted\" title=\"added in {$latest_revision}\">", $return[$attribute]['diff']);
+                        $return[$attribute]['diff'] = str_replace('</ins>', '</span>', $return[$attribute]['diff']);
                     }
                 } elseif (!is_null($GLOBALS['midcom_config']['utility_diff'])){
                     /* this doesnt work */

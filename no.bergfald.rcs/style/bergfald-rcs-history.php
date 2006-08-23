@@ -27,36 +27,38 @@ else
                     <th><?php echo $request_data['l10n']->get('user'); ?></th>
                     <th><?php echo $request_data['l10n']->get('lines'); ?></th>
                     <th><?php echo $request_data['l10n']->get('message'); ?></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-    <?php
-    foreach ($history as $rev => $history) 
-    {
-        echo "                <tr>\n";
-        echo "                    <td><a href='{$prefix}rcs/preview/$source/$guid/$rev'>{$rev}</a></td>\n";
-        echo "                    <td>".strftime('%x %X', $history['date'])."</td>\n";
-        
-        if ($history['user'])
-        {
-            $user = $_MIDCOM->auth->get_user($history['user']);
-            $person = $user->get_storage();
-            $user_card = new org_openpsa_contactwidget($person);
-            echo "                    <td>" . $user_card->show_inline() . "</td>\n";            
-        }
-        elseif ($history['ip'])
-        {
-            echo "                    <td>{$history['ip']}</td>\n";
-        }
-        else
-        {
-            echo "                    <td></td>\n";            
-        }
-        echo "                    <td>{$history['lines']}</td>\n";                       
-        echo "                    <td>{$history['message']}</td>\n";
-        echo "                </tr>\n";
-    }
-    ?>
+            <?php
+            foreach ($history as $rev => $history) 
+            {
+                echo "                <tr>\n";
+                echo "                    <td><a href='{$prefix}rcs/preview/$source/$guid/$rev'>{$rev}</a></td>\n";
+                echo "                    <td>".strftime('%x %X', $history['date'])."</td>\n";
+                
+                if ($history['user'])
+                {
+                    $user = $_MIDCOM->auth->get_user($history['user']);
+                    $person = $user->get_storage();
+                    $user_card = new org_openpsa_contactwidget($person);
+                    echo "                    <td>" . $user_card->show_inline() . "</td>\n";            
+                }
+                elseif ($history['ip'])
+                {
+                    echo "                    <td>{$history['ip']}</td>\n";
+                }
+                else
+                {
+                    echo "                    <td></td>\n";            
+                }
+                echo "                    <td>{$history['lines']}</td>\n";                       
+                echo "                    <td>{$history['message']}</td>\n";
+                echo "                    <td></td>\n";
+                echo "                </tr>\n";
+            }
+            ?>
             </tbody>
         </table>
     </form>

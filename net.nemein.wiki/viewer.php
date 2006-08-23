@@ -114,7 +114,7 @@ class net_nemein_wiki_viewer extends midcom_baseclasses_components_request
             $wikipage = new net_nemein_wiki_wikipage($args[count($args)-1]);
             if ($wikipage)
             {
-                $this->_node_toolbar->add_item(
+                $this->_view_toolbar->add_item(
                     array
                     (
                         MIDCOM_TOOLBAR_URL => "{$wikipage->name}/",

@@ -14,7 +14,7 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
      */
     var $rcsroot = '';
    
-    function no_bergfald_rcs_aegirrcs ($guid) 
+    function no_bergfald_rcs_aegirrcs($guid) 
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         parent::no_bergfald_rcs($guid);
@@ -365,6 +365,13 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
                 }
             }
         }
+        
+        /*foreach ($revisions as $revision_number => $revision)
+        {
+            $revisions['prev'] = $this->get_prev_version($revision_number);
+            $revisions['next'] = $this->get_next_version($revision_number);
+        }*/
+        
         return $revisions;
     }
     

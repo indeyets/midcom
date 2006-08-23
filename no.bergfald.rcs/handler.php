@@ -119,6 +119,14 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
             'variable_args' => 3,
         );
         
+        $_MIDCOM->add_link_head(array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL."/no.bergfald.rcs/rcs.css",
+            )
+        );
+        
         return $request_switch;
         
     }
@@ -231,6 +239,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         
         // for now, we only got the aegirrcs handler. Later we might have to reconsider this part.
         $this->_backend = new no_bergfald_rcs_aegirrcs($this->_guid);
+        
         debug_pop();
     }
     /**
@@ -238,13 +247,12 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
      */
     function _prepare_toolbars($revision = '', $diff_view = false) 
     {
-        $this->_toolbars = &midcom_helper_toolbars::get_instance();
         $this->_view_toolbar->add_item
         (
             array
             (
                 MIDCOM_TOOLBAR_URL => "rcs/{$this->_source}/{$this->_guid}/",
-                MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('show history'),
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('show history'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
                 MIDCOM_TOOLBAR_ENABLED => true,
@@ -291,7 +299,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
             (
                 MIDCOM_TOOLBAR_URL => "rcs/preview/{$this->_source}/{$this->_guid}/{$revision}.html",
                 MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_midcom->get('view this revision (%s)'), $revision),
-                MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('view the whole version'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/search.png',
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
@@ -305,7 +313,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
                 (
                     MIDCOM_TOOLBAR_URL => "rcs/restore/{$this->_source}/{$this->_guid}/{$revision}.html",
                     MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_midcom->get('restore this revision (%s)'), $revision),
-                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('restore to this version'),
+                    MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_task-recurring.png',
                     MIDCOM_TOOLBAR_ENABLED => $this->_object->can_do('midgard:update'),
                 )
@@ -316,12 +324,14 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
                 (
                     MIDCOM_TOOLBAR_URL => "rcs/diff/{$this->_source}/{$this->_guid}/{$revision}/{$after}.html",
                     MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_midcom->get("view %s differences with next (%s)"), $revision, $after),
-                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('view differences with the next newer version'),
+                    MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_right.png',
                     MIDCOM_TOOLBAR_ENABLED => true,
                 )
             );
         }
+        
+        $_MIDCOM->bind_view_to_object($this->_object);
     }     
     /**
      * Show the changes done to the object 
@@ -344,7 +354,6 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         $this->_request_data['view_title'] = sprintf($this->_request_data['l10n']->get('revision history of %s'), $this->_resolve_object_title());
         $_MIDCOM->set_pagetitle($this->_request_data['view_title']);
         
-        
         debug_pop();
         return true;
     }
@@ -354,7 +363,6 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         $this->_request_data['history'] = $this->_backend->list_history();
         $this->_request_data['guid']    = $this->_guid;
         midcom_show_style('bergfald-rcs-history');
-        
     }
     
     function _resolve_object_title()
@@ -371,7 +379,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         }
         else
         {
-            return $this->_object->guid;
+            return "#{$this->_object->id}";
         }
     }
     
@@ -400,6 +408,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
             @include_once 'Text/Diff.php';
             @include_once 'Text/Diff/Renderer.php';
             @include_once 'Text/Diff/Renderer/unified.php';
+            @include_once 'Text/Diff/Renderer/inline.php';
         
             if (!class_exists('Text_Diff')) 
             {
@@ -421,6 +430,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         
         $this->_prepare_toolbars($args[3], true);        
         $this->_request_data['diff'] = $this->_backend->get_diff($args[2], $args[3]);
+
         $this->_request_data['comment'] = $this->_backend->get_comment($args[3]);
                 
         $this->_request_data['latest_revision'] = $args[3]; 
@@ -492,6 +502,8 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         $this->_load_object();
         $this->_prepare_toolbars($revision);
         $this->_request_data['preview'] = $this->_backend->get_revision($revision);
+        
+        $this->_view_toolbar->disable_item("rcs/preview/{$this->_source}/{$this->_guid}/{$revision}.html");
         
         $this->_request_data['view_title'] = sprintf($this->_request_data['l10n']->get('viewing version %s of %s'), $revision, $this->_resolve_object_title());
         $_MIDCOM->set_pagetitle($this->_request_data['view_title']);        

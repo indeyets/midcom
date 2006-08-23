@@ -130,13 +130,13 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
                 MIDCOM_TOOLBAR_ENABLED => $this->_page->can_do('midgard:delete'),
             )
         );  
-        $this->_node_toolbar->add_item(
+        $this->_view_toolbar->add_item(
             array
             (
                 MIDCOM_TOOLBAR_URL => "rcs/net.nemein.wiki/{$this->_page->guid}/",
-                MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('Show history'),
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('show history', 'no.bergfald.rcs'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
         ); 

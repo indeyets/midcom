@@ -11,7 +11,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
 <h1>&(request_data['view_title']);</h1>
 
-<dl>
+<dl class="no_bergfald_rcs_diff">
 <?php
 foreach ($diff as $attribute => $values)  
 {
@@ -26,9 +26,9 @@ foreach ($diff as $attribute => $values)
     }
 
     echo "<dt>{$attribute}</dt>\n";
-    echo "    <dd><pre>\n";
-    echo htmlentities($values['diff']);
-    echo "    </pre></dd>\n";
+    echo "    <dd>\n";
+    echo nl2br($values['diff']);
+    echo "    </dd>\n";
 }
 ?>
 </dl>
