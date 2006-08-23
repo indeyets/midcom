@@ -1,7 +1,7 @@
 'name' => 'no.bergfald.rcs',
 'description' => 'Front and backend for a versioning library',
 'purecode' => true,
-'version' => '0.8.0',
+'version' => '0.9.0',
 'privileges' =>  Array(),
 'class_definitions' => Array(),
 'package.xml' => Array(  
