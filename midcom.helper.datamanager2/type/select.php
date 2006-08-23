@@ -158,6 +158,15 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
      * @access public
      */
     var $allow_multiple = false;
+    
+    /**
+     * Set this to true to use with universalchooser, this skips making sure the key exists in option list
+     * Mainly used to avoid unneccessary seeks to load all a ton of objects to the options list.
+     *
+     * @var bool
+     * @access public
+     */
+     var $require_corresponding_option = true;
 
     /**
      * Set this to true if you want the keys to be exported to the csv dump instead of the
@@ -351,6 +360,16 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
         {
             $key = (string) $key;
             if ($this->key_exists($key))
+            {
+                $this->selection[] = $key;
+                if (! $this->allow_multiple)
+                {
+                    // Whatever happens, in this mode we only have one key.
+                    return;
+                }
+            }
+            // Done as separate check instead of || because I'm not 100% sure this is the correct place for it (Rambo)
+            else if (!$this->require_corresponding_option)
             {
                 $this->selection[] = $key;
                 if (! $this->allow_multiple)
