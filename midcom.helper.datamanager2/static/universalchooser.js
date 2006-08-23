@@ -168,7 +168,15 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
     
     input_exists: function(name)
     {
-        inputs = Form.getInputs(this.input_element.form, 'checkbox', name);
+        switch (this.mode)
+        {
+            case 'single':
+                inputs = Form.getInputs(this.input_element.form, 'radio', name);
+                break;
+            case 'multiple':
+                inputs = Form.getInputs(this.input_element.form, 'checkbox', name);
+                break;
+        }
         inputs_array = inputs.entries();
 
         if (inputs_array.length > 0)
@@ -183,26 +191,34 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
         /* Add the clicked option to the selection list, remember to check mode ('multiple' vs 'single')
            and act accordingly */
         //alert('add_option called, this.idsuffix: ' + this.idsuffix);
-        input_name = this.fieldname + '[' + key + ']';
-        if (this.input_exists(input_name))
-        {
-            // Input is already there skip
-            return;
-        }
         input_id = 'universalchooser_' + this.idsuffix + '_' + key;
         html = '';
         switch (this.mode)
         {
             case 'single':
-                html += '<input type="radio" id="' + input_id + '" value="1" name="' + input_name + '" class="radio" />\n';
+                if (input_element = $(input_id))
+                {
+                    // Input is already there trigger a click and then skip.
+                    input_element.click();
+                    return;
+                }
+                input_name = this.fieldname;
+                html += '<input type="radio" id="' + input_id + '" value="' + key + '" name="' + input_name + '" class="radio"/>\n';
                 break;
             case 'multiple':
+                input_name = this.fieldname + '[' + key + ']';
+                if (this.input_exists(input_name))
+                {
+                    // Input is already there skip
+                    return;
+                }
                 html += '<input type="checkbox" id="' + input_id + '" value="1" name="' + input_name + '" class="checkbox" />\n';
                 break;
         }
         html += '<label for="' + input_id + '">' + title + '</label>\n<br/>\n';
         
-        new Insertion.After(this.fieldname + '_label', html);
+        //new Insertion.After(this.fieldname + '_label', html);
+        new Insertion.Before(this.input_element, html)
         input_element = $(input_id);
         input_element.click();
     },
@@ -260,6 +276,7 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
 
 function midcom_helper_datamanager2_widget_universalchooser_search_onkeyup(idsuffix)
 {
+    /* TODO: filter out [ctrl|alt]-<something> keypresses somehow */
     /* Initialize handler if not done alreaydy */
     if (!midcom_helper_datamanager2_widget_universalchooser_store[idsuffix])
     {

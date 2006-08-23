@@ -18,13 +18,10 @@ require_once('radiocheckselect.php');
  * It can only be bound to a select type (or subclass thereoff), and inherits the configuration
  * from there as far as possible.
  *
- * <b>Available configuration options:</b>
- *
- * - <i>string othertext:</i> The text that is used to separate the main from the
- *   other form element. They are usually displayed in the same line. The value is passed
- *   through the standard schema localization chain.
- *
- * Note: At this time there is no support for select types with allow_other set at this time.
+ * Note for this widget to work correctly you probably need these two set in type_config
+ * (not strictly required, if your options list/callback always contains everything needed, which is unlikely)
+ *     'require_corresponding_option' => false,
+ *     'allow_other'    => true,
  *
  * @package midcom.helper.datamanager2
  */
@@ -93,6 +90,12 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
      * @var array
      */
     var $orders = array();
+    /**
+     * Allow creation of new objects (depends on components support as well for the actual work)
+     *
+     * @var boolean
+     */
+    var $allow_create = false;
 
    /**
      * The initialization event handler verifies the correct type.
@@ -108,11 +111,6 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
                 MIDCOM_LOG_WARN);
             debug_pop();
             return false;
-        }
-
-        if ($this->_type->allow_other)
-        {
-            die ("Allow Other support for universalchooser widget not yet implemented");
         }
 
         if (empty($this->class))
@@ -181,14 +179,37 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
     
     function _get_single_key($key)
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("calling {$this->class}::new_query_builder()");
         $qb = call_user_func(array($this->class, 'new_query_builder'));
+        debug_add("adding constraint {$this->idfield}={$key}");
         $qb->add_constraint($this->idfield, '=', $key);
         $results = $qb->execute();
+        debug_print_r('Got results:', $results);
         if (empty($results))
         {
+            debug_pop();
             return false;
         }
+        debug_pop();
         return $results[0];
+    }
+    
+    function _get_key_value($key)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $object = $this->_get_single_key($key);
+        if (!is_object($object))
+        {
+            // Could not object, or got wrong type of object
+            debug_add("Could not get object for key: {$key}", MIDCOM_LOG_WARN);
+            debug_pop();
+            return false;
+        }
+        $titlefield =& $this->titlefield;
+        $value = $object->$titlefield;
+        debug_pop();
+        return $value;
     }
 
     /**
@@ -196,22 +217,21 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
      */
     function add_elements_to_form()
     {
+        $idsuffix = $this->_create_random_suffix();
+        debug_push_class(__CLASS__, __FUNCTION__);
         $elements = Array();
-        /* Instead of listing all possibilities we just use the current selection
-        $all_elements = $this->_type->list_all();
-        */
+
         $existing_elements = $this->_type->selection;
         foreach ($existing_elements as $key)
         {
-            $object = $this->_get_single_key($key);
-            if (   !is_object($object)
-                || !is_a($object, $this->class))
+            debug_add("Processing key {$key}");
+            $value = $this->_get_key_value($key);
+            if ($value === false)
             {
-                // Could not object, or got wrong type of object
+                debug_add('Got strict boolean false as value, skipping field');
                 continue;
             }
-            $value = $object->$this->titlefield;
-            
+            debug_add("Adding field '{$key}' => '{$value}'");
             if ($this->_type->allow_multiple)
             {
                 $elements[] =& HTML_QuickForm::createElement
@@ -232,12 +252,20 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
                     $key,
                     $this->_translate($value),
                     $key,
-                    Array('class' => 'radiobutton')
+                    Array(
+                        'class' => 'radiobutton',
+                        'id' => "universalchooser_{$idsuffix}_{$key}",
+                    )
                 );
             }
         }
 
-        $idsuffix = $this->_create_random_suffix();
+
+        /*
+        TODO: Add shared secret based hash creation (checked in handler end) to make sure the request actually
+        comes from universalchooser (or someone who A: is competent B: has access to the secret)
+        */
+
         // Serialize the parameter we need in the search end
         $searchconstraints_serialized = "idsuffix={$idsuffix}";
         $serialize = array('component', 'class', 'titlefield', 'idfield', 'searchfields');
@@ -358,6 +386,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         {
             $group->setAttributes(Array('class' => 'checkbox'));
         }
+        debug_pop();
     }
 
     /**
@@ -465,7 +494,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
             {
                 foreach ($this->_type->selection as $key)
                 {
-                    echo '<li>' . $this->_translate($this->_type->get_name_for_key($key)) . '</li>';
+                    echo '<li>' . $this->_get_key_value($key) . '</li>';
                 }
             }
             echo '</ul>';
@@ -478,10 +507,10 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
             }
             else
             {
-                echo $this->_translate($this->_type->get_name_for_key($this->_type->selection[0]));
+                echo $this->_get_key_value($this->_type->selection[0]);
             }
         }
-
+        /* TODO: What to do with this ??
         if ($this->_type->allow_other)
         {
             if (! $this->_type->allow_multiple)
@@ -491,7 +520,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
             echo $this->_translate($this->othertext) . ': ';
             echo implode(',', $this->_type->others);
         }
-
+        */
     }
 
 }
