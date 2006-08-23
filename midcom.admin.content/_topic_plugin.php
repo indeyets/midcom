@@ -78,6 +78,11 @@ class midcom_admin_content_topic_plugin extends midcom_baseclasses_components_ha
         }
         $object->require_do('midcom:approve');
 
+        if (get_class($object) != 'midcom_baseclasses_database_topic')
+        {
+            $_MIDCOM->bind_view_to_object($object);
+        }
+
         $metadata =& midcom_helper_metadata::retrieve($object);
         if (! $metadata)
         {

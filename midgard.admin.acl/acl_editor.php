@@ -102,7 +102,25 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
         {
             $this->_privileges[] = 'midcom:component_config';
         }
-    }     
+    }
+    
+    function _resolve_object_title($object)
+    {
+        $vars = get_object_vars($object);
+        
+        if (array_key_exists('title', $vars)) 
+        {
+            return $object->title;
+        } 
+        elseif (array_key_exists('name', $vars)) 
+        {
+            return $object->name;
+        }
+        else
+        {
+            return "#{$object->id}";
+        }
+    }   
     
     /**
      * Loads and prepares the schema database.
@@ -275,6 +293,11 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
         }
         $this->_object->require_do('midgard:privileges');
         
+        if (get_class($this->_object) != 'midcom_baseclasses_database_topic')
+        {
+            $_MIDCOM->bind_view_to_object($this->_object);
+        }
+        
         // Load possible additional component privileges
         $this->_load_component_privileges();
         
@@ -320,7 +343,7 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
                 $type = $type_parts[count($type_parts)-1];
         }    
     
-        echo "<h1>".sprintf($_MIDCOM->i18n->get_string('permissions for %s %s', 'midgard.admin.acl'), $type, "#{$this->_object->id}")."</h1>\n";
+        echo "<h1>".sprintf($_MIDCOM->i18n->get_string('permissions for %s %s', 'midgard.admin.acl'), $type, $this->_resolve_object_title($this->_object))."</h1>\n";
         $this->_controller->display_form();
     }
 }

@@ -6,14 +6,14 @@
  * $Id$
  */
 
-#ais_container ul.midcom_toolbar {
-/*	border: 1px solid #666666;*/
-	background: #EAE8E3;
+ul.midcom_toolbar {
+	border: 1px solid #666666;
+	background: #DDDDDD;
 	padding: 7px;
 	margin: 0;
 }
 
-#ais_container ul.midcom_toolbar li {
+ul.midcom_toolbar li {
 	list-style: none;
 	display: inline;
 	padding: 0px 0.4em 0px 0.7em;
@@ -27,53 +27,46 @@
 	white-space: normal;
 }
 
-#ais_container ul.midcom_toolbar li img {
+ul.midcom_toolbar li img {
 	vertical-align: top;
 	padding: 0 0.25em 0 0;
 	border: none;
 }
 
-#ais_container ul.midcom_toolbar li abbr {
+ul.midcom_toolbar li abbr {
 	border: none;
 }
 
-#ais_container ul.midcom_toolbar li a {
+ul.midcom_toolbar li a {
 	text-decoration: none;
 	border: none;
 	white-space: nowrap;
-	padding: 4px;
 }
 
-#ais_container ul.midcom_toolbar li.enabled {
+ul.midcom_toolbar li.enabled {
 	/* no special rules yet */
 }
 
-#ais_container ul.midcom_toolbar li a.accesskey:hover:after, #menu li a.accesskey:focus:after {
-     content: " [" attr(accesskey) "] ";
-}
-
-#ais_container ul.midcom_toolbar li a:hover {
-	background-color: #BAB5AB;
-	color: #EEEEEE;
+ul.midcom_toolbar li.enabled:hover, ul.midcom_toolbar li a:hover {
+	background: #EEEEEE;
 	text-decoration: none;
-	-moz-border-radius: 6px;
 }
 
-#ais_container ul.midcom_toolbar li.disabled {
+ul.midcom_toolbar li.disabled {
 	color: #666666;
 	white-space: nowrap;
 }
 
-#ais_container ul.midcom_toolbar li.only_item {
+ul.midcom_toolbar li.only_item {
 	border: none;
 	padding-left: 0px;
 }
 
-#ais_container ul.midcom_toolbar li.first_item {
+ul.midcom_toolbar li.first_item {
 	padding-left: 0px;
 }
 
-#ais_container ul.midcom_toolbar li.last_item {
+ul.midcom_toolbar li.last_item {
 	border: none;
 }
 
@@ -86,6 +79,11 @@ ul.midcom_toolbar_in_content {
 	border: none;
 	background: none;
 	padding: 7px 0px;
+}
+
+ul.midcom_toolbar_in_content li.enabled:hover, ul.midcom_toolbar_in_content li a:hover {
+	background: #DDDDDD;
+	text-decoration: none;
 }
 
 /* Define a toolbar class for the main AIS toolbar
