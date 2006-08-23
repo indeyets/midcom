@@ -2,7 +2,7 @@
 'purecode' => true,
 'privileges' =>  Array(),
 'class_definitions' => Array(),
-'version' => '2.0.5',
+'version' => '2.0.6',
 'state' => 'stable',
 'package.xml' => Array(
     'summary' => 'Email sending and decoding library',
@@ -15,6 +15,7 @@
         ),
     ),
     'dependencies' => Array(
+        'org.openpsa.helpers' => Array(),
         'Mail' => Array
         (
             'channel' => 'pear.php.net',

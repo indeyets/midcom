@@ -22,6 +22,9 @@ class org_openpsa_mail_interface extends midcom_baseclasses_components_interface
             'backends/mail_sendmail.php',
             'backends/bouncer.php',
         );
+        $this->_autoload_libraries = array(
+            'org.openpsa.helpers',
+        );
     }
     
     function _on_initialize()

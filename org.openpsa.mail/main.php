@@ -630,7 +630,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
      */
     function encode_subject()
     {
-        preg_match_all("/[^\x20-\x7e]/", $this->subject, $matches);
+        preg_match_all("/[^\x21-\x7e]/", $this->subject, $matches);
         if (count ($matches[0])>0) {
             $cache = array();
             $newSubj = $this->subject;
@@ -638,11 +638,14 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             {
                 $code = "=".dechex(ord($char));
                 $hex = str_pad(strtoupper(dechex(ord($char))),2,"0", STR_PAD_LEFT);
-                if (isset($cache[$hex])) continue;
-                    $newSubj = str_replace($char, " = $hex", $newSubj);
-                    $cache[$hex] = 1;
+                if (isset($cache[$hex]))
+                {
+                    continue;
+                }
+                $newSubj = str_replace($char, '=' . $hex, $newSubj);
+                $cache[$hex] = true;
             }
-            $this->subject = "=?".strtoupper($this->encoding)."?Q?".$newSubj."? = ";
+            $this->subject = '=?' . strtoupper($this->encoding) . '?Q?' . $newSubj . '?=';
         }
     }
 
@@ -693,12 +696,18 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             $this->headers = $mime->headers($this->headers);
         }
 
-        //Encode subject (if neccessary) and set Content-Type (if not set already)
+        // Encode subject (if neccessary) and set Content-Type (if not set already)
         $this->encode_subject();
         if (   !isset($this->headers['Content-Type'])
             || $this->headers['Content-Type'] == null)
         {
             $this->headers['Content-Type'] = "text/plain; charset={$this->encoding}";
+        }
+        // Set Mime-version if not set already
+        if (   !isset($this->headers['Mime-version'])
+            || $this->headers['Mime-version'] == null)
+        {
+            $this->headers['Mime-version'] = '1.0';
         }
         
         //Make sure we don't send any empty headers
