@@ -52,11 +52,15 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
      * @access private
      */
     var $_object = null;
+
     /**
-     * Pointer to the toolbars object.
-     * @access private
+     * The view toolbar for the current request context. Not available during the can_handle
+     * phase.
+     *
+     * @var midcom_helper_toolbar
+     * @see midcom_services_toolbars
      */
-    var $_toolbars = null; 
+    var $_view_toolbar = null;
 
     /**
      * The args that has been requested.
@@ -114,9 +118,43 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
             'handler' => array('no_bergfald_rcs_handler','restore'),
             'variable_args' => 3,
         );
+        
         return $request_switch;
         
-    }    
+    }
+    
+    /**
+     * Static method for determining if we should display a particular field
+     * in the diff or preview states
+     */
+    function is_field_showable($field)
+    {
+        switch ($field)
+        {
+            case '_topic':
+            case 'realm':
+            case 'guid':
+            case 'id':
+            case 'sitegroup':
+            case 'action':
+            case 'errno':
+            case 'errstr':
+            case 'revised':
+            case 'revisor':
+            case 'revision':
+            case 'created':
+            case 'creator':
+            case 'approved':
+            case 'approver':
+            case 'locked':
+            case 'locker':
+            case 'lang':
+            case 'sid':
+                return false;
+            default:
+                return true;
+        }
+    }
 
     /**
      * Load the text_diff libaries needed to show diffs.
@@ -124,7 +162,9 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
     function _on_initialize() 
     {
         // It is better to load this libraries here as the component isn't always loaded.
-        $_MIDCOM->load_library('midcom.helper.datamanager', 'midcom.helper.xml');    
+        $_MIDCOM->load_library('midcom.helper.datamanager', 'midcom.helper.xml');
+        
+        $this->_view_toolbar =& $_MIDCOM->toolbars->get_node_toolbar();
     }
     
     /**
@@ -139,7 +179,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         $class = str_replace('.', '_' , $this->_args[0]);
         $this->_request_data['source'] = $this->_source;
         
-        if (! $_MIDCOM->load_library($this->_args[0]) ) {
+        if (! $_MIDCOM->componentloader->load_graceful($this->_args[0]) ) {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Could not load component {$this->_args[0]}");
         }
 
@@ -196,16 +236,17 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
     /**
      * Call this after loading an object
      */
-    function _prepare_toolbars($revision = '') 
+    function _prepare_toolbars($revision = '', $diff_view = false) 
     {
         $this->_toolbars = &midcom_helper_toolbars::get_instance();
-        $this->_toolbars->top->add_item(
+        $this->_view_toolbar->add_item
+        (
             array
             (
                 MIDCOM_TOOLBAR_URL => "rcs/{$this->_source}/{$this->_guid}/",
-                MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('Show history'),
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('show history'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
         );
@@ -213,53 +254,68 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         {
             return;
         }
+        
         $before = $this->_backend->get_prev_version($revision);
         $before2 = $this->_backend->get_prev_version($before);
         $after  = $this->_backend->get_next_version($revision);
         
-        if ($before != '' &&$before2 != "") 
+        if (   $before != '' 
+            && $before2 != '') 
         {
-            $this->_toolbars->bottom->add_item(
+            if ($diff_view)
+            {
+                // When browsing diffs we want to display buttons to previous instead of current
+                $first = $before2;
+                $second = $before;
+            }
+            else
+            {
+                $first = $before;
+                $second = $revision;
+            }
+            
+            $this->_view_toolbar->add_item(
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "rcs/diff/{$this->_source}/{$this->_guid}/{$before2}/{$before}.html",
-                    MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_midcom->get("view %s differences with revision %s"), $before, $before2),
+                    MIDCOM_TOOLBAR_URL => "rcs/diff/{$this->_source}/{$this->_guid}/{$first}/{$second}.html",
+                    MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_midcom->get("view %s differences with previous (%s)"), $second, $first),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_left.png',
                     MIDCOM_TOOLBAR_ENABLED => true,
                 )
             );
         }
-        $this->_toolbars->bottom->add_item(
-            array
-            (
-                MIDCOM_TOOLBAR_URL => "rcs/restore/{$this->_source}/{$this->_guid}/{$revision}.html",
-                MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_midcom->get('restore this revision (%s)'), $revision),
-                MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('restore to this version'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
-                MIDCOM_TOOLBAR_ENABLED =>
-                (
-                    $_MIDCOM->auth->can_do('midgard:update', $this->_object)
-                )
-            )
-        );
-        $this->_toolbars->bottom->add_item(
+        
+        $this->_view_toolbar->add_item(
             array
             (
                 MIDCOM_TOOLBAR_URL => "rcs/preview/{$this->_source}/{$this->_guid}/{$revision}.html",
-                MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_midcom->get('preview this revision (%s)'), $revision),
+                MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_midcom->get('view this revision (%s)'), $revision),
                 MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('view the whole version'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/search.png',
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
         );
-        if ($after != '') 
+        
+        // Display restore and next buttons only if we're not in latest revision
+        if ($after != '')
         {
-            $this->_toolbars->bottom->add_item(
+            $this->_view_toolbar->add_item(
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "rcs/restore/{$this->_source}/{$this->_guid}/{$revision}.html",
+                    MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_midcom->get('restore this revision (%s)'), $revision),
+                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('restore to this version'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_task-recurring.png',
+                    MIDCOM_TOOLBAR_ENABLED => $this->_object->can_do('midgard:update'),
+                )
+            );
+
+            $this->_view_toolbar->add_item(
                 array
                 (
                     MIDCOM_TOOLBAR_URL => "rcs/diff/{$this->_source}/{$this->_guid}/{$revision}/{$after}.html",
-                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('view differences with next'),
+                    MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_midcom->get("view %s differences with next (%s)"), $revision, $after),
                     MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('view differences with the next newer version'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_right.png',
                     MIDCOM_TOOLBAR_ENABLED => true,
@@ -280,7 +336,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         $this->_load_object();
         
         // Disable the "Show history" button when we're at its view
-        $this->_toolbars->top->disable_item("rcs/{$this->_source}/{$this->_guid}/");
+        $this->_view_toolbar->disable_item("rcs/{$this->_source}/{$this->_guid}/");
         
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('no.bergfald.rcs');
@@ -333,10 +389,10 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('no.bergfald.rcs');        
         
-        if (!$this->_backend->version_exists($args[2])
-            || !$this->_backend->version_exists($args[3]) ) {
-                debug_add("One of the revisions {$args[2]} or  {$args[3]} does not exists. ");
-            return false;
+        if (   !$this->_backend->version_exists($args[2])
+            || !$this->_backend->version_exists($args[3]) ) 
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "One of the revisions {$args[2]} or {$args[3]} does not exist.");
         }
         
         if (!class_exists('Text_Diff')) 
@@ -363,7 +419,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
                 $this->_request_data['libs_ok'] = true;
         }    
         
-        $this->_prepare_toolbars($args[3]);        
+        $this->_prepare_toolbars($args[3], true);        
         $this->_request_data['diff'] = $this->_backend->get_diff($args[2], $args[3]);
         $this->_request_data['comment'] = $this->_backend->get_comment($args[3]);
                 
@@ -378,7 +434,8 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
     }
     function _show_diff() 
     {
-        if (!$this->_request_data['libs_ok']) {
+        if (!$this->_request_data['libs_ok']) 
+        {
             $this->_request_data['error'] = "You are missing the PEAR library Text_Diff that is needed to show diffs.";
             include ('style/bergfald-rcs-error.php');
             return;
@@ -396,31 +453,24 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         $this->_do_callbacks();
         $this->_load_object();
         
+        $this->_object->require_do('midgard:update');
+        // TODO: set another privilege for restoring?
+        
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('no.bergfald.rcs');        
         
         $this->_prepare_toolbars($args[2]);       
         
-        if ($this->_backend->version_exists($args[2]) && $this->_backend->restore_to_revision($args[2])) {
-            $this->_request_data['status'] = true;
-        } else {
-            $this->_request_data['status'] = false;
-        }
-        
-        return true;
-    }
-    function _show_restore()
-    {
-        if ($this->_request_data['status'] == false) 
+        if (   $this->_backend->version_exists($args[2]) 
+            && $this->_backend->restore_to_revision($args[2])) 
         {
-            $this->_request_data['message'] = $this->_l10n->get("Restore failed.");
-            $this->_request_data['message'] .= "<br/>" .$this->_backend->get_error(); 
+            $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('no.bergfald.rcs', 'no.bergfald.rcs'), sprintf($_MIDCOM->i18n->get_string('restore to version %s successful', 'no.bergfald.rcs'), $args[2]), 'ok');
+            $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($this->_object->guid));
         } 
         else 
         {
-            $this->_request_data['message'] = $this->_l10n->get("Restore sucessfull.");    
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, sprintf($_MIDCOM->i18n->get_string('restore to version %s failed, reason %s', 'no.bergfald.rcs'), $args[2], $this->_backend->get_error()));
         }
-        midcom_show_style('bergfald-rcs-restore');
     }
     
     /**

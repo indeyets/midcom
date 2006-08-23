@@ -22,12 +22,11 @@ else
         <table>
             <thead>
                 <tr>
-                    <th>Revision</th>
-                    <th>Date</th>
-                    <th>User</th>
-                    <th>Lines</th>
-                    <th>Message</th>
-                    <th></th>                    
+                    <th><?php echo $request_data['l10n']->get('revision'); ?></th>
+                    <th><?php echo $request_data['l10n']->get('date'); ?></th>
+                    <th><?php echo $request_data['l10n']->get('user'); ?></th>
+                    <th><?php echo $request_data['l10n']->get('lines'); ?></th>
+                    <th><?php echo $request_data['l10n']->get('message'); ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -35,14 +34,15 @@ else
     foreach ($history as $rev => $history) 
     {
         echo "                <tr>\n";
-        echo "                    <td>{$rev}</td>\n";
+        echo "                    <td><a href='{$prefix}rcs/preview/$source/$guid/$rev'>{$rev}</a></td>\n";
         echo "                    <td>".strftime('%x %X', $history['date'])."</td>\n";
         
         if ($history['user'])
         {
             $user = $_MIDCOM->auth->get_user($history['user']);
-            $user = $user->get_storage();
-            echo "                    <td>{$user->name}</td>\n";            
+            $person = $user->get_storage();
+            $user_card = new org_openpsa_contactwidget($person);
+            echo "                    <td>" . $user_card->show_inline() . "</td>\n";            
         }
         elseif ($history['ip'])
         {
@@ -53,8 +53,7 @@ else
             echo "                    <td></td>\n";            
         }
         echo "                    <td>{$history['lines']}</td>\n";                       
-        echo "                    <td>{$history['message']}</td>\n";        
-        echo "                    <td><a href='{$prefix}rcs/preview/$source/$guid/$rev'>Preview</td>\n";
+        echo "                    <td>{$history['message']}</td>\n";
         echo "                </tr>\n";
     }
     ?>

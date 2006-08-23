@@ -427,7 +427,7 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
     {
                       
         $mapper = new midcom_helper_xml_objectmapper();
-        
+
         return $mapper->data2array($data);        
         /*
         if (strpos($data, '<array>')) {

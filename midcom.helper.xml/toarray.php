@@ -108,13 +108,12 @@ class midcom_helper_xml_toarray
      */
     function _parse($xml)
     {
-        
         if ($xml == '') {
             $this->errstr = "Empty string. Nothing to parse.";
             return false;
         }
 
-        $this->_parser = xml_parser_create();
+        $this->_parser = xml_parser_create($_MIDCOM->i18n->get_current_charset());
         xml_set_object($this->_parser, $this);
         xml_set_element_handler($this->_parser, "_tag_open", "_tag_closed");
         xml_parser_set_option($this->_parser, XML_OPTION_CASE_FOLDING, 0);
@@ -122,15 +121,30 @@ class midcom_helper_xml_toarray
 
         $this->_push_pos(& $this->_output);
 
+        // Hide newlines from XML parser
+        $xml = str_replace("\n", 'MIDCOM_HELPER_XML_NEWLINE', $xml);
+
         $result = xml_parse($this->_parser, $xml);
         if (!$result)
         {
             $this->errstr = sprintf("XML error: %s at line %d", xml_error_string(xml_get_error_code($this->_parser)), xml_get_current_line_number($this->_parser));
             return false;
         }
-
         xml_parser_free($this->_parser);
-
+        
+        // Restore newlines from XML parsing
+        foreach ($this->_output as $type => $fields)
+        {
+            foreach ($fields as $field => $value)
+            {
+                if (   is_array($this->_output[$type][$field])
+                    && array_key_exists('_content', $this->_output[$type][$field]))
+                {
+                    $this->_output[$type][$field]['_content'] = str_replace('MIDCOM_HELPER_XML_NEWLINE', "\n", $value['_content']);
+                }
+            }
+        }
+        
         return $this->_output;
     }
     /**

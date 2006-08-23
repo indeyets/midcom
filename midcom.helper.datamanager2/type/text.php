@@ -83,6 +83,9 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
 
     function convert_to_storage()
     {
+        // Normalize line breaks to the UNIX format
+        $this->value = preg_replace("/\n\r|\r\n|\r/", "\n", $this->value);
+        
         return $this->value;
     }
 

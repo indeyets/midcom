@@ -80,7 +80,7 @@ class no_bergfald_rcs {
      * @return array array with the original value, the new value and a diff -u
      */
     
-    function get_diff ($latest_revison, $oldest_revision) 
+    function get_diff($oldest_revision, $latest_revison) 
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         
@@ -89,22 +89,32 @@ class no_bergfald_rcs {
         
         $return = array();
        
-        foreach ($oldest as $attribute => $oldest_value) {
+        foreach ($oldest as $attribute => $oldest_value) 
+        {
             
-            $return[$attribute] = array ('old' => $oldest_value, 'new' => $newest[$attribute]);
+            if (!array_key_exists($attribute, $newest))
+            {
+                continue;
+            }
+            
+            $return[$attribute] = array
+            (
+                'old' => $oldest_value, 
+                'new' => $newest[$attribute]
+            );
+            
             if ( $oldest_value != $newest[$attribute] ) {
                 if (class_exists('Text_Diff')) {
                 
                     $lines1 = explode ("\n", $oldest_value);
                     $lines2 = explode ("\n", $newest[$attribute]);
                 
-                
                     $diff = &new Text_Diff($lines1, $lines2);
                     
                     $renderer = &new Text_Diff_Renderer_unified();
                 
-                
-                    if (!$diff->isEmpty()) {
+                    if (!$diff->isEmpty()) 
+                    {
                         $return[$attribute]['diff'] = $renderer->render($diff);
                     }
                 } elseif (!is_null($GLOBALS['midcom_config']['utility_diff'])){

@@ -15,6 +15,7 @@
     ),  
     'dependencies' => Array(
         'midcom.helper.xml' => array(),
+        'org.openpsa.contactwidget' => array(),
         'Text_Diff' => array(
             'channel' => 'pear.php.net',
         ),
