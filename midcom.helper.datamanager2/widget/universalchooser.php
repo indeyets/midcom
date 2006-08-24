@@ -332,7 +332,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
             }
         }
 
-        debug_add('widget hashsource: ' . $hashsource);
+        debug_add('widget hashsource: (B64)' . base64_encode($hashsource));
         $searchconstraints_serialized .= '&hash=' . md5($hashsource);
         // Start a new group to not to clutter the values
         $elements2 = array();
