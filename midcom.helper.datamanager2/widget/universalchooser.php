@@ -96,6 +96,13 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
      * @var boolean
      */
     var $allow_create = false;
+    
+    /**
+     * Used as part of data for a hash the handler checks
+     *
+     * @var string (binary)
+     */
+    var $_shared_secret = null;
 
    /**
      * The initialization event handler verifies the correct type.
@@ -150,6 +157,17 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         {
             debug_add("Component {$this->component} does not have handler for creations, disallowing create", MIDCOM_LOG_WARN);
             $this->allow_create = false;
+        }
+
+        $key_snippet = mgd_get_snippet_by_path('/sitegroup-config/midcom.helper.datamanager2/widget_universalchooser_key');
+        if (   !is_object($key_snippet)
+            || empty($key_snippet->doc))
+        {
+            debug_add("Warning, cannot get shared secret (either not generated or error loading), try generating with /midcom-exec-midcom.helper.datamanager2/universalchooser_create_secret.php.", MIDCOM_LOG_WARN);
+        }
+        else
+        {
+            $this->_shared_secret = $key_snippet->doc;
         }
 
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/Javascript/Prototype/prototype.js');
@@ -279,6 +297,8 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         comes from universalchooser (or someone who A: is competent B: has access to the secret)
         */
 
+        $hashsource = $this->class . $this->idfield . $this->_shared_secret . $this->component;
+
         // Serialize the parameter we need in the search end
         $searchconstraints_serialized = "idsuffix={$idsuffix}";
         $serialize = array('component', 'class', 'titlefield', 'idfield', 'searchfields');
@@ -299,9 +319,10 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         }
         foreach ($this->constraints as $key => $data)
         {
-            $searchconstraints_serialized .= '&' . rawurlencode("constraints[{$key}]['field']") . '=' . rawurlencode($data['field']);
-            $searchconstraints_serialized .= '&' . rawurlencode("constraints[{$key}]['op']") . '=' . rawurlencode($data['op']);
-            $searchconstraints_serialized .= '&' . rawurlencode("constraints[{$key}]['value']") . '=' . rawurlencode($data['value']);
+            $hashsource .= $data['field'] . $data['op'] . $data['value'];
+            $searchconstraints_serialized .= '&' . rawurlencode("constraints[{$key}][field]") . '=' . rawurlencode($data['field']);
+            $searchconstraints_serialized .= '&' . rawurlencode("constraints[{$key}][op]") . '=' . rawurlencode($data['op']);
+            $searchconstraints_serialized .= '&' . rawurlencode("constraints[{$key}][value]") . '=' . rawurlencode($data['value']);
         }
         foreach ($this->orders as $key => $data)
         {
@@ -311,6 +332,8 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
             }
         }
 
+        debug_add('widget hashsource: ' . $hashsource);
+        $searchconstraints_serialized .= '&hash=' . md5($hashsource);
         // Start a new group to not to clutter the values
         $elements2 = array();
         // Hidden input for Ajax url

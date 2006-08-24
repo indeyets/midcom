@@ -19,12 +19,6 @@ $_MIDCOM->header('Content-type: text/xml; charset=' . $encoding);
 echo '<?xml version="1.0" encoding="' . $encoding . '" standalone="yes"?>' . "\n";
 echo "<response>\n";
 
-/*
-TODO: Add shared secret based hash checking to make sure the request actually
-comes from universalchooser (or someone who A: is competent B: has access to the secret)
-*/
-
-
 // Make sure we have search term
 if (!isset($_REQUEST['search']))
 {
@@ -37,7 +31,7 @@ if (!isset($_REQUEST['search']))
 $search = str_replace('*', '%', $_REQUEST['search']);
 
 // Get local copies of other variables from request
-$map = array('component', 'class', 'titlefield', 'idfield', 'searchfields', 'constraints', 'orders');
+$map = array('component', 'class', 'titlefield', 'idfield', 'searchfields', 'constraints', 'orders', 'hash');
 foreach ($map as $varname)
 {
     if (isset($_REQUEST[$varname]))
@@ -48,6 +42,49 @@ foreach ($map as $varname)
     {
         $$varname = false;
     }
+}
+
+// Get the shared secret
+$shared_secret = null;
+$key_snippet = mgd_get_snippet_by_path('/sitegroup-config/midcom.helper.datamanager2/widget_universalchooser_key');
+if (   !is_object($key_snippet)
+    || empty($key_snippet->doc))
+{
+    debug_add("Warning, cannot get shared secret (either not generated or error loading), try generating with /midcom-exec-midcom.helper.datamanager2/universalchooser_create_secret.php.", MIDCOM_LOG_WARN);
+}
+else
+{
+    $shared_secret = $key_snippet->doc;
+}
+
+$hashsource = $class . $idfield . $shared_secret . $component;
+if (is_array($constraints))
+{
+    ksort($constraints);
+    reset($constraints);
+    foreach ($constraints as $key => $data)
+    {
+        if (   !array_key_exists('field', $data)
+            || !array_key_exists('op', $data)
+            || !array_key_exists('value', $data)
+            )
+        {
+            debug_add("hashsource loop: Constraint #{$key} is not fully defined, skipping", MIDCOM_LOG_WARN);
+            continue;
+        }
+        $hashsource .= $data['field'] . $data['op'] . $data['value'];
+    }
+}
+
+debug_add('handler hashsource: (B64)' . base64_encode($hashsource));
+debug_add('given hash: ' . $hash . ', calculated: ' . md5($hashsource));
+if ($hash != md5($hashsource))
+{
+    echo "    <status>0</status>\n";
+    echo "    <errstr>Hash mismatch (if error persists contact system administrator)</errstr>\n";
+    echo "</response>\n";
+    $_MIDCOM->finish();
+    exit();
 }
 
 // Load component if required
@@ -87,18 +124,24 @@ if (   empty($titlefield)
 
 
 $qb = call_user_func(array($class, 'new_query_builder'));
+debug_print_r('constraints: ' , $constraints);
 if (is_array($constraints))
 {
-    foreach ($constraints as $data)
+    ksort($constraints);
+    reset($constraints);
+    foreach ($constraints as $key => $data)
     {
-        if (   !isset($data['field'])
-            || !isset($data['op'])
-            || !isset($data['value']))
+        if (   !array_key_exists('field', $data)
+            || !array_key_exists('op', $data)
+            || !array_key_exists('value', $data)
+            || empty($data['field'])
+            || empty($data['op'])
+            )
         {
-            debug_add('Constraint is not fully defined, skipping', MIDCOM_LOG_WARN);
+            debug_add("addconstraint loop: Constraint #{$key} is not correctly defined, skipping", MIDCOM_LOG_WARN);
             continue;
         }
-        debug_add("adding constraint: {$data['field']} {$data['op']} '{$data['value']}'");
+        debug_add("Adding constraint: {$data['field']} {$data['op']} '{$data['value']}'");
         $qb->add_constraint($data['field'], $data['op'], $data['value']);
     }
 }
@@ -113,6 +156,8 @@ $qb->end_group();
 
 if (is_array($orders))
 {
+    ksort($orders);
+    reset($orders);
     foreach ($orders as $data)
     {
         foreach($data as $field => $order)
@@ -140,7 +185,7 @@ echo "    <errstr></errstr>\n";
 echo "    <results>\n";
 foreach ($results as $object)
 {
-    // Silence to avoid notices breaking the XML in case of nonexisten field
+    // Silence to avoid notices breaking the XML in case of nonexistent field
     $id = @$object->$idfield;
     $title = @$object->$titlefield;
     debug_add("adding result: id={$id} title='{$title}'");
