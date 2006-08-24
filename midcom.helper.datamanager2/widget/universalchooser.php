@@ -145,6 +145,13 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
             return false;
         }
 
+        if (   $this->allow_create
+            && !$this->_check_create())
+        {
+            debug_add("Component {$this->component} does not have handler for creations, disallowing create", MIDCOM_LOG_WARN);
+            $this->allow_create = false;
+        }
+
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/Javascript/Prototype/prototype.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/universalchooser.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/protoGrowl.js');
@@ -165,6 +172,12 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
 
         debug_pop();
         return true;
+    }
+    
+    function _check_create()
+    {
+        $component_path = MIDCOM_ROOT . '/' . str_replace('.', '/', $this->component);
+        return file_exists($component_path . '/exec/universalchooser_createhandler.php');
     }
     
     function _check_class()
@@ -313,6 +326,19 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
                     'id' => "widget_universalchooser_search_{$idsuffix}_url",
                     )
             );
+        if ($this->allow_create)
+        {
+            $createurl = $root_node[MIDCOM_NAV_FULLURL] . "midcom-exec-{$this->component}/universalchooser_createhandler.php";
+            $elements2[] =& HTML_QuickForm::createElement
+                (
+                    'hidden',
+                    "widget_universalchooser_search_{$idsuffix}_createurl",
+                    $createurl,
+                    array(
+                        'id' => "widget_universalchooser_search_{$idsuffix}_createurl",
+                        )
+                );
+        }
 
         // Hidden input for mode
         $mode = 'single';

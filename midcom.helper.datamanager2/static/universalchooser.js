@@ -23,9 +23,12 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
         this.mode = false;
         this.search = false;
         this.url = false;
+        this.createurl = false;
         this.ajax_request = false;
+        this.ahah_request = false;
         this.input_element = false;
         this.results_ul = false;
+        this.results_div = false;
         this.fieldname = false;
         
         /* And get them values where applicable */
@@ -34,11 +37,16 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
         this.url = $F('widget_universalchooser_search_' + this.idsuffix + '_url');
         this.fieldname = $F('widget_universalchooser_search_' + this.idsuffix + '_fieldname');
         this.input_element = $('widget_universalchooser_search_' + this.idsuffix);
+        if (createurl_element = $('widget_universalchooser_search_' + this.idsuffix + '_createurl'))
+        {
+            this.createurl = createurl_element.value;
+        }
 
         /* Create our results div */        
         label_id = $F('widget_universalchooser_search_' + this.idsuffix + '_labelid');
-        new Insertion.After(label_id, '<ul id="widget_universalchooser_search_results_' + this.idsuffix +'" style="display: block;" class="universalchooser_search_results hidden"></ul>');
+        new Insertion.After(label_id, '<div id="widget_universalchooser_search_resultscontainer_' + this.idsuffix +'" class="universalchooser_search_resultscontainer hidden"><ul id="widget_universalchooser_search_results_' + this.idsuffix +'" style="display: block;" class="universalchooser_search_results"></ul></div>');
         this.results_ul = $('widget_universalchooser_search_results_' + this.idsuffix);
+        this.results_div = $('widget_universalchooser_search_resultscontainer_' + this.idsuffix); 
     },
 
     create_element: function(name, attrs, style, text)
@@ -101,13 +109,29 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
             onFailure: this.ajax_failure.bind(this), 
             onException: this.ajax_exception.bind(this),
         });
+        /* If we have createurl set, fetch it on the background as well */
+        if (this.createurl)
+        {
+            get_createurl = this.createurl + '?' + this.constraints + '&search=' + this.search;
+            if (!$('widget_universalchooser_search_createcontainer_' + this.idsuffix))
+            {
+                new Insertion.Bottom(this.results_div, '<div class="universalchooser_search_createcontainer" id="widget_universalchooser_search_createcontainer_' + this.idsuffix +'" ></div>');
+            }
+            this.ahah_request = new Ajax.Updater(
+                'widget_universalchooser_search_createcontainer_' + this.idsuffix,
+                get_createurl,
+                {
+                    method: 'get',
+                });
+        }
         // For some reason the DM2 field focus screws our class tricks for changing background, figure out why then remove this
         //this.input_element.blur();
     },
     
     clear_old_results: function()
     {
-        Element.addClassName(this.results_ul, 'hidden');
+        /* Element.addClassName(this.results_ul, 'hidden'); */
+        Element.addClassName(this.results_div, 'hidden');
         if (   this.results_ul
             && this.results_ul.hasChildNodes
             && this.results_ul.removeChild)
@@ -132,7 +156,8 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
         Element.addClassName(this.input_element, 'universalchooser_search_ok');
         /* Display lines in result */
         results = request.responseXML.getElementsByTagName('line');
-        Element.removeClassName(this.results_ul, 'hidden');
+        /* Element.removeClassName(this.results_ul, 'hidden'); */
+        Element.removeClassName(this.results_div, 'hidden');
         if (results.length < 1)
         {
             no_results = this.create_element('li', null, false, 'no results');
