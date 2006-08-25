@@ -139,16 +139,6 @@
             'type' => 'text',
             'widget' => 'text',
         ),
-        'homepage' => Array
-        (
-            'title' => 'homepage',
-            'description' => '',
-            'helptext' => '',
-
-            'storage' => 'homepage',
-            'type' => 'text',
-            'widget' => 'text',
-        ),
         'email' => Array
         (
             'title' => 'email',
@@ -166,16 +156,6 @@
             'helptext' => '',
 
             'storage' => 'workphone',
-            'type' => 'text',
-            'widget' => 'text',
-        ),
-        'mobilephone' => Array
-        (
-            'title' => 'mobilephone',
-            'description' => '',
-            'helptext' => '',
-
-            'storage' => 'mobilephone',
             'type' => 'text',
             'widget' => 'text',
         ),
