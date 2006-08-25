@@ -587,7 +587,9 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         $open_amount = $this->price - $this->invoiced;
         if ($sum > $open_amount)
         {
-            return false;
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
+                "The amount you're trying to invoice ({$sum}) exceeds the open amount of the deliverable ({$open_amount}). Please edit deliverable.");
+            // This will exit.
         }
         
         // Generate org.openpsa.invoices invoice

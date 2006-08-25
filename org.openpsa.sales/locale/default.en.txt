@@ -11,6 +11,10 @@
 %s cycles, %s - %s
 ---STRINGEND
 
+---STRING %s%% of %s
+%s%% of %s
+---STRINGEND
+
 ---STRING active
 Active
 ---STRINGEND
@@ -29,6 +33,10 @@ calculation basis
 
 ---STRING contacts
 Contacts
+---STRINGEND
+
+---STRING continuous subscription
+Continuous subscription
 ---STRINGEND
 
 ---STRING cost
@@ -203,7 +211,7 @@ Weighted value
 Won
 ---STRINGEND
 
----STRING %s%% of %s
-%s%% of %s
+---STRING canceled
+Canceled
 ---STRINGEND
 

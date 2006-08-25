@@ -1,6 +1,6 @@
 'name' => 'org.openpsa.sales',
 'purecode' => false,
-'version' => '1.1.0',
+'version' => '1.1.1',
 'class_definitions' => Array('midcom_dba_classes.inc'),
 'privileges' =>  Array(),
 'package.xml' => Array(

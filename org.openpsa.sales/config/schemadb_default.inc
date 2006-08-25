@@ -28,6 +28,7 @@
             'widget_select_choices' => array
             (
                 ORG_OPENPSA_SALESPROJECTSTATUS_ACTIVE   => 'active',
+                ORG_OPENPSA_SALESPROJECTSTATUS_CANCELED => 'canceled',
                 ORG_OPENPSA_SALESPROJECTSTATUS_LOST     => 'lost',
                 ORG_OPENPSA_SALESPROJECTSTATUS_WON      => 'won',
             ),

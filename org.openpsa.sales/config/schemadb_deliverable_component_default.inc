@@ -85,6 +85,13 @@
             'widget'  => 'text',
             'readonly' => true,
         ),
+        'purchase_ok' => Array
+        (
+            'title'   => 'purchase invoice',
+            'storage' => 'parameter',
+            'type'    => 'boolean',
+            'widget'  => 'checkbox',
+        ),
     )
 ),
 'subscription' => array

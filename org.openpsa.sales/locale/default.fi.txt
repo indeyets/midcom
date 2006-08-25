@@ -11,6 +11,10 @@
 %s kautta, %s - %s
 ---STRINGEND
 
+---STRING %s%% of %s
+%s%% %s:sta
+---STRINGEND
+
 ---STRING active
 Käynnissä
 ---STRINGEND
@@ -29,6 +33,10 @@ Laskutapa
 
 ---STRING contacts
 Yhteyshenkilöt
+---STRINGEND
+
+---STRING continuous subscription
+Tilaus toistaiseksi
 ---STRINGEND
 
 ---STRING cost
@@ -203,7 +211,7 @@ Painotettu arvo
 Voitettu
 ---STRINGEND
 
----STRING %s%% of %s
-%s%% %s:sta
+---STRING canceled
+Peruuntunut
 ---STRINGEND
 

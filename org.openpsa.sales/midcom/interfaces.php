@@ -55,6 +55,7 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
         define('ORG_OPENPSA_OBTYPE_SALESPROJECT_MEMBER', 10500);
         //org.openpsa.sales salesproject statuses
         define('ORG_OPENPSA_SALESPROJECTSTATUS_LOST', 11000);
+        define('ORG_OPENPSA_SALESPROJECTSTATUS_CANCELED', 11001);
         define('ORG_OPENPSA_SALESPROJECTSTATUS_ACTIVE', 11050);
         define('ORG_OPENPSA_SALESPROJECTSTATUS_WON', 11100);
         //org.openpsa.sales salesproject deliverable statuses

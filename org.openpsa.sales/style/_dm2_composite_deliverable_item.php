@@ -11,5 +11,11 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             <td>&(view['units']:h);</td>
             <td>&(view['price']:h);</td>
             <td>&(view['cost']:h);</td>
+            <td><?php
+                if (array_key_exists('purchase_ok', $view))
+                {
+                    echo $view['purchase_ok'];
+                }
+            ?></td>
             <!-- TODO: Show supplier, etc -->
         </tr>
