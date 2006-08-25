@@ -1,6 +1,6 @@
 'name' => 'org.openpsa.sales',
 'purecode' => false,
-'version' => '1.0.1',
+'version' => '1.1.0',
 'class_definitions' => Array('midcom_dba_classes.inc'),
 'privileges' =>  Array(),
 'package.xml' => Array(
@@ -8,6 +8,11 @@
     'description' => 'Sales process manager',
     'maintainers' => Array(
         'bergie' => Array(
+            'name' => 'Henri Bergius',
+            'email' => 'henri.bergius@iki.fi',
+            'role' => 'lead',
+        ),
+        'rambo' => Array(
             'name' => 'Eero af Heurlin',
             'email' => 'eero.afheurlin@iki.fi',
             'role' => 'lead',
