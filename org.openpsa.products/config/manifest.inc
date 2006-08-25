@@ -1,7 +1,6 @@
 'name' => 'org.openpsa.products',
 'purecode' => false,
-'version' => '0.0.1',
-'state' => 'stable',
+'version' => '0.0.2',
 'privileges' =>  Array(),
 'class_definitions' => Array('midcom_dba_classes.inc'),
 /**
