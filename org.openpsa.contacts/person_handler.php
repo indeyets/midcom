@@ -506,8 +506,8 @@ class org_openpsa_contacts_person_handler
 
                 if ($this->_request_data['person']->email)
                 {
-                    // Email address is the default username
-                    $this->_request_data['default_username'] = $this->_request_data['person']->email;
+                    // Email address (first part) is the default username
+                    $this->_request_data['default_username'] = preg_replace('/@.*/', '', $this->_request_data['person']->email);
                 }
                 else
                 {

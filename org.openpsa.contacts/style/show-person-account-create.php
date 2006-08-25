@@ -15,6 +15,8 @@ $view_data =& $GLOBALS['midcom']->get_custom_context_data('request_data');
                 <input type="text" name="org_openpsa_contacts_person_account_password" id="org_openpsa_contacts_person_account_password" class="shorttext" value="&(view_data["default_password"]);" maxlength="11" />
             </label>
         </fieldset>
-        <div class="form_toolbar">            <input type="submit" name="midcom_helper_datamanager_submit" class="save" value="<?php echo $view_data['l10n_midcom']->get("save"); ?>" />        </div>
+        <div class="form_toolbar">
+            <input type="submit" name="midcom_helper_datamanager_submit" class="save" value="<?php echo $view_data['l10n_midcom']->get("save"); ?>" />
+        </div>
     </form>
 </div>
