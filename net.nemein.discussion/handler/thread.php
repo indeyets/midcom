@@ -22,7 +22,6 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
     function net_nemein_discussion_handler_thread()
     {
         parent::midcom_baseclasses_components_handler();
-        $this->_toolbars =& midcom_helper_toolbars::get_instance();
     }
 
     /**
@@ -62,7 +61,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
     
     function _handler_thread($handler_id, $args, &$data)
     {
-        $this->_toolbars->bottom->add_item(
+        $this->_view_toolbar->add_item(
             array
             (
                 MIDCOM_TOOLBAR_URL => "",
@@ -72,7 +71,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
                 MIDCOM_TOOLBAR_ENABLED =>  true,
             )
         );
-        $this->_toolbars->top->add_item(
+        $this->_node_toolbar->add_item(
             array
             (
                 MIDCOM_TOOLBAR_URL => 'post.html',

@@ -245,8 +245,8 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                 }
                 
                 // Index the article
-                //$indexer =& $_MIDCOM->get_service('indexer');
-                //net_nemein_discussion_viewer::index($this->_controller->datamanager, $indexer, $this->_thread);
+                $indexer =& $_MIDCOM->get_service('indexer');
+                net_nemein_discussion_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
 
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "read/{$this->_post->guid}.html");
                 // This will exit.
@@ -304,13 +304,13 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
         {
             case 'save':
                 // Index the article
-                //$indexer =& $_MIDCOM->get_service('indexer');
-                //net_nemein_discussion_viewer::index($this->_controller->datamanager, $indexer, $this->_thread);
+                $indexer =& $_MIDCOM->get_service('indexer');
+                net_nemein_discussion_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
 
                 // *** FALL THROUGH ***
 
             case 'cancel':
-                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "read/{$this->_post->guid}.html");
+                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "read/{$this->_parent_post->guid}.html");
                 // This will exit.
         }
 

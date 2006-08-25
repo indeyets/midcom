@@ -10,6 +10,7 @@
             'required' => false,
             'type' => 'text',
             'widget' => 'text',
+            'index_method' => 'title',
         ),        
         'sendername' => Array
         (
@@ -19,6 +20,7 @@
             'required' => true,
             'type' => 'text',
             'widget' => 'text',
+            'index_method' => 'author',
         ),
         'senderemail' => Array
         (
@@ -27,6 +29,7 @@
             'hidden' => true,
             'type' => 'text',
             'widget' => 'text',
+            'index_method' => 'noindex',
         ),
         'content' => Array
         (

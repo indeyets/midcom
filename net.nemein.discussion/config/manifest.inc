@@ -1,7 +1,7 @@
 'name' => 'net.nemein.discussion',
 'purecode' => false,
-'version' => '2.0.0beta1',
-'state'   => 'devel',
+'version' => '2.0.0beta2',
+'state'   => 'beta',
 'privileges' =>  Array
 (
 	'moderation' => MIDCOM_PRIVILEGE_DENY, 
@@ -17,10 +17,11 @@
             'role' => 'lead',
         ),
     ),
-    'dependencies' => Array(
+    'dependencies' => Array
+    (
         'midcom.helper.datamanager2' => Array(),
         'de.bitfolge.feedcreator' => Array(),
         'org.openpsa.qbpager' => Array(),
-	'net.nehmer.markdown' => Array(),
+        'net.nehmer.markdown' => Array(),
     ),
 ),

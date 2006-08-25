@@ -58,47 +58,40 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
      */
     function _on_reindex($topic, $config, &$indexer)
     {
-        if (is_null($config->get('symlink_topic')))
+        $thread_qb = net_nemein_discussion_thread_dba::new_query_builder();
+        $thread_qb->add_constraint('node', '=', $topic->id);
+        $threads = $thread_qb->execute();
+        
+        $qb = net_nemein_discussion_post_dba::new_query_builder();
+        $qb->begin_group('OR');
+        foreach ($threads as $thread)
         {
-            $thread_qb = net_nemein_discussion_thread_dba::new_query_builder();
-            $thread_qb->add_constraint('node', '=', $topic->id);
-            $threads = $qb->execute();
-            
-            $qb = net_nemein_discussion_post_dba::new_query_builder();
-            $qb->begin_group('OR');
-            foreach ($threads as $thread)
+            $qb->add_constraint('thread', '=', $thread->id);
+        }
+        $qb->end_group();
+        $posts = $qb->execute();
+        
+        if ($posts)
+        {
+            $schemadb = midcom_helper_datamanager2_schema::load_database($config->get('schemadb'));
+            $datamanager = new midcom_helper_datamanager2_datamanager($schemadb);
+            if (! $datamanager)
             {
-                $qb->add_constraint('thread', '=', $thread->id);
+                debug_add('Warning, failed to create a datamanager instance with this schemapath:' . $config->get('schemadb'),
+                    MIDCOM_LOG_WARN);
+                continue;
             }
-            $qb->end_group();
-            $posts = $qb->execute();
-            
-            if ($posts)
+
+            foreach ($posts as $post)
             {
-                $schemadb = midcom_helper_datamanager2_schema::load_database($config->get('schemadb'));
-                $datamanager = new midcom_helper_datamanager2_datamanager($schemadb);
-                if (! $datamanager)
+                if (! $datamanager->autoset_storage($post))
                 {
-                    debug_add('Warning, failed to create a datamanager instance with this schemapath:' . $config->get('schemadb'),
-                        MIDCOM_LOG_WARN);
+                    debug_add("Warning, failed to initialize datamanager for Post {$post->id}. Skipping it.", MIDCOM_LOG_WARN);
                     continue;
                 }
 
-                foreach ($posts as $post)
-                {
-                    if (! $datamanager->autoset_storage($post))
-                    {
-                        debug_add("Warning, failed to initialize datamanager for Post {$post->id}. Skipping it.", MIDCOM_LOG_WARN);
-                        continue;
-                    }
-
-                    net_nehmer_static_viewer::index($datamanager, $indexer, $topic);
-                }
+                net_nemein_discussion_viewer::index($datamanager, $indexer, $topic);
             }
-        }
-        else
-        {
-            debug_add("The topic {$topic->id} is symlinked to another topic, skipping indexing.");
         }
 
         debug_pop();

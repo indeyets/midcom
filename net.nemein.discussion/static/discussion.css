@@ -1,41 +1,7 @@
-/* Comment display in thread */
-div.net_nemein_discussion_thread ol
-{
-    padding: 0px;
-    margin: 0px;
-}
-div.net_nemein_discussion_thread li.mfcomment
-{    border-top: 1px dotted #999;    padding-top: 12px;
-    margin-top: 12px;
-    padding-left: 22px;    background-image: url("stock-discussion.png");
-    background-repeat: no-repeat;
-    background-position: 0px 12px;    list-style: none;}
-div.net_nemein_discussion_thread li.mfcomment h2.subject
-{
-    margin-top: 0px;
-}
-div.net_nemein_discussion_thread li.mfcomment abbr.dtcommented,
-div.net_nemein_discussion_thread li.mfcomment span.commenter
-{    color: #777;
-    border-bottom: none;}
+div.net_nemein_discussion_index div.new-thread {  padding-left: 22px;  font-weight: bold;  background: url("stock_new-discussion-thread.png") no-repeat;}div.net_nemein_discussion_index div.thread h2, div.net_nemein_discussion_thread h2.comment_title, ul.net_nemein_discussion_replylist li {  padding-left: 22px;  background: url("stock-discussion.png") no-repeat;}div.net_nemein_discussion_index div.thread div.posts, div.net_nemein_discussion_index div.thread div.latest_post {  margin-left: 32px;  margin-top: 2px;}div.net_nemein_discussion_thread div.comment {  border-top: 1px dotted #999;  padding-top: 12px;}div.net_nemein_discussion_thread div.comment h2.comment_title {  margin-top: 2px;
+  padding-top: 0px;}
 
-/* Comment's toolbar */
-div.net_nemein_discussion_thread li.mfcomment ul.midcom_toolbar
-{
-    margin: 0px;
-    padding: 0px;
-}
-div.net_nemein_discussion_thread li.mfcomment ul.midcom_toolbar li
-{
-    border-left: solid 1px #000000;    display: inline;    padding: 0 0.5em;    white-space: nowrap;
-}
-div.net_nemein_discussion_thread li.mfcomment ul.midcom_toolbar li.first_child{    border: none;}
-div.net_nemein_discussion_thread li.mfcomment ul.midcom_toolbar li.disabled{    display: none;}
-div.net_nemein_discussion_thread li.mfcomment ul.midcom_toolbar li a img{    border: none;}
-
-/*
-div.net_nemein_discussion_index div.new-thread {  padding-left: 22px;  font-weight: bold;  background: url("stock_new-discussion-thread.png") no-repeat;
-  min-height: 18px;}div.net_nemein_discussion_index div.thread h2, div.net_nemein_discussion_thread h2.comment_title, ul.net_nemein_discussion_replylist li {  padding-left: 22px;  background: url("stock-discussion.png") no-repeat;}div.net_nemein_discussion_index div.thread div.posts, div.net_nemein_discussion_index div.thread div.latest_post {  margin-left: 32px;  margin-top: 2px;}
+div.net_nemein_discussion_thread div.comment_posted, div.net_nemein_discussion_index div.posts, div.net_nemein_discussion_index div.latest_post, ul.net_nemein_discussion_replylist li span.comment_posted {  font-size: 9px;  color: #777;}
 
 div.net_nemein_discussion_thread div.writecomment, div.net_nemein_discussion_new_thread {
   padding: 7px;
@@ -48,7 +14,7 @@ div.net_nemein_discussion_thread div.writecomment h2 {
   padding-top: 0px;
 }
 
-div.net_nemein_discussion_thread li.mfcomment_toolbar ul, div.net_nemein_discussion_thread div.thread_toolbar ul, ul.net_nemein_discussion_replylist {
+div.net_nemein_discussion_thread div.comment_toolbar ul, div.net_nemein_discussion_thread div.thread_toolbar ul, ul.net_nemein_discussion_replylist {
   margin-left: 0px;
   padding-left: 0px;
 }
@@ -57,11 +23,10 @@ ul.net_nemein_discussion_replylist li {
   list-style: none;
 }
 
-div.net_nemein_discussion_thread li.mfcomment_toolbar li, div.net_nemein_discussion_thread div.thread_toolbar li {  display: inline;  list-style: none;  padding: 0px 0.4em 0px 0.7em;  margin: 3px 0;  white-space: nowrap !important;}
-div.net_nemein_discussion_thread li.mfcomment_toolbar li a, div.net_nemein_discussion_thread div.thread_toolbar li a {
+div.net_nemein_discussion_thread div.comment_toolbar li, div.net_nemein_discussion_thread div.thread_toolbar li {  display: inline;  list-style: none;  padding: 0px 0.4em 0px 0.7em;  margin: 3px 0;  white-space: nowrap !important;}
+div.net_nemein_discussion_thread div.comment_toolbar li a, div.net_nemein_discussion_thread div.thread_toolbar li a {
   text-decoration: none;
 }
-div.net_nemein_discussion_thread li.mfcomment_toolbar li img, div.net_nemein_discussion_thread div.thread_toolbar li img {
+div.net_nemein_discussion_thread div.comment_toolbar li img, div.net_nemein_discussion_thread div.thread_toolbar li img {
   border: 0px;
 }
-*/
