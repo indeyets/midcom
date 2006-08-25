@@ -131,7 +131,7 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
      */
     function index(&$dm, &$indexer, $topic)
     {
-        if (is_object($topic))
+        if (!is_object($topic))
         {
             $tmp = new midcom_db_topic($topic);
             if (! $tmp)
