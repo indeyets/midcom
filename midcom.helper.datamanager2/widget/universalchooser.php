@@ -291,12 +291,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
             }
         }
 
-
-        /*
-        TODO: Add shared secret based hash creation (checked in handler end) to make sure the request actually
-        comes from universalchooser (or someone who A: is competent B: has access to the secret)
-        */
-
+        // Create a hash of our constraints with a shared secret thrown in (to avoid leaking data outside the widget)
         $hashsource = $this->class . $this->idfield . $this->_shared_secret . $this->component;
 
         // Serialize the parameter we need in the search end
@@ -336,10 +331,12 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         $searchconstraints_serialized .= '&hash=' . md5($hashsource);
         // Start a new group to not to clutter the values
         $elements2 = array();
+
         // Hidden input for Ajax url
         $nav = new midcom_helper_nav();
         $root_node = $nav->get_node($nav->get_root_node());
         $url = $root_node[MIDCOM_NAV_FULLURL] . 'midcom-exec-midcom.helper.datamanager2/universalchooser_handler.php';
+        
         $elements2[] =& HTML_QuickForm::createElement
             (
                 'hidden',
@@ -425,8 +422,10 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
             );
 
         $group =& $this->_form->addGroup($elements, $this->name, $this->_translate($this->_field['title']), "<br />");
-        $group2 =& $this->_form->addGroup($elements2, $this->name . '_universalchooser_' . $idsuffix, '', '');
+        /* PONDER: Why if the ones in elements2 are put to elements they all get value set to '2' ?? */
+        $group2 =& $this->_form->addGroup($elements2, $this->name . '_universalchooser_' . $idsuffix, '', '', array('class' => 'universalchooser_searchinput'));
         $group2->setAttributes(Array('class' => 'midcom_helper_datamanager2_widget_universalchooser'));
+
         if ($this->_type->allow_multiple)
         {
             $group->setAttributes(Array('class' => 'radiobox'));

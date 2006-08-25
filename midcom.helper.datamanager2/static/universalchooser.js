@@ -45,6 +45,7 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
         /* Create our results div */        
         label_id = $F('widget_universalchooser_search_' + this.idsuffix + '_labelid');
         new Insertion.After(label_id, '<div id="widget_universalchooser_search_resultscontainer_' + this.idsuffix +'" class="universalchooser_search_resultscontainer hidden"><ul id="widget_universalchooser_search_results_' + this.idsuffix +'" style="display: block;" class="universalchooser_search_results"></ul></div>');
+        new Insertion.After(this.input_element, '<div id="widget_universalchooser_search_resultscontainer_' + this.idsuffix +'" class="universalchooser_search_resultscontainer hidden"><ul id="widget_universalchooser_search_results_' + this.idsuffix +'" style="display: block;" class="universalchooser_search_results"></ul></div>');
         this.results_ul = $('widget_universalchooser_search_results_' + this.idsuffix);
         this.results_div = $('widget_universalchooser_search_resultscontainer_' + this.idsuffix); 
     },
@@ -240,10 +241,9 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
                 html += '<input type="checkbox" id="' + input_id + '" value="1" name="' + input_name + '" class="checkbox" />\n';
                 break;
         }
-        html += '<label for="' + input_id + '">' + title + '</label>\n<br/>\n';
+        html += '<label for="' + input_id + '">' + title + '</label>\n';
         
-        //new Insertion.After(this.fieldname + '_label', html);
-        new Insertion.Before(this.input_element, html)
+        new Insertion.Bottom(this.fieldname + '_fieldset', html)
         input_element = $(input_id);
         input_element.click();
     },
