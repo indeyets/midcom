@@ -8,6 +8,10 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 <table>
     <tbody>
         <tr>
+            <td><?php echo $data['l10n']->get('product group'); ?></td>
+            <td>&(view['productGroup']:h);</td>
+        </tr>
+        <tr>
             <td><?php echo $data['l10n']->get('delivery type'); ?></td>
             <td>&(view['delivery']:h);</td>
         </tr>

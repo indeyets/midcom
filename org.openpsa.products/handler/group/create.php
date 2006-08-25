@@ -88,6 +88,8 @@ class org_openpsa_products_handler_group_create extends midcom_baseclasses_compo
         $qb->add_constraint('up', '=', $this->_request_data['up']);
         $existing_groups = $qb->count_unchecked();
         $this->_defaults['code'] = $existing_groups + 1;
+
+        $this->_defaults['up'] = $this->_request_data['up'];
     }
 
     /**

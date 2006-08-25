@@ -47,6 +47,10 @@ kuukausi
 Tuotetietokanta
 ---STRINGEND
 
+---STRING parent group
+Ylempi ryhmä
+---STRINGEND
+
 ---STRING per unit
 per kappale
 ---STRINGEND
@@ -65,6 +69,10 @@ Hinta
 
 ---STRING product
 Tuote
+---STRINGEND
+
+---STRING product components
+Tuotteen komponentit
 ---STRINGEND
 
 ---STRING product database
@@ -107,7 +115,7 @@ Yksikkö
 vuosi
 ---STRINGEND
 
----STRING product components
-Tuotteen komponentit
+---STRING toplevel
+Päätaso
 ---STRINGEND
 

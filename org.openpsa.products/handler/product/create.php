@@ -55,6 +55,14 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
     var $_defaults = Array();
 
     /**
+     * Simple default constructor.
+     */
+    function org_openpsa_products_handler_product_create()
+    {
+        parent::midcom_baseclasses_components_handler();
+    }
+    
+    /**
      * Simple helper which references all important members to the request data listing
      * for usage within the style listing.
      */
@@ -66,27 +74,16 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
         $this->_request_data['schemadb'] =& $this->_schemadb;
     }
 
-
-    /**
-     * Simple default constructor.
-     */
-    function org_openpsa_products_handler_product_create()
-    {
-        parent::midcom_baseclasses_components_handler();
-    }
-
     /**
      * Loads and prepares the schema database.
-     *
-     * Special treatement is done for the name field, which is set readonly for non-creates
-     * if the simple_name_handling config option is set. (using an auto-generated urlname based
-     * on the title, if it is missing.)
      *
      * The operations are done on all available schemas within the DB.
      */
     function _load_schemadb()
     {
         $this->_schemadb =& $this->_request_data['schemadb_product'];
+        
+        $this->_defaults['productGroup'] = $this->_request_data['up'];
     }
 
     /**
@@ -115,7 +112,7 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
     function & dm2_create_callback (&$controller)
     {
         $this->_product = new org_openpsa_products_product_dba();
-        $this->_product->productGroup = $this->_request_data['up'];
+        //$this->_product->productGroup = $this->_request_data['up'];
 
         if (! $this->_product->create())
         {

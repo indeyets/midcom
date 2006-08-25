@@ -47,6 +47,10 @@ month
 Product database
 ---STRINGEND
 
+---STRING parent group
+Parent group
+---STRINGEND
+
 ---STRING per unit
 per unit
 ---STRINGEND
@@ -65,6 +69,10 @@ Price
 
 ---STRING product
 Product
+---STRINGEND
+
+---STRING product components
+Product components
 ---STRINGEND
 
 ---STRING product database
@@ -107,7 +115,7 @@ Unit
 year
 ---STRINGEND
 
----STRING product components
-Product components
+---STRING toplevel
+Top level
 ---STRINGEND
 

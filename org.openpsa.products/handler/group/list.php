@@ -142,8 +142,15 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
                 );
             }
         }
-    
-    
+        
+        if ($this->_request_data['group'])
+        {
+            $this->_request_data['controller'] =& midcom_helper_datamanager2_controller::create('ajax');
+            $this->_request_data['controller']->schemadb =& $this->_request_data['schemadb_group'];
+            $this->_request_data['controller']->set_storage($this->_request_data['group']);
+            $this->_request_data['controller']->process_ajax();
+        }
+        
         /***
          * Set the breadcrumb text
          */
@@ -159,8 +166,13 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
      * This function does the output.
      *  
      */
-    function _show_list() {
-        // hint: look in the style/group_list.php file to see what happens here.
+    function _show_list() 
+    {
+        if ($this->_request_data['group'])
+        {
+            $this->_request_data['view_group'] = $this->_request_data['controller']->get_content_html();
+        }
+        
         midcom_show_style('group_list');
     }
     

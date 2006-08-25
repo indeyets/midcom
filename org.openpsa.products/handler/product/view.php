@@ -23,14 +23,6 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
     var $_product = null;
 
     /**
-     * The Datamanager of the product to display.
-     *
-     * @var midcom_helper_datamanager2_datamanager
-     * @access private
-     */
-    var $_datamanager = null;
-
-    /**
      * Simple helper which references all important members to the request data listing
      * for usage within the style listing.
      */

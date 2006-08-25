@@ -21,6 +21,17 @@
             'type' => 'text',
             'widget'  => 'text',
         ),
+        'productGroup' => Array
+        (
+            'title' => 'product group',
+            'storage' => 'productGroup',
+            'type' => 'select',
+            'type_config' => Array
+            (
+                'options' => org_openpsa_products_product_group_dba::list_groups(),
+            ),
+            'widget' => 'select',
+        ),
         'price' => Array
         (
             'title' => 'price',
@@ -147,10 +158,11 @@
             'type' => 'composite',
             'type_config' => Array
             (
-                'child_class' => 'org_openpsa_products_product_member_dba',
-                'child_schemadb' => 'file:/org/openpsa/products/config/schemadb_member_default.inc',
+                'child_class'                 => 'org_openpsa_products_product_member_dba',
+                'child_schemadb'              => 'file:/org/openpsa/products/config/schemadb_member_default.inc',
                 'child_foreign_key_fieldname' => 'product',
-                'style_element_name' => 'component',
+                'style_element_name'          => 'component',
+                'area_element'                => 'tr',
             ),
             'widget' => 'composite',
         ),    
