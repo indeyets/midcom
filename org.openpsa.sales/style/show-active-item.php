@@ -5,6 +5,7 @@ $view_data['salesproject_url'] = "{$prefix}salesproject/{$view_data['salesprojec
 $view_data['owner_widget'] = new org_openpsa_contactwidget($view_data['owner']);
 ?>
 <tr>
+    <td><?php echo "<a href=\"{$view_data['salesproject_url']}\">{$view_data['salesproject']->title}</a>"; ?></td>
     <td><?php
         if ($view_data['customer'])
         {
@@ -23,7 +24,6 @@ $view_data['owner_widget'] = new org_openpsa_contactwidget($view_data['owner']);
         }
         ?></td>
     <td><?php echo $view_data['owner_widget']->show_inline(); ?>
-    <td><?php echo "<a href=\"{$view_data['salesproject_url']}\">{$view_data['salesproject']->title}</a>"; ?></td>
     <td><?php   
         if ($view_data['salesproject_dmdata']['close_est']['timestamp'])
         {

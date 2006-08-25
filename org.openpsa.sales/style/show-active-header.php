@@ -8,9 +8,9 @@ $view_data =& $_MIDCOM->get_custom_context_data('request_data');
     <table id="org_openpsa_sales_activeprojects">
         <thead>
             <tr>
+                <?php echo org_openpsa_sales_sort_link('title', $view_data['l10n']->get('title')); ?>
                 <?php echo org_openpsa_sales_sort_link('customer', $view_data['l10n']->get('customer')); ?>
                 <?php echo org_openpsa_sales_sort_link('owner', $view_data['l10n']->get('owner')); ?>
-                <?php echo org_openpsa_sales_sort_link('title', $view_data['l10n']->get('title')); ?>
                 <?php echo org_openpsa_sales_sort_link('close_est', $view_data['l10n']->get('estimated closing date')); ?>
                 <?php echo org_openpsa_sales_sort_link('probability', $view_data['l10n']->get('probability')); ?>
                 <?php echo org_openpsa_sales_sort_link('value', $view_data['l10n']->get('value')); ?>
