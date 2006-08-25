@@ -202,7 +202,7 @@ class net_nehmer_static_viewer extends midcom_baseclasses_components_request
                     MIDCOM_TOOLBAR_LABEL => sprintf
                     (
                         $this->_l10n_midcom->get('create %s'),
-                        $this->_request_data['schemadb'][$name]->description
+                        $this->_l10n->get($this->_request_data['schemadb'][$name]->description)
                     ),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
                 ));

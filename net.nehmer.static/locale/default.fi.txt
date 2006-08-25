@@ -15,6 +15,10 @@ Luo automaattinen sisällysluettelo kansiolle?
 Hyväksy
 ---STRINGEND
 
+---STRING article
+Artikkeli
+---STRINGEND
+
 ---STRING auto_approved
 Hyväksy uudet artikkelit oletuksena
 ---STRINGEND
@@ -71,6 +75,14 @@ Koko
 Tyyppi
 ---STRINGEND
 
+---STRING indexinnav
+Näytetäänkö index-artikkeli navigaatiossa?
+---STRINGEND
+
+---STRING net.nehmer.static
+Normaali sisältö
+---STRINGEND
+
 ---STRING no files in this directory
 Ei tiedostoja kansiossa
 ---STRINGEND
@@ -99,6 +111,14 @@ Valitse tyyppi
 Asetukset
 ---STRINGEND
 
+---STRING symlink_topic
+Hae sisällöt toisesta kansiosta ("symlink")
+---STRINGEND
+
+---STRING symlink_topic disabled
+Ei kansiota
+---STRINGEND
+
 ---STRING taviewer
 Staattinen sisältö
 ---STRINGEND
@@ -113,5 +133,9 @@ Näytä artikkeli
 
 ---STRING visible
 Onko kansio näkyvissä
+---STRINGEND
+
+---STRING content
+Sisältö
 ---STRINGEND
 

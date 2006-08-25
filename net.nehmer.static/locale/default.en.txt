@@ -15,6 +15,10 @@ Automatically create an index page for this topic?
 Approve
 ---STRINGEND
 
+---STRING article
+Article
+---STRINGEND
+
 ---STRING auto_approved
 Approve new articles by default
 ---STRINGEND
@@ -71,8 +75,12 @@ File Size
 File Type
 ---STRINGEND
 
+---STRING indexinnav
+Show the index article in navigation?
+---STRINGEND
+
 ---STRING net.nehmer.static
-Static content
+Regular content
 ---STRINGEND
 
 ---STRING no files in this directory
@@ -104,7 +112,7 @@ Settings
 ---STRINGEND
 
 ---STRING symlink_topic
-Link to another content topic ("symlink")
+Get content from another topic ("symlink")
 ---STRINGEND
 
 ---STRING symlink_topic disabled
@@ -127,6 +135,7 @@ View Article
 Should the topic be visible
 ---STRINGEND
 
----STRING indexinnav
-If autonindex is disabled, should the index article be shown in the navigation?
+---STRING content
+Content
 ---STRINGEND
+

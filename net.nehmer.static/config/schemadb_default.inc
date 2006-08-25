@@ -1,12 +1,12 @@
 'default' => array
 (
-    'description' => 'Default Article',
+    'description' => 'article',
     'fields'      => array
     (
         'name' => Array
         (
             // COMPONENT-REQUIRED
-            'title' => 'URL Name',
+            'title' => 'url name',
             'storage' => 'name',
             'type' => 'text',
             'widget' => 'text',
@@ -14,7 +14,7 @@
         'title' => Array
         (
             // COMPONENT-REQUIRED
-            'title' => 'Title',
+            'title' => 'title',
             'storage' => 'title',
             'required' => true,
             'type' => 'text',
@@ -23,7 +23,7 @@
         'content' => Array
         (
             // COMPONENT-REQUIRED
-            'title' => 'Content',
+            'title' => 'content',
             'storage' => 'content',
             'required' => true,
             'type' => 'text',
@@ -34,7 +34,7 @@
 
         'image' => Array
         (
-            'title' => 'Image',
+            'title' => 'image',
             'storage' => null,
             'type' => 'image',
             'type_config' => Array
@@ -43,6 +43,7 @@
                 'auto_thumbnail' => Array(200,200),
             ),
             'widget' => 'image',
+            'hidden' => true,
         ),
 
     )

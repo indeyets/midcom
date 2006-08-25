@@ -1,5 +1,5 @@
 'name' => 'net.nehmer.static',
-'version' => '1.0.3',
+'version' => '1.0.4',
 'state' => 'stable',
 'package.xml' => Array
 (
