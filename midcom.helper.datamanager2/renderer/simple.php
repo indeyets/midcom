@@ -61,7 +61,8 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     * @var      string
     * @access   private
     */
-    var $_groupTemplate = "<label for='{element_name}' id='{element_name}_label'<!-- BEGIN required --> class='required'<!-- END required -->>\n\t\t
+    /*
+    var $_orig_group_template = "<label for='{element_name}' id='{element_name}_label'<!-- BEGIN required --> class='required'<!-- END required -->>\n\t\t
         <span class=\"field_text\">
                 {label}<!-- BEGIN required --> <span style=\"field_required_start\">*</span><!-- END required --></span>\n\t\t
 
@@ -70,6 +71,17 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
                 {element}\n\t\t
             </fieldset>
         </label>";
+    */ 
+    var $_orig_group_template = "<div id='{element_name}_label'<!-- BEGIN required --> class='required'<!-- END required -->>\n\t\t
+        <label><span class=\"field_text\">
+                {label}<!-- BEGIN required --> <span style=\"field_required_start\">*</span><!-- END required --></span></label>\n\t\t
+
+        <!-- BEGIN error --><span class='field_error' style=\"color: #ff0000\">{error}</span><br /><!-- END error -->\n\t\t
+            <fieldset id='{element_name}_fieldset' {attributes}>
+                {element}\n\t\t
+            </fieldset>
+        </div>";
+    var $_groupTemplate;
 
    /**
     * Form template string
@@ -197,11 +209,18 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     *
     * @access public
     */
+    /* Shouldn't this be midcom_helper_datamanager2_renderer_simple?
     function HTML_QuickForm_Renderer_Default()
     {
         $this->HTML_QuickForm_Renderer();
     } // end constructor
-
+    */
+    function midcom_helper_datamanager2_renderer_simple()
+    {
+        $this->_groupTemplate = $this->_orig_group_template;
+        $this->HTML_QuickForm_Renderer();
+    }
+    
    /**
     * returns the HTML generated for the form
     *
@@ -278,30 +297,49 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     * @param    mixed       Element label (if using an array of labels, you should set the appropriate template)
     * @param    bool        Whether an element is required
     * @param    string      Error message associated with the element
+    * @param    string      Element type (optional)
     * @access   private
     * @see      renderElement()
     * @return   string      Html for element
     */
-    function _prepareTemplate($name, $label, $required, $error)
+    function _prepareTemplate($name, $label, $required, $error, $type = false)
     {
+        debug_add("_prepareTemplate called with options: {$name}, {$label}, {$required}, {$error}, $type");
         if (is_array($label)) {
             $nameLabel = array_shift($label);
         } else {
             $nameLabel = $label;
         }
+        
         if (isset($this->_templates[$name])) {
+            debug_add("_prepareTemplate _templates[{$name}] check caught, using template\n===\n{$this->_templates[$name]}\n===\n");
             $html = str_replace('{label}', $nameLabel, $this->_templates[$name]);
         } else if ($this->_inGroup) {
+            /* rambo: I'm pretty sure this is never reached... */
+            debug_add("_prepareTemplate ingroup check caught, using template\n===\n{$this->_defaultGroupTemplate}\n===\n");
             $html = str_replace('{label}', $nameLabel, $this->_defaultGroupTemplate);
         } else {
-            $html = str_replace('{label}', $nameLabel, $this->_elementTemplate);
+            debug_add("_prepareTemplate else caught, switching by type: {$type}");
+            switch ($type)
+            {
+                case 'dummy:group':
+                    $template = $this->_orig_group_template;
+                    break;
+                default:
+                    $template = $this->_elementTemplate;
+                    break;
+            }
+            debug_add("_prepareTemplate using template\n===\n{$template}\n===\n");
+            $html = str_replace('{label}', $nameLabel, $template);
         }
+        
         if ($required) {
             $html = str_replace('<!-- BEGIN required -->', '', $html);
             $html = str_replace('<!-- END required -->', '', $html);
         } else {
             $html = preg_replace("/([ \t\n\r]*)?<!-- BEGIN required -->.*?<!-- END required -->([ \t\n\r]*)?/is", '', $html);
         }
+        
         if (isset($error)) {
             $html = str_replace('{error}', $error, $html);
             $html = str_replace('<!-- BEGIN error -->', '', $html);
@@ -311,6 +349,7 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
             
             $html = preg_replace("/([ \t\n\r]*)?<!-- BEGIN error -->.*?<!-- END error -->([ \t\n\r]*)?/is", '', $html);
         }
+        
         if (is_array($label)) {
             foreach($label as $key => $text) {
                 $key  = is_int($key)? $key + 2: $key;
@@ -319,10 +358,12 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
                 $html = str_replace("<!-- END label_{$key} -->", '', $html);
             }
         }
+        
         $html = str_replace('{element_name}', $name , $html);
         if (strpos($html, '{label_')) {
             $html = preg_replace('/\s*<!-- BEGIN label_(\S+) -->.*<!-- END label_\1 -->\s*/i', '', $html);
         }
+        
         return $html;
     } // end func _prepareTemplate
 
@@ -338,9 +379,9 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     */
     function renderElement(&$element, $required, $error)
     {
-        
+        debug_print_r('renderElement got element: ', $element);
         if (!$this->_inGroup) {
-            $html = $this->_prepareTemplate($element->getName(), $element->getLabel(), $required, $error);
+            $html = $this->_prepareTemplate($element->getName(), $element->getLabel(), $required, $error, $element->getType());
             $this->_html .= str_replace('{element}', $element->toHtml(), $html);
 
 
@@ -405,7 +446,8 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
         
         
         $this->_currentGroupTemplates[$name] = array (
-            '_groupTemplate'        => $this->_prepareTemplate($name, $group->getLabel(), $required, $error),
+            // '_groupTemplate'        => $this->_prepareTemplate($name, $group->getLabel(), $required, $error),
+            '_groupTemplate'        => $this->_prepareTemplate($name, $group->getLabel(), $required, $error, 'dummy:group'),
             '_groupElementTemplate' => empty($this->_groupTemplates[$name])? '': $this->_groupTemplates[$name],
             '_groupWrap'            => empty($this->_groupWraps[$name])? '': $this->_groupWraps[$name],
             '_groupElements'        => array(),
