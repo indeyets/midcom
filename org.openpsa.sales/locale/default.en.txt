@@ -3,6 +3,14 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING %s cycles in %s months
+%s cycles in %s months
+---STRINGEND
+
+---STRING %s cycles, %s - %s
+%s cycles, %s - %s
+---STRINGEND
+
 ---STRING active
 Active
 ---STRINGEND
@@ -13,6 +21,10 @@ Active sales projects
 
 ---STRING add deliverable
 Add deliverable
+---STRINGEND
+
+---STRING calculation basis
+calculation basis
 ---STRINGEND
 
 ---STRING contacts
@@ -71,6 +83,10 @@ Invoice
 Invoice by actual units
 ---STRINGEND
 
+---STRING invoices
+Invoices
+---STRINGEND
+
 ---STRING lost
 Lost
 ---STRINGEND
@@ -127,8 +143,20 @@ Probability
 Product
 ---STRINGEND
 
+---STRING profit
+Profit
+---STRINGEND
+
 ---STRING sales report
 Sales report
+---STRINGEND
+
+---STRING sales report %s - %s
+Sales report for %s - %s
+---STRINGEND
+
+---STRING salesproject
+Sales project
 ---STRINGEND
 
 ---STRING select product
@@ -167,11 +195,15 @@ Units
 Value
 ---STRINGEND
 
+---STRING weighted value
+Weighted value
+---STRINGEND
+
 ---STRING won
 Won
 ---STRINGEND
 
----STRING weighted value
-Weighted value
+---STRING %s%% of %s
+%s%% of %s
 ---STRINGEND
 

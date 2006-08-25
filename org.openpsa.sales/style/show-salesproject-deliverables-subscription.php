@@ -19,6 +19,10 @@ $invoices_node = midcom_helper_find_node_by_component('org.openpsa.invoices');
                 <td>&(deliverable['end']:h);</td>
             </tr>
             <tr>
+                <th><?php echo $view_data['l10n']->get('continuous subscription'); ?></th>
+                <td>&(deliverable['continuous']:h);</td>
+            </tr>
+            <tr>
                 <th><?php echo $view_data['l10n']->get('price per unit'); ?></th>
                 <td>&(deliverable['pricePerUnit']:h); / &(deliverable['unit']:h);</td>
             </tr>

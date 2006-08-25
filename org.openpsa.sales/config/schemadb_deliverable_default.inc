@@ -266,6 +266,13 @@
                 'show_time' => false,
             ),
         ),
+        'continuous' => Array
+        (
+            'title'   => 'continuous subscription',
+            'storage' => 'continuous',
+            'type'    => 'boolean',
+            'widget'  => 'checkbox',
+        ),
         'components' => Array
         (
             'title' => 'components',

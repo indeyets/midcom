@@ -3,6 +3,14 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING %s cycles in %s months
+%s kautta %s kuukaudessa
+---STRINGEND
+
+---STRING %s cycles, %s - %s
+%s kautta, %s - %s
+---STRINGEND
+
 ---STRING active
 Käynnissä
 ---STRINGEND
@@ -13,6 +21,10 @@ Käynnissä olevat myyntiprojektit
 
 ---STRING add deliverable
 Lisää tuote
+---STRINGEND
+
+---STRING calculation basis
+Laskutapa
 ---STRINGEND
 
 ---STRING contacts
@@ -71,6 +83,10 @@ Laskuta
 Laskuta toteutuneen mukaan
 ---STRINGEND
 
+---STRING invoices
+Laskut
+---STRINGEND
+
 ---STRING lost
 Hävitty
 ---STRINGEND
@@ -127,8 +143,20 @@ Todennäköisyys
 Tuote
 ---STRINGEND
 
+---STRING profit
+Kate
+---STRINGEND
+
 ---STRING sales report
 Myyntiraportti
+---STRINGEND
+
+---STRING sales report %s - %s
+Myyntiraportti ajalle %s - %s
+---STRINGEND
+
+---STRING salesproject
+Myyntiprojekti
 ---STRINGEND
 
 ---STRING select product
@@ -167,11 +195,15 @@ Yksiköitä
 Arvo
 ---STRINGEND
 
+---STRING weighted value
+Painotettu arvo
+---STRINGEND
+
 ---STRING won
 Voitettu
 ---STRINGEND
 
----STRING weighted value
-Painotettu arvo
+---STRING %s%% of %s
+%s%% %s:sta
 ---STRINGEND
 

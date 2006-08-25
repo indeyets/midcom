@@ -107,29 +107,15 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
     }
 
     /**
-     * Shows the loaded salesproject.
+     * Shows the report
      */
     function _show_report($handler_id, &$data)
     {   
+        $data['handler_id' ] = $handler_id;
+        midcom_show_style('show-deliverable-report-header');
+        
         $invoices_node = midcom_helper_find_node_by_component('org.openpsa.invoices');
-        echo "<h1>sales report " . strftime('%x', $data['start']) . " - " . strftime('%x', $data['end']) . "</h1>\n";
-        echo "<table class=\"sales_report\">\n";
-        echo "    <thead>\n";
-        echo "        <tr>\n";
-        echo "            <th>Invoices</th>\n";
-        if ($handler_id != 'deliverable_report')
-        {
-            echo "            <th>Owner</th>\n";
-        }
-        echo "            <th>Customer</th>\n";
-        echo "            <th>Sales project</th>\n";
-        echo "            <th>Product</th>\n";
-        echo "            <th>Price</th>\n";
-        echo "            <th>Cost</th>\n";
-        echo "            <th>Profit</th>\n";
-        echo "        </tr>\n";
-        echo "    </thead>\n";
-        echo "    <tbody>\n";        
+     
         $sums_per_person = Array();
         $sums_all = Array
         (
@@ -162,103 +148,106 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
             
             if ($odd)
             {
-                $class = '';
+                $data['row_class'] = '';
                 $odd = false;
             }
             else
             {
-                $class = ' class="even"';
+                $data['row_class'] = ' class="even"';
                 $odd = true;
             }
             
-            echo "<tr{$class}>\n";
-
-            echo "    <td class=\"invoices\"><ul>\n";            
             // Calculate the price and cost from invoices
             $invoice_price = 0;
+            $data['invoice_string'] = '';
+            $invoice_cycle_numbers = Array();
             foreach ($invoices as $invoice)
             {
                 $invoice_price += $invoice->sum;
-                $class = $invoice->get_invoice_class();
+                $invoice_class = $invoice->get_invoice_class();
                 
                 if ($invoices_node)
                 {
-                    $invoice_label = "<a class=\"{$class}\" href=\"{$invoices_node[MIDCOM_NAV_FULLURL]}invoice/{$invoice->guid}/\">{$invoice->invoiceNumber}</a>";
+                    $invoice_label = "<a class=\"{$invoice_class}\" href=\"{$invoices_node[MIDCOM_NAV_FULLURL]}invoice/{$invoice->guid}/\">{$invoice->invoiceNumber}</a>";
                 }
                 else
                 {
                     $invoice_label = $invoice->invoiceNumber;
                 }
                 
-                echo "<li class=\"{$class}\">{$invoice_label}</li>\n";
+                if ($deliverable->orgOpenpsaObtype == ORG_OPENPSA_PRODUCTS_DELIVERY_SUBSCRIPTION)
+                {
+                    $invoice_cycle_numbers[] = $invoice->parameter('org.openpsa.sales', 'cycle_number');
+                }
+                
+                $data['invoice_string'] .= "<li class=\"{$invoice_class}\">{$invoice_label}</li>\n";
             }
-            echo "</ul></td>\n";
             
-            if ($invoice_price > $deliverable->price)
+            if ($deliverable->orgOpenpsaObtype == ORG_OPENPSA_PRODUCTS_DELIVERY_SUBSCRIPTION)
             {
-                // TODO: Do we need other ways note that this is a subscription?
+                // This is a subscription, it should be shown only if it is the first invoice
+                if (!in_array(1, $invoice_cycle_numbers))
+                {
+                    continue;
+                    // This will skip to next deliverable
+                }
+                
+                if ($deliverable->end == 0)
+                {
+                    // Subscription doesn't have an end date, use specified amounth of months for calculation
+                    $cycles = $deliverable->calculate_cycles($this->_config->get('subscription_profit_months'));
+                    $data['calculation_basis'] = sprintf($data['l10n']->get('%s cycles in %s months'), $cycles, $this->_config->get('subscription_profit_months'));
+                }
+                else
+                {
+                    $cycles = $deliverable->calculate_cycles();
+                    $data['calculation_basis'] = sprintf($data['l10n']->get('%s cycles, %s - %s'), $cycles, strftime('%x', $deliverable->start), strftime('%x', $deliverable->end));
+                }
+                
+                $price = $deliverable->price * $cycles;
+                $cost = $deliverable->cost * $cycles;
+            }
+            else
+            {
+                // This is a single delivery, calculate cost as percentage as it may be invoiced in pieces
+                if ($deliverable->price)
+                {
+                    $cost_percentage = 100 / $deliverable->price * $invoice_price;
+                    $cost = $deliverable->cost / 100 * $cost_percentage;
+                }
+                else
+                {
+                    $cost_percentage = 100;
+                    $cost = $deliverable->cost;
+                }
                 $price = $invoice_price;
-                $cost = $deliverable->cost * count($invoices);
+                $data['calculation_basis'] = sprintf($data['l10n']->get('%s%% of %s'), round($cost_percentage), $deliverable->price); 
             }
-            elseif ($invoice_price <= $deliverable->price)
-            {
-                // This is a partial invoice, calculate cost as percentage
-                $cost_percentage = 100 / $deliverable->price * $invoice_price;
-                $cost = $deliverable->cost / 100 * $cost_percentage;
-            }
-            $price = $invoice_price;
             
+            // And now just count the profit
             $profit = $price - $cost;
+            $data['customer'] = $customer;
+            $data['salesproject'] = $salesproject;
+            $data['deliverable'] = $deliverable;
             
-            if ($handler_id != 'deliverable_report')
-            {
-                $owner = new midcom_db_person($salesproject->owner);
-                echo "    <td>{$owner->name}</td>\n";
-            }
-            
-            echo "    <td>{$customer->official}</td>\n";
-            echo "    <td>{$salesproject->title}</td>\n";
-            echo "    <td>{$deliverable->title}</td>\n";
-
-            echo "    <td>{$price}</td>\n";
+            $data['price'] = $price;
             $sums_per_person[$salesproject->owner]['price'] += $price;
             $sums_all['price'] += $price;
-
-            echo "    <td>{$cost}</td>\n";
+            
+            $data['cost'] = $cost;
             $sums_per_person[$salesproject->owner]['cost'] += $cost;
             $sums_all['cost'] += $cost;
-            
-            echo "    <td>{$profit}</td>\n";
+
+            $data['profit'] = $profit;
             $sums_per_person[$salesproject->owner]['profit'] += $profit;
             $sums_all['profit'] += $profit;
-            echo "</tr>\n";        
-        }
-        echo "    </tbody>\n";
-        echo "    <tfoot>\n";
-        $colspan = 4;
-        if ($handler_id != 'deliverable_report')
-        {
-            $colspan++;
-            foreach ($sums_per_person as $person_id => $sums)
-            {
-                $owner = new midcom_db_person($person_id);
-                echo "        <tr>\n";
-                echo "            <td colspan=\"{$colspan}\">{$owner->name}</td>\n";
-                echo "            <td>{$sums['price']}</td>\n";
-                echo "            <td>{$sums['cost']}</td>\n";
-                echo "            <td>{$sums['profit']}</td>\n";
-                echo "        </tr>\n";
-            }
-        }
-        echo "        <tr>\n";
-        echo "            <td colspan=\"{$colspan}\">Totals</td>\n";
-        echo "            <td>{$sums_all['price']}</td>\n";
-        echo "            <td>{$sums_all['cost']}</td>\n";
-        echo "            <td>{$sums_all['profit']}</td>\n";
-        echo "        </tr>\n";
 
-        echo "    </tfoot>\n";
-        echo "</table>\n";
+            midcom_show_style('show-deliverable-report-item');
+        }
+        
+        $data['sums_per_person'] = $sums_per_person;
+        $data['sums_all'] = $sums_all;
+        midcom_show_style('show-deliverable-report-footer');
     }
 }
 ?>

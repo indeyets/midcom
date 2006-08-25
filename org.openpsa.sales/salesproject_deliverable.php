@@ -5,6 +5,8 @@
  
 class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_salesproject_deliverable
 {
+    var $continuous = false;
+    
     function org_openpsa_sales_salesproject_deliverable($id = null)
     {
         return parent::__org_openpsa_sales_salesproject_deliverable($id);
@@ -80,6 +82,12 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
     function _on_updating()
     {
         $this->calculate_price();
+        
+        if ($this->continuous)
+        {
+            $this->end = 0;
+        }
+        
         return parent::_on_updating();
     }
     
@@ -90,6 +98,15 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         {
             $parent->calculate_price();
         }
+    }
+    
+    function _on_loaded()
+    {
+        if ($this->end == 0)
+        {
+            $this->continuous = true;
+        }
+        return parent::_on_loaded();
     }
     
     function calculate_price($update = true)
@@ -168,7 +185,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
      * Send an invoice from the deliverable. Creates a new, unsent org.openpsa.invoices item
      * and adds a relation between it and the deliverable.
      */
-    function _send_invoice($sum, $description)
+    function _send_invoice($sum, $description, $cycle_number = null)
     {        
         $salesproject = new org_openpsa_sales_salesproject($this->salesproject);
         
@@ -187,6 +204,12 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
             // TODO: Create invoicing task if assignee is defined
         
             $relation_deliverable = org_openpsa_relatedto_handler::create_relatedto($invoice, 'org.openpsa.invoices', $this, 'org.openpsa.sales');
+            
+            // Register the cycle number for reporting purposes
+            if (!is_null($cycle_number))
+            {
+                $invoice->parameter('org.openpsa.sales', 'cycle_number', $cycle_number);
+            }
         }
     }
     
@@ -224,7 +247,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         
         if ($send_invoice)
         {
-            $this->_send_invoice($this_cycle_amount, sprintf('%s %s', $this->title, $this_cycle_identifier));
+            $this->_send_invoice($this_cycle_amount, sprintf('%s %s', $this->title, $this_cycle_identifier), $cycle_number);
         }
         
         switch ($product->orgOpenpsaObtype)
@@ -258,7 +281,8 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         $this->invoiced = $this->invoiced + $this_cycle_amount;
         $this->update();
     
-        if ($this->end < $next_cycle)
+        if (   $this->end < $next_cycle
+            && $this->end != 0)
         {
             // Do not generate next cycle, the contract ends before
             return true;
@@ -271,6 +295,32 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         );
         $atstat = midcom_services_at_interface::register($next_cycle, 'org.openpsa.sales', 'new_subscription_cycle', $args);
         return $atstat;
+    }
+    
+    function calculate_cycles($months = null)
+    {
+        $cycle_time = $this->start;
+        $end_time = $this->end;
+        
+        if (!is_null($months))
+        {
+            // We calculate how many cycles fit into the number of months, figure out the end of time
+            $end_time = mktime(date('H', $cycle_time), date('m', $cycle_time), date('i', $cycle_time), date('m', $cycle_time) + $months, date('d', $cycle_time), date('Y', $cycle_time));
+        }
+    
+        // Calculate from begininning to the end
+        $cycles = 0;
+        while (   $cycle_time < $end_time
+               && $cycle_time != false)
+        {
+            $cycle_time = $this->_calculate_cycle_next($cycle_time);
+
+            if ($cycle_time <= $end_time)
+            {
+                $cycles++;
+            }
+        }
+        return $cycles;
     }
     
     function _calculate_cycle_next($time)
