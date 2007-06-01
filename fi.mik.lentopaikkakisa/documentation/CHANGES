@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-03-22 bergie
+  ! Started complete refactoring for 2007 contest
+
 2006-05-26 bergie
   + Fixed minor ACL settings as for some reason require_user_do doesn't seem to work
 

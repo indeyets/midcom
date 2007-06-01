@@ -100,7 +100,16 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
         
         // Wait a bit (0.1 sec) in case there are still files open.
         usleep(100000);
-        exec("rm -f {$tmpdir}/*");
+        $files = glob($tmpdir . "*",GLOB_NOSORT);
+        foreach ($files as $file)
+        {
+            if (!unlink($file))
+            {
+                debug_add( "Could not clear phpfilecache. Most probably due to missing permissions.");
+            }
+        }
+
+
         if (!@rmdir($tmpdir))
         {
             // Perhaps there is a file left?

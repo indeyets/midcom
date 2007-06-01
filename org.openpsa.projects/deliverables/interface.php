@@ -16,14 +16,14 @@
 class org_openpsa_projects_deliverables_interface
 {
     var $_plugins = array(); //List of plugins available
-    
+
     function org_openpsa_projects_deliverables_interface()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $this->_find_plugins();
         debug_pop();
     }
-    
+
     /**
      * Searches for plugins and fills $this->_plugins
      */
@@ -32,7 +32,7 @@ class org_openpsa_projects_deliverables_interface
         //Hardcoded for now.
         $this->_plugins['org_openpsa_projects_deliverables_interface_plugin_noop'] = new org_openpsa_projects_deliverables_interface_plugin_noop();
     }
-    
+
     /**
      * Returns an array of available plugins as objects
      */
@@ -47,7 +47,7 @@ class org_openpsa_projects_deliverables_interface
         debug_pop();
         return $ret;
     }
-    
+
     /**
      * Checks all deliverables for task returns true if all return true otherwise false
      * @param integer $task_id Identifier of an OpenPsa Projects task
@@ -83,7 +83,7 @@ class org_openpsa_projects_deliverables_interface
         }
         return true;
     }
-    
+
     /**
      * Takes plugin name and returns classname
      */
@@ -101,7 +101,7 @@ class org_openpsa_projects_deliverables_interface
         debug_pop();
         return false;
     }
-    
+
     /**
      * Based on deliverable object id/guid returns correct plugin initialized
      */
@@ -129,7 +129,7 @@ class org_openpsa_projects_deliverables_interface
             debug_pop();
             return false;
         }
-        
+
         $classname = $this->_resolve_plugin($deliverable->plugin);
         if (!$classname)
         {
@@ -141,7 +141,7 @@ class org_openpsa_projects_deliverables_interface
         debug_pop();
         return new $classname($deliverable);
     }
-    
+
     /**
      * Returns an empty (not initialized with deliverable object) plugin for plugin name
      */

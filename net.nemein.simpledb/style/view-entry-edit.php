@@ -1,11 +1,10 @@
 <?php
-  global $view;
-  global $view_title;
-  global $view_datamanager;
-  global $midcom;
-  $prefix = $midcom->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$view_title =& $data['view_title'];
+$datamanager =& $data['datamanager'];
+$view =& $data['view'];
 ?>
 
-<h1>&(view_title);: <?echo htmlspecialchars($view["title"]); ?></h1>
+<h1>&(view_title);: <?php echo htmlspecialchars($view["title"]); ?></h1>
 
-<?php $view_datamanager->display_form(); ?>
+<?php $datamanager->display_form(); ?>

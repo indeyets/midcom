@@ -2,7 +2,7 @@
 global $view_title;
 global $view_status;
 global $view_upload_dm;
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
 $have_gzip = ! is_null($GLOBALS['midcom_config']['utility_gzip']); 
 $have_tar = ! is_null($GLOBALS['midcom_config']['utility_tar']);

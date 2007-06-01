@@ -1,0 +1,6 @@
+'name' => 'org.dgap.ipautologin',
+'purecode' => true,
+'version' => '0.0.2beta1',
+'state' => 'beta',
+'privileges' => array (),
+'class_definitions' => array (),

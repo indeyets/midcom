@@ -64,7 +64,7 @@ class org_openpsa_mail_backend_bouncer
         }
         return 'Unknown error';
     }
-    
+
     function is_available()
     {
         if (   !is_object($this->_backend)
@@ -89,6 +89,6 @@ class org_openpsa_mail_backend_bouncer
         debug_add("backend class {$classname} is not available", MIDCOM_LOG_WARN);
         return false;
     }
-} 
+}
 
 ?>

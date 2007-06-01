@@ -28,8 +28,8 @@ function org_openpsa_helpers_workgroups($add_me = 'last', $show_members = false)
             {
                 // Admins must see all workgroups, all the time
                 $users_vgroups = $_MIDCOM->auth->get_all_vgroups();
-                $users_groups = $_MIDCOM->auth->user->list_memberships(); 
-                $users_groups = array_merge($users_vgroups, $users_groups);               
+                $users_groups = $_MIDCOM->auth->user->list_memberships();
+                $users_groups = array_merge($users_vgroups, $users_groups);
             }
             else
             {
@@ -44,9 +44,9 @@ function org_openpsa_helpers_workgroups($add_me = 'last', $show_members = false)
                 }
                 else
                 {
-                    $label = $vgroup;    
+                    $label = $vgroup;
                 }
-                
+
                 if (substr($key, strlen($key)-11) == 'subscribers')
                 {
                     if ($_MIDGARD['admin'])
@@ -68,7 +68,7 @@ function org_openpsa_helpers_workgroups($add_me = 'last', $show_members = false)
                 else
                 {
                     $GLOBALS[$array_name][$key] = $label;
-                    
+
                     //TODO: get the vgroup object based on the key or something, this check fails always.
                     if (   $show_members
                         && is_object($vgroup)
@@ -82,15 +82,15 @@ function org_openpsa_helpers_workgroups($add_me = 'last', $show_members = false)
                     }
                 }
             }
-            
-            
-            
+
+
+
             if ($add_me == 'last')
             {
                 //TODO: Localization
                 $GLOBALS[$array_name][$_MIDCOM->auth->user->id] = 'me';
             }
-            
+
             // Add subscription lists after real ones
             foreach ($my_subscription_groups as $key => $label)
             {
@@ -101,7 +101,7 @@ function org_openpsa_helpers_workgroups($add_me = 'last', $show_members = false)
             }
         }
     }
-    //mgd_debug_stop();    
+    //mgd_debug_stop();
     return $GLOBALS[$array_name];
 }
 ?>

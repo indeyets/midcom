@@ -1,0 +1,23 @@
+midcom.helper.replicator program flow
+=====================================
+
+## On watcher
+
+* Replicator watcher is called on any object create, update or delete
+* Watcher instantiates queue manager
+* Queue manager lists subscribers interested in the particular item
+* Exporter is instantiated per each subscriber
+* Queue manager calls `export()` method of the exporters
+* Queue manager handles storage of generated XML per settings of each queue
+
+## On cron (everymin)
+
+* Queue manager is instantiated
+* Queue manager checks subscription queues if there is anything to send
+* Transporter is instantiated for each subscriber
+* Queue manager calls the `send()` method of the transporters
+* Queue data is updated
+
+## On import
+
+TODO

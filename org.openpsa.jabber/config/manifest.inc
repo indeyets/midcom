@@ -1,21 +1,37 @@
-'name' => 'org.openpsa.jabber',
-'purecode' => false,
-'privileges' =>  Array(),
-'class_definitions' => Array(),
-'version' => '2.0.0beta2',
-'state' => 'beta',
-'package.xml' => Array(
+
+  'name' => 'org.openpsa.jabber',
+  'purecode' => false,
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+  ),
+  'version' => '2.0.1beta1',
+  'state' => 'beta',
+  'package.xml' => 
+  array (
     'summary' => 'Jabber applet viewer',
     'description' => 'Jabber applet viewer',
-    'maintainers' => Array(
-        'bergie' => Array(
-            'name' => 'Henri Bergius',
-            'email' => 'henri.bergius@iki.fi',
-            'role' => 'lead',
-        ),  
+    'maintainers' => 
+    array (
+      'bergie' => 
+      array (
+        'name' => 'Henri Bergius',
+        'email' => 'henri.bergius@iki.fi',
+        'role' => 'lead',
+      ),
     ),
-    'dependencies' => Array(
-        'org.openpsa.core'          => Array(),
-        'org.openpsa.helpers'       => Array(),        
+    'dependencies' => 
+    array (
+      'org.openpsa.core' => 
+      array (
+      ),
+      'org.openpsa.helpers' => 
+      array (
+      ),
+      'midcom' => 
+      array (
+      ),
     ),
-),
+  ),

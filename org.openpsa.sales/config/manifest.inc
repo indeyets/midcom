@@ -1,36 +1,85 @@
-'name' => 'org.openpsa.sales',
-'purecode' => false,
-'version' => '1.1.1',
-'class_definitions' => Array('midcom_dba_classes.inc'),
-'privileges' =>  Array(),
-'package.xml' => Array(
+
+  'name' => 'org.openpsa.sales',
+  'purecode' => false,
+  'version' => '1.1.12beta1',
+  'state' => 'beta',
+  'class_definitions' => 
+  array (
+    0 => 'midcom_dba_classes.inc',
+  ),
+  'privileges' => 
+  array (
+  ),
+  'package.xml' => 
+  array (
     'summary' => 'Sales',
     'description' => 'Sales process manager',
-    'maintainers' => Array(
-        'bergie' => Array(
-            'name' => 'Henri Bergius',
-            'email' => 'henri.bergius@iki.fi',
-            'role' => 'lead',
-        ),
-        'rambo' => Array(
-            'name' => 'Eero af Heurlin',
-            'email' => 'eero.afheurlin@iki.fi',
-            'role' => 'lead',
-        ),
+    'maintainers' => 
+    array (
+      'bergie' => 
+      array (
+        'name' => 'Henri Bergius',
+        'email' => 'henri.bergius@iki.fi',
+        'role' => 'lead',
+      ),
+      'rambo' => 
+      array (
+        'name' => 'Eero af Heurlin',
+        'email' => 'eero.afheurlin@iki.fi',
+        'role' => 'lead',
+      ),
     ),
-    'dependencies' => Array
-    (
-        'midcom.helper.datamanager' => Array(),
-        'org.openpsa.contacts' => Array(),
-        'org.openpsa.contactwidget' => Array(),
-        'net.nemein.wiki' => Array(),
-        'org.openpsa.calendar' => Array(),
-        'org.openpsa.projects' => Array(),
-        'org.openpsa.products' => Array(),
-        'org.openpsa.invoices' => Array(),
-        'Calendar' => Array
-        (
-            'channel' => 'pear.php.net',
-        ),
+    'dependencies' => 
+    array (
+      'midcom.helper.datamanager' => 
+      array (
+      ),
+      'midcom.helper.datamanager2' => 
+      array (
+      ),
+      'midcom.services.at' => 
+      array (
+      ),
+      'org.openpsa.contacts' => 
+      array (
+      ),
+      'org.openpsa.contactwidget' => 
+      array (
+      ),
+      'net.nemein.wiki' => 
+      array (
+      ),
+      'net.nemein.tag' => 
+      array (
+      ),
+      'org.openpsa.calendar' => 
+      array (
+      ),
+      'org.openpsa.projects' => 
+      array (
+      ),
+      'org.openpsa.products' => 
+      array (
+      ),
+      'org.openpsa.invoices' => 
+      array (
+      ),
+      'Calendar' => 
+      array (
+        'channel' => 'pear.php.net',
+      ),
+      'midcom' => 
+      array (
+      ),
     ),
-),
+  ),
+  'customdata' => 
+  array (
+    'org.openpsa.notifications' => 
+    array (
+      'new_subscription_cycle' => 
+      array (
+        'default' => 'email',
+      ),
+    ),
+  ),

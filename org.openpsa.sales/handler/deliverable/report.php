@@ -35,7 +35,9 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
         {
             $_MIDCOM->auth->require_admin_user();
         }
-        
+
+        $this->_component_data['active_leaf'] = "{$this->_topic->id}:deliverable_report";
+
         $data['invoices'] = Array();
 
         // Calculate time range
@@ -46,8 +48,8 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
         $next_month = $this_month->nextMonth('object');
 
         $data['start'] = $this_month->getTimestamp();
-        $data['end'] = $next_month->getTimestamp();
-        
+        $data['end'] = $next_month->getTimestamp() - 1;
+
         // List sales projects
         $salesproject_qb = org_openpsa_sales_salesproject::new_query_builder();
         $salesproject_qb->add_constraint('status', '<>', ORG_OPENPSA_SALESPROJECTSTATUS_LOST);
@@ -57,7 +59,7 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
             $salesproject_qb->add_constraint('owner', '=', $_MIDGARD['user']);
         }
         $salesprojects = $salesproject_qb->execute();
-        
+
         // List deliverables related to the sales projects
         $deliverable_qb = org_openpsa_sales_salesproject_deliverable::new_query_builder();
         $deliverable_qb->add_constraint('state', '<>', 'ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_DECLINED');
@@ -68,11 +70,11 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
         }
         $deliverable_qb->end_group();
         $deliverables = $deliverable_qb->execute();
-        
+
         // List relations of invoices to the deliverables we have
         $relation_qb = org_openpsa_relatedto_relatedto::new_query_builder();
         $relation_qb->add_constraint('fromComponent', '=', 'org.openpsa.invoices');
-        $relation_qb->add_constraint('fromClass', '=', 'org_openpsa_invoices_invoice');        
+        $relation_qb->add_constraint('fromClass', '=', 'org_openpsa_invoices_invoice');
         $relation_qb->begin_group('OR');
         foreach ($deliverables as $deliverable)
         {
@@ -81,7 +83,7 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
         }
         $relation_qb->end_group();
         $relations = $relation_qb->execute();
-        
+
         // Get invoices our deliverables are related to
 
         foreach ($relations as $relation)
@@ -110,12 +112,13 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
      * Shows the report
      */
     function _show_report($handler_id, &$data)
-    {   
+    {
+        $data['report'] = array();
         $data['handler_id' ] = $handler_id;
         midcom_show_style('show-deliverable-report-header');
-        
+
         $invoices_node = midcom_helper_find_node_by_component('org.openpsa.invoices');
-     
+
         $sums_per_person = Array();
         $sums_all = Array
         (
@@ -131,11 +134,11 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
                 // No invoices sent in this project, skip
                 continue;
             }
-        
+
             $deliverable = new org_openpsa_sales_salesproject_deliverable($deliverable_guid);
             $salesproject = new org_openpsa_sales_salesproject($deliverable->salesproject);
             $customer = new midcom_db_group($salesproject->customer);
-            
+
             if (!array_key_exists($salesproject->owner, $sums_per_person))
             {
                 $sums_per_person[$salesproject->owner] = Array
@@ -145,7 +148,7 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
                     'profit' => 0,
                 );
             }
-            
+
             if ($odd)
             {
                 $data['row_class'] = '';
@@ -156,7 +159,7 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
                 $data['row_class'] = ' class="even"';
                 $odd = true;
             }
-            
+
             // Calculate the price and cost from invoices
             $invoice_price = 0;
             $data['invoice_string'] = '';
@@ -165,7 +168,7 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
             {
                 $invoice_price += $invoice->sum;
                 $invoice_class = $invoice->get_invoice_class();
-                
+
                 if ($invoices_node)
                 {
                     $invoice_label = "<a class=\"{$invoice_class}\" href=\"{$invoices_node[MIDCOM_NAV_FULLURL]}invoice/{$invoice->guid}/\">{$invoice->invoiceNumber}</a>";
@@ -174,15 +177,15 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
                 {
                     $invoice_label = $invoice->invoiceNumber;
                 }
-                
+
                 if ($deliverable->orgOpenpsaObtype == ORG_OPENPSA_PRODUCTS_DELIVERY_SUBSCRIPTION)
                 {
                     $invoice_cycle_numbers[] = $invoice->parameter('org.openpsa.sales', 'cycle_number');
                 }
-                
+
                 $data['invoice_string'] .= "<li class=\"{$invoice_class}\">{$invoice_label}</li>\n";
             }
-            
+
             if ($deliverable->orgOpenpsaObtype == ORG_OPENPSA_PRODUCTS_DELIVERY_SUBSCRIPTION)
             {
                 // This is a subscription, it should be shown only if it is the first invoice
@@ -191,7 +194,7 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
                     continue;
                     // This will skip to next deliverable
                 }
-                
+
                 if ($deliverable->end == 0)
                 {
                     // Subscription doesn't have an end date, use specified amounth of months for calculation
@@ -203,7 +206,7 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
                     $cycles = $deliverable->calculate_cycles();
                     $data['calculation_basis'] = sprintf($data['l10n']->get('%s cycles, %s - %s'), $cycles, strftime('%x', $deliverable->start), strftime('%x', $deliverable->end));
                 }
-                
+
                 $price = $deliverable->price * $cycles;
                 $cost = $deliverable->cost * $cycles;
             }
@@ -221,19 +224,19 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
                     $cost = $deliverable->cost;
                 }
                 $price = $invoice_price;
-                $data['calculation_basis'] = sprintf($data['l10n']->get('%s%% of %s'), round($cost_percentage), $deliverable->price); 
+                $data['calculation_basis'] = sprintf($data['l10n']->get('%s%% of %s'), round($cost_percentage), $deliverable->price);
             }
-            
+
             // And now just count the profit
             $profit = $price - $cost;
             $data['customer'] = $customer;
             $data['salesproject'] = $salesproject;
             $data['deliverable'] = $deliverable;
-            
+
             $data['price'] = $price;
             $sums_per_person[$salesproject->owner]['price'] += $price;
             $sums_all['price'] += $price;
-            
+
             $data['cost'] = $cost;
             $sums_per_person[$salesproject->owner]['cost'] += $cost;
             $sums_all['cost'] += $cost;
@@ -244,7 +247,7 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
 
             midcom_show_style('show-deliverable-report-item');
         }
-        
+
         $data['sums_per_person'] = $sums_per_person;
         $data['sums_all'] = $sums_all;
         midcom_show_style('show-deliverable-report-footer');

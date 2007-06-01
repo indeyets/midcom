@@ -1,0 +1,251 @@
+<?php
+class midgard_admin_asgard_navigation extends midcom_baseclasses_components_purecode
+{
+
+    /**
+     * Root types
+     * 
+     * @access public
+     * @var string
+     */ 
+    var $root_types = array();
+
+    /**
+     * Some object
+     *
+     * @var midgard_object
+     * @access private
+     */
+    var $_object = null;
+
+    /**
+     * Object path to the current object.
+     * 
+     * @access private
+     * @var Array
+     */
+    var $_object_path = array();
+    
+    var $_reflectors = array();
+    var $_request_data = array();
+    var $expanded_root_types = array();
+    var $shown_objects = array();
+    
+    function midgard_admin_asgard_navigation($object, &$request_data)
+    {
+        $this->_component = 'midgard.admin.asgard';
+        parent::midcom_baseclasses_components_purecode();
+        
+        $this->_object = $object;
+        $this->_object_path = $this->get_object_path();
+        $this->_request_data =& $request_data;
+        
+        $this->root_types = midgard_admin_asgard_reflector_tree::get_root_classes();
+        
+        $this->handle_session();
+    }
+    
+    function handle_session()
+    {
+        $session = new midcom_service_session();
+        if ($session->exists('midgard_admin_asgard_navigation_roots'))
+        {
+            $this->expanded_root_types = $session->get('midgard_admin_asgard_navigation_roots');
+        }
+        if (isset($_GET['midgard_admin_asgard_navigation_open']))
+        {
+            if (!in_array($_GET['midgard_admin_asgard_navigation_open'], $this->root_types))
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "MgdSchema type '{$_GET['midgard_admin_asgard_navigation_open']}' was not found.");
+            }
+            $this->expanded_root_types[] = $_GET['midgard_admin_asgard_navigation_open'];
+            $session->set('midgard_admin_asgard_navigation_roots', $this->expanded_root_types);
+        }
+        
+        if (isset($_GET['midgard_admin_asgard_navigation_close']))
+        {
+            if (!in_array($_GET['midgard_admin_asgard_navigation_close'], $this->root_types))
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "MgdSchema type '{$_GET['midgard_admin_asgard_navigation_close']}' was not found.");
+            }
+            
+            $new_root_types = array();
+            foreach ($this->expanded_root_types as $type)
+            {
+                if ($type != $_GET['midgard_admin_asgard_navigation_close'])
+                {
+                    $new_root_types[] = $type;
+                }
+            }
+            $this->expanded_root_types = $new_root_types;
+            $session->set('midgard_admin_asgard_navigation_roots', $this->expanded_root_types);
+        }
+    }
+    
+    function &_get_reflector(&$object)
+    {
+        if (is_string($object))
+        {
+            $classname = $object;
+        }
+        else
+        {
+            $classname = get_class($object);
+        }
+        if (!isset($this->_reflectors[$classname]))
+        {
+            $this->_reflectors[$classname] = new midgard_admin_asgard_reflector_tree($object);
+        }
+        return $this->_reflectors[$classname];
+    }
+    
+    function get_object_path()
+    {
+        $object_path = array();
+        
+        $object_path[] = $this->_object->guid;
+
+        $parent = $this->_object->get_parent();
+        while (   is_object($parent)
+               && $parent->guid)
+        {
+            $object_path[] = $parent->guid;
+            $parent = $parent->get_parent();
+        }
+        
+        return array_reverse($object_path);
+    }
+    
+    function _list_child_elements($object, $prefix = '    ', $level = 0)
+    {
+        if ($level > 25)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Recursion level 25 exceeded, aborting', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return;
+        }
+        $siblings = midgard_admin_asgard_reflector_tree::get_child_objects($object);
+        if (   is_array($siblings)
+            && count($siblings) > 0)
+        {
+            echo "{$prefix}<ul>\n";
+            foreach ($siblings as $type => $children)
+            {
+                foreach ($children as $child)
+                {
+                    if (isset($this->shown_objects[$child->guid]))
+                    {
+                        continue;
+                    }
+                    
+                    $ref =& $this->_get_reflector(&$child);
+
+                    $selected = false;
+                    $css_class = $type;
+                    if (in_array($child->guid, $this->_object_path))
+                    {
+                        $selected = true;
+                        $css_class .= ' selected';
+                    }
+                    
+                    if ($child->guid == $this->_object->guid)
+                    {
+                        $css_class .= ' current';
+                    }
+                    
+                    $this->shown_objects[$child->guid] = true;
+                    
+                    echo "{$prefix}    <li class=\"{$css_class}\">";
+                    $label_property = $ref->get_label_property();
+                    $label = htmlspecialchars($child->$label_property);
+                    if (empty($label))
+                    {
+                        $label = "#{$child->id}";
+                    }
+                    
+                    echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$child->guid}/\">{$label}</a>\n";
+                    
+
+                    if ($selected)
+                    {
+                        $this->_list_child_elements($child, "{$prefix}        ", $level+1);
+                    }
+                    
+                    echo "{$prefix}    </li>\n";
+                }
+            }
+            echo "{$prefix}</ul>\n";
+        }
+    }
+    
+    function draw()
+    {
+        $root_object = $_MIDCOM->dbfactory->get_object_by_guid($this->_object_path[0]);
+        foreach ($this->root_types as $root_type)
+        {
+            $ref = $this->_get_reflector($root_type);
+            
+            if (in_array($root_type, $this->expanded_root_types))
+            {
+                $this->_request_data['section_url'] = "?midgard_admin_asgard_navigation_close={$root_type}";
+            }
+            else
+            {
+                $this->_request_data['section_url'] = "?midgard_admin_asgard_navigation_open={$root_type}";
+            }
+            
+            $this->_request_data['section_name'] = $ref->get_class_label();
+            midcom_show_style('midgard_admin_asgard_navigation_section_header');
+            if (   is_a($root_object, $root_type)
+                || in_array($root_type, $this->expanded_root_types))
+            {
+                $root_objects = $ref->get_root_objects();
+                if (count($root_objects) > 0)
+                {
+                    echo "<ul class=\"midgard_admin_asgard_navigation\">\n";
+                    
+                    foreach ($root_objects as $object)
+                    {
+                        $label_property = $ref->get_label_property();
+                        $selected = false;
+                        $css_class = get_class($object);
+                        if (in_array($object->guid, $this->_object_path))
+                        {
+                            $selected = true;
+                            $css_class .= ' selected';
+                        }
+                        
+                        if ($object->guid == $this->_object->guid)
+                        {
+                            $css_class .= ' current';
+                        }
+                        $this->shown_objects[$object->guid] = true;
+                        
+                        echo "    <li class=\"{$css_class}\">";
+                        
+                        $label = htmlspecialchars($object->$label_property);
+                        if (empty($label))
+                        {
+                            $label = "#{$object->id}";
+                        }
+                        
+                        echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$object->guid}/\">{$label}</a>\n";
+                        
+                        if ($selected)
+                        {
+                            $this->_list_child_elements($root_object);
+                        }
+                        
+                        echo "    </li>\n";
+                    }
+                    
+                    echo "</ul>\n";
+                }
+            }
+            midcom_show_style('midgard_admin_asgard_navigation_section_footer');
+        }
+    }
+}
+
+?>

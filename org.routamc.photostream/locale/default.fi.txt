@@ -1,0 +1,133 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING %d photos tagged with %s
+<span>%d valokuvaa merkittynä </span>%s
+---STRINGEND
+
+---STRING all photos
+Kaikki valokuvat
+---STRINGEND
+
+---STRING all photos rated as %s
+Kaikki kuvat joiden arvio on %s
+---STRINGEND
+
+---STRING all tags
+Kaikki merkinnät
+---STRINGEND
+
+---STRING delete photo
+Poista valokuva
+---STRINGEND
+
+---STRING edit photo
+Muokkaa valokuvaa
+---STRINGEND
+
+---STRING if checked only logged in users can see this photo
+Jos merkitty niin vain kirjautuneet käyttäjät voivat nähdä tämän valokuvan
+---STRINGEND
+
+---STRING if checked only you can see this photo
+Jos merkitty niin vain sinä voit nähdä tämän valokuvan
+---STRINGEND
+
+---STRING my photos
+Omat valokuvani
+---STRINGEND
+
+---STRING my tags
+Omat merkintäni
+---STRINGEND
+
+---STRING not public
+Ei-Julkinen
+---STRINGEND
+
+---STRING org.routamc.photostream
+Valokuvien hallinta
+---STRINGEND
+
+---STRING photo
+Valokuva
+---STRINGEND
+
+---STRING photo tags
+Valokuvien merkinnät
+---STRINGEND
+
+---STRING photo tags of %s
+Käyttäjän %s valokuvien merkinnät
+---STRINGEND
+
+---STRING photographer
+Valokuvaaja
+---STRINGEND
+
+---STRING photos in batch %s
+Valokuvat erässä %s
+---STRINGEND
+
+---STRING photos of %s
+Käyttäjän %s valokuvat
+---STRINGEND
+
+---STRING photos of %s rated as %s
+Käyttäjän %s kuvat joiden arvio on %s
+---STRINGEND
+
+---STRING photos of %s tagged with %s
+Käyttäjän %s "%s":llä merkityt valokuvat
+---STRINGEND
+
+---STRING photos tagged with %s
+"%s":llä merkityt valokuvat
+---STRINGEND
+
+---STRING private
+Kuva on yksityinen
+---STRINGEND
+
+---STRING rating
+Arvio
+---STRINGEND
+
+---STRING recreate derived images
+Päivitä generoidut kuvakoot
+---STRINGEND
+
+---STRING start
+Aloita
+---STRINGEND
+
+---STRING taken
+Kuva otettu
+---STRINGEND
+
+---STRING taken on %s
+Otettu %s
+---STRINGEND
+
+---STRING taken on %s in %s
+Otettu %s paikassa %s
+---STRINGEND
+
+---STRING this operation will take some time
+Tämä toiminto kestää aika kauan.
+---STRINGEND
+
+---STRING upload photos
+Tuo kuvia
+---STRINGEND
+
+---STRING upload size limit
+Tuotavien tiedostojen maksimikoko
+---STRINGEND
+
+---STRING upload to gallery
+Lataa galleriaan
+---STRINGEND
+

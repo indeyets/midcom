@@ -73,7 +73,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         if ($this->_event->can_do('net.nemein.registrations:manage'))
         {
             $this->_request_data['list_registrations_url'] = "{$prefix}event/list_registrations/{$this->_event->guid}.html";
-            $this->_request_data['export_csv_url'] = "{$prefix}event/export/csv/{$this->_event->guid}.html";
+            $this->_request_data['export_csv_url'] = "{$prefix}event/export/csv/{$this->_event->guid}/{$this->_event->guid}.csv";
         }
         else
         {
@@ -141,6 +141,72 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         $this->_root_event =& $this->_request_data['root_event'];
         $this->_schemadb =& $this->_request_data['schemadb'];
     }
+    
+    function _populate_toolbar(&$data)
+    {
+        if ($data['list_registrations_url'])
+        {
+            $this->_view_toolbar->add_item(Array(
+                MIDCOM_TOOLBAR_URL => $data['list_registrations_url'],
+                MIDCOM_TOOLBAR_LABEL => $data['l10n']->get('list registrations'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+                MIDCOM_TOOLBAR_ENABLED => true,
+            ));
+        }
+        if ($data['export_csv_url'])
+        {
+            $this->_view_toolbar->add_item(Array(
+                MIDCOM_TOOLBAR_URL => $data['export_csv_url'],
+                MIDCOM_TOOLBAR_LABEL => $data['l10n']->get('csv export'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/save.png',
+                MIDCOM_TOOLBAR_ENABLED => true,
+            ));
+        }
+        if ($data['edit_url'])
+        {
+            $this->_view_toolbar->add_item(Array(
+                MIDCOM_TOOLBAR_URL => $data['edit_url'],
+                MIDCOM_TOOLBAR_LABEL => $data['l10n_midcom']->get('edit'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                MIDCOM_TOOLBAR_ENABLED => true,
+            ));
+        }
+        
+        if ($data['open_url'])
+        {
+            $this->_view_toolbar->add_item(Array(
+                MIDCOM_TOOLBAR_URL => $data['open_url'],
+                MIDCOM_TOOLBAR_LABEL => $data['l10n']->get('open the even for registration now'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/approved.png',
+                MIDCOM_TOOLBAR_ENABLED => true,
+            ));
+        }
+        if ($data['close_url'])
+        {
+            $this->_view_toolbar->add_item(Array(
+                MIDCOM_TOOLBAR_URL => $data['close_url'],
+                MIDCOM_TOOLBAR_LABEL => $data['l10n']->get('close the event for registration now'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/cancel.png',
+                MIDCOM_TOOLBAR_ENABLED => true,
+            ));
+        }
+        
+        if ($data['delete_url'])
+        {
+            $this->_view_toolbar->add_item(Array(
+                MIDCOM_TOOLBAR_URL => $data['delete_url'],
+                MIDCOM_TOOLBAR_LABEL => $data['l10n_midcom']->get('delete'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                MIDCOM_TOOLBAR_ENABLED => true,
+            ));
+        }
+    }
 
     /**
      * Helper, updates the context so that we get a complete breadcrum line towards the current
@@ -206,6 +272,8 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         $title = $this->_event->title;
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
         $this->_update_breadcrumb_line($handler_id);
+        
+        $this->_populate_toolbar($data);
 
         return true;
     }
@@ -252,6 +320,8 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         $title = $this->_event->title;
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
         $this->_update_breadcrumb_line($handler_id);
+
+        $this->_populate_toolbar($data);
 
         return true;
     }
@@ -390,7 +460,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         $aq_schema = $this->_event->get_additional_questions_schema();
 
         // Change the output mode accordingly, enforce UTF-8.
-        header('Content-Type: text/plain;charset=UTF-8');
+        header('Content-Type: application/csv;charset=UTF-8');
         $_MIDCOM->cache->content->enable_live_mode();
 
         // Prepare required classes and values

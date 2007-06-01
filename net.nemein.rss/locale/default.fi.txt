@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING %s items
+%s uutista tuotu
+---STRINGEND
+
 ---STRING add new feed
 Lisää uusi RSS-lähde
 ---STRINGEND
@@ -13,6 +17,10 @@ Aggregaattorin moodi
 
 ---STRING aggregator settings
 Aggregaattorin asetukset
+---STRINGEND
+
+---STRING approve new items automatically
+Hyväksy uudet uutiset automaattisesti
 ---STRINGEND
 
 ---STRING bloglines
@@ -35,12 +43,24 @@ Järjestele uutiset lähteen mukaan
 Järjestele uutiset yhteen julkaisuajan mukaan
 ---STRINGEND
 
+---STRING default author for items
+Uutisten oletuskirjoittaja
+---STRINGEND
+
+---STRING delete feed
+Poista syöte
+---STRINGEND
+
 ---STRING details
 Koko uutinen
 ---STRINGEND
 
 ---STRING display items
 Näytä uutiset muodossa
+---STRINGEND
+
+---STRING edit feed %s
+Muokkaa uutissyötettä "%s"
 ---STRINGEND
 
 ---STRING feed icon url
@@ -59,8 +79,24 @@ Lähteen otsikon näyttö
 Lähteen URL-osoite
 ---STRINGEND
 
+---STRING fetch feed %s
+Päivitetty uutissyöte "%s"
+---STRINGEND
+
 ---STRING import opml subscriptions
 Lisää lähteitä OPML-muodossa
+---STRINGEND
+
+---STRING keep removed items
+Säilytä syötteestä poistetut uutiset paikallisesti
+---STRINGEND
+
+---STRING latest fetch %s
+Viimeisin sisäänluku oli %s
+---STRINGEND
+
+---STRING latest item from %s
+Viimeisin uutinen on päivätty %s
 ---STRINGEND
 
 ---STRING latest items to show
@@ -71,12 +107,44 @@ Kuinka monta viimeisintä uutista näytetään?
 Paikallinen tietokanta
 ---STRINGEND
 
+---STRING local item
+Uutisen paikallinen kopio
+---STRINGEND
+
+---STRING manage feeds
+Hallinnoi uutissyötteitä
+---STRINGEND
+
+---STRING manage feeds of %s
+Hallinnoi kansion "%s" uutissyötteitä
+---STRINGEND
+
+---STRING net.nemein.rss
+RSS- ja Atom-lukija
+---STRINGEND
+
+---STRING no items found in feed
+Syötteestä ei löytynyt uutisia.
+---STRINGEND
+
 ---STRING opml file
 OPML-tiedosto
 ---STRINGEND
 
+---STRING refresh all feeds
+Päivitä kaikki syötteet
+---STRINGEND
+
+---STRING refresh feed
+Päivitä syöte
+---STRINGEND
+
 ---STRING remote from feed
 Luetaan lähteestä
+---STRINGEND
+
+---STRING remote item
+Uutinen syötteessä
 ---STRINGEND
 
 ---STRING remove feed
@@ -103,6 +171,14 @@ RSS-tulosteen asetukset
 Tallenna
 ---STRINGEND
 
+---STRING subscribe feeds
+Tilaa uusia uutissyötteitä
+---STRINGEND
+
+---STRING subscribe feeds for %s
+Tilaa uutissyötteitä kansioon "%s"
+---STRINGEND
+
 ---STRING subscription mode
 Tilausten hallinta
 ---STRINGEND
@@ -113,5 +189,9 @@ Pelkkä otsikko
 
 ---STRING untitled
 Nimetön
+---STRINGEND
+
+---STRING n/a
+E/S
 ---STRINGEND
 

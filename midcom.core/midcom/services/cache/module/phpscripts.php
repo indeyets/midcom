@@ -62,15 +62,13 @@ class midcom_services_cache_module_phpscripts extends midcom_services_cache_modu
         {
             if (! @mkdir($this->_cache_dir, 0755))
             {
-                $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
-                    "Failed to create the cache base directory {$this->_cache_dir}: {$php_errormsg}");
+                die("Failed to create the cache base directory {$this->_cache_dir}: {$php_errormsg}");
                 // This will exit.
             }
         }
 	    else if (! is_dir($this->_cache_dir))
 	    {
-	        $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
-	            "Failed to create the cache base directory {$this->_cache_dir}: A file of the same name already exists.");
+	        die("Failed to create the cache base directory {$this->_cache_dir}: A file of the same name already exists.");
 	        // This will exit.
 	    }
     }
@@ -230,7 +228,14 @@ class midcom_services_cache_module_phpscripts extends midcom_services_cache_modu
      */
     function invalidate_all()
     {
-        exec("rm -rf {$this->_cache_dir}*.php");
+        $files = glob($this->_cache_dir . "*.php",GLOB_NOSORT);
+        foreach ($files as $file)
+        {
+            if (!unlink($file))
+            {
+                echo "Could not clear phpfilecache. Most probably due to missing permissions.";
+            }
+        }
     }
 }
 

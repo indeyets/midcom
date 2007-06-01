@@ -112,7 +112,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
      * @var String
      * @access public
      */
-    var $others = '';
+    var $others = Array();
 
     /**
      * The options available to the client. You should not acecss this variable directly,
@@ -160,7 +160,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
     var $allow_multiple = false;
     
     /**
-     * Set this to true to use with universalchooser, this skips making sure the key exists in option list
+     * Set this to false to use with universalchooser, this skips making sure the key exists in option list
      * Mainly used to avoid unneccessary seeks to load all a ton of objects to the options list.
      *
      * @var bool
@@ -274,7 +274,27 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
 
         if (! $this->key_exists($key))
         {
-            return null;
+            if ($this->require_corresponding_option)
+            {
+                return null;
+            }
+            else
+            {
+                // This is probably universal chooser
+                // FIXME: This is not exactly an elegant way to do this
+                if ($this->storage->_schema->fields[$this->name]['widget'] != 'universalchooser')
+                {
+                    return null;
+                }
+                $class = $this->storage->_schema->fields[$this->name]['widget_config']['class'];
+                $titlefield = $this->storage->_schema->fields[$this->name]['widget_config']['titlefield'];
+                $object = new $class($key);
+                if (!$object)
+                {
+                    return null;
+                }
+                return $object->$titlefield;
+            }
         }
 
         if ($this->option_callback === null)
@@ -329,22 +349,20 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
      * Converts storage format to live format, all invalid keys are dropped, and basic validation
      * is done to ensure constraints like allow_multiple are met.
      */
-    function convert_from_storage ($source)
+    function convert_from_storage($source)
     {
         $this->selection = Array();
-        $this->others = '';
-
+        $this->others = Array();
+        
         if (   $source === false
             || $source === null)
         {
             // We are fine at this point.
             return;
         }
-
         if ($this->allow_multiple)
         {
             // In multiselect mode, we need to convert as per type setting.
-
             $source = $this->_convert_multiple_from_storage($source);
         }
         else
@@ -380,14 +398,8 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
             }
             else if ($this->allow_other)
             {
-                if ($this->others)
-                {
-                    $this->others .= ", {$key}";
-                }
-                else
-                {
-                    $this->others = $key;
-                }
+                $this->others[] = $key;
+
                 if (! $this->allow_multiple)
                 {
                     // Whatever happens, in this mode we only have one key.
@@ -418,9 +430,9 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
         else
         {
             if (   $this->allow_other
-                && $this->others)
+                && !empty($this->others))
             {
-                return $this->others;
+                return $this->others[0];
             }
             else
             {
@@ -449,6 +461,12 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
         switch ($this->multiple_storagemode)
         {
             case 'serialized':
+            case 'array':
+                if (   !is_array($source)
+                    && empty($source))
+                {
+                    $source = array();
+                }
                 return $source;
 
             case 'imploded':
@@ -473,6 +491,9 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
     {
         switch ($this->multiple_storagemode)
         {
+            case 'array':
+                return $this->selection;
+                
             case 'serialized':
                 if ($this->others)
                 {
@@ -511,6 +532,13 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
 
         if ($this->others)
         {
+            if (is_string($this->others))
+            {                
+                $this->others = array
+                (
+                    $this->others => $this->others,
+                );
+            }
             $options = array_merge($this->selection, $this->others);
         }
         else
@@ -606,8 +634,8 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
 
         return true;
     }
-
-    function convert_to_html()
+    
+    function combine_values()
     {
         $selection = Array();
         foreach($this->selection as $item)
@@ -616,13 +644,26 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
         }
         if ($this->others)
         {
-            $values = array_merge($selection, Array($this->others));
+            if (is_array($this->others))
+            {
+                $values = array_merge($selection, $this->others);
+            }
+            else
+            {
+                $values = array_merge($selection, Array($this->others));
+            }
         }
         else
         {
             $values = $selection;
         }
-        return htmlspecialchars(implode($values, ', '));
+        return $values;
+    }
+
+    function convert_to_html()
+    {
+        $values = $this->combine_values();
+        return implode($values, ', ');
     }
 
 }

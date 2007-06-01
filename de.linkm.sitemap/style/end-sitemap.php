@@ -1,1 +1,0 @@
-<?php global $view_meta; ?>

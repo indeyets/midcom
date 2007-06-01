@@ -23,6 +23,10 @@ Sort topics
 The articles in this topic cannot be sorted
 ---STRINGEND
 
+---STRING Welcome
+Welcome
+---STRINGEND
+
 ---STRING are you sure to delete
 Are you sure you want to delete this Topic with all its descendants?
 ---STRINGEND
@@ -175,6 +179,10 @@ Topic Attachments
 Topics first, then articles (by score)
 ---STRINGEND
 
+---STRING topics to delete
+Topic tree to delete
+---STRINGEND
+
 ---STRING type
 Type
 ---STRINGEND
@@ -195,10 +203,7 @@ Go to page not allowed
 Groups which have the permission to view this topic
 ---STRINGEND
 
----STRING topics to delete
-Topic tree to delete
----STRINGEND
----STRING Welcome
-Welcome
+---STRING midcom.admin.aegir
+Aegir administration interface
 ---STRINGEND
 

@@ -15,7 +15,7 @@ class org_openpsa_documents_directory_handler
     var $_datamanagers;
     var $_request_data;
     var $_toolbars = null;
-    
+
     function org_openpsa_documents_directory_handler(&$datamanagers, &$request_data)
     {
         $this->_datamanagers =& $datamanagers;
@@ -33,56 +33,56 @@ class org_openpsa_documents_directory_handler
 
         $topic = new org_openpsa_documents_directory();
         $topic->up = $this->_request_data['directory']->id;
-        
+
         // Set the name by default
         if (array_key_exists('midcom_helper_datamanager_field_extra', $_POST))
         {
             $topic->name = midcom_generate_urlname_from_string($_POST['midcom_helper_datamanager_field_extra']);
         }
-        
+
         $stat = $topic->create();
         if ($stat)
         {
             $this->_request_data['directory'] = new org_openpsa_documents_directory($topic->id);
-            
+
             // Set the component
             // FIXME: For some reason the regular parameter method doesn't work for non-admins here
             $this->_request_data['directory']->set_parameter('midcom', 'component', 'org.openpsa.documents');
-            
+
             $result["storage"] =& $this->_request_data['directory'];
             $result["success"] = true;
             return $result;
         }
         return null;
-    }    
+    }
 
     function _handler_directory_edit($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_do('midgard:update', $this->_request_data['directory']);
-        
+
         if (!$this->_datamanagers['directory']->init($this->_request_data['directory']))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "Failed to initialize datamanager for directory.");
-            // This will exit   
-        }        
-                      
+            // This will exit
+        }
+
         switch ($this->_datamanagers['directory']->process_form()) {
             case MIDCOM_DATAMGR_EDITING:
                 $this->_view = "edit";
 
                 // Add toolbar items
                 org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
-                        
+
                 return true;
 
             case MIDCOM_DATAMGR_SAVED:
                 // TODO: Update the URL name?
-                    
-                // Update the Index 
+
+                // Update the Index
                 $indexer =& $_MIDCOM->get_service('indexer');
                 $indexer->index($this->_datamanagers['directory']);
-                        
+
                 $this->_view = "default";
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
                 // This will exit()
@@ -91,7 +91,7 @@ class org_openpsa_documents_directory_handler
                 $this->_view = "default";
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
                 // This will exit()
-                
+
             case MIDCOM_DATAMGR_FAILED:
                 $this->errstr = "Datamanager: " . $GLOBALS["midcom_errstr"];
                 $this->errcode = MIDCOM_ERRCRIT;
@@ -103,56 +103,56 @@ class org_openpsa_documents_directory_handler
     function _show_directory_edit($handler_id, &$data)
     {
         $this->_request_data['directory_dm'] = $this->_datamanagers['directory'];
-        midcom_show_style("show-directory-edit");    
+        midcom_show_style("show-directory-edit");
     }
 
     function _handler_directory_new($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_do('midgard:create', $this->_request_data['directory']);
-            
+
         if (!$this->_datamanagers['directory']->init_creation_mode("default",$this,"_creation_dm_callback"))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "Failed to initialize datamanger in creation mode for schema 'default'.");
-            // This will exit   
+            // This will exit
         }
-        
+
         // Add toolbar items
         org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
-        
+
         switch ($this->_datamanagers['directory']->process_form()) {
             case MIDCOM_DATAMGR_CREATING:
                 debug_add('First call within creation mode');
                 break;
-            
+
             case MIDCOM_DATAMGR_EDITING:
-            case MIDCOM_DATAMGR_SAVED:            
+            case MIDCOM_DATAMGR_SAVED:
                 debug_add("First time submit, the DM has created an object");
-                                
+
                 // Update the URL name
                 // $this->_request_data['directory']->name = midcom_generate_urlname_from_string($this->_request_data['directory']->extra);
                 // $this->_request_data['directory']->update();
-                
+
                 // Index the directory
                 $indexer =& $_MIDCOM->get_service('indexer');
                 $indexer->index($this->_datamanagers['directory']);
-                                
+
                 // Relocate to the new directory view
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                     . $this->_request_data["directory"]->name. "/");
                 break;
-            
+
             case MIDCOM_DATAMGR_CANCELLED_NONECREATED:
                 debug_add('Cancel without anything being created, redirecting to the welcome screen.');
                 $_MIDCOM->relocate('');
                 // This will exit
-            
+
             case MIDCOM_DATAMGR_CANCELLED:
                 $this->errcode = MIDCOM_ERRCRIT;
                 $this->errstr = 'Method MIDCOM_DATAMGR_CANCELLED unknown for creation mode.';
                 debug_pop();
                 return false;
-            
+
             case MIDCOM_DATAMGR_FAILED:
             case MIDCOM_DATAMGR_CREATEFAILED:
                 debug_add('The DM failed critically, see above.');
@@ -160,15 +160,15 @@ class org_openpsa_documents_directory_handler
                 $this->errcode = MIDCOM_ERRCRIT;
                 debug_pop();
                 return false;
-            
+
             default:
                 $this->errcode = MIDCOM_ERRCRIT;
                 $this->errstr = 'Method unknown';
                 debug_pop();
                 return false;
-            
+
         }
-        
+
         debug_pop();
         return true;
 
@@ -180,20 +180,22 @@ class org_openpsa_documents_directory_handler
         midcom_show_style("show-directory-new");
     }
 
-    
+
     function _handler_directory($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
-    
+
         // Add toolbar items
         if ($_MIDCOM->auth->can_do('midgard:create', $this->_request_data['directory']))
         {
             $this->_toolbars->top->add_item(
-                Array(                    MIDCOM_TOOLBAR_URL => 'document_metadata/new/',
+                Array(
+                    MIDCOM_TOOLBAR_URL => 'document_metadata/new/',
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('new document'),
                     MIDCOM_TOOLBAR_HELPTEXT => '',
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
-                    MIDCOM_TOOLBAR_ENABLED => true,                )
+                    MIDCOM_TOOLBAR_ENABLED => true,
+                )
             );
             $this->_toolbars->top->add_item(
                 Array(
@@ -203,7 +205,7 @@ class org_openpsa_documents_directory_handler
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-dir.png',
                     MIDCOM_TOOLBAR_ENABLED => true,
                 )
-            );    
+            );
         }
         if ($_MIDCOM->auth->can_do('midgard:update', $this->_request_data['directory']))
         {
@@ -215,15 +217,15 @@ class org_openpsa_documents_directory_handler
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                     MIDCOM_TOOLBAR_ENABLED => true,
                 )
-            );    
+            );
         }
-    
+
         return true;
     }
-    
+
     function _show_directory($handler_id, &$data)
     {
-        debug_push('_show_directory');    
+        debug_push('_show_directory');
         midcom_show_style("show-directory-header");
         $documents = new org_openpsa_document();
         $documents->topic = $this->_request_data['directory']->id;
@@ -232,19 +234,19 @@ class org_openpsa_documents_directory_handler
         $qb->add_constraint('topic', '=', $this->_request_data['directory']->id);
         $qb->add_constraint('nextVersion', '=', 0);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_DOCUMENT);
-        
+
         // Workgroup filtering
         if ($GLOBALS['org_openpsa_core_workgroup_filter'] != 'all')
         {
             debug_add("Filtering documents by workgroup {$GLOBALS['org_openpsa_core_workgroup_filter']}");
             $qb->add_constraint('orgOpenpsaOwnerWg', '=', $GLOBALS['org_openpsa_core_workgroup_filter']);
         }
-        debug_add("Executing Query Builder");        
+        debug_add("Executing Query Builder");
         $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
         if (   is_array($ret)
             && count($ret) > 0)
         {
-            midcom_show_style("show-directory-index-header");        
+            midcom_show_style("show-directory-index-header");
             foreach ($ret as $document)
             {
                 //if ($document)

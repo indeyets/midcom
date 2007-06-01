@@ -10,7 +10,7 @@ $incident_type = $GLOBALS["view_incident_type"];
 $data = $view_datamanager->get_array();
 $title = $view_l10n->get("view incident");
 
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
 
 <h2>&(title);</h2>

@@ -1,9 +1,9 @@
-                   org.openpsa.imp Changelog
+org.openpsa.imp Changelog
                    ----------------------------
 Legend:
 - All items marked with "!" represent a major API-Change that is
   not guaranteed to be backwards compatible to previous versions
-  which might even break existing functionality. 
+  which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
 2006-02-15 rambo
@@ -23,5 +23,5 @@ Legend:
   + Added support for topic level server configuration
 
 2005-07-29 rambo
-  + created first workable version, some polishing and localizations 
+  + created first workable version, some polishing and localizations
     needed

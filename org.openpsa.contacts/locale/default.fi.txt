@@ -1,6 +1,6 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.fi.txt,v 1.7 2006/06/08 14:17:53 rambo Exp $
+---CVS $Id$
 ---LANGUAGE fi
 
 ---STRING <title>
@@ -27,6 +27,10 @@ Tyyppi
 matkapuhelin %s
 ---STRINGEND
 
+---STRING choose the person to keep
+Valitse kumpi henkilö säilytetään. Voit myös valita myöhemmin tai säilyttää molemmat.
+---STRINGEND
+
 ---STRING city
 Kaupunki
 ---STRINGEND
@@ -37,6 +41,10 @@ Asiakas
 
 ---STRING company id
 Y-tunnus
+---STRINGEND
+
+---STRING competence areas
+Osaamisalueet
 ---STRINGEND
 
 ---STRING contact information
@@ -55,6 +63,10 @@ Yhteyshenkilöt
 Maa
 ---STRINGEND
 
+---STRING create account
+Luo käyttäjätunnus
+---STRINGEND
+
 ---STRING create event
 Luo tapahtuma
 ---STRINGEND
@@ -71,12 +83,28 @@ Luo henkilö
 Luo aliorganisaatio
 ---STRINGEND
 
+---STRING customers invoices
+Asiakkaan laskut
+---STRINGEND
+
 ---STRING daughter organization
 Tytäryhtiö
 ---STRINGEND
 
+---STRING dbe service id
+DBE-palvelutunniste
+---STRINGEND
+
+---STRING decide later
+Päätä myöhemmin
+---STRINGEND
+
 ---STRING department
 Osasto
+---STRINGEND
+
+---STRING digital business ecosystem
+Digital Business Ecosystem -verkosto
 ---STRINGEND
 
 ---STRING edit
@@ -103,16 +131,44 @@ sähköposti %s
 Salli tapahtumien luonti ryhmäkalenteriin
 ---STRINGEND
 
+---STRING enable campaign creation
+Salli kampanjoiden luonti
+---STRINGEND
+
 ---STRING enable contact creation
 Salli yhteyshenkilöiden luonti
+---STRINGEND
+
+---STRING enable editing campaigns created by others
+Salli toisten luomien kampanjoiden muokkaus
 ---STRINGEND
 
 ---STRING enable editing contacts created by others
 Salli muiden luomien yhteyshenkilöiden muokkaus
 ---STRINGEND
 
+---STRING enable editing invoices created by others
+Salli toisten luomien laskujen muokkaus
+---STRINGEND
+
+---STRING enable editing organizations created by others
+Salli muiden luomien organisaatioiden muokkaus
+---STRINGEND
+
+---STRING enable invoice creation
+Salli laskujen luonti
+---STRINGEND
+
+---STRING enable organization creation
+Salli organisaatioiden luonti
+---STRINGEND
+
 ---STRING enable project creation
 Salli juuritason projektien luonti
+---STRINGEND
+
+---STRING enable salesproject creation
+Salli myyntiprojektien luonti
 ---STRINGEND
 
 ---STRING failed to create user account, reason
@@ -139,8 +195,24 @@ Kotipuhelin
 Laskutusosoite
 ---STRINGEND
 
+---STRING invoicing target percentage
+Tavoiteltu laskutusprosentti
+---STRINGEND
+
 ---STRING jabber id
 Jabber-tunnus
+---STRINGEND
+
+---STRING job title
+Titteli
+---STRINGEND
+
+---STRING keep both
+Säilytä molemmat
+---STRINGEND
+
+---STRING keep this
+Säilytä tämä
 ---STRINGEND
 
 ---STRING lastname
@@ -153,6 +225,14 @@ Logo
 
 ---STRING me
 Minä
+---STRINGEND
+
+---STRING member
+Organisaation jäsen
+---STRINGEND
+
+---STRING merge persons
+Yhdistä päällekkäiset henkilöt
 ---STRINGEND
 
 ---STRING mobile phone
@@ -173,6 +253,14 @@ Uusi henkilö
 
 ---STRING no account
 Ei käyttäjätunnusta
+---STRINGEND
+
+---STRING no duplicates found
+Ei päällekkäisyyksiä
+---STRINGEND
+
+---STRING no more duplicates to merge found
+Päällekkäisyyksiä, joiden muuttamiseen sinulla on oikeudet, ei enää löydy
 ---STRINGEND
 
 ---STRING notes
@@ -219,6 +307,10 @@ Salasanat eivät täsmää!
 Käyttöoikeudet
 ---STRINGEND
 
+---STRING person
+Henkilö
+---STRINGEND
+
 ---STRING persons
 Henkilöt
 ---STRINGEND
@@ -257,6 +349,10 @@ Hae
 
 ---STRING skype name
 Skype-tunnus
+---STRINGEND
+
+---STRING store as plain text
+Tallenna selkokielisenä
 ---STRINGEND
 
 ---STRING street address
@@ -299,7 +395,7 @@ Viikottaiset työtunnit
 Työpuhelin
 ---STRINGEND
 
----STRING invoicing target percentage
-Tavoiteltu laskutusprosentti
+---STRING user account for %s
+Käyttäjätunnus henkilölle %s
 ---STRINGEND
 

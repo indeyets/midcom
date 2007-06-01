@@ -1,7 +1,7 @@
 <?php
 // Available request keys: persons, person, datamanager, view_url
 
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+// $data =& $_MIDCOM->get_custom_context_data('request_data');
 $view = $data['datamanager']->get_content_html();
 ?>
 <td valign="bottom">

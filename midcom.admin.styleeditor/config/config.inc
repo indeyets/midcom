@@ -1,7 +1,7 @@
-
-"schemadb_style"       => "file:/midcom/admin/styleeditor/config/schemadb_style.inc",
-"schemadbs"      => Array (
-    "file:/midcom/admin/styleeditor/config/schemadb_style.inc" => "Style editor"
+'text_types' => array
+(
+    'text/css'        => 'cascading style sheet',
+    'text/javascript' => 'javascript',
+    'text/plain'      => 'plain text',
+    'text/xml'        => 'xml',
 ),
-
-

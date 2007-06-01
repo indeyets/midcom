@@ -9,7 +9,7 @@
 
 /**
  * org.openpsa.reports site interface class.
- * 
+ *
  * Reporting interfaces to various org.openpsa components
  */
 class org_openpsa_reports_viewer extends midcom_baseclasses_components_request
@@ -19,78 +19,67 @@ class org_openpsa_reports_viewer extends midcom_baseclasses_components_request
     /*
     var $_contacts_handler = null;
     */
-    
+
     /**
      * Constructor.
      */
     function org_openpsa_reports_viewer($topic, $config)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         parent::midcom_baseclasses_components_request($topic, $config);
+    }
 
+    function _on_initialize()
+    {
         // Always run in uncached mode
         $_MIDCOM->cache->content->no_cache();
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $components = org_openpsa_reports_viewer::available_component_generators();
+        foreach ($components as $component => $loc)
+        {
+            $parts = explode('.', $component);
+            $last = array_pop($parts);
+            // Match /xxx/get
+            $this->_request_switch["{$last}_report_get"] = array(
+                'fixed_args' => array($last, 'get'),
+                'handler' => array("org_openpsa_reports_handler_{$last}_report", 'generator_get'),
+            );
 
-        // Load datamanagers for main classes
-        $this->_initialize_datamanager('projects', $this->_config->get('schemadb_queryform_projects'));
-        /*
-        $this->_initialize_datamanager('contacts', $this->_config->get('schemadb_queryform_contacts'));
-        */
+            // Match /xxx/<guid>/<filename>
+            $this->_request_switch["{$last}_report_guid_file"] = array
+            (
+                'fixed_args' => array($last),
+                'variable_args' => 2,
+                'handler' => array("org_openpsa_reports_handler_{$last}_report", 'generator'),
+            );
 
-        // Load handler classes
-        $this->_projects_handler = new org_openpsa_reports_projects_handler(&$this->_datamanagers, &$this->_request_data);
-        /*
-        $this->_contacts_handler = new org_openpsa_reports_contacts_handler(&$this->_datamanagers, &$this->_request_data);
-        */
-        
-        //TODO: Create the report switches dynamically (when having more than one handler class)
+            // Match /xxx/<guid>
+            $this->_request_switch["{$last}_report_guid"] = array
+            (
+                'fixed_args' => array($last),
+                'variable_args' => 1,
+                'handler' => array("org_openpsa_reports_handler_{$last}_report", 'generator'),
+            );
 
-        // Match /projects/get
-        $this->_request_switch[] = array(
-            'fixed_args' => array ('projects', 'get'),
-            'handler' => array(&$this->_projects_handler, 'report_generator_get'),
-        );
-
-        // Match /projects/<guid>/<filename>
-        $this->_request_switch[] = array(
-            'fixed_args' => 'projects',
-            'variable_args' => 2,
-            'handler' => array(&$this->_projects_handler, 'report_generator'),
-        );
-
-        // Match /projects/<guid>
-        $this->_request_switch[] = array(
-            'fixed_args' => 'projects',
-            'variable_args' => 1,
-            'handler' => array(&$this->_projects_handler, 'report_generator'),
-        );
-
-        // Match /projects
-        $this->_request_switch[] = array(
-            'fixed_args' => 'projects',
-            'handler' => array(&$this->_projects_handler, 'query_form'),
-        );
-
-        /*
-        // Match /contacts
-        $this->_request_switch[] = array(
-            'fixed_args' => 'contacts',        
-            'handler' => array(&$this->_contacts_handler, 'query_form'),
-        );
-        */
+            // Match /xxx
+            $this->_request_switch["{$last}_report"] = array
+            (
+                'fixed_args' => array($last),
+                'handler' => array("org_openpsa_reports_handler_{$last}_report", 'query_form'),
+            );
+        }
 
         // Match /csv/<filename>
-        $this->_request_switch[] = array(
+        $this->_request_switch['csv_export'] = array(
             'fixed_args'    => 'csv',
             'variable_args' => 1,
             'handler'       => 'csv',
         );
 
         // Match /
-        $this->_request_switch[] = array(
+        $this->_request_switch['frontpage'] = array(
             'handler' => 'frontpage'
         );
-        
+
         debug_pop();
         return true;
     }
@@ -98,7 +87,7 @@ class org_openpsa_reports_viewer extends midcom_baseclasses_components_request
     function _populate_toolbar()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         /*
         //Add icon for user settings
         $GLOBALS['org_openpsa_core_toolbar']->add_item(Array(
@@ -109,27 +98,7 @@ class org_openpsa_reports_viewer extends midcom_baseclasses_components_request
             MIDCOM_TOOLBAR_ENABLED => true
         ));
         */
-        
-        debug_pop();
-        return true;
-    }
 
-    function _initialize_datamanager($type, $schemadb_snippet)
-    {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        // Load schema database snippet or file
-        debug_add("Loading Schema Database", MIDCOM_LOG_DEBUG);
-        $schemadb_contents = midcom_get_snippet_content($schemadb_snippet);
-        eval("\$schemadb = Array ( {$schemadb_contents} );");
-        // Initialize the datamanager with the schema
-        $this->_datamanagers[$type] = new midcom_helper_datamanager($schemadb);
-
-        if (!$this->_datamanagers[$type]) {
-            debug_pop();
-            $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
-            // This will exit. 	 
-        }
-        
         debug_pop();
         return true;
     }
@@ -140,18 +109,18 @@ class org_openpsa_reports_viewer extends midcom_baseclasses_components_request
     function _handler_csv($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         if ( !isset($_POST['org_openpsa_reports_csv']) )
         {
             debug_add('Variable org_openpsa_reports_csv not set in _POST, aborting');
             debug_pop();
             return false;
         }
-        
+
         //We're outputting CSV
         $_MIDCOM->skip_page_style = true;
         $_MIDCOM->cache->content->content_type('application/csv');
-        
+
         debug_pop();
         return true;
     }
@@ -159,42 +128,74 @@ class org_openpsa_reports_viewer extends midcom_baseclasses_components_request
     function _show_csv($handler_id, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         echo $_POST['org_openpsa_reports_csv'];
-        
-        debug_pop();
-        return true;
-    }
-    
-    function _handler_frontpage($handler_id, $args, &$data)
-    {
-        debug_push_class(__CLASS__, __FUNCTION__);
-                
-        //TODO: Determine "best" report to redirect to, now goes to projects as it's the only one implemented.
-        
-        if ($no_op = true)
-        {
-            debug_pop();
-            $_MIDCOM->relocate( $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
-                                . 'projects/');
-            //This will exit
-        }
 
         debug_pop();
         return true;
     }
-    
-    
-    /**
-     * We will no longer hit this method, but kept in case we decided redirecting is stupid or something...
-     */
-    function _show_frontpage($handler_id, &$data)
+
+    function _handler_frontpage($handler_id, $args, &$data)
     {
+        $_MIDCOM->auth->require_valid_user();
         debug_push_class(__CLASS__, __FUNCTION__);
-        
-        midcom_show_style("show-frontpage");
-        
+        $nap = new midcom_helper_nav();
+        $data['nap_node'] = $nap->get_node($nap->get_current_node());
+        $data['available_components'] = org_openpsa_reports_viewer::available_component_generators();
+
         debug_pop();
         return true;
     }
+
+    function _show_frontpage($handler_id, &$data)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+
+        midcom_show_style('show-frontpage');
+
+        debug_pop();
+        return true;
+    }
+
+    function available_component_generators()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        if (!isset($GLOBALS['available_component_generators_components_checked']))
+        {
+            $GLOBALS['available_component_generators_components_checked'] = false;
+        }
+        $components_checked =& $GLOBALS['available_component_generators_components_checked'];
+        if (!isset($GLOBALS['available_component_generators_components']))
+        {
+            $GLOBALS['available_component_generators_components'] = array
+            (
+                // TODO: better localization strings
+                'org.openpsa.projects' => $_MIDCOM->i18n->get_string('org.openpsa.projects', 'org.openpsa.projects'),
+                'org.openpsa.sales' => $_MIDCOM->i18n->get_string('org.openpsa.sales', 'org.openpsa.sales'),
+                //'org.openpsa.directmarketing' => $_MIDCOM->i18n->get_string('org.openpsa.directmarketing', 'org.openpsa.reports'),
+            );
+        }
+        $components =& $GLOBALS['available_component_generators_components'];
+        if ($components_checked)
+        {
+            reset($components);
+            debug_pop();
+            return $components;
+        }
+        foreach ($components as $component => $loc)
+        {
+            $node = midcom_helper_find_node_by_component($component);
+            if (   empty($node)
+                || !$node[MIDCOM_NAV_OBJECT]->can_do('midgard:read'))
+            {
+                debug_add("node for component '{$component}' not found or accessible");
+                unset ($components[$component]);
+            }
+        }
+        $components_checked = true;
+        reset($components);
+        debug_pop();
+        return $components;
+    }
+
 }

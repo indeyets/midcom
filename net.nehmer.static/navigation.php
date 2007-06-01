@@ -71,10 +71,12 @@ class net_nehmer_static_navigation extends midcom_baseclasses_components_navigat
         $result = $qb->execute();
 
         // Prepare everything
-        $leaves = array ();
+        $leaves = array();
 
         foreach ($result as $article)
         {
+            $metadata =& midcom_helper_metadata::retrieve($article);
+            
             $leaves[$article->id] = array
             (
                 MIDCOM_NAV_SITE => Array
@@ -85,10 +87,11 @@ class net_nehmer_static_navigation extends midcom_baseclasses_components_navigat
                 MIDCOM_NAV_ADMIN => null,
                 MIDCOM_NAV_GUID => $article->guid,
                 MIDCOM_NAV_OBJECT => $article,
-                MIDCOM_META_CREATOR => $article->creator,
-                MIDCOM_META_EDITOR => $article->revisor,
-                MIDCOM_META_CREATED => $article->created,
-                MIDCOM_META_EDITED => $article->revised
+                MIDCOM_NAV_NOENTRY => (bool) $metadata->get('navnoentry'),
+                MIDCOM_META_CREATOR => $metadata->get('creator'),
+                MIDCOM_META_EDITOR => $metadata->get('revisor'),
+                MIDCOM_META_CREATED => $metadata->get('created'),
+                MIDCOM_META_EDITED => $metadata->get('edited')
             );
 
         }
@@ -116,14 +119,14 @@ class net_nehmer_static_navigation extends midcom_baseclasses_components_navigat
         */
         $hidden = false;
 
-        // Get latest article
+        // Get latest article but skip using ACL checks
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_topic->id);
-        $qb->add_order('revised', 'DESC');
+        $qb->add_order('metadata.revised', 'DESC');
         $qb->set_limit(1);
-        $result = $qb->execute();
+        $result = $qb->execute_unchecked();
         if (   $result
-            && $result[0]->revised > $this->_topic->revised)
+            && $result[0]->metadata->revised > $this->_topic->metadata->revised)
         {
             $revised = $result[0];
         }
@@ -138,10 +141,10 @@ class net_nehmer_static_navigation extends midcom_baseclasses_components_navigat
             MIDCOM_NAV_NAME => $this->_topic->extra,
             MIDCOM_NAV_NOENTRY => $hidden,
             MIDCOM_NAV_CONFIGURATION => $this->_config,
-            MIDCOM_META_CREATOR => $this->_topic->creator,
-            MIDCOM_META_EDITOR => $revised->revisor,
-            MIDCOM_META_CREATED => $this->_topic->created,
-            MIDCOM_META_EDITED => $revised->revised
+            MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
+            MIDCOM_META_EDITOR => $revised->metadata->revisor,
+            MIDCOM_META_CREATED => $this->_topic->metadata->created,
+            MIDCOM_META_EDITED => $revised->metadata->revised
         );
     }
 
@@ -183,7 +186,7 @@ class net_nehmer_static_navigation extends midcom_baseclasses_components_navigat
             debug_add('Failed to open symlink content topic, (might also be an invalid object) last Midgard Error: ' . mgd_errstr(),
                 MIDCOM_LOG_ERROR);
             debug_pop();
-            $_MIDCOM->generate_error('Failed to open symlink content topic.');
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Failed to open symlink content topic {$guid}.");
             // This will exit.
         }
 

@@ -1,17 +1,89 @@
-                   org.openpsa.directmarketing Changelog
+org.openpsa.directmarketing Changelog
                    -------------------------------------
 Legend:
 - All items marked with "!" represent a major API-Change that is
   not guaranteed to be backwards compatible to previous versions
-  which might even break existing functionality. 
+  which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
-TODO:
-  - message send check the (smart campaign) last synch timestamp and set some configurable thresshold ?
-  - display (smart campaign) last synch time in the campaign view
-  - (smart campaign) "synch now" button (without having to go via the rules edit which forces synch)
-  - UI for delayed send
-  - allowed domains configuration for logger/redirect
+2007-03-08 bergie
+  + Fixed leaf activation in navigation
+  + Fixed breadcrumbs in many places
+  + Fixed tester group person removal
+
+2007-02-27 rambo
+  + message report can now be grouped by "market segment"
+  - fixed a bug where those that have clicked a link were displayed twice as recipients
+  - fixed a bug in "create campaign from link" (didn't remember to change redirect url after DM2 refactoring)
+
+2007-01-26 rambo
+  ! finalized port to Datamanager 2
+
+2007-01-08 bergie
+  ! Started port to Datamanager2
+
+2006-12-12 rambo
+  - converted message send to always get fresh QB instance for each chunk
+  + added possibility to add parameters to message receipts created via the member helper
+  + added UI messages for error output when sending messages in "live" mode (test group being an example)
+  + added logging of failed sends as a new type of message receipt.
+
+2006-11-30 rambo
+  ! started converting to collector based parent guid methods (requires midgard 1.8)
+
+2006-10-18 rambo
+  - CSV export for smart campaigns too
+  - IE fixes for rule editor
+  - localizations
+  + support for group member property/param seach in rule editor
+  - CSS tweaks regarding the rule editor
+  - version bump
+
+2006-10-17 rambo
+  + New string substitutions in email sending
+  - refactored rule generation to separate methods
+  + support for expanding groups and group parameters to smart campaign rule resolver
+  + possibility to skip embedding images in HTML emails
+  - based smart-campaign rule editor in usable condition
+  - localizations
+  - version bump
+
+2006-10-16 rambo
+  + New string substitutions in email sending
+
+2006-10-12 rambo
+  - DOM based smart-campaign rule editor continued
+
+2006-10-11 rambo
+  + DOM based smart-campaign rule editor (for simple rules)
+    (does not yet actually make rules)
+  - renamed the old rule editor to advanced editor.
+
+2006-10-09 bergie & rambo
+  + Finalized CSV importing and matching UI (bergie)
+  + Schema based CSV export (rambo)
+  - version bump (rambo)
+
+2006-09-19 rambo
+  + added total % of recipients click count to message report
+
+2006-09-18 rambo
+  + smart campaign creation from message report
+  - message report localizations
+  - state to manifest, version bump
+
+2006-09-15 rambo
+  - message report continued
+  - moved array2code to org.openpsa.helpers
+
+2006-09-14 rambo
+  + started work on message report (statistics on send and link logger data)
+  + message sendStarted and sendCompleted get some values again (how accurate or
+    usefull they actually are is a different matter)
+  + new classes supported in smart-campaign rules
+
+2006-08-29 rambo
+  + added support for org.openpsa.contacts person merge
 
 2006-07-06 rambo
   - fixed the ACL check in create message
@@ -54,7 +126,7 @@ TODO:
   + Test-mode outgoing emails subject gets prefixed with "[TEST] "
 
 2006-03-29 rambo
-  - fixed a bug in SMS background sending (would not get content or parameters 
+  - fixed a bug in SMS background sending (would not get content or parameters
     properly)
 
 2006-03-27 rambo
@@ -114,7 +186,7 @@ TODO:
   - fixed campaign schema for workgroup filtering
   - update PEAR packaging information in manifest
   - refactored toolbars to use top/bottom, also DM save/cancel buttons now use the helper
-    
+
 
 2006-02-14 rambo
   + unsubscribe from all campaigns
@@ -127,7 +199,7 @@ TODO:
 
 2006-02-08 rambo
   + background send refactoring complete.
-  + delayed sending supported via url method (add a string parseable with 
+  + delayed sending supported via url method (add a string parseable with
     strtotime after ../send/).
 
 2006-02-07 rambo

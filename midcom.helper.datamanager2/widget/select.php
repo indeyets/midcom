@@ -154,7 +154,7 @@ class midcom_helper_datamanager2_widget_select extends midcom_helper_datamanager
                 $this->name => Array
                 (
                     'select' => $this->_type->selection,
-                    'other' => $this->_type->others
+                    'other' => implode(',', $this->_type->others)
                 ),
             );
         }
@@ -188,7 +188,7 @@ class midcom_helper_datamanager2_widget_select extends midcom_helper_datamanager
         $this->_type->selection = $selection;
         if ($this->_type->allow_other)
         {
-            $this->_type->others = $results[$this->name]['other'];
+            $this->_type->others = explode(',', $results[$this->name]['other']);
         }
     }
 
@@ -229,7 +229,7 @@ class midcom_helper_datamanager2_widget_select extends midcom_helper_datamanager
                 echo '; ';
             }
             echo $this->_translate($this->othertext) . ': ';
-            echo $this->_type->others;
+            echo implode(',', $this->_type->others);
         }
 
     }

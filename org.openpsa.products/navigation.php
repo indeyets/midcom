@@ -1,6 +1,6 @@
 <?php
 /**
- * @package org.openpsa.products 
+ * @package org.openpsa.products
  * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: navigation.php 3757 2006-07-27 14:32:42Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org

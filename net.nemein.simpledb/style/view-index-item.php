@@ -1,24 +1,32 @@
 <?php
-global $view, $view_columns, $view_name, $view_datamanager;
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
-  <tr>
+<tr>
     <?php
     $i = 0;
-    foreach($view_columns as $key => $field) {
-      ?>
-      <td><?php 
-      if ($view[$key]) {
-        if ($i == 0) {
-          echo "<a href=\"$view_name\">";
-          $view_datamanager->display_view_field($key);
-          echo "</a>";
-        } else {
-          $view_datamanager->display_view_field($key); 
-        }
-      }
-      ?></td>
-      <?php
-      $i++;
+    foreach($data['columns'] as $key => $field) 
+    {
+        ?>
+        <td>
+            <?php 
+            if ($data['view'][$key]) 
+            {
+                if ($i == 0) 
+                {
+                    echo "<a href=\"{$prefix}{$data['view_name']}\">";
+                    $data['datamanager']->display_view_field($key);
+                    echo "</a>";
+                } 
+                else
+                {
+                    $data['datamanager']->display_view_field($key); 
+                }
+            }
+            $i++;
+            ?>
+        </td>
+        <?php        
     }
     ?>
-  </tr>
+</tr>

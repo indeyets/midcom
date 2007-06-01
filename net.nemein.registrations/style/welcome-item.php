@@ -2,7 +2,7 @@
 // Available request keys:
 // events, event, register_url, registration_url, view_url, registration_allowed, registration_url
 
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $event =& $data['event'];
 // $event_dm =& $event->get_datamanager();
 ?>

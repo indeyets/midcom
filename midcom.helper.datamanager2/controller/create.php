@@ -195,7 +195,12 @@ class midcom_helper_datamanager2_controller_create extends midcom_helper_dataman
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Scriptaculous/scriptaculous.js?effects");
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/midcom.helper.datamanager2/ajax.js");
         
-        if (   array_key_exists('window_mode', $this->ajax_options)
+        if (   array_key_exists('wide_mode', $this->ajax_options)
+            && $this->ajax_options['wide_mode'])
+        {
+            $_MIDCOM->add_jsonload("var dm2AjaxEditor_{$this->form_identifier} = new dm2AjaxEditor('{$this->form_identifier}', true, false, true);");
+        }
+        elseif (   array_key_exists('window_mode', $this->ajax_options)
             && $this->ajax_options['window_mode'])
         {
             $_MIDCOM->add_jsonload("var dm2AjaxEditor_{$this->form_identifier} = new dm2AjaxEditor('{$this->form_identifier}', true, true);");
@@ -307,7 +312,7 @@ class midcom_helper_datamanager2_controller_create extends midcom_helper_dataman
             {
                 // In case that the type validation fails, we bail with generate_error, until
                 // we have a better defined way-of-life here.
-                $_MIDOM->generate_error(MIDCOM_ERRCRIT,
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     "Failed to save object, type validation failed:\n" . implode("\n", $this->datamanager->validation_errors));
                 // This will exit.
             }
@@ -315,9 +320,15 @@ class midcom_helper_datamanager2_controller_create extends midcom_helper_dataman
             if (   $result == 'save'
                 && ! $this->datamanager->save())
             {
+                // Get the error message
+                $midgard_error = mgd_errstr();
+                
+                // Delete the object as saving failed
+                $this->datamanager->storage->object->delete();
+                
                 // We seem to have a critical error.
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    'Failed to save the data to disk, check the debug level log for more information.');
+                    "Failed to save the data to disk: {$midgard_error}. Check the debug level log for more information.");
                 // This will exit.
             }
         }

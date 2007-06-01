@@ -176,9 +176,9 @@ class midcom_helper_urlparser {
         }
 
         // style inheritance
-        $tmp_style_inherit = $this->_roottopic->parameter("midcom","style_inherit");
+        $tmp_style_inherit = $this->_roottopic->styleInherit;
         if ($tmp_style_inherit) {
-            $tmp_style = $this->_roottopic->parameter("midcom","style");
+            $tmp_style = $this->_roottopic->style;
             if ($tmp_style) {
                 global $midcom_style_inherited;
                 $midcom_style_inherited = $tmp_style;
@@ -283,9 +283,9 @@ class midcom_helper_urlparser {
         array_shift ($this->argv);
 
         // style inheritance
-        $tmp_style_inherit = $this->_curobject->parameter("midcom","style_inherit");
+        $tmp_style_inherit = $this->_curobject->styleInherit;
         if ($tmp_style_inherit) {
-            $tmp_style = $this->_curobject->parameter("midcom","style");
+            $tmp_style = $this->_curobject->style;
             if ($tmp_style) {
                 global $midcom_style_inherited;
                 $midcom_style_inherited = $tmp_style;

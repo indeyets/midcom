@@ -1,3 +1,4 @@
+// This is for a midcom_db_person object
 'person' => array 
 (
     'description' => 'person card',
@@ -11,6 +12,7 @@
             'hidden'      => true,
             'type'        => 'text',
             'widget'      => 'text',
+            'index_method' => 'noindex',
         ),
         'name' => array 
         (
@@ -20,6 +22,7 @@
             'hidden'      => true,
             'type'        => 'text',
             'widget'      => 'text',
+            'index_method' => 'title',
         ),
         'rname' => array 
         (
@@ -29,6 +32,7 @@
             'hidden'      => true,
             'type'        => 'text',
             'widget'      => 'text',
+            'index_method' => 'noindex',
         ),
         
         
@@ -38,20 +42,23 @@
             'type'        => 'text',
             'widget'      => 'text',
             'storage'     => 'firstname',
+            'index_method' => 'noindex',
         ),
         'lastname' => array 
         (
             'title'       => 'lastname',
             'type'        => 'text',
             'widget'      => 'text',
-            'storage'     => 'lastname'
+            'storage'     => 'lastname',
+            'index_method' => 'noindex',
         ),
         'title' => array 
         (
             'title'       => 'job title',
             'type'        => 'text',
             'widget'      => 'text',
-            'storage'     => 'parameter'
+            'storage'     => 'parameter',
+            'index_method' => 'text',
         ),
         'email' => array 
         (
@@ -87,7 +94,64 @@
                 'auto_thumbnail' => Array(150,150),
             ),
             'widget'      => 'image',
-        )
-    )
+        ),
+    ),
+),
 
-)
+// This is for a midcom_db_group object
+'group' => array
+(
+    'description' => 'group card',
+    'fields'      => array
+    (
+        'official' => array
+        (
+            // COMPONENT-RECOMMENDED
+            'title'       => 'official name',
+            'storage'     => 'name',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'required'    => true,
+        ),
+        'email' => array
+        (
+            'title'       => 'email',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'storage'     => 'email',
+            'validation'  => 'email',
+        ),
+        'street' => array
+        (
+            'title'       => 'street address',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'storage'     => 'street',
+        ),
+        'postcode' => array
+        (
+            'title'       => 'postal code',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'storage'     => 'postcode',
+        ),
+        'city' => array
+        (
+            'title'       => 'city',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'storage'     => 'city',
+        ),
+        'description' => array
+        (
+            'title'       => 'description',
+            'type'        => 'text',
+            'type_config' => array
+            (
+                'output_mode' => 'html',
+            ),
+            'widget'      => 'tinymce',
+            'storage'     => 'extra',
+        ),
+    ),
+),

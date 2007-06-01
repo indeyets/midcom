@@ -1,7 +1,5 @@
-<?php
-$view_data =& $_MIDCOM->get_custom_context_data('request_data');
-$view = $view_data['message_dm'];
+<h1><?php echo $data['topic']->extra; ?>: <?php echo $data['view_title']; ?></h1>
+
+<?php 
+$data['controller']->display_form(); 
 ?>
-<div class="main">
-    <?php $view->display_form(); ?>
-</div>

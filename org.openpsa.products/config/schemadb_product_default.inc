@@ -1,6 +1,18 @@
 'default' => array
 (
     'description' => 'product',
+    'validation' => array
+    (
+        /* This fails on updating existing producst (no sensible way to pass current ID)
+        // Validator for code uniqueness
+        'uniquecode' => array
+        (
+            'type'    => 'callback',
+            'message' => 'product with this code already exists',
+            'callback' => array('org_openpsa_products_product_dba','validate_code'),
+        ),
+        */
+    ),
     'fields'      => array
     (
         'code' => Array
@@ -10,8 +22,11 @@
             'storage' => 'code',
             'type'    => 'text',
             'widget'  => 'text',
+            /* see validation block for why this is disabled
+            'validation' => 'uniquecode',
+            */
             'required' => true,
-        ),    
+        ),
         'title' => Array
         (
             // COMPONENT-REQUIRED
@@ -20,6 +35,13 @@
             'required' => true,
             'type' => 'text',
             'widget'  => 'text',
+        ),
+        'tags' => Array
+        (
+            'title' => 'tags',
+            'storage' => null,
+            'type' => 'tags',
+            'widget' => 'text',
         ),
         'productGroup' => Array
         (
@@ -31,6 +53,37 @@
                 'options' => org_openpsa_products_product_group_dba::list_groups(),
             ),
             'widget' => 'select',
+        ),
+        'supplier' => array
+        (
+            'title'   => 'supplier',
+            'storage' => 'supplier',
+            'type' => 'select',
+            'type_config' => array
+            (
+                 'require_corresponding_option' => false,
+                 'options' => array(),
+            ),
+            'widget' => 'universalchooser',
+            'widget_config' => array
+            (
+                'class'       => 'org_openpsa_contacts_group',
+                'component'   => 'org.openpsa.contacts',
+                'titlefield'  => 'official',
+                'idfield'     => 'id',
+                'constraints' => array
+                (
+                ),
+                'searchfields'  => array
+                (
+                    'name',
+                    'official'
+                ),
+                'orders'        => array
+                (
+                    array('official'    => 'ASC'),
+                ),
+            ),
         ),
         'price' => Array
         (
@@ -48,7 +101,7 @@
             (
                 'options' => Array
                 (
-                    'p' => 'piece',       // per piece
+                    'p' => 'piece',   // per piece
                     'h' => 'hour',    // per hour
                     'd' => 'day',     // per day
                     'm' => 'month',   // per month
@@ -85,8 +138,8 @@
             'title' => 'description',
             'storage' => 'description',
             'type' => 'text',
-            'type_config' => Array ( 
-                'output_mode' => 'markdown' 
+            'type_config' => Array (
+                'output_mode' => 'markdown'
             ),
             'widget' => 'textarea',
         ),
@@ -120,20 +173,22 @@
                 (
                     ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_SERVICE   => 'service',
                     ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_GOODS     => 'material goods',
+                    ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_SOLUTION  => 'solution',
                     ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_COMPONENT => 'component',
                 ),
             ),
             'widget' => 'select',
         ),
+        /*
         'start' => Array
         (
             // COMPONENT-REQUIRED
             'title' => 'in market from',
             'storage' => 'start',
             'type' => 'date',
-            'type_config' => Array 
-            ( 
-                'storage_type' => 'UNIXTIME' 
+            'type_config' => Array
+            (
+                'storage_type' => 'UNIXTIME'
             ),
             'widget' => 'jsdate',
             'hidden' => true,
@@ -144,9 +199,9 @@
             'title' => 'in market until',
             'storage' => 'end',
             'type' => 'date',
-            'type_config' => Array 
-            ( 
-                'storage_type' => 'UNIXTIME' 
+            'type_config' => Array
+            (
+                'storage_type' => 'UNIXTIME'
             ),
             'widget' => 'jsdate',
             'hidden' => true,
@@ -165,6 +220,6 @@
                 'area_element'                => 'tr',
             ),
             'widget' => 'composite',
-        ),    
+        ),*/
     )
 ),

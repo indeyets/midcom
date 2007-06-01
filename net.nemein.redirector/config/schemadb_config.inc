@@ -31,6 +31,21 @@
             'config_domain' => 'net.nemein.redirector',
             'config_key'    => 'redirection_url',
         ),
+	    'replace_lang' => array
+	    (
+	     'description' => 'replace LANG with current lang',
+	     'datatype' => 'text',
+	     'location' => 'config',
+	     'config_domain' => 'net.nemein.redirector',
+	     'config_key' => 'replace_lang',
+	     'widget' => 'config_radiobox',
+	     'widget_radiobox_choices' => Array
+	     (
+	      '' => 'default setting',
+	      '1' => 'yes',
+	      '0' => 'no',
+	     ),
+	    ),
         'redirection_code' => array
         (
             'description'   => 'redirection http code',

@@ -3,47 +3,146 @@
 ---CVS $Id$
 ---LANGUAGE en
 
----STRING Message to send to user
-Message to put on top of the mail to the user
+---STRING email
+Email address
 ---STRINGEND
 
----STRING Send mail to submitter
-Should a copy of the email be sendt the submitter of the form?
+---STRING message to show user after the form has been submitted
+Message to show user after the form has been submitted.
 ---STRINGEND
 
----STRING end_message
-Message to show user after the form has been submittet.
----STRINGEND
-
----STRING helptext_message_to_user
-This message is appended on the top of the email sendt to the user if the "send copy to user" item has been ticked off.
----STRINGEND
-
----STRING mail_address_to
-Emailaddress to send the submitted form to
----STRINGEND
-
----STRING mail_adress_help_text
-When the form is submitted, it is emailed to this address.
----STRINGEND
-
----STRING mail_itemgroup
-Form email settings
----STRINGEND
-
----STRING mail_new_item
-Send an email to someone for each new item?
----STRINGEND
-
----STRING topic_introduction
-Text to place over the form
----STRINGEND
-
----STRING topic_introduction_help
-Use this field to add a simple text above the form to help the user fill in the form.
----STRINGEND
-
----STRING end_message_help
+---STRING this message is displayed after the user has submitted the form
 This message is displayed after the user has submitted the form.
 ---STRINGEND
 
+---STRING form settings
+Form settings
+---STRINGEND
+
+---STRING this message is appended on top of the email sent to user
+This message is appended on the top of the email sent to the user if the 'send copy to user' item has been ticked off.
+---STRINGEND
+
+---STRING from address of the email
+From-address of the email
+---STRINGEND
+
+---STRING email address to send the submitted form to
+Email address to send the submitted form to
+---STRINGEND
+
+---STRING email address where the form will be sent
+When the form is submitted, it is emailed to this address.
+---STRINGEND
+
+---STRING form email settings
+Form email settings
+---STRINGEND
+
+---STRING send an email to someone for each new item
+Send an email to someone for each new item?
+---STRINGEND
+
+---STRING should a copy of the email be sent to the submitter of the form
+Should a copy of the email be sent the submitter of the form?
+---STRINGEND
+
+---STRING include submitted data in the message sent to user
+Include submitted data in the message sent to user?
+---STRINGEND
+
+---STRING message of the mail sent to user
+Message to put on top of the mail to the user
+---STRINGEND
+
+---STRING mail subject
+Subject of the email
+---STRINGEND
+
+---STRING message
+Message
+---STRINGEND
+
+---STRING no.odindata.quickform
+Email form
+---STRINGEND
+
+---STRING send
+Send
+---STRINGEND
+
+---STRING text to place over the form
+Text to place over the form
+---STRINGEND
+
+---STRING use this field to add a simple text above the form to help the user fill in the form
+Use this field to add a simple text above the form to help the user fill in the form.
+---STRINGEND
+
+---STRING Message to send to user
+Message to send to user
+---STRINGEND
+
+---STRING Send mail to submitter
+Send mail to submitter
+---STRINGEND
+
+---STRING sending the message failed
+Sending the message failed
+---STRINGEND
+
+---STRING there was an error while sending the message
+There was an error while sending the message, please try again later!
+---STRINGEND
+
+---STRING A simple email form generator
+A simple email form generator
+---STRINGEND
+
+---STRING Time submitted
+Time submitted
+---STRINGEND
+
+---STRING Submit
+Submit
+---STRINGEND
+
+---STRING Reports
+Reports
+---STRINGEND
+
+---STRING Article count
+Article count
+---STRINGEND
+
+---STRING List all
+List all
+---STRINGEND
+
+---STRING Select column to sort with
+Select column to sort with
+---STRINGEND
+
+---STRING List by key
+List by key
+---STRINGEND
+
+---STRING List responces by key
+List responces by key
+---STRINGEND
+
+---STRING Show on screen
+Show on screen
+---STRINGEND
+
+---STRING Show in excel
+Show in excel
+---STRINGEND
+
+---STRING Count
+Count
+---STRINGEND
+
+---STRING Time
+Time
+---STRINGEND

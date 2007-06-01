@@ -19,6 +19,10 @@ tietue
 Hae
 ---STRINGEND
 
+---STRING net.nemein.simpledb
+Yksinkertainen tietokanta
+---STRINGEND
+
 ---STRING no entries
 Tietokanta on tyhjä
 ---STRINGEND
@@ -47,7 +51,46 @@ Yksinkertainen tietokanta
 Tietue
 ---STRINGEND
 
----STRING net.nemein.simpledb
-Yksinkertainen tietokanta
+---STRING really delete entry
+Oletko varma että haluat poistaa tietueen?
 ---STRINGEND
 
+---STRING database entry
+Tietue
+---STRINGEND
+
+---STRING sort order
+Lajittelujärjestys
+---STRINGEND
+
+---STRING database id
+Tietokannan ID
+---STRINGEND
+
+---STRING url name
+Tiedostonimi
+---STRINGEND
+
+---STRING entry name
+Tietueen nimi
+---STRINGEND
+
+---STRING searchable 1
+Etsittävä kenttä 1
+---STRINGEND
+
+---STRING searchable 2
+Etsittävä kenttä 2
+---STRINGEND
+
+---STRING searchable 3
+Etsittävä kenttä 3
+---STRINGEND
+
+---STRING description
+Kuvaus
+---STRINGEND
+
+---STRING export database to excel
+Tuo tietokanta Excel-tiedostoon
+---STRINGEND

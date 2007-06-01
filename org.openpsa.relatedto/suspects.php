@@ -49,14 +49,14 @@ class org_openpsa_relatedto_suspect extends midcom_baseclasses_components_pureco
             }
             unset($ret2, $linkdata);
         }
-        
+
         //TODO: Filter out duplicates (not likely but theoretically possible)
-        
+
         debug_pop();
         return $ret;
     }
-    
-    
+
+
     /**
      * Query all specific component for objects related to given object
      *
@@ -66,7 +66,7 @@ class org_openpsa_relatedto_suspect extends midcom_baseclasses_components_pureco
     {
         $ret = array();
         debug_push_class(__CLASS__, __FUNCTION__);
-        //Make sure we can load and access the component            
+        //Make sure we can load and access the component
         if (!$_MIDCOM->componentloader->is_loaded($component))
         {
             $_MIDCOM->componentloader->load_graceful($component);
@@ -101,7 +101,7 @@ class org_openpsa_relatedto_suspect extends midcom_baseclasses_components_pureco
         //Filter out existing links
         foreach($ret as $k => $linkdata)
         {
-            if ($id = $linkdata['link']->check_db())
+            if ($id = $linkdata['link']->check_db(false))
             {
                 //Essentially same link already exists in db, remove from returned values
                 debug_add("found matching link with #{$id} (skipping), our data \n===\n" . sprint_r($linkdata['link']) . "===\n");
@@ -113,7 +113,7 @@ class org_openpsa_relatedto_suspect extends midcom_baseclasses_components_pureco
         debug_pop();
         return $ret;
     }
-    
+
     /**
      * Helper to fill properties of given $link object from given link object with defaults
      *
@@ -168,5 +168,5 @@ class org_openpsa_relatedto_suspect extends midcom_baseclasses_components_pureco
         }
         debug_pop();
     }
-    
+
 }

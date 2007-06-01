@@ -39,7 +39,7 @@ foreach ($threads as $thread)
     foreach ($posts as $post)
     {
         if (   is_null($latest_post)
-            || $post->created > $latest_post->created)
+            || $post->metadata->published > $latest_post->metadata->published)
         {
             $latest_post = $post;
         }
@@ -48,11 +48,11 @@ foreach ($threads as $thread)
     if (   count($posts) != $thread->posts
         || (   is_object($latest_post)
             && $latest_post->id != $thread->latestpost)
-        || $thread->latestposttime != strtotime($latest_post->created))
+        || $thread->latestposttime != strtotime($latest_post->metadata->published))
     {
         $thread->posts = count($posts);
         $thread->latestpost = $latest_post->id;
-        $thread->latestposttime = strtotime($latest_post->created);
+        $thread->latestposttime = strtotime($latest_post->metadata->published);
         
         echo "Setting post count for thread \"{$thread->title}\" to {$thread->posts} and latest post to #{$thread->latestpost}<br />\n";
         flush();

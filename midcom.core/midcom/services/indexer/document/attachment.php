@@ -96,8 +96,8 @@ class midcom_services_indexer_document_attachment extends midcom_services_indexe
    
     function _process_attachment()
     {
-        $this->creator = mgd_get_person($this->_attachment->author);
-        $this->created = $this->_attachment->created;
+        $this->creator = new midcom_db_person($this->_attachment->metadata->author);
+        $this->created = $this->_attachment->metadata->created;
         $this->editor = $this->creator;
         $this->edited = $this->created;
         $this->author = $this->creator->name;

@@ -1,26 +1,46 @@
-'name' => 'org.openpsa.core',
-'purecode' => true,
-'privileges' =>  Array(),
-'class_definitions' => Array(),
-'version' => '2.0.2',
-'package.xml' => Array(
+
+  'name' => 'org.openpsa.core',
+  'purecode' => true,
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+  ),
+  'version' => '2.0.7beta1',
+  'state' => 'beta',
+  'package.xml' => 
+  array (
     'summary' => 'OpenPsa core library',
     'description' => 'OpenPsa core library',
-    'maintainers' => Array(
-        'rambo' => Array(
-            'name' => 'Eero af Heurlin',
-            'email' => 'eero.afheurlin@iki.fi',
-            'role' => 'lead',
-        ),
-        'bergie' => Array(
-            'name' => 'Henri Bergius',
-            'email' => 'henri.bergius@iki.fi',
-            'role' => 'lead',
-        ),  
+    'maintainers' => 
+    array (
+      'rambo' => 
+      array (
+        'name' => 'Eero af Heurlin',
+        'email' => 'eero.afheurlin@iki.fi',
+        'role' => 'lead',
+      ),
+      'bergie' => 
+      array (
+        'name' => 'Henri Bergius',
+        'email' => 'henri.bergius@iki.fi',
+        'role' => 'lead',
+      ),
     ),
-    'dependencies' => Array(
-        'org.openpsa.helpers'   => Array(),
-        'template_OpenPsa2'   => Array(),
-        'net.nehmer.markdown'   => Array(),
+    'dependencies' => 
+    array (
+      'org.openpsa.helpers' => 
+      array (
+      ),
+      'template_OpenPsa2' => 
+      array (
+      ),
+      'net.nehmer.markdown' => 
+      array (
+      ),
+      'midcom' => 
+      array (
+      ),
     ),
-),
+  ),

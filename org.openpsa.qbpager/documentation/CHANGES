@@ -1,10 +1,18 @@
-                   org.openpsa.qbpager Changelog
+org.openpsa.qbpager Changelog
                    ----------------------------
 Legend:
 - All items marked with "!" represent a major API-Change that is
   not guaranteed to be backwards compatible to previous versions
-  which might even break existing functionality. 
+  which might even break existing functionality.
 - All items marked with "+" represent completly new features.
+
+2006-11-24 rambo
+  - better workaround for references trouble
+  - version bump
+
+2006-11-21 rambo
+  - workaround for 1.8 QB behaviour (where the core object is always referenced)
+  - version bump
 
 2006-04-05 bergie
   + Localized the next/previous links
@@ -28,4 +36,3 @@ Legend:
 
 2005-10-10 rambo
   + initial version, should work as QB replacement, no paging yet, UNTESTED.
-  

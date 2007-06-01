@@ -10,7 +10,6 @@
  * Dummy class stub. The admin class is rarely used these days.
  * @package ${module}
  */
-
 class ${module_class}_admin extends midcom_baseclasses_components_request_admin
 {
 }

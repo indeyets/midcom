@@ -38,16 +38,6 @@ class midgard_admin_sitewizard_handler_sitegroup extends midcom_baseclasses_comp
             // This will exit
         }
         
-        // FIXME: Midgard 1.7 compatibility hack
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
-        {
-            $this->_request_data['17_compatibility'] = false;
-        }
-        else
-        {
-            $this->_request_data['17_compatibility'] = true;
-        }
-        
         // FIXME: For some reason not all 1.7 installs have midgard_quota defined
         if (   $_MIDGARD['config']['quota']
             && class_exists('midgard_quota'))

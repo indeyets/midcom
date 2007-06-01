@@ -14,7 +14,7 @@ else
     $str = $view_l10n->get("edit incident");
 $title = sprintf($str, $incident_type["name"]);
 
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
 
 <h2>&(title);</h2>

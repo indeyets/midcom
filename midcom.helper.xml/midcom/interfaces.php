@@ -26,11 +26,8 @@ class midcom_helper_xml_interface extends midcom_baseclasses_components_interfac
         (
             'toarray.php',
             'objectmapper.php'
-        );
-              
+        );      
     }
-    
-    
 }
 
 ?>

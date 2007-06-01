@@ -17,7 +17,7 @@ class org_openpsa_smslib_clickatell extends org_openpsa_smslib
         $this->client_id = &$this->api_id;
         return true;
     }
-    
+
     /**
      * Returns  (bool)false on error or whatever the GW returns
      * Non-numeric balance should be supposed infinite.
@@ -96,13 +96,13 @@ class org_openpsa_smslib_clickatell extends org_openpsa_smslib
         $url = "{$this->uri}/sendmsg?user={$this->user}&password={$this->password}&api_id={$this->client_id}";
         //Handle required features and set concat to N
         $url .= '&concat=N&req_feat=' . $this->_encode_req_feat();
-        
+
         //TODO: Add support for array of numbers
         //Strip invalid characters from number
         //PONDER: leave + or not ?? (check API, works as is not though)
         $number = preg_replace('/[^0-9]+/', '', $number);
         $url .= "&to={$number}";
-        
+
         //Try to make sure the message is in correct encoding.
         $msg = $this->msg_to_latin1($msg);
         $url .= '&text=' . rawurlencode($msg);
@@ -124,7 +124,7 @@ class org_openpsa_smslib_clickatell extends org_openpsa_smslib
         {
             $url .= "&cliMsgId={$clientid}";
         }
-        
+
         //URL constructed, time to work
         $fp = @fopen($url, 'r');
         $this->_get_http_error($http_response_header);
@@ -149,9 +149,9 @@ class org_openpsa_smslib_clickatell extends org_openpsa_smslib
             debug_pop();
             return false;
         }
-        
+
         //TODO: Parse rest the returned text and get for example message IDs
-        
+
         debug_pop();
         return true;
     }
@@ -168,8 +168,8 @@ class org_openpsa_smslib_clickatell extends org_openpsa_smslib
         {
             $feat_arr[strtoupper($feature)] = true;
         }
-        $feat_arr['FEAT_TEXT'] = true; //Always Force this feature 
-        $feat_arr['FEAT_CONCAT'] = true; //Always Force this feature 
+        $feat_arr['FEAT_TEXT'] = true; //Always Force this feature
+        $feat_arr['FEAT_CONCAT'] = true; //Always Force this feature
         $feat_dec = 0;
         foreach ($feat_arr as $feature => $bool)
         {
@@ -243,7 +243,7 @@ class org_openpsa_smslib_clickatell extends org_openpsa_smslib
                 break;
         }
     }
-    
+
     /**
      * Look for error messages in content and decode them, returns false on no errors found, true on errors found.
      */
@@ -282,7 +282,7 @@ class org_openpsa_smslib_clickatell extends org_openpsa_smslib
                 $this->errstr = $msg;
                 break;
         }
-        
+
         return true;
     }
 }

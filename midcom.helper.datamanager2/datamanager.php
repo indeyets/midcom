@@ -100,6 +100,14 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
      */
     function set_schema($name = null)
     {
+        if (!is_array($this->_schemadb))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("The active schema database is invalid.", MIDCOM_LOG_ERROR);
+            debug_print_r('Schema database in use:', $this->_schemadb);
+            debug_pop();
+            return false;
+        }
         if (   $name !== null
             && ! array_key_exists($name, $this->_schemadb))
         {
@@ -297,6 +305,35 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
     }
 
     /**
+     * Little helper function returning an accociative array of all field values converted to XML
+     * using their default convert_to_csv or convert_to_raw options.
+     *
+     * @return Array All field values in their XML representation indexed by their name.
+     */
+    function get_content_xml()
+    {
+        $result = Array();
+        foreach ($this->schema->field_order as $name)
+        {
+            if (is_a($this->types[$name], 'midcom_helper_datamanager2_type_blobs'))
+            {
+                $result[$name] = explode(',', $this->types[$name]->convert_to_csv());
+            }
+            elseif (is_a($this->types[$name], 'midcom_helper_datamanager2_type_select'))
+            {
+                $this->types[$name]->csv_export_key = true;
+                $this->types[$name]->multiple_storagemode = 'array';
+                $result[$name] = $this->types[$name]->convert_to_storage();
+            }
+            else
+            {
+                $result[$name] = $this->types[$name]->convert_to_storage();
+            }
+        }
+        return $result;
+    }
+
+    /**
      * Little helper function returning an accociative array of all field values converted to CSV
      * using their default convert_to_csv option.
      *
@@ -339,13 +376,17 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
     function display_view()
     {
         // iterate over all types so that they can add their piece to the form
+        echo "<div class=\"midcom_helper_datamanager2_view\">\n";
         foreach ($this->schema->fields as $name => $config)
         {
+            echo "<div class=\"field\">\n";
             echo '<div class="title" style="font-weight: bold;">' . $this->schema->translate_schema_string($this->schema->fields[$name]['title']) . "</div>\n";
-            echo '<div class="value" style="margin-left: 5em;">';
+            echo '<div class="value" style="margin-left: 5em; min-height: 1em;">';
             echo $this->types[$name]->convert_to_html();
             echo "</div>\n";
+            echo "</div>\n";
         }
+        echo "</div>\n";
     }
 
 

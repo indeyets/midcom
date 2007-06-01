@@ -8,6 +8,16 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-05-21 Joonas Bergius
+  - Fixed a problem with username_is_email option.
+
+2007-02-12 bergie
+  ! Switched the component to on-site toolbars
+
+2006-10-26 bergie
+  + Fixed situation where unauthenticated user could trigger error
+    on the profile page
+
 2006-07-17 torben
   - The change username form now changes its names/headings when
     the E-Mail is used as username.

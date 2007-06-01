@@ -12,6 +12,44 @@
             'type' => 'text',
             'widget'  => 'text',
         ),
+        'tags' => Array
+        (
+            'title' => 'tags',
+            'storage' => null,
+            'type' => 'tags',
+            'widget' => 'text',
+        ),
+        'supplier' => array
+        (
+            'title'   => 'supplier',
+            'storage' => 'supplier',
+            'type' => 'select',
+            'type_config' => array
+            (
+                 'require_corresponding_option' => false,
+                 'options' => array(),
+            ),
+            'widget' => 'universalchooser',
+            'widget_config' => array
+            (
+                'class'       => 'org_openpsa_contacts_group',
+                'component'   => 'org.openpsa.contacts',
+                'titlefield'  => 'official',
+                'idfield'     => 'id',
+                'constraints' => array
+                (
+                ),
+                'searchfields'  => array
+                (
+                    'name',
+                    'official'
+                ),
+                'orders'        => array
+                (
+                    array('official'    => 'ASC'),
+                ),
+            ),
+        ),
         'pricePerUnit' => Array
         (
             'title' => 'price per unit',
@@ -107,6 +145,44 @@
             'required' => true,
             'type' => 'text',
             'widget'  => 'text',
+        ),
+        'tags' => Array
+        (
+            'title' => 'tags',
+            'storage' => null,
+            'type' => 'tags',
+            'widget' => 'text',
+        ),
+        'supplier' => array
+        (
+            'title'   => 'supplier',
+            'storage' => 'supplier',
+            'type' => 'select',
+            'type_config' => array
+            (
+                 'require_corresponding_option' => false,
+                 'options' => array(),
+            ),
+            'widget' => 'universalchooser',
+            'widget_config' => array
+            (
+                'class'       => 'org_openpsa_contacts_group',
+                'component'   => 'org.openpsa.contacts',
+                'titlefield'  => 'official',
+                'idfield'     => 'id',
+                'constraints' => array
+                (
+                ),
+                'searchfields'  => array
+                (
+                    'name',
+                    'official'
+                ),
+                'orders'        => array
+                (
+                    array('official'    => 'ASC'),
+                ),
+            ),
         ),
         'pricePerUnit' => Array
         (

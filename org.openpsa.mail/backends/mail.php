@@ -21,11 +21,18 @@ class org_openpsa_mail_backend_mail
         reset($mailclass->headers);
         foreach ($mailclass->headers as $k => $v)
         {
+            if (   strtolower($k) == 'to'
+                || strtolower($k) == 'subject')
+            {
+                continue;
+            }
             $hdr .= "{$k}: {$v}\n";
         }
-        $ret = mail($mailclass->merge_address_headers(), $mailclass->subject, $mailclass->body, $hdr);
+        $merged = $mailclass->merge_address_headers();
+        debug_add("address_headers_merged:\n===\n{$merged}\n===\nheaders:\n===\n{$hdr}\n===\n");
+        $ret = mail($merged, $mailclass->subject, $mailclass->body, $hdr);
         if (!$ret)
-        { 
+        {
             $this->error = true;
         }
         else
@@ -34,7 +41,7 @@ class org_openpsa_mail_backend_mail
         }
         return $ret;
     }
-    
+
     function get_error_message()
     {
         if (!$this->error)
@@ -48,6 +55,6 @@ class org_openpsa_mail_backend_mail
     {
         return function_exists('mail');
     }
-} 
+}
 
 ?>

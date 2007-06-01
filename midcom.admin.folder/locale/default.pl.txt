@@ -1,0 +1,117 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE pl
+
+---STRING all descendants will be deleted
+Cała zawartosc folderu zostanie usunięta:
+---STRINGEND
+
+---STRING are you sure you want to delete this folder
+Na pewno usunąc ten folder?
+---STRINGEND
+
+---STRING by score
+Sortowanie ręczne
+---STRINGEND
+
+---STRING create folder under %s
+Utwórz folder w "%s"
+---STRINGEND
+
+---STRING create subfolder
+Utwórz folder
+---STRINGEND
+
+---STRING default
+Domyślnie
+---STRINGEND
+
+---STRING default sort order
+Domyślne sortowanie
+---STRINGEND
+
+---STRING delete folder
+Usuń folder
+---STRINGEND
+
+---STRING delete folder %s
+Usuń folder "%s"
+---STRINGEND
+
+---STRING edit folder
+Edytuj folder
+---STRINGEND
+
+---STRING edit folder %s
+Edytuj folder "%s"
+---STRINGEND
+
+---STRING edit folder metadata
+Edytuj metadane folderu "%s"
+---STRINGEND
+
+---STRING edit metadata
+Edytuj metadane
+---STRINGEND
+
+---STRING edit metadata of %s
+Edytuj metadane "%s"
+---STRINGEND
+
+---STRING folder type
+Typ folderu
+---STRINGEND
+
+---STRING folders first
+Najpierw foldery
+---STRINGEND
+
+---STRING inherit style
+Dziedzicz szablon do podfolderów
+---STRINGEND
+
+---STRING install more %s from %s
+Więcej <a href="%s">Komponentów MidCOM'a</a> znajdziesz w <a href="%s">repozytorium PEAR</a>.
+---STRINGEND
+
+---STRING midcom.admin.folder
+Zarządzanie folderami
+---STRINGEND
+
+---STRING nav order
+Kolejność nawigacji
+---STRINGEND
+
+---STRING order navigation
+Ustalanie kolejnosci elementów
+---STRINGEND
+
+---STRING order navigation in folder %s
+Ustalanie kolejnosci elementów w "%s"
+---STRINGEND
+
+---STRING pages first
+Najpierw strony
+---STRINGEND
+
+---STRING privilege topic_management
+Zarządzanie folderami
+---STRINGEND
+
+---STRING sort by score
+Wg wagi
+---STRINGEND
+
+---STRING sort folders
+Sortowanie folderów
+---STRINGEND
+
+---STRING sort pages
+Sortowanie stron
+---STRINGEND
+
+---STRING style
+Szablon stylu
+---STRINGEND
+

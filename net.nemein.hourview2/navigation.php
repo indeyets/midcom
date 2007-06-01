@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package net.nemein.hourview2
  * @author The Midgard Project, http://www.midgard-project.org 
@@ -13,8 +12,7 @@
  * 
  * NAP has pretty much nothing to do with this component. Only the node
  * should be visible.
- * 
- * ...
+ *
  * @package net.nemein.hourview2
  */
 class net_nemein_hourview2_navigation extends midcom_baseclasses_components_navigation

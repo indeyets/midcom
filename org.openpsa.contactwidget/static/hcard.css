@@ -1,6 +1,10 @@
 /* hCard rendering */
-div.vcard div.n {    font-weight: bold;}
-div.vcard div.n a {    text-decoration: none;}
+div.vcard div.n {
+    font-weight: bold;
+}
+div.vcard div.n a {
+    text-decoration: none;
+}
 div.vcard ul {
     padding: 0px;
     margin: 0px;

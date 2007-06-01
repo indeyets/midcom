@@ -45,6 +45,7 @@ ALTER TABLE org_openpsa_task ADD COLUMN acceptanceType int(11) NOT NULL default 
 ALTER TABLE org_openpsa_task add column guid varchar(80) NOT NULL default '';
 ALTER TABLE org_openpsa_task ADD COLUMN hoursInvoiceableDefault int(11) NOT NULL default '0';
 ALTER TABLE org_openpsa_task ADD COLUMN agreement int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_task ADD COLUMN dependency int(11) NOT NULL default '0';
 
 CREATE TABLE org_openpsa_task_resource (
   id int(11) NOT NULL auto_increment,
@@ -158,5 +159,30 @@ CREATE TABLE org_openpsa_task_status (
 ALTER TABLE org_openpsa_task_status ADD COLUMN timestamp int(11) NOT NULL default '0';
 ALTER TABLE org_openpsa_task_status ADD COLUMN comment text NOT NULL default '';
 alter table org_openpsa_task_status add column guid varchar(80) NOT NULL default '';
+# 1.7 metadata
+#
+ALTER TABLE org_openpsa_task ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE org_openpsa_task ADD COLUMN creator int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_task ADD COLUMN revisor int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_task ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE org_openpsa_task ADD COLUMN revision int(11) NOT NULL default '0';
+#
+ALTER TABLE org_openpsa_hour_report ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE org_openpsa_hour_report ADD COLUMN creator int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_hour_report ADD COLUMN revisor int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_hour_report ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE org_openpsa_hour_report ADD COLUMN revision int(11) NOT NULL default '0';
+#
+ALTER TABLE org_openpsa_hour_expense ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE org_openpsa_hour_expense ADD COLUMN creator int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_hour_expense ADD COLUMN revisor int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_hour_expense ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE org_openpsa_hour_expense ADD COLUMN revision int(11) NOT NULL default '0';
+#
+ALTER TABLE org_openpsa_task_resource ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE org_openpsa_task_resource ADD COLUMN creator int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_task_resource ADD COLUMN revisor int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_task_resource ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE org_openpsa_task_resource ADD COLUMN revision int(11) NOT NULL default '0';
 
 

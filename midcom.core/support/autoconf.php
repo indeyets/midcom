@@ -14,7 +14,7 @@
  * 
  * @package midcom
  * @author The Midgard Project, http://www.midgard-project.org 
- * @version $Id$
+ * @version $Id:autoconf.php 3762 2006-07-30 16:04:01 +0000 (Sun, 30 Jul 2006) tarjei $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
@@ -60,17 +60,20 @@ function scan_for_utility($name, $executable, $utilityname, $required = true, $r
         if ($required)
         {
             println_red("Critical: {$name} not found, this is a required part of MidCOM, please install it.");
+            return false;
         }
         else
         {
             println_orange("Warning: {$name} not found. {$recommended_msg}");
             add_option_to_configfile("utility_{$utilityname}", 'null');
+            return false;
         }
     }
     else
     {
         echo "{$name} found at {$path}.\n";
         add_option_to_configfile("utility_{$utilityname}", "'{$path}'");
+        return $path;
     }
 }
 
@@ -157,7 +160,39 @@ scan_for_utility('pdftotext', 'pdftotext', 'pdftotext', false, 'The pdftotext ut
 scan_for_utility('unrtf', 'unrtf', 'unrtf', false, 'The unrtf utility is recommended to convert Rich Text Format (RTF) Documents into Plain Text for indexing with the MidCOM Indexer.');
 
 scan_for_utility('diff','diff','diff', false, 'diff is needed by the versioning library. You can also use the pear library Text_Diff');
-scan_for_utility('rcs', 'rcs','rcs',  true,  'You need the RCS utilities to have midcom save versions of your objects.');
+
+
+$rcs = scan_for_utility('rcs', 'rcs','rcs',  true,  'You need the RCS utilities to have midcom save versions of your objects.');
+
+if (!$rcs ) 
+{
+    echo "Could not find the RCS utilities you need to use the revision controll functions\n";
+    echo "Therefore they are disabled.\n";
+    add_option_to_configfile('midcom_services_rcs_use', "false");
+    
+} else {
+    
+    $prefix = dirname (exec ('which repligard'));
+    if ($prefix == '/usr/bin' || $prefix == '/usr/local/bin') {
+        $dir = '/var/lib/midgard/rcs';
+    } else {
+        $prefix = str_replace('/bin', '' , $prefix);
+        $dir = $prefix . '/var/lib/midgard/rcs';
+    }
+    
+    if (!is_dir($dir)) {
+        echo "The RCS directory ($dir) is missing! You must create this directory\n";
+        echo "or change the RCS root setting to another directory!\n";
+    } 
+    
+    add_option_to_configfile('midcom_services_rcs_root', "'$dir'");
+    add_option_to_configfile('midcom_services_rcs_bin_dir', "'$prefix'");
+    add_option_to_configfile('midcom_services_rcs_use', "true");
+    
+}
+
+
+
 // Check Memory Limit
 echo "Checking Memory Limit... ";
 $cur_limit = ini_get('memory_limit');
@@ -185,6 +220,8 @@ else
 }
 
 // - Check PHP / PEAR dependencies
+
+
 
 ?>
 

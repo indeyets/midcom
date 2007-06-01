@@ -12,11 +12,25 @@
  *
  * @package net.nemein.calendar
  */
-class net_nemein_calendar_event extends midcom_db_event
+class net_nemein_calendar_event extends __net_nemein_calendar_event
 {
     function net_nemein_calendar_event($guid = null) 
     {
-        return parent::midcom_db_event($guid);
+        return parent::__net_nemein_calendar_event($guid);
+    }
+    
+    function get_parent_guid_uncached()
+    {
+        // FIXME: Midgard Core should do this
+        if ($this->up != 0)
+        {
+            $parent = new net_nemein_calendar_event($this->up);
+            return $parent;
+        }
+        else
+        {
+            return null;
+        }
     }
     
     /**

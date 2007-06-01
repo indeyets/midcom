@@ -38,7 +38,10 @@ class net_nehmer_blog_interface extends midcom_baseclasses_components_interface
 
         $this->_component = 'net.nehmer.blog';
         $this->_autoload_files = Array('viewer.php', 'admin.php', 'navigation.php');
-        $this->_autoload_libraries = Array('midcom.helper.datamanager', 'midcom.helper.datamanager2');
+        $this->_autoload_libraries = array
+        (
+            'midcom.helper.datamanager2'
+        );
         
         if ($GLOBALS['midcom_config']['positioning_enable'])
         {
@@ -126,7 +129,15 @@ class net_nehmer_blog_interface extends midcom_baseclasses_components_interface
             return null;
         }
         $arg = $article->name ? $article->name : $article->guid;
-        return "view/{$arg}.html";
+        
+        if ($config->get('view_in_url'))
+        {
+            return "view/{$arg}.html";
+        }
+        else
+        {
+            return "{$arg}.html";
+        }
     }
 
 

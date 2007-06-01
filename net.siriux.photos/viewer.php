@@ -95,7 +95,7 @@ class net_siriux_photos_viewer {
             debug_pop();
             return FALSE;
         }
-        $metadata =& midcom_helper_metadata::retrieve($article);
+        $metadata =& midcom_helper_metadata::retrieve(new midcom_db_article($article));
         if (   ! $GLOBALS['midcom_config']['show_unapproved_objects']
             && ! $metadata->is_approved())
         {
@@ -432,7 +432,7 @@ class net_siriux_photos_viewer {
                     if ($gallery_topics[$articles->topic]) {
 
                         $article = mgd_get_article($articles->id);
-                        $metadata =& midcom_helper_metadata::retrieve($article);
+                        $metadata =& midcom_helper_metadata::retrieve($article->guid());
                         if (   ($only_approved && ! $metadata->is_approved())
                             || (! $GLOBALS['midcom_config']['show_hidden_objects'] && ! $metadata->is_visible()))
                         {

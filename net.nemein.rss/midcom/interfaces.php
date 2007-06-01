@@ -17,23 +17,28 @@ class net_nemein_rss_interface extends midcom_baseclasses_components_interface
     /**
      * Constructor.
      * 
-     * Nothing fancy, loads all script files and the datamanager library.
+     * Nothing fancy, loads all script files.
      */
     function net_nemein_rss_interface()
     {
         parent::midcom_baseclasses_components_interface();
         
         $this->_component = 'net.nemein.rss';
-        $this->_autoload_files = Array
+        $this->_purecode = true;
+        $this->_autoload_files = array
         (
-            'viewer.php', 
-            'admin.php', 
-            'navigation.php',
-            'magpierss/Snoopy.class.inc',
+            'feed.php', 
+            'fetch.php', 
+            'manage.php',
 			'magpierss/rss_parse.inc',
 			'magpierss/rss_cache.inc',
 			'magpierss/rss_fetch.inc',
 			'magpierss/rss_utils.inc',
+        );
+        $this->_autoload_libraries = array
+        (
+            'org.openpsa.httplib',
+            'net.nemein.tag',
         );
     }
     
@@ -43,25 +48,21 @@ class net_nemein_rss_interface extends midcom_baseclasses_components_interface
     function _on_initialize()
     {
         // RSS bandwidth usage settings
-        define('MAGPIE_CACHE_ON', true);
-        define('MAGPIE_CACHE_DIR', '/tmp/');
-
+        define('MAGPIE_CACHE_ON', false);
+        define('MAGPIE_CACHE_DIR', $GLOBALS['midcom_config']['midcom_tempdir']);
         // $midcom->cache->expires must match this
-        define('MAGPIE_CACHE_AGE', 1800);
+        //define('MAGPIE_CACHE_AGE', 1800);
 
         // Get correct encoding for magpie
-        $i18n =& $GLOBALS['midcom']->get_service('i18n');
-        $encoding = $i18n->get_current_charset();
+        $encoding = $_MIDCOM->i18n->get_current_charset();
         // PHP's XML parser supports UTF-8 and ISO-LATIN-1
-        if ($encoding == "ISO-8859-15") 
+        if ($encoding == 'ISO-8859-15') 
         {
-            $encoding = "ISO-8859-1";
+            $encoding = 'ISO-8859-1';
         }
         define('MAGPIE_OUTPUT_ENCODING', $encoding);
 
         return true;
     }
-    
-    /* No indexing at this time. */
 }
 ?>

@@ -13,16 +13,16 @@ function org_routamc_positioning_send_sms($to, $message, $from, $config)
     $sms_lib_client_id = $config->get('smslib_client_id');
     $sms_lib_user = $config->get('smslib_user');
     $sms_lib_password = $config->get('smslib_password');
-    
+
     if (   !$sms_lib_api
         || !$sms_lib_location
         || !$sms_lib_user)
     {
         return false;
     }
-    
+
     @ini_set('max_execution_time', 0);
-    
+
     //Initializing SMS broker
     $smsbroker = call_user_func(array(str_replace('.', '_', $sms_lib), 'factory'), $sms_lib_api);
     if (!is_object($smsbroker))
@@ -35,7 +35,7 @@ function org_routamc_positioning_send_sms($to, $message, $from, $config)
     $smsbroker->client_id = $sms_lib_client_id;
     $smsbroker->user = $sms_lib_user;
     $smsbroker->password = $sms_lib_password;
-    
+
     return $smsbroker->send_sms($to, $message, $from);
 }
 
@@ -79,30 +79,30 @@ if (   array_key_exists('msisdn', $_GET)
             exit();
         }
     }
-    
+
     if (!$_MIDCOM->auth->request_sudo('org.routamc.positioning'))
     {
         debug_add('Could not get sudo rights (check debug log for details), abort', MIDCOM_LOG_ERROR);
         $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Could not get sudo rights (check debug log for details), abort');
     }
-     
+
     // Find matching person
     $person_qb = midcom_db_person::new_query_builder();
     $person_qb->add_constraint('handphone', '=', "+{$_GET['msisdn']}");
     $persons = $person_qb->execute();
-    
+
     if (count($persons) != 1)
     {
         $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "User matching number +{$_GET['msisdn']} not found");
     }
 
     $person = $persons[0];
-    
+
     // Make sure the message is in server charset (which is UTF-8)
     debug_add("_GET['msg'] before charset check/convert: {$_GET['msg']}");
     $_GET['msg'] = org_routamc_positioning_msg_to_utf8($_GET['msg']);
     debug_add("_GET['msg'] after charset check/convert: {$_GET['msg']}");
-    
+
     if ($_GET['msg'] == 'CANCEL')
     {
         // We must cancel previous report
@@ -123,25 +123,25 @@ if (   array_key_exists('msisdn', $_GET)
         $_MIDCOM->finish();
         exit();
     }
-    
+
     $params = explode(',', $_GET['msg']);
     if (count($params) == 2)
     {
         $manual = org_routamc_positioning_importer::create('manual');
-        $manual_position = Array(); 
+        $manual_position = Array();
         $manual_position['city'] = trim($params[0]);
         $manual_position['country'] = trim($params[1]);
         $manual_position['person'] = $person->id;
-        
+
         $import = $manual->import($manual_position);
-        
+
         if (!$import)
         {
             // Send error message to user
             org_routamc_positioning_send_sms($person->handphone, "Failed to store position, reason {$manual->error}", $config->get('smslib_from'), $config);
         }
         else
-        {            
+        {
             // Get current coordinates
             $user_position = new org_routamc_positioning_person($person);
             $latest_log = $user_position->seek_log();
@@ -157,7 +157,7 @@ if (   array_key_exists('msisdn', $_GET)
                 $previous_coord = Array(
                     'latitude'  => $previous_log->latitude,
                     'longitude' => $previous_log->longitude
-                );            
+                );
                 $message .= " Previous was " . org_routamc_positioning_utils::get_distance($previous_coord, $latest_coord) . "km " .  org_routamc_positioning_utils::get_bearing($latest_coord, $previous_coord) . ".";
             }
 
@@ -175,29 +175,29 @@ $user = $_MIDCOM->auth->user->get_storage();
 if (array_key_exists('add_position', $_POST))
 {
     $manual = org_routamc_positioning_importer::create('manual');
-    
+
     $manual_position = Array();
-    
+
     if (array_key_exists('city', $_POST))
     {
         $manual_position['city'] = $_POST['city'];
     }
-    
+
     if (array_key_exists('country', $_POST))
     {
         $manual_position['country'] = $_POST['country'];
-    }    
-    
+    }
+
     if (array_key_exists('latitude', $_POST))
     {
         $manual_position['latitude'] = $_POST['latitude'];
-    }    
+    }
 
     if (array_key_exists('longitude', $_POST))
     {
         $manual_position['longitude'] = $_POST['longitude'];
     }
-    
+
     $import = $manual->import($manual_position);
     echo $manual->error."<br />\n";
 }

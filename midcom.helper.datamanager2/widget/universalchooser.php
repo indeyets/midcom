@@ -11,7 +11,7 @@
 require_once('radiocheckselect.php');
 
 /**
- * Datamanger 2 universal "chooser" widget.
+ * Datamanager 2 universal "chooser" widget.
  *
  * Based on the radiocheckselect widget
  *
@@ -23,6 +23,9 @@ require_once('radiocheckselect.php');
  *     'require_corresponding_option' => false,
  *     'allow_other'    => true,
  *
+ * Extra configurations:
+ *     'static_options' is an array of key => value pairs, shown always (use it to add for example "none" to a radio selection)
+ *
  * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_datamanager2_widget_radiocheckselect
@@ -33,6 +36,16 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
      * @var string
      */
     var $class = false;
+    
+    /**
+     * The group of selected items as QuickForm elements
+     */
+    var $elements = array();
+
+    /**
+     * The group of search items as QuickForm elements
+     */
+    var $elements2 = array();
 
     /**
      * Which component the searched class belongs to
@@ -103,6 +116,23 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
      * @var string (binary)
      */
     var $_shared_secret = null;
+    
+    /**
+     * These options are always visible
+     */
+    var $static_options = array();
+    
+    /**
+     * Whether to automatically append/prepend wildcards to the query
+     * 
+     * Valid values: 'both', 'start', 'end' and <empty> (0, '', false & null)
+     *
+     * Example: 
+     *     'auto_wildcards' => 'both',
+     *
+     * $var string
+     */
+    var $auto_wildcards = false;
 
    /**
      * The initialization event handler verifies the correct type.
@@ -219,6 +249,18 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         debug_print_r('Got results:', $results);
         if (empty($results))
         {
+            // FIXME: 1.7 fallback, GUIDs are not fetchable via QB
+            if (mgd_is_guid($key))
+            {
+                debug_add("Trying to fetch by GUID (this is a Midgard 1.7 fallback)");
+                $object = new $this->class($key);
+                if ($object)
+                {
+                    debug_pop();
+                    return $object;
+                }
+            }
+        
             debug_pop();
             return false;
         }
@@ -243,6 +285,39 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         return $value;
     }
 
+
+    function _add_single_option(&$elements, &$idsuffix, $key, $value)
+    {
+        if ($this->_type->allow_multiple)
+        {
+            $elements[] =& HTML_QuickForm::createElement
+            (
+                'checkbox',
+                $key,
+                $key,
+                $this->_translate($value),
+                Array(
+                    'class' => 'checkbox'
+                )
+            );
+        }
+        else
+        {
+            $elements[] =& HTML_QuickForm::createElement
+            (
+                'radio',
+                null,
+                $key,
+                $this->_translate($value),
+                $key,
+                Array(
+                    'class' => 'radiobutton',
+                    'id' => "universalchooser_{$idsuffix}_{$key}",
+                )
+            );
+        }
+    }
+
     /**
      * Adds checkboxes / radioboxes to the form.
      */
@@ -250,12 +325,22 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
     {
         $idsuffix = $this->_create_random_suffix();
         debug_push_class(__CLASS__, __FUNCTION__);
-        $elements = Array();
 
+        // Add static options
+        foreach ($this->static_options as $key => $value)
+        {
+            $this->_add_single_option($this->elements, $idsuffix, $key, $value);
+        }
+        // Add existing selection
         $existing_elements = $this->_type->selection;
         foreach ($existing_elements as $key)
         {
             debug_add("Processing key {$key}");
+            if (array_key_exists($key, $this->static_options))
+            {
+                debug_add("key '{$key}' found in static options, not adding it again", MIDCOM_LOG_INFO);
+                continue;
+            }
             $value = $this->_get_key_value($key);
             if ($value === false)
             {
@@ -263,40 +348,15 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
                 continue;
             }
             debug_add("Adding field '{$key}' => '{$value}'");
-            if ($this->_type->allow_multiple)
-            {
-                $elements[] =& HTML_QuickForm::createElement
-                (
-                    'checkbox',
-                    $key,
-                    $key,
-                    $this->_translate($value),
-                    Array('class' => 'checkbox')
-                );
-            }
-            else
-            {
-                $elements[] =& HTML_QuickForm::createElement
-                (
-                    'radio',
-                    null,
-                    $key,
-                    $this->_translate($value),
-                    $key,
-                    Array(
-                        'class' => 'radiobutton',
-                        'id' => "universalchooser_{$idsuffix}_{$key}",
-                    )
-                );
-            }
+            $this->_add_single_option($this->elements, $idsuffix, $key, $value);
         }
 
         // Create a hash of our constraints with a shared secret thrown in (to avoid leaking data outside the widget)
-        $hashsource = $this->class . $this->idfield . $this->_shared_secret . $this->component;
+        $hashsource = $this->class . $this->idfield . $this->_shared_secret . $this->component . $idsuffix;
 
         // Serialize the parameter we need in the search end
         $searchconstraints_serialized = "idsuffix={$idsuffix}";
-        $serialize = array('component', 'class', 'titlefield', 'idfield', 'searchfields');
+        $serialize = array('component', 'class', 'titlefield', 'idfield', 'searchfields', 'auto_wildcards');
         foreach ($serialize as $field)
         {
             $data = $this->$field;
@@ -330,14 +390,13 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         debug_add('widget hashsource: (B64)' . base64_encode($hashsource));
         $searchconstraints_serialized .= '&hash=' . md5($hashsource);
         // Start a new group to not to clutter the values
-        $elements2 = array();
 
         // Hidden input for Ajax url
         $nav = new midcom_helper_nav();
         $root_node = $nav->get_node($nav->get_root_node());
         $url = $root_node[MIDCOM_NAV_FULLURL] . 'midcom-exec-midcom.helper.datamanager2/universalchooser_handler.php';
         
-        $elements2[] =& HTML_QuickForm::createElement
+        $this->elements2[] =& HTML_QuickForm::createElement
             (
                 'hidden',
                 "widget_universalchooser_search_{$idsuffix}_url",
@@ -349,7 +408,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         if ($this->allow_create)
         {
             $createurl = $root_node[MIDCOM_NAV_FULLURL] . "midcom-exec-{$this->component}/universalchooser_createhandler.php";
-            $elements2[] =& HTML_QuickForm::createElement
+            $this->elements2[] =& HTML_QuickForm::createElement
                 (
                     'hidden',
                     "widget_universalchooser_search_{$idsuffix}_createurl",
@@ -366,7 +425,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         {
             $mode = 'multiple';
         }
-        $elements2[] =& HTML_QuickForm::createElement
+        $this->elements2[] =& HTML_QuickForm::createElement
             (
                 'hidden',
                 "widget_universalchooser_search_{$idsuffix}_mode",
@@ -377,7 +436,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
             );
 
         // Hidden input for the serialized constraints
-        $elements2[] =& HTML_QuickForm::createElement
+        $this->elements2[] =& HTML_QuickForm::createElement
             (
                 'hidden',
                 "widget_universalchooser_search_{$idsuffix}_constraints",
@@ -388,7 +447,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
             );
 
         // Hidden input for the id parent label
-        $elements2[] =& HTML_QuickForm::createElement
+        $this->elements2[] =& HTML_QuickForm::createElement
             (
                 'hidden',
                 "widget_universalchooser_search_{$idsuffix}_labelid",
@@ -397,7 +456,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
                     'id' => "widget_universalchooser_search_{$idsuffix}_labelid",
                     )
             );
-        $elements2[] =& HTML_QuickForm::createElement
+        $this->elements2[] =& HTML_QuickForm::createElement
             (
                 'hidden',
                 "widget_universalchooser_search_{$idsuffix}_fieldname",
@@ -408,7 +467,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
             );
 
         // Text input for the search box
-        $elements2[] =& HTML_QuickForm::createElement
+        $this->elements2[] =& HTML_QuickForm::createElement
             (
                 'text',
                 "widget_universalchooser_search_{$idsuffix}",
@@ -421,9 +480,9 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
                     )
             );
 
-        $group =& $this->_form->addGroup($elements, $this->name, $this->_translate($this->_field['title']), "<br />");
+        $group =& $this->_form->addGroup($this->elements, $this->name, $this->_translate($this->_field['title']), "<br />");
         /* PONDER: Why if the ones in elements2 are put to elements they all get value set to '2' ?? */
-        $group2 =& $this->_form->addGroup($elements2, $this->name . '_universalchooser_' . $idsuffix, '', '', array('class' => 'universalchooser_searchinput'));
+        $group2 =& $this->_form->addGroup($this->elements2, $this->name . '_universalchooser_' . $idsuffix, '', '', array('class' => 'universalchooser_searchinput'));
         $group2->setAttributes(Array('class' => 'midcom_helper_datamanager2_widget_universalchooser'));
 
         if ($this->_type->allow_multiple)
@@ -499,33 +558,28 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
     }
 
     /**
-     * The current selection is compatible to the widget value only for multiselects.
-     * We need minor typecasting otherwise.
+     * Reads the given get/post data and puts to type->selection
      */
     function sync_type_with_widget($results)
     {
+        $this->_type->selection = Array();
+        if (!isset($results[$this->name]))
+        {
+            return;
+        }
+        $real_results =& $results[$this->name];
+        
+        // PONDER: Check type->require_corresponding_option setting and do checks against available options if set (very unlikely though...)
         if ($this->_type->allow_multiple)
         {
-            $this->_type->selection = Array();
-
-            if ($results[$this->name])
+            foreach ($real_results as $key => $value)
             {
-                $all_elements = $this->_type->list_all();
-                foreach ($all_elements as $key => $value)
-                {
-                    if (array_key_exists($key, $results[$this->name]))
-                    {
-                        $this->_type->selection[] = $key;
-                    }
-                }
+                $this->_type->selection[] = $key;
             }
         }
         else
         {
-            if ($results[$this->name])
-            {
-                $this->_type->selection = Array($results[$this->name]);
-            }
+            $this->_type->selection[] = $real_results;
         }
     }
 
@@ -550,7 +604,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         else
         {
             if (count($this->_type->selection) == 0)
-            {
+            {            
                 echo $this->_translate('type select: no selection');
             }
             else
@@ -570,6 +624,49 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         }
         */
     }
+    
+    function freeze()
+    {
+        foreach ($this->elements as $element)
+        {
+            if (method_exists($element, 'freeze'))
+            {
+                $element->freeze();
+            }
+        }
+        foreach ($this->elements2 as $element)
+        {
+            if (method_exists($element, 'freeze'))
+            {
+                $element->freeze();
+            }
+        }
+    }
+
+    /**
+     * Unfreezes all form elements accociated with the widget. The default implementation
+     * works on the default field name, you don't need to override this function unless
+     * you have multiple widgets in the form.
+     *
+     * This maps to the HTML_QuickForm_element::unfreeze()unction.
+     */
+    function unfreeze()
+    {
+        foreach ($this->elements as $element)
+        {
+            if (method_exists($element, 'freeze'))
+            {
+                $element->unfreeze();
+            }
+        }
+        foreach ($this->elements2 as $element)
+        {
+            if (method_exists($element, 'freeze'))
+            {
+                $element->unfreeze();
+            }
+        }
+    }    
 
 }
 

@@ -18,46 +18,81 @@
  * <b>Configurationparameters that are in use by this service:
  * * string midcom_services_rcs_bin_dir - the prefix for the rcs utilities (normally /usr/bin)
  * * string midcom_services_rcs_root - the directory where the rcs files get placed.
- * * boolean midcom_services_rcs_use - if set, midcom will fail hard if the rcs service is not operational. 
+ * * boolean midcom_services_rcs_enable - if set, midcom will fail hard if the rcs service is not operational. 
  * 
  */
 require 'rcs/backend.php';
 require 'rcs/config.php';
-class midcom_services_rcs extends midcom_baseclasses_core_object {
+
+class midcom_services_rcs extends midcom_baseclasses_core_object 
+{
     
     /**
-     * The handler that rcs uses to save an object.
+     * Array of handlers that rcs uses to manage object versioning.
      */
-    var $_handler = null;
+    var $_handlers = Array();
+      
     /**
-     * An instance of midcom
+     * The configuration object for the rcs service.
+     * @var midcom_services_rcs_config
      */
-    var $_midcom = null;
+    var $config;
+    
     /**
      * Constructor 
      * @param $config the midcom_config array
      * @param $midcom midcom_application reference.
      */
-    function midcom_services_rcs  ($config, &$midcom) 
+    function midcom_services_rcs($config) 
     {
         parent::midcom_baseclasses_core_object();
-        $this->_config = new midcom_services_rcs_config($config);
-        $this->_midcom = $midcom;
+        $this->config = new midcom_services_rcs_config($config);
     }
+    
     /**
      * Loads the handler  
      */
-    function _load_handler() 
+    function load_handler(&$object) 
     {
-        if ($this->_handler === NULL) 
-        { 
-            $this->_handler = $this->config->get_handler(&$this->_midcom);
+        if (!$object->guid)
+        {
+            return false;
         }
+        
+        if (!array_key_exists($object->guid, $this->_handlers))
+        {
+            $this->_handlers[$object->guid] = $this->config->get_handler($object);
+        }
+        
+        return $this->_handlers[$object->guid];
     }
     
-    function update (&$object, $message) {
-        $this->_load_handler();
-        return $this->_handler->update(&$object, $message);
+    /**
+     * Create or update the RCS file for the object. 
+     * @param $object the midgard object to be saved
+     * @param $message the update message to save (optional)
+     */
+    function update(&$object, $message = null) 
+    {
+        $handler = $this->load_handler($object);
+        if (   !is_object($handler)
+            || !method_exists($handler, 'update'))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_print_r('RCS: Could not load handler! Object is', $object);
+            debug_pop();
+            return false;
+        }
+        if (   !$handler->update($object, $message)
+            && $this->config->use_rcs()) 
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_print_r('RCS: Could not save file! Object is', $object);
+            debug_print_r('RCS: Could not save file! Handler is', $handler);
+            debug_pop();
+            return false;
+        }
+        return true;
     } 
     
     /**
@@ -73,15 +108,16 @@ class midcom_services_rcs extends midcom_baseclasses_core_object {
      * @return array 
      *  
      */
-    function _probe_rcs_config() {
+    function _probe_rcs_config() 
+    {
         $set = array();
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add ("RCS interface: checking for /AegirCore/config/config");
         
         // we like config in midcom best!
-        if (array_key_exists('midcom_rcs_root',$this->_config) ) 
+        if (array_key_exists('midcom_rcs_root',$this->config) ) 
         {
-            $set['rcsroot'] = $this->_config['midcom_rcs_root'];
+            $set['rcsroot'] = $this->config['midcom_rcs_root'];
             
         } elseif (mgd_snippet_exists("/AegirCore/config/config")) 
         {
@@ -104,13 +140,16 @@ class midcom_services_rcs extends midcom_baseclasses_core_object {
         
         if (!array_key_exists('rcsroot', $set)) 
         {
-            $_MIDCOM->generate_error('RCSROOT SHOULD BE SET AT THIS POINT!', MIDCOM_ERRCRIT);
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'RCS root directory must be set.');
         }
         
-        if ($this->_check_config($set)) {
+        if ($this->_check_config($set)) 
+        {
             return $set;
-        } elseif ($this->_config['midcom_use_rcs']) {
-            $_MIDCOM->generate_error('Error in rcs configuration. Please check the log for details.', MIDCOM_ERRCRIT);
+        } 
+        elseif ($this->_config['midcom_services_rcs_enable']) 
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Error in rcs configuration. Please check the log for details.');
         }
         
         return $set;

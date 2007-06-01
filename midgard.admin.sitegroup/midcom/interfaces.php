@@ -27,7 +27,6 @@ class midgard_admin_sitegroup_interface extends midcom_baseclasses_components_in
             'creation/base.php',
             'creation/sitegroup.php',
             'creation/host.php',
-            'hostconfig.php',
             'creation/config/config.php',
         );
               

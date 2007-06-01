@@ -8,9 +8,12 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
-2006-07-12 rambo
-  - fixed the version compares for true 1.7 support
-  - version bump for packaging
+2007-04-05 bergie
+  + Added notifications support (sends notification to author of entry being commented)
+
+2007-03-30 bergie
+  + Added ratings support
+  + Fixed some Midgard 1.8 issues
 
 2006-06-23 bergie
 

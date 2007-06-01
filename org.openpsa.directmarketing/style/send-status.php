@@ -1,12 +1,12 @@
 <?php
-$view_data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $nap = new midcom_helper_nav();
 $node = $nap->get_node($nap->get_current_node());
-$msg_guid = $view_data['message']->guid;
-$ajax_url = "{$node[MIDCOM_NAV_FULLURL]}/message/{$msg_guid}/send_status";
+$msg_guid = $data['message']->guid;
+$ajax_url = "{$node[MIDCOM_NAV_FULLURL]}/message/send_status/{$msg_guid}/";
 ?>
 <div id="org_openpsa_directmarketing_send_uimessages">
-    <?php echo $view_data['l10n']->get('messages sent'); ?>: <div id="org_openpsa_directmarketing_send_uimessages_sent" style="display: inline">??</div> / <div id="org_openpsa_directmarketing_send_uimessages_total" style="display: inline">??</div>
+    <?php echo $data['l10n']->get('messages sent'); ?>: <div id="org_openpsa_directmarketing_send_uimessages_sent" style="display: inline">??</div> / <div id="org_openpsa_directmarketing_send_uimessages_total" style="display: inline">??</div>
 </div>
 <script language="javascript">
 function org_openpsa_directmarketing_get_send_status()
@@ -47,7 +47,7 @@ function org_openpsa_directmarketing_set_send_status(resultList, element)
         //No results, do something
         return false;
     }
-    
+
     ooRemoveChildNodes(sent_div);
     ooRemoveChildNodes(total_div);
     sent_div.appendChild(document.createTextNode(sent_results[0].firstChild.data));

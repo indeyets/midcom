@@ -8,7 +8,7 @@ $coordinates = $plazes->get_plazes_location($user);
 
 if ($coordinates)
 {
-    echo sprintf('According to Plazes your position is %s', org_routamc_positioning_utils::pretty_print_coordinates($coordinates['latitude'], $coordinates['longitude']));
+    echo sprintf('According to Plazes your position since %s is %s', strftime('%x %X', $coordinates['date']), org_routamc_positioning_utils::microformat_location($coordinates['latitude'], $coordinates['longitude']));
 }
 else
 {

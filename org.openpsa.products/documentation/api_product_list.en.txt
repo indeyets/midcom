@@ -1,0 +1,23 @@
+/api/product/list/`Group GUID`
+========================
+
+List products in a product group
+
+## Authentication
+
+This method does not require authentication.
+
+## Arguments
+
+* `Group GUID`: GUID of a product group to list products of
+
+## Example response
+
+TODO
+
+## Error Codes
+
+404: Not found
+:    The requested product group could not be found
+500: Internal Server Error
+:    Some error state has happened in the database

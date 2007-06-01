@@ -136,11 +136,40 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
         $this->_datamanager->autoset_storage($article);
 
         $item = new FeedItem();
-        $author = $_MIDCOM->auth->get_user($article->creator);
+        $author_user = $_MIDCOM->auth->get_user($article->author);
+        if ($author_user)
+        {
+            $author = $author_user->get_storage();
+            
+            if (empty($author->email))
+            {
+                $author->email = "webmaster@{$_SERVER['SERVER_NAME']}";
+            }
+            
+            $item->author = trim("{$author->name} <{$author->email}>");
+        }
 
         $item->title = $article->title;
         $arg = $article->name ? $article->name : $article->guid;
-        $item->link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "view/{$arg}.html";
+        
+        if (   $this->_config->get('link_to_external_url')
+            && !empty($article->url))
+        {
+            $item->link = $article->url;
+        }
+        else
+        {
+            if ($this->_config->get('view_in_url'))
+            {
+                $item->link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "view/{$arg}.html";
+            }
+            else
+            {
+                $item->link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$arg}.html";
+            }
+        }
+        
+        $item->guid = $_MIDCOM->permalinks->create_permalink($article->guid);
 
         // TODO: 1.7 support is only temporary, I'd rather drop it as soon as 1.8 goes somehting like RC.
         if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
@@ -151,8 +180,6 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
         {
             $item->date = $article->created;
         }
-
-        $item->author = $author->name;
 
         $item->description = '';
 
@@ -171,6 +198,9 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
         {
             $item->description .= "\n" . $this->_datamanager->types['content']->convert_to_html();
         }
+        
+        // Replace links
+        $item->description = preg_replace(',<(a|link|img|script|form|input)([^>]+)(href|src|action)="/([^>"\s]+)",ie', '"<\1\2\3=\"' . $_MIDCOM->get_host_name() . '/\4\""', $item->description);
 
         // TODO: Figure out the RSS multi-category support for real
         $categories = explode('|', $article->extra1);
@@ -278,7 +308,7 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
     function _handler_index ($handler_id, $args, &$data)
     {
         $this->_component_data['active_leaf'] = NET_NEHMER_BLOG_LEAFID_FEEDS;
-        $_MIDCOM->set_26_request_metadata($this->_topic->revised, $this->_topic->guid);
+        $_MIDCOM->set_26_request_metadata($this->_topic->metadata->revised, $this->_topic->guid);
         return true;
     }
 

@@ -152,6 +152,24 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      */
     var $_uncached = false;
 
+    /**
+     * controls cache headers strategy
+     * 'no-cache' activates no-cache mode that actively tries to circumvent all caching 
+     * 'revalidate' is the default which sets must-revalidate and expiry to current time
+     * 'public' and 'private' enable caching with the cache-control header of the same name, default expiry timestamps are generated using the default_lifetime
+     *
+     * @var string
+     */
+    var $_headers_strategy = 'revalidate';
+
+    /**
+     * Default lifetime of page for public/private headers strategy
+     * When generating default expires header this is added to time().
+     *
+     * @var int
+     */
+    var $_default_lifetime = 0;
+
     /**#@-*/
 
     /**#@+
@@ -230,6 +248,67 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         if (array_key_exists('cache_module_content_uncached', $GLOBALS['midcom_config']))
         {
             $this->_uncached = $GLOBALS['midcom_config']['cache_module_content_uncached'];
+        }
+
+        if (array_key_exists('cache_module_content_headers_strategy', $GLOBALS['midcom_config']))
+        {
+            $this->_headers_strategy = strtolower($GLOBALS['midcom_config']['cache_module_content_headers_strategy']);
+        }
+        if (array_key_exists('cache_module_content_default_lifetime', $GLOBALS['midcom_config']))
+        {
+            $this->_default_lifetime = (int)$GLOBALS['midcom_config']['cache_module_content_default_lifetime'];
+        }
+        switch ($this->_headers_strategy)
+        {
+            case 'no-cache':
+                $this->no_cache();
+                break;
+            case 'revalidate':
+            case 'public':
+            case 'private':
+                break;
+            default:
+                debug_add("Cache headers strategy '{$this->_headers_strategy}' is not valid, try 'no-cache', 'revalidate', 'public' or 'private'", MIDCOM_LOG_ERROR);
+                $this->no_cache();
+                /* Copied from midcom_application::generate_error, because we do not yet have midcom fully loaded */
+                $message = "Cache headers strategy '{$this->_headers_strategy}' is not valid, try 'no-cache', 'revalidate', 'public' or 'private'";
+                $title = "Server Error";
+                $code = 500;
+                header('HTTP/1.0 500 Server Error');
+                header ('Content-Type: text/html');
+                echo '<?'.'xml version="1.0" encoding="ISO-8859-1"?'.">\n";
+                ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <title><?echo $title; ?></title>
+        <style type="text/css">
+            body { color: #000000; background-color: #FFFFFF; }
+            a:link { color: #0000CC; }
+            p, address {margin-left: 3em;}
+            address {font-size: smaller;}
+        </style>
+    </head>
+
+    <body>
+        <h1><?echo $title; ?></h1>
+        
+        <p>
+        <?echo $message; ?>
+        </p>
+        
+        <h2>Error <?echo $code; ?></h2>
+        <address>
+          <a href="/"><?php echo $_SERVER["SERVER_NAME"]; ?></a><br />
+          <?php echo date("r"); ?><br />
+          <?php echo $_SERVER["SERVER_SOFTWARE"]; ?>
+        </address>
+    </body>
+</html>
+                <?php
+                exit();
+                break;
         }
 
         // Init complete, now check for a cache hit and start up caching.
@@ -420,7 +499,16 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         debug_add('Caching disabled by no_cache() method, sending appropriate headers.', MIDCOM_LOG_INFO);
         header('Cache-Control: no-store, no-cache, must-revalidate');
         header('Cache-Control: post-check=0, pre-check=0', false);
-        header('Pragma: no-cache');
+        if (   isset ($_SERVER['HTTPS'])
+            && preg_match('/MSIE/', $_SERVER['HTTP_USER_AGENT']))
+        {
+            //Suppress "Pragma: no-cache" header, because otherwise file downloads don't work in IE with https.
+        }
+        else 
+        {
+            header('Pragma: no-cache');
+        }
+        // PONDER:, send expires header (set to long time in past) as well ??
         debug_pop();
     }
 
@@ -725,10 +813,10 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         $etag_header = "ETag: {$etag}";
         header($etag_header);
         $this->register_sent_header($etag_header);
-        debug_add("Sent HEader: {$etag_header}");
+        debug_add("Sent Header: {$etag_header}");
 
         // Register additional Headers around the current output request
-        // It has been sent already during calls to conent_type
+        // It has been sent already during calls to content_type
         $header = "Content-type: " . $this->_content_type;
         $this->register_sent_header($header);
         $this->_complete_sent_headers($cache_data);
@@ -820,7 +908,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
                 $this->_last_modified = strtotime($tmp);
                 if ($this->_last_modified == -1)
                 {
--                    debug_add("Failed to extract the timecode from the last modified header '{$header}', defaulting to the current time.", MIDCOM_LOG_WARN);
+                    debug_add("Failed to extract the timecode from the last modified header '{$header}', defaulting to the current time.", MIDCOM_LOG_WARN);
                     $this->_last_modified = time();
                 }
             }
@@ -835,10 +923,22 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         }
         if (! $size)
         {
-            $header = "Content-Length: " . ob_get_length();
-            header ($header);
-            $this->_sent_headers[] = $header;
-            debug_add("Added Header '$header'");
+            /* TODO: Doublecheck the way this is handled, it seems it's one byte too short
+               which causes issues with Squid for example (could be that we output extra
+               whitespace somewhere or something), now we just don't send it if headers_strategy 
+               implies caching */
+            switch($this->_headers_strategy)
+            {
+                case 'public':
+                case 'private':
+                    break;
+                default:
+                    $header = "Content-Length: " . ob_get_length();
+                    header ($header);
+                    $this->_sent_headers[] = $header;
+                    debug_add("Added Header '$header'");
+                    break;
+            }
         }
         if (! $lastmod)
         {
@@ -868,18 +968,67 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         }
 
         // Add Expiration and Cache Control headers
-        // Currently, we *force* a cache client to revalidate the copy every time.
-        // I hope that this fixes most of the problems outlined in #297 for the time being.
-        // The timeout of a content cache entry is not affected by this.
-        $header = "Cache-Control: max-age=0 must-revalidate";
-        header ($header);
-        $this->_sent_headers[] = $header;
-        debug_add("Added Header '$header'");
-
-        $header = "Expires: " . gmdate("D, d M Y H:i:s", time()) . " GMT";
-        header ($header);
-        $this->_sent_headers[] = $header;
-        debug_add("Added Header '$header'");
+        $cache_control = false;
+        $pragma = false;
+        $expires = false;
+        // Just to be sure not to mess the headers sent by no_cache in case it was called
+        if (!$this->_no_cache)
+        {
+            switch($this->_headers_strategy)
+            {
+                case 'revalidate':
+                    // Currently, we *force* a cache client to revalidate the copy every time.
+                    // I hope that this fixes most of the problems outlined in #297 for the time being.
+                    // The timeout of a content cache entry is not affected by this.
+                    $cache_control = 'max-age=0 must-revalidate';
+                    $expires = time();
+                    break;
+                case 'private':
+                    // Fall-strough intentional
+                case 'public':
+                    if (!is_null($this->_expires))
+                    {
+                        $expires = $this->_expires;
+                        $max_age = $this->_expires - time();
+                    }
+                    else
+                    {
+                        $expires = time() + $this->_default_lifetime;
+                        $max_age = $this->_default_lifetime;
+                    }
+                    if ($max_age > 0)
+                    {
+                        $cache_control = "{$this->_headers_strategy} max-age={$max_age}";
+                    }
+                    else
+                    {
+                        $cache_control = $this->_headers_strategy;
+                    }
+                    $pragma =& $this->_headers_strategy;
+                    break;
+            }
+        }
+        if ($cache_control !== false)
+        {
+            $header = "Cache-Control: {$cache_control}";
+            header ($header);
+            $this->_sent_headers[] = $header;
+            debug_add("Added Header '$header'");
+        }
+        if ($pragma !== false)
+        {
+            $header = "Pragma: {$pragma}";
+            header ($header);
+            $this->_sent_headers[] = $header;
+            debug_add("Added Header '$header'");
+        }
+        if ($expires !== false)
+        {
+            $header = "Expires: " . gmdate("D, d M Y H:i:s", $expires) . " GMT";
+            header ($header);
+            $this->_sent_headers[] = $header;
+            debug_add("Added Header '$header'");
+        }
 
         debug_pop();
     }
@@ -911,8 +1060,10 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
 
         $db = dba_open($this->_dbname, "r", $this->_handler);
         if (!$db)
+        {
             die("Could not open dbm File");
-
+        }
+        
         $key = dba_firstkey($db);
         while ($key != false) {
             $control = unserialize(dba_fetch($key, $db));

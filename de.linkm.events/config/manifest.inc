@@ -1,5 +1,0 @@
-'name' => 'de.linkm.events',
-'purecode' => false,
-'version' => 0,
-'privileges' =>  Array(),
-'class_definitions' => Array(),

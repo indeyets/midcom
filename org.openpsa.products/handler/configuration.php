@@ -25,23 +25,4 @@ class org_openpsa_products_handler_configuration extends midcom_core_handler_con
         parent::midcom_core_handler_configdm();
     }
 
-    /**
-     * Populate a single global variable with the current schema database, so that the
-     * configuration schema works again.
-     *
-     * @todo Rewrite this to use the real schema select widget, which is based on some
-     *     other field which contains the URL of the schema.
-     */
-    function _on_handler_configdm_preparing()
-    {
-        $GLOBALS['org_openpsa_products_schemadbs'] = array_merge
-        (
-            Array
-            (
-                '' => $this->_l10n->get('default setting')
-            ),
-            $this->_config->get('schemadbs')
-        );
-    }
-
 }

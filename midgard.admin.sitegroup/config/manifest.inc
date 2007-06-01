@@ -1,23 +1,40 @@
-'name' => 'midgard.admin.sitegroup',
-'purecode' => true,
-'version' => '0.0.4',
-'privileges' =>  Array(),
-'class_definitions' => Array(),
-'package.xml' => Array(  
-    'license' => 'GPL',  
-    'maintainers' => Array( 
-        'tarjei' => Array(  
-            'name' => 'Tarjei Huse',  
-            'email' => 'tarjei@nu.no',  
-            'role' => 'lead',  
-        ),  
-    ),  
-    'dependencies' => Array
-    (
-        'Console_Getargs' => Array
-        (
-            'channel' => 'pear.php.net',
-        ),
-    ),  
-    
-),
+
+  'name' => 'midgard.admin.sitegroup',
+  'purecode' => true,
+  'version' => '1.0.3beta1',
+  'state' => 'beta',
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+  ),
+  'package.xml' => 
+  array (
+    'license' => 'GPL',
+    'maintainers' => 
+    array (
+      'tarjei' => 
+      array (
+        'name' => 'Tarjei Huse',
+        'email' => 'tarjei@nu.no',
+        'role' => 'lead',
+      ),
+      'solt' => 
+      array (
+        'name' => 'Marcin Sołtysiak',
+        'email' => 'olga@olga.pl',
+        'role' => 'developer',
+      ),
+    ),
+    'dependencies' => 
+    array (
+      'Console_Getargs' => 
+      array (
+        'channel' => 'pear.php.net',
+      ),
+      'midcom' => 
+      array (
+      ),
+    ),
+  ),

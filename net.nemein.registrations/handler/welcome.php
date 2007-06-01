@@ -82,6 +82,39 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
         $this->_prepare_request_data();
         $_MIDCOM->set_26_request_metadata(time(), null);
         $_MIDCOM->set_pagetitle($this->_topic->extra);
+        
+        $_MIDCOM->bind_view_to_object($this->_root_event);
+
+        if ($this->_root_event->can_do('midgard:create'))
+        {
+            $this->_node_toolbar->add_item
+            (
+                Array
+                (
+                    MIDCOM_TOOLBAR_URL => "events/create.html",
+                    MIDCOM_TOOLBAR_LABEL => $data['l10n']->get('create an event'),
+                    MIDCOM_TOOLBAR_HELPTEXT => null,
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_new.png',
+                    MIDCOM_TOOLBAR_ENABLED => true,
+                )
+            );
+        }
+
+        if ($this->_root_event->can_do('net.nemein.registrations:manage'))
+        {
+            $this->_node_toolbar->add_item
+            (
+                Array
+                (
+                    MIDCOM_TOOLBAR_URL => "events/list_all.html",
+                    MIDCOM_TOOLBAR_LABEL => $data['l10n']->get('list all events'),
+                    MIDCOM_TOOLBAR_HELPTEXT => null,
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/search.png',
+                    MIDCOM_TOOLBAR_ENABLED => true,
+                )
+            );
+        }
+        
         return true;
     }
 
@@ -122,20 +155,6 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
         }
 
         midcom_show_style('welcome-end');
-
-        if ($this->_root_event->can_do('net.nemein.registrations:manage'))
-        {
-            $data['list_all_url'] = "{$prefix}events/list_all.html";
-            if ($this->_root_event->can_do('midgard:create'))
-            {
-                $data['create_url'] = "{$prefix}events/create.html";
-            }
-            else
-            {
-                $data['create_url'] = null;
-            }
-            midcom_show_style('welcome-admin-toolbar');
-        }
     }
 
 }

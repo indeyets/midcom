@@ -1,9 +1,16 @@
 <?php
 /**
- * MidCOM wrapped class for access to stored queries
+ * @package net.nemein.discussion
+ * @author The Midgard Project, http://www.midgard-project.org 
+ * @version $Id$
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
- 
-class net_nemein_discussion_thread_dba extends __net_nemein_discussion_thread_dba
+
+/**
+ * MidCOM DBA access to threads
+ */
+ class net_nemein_discussion_thread_dba extends __net_nemein_discussion_thread_dba
 {
     function net_nemein_discussion_thread_dba($id = null)
     {

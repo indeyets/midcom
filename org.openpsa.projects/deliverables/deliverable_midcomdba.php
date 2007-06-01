@@ -20,7 +20,7 @@ class org_openpsa_projects_deliverable extends midcom_org_openpsa_deliverable
 
     function org_openpsa_projects_deliverable($identifier=NULL)
     {
-        return parent::__midcom_org_openpsa_deliverable($identifier); 
+        return parent::__midcom_org_openpsa_deliverable($identifier);
     }
 }
 

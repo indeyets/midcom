@@ -15,8 +15,6 @@
 
 class net_nemein_discussion_handler_post extends midcom_baseclasses_components_handler
 {
-    var $_toolbars;
-
     /**
      * The thread we're working in
      *
@@ -93,7 +91,6 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
     function net_nemein_discussion_handler_post()
     {
         parent::midcom_baseclasses_components_handler();
-        $this->_toolbars =& midcom_helper_toolbars::get_instance();        
     }
 
     /**
@@ -107,7 +104,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
      */
     function _load_schemadb()
     {
-        $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
+        $this->_schemadb =& $this->_request_data['schemadb'];
         // TODO: Be extra smart here about populating/hiding fields
         if ($_MIDCOM->auth->user)
         {
@@ -235,8 +232,9 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                 $this->_thread->name = midcom_generate_urlname_from_string($this->_post->subject);
                 $this->_thread->posts = 1;
                 $this->_thread->latestpost = $this->_post->id;
-                $this->_thread->latestposttime = $this->_post->created;
+                $this->_thread->latestposttime = $this->_post->metadata->published;
                 $i = 0;
+                // FIXME: check for duplicate name explicitly
                 while (   !$this->_thread->update()
                            && $i < 1000)
                 {
@@ -244,9 +242,11 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                     $i++;
                 }
                 
-                // Index the article
+                // Index the post
                 $indexer =& $_MIDCOM->get_service('indexer');
                 net_nemein_discussion_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
+
+                $this->_email_post();
 
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "read/{$this->_post->guid}.html");
                 // This will exit.
@@ -259,7 +259,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
         $this->_prepare_request_data();
         $_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('post to %s'), $this->_topic->extra));
 
-        $this->_toolbars->bottom->add_item(
+        $this->_view_toolbar->add_item(
             array
             (
                 MIDCOM_TOOLBAR_URL => "",
@@ -307,6 +307,8 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                 $indexer =& $_MIDCOM->get_service('indexer');
                 net_nemein_discussion_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
 
+                $this->_email_post();
+
                 // *** FALL THROUGH ***
 
             case 'cancel':
@@ -325,9 +327,127 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
      */
     function _show_reply($handler_id, &$data)
     {
+        // Prepare datamanager for displaying parent
+        $data['datamanager'] = new midcom_helper_datamanager2_datamanager($data['schemadb']);  
+        if (! $data['datamanager']->autoset_storage($data['parent_post']))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("The datamanager for parent post {$data['parent_post']->id} could not be initialized, skipping it.",  MIDCOM_LOG_ERROR);
+            debug_print_r('Object was:', $data['parent_post']);
+            debug_pop();
+            continue;
+        }
+        $data['view_parent_post'] = $data['datamanager']->get_content_html();
+    
         midcom_show_style('reply-widget');
     }
-        
+
+    /**
+     * emails $this->_post out to configured address
+     */
+    function _email_post()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        if (!$this->_config->get('email_out_enable'))
+        {
+            debug_add('Outbound emailing not enabled');
+            debug_pop();
+            // We wish to be silent about this
+            return true;
+        }
+        $to_email = trim($this->_config->get('email_out_to'));
+        if (empty($to_email))
+        {
+            debug_add('Outbound email address empty', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.mail');
+        if (!class_exists('org_openpsa_mail'))
+        {
+            debug_add('Could not load org.openpsa.mail library', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        $post =& $this->_post;
+        // Sanitycheck some values
+        if (empty($post->senderemail))
+        {
+            $post->senderemail = 'noreply@net.nemein.discussion.midcom-project.org';
+        }
+        if (empty($post->sendername))
+        {
+            $post->sendername = 'unknown';
+        }
+        $subj_prefix = trim($this->_config->get('email_out_subject_prefix'));
+
+        $mail = new org_openpsa_mail();
+        // Set Message-Id so we can use it later
+        $mail->headers['Message-Id'] = "<{$post->guid}@net.nemein.discussion-{$_SERVER['SERVER_NAME']}>";
+        $mail->to = $to_email;
+        $override_from = trim($this->_config->get('email_out_from'));
+        if (empty($override_from))
+        {
+            $mail->from = "\"$post->sendername\" <$post->senderemail>";
+        }
+        else
+        {
+            $mail->from = $override_from;
+        }
+        if (   !empty($subj_prefix)
+            && strpos($mail->subject, $subj_prefix) !== false)
+        {
+            $mail->subject = "{$subj_prefix} {$post->subject}";
+        }
+        else
+        {
+            $mail->subject = $post->subject;
+        }
+        // TODO: Figure out when to use html_body in stead.
+        $mail->body = $post->content;
+
+        // Set In-Reply-To and References
+        if ($post->replyto)
+        {
+            $parent = new net_nemein_discussion_post_dba($post->replyto);
+            $parent_msgid = $parent->get_parameter('net.nemein.discussion.mailheaders', 'Message-Id');
+            $mail->headers['In-Reply-To'] = $parent_msgid;
+            $mail->headers['References'] = $parent_msgid;
+            while ($parent->replyto)
+            {
+                $parent = new net_nemein_discussion_post_dba($parent->replyto);
+                $parent_msgid = $parent->get_parameter('net.nemein.discussion.mailheaders', 'Message-Id');
+                $mail->headers['References'] .= "\t{$parent_msgid}";
+            }
+        }
+
+        // TODO: Handle attachments ??
+
+        if (!$mail->send())
+        {
+            debug_add("Failed to send post {$post->guid} via email to {$mail->to}, reason: " . $mail->get_error_message(), MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        debug_add("Sent post {$post->guid} via email to {$mail->to}", MIDCOM_LOG_INFO);
+
+        // store headers for future reference
+        foreach ($mail->headers as $header => $value)
+        {
+            if (empty($value))
+            {
+                continue;
+            }
+            if (!$post->set_parameter('net.nemein.discussion.mailheaders', $header, $value))
+            {
+                debug_add("Could not store header '{$header}' data in parameters", MIDCOM_LOG_WARN);
+                // PONDER: abort and clean up ?? (this may affect future imports adversely)
+                continue;
+            }
+        }
+        debug_pop();
+        return true;
+    }        
 }
 
 ?>

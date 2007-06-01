@@ -7,6 +7,22 @@
 Changes done in revision %s to %s
 ---STRINGEND
 
+---STRING changes from version %s
+Changes from version %s
+---STRINGEND
+
+---STRING date
+Date
+---STRINGEND
+
+---STRING lines
+Lines
+---STRINGEND
+
+---STRING message
+Message
+---STRINGEND
+
 ---STRING no.bergfald.rcs
 Revision control
 ---STRINGEND
@@ -23,12 +39,24 @@ Restore to version %s failed, reason %s
 Restore to version %s was successful
 ---STRINGEND
 
+---STRING revision
+Revision
+---STRINGEND
+
 ---STRING revision history of %s
 Revision history of %s
 ---STRINGEND
 
 ---STRING show history
 Show revision history
+---STRINGEND
+
+---STRING user
+User
+---STRINGEND
+
+---STRING version %s
+Version %s
 ---STRINGEND
 
 ---STRING view %s differences with next (%s)
@@ -45,5 +73,9 @@ View this revision (%s)
 
 ---STRING viewing version %s of %s
 Version %s of %s
+---STRINGEND
+
+---STRING back to %s
+Back to page "%s"
 ---STRINGEND
 

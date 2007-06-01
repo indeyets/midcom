@@ -1,7 +1,5 @@
 <?php
 // Available request keys: article, datamanager, edit_url, delete_url, create_urls
-
-$data =& $_MIDCOM->get_custom_context_data('request_data');
 $view = $data['view_article'];
 ?>
 
@@ -17,4 +15,4 @@ if (   array_key_exists('image', $view)
 } 
 ?>
 
-&(view["content"]:h);
+&(view['content']:h);

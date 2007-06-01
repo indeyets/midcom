@@ -1,8 +1,15 @@
 <?php
 /**
- * MidCOM wrapped class for access to stored queries
+ * @package net.nemein.discussion
+ * @author The Midgard Project, http://www.midgard-project.org 
+ * @version $Id$
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
- 
+
+/**
+ * MidCOM DBA access to posts
+ */ 
 class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
 {
     function net_nemein_discussion_post_dba($id = null)
@@ -29,15 +36,109 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
      */
     function report_abuse()
     {
+        if ($this->status == NET_NEMEIN_DISCUSSION_REPORTED_MODERATED)
+        {
+            return false;
+        }
+        
         // Set the status
-        $this->status = NET_NEMEIN_DISCUSSION_REPORTED_ABUSE;
+        if ($this->can_do('net.nemein.discussion:moderation'))
+        {
+            $this->status = NET_NEMEIN_DISCUSSION_ABUSE;
+        }
+        else
+        {
+            $this->status = NET_NEMEIN_DISCUSSION_REPORTED_ABUSE;
+        }
+        
+        if ($this->update())
+        {
+            // Log who reported it
+            $this->_log_moderation('reported_abuse');
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Marks the message as confirmed abuse
+     */
+    function confirm_abuse()
+    {
+        if ($this->status == NET_NEMEIN_DISCUSSION_REPORTED_MODERATED)
+        {
+            return false;
+        }
+        
+        // Set the status
+        if (!$this->can_do('net.nemein.discussion:moderation'))
+        {
+            return false;
+        }
+        
+        $this->status = NET_NEMEIN_DISCUSSION_ABUSE;
+        if ($this->update())
+        {
+            // Log who reported it
+            $this->_log_moderation('confirmed_abuse');
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Marks the message as confirmed junk (spam)
+     */
+    function confirm_junk()
+    {
+        if ($this->status == NET_NEMEIN_DISCUSSION_REPORTED_MODERATED)
+        {
+            return false;
+        }
+        
+        // Set the status
+        if (!$this->can_do('net.nemein.discussion:moderation'))
+        {
+            return false;
+        }
+        
+        $this->status = NET_NEMEIN_DISCUSSION_JUNK;
+        if ($this->update())
+        {
+            // Log who reported it
+            $this->_log_moderation('confirmed_junk');
+            return true;
+        }
+        return false;
+    }    
+    
+    /**
+     * Marks the message as not abuse
+     */
+    function report_not_abuse()
+    {
+        if ($this->status > NET_NEMEIN_DISCUSSION_REPORTED_ABUSE)
+        {
+            return false;
+        }
+        
+        if (!$this->can_do('net.nemein.discussion:moderation'))
+        {
+            return false;
+        }
+        
+        // Set the status
+        $this->status = NET_NEMEIN_DISCUSSION_MODERATED;
         $updated = $this->update();
         
-        // Log who reported it
-        $this->_log_moderation('reported_abuse');
-        
-        return $updated;
-    }
+        if ($this->update())
+        {
+            // Log who reported it
+            $this->_log_moderation('reported_not_abuse');
+            return true;
+        }
+        return false;
+    }    
     
     function get_logs()
     {
@@ -120,7 +221,7 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
         $posts = $qb->execute();
         foreach ($posts as $post)
         {
-            if ($post->created > $latest_post->created)
+            if ($post->metadata->published > $latest_post->metadata->published)
             {
                 $latest_post = $post;
             }
@@ -133,12 +234,14 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
             {
                 $thread->posts = count($posts);
                 $thread->latestpost = $latest_post->id;
-                $thread->latestposttime = $latest_post->created;
+                $thread->latestposttime = $latest_post->metadata->published;
                 $thread->update();
             }
             else
             {
                 // TODO: There are no visible posts any more, should we delete thread?
+                $thread->posts = 0;
+                $thread->update();
             }
         }
         return true;

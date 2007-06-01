@@ -1,44 +1,50 @@
 <?php
 /**
  * OpenPSA group projects
- * 
- * 
+ *
+ *
  * @package org.openpsa.projects
  */
 class org_openpsa_projects_interface extends midcom_baseclasses_components_interface
 {
-    
+
     function org_openpsa_projects_interface()
-    {        
+    {
         parent::midcom_baseclasses_components_interface();
         $this->_component = 'org.openpsa.projects';
         $this->_autoload_class_definitions = array('midcom_dba_classes.inc');
-        $this->_autoload_files = array(
+        $this->_autoload_files = array
+        (
             'admin.php',
             'viewer.php',
             'navigation.php',
-            'task_midcomdba.php',              
-            'project_midcomdba.php', 
-            'resource_midcomdba.php', 
-            'hour_report_midcomdba.php', 
-            'expense_midcomdba.php', 
-            'mileage_midcomdba.php',                        
+            'task_midcomdba.php',
+            'project_midcomdba.php',
+            'resource_midcomdba.php',
+            'hour_report_midcomdba.php',
+            'expense_midcomdba.php',
+            'mileage_midcomdba.php',
             'hours_widget.php',
             'deliverables/deliverable_midcomdba.php',
             'deliverables/interface.php',
             'deliverables/plugin_base.php',
             'deliverables/plugin_noop.php',
             'task_status_midcomdba.php',
-            'workflow_handler.php',            
+            'workflow_handler.php',
+            'workingon.php',
+            // TODO: Only load this file when needed.
+            'projectbroker.php',
         );
-        $this->_autoload_libraries = Array( 
-            'org.openpsa.core', 
+        $this->_autoload_libraries = Array
+        (
+            'org.openpsa.core',
             'org.openpsa.helpers',
             'midcom.helper.datamanager',
             'org.openpsa.contactwidget',
-            'org.openpsa.relatedto', 
+            'org.openpsa.calendarwidget',
+            'org.openpsa.relatedto',
         );
-        
+
         $this->_fill_virtual_groups();
     }
 
@@ -50,7 +56,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         // FIXME: Constant ORG_OPENPSA_WGTYPE_ACTIVE is not set yet
         $qb->add_constraint('orgOpenpsaWgtype', '=', 3);
         $ret = @$qb->execute();
-        //$ret = $_MIDCOM->dbfactory->exec_query_builder($qb);        
+        //$ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
         if (   is_array($ret)
             && count($ret) > 0)
         {
@@ -84,7 +90,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             //PONDER: Should we fail with more vigor here ??
             return $members;
         }
-        
+
         $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task_resource');
         $qb->add_constraint('task', '=', $project->id);
         if ($type == 'contacts')
@@ -108,7 +114,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
                 }
             }
         }
-        debug_pop();        
+        debug_pop();
         return $members;
     }
 
@@ -116,12 +122,12 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
     function _on_initialize()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         $_MIDCOM->componentloader->load_graceful('org.openpsa.sales');
-        
+
         //With the plentyness of typecasting around any other numeric locale calls for trouble with floats
         setlocale(LC_NUMERIC, 'C');
-        
+
         //org.openpsa.projects object types
         define('ORG_OPENPSA_OBTYPE_PROJECT', 6000);
         define('ORG_OPENPSA_OBTYPE_PROCESS', 6001);
@@ -131,6 +137,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         define('ORG_OPENPSA_OBTYPE_MILEAGE', 6005);
         define('ORG_OPENPSA_OBTYPE_PROJECTRESOURCE', 6006);
         define('ORG_OPENPSA_OBTYPE_PROJECTCONTACT', 6007);
+        define('ORG_OPENPSA_OBTYPE_PROJECTPROSPECT', 6008);
         //org.openpsa.projects status types
         //Templates/Drafts
         define('ORG_OPENPSA_TASKSTATUS_DRAFT', 6450);
@@ -149,7 +156,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         define('ORG_OPENPSA_TASKACCEPTANCE_ALLACCEPT', 6700);
         define('ORG_OPENPSA_TASKACCEPTANCE_ONEACCEPT', 6701);
         define('ORG_OPENPSA_TASKACCEPTANCE_ONEACCEPTDROP', 6702);
-                
+
         debug_pop();
         return true;
     }
@@ -161,7 +168,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         {
             return null;
         }
-        
+
         if ($task->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_PROJECT)
         {
             return "project/{$task->guid}/";
@@ -272,13 +279,13 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             org_openpsa_relatedto_suspect::defaults_helper($link, $defaults, $this->_component, $task);
             $to_array['other_obj'] = $task;
             $to_array['link'] = $link;
-            
+
             $links_array[] = $to_array;
         }
         debug_pop();
         return;
     }
-    
+
     /**
      * Used by org_openpsa_relatedto_find_suspects to in case the givcen object is a person
      */
@@ -316,13 +323,13 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             org_openpsa_relatedto_suspect::defaults_helper($link, $defaults, $this->_component, $task);
             $to_array['other_obj'] = $task;
             $to_array['link'] = $link;
-            
+
             $links_array[] = $to_array;
         }
         debug_pop();
         return;
     }
-    
+
     function create_hour_report(&$task, $person_id, &$from_object, $from_component)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -349,7 +356,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         $hr->task = $task->id;
         $hr->person = $person_id;
         $hr->invoiceable = $task->hoursInvoiceableDefault;
-        
+
         switch (true)
         {
             case is_a($from_object, 'midcom_org_openpsa_event'):
@@ -366,7 +373,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
                 return false;
         }
         debug_add("about to create hour_report\n===\n" . sprint_r($hr) . "===\n");
-        
+
         $stat = $hr->create();
         if (!$stat)
         {
@@ -378,7 +385,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             return false;
         }
         debug_add("created hour_report #{$hr->id}");
-        
+
         // Create a relatedtolink from hour_report to the object it was created from
         $link = org_openpsa_relatedto_handler::create_relatedto($hr, 'org.openpsa.projects', $from_object, $from_component);
         if (   !is_object($link)
@@ -387,7 +394,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             debug_add("failed to create link from hour_report #{$hr->id} to " . get_class($from_object) . " {$from_object->guid}, errstr: " . mgd_errstr(), MIDCOM_LOG_WARN);
         }
         debug_add("created link #{$link->id}");
-        
+
         // Return correct user
         $_MIDGARD['user'] = $GLOBALS['midgard_user_backup'];
         $_MIDCOM->auth->user = $GLOBALS['midcom_user_backup'];
@@ -395,5 +402,208 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         return true;
     }
 
+    /**
+     * Support for contacts person merge
+     */
+    function org_openpsa_contacts_duplicates_merge_person(&$person1, &$person2, $mode)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        switch($mode)
+        {
+            case 'all':
+                break;
+            /* In theory we could have future things (like resource/manager ships), but now we don't support that mode, we just exit */
+            case 'future':
+                return true;
+                break;
+            default:
+                // Mode not implemented
+                debug_add("mode {$mode} not implemented", MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;
+                break;
+        }
+
+        // Transfer links from classes we drive
+        // ** resources **
+        $qb_member = org_openpsa_projects_task_resource::new_query_builder();
+        $qb_member->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
+        $qb_member->add_constraint('person', '=', $person2->id);
+        $members = $qb_member->execute();
+        if ($members === false)
+        {
+            // Some error with QB
+            debug_add('QB Error', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        // Transfer memberships
+        $membership_map = array();
+        foreach ($members as $member)
+        {
+            // TODO: figure out duplicate memberships and delete unneeded ones
+            $member->person = $person1->id;
+            debug_add("Transferred task resource #{$member->id} to person #{$person1->id} (from #{$member->person})", MIDCOM_LOG_INFO);
+            if (!$member->update())
+            {
+                debug_add("Failed to update task resource #{$member->id}, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;
+            }
+        }
+
+        // ** task statuses **
+        $qb_receipt = org_openpsa_projects_task_status::new_query_builder();
+        $qb_receipt->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
+        $qb_receipt->add_constraint('targetPerson', '=', $person2->id);
+        $receipts = $qb_receipt->execute();
+        if ($receipts === false)
+        {
+            // Some error with QB
+            debug_add('QB Error / status', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        foreach($receipts as $receipt)
+        {
+            debug_add("Transferred task_status #{$receipt->id} to person #{$person1->id} (from #{$receipt->person})", MIDCOM_LOG_INFO);
+            $receipt->targetPerson = $person1->id;
+            if (!$receipt->update())
+            {
+                // Error updating
+                debug_add("Failed to update status #{$receipt->id}, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;
+            }
+        }
+
+        // ** hour reports **
+        $qb_log = org_openpsa_projects_hour_report::new_query_builder();
+        $qb_log->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
+        $qb_log->add_constraint('person', '=', $person2->id);
+        $logs = $qb_log->execute();
+        if ($logs === false)
+        {
+            // Some error with QB
+            debug_add('QB Error / hours', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        foreach($logs as $log)
+        {
+            debug_add("Transferred hour_report #{$log->id} to person #{$person1->id} (from #{$log->person})", MIDCOM_LOG_INFO);
+            $log->person = $person1->id;
+            if (!$log->update())
+            {
+                // Error updating
+                debug_add("Failed to update hour_report #{$log->id}, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;
+            }
+        }
+
+        // ** Task managers **
+        $qb_task = org_openpsa_projects_task::new_query_builder();
+        $qb_task->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
+        $qb_task->add_constraint('manager', '=', $person2->id);
+        $tasks = $qb_task->execute();
+        if ($tasks === false)
+        {
+            // Some error with QB
+            debug_add('QB Error / tasks', MIDCOM_task_ERROR);
+            debug_pop();
+            return false;
+        }
+        foreach($tasks as $task)
+        {
+            debug_add("Transferred task #{$task->id} to person #{$person1->id} (from #{$task->person})", MIDCOM_task_INFO);
+            $task->manager = $person1->id;
+            if (!$task->update())
+            {
+                // Error updating
+                debug_add("Failed to update task #{$task->id}, errstr: " . mgd_errstr(), MIDCOM_task_ERROR);
+                debug_pop();
+                return false;
+            }
+        }
+
+        // ** expense reports **
+        $qb_expense = org_openpsa_projects_expense::new_query_builder();
+        $qb_expense->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
+        $qb_expense->add_constraint('person', '=', $person2->id);
+        $expenses = $qb_expense->execute();
+        if ($expenses === false)
+        {
+            // Some error with QB
+            debug_add('QB Error / expenses', MIDCOM_expense_ERROR);
+            debug_pop();
+            return false;
+        }
+        foreach($expenses as $expense)
+        {
+            debug_add("Transferred expense #{$expense->id} to person #{$person1->id} (from #{$expense->person})", MIDCOM_expense_INFO);
+            $expense->person = $person1->id;
+            if (!$expense->update())
+            {
+                // Error updating
+                debug_add("Failed to update expense #{$expense->id}, errstr: " . mgd_errstr(), MIDCOM_expense_ERROR);
+                debug_pop();
+                return false;
+            }
+        }
+
+
+        // Transfer metadata dependencies from classes that we drive
+        $classes = array(
+            'org_openpsa_projects_task_resource',
+            'org_openpsa_projects_task_status',
+            'org_openpsa_projects_task',
+            'org_openpsa_projects_hour_report',
+            'org_openpsa_projects_expense',
+        );
+        foreach($classes as $class)
+        {
+            if ($version_not_18 = true)
+            {
+                switch($class)
+                {
+                    default:
+                        $metadata_fields = array(
+                            'creator' => 'id',
+                            'revisor' => 'id' // Though this will probably get touched on update we need to check it anyways to avoid invalid links
+                        );
+                        break;
+                }
+            }
+            else
+            {
+                // TODO: 1.8 metadata format support
+            }
+            $ret = org_openpsa_contacts_duplicates_merge::person_metadata_dependencies_helper($class, $person1, $person2, $metadata_fields);
+            if (!$ret)
+            {
+                // Failure updating metadata
+                debug_add("Failed to update metadata dependencies in class {$class}, errsrtr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;
+            }
+        }
+
+        // All done
+        return true;
+    }
+
+    function background_search_resources($args, &$handler)
+    {
+        $task = new org_openpsa_projects_task($args['task']);
+        if (!is_object($task))
+        {
+            // TODO: error reporting
+            return false;
+        }
+        $broker = new org_openpsa_projects_projectbroker();
+        $broker->membership_filter = $args['membership_filter'];
+        return $broker->save_task_prospects($task);
+    }
 }
 ?>

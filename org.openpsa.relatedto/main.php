@@ -12,7 +12,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
         $this->_component = 'org.openpsa.relatedto';
         parent::midcom_baseclasses_components_purecode();
     }
-    
+
     /**
      * Shorthand for creating a relatedto object. The <em>from</em> object is something that is related to the <em>to</em> object.
      * For example, if a task is created under a sales project, that task is the from object, and the sales project the to object.
@@ -41,7 +41,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
         }
         return $rel;
     }
-        
+
     /**
      * Parses relatedto information from request, returning either
      * existing matching relatedtos or prefilled new ones for creation
@@ -68,7 +68,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
         }
         return $ret;
     }
-    
+
     /**
      * Used to convert our GET parameters into session data
      *
@@ -84,7 +84,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
             $session->set('relatedto2get_array', $arr);
         }
     }
-    
+
     /**
      * Clean up after get2session() (in case we cancel or something)
      *
@@ -100,10 +100,10 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
             $session->remove('relatedto2get_array');
         }
     }
-    
+
     /**
      * serializes an array or relatedto objects into GET parameters
-     * 
+     *
      * NOTE: does not prefix the ? for the first parameter in case this needs
      * to be used with some other GET parameters.
      */
@@ -124,35 +124,35 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
             }
             if ($i > 0)
             {
-                $ret .= '&';
+                $ret .= '&amp;';
             }
             //These should be always specified
             $ret .= rawurlencode("org_openpsa_relatedto[{$i}][toGuid]") . '=' . rawurlencode("{$rel->toGuid}");
-            $ret .= '&' . rawurlencode("org_openpsa_relatedto[{$i}][toComponent]") . '=' . rawurlencode("{$rel->toComponent}");
-            $ret .= '&' . rawurlencode("org_openpsa_relatedto[{$i}][toClass]") . '=' . rawurlencode("{$rel->toClass}");
+            $ret .= '&amp;' . rawurlencode("org_openpsa_relatedto[{$i}][toComponent]") . '=' . rawurlencode("{$rel->toComponent}");
+            $ret .= '&amp;' . rawurlencode("org_openpsa_relatedto[{$i}][toClass]") . '=' . rawurlencode("{$rel->toClass}");
             //To save GET space we only append these if they have values
             if ($rel->status)
             {
-                $ret .= '&' . rawurlencode("org_openpsa_relatedto[{$i}][status]") . '=' . rawurlencode("{$rel->status}");
+                $ret .= '&amp;' . rawurlencode("org_openpsa_relatedto[{$i}][status]") . '=' . rawurlencode("{$rel->status}");
             }
             if ($rel->fromComponent)
             {
-                $ret .= '&' . rawurlencode("org_openpsa_relatedto[{$i}][fromComponent]") . '=' . rawurlencode("{$rel->fromComponent}");
+                $ret .= '&amp;' . rawurlencode("org_openpsa_relatedto[{$i}][fromComponent]") . '=' . rawurlencode("{$rel->fromComponent}");
             }
             if ($rel->fromClass)
             {
-                $ret .= '&' . rawurlencode("org_openpsa_relatedto[{$i}][fromClass]") . '=' . rawurlencode("{$rel->fromClass}");
+                $ret .= '&amp;' . rawurlencode("org_openpsa_relatedto[{$i}][fromClass]") . '=' . rawurlencode("{$rel->fromClass}");
             }
             if ($rel->fromGuid)
             {
-                $ret .= '&' . rawurlencode("org_openpsa_relatedto[{$i}][fromGuid]") . '=' . rawurlencode("{$rel->fromGuid}");
+                $ret .= '&amp;' . rawurlencode("org_openpsa_relatedto[{$i}][fromGuid]") . '=' . rawurlencode("{$rel->fromGuid}");
             }
-            
+
             $i++;
         }
         return $ret;
     }
-    
+
     /**
      * Call to create relatedtos passed on as GET parameters to a newly created object
      */
@@ -230,7 +230,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
         //debug_add("request switch after\n===\n" . sprint_r($switch) . "===\n");
         debug_pop();
     }
-    
+
     /**
      * Checks if component is loaded if not tries to load it, then returns is_loaded
      */
@@ -242,7 +242,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
         }
         return $_MIDCOM->componentloader->is_loaded($component);
     }
-    
+
     function common_node_toolbar_buttons_sanitycheck(&$data, &$button_component, &$bind_object, &$calling_component)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -266,13 +266,13 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
             debug_pop();
             return false;
         }
-        
+
         $related_to = new org_openpsa_relatedto_relatedto();
         $related_to->toGuid = $bind_object->guid;
         $related_to->toClass = get_class($bind_object);
         $related_to->toComponent = $calling_component;
         $related_to->status = ORG_OPENPSA_RELATEDTO_STATUS_CONFIRMED;
-        
+
         debug_pop();
         return $related_to;
     }
@@ -296,7 +296,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
         );
         return $buttons;
     }
-    
+
     function common_node_toolbar_buttons(&$toolbar, &$bind_object, $calling_component, $buttons = 'default')
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -309,7 +309,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
             //Invalid buttons given
             return;
         }
-        
+
         foreach($buttons as $mode => $data)
         {
             debug_add("processing button '{$mode}' with data:\n===\n" . sprint_r($data) . "===\n");
@@ -385,7 +385,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
                         debug_add("sanitycheck returned '{$related_to}' (relatedto object expected), skipping", MIDCOM_LOG_WARN);
                         continue 2;
                     }
-                    
+
                     if (!net_nemein_wiki_interface::node_wikiword_is_free($data['node'], $data['wikiword']))
                     {
                         //Wikiword is already reserved
@@ -394,11 +394,12 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
                         continue 2;
                     }
 
-                    
-                    $data['wikiword_encoded'] = rawurlencode(str_replace('/', '-', $data['wikiword']));
+
+                    //$data['wikiword_encoded'] = rawurlencode(str_replace('/', '-', $data['wikiword']));
+                    $data['wikiword_encoded'] = rawurlencode($data['wikiword']);
                     $toolbar->add_item(
                         Array(
-                            MIDCOM_TOOLBAR_URL => "{$data['node'][MIDCOM_NAV_FULLURL]}create/{$data['wikiword_encoded']}/?" . org_openpsa_relatedto_handler::relatedto2get(array($related_to)),
+                            MIDCOM_TOOLBAR_URL => "{$data['node'][MIDCOM_NAV_FULLURL]}create/?wikiword={$data['wikiword_encoded']}&" . org_openpsa_relatedto_handler::relatedto2get(array($related_to)),
                             MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create note', $button_component),
                             MIDCOM_TOOLBAR_HELPTEXT => null,
                             //TODO: Different icon from new document ?

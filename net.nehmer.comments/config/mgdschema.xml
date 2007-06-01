@@ -5,14 +5,16 @@
     <property name="id" type="integer" primaryfield="id" />
 
     <!-- Additional Metadata -->
-    <property name="author" type="text" />
-    <property name="objectguid" type="text" dbtype="varchar(80)" />
+    <property name="author" type="string" />
+    <property name="objectguid" type="string" dbtype="varchar(80)" />
 
-    <property name="title" type="text" />
+    <property name="title" type="string" />
     <property name="content" type="longtext" />
 
+    <property name="rating" type="integer" />
+
 	<!-- Audit Trail -->
-	<property name="ip" type="text" dbtype="varchar(15)" />
+	<property name="ip" type="string" dbtype="varchar(15)" />
     <property name="status" type="integer" />
     
     <!-- 1.7 required metadata -->        

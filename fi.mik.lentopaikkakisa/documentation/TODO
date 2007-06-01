@@ -1,0 +1,14 @@
+fi.mik.lentopaikkakisa TODO
+===========================
+
+* Check against duplicates (same person/club/aerodrome combo) on form validation phase
+* Connect reports to person record
+* Enable inputting flights to multiple aerodromes on one go (and scores per each)
+* Cache per-club scores and per-person scores
+* Report of visited aerodromes per person and club
+* Top 5 persons per club
+* "Your flights" view
+
+* Easy addition of quick stats to directmarketing newsletters
+  - Top 5 persons
+  - Club scores

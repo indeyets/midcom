@@ -6,7 +6,7 @@ var dm2AjaxEditor = Class.create();
 
 dm2AjaxEditor.prototype = {
 
-    initialize: function(formId, creationMode, windowMode)
+    initialize: function(formId, creationMode, windowMode, wideMode)
     {
         // This is the constructor
         
@@ -16,6 +16,7 @@ dm2AjaxEditor.prototype = {
         
         this.formId = formId;
         this.windowMode = windowMode;
+        this.wideMode = wideMode;
         
         // Temporary storage for form values
         this.formValues = new Object();
@@ -25,11 +26,8 @@ dm2AjaxEditor.prototype = {
 
         // Dimensions of the whole editable area
         this.formDimensions = new Object();
-        this.formDimensions.x1 = false;
-        this.formDimensions.y1 = false;
-        this.formDimensions.x2 = false;
-        this.formDimensions.y2 = false;
-        
+        this.emptyDimensions();
+                
         this.blinder = false;
         this.formArea = $(this.formId + '_area');
         
@@ -79,13 +77,13 @@ dm2AjaxEditor.prototype = {
         {
             this.formArea.style.display = '';
         }
+        this.emptyDimensions();
         this.makeEditable();
         this.fetchFields();
     },
     
     /**
      * Get elements in tree by certain class name
-     */
     getElementsByClassName: function(class, parent)
     {
         var elementsArray = [];
@@ -99,7 +97,7 @@ dm2AjaxEditor.prototype = {
             }
         }
         return elementsArray;
-    },
+    },*/
     
     /**
      * Clone the creation form into reserve
@@ -111,17 +109,16 @@ dm2AjaxEditor.prototype = {
         // We rename the new area as a "holding" area
         newArea.id = this.reserveIdentifier + '_area';
         newArea.style.display = 'none';
-        editableFields = this.getElementsByClassName(this.formId, newArea);
+        editableFields = document.getElementsByClassName(this.formId, newArea);
         for (i = 0; i < editableFields.length; i++) 
         {
             id = editableFields[i].getAttribute('id');
             editableFields[i].className = this.reserveIdentifier;
             eval("editableFields[i].id = id.replace(/" + this.formId + "/, this.reserveIdentifier);");
         }
-
         try
         {
-            this.formArea.parentNode.insertBefore(newArea, button);
+            this.formArea.parentNode.appendChild(newArea, button);
         }
         catch (error)
         {
@@ -220,16 +217,27 @@ dm2AjaxEditor.prototype = {
             'text-align': 'center',
             'font-family': 'Helvetica, sans-serif',
             'padding-top'           : '40px',
-            'background-image'  : 'url("/midcom-static/midcom.helper.datamanager2/ajax-loading.gif")',
+            'background-image'  : 'url("/midcom-static/midcom.helper.datamanager2/ajax-loading-black.gif")',
             'background-repeat' : 'no-repeat',
             'background-position': 'top center',
             '-moz-border-radius': '8px',
             'z-index'   : '999999',
-            'display'   : 'none'            
+            'display'   : 'none'           
         };
         stylesHash = $H(blinderStyles);
         Element.setStyle(this.blinder, stylesHash);
         this.blinder.innerHTML = 'Loading...';
+    },
+    
+    /**
+     * Empty the field dimensions
+     */
+    emptyDimensions: function()
+    {
+        this.formDimensions.x1 = false;
+        this.formDimensions.y1 = false;
+        this.formDimensions.x2 = false;
+        this.formDimensions.y2 = false;
     },
 
     /**
@@ -315,6 +323,13 @@ dm2AjaxEditor.prototype = {
                         {
                             this.formValues[formFields[i].childNodes[ii].name] = 0;
                         }
+                    }
+                    if (formFields[i].childNodes[ii].type == 'radio') 
+                    {
+                        if (formFields[i].childNodes[ii].checked) 
+                        {
+                            this.formValues[formFields[i].childNodes[ii].name] = formFields[i].childNodes[ii].value;
+                        } 
                     }
                 }
                 if (formFields[i].childNodes[ii].tagName == 'SELECT') 
@@ -407,7 +422,7 @@ dm2AjaxEditor.prototype = {
      */
     failedRequest: function()
     {
-        new protoGrowl({type: 'ok', title: 'Datamanager', message: 'HTTP request failed'});                    
+        new protoGrowl({type: 'error', title: 'Datamanager', message: 'HTTP request failed'});                    
         this.cancelFields();
     },
 
@@ -477,7 +492,7 @@ dm2AjaxEditor.prototype = {
                 method: 'post', 
                 parameters: queryString, 
                 onComplete: this.renderFields.bind(this),
-                onFailure: this.failedRequest.bind(this),
+                onFailure: this.failedRequest.bind(this)
             }
         );    
     },
@@ -505,6 +520,7 @@ dm2AjaxEditor.prototype = {
      */
     fetchFields: function()
     {
+        this.removeToolbar();
         this.blinder.innerHTML = 'Loading...';    
     
         Effect.Appear(this.blinder);
@@ -542,7 +558,7 @@ dm2AjaxEditor.prototype = {
             }
             for (var i=0;i < errors.length; i++)
             {
-                new protoGrowl({type: 'warning', title: 'Datamanager', message: errors[i].firstChild.nodeValue});
+                new protoGrowl({type: 'error', title: 'Datamanager', message: errors[i].firstChild.nodeValue});
             }
         }
 
@@ -584,47 +600,55 @@ dm2AjaxEditor.prototype = {
                 formField.innerHTML += fields[i].firstChild.nodeValue;
 
                 // Set up fields so that they aren't too big
-                
                 for (ii = 0; ii < formField.childNodes.length; ii++) 
                 {
                     switch (formField.childNodes[ii].tagName)
                     {
                         case 'TEXTAREA':
-                            if (this.windowMode)
+                            if (   this.windowMode)
                             {
-                                formField.childNodes[ii].style.width = 460 + 'px;';
+                                formField.childNodes[ii].style.width = 460 + 'px';
+                            }
+                            else if(this.wideMode)
+                            {
+                                formField.childNodes[ii].style.width = 200 + 'px';
                             }
                             else
                             {
-                                formField.childNodes[ii].style.width = dimensions.width + 'px;';
+                                formField.childNodes[ii].style.width = dimensions.width + 'px';
                                 //formField.childNodes[ii].style.height = dimensions.height + 'px;';
                             }
-                            formField.childNodes[ii].cols = '';
-                            break;
+                            //formField.childNodes[ii].cols = '';
+                            break
                         case 'INPUT':
                             if (formField.childNodes[ii].className == 'date')
                             {
-                                if (formField.childNodes[ii].name == 'date')
+                                if (   this.windowMode
+                                    || this.wideMode)
                                 {
-                                    formField.childNodes[ii].style.width = dimensions.width - 30 + 'px;';
+                                    formField.childNodes[ii].style.width = 90 + 'px';
+                                }
+                                else if (formField.childNodes[ii].name == 'date')
+                                {
+                                    formField.childNodes[ii].style.width = dimensions.width - 30 + 'px';
                                 }
                             }
-                            else if (formField.childNodes[ii].className != 'checkbox')
+                            else if (   formField.childNodes[ii].className != 'checkbox'
+                                     && formField.childNodes[ii].className != 'radiobutton')
                             {
                                 if (dimensions.width < 10)
                                 {
                                     dimensions.width = 40;
-                                }
-                                formField.childNodes[ii].style.width = dimensions.width + 'px;';
+                                }                               
+                                formField.childNodes[ii].style.width = dimensions.width + 'px';
                             }
-                            break;
+                            break
                     }
                 }
-
                 lastFormField = formField;
             }
         }
-        
+      
         if (lastFormField)
         {
             if (   this.creationMode
@@ -635,7 +659,6 @@ dm2AjaxEditor.prototype = {
                 this.newState = 'view';
                 return;
             }
-        
             // Populate toolbar accordingly to the state
             switch (this.newState)
             {
@@ -643,7 +666,7 @@ dm2AjaxEditor.prototype = {
                     // We're in preview state, options are "Edit" and "Save
                     var buttons = '<div class="midcom_helper_datamanager2_ajax_toolbar" id="' + formIdentifier + '_toolbar">';
                     buttons    += '  <input id="' + formIdentifier + '_edit" class="edit" type="button" value="Edit" />';
-                    buttons    += '  <input id="' + formIdentifier + '_save" class="save" type="button" value="Save" />';
+                    buttons    += '  <input id="' + formIdentifier + '_save" class="save" accesskey="s" type="button" value="Save" />';
                     buttons    += '</div>';
                     new Insertion.After(lastFormField, buttons);    
                     $(formIdentifier + '_edit').onclick = this.fetchFields.bindAsEventListener(this);
@@ -671,7 +694,7 @@ dm2AjaxEditor.prototype = {
                     if (this.creationMode)
                     {
                         var buttons = '<div class="midcom_helper_datamanager2_ajax_toolbar" id="' + formIdentifier + '_toolbar">';
-                        buttons    += '  <input id="' + formIdentifier + '_save" class="save" type="button" value="Save" />';
+                        buttons    += '  <input id="' + formIdentifier + '_save" class="save" accesskey="s" type="button" value="Save" />';
                         buttons    += '</div>';
                         
                         if (this.windowMode)
@@ -688,9 +711,9 @@ dm2AjaxEditor.prototype = {
                     else
                     {
                         var buttons = '<div class="midcom_helper_datamanager2_ajax_toolbar" id="' + formIdentifier + '_toolbar">';
-                        buttons    += '  <input id="' + formIdentifier + '_preview" class="preview" type="button" value="Preview" />';
-                        buttons    += '  <input id="' + formIdentifier + '_save" class="save" type="button" value="Save" />';
-                        buttons    += '  <input id="' + formIdentifier + '_cancel" class="cancel" type="button" value="Cancel" />';
+                        buttons    += '  <input id="' + formIdentifier + '_preview" class="preview" accesskey="r" type="button" value="Preview" />';
+                        buttons    += '  <input id="' + formIdentifier + '_save" class="save" accesskey="s" type="button" value="Save" />';
+                        buttons    += '  <input id="' + formIdentifier + '_cancel" class="cancel" accesskey="c" type="button" value="Cancel" />';
                         buttons    += '  <input id="' + formIdentifier + '_delete" class="delete" type="button" value="Delete" />';                        
                         buttons    += '</div>';
                         
@@ -804,7 +827,7 @@ dm2AjaxEditor.prototype = {
         response =  ajaxRequest.responseText;
         if (response == 'MGD_ERR_OK')
         {
-            Effect.BlindUp(this.formArea);
+            Effect.Fade(this.formArea);
             new protoGrowl({type: 'ok', title: 'Datamanager', message: 'Object deleted successfully'});
         }
         else
@@ -819,7 +842,7 @@ dm2AjaxEditor.prototype = {
     removeToolbar: function()
     {
         // Remove old toolbars
-        oldToolbar = $(formIdentifier + '_toolbar');
+        oldToolbar = $(this.formId + '_toolbar');
         if (oldToolbar)
         {
             Element.remove(oldToolbar);
@@ -834,11 +857,11 @@ dm2AjaxEditor.prototype = {
         tinyFields = document.getElementsByClassName('tinymce');
         for (i = 0; i < tinyFields.length; i++) 
         {
-            parent = tinyFields[i].parentNode;
+            parentNode = tinyFields[i].parentNode;
             
             if (!this.windowMode)
             {
-                dimensions = this.getFieldDimensions(parent);
+                dimensions = this.getFieldDimensions(parentNode);
                 tinyMCE.settings['width'] = dimensions.width;
             }
             //tinyMCE.settings['theme'] = 'simple';

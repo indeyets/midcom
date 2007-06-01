@@ -1,0 +1,224 @@
+/* Individual task view */
+div.org_openpsa_projects_task div.tags
+{
+    float: right;
+    color: #c0c0c0;
+}
+div.org_openpsa_projects_task div.bookings p.ok
+{
+    color: #4e9a06;
+}
+div.org_openpsa_projects_task div.bookings p.acceptable
+{
+    color: #c4a000;
+}
+div.org_openpsa_projects_task div.bookings p.bad
+{
+    color: #a40000;
+}
+
+/* Task listings */
+table.tasks
+{
+    border-collapse: collapse;
+}
+
+table.tasks thead th
+{
+    background-color: #3465a4;
+    color: #ffffff;
+    text-align: left;
+    padding-right: 8px;
+}
+
+table.tasks tr
+{
+    vertical-align: top;
+}
+
+table.tasks td
+{
+    padding-right: 8px;
+}
+table.tasks td.title
+{
+    font-weight: bold;
+}
+table.tasks th.hours, table.tasks td.hours
+{
+    text-align: right;
+}
+table.tasks tr.even td
+{
+    background-color: #e0e0e0;
+}
+
+table.tasks tfoot
+{
+    margin-top: 10px;
+}
+
+table.tasks tfoot td
+{
+    border-top: 1px solid #000000;
+}
+
+/* Composite hour reporting element */
+div.hours table.composite thead th
+{
+    font-size: 9px;
+}
+div.hours table tr td
+{
+    vertical-align: top;
+}
+div.hours table td p
+{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+div.hours td.date
+{
+    width: 90px;
+}
+
+div.hours td.description
+{
+    width: 200px;
+}
+
+/* "Now working on" rendering */
+div.org_openpsa_projects_workingon
+{
+    border: 1px solid #babdb6;
+    -moz-border-radius: 8px;
+    padding-left: 24px;
+}
+div.org_openpsa_projects_workingon h2
+{
+    background-color: #e9ede4;
+    padding: 0 0.5em;
+    margin: 0;
+    border-left: solid 1px #babdb6;
+    border-bottom: solid 1px #babdb6;
+    -moz-border-radius-bottomleft: 8px;
+}
+div.org_openpsa_projects_workingon form
+{
+    margin: 6px;
+}
+div.org_openpsa_projects_workingon select
+{
+    border: 1px solid #e9ede4;
+    display: inline;
+    width: 90%;
+}
+div.org_openpsa_projects_workingon label.calculator input
+{
+    border: none;
+    background-color: transparent;
+    color: #333333;
+    font-weight: bold;
+    display: inline;
+    width: 60px;
+}
+
+/* Project broker styling */
+div.org_openpsa_projects_projectbroker ul.prospects
+{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+div.org_openpsa_projects_projectbroker ul.prospects li.project_prospects_renderer_search_ok
+{
+    border: 2px solid #babdb6;
+    -moz-border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+}
+div.org_openpsa_projects_projectbroker ul.prospects li.project_prospects_renderer_search_ok div.vcard
+{
+    float: none;
+    border: none;
+    clear: both;
+}
+div.org_openpsa_projects_projectbroker ul.prospects li.project_prospects_renderer_search_ok table
+{
+    clear: both;
+    border-collapse: collapse;
+    width: 100%;
+}
+div.org_openpsa_projects_projectbroker ul.prospects li.project_prospects_renderer_search_ok table tbody
+{
+    height: 200px;
+    overflow-x: auto;
+}
+div.org_openpsa_projects_projectbroker ul.prospects li.project_prospects_renderer_search_ok table thead th
+{
+    background-color: #3465a4;
+    color: #ffffff;
+    text-align: left;
+    padding-right: 8px;
+}
+div.org_openpsa_projects_projectbroker ul.prospects li.project_prospects_renderer_search_ok table thead th,
+div.org_openpsa_projects_projectbroker ul.prospects li.project_prospects_renderer_search_ok table tbody td
+{
+    padding: 4px;
+    border-bottom: 1px solid #babdb6;
+}
+div.org_openpsa_projects_projectbroker ul.prospects li.project_prospects_renderer_search_ok table td abbr
+{
+    border-bottom: none;
+}
+div.org_openpsa_projects_projectbroker ul.prospects li.project_prospects_renderer_search_ok table td.previous,
+div.org_openpsa_projects_projectbroker ul.prospects li.project_prospects_renderer_search_ok table td.next
+{
+    background-color: #e0e0e0;
+}
+
+div.org_openpsa_projects_projectbroker ul.prospects li.project_prospects_renderer_search_ok table td.slot label.checkbox_checked
+{
+    background: #d1f899;
+    border: 1px solid #c2e78c;
+    color: #7a9751;
+    padding: 5px;
+    margin: 3px;
+}
+div.org_openpsa_projects_projectbroker ul.prospects li.project_prospects_renderer_search_ok table td.slot label.checkbox_unchecked
+{
+    background: #eee;
+    border: 1px solid #e5e5e5;
+    color: #979797;
+    padding: 5px;
+    margin: 3px;
+}
+
+div.org_openpsa_projects_projectbroker ul.prospects
+{
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+div.org_openpsa_projects_projectbroker ul.project_prospects_renderer_searching
+{
+    background-image: url("../midcom.helper.datamanager2/ajax-loading.gif");
+    padding-top: 32px;
+}
+div.org_openpsa_projects_projectbroker ul.project_prospects_renderer_search_fail
+{
+    // TODO: Display error
+}
+div.org_openpsa_projects_projectbroker ul.project_prospects_renderer_search_ok
+{
+}
+div.org_openpsa_projects_projectbroker ul.prospects > li
+{
+    background-repeat: no-repeat;
+    background-position: top right;
+}
+div.org_openpsa_projects_projectbroker ul.prospects li.project_prospects_renderer_searching
+{
+    background-image: url("../midcom.helper.datamanager2/ajax-loading-small.gif");
+    padding-right: 16px;
+}

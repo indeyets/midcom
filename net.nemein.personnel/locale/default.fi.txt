@@ -91,3 +91,106 @@ Sinun käyttöoikeutesi eivät riitä henkilön tietojen käsittelyyn
 Näytettävä ryhmä
 ---STRINGEND
 
+---STRING sort personnel manually
+Järjestele henkilöstö käsin
+---STRINGEND
+
+---STRING sorting order
+Järjestys
+---STRINGEND
+
+---STRING overrides alphabetical order
+Yliajaa aakkosellisen järjestyksen
+---STRINGEND
+
+---STRING enable alphabetical ordering
+Järjestele aakkosjärjestykseen
+---STRINGEND
+
+---STRING accessibility
+Saavutettavuus
+---STRINGEND
+
+---STRING how many persons should be displayed in a row
+Kuinka monta henkilöä näytetään kullakin rivillä?
+---STRINGEND
+
+---STRING preferred person
+Ensimmäisenä näytettävä henkilö
+---STRINGEND
+
+---STRING this person will be displayed first
+Tämä henkilö näytetään ensimmäisenä
+---STRINGEND
+
+---STRING double click to edit
+Tuplaklikkaa muokataksesi.
+---STRINGEND
+
+---STRING no persons found
+Ryhmästä ei löydetty henkilöitä!
+---STRINGEND
+
+---STRING sort personnel into sub groups
+Järjestele henkilöt aliryhmiin
+---STRINGEND
+
+---STRING drag and drop to sort
+Vedä ja pudota järjestääksesi.
+---STRINGEND
+
+---STRING create a new group
+Luo uusi ryhmä
+---STRINGEND
+
+---STRING unsorted
+Järjestelemättömät
+---STRINGEND
+
+---STRING alphabetic
+Aakkosjärjestys
+---STRINGEND
+
+---STRING manually sorted and grouped
+Käsin järjestelty ja ryhmitelty
+---STRINGEND
+
+---STRING manually sorted
+Käsin järjestelty
+---STRINGEND
+
+---STRING display in navigation
+Näytä navigaatiossa
+---STRINGEND
+
+---STRING display nothing
+Älä näytä mitään
+---STRINGEND
+
+---STRING personnel
+Henkilöstö
+---STRINGEND
+
+---STRING groups
+Ryhmät
+---STRINGEND
+
+---STRING edit group
+Muokkaa ryhmää
+---STRINGEND
+
+---STRING edit group %s
+Muokkaa ryhmää "%s"
+---STRINGEND
+
+---STRING street address
+Katuosoite
+---STRINGEND
+
+---STRING postal code
+Postinumero
+---STRINGEND
+
+---STRING city
+Postitoimipaikka
+---STRINGEND

@@ -1,0 +1,16 @@
+table.midcom_admin_babel_languages tr.ok
+{
+    color: #4e9a06;
+}
+table.midcom_admin_babel_languages tr.acceptable
+{
+    color: #c4a000;
+}
+table.midcom_admin_babel_languages tr.bad
+{
+    color: #a40000;
+}
+table.midcom_admin_babel_languages tr th.component
+{
+    text-align: left;
+}

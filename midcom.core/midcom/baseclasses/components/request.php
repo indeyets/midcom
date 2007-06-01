@@ -38,7 +38,8 @@
  *   is the default.
  * - <b>int variable_args:</b> Usually, there are a number of variables in the URL, like
  *   article IDs, or article names. This can be 0, indicating that no variable arguments are
- *   required, which is the default.
+ *   required, which is the default. For an unlimmited number of variable_args set it to -1. 
+ *
  * - <b>bool no_cache:</b> For those cases where you want to prevent a certain "type" of request
  *   being cached. Set to false by default.
  * - <b>int expires:</b> Set the default expiration time of a given type of request. The default -1
@@ -501,9 +502,9 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
     {
         $this->_component = $component;
         $this->_component_data =& $GLOBALS['midcom_component_data'][$this->_component];
-        $GLOBALS['midcom']->set_custom_context_data('request_data', $this->_request_data);
+        $_MIDCOM->set_custom_context_data('request_data', $this->_request_data);
 
-        $this->_i18n =& $GLOBALS['midcom']->get_service('i18n');
+        $this->_i18n =& $_MIDCOM->get_service('i18n');
         $this->_l10n =& $this->_i18n->get_l10n($this->_component);
         $this->_l10n_midcom =& $this->_i18n->get_l10n('midcom');
 
@@ -610,7 +611,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
             $fixed_args_count = count($request['fixed_args']);
             $total_args_count = $fixed_args_count + $request['variable_args'];
 
-            if ($argc != $total_args_count)
+            if (( $argc != $total_args_count && (  $request['variable_args'] >= 0 )) || $fixed_args_count > $argc)
             {
                 debug_add('Argument count does not match, skipping.');
                 continue;
@@ -717,11 +718,11 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
         // Check wether this request should not be cached by default:
         if ($this->_handler['no_cache'] == true)
         {
-            $GLOBALS['midcom']->cache->content->no_cache();
+            $_MIDCOM->cache->content->no_cache();
         }
         if ($this->_handler['expires'] >= 0)
         {
-            $GLOBALS['midcom']->cache->content->expires($this->_handler['expires']);
+            $_MIDCOM->cache->content->expires($this->_handler['expires']);
         }
         debug_pop();
         return $result;
@@ -740,7 +741,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
             $classname = $this->_handler['handler'][0];
             if (! $this->_verify_handler_class($classname))
             {
-                $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     "Failed to create a class instance of the type {$classname}, the class is not declared.");
                 // This will exit
             }
@@ -748,7 +749,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
             $this->_handler['handler'][0] = new $classname();
             if (! is_a($this->_handler['handler'][0], 'midcom_baseclasses_components_handler'))
             {
-                $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     "Failed to create a class instance of the type {$classname}, it is no subclass of midcom_baseclasses_components_handler.");
                 // This will exit
             }
@@ -1053,7 +1054,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
         }
 
         $i = strpos($plugin_config['src'], ':');
-        if ($i === false)
+        if ($i == false)
         {
             $method = 'snippet';
             $src = $plugin_config['src'];
@@ -1148,16 +1149,11 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
             '__ais',
             Array
             (
-                'topic' => Array
+                'folder' => Array
                 (
-                    'class' => 'midcom_admin_content_topic_plugin',
-                    'src' => 'file:/midcom/admin/content/_topic_plugin.php',
-                    'name' => 'Topic administration',
-                    /*
-                    'class' => 'midcom_admin_core_plugin',
-                    'src' => 'file:/midcom/admin/core/topics.php',
-                    'name' => 'Administration',
-                    */
+                    'class' => 'midcom_admin_folder_folder_management',
+                    'src' => 'file:/midcom/admin/folder/folder_management.php',
+                    'name' => 'Folder administration',
                     'config' => null,
                 ),
                 'acl' => Array
@@ -1165,6 +1161,85 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
                     'class' => 'midgard_admin_acl_editor_plugin',
                     'src' => 'file:/midgard/admin/acl/acl_editor.php',
                     'name' => 'Privileges',
+                    'config' => null,
+                ),
+                'rcs' => Array
+                (
+                    'class' => 'no_bergfald_rcs_handler',
+                    'src' => 'file:/no/bergfald/rcs/handler.php',
+                    'name' => 'Revision control',
+                    'config' => null,
+                ),
+                'imagepopup' => Array
+                (
+                    'class' => 'midcom_helper_imagepopup_viewer',
+                    'src' => 'file:/midcom/helper/imagepopup/viewer.php',
+                    'name' => 'Image pop-up',
+                    'config' => null,
+                ),
+                'midcom-settings' => array
+                (
+            	    'class' => 'midcom_admin_settings_editor',
+            	    'src' => 'file:/midcom/admin/settings/editor.php',
+            	    'name' => 'MidCOM site configuration',
+            	    'config' => null,
+            	),
+            	'l10n' => array
+            	(
+            	    'class' => 'midcom_admin_babel_main',
+            	    'src' => 'file:/midcom/admin/babel/main.php',
+            	    'name' => 'MidCOM localization',
+            	    'config' => null,
+            	),
+            	'help' => array
+            	(
+            	    'class' => 'midcom_admin_help_help',
+            	    'src' => 'file:/midcom/admin/help/help.php',
+            	    'name' => 'On-site help',
+            	    'config' => null,
+            	),
+            )
+        );
+        
+        // Centralized admin panel functionalities
+        $this->register_plugin_namespace
+        (
+            '__mfa',
+            array
+            (
+                'asgard' => array
+                (
+                    'class' => 'midgard_admin_asgard_plugin',
+                    'src' => 'file:/midgard/admin/asgard/plugin.php',
+                    'name' => 'Asgard',
+                    'config' => null,
+                ),            
+                'users' => array
+                (
+                    'class' => 'org_openpsa_contacts_mfa',
+                    'src' => 'file:/org/openpsa/contacts/mfa.php',
+                    'name' => 'User management',
+                    'config' => null,
+                ),
+                'replication' => array
+                (
+                    'class' => 'midcom_helper_replicator_manager',
+                    'src' => 'file:/midcom/helper/replicator/manager.php',
+                    'name' => 'Replication management',
+                    'config' => null,
+                ),
+                'sitetemplate' => array
+                (
+                    'class' => 'midgard_admin_sitewizard_sitetemplate',
+                    'src' => 'file:/midgard/admin/sitewizard/sitetemplate.php',
+                    'name' => 'Site template management',
+                    'config' => null,
+                ),
+                'styleeditor' => array
+                (
+                    'class' => 'midcom_admin_styleeditor_viewer',
+                    'src' => 'file:/midcom/admin/styleeditor/viewer.php',
+                    'name' => 'Style editing',
                     'config' => null,
                 ),
             )

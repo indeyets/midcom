@@ -136,7 +136,7 @@ Arvet fra elementet over
 ---STRINGEND
 
 ---STRING login
-Login
+Logg inn
 ---STRINGEND
 
 ---STRING logout

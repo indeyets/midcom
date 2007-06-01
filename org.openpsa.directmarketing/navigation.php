@@ -10,11 +10,18 @@
 
 /**
  * org.openpsa.directmarketing NAP interface class.
- * 
+ *
  * @package org.openpsa.directmarketing
  */
 class org_openpsa_directmarketing_navigation extends midcom_baseclasses_components_navigation
 {
+    /**
+     * Simple constructor, calls base class.
+     */
+    function org_openpsa_directmarketing_navigation()
+    {
+        parent::midcom_baseclasses_components_navigation();
+    }
 
     function get_leaves()
     {
@@ -29,7 +36,7 @@ class org_openpsa_directmarketing_navigation extends midcom_baseclasses_componen
         }
         foreach ($campaigns as $campaign)
         {
-            $leaves[$campaign->id] = array
+            $leaves["campaign_{$campaign->id}"] = array
             (
                 MIDCOM_NAV_SITE => array
                 (
@@ -50,7 +57,7 @@ class org_openpsa_directmarketing_navigation extends midcom_baseclasses_componen
         }
         return $leaves;
     }
-    
+
     function get_node($toolbar = null)
     {
         $toolbar = Array();

@@ -1,5 +1,5 @@
 <?php
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $entry =& $data['entry'];
 
 // Available request data: entry, datamanager, type_list, type_config, type, mode,

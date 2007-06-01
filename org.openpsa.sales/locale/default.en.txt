@@ -11,8 +11,16 @@
 %s cycles, %s - %s
 ---STRINGEND
 
+---STRING %s planned
+%s planned
+---STRINGEND
+
 ---STRING %s%% of %s
 %s%% of %s
+---STRINGEND
+
+---STRING action new_subscription_cycle
+Start of new subscription cycle
 ---STRINGEND
 
 ---STRING active
@@ -31,6 +39,14 @@ Add deliverable
 calculation basis
 ---STRINGEND
 
+---STRING canceled
+Canceled
+---STRINGEND
+
+---STRING code
+Project code
+---STRINGEND
+
 ---STRING contacts
 Contacts
 ---STRINGEND
@@ -45,6 +61,10 @@ Cost
 
 ---STRING cost per unit
 Cost per unit
+---STRINGEND
+
+---STRING cost structure
+Cost structure
 ---STRINGEND
 
 ---STRING create document
@@ -75,6 +95,10 @@ Customer
 Deliverables
 ---STRINGEND
 
+---STRING download as CSV
+Download as CSV
+---STRINGEND
+
 ---STRING estimated closing date
 Estimated closing date
 ---STRINGEND
@@ -87,12 +111,28 @@ Estimated delivery
 Invoice
 ---STRINGEND
 
+---STRING invoice approved only
+Invoice only approved units
+---STRINGEND
+
 ---STRING invoice by actual units
 Invoice by actual units
 ---STRINGEND
 
+---STRING invoiced
+Invoiced
+---STRINGEND
+
 ---STRING invoices
 Invoices
+---STRINGEND
+
+---STRING invoicing information
+Invoicing information
+---STRINGEND
+
+---STRING invoicing period
+Invoicing period
 ---STRINGEND
 
 ---STRING lost
@@ -123,12 +163,20 @@ No action
 No customer
 ---STRINGEND
 
+---STRING ordered
+Ordered
+---STRINGEND
+
 ---STRING org.openpsa.sales
 Sales projects
 ---STRINGEND
 
 ---STRING owner
 Owner
+---STRINGEND
+
+---STRING per unit
+per unit
 ---STRINGEND
 
 ---STRING previous action
@@ -143,6 +191,14 @@ Price
 Price per unit
 ---STRINGEND
 
+---STRING pricing
+Pricing
+---STRINGEND
+
+---STRING pricing information
+Pricing information
+---STRINGEND
+
 ---STRING probability
 Probability
 ---STRINGEND
@@ -153,6 +209,14 @@ Product
 
 ---STRING profit
 Profit
+---STRINGEND
+
+---STRING proposed
+Proposed
+---STRINGEND
+
+---STRING purchase invoice
+Purchase invoice OK
 ---STRINGEND
 
 ---STRING sales report
@@ -167,12 +231,36 @@ Sales report for %s - %s
 Sales project
 ---STRINGEND
 
+---STRING salesprojects won
+Sales projects won
+---STRINGEND
+
+---STRING salesprojects: %s
+Sales projects: %s
+---STRINGEND
+
 ---STRING select product
 Select product
 ---STRINGEND
 
+---STRING single delivery
+Single delivery
+---STRINGEND
+
+---STRING started
+Work started
+---STRINGEND
+
 ---STRING status
 Status
+---STRINGEND
+
+---STRING subscription
+Subscription
+---STRINGEND
+
+---STRING subscription begins
+Subscription begins
 ---STRINGEND
 
 ---STRING subscription ends
@@ -181,6 +269,10 @@ Subscription ends
 
 ---STRING subscription starts
 Subscription starts
+---STRINGEND
+
+---STRING supplier
+Supplier
 ---STRINGEND
 
 ---STRING title
@@ -193,6 +285,10 @@ Total
 
 ---STRING total cost
 Total cost
+---STRINGEND
+
+---STRING unit
+unit
 ---STRINGEND
 
 ---STRING units
@@ -209,9 +305,5 @@ Weighted value
 
 ---STRING won
 Won
----STRINGEND
-
----STRING canceled
-Canceled
 ---STRINGEND
 

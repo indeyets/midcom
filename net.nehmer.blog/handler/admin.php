@@ -72,6 +72,7 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
                 MIDCOM_TOOLBAR_URL => "edit/{$this->_article->guid}.html",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                MIDCOM_TOOLBAR_ACCESSKEY => 'e',
             ));
         }
 
@@ -81,6 +82,7 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
                 MIDCOM_TOOLBAR_URL => "delete/{$this->_article->guid}.html",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                MIDCOM_TOOLBAR_ACCESSKEY => 'd',
             ));
         }
     }
@@ -171,9 +173,19 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
         $tmp = Array();
 
         $arg = $this->_article->name ? $this->_article->name : $this->_article->guid;
+        
+        if ($this->_config->get('view_in_url'))
+        {
+            $view_url = "view/{$arg}.html";
+        }
+        else
+        {
+            $view_url = "{$arg}.html";
+        }        
+        
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "view/{$arg}.html",
+            MIDCOM_NAV_URL => $view_url,
             MIDCOM_NAV_NAME => $this->_article->title,
         );
         $tmp[] = Array
@@ -215,14 +227,22 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
 
                 // *** FALL-THROUGH ***
 
-            case 'cancel':
-                $_MIDCOM->relocate("view/{$this->_article->name}.html");
+            case 'cancel':       
+                if ($this->_config->get('view_in_url'))
+                {
+                    $_MIDCOM->relocate("view/{$this->_article->name}.html");
+                }
+                else
+                {
+                    $_MIDCOM->relocate("{$this->_article->name}.html");
+                }
+                
                 // This will exit.
         }
 
         $this->_prepare_request_data();
         $this->_view_toolbar->bind_to($this->_article);
-        $_MIDCOM->set_26_request_metadata($this->_article->revised, $this->_article->guid);
+        $_MIDCOM->set_26_request_metadata($this->_article->metadata->revised, $this->_article->guid);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_article->title}");
         $this->_update_breadcrumb_line($handler_id);
 
@@ -279,12 +299,19 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
         if (array_key_exists('net_nehmer_blog_deletecancel', $_REQUEST))
         {
             // Redirect to view page.
-            $_MIDCOM->relocate("view/{$this->_article->name}.html");
+            if ($this->_config->get('view_in_url'))
+            {
+                $_MIDCOM->relocate("view/{$this->_article->name}.html");
+            }
+            else
+            {
+                $_MIDCOM->relocate("{$this->_article->name}.html");
+            }
             // This will exit()
         }
 
         $this->_prepare_request_data();
-        $_MIDCOM->set_26_request_metadata($this->_article->revised, $this->_article->guid);
+        $_MIDCOM->set_26_request_metadata($this->_article->metadata->revised, $this->_article->guid);
         $this->_view_toolbar->bind_to($this->_article);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_article->title}");
         $this->_update_breadcrumb_line($handler_id);

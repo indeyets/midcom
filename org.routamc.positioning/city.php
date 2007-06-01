@@ -18,7 +18,7 @@ class org_routamc_positioning_city_dba extends __org_routamc_positioning_city_db
     {
         return parent::__org_routamc_positioning_city_dba($id);
     }
-    
+
     /**
      * Don't save city if another city is in same place
      */

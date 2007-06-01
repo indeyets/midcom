@@ -12,3 +12,10 @@
 
 // Allow anonymous posting.
 'allow_anonymous' => true,
+
+// Rating mode
+'ratings_enable' => false,
+'ratings_cache_to_object' => false,
+'ratings_cache_to_object_property' => 'score',
+'ratings_cache_to_object_property_metadata' => false,
+'ratings_cache_total' => false,

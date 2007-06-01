@@ -150,7 +150,7 @@ class no_bergfald_rcs {
      * @param string revison id
      * @return string comment
      */
-    function get_comment ($revision) 
+    function get_comment($revision) 
     {
         if (is_null($this->_history)) {
             $this->_history = $this->list_history();

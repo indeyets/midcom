@@ -52,7 +52,7 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     */
     var $_elementTemplate = "<label for='{element_name}' id='{element_name}_label'<!-- BEGIN required --> class='required'<!-- END required -->>\n\t\t
         <span class=\"field_text\">
-                {label}<!-- BEGIN required --> <span style=\"field_required_start\">*</span><!-- END required --></span>\n\t\t
+                {label}<!-- BEGIN required --> <span class=\"field_required_start\">*</span><!-- END required --></span>\n\t\t
 
         <!-- BEGIN error --><span class='field_error' style=\"color: #ff0000\">{error}</span><br /><!-- END error -->\t{element}\n\t</label>";
 
@@ -64,7 +64,7 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     /*
     var $_orig_group_template = "<label for='{element_name}' id='{element_name}_label'<!-- BEGIN required --> class='required'<!-- END required -->>\n\t\t
         <span class=\"field_text\">
-                {label}<!-- BEGIN required --> <span style=\"field_required_start\">*</span><!-- END required --></span>\n\t\t
+                {label}<!-- BEGIN required --> <span class=\"field_required_start\">*</span><!-- END required --></span>\n\t\t
 
         <!-- BEGIN error --><span class='field_error' style=\"color: #ff0000\">{error}</span><br /><!-- END error -->\n\t\t
             <fieldset id='{element_name}_fieldset' {attributes}>
@@ -74,7 +74,7 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     */ 
     var $_orig_group_template = "<div id='{element_name}_label'<!-- BEGIN required --> class='required'<!-- END required -->>\n\t\t
         <label><span class=\"field_text\">
-                {label}<!-- BEGIN required --> <span style=\"field_required_start\">*</span><!-- END required --></span></label>\n\t\t
+                {label}<!-- BEGIN required --> <span class=\"field_required_start\">*</span><!-- END required --></span></label>\n\t\t
 
         <!-- BEGIN error --><span class='field_error' style=\"color: #ff0000\">{error}</span><br /><!-- END error -->\n\t\t
             <fieldset id='{element_name}_fieldset' {attributes}>
@@ -89,7 +89,7 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     * @access   private
     */
     var $_formTemplate =
-        "\n<form{attributes} class=\"datamanager datamanager2\" >\n<div>\n{hidden} \n{content}\n\n</div>\n</form>";
+        "\n<form{attributes} class=\"datamanager2\" >\n<div>\n{hidden} \n{content}\n\n</div>\n</form>";
 
    /**
     * Required Note template string
@@ -133,7 +133,7 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     var $_groupTemplates = array(
         'datamanager_table' => "<label for='{element_name}' id='{element_name}_label'<!-- BEGIN required --> class='required'<!-- END required -->> </label>\n\t\t
         <span class=\"field_text\">
-                {label}<!-- BEGIN required --> <span style=\"field_required_start\">*</span><!-- END required --></span>\n
+                {label}<!-- BEGIN required --> <span class=\"field_required_start\">*</span><!-- END required --></span>\n
                         </label>\n\t\t
         <!-- BEGIN error --><span class='field_error' style=\"color: #ff0000\">{error}</span><br /><!-- END error -->\n\t\t
             <fieldset id='{element_name}_fieldset' {attributes}>

@@ -1,5 +1,5 @@
 <?php
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 
 // Available request data: entry, controller, type_list, type_config, type, mode, view_url
 ?>

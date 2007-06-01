@@ -1,15 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="">    <head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="">
+    <head>
         <title>Hour reporting test</title>
-        <script type="text/javascript" src="http://devel.openpsa.org/midcom-static/org.openpsa.helpers/messages.js"></script>        <script type="text/javascript" src="http://devel.openpsa.org/midcom-static/org.openpsa.helpers/ajaxutils.js"></script>
+        <script type="text/javascript" src="http://devel.openpsa.org/midcom-static/org.openpsa.helpers/messages.js"></script>
+        <script type="text/javascript" src="http://devel.openpsa.org/midcom-static/org.openpsa.helpers/ajaxutils.js"></script>
         <link rel="stylesheet" type="text/css" href="http://devel.openpsa.org/midcom-static/midcom.helper.datamanager/datamanager.css" />
         <link rel="stylesheet" type="text/css" href="http://devel.openpsa.org/20/style.css" />
         <style type="text/css">
 #org_openpsa_projects_hourlist_table {
     display: none;
-    border-collapse: collapse;    border-spacing: 0;    
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 #org_openpsa_projects_hourlist_table tr {
-    vertical-align: top;    
+    vertical-align: top;
 }
 #org_openpsa_projects_hourlist_table tfoot {
     border-top: 1px dashed #c0c0c0;
@@ -49,8 +53,8 @@ tr.ajax_editable_row_editing {
 var viewName = 'org_openpsa_projects_hourlist';
 var focusField = 'hours';
 
-/** 
- * Populate the table 
+/**
+ * Populate the table
  * TODO: Get data via AJAX or generate JS via PHP output?
  */
 var existingReports = {
@@ -96,7 +100,7 @@ var tableId = viewName+'_table';
 var tableDataId = viewName+'_data';
 
 var loadedToEditor = false;
-var tableShown = false; 
+var tableShown = false;
 
 /**
  * We have to call this via BODY onLoad because during the header we can't
@@ -104,7 +108,7 @@ var tableShown = false;
  */
 function populateData()
 {
-    var table = document.getElementById(tableDataId);    
+    var table = document.getElementById(tableDataId);
     for (reports in existingReports)
     {
         ooAjaxAddTableRow(table, existingReports[reports], 0);
@@ -117,7 +121,8 @@ function populateData()
     </head>
     <body id="org_openpsa_popup"  onLoad="populateData()">
         <div id="org_openpsa_toolbar">
-            <div id="org_openpsa_object_metadata">                <h1>Hour reporting</h1>        
+            <div id="org_openpsa_object_metadata">
+                <h1>Hour reporting</h1>
             </div>
         </div>
         <div id="org_openpsa_content">
@@ -141,7 +146,7 @@ function populateData()
                     <td></td>
                 </tfoot>
             </table>
-            <form id="org_openpsa_projects_hourlist_editor" class="datamanager">            
+            <form id="org_openpsa_projects_hourlist_editor" class="datamanager">
                 <input type="hidden" name="guid" value="" />
                 <label for="org_openpsa_projects_houreditor_date">
                     Date
@@ -152,7 +157,7 @@ function populateData()
                     <input type="text" name="hours" id="org_openpsa_projects_houreditor_hours" />
                 </label>
                 <label for="org_openpsa_projects_houreditor_description">
-                    Description           
+                    Description
                     <textarea name="description" id="org_openpsa_projects_houreditor_description"></textarea>
                 </label>
                 <input type="button" id="org_openpsa_projects_houreditor_save" onClick="javascript:ooAjaxConvertEditorToRow();" value="Save" />

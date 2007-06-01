@@ -23,12 +23,12 @@
             ),
             'required'    => true,
             'index_method' => 'title',
-        ),       
+        ),
         'lastname' => array (
             'description' => 'lastname',
             'datatype'    => 'text',
             'location'    => 'lastname',
-        ),       
+        ),
         'photo' => array (
             'description' => 'photo',
             'datatype'    => 'image',
@@ -44,7 +44,7 @@
                 'title' => 'contact information',
                 'css_group' => 'area contact',
             ),
-            'index_merge_with_content' => false,     
+            'index_merge_with_content' => false,
         ),
         'email' => array (
             'description' => 'email',
@@ -55,7 +55,7 @@
             'description' => 'mobile phone',
             'datatype'    => 'text',
             'location'    => 'handphone',
-        ),        
+        ),
         'workphone' => array (
             'description' => 'work phone',
             'datatype'    => 'text',
@@ -77,7 +77,7 @@
             'location'    => 'config',
             'config_domain' => 'org.openpsa.skype',
             'config_key'    => 'name',
-        ),  
+        ),
         'jid' => array (
             'description' => 'jabber id',
             'datatype'    => 'text',
@@ -126,7 +126,7 @@
             'start_fieldgroup' => array (
                 'title' => 'project management',
                 'css_group' => 'area',
-            ),  
+            ),
         ),
         'invoiceable_target' => array (
             'description' => 'invoicing target percentage',
@@ -161,7 +161,7 @@
                 'css_group' => 'area meta',
             ),
             'required'    => true,
-        ),       
+        ),
         'lastname' => array (
             'description' => 'lastname',
             'datatype'    => 'text',
@@ -173,6 +173,16 @@
             'datatype'    => 'text',
             'location'    => 'email',
         ),
+        'handphone' => array (
+            'description' => 'mobile phone',
+            'datatype'    => 'text',
+            'location'    => 'handphone',
+        ),
+        'workphone' => array (
+            'description' => 'work phone',
+            'datatype'    => 'text',
+            'location'    => 'workphone',
+        ),
         'photo' => array (
             'description' => 'photo',
             'datatype'    => 'image',
@@ -182,4 +192,3 @@
 
     )
 )
-

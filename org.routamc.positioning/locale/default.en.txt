@@ -1,0 +1,29 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING html
+Metadata in remote HTML document
+---STRINGEND
+
+---STRING manual
+manually inputted
+---STRINGEND
+
+---STRING org.routamc.positioning
+Geospatial toolkit
+---STRINGEND
+
+---STRING plazes
+Plazes network position
+---STRINGEND
+
+---STRING source %s
+source: %s
+---STRINGEND
+
+---STRING georss
+GeoRSS feed
+---STRINGEND
+

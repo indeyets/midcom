@@ -41,7 +41,7 @@
 'fr' => Array (
     'enname' => 'French',
     'locale' => 'fr_FR',
-    'localname' => 'Francais',
+    'localname' => 'Français',
     'encoding' => 'UTF-8',
     'midgard_code' => 'fr',
 ),
@@ -65,7 +65,7 @@
 'it' => Array (
     'enname' => 'Italian',
     'locale' => array('it_IT.UTF-8@euro', 'it_IT'),
-    'localname' => 'Italian',
+    'localname' => 'Italiano',
     'encoding' => 'UTF-8',
     'midgard_code' => 'it',
 ),
@@ -89,23 +89,15 @@
 'pt' => Array ( 
     'enname' => 'Portuguese',
     'locale' => 'pt_BR', 
-    'localname' => 'Portugu�s', 
+    'localname' => 'Português', 
     'encoding' => 'UTF-8',
     'midgard_code' => 'pt', 
-),
-
-'ru_cp1251' => Array (
-    'enname' => 'Russian (CP1251)',
-    'locale' => 'ru_RU.CP1251',
-    'localname' => '&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081; (CP1251)',
-    'encoding' => 'windows-1251',
-    'midgard_code' => 'ru',
 ),
 
 'ru' => Array (
     'enname' => 'Russian',
     'locale' => 'ru_RU',
-    'localname' => '&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081; (CP1251)',
+    'localname' => 'Русский',
     'encoding' => 'UTF-8',
     'midgard_code' => 'ru',
 ),
@@ -113,15 +105,31 @@
 'es' => Array (
     'enname' => 'Spanish',
     'locale'=>'es_MX',
-    'localname'=>'Spanish',
+    'localname' => 'Español',
     'encoding' => 'UTF-8',
     'midgard_code' => 'es',
 ),
 
 'sv' => Array (
     'enname' => 'Swedish',
-    'locale' => 'sv_SE',
+    'locale' => array('sv_SE.UTF-8', 'sv_SE'),
     'localname' => 'Svenska',
     'encoding' => 'UTF-8',
     'midgard_code' => 'sv',
+),
+
+'hu' => Array (
+    'enname' => 'Hungarian',
+    'locale' => array('hu_HU.UTF-8', 'hu_HU'),
+    'localname' => 'Magyar',
+    'encoding' => 'UTF-8',
+    'midgard_code' => 'hu',
+),
+
+'zh' => Array (
+    'enname' => 'Chinese',
+    'locale' => 'zh_CN',
+    'localname' => '中文',
+    'encoding' => 'UTF-8',
+    'midgard_code' => 'zh',
 ),

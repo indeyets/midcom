@@ -59,6 +59,22 @@
    ),
   ),
 
+  'ajax_enable' => array
+  (
+   'description' => 'ajax_enable',
+   'datatype' => 'text',
+   'location' => 'config',
+   'config_domain' => 'net.nehmer.static',
+   'config_key' => 'enable_ajax_editing',
+   'widget' => 'config_radiobox',
+   'widget_radiobox_choices' => Array
+   (
+    '' => 'default setting',
+    '1' => 'yes',
+    '0' => 'no',
+   ),
+  ),
+
   'auto_approve' => array
   (
    'description' => 'auto_approved',
@@ -73,9 +89,25 @@
     '1' => 'yes',
     '0' => 'no',
    ),
-   'end_fieldgroup' => '',
+
+  'simple_name_handling' => array
+  (
+   'description' => 'simple_name_handling',
+   'datatype' => 'text',
+   'location' => 'config',
+   'config_domain' => 'net.nehmer.static',
+   'config_key' => 'simple_name_handling',
+   'widget' => 'config_radiobox',
+   'widget_radiobox_choices' => Array
+   (
+    '' => 'default setting',
+    '1' => 'yes',
+    '0' => 'no',
+   ),
   ),
 
+   'end_fieldgroup' => '',
+  ),
   'schemadb' => array
   (
    'description' => 'schemadb',

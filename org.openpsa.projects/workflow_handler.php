@@ -15,22 +15,22 @@ class org_openpsa_projects_workflow_handler
 {
     var $_datamanagers;
     var $_request_data;
-    
+
     function org_openpsa_projects_workflow_handler(&$datamanagers, &$request_data)
     {
         $this->_datamanagers = &$datamanagers;
         $this->_request_data = &$request_data;
     }
-    
+
     function _load_task($identifier)
     {
         $task = new org_openpsa_projects_task($identifier);
-        
+
         if (!is_object($task))
         {
             return false;
         }
-        
+
         // Load the task to datamanager
         if (!$this->_datamanagers['task']->init($task))
         {
@@ -38,7 +38,7 @@ class org_openpsa_projects_workflow_handler
         }
         return $task;
     }
-    
+
     function _handler_action($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -57,7 +57,7 @@ class org_openpsa_projects_workflow_handler
             $this->errcode = MIDCOM_ERRCRIT;
             return false;
         }
-        
+
         switch($this->_request_data['action'])
         {
             case 'accept':
@@ -101,11 +101,11 @@ class org_openpsa_projects_workflow_handler
                 }
                 break;
         }
-        
+
         //We should not fall this far trough
         return false;
     }
-    
+
     function _handle_accept()
     {
         $stat = $this->_request_data['task']->accept();
@@ -312,7 +312,7 @@ class org_openpsa_projects_workflow_handler
             break;
         }
     }
-    
+
     function _redirect()
     {
         if (   !isset($this->_request_data['redirect_to'])
@@ -323,13 +323,13 @@ class org_openpsa_projects_workflow_handler
         $_MIDCOM->relocate($this->_request_data['redirect_to']);
         //This will exit
     }
-    
+
     function _show_action($handler_id, &$data)
     {
         //We actually should not ever get this far
         return;
     }
-    
+
     function _handler_post($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -341,13 +341,13 @@ class org_openpsa_projects_workflow_handler
             //We do not have proper POST available, abort
             return false;
         }
-        
+
         //Go trough the array, in theory it should have only one element and in any case only the last of them will be processed
         foreach ($_POST['org_openpsa_projects_workflow_action'] as $action => $val)
         {
             $this->_request_data['action'] = $action;
         }
-        
+
         $this->_request_data['reply_mode'] = 'redirect';
         if (!isset($_POST['org_openpsa_projects_workflow_action_redirect']))
         {
@@ -360,7 +360,7 @@ class org_openpsa_projects_workflow_handler
         }
         return $this->_handler_action($handler_id, $args, $data);
     }
-    
+
     function _show_post($handler_id, &$data)
     {
         //We actually should not ever get this far

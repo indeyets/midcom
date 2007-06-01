@@ -1,5 +1,5 @@
 <?php
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 ?>
 <div id="midgard_admin_sitewizard">
   <h1><?php echo $data['l10n']->get("midgard.admin.sitewizard"); ?></h1>

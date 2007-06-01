@@ -1,8 +1,8 @@
 <?php
 global $view;
 $data = $view->datamanager->data;
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-$attachmentserver = $GLOBALS["midcom"]->midgard->self . "midcom-serveattachmentguid-";
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+$attachmentserver = $_MIDCOM->midgard->self . "midcom-serveattachmentguid-";
 ?>
 <table border="0" align="left">
 <tr>

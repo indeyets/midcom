@@ -23,11 +23,18 @@ class org_openpsa_helpers_vxparser
      * charset to use
      */
     var $charset = 'utf-8';
+    
+    /**
+     * Used then constructor decoding
+     * @access private
+     */
+    var $_parsed = false;
 
     function org_openpsa_helpers_vxparser($input = false)
     {
         // Compatibility defaults, need to be adjusted for various states of client b0rkedness
         $this->compatibility['data'] = array();
+        $this->compatibility['data']['suppose_charset'] = 'ISO-8859-1';
         $this->compatibility['data']['escape_separators'] = true;
         $this->compatibility['data']['folding'] = true;
         $this->compatibility['data']['supported_encodings'] = array();
@@ -41,17 +48,22 @@ class org_openpsa_helpers_vxparser
         $this->compatibility['times'] = array();
 
 /* Stuff from old calendar class to remind us
-488:                    
+488:
 489:                    //Whether we trust attendee and resource lists from client (as being complete) or not, default is not to trust.
 490:                    $this->__compatibility['data']['trust_lists']=array('ATTENDEE' => FALSE, 'RESOURCES' => FALSE);
-491:                    
-492:                    //Charset is Latin-1 by default
-493:                    $this->__compatibility['data']['suppose_charset']='ISO-8859-1';
+491:
 */
 
         if ($input !== false)
         {
             //Pass on to decode
+            $this->_parsed = array
+            (
+                'variables' => array(),
+                'parameters' => array(),
+            );
+            $this->vx_parse_recursive($this->_parsed['variables'], $this->_parsed['parameters'], $input);
+            return $this->_parsed;
         }
     }
 
@@ -117,13 +129,13 @@ class org_openpsa_helpers_vxparser
      * Converts DURATION to seconds or an array
      */
     function vCal_duration($input, $toArray=FALSE)
-    { 
+    {
         $ret=array('d' => 0, 'h' => 0, 'm' => 0, 's' => 0);
         $regExp='/([+-])?P(([0-9]+)W)?(([0-9]+)D)?(T(([0-9]+)H)?(([0-9]+)M)?(([0-9]+)S)?)?/';
         preg_match($regExp, $input, $dmatch);
         //Check the prefix, in case of minus make factor -1, else 1.
         if ($dmatch[1]==='-')
-        { 
+        {
             $x=-1;
         }
         else
@@ -155,21 +167,21 @@ class org_openpsa_helpers_vxparser
         {
             $ret['s']+=((int)$dmatch[12])*$x;
         }
-        
+
         //If we want seconds in stead of an array: sum and return.
         if ($toArray==FALSE)
         {
             return (($ret['d']*3600*24)+($ret['h']*3600)+($ret['m']*60)+($ret['s']));
         }
-        
+
         return $ret;
     }
-    
+
     /**
      * Converts between vCal and Unix (and Midgard created/revised) timestamps
      */
     function vcal_stamp($stamp=false, $params=array())
-    { 
+    {
         if ($stamp === false)
         {
             $stamp=time();
@@ -201,7 +213,7 @@ class org_openpsa_helpers_vxparser
        //If $stamp is Midgard created/revised timestamp, convert to vCal
        if (preg_match("/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/", $stamp, $matches))
        {
-            $stamp = mktime((int)$matches[4],(int)$matches[5],(int)$matches[6],(int)$matches[2],(int)$matches[3],(int)$matches[1]); 
+            $stamp = mktime((int)$matches[4],(int)$matches[5],(int)$matches[6],(int)$matches[2],(int)$matches[3],(int)$matches[1]);
             //If value is DATE (in stead of DATETIME) return a datestamp in stead
             if ($params['VALUE'] === 'DATE')
             {
@@ -210,15 +222,15 @@ class org_openpsa_helpers_vxparser
             if ($convert) $stamp = $this->timezone_convert($stamp, &$convert, 'to');
             return date('Ymd', $stamp) . 'T' . date('His', $stamp);
        }
-           
+
         //If $stamp is vCal timestamp convert to Unix timestamp
         if (preg_match("/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})(Z?)/", $stamp, $matches))
         {
-            $stamp=mktime((int)$matches[4],(int)$matches[5],(int)$matches[6],(int)$matches[2],(int)$matches[3],(int)$matches[1]); 
+            $stamp=mktime((int)$matches[4],(int)$matches[5],(int)$matches[6],(int)$matches[2],(int)$matches[3],(int)$matches[1]);
             //Z modifier at the end of a vCal timestamp specifies that it's in "Zulu time"==UTC, any other TZID is disallowed
             if (   isset($matches[7])
                 && $matches[7] != null)
-            { 
+            {
                 $convert = 'UTC';
             }
             if ($convert)
@@ -246,7 +258,7 @@ class org_openpsa_helpers_vxparser
         }
         return date('Ymd', $stamp).'T'.date('His', $stamp);
     }
-    
+
     function _vtimezone_decode_offset($str)
     {
         preg_match('/([+-])([0-9]{2})([0-9]{2})/', $str, $matches);
@@ -262,14 +274,14 @@ class org_openpsa_helpers_vxparser
             break;
         }
     }
-    
+
     function timezone_convert($stamp, $tzid='UTC', $dir='to')
     {
            //Some clients incorrectly specify Zulu (or whatever) -time even if they mean floating time...
            if (isset($this->compatibility['times']['force_float']) && $this->compatibility['times']['force_float']===TRUE)
            {
                 $tzid='NO_CONVERSION';
-           } 
+           }
            switch(strtoupper($tzid))
            {
                 case 'UTC': //The normal case, no extra adjustment required.
@@ -289,7 +301,7 @@ class org_openpsa_helpers_vxparser
                             $dst_starts=$this->vCal_stamp($tzInfo['DAYLIGHT']['DTSTART'], array('TZID' => 'NO_CONVERSION'));
                             $dst_offset=$tzInfo['DAYLIGHT']['TZOFFSETTO'];
                         }
-                        
+
                         if (isset($std_starts) && isset($dst_starts)) {
                             //Both are present, determine which to use...
                             if ($stamp>$std_starts && $stamp<$dst_starts) {
@@ -397,19 +409,19 @@ class org_openpsa_helpers_vxparser
      * Check if value needs encoding, encode as neccessary
      */
     function vx_encode($str, &$params, $nl="\r\n")
-    { 
+    {
         //See if we have any special characters in str to escape
         if (preg_match_all("/[^\x20-\x7e]/", $str, $matches))
         {
             if (   (   (count($matches[0])/strlen($str)*100)>50
                     && $this->compatibility['data']['supported_encodings']['B64']
-                    ) 
+                    )
                 || (   isset($params['VALUE'])
                     && $params['VALUE'] == 'BINARY'
                     )
                 )
             {
-                //If over 50% characters require encoding (and client supports it) or data is specified to be binary use base64 
+                //If over 50% characters require encoding (and client supports it) or data is specified to be binary use base64
                 $params['CHARSET'] = strtoupper($this->charset);
                 $params['ENCODING'] = 'BASE64';
                 $str = $this->vx_encode_b64($str, $nl);
@@ -461,7 +473,7 @@ class org_openpsa_helpers_vxparser
                         */
                    }
                }
-                
+
                if (!is_array($data)) {
                     if (!isset($param['ENCODING'])) $param['ENCODING']='QUOTED-PRINTABLE'; //Try quoted printable as default encoding
                     switch (strtoupper($param['ENCODING'])) {
@@ -489,10 +501,11 @@ class org_openpsa_helpers_vxparser
 
                    $data=str_replace(array('\n','\;','\,'), array("\n",';',','), $data); //Convert escaped values back to real
                    $data=preg_replace("/\r\n|\n\r|\r/", "\n", $data); //Convert different CR/LF sequences to newlines
-                   
+
                    if (!isset($param['CHARSET'])) $param['CHARSET']=$this->compatibility['data']['suppose_charset'];
                    //Convert characters if neccessary
-                   if ($this->__iconv && isset($param['CHARSET']) && $param['CHARSET'] && strtolower($param['CHARSET'])!=strtolower($this->charset) && function_exists('iconv')) {
+                   //if ($this->__iconv && isset($param['CHARSET']) && $param['CHARSET'] && strtolower($param['CHARSET'])!=strtolower($this->charset) && function_exists('iconv')) {
+                   if (isset($param['CHARSET']) && $param['CHARSET'] && strtolower($param['CHARSET'])!=strtolower($this->charset) && function_exists('iconv')) {
                       //echo "DEBUG: calling iconv(".$param['CHARSET'].", ".$this->charset.", $data)\n";
                       $icRet=iconv($param['CHARSET'], $this->charset, $data);
                       //echo "DEBUG: returned: $icRet\n";
@@ -507,17 +520,17 @@ class org_openpsa_helpers_vxparser
                }
         return $data;
       }
-      
+
     function _unfold($data)
     {
-        $data=preg_replace("/\r\n|\n\r|\r/", "\n", $data); //Make sure we only have newlines in the 
+        $data=preg_replace("/\r\n|\n\r|\r/", "\n", $data); //Make sure we only have newlines in the
         $data=preg_replace("/\n[\x9\x20]|=\n/", '', $data); //RFC and MIME "soft-linebreak" unfolding
         return $data;
     }
 
 
-      function _vX_parse_recursive($toVars, $toParams, $data) {
-                //"Unfolding" lines (RFC says lines must be unfolded before parsing), at the same time we convert all linebreaks to newlines 
+      function vx_parse_recursive(&$toVars, &$toParams, $data) {
+                //"Unfolding" lines (RFC says lines must be unfolded before parsing), at the same time we convert all linebreaks to newlines
                 $data=$this->_unfold($data);
 
 
@@ -545,8 +558,8 @@ class org_openpsa_helpers_vxparser
                                     $tmpPar=&$toParams[$setMode];
                                 }
                                 //echo "DEBUG-_vCal_parse_recursive: found END for setMode=$setMode<br>\n";
-                                $this->_vX_parse_recursive(&$tmpVal, &$tmpPar, $setData);
-                                $setMode=FALSE; $setData='';                            
+                                $this->vx_parse_recursive($tmpVal, $tmpPar, $setData);
+                                $setMode=FALSE; $setData='';
                             } else {
                                 $setData.=$v."\n";
                             }
@@ -559,7 +572,7 @@ class org_openpsa_helpers_vxparser
                             $this->_vCal_parse_line(&$toVars, &$toParams, $v);
                         }
                 }
-        return TRUE;
+        return true;
       }
 
       function _vCal_parse_line($data, $parameters, $v) {
@@ -575,7 +588,7 @@ class org_openpsa_helpers_vxparser
                     $kpVal=preg_replace("/^([\"']?)(.*?)(\\1?)$/", "\\2",  $kpVal); //Strip outmost quotes from value
                     $keyParam[$kpName]=$this->vCal_decode($kpVal, array('CHARSET'=>'')); //We'll handle the charset issue later for parameters
               }
-              
+
               if (isset($data[$key])) { //Multiple instances of same key must be parsed as new values, we put them to array.
                  if (!is_array($data[$key])) {
                     $oldVal=$data[$key];
@@ -587,9 +600,9 @@ class org_openpsa_helpers_vxparser
                  $parameters[$key][]=$keyParam;
               } else {
                  $data[$key]=$this->vCal_decode($keyData, &$keyParam);
-                 $parameters[$key]=$keyParam;                      
+                 $parameters[$key]=$keyParam;
               }
-              
+
         return TRUE;
       }
 
@@ -609,7 +622,7 @@ class org_openpsa_helpers_vxparser
         }
         return true;
     }
-    
+
     /**
      * Whether to quote strings or not
      *
@@ -619,7 +632,7 @@ class org_openpsa_helpers_vxparser
     function _check_quoting()
     {
         if (   isset($this->compatibility['data'])
-            && $this->compatibility['data']['quoting']
+            && isset($this->compatibility['data']['quoting'])
             && $this->compatibility['data']['quoting'] === false)
         {
             return false;
@@ -664,10 +677,10 @@ class org_openpsa_helpers_vxparser
             {
                 $param[$k] = array();
             }
-            
+
             // Encode the value properly
             $v = $this->vx_encode($v, &$param[$k], $nl);
-            
+
             //Append extra parameters on fields
             $keyExtra='';
             if (is_array($param[$k]))
@@ -691,7 +704,7 @@ class org_openpsa_helpers_vxparser
                     else
                     {
                         //"Fold" parameters (easiest way to keep lines in RFC width and preserve readability)
-                        $keyExtra .= ';' . $nl . ' ' . $kk . '=' . $vv; 
+                        $keyExtra .= ';' . $nl . ' ' . $kk . '=' . $vv;
                     }
                 }
             }
@@ -703,7 +716,7 @@ class org_openpsa_helpers_vxparser
             if ($this->_check_folding())
             {
                 //"Fold" Key and value (readibilty, RFC width)
-                $ret .= $k . $keyExtra . ':' . $nl . ' ' . $v . $nl; 
+                $ret .= $k . $keyExtra . ':' . $nl . ' ' . $v . $nl;
             }
             else
             {

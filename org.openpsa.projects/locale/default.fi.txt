@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING %s of %s planned hours booked
+%sh %s:stä arvioidusta tunnista varattu kalenterista
+---STRINGEND
+
 ---STRING %s projects
 %s projektia
 ---STRINGEND
@@ -11,8 +15,32 @@
 Hyväksy
 ---STRINGEND
 
+---STRING accepted by %s
+Hyväksynyt %s
+---STRINGEND
+
+---STRING agreement
+Sopimus
+---STRINGEND
+
+---STRING agreement tasks
+Toimituksen tehtävät
+---STRINGEND
+
 ---STRING approve
 Hyväksy
+---STRINGEND
+
+---STRING approved
+Hyväksytty
+---STRINGEND
+
+---STRING approved by %s
+Hyväksynyt valmiiksi %s
+---STRINGEND
+
+---STRING automatic resource search
+Automaattinen resurssien haku
 ---STRINGEND
 
 ---STRING back to task
@@ -23,8 +51,16 @@ Takaisin tehtävään
 Perustiedot
 ---STRINGEND
 
+---STRING booked times
+Aikavaraukset
+---STRINGEND
+
 ---STRING closed
 Suljettu
+---STRINGEND
+
+---STRING closed by %s
+Sulkenut %s
 ---STRINGEND
 
 ---STRING closed tasks
@@ -71,12 +107,24 @@ Eräpäivä
 Hylkää
 ---STRINGEND
 
+---STRING declined by %s
+Hylännyt %s
+---STRINGEND
+
+---STRING delete task
+Poista tehtävä
+---STRINGEND
+
 ---STRING description
 Kuvaus
 ---STRINGEND
 
 ---STRING dont approve
 Älä hyväksy
+---STRINGEND
+
+---STRING duration
+Kesto
 ---STRINGEND
 
 ---STRING edit
@@ -95,6 +143,10 @@ Päättymisaika
 %s :ltä
 ---STRINGEND
 
+---STRING hour report
+tuntiraportti
+---STRINGEND
+
 ---STRING hour reports
 Tuntiraportit
 ---STRINGEND
@@ -111,12 +163,32 @@ Tunnit ovat oletuksena laskutettavia
 Laskutettava
 ---STRINGEND
 
+---STRING invoiceable tasks
+Laskutettavat tehtävät
+---STRINGEND
+
+---STRING invoiced
+Laskutettu
+---STRINGEND
+
 ---STRING manager
 Vastuullinen
 ---STRINGEND
 
 ---STRING mark completed
 Merkkaa valmiiksi
+---STRINGEND
+
+---STRING marked as completed by %s
+Merkannut valmiiksi %s
+---STRINGEND
+
+---STRING minimum time slot needed for task bookings
+Aikavarauksissä käytettävä pienin hyväksyttävä kesto
+---STRINGEND
+
+---STRING my organization
+Omasta organisaatiosta
 ---STRINGEND
 
 ---STRING my_tasks
@@ -135,6 +207,14 @@ Uusi tehtävä
 Uusi tehtävä projektiin %s
 ---STRINGEND
 
+---STRING no search
+Ei hakua
+---STRINGEND
+
+---STRING not working on a task
+Ei tehtävää
+---STRINGEND
+
 ---STRING not_started
 Ei aloitettu
 ---STRINGEND
@@ -143,8 +223,16 @@ Ei aloitettu
 Muistio tehtävään %s (%s)
 ---STRINGEND
 
+---STRING now working on
+Nyt työn alla
+---STRINGEND
+
 ---STRING ongoing
 Käynnissä
+---STRINGEND
+
+---STRING open tasks
+Avoimet tehtävät
 ---STRINGEND
 
 ---STRING org.openpsa.projects
@@ -157,6 +245,10 @@ Myöhässä
 
 ---STRING pending approval by %s
 Odottaa %s hyväksyntää
+---STRINGEND
+
+---STRING planned hours
+Tuntiarvio
 ---STRINGEND
 
 ---STRING project
@@ -175,6 +267,22 @@ Projektin tehtävät
 Ehdotetut tehtävät
 ---STRINGEND
 
+---STRING proposed to %s by %s
+Ehdotettu käyttäjälle %s (%s)
+---STRINGEND
+
+---STRING put on hold by %s
+Laittanut odottamaan %s
+---STRINGEND
+
+---STRING re-opened by %s
+Avannut uudelleen %s
+---STRINGEND
+
+---STRING rejected by %s
+Hylännyt %s
+---STRINGEND
+
 ---STRING reopen
 Avaa uudestaan
 ---STRINGEND
@@ -183,12 +291,24 @@ Avaa uudestaan
 Raportoi tunteja
 ---STRINGEND
 
+---STRING reported
+Raportoitu
+---STRINGEND
+
 ---STRING reporter
 Raportoija
 ---STRINGEND
 
 ---STRING resources
 Resurssit
+---STRINGEND
+
+---STRING resourcing
+Resurssointi
+---STRINGEND
+
+---STRING skills required
+Vaadittava osaaminen
 ---STRINGEND
 
 ---STRING start
@@ -213,6 +333,14 @@ Liity
 
 ---STRING synchronization
 Synkronointi
+---STRINGEND
+
+---STRING synchronized with %s by %s
+Synkronoinut %s:n kanssa %s
+---STRINGEND
+
+---STRING system
+järjestelmä
 ---STRINGEND
 
 ---STRING task
@@ -251,6 +379,18 @@ Poista itsesi
 Näytä asiaan liittyvät tiedot
 ---STRINGEND
 
+---STRING whole openpsa
+Koko OpenPsa:sta
+---STRINGEND
+
+---STRING whole world (dbe)
+Koko maailmasta (DBE-verkosta)
+---STRINGEND
+
+---STRING work started by %s
+Työn aloittanut %s
+---STRINGEND
+
 ---STRING you are not subscribed to project
 Et ole projektissa yhteyshenkilönä
 ---STRINGEND
@@ -263,7 +403,7 @@ Olet projektin osallistuja
 Olet projektin yhteyshenkilö
 ---STRINGEND
 
----STRING agreement
-Sopimus
+---STRING schedule resources
+Aikatauluta resursseja
 ---STRINGEND
 

@@ -1,10 +1,45 @@
-                   org.openpsa.mail Changelog
+org.openpsa.mail Changelog
                    ----------------------------
 Legend:
 - All items marked with "!" represent a major API-Change that is
   not guaranteed to be backwards compatible to previous versions
-  which might even break existing functionality. 
+  which might even break existing functionality.
 - All items marked with "+" represent completly new features.
+
+2006-10-20 rambo
+  - fixed an issue with double-encodes when '=' in subject
+  - version bump
+
+2006-10-03 rambo
+  - bulletproofing to nonmidcom.php
+  + nonmidcom.php now uses the component config.inc
+  + small test script for nonmidcom.php
+  - fixes in wrapper methods for old nemeinnet_mail compatibility
+  - version bump
+
+2006-10-02 rambo
+  + added HTML email test script (/midcom-exec-org.openpsa.mail/test-html.php)
+  + added background property support for html_get_embeds()
+  - version bump
+
+2006-09-18 rambo
+  + added configuration option to append to target charset when converting,
+    defaults to '//TRANSLIT'
+
+2006-09-17 rambo
+  ! renamed 'no_iconv_domains' configuration key to better reflect its new functionality
+  - better charset conversion handling
+  + new exec method for testing mime decoding
+  - changed the normal test exec to require admin user as well (in case of
+    setups where anyone is allowed to register an account)
+  - version bump
+
+2006-09-13 rambo
+  - extra safety checks for header handling
+
+2006-09-06 rambo
+  + Backend selection for test script
+  - Fixed double To and Subject header when using mail() as backend
 
 2006-08-23 rambo
   - Fixed an error in subject encoding for plaintext mails

@@ -62,7 +62,34 @@ class net_nemein_redirector_viewer extends midcom_baseclasses_components_request
             case 'url':
                 if ($this->_config->get('redirection_url') != '')
                 {
-                    $_MIDCOM->relocate($this->_config->get('redirection_url'));
+					$url = $this->_config->get('redirection_url');
+					
+					// If the replace option is selected
+					if($this->_config->get('replace_lang') == "1")
+					{
+						$content_language = mgd_get_lang();
+						
+						$qb = new midgard_query_builder('midgard_language');
+						$qb->add_constraint('id', '=', $content_language);
+						$lang = $qb->execute();
+						
+						$default_lang_code = "en";
+						$hosts = $_MIDCOM->i18n->get_language_hosts();
+						foreach($hosts as $k => $host) {
+							if($host->prefix != "" && $host->lang == 0) {
+								$default_lang_code = str_replace("/","",$host->prefix);
+							}
+						}
+						$lang_code = $lang[0]->code;
+						if($lang_code == "") {
+							$lang_code = $default_lang_code;
+						}
+
+						// replace LANG string from redirection_url to current lang name
+						$url = str_replace("LANG",$lang_code,$url);
+					}
+										
+                    $_MIDCOM->relocate($url);
                     // This will exit                    
                 }
                 // Otherwise fall-through to config

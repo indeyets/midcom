@@ -32,25 +32,25 @@
             'description' => 'customer',
             'datatype'    => 'integer',
             'location'    => 'customer',
-        ),        
+        ),
         'description' => array
         (
             'description' => 'description',
             'location'  => 'description',
             'datatype'  => 'markdown',
             'end_fieldgroup' => '',
-        ),        
+        ),
         'sum' => array
         (
             'description' => 'sum',
             'location'  => 'sum',
             'datatype'  => 'number',
-            'widget'    => 'text',            
+            'widget'    => 'text',
             'default'   => 0,
             'start_fieldgroup' => array (
                 'title' => 'invoicing information',
                 'css_group' => 'area meta',
-            ),            
+            ),
         ),
         'vat' => array
         (
@@ -64,22 +64,22 @@
             'description' => 'due',
             'datatype'    => 'unixdate',
             'location'    => 'due',
-            'widget_date_enable_outside_ais' => true,            
-        ),        
+            'widget_date_enable_outside_ais' => true,
+        ),
         'sent' => array (
             'description' => 'sent',
             'datatype'    => 'unixdate',
             'location'    => 'sent',
             'readonly'    => true,
             'hidden'    => true,
-        ),            
+        ),
         'paid' => array (
             'description' => 'paid',
             'datatype'    => 'unixdate',
             'location'    => 'paid',
             'readonly'    => true,
-            'hidden'    => true,            
-            'end_fieldgroup' => '',            
+            'hidden'    => true,
+            'end_fieldgroup' => '',
         ),
     ),
 ),

@@ -5,17 +5,17 @@
 function ooAjaxTableFormHandler(viewId, fieldPrefix)
 {
     // This is the constructor
-    
+
     // Define HTML IDs of the relevant elements
     this.instanceName = '',
     this.formId = viewId+'_editor',
     this.saveButtonId = viewId+'_savebutton';
     this.tableId = viewId+'_table';
     this.tableDataId = viewId+'_data';
-    
+
     // Field prefix for the editing form
     this.fieldPrefix = fieldPrefix;
-    
+
     // Some default settings
     this.hiddenFields = Array();
     this.allowCreate = false;
@@ -27,12 +27,12 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
     this.dataPopulated = false;
     this.evenRow = false;
     this.evenColor = '#eeeeee';
-    
+
     /**
      * Calculate sum of numeric values in specific column of the table
      * @param string column Name of the column
      */
-    this.calculateColumn = function(column) 
+    this.calculateColumn = function(column)
     {
         var calculatedSum = 0;
         var tableBody = document.getElementById(this.tableDataId);
@@ -49,15 +49,15 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
                 }
             }
         }
-    
+
         // Save the field to the footer
-        var wholeTable = document.getElementById(this.tableId);    
+        var wholeTable = document.getElementById(this.tableId);
         var footer = wholeTable.getElementsByTagName('tfoot');
         if (footer.length > 0)
         {
             var cells = footer[0].getElementsByTagName('td');
             for (var i=0; i < cells.length; i++)
-            {       
+            {
                 if (cells[i].className == column)
                 {
                     cells[i].innerHTML = Math.round(Number(calculatedSum)*100)/100;
@@ -65,7 +65,7 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
             }
         }
     }
-    
+
     /**
      * Method for adding a row of data to the table
      */
@@ -73,29 +73,29 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
     {
         // Create and style the table row
         newRow = document.createElement('tr');
-        
+
         if (editable != false)
         {
             ooAjaxSetClass(newRow, 'ajax_editable_row', false);
-            if (newRow.addEventListener) 
+            if (newRow.addEventListener)
             {
                 // This is the correct DOM method
                 newRow.addEventListener('click', this.convertRowToEditorEventhandler, false);
-            } 
-            else if (newRow.attachEvent) 
+            }
+            else if (newRow.attachEvent)
             {
                 // IE compatibility
                 newRow.attachEvent('onclick', this.convertRowToEditorEventhandler);
             }
         }
-    
+
         // "Generate" a GUID
         if (!dataArray[this.fieldPrefix+'guid'])
         {
             dataArray[this.fieldPrefix+'guid'] = existingRows + 1;
         }
         newRow.id = 'ooAjaxFormTableRow_'+dataArray[this.fieldPrefix+'guid'];
-        
+
         if (this.evenRow)
         {
             //newRow.style.background = '#eeeeee';
@@ -106,22 +106,22 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
         {
             this.evenRow = true;
         }
-    
+
         wholeTable = document.getElementById(this.tableId);
-         
-        // Populate cells in same order as the table headers  
+
+        // Populate cells in same order as the table headers
         var headers = wholeTable.getElementsByTagName('th');
         for (var i=0; i < headers.length; i++)
         {
             newCell = document.createElement('td');
             //newCell.setAttribute('class', headers[i].className);
             newCell.className = headers[i].className;
-            
+
             if (headers[i].style.display == 'none')
             {
                 newCell.style.display = 'none';
             }
-            
+
             if (dataArray[headers[i].className])
             {
                 newCell.innerHTML = dataArray[headers[i].className];
@@ -130,17 +130,17 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
             {
                 newCell.innerHTML = '';
             }
-            
+
             newRow.appendChild(newCell);
         }
-    
+
         // Populate cells
         /*
         for (item in dataArray)
         {
             newCell = document.createElement('td');
             newCell.setAttribute('class',item);
-            
+
             if (this.hiddenFields)
             {
                 for (var i=0; i < this.hiddenFields.length; i++)
@@ -151,19 +151,19 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
                     }
                 }
             }
-            
+
             newCell.innerHTML = dataArray[item];
-            
+
             newRow.appendChild(newCell);
         }
         */
-    
+
         // Add the row to the table
         parentElement.appendChild(newRow);
-    
+
         // Update sum
         this.calculateColumn(this.focusField);
-    
+
         // Reveal the table if needed
         if (   !this.tableShown
             || wholeTable.style.display == 'none')
@@ -171,10 +171,10 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
             wholeTable.style.display = 'block';
             this.tableShown = true;
         }
-        
+
         return newRow;
     }
-    
+
     /*
      * Register event for key press. Override in instance
      */
@@ -190,9 +190,9 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
         {
             // Enter pressed, convert to save button press
             this.convertEditorToRow();
-        } 
+        }
     }
-    
+
     /*
      * Convert fields of the editor to a data row in table
      */
@@ -200,10 +200,10 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
     {
         // Get the values from the form
         var form = document.getElementById(this.formId);
-        var values = Array();    
+        var values = Array();
         var names = Array();
         var formSaved = false;
-    
+
         var inputs = form.getElementsByTagName('input');
         for (var i=0; i < inputs.length; i++)
         {
@@ -224,7 +224,7 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
                 values[inputs[i].name] = inputs[i].value;
                 names[i] = inputs[i].name;
             }
-        }    
+        }
         var inputs = form.getElementsByTagName('textarea');
         for (var i=0; i < inputs.length; i++)
         {
@@ -239,7 +239,7 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
             names[i] = inputs[i].name;
         }
         // TODO: Support other form field types
-    
+
         // Consistency checks
         values = this.consistencyChecks(values);
         if (!values)
@@ -248,7 +248,7 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
         }
 
         // Find the row and alter it
-        var tableBody = document.getElementById(this.tableDataId);    
+        var tableBody = document.getElementById(this.tableDataId);
         var rows = tableBody.getElementsByTagName('tr');
         var rowFound = false;
         var selectedRow = false;
@@ -257,7 +257,7 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
         {
             var cells = rows[i].getElementsByTagName('td');
             for (var ii=0; ii < cells.length; ii++)
-            {       
+            {
                 if (  cells[ii].className == this.fieldPrefix+'guid'
                     && cells[ii].innerHTML == values[this.fieldPrefix+'guid'])
                 {
@@ -296,15 +296,15 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
                 //ooDisplayMessage(submitStr, 'error');
                 formSaved = ooAjaxPost(this.URL + 'update/', submitStr, selectedRow, false, this.instanceName+'.convertEditorToRowCleanUp');
                 break;
-            }        
+            }
         }
-    
+
         if (!rowFound)
         {
             // TODO: Figure out how to pass the GUID from the created report to the row and enable editing
             newRow = this.addTableRow(tableBody, values, totalRows, false);
             //formSaved = true;
-            
+
             // Create record via AJAX
             submitStr = '';
             shown = 0;
@@ -314,21 +314,21 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
                 {
                     submitStr += '&'
                 }
-                fieldNormalized = new String(field).replace(this.fieldPrefix, 'midcom_helper_datamanager_field_');                
+                fieldNormalized = new String(field).replace(this.fieldPrefix, 'midcom_helper_datamanager_field_');
                 submitStr += fieldNormalized + '=' + values[field];
                 shown++;
             }
             formSaved = ooAjaxPost(this.URL + 'create/', submitStr, newRow, false, this.instanceName+'.convertEditorToRowCleanUp');
         }
     }
-    
+
     /**
      * Clean up the editor after conversion to data table
      */
     this.convertEditorToRowCleanUp = function()
     {
         form = document.getElementById(this.formId);
-        
+
         // Data saved, empty the form
         var inputs = form.getElementsByTagName('input');
         for (var i=0; i < inputs.length; i++)
@@ -359,13 +359,13 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
                     inputs[i].value = '';
                 }
             }
-        }    
+        }
         var inputs = form.getElementsByTagName('textarea');
         for (var i=0; i < inputs.length; i++)
         {
             inputs[i].value = '';
         }
-        
+
         if (!this.allowCreate)
         {
             // Hide the form as creating new items is not allowed
@@ -400,7 +400,7 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
             // IE compatibility
             element = event.srcElement.parentNode;
         }
-    
+
         if (this.loadedToEditor == true)
         {
             // Save the previous first
@@ -414,7 +414,7 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
         {
             values[cells[i].className] = cells[i].innerHTML;
         }
-        
+
         // Set the values to the form
 
         var form = document.getElementById(this.formId);
@@ -434,15 +434,15 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
             }
             else if (   inputs[i].type != 'submit'
                      && inputs[i].type != 'button')
-            {    
+            {
                 inputs[i].value = values[inputs[i].name];
-        
+
                 if (inputs[i].name == this.focusField)
                 {
                     inputs[i].focus();
                 }
             }
-        }    
+        }
         var inputs = form.getElementsByTagName('textarea');
         for (var i=0; i < inputs.length; i++)
         {
@@ -455,18 +455,18 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
             inputs[i].value = values[inputs[i].name];
         }
         // TODO: Support other form field types
-        
+
         ooAjaxSetClass(element, 'ajax_editable_row_editing', false);
-        
+
         // Reveal the hidden form
         // TODO: Do this more elegantly
         form.style.display = 'block';
         saveButton = document.getElementById(this.saveButtonId);
         saveButton.style.display = 'block';
-        
+
         this.loadedToEditor = true;
     }
-    
+
     /**
      * Register keypress listeners and fetch content via AJAX
      */
@@ -477,7 +477,7 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
             // We have this data already
             return false;
         }
-    
+
         // Populate the data items via AJAX
         if (this.URL)
         {
@@ -486,7 +486,7 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
             ooAjaxGet(this.URL, false, table, this.instanceName+'.handleAjaxResults');
             this.dataPopulated = true;
         }
-    
+
         // Hide the form if creating new items is not allowed
         if (!this.allowCreate)
         {
@@ -497,12 +497,12 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
 
         // Make Enter key submit the form
         var form = document.getElementById(this.formId);
-        if (form.addEventListener) 
+        if (form.addEventListener)
         {
             // This is the correct DOM method
             form.addEventListener('keydown', this.convertEditorToRowKeyhandler, false);
-        } 
-        else if (form.attachEvent) 
+        }
+        else if (form.attachEvent)
         {
             // IE compatibility
             form.attachEvent('onkeydown', this.convertEditorToRowKeyhandler);
@@ -512,7 +512,7 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
         //form.addEventListener('keydown', this.convertEditorToRowKeyhandler, false);
 
     }
-    
+
     /*
      * Abstract method for consistency checking of data. Override in child classes
      */
@@ -527,14 +527,14 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
     this.handleAjaxResults = function(resultList, element)
     {
         items = resultList.getElementsByTagName(this.ajaxResultElement);
-    
+
         if (items.lenght == 0)
         {
             //No results, do something
             return false;
         }
-        
-        for (var i=0;i < items.length; i++)    
+
+        for (var i=0;i < items.length; i++)
         {
             // Iterate based on schema
             var item = new Array();
@@ -549,7 +549,7 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
                     }
                 }
             }
-            
+
             if (items[i].getAttribute('editable') == 'true')
             {
                 this.addTableRow(document.getElementById(this.tableDataId), item);

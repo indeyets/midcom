@@ -1,0 +1,7 @@
+This is the first official release of the filesystem port of the
+Midgard Components Framework.
+
+It should be possible, to upgrade existing MidCOM 1.4 installations to this
+release without problems, see the INSTALL file for further notes, and the 
+CHANGES file about the updates since 1.4, this is especially important for
+component authors.

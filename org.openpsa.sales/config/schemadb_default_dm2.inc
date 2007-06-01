@@ -2,7 +2,16 @@
 (
     'description' => 'salesproject',
     'fields'      => array
-    (   
+    (
+        'code' => Array
+        (
+            // COMPONENT-REQUIRED
+            'title' => 'code',
+            'storage' => 'code',
+            'required' => true,
+            'type' => 'text',
+            'widget'  => 'text',
+        ),
         'title' => Array
         (
             // COMPONENT-REQUIRED
@@ -43,8 +52,8 @@
                 (
                     25 => '25%',
                     50 => '50%',
-                    75 => '75%',                
-                    100 => '100%', 
+                    75 => '75%',
+                    100 => '100%',
                 ),
             ),
             'widget' => 'select',
@@ -54,8 +63,8 @@
             'title' => 'description',
             'storage' => 'description',
             'type' => 'text',
-            'type_config' => Array ( 
-                'output_mode' => 'markdown' 
+            'type_config' => Array (
+                'output_mode' => 'markdown'
             ),
             'widget' => 'textarea',
         ),
@@ -79,13 +88,13 @@
                 'name'     => 'close_est',
             ),
             'type' => 'date',
-            'type_config' => Array 
-            ( 
-                'storage_type' => 'UNIXTIME' 
+            'type_config' => Array
+            (
+                'storage_type' => 'UNIXTIME'
             ),
             'widget' => 'jsdate',
-            'widget_config' => Array 
-            ( 
+            'widget_config' => Array
+            (
                 'show_time' => false,
             ),
         ),

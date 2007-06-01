@@ -1,12 +1,12 @@
 <?php
 // Available request data: comments, objectguid, comment, display_datamanager
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $comment = $data['comment'];
 
-if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
+if (version_compare(mgd_version(), '1.8', '>='))
 {
     $creator = $comment->metadata->creator;
-    $created = strtotime($comment->metadata->created);
+    $created = $comment->metadata->created;
 }
 else
 {

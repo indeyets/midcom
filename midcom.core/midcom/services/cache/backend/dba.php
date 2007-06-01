@@ -92,17 +92,13 @@ class midcom_services_cache_backend_dba extends midcom_services_cache_backend
                 }
                 else
                 {
-                    // TODO: No MidCOM here
-                    $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
-                    "dba cache handler: Failed autodetection of a usable DBA handler. Found handlers were: {$handlers}"); 
+                    die("dba cache handler: Failed autodetection of a usable DBA handler. Found handlers were: {$handlers}"); 
                     // This will exit.
                 }
             }
             else
             {
-                // TODO: No MidCOM here
-	            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
-                    "dba cache handler autodetection: DBA-Functions unavailable or PHP prior to 4.3 is being used (checked for the function dba_handlers)."); 
+	            die("dba cache handler autodetection: DBA-Functions unavailable or PHP prior to 4.3 is being used (checked for the function dba_handlers).");
                 // This will exit.
             }
         }

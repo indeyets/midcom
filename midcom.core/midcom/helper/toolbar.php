@@ -195,6 +195,47 @@ class midcom_helper_toolbar {
     }
 
     /**
+     * This function will add a help item to the toolbar.
+     *
+     * @param string $help_id Name of the help file in component documentation directory.
+     * @param string $component Component to display the help from
+     * @param string $label Label for the help link
+     */
+    function add_help_item($help_id, $component = null, $label = null)
+    {
+        if (is_null($component))
+        {
+            $uri = "__ais/help/{$help_id}.html";
+        }
+        else
+        {
+            $uri = "__ais/help/{$component}/{$help_id}.html";
+        }
+        
+        if (is_null($label))
+        {
+            $label = $_MIDCOM->i18n->get_string('help', 'midcom.admin.help');
+        }
+        
+        $this->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => $uri,
+                MIDCOM_TOOLBAR_LABEL => $label,
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_help-agent.png',
+                MIDCOM_TOOLBAR_ENABLED => true,
+                MIDCOM_TOOLBAR_ACCESSKEY => 'h',
+                MIDCOM_TOOLBAR_OPTIONS => array
+                (
+                    'target' => '_blank',
+                ),
+            )
+        );
+    }
+
+    /**
      * This function will add an Item to the toolbar. Set before to the index
      * of the element before which you want to insert the item or use -1 if
      * you want to append an item. Alternativly, instead of specifying an
@@ -280,6 +321,8 @@ class midcom_helper_toolbar {
      */
     function clean_item($item)
     {
+        static $used_access_keys = array();
+    
         $item[MIDCOM_TOOLBAR__ORIGINAL_URL] = $item[MIDCOM_TOOLBAR_URL];
         if (! array_key_exists(MIDCOM_TOOLBAR_OPTIONS, $item))
         {
@@ -311,10 +354,36 @@ class midcom_helper_toolbar {
             $item[MIDCOM_TOOLBAR_POST_HIDDENARGS] = Array();
         }
 
-        if (! array_key_exists(MIDCOM_TOOLBAR_ACCESSKEY, $item))
+        // Check that access keys get registered only once
+        if (   ! array_key_exists(MIDCOM_TOOLBAR_ACCESSKEY, $item)
+            || array_key_exists($item[MIDCOM_TOOLBAR_ACCESSKEY], $used_access_keys))
         {
             $item[MIDCOM_TOOLBAR_ACCESSKEY] = null;
         }
+        else
+        {
+            // We have valid access key, add it to help text
+            if (strstr($_SERVER['HTTP_USER_AGENT'], 'Macintosh'))
+            {
+                // Mac users
+                $hotkey = 'Ctrl-' . strtoupper($item[MIDCOM_TOOLBAR_ACCESSKEY]);
+            }
+            else
+            {
+                // Windows and Linux clients
+                $hotkey = 'Alt-' . strtoupper($item[MIDCOM_TOOLBAR_ACCESSKEY]);
+            }
+            
+            if ($item[MIDCOM_TOOLBAR_HELPTEXT] == '')
+            {
+                $item[MIDCOM_TOOLBAR_HELPTEXT] = $hotkey;
+            }
+            else
+            {
+                $item[MIDCOM_TOOLBAR_HELPTEXT] .= " ({$hotkey})";
+            }
+        }
+
         // Some items may want to keep their links unmutilated
         $direct_link = false;
         if (   array_key_exists(MIDCOM_TOOLBAR_OPTIONS, $item)
@@ -329,7 +398,7 @@ class midcom_helper_toolbar {
             && ! preg_match('|^https?://|', $item[MIDCOM_TOOLBAR_URL]))
         {
             $item[MIDCOM_TOOLBAR_URL] =
-                  $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
+                  $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                 . $item[MIDCOM_TOOLBAR_URL];
         }
         return $item;
@@ -432,7 +501,13 @@ class midcom_helper_toolbar {
      */
     function disable_item($index)
     {
-        $index = $this->_check_index($index);
+        $index = $this->_check_index($index, false);
+        
+        if (is_null($index))
+        {
+            return false;
+        }
+        
         $this->items[$index][MIDCOM_TOOLBAR_ENABLED] = false;
     }
 
@@ -443,7 +518,13 @@ class midcom_helper_toolbar {
      */
     function hide_item($index)
     {
-        $index = $this->_check_index($index);
+        $index = $this->_check_index($index, false);
+        
+        if (is_null($index))
+        {
+            return false;
+        }
+        
         $this->items[$index][MIDCOM_TOOLBAR_HIDDEN] = true;
     }
 
@@ -520,7 +601,17 @@ class midcom_helper_toolbar {
 
         // List items
         $i = 0;
-        $last = count($this->items) - 1;
+        $last = 0;
+        
+        // Get count of visible items
+        foreach ($this->items as $item)
+        {
+            if ($item[MIDCOM_TOOLBAR_HIDDEN])
+            {
+                continue;
+            }
+            $last++;
+        }
 
         foreach ($this->items as $item)
         {
@@ -528,6 +619,8 @@ class midcom_helper_toolbar {
             {
                 continue;
             }
+            
+            $i++;
 
             $output .= '  <li class=\'';
             if ($last == 0)
@@ -540,9 +633,9 @@ class midcom_helper_toolbar {
             }
             else if ($i == $last)
             {
+                // Either this is the last item, or th
                 $output .= 'last_item ';
             }
-            $i++;
 
             if ($item[MIDCOM_TOOLBAR_ENABLED])
             {
@@ -571,6 +664,44 @@ class midcom_helper_toolbar {
         return $output;
     }
 
+    /**
+     * Helper function, generates a label for the item that includes its accesskey
+     *
+     * @param Array $item The item to label
+     * @return string Item's label to display
+     */
+    function _generate_item_label($item)
+    {
+        $label = $item[MIDCOM_TOOLBAR_LABEL];
+        if (!is_null($item[MIDCOM_TOOLBAR_ACCESSKEY]))
+        {
+            // Try finding uppercase version of the accesskey first
+            $accesskey_upper = strtoupper($item[MIDCOM_TOOLBAR_ACCESSKEY]);
+            $accesskey_lower = strtolower($item[MIDCOM_TOOLBAR_ACCESSKEY]);
+            $position = strpos($label, $accesskey_upper);
+            if ($position !== false)
+            {
+                $new_label  = substr($label, 0, $position);
+                $new_label .= "<u>{$accesskey_upper}</u>";
+                $new_label .= substr($label, $position + 1);
+                $label = $new_label;
+            }
+            else
+            {
+                // Try lowercase too
+                $position = strpos($label, $accesskey_lower);
+                if ($position !== false)
+                {
+                    $new_label  = substr($label, 0, $position);
+                    $new_label .= "<u>{$accesskey_lower}</u>";
+                    $new_label .= substr($label, $position + 1);
+                    $label = $new_label;
+                }
+            }
+        }
+        // FIXME: This is an ugly IE rendering fix
+        return str_replace(' ', '&nbsp;', $label);
+    }
 
     /**
      * Helper function, renders a regular a href... based link target.
@@ -608,23 +739,35 @@ class midcom_helper_toolbar {
             {
                 $output .= "    <abbr title='${item[MIDCOM_TOOLBAR_HELPTEXT]}'>\n";
             }
+            else
+            {
+                $output .= "    <span>";
+            }
         }
 
         if (! is_null($item[MIDCOM_TOOLBAR_ICON]))
         {
             $url = MIDCOM_STATIC_URL . "/{$item[MIDCOM_TOOLBAR_ICON]}";
-            $output .= "      <img src='{$url}' alt='' />\n";
+            $output .= "      <img src='{$url}' alt='' />";
         }
 
-        $output .= "      {$item[MIDCOM_TOOLBAR_LABEL]}\n";
+        $label = $this->_generate_item_label($item);
+        $output .= "&nbsp;{$label}\n";
 
         if ($item[MIDCOM_TOOLBAR_ENABLED])
         {
             $output .= "    </a>\n";
         }
-        else if (! is_null($item[MIDCOM_TOOLBAR_HELPTEXT]))
-        {
-            $output .= "    </abbr>\n";
+        else
+        { 
+            if (! is_null($item[MIDCOM_TOOLBAR_HELPTEXT]))
+            {
+                $output .= "    </abbr>\n";
+            }
+            else
+            {
+                $output .= "</span>";
+            }
         }
 
         if (   array_key_exists(MIDCOM_TOOLBAR_SUBMENU, $item)
@@ -650,16 +793,6 @@ class midcom_helper_toolbar {
         if ($item[MIDCOM_TOOLBAR_ENABLED])
         {
             $output .= "  <form method='post' action='{$item[MIDCOM_TOOLBAR_URL]}'>\n";
-            if ($item[MIDCOM_TOOLBAR_POST_HIDDENARGS])
-            {
-                foreach ($item[MIDCOM_TOOLBAR_POST_HIDDENARGS] as $key => $value)
-                {
-                    $key = htmlspecialchars($key);
-                    $value = htmlspecialchars($value);
-                    $output .= "    <input type='hidden' name='{$key}' value='{$value}'/>\n";
-                }
-            }
-
             $output .= "    <button type='submit' name='midcom_helper_toolbar_submit'";
 
             if ( count($item[MIDCOM_TOOLBAR_OPTIONS]) > 0 )
@@ -673,30 +806,35 @@ class midcom_helper_toolbar {
             {
                 $output .= " class='accesskey' accesskey='{$item[MIDCOM_TOOLBAR_ACCESSKEY]}' ";
             }
-            $output .= ">\n";
-        }
-
-        if ($item[MIDCOM_TOOLBAR_HELPTEXT])
-        {
-            $output .= "      <abbr title='${item[MIDCOM_TOOLBAR_HELPTEXT]}'>\n";
+            if ($item[MIDCOM_TOOLBAR_HELPTEXT])
+            {
+                $output .= " title='${item[MIDCOM_TOOLBAR_HELPTEXT]}' ";
+            }
+            $output .= ">";
         }
 
         if ($item[MIDCOM_TOOLBAR_ICON])
         {
             $url = MIDCOM_STATIC_URL . "/{$item[MIDCOM_TOOLBAR_ICON]}";
-            $output .= "        <img src='{$url}' alt='{$item[MIDCOM_TOOLBAR_ICON]}' title='{$item[MIDCOM_TOOLBAR_ICON]}' />\n";
+            $output .= "<img src='{$url}' alt='{$item[MIDCOM_TOOLBAR_ICON]}' title='{$item[MIDCOM_TOOLBAR_ICON]}' />";
         }
 
-        $output .= "        {$item[MIDCOM_TOOLBAR_LABEL]}\n";
-
-        if ($item[MIDCOM_TOOLBAR_HELPTEXT])
-        {
-            $output .= "      </abbr>\n";
-        }
+        $label = $this->_generate_item_label($item);
+        $output .= "&nbsp;{$label}";
 
         if ($item[MIDCOM_TOOLBAR_ENABLED])
         {
-            $output .= "    </button>\n  </form>\n";
+            $output .= "</button>\n";
+            if ($item[MIDCOM_TOOLBAR_POST_HIDDENARGS])
+            {
+                foreach ($item[MIDCOM_TOOLBAR_POST_HIDDENARGS] as $key => $value)
+                {
+                    $key = htmlspecialchars($key);
+                    $value = htmlspecialchars($value);
+                    $output .= "    <input type='hidden' name='{$key}' value='{$value}'/>\n";
+                }
+            }
+            $output .= "  </form>\n";
         }
 
         if (   array_key_exists(MIDCOM_TOOLBAR_SUBMENU, $item)
@@ -751,10 +889,11 @@ class midcom_helper_toolbar {
      * function.
      *
      * @param mixed $index The integer index or URL to check
-     * @return int $index The valid index (possibly translated from the URL).
+     * @param boolean $raise_error Whether we should raise an error on missing item
+     * @return int $index The valid index (possibly translated from the URL) or null on missing index.
      * @access private
      */
-    function _check_index ($index)
+    function _check_index ($index, $raise_error = true)
     {
         if (is_string($index))
         {
@@ -763,9 +902,19 @@ class midcom_helper_toolbar {
             $index = $this->get_index_from_url($url);
             if (is_null($index))
             {
-                $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
-                    "midcom_helper_toolbar::check_index - Invalid URL '{$url}', URL not found.");
-                // This will exit.
+                debug_add("Invalid URL '{$url}', URL not found.", MIDCOM_LOG_ERROR);
+                debug_pop();
+                
+                if ($raise_error)
+                {
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
+                        "midcom_helper_toolbar::check_index - Invalid URL '{$url}', URL not found.");
+                    // This will exit.
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
         if ($index >= count($this->items))
@@ -808,3 +957,5 @@ class midcom_helper_toolbar_page extends midcom_helper_toolbar
     }
 }
 */
+
+?>

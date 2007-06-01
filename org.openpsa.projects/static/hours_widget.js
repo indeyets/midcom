@@ -1,4 +1,3 @@
-
 var ooHourWidgetDisplayed = Array();
 
 function ooToggleHourWidgetDisplay(guid)

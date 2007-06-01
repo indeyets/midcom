@@ -1,0 +1,99 @@
+/* Styling for photo listing */
+ul.org_routamc_photostream_photos
+{
+    margin: 0px;
+    padding: 0px;
+    margin-top: 6px;
+}
+ul.org_routamc_photostream_photos li
+{
+    list-style: none;
+    float: left;
+    width: 200px;
+    height: 200px;
+    margin-right: 8px;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    text-align: center;
+}
+ul.org_routamc_photostream_photos li img
+{
+    border: 1px solid #000000;
+}
+ul.org_routamc_photostream_photos li span.title
+{
+    display: block;
+}
+ul.org_routamc_photostream_photos li span.rating
+{
+    display: block;
+}
+
+/* Styling for individual photo page */
+div.org_routamc_photostream_photo div.taken
+{
+    margin-top: 1em;
+}
+div.org_routamc_photostream_photo div.rating
+{
+    font-weight: bold;
+    margin-top: 1em;
+}
+div.org_routamc_photostream_photo dl.tags
+{
+    margin-top: 10px;
+}
+div.org_routamc_photostream_photo dl.tags dt
+{
+    display: inline;
+    font-weight: bold;
+}
+div.org_routamc_photostream_photo dl.tags dt:after
+{
+    content: ':';
+}
+div.org_routamc_photostream_photo dl.tags dd
+{
+    display: inline;
+    margin: 0px;
+    padding: 0px;
+}
+
+/* Styling for the tag cloud */
+div.org_routamc_photostream ul.tags li
+{
+    display: inline;
+    font-weight: normal;
+}
+div.org_routamc_photostream ul.tags li span 
+{ 
+    position: absolute; 
+    left: -999px; 
+    width: 990px; 
+}
+div.org_routamc_photostream ul.tags li.not-very-popular
+{ 
+    font-size: 0.8em; 
+}
+div.org_routamc_photostream ul.tags li.somewhat-popular 
+{ 
+    font-size: 1.0em; 
+}
+div.org_routamc_photostream ul.tags li.popular 
+{ 
+    font-size: 1.2em; 
+}
+div.org_routamc_photostream ul.tags li.very-popular 
+{ 
+    font-size: 1.4em; 
+}
+
+/* Styling for photos shown in other places like universalchooser */
+div.org_routamc_photostream_photo_thumbnail img
+{
+    border: 1px solid #000000;
+}
+div.org_routamc_photostream_photo_thumbnail span.title
+{
+    display: block;
+}

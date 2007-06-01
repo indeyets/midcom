@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package de.linkm.sitemap
  * @author The Midgard Project, http://www.midgard-project.org 
@@ -26,7 +25,12 @@ class de_linkm_sitemap_interface extends midcom_baseclasses_components_interface
         parent::midcom_baseclasses_components_interface();
         
         $this->_component = 'de.linkm.sitemap';
-        $this->_autoload_files = Array('viewer.php', 'admin.php', 'navigation.php');
+        $this->_autoload_files = array
+        (
+            'viewer.php',
+            'admin.php',
+            'navigation.php'
+        );
     }
 }
 

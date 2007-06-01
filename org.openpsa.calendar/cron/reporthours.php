@@ -16,7 +16,7 @@ class org_openpsa_calendar_cron_reporthours extends midcom_baseclasses_component
 {
     function _on_initialize()
     {
-        return true;
+        return array_key_exists('org.openpsa.projects', $_MIDCOM->componentloader->manifests);
     }
 
     /**
@@ -29,7 +29,7 @@ class org_openpsa_calendar_cron_reporthours extends midcom_baseclasses_component
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add('_on_execute called');
-        
+
         if (   !isset($GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event'])
             || !is_object($GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']))
         {
@@ -46,10 +46,18 @@ class org_openpsa_calendar_cron_reporthours extends midcom_baseclasses_component
             return;
         }
 
-        $_MIDCOM->componentloader->load('org.openpsa.projects');
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.projects');
         if (!class_exists('org_openpsa_projects_task'))
         {
             debug_add('org.openpsa.projects could not be loaded', MIDCOM_LOG_WARN);
+            debug_pop();
+            return;
+        }
+        if (!$_MIDCOM->auth->request_sudo('org.openpsa.calendar'))
+        {
+            $msg = "Could not get sudo, aborting operation, see error log for details";
+            $this->print_error($msg);
+            debug_add($msg, MIDCOM_LOG_ERROR);
             debug_pop();
             return;
         }
@@ -63,7 +71,7 @@ class org_openpsa_calendar_cron_reporthours extends midcom_baseclasses_component
         $qb->add_constraint('eid.end', '<', time());
         // Event can be at most week old
         // TODO: make max age configurable
-        /* TODO: store a timestamp of last process in root event and use whichever 
+        /* TODO: store a timestamp of last process in root event and use whichever
                  is nearer, though it has the issue with creating events after the fact
                  (which can happen when synchronizing from other systems for example)
         */
@@ -74,6 +82,7 @@ class org_openpsa_calendar_cron_reporthours extends midcom_baseclasses_component
         if (   !is_array($eventmembers)
             || count ($eventmembers) < 1)
         {
+            $_MIDCOM->auth->drop_sudo();
             return;
         }
 
@@ -85,14 +94,23 @@ class org_openpsa_calendar_cron_reporthours extends midcom_baseclasses_component
         $event_links = array();
         foreach($eventmembers as $member)
         {
+            // Bulletproofing: prevent duplicating hour reports
+            $member->hoursReported = time();
+            if (!$member->update(false))
+            {
+                $msg = "Could not set hoursReported on member #{$member->id} (event #{$member->eid}), errstr: " . mgd_errstr() . " skipping this member";
+                $this->print_error($msg);
+                debug_add($msg, MIDCOM_LOG_ERROR);
+                continue;
+            }
             //Avoid multiple loads of same event
             if (!isset($seen_events[$member->eid]))
             {
                 $seen_events[$member->eid] = new org_openpsa_calendar_event($member->eid);
             }
             $event =& $seen_events[$member->eid];
-            
-            // Avoid multiple of events links
+
+            // Avoid multiple queries of events links
             if (!isset($event_links[$event->guid]))
             {
                 $qb2 = org_openpsa_relatedto_relatedto::new_query_builder();
@@ -104,7 +122,7 @@ class org_openpsa_calendar_cron_reporthours extends midcom_baseclasses_component
                 $event_links[$event->guid] = $qb2->execute();
             }
             $links =& $event_links[$event->guid];
-            // These checks are done here (in stead of few lines above) on purpose 
+            // These checks are done here (in stead of few lines above) on purpose
             if (   !is_array($links)
                 || count ($links) < 1)
             {
@@ -131,16 +149,24 @@ class org_openpsa_calendar_cron_reporthours extends midcom_baseclasses_component
 
                 if (!org_openpsa_projects_interface::create_hour_report($task, $member->uid, $event, 'org.openpsa.calendar'))
                 {
-                    /* Failed to create hour report, error reporting is done by the interface method so
-                       we just skip to next iteration */
+                    // MidCOM error log is filled in the method, here we just display error
+                    $this->print_error("Failed to create hour_report to task #{$task->id} for person #{$member->uid} from event #{$event->id}");
+                    // Failed to create hour_report, unset hoursReported so that we might have better luck next time
+                    // PONDER: This might be an issue in case be have multiple tasks linked and only one of them fails... figure out a more granular way to flag reported hours ?
+                    $member->hoursReported = 0;
+                    if (!$member->update(false))
+                    {
+                        $msg = "Could not UNSET hoursReported on member #{$member->id} (event #{$member->eid}), errstr: " . mgd_errstr();
+                        $this->print_error($msg);
+                        debug_add($msg, MIDCOM_LOG_WARN);
+                    }
                     continue;
                 }
 
-                $member->hoursReported = time();
-                $member->update();                
             }
         }
 
+        $_MIDCOM->auth->drop_sudo();
         debug_add('done');
         debug_pop();
         return;

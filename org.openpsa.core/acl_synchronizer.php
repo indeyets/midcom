@@ -13,21 +13,27 @@
  */
 class org_openpsa_core_acl_synchronizer
 {
-    
+
     function org_openpsa_core_acl_synchronizer()
     {
 
     }
-    
+
     function write_acls($object, $owner_id, $accesstype)
     {
+        if (   empty($owner_id)
+            || empty($accesstype))
+        {
+            return false;
+        }
+
         // TODO: Figure out what kind of write handler we need based on the situation (calendar/document etc)
         return $this->_write_full_midcom_acls($object, $owner_id, $accesstype);
     }
-    
+
     function _write_full_midcom_acls($object, $owner_id, $accesstype)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);    
+        debug_push_class(__CLASS__, __FUNCTION__);
         // Exit if no owner workgroup has been assigned
         if ($owner_id == '')
         {
@@ -35,7 +41,15 @@ class org_openpsa_core_acl_synchronizer
             debug_pop();
             return false;
         }
-            
+
+        $owner_object =& $_MIDCOM->auth->get_assignee($owner_id);
+        if (!$owner_object)
+        {
+            debug_add('Given owner was invalid, aborting');
+            debug_pop();
+            return false;
+        }
+
         // Clear old ACLs applying to others than current user or selected owner group
         $privileges = $object->get_privileges();
         if ($privileges)
@@ -58,7 +72,7 @@ class org_openpsa_core_acl_synchronizer
                 }
             }
         }
-        
+
         // Handle ACL storage
         switch ($accesstype)
         {
@@ -96,16 +110,16 @@ class org_openpsa_core_acl_synchronizer
                 {
                     // Allow them to read the object
                     $object->set_privilege('midgard:read', $subscriber_group->id, MIDCOM_PRIVILEGE_ALLOW);
-                    
+
                     // But disallow reading of possible attachments
                     $this->_set_attachment_permission($object, 'midgard:read', $subscriber_group->id, MIDCOM_PRIVILEGE_DENY);
                 }
                 break;
         }
         debug_pop();
-        return true;    
+        return true;
     }
-    
+
     function _set_attachment_permission($object, $privilege, $assignee, $value)
     {
         debug_push_class(__CLASS__, __FUNCTION__);

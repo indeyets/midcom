@@ -26,7 +26,7 @@
             'datatype'    => 'integer',
             'location'    => 'manager',
             'widget'      => 'contactchooser',
-        ),  
+        ),
         'resources' => array (
             'description' => 'resources',
             'datatype'    => 'array',
@@ -38,7 +38,7 @@
             'datatype'    => 'array',
             'location'    => 'contacts',
             'widget'      => 'contactchooser',
-        ),        
+        ),
         'agreement' => array (
             'description' => 'agreement',
             'datatype'    => 'integer',
@@ -49,13 +49,13 @@
             'datatype'    => 'unixdate',
             'location'    => 'start',
             'widget_date_enable_outside_ais' => true,
-        ),            
+        ),
         'end' => array (
             'description' => 'deadline',
             'datatype'    => 'unixdate',
             'location'    => 'end',
             'widget_date_enable_outside_ais' => true,
-        ), 
+        ),
         'description' => array (
             'description' => 'description',
             'datatype'    => 'markdown',
@@ -79,8 +79,8 @@
             'location'    => 'orgOpenpsaOwnerWg',
             'datatype'     => 'text',
             'widget'       => 'select',
-            'widget_select_choices' => org_openpsa_helpers_workgroups(),   
-            'default' => $GLOBALS['org_openpsa_core_workgroup_filter'], 
+            'widget_select_choices' => org_openpsa_helpers_workgroups(),
+            'default' => $GLOBALS['org_openpsa_core_workgroup_filter'],
             'end_fieldgroup' => '',
         ),
     )
@@ -107,7 +107,7 @@
                 'css_group' => 'area meta',
             ),
             'required'    => true,
-        ),       
+        ),
         'resources' => array (
             'description' => 'resources',
             'datatype'    => 'array',
@@ -120,13 +120,13 @@
             'datatype'    => 'array',
             'location'    => 'contacts',
             'widget'      => 'contactchooser',
-        ),        
+        ),
         'end' => array (
             'description' => 'deadline',
             'datatype'    => 'unixdate',
             'location'    => 'end',
             'widget_date_enable_outside_ais' => true,
-        ), 
+        ),
         'orgOpenpsaAccesstype' => array (
             'description' => 'access type',
             'location'    => 'orgOpenpsaAccesstype',
@@ -140,9 +140,9 @@
             'location'    => 'orgOpenpsaOwnerWg',
             'datatype'     => 'text',
             'widget'       => 'select',
-            'widget_select_choices' => org_openpsa_helpers_workgroups(),   
+            'widget_select_choices' => org_openpsa_helpers_workgroups(),
             'default' => $GLOBALS['org_openpsa_core_workgroup_filter'],
-            'hidden'      => true,            
+            'hidden'      => true,
         ),
     )
 ),

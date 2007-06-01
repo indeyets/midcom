@@ -1,5 +1,5 @@
 <?php
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $view = $data['view_product'];
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
@@ -8,8 +8,16 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 <table>
     <tbody>
         <tr>
+            <td><?php echo $data['l10n_midcom']->get('tags'); ?></td>
+            <td>&(view['tags']:h);</td>
+        </tr>
+        <tr>
             <td><?php echo $data['l10n']->get('product group'); ?></td>
             <td>&(view['productGroup']:h);</td>
+        </tr>
+        <tr>
+            <td><?php echo $data['l10n']->get('supplier'); ?></td>
+            <td>&(view['supplier']:h);</td>
         </tr>
         <tr>
             <td><?php echo $data['l10n']->get('delivery type'); ?></td>

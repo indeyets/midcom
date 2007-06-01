@@ -1,21 +1,41 @@
-'name' => 'org.openpsa.documents',
-'purecode' => false,
-'privileges' =>  Array(),
-'class_definitions' => Array('midcom_dba_classes.inc'),
-'version' => '2.0.0',
-'package.xml' => Array(
+
+  'name' => 'org.openpsa.documents',
+  'purecode' => false,
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+    0 => 'midcom_dba_classes.inc',
+  ),
+  'version' => '2.0.2beta1',
+  'package.xml' => 
+  array (
     'summary' => 'Document management',
     'description' => 'Organize and manage documents with metadata, search inside documents.',
-    'maintainers' => Array(
-        'bergie' => Array(
-            'name' => 'Henri Bergius',
-            'email' => 'henri.bergius@iki.fi',
-            'role' => 'lead',
-        ),  
+    'maintainers' => 
+    array (
+      'bergie' => 
+      array (
+        'name' => 'Henri Bergius',
+        'email' => 'henri.bergius@iki.fi',
+        'role' => 'lead',
+      ),
     ),
-    'dependencies' => Array(
-        'org.openpsa.core'          => Array(),
-        'org.openpsa.helpers'       => Array(),        
-        'midcom.helper.datamanager' => Array(),
+    'dependencies' => 
+    array (
+      'org.openpsa.core' => 
+      array (
+      ),
+      'org.openpsa.helpers' => 
+      array (
+      ),
+      'midcom.helper.datamanager' => 
+      array (
+      ),
+      'midcom' => 
+      array (
+      ),
     ),
-),
+  ),
+  'state' => 'beta',

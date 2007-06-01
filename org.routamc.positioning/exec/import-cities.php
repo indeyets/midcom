@@ -27,9 +27,9 @@ if (   array_key_exists('cities_file_path', $_POST)
     @ini_set('memory_limit', -1);
     @ini_set('max_execution_time', 0);
     while (@ob_end_flush());
-    
+
     $imported_cities = Array();
-    
+
     // Read CSV file
     $cities_created = 0;
     $row = 0;
@@ -43,12 +43,12 @@ if (   array_key_exists('cities_file_path', $_POST)
         {
             continue;
         }
-        
+
         if ($data[$fields_map['population']] < $_POST['population_to_import'])
         {
             continue;
         }
-        
+
         if (strlen($data[$fields_map['country']]) > 2)
         {
             continue;
@@ -61,7 +61,7 @@ if (   array_key_exists('cities_file_path', $_POST)
         $new_city->longitude = $data[$fields_map['longitude']];
         $new_city->population = $data[$fields_map['population']];
         $new_city->altitude = $data[$fields_map['averageelevation']];
-        
+
         // Handle possible alternate names
         $alternate_names = explode(',', $data[$fields_map['alternatenames']]);
         if (count($alternate_names) > 0)
@@ -72,16 +72,16 @@ if (   array_key_exists('cities_file_path', $_POST)
             }
             $new_city->alternatenames .= '|';
         }
-        
+
         if (   array_key_exists("{$new_city->country}:{$data[3]}:{$new_city->city}", $imported_cities)
             || $row == 1)
         {
             // We have city by this name for the country already
             continue;
         }
-        
+
         echo "Adding {$new_city->city}, {$new_city->country}... ";
-        
+
         if ($new_city->create())
         {
             echo "<span style=\"color: #00cc00;\">Success,</span> ";
@@ -95,37 +95,38 @@ if (   array_key_exists('cities_file_path', $_POST)
         echo mgd_errstr() . "<br />\n";
         flush();
     }
-    
+
     echo "<p>{$cities_created} cities imported.</p>\n";
 }
 else
 {
     ?>
     <h1>World Cities Database installation</h1>
-    
+
     <p>
-    You can use this script to install a <a href="http://www.geonames.org/export/#dump">Geonames city database</a>. 
+    You can use this script to install a <a href="http://www.geonames.org/export/#dump">Geonames city database</a>.
     <a href="http://download.geonames.org/export/dump/">Download the database ZIP file</a>
     to your server, unzip it and provide its local path in the box below. Ensure that Apache can read it.
     </p>
-    
+
     <p><strong>Please note that this process will take a long time.</strong> This can be anything between half hour and several hours
-    to process the 3 million cities.</p>
-    
+    to process the 3 million cities of the full dump, or significantly less for the 
+    <a href="http://download.geonames.org/export/dump/cities15000.zip">list of cities with over 15,000 inhabitants</a>.</p>
+
     <form method="post">
         <label><a href="http://www.geonames.org/export/codes.html">Features</a> to import<br /><input type="text" name="featurecodes_to_import" value="PPL,PPLA,PPLC,PPLL,PPLS" /></label><br />
         <label>Minimum population<br /><input type="text" name="population_to_import" value="0" /></label><br />
-        <label>File path<br /><input type="text" name="cities_file_path" value="/tmp/FI.txt" /></label>
+        <label>File path<br /><input type="text" name="cities_file_path" value="/tmp/cities15000.txt" /></label>
         <input type="submit" value="Install" />
     </form>
-    
+
     <p>
     If you want to install a custom cities list, it must be in a tab-delimited CSV file in the following format:
     </p>
-    
+
     <pre>
 660561  Borgå   Borga   Borgo,Porvo,Porvoo      60.4    25.6666667      P       PPL     FI      13      47192   0       37
-    </pre>    
+    </pre>
     <?php
 }
 ?>

@@ -4,31 +4,31 @@
 'purecode' => false,
 /* when using pear packaging, versions > 1 are stable */
 'version' => '0.0.1',
-'state' => 'stable',
+'state' => 'devel',
 /* use this to set default privileges */
-'privileges' =>  Array(),
+'privileges' => array(),
 /* use this to initialize your own MgdSchema classes */
-'class_definitions' => Array(),
+'class_definitions' => array(),
 /**
  * This is used by the PEAR packaging.
  */
-'package.xml' => Array
+'package.xml' => array
 (
     'summary' => '${module_description}',
     'description' => '${module_description}',
-    'maintainers' => Array
+    'maintainers' => array
     (
-        'torben' => Array
+        'username' => array
         (
-            'name' => 'Insert your name here',
-            'email' => 'and your email here',
+            'name' => 'Firstname Lastname',
+            'email' => 'user@example.net',
             'role' => 'lead',
         ),
     ),
-/* Define what modules this module depends on.  */
+    /* Define what modules this module depends on.  */
     'dependencies' => Array
     (
-        'midcom.helper.datamanager2' => Array(),
+        'midcom.helper.datamanager2' => array(),
     ),
 ),
 

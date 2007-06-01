@@ -1,274 +1,174 @@
 <?php
+/**
+ * @package net.nemein.downloads
+ * @author The Midgard Project, http://www.midgard-project.org 
+ * @version $Id$
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
-/* Processing and output, called by the "component" interface class */
+/**
+ * Download manager Site interface class.
+ * 
+ * @package net.nemein.downloads
+ */
+class net_nemein_downloads_viewer extends midcom_baseclasses_components_request
+{
+    function net_nemein_downloads_viewer($topic, $config) 
+    {
+        parent::midcom_baseclasses_components_request($topic, $config);       
 
-class net_nemein_downloads_viewer {
-
-  var $_debug_prefix;
-
-  var $_config;
-  var $_release;
-  var $_current_release;
-  var $_topic;
-  var $_layout;
-  var $_view;
-  var $_relocate;
-  var $_relocate_prefix;
-
-  function net_nemein_downloads_viewer($topic, $config) {
-
-    global $midgard;
-    
-    $this->_debug_prefix = "net.nemein.downloads viewer::";
-
-    $this->_config = $config;
-    $this->_topic = $topic;
-    $this->_release = false;
-    $this->_current_release = $this->_config->get("current_release");
-    $this->_layout = false;
-    $this->_view = false; 
-    $this->_relocate = false;
-    $this->_relocate_prefix = "";
-    $this->form_prefix = "net_nemein_downloads_viewer_";
-
-    // get l10n libraries
-    $i18n =& $GLOBALS["midcom"]->get_service("i18n");
-    $GLOBALS["view_l10n"] = $i18n->get_l10n("net.nemein.downloads");
-
-  }
-
-
-  function can_handle($argc, $argv) {
-
-    debug_push($this->_debug_prefix . "can_handle");
-
-    // see if we can handle this request.
-    if (!$this->_getRelease($argc, $argv)) {
-      // errstr and errcode are already set by getArticle
-      debug_add("could not get release. see above.");
-      debug_pop();
-      return false;
-    }
-    $GLOBALS["net_nemein_downloads_nap_activeid"] = $this->_release->id;
-
-    debug_pop();
-    return true;
-  }
-
-  function _getRelease($argc, $argv) {
-  
-    global $net_nemein_downloads_layouts;
-
-    debug_push($this->_debug_prefix . "_getRelease");
-
-    $this->_layout = new midcom_helper_datamanager($net_nemein_downloads_layouts);
-
-    if (! $this->_layout) {
-      $this->errstr = "Could not create layout, see Debug Log";
-      $this->errcode = MIDCOM_ERRCRIT;
-      debug_add($this->errstr, MIDCOM_LOG_CRIT);
-      return false;
-    }
-
-    if ($argc == 0) {
-      // Try to view current release
-      if ($this->_current_release) {
-        $this->_release = mgd_get_object_by_guid($this->_current_release);
-
-        if (!$this->_release) {
+        // Match /create/<schema>
+        $this->_request_switch['create'] = array
+        (
+            'fixed_args' => 'create',
+            'variable_args' => 1,
+            'handler' => array
+            (
+                'net_nemein_downloads_handler_create', 
+                'create'
+            ),
+        );
         
-          debug_add("current release could not be loaded: " . mgd_errstr(), MIDCOM_LOG_INFO);
-          $this->errstr = "current release could not be loaded: " . mgd_errstr();
-          $this->errcode = MIDCOM_ERRNOTFOUND;
-          return false;
-          
+        // Match /edit/<downloadpage>
+        $this->_request_switch['edit'] = array
+        (
+            'fixed_args' => 'edit',
+            'variable_args' => 1,
+            'handler' => array
+            (
+                'net_nemein_downloads_handler_admin', 
+                'edit'
+            ),
+        );
+        
+        // Match /delete/<downloadpage>
+        $this->_request_switch['delete'] = array
+        (
+            'fixed_args' => 'delete',
+            'variable_args' => 1,
+            'handler' => array
+            (
+                'net_nemein_downloads_handler_admin', 
+                'delete'
+            ),
+        );
+
+        if ($this->_config->get('current_release'))
+        {
+            // Match /
+            $this->_request_switch['view_current'] = array
+            (
+                'handler' => array
+                (
+                    'net_nemein_downloads_handler_view', 
+                    'view'
+                ),
+            );
         }
-      } else {
-      
-        // No release is the default, show index
-        $this->_view = "index";
+        else
+        {
+            // No "current release" set, show list
+            $this->_request_switch['index'] = array
+            (
+                'handler' => array
+                (
+                    'net_nemein_downloads_handler_view', 
+                    'index'
+                ),
+            );
+        }
+        
+        // Match /config/
+        $this->_request_switch['config'] = array
+        (
+            'handler' => array
+            (
+                'midcom_core_handler_configdm', 
+                'configdm'
+            ),
+            'schemadb' => 'file:/net/nemein/downloads/config/schemadb_config.inc',
+            'schema' => 'config',
+            'fixed_args' => array
+            (
+                'config'
+            ),
+        );
+
+        // Match /<downloadpage>
+        $this->_request_switch['view'] = array
+        (
+            'variable_args' => 1,
+            'handler' => array
+            (
+                'net_nemein_downloads_handler_view', 
+                'view'
+            ),
+        );        
+    }
+    
+    function _on_handle($handler_id, $args)
+    {
+        $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
+
+        if ($this->_topic->can_do('midgard:create'))
+        {
+            foreach (array_keys($this->_request_data['schemadb']) as $name)
+            {
+                $this->_node_toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "create/{$name}.html",
+                        MIDCOM_TOOLBAR_LABEL => sprintf
+                        (
+                            $this->_l10n_midcom->get('create %s'),
+                            $this->_l10n->get($this->_request_data['schemadb'][$name]->description)
+                        ),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
+                        MIDCOM_TOOLBAR_ACCESSKEY => 'n',
+                    )
+                );
+            }
+        }
+        
+        if (   $this->_topic->can_do('midgard:update')
+            && $this->_topic->can_do('midcom:component_config'))
+        {
+            $this->_node_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => 'config.html',
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
+                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+                )
+            );
+        }
+        
+        $this->_request_data['node'] =& $this->_topic;
+        
         return true;
+    }
+    
+    /**
+     * Static method for listing GUIDs and names of releases
+     */
+    function list_releases()
+    {
+        $data =& $_MIDCOM->get_custom_context_data('request_data');
+        $release_array = array();
         
-      }
-    
-    } elseif ($argc == 1) {
-      if ($argv[0] == 'archive')
-      {
-          $this->_release =  false;
-          $this->_view = 'index';
-          return true;
-      }
-      else
-      {
-          $this->_release = mgd_get_article_by_name($this->_topic->id,$argv[0]);
-          if (!$this->_release) {
-            
-            debug_add("release $argv[0] could not be loaded: " . mgd_errstr(), MIDCOM_LOG_INFO);
-            $this->errstr = "release $argv[0] could not be loaded: " . mgd_errstr();
-            $this->errcode = MIDCOM_ERRNOTFOUND;
-            return false;
-              
-          }
-      }
-      
-    } elseif ($argc == 2) {
-
-      // Redirections for current release
-      if ($argv[0] == "latest") {
-
-        if ($this->_current_release) {
-          // Use set "current release"
-          $this->_release = mgd_get_object_by_guid($this->_current_release);
-        } else {
-          // Use latest added release
-          $releases = mgd_list_topic_articles($this->_topic->id);
-          if ($releases) {
-            if ($releases->fetch()) {
-              $this->_release = mgd_get_article($releases->id);
-            }
-          }
+        $qb = midcom_db_article::new_query_builder();
+        $qb->add_constraint('topic', '=', $data['node']->id);
+        $qb->add_order('title', 'DESC');
+        $releases = $qb->execute();
+        foreach ($releases as $release)
+        {
+            $release_array[$release->guid] = $release->title;
         }
-
-        if (!$this->_release) {        
-          debug_add("current release could not be loaded: " . mgd_errstr(), MIDCOM_LOG_INFO);
-          $this->errstr = "current release could not be loaded: " . mgd_errstr();
-          $this->errcode = MIDCOM_ERRNOTFOUND;
-          return false;          
-        }
-
-        // Load needed prefixes for relocations
-        $host = mgd_get_host($GLOBALS["midgard"]->host);
-        $host_prefix = $host->prefix."/";
-
-        switch ($argv[1]) {
-
-          case "web":
-            // Relocate to release's web page
-            $this->_relocate = $this->_release->name.".html";
-            break;
-
-          case "file":
-            // Relocate to first file in release
-            $files = $this->_release->listattachments();
-            if ($files) {
-              if ($files->fetch()) {
-                $this->_relocate = "midcom-serveattachmentguid-".$files->guid()."/".$files->name;   
-                $this->_relocate_prefix = $host_prefix;
-              }
-            }
-            break;
-
-          default:
-            // Relocate to first file in release
-            $files = $this->_release->listattachments();
-            if ($files) {
-              while ($files->fetch()) {
-                if ($files->name == $argv[1]) {
-                  $this->_relocate = $host_prefix."midcom-serveattachmentguid-".$files->guid()."/".$files->name;   
-                  $this->_relocate_prefix = $host_prefix;
-                }
-              }
-            }
-            break;
-  
-        }
-
-        if (!$this->_relocate) {
-          return false;
-        }
-      }
-
+        return $release_array;
     }
-    
-    if ($this->_release) {
-      
-      $this->_view = "release";
-      
-      if ($this->_release && ! $this->_layout->init($this->_release)) {
-        $this->errstr = "Could not initialize layout, see Debug Log";
-        $this->errcode = MIDCOM_ERRCRIT;
-        debug_add($this->errstr, MIDCOM_LOG_CRIT);
-        return false;
-      } 
-      
-      return true;
-
-    } else {
-
-      debug_add("Release could not be loaded", MIDCOM_LOG_DEBUG);
-      debug_pop();
-      return false;
-    }
-  }
-
-  function handle() {
-    global $_REQUEST;
-    
-    debug_push($this->_debug_prefix . "handle");
-
-    if (!$this->_relocate_prefix) {
-      $this->_relocate_prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-    }
-    if ($this->_relocate) {
-      debug_add("Relocating to ".$this->_relocate);
-      $GLOBALS["midcom"]->relocate($this->_relocate_prefix.$this->_relocate);
-    }
-
-    debug_pop();
-    return true;
-  }
-
-  function show() {
-
-    global $midcom;
-    global $view;
-  
-    debug_push($this->_debug_prefix . "show");
-    
-    if ($this->_view == "release") {
-    
-      $view = $this->_layout->get_array();
-      midcom_show_style("view-release-header");
-      midcom_show_style("view-release");
-      midcom_show_style("view-release-footer");
-
-    } elseif (!$this->_release) {
-      // Main topic view / release listing
-      $releases = mgd_list_topic_articles($this->_topic->id,"reverse created");
-      if ($releases) {
-        $view = $this->_topic;
-        midcom_show_style("view-index-header");
-      
-        while ($releases->fetch()) {
-          $release = mgd_get_article($releases->id);
-          $this->_layout->init($release);
-          $view = $this->_layout->get_array();
-          midcom_show_style("view-index-item");
-        }
-      
-        midcom_show_style("view-index-footer");
-      }
-      
-      
-    }
-    
-    debug_pop();
-    return true;
-  }
-
-
-  function get_metadata() {
-
-        // metadata for the current element
- /*
-        return array (
-            MIDCOM_META_CREATOR => ...,
-            MIDCOM_META_EDITOR => ...,
-            MIDCOM_META_CREATED => ...,
-            MIDCOM_META_EDITED => ...
-        );*/
-  }
-
-} // viewer
-
+}
 ?>

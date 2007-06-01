@@ -66,6 +66,18 @@ class midcom_midcom_services_at_entry_db extends __midcom_midcom_services_at_ent
     }
 
     /**
+     * Autopurge after delete
+     */
+    function _on_deleted()
+    {
+        if (!method_exists($this, 'purge'))
+        {
+            return;
+        }
+        $this->purge();
+    }
+
+    /**
      * Unserializes argumentsstore to arguments
      */
     function _unserialize_arguments()

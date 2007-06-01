@@ -4,7 +4,7 @@ global $view_topic;
 global $view_layouts;
 
 $pdomain = "net.nemein.discussion";
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
 
 <form method="post" action="&(prefix);config">

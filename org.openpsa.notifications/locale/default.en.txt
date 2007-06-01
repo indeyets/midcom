@@ -1,41 +1,37 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.en.txt,v 1.1 2006/05/24 16:01:00 rambo Exp $
+---CVS $Id$
 ---LANGUAGE en
+
+---STRING default
+Default
+---STRINGEND
+
+---STRING email
+Email
+---STRINGEND
 
 ---STRING inherit
 Inherited
+---STRINGEND
+
+---STRING nabaztag
+Nabaztag bunny
 ---STRINGEND
 
 ---STRING none
 No notification
 ---STRINGEND
 
----STRING org.openpsa.calendar
-Calendar
+---STRING notification preferences
+Notification preferences
 ---STRINGEND
 
----STRING org.openpsa.calendar:event_add
-Added event
----STRINGEND
-
----STRING org.openpsa.calendar:event_cancel
-Cancelled event
----STRINGEND
-
----STRING org.openpsa.calendar:event_remove
-Removed event
----STRINGEND
-
----STRING org.openpsa.calendar:event_update
-Updated event
+---STRING notification sent to %s
+Notification sent to %s
 ---STRINGEND
 
 ---STRING org.openpsa.notifications
 Notification management
----STRINGEND
-
----STRING email
-Email
 ---STRINGEND
 

@@ -26,11 +26,11 @@ class midcom_org_openpsa_campaign_member extends __midcom_org_openpsa_campaign_m
         {
             return null;
         }
-    }     
+    }
 
     /**
      * Checks for duplicate memberships returns true for NO duplicate memberships
-     */     
+     */
     function _check_duplicate_membership()
     {
         $qb = new MidgardQueryBuilder('org_openpsa_campaign_member');
@@ -63,12 +63,12 @@ class midcom_org_openpsa_campaign_member extends __midcom_org_openpsa_campaign_m
         }
         return true;
     }
-    
+
     function _on_creating()
     {
         return $this->_check_duplicate_membership();
     }
-    
+
     function _on_updating()
     {
         return $this->_check_duplicate_membership();
@@ -90,22 +90,43 @@ class midcom_org_openpsa_campaign_member extends __midcom_org_openpsa_campaign_m
             $person = new org_openpsa_contacts_person($this->person);
         }
         //TODO: All kinds of string substitutions, remember to check message type before mangling if only applies to certain types
-        //Unsubscribe URL
+        // Unsubscribe URL
         $content = str_replace('<UNSUBSCRIBE_URL>', $this->get_unsubscribe_url($node, $person), $content);
-        //Unsubscribe from all URL
+        // Unsubscribe from all URL
         $content = str_replace('<UNSUBSCRIBE_ALL_URL>', "{$node[MIDCOM_NAV_FULLURL]}campaign/unsubscribe_all/{$person->guid}.html", $content);
-        //General membership GUID
+        // General membership GUID
         $content = str_replace('<MEMBER_GUID>', $this->guid, $content);
-        //General person GUID
+        // General person GUID
         $content = str_replace('<PERSON_GUID>', $person->guid, $content);
-        //Firstname
+        // E-Mail
+        $content = str_replace('<EMAIL>', $person->email, $content);
+        // Firstname
         $content = str_replace('<FNAME>', $person->firstname, $content);
-        //Lastname
+        // Lastname
         $content = str_replace('<LNAME>', $person->lastname, $content);
-        
+        // Username
+        $content = str_replace('<UNAME>', $person->username, $content);
+        // Password (if plaintext)
+        if (preg_match('/^\*\*(.*)/', $person->password, $pwd_matches))
+        {
+            $plaintext_password = $pwd_matches[1];
+        }
+        else
+        {
+            if ($message_type == ORG_OPENPSA_MESSAGETYPE_EMAIL_HTML)
+            {
+                $plaintext_password = '&lt;unknown&gt;';
+            }
+            else
+            {
+                $plaintext_password = '<unknown>';
+            }
+        }
+        $content = str_replace('<PASSWD>', $plaintext_password, $content);
+
         return $content;
     }
-    
+
     function get_unsubscribe_url($node=false, $person=false)
     {
         if (!$node)
@@ -119,13 +140,13 @@ class midcom_org_openpsa_campaign_member extends __midcom_org_openpsa_campaign_m
         }
         return "{$node[MIDCOM_NAV_FULLURL]}campaign/unsubscribe/{$this->guid}.html";
     }
-    
+
     /**
      * Creates a message receipt of type.
      */
-    function create_receipt($message_id, $type, $token = '')
+    function create_receipt($message_id, $type, $token = '', $parameters = false)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);   
+        debug_push_class(__CLASS__, __FUNCTION__);
         $receipt = new org_openpsa_directmarketing_campaign_message_receipt();
         $receipt->orgOpenpsaObtype = $type;
         $receipt->person = $this->person;
@@ -139,12 +160,31 @@ class midcom_org_openpsa_campaign_member extends __midcom_org_openpsa_campaign_m
         if (!$stat)
         {
             debug_add('Failed to create, errstr: ' . mgd_errstr(), MIDCOM_LOG_ERROR);
+            debug_pop();
+            return $stat;
         }
-        debug_pop();
-        return $stat;
+        if (   is_array($parameters)
+            && !empty($parameters))
+        {
+            foreach ($parameters as $param_data)
+            {
+                if (   !isset($param_data['domain'])
+                    || empty($param_data['domain'])
+                    || !isset($param_data['name'])
+                    || empty($param_data['name'])
+                    || !isset($param_data['value'])
+                    || empty($param_data['value'])
+                    )
+                {
+                    // TODO: Log warning
+                    continue;
+                }
+                $receipt->set_parameter($param_data['domain'], $param_data['name'], $param_data['value']);
+            }
+        }
     }
-} 
- 
+}
+
 class org_openpsa_directmarketing_campaign_member extends midcom_org_openpsa_campaign_member
 {
     function org_openpsa_directmarketing_campaign_member($id = null)

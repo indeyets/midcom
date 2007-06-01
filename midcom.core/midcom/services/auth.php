@@ -492,7 +492,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         $this->sessionmgr = new midcom_services_auth_sessionmgr();
 
         $this->_register_core_privileges();
-
         $this->_initialize_user_from_midgard();
         $this->_prepare_authentication_drivers();
         if (! $this->_check_for_new_login_session())
@@ -717,6 +716,91 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      */
     function can_do($privilege, &$content_object, $user = null)
     {
+        if (   $privilege != 'midgard:read'
+            && $_MIDGARD['sitegroup'] != 0
+            && $content_object->sitegroup != $_MIDGARD['sitegroup'])
+        {
+            return false;
+        }    
+        return $this->can_do_byguid($privilege, $content_object->guid, get_class($content_object), $user);
+        /*
+        debug_push_class(__CLASS__, __FUNCTION__);
+        if (   is_null($user)
+            && ! is_null($this->user)
+            && $this->admin)
+        {
+            // Administrators always have access.
+            debug_pop();
+            return true;
+        }
+        
+        debug_add("Querying privilege {$privilege} to " . get_class($content_object) . " {$content_object->guid}", MIDCOM_LOG_DEBUG);
+        
+        if ($this->_internal_sudo)
+        {
+            debug_add('INTERNAL SUDO mode is enabled. Generic Read-Only mode set.', MIDCOM_LOG_DEBUG);
+            debug_pop();
+            return $this->_can_do_internal_sudo($privilege);
+        }
+
+        if ($this->_component_sudo)
+        {
+            debug_pop();
+            return true;
+        }
+
+        // Cache results of ACL checks per session
+        static $cached_privileges = array();
+
+        if (is_null($this->user))
+        {
+            $privilege_key = "{$content_object->guid}-{$privilege}";
+        }
+        else
+        {
+            $privilege_key = "{$this->user->id}-{$content_object->guid}-{$privilege}";
+        }
+        
+        if (!array_key_exists($privilege_key, $cached_privileges))
+        {
+            $full_privileges = $this->get_privileges($content_object, $user);
+    
+            if (! array_key_exists($privilege, $full_privileges))
+            {
+                debug_add("The privilege {$privilege} is unknown at this point. Assuming not granted privilege.", MIDCOM_LOG_WARN);
+                debug_pop();
+                return false;
+            }
+    
+            if ($full_privileges[$privilege] == MIDCOM_PRIVILEGE_ALLOW)
+            {
+                $cached_privileges[$privilege_key] = true;
+            }
+            else
+            {
+                $cached_privileges[$privilege_key] = false;
+            }
+        }
+        debug_pop();
+        return $cached_privileges[$privilege_key];
+        */
+    }
+
+    /**
+     * Checks wether a user has a certain privilege on the given (via guid and class) content object.
+     * Works on the currently authenticated user by default, but can take another
+     * user as an optional argument.
+     *
+     * @param string $privilege The privilege to check for
+     * @param string $object_guid A Midgard GUID pointing to an object
+     * @param string $object_class Class of the object in question
+     * @param midcom_core_user $user The user against which to check the privilege, defaults to the currently authenticated user.
+     *     You may specify "EVERYONE" instead of a object to check what an anonymous user can do.
+     * @return bool True if the privilege has been grante, false otherwise.
+     */
+    function can_do_byguid($privilege, $object_guid, $object_class, $user = null)
+    {
+        
         if (   is_null($user)
             && ! is_null($this->user)
             && $this->admin)
@@ -724,31 +808,86 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             // Administrators always have access.
             return true;
         }
-
+        debug_push_class(__CLASS__, __FUNCTION__);
+        if (is_null($user))
+        {
+            debug_add("Querying privilege {$privilege} to {$object_class} {$object_guid}", MIDCOM_LOG_DEBUG);
+        }
+        else
+        {
+            if (is_string($user))
+            {
+                debug_add("Querying privilege {$privilege} to {$object_class} {$object_guid} (for user {$user})", MIDCOM_LOG_DEBUG);
+            }
+            else
+            {
+                debug_add("Querying privilege {$privilege} to {$object_class} {$object_guid} (for user {$user->id})", MIDCOM_LOG_DEBUG);
+            }
+        }
+        
         if ($this->_internal_sudo)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('INTERNAL SUDO mode is enabled. Generic Read-Only mode set.');
+            debug_add('INTERNAL SUDO mode is enabled. Generic Read-Only mode set.', MIDCOM_LOG_DEBUG);
             debug_pop();
             return $this->_can_do_internal_sudo($privilege);
         }
 
         if ($this->_component_sudo)
         {
+            debug_pop();
             return true;
         }
 
-        $full_privileges = $this->get_privileges($content_object, $user);
-
-        if (! array_key_exists($privilege, $full_privileges))
+        // Cache results of ACL checks per session
+        static $cached_privileges = array();
+        if (!is_null($user))
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("The privilege {$privilege} is unknown at this point. Assuming not granted privilege.", MIDCOM_LOG_WARN);
-            debug_pop();
-            return false;
+            $for_user =& $user;
         }
-
-        return ($full_privileges[$privilege] == MIDCOM_PRIVILEGE_ALLOW);
+        else
+        {
+            $for_user =& $this->user;
+        }
+        if (is_null($for_user))
+        {
+            $privilege_key = "{$object_guid}-{$privilege}";
+        }
+        else
+        {
+            if (is_string($for_user))
+            {
+                $privilege_key = "{$for_user}-{$object_guid}-{$privilege}";
+            }
+            else
+            {
+                $privilege_key = "{$for_user->id}-{$object_guid}-{$privilege}";
+            }
+        }
+        debug_add("privilege_key={$privilege_key}");
+        if (!array_key_exists($privilege_key, $cached_privileges))
+        {
+            debug_add("Cache miss, fetching privileges for {$object_guid}");
+            debug_pop();
+            $full_privileges = $this->get_privileges_byguid($object_guid, $object_class, $user);
+    
+            if (! array_key_exists($privilege, $full_privileges))
+            {
+                debug_add("The privilege {$privilege} is unknown at this point. Assuming not granted privilege.", MIDCOM_LOG_WARN);
+                debug_pop();
+                return false;
+            }
+    
+            if ($full_privileges[$privilege] == MIDCOM_PRIVILEGE_ALLOW)
+            {
+                $cached_privileges[$privilege_key] = true;
+            }
+            else
+            {
+                $cached_privileges[$privilege_key] = false;
+            }
+        }
+        debug_pop();
+        return $cached_privileges[$privilege_key];
     }
 
     /**
@@ -784,15 +923,21 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             $user = null;
         }
 
+        if (!is_null($user))
+        {
+            debug_add("Querying privilege {$privilege} for user {$user->id} to class {$class}", MIDCOM_LOG_DEBUG);
+        }
+
         if ($this->_internal_sudo)
         {
-            debug_add('INTERNAL SUDO mode is enabled. Generic Read-Only mode set.');
+            debug_add('INTERNAL SUDO mode is enabled. Generic Read-Only mode set.', MIDCOM_LOG_DEBUG);
             debug_pop();
             return $this->_can_do_internal_sudo($privilege);
         }
 
         if ($this->_component_sudo)
         {
+            debug_pop();
             return true;
         }
 
@@ -885,6 +1030,8 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      */
     function get_privileges(&$content_object, $user = null)
     {
+        return $this->get_privileges_byguid($privilege, $content_object->guid, get_class($content_object), $user);
+        /*
         if (is_null($user))
         {
             $user =& $this->user;
@@ -930,7 +1077,8 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         else
         {
             if (   is_null($user)
-                || $user == 'EVERYONE')
+                || (    !is_object($user)
+                    && $user == 'EVERYONE'))
             {
                 $user_privileges = Array();
                 $user_per_class_privileges = Array();
@@ -961,7 +1109,136 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         }
 
         return $full_privileges;
+        */
     }
+
+    /**
+     * Returns a full listing of all currently known privileges for a certain object/user
+     * combination (object is speificied by guid/class combination)
+     *
+     * The information is cached per object-guid during runtime, so that repeated checks
+     * to the same object do not cause repeateing checks. Be aware that this means, that
+     * new privileges set are not guranteed to take effect until the next request.
+     *
+     * @param string $object_guid A Midgard GUID pointing to an object
+     * @param string $object_class Class of the object in question
+     * @param midcom_core_user $user The user against which to check the privilege, defaults to the currently authenticated user.
+     *     You may specify "EVERYONE" instead of a object to check what an anonymous user can do.
+     * @return Array Accociative listing of all privileges and their value.
+     */
+    function get_privileges_byguid($object_guid, $object_class, $user = null)
+    {
+        // TODO: Clean if/else shorthands, make sure this works corretcly for magick assignees as well
+        if (is_null($user))
+        {
+            $user =& $this->user;
+            if (empty($user))
+            {
+                $cache_user_id = null;
+            }
+            else
+            {
+                $cache_user_id = $user->id;
+            }
+        }
+
+        if (is_string($user))
+        {
+            if ($user != 'EVERYONE'
+                && (    mgd_is_guid($user)
+                    || is_numeric($user)))
+            {
+                $user =& $_MIDCOM->auth->get_user($user);
+                $cache_user_id = $user->id;
+            }
+            else
+            {
+                $cache_user_id = $user;
+                $user = null;
+            }
+        }
+        // safety
+        if (!isset($cache_user_id))
+        {
+            if (is_object($user))
+            {
+                $cache_user_id = $user->id;
+            }
+            else
+            {
+                $cache_user_id = $user;
+            }
+        }
+        if (!class_exists($object_class))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "class '{$object_class}' does not exist");
+            // This will exit()
+        }
+        $dummy_object_init = new $object_class();
+        if (! $_MIDCOM->dbclassloader->is_midcom_db_object($dummy_object_init))
+        {
+            $dummy_object = $_MIDCOM->dbfactory->convert_midgard_to_midcom($dummy_object_init);
+            if (is_null($dummy_object))
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add('Failed to convert an object, falling back to an empty privilege set for the object in question. See debug level log for details.');
+                debug_print_r('Content object was:', $dummy_object_init);
+                debug_pop();
+                return Array();
+            }
+        }
+        else
+        {
+            $dummy_object =& $dummy_object_init;
+        }
+
+        // Check for a cache Hit.
+        $cache_id = "{$cache_user_id}:{$object_guid}";
+        if (array_key_exists($cache_id, $this->_privileges_cache))
+        {
+            $full_privileges = $this->_privileges_cache[$cache_id];
+        }
+        else
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("cache miss for {$cache_id}");
+            debug_pop();
+            if (   is_object($user)
+                && method_exists($user, 'get_privileges')
+                && method_exists($user, 'get_per_class_privileges'))
+            {
+                $user_privileges = $user->get_privileges();
+                $user_per_class_privileges = $user->get_per_class_privileges($dummy_object);
+            }
+            else
+            {
+                $user_privileges = Array();
+                $user_per_class_privileges = Array();
+            }
+            $this->_load_class_magic_privileges($dummy_object);
+            $dummy_object->guid = $object_guid;
+
+            // Remember to sync this merging chain with can_user_do.
+            $full_privileges = array_merge
+            (
+                $this->_default_privileges,
+                $this->_default_magic_class_privileges[$dummy_object->__new_class_name__]['EVERYONE'],
+                (
+                    (is_null($this->user))
+                        ? $this->_default_magic_class_privileges[$dummy_object->__new_class_name__]['ANONYMOUS']
+                        : $this->_default_magic_class_privileges[$dummy_object->__new_class_name__]['USERS']
+                ),
+                $user_privileges,
+                $user_per_class_privileges,
+                midcom_core_privilege::collect_content_privileges($dummy_object)
+            );
+
+            $this->_privileges_cache[$cache_id] = $full_privileges;
+        }
+
+        return $full_privileges;
+    }
+
 
     /**
      * Request superuser privileges for the domain passed.
@@ -1034,6 +1311,8 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * Check, wether a user is member of a given group. By default, the query is run
      * against the currently authenticated user.
      *
+     * It always returns TRUE for admistrative users.
+     *
      * @param mixed $group Group to check against, this can be either a midcom_core_group object or a group string identifier.
      * @param midcom_core_user The user which should be checked, defaults to the current user.
      * @return bool Indicating membership state.
@@ -1049,6 +1328,12 @@ class midcom_services_auth extends midcom_baseclasses_core_object
                 return false;
             }
             $user =& $this->user;
+        }
+        
+        if ($this->admin)
+        {
+            // Administrators always have access.
+            return true;
         }
 
         return $user->is_in_group($group);
@@ -1189,13 +1474,66 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * show_login_page() for details..
      *
      * If the check is successful, the function returns silently.
+     *
+     * @param string $method Preferred authentication method: form or basic
      */
-    function require_valid_user()
+    function require_valid_user($method = 'form')
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("require_valid_user called", MIDCOM_LOG_DEBUG);
+        debug_print_function_stack("require_valid_user called at this level");
+        debug_pop();        
         if (! $this->is_valid_user())
         {
-            $this->show_login_page();
-            // This will exit.
+            switch ($method)
+            {
+                case 'basic':
+                    $this->_http_basic_auth();
+                    break;
+            
+                case 'form':
+                default:
+                    $this->show_login_page();
+                    // This will exit.
+            }
+        }
+    }
+    
+    /**
+     * Handles HTTP Basic authentication
+     */
+    function _http_basic_auth()
+    {
+        // TODO: convert to MidCOM DBA API
+        if ($_MIDGARD['sitegroup'])
+        {
+            $sitegroup = mgd_get_sitegroup($_MIDGARD['sitegroup']);
+        }
+        else
+        {
+            $sitegroup = mgd_get_sitegroup();
+            $sitegroup->name = 'SG0';
+        }
+
+        if (!isset($_SERVER['PHP_AUTH_USER']))
+        {
+            header("WWW-Authenticate: Basic realm=\"{$sitegroup->name}\"");
+            header('HTTP/1.0 401 Unauthorized');
+            // TODO: more fancy 401 output ?
+            echo "<h1>Authorization required</h1>\n";
+            $_MIDCOM->finish();
+            exit();
+        }
+        else
+        {
+            if (!$this->sessionmgr->_do_midgard_auth($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']))
+            {
+                // Wrong password: Recurse untill auth ok or user gives up
+                unset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+                $this->_http_basic_auth();
+            }
+            // Figure out how to update midcom auth status
+            $_MIDCOM->auth->_initialize_user_from_midgard();
         }
     }
 
@@ -1339,10 +1677,15 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * @return midcom_core_group A reference to the group object matching the group name,
      *     or false if the group name is unknown.
      */
-    function & get_midgard_group_by_name($name)
+    function & get_midgard_group_by_name($name,$sg_id=null)
     {
+		//$sg_id = $sg_id == null || !is_integer($sg_id) ? $_MIDGARD['sitegroup'] : $sg_id;
         $qb = new MidgardQueryBuilder('midgard_group');
         $qb->add_constraint('name', '=', $name);
+		if (is_integer($sg_id))
+		{
+			$qb->add_constraint('sitegroup', '=', $sg_id);
+		}
         $result = @$qb->execute();
         if (   ! $result
             || count($result) == 0)
@@ -1576,6 +1919,10 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             debug_pop();
             return false;
         }
+        if (method_exists($virtual_group->_storage, 'purge'))
+        {
+            $virtual_group->_storage->purge();
+        }
 
         if (array_key_exists($virtual_group->id, $this->_group_cache))
         {
@@ -1703,6 +2050,27 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         $_SESSION = Array();
         session_destroy();
     }
+    
+    function _generate_http_response()
+    {
+        if (headers_sent())
+        {
+            // We have sent output to browser already, skip setting headers
+            return false;
+        }
+        
+        switch ($GLOBALS['midcom_config']['auth_login_form_httpcode'])
+        {
+            case 200:
+                header('HTTP/1.0 200 OK');
+                break;
+                
+            case 403:
+            default:
+                header('HTTP/1.0 403 Forbidden');
+                break;
+        }
+    }
 
     /**
      * This is called by $_MIDCOM->generate_error(MIDCOM_ERRFORBIDDEN, ...) if and only if
@@ -1773,61 +2141,71 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             // Empty Loop
         ;
         $_MIDCOM->cache->content->_obrunning = false;
+        
+        $this->_generate_http_response();
 
-        header('HTTP/1.0 403 Forbidden');
         $_MIDCOM->cache->content->no_cache();
 
-        if ($login_warning != '')
-        {
-            $login_warning = "<p id='login_warning'>{$login_warning}</p>";
-        }
-
-        if (mgd_is_element_loaded('midcom_services_auth_access_denied'))
+        if (   function_exists('mgd_is_element_loaded')
+            && mgd_is_element_loaded('midcom_services_auth_access_denied'))
         {
             mgd_show_element('midcom_services_auth_access_denied');
         }
         else
         {
+            $_MIDCOM->add_link_head
+            (
+                array
+                (
+                    'rel' => 'stylesheet',
+                    'type' => 'text/css',
+                    'href' => MIDCOM_STATIC_URL.'/midcom.services.auth/style.css',
+                )
+            );
+        
             echo '<?'.'xml version="1.0" encoding="ISO-8859-1"?'.">\n";
             ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<title><?php echo $title; ?></title>
-<style type="text/css">
-    body { color: #000000; background-color: #FFFFFF; }
-    a:link { color: #0000CC; }
-    address { font-size: smaller; }
+    <head>
+        <title><?php echo $title; ?></title>
+        <?php echo $_MIDCOM->print_head_elements(); ?>
+    </head>
 
-    #login_warning { color: red; }
+    <body onLoad="self.focus();document.midcom_services_auth_frontend_form.username.focus();">
+		<div id="container">
+			<div id="branding">
+				<div id="title"><h1>Midgard CMS</h1><h2><?php echo $title; ?></h2></div>
+				<div id="grouplogo"><a href="http://www.midgard-project.org/"><img src="<?php echo MIDCOM_STATIC_URL; ?>/midcom.services.auth/images/midgard-project.gif" width="104" height="104" /></a></div>
+			</div>
+			<div class="clear"></div>
+			<div id="content">
+                <div id="login">
+                    <?php 
+                    $_MIDCOM->auth->show_login_form(); 
+                    ?>
+                    <div class="clear"></div>
+                </div>
 
-    form label { margin-left: none; padding-left: none; display: block; }
-    form label input { margin: 0.5ex 0 0 0; display: block; }
-</form>
-</style>
-</head>
-
-<body>
-<h1><?php echo $title; ?></h1>
-
-<p><?php echo $message; ?></p>
-
-<h2><?php echo $_MIDCOM->i18n->get_string('login', 'midcom');?>:</h2>
-
-<?php echo $login_warning; ?>
-
-<?php $_MIDCOM->auth->show_login_form(); ?>
-
-<p><strong>Error 403</strong></p>
-<address>
-  <a href="/"><?php echo $_SERVER["SERVER_NAME"]; ?></a><br />
-  <?php echo date("r"); ?><br />
-  <?php echo $_SERVER["SERVER_SOFTWARE"]; ?>
-</address>
-</body>
+                <div id="error"><?php echo "<div>{$login_warning}</div><div>{$message}</div>"; ?></div>
+            </div>
+            
+            <div id="bottom">
+                <div id="version">version <?php echo mgd_version(); ?></div>
+            </div>
+    
+            <div id="footer">
+                <div class="midgard">
+                    Copyright &copy; 1998-2006 <a href="http://www.midgard-project.org/">The Midgard Project</a>. Midgard is <a href="http://en.wikipedia.org/wiki/Free_software">free software</a> available under <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.
+                </div>
+                <div class="server">
+                    <?php echo "{$_SERVER['SERVER_NAME']}: {$_SERVER['SERVER_SOFTWARE']}"; ?>
+                </div>
+            </div>
+    </body>
 </html>
-<?php
+            <?php
         }
         $_MIDCOM->finish();
         debug_add("Error Page output finished, exitting now", MIDCOM_LOG_DEBUG);
@@ -1876,7 +2254,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             // Empty Loop
         ;
 
-        header('HTTP/1.0 403 Forbidden');
+        $this->_generate_http_response();
 
         $_MIDCOM->cache->content->_obrunning = false;
         $_MIDCOM->cache->content->no_cache();
@@ -1890,54 +2268,89 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         {
             $login_warning = $_MIDCOM->i18n->get_string('login message - user or password wrong', 'midcom');
         }
-        if ($login_warning != '')
-        {
-            $login_warning = "<p id='login_warning'>{$login_warning}</p>";
-        }
 
-        if (mgd_is_element_loaded('midcom_services_auth_login_page'))
+        if (   function_exists('mgd_is_element_loaded')
+            && mgd_is_element_loaded('midcom_services_auth_login_page'))
         {
             mgd_show_element('midcom_services_auth_login_page');
         }
         else
         {
+            $_MIDCOM->add_link_head
+            (
+                array
+                (
+                    'rel' => 'stylesheet',
+                    'type' => 'text/css',
+                    'href' => MIDCOM_STATIC_URL.'/midcom.services.auth/style.css',
+                )
+            );
+            $accounts_node = midcom_helper_find_node_by_component('net.nehmer.account');
+            if (!empty($accounts_node))
+            {
+                $passwd_url = $accounts_node[MIDCOM_NAV_FULLURL] . 'lostpassword.html';
+            }
+            else
+            {
+                $passwd_url = false;
+            }
+
+            echo '<?'.'xml version="1.0" encoding="ISO-8859-1"?'.">\n";
             ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<title><?php echo $title; ?></title>
-<style type="text/css">
-    body { color: #000000; background-color: #FFFFFF; }
-    address { font-size: smaller; }
-    a:link { color: #0000CC; }
+    <head>
+        <title><?php echo $title; ?></title>
+        <?php echo $_MIDCOM->print_head_elements(); ?>
+    </head>
 
-    #login_warning { color: red; }
-    p.login_message { }
-
-    form label { margin-left: none; padding-left: none; display: block; }
-    form label input { margin: 0.5ex 0 0 0; display: block; }
-</form>
-</style>
-</head>
-
-<body>
-<h1><?php echo $title; ?></h1>
-
-<p class='login_message'><?php echo $_MIDCOM->i18n->get_string('login message - please enter credencials', 'midcom');?></p>
-
-<?php echo $login_warning; ?>
-
-<?php $_MIDCOM->auth->show_login_form(); ?>
-
-<address>
-  <a href="/"><?php echo $_SERVER["SERVER_NAME"]; ?></a><br />
-  <?php echo date("r"); ?><br />
-  <?php echo $_SERVER["SERVER_SOFTWARE"]; ?>
-</address>
-</body>
+    <body onLoad="self.focus();document.midcom_services_auth_frontend_form.username.focus();">
+		<div id="container">
+			<div id="branding">
+				<div id="title"><h1>Midgard CMS</h1><h2><?php echo $title; ?></h2></div>
+				<div id="grouplogo"><a href="http://www.midgard-project.org/"><img src="<?php echo MIDCOM_STATIC_URL; ?>/midcom.services.auth/images/midgard-project.gif" width="104" height="104" /></a></div>
+			</div>
+			<div class="clear"></div>
+			<div id="content">
+                <div id="login">
+                    <?php 
+                    $_MIDCOM->auth->show_login_form(); 
+                    ?>
+                    <div class="clear"></div>
+                </div>
+                <?php
+                if ($login_warning == '')
+                {
+                    echo "<div id=\"ok\">" . $_MIDCOM->i18n->get_string('login message - please enter credencials', 'midcom') . "</div>\n";
+                }
+                else
+                {
+                    echo "<div id=\"error\">{$login_warning}</div>\n";
+                }
+                // PONDER: Only display if we have login warning ??
+                if (!empty($passwd_url))
+                {
+                    echo "                <div class=\"notice\"><a href=\"{$passwd_url}\">" . $_MIDCOM->i18n->get_string('lost password ?') . "</a></div>\n";
+                }
+                ?>
+            </div>
+            
+            <div id="bottom">
+                <div id="version">version <?php echo mgd_version(); ?></div>
+            </div>
+    
+            <div id="footer">
+                <div class="midgard">
+                    Copyright &copy; 1998-2006 <a href="http://www.midgard-project.org/">The Midgard Project</a>. Midgard is <a href="http://en.wikipedia.org/wiki/Free_software">free software</a> available under <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.
+                </div>
+                <div class="server">
+                    <?php echo "{$_SERVER['SERVER_NAME']}: {$_SERVER['SERVER_SOFTWARE']}"; ?>
+                </div>
+            </div>
+    </body>
 </html>
-<?php
+            <?php
         }
         $_MIDCOM->finish();
         exit();

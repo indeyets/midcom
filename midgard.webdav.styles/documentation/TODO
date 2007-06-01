@@ -1,0 +1,10 @@
+-get authentication to acutally authenticate
+-fix index handler
+-make /midcoms/componentname display the default style elements
+-support for renaming files
+-escape forward slash in Style names
+
+Long term: 
+-it would be nice if the component could display inherited style elements somehow
+-it would even be nicer if it worked with snippets and page elements as well 
+(maybe even articles?)

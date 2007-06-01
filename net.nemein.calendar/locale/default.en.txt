@@ -3,6 +3,14 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING archive
+Archive
+---STRINGEND
+
+---STRING back to archive.
+Back to the archive.
+---STRINGEND
+
 ---STRING create event
 Create event
 ---STRINGEND
@@ -37,6 +45,10 @@ End date
 
 ---STRING event
 Event
+---STRINGEND
+
+---STRING first event started on %s.
+The first event started on %s.
 ---STRINGEND
 
 ---STRING from date
@@ -91,6 +103,10 @@ Event Calendar
 No participants
 ---STRINGEND
 
+---STRING numbers in parantheses show ongoing events.
+The numbers in the parantheses show ongoing events.
+---STRINGEND
+
 ---STRING participants
 Participants
 ---STRINGEND
@@ -143,6 +159,10 @@ Subscribed event - Click to unsubscribe
 Available for syndication
 ---STRINGEND
 
+---STRING there is a total of %d events.
+A total of %d events have been found.
+---STRINGEND
+
 ---STRING title
 Title
 ---STRINGEND
@@ -167,22 +187,7 @@ Until date
 Weekly
 ---STRINGEND
 
----STRING there is a total of %d events.
-A total of %d events have been found.
+---STRING week %1$s of year %2$s
+Week %1$s of year %2$s
 ---STRINGEND
 
----STRING first event started on %s.
-The first event started on %s.
----STRINGEND
-
----STRING numbers in parantheses show ongoing events.
-The numbers in the parantheses show ongoing events.
----STRINGEND
-
----STRING archive
-Archive
----STRINGEND
-
----STRING back to archive.
-Back to the archive.
----STRINGEND

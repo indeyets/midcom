@@ -71,3 +71,6 @@ Permissions
 Folder permissions
 ---STRINGEND
 
+---STRING privilege reserve
+Reserve
+---STRINGEND

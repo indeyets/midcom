@@ -32,22 +32,22 @@ function ooDisplayMessage(messageText, messageClass)
         //Could not find the messagearea
         return false;
     }
-    
+
     //Make sure we have some class for messages
     if(!messageClass)
     {
         messageClass='normal';
     }
-    
+
     //Make display area invisible (force reflow), should not be neccessary
     //areaDiv.style.display = 'none';
-    
+
     //Create and append a child node to messagearea.
     areaDiv.appendChild(ooCreateElement('div',
-                                        {'class': messageClass}, 
-                                        {'display': 'block'}, 
+                                        {'class': messageClass},
+                                        {'display': 'block'},
                                         messageText));
-                                        
+
     //Make sure display area  is visible (again)...
     areaDiv.style.display = 'block';
 }

@@ -37,7 +37,7 @@ class org_openpsa_invoices_interface extends midcom_baseclasses_components_inter
             'org.openpsa.relatedto',
         );
     }
-    
+
     function _on_initialize()
     {
 

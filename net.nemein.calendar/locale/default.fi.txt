@@ -123,6 +123,10 @@ Merkkaa %s toistuvaksi
 Näytä
 ---STRINGEND
 
+---STRING show events locally
+Näytä kaikki tapahtumat paikallisesti
+---STRINGEND
+
 ---STRING start
 Alkamisaika
 ---STRINGEND
@@ -159,7 +163,31 @@ Päivämäärään asti
 Viikottain
 ---STRINGEND
 
----STRING show events locally
-Näytä kaikki tapahtumat paikallisesti
+---STRING week %1$s of year %2$s
+Viikko %1$s vuonna %2$s
+---STRINGEND
+
+---STRING archive
+Arkisto
+---STRINGEND
+
+---STRING back to archive.
+Takaisin arkistoon.
+---STRINGEND
+
+---STRING first event started on %s.
+Ensimmäinen tapahtuma oli %s.
+---STRINGEND
+
+---STRING net.nemein.calendar
+Tapahtumakalenteri
+---STRINGEND
+
+---STRING numbers in parantheses show ongoing events.
+Numerot sulkeissa näyttävät tällä hetkellä käynnissä olevia tapahtumia.
+---STRINGEND
+
+---STRING there is a total of %d events.
+Yhteensä %d tapahtumaa.
 ---STRINGEND
 

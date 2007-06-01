@@ -55,6 +55,7 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
                 MIDCOM_TOOLBAR_URL => "edit/{$this->_article->guid}.html",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                MIDCOM_TOOLBAR_ACCESSKEY => 'e',
             ));
         }
 
@@ -64,6 +65,7 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
                 MIDCOM_TOOLBAR_URL => "delete/{$this->_article->guid}.html",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                MIDCOM_TOOLBAR_ACCESSKEY => 'd',
             ));
         }
     }
@@ -86,17 +88,11 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
     }
 
     /**
-     * Looks up an article to display. If the handler_id is 'index', the index article is tried to be
-     * looked up, otherwise the article name is taken from args[0]. Triggered error messages are
-     * generated accordingly. A missing index will trigger a forbidden error, a missing regular
-     * article a 404 (from can_handle).
-     *
-     * Note, that the article for non-index mode operation is automatically determined in the can_handle
-     * phase.
-     *
-     * If create privileges apply, we relocate to the index creation article,
+     * Can-Handle check against the article name. We have to do this explicitly
+     * in can_handle already, otherwise we would hide all subtopics as the request switch
+     * accepts all argument count matches unconditionally.
      */
-    function _handler_view ($handler_id, $args, &$data)
+    function _can_handle_view ($handler_id, $args, &$data)
     {
         debug_add('mgd_version: ' . mgd_version());
         if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
@@ -111,49 +107,57 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
                 $qb->add_constraint('guid', '=', $args[0]);
             $qb->end_group();
             $articles = $qb->execute();
-            if (count($articles) == 0)
+            if (count($articles) > 0)
             {
-                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND,
-                    "The article '{$args[0]}' has not been found in the content topic.");
-                // This will exit.
+                $this->_article = $articles[0];
             }
-            $this->_article = $articles[0];
         }
         else
         {
             debug_add('1.7.x detected, doing separate checks');
             // 1.7 requires that we check for guid and name separately
-            if (mgd_is_guid($args[0]))
+            debug_add('Trying to fetch with name');
+            $qb = midcom_db_article::new_query_builder();
+            $qb->add_constraint('topic', '=', $this->_content_topic->id);
+            $qb->add_constraint('up', '=', 0);
+            $qb->add_constraint('name', '=', $args[0]);
+            $articles = $qb->execute();
+            if (count($articles) > 0)
+            {
+                $this->_article = $articles[0];
+            }
+            elseif (mgd_is_guid($args[0]))
             {
                 debug_add('mgd_is_guid returned true, trying to fetch with guid');
                 $article = new midcom_db_article($args[0]);
-                if (   !is_object($article)
-                    || !is_a($article, 'midcom_db_article')
-                    || $article->up != 0
-                    || $article->topic != $this->_content_topic->id)
+                if (   is_object($article)
+                    && is_a($article, 'midcom_db_article')
+                    && $article->up == 0
+                    && $article->topic == $this->_content_topic->id)
                 {
-                    $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND,
-                        "The article '{$args[0]}' has not been found in the content topic.");
-                    // This will exit.
+                    $this->_article = $article;
                 }
-                $this->_article = $article;
             }
-            else
-            {
-                debug_add('mgd_is_guid returned false, trying to fetch with name');
-                $qb = midcom_db_article::new_query_builder();
-                $qb->add_constraint('topic', '=', $this->_content_topic->id);
-                $qb->add_constraint('up', '=', 0);
-                $qb->add_constraint('name', '=', $args[0]);
-                $articles = $qb->execute();
-                if (count($articles) == 0)
-                {
-                    $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND,
-                        "The article '{$args[0]}' has not been found in the content topic.");
-                    // This will exit.
-                }
-                $this->_article = $articles[0];
-            }
+        }
+        
+        if (!$this->_article)
+        {
+            return false;
+            // This will 404
+        }
+        
+        return true;
+    }
+
+    /**
+     * Handle actual article display
+     */
+    function _handler_view ($handler_id, $args, &$data)
+    {
+        if (!$this->_article)
+        {
+            return false;
+            // This will 404
         }
 
         $this->_load_datamanager();
@@ -168,9 +172,18 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
 
         $tmp = Array();
         $arg = $this->_article->name ? $this->_article->name : $this->_article->guid;
+        if ($this->_config->get('view_in_url'))
+        {
+            $view_url = "view/{$arg}.html";
+        }
+        else
+        {
+            $view_url = "{$arg}.html";
+        }        
+        
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "view/{$arg}.html",
+            MIDCOM_NAV_URL => $view_url,
             MIDCOM_NAV_NAME => $this->_article->title,
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
@@ -178,7 +191,7 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
         $this->_prepare_request_data();
 
         $_MIDCOM->bind_view_to_object($this->_article, $this->_datamanager->schema->name);
-        $_MIDCOM->set_26_request_metadata($this->_article->revised, $this->_article->guid);
+        $_MIDCOM->set_26_request_metadata($this->_article->metadata->revised, $this->_article->guid);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_article->title}");
 
         return true;

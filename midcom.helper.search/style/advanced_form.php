@@ -1,6 +1,6 @@
 <?php
-$data =& $_MIDCOM->get_custom_context_data('request_data');
-$prefix = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
 // Map, stimestamps => text
 // default is 1, 3, 6 and a year
@@ -21,7 +21,7 @@ function midcom_helper_search_process_node ($node_id, &$nap, &$topics, &$compone
     if (   ! array_key_exists($node[MIDCOM_NAV_COMPONENT], $components)
         && $node[MIDCOM_NAV_COMPONENT] != 'midcom.helper.search')
     {
-        $i18n =& $GLOBALS['midcom']->get_service('i18n');
+        $i18n =& $_MIDCOM->get_service('i18n');
         $l10n =& $i18n->get_l10n($node[MIDCOM_NAV_COMPONENT]);
         $components[$node[MIDCOM_NAV_COMPONENT]] = $l10n->get($node[MIDCOM_NAV_COMPONENT]);
     }

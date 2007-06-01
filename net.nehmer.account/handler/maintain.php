@@ -93,6 +93,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
     {
         $_MIDCOM->auth->require_valid_user();
         $this->_account = $_MIDCOM->auth->user->get_storage();
+        net_nehmer_account_viewer::verify_person_privileges($this->_account);
         $_MIDCOM->auth->require_do('midgard:update', $this->_account);
         $_MIDCOM->auth->require_do('midgard:parameters', $this->_account);
 
@@ -101,9 +102,18 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
         $this->_process_pwchange_form();
         $this->_prepare_request_data();
 
-        $_MIDCOM->substyle_append($this->_datamanager->schema->name);
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
-        $this->_component_data['active_leaf'] = NET_NEHMER_ACCOUNT_LEAFID_PASSWORD;
+        
+        $tmp[] = array
+        (
+            MIDCOM_NAV_URL => 'password/',
+            MIDCOM_NAV_NAME => $this->_l10n->get('change password'),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        $this->_view_toolbar->hide_item('password/');
+                
+        $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name);        
+        
         $_MIDCOM->set_pagetitle($this->_l10n->get('change password'));
 
         return true;
@@ -251,6 +261,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
     {
         $_MIDCOM->auth->require_valid_user();
         $this->_account = $_MIDCOM->auth->user->get_storage();
+        net_nehmer_account_viewer::verify_person_privileges($this->_account);
         $_MIDCOM->auth->require_do('midgard:update', $this->_account);
         $_MIDCOM->auth->require_do('midgard:parameters', $this->_account);
 
@@ -259,9 +270,18 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
         $this->_process_usernamechange_form();
         $this->_prepare_request_data();
 
-        $_MIDCOM->substyle_append($this->_datamanager->schema->name);
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
-        $this->_component_data['active_leaf'] = NET_NEHMER_ACCOUNT_LEAFID_USERNAME;
+
+        $tmp[] = array
+        (
+            MIDCOM_NAV_URL => 'username/',
+            MIDCOM_NAV_NAME => $this->_l10n->get('change username'),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        $this->_view_toolbar->hide_item('username/');
+                
+        $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name); 
+
         $_MIDCOM->set_pagetitle($this->_l10n->get('change username'));
 
         return true;
@@ -384,7 +404,10 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
         $this->_process_lostpassword_form();
         $this->_prepare_request_data();
 
-        $_MIDCOM->substyle_append($this->_datamanager->schema->name);
+        if ($this->_datamanager)
+        {
+            $_MIDCOM->substyle_append($this->_datamanager->schema->name);
+        }
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
         $this->_component_data['active_leaf'] = NET_NEHMER_ACCOUNT_LEAFID_LOSTPASSWORD;
         $_MIDCOM->set_pagetitle($this->_l10n->get('lost password'));
@@ -415,13 +438,17 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
             'verify_existing_user_name',
             'net_nehmer_account_callbacks_validation'
         );
-        $this->_controller->formmanager->form->addRule
-        (
-            'username',
-             $this->_l10n->get('the username is unknown.'),
-            'verify_existing_user_name',
-            $this->_account->username
-        );
+        
+        if ($this->_account)
+        {
+            $this->_controller->formmanager->form->addRule
+            (
+                'username',
+                 $this->_l10n->get('the username is unknown.'),
+                'verify_existing_user_name',
+                $this->_account->username
+            );
+        }
     }
 
     /**
@@ -555,6 +582,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
     {
         $_MIDCOM->auth->require_valid_user();
         $this->_account = $_MIDCOM->auth->user->get_storage();
+        net_nehmer_account_viewer::verify_person_privileges($this->_account);
         $_MIDCOM->auth->require_do('midgard:update', $this->_account);
         $_MIDCOM->auth->require_do('midgard:parameters', $this->_account);
 
@@ -569,9 +597,18 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
 
         $this->_prepare_request_data();
 
-        $_MIDCOM->substyle_append($this->_datamanager->schema->name);
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
-        $this->_component_data['active_leaf'] = NET_NEHMER_ACCOUNT_LEAFID_CANCELMEMBERSHIP;
+
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => 'cancel_membership/',
+            MIDCOM_NAV_NAME => $this->_l10n->get('cancel membership'),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        $this->_view_toolbar->hide_item('cancel_membership/');
+                
+        $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name);
+
         $_MIDCOM->set_pagetitle($this->_l10n->get('cancel membership'));
 
         return true;

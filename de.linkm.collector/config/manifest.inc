@@ -1,5 +1,0 @@
-'name' => 'de.linkm.collector',
-'purecode' => false,
-'version' => 0,
-'privileges' =>  Array(),
-'class_definitions' => Array(),

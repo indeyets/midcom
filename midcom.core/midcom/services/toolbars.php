@@ -204,6 +204,15 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 $GLOBALS['midcom_config']['toolbars_view_style_class'],
                 $GLOBALS['midcom_config']['toolbars_view_style_id']
             );
+            
+        $this->_toolbars[$context_id][MIDCOM_TOOLBAR_HOST] =
+            new midcom_helper_toolbar
+            (
+                $GLOBALS['midcom_config']['toolbars_host_style_class'],
+                $GLOBALS['midcom_config']['toolbars_host_style_id']
+            );
+        $this->add_topic_management_commands($this->_toolbars[$context_id][MIDCOM_TOOLBAR_NODE], $context_id);
+        $this->add_host_management_commands($this->_toolbars[$context_id][MIDCOM_TOOLBAR_HOST], $context_id);
     }
 
     /**
@@ -240,6 +249,11 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         {
             $topic = $_MIDCOM->get_context_data($context_id, MIDCOM_CONTEXT_CONTENTTOPIC);
         }
+        
+        if (!$topic)
+        {
+            return false;
+        }
 
         if (! is_a($topic, 'midcom_baseclasses_database_topic'))
         {
@@ -247,22 +261,51 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             $topic = new midcom_db_topic($topic->id);
         }
 
-        if ($topic->can_do('midgard:update'))
+        if (   $topic->can_do('midgard:update')
+            && $topic->can_do('midcom.admin.folder:topic_management'))
         {
-            $toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "__ais/topic/edit.html",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit topic', 'midcom.admin.content'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
-                MIDCOM_TOOLBAR_ACCESSKEY => 'e',
-            ));
+            $toolbar->add_item(
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__ais/folder/edit.html",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit folder', 'midcom.admin.folder'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'g',
+                )
+            );
 
             // TEMPORARY CODE: This links the old DM1 Metadata editor into the site.
-            $toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "__ais/topic/metadata/{$topic->guid}.html",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit metadata', 'midcom.admin.content'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
-            ));
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__ais/folder/metadata/{$topic->guid}.html",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit folder metadata', 'midcom.admin.folder'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+                )
+            );
             // TEMPORARY CODE END
+
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__ais/folder/move/{$topic->guid}.html",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('move', 'midcom.admin.folder'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/topic-score.png',
+                )
+            );
+            
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__ais/folder/order.html",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('order navigation', 'midcom.admin.folder'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/topic-score.png',
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'o',
+                )
+            );
         }
 
         // TEMPORARY CODE: This links the old midcom approval helpers into the site
@@ -274,54 +317,106 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             $metadata =& midcom_helper_metadata::retrieve($topic);
             if ($metadata->is_approved())
             {
-                $toolbar->add_item(Array(
-                    MIDCOM_TOOLBAR_URL => "__ais/topic/unapprove.html",
-                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('unapprove topic', 'midcom'),
-                    MIDCOM_TOOLBAR_HELPTEXT => $_MIDCOM->i18n->get_string('approved', 'midcom'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/approved.png',
-                    MIDCOM_TOOLBAR_POST => true,
-                    MIDCOM_TOOLBAR_POST_HIDDENARGS => Array
+                $toolbar->add_item
+                (
+                    array
                     (
-                        'guid' => $topic->guid,
-                        'return_to' => $_SERVER['REQUEST_URI'],
-                    ),
-                ));
+                        MIDCOM_TOOLBAR_URL => "__ais/folder/unapprove.html",
+                        MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('unapprove topic', 'midcom'),
+                        MIDCOM_TOOLBAR_HELPTEXT => $_MIDCOM->i18n->get_string('approved', 'midcom'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/approved.png',
+                        MIDCOM_TOOLBAR_POST => true,
+                        MIDCOM_TOOLBAR_POST_HIDDENARGS => Array
+                        (
+                            'guid' => $topic->guid,
+                            'return_to' => $_SERVER['REQUEST_URI'],
+                        ),
+                    )
+                );
             }
             else
             {
-                $toolbar->add_item(Array(
-                    MIDCOM_TOOLBAR_URL => "__ais/topic/approve.html",
-                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('approve topic', 'midcom'),
-                    MIDCOM_TOOLBAR_HELPTEXT => $_MIDCOM->i18n->get_string('unapproved', 'midcom'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/not_approved.png',
-                    MIDCOM_TOOLBAR_POST => true,
-                    MIDCOM_TOOLBAR_POST_HIDDENARGS => Array
+                $toolbar->add_item
+                (
+                    array
                     (
-                        'guid' => $topic->guid,
-                        'return_to' => $_SERVER['REQUEST_URI'],
-                    ),
-                ));
+                        MIDCOM_TOOLBAR_URL => "__ais/folder/approve.html",
+                        MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('approve topic', 'midcom'),
+                        MIDCOM_TOOLBAR_HELPTEXT => $_MIDCOM->i18n->get_string('unapproved', 'midcom'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/not_approved.png',
+                        MIDCOM_TOOLBAR_POST => true,
+                        MIDCOM_TOOLBAR_POST_HIDDENARGS => Array
+                        (
+                            'guid' => $topic->guid,
+                            'return_to' => $_SERVER['REQUEST_URI'],
+                        ),
+                    )
+                );
             }
         }
-        // TEMPORARY METADATA CODE END
-        if ($topic->can_do('midgard:create'))
+        
+        if (   array_key_exists('midcom.helper.replicator', $_MIDCOM->componentloader->manifests)
+            && $_MIDGARD['admin'] == true)
         {
-            $toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "__ais/topic/create.html",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create subtopic', 'midcom.admin.content'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-dir.png',
-                MIDCOM_TOOLBAR_ACCESSKEY => 'c',
-            ));
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__mfa/replication/object/{$topic->guid}.html",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('replication information', 'midcom.helper.replicator'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
+                )
+            );
+        }
+        
+        if ($topic->can_do('midcom.admin.folder:template_management'))
+        {
+            if ($topic->style != '')
+            {
+                $enabled = true;
+            }
+            else
+            {
+                $enabled = false;
+            }
+            
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__mfa/styleeditor/",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit layout template', 'midcom.admin.styleeditor'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/text-x-generic-template.png',
+                    MIDCOM_TOOLBAR_ACCESSKEY => 't',
+                    MIDCOM_TOOLBAR_ENABLED => $enabled,
+                )
+            );            
+        }
+        
+        // TEMPORARY METADATA CODE END
+        if (   $topic->can_do('midgard:create')
+            && $topic->can_do('midcom.admin.folder:topic_management'))
+        {
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__ais/folder/create.html",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create subfolder', 'midcom.admin.folder'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-dir.png',
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'f',
+                )
+            );
         }
         if (   $topic->guid != $GLOBALS['midcom_config']['midcom_root_topic_guid']
-            && $topic->can_do('midgard:delete'))
+            && $topic->can_do('midgard:delete')
+            && $topic->can_do('midcom.admin.folder:topic_management'))
         {
             $toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "__ais/topic/delete.html",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('delete topic', 'midcom.admin.content'),
+                MIDCOM_TOOLBAR_URL => "__ais/folder/delete.html",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('delete folder', 'midcom.admin.folder'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 // for terminate d is used by everyone to go to the location bar
-                MIDCOM_TOOLBAR_ACCESSKEY => 't',
             ));
         }
         if ($topic->can_do('midgard:privileges'))
@@ -333,6 +428,135 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 MIDCOM_TOOLBAR_ACCESSKEY => 'p',
             ));
         }
+        
+        
+    }
+    
+    /**
+     * Adds the Host management commands to the specified toolbar.
+     *
+     * Repeated calls to the same toolbar are intercepted accordingly.
+     *
+     * @todo This is an intermediate implementation to link to the current proof-of-concept
+     *     Folder management code. This needs adaption to Aegir2!
+     * @todo Better privilege checks
+     * @todo Localize
+     *
+     * @param midcom_helper_toolbar $toolbar A reference to the toolbar to use.
+     * @param int $context_id The context to use (the topic is drawn from there). This defaults
+     *     to the currently active context.
+     */
+    function add_host_management_commands(&$toolbar, $context_id = null)
+    {
+        if (array_key_exists('midcom_service_toolbars_bound_to_host', $toolbar->customdata))
+        {
+            // We already processed this toolbar, skipping further adds.
+            return;
+        }
+        else
+        {
+            $toolbar->customdata['midcom_service_toolbars_bound_to_host'] = true;
+        }
+
+        if ($_MIDCOM->auth->user)
+        {
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}midcom-logout-",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('logout', 'midcom'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/exit.png',
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'l',
+                )
+            );
+        }
+        
+        if ($_MIDGARD['admin'] == true)
+        {
+            // Safety
+            if (!isset($GLOBALS['midcom_config']['staging2live_staging']))
+            {
+                $GLOBALS['midcom_config']['staging2live_staging'] = false;
+            }
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}midcom-exec-midcom/runreplication.php",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('run replication', 'midcom'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_jump-to.png',
+                    MIDCOM_TOOLBAR_ENABLED => $GLOBALS['midcom_config']['staging2live_staging'],
+                    MIDCOM_TOOLBAR_POST => true,
+                    MIDCOM_TOOLBAR_POST_HIDDENARGS => Array
+                    (
+                        'return_to' => $_SERVER['REQUEST_URI'],
+                    ),
+                )
+            );
+            
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}__ais/midcom-settings/edit.html",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('host configuration', 'midcom.admin.settings'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+                )
+            );
+            
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}midcom-cache-invalidate",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('invalidate cache', 'midcom'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_refresh.png',
+                )
+            );
+            
+            if (array_key_exists('midcom.helper.replicator', $_MIDCOM->componentloader->manifests))
+            {
+                $toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}__mfa/replication/",
+                        MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('manage replication', 'midcom.helper.replicator'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+                    )
+                );
+            }
+        }
+
+    	if ($_MIDGARD['admin'] == true)
+    	{
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}__ais/l10n/",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('midcom.admin.babel', 'midcom.admin.babel'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'z',
+                )
+            );
+    	}
+
+        if ($_MIDGARD['admin'] == true)
+        {
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}midcom-exec-midcom/config-test.php",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('test settings', 'midcom'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
+                )
+            );
+        }
+        
+        
     }
 
     /**
@@ -365,6 +589,15 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         {
             $toolbar->customdata['midcom_service_toolbars_bound_to_object'] = true;
         }
+        
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        if (!$prefix)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Toolbar for object {$object->guid} was called before topic prefix was available, skipping global items.", MIDCOM_LOG_WARN);
+            debug_pop();
+            return;
+        }
 
         // TEMPORARY CODE: This links the old midcom metadata helpers into the site
         // if we are configured to do so. This will be replaced once we revampt the
@@ -373,10 +606,11 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             && $object->can_do('midcom:approve'))
         {
             $metadata =& midcom_helper_metadata::retrieve($object);
-            if ($metadata->is_approved())
+            if (   $metadata
+                && $metadata->is_approved())
             {
                 $toolbar->add_item(Array(
-                    MIDCOM_TOOLBAR_URL => "__ais/topic/unapprove.html",
+                    MIDCOM_TOOLBAR_URL => "{$prefix}__ais/folder/unapprove.html",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('unapprove', 'midcom'),
                     MIDCOM_TOOLBAR_HELPTEXT => $_MIDCOM->i18n->get_string('approved', 'midcom'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/approved.png',
@@ -386,12 +620,13 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                         'guid' => $object->guid,
                         'return_to' => $_SERVER['REQUEST_URI'],
                     ),
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'u',
                 ));
             }
             else
             {
                 $toolbar->add_item(Array(
-                    MIDCOM_TOOLBAR_URL => "__ais/topic/approve.html",
+                    MIDCOM_TOOLBAR_URL => "{$prefix}__ais/folder/approve.html",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('approve', 'midcom'),
                     MIDCOM_TOOLBAR_HELPTEXT => $_MIDCOM->i18n->get_string('unapproved', 'midcom'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/not_approved.png',
@@ -402,28 +637,74 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                         'guid' => $object->guid,
                         'return_to' => $_SERVER['REQUEST_URI'],
                     ),
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'a',
                 ));
             }
         }
 
+        if (   array_key_exists('midcom.helper.replicator', $_MIDCOM->componentloader->manifests)
+            && $_MIDGARD['admin'] == true)
+        {
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/replication/object/{$object->guid}.html",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('replication information', 'midcom.helper.replicator'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
+                )
+            );
+        }
+
         if ($object->can_do('midgard:update'))
         {
-            $toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "__ais/topic/metadata/{$object->guid}.html",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit metadata', 'midcom.admin.content'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
-            ));
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "{$prefix}__ais/folder/metadata/{$object->guid}.html",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit metadata', 'midcom.admin.folder'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'm',
+                )
+            );
         }
         // TEMPORARY METADATA CODE END
+        
+        if ($object->can_do('midgard:update'))
+        {
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "{$prefix}__ais/folder/move/{$object->guid}.html",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('move', 'midcom.admin.folder'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/topic-score.png',
+                )
+            );
+        }
 
         if ($object->can_do('midgard:privileges'))
         {
             $toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "__ais/acl/edit/{$object->guid}.html",
+                MIDCOM_TOOLBAR_URL => "{$prefix}__ais/acl/edit/{$object->guid}.html",
                 MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('privileges', 'midgard.admin.acl'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
-                MIDCOM_TOOLBAR_ACCESSKEY => 'p',
             ));
+        }
+        
+        if ($object->can_do('midgard:update'))
+        {
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "{$prefix}__ais/rcs/{$object->guid}/",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('show history', 'no.bergfald.rcs'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'v',
+                )
+            );
         }
     }
 
@@ -451,11 +732,18 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             return '';
         }
 
-        if ($toolbar_identifier == MIDCOM_TOOLBAR_NODE)
-        {
-            $this->add_topic_management_commands($this->_toolbars[$context_id][MIDCOM_TOOLBAR_NODE], $context_id);
-        }
-
+        /**
+         * These have been moved to _create_toolbars() so that the appropriate actions can hide their own buttons
+         * if ($toolbar_identifier == MIDCOM_TOOLBAR_NODE)
+         * {
+         *    //$this->add_topic_management_commands($this->_toolbars[$context_id][MIDCOM_TOOLBAR_NODE], $context_id);
+         * }
+         *
+         * if ($toolbar_identifier == MIDCOM_TOOLBAR_HOST)
+         * {
+         *     $this->add_host_management_commands($this->_toolbars[$context_id][MIDCOM_TOOLBAR_HOST], $context_id);
+         * }
+         */
 
         return $this->_toolbars[$context_id][$toolbar_identifier]->render();
     }
@@ -489,6 +777,21 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
     {
         return $this->_render_toolbar(MIDCOM_TOOLBAR_VIEW, $context_id);
     }
+    
+    /**
+     * Renders the host toolbar for the indicated context. If the toolbar is undefined,
+     * an empty string is returned. If you want to show the toolbar directly, look for
+     * the show_xxx_toolbar methods.
+     *
+     * @param int $context_id The context to retrieve the node toolbar for, this
+     *     defaults to the current context.
+     * @return string The rendered toolbar
+     * @see midcom_helper_toolbar::render()
+     */
+    function render_host_toolbar($context_id = null)
+    {
+        return $this->_render_toolbar(MIDCOM_TOOLBAR_HOST, $context_id);
+    }
 
     /**
      * Displays the node toolbar for the indicated context. If the toolbar is undefined,
@@ -505,6 +808,23 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             return;
         }
         echo $this->render_node_toolbar();
+    }
+    
+    /**
+     * Displays the host toolbar for the indicated context. If the toolbar is undefined,
+     * an empty string is returned.
+     *
+     * @param int $context_id The context to retrieve the node toolbar for, this
+     *     defaults to the current context.
+     * @see midcom_helper_toolbar::render()
+     */
+    function show_host_toolbar($context_id = null)
+    {
+        if ($this->_centralized_mode)
+        {
+            return;
+        }
+        echo $this->render_host_toolbar();
     }
 
     /**
@@ -540,26 +860,27 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
 
         $this->_centralized_mode = true;
 
-        echo "<div id='protoToolbar-".$this->type."' style='display: none;'>\n";
-        echo "    <div id='protoToolbar-".$this->type."-logos'>\n";
+        echo "<div id=\"protoToolbar-{$this->type}\" style=\"display: none;\">\n";
+        echo "    <div id=\"protoToolbar-{$this->type}-logos\">\n";
         echo "        <a href=\"" . $_MIDCOM->get_page_prefix() . "midcom-exec-midcom/about.php\">\n";
-        echo "            <img src='" . MIDCOM_STATIC_URL . "/Javascript_protoToolkit/images/midgard-logo.png' width='16' height='16' alt='Midgard' />\n";
+        echo "            <img src=\"" . MIDCOM_STATIC_URL . "/Javascript_protoToolkit/images/midgard-logo.png\" width=\"16\" height=\"16\" alt=\"Midgard\" />\n";
         echo "        </a>\n";
         echo "    </div>\n";
-        echo "    <div id='protoToolbar-".$this->type."-content'>\n";
-        echo "        <div id='item-page' class='item'>\n";
-        echo "            <h1><a href='#'>". $_MIDCOM->i18n->get_string('page', 'midcom') . "</a></h1>\n";
+        echo "    <div id=\"protoToolbar-{$this->type}-content\">\n";
+        echo "        <div id=\"item-page\" class=\"item\">\n";
+        echo "            <span class=\"toolbar_list_class page\">". $_MIDCOM->i18n->get_string('page', 'midcom') . "</span>\n";
         echo $this->render_view_toolbar();
         echo "        </div>\n";
-        echo "        <div id='item-folder' class='item'>\n";
-        echo "            <h1><a href='#'>". $_MIDCOM->i18n->get_string('folder', 'midcom') . "</a></h1>\n";
+        echo "        <div id=\"item-folder\" class=\"item\">\n";
+        echo "            <span class=\"toolbar_list_class folder\">". $_MIDCOM->i18n->get_string('folder', 'midcom') . "</span>\n";
         echo $this->render_node_toolbar();
         echo "        </div>\n";
-        echo "        <div id='item-logout' class='item'>\n";
-        echo "            <h1><a href='" . $_MIDCOM->get_page_prefix() . "midcom-logout-'>". $_MIDCOM->i18n->get_string('logout', 'midcom') . "</a></h1>\n";
+        echo "        <div id=\"item-host\" class=\"item\">\n";
+        echo "            <span class=\"toolbar_list_class host\">". $_MIDCOM->i18n->get_string('host', 'midcom') . "</span>\n";
+        echo $this->render_host_toolbar();
         echo "        </div>\n";
         echo "    </div>\n";
-        echo "     <div class='dragbar'></div>\n";
+        echo "     <div class=\"dragbar\"></div>\n";
         echo "</div>\n";
     }
 }

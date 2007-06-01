@@ -52,7 +52,7 @@
  *        ),
  *    ),
  * ),
- * </code> 
+ * </code>
  *
  * NOTE: subgroups are processed before rules, subgroups must match class of parent group
  * untill midgard core has the new infinite JOINs system. The root level group array is
@@ -106,7 +106,9 @@ class org_openpsa_directmarketing_campaign_ruleresolver
         {
             $this->_resolve_rule_group($group);
         }
-        
+
+        debug_add("this->_qbs:\n===\n" . sprint_r($this->_qbs) . "===\n");
+        debug_pop();
         return true;
     }
 
@@ -132,6 +134,7 @@ class org_openpsa_directmarketing_campaign_ruleresolver
         {
             //We're only interested in results from current SG
             $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
+            //mgd_debug_start();
             if (is_a($qb, 'midcom_core_querybuilder'))
             {
                 $this->_results[$class] = $qb->execute();
@@ -141,9 +144,11 @@ class org_openpsa_directmarketing_campaign_ruleresolver
                 //Standard midgard QB, silence due to unneccessary notice
                 $this->_results[$class] = @$qb->execute();
             }
+            //mgd_debug_stop();
             $this->_normalize_to_persons(&$this->_results[$class], $class);
         }
-        
+        debug_add("this->_results:\n===\n" . sprint_r($this->_results) . "===\n");
+
         $ret = array();
         switch (strtoupper($this->_rules['type']))
         {
@@ -170,7 +175,7 @@ class org_openpsa_directmarketing_campaign_ruleresolver
                             //debug_add("not found in class {$class}, skipping");
                             continue 2;
                         }
-                        //debug_add("found in class {$class}"); 
+                        //debug_add("found in class {$class}");
                     }
                     //debug_add('found in all classes, adding to array to be returned');
                     $ret[$guid] = $this->_seek[$guid][$class];
@@ -182,11 +187,11 @@ class org_openpsa_directmarketing_campaign_ruleresolver
                 return false;
                 break;
         }
-        
+
         debug_pop();
         return $ret;
     }
-    
+
     /**
      * Normalizes the various intermediate classes to org_openpsa_contacts_persons
      * for final results merging. Removes those entries which cannot be normalized.
@@ -194,7 +199,7 @@ class org_openpsa_directmarketing_campaign_ruleresolver
     function _normalize_to_persons(&$array, $from_class)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         debug_add("called with from_class: {$from_class}, array count: " . count($array));
         reset($array);
         foreach ($array as $k => $obj)
@@ -209,6 +214,12 @@ class org_openpsa_directmarketing_campaign_ruleresolver
                 case is_a($obj, 'midgard_person'):
                     $array[$k] = new org_openpsa_contacts_person($obj->id);
                     break;
+                // Expand add org_openpsa_contacts_person for each group member
+                case is_a($obj, 'midgard_group'):
+                case is_a($obj, 'org_openpsa_organization'):
+                    unset ($array[$k]);
+                    $this->_expand_group_members2persons($obj->id, $array);
+                    break;
                 //Expand member to org_openpsa_contacts_person
                 case is_a($obj, 'midgard_member'):
                 case is_a($obj, 'midgard_eventmember'):
@@ -221,12 +232,20 @@ class org_openpsa_directmarketing_campaign_ruleresolver
                         case 'person':
                             $array[$k] = new org_openpsa_contacts_person($obj->oid);
                             break;
-                        //TODO: parameters of groups (which need to be expanded to persons via members)
+                        case 'grp':
+                            unset ($array[$k]);
+                            $this->_expand_group_members2persons($obj->oid, $array);
+                            break;
                         default:
                             debug_add("parameters for table {$obj->tablename} not supported");
                             unset ($array[$k]);
                             break;
                     }
+                    break;
+                case is_a($obj, 'midcom_org_openpsa_campaign_member'):
+                case is_a($obj, 'midcom_org_openpsa_campaign_message_receipt'):
+                case is_a($obj, 'midcom_org_openpsa_link_log'):
+                    $array[$k] = new org_openpsa_contacts_person($obj->person);
                     break;
                 default:
                     debug_add("class " . get_class($obj) . " not supported", MIDCOM_LOG_WARN);
@@ -246,7 +265,25 @@ class org_openpsa_directmarketing_campaign_ruleresolver
         }
         debug_pop();
     }
-    
+
+    /**
+     * Adds group #$id members to array as org_openpsa_contacts_persons
+     */
+    function _expand_group_members2persons($id, &$array)
+    {
+        $qb_grp_mem = new MidgardQueryBuilder('midgard_member');
+        $qb_grp_mem->add_constraint('gid', '=', $id);
+        $grp_mems = @$qb_grp_mem->execute();
+        if (!is_array($grp_mems))
+        {
+            return;
+        }
+        foreach($grp_mems as $grp_mem)
+        {
+            $array[] = new org_openpsa_contacts_person($grp_mem->uid);
+        }
+    }
+
     /**
      * Resolves the rules in a single rule group
      * @param array $group single group from rules array
@@ -303,11 +340,13 @@ class org_openpsa_directmarketing_campaign_ruleresolver
                 $this->_qbs[$group['class']] = call_user_func(array($group['class'], 'new_query_builder'));
             }
         }
+        debug_add("qb =& this->_qbs[{$group['class']}]");
         $qb =& $this->_qbs[$group['class']];
         if (!array_key_exists('type', $group))
         {
             $group['type'] = 'AND';
         }
+        debug_add("calling qb->begin_group(strtoupper({$group['type']}))");
         $qb->begin_group(strtoupper($group['type']));
         if (array_key_exists('groups', $group))
         {
@@ -320,11 +359,12 @@ class org_openpsa_directmarketing_campaign_ruleresolver
         {
             $this->_parse_rule($rule, $qb);
         }
+        debug_add('calling qb->end_group()');
         $qb->end_group();
         debug_pop();
         return true;
     }
-    
+
     /**
      * Parses a rule definition array, and adds QB constraints accordingly
      * @param array $rule rule definition array
@@ -349,9 +389,9 @@ class org_openpsa_directmarketing_campaign_ruleresolver
             debug_pop();
             return false;
         }
-        
+        debug_add("calling qb->add_constraint({$rule['property']}, {$rule['match']}, {$rule['value']})");
         $qb->add_constraint($rule['property'], $rule['match'], $rule['value']);
-        
+
         debug_pop();
         return true;
     }

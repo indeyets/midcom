@@ -1,0 +1,51 @@
+ul.midcom_helper_replicator_object
+{
+    margin-left: 0px;
+    width: 100%;
+    overflow: auto;
+    background-color: #e0e0e0;
+    padding: 4px;
+}
+
+ul.midcom_helper_replicator_object li
+{
+    margin-left: 0px;
+    padding-left: 20px;
+    list-style: none;
+    background-position: left;
+    background-repeat: no-repeat;
+    white-space: nowrap;
+    line-height: 20px;
+}
+
+ul.midcom_helper_replicator_object li .date
+{
+    font-weight: bold;
+}
+
+ul.midcom_helper_replicator_object li.importer
+{
+    margin-top: 10px;
+    background-image: url('../stock-icons/16x16/stock_down.png');
+}
+
+ul.midcom_helper_replicator_object li.queuemanager
+{
+    background-image: url('../stock-icons/16x16/scheduled_and_shown.png');
+}
+
+ul.midcom_helper_replicator_object li.exporter
+{
+    margin-top: 10px;
+    background-image: url('../stock-icons/16x16/stock_up.png');
+}
+
+ul.midcom_helper_replicator_object li.transporter
+{
+    background-image: url('../stock-icons/16x16/stock_right.png');
+}
+
+ul.midcom_helper_replicator_object li.error
+{
+    color: red;
+}

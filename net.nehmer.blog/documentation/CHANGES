@@ -8,6 +8,16 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-03-19 bergie
+  + Added support for linking items in list to an external URL
+
+2007-01-29 bergie
+  + Added support for metaWeblog API
+
+2006-09-07 bergie
+  + Switched order of trying to resolve article by name or GUID because sometimes
+    mgd_is_guid() thought regular article names to be GUIDs
+
 2006-07-14 rambo
   - made permalink resolution return the article name instead of guid if available
 

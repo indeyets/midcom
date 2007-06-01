@@ -21,7 +21,7 @@ class org_openpsa_sales_handler_deliverable_process extends midcom_baseclasses_c
      * @access private
      */
     var $_deliverable = null;
-    
+
     /**
      * The salesproject the deliverable is connected to
      *
@@ -45,7 +45,7 @@ class org_openpsa_sales_handler_deliverable_process extends midcom_baseclasses_c
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Simple helper which references all important members to the request data listing
      * for usage within the style listing.
@@ -65,25 +65,25 @@ class org_openpsa_sales_handler_deliverable_process extends midcom_baseclasses_c
         {
             $_MIDCOM->generate_error(MIDCOM_ERRFORBIDDEN, 'Only POST requests are allowed here.');
         }
-        
+
         $this->_deliverable = new org_openpsa_sales_salesproject_deliverable($args[0]);
         if (!$this->_deliverable)
         {
             return false;
         }
-        
+
         $this->_salesproject = new org_openpsa_sales_salesproject($this->_deliverable->salesproject);
         if (!$this->_salesproject)
         {
             return false;
         }
-        
+
         $this->_product = new org_openpsa_products_product_dba($this->_deliverable->product);
         if (!$this->_product)
         {
             return false;
         }
-        
+
         // Check what status change user requested
         if (array_key_exists('mark_proposed', $_POST))
         {
@@ -136,7 +136,7 @@ class org_openpsa_sales_handler_deliverable_process extends midcom_baseclasses_c
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 'No procedure specified, aborting.');
         }
-        
+
         // Get user back to the sales project
         $_MIDCOM->relocate("salesproject/{$this->_salesproject->guid}/");
         // This will exit.

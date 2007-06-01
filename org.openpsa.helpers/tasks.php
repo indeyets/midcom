@@ -23,7 +23,7 @@ function org_openpsa_helpers_projects($add_all = false, $display_tasks = false, 
             //TODO: Localization
             $GLOBALS['org_openpsa_helpers_tasks']['all'] = 'all';
         }
-        
+
         $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task');
         /*
          * Display those that are active or finished less than two weeks ago
@@ -32,13 +32,13 @@ function org_openpsa_helpers_projects($add_all = false, $display_tasks = false, 
             $qb->add_constraint('finished', '>', time()-(3600*24*14));
             $qb->add_constraint('status', '=', 0);
         $qb->end_group();*/
-        
+
         // Workgroup filtering
         if ($GLOBALS['org_openpsa_core_workgroup_filter'] != 'all')
         {
             $qb->add_constraint('orgOpenpsaOwnerWg', '=', $GLOBALS['org_openpsa_core_workgroup_filter']);
         }
-        
+
         //Object type filtering
         $qb->begin_group('OR');
             $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECT);

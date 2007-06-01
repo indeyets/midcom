@@ -2,7 +2,7 @@
 // Request Keys:
 // datamanager, fields, schema, account, avatar, avatar_thumbnail, form_submit_name,
 // processing_msg, profile_url, edit_url, avatar_url, avatar_thumbnail_url
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $account =& $data['account'];
 $visible_data =& $data['visible_data'];
 $schema =& $data['datamanager']->schema;
@@ -45,10 +45,6 @@ foreach ($data['visible_fields'] as $name)
     <?php
     echo $data['l10n_midcom']->get('last modified') . ': '
         . $data['revised']->format($data['l10n_midcom']->get('short date') . " %T");
-    if ($data['view_self'])
-    {
-        ?>, <a href="&(data['edit_url']);"><?php $data['l10n_midcom']->show('edit'); ?></a><?php
-    }
     if ($data['config']->get('allow_publish'))
     {
     ?><br />
@@ -68,7 +64,3 @@ foreach ($data['visible_fields'] as $name)
     }
     ?>
 </p>
-
-<?php if ($data['edit_url']) { ?>
-<p><a href="&(data['edit_url']);"><?php $data['l10n_midcom']->show('edit'); ?></a></p>
-<?php } ?>

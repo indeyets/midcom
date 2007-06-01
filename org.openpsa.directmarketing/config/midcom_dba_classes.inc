@@ -27,4 +27,4 @@ array(
     'old_class_name' => null,
     'new_class_name' => 'org_openpsa_link_log',
     'midcom_class_name' => 'midcom_org_openpsa_link_log'
-),
+)

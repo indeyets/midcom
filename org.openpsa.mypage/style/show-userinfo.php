@@ -1,5 +1,5 @@
 <?php
-$view_data =& $GLOBALS['midcom']->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $user = $_MIDCOM->auth->user->get_storage();
 $nap = new midcom_helper_nav();
 $node = $nap->get_node($nap->get_root_node());
@@ -9,8 +9,8 @@ echo "<ul>\n";
 echo "    <li class=\"user\">".$contact->show_inline()."</li>\n";
 echo "    <li class=\"filter\">\n";
 echo "        <input id=\"org_openpsa_mypage_workgroups_ajaxUrl\" type=\"hidden\" value=\"{$node[MIDCOM_NAV_FULLURL]}savefilter.html\" />\n";
-echo "        <select title=\"".$view_data['l10n']->get('select filter')."\" id=\"org_openpsa_mypage_workgroups\" name=\"org_openpsa_workgroup_filter\" class=\"ajax_editable\" onchange=\"ooAjaxSelect(this);\">\n";
-foreach ($view_data['virtual_groups'] as $key => $vgroup)
+echo "        <select title=\"".$data['l10n']->get('select filter')."\" id=\"org_openpsa_mypage_workgroups\" name=\"org_openpsa_workgroup_filter\" class=\"ajax_editable\" onchange=\"ooAjaxSelect(this);\">\n";
+foreach ($data['virtual_groups'] as $key => $vgroup)
 {
     if (is_object($vgroup))
     {
@@ -18,7 +18,7 @@ foreach ($view_data['virtual_groups'] as $key => $vgroup)
     }
     else
     {
-        $label = $vgroup;    
+        $label = $vgroup;
     }
 
     $selected = '';
@@ -35,7 +35,7 @@ foreach ($view_data['virtual_groups'] as $key => $vgroup)
 echo "        </select>\n";
 echo "    </li>\n";
 
-echo "    <li class=\"logout\"><a href=\"{$node[MIDCOM_NAV_FULLURL]}midcom-logout-\"><img src=\"".MIDCOM_STATIC_URL."/stock-icons/16x16/exit.png\" title=\"".$view_data['l10n_midcom']->get('logout')."\" alt=\"".$view_data['l10n_midcom']->get('logout')."\" /></a></li>\n";
+echo "    <li class=\"logout\"><a href=\"{$node[MIDCOM_NAV_FULLURL]}midcom-logout-\"><img src=\"".MIDCOM_STATIC_URL."/stock-icons/16x16/exit.png\" title=\"".$data['l10n_midcom']->get('logout')."\" alt=\"".$data['l10n_midcom']->get('logout')."\" /></a></li>\n";
 
 echo "</ul>\n";
 ?>

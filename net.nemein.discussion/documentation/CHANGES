@@ -6,6 +6,20 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2006-03-06 rambo
+  + Added threaded display mode
+
+2006-11-30 bergie
+  + Switched to Midgard 1.8 metadata
+
+2006-10-26 bergie
+  + Various fixes to the default styles
+
+2006-10-09 bergie
+  + Midgard 1.8 metadata compatibility work
+  + Switched post display to utilize datamanager
+  + Added simple XML view of posts for AJAX purposes
+
 2006-08-25 bergie
   + Switched to the MidCOM toolbar service
   - Fixed indexing of posts

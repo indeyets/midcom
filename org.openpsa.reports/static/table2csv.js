@@ -1,4 +1,4 @@
-/* Based on Alan Knowles' neat trick on turning tables to CSV, 
+/* Based on Alan Knowles' neat trick on turning tables to CSV,
    namespaced and slightly improved */
 function table2csv_flatten(children) {
     var ret = '';
@@ -26,7 +26,7 @@ function table2csv_flatten(children) {
         }
     }
     return ret;
-        
+
 }
 
 function table2csv_TrimString(sInString)
@@ -37,7 +37,7 @@ function table2csv_TrimString(sInString)
   */
   sInString = sInString.replace( /\s+/g, " " ); // Shorten long whitespace
   sInString = sInString.replace( /^\s+/g, "" ); // strip leading ws
- 
+
   return sInString.replace( /\s+$/g, "" ); // strip trailing ws
 }
 
@@ -45,10 +45,10 @@ function table2csv(table)
 {
     var tab = document.getElementById(table);
     var str = '';
-    //TODO: configurable separator 
+    //TODO: configurable separator
     //var separator='\t';
     var separator=';';
-    
+
     for (var r =0; r < tab.rows.length; r++)
     {
         var rstr = '';
@@ -67,7 +67,7 @@ function table2csv(table)
                 //alert(rstr);
             }
         }
-        str  = str + rstr + "\n"; 
+        str  = str + rstr + "\n";
     }
     //alert(str);
     //return false;
@@ -76,7 +76,7 @@ function table2csv(table)
     //return false;
     return true;
 }
- 
+
 //2005.04.19, Rambo: A quick wqay to add table separators (empthy lines) to csvdata
 function table2csv_lineSep()
 {

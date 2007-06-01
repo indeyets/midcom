@@ -22,11 +22,11 @@
 class net_nemein_hourview2_viewer extends midcom_baseclasses_components_request
 {
     /**
-     * Array for user's companies
+     * Array for user's agreements
      * 
-     * @var midgard_group
+     * @var Array of org_openpsa_salesproject_deliverable objects
      */
-     var $_companies = Array();
+     var $_agreements = Array();
      
     /**
      * Array for cached tasks
@@ -36,50 +36,71 @@ class net_nemein_hourview2_viewer extends midcom_baseclasses_components_request
      var $_tasks = Array();
      
     /**
-     * Array for UI messages
-     */
-     var $_messages = Array();
-
-    /**
      * Constructor.
      * 
      * Nothing fancy, defines the request switch.
      */
     function net_nemein_hourview2_viewer($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
-        
-        if ($_MIDGARD['user'])
-        {
-            // List companies the user belongs to
-            $qb_member = new MidgardQueryBuilder('midgard_member');
-            $qb_member->add_constraint('uid', '=', $_MIDGARD['user']);
-            $connections = $qb_member->execute();
-            foreach ($connections as $connection)
-            {
-                $this->_companies[] = $connection->gid;
-            }
-        }
-        
+        parent::midcom_baseclasses_components_request($topic, $config);      
+    }
+    
+    function _on_initialize()
+    {
+        $_MIDCOM->auth->require_valid_user();
+                
         // Always run in uncached mode
-        $GLOBALS["midcom"]->cache->content->no_cache();
+        $_MIDCOM->cache->content->no_cache();
         
-        $this->_request_switch[] = Array 
+        $this->_request_switch['list_unapproved'] = Array 
         ( 
-            /* These two are the default values anyway, so we can skip them. */
-            // 'fixed_arguments' => null,
-            // 'variable_arguments' => 0,
             'handler' => 'index'
         );
         
-        $GLOBALS["midcom"]->add_link_head(
+        $this->_request_switch['list_all'] = Array 
+        ( 
+            'handler' => 'index',
+            'fixed_args' => Array('all'),
+        );
+        
+        $_MIDCOM->add_link_head
+        (
             array
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL."/net.nemein.hourview2/hourview2.css",
+                'href' => MIDCOM_STATIC_URL.'/net.nemein.hourview2/hourview.css',
             )
-        );        
+        );
+    }
+    
+    function _list_agreements()
+    {
+        // List agreements where user is part of
+        $qb_member = org_openpsa_sales_salesproject_member::new_query_builder();
+        $qb_member->add_constraint('person', '=', $_MIDGARD['user']);
+        $memberships = $qb_member->execute_unchecked();
+        
+        if (count($memberships) > 0)
+        {
+        
+            $qb_agreement = org_openpsa_sales_salesproject_deliverable::new_query_builder();
+            $qb_agreement->add_constraint('state', '>=', 400); // ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_ORDERED
+
+            $qb_agreement->begin_group('OR');
+                foreach ($memberships as $member)
+                {
+                    $qb_agreement->add_constraint('salesproject', '=', $member->salesproject);
+                }
+            $qb_agreement->end_group();
+            
+            $agreements = $qb_agreement->execute_unchecked();
+            
+            foreach ($agreements as $agreement)
+            {
+                $this->_agreements[$agreement->id] = $agreement;
+            }
+        }
     }
     
     function _list_hours($hide_approved = true)
@@ -89,42 +110,51 @@ class net_nemein_hourview2_viewer extends midcom_baseclasses_components_request
         // By default list hour reports from last two months
         $start_timestamp = mktime(0,0,0,date('n')-2,1,date('Y'));
         
-        if (array_key_exists("net_nemein_hourview2_view_all",$_REQUEST))
+        /*if (array_key_exists("net_nemein_hourview2_view_all",$_REQUEST))
         {
             // User has requested all hour reports
             $start_timestamp = 0;
-        }
+            $hide_approved = false;
+        }*/
         
         // List hour reports until yesterday
         $end_timestamp = mktime(0,0,0,date('n'),date('j'),date('Y'));
         
-        if (count($this->_companies) == 0)
+        if (count($this->_agreements) == 0)
         {
             return Array();
         }
         
         // List tasks user is customer in
-        $task_qb = new MidgardQueryBuilder('org_openpsa_task');
+        $task_qb = org_openpsa_projects_task::new_query_builder();
         $task_qb->begin_group('OR');
-        foreach ($this->_companies as $company_id)
+        foreach ($this->_agreements as $agreement)
         {
-            $task_qb->add_constraint('customer', '=', $company_id);
+            $task_qb->add_constraint('agreement', '=', $agreement->id);
         }
         $task_qb->end_group();
-        $task_qb->add_constraint('status', '>=', 6560); // ORG_OPENPSA_TASKSTATUS_COMPLETED
-        $tasks = $task_qb->execute();
+        //$task_qb->add_constraint('status', '>=', 6560); // ORG_OPENPSA_TASKSTATUS_COMPLETED
+        $tasks = $task_qb->execute_unchecked();
         foreach ($tasks as $task)
         {
             $this->_tasks[$task->id] = $task;
         }
         
+        // No tasks where current user is a customer
+        if (count($this->_tasks) == 0)
+        {
+            return Array();
+        }
+        
         // List hour reports
-        $qb = new MidgardQueryBuilder('org_openpsa_hour_report');
+        $qb = org_openpsa_projects_hour_report::new_query_builder();
 
         if ($hide_approved)
         {
-            $qb->add_constraint('approved', '=', '0000-00-00 00:00:00');
+            $qb->add_constraint('approved', '<=', '0000-00-00 00:00:00');
         }
+        // Always skip those that are invoiced
+        $qb->add_constraint('invoiced', '<=', '0000-00-00 00:00:00');
 
         $qb->add_constraint('invoiceable', '=', 1);
         $qb->begin_group('OR');
@@ -133,7 +163,7 @@ class net_nemein_hourview2_viewer extends midcom_baseclasses_components_request
             $qb->add_constraint('task', '=', $task->id);
         }
         $qb->end_group();
-        $hours = $qb->execute();
+        $hours = $qb->execute_unchecked();
 
         foreach ($hours as $hour_report)
         {
@@ -141,6 +171,108 @@ class net_nemein_hourview2_viewer extends midcom_baseclasses_components_request
         }
         
         return $hours_by_task;
+    }
+    
+    function _process_approvals()
+    {
+        // Handle approvals
+        ignore_user_abort(true);
+        ini_set('max_execution_time', 0);
+        
+        // Get user
+        $user = new midcom_db_person($_MIDGARD['user']);
+        
+        $hours_by_task = $this->_list_hours();
+        foreach ($hours_by_task as $task_id => $hours)
+        {
+            $hour_reports_approved = array();
+            $hour_reports_failedapproval = array();
+            $hour_reports_notapproved = array();        
+        
+            // Get the task
+            $task = $this->_tasks[$task_id];
+            
+            // Run through the hours
+            $_MIDCOM->auth->request_sudo('net.nemein.hourview2');
+            foreach ($hours as $hour_report)
+            {
+                if (   array_key_exists('net_nemein_hourview2_approve', $_POST)
+                    && array_key_exists($hour_report->id, $_POST['net_nemein_hourview2_approve'])
+                    && $_POST['net_nemein_hourview2_approve'][$hour_report->id] == 1)
+                {
+                    if ($hour_report->approve())
+                    {
+                        //Approved succesfully
+                        $hour_reports_approved[] = $hour_report;
+                    } 
+                    else
+                    {
+                        //Error handling
+                        $hour_reports_failedapproval[] = $hour_report;
+                        $_MIDCOM->uimessages->add($this->_l10n->get('net.nemein.hourview2'), sprintf($this->_l10n->get('failed to approve hour report #%s, reason %s'), $hour_report->id, mgd_errstr()), 'error');
+                    }
+                }
+                else
+                {
+                    // User did not approve this hour report
+                    $hour_reports_notapproved[] = $hour_report;
+                }
+            }
+            $_MIDCOM->auth->drop_sudo();
+            
+            // Get the manager, he will receive some spam
+            $manager = new midcom_db_person($task->manager);
+                    
+            $message = Array();
+            $message['content'] = sprintf($this->_l10n->get('%s has processed the following hour reports in task %s'), $user->name, $task->title) . "\n\n";
+        
+            if (count($hour_reports_approved) > 0)
+            {
+                $_MIDCOM->uimessages->add($this->_l10n->get('net.nemein.hourview2'), sprintf($this->_l10n->get('approved %s hour reports in task "%s"'), count($hour_reports_approved), $task->title), 'ok');
+                
+                $message['content'] .= $this->_l10n->get('approved hours') . ":\n";
+                foreach ($hour_reports_approved as $hour_report)
+                {
+                    $reporter = new midcom_db_person($hour_report->person);
+                    $message['content'] .= strftime('%x', $hour_report->date) . ": {$hour_report->hours}h, {$reporter->lastname} {$reporter->name}\n";
+                }
+            }
+        
+            if (count($hour_reports_notapproved) > 0)
+            {
+                $message['content'] .= "\n" . $this->_l10n->get('not approved hours') . ":\n";
+                foreach ($hour_reports_notapproved as $hour_report)
+                {
+                    $reporter = new midcom_db_person($hour_report->person);
+                    $message['content'] .= strftime('%x',$hour_report->date) . ": {$hour_report->hours}h, {$reporter->lastname} {$reporter->name}\n";
+                }
+            }
+            
+            if (count($hour_reports_failedapproval) > 0)
+            {
+                $message['content'] .= "\n" . $this->_l10n->get('approval failed for hours') . ":\n";
+                foreach ($hour_reports_failedapproval as $hour_report)
+                {
+                    $reporter = new midcom_db_person($hour_report->person);
+                    $message['content'] .= strftime('%x', $hour_report->date) . ": {$hour_report->hours}h, {$reporter->name}\n";
+                }
+            }
+                        
+            $message['content'] .= "\n" . $this->_l10n->get('comments') . ":\n" . $_POST['net_nemein_hourview2_comments'];
+            
+            $message['title'] = sprintf($this->_l10n->get('processed hour reports in %s'), $task->title);
+            
+            // Notify project manager
+            org_openpsa_notifications::notify('org.openpsa.projects:hour_reports_approved', $manager->guid, $message);
+            
+            //Send the notification also to the owner of the salesproject
+            $salesproject = new org_openpsa_sales_salesproject($this->_agreements[$task->agreement]->salesproject);
+            $owner = new midcom_db_person($salesproject->owner);
+            if ($owner->id != $manager->id)
+            {
+                org_openpsa_notifications::notify('org.openpsa.projects:hour_reports_approved', $owner->guid, $message);
+            }
+        }
     }
         
     /**
@@ -153,140 +285,16 @@ class net_nemein_hourview2_viewer extends midcom_baseclasses_components_request
      */
     function _handler_index($handler_id, $args, &$data)
     {
-        if (isset($_POST['net_nemein_hourview2_submit']))
+        $this->_list_agreements();
+    
+        if (array_key_exists('net_nemein_hourview2_submit', $_POST))
         {
-            // Handle approvals
-            error_reporting(E_ALL ^ E_NOTICE);
-            ignore_user_abort(true);
-            ini_set('max_execution_time', 0);
-            
-            //Get SG config for sudo
-            mgd_include_snippet_php('/NemeinNet_Core/get_sg_config');
-            mgd_include_snippet_php('/NemeinNet_Core/Mail');
-            
-            // Get user
-            $user = mgd_get_person($_MIDGARD["user"]);
-            
-            $hours_by_task = $this->_list_hours();
-            foreach ($hours_by_task as $task_id => $hours)
-            {
-                $hour_reports_approved = array();
-                $hour_reports_failedapproval = array();
-                $hour_reports_notapproved = array();        
-            
-                // Get the process
-                $task = $this->_tasks[$task_id];
-                
-                // TODO: we need to sudo here
-                /*
-                $sudo = mgd_auth_midgard($GLOBALS["system_user"], $GLOBALS["system_pass"], 0);
-                if (!$sudo)
-                {
-                    $this->_messages[] = "Failed to sudo to ".$GLOBALS["system_user"].", reason ".mgd_errstr();
-                }
-                $GLOBALS['midgard']=mgd_get_midgard();
-                */
-                
-                // Run through the hours
-                foreach ($hours as $hour_report)
-                {
-                    if (   array_key_exists('net_nemein_hourview2_approve', $_POST)
-                        && array_key_exists($hour_report->id, $_POST['net_nemein_hourview2_approve'])
-                        && $_POST['net_nemein_hourview2_approve'][$hour_report->id] == 1)
-                    {
-                        $hour_report->approved = date('Y-m-d H:i:s');
-                        $hour_report->approver = $_MIDGARD['user'];
-                        if ($hour_report->update())
-                        {
-                            //Approved succesfully
-                            $hour_reports_approved[] = $hour_report;
-                        } 
-                        else
-                        {
-                            //Error handling
-                            $hour_reports_failedapproval[] = $hour_report;
-                            $this->_messages[] = "Failed to approve hour report ".$hour_report->id.", reason ".mgd_errstr();
-                        }
-                    }
-                    else
-                    {
-                        // User did not approve this hour report
-                        $hour_reports_notapproved[] = $hour_report;
-                    }
-                }
-                
-                //TODO: We need unsetuid here
-                
-                // Get the manager, he will receive some spam
-                $manager = new midgard_person();
-                $manager->get_by_id($task->manager);
-            
-                $message = "{$user->name} has processed the following hour reports in process ".$task->title."\n\n";
-            
-                if (count($hour_reports_approved) > 0)
-                {
-                    $this->_messages[] = "Approved ".count($hour_reports_approved)." hour reports";
-                    $message .= "Approved hours:\n";
-                    foreach ($hour_reports_approved as $hour_report)
-                    {
-                        $reporter = new midgard_person();
-                        $reporter->get_by_id($hour_report->person);
-                        $message .= strftime("%x",$hour_report->date).": {$hour_report->hours}h, {$reporter->lastname} {$reporter->firstname}\n";
-                    }
-                }
-            
-                if (count($hour_reports_notapproved) > 0)
-                {
-                    $message .= "\nNot approved hours:\n";
-                    foreach ($hour_reports_notapproved as $hour_report)
-                    {
-                        $reporter = new midgard_person();
-                        $reporter->get_by_id($hour_report->person);
-                        $message .= strftime("%x",$hour_report->date).": {$hour_report->hours}h, {$reporter->lastname} {$reporter->firstname}\n";
-                    }
-                }
-                
-                if (count($hour_reports_failedapproval) > 0)
-                {
-                    $message .= "\nApproval failed for hours:\n";
-                    foreach ($hour_reports_failedapproval as $hour_report)
-                    {
-                        $reporter = new midgard_person();
-                        $reporter->get_by_id($hour_report->person);
-                        $message .= strftime("%x",$hour_report->date).": {$hour_report->hours}h, {$reporter->lastname} {$reporter->firstname}\n";
-                    }
-                }
-                            
-                $message .= "\nComments:\n".$_POST["net_nemein_hourview2_comments"];
-                
-                if ($manager->email)
-                {
-                    // TODO: Use MidCOM mailtemplate
-                    //mail($manager->name. "<".$manager->email.">","Processed hour reports in ".$task->title,$message,"From: ".$user->name. "<".$user->email.">\nContent-Type: text/plain;charset=".$this->_i18n->get_current_charset());
-                    $mail=new nemeinnet_mail();
-                    $mail->to = '"'.$manager->firstname.' '.$manager->lastname.'" <'.$manager->email.'>';
-                    $mail->subject = "Processed hour reports in ".$task->title;
-                    if ($user->email)
-                    {
-                        $mail->from = '"'.$user->name.'" <'.$user->email.'>';
-                    }
-                    else
-                    {
-                        $mail->from = '"'.$user->name.'" <noreply@openpsa.org>';
-                    }
-                    $mail->body = $message;
-                    error_reporting(E_ALL ^ E_NOTICE);
-                    $mail->send();
-                    $this->_messages[] = "Mailed note to {$manager->firstname} {$manager->lastname} <{$manager->email}>";
-                }
-                else
-                {
-                    // TODO: Send to a default address?
-                }
-
-            }
-            error_reporting(E_ALL);
+            // Process approvals
+            $this->_process_approvals();
         }
+        
+        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: " . $this->_l10n->get('net.nemein.hourview2')); 
+        
         return true;
     }
     
@@ -298,40 +306,39 @@ class net_nemein_hourview2_viewer extends midcom_baseclasses_components_request
      */
     function _show_index($handler_id, &$data)
     {
-        global $view_topic;
-        $view_topic = $this->_topic;
-        global $view_messages;
-        $view_messages = $this->_messages;
-        global $view_l10n;
-        $view_l10n = $this->_l10n;
-        global $view_l10n_midcom;
-        $view_l10n_midcom = $this->_l10n_midcom;
+        $data['node'] = $this->_topic;
         
-        $hours_by_task = $this->_list_hours();
+        if ($handler_id == 'list_all')
+        {  
+            $hours_by_task = $this->_list_hours(false);
+        }
+        else
+        {
+            $hours_by_task = $this->_list_hours();
+        }
         
         if (count($hours_by_task) > 0)
         {
             midcom_show_style('show-index-header');
             foreach ($hours_by_task as $task_id => $hours)
             {
-                global $view_process;
-                $view_process = $this->_tasks[$task_id];
+                $data['process'] = $this->_tasks[$task_id];
                 midcom_show_style('show-process-header');
-                $GLOBALS["view_even"] = false;
+                $data['view_even'] = false;
                 
                 foreach ($hours as $hour_report)
                 {
                     global $view;                    
-                    $view = $hour_report;
+                    $data['hour_report'] = $hour_report;
                     midcom_show_style('show-process-hour-report');
                     
-                    if (!$GLOBALS["view_even"])
+                    if (!$data['view_even'])
                     {
-                        $GLOBALS["view_even"] = true;
+                        $data['view_even'] = true;
                     } 
                     else
                     {
-                        $GLOBALS["view_even"] = false;
+                        $data['view_even'] = false;
                     }
                 }
                 midcom_show_style('show-process-footer');

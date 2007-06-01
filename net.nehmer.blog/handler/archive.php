@@ -249,7 +249,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
                 $start_time->setHour(0);
                 $start_time->setMinute(0);
                 $start_time->setSecond(0);
-                $end_time = $start_time;
+                $end_time = clone($start_time);
                 if ($month == 12)
                 {
                     $end_time->setYear($year + 1);
@@ -509,7 +509,23 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
 
                 $data['article'] =& $article;
                 $arg = $article->name ? $article->name : $article->guid;
-                $data['view_url'] = "{$prefix}view/{$arg}.html";
+
+                if (   $this->_config->get('link_to_external_url')
+                    && !empty($article->url))
+                {
+                    $data['view_url'] = $article->url;
+                }
+                else
+                {
+                    if ($this->_config->get('view_in_url'))
+                    {
+                        $data['view_url'] = "{$prefix}view/{$arg}.html";
+                    }
+                    else
+                    {
+                        $data['view_url'] = "{$prefix}{$arg}.html";
+                    }
+                }
 
                 midcom_show_style('archive-list-item');
             }

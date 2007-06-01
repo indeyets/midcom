@@ -3,7 +3,7 @@
 // of net_nehmer_account_handler_view
 //
 // Bind the view data, remember the reference assignment:
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $account =& $data['account'];
 $visible_data =& $data['visible_data'];
 $schema =& $data['datamanager']->schema;

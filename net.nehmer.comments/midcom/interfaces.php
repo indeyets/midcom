@@ -58,10 +58,18 @@ class net_nehmer_comments_interface extends midcom_baseclasses_components_interf
         parent::midcom_baseclasses_components_interface();
 
         $this->_component = 'net.nehmer.comments';
-        $this->_autoload_files = Array(
-            'viewer.php', 'admin.php', 'navigation.php', 'comment.php'
+        $this->_autoload_files = array
+        (
+            'viewer.php', 
+            'admin.php', 
+            'navigation.php', 
+            'comment.php'
         );
-        $this->_autoload_libraries = Array('midcom.helper.datamanager2');
+        $this->_autoload_libraries = array
+        (
+            'midcom.helper.datamanager2',
+            'org.openpsa.notifications',
+        );
     }
 
     /**

@@ -800,8 +800,7 @@ class FeedDate {
 	 */
 	function rfc822() {
 		//return gmdate("r",$this->unix);
-		$date = gmdate("D, d M Y H:i:s", $this->unix);
-		if (TIME_ZONE!="") $date .= " ".str_replace(":","",TIME_ZONE);
+		$date = gmdate("D, d M Y H:i:s O", $this->unix);
 		return $date;
 	}
 	
@@ -956,7 +955,7 @@ class RSSCreator091 extends FeedCreator {
 		$feed.= $this->_createStylesheetReferences();
 		$feed.= "<rss version=\"".$this->RSSVersion."\"";
 		if ($this->items[0]->lat!="") {
-			$feed.= " xmlns:geo=\"http://www.w3.org/2003/01/geo/wgs84_pos#\"";
+			$feed.= "    xmlns:georss=\"http://www.georss.org/georss/\"\n";
         }
         $feed.= ">\n";
 		if ($this->format == 'BASE') {
@@ -1040,9 +1039,8 @@ class RSSCreator091 extends FeedCreator {
 			}
 			*/
 			if ($this->items[$i]->lat!="") {
-				$feed.= "            <geo:lat>".$this->items[$i]->lat."</geo:lat>\n";
-				$feed.= "            <geo:long>".$this->items[$i]->long."</geo:long>\n";
-			}			
+				$feed.= "            <georss:point>".$this->items[$i]->lat." ".$this->items[$i]->long."</georss:point>\n";
+            }			
 			if ($this->items[$i]->category!="") {
 				$feed.= "            <category>".htmlspecialchars($this->items[$i]->category)."</category>\n";
 			}

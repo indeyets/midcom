@@ -136,18 +136,25 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
      */
     function _handler_view($handler_id, $args, &$data)
     {
-        $_MIDCOM->auth->require_valid_user();
-
         switch ($handler_id)
         {
             case 'self':
+                if (   !$_MIDCOM->auth->user
+                    && $this->_config->get('allow_register'))
+                {
+                    $_MIDCOM->relocate('register.html');
+                }
+                $_MIDCOM->auth->require_valid_user();
                 $this->_account = $_MIDCOM->auth->user->get_storage();
+                net_nehmer_account_viewer::verify_person_privileges($this->_account);
                 $this->_view_self = true;
                 $this->_view_quick = false;
                 break;
 
             case 'self_quick':
+                $_MIDCOM->auth->require_valid_user();
                 $this->_account = $_MIDCOM->auth->user->get_storage();
+                net_nehmer_account_viewer::verify_person_privileges($this->_account);
                 $this->_view_self = true;
                 $this->_view_quick = true;
                 break;
@@ -188,7 +195,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
         $this->_prepare_datamanager();
         $this->_compute_visible_fields();
         $this->_prepare_request_data();
-        $_MIDCOM->substyle_append($this->_datamanager->schema->name);
+        $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name);
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
         $_MIDCOM->set_pagetitle("{$this->_account->name} ({$this->_datamanager->schema->description})");
 

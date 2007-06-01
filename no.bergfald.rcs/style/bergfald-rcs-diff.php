@@ -3,13 +3,13 @@
  * Created on Aug 22, 2005
  *
  */
-$request_data =& $_MIDCOM->get_custom_context_data('request_data');
-$diff   = $request_data['diff'];
-$latest = $request_data['latest_revision'];
-$comment= $request_data['comment'];
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$diff   = $data['diff'];
+$latest = $data['latest_revision'];
+$comment= $data['comment'];
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
-<h1>&(request_data['view_title']);</h1>
+<h1>&(data['view_title']);</h1>
 
 <dl class="no_bergfald_rcs_diff">
 <?php

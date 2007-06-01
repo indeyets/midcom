@@ -18,3 +18,10 @@ CREATE TABLE org_openpsa_query (
   KEY ooquery_sitegroup_idx(sitegroup)
 );
 alter table org_openpsa_query add column guid varchar(80) NOT NULL default '';
+# 1.7 metadata
+#
+ALTER TABLE org_openpsa_query ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE org_openpsa_query ADD COLUMN creator int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_query ADD COLUMN revisor int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_query ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE org_openpsa_query ADD COLUMN revision int(11) NOT NULL default '0';

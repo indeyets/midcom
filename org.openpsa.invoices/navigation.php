@@ -9,7 +9,7 @@
 
 /**
  * org.openpsa.invoices NAP interface class.
- * 
+ *
  * @package org.openpsa.invoices
  */
 class org_openpsa_invoices_navigation extends midcom_baseclasses_components_navigation
@@ -22,14 +22,14 @@ class org_openpsa_invoices_navigation extends midcom_baseclasses_components_navi
     {
         parent::midcom_baseclasses_components_navigation();
     }
-    
+
     /**
      * Returns a static leaf list with access to the archive.
      */
     function get_leaves()
     {
         $leaves = array();
-        
+
         /*
         $leaves[$this->_topic->id.':from_projects'] = array
         (

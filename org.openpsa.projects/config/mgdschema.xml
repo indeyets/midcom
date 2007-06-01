@@ -5,27 +5,28 @@
     <type name="org_openpsa_task" table="org_openpsa_task" parent="org_openpsa_task" parentfield="up">
         <!-- Copied from NewMidgardevent -->
         <property name="id" type="integer" primaryfield="id"/>
-        <property name="up" upfield="up" type="integer"/>
+        <property name="up" upfield="up" link="org_openpsa_task:id" type="integer"/>
+        <property name="dependency" link="org_openpsa_task:id" reverse="no" type="integer"/>
         <property name="start" type="integer"/>
         <property name="end" type="integer"/>
-        <property name="title" type="text"/>
+        <property name="title" type="string"/>
         <property name="description" type="text"/>
-        <!-- required metadata -->        
-        <property name="revised" type="string"/>
+        <!-- required metadata -->
+        <property name="revised" type="datetime"/>
         <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
+        <property name="created" type="datetime"/>
         <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
         <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->        
+        <!-- /required metadata -->
         <!-- /Copied from NewMidgardevent -->
         <!-- in general we rely on ACL but untill it's in core level we might need this -->
         <property name="owner" link="midgard_group:id" reverse="no" type="integer"/>
 
-        <property name="affectsSaldo" type="integer"/>
+        <property name="affectsSaldo" type="boolean"/>
         <property name="plannedHours" type="float"/>
         <property name="projectCode" type="string" />
-        
-        <!-- moved to separate table 
+
+        <!-- moved to separate table
         <property name="started" type="integer"/>
         <property name="finished" type="integer"/>
         -->
@@ -68,15 +69,15 @@
         <property name="customerOrderCode" type="string" />
         <property name="customerReference" type="string" />
         -->
-        
+
         <!-- Allow calendar "tasks as resources" feature (when implemented) to reserve overlapping
              instances with this task, I'm not sure this is actually very usefull as most be the time it will be true
         <property name="calendarAllowOverlap" type="integer"/>
          -->
         <!-- Are expenses and mileages invoiceable by default ? -->
-        <property name="expensesInvoiceableDefault" type="integer"/>
+        <property name="expensesInvoiceableDefault" type="boolean"/>
         <!-- Are hours invoiceable by default ? -->
-        <property name="hoursInvoiceableDefault" type="integer"/>
+        <property name="hoursInvoiceableDefault" type="boolean"/>
 
         <!-- TODO: how to handle "percentages" [as in the 1.x Projects] ? I think they will be a member-like system or something -->
 
@@ -85,7 +86,7 @@
         <!-- The can_xxx properties are deprecated, no-one actually uses them -->
 
         <!-- Common OpenPSA properties -->
-        
+
         <!-- Shortcut for various ACL scenarios -->
         <property name="orgOpenpsaAccesstype" type="integer"/>
         <!-- Used to a) distinguish OpenPSA objects in QB b) store object "subtype" (project vs task etc) -->
@@ -95,11 +96,11 @@
         <property name="orgOpenpsaWgtype" type="integer"/>
         <!-- The "owner" workgroup of this object -->
         <property name="orgOpenpsaOwnerWg" type="string"/>
-        
+
         <!-- /Common OpenPSA properties -->
-    
+
     </type>
-    
+
     <type name="org_openpsa_task_status" table="org_openpsa_task_status" parent="org_openpsa_task" parentfield="task">
         <property name="id" type="integer" primaryfield="id"/>
         <property name="task" link="org_openpsa_task:id" type="integer"/>
@@ -109,9 +110,9 @@
         <property name="comment" type="text" />
 
         <!-- required metadata -->
-        <property name="revised" type="string"/>
+        <property name="revised" type="datetime"/>
         <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
+        <property name="created" type="datetime"/>
         <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
         <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
         <!-- /required metadata -->
@@ -125,33 +126,33 @@
         <!-- /Copied NewMidgardEventmember properties -->
 
         <!-- I think these properties will be handled by core in the future -->
-        <!-- required metadata -->        
-        <property name="revised" type="string"/>
+        <!-- required metadata -->
+        <property name="revised" type="datetime"/>
         <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
+        <property name="created" type="datetime"/>
         <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
         <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->        
-        
+        <!-- /required metadata -->
+
         <!-- PONDER: Should we have separate "approved" like property ?
              To distinguish between customer and internal approvals -->
-        <property name="approved" type="string"/>
+        <property name="approved" type="datetime"/>
         <property name="approver" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="invoiced" type="string"/>
+        <property name="invoiced" type="datetime"/>
         <property name="invoicer" link="midgard_person:id" reverse="no" type="integer"/>
         <property name="hours" type="float" />
         <property name="description" type="text"/>
 
         <property name="date" type="integer"/>
 
-        <!-- Is this property actually neccessary to be a link, couldn't we 
+        <!-- Is this property actually neccessary to be a link, couldn't we
              just use a string pull-down defined in MidCOM schema ?
         <property name="reportType" link="org_openpsa_reporttype:id" type="integer" />
         -->
-        <property name="reportType" stype="string"/>
+        <property name="reportType" type="string"/>
         <!-- It might be good to have this flag here as well -->
-        <property name="invoiceable" type="integer"/>
-        
+        <property name="invoiceable" type="boolean"/>
+
         <!-- TODO: how to handle "percentages" [as in the 1.x Projects] ? I think thge plugins should handle them as they see fit -->
 
         <!-- Caches for various values that other would have to be queried/calculated runtime -->
@@ -159,12 +160,12 @@
         <property name="priceCache" type="float"/>
 
         <!-- Common OpenPSA properties -->
-        
+
         <!-- Used to a) distinguish OpenPSA objects in QB b) store object "subtype" (project vs task etc) -->
         <property name="orgOpenpsaObtype" type="integer"/>
-        
+
         <!-- /Common OpenPSA properties -->
-        
+
     </type>
 
     <type name="org_openpsa_expense" table="org_openpsa_expense" parent="org_openpsa_task" parentfield="task">
@@ -175,32 +176,32 @@
         <!-- /Copied NewMidgardEventmember properties -->
 
         <!-- I think these properties will be handled by core in the future -->
-        <!-- required metadata -->        
-        <property name="revised" type="string"/>
+        <!-- required metadata -->
+        <property name="revised" type="datetime"/>
         <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
+        <property name="created" type="datetime"/>
         <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
         <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->        
-        
+        <!-- /required metadata -->
+
         <!-- PONDER: Should we have separate "approved" like property ?
              To distinguish between customer and internal approvals -->
-        <property name="approved" type="string"/>
+        <property name="approved" type="datetime"/>
         <property name="approver" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="invoiced" type="string"/>
+        <property name="invoiced" type="datetime"/>
         <property name="invoicer" link="midgard_person:id" reverse="no" type="integer"/>
         <property name="date" type="integer"/>
 
         <property name="description" type="text"/>
-        <!-- Is this property actually neccessary to be a link, couldn't we 
+        <!-- Is this property actually neccessary to be a link, couldn't we
              just use a string pull-down defined in MidCOM schema ?
         <property name="reportType" link="org_openpsa_reporttype" type="integer" />
         -->
-        <property name="reportType" stype="string"/>
-        <property name="invoiceable" type="integer"/>
+        <property name="reportType" type="string"/>
+        <property name="invoiceable" type="boolean"/>
 
-        <!-- PONDER: How to handle mileages as a special case of expense ?, 
-            I'd probably use similar scheme to how hour prices are calculated in project -->            
+        <!-- PONDER: How to handle mileages as a special case of expense ?,
+            I'd probably use similar scheme to how hour prices are calculated in project -->
         <!-- PONDER: should these we even links, that would in a way make defining new ones easier, though how many are we going to need ? -->
         <property name="pricePlugin" type="string"/>
         <property name="costPlugin" type="string"/>
@@ -213,12 +214,12 @@
 
 
         <!-- Common OpenPSA properties -->
-        
+
         <!-- Used to a) distinguish OpenPSA objects in QB b) store object "subtype" (project vs task etc) -->
         <property name="orgOpenpsaObtype" type="integer"/>
-        
+
         <!-- /Common OpenPSA properties -->
-        
+
     </type>
 
     <type name="org_openpsa_task_resource" table="org_openpsa_task_resource" parent="org_openpsa_task" parentfield="task">
@@ -231,24 +232,24 @@
         <!-- Link to resource type, the types themselves have a magic number our reports etc can use in the future
         <property name="resourceType" link="org_openpsa_resource_type" reverse="no" />
         -->
-        
+
         <!-- Here we can also add mapping properties for pricelist person classes
              (1.x pricelists property) like features or even invidual pricing not based on pricelists -->
 
         <!-- Common OpenPSA properties -->
-        
+
         <!-- Used to a) distinguish OpenPSA objects in QB b) store object "subtype" (project vs task etc) -->
         <property name="orgOpenpsaObtype" type="integer"/>
-        
+
         <!-- /Common OpenPSA properties -->
-        
-        <!-- required metadata -->        
-        <property name="revised" type="string"/>
+
+        <!-- required metadata -->
+        <property name="revised" type="datetime"/>
         <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
+        <property name="created" type="datetime"/>
         <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
         <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->        
+        <!-- /required metadata -->
     </type>
 
     <type name="org_openpsa_deliverable" table="org_openpsa_deliverable">
@@ -258,13 +259,13 @@
         <property name="target" type="string"/>
 
         <property name="orgOpenpsaObtype" type="integer"/>
-        <!-- required metadata -->        
-        <property name="revised" type="string"/>
+        <!-- required metadata -->
+        <property name="revised" type="datetime"/>
         <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
+        <property name="created" type="datetime"/>
         <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
         <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->        
+        <!-- /required metadata -->
     </type>
     <!-- /org.openpsa.projects objects -->
 

@@ -133,9 +133,9 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
         {
             case 'save':
                 // Reindex the article
-                //$indexer =& $_MIDCOM->get_service('indexer');
-                //net_nehmer_blog_viewer::index($this->_controller->datamanager, $indexer, $this->_content_topic);
-                $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('net.nemein.wiki'), sprintf($this->_request_data['l10n']->get('page "%s" saved'), $this->_page->title), 'ok');
+                $indexer =& $_MIDCOM->get_service('indexer');
+                net_nemein_wiki_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
+                $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('net.nemein.wiki'), sprintf($this->_request_data['l10n']->get('page %s saved'), $this->_page->title), 'ok');
                 // *** FALL-THROUGH ***
             case 'cancel':
                 if ($this->_page->name == 'index')
@@ -155,22 +155,66 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
                 MIDCOM_TOOLBAR_URL => "{$this->_page->name}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('view'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
-                MIDCOM_TOOLBAR_ENABLED => $this->_page->can_do('midgard:update'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_left.png',
+                MIDCOM_TOOLBAR_ENABLED => true,
             )
         );    
-        $this->_node_toolbar->add_item(
+        $this->_view_toolbar->add_item(
             array
             (
-                MIDCOM_TOOLBAR_URL => "rcs/net.nemein.wiki/{$this->_page->guid}/",
-                MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('Show history'),
+                MIDCOM_TOOLBAR_URL => "delete/{$this->_page->name}.html",
+                MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('delete'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
-                MIDCOM_TOOLBAR_ENABLED => true,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                MIDCOM_TOOLBAR_ENABLED => $this->_page->can_do('midgard:delete'),
             )
         );
         
+        foreach (array_keys($this->_request_data['schemadb']) as $name)
+        {
+            if ($name == $this->_controller->datamanager->schema->name)
+            {
+                // The page is already of this type, skip
+                continue;
+            }
+            
+            $this->_view_toolbar->add_item(
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "change/{$this->_page->name}.html",
+                    MIDCOM_TOOLBAR_LABEL => sprintf
+                    (
+                        $this->_l10n->get('change to %s'),
+                        $this->_l10n->get($this->_request_data['schemadb'][$name]->description)
+                    ),
+                    MIDCOM_TOOLBAR_HELPTEXT => null,
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_refresh.png',
+                    MIDCOM_TOOLBAR_POST => true,
+                    MIDCOM_TOOLBAR_POST_HIDDENARGS => Array
+                    (
+                        'change_to' => $name,
+                    ),
+                    MIDCOM_TOOLBAR_ENABLED => $this->_page->can_do('midgard:update'),
+                )
+            );
+        }
+        
+        $_MIDCOM->bind_view_to_object($this->_page, $this->_controller->datamanager->schema->name);
+        
         $_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('edit %s'), $this->_page->title));
+
+        $tmp = Array();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "{$this->_page->name}/",
+            MIDCOM_NAV_NAME => $this->_page->title,
+        );
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "edit/{$this->_page->name}.html",
+            MIDCOM_NAV_NAME => $this->_request_data['l10n_midcom']->get('edit'),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         
         return true;
     }
@@ -179,6 +223,27 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
     {
         $this->_request_data['controller'] =& $this->_controller;
         midcom_show_style('view-wikipage-edit');
+    }
+    
+    function _handler_change($handler_id, $args, &$data)
+    {
+        if ($_SERVER['REQUEST_METHOD'] != 'POST')
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRFORBIDDEN, 'Only POST requests are allowed here.');
+        }
+        
+        if (!$this->_load_page($args[0]))
+        {
+            return false;
+        }
+        $this->_page->require_do('midgard:update');
+        
+        // Change schema to redirect
+        $this->_page->parameter('midcom.helper.datamanager2', 'schema_name', $_POST['change_to']);
+        
+        // Redirect to editing
+        $_MIDCOM->relocate("edit/{$this->_page->name}.html");
+        // This will exit
     }
 }
 ?>

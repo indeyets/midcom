@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    <type name="net_nemein_tag" table="net_nemein_tag" >
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="tag" type="text"/>
+        <property name="url" type="text"/>
+    </type>
+
+    <type name="net_nemein_tag_link" table="net_nemein_tag_link" >
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="fromComponent" type="text"/>
+        <property name="fromGuid" type="text"/>
+        <property name="fromClass" type="text"/>
+        <property name="tag" link="net_nemein_tag:id" reverse="no" type="integer"/>
+        <property name="context" type="text"/>
+        <property name="value" type="text"/>
+    </type>
+</Schema>

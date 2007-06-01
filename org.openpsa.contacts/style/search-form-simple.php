@@ -1,10 +1,10 @@
 <?php
-$view =& $GLOBALS['midcom']->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $nap = new midcom_helper_nav();
 $node = $nap->get_node($nap->get_current_node());
 ?>
 <div class="area">
-    <h2><?php echo $view['l10n']->get("contact search"); ?></h2>
+    <h2><?php echo $data['l10n']->get("contact search"); ?></h2>
     <form method="get" action="&(node[MIDCOM_NAV_FULLURL]);search/">
         <input type="text" name="search"<?php
         if (array_key_exists('search', $_GET))
@@ -12,6 +12,6 @@ $node = $nap->get_node($nap->get_current_node());
             echo " value=\"{$_GET['search']}\"";
         }
         ?> />
-        <input type="submit" value="<?php echo $view['l10n']->get("search"); ?>" />
+        <input type="submit" value="<?php echo $data['l10n']->get("search"); ?>" />
     </form>
 </div>

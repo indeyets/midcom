@@ -5,5 +5,16 @@
 /* The schema databases to use */
 'schemadb_product' => 'file:/org/openpsa/products/config/schemadb_product_default.inc',
 'schemadb_group' => 'file:/org/openpsa/products/config/schemadb_group_default.inc',
+'schemadb_businessarea' => 'file:/org/openpsa/products/config/schemadb_businessarea_default.inc',
 /* Whether to enable adding subcomponents to products */
 'enable_components' => true,
+'root_group' => 0,
+'root_businessarea' => 0,
+'search_first' => false,
+'search_default_to_all' => true,
+'group_list_products' => true,
+'products_per_page' => 30,
+'show_items_in_feed' => 10,
+
+'api_products_enable' => true,
+'api_products_schema' => 'default',

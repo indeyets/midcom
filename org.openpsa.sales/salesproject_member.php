@@ -9,7 +9,7 @@
 
 /**
  * Midcom wrapped base class, keep logic here
- * 
+ *
  * @package org.openpsa.sales
  */
 class midcom_org_openpsa_salesproject_member extends __midcom_org_openpsa_salesproject_member
@@ -27,21 +27,21 @@ class midcom_org_openpsa_salesproject_member extends __midcom_org_openpsa_salesp
         }
         return true;
     }
-    
+
     function _on_created()
     {
         // Check if the salesman and the contact are buddies already
         $salesproject = new org_openpsa_sales_salesproject($this->salesproject);
         $owner = new midcom_db_person($salesproject->owner);
         $person = new midcom_db_person($this->person);
-        
+
         $qb = org_openpsa_contacts_buddy::new_query_builder();
         $user =& $_MIDCOM->auth->user->get_storage();
         $qb->add_constraint('account', '=', $owner->guid);
         $qb->add_constraint('buddy', '=', $person->guid);
         $qb->add_constraint('blacklisted', '=', false);
         $buddies = $qb->execute();
-        
+
         if (count($buddies) == 0)
         {
             // Cache the association to buddy list of the sales project owner
@@ -71,14 +71,14 @@ class midcom_org_openpsa_salesproject_member extends __midcom_org_openpsa_salesp
 
 /**
  * Wrap the midcom class to component namespace
- * 
+ *
  * @package org.openpsa.sales
  */
 class org_openpsa_sales_salesproject_member extends midcom_org_openpsa_salesproject_member
 {
     function org_openpsa_sales_salesproject_member($identifier=NULL)
     {
-        return parent::midcom_org_openpsa_salesproject_member($identifier); 
+        return parent::midcom_org_openpsa_salesproject_member($identifier);
     }
 }
 ?>

@@ -2,5 +2,5 @@
 // Available request keys:
 // pending
 //
-// $data =& $_MIDCOM->get_custom_context_data('request_data');
+// //$data =& $_MIDCOM->get_custom_context_data('request_data');
 ?>

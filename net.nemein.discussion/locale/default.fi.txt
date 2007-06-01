@@ -15,6 +15,22 @@
 Takaisin foorumiin
 ---STRINGEND
 
+---STRING confirm abuse
+Vahvista väärinkäytökseksi
+---STRINGEND
+
+---STRING confirm junk
+Vahvista roskapostiksi
+---STRINGEND
+
+---STRING confirmed_abuse
+Vahvistettu väärinkäytökseksi
+---STRINGEND
+
+---STRING confirmed_junk
+Vahvistettu roskapostiksi
+---STRINGEND
+
 ---STRING content
 Sisältö
 ---STRINGEND
@@ -27,8 +43,20 @@ Uusi keskustelu
 Moderaatiohistoria
 ---STRINGEND
 
+---STRING net.nemein.discussion
+Keskustelufoorumi
+---STRINGEND
+
+---STRING not abuse
+Ei väärinkäytös
+---STRINGEND
+
 ---STRING post to
 Kirjoita alueelle:
+---STRINGEND
+
+---STRING privilege moderation
+Moderointi
 ---STRINGEND
 
 ---STRING reply
@@ -47,6 +75,10 @@ Ilmoita väärinkäytös
 Ilmoitettu väärinkäytökseksi
 ---STRINGEND
 
+---STRING reported_not_abuse
+Ilmoitettu ei väärinkäytökseksi
+---STRINGEND
+
 ---STRING sender
 Lähettäjä
 ---STRINGEND
@@ -55,7 +87,7 @@ Lähettäjä
 Aihe
 ---STRINGEND
 
----STRING net.nemein.discussion
-Keskustelufoorumi
+---STRING re:
+Vs:
 ---STRINGEND
 

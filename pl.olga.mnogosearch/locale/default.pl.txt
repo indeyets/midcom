@@ -1,0 +1,93 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE pl
+
+---STRING begin mark
+Kod podświetlenia znalezionych słów, do wklejenia przed słowem.
+---STRINGEND
+
+---STRING bytes
+bajtów.
+---STRINGEND
+
+---STRING crosswords
+Crosswords?
+---STRINGEND
+
+---STRING database uri
+URI Bazy danych
+---STRINGEND
+
+---STRING date format
+Format daty
+---STRINGEND
+
+---STRING detect clones
+Wyszukiwanie klonów?
+---STRINGEND
+
+---STRING docs <b>%d-%d</b> of <b>%d</b> found
+Dokumenty <b>%d-%d</b> z <b>%d</b> znalezionych.
+---STRINGEND
+
+---STRING end mark
+Kod podświetlenia znalezionych słów, do wklejenia za słowem.
+---STRINGEND
+
+---STRING excerpt padding
+Ilość słów przed i za znalezionym słowem.
+---STRINGEND
+
+---STRING excerpt size
+Rozmiar skrótu
+---STRINGEND
+
+---STRING mnogosearch settings
+Konfiguracja wyszukiwarki
+---STRINGEND
+
+---STRING next
+Dalej
+---STRINGEND
+
+---STRING pl.olga.mnogosearch
+Wyszukiwarka Mnogosearch
+---STRINGEND
+
+---STRING prev
+Wstecz
+---STRINGEND
+
+---STRING query tracking
+Śledzenie zapytań?
+---STRINGEND
+
+---STRING results per page
+Ilość wyników na stronę
+---STRINGEND
+
+---STRING search
+Szukaj
+---STRINGEND
+
+---STRING search cache
+Włączyć cache?
+---STRINGEND
+
+---STRING search for <b>%s</b>
+Wyszukiwanie <b>%s</b>.
+---STRINGEND
+
+---STRING search for:
+Szukaj:
+---STRINGEND
+
+---STRING search time: %s seconds
+Czas wyszukiwania: %s sekund.
+---STRINGEND
+
+---STRING max number of results
+Maksymalna ilość zwracanych wyników wyszukiwania.
+---STRINGEND
+

@@ -67,26 +67,28 @@ class midcom_services_auth_frontend_form extends midcom_services_auth_frontend
      */
     function show_authentication_form()
     {
-        if (mgd_is_element_loaded('midcom_services_auth_frontend_form'))
+        if (   function_exists('mgd_is_element_loaded')    
+            && mgd_is_element_loaded('midcom_services_auth_frontend_form'))
         {
             mgd_show_element('midcom_services_auth_frontend_form');
         }
         else
         {
             ?>
-<form name="midcom_services_auth_frontend_form" action='' method='POST' id="midcom_services_auth_frontend_form">
-    <label for="username">
-        <?php echo $_MIDCOM->i18n->get_string('username', 'midcom'); ?>:
-        <input name="username" id="username" />
-    </label>
-    <label for="password">
-        <?php echo $_MIDCOM->i18n->get_string('password', 'midcom'); ?>:
-        <input name="password" id="password" type="password" />
-    </label>
-    <input type="submit" name="midcom_services_auth_frontend_form_submit" id="midcom_services_auth_frontend_form_submit" value="<?php
-        echo $_MIDCOM->i18n->get_string('login', 'midcom'); ?>" />
-</form>
-<?php
+            <form name="midcom_services_auth_frontend_form" method='post' id="midcom_services_auth_frontend_form">
+                <label for="username">
+                    <p><?php echo $_MIDCOM->i18n->get_string('username', 'midcom'); ?></p>
+                    <input name="username" id="username" class="input" />
+                </label>
+                <label for="password">
+                    <p><?php echo $_MIDCOM->i18n->get_string('password', 'midcom'); ?></p>
+                    <input name="password" id="password" type="password" class="input" />
+                </label>
+                <div class="clear"></div>
+                <input type="submit" name="midcom_services_auth_frontend_form_submit" id="midcom_services_auth_frontend_form_submit" value="<?php
+                    echo $_MIDCOM->i18n->get_string('login', 'midcom'); ?>" />
+            </form>
+            <?php
         }
     }
 

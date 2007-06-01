@@ -1,6 +1,6 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.en.txt,v 1.4 2006/05/12 16:51:05 rambo Exp $
+---CVS $Id$
 ---LANGUAGE en
 
 ---STRING %s document
@@ -9,6 +9,10 @@
 
 ---STRING application/vnd.ms-powerpoint
 Powerpoint
+---STRINGEND
+
+---STRING create document
+Create document
 ---STRINGEND
 
 ---STRING document search
@@ -53,9 +57,5 @@ Search
 
 ---STRING text/plain
 Text
----STRINGEND
-
----STRING create document
-Create document
 ---STRINGEND
 

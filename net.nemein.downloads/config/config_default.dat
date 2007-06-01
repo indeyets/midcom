@@ -1,6 +1,0 @@
-"schemadb" => "file:/net/nemein/downloads/config/schemadb_default.dat",
-"schemadbs" => Array (
-    "file:/net/nemein/downloads/config/schemadb_default.dat" => "Downloads Default Schema Database",
-),
-"default_schema" => "default",
-"current_release" => false

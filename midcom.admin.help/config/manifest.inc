@@ -1,18 +1,40 @@
-'name' => 'midcom.admin.help',
-'description' => 'This module handles help.',
-'purecode' => true,
-'version' => '0.0.1',
-'privileges' =>  Array(),
-'class_definitions' => Array(),
-'package.xml' => Array(
+
+  'name' => 'midcom.admin.help',
+  'description' => 'On-site help displayer',
+  'purecode' => true,
+  'version' => '1.0.2beta1',
+  'state' => 'beta',
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+  ),
+  'package.xml' => 
+  array (
     'license' => 'GPL',
-    'maintainers' => Array(
-        'tarjei' => Array(
-            'name' => 'Tarjei Huse',
-            'email' => 'tarjei@nu.no',
-            'role' => 'lead',
-        ),
+    'maintainers' => 
+    array (
+      'tarjei' => 
+      array (
+        'name' => 'Tarjei Huse',
+        'email' => 'tarjei@nu.no',
+        'role' => 'lead',
+      ),
+      'bergie' => 
+      array (
+        'name' => 'Henri Bergius',
+        'email' => 'henri.bergius@iki.fi',
+        'role' => 'developer',
+      ),
     ),
-    'dependencies' => Array(
+    'dependencies' => 
+    array (
+      'net.nehmer.markdown' => 
+      array (
+      ),
+      'midcom' => 
+      array (
+      ),
     ),
-),
+  ),

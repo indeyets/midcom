@@ -1,9 +1,9 @@
-                   org.openpsa.jabber Changelog
+org.openpsa.jabber Changelog
                    ----------------------------
 Legend:
 - All items marked with "!" represent a major API-Change that is
   not guaranteed to be backwards compatible to previous versions
-  which might even break existing functionality. 
+  which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
 2006-02-15 rambo

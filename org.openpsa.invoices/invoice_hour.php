@@ -9,7 +9,7 @@
 
 /**
  * Midcom wrapped base class, keep logic here
- * 
+ *
  * @package org.openpsa.invoices
  */
 class org_openpsa_invoices_invoice_hour extends __org_openpsa_invoices_invoice_hour
@@ -22,7 +22,7 @@ class org_openpsa_invoices_invoice_hour extends __org_openpsa_invoices_invoice_h
     function _on_created()
     {
         parent::_on_created();
-        
+
         // Cache the information that the hour report has been invoiced to the report itself
         $hour_report = new org_openpsa_projects_hour_report($this->hourReport);
         if (!$hour_report)

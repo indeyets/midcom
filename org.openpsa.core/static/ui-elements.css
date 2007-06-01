@@ -111,7 +111,7 @@ div.area form.subscribe
 div.area form.subscribe input
 {
     background-color: transparent;
-    color: #314E6C;    
+    color: #314E6C;
     border: none;
     padding-left: 16px;
     background-image: url('../stock-icons/16x16/jump-to.png');
@@ -175,7 +175,7 @@ div.area ul.comments {
    padding: 0px;
 }
 div.area ul.comments li {
-   list-style: none; 
+   list-style: none;
    margin-left: 0px;
 }
 div.area ul.comments li div {
@@ -201,7 +201,7 @@ div.form_description {
 div.form_viewfield {
     margin-left: 100px;
 }*/
- 
+
 /* Ajax handling */
 input.ajax_editable, select.ajax_editable {
     border: 1px solid transparent;
@@ -291,7 +291,7 @@ div.area div.news-item
     padding-left: 22px;
     background-image: url('../stock-icons/16x16/stock_news.png');
     background-position: top left;
-    background-repeat: no-repeat;    
+    background-repeat: no-repeat;
 }
 
 #org_openpsa_projects_savebutton
@@ -341,11 +341,11 @@ div.net_nemein_wiki ul
 div.net_nemein_wiki ul.related li
 {
     list-style: none;
-    padding-left: 22px;    
+    padding-left: 22px;
     background-image: url('../stock-icons/16x16/new-text.png');
     background-position: top left;
-    background-repeat: no-repeat;    
-    margin-bottom: 4px;        
+    background-repeat: no-repeat;
+    margin-bottom: 4px;
 }
 div.net_nemein_wiki ul.related li a
 {
@@ -356,4 +356,19 @@ div.net_nemein_wiki ul.related li a
 a.sort img
 {
     border: 0px;
+}
+
+/* Message report table */
+table.link_statistics
+{
+}
+
+table.link_statistics td.numeric
+{
+    text-align: center;
+}
+
+table.link_statistics td.bargraph div.link_count_visualization
+{
+    background-color: #3364a3;
 }

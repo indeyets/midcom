@@ -9,7 +9,7 @@ class org_openpsa_projects_project extends org_openpsa_projects_task
     {
         return parent::org_openpsa_projects_task($identifier);
     }
-    
+
     function _on_creating()
     {
         $stat = parent::_on_creating();
@@ -19,13 +19,13 @@ class org_openpsa_projects_project extends org_openpsa_projects_task
 
     function _prepare_save()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);    
+        debug_push_class(__CLASS__, __FUNCTION__);
         $stat = parent::_prepare_save();
-        
+
         debug_pop();
         return $stat;
     }
-    
+
     function _on_updated()
     {
         $participants_vgroup = new midcom_core_group_virtual("org.openpsa.projects-{$this->guid}");
@@ -34,7 +34,7 @@ class org_openpsa_projects_project extends org_openpsa_projects_task
         if ($this->status != ORG_OPENPSA_TASKSTATUS_CLOSED)
         {
             $this->orgOpenpsaWgtype = ORG_OPENPSA_WGTYPE_ACTIVE;
-            
+
             if (!is_object($participants_vgroup))
             {
                 // Register workgroups here
@@ -54,7 +54,7 @@ class org_openpsa_projects_project extends org_openpsa_projects_task
                 $_MIDCOM->auth->register_virtual_group('org.openpsa.projects', $this->guid, $this->title);
                 $_MIDCOM->auth->drop_sudo();
             }
-            
+
             if (!is_object($contacts_vgroup))
             {
                 debug_add("Registering workgroup: Project subscribers");
@@ -97,14 +97,14 @@ class org_openpsa_projects_project extends org_openpsa_projects_task
         }
         parent::_on_updated();
     }
-    
+
     function _update_parent()
     {
         // Not needed for now
         // TODO: Update information upwards in project hierarchy?
         return true;
     }
-    
+
     function _refresh_from_tasks()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -116,7 +116,7 @@ class org_openpsa_projects_project extends org_openpsa_projects_task
         $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
         $task_statuses = Array();
         $task_number = count($ret);
-        
+
         if (   is_array($ret)
             && count($ret) > 0)
         {
@@ -150,19 +150,19 @@ class org_openpsa_projects_project extends org_openpsa_projects_task
                         && !array_key_exists($pid, $this->contacts))
                     {
                         $this->contacts[$pid] = true;
-                        $update_required = true;                        
+                        $update_required = true;
                     }
                 }
-                
+
                 //Simple way to handle accepted and various "under work" statuses
                 if (!array_key_exists($task->status, $task_statuses))
                 {
                     $task_statuses[$task->status] = 0;
                 }
                 $task_statuses[$task->status]++;
-                
+
             }
-            
+
             //TODO: Some way to check if all tasks of project are completed (or above) and set to lowest common.
             $orig_status = null;
             $new_status = null;
@@ -182,7 +182,7 @@ class org_openpsa_projects_project extends org_openpsa_projects_task
                     }
                 }
             }
-            
+
             if (   !is_null($new_status)
                 && $this->status != $new_status)
             {
@@ -202,7 +202,7 @@ class org_openpsa_projects_project extends org_openpsa_projects_task
             debug_pop();
             return true;
         }
-    }    
-    
+    }
+
 }
 ?>

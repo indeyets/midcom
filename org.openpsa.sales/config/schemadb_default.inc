@@ -3,6 +3,13 @@
     'description' => 'salesproject',
     'fields'      => array
     (
+        'code' => array
+        (
+            'description' => 'code',
+            'location'  => 'code',
+            'datatype'  => 'text',
+            'required'  => true,
+        ),
         'title' => array
         (
             'description' => 'title',
@@ -40,22 +47,31 @@
             'config_domain'  => 'org.openpsa.sales',
             'config_key'  => 'probability',
             'widget'    => 'select',
-            'datatype'  => 'integer',            
+            'datatype'  => 'integer',
             'widget_select_choices' => array
             (
                 25 => '25%',
                 50 => '50%',
-                75 => '75%',                
-                100 => '100%', 
+                75 => '75%',
+                100 => '100%',
             ),
             'default'   => 50,
-        ),   
+        ),
         'value' => array
         (
             'description' => 'value',
             'location'  => 'config',
             'config_domain'  => 'org.openpsa.sales',
             'config_key'  => 'value',
+            'datatype'  => 'text',
+            'default'   => 0,
+        ),
+        'profit' => array
+        (
+            'description' => 'profit',
+            'location'  => 'config',
+            'config_domain'  => 'org.openpsa.sales',
+            'config_key'  => 'profit',
             'datatype'  => 'text',
             'default'   => 0,
         ),
@@ -66,7 +82,7 @@
             'config_domain'  => 'org.openpsa.sales',
             'config_key'  => 'close_est',
             'widget_date_enable_outside_ais' => true,
-        ), 
+        ),
         'description' => array
         (
             'description' => 'description',
@@ -106,6 +122,13 @@
                 ORG_OPENPSA_SALESPROJECTSTATUS_WON      => 'won',
             ),
             'hidden'    => true,
+        ),
+        'code' => array
+        (
+            'description' => 'code',
+            'location'  => 'code',
+            'datatype'  => 'text',
+            'required'  => true,
         ),
         'title' => array
         (

@@ -18,7 +18,10 @@ class midcom_org_openpsa_task_status extends __midcom_org_openpsa_task_status
         $ret = parent::__midcom_org_openpsa_task_status($id);
         if (!$this->id)
         {
-            $this->timestamp = $this->gmtime();
+            if (is_object($this))
+            {
+                $this->timestamp = $this->gmtime();
+            }
         }
         return $ret;
     }
@@ -27,15 +30,15 @@ class midcom_org_openpsa_task_status extends __midcom_org_openpsa_task_status
     {
         if ($this->task != 0)
         {
-            $parent = new org_openpsa_projects_task($this->task);            
+            $parent = new org_openpsa_projects_task($this->task);
             return $parent;
         }
         else
         {
             return null;
         }
-    }    
-    
+    }
+
     function _on_creating()
     {
         //Make sure we have timestamp
@@ -43,7 +46,7 @@ class midcom_org_openpsa_task_status extends __midcom_org_openpsa_task_status
         {
             $this->timestamp = $this->gmtime();
         }
-        
+
         //Check for duplicate(s) (for some reason at times the automagic actions in task object try to create duplicate statuses)
         $qb = new MidgardQueryBuilder('org_openpsa_task_status');
         $qb->add_constraint('task', '=', 'task');
@@ -62,8 +65,39 @@ class midcom_org_openpsa_task_status extends __midcom_org_openpsa_task_status
             debug_add("List of duplicate status objects \n===\n" . sprint_r($qbret) . "===\n");
             return false;
         }
-        
+
         return true;
+    }
+
+    function get_status_message()
+    {
+        switch ($this->type)
+        {
+            case ORG_OPENPSA_TASKSTATUS_PROPOSED:
+                return 'proposed to %s by %s';
+            case ORG_OPENPSA_TASKSTATUS_DECLINED:
+                return 'declined by %s';
+            case ORG_OPENPSA_TASKSTATUS_ACCEPTED:
+                return 'accepted by %s';
+            case ORG_OPENPSA_TASKSTATUS_ONHOLD:
+                return 'put on hold by %s';
+            case ORG_OPENPSA_TASKSTATUS_STARTED:
+                return 'work started by %s';
+            case ORG_OPENPSA_TASKSTATUS_REJECTED:
+                return 'rejected by %s';
+            case ORG_OPENPSA_TASKSTATUS_REOPENED:
+                return 're-opened by %s';
+            case ORG_OPENPSA_TASKSTATUS_COMPLETED:
+                return 'marked as completed by %s';
+            case ORG_OPENPSA_TASKSTATUS_APPROVED:
+                return 'approved by %s';
+            case ORG_OPENPSA_TASKSTATUS_CLOSED:
+                return 'closed by %s';
+            case ORG_OPENPSA_TASKSTATUS_DBE_SYNC_OK:
+                return 'synchronized with %s by %s';
+            default:
+                return "{$this->type} by %s";
+        }
     }
 
     function gmtime()
@@ -81,9 +115,9 @@ class org_openpsa_projects_task_status extends midcom_org_openpsa_task_status
 
     function org_openpsa_projects_task_status($identifier=NULL)
     {
-        return parent::__midcom_org_openpsa_task_status($identifier); 
+        return parent::__midcom_org_openpsa_task_status($identifier);
     }
-    
+
 }
 
 ?>

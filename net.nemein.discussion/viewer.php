@@ -16,13 +16,10 @@
 
 class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
 {
-    var $_toolbars;
 
     function net_nemein_discussion_viewer($topic, $config)
     {
         parent::midcom_baseclasses_components_request($topic, $config);
-        
-        $this->_toolbars =& midcom_helper_toolbars::get_instance();
         
         // Match /
         $this->_request_switch['index'] = array(
@@ -37,10 +34,18 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
         );
 
         // Match /read/<post guid>
-        $this->_request_switch['read'] = Array
+        $this->_request_switch['read_redirect'] = Array
         (
             'handler' => Array('net_nemein_discussion_handler_thread', 'post'),
             'fixed_args' => Array('read'),
+            'variable_args' => 1,            
+        );
+        
+        // Match /read/xml/<post guid>
+        $this->_request_switch['read_xml'] = Array
+        (
+            'handler' => Array('net_nemein_discussion_handler_thread', 'post'),
+            'fixed_args' => Array('read', 'xml'),
             'variable_args' => 1,            
         );
 
@@ -95,12 +100,27 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('latest'),
             'variable_args' => 1,
         );
-        
+
+        $this->_request_switch['api-email'] = Array
+        (
+            'handler' => Array('net_nemein_discussion_handler_api_email', 'import'),
+            'fixed_args' => Array('api', 'email'),
+        );
+
+        // Match /config/
+        $this->_request_switch['config'] = Array
+        (
+            'handler' => Array('midcom_core_handler_configdm', 'configdm'),
+            'schemadb' => 'file:/net/nemein/discussion/config/schemadb_config.inc',
+            'schema' => 'config',
+            'fixed_args' => Array('config'),
+        );        
     }
     
     function _on_handle($handler_id, $args)
     {
-        $_MIDCOM->add_link_head(
+        $_MIDCOM->add_link_head
+        (
             array
             (
                 'rel' => 'stylesheet',
@@ -108,7 +128,8 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
                 'href' => MIDCOM_STATIC_URL.'/net.nemein.discussion/discussion.css',
             )
         );
-        $_MIDCOM->add_link_head(
+        $_MIDCOM->add_link_head
+        (
             array(
                 'rel'   => 'alternate',
                 'type'  => 'application/rss+xml',
@@ -116,6 +137,37 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
                 'href'  => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'rss.xml',
             )
         );
+        
+        $this->_node_toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => 'post.html',
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('create thread'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail-reply.png',
+                MIDCOM_TOOLBAR_ENABLED => $this->_topic->can_do('midgard:create'),
+                MIDCOM_TOOLBAR_ACCESSKEY => 'n',
+            )
+        );
+
+        if (   $this->_topic->can_do('midgard:update')
+            && $this->_topic->can_do('midcom:component_config'))
+        {
+            $this->_node_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => 'config.html',
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
+                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+                )
+            );
+        }  
+        
+        $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
+        
         return true;
     }
     

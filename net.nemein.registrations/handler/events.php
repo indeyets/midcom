@@ -91,11 +91,23 @@ class net_nemein_registrations_handler_events extends midcom_baseclasses_compone
     function _update_breadcrumb_line($handler_id)
     {
         $tmp = Array();
-        $tmp[] = Array
-        (
-            MIDCOM_NAV_URL => "events/list_all.html",
-            MIDCOM_NAV_NAME => $this->_l10n->get('list all events'),
-        );
+        switch ($handler_id)
+        {
+            case 'events-create':
+                $tmp[] = Array
+                (
+                    MIDCOM_NAV_URL => "events/create.html",
+                    MIDCOM_NAV_NAME => $this->_l10n->get('create an event'),
+                );
+                break;
+            default:
+                $tmp[] = Array
+                (
+                    MIDCOM_NAV_URL => "events/list_all.html",
+                    MIDCOM_NAV_NAME => $this->_l10n->get('list all events'),
+                );
+                break;
+        }
 
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
@@ -113,8 +125,7 @@ class net_nemein_registrations_handler_events extends midcom_baseclasses_compone
         $this->_events = $qb->execute();
 
         $this->_prepare_request_data();
-        $_MIDCOM->set_26_request_metadata(time(), $this->_event->guid);
-        $title = $this->_event->title;
+        $title = $this->_l10n->get('list all events');
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
         $this->_update_breadcrumb_line($handler_id);
         return true;
@@ -150,7 +161,6 @@ class net_nemein_registrations_handler_events extends midcom_baseclasses_compone
      */
     function _handler_create($handler_id, $args, &$data)
     {
-        $this->_root_event->require_do('net.nemein.registrations:manage');
         $this->_root_event->require_do('midgard:create');
 
         $this->_controller =& $this->_root_event->prepare_create_controller($this);
@@ -159,8 +169,16 @@ class net_nemein_registrations_handler_events extends midcom_baseclasses_compone
 
 
         $this->_prepare_request_data();
-        $_MIDCOM->set_26_request_metadata(time(), $this->_event->guid);
-        $title = $this->_event->title;
+        
+        if ($this->_event)
+        {
+            $_MIDCOM->set_26_request_metadata(time(), $this->_event->guid);
+            $title = $this->_event->title;
+        }
+        else
+        {
+            $title = $this->_l10n->get('create an event');
+        }
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
         $this->_update_breadcrumb_line($handler_id);
         return true;

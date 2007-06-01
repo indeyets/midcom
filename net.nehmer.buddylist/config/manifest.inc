@@ -1,37 +1,45 @@
-'name' => 'net.nehmer.buddylist',
-'version' => '1.0.0',
-'class_definitions' => Array('midcomdba.inc'),
 
-'watches' => Array
-(
-    Array
-    (
-        'classes' => Array ('midgard_person'),
-        'operations' => MIDCOM_OPERATION_DBA_DELETE,
+  'name' => 'net.nehmer.buddylist',
+  'version' => '1.0.3beta1',
+  'class_definitions' => 
+  array (
+    0 => 'midcomdba.inc',
+  ),
+  'watches' => 
+  array (
+    0 => 
+    array (
+      'classes' => 
+      array (
+        0 => 'midgard_person',
+      ),
+      'operations' => MIDCOM_OPERATION_DBA_DELETE,
     ),
-),
-
-'package.xml' => Array(
+  ),
+  'package.xml' => 
+  array (
     'summary' => 'Buddy list manager',
     'description' => 'Buddy list and social network manager',
-    'maintainers' => Array(
-        'torben' => Array(
-            'name' => 'Torben Nehmer',
-            'email' => 'torben@nehmer.net',
-            'role' => 'lead',
-        ),
+    'maintainers' => 
+    array (
+      'torben' => 
+      array (
+        'name' => 'Torben Nehmer',
+        'email' => 'torben@nehmer.net',
+        'role' => 'lead',
+      ),
+      'rambo' => 
+      array (
+        'name' => 'Eero af Heurlin',
+        'email' => 'eero.afheurlin@iki.fi',
+        'role' => 'lead',
+      ),
     ),
-),
-
-
-//'customdata' => Array
-//(
-//    'midcom.services.cron' => Array
-//    (
-//        Array
-//        (
-//            'handler' => 'net_nehmer_buddylist_cron_cleanup',
-//            'recurrence' => MIDCOM_CRON_DAY,
-//        )
-//    ),
-//),
+    'dependencies' => 
+    array (
+      'midcom' => 
+      array (
+      ),
+    ),
+  ),
+  'state' => 'beta',

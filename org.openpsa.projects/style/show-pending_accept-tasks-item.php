@@ -1,11 +1,11 @@
 <?php
-$view_data =& $GLOBALS['midcom']->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $nap = new midcom_helper_nav();
 $node = $nap->get_node($nap->get_current_node());
-echo "<dt><a href=\"{$node[MIDCOM_NAV_FULLURL]}task/{$view_data['task']->guid}/\">{$view_data['task']->title}</a>";
-if ($view_data['task']->up)
+echo "<dt><a href=\"{$node[MIDCOM_NAV_FULLURL]}task/{$data['task']->guid}/\">{$data['task']->title}</a>";
+if ($data['task']->up)
 {
-    $parent = $view_data['task']->get_parent();
+    $parent = $data['task']->get_parent();
     if ($parent->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_PROJECT)
     {
         $parent_url = "{$node[MIDCOM_NAV_FULLURL]}project/{$parent->guid}/";
@@ -18,11 +18,11 @@ if ($view_data['task']->up)
 }
 echo "</dt>\n";
 echo "<dd>\n";
-if ($view_data['task']->manager)
+if ($data['task']->manager)
 {
     // FIXME: List resources instead
     $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task_resource');
-    $qb->add_constraint('task', '=', $view_data['task']->id);
+    $qb->add_constraint('task', '=', $data['task']->id);
     $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
     if (   is_array($ret)
         && count($ret) > 0)
@@ -34,7 +34,7 @@ if ($view_data['task']->manager)
             $contact = new org_openpsa_contactwidget($resource);
             $resources_string .= ' '.$contact->show_inline();
         }
-        echo sprintf($view_data['l10n']->get("proposed to %s"), $resources_string);
+        echo sprintf($data['l10n']->get("proposed to %s"), $resources_string);
     }
 }
 ?>

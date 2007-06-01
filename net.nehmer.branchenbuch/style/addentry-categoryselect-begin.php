@@ -3,7 +3,7 @@
 // of net_nehmer_account_handler_register
 //
 // Bind the view data, remember the reference assignment:
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 ?>
 
 <h2><?php echo $data['l10n']->get('add entry') . ": {$data['type']->name}: " . $data['l10n']->get('select category'); ?></h2>

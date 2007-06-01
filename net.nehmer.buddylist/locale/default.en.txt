@@ -63,6 +63,10 @@ No buddies found.
 Reject
 ---STRINGEND
 
+---STRING request approved and buddy added to own list.
+Buddy request has been approved and and added to your own list as well.
+---STRINGEND
+
 ---STRING request approved and buddy request sent.
 Buddy request has been approved and a request has been sent to the user.
 ---STRINGEND
@@ -81,9 +85,5 @@ The buddies have been deleted.
 
 ---STRING user already on your buddylist.
 This user is already on your buddylist.
----STRINGEND
-
----STRING request approved and buddy added to own list.
-Buddy request has been approved and and added to your own list as well.
 ---STRINGEND
 

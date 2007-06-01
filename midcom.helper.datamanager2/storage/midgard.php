@@ -53,12 +53,26 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
         switch ($this->_schema->fields[$name]['storage']['location'])
         {
             case 'parameter':
-                $this->object->set_parameter
-                (
-                    $this->_schema->fields[$name]['storage']['domain'],
-                    $name,
-                    $data
-                );
+                if (   array_key_exists('multilang', $this->_schema->fields[$name]['storage'])
+                    && $this->_schema->fields[$name]['storage']['multilang']
+                    && $_MIDCOM->i18n->get_midgard_language() != 0)
+                {
+                    $this->object->set_parameter
+                    (
+                        $this->_schema->fields[$name]['storage']['domain'],
+                        $name . '_' . $_MIDCOM->i18n->get_content_language(),
+                        $data
+                    );
+                }
+                else
+                {
+                    $this->object->set_parameter
+                    (
+                        $this->_schema->fields[$name]['storage']['domain'],
+                        $name,
+                        $data
+                    );
+                }
                 break;
 
             case 'configuration':
@@ -71,8 +85,7 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
                 break;
 
             case 'metadata':
-                $fieldname = $this->_schema->fields[$name]['storage']['field'];
-                $this->object->metadata->$fieldname = $data;
+                $this->object->metadata->$name = $data;
                 break;
 
             default:
@@ -88,6 +101,22 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
         switch ($this->_schema->fields[$name]['storage']['location'])
         {
             case 'parameter':
+                if (   array_key_exists('multilang', $this->_schema->fields[$name]['storage'])
+                    && $this->_schema->fields[$name]['storage']['multilang']
+                    && $_MIDCOM->i18n->get_midgard_language() != 0)
+                {
+                    // Try to get a translated parameter
+                    $translated_value = $this->object->get_parameter
+                    (
+                        $this->_schema->fields[$name]['storage']['domain'],
+                        $name . '_' . $_MIDCOM->i18n->get_content_language()
+                    );
+                    if ($translated_value)
+                    {
+                        return $translated_value;
+                    }
+                    // Otherwise fall back to the lang0 version
+                }
                 return $this->object->get_parameter
                 (
                     $this->_schema->fields[$name]['storage']['domain'],
@@ -102,8 +131,7 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
                 );
 
             case 'metadata':
-                $fieldname = $this->_schema->fields[$name]['storage']['field'];
-                return $this->object->metadata->$fieldname;
+                return $this->object->metadata->$name;
                 break;
 
             default:

@@ -50,16 +50,19 @@ class org_routamc_positioning_location_dba extends __org_routamc_positioning_loc
      */
     function _on_created()
     {
-        if (!$this->log)
-        {   
-            // This location entry is stored to object directly without
-            // corresponding log, create one.
+        if (   !$this->log
+            && $this->relation == ORG_ROUTAMC_POSITIONING_RELATION_IN)
+        {
+            // This location entry is defined as being made in a location,
+            // but is stored to object directly without corresponding log,
+            // create one.
             // This situation can happen for example when importing images
             // that have EXIF geo tags set
             $object = $this->get_parent();
             $log = new org_routamc_positioning_log();
             $log->date = $this->date;
-            $log->person = $this->object->creator;
+            // TODO: Use 1.8 metadata authors instead?
+            $log->person = $object->metadata->creator;
             $log->latitude = $this->latitude;
             $log->longitude = $this->longitude;
             $log->altitude = $this->altitude;
@@ -70,7 +73,7 @@ class org_routamc_positioning_location_dba extends __org_routamc_positioning_loc
             $log->accuracy = ORG_ROUTAMC_POSITIONING_ACCURACY_MANUAL;
             $log->create();
         }
-        
+
         return true;
     }
 }

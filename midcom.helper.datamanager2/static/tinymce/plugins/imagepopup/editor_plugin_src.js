@@ -33,10 +33,10 @@ var TinyMCE_imagepopupPlugin = {
 	 */
 	getInfo : function() {
 		return {
-			longname : 'Image pupup plugin',
+			longname : 'Image popup plugin',
 			author : 'Tarjei Huse',
 			authorurl : 'http://www.midgard-project.org',
-			infourl : 'http://www.yoursite.com/docs/template.html',
+			infourl : 'http://www.midgard-project.org/documentation/images-in-midcom/',
 			version : "1.0"
 		};
 	},
@@ -68,10 +68,10 @@ var TinyMCE_imagepopupPlugin = {
 	getControlHTML : function(cn) {
 		switch (cn) {
              case "imagepopup":
-                return tinyMCE.getButtonHTML(cn, 'lang_image_desc', '{$themeurl}/images/template.gif', 'mceImagepopup');
+                return tinyMCE.getButtonHTML(cn, 'lang_image_desc', '{$themeurl}/images/image.gif', 'mceImagepopup', true);
 		}
 
-		return "<p>pok</p>";
+		return "";
 	},
 
 	/**
@@ -93,13 +93,11 @@ var TinyMCE_imagepopupPlugin = {
 				// Show UI/Popup
 				if (user_interface) {
 					// Open a popup window and send in some custom data in a window argument
-					var template = new Array();
-
-					template['file'] = '/static/midcom-exec-midcom.helper.imagepopup/runner.php/00000000c43d6b9fb85ce2c64ad81598'; // Relative to theme
-					template['width'] = 300;
-					template['height'] = 200;
-
-					tinyMCE.openWindow(template, {editor_id : editor_id, some_custom_arg : "somecustomdata"});
+					tinyMCE.openWindow({
+						file : tinyMCE.getParam('plugin_imagepopup_popupurl'),
+						width : tinyMCE.getParam('template_popup_width', 750),
+						height : tinyMCE.getParam('template_popup_height', 300)
+					}, {editor_id : editor_id, resizable : "yes", scrollbars : "yes", pluginObj : TinyMCE_imagepopupPlugin});
 
 					// Let TinyMCE know that something was modified
 					tinyMCE.triggerNodeChange(false);
@@ -166,7 +164,7 @@ var TinyMCE_imagepopupPlugin = {
 	 * @return true - pass to next handler in chain, false - stop chain execution
 	 * @type boolean
 	 */
-	handleEvent : function(e) {
+	handleEvent : function(e, type) {
 		// Display event type in statusbar
 		top.status = "template plugin event: " + e,type;
 
@@ -185,35 +183,6 @@ var TinyMCE_imagepopupPlugin = {
 	 * @type string
 	 */
 	cleanup : function(type, content, inst) {
-		switch (type) {
-			case "get_from_editor":
-				alert("[FROM] Value HTML string: " + content);
-
-				// Do custom cleanup code here
-
-				break;
-
-			case "insert_to_editor":
-				alert("[TO] Value HTML string: " + content);
-
-				// Do custom cleanup code here
-
-				break;
-
-			case "get_from_editor_dom":
-				alert("[FROM] Value DOM Element " + content.innerHTML);
-
-				// Do custom cleanup code here
-
-				break;
-
-			case "insert_to_editor_dom":
-				alert("[TO] Value DOM Element: " + content.innerHTML);
-
-				// Do custom cleanup code here
-
-				break;
-		}
 
 		return content;
 	},

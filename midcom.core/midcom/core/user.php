@@ -238,7 +238,8 @@ class midcom_core_user extends midcom_baseclasses_core_object
             }
         }
         else if (   is_object($id)
-                 && is_a($id, 'midgard_person'))
+                 && (   is_a($id, 'midgard_person')
+                     || is_a($id, 'org_openpsa_person')))
         {
             $this->_storage = $id;
         }
@@ -353,9 +354,11 @@ class midcom_core_user extends midcom_baseclasses_core_object
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
-        $this->_direct_groups = array_merge(
+        $this->_direct_groups = array_merge
+        (
             midcom_core_group_midgard::list_memberships($this),
-            midcom_core_group_virtual::list_memberships($this));
+            midcom_core_group_virtual::list_memberships($this)
+        );
 
         debug_pop();
     }
@@ -379,7 +382,9 @@ class midcom_core_user extends midcom_baseclasses_core_object
         {
             $this->_all_groups[$id] =& $this->_direct_groups[$id];
             $inheritance_chain = Array($group->id);
-
+            /**
+             * FIXME: Parent group members should inherit permissions from
+             * the child groups, not the other way around!!!
             $parent = $group->get_parent_group();
             while (! is_null($parent))
             {
@@ -388,6 +393,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
 
                 $parent = $parent->get_parent_group();
             }
+            */
             $this->_inheritance_chains[$id] = $inheritance_chain;
         }
     }

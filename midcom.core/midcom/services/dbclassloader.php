@@ -390,7 +390,7 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
             if (! class_exists($definition['new_class_name']))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Validation failed: Key {$key} had an invalid new_class_name element.", MIDCOM_LOG_INFO);
+                debug_add("Validation failed: Key {$key} had an invalid new_class_name element: {$definition['new_class_name']}. Probably the required MgdSchema is not loaded.", MIDCOM_LOG_INFO);
                 debug_pop();
                 return false;
             }
@@ -432,6 +432,7 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
         {
             $this->_class_definition_filename = MIDCOM_ROOT . $_MIDCOM->componentloader->path_to_snippetpath($component) . "/config/{$filename}";
         }
+        
     }
 
     /**
@@ -594,10 +595,40 @@ EOF;
         $this->_class_string .= <<<EOF
     function __{$this->_class_definition['midcom_class_name']} (\$id = null)
     {
-        parent::{$this->_class_definition['new_class_name']}();
+        if (mgd_is_guid(\$id))
+        {
+            \$construct_stat = parent::{$this->_class_definition['new_class_name']}(\$id);
+        }
+        else if (is_numeric(\$id))
+        {
+            \$construct_stat = parent::{$this->_class_definition['new_class_name']}((int)\$id);
+        }
+        else if (   is_object(\$id)
+                 && ! empty(\$id->guid))
+        {
+            \$construct_stat = parent::{$this->_class_definition['new_class_name']}(\$id->guid);
+            if (!midcom_baseclasses_core_dbobject::cast_object(\$this, \$id))
+            {
+                \$x =& \$this;
+                \$x = false;
+                return false;
+            }
+        }
+        else
+        {
+            parent::{$this->_class_definition['new_class_name']}();
+            \$construct_stat = true;
+        }
+        if (!\$construct_stat)
+        {
+            midcom_baseclasses_core_dbobject::_clear_object(\$this);
+            \$x =& \$this;
+            \$x = false;
+            return false;
+        }
 
         if (   ! is_null(\$id)
-            && ! \$this->_load_from_database(\$id))
+            && ! midcom_baseclasses_core_dbobject::post_db_load_checks(\$this))
         {
             \$x =& \$this;
             \$x = false;
@@ -639,6 +670,7 @@ EOF;
     function list_attachments() { return midcom_baseclasses_core_dbobject::list_attachments(\$this); }
     function list_parameters(\$domain = null) { return midcom_baseclasses_core_dbobject::list_parameters(\$this, \$domain); }
     function new_query_builder() { return \$_MIDCOM->dbfactory->new_query_builder('{$this->_class_definition['midcom_class_name']}'); }
+    function new_collector(\$domain, \$value) { return \$_MIDCOM->dbfactory->new_collector('{$this->_class_definition['midcom_class_name']}', \$domain, \$value); }
     function open_attachment(\$name, \$mode = 'w') { return midcom_baseclasses_core_dbobject::open_attachment(\$this, \$name, \$mode); }
     function refresh() { return midcom_baseclasses_core_dbobject::refresh(\$this); }
     function set_parameter(\$domain, \$name, \$value) { return midcom_baseclasses_core_dbobject::set_parameter(\$this, \$domain, \$name, \$value); }
@@ -675,6 +707,18 @@ EOF;
             }
         }
     }
+    function _parent_parameter(\$domain, \$name)
+    {
+        if (func_num_args() == 2)
+        {
+            return parent::parameter(\$domain, \$name);
+        }
+        else
+        {
+            \$value = func_get_arg(2);
+            return parent::parameter(\$domain, \$name, \$value);
+        }
+    }
 
     // ACL Shortcuts
     function can_do(\$privilege, \$user = null) { return \$_MIDCOM->auth->can_do(\$privilege, \$this, \$user); }
@@ -692,6 +736,22 @@ EOF;
         );
     }
     function get_parent_guid_uncached() { return null; }
+    function get_parent_guid_uncached_static(\$object_guid)
+    {
+        // TODO: Try to figure a way to use collector based on reflection data for this (and why not for get_parent_guid_uncached as well)
+        \$object = new {$this->_class_definition['midcom_class_name']}(\$object_guid);
+        if (   !is_object(\$object)
+            || !method_exists(\$object, 'get_parent_guid_uncached'))
+        {
+            return null;
+        }
+        return \$object->get_parent_guid_uncached();
+    }
+    function get_dba_parent_class()
+    {
+        // TODO: Try to figure this out via reflection (NOTE: this must return a midcom DBA class...)
+        return null;
+    }
 
     // PEAR API mapping
     function isError (\$data, \$msgcode = null) { return PEAR::isError(\$data, \$msgcode); }
@@ -792,8 +852,24 @@ EOF;
     function _on_prepare_exec_query_builder(&\$qb) { return true; }
     function _on_prepare_new_query_builder(&\$qb) {}
     function _on_process_query_result(&\$result) {}
+    function _on_prepare_new_collector(&\$mc) {}
+    function _on_prepare_exec_collector(&\$mc) { return true; }    
+    function _on_process_collector_result(&\$result) {}
     function _on_updated() {}
     function _on_updating() { return true; }
+    function _on_imported() {}
+    function _on_importing() { return true; }
+    
+    // functions related to the rcs service.
+    var \$_use_rcs = true;
+    var \$_rcs_message = false;
+    function disable_rcs() { \$this->_use_rcs = false; }     
+    function enable_rcs() { \$this->_use_rcs  = true; }
+    function set_rcs_message(\$msg) { \$this->_rcs_message = \$msg; }
+    function get_rcs_message() { return \$this->_rcs_message; }
+    
+    
+    
 EOF;
         $this->_class_string .= "\n    \n";
     }
@@ -868,6 +944,24 @@ EOF;
             if (is_a($object, $class_definition['old_class_name']))
             {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Get a MidCOM DB class name for a legacy Midgard class.
+     *
+     * @param object $classname The class to check
+     * @return string The corresponding MidCOM DB class name, false otherwise.
+     */
+    function get_midcom_class_name_for_legacy_midgard_class($classname)
+    {
+        foreach ($this->_loaded_classes as $class_definition)
+        {
+            if ($classname == $class_definition['new_class_name'])
+            {
+                return $class_definition['midcom_class_name'];
             }
         }
         return false;

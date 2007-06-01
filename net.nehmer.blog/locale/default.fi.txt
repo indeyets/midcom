@@ -55,6 +55,10 @@ Blogin asetukset
 Kategoriat
 ---STRINGEND
 
+---STRING comments_enable
+Salli uutisten kommentointi (vaatii net.nehmer.comments -komponentin)
+---STRINGEND
+
 ---STRING content
 Sisältö
 ---STRINGEND
@@ -160,7 +164,7 @@ Sinulla ei ole riittäviä oikeuksia artikkelien luontiin.
 ---STRINGEND
 
 ---STRING posted on %s.
-Julkaisu %s.
+Julkaistu %s.
 ---STRINGEND
 
 ---STRING public posting
@@ -211,8 +215,16 @@ Kuvaus
 Salli RSS-syöte
 ---STRINGEND
 
+---STRING rss_include_image
+Lisää täysikokoinen kuva tietokantakuvauksen kentästä "image" RSS-syötteeseen
+---STRINGEND
+
 ---STRING rss_language
 Kieli
+---STRINGEND
+
+---STRING rss_subscription_enable
+Salli uutisten luonti ulkoisista RSS- ja Atom-syötteistä
 ---STRINGEND
 
 ---STRING rss_title
@@ -229,6 +241,10 @@ Tietokantakuvauksen (schema) snippet-tietue
 
 ---STRING schema settings
 Tietokanta-asetukset
+---STRINGEND
+
+---STRING schemadb
+Artikkeleille käytettävä tietokantakuvaus
 ---STRINGEND
 
 ---STRING select article type
@@ -255,7 +271,11 @@ Kansiota ei valittu
 Yhteensä %s uutista.
 ---STRINGEND
 
----STRING schemadb
-Artikkeleille käytettävä tietokantakuvaus
+---STRING visible
+Näytetäänkö kansio
+---STRINGEND
+
+---STRING link_to_external_url
+Linkitä artikkelit ulkoiseen osoitteeseen jos saatavilla
 ---STRINGEND
 

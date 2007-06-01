@@ -1,6 +1,6 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.en.txt,v 1.11 2006/06/08 14:17:53 rambo Exp $
+---CVS $Id$
 ---LANGUAGE en
 
 ---STRING <title>
@@ -27,6 +27,10 @@ Categories
 cell %s
 ---STRINGEND
 
+---STRING choose the person to keep
+Choose which contact person to keep. You can also decide later or keep both.
+---STRINGEND
+
 ---STRING city
 City
 ---STRINGEND
@@ -37,6 +41,10 @@ Client
 
 ---STRING company id
 Company ID
+---STRINGEND
+
+---STRING competence areas
+Competence areas
 ---STRINGEND
 
 ---STRING contact information
@@ -55,6 +63,10 @@ Contacts
 Country
 ---STRINGEND
 
+---STRING create account
+Create user account
+---STRINGEND
+
 ---STRING create event
 Create event
 ---STRINGEND
@@ -71,12 +83,20 @@ Create person
 Create suborganization
 ---STRINGEND
 
+---STRING customers invoices
+Customer's invoices
+---STRINGEND
+
 ---STRING daughter organization
 Daughter organization
 ---STRINGEND
 
 ---STRING dbe service id
 DBE ServiceID
+---STRINGEND
+
+---STRING decide later
+Decide later
 ---STRINGEND
 
 ---STRING department
@@ -111,16 +131,44 @@ e-mail %s
 Allow to create events in the Group Calendar
 ---STRINGEND
 
+---STRING enable campaign creation
+Enable campaign creation
+---STRINGEND
+
 ---STRING enable contact creation
 Enable contact creation
+---STRINGEND
+
+---STRING enable editing campaigns created by others
+Enable editing campaigns created by others
 ---STRINGEND
 
 ---STRING enable editing contacts created by others
 Enable editing contacts created by others
 ---STRINGEND
 
+---STRING enable editing invoices created by others
+Eenable editing of invoices created by others
+---STRINGEND
+
+---STRING enable editing organizations created by others
+Enable editing of organizations created by others
+---STRINGEND
+
+---STRING enable invoice creation
+Enable invoice creation
+---STRINGEND
+
+---STRING enable organization creation
+Enable organization creation
+---STRINGEND
+
 ---STRING enable project creation
 Allow to create root-level projects
+---STRINGEND
+
+---STRING enable salesproject creation
+Enable sales project creation
 ---STRINGEND
 
 ---STRING failed to create user account, reason
@@ -143,36 +191,28 @@ Homepage
 Home phone
 ---STRINGEND
 
----STRING instructions
-Instructions
----STRINGEND
-
----STRING instructions for editing account
-Instructions for editing account
----STRINGEND
-
----STRING instructions for frontpage
-Instructions for frontpage
----STRINGEND
-
----STRING instructions for new account
-Instructions for new account
----STRINGEND
-
----STRING instructions for new group
-Instructions for new group
----STRINGEND
-
----STRING instructions for new person
-Instructions for new person
----STRINGEND
-
 ---STRING invoicing address
 Invoicing address
 ---STRINGEND
 
+---STRING invoicing target percentage
+Invoicing target percentage
+---STRINGEND
+
 ---STRING jabber id
 Jabber ID
+---STRINGEND
+
+---STRING job title
+Job title
+---STRINGEND
+
+---STRING keep both
+Keep both
+---STRINGEND
+
+---STRING keep this
+Keep this
 ---STRINGEND
 
 ---STRING lastname
@@ -185,6 +225,14 @@ Logo
 
 ---STRING me
 Me
+---STRINGEND
+
+---STRING member
+Organization member
+---STRINGEND
+
+---STRING merge persons
+Merge duplicate persons
 ---STRINGEND
 
 ---STRING mobile phone
@@ -205,6 +253,14 @@ New person
 
 ---STRING no account
 No account
+---STRINGEND
+
+---STRING no duplicates found
+No duplicates found
+---STRINGEND
+
+---STRING no more duplicates to merge found
+No more duplicates that you have permissions to merge found
 ---STRINGEND
 
 ---STRING notes
@@ -251,6 +307,10 @@ Passwords don't match!
 Permissions
 ---STRINGEND
 
+---STRING person
+Person
+---STRINGEND
+
 ---STRING persons
 Persons
 ---STRINGEND
@@ -291,6 +351,10 @@ Search
 Skype name
 ---STRINGEND
 
+---STRING store as plain text
+Store as plain text
+---STRINGEND
+
 ---STRING street address
 Street address
 ---STRINGEND
@@ -311,6 +375,10 @@ Treat as Workgroup
 User account
 ---STRINGEND
 
+---STRING user account for %s
+User account for %s
+---STRINGEND
+
 ---STRING vendor
 Vendor
 ---STRINGEND
@@ -329,9 +397,5 @@ Weekly work hours
 
 ---STRING work phone
 Work phone
----STRINGEND
-
----STRING invoicing target percentage
-Invoicing target percentage
 ---STRINGEND
 

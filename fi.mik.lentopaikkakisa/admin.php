@@ -19,18 +19,5 @@ class fi_mik_lentopaikkakisa_admin extends midcom_baseclasses_components_request
     {
          parent::midcom_baseclasses_components_request_admin($topic, $config);
     }
-
-    function _on_initialize()
-    {
-        // Configuration
-        $this->_request_switch[] = Array
-        (
-            'handler' => 'config_dm',
-            'schemadb' => 'file:/net/nemein/discussion/config/schemadb_config.inc',
-            'schema' => 'config',
-            'disable_return_to_topic' => true,
-        );    
-        return true;
-    }
 }
 ?>

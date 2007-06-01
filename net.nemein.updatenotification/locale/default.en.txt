@@ -1,0 +1,19 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---LANGUAGE en
+
+---STRING root topic to use
+Root topic to use in listing
+---STRINGEND
+
+---STRING text before form
+Text before the form listing available topics
+---STRINGEND
+
+---STRING display_levels
+Display this many topic levels
+---STRINGEND
+
+---STRING unlimited
+Unlimited
+---STRINGEND

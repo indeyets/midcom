@@ -1,5 +1,5 @@
 <?php
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $view_form_prefix = 'midgard_admin_sitewizard_';
 ?>
 <script type="text/javascript">
@@ -25,6 +25,8 @@ function handleAdvanced() {
 <form method="post" name="&(view_form_prefix);sitegroup_select" action="&(_MIDGARD['uri']);">
 
   <fieldset>
+    <label for="&(view_form_prefix);site_name"><?php echo $data['l10n']->get("site name"); ?></label>
+    <input type="text" class="shorttext" name="&(view_form_prefix);site_name" id="&(view_form_prefix);site_name" value="<?php echo $data['sitegroup']->name; ?>" />
     <label for="&(view_form_prefix);host_name"><?php echo $data['l10n']->get("host name"); ?></label>
     <input type="text" class="shorttext" name="&(view_form_prefix);host_name" id="&(view_form_prefix);host_name" value="<?php echo $data['current_host']->name; ?>" />
   </fieldset>

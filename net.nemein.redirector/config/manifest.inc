@@ -1,18 +1,31 @@
-'name' => 'net.nemein.redirector',
-'purecode' => false,
-'version' => '1.0.0',
-'privileges' =>  Array(),
-'class_definitions' => Array(),
-'package.xml' => Array(
+
+  'name' => 'net.nemein.redirector',
+  'purecode' => false,
+  'version' => '1.0.2beta1',
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+  ),
+  'package.xml' => 
+  array (
     'summary' => 'Redirector',
     'description' => 'Folder that redirects to subnode or given URL',
-    'maintainers' => Array(
-        'bergie' => Array(
-            'name' => 'Henri Bergius',
-            'email' => 'henri.bergius@iki.fi',
-            'role' => 'lead',
-        ),
+    'maintainers' => 
+    array (
+      'bergie' => 
+      array (
+        'name' => 'Henri Bergius',
+        'email' => 'henri.bergius@iki.fi',
+        'role' => 'lead',
+      ),
     ),
-    'dependencies' => Array(
+    'dependencies' => 
+    array (
+      'midcom' => 
+      array (
+      ),
     ),
-),
+  ),
+  'state' => 'beta',

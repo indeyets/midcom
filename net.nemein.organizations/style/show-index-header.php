@@ -1,6 +1,11 @@
 <?php
-global $view_topic;
-?>
-<h1>&(view_topic.extra);</h1>
+// Available Request keys: groups
 
-<dl>
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$title = $data['topic']->extra;
+?>
+<h1>&(title);</h1>
+
+<?php midcom_show_style('index-alpha-bar'); ?>
+
+<table border="0">

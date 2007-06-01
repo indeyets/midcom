@@ -18,13 +18,6 @@ class net_nemein_wiki_viewer extends midcom_baseclasses_components_request
     {
         parent::midcom_baseclasses_components_request($topic, $config);
         
-        // Match /create/<wikipage>
-        $this->_request_switch[] = array(
-            'fixed_args' => 'create',
-            'variable_args' => 1,
-            'handler' => Array('net_nemein_wiki_handler_create', 'create'),
-        ); 
-        
         // Match /delete/<wikipage>
         $this->_request_switch[] = array(
             'fixed_args' => 'delete',
@@ -37,20 +30,61 @@ class net_nemein_wiki_viewer extends midcom_baseclasses_components_request
             'fixed_args' => 'raw',
             'variable_args' => 1,
             'handler' => Array('net_nemein_wiki_handler_view', 'raw'),
-        ); 
+        );
         
-        // Match /create/<wikipage>/<related to node>/<related to object>
+        // Match /whatlinks/<wikipage>
         $this->_request_switch[] = array(
+            'fixed_args' => 'whatlinks',
+            'variable_args' => 1,
+            'handler' => Array('net_nemein_wiki_handler_view', 'whatlinks'),
+        ); 
+
+        // Match /subscribe/<wikipage>
+        $this->_request_switch[] = array(
+            'fixed_args' => 'subscribe',
+            'variable_args' => 1,
+            'handler' => Array('net_nemein_wiki_handler_view', 'subscribe'),
+        ); 
+
+        // Match /create/
+        $this->_request_switch['create_by_word'] = array(
             'fixed_args' => 'create',
-            'variable_args' => 3,
             'handler' => Array('net_nemein_wiki_handler_create', 'create'),
         );         
+
+        // Match /create/<schema>
+        $this->_request_switch['create_by_word_schema'] = array(
+            'fixed_args' => 'create',
+            'variable_args' => 1,
+            'handler' => Array('net_nemein_wiki_handler_create', 'create'),
+        );
+
+        // Match /create/<related to node>/<related to object>
+        $this->_request_switch['create_by_word_relation'] = array(
+            'fixed_args' => 'create',
+            'variable_args' => 2,
+            'handler' => Array('net_nemein_wiki_handler_create', 'create'),
+        );         
+
+        // Match /notfound/<wikiword>
+        $this->_request_switch[] = array(
+            'fixed_args' => 'notfound',
+            'variable_args' => 1,
+            'handler' => Array('net_nemein_wiki_handler_notfound', 'notfound'),
+        ); 
         
         // Match /edit/<wikipage>
         $this->_request_switch[] = array(
             'fixed_args' => 'edit',
             'variable_args' => 1,
             'handler' => Array('net_nemein_wiki_handler_edit', 'edit'),
+        ); 
+        
+        // Match /change/<wikipage>
+        $this->_request_switch[] = array(
+            'fixed_args' => 'change',
+            'variable_args' => 1,
+            'handler' => Array('net_nemein_wiki_handler_edit', 'change'),
         ); 
         
         // Match /rss.xml        
@@ -65,6 +99,13 @@ class net_nemein_wiki_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nemein_wiki_handler_latest', 'latest'),
         );       
 
+        // Match /orphans
+        $this->_request_switch[] = array(
+            'fixed_args' => 'orphans',
+            'handler' => Array('net_nemein_wiki_handler_orphan', 'orphan'),
+        ); 
+        
+
         // Match /
         $this->_request_switch[] = array(
             'handler' => Array('net_nemein_wiki_handler_view', 'view'),
@@ -75,6 +116,15 @@ class net_nemein_wiki_viewer extends midcom_baseclasses_components_request
             'fixed_args' => 'email_import',
             'handler' => Array('net_nemein_wiki_handler_emailimport', 'emailimport'),
         );
+        
+        // Match /config/
+        $this->_request_switch['config'] = Array
+        (
+            'handler' => Array('midcom_core_handler_configdm', 'configdm'),
+            'schemadb' => 'file:/net/nemein/wiki/config/schemadb_config.inc',
+            'schema' => 'config',
+            'fixed_args' => Array('config'),
+        );
 
         // Match /<wikipage>
         $this->_request_switch[] = array(
@@ -82,12 +132,6 @@ class net_nemein_wiki_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nemein_wiki_handler_view', 'view'),
         );
         
-        $rcs_array = no_bergfald_rcs_handler::get_request_switch();
-        foreach ($rcs_array as $key => $switch) 
-        {
-            $this->_request_switch[] = $switch;
-        }
-
         //Add common relatedto request switches
         org_openpsa_relatedto_handler::common_request_switches($this->_request_switch, 'net.nemein.wiki');
         //If you need any custom switches add them here               
@@ -99,36 +143,149 @@ class net_nemein_wiki_viewer extends midcom_baseclasses_components_request
     
         // Add machine-readable RSS link    
         $_MIDCOM->add_link_head(
-            array(
+            array
+            (
                 'rel'   => 'alternate',
                 'type'  => 'application/rss+xml',
                 'title' => 'Latest changes RSS',
                 'href'  => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX).'rss.xml',
             )
         );
-
-        // Populate toolbars for RCS handlers
-        if (   count($args)
-            && $args[0] == 'net.nemein.wiki')
+        
+        $_MIDCOM->add_link_head(
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL."/net.nemein.wiki/wiki.css",
+            )
+        );
+        
+        if ($_MIDCOM->auth->user)
         {
-            $wikipage = new net_nemein_wiki_wikipage($args[count($args)-1]);
-            if ($wikipage)
+            $user = $_MIDCOM->auth->user->get_storage();    
+            if ($this->_topic->parameter('net.nemein.wiki:watch', $user->guid))
             {
-                $this->_view_toolbar->add_item(
+                $this->_node_toolbar->add_item
+                (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "{$wikipage->name}/",
-                        MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('view'),
+                        MIDCOM_TOOLBAR_URL => "subscribe/index.html",
+                        MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('unsubscribe'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
-                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
-                        MIDCOM_TOOLBAR_ENABLED => true,
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail.png',
+                        MIDCOM_TOOLBAR_POST => true,
+                        MIDCOM_TOOLBAR_POST_HIDDENARGS => Array
+                        (
+                            'unsubscribe' => 1,
+                            'target'      => 'folder',
+                        ),
                     )
-                );    
+                );
+            }
+            else
+            {
+                $this->_node_toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "subscribe/index.html",
+                        MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('subscribe'),
+                        MIDCOM_TOOLBAR_HELPTEXT => null,
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail.png',
+                        MIDCOM_TOOLBAR_POST => true,
+                        MIDCOM_TOOLBAR_POST_HIDDENARGS => Array
+                        (
+                            'subscribe' => 1,
+                            'target'      => 'folder',
+                        ),
+                    )
+                );
             }
         }
         
+        $this->_node_toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "orphans.html",
+                MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('orphaned pages'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/editcut.png',
+            )
+        );
+        
+        if (   $this->_topic->can_do('midgard:update')
+            && $this->_topic->can_do('midcom:component_config'))
+        {
+            $this->_node_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => 'config.html',
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
+                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+                )
+            );
+        }
+                
         return true;
     }
+
+    /**
+     * Indexes a wiki page.
+     *
+     * This function is usually called statically from various handlers.
+     *
+     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encaspulating the event.
+     * @param midcom_services_indexer $indexer The indexer instance to use.
+     * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
+     *     tries to load a new topic instance from the database identified by this parameter.
+     */
+    function index(&$dm, &$indexer, $topic)
+    {
+        if (is_object($topic))
+        {
+            $tmp = new midcom_db_topic($topic);
+            if (! $tmp)
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
+                    "Failed to load the topic referenced by {$topic} for indexing, this is fatal.");
+                // This will exit.
+            }
+            $topic = $tmp;
+        }
+
+        // Don't index directly, that would loose a reference due to limitations
+        // of the index() method. Needs fixes there.
+
+        $nav = new midcom_helper_nav();
+        $node = $nav->get_node($topic->id);
+        $author = $_MIDCOM->auth->get_user($dm->storage->object->creator);
+
+        $document = $indexer->new_document($dm);
+        $document->topic_guid = $topic->guid;
+        $document->topic_url = $node[MIDCOM_NAV_FULLURL];
+        $document->author = $author->name;
+        $document->created = $dm->storage->object->created;
+        $document->edited = $dm->storage->object->revised;
+        $indexer->index($document);
+    }  
     
+    function initialize_index_article($topic)
+    {
+        $page = new net_nemein_wiki_wikipage();
+        $page->topic = $topic->id;
+        $page->name = 'index';
+        $page->title = $topic->extra;
+        $page->content = $this->_l10n->get('wiki default page content');
+        $page->author = $_MIDGARD['user'];
+        if ($page->create())
+        {
+                return $page;
+        }
+        return false;
+    }
 }
 ?>

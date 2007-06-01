@@ -42,11 +42,16 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
     var $child_foreign_key_fieldname = 'up';
     var $parent_key_fieldname = 'id';
     var $child_constraints = Array();
+    var $orders = Array(
+        'created' => 'ASC',
+    );
     var $style_element_name = 'child';
     var $window_mode = false;
+    var $wide_mode = false;
     var $maximum_items = null;
     var $enable_creation = true;
     var $area_element = 'div';
+    var $defaults = array();
 
     /**
      * The schema database in use for the child elements
@@ -139,8 +144,11 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
             $qb->add_constraint($constraint[0], $constraint[1], $constraint[2]);
         }
         
-        // TODO: Add ordering support
-        $qb->add_order('created', 'ASC');
+        // Order according to configuration
+        foreach ($this->orders as $field => $order)
+        {
+            $qb->add_order($field, $order);
+        }
         
         $raw_objects = $qb->execute();
         foreach ($raw_objects as $object)
@@ -187,6 +195,9 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
                 'Failed to create a new child object. Last Midgard error was: '. mgd_errstr());
             // This will exit.
         }
+        
+        // Notify parent of changes
+        $this->storage->object->update();
 
         return $object;
     }
@@ -215,6 +226,9 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
             debug_pop();
             return false;
         }
+        
+        // Notify parent of changes
+        $this->storage->object->update();
 
         unset($this->objects[$identifier]);
         return true;
@@ -249,10 +263,25 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
         {
             $this->_controllers[$identifier]->window_mode = $this->window_mode;
         }
+        if ($this->wide_mode)
+        {
+            $this->_controllers[$identifier]->wide_mode = $this->wide_mode;
+        }
         
         $this->_controllers[$identifier]->schemadb =& $this->_schemadb;
         $this->_controllers[$identifier]->set_storage($object);
-        $this->_controllers[$identifier]->process_ajax();
+        switch ($this->_controllers[$identifier]->process_ajax(false))
+        {
+            case 'view':
+                break;
+                
+            case 'ajax_saved':
+                // Notify parent of changes
+                $this->storage->object->update();
+            default:
+                $_MIDCOM->finish();
+                exit();
+        }
     }
     
     function _load_creation_controllers()
@@ -279,12 +308,17 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
                 if ($this->window_mode)
                 {
                     $this->_creation_controllers[$name]->ajax_options['window_mode'] = $this->window_mode;
-                }            
+                }
+                if ($this->wide_mode)
+                {
+                    $this->_creation_controllers[$name]->ajax_options['wide_mode'] = $this->wide_mode;
+                }
                 
                 $this->_creation_controllers[$name]->schemadb =& $this->_schemadb;
                 $this->_creation_controllers[$name]->schemaname = $name;
                 $this->_creation_controllers[$name]->callback_object =& $this;
                 $this->_creation_controllers[$name]->callback_method = 'create_object';
+                $this->_creation_controllers[$name]->defaults = $this->defaults;
                 if (! $this->_creation_controllers[$name]->initialize())
                 {
                     $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");
@@ -333,7 +367,7 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
             {            
                 $form_identifier = $this->_creation_controllers[$name]->form_identifier;            
                 echo "<button value=\"name\" id=\"{$form_identifier}_button\" class=\"midcom_helper_datamanager2_composite_create_button\">\n";
-                echo sprintf($this->_l10n_midcom->get('create %s'), $this->_schemadb[$name]->description);
+                echo sprintf($this->_l10n_midcom->get('create %s'), $this->_schemadb[$name]->_l10n_schema->get($this->_schemadb[$name]->description));
                 echo "</button>\n";
             }
         }
@@ -358,10 +392,16 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
     function convert_to_html()
     {
         ob_start();
+        
+        $item_total = count($this->objects);
+        $request_data = Array(
+            'item_total' => $item_total,
+        );
+        
+        $_MIDCOM->set_custom_context_data('midcom_helper_datamanager2_widget_composite', $request_data);
         midcom_show_style("_dm2_composite_{$this->style_element_name}_header");
        
         $item_count = 0;
-        $item_total = count($this->objects);
         foreach ($this->objects as $identifier => $object)
         {
             $item_count++;
@@ -369,12 +409,10 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
             {
                 $this->add_object_item($identifier);
             }
-            $request_data = Array(
-                'item_html'  => $this->_controllers[$identifier]->get_content_html(),
-                'item'       => $object,
-                'item_count' => $item_count,
-                'item_total' => $item_total,
-            );
+            $request_data['item_html'] = $this->_controllers[$identifier]->get_content_html();
+            $request_data['item'] = $object;
+            $request_data['item_count'] = $item_count;
+
             $_MIDCOM->set_custom_context_data('midcom_helper_datamanager2_widget_composite', $request_data);
             echo "<{$this->area_element} id=\"{$this->_controllers[$identifier]->form_identifier}_area\">\n";
             midcom_show_style("_dm2_composite_{$this->style_element_name}_item");

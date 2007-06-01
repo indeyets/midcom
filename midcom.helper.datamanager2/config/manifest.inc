@@ -1,29 +1,63 @@
-'name' => 'midcom.helper.datamanager2',
-'version' => '0.8.13',
-'state'   => 'beta',
-'purecode' => true,
-'package.xml' => Array(
+
+  'name' => 'midcom.helper.datamanager2',
+  'version' => '1.0.4beta1',
+  'state' => 'beta',
+  'purecode' => true,
+  'package.xml' => 
+  array (
     'summary' => 'Data abstraction and form rendering library',
     'description' => 'midcom.helper.datamanager2 is a MidCOM purecode component providing database abstraction and form processing features to MidCOM components.',
-    'maintainers' => Array(
-        'midgard' => Array(
-            'name' => 'The Midgard Project',
-            'email' => 'dev@midgard-project.org',
-            'role' => 'lead',
-        ),
+    'state' => 'beta',
+    'maintainers' => 
+    array (
+      'rambo' => 
+      array (
+        'name' => 'Eero af Heurlin',
+        'email' => 'eero.afheurlin@iki.fi',
+        'role' => 'lead',
+      ),
+      'bergie' => 
+      array (
+        'name' => 'Henri Bergius',
+        'email' => 'henri.bergius@iki.fi',
+        'role' => 'lead',
+      ),
+      'torben' => 
+      array (
+        'name' => 'Torben Nehmer',
+        'email' => 'torben@nehmer.net',
+        'role' => 'lead',
+        'active' => 'no',
+      ),
+      'adrenalin' => 
+      array (
+        'name' => 'Arttu Manninen',
+        'email' => 'arttu@kaktus.cc',
+        'role' => 'developer',
+      ),
     ),
-    'dependencies' => Array(    
-        'net.nehmer.markdown'           => Array(),
-        'HTML_QuickForm'                => Array
-        (
-            'channel'  => 'pear.php.net',
-        ),
-        'Text_CAPTCHA'                  => Array
-        (
-            'channel'  => 'pear.php.net',
-        ),        
-        'JavaScript_Prototype'          => Array(
-            'channel' => 'pearified.com',
-        ),        
-    ), 
-),
+    'dependencies' => 
+    array (
+      'net.nehmer.markdown' => 
+      array (
+      ),
+      'net.nemein.tag' => 
+      array (
+      ),
+      'HTML_QuickForm' => 
+      array (
+        'channel' => 'pear.php.net',
+      ),
+      'Text_CAPTCHA' => 
+      array (
+        'channel' => 'pear.php.net',
+      ),
+      'JavaScript_Prototype' => 
+      array (
+        'channel' => 'pearified.com',
+      ),
+      'midcom' => 
+      array (
+      ),
+    ),
+  ),

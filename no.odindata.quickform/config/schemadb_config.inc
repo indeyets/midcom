@@ -1,143 +1,163 @@
-"config" => array (
-    "name"        => "config",
-    "description" => "Default Configuration Schema", /* This is a topic */
-    "locktimeout" => 0, /* Don"t lock this, we display the edit view always */
-    "fields"      => array (
+'config' => array
+(
+    'name'        => 'config',
+    'description' => 'Default Configuration Schema', /* This is a topic */
+    'locktimeout' => 0, /* Don't lock this, we display the edit view always */
+    'fields'      => array (
         /* for the day when qform may also save the values ...  */
-        "mail_new_item" => array (
-            "description" => "mail_new_item",
-            "datatype" => "boolean",
-            "helptext" => "mail new item",
-            "hidden"   => true,
-            "default"  => true,
+        'mail_new_item' => array
+        (
+            'description' => 'send an email to someone for each new item',
+            'datatype' => 'boolean',
+            'location' => 'config',
+            'config_key'    => 'mail_new_item',
+            'config_domain' => 'no.odindata.quickform',
+            'helptext' => 'mail new item',
+            'hidden'   => false,
+            'default'  => true,
+            'start_fieldgroup' => array
+            (
+                'title' => 'form email settings'
+            ),
         ),
-        "mail_address_to" => array (
-            "description" => "Mailadress to send the contents of the form to",
-            "datatype" => "text",
-            "helptext" => "Who should get the mail?",
-            "location"    => "config",
-            'required' => true,
-            "config_key"  => "mail_address_to",
-            "config_domain" => "no.odindata.quickform",
-            "start_fieldgroup" => Array ( "title" => "Mailsettings" ),
+        'mail_address_to' => array
+        (
+            'description'   => 'email address to send the submitted form to',
+            'datatype'      => 'text',
+            'helptext'      => 'email address where the form will be sent',
+            'location'      => 'config',
+            'required'      => true,
+            'config_key'    => 'mail_address_to',
+            'config_domain' => 'no.odindata.quickform',
+
         ),
-        "mail_subject" => array (
-            "description" => "Email subject",
-            "datatype" => "text",
-            "helptext" => "The subject of the email",
-            "location"    => "config",
-            "config_key"  => "mail_subject",
-            "config_domain" => "no.odindata.quickform",
+        'mail_subject' => array
+        (
+            'description' => 'mail subject',
+            'datatype' => 'text',
+            'location'    => 'config',
+            'config_key'  => 'mail_subject',
+            'config_domain' => 'no.odindata.quickform',
         ),
 
-        "mail_address_from" => array (
-            "description" => "Which mailaddress should the mail come from?",
-            "datatype" => "text",
-            "helptext" => "Which mailaddress should the mail come from?",
-            "location"    => "config",
-            "config_key"  => "mail_address_from",
-            "config_domain" => "no.odindata.quickform",
+        'mail_address_from' => array
+        (
+            'description' => 'from address of the email',
+            'datatype' => 'text',
+            'location'    => 'config',
+            'config_key'  => 'mail_address_from',
+            'config_domain' => 'no.odindata.quickform',
         ),
-        "mail_reciept" => array (
-            "description" => "Send mail to submitter? (BIG NOTE: YOU MUST HAVE A 'email' attribute in the form schema for this to work!",
-            "datatype"    => "boolean",
-            "location"    => "config",
-            "config_key"  => "mail_reciept",
-            "config_domain" => "no.odindata.quickform",
-            "helptext"    => "Do you want to send a recept to the submitter of the form?",
-        ),
-
-        "mail_reciept_message" => array (
-            "description" => "Message to send to user",
-            "datatype"  => "text",
-            "widget"    => "text",
-            "location" => "config",
-            "config_key"  => "mail_reciept_message",
-            "config_domain" => "no.odindata.quickform",
-            "widget_text_height" => "4em",
-            "widget_text_inputstyle" => "longtext",
-            "helptext" => "If you want to write a note to the user, write it here.",
-        ),
-        "mail_reciept_data" => array (
-            "description" => "Include submitted data in reciept?",
-            "datatype"    => "boolean",
-            "location"    => "config",
-            "config_key"  => "mail_reciept_data",
-            "config_domain" => "no.odindata.quickform",
-            "helptext"    => "",
-            "end_fieldgroup" => "",
+        'mail_reciept' => array
+        (
+            'description' => 'should a copy of the email be sent to the submitter of the form',
+            'datatype'    => 'boolean',
+            'location'    => 'config',
+            'config_key'  => 'mail_reciept',
+            'config_domain' => 'no.odindata.quickform',
         ),
 
-
-        "topic_introduction" => array (
-            "description" => "Message over the form",
-            "datatype" => "text",
-            "location" => "config",
-            "widget" => "html",
-            "config_key" => "form_description",
-            "config_domain" => "no.odindata.quickform",
-            "widget_text_height" => "4em",
-            "helptext"  => "topic_introduction_help",
+        'mail_reciept_message' => array 
+        (
+            'description' => 'message of the mail sent to user',
+            'datatype'  => 'text',
+            'widget'    => 'text',
+            'location' => 'config',
+            'config_key'  => 'mail_reciept_message',
+            'config_domain' => 'no.odindata.quickform',
+            'widget_text_height' => '4em',
+            'widget_text_inputstyle' => 'longtext',
+            'helptext' => 'this message is appended on top of the email sent to user',
+        ),
+        'mail_reciept_data' => array
+        (
+            'description' => 'include submitted data in the message sent to user',
+            'datatype'    => 'boolean',
+            'location'    => 'config',
+            'config_key'  => 'mail_reciept_data',
+            'config_domain' => 'no.odindata.quickform',
+            'helptext'    => '',
+            'end_fieldgroup' => '',
         ),
 
-        "end_message" => array (
-            "description" => "Thank you message to the user",
-            "datatype" => "text",
-            "location" => "config",
-            "widget" => "html",
-            "config_key" => "end_message",
-            "config_domain" => "no.odindata.quickform",
-            "widget_text_height" => "4em",
-            "default" => "",
-            "helptext"  => "This message is shown to the user after the form has been submitted.",
+        'save_form_as_article' => array
+        (
+            'description' => 'save form as an article',
+            'datatype' => 'boolean',
+            'location' => 'config',
+            'config_key'    => 'save_form_as_article',
+            'config_domain' => 'no.odindata.quickform',
+            'helptext' => 'save form as an article',
+            'hidden'   => false,
+            'default'  => true,
+            'start_fieldgroup' => array
+            (
+                'title' => 'form article settings'
+            ),
+            'end_fieldgroup' => '',
         ),
-        "schemadb" => array (
-            "description" => "Schema database",
-            "datatype" => "text",
-            "location" => "config",
-            "config_domain" => "no.odindata.quickform",
-            "hidden"   => false,
-            "config_key" => "schemadb",
-            "helptext" => "Path to schemadefinition", 
+        'topic_introduction' => array
+        (
+            'description' => 'text to place over the form',
+            'datatype' => 'text',
+            'location' => 'config',
+            'widget' => 'html',
+            'config_key' => 'form_description',
+            'config_domain' => 'no.odindata.quickform',
+            'widget_text_height' => '4em',
+            'helptext'  => 'use this field to add a simple text above the form to help the user fill in the form',
+            'start_fieldgroup' => Array
+            (
+                'title' => 'form settings'
+            ),
+        ),
+
+        'end_message' => array
+        (
+            'description' => 'message to show user after the form has been submitted',
+            'datatype' => 'text',
+            'location' => 'config',
+            'widget' => 'html',
+            'config_key' => 'end_message',
+            'config_domain' => 'no.odindata.quickform',
+            'widget_text_height' => '4em',
+            'default' => '',
+            'helptext'  => 'this message is displayed after the user has submitted the form',
+        ),
+        'schemadb' => array
+        (
+            'description' => 'Schema database',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'no.odindata.quickform',
+            'hidden'   => false,
+            'config_key' => 'schemadb',
+            'helptext' => 'Path to schemadefinition',
+            'widget' => 'select',
+            'widget_select_choices' => $GLOBALS['no_odindata_quickform_schemadbs'],
+            'end_fieldgroup' => '',
         ),
 
         
-        "form_user" => array (
-            "description" => "public posting user",
-            "datatype" => "text",
-            "location" => "config",
-            "config_domain" => "no.odindata.quickform",
-            "config_key" => "form_user",
-            "hidden" => true,
+        'form_user' => array
+        (
+            'description' => 'public posting user',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'no.odindata.quickform',
+            'config_key' => 'form_user',
+            'hidden' => true,
         ),
-        "form_pass" => array (
-            "description" => "public posting password",
-            "datatype" => "text",
-            "location" => "config",
-            "config_domain" => "no.odindata.quickform",
-            "config_key" => "form_pass",
-            "widget_text_inputstyle" => "password",
-            "end_fieldgroup" => "",
-            "hidden" => true,
+        'form_pass' => array
+        (
+            'description' => 'public posting password',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'no.odindata.quickform',
+            'config_key' => 'form_pass',
+            'widget_text_inputstyle' => 'password',
+            //'end_fieldgroup' => '',
+            'hidden' => true,
         ),
-
-        
-        /* some hidden topic fields come below here, edit topic will show them,
-         * but this will make accessing them on-site easier.
-         */
-
-        "topic_urlname" => array (
-            "description" => "topic_urlname",
-            "datatype" => "text",
-            "location" => "name",
-            "hidden" => true,
-        ),
-        "topic_title" => array (
-            "description" => "topic_title",
-            "datatype" => "text",
-            "location" => "name",
-            "hidden" => true,
-        ),
-
-    )
+    ),
 ),

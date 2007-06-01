@@ -24,7 +24,7 @@ class net_nemein_wiki_handler_latest extends midcom_baseclasses_components_handl
         $this->_request_data['latest_pages'] = Array();
         $qb = net_nemein_wiki_wikipage::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_topic->id);
-        $qb->add_order('revised', 'DESC');
+        $qb->add_order('metadata.revised', 'DESC');
         $qb->set_limit($this->_config->get('latest_count'));
         $result = $qb->execute();        
         

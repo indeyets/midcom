@@ -2,9 +2,35 @@
                    ------------------------------
 Legend:
 - All items marked with "!" represent a major API-Change that is
-  not guranteed to be backwards compatible to previous versions
+  not guaranteed to be backwards compatible to previous versions
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
+
+2007-02-27
+  - Fixed a foreach bug (trying to foreach uninitialized array in sorting mode)
+
+2007-02-21 adrenalin
+  + Added support for viewing one sub group at a time
+  + Added midcom_helper_datamanager2 support for sub groups
+  + Added configurable display options for navigation: it's now possible to display
+    nothing, to display sub groups or to display all the members in navigation (default: none)
+
+2007-02-09 adrenalin
+  ! Sorting is now possible to be done on two levels. Sub groups will be fetched from the
+    configured group and "intelligent" calculations are made to select each person only once.
+  - Changed the style elements to support vCard microformat
+
+2007-01-31 adrenalin
+  - Added most of the configuration keys from config.inc to schemadb_config for
+    setting the configuration onsite.
+  - Finished the support for sorting the personnel manually
+
+2007-01-29 adrenalin
+  + Added support for sorting the personnel manually
+
+2006-12-28 bergie
+  + Added indexing support
+  + Added initial person searching capability
 
 2006-06-23 bergie
   + Added 1.7 compatibility and some localizations

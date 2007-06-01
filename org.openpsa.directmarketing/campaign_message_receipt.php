@@ -8,7 +8,7 @@ class midcom_org_openpsa_campaign_message_receipt extends __midcom_org_openpsa_c
     {
         return parent::__midcom_org_openpsa_campaign_message_receipt($id);
     }
-    
+
     function _on_creating()
     {
         if (!$this->timestamp)
@@ -17,7 +17,7 @@ class midcom_org_openpsa_campaign_message_receipt extends __midcom_org_openpsa_c
         }
         return true;
     }
-    
+
     /**
      * Check whether given token has already been used in the database
      * @param string $token
@@ -38,7 +38,7 @@ class midcom_org_openpsa_campaign_message_receipt extends __midcom_org_openpsa_c
         }
         return false;
     }
-    
+
 }
 
 /**

@@ -1,7 +1,15 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.en.txt,v 1.8 2006/06/08 16:24:37 rambo Exp $
+---CVS $Id$
 ---LANGUAGE en
+
+---STRING available slot
+Available time slot
+---STRINGEND
+
+---STRING back to calendar
+Back to calendar
+---STRINGEND
 
 ---STRING choose calendars
 Choose calendars to display
@@ -43,12 +51,24 @@ Event %s
 Event %s deleted
 ---STRINGEND
 
+---STRING event after
+Event after
+---STRINGEND
+
+---STRING event before
+Event before
+---STRINGEND
+
 ---STRING event deleted
 Event deleted
 ---STRINGEND
 
 ---STRING event information
 Event information
+---STRINGEND
+
+---STRING events on %s
+Events on %s
 ---STRINGEND
 
 ---STRING failed to delete event, reason
@@ -77,6 +97,10 @@ Month view
 
 ---STRING next
 Next
+---STRINGEND
+
+---STRING no event
+No event
 ---STRINGEND
 
 ---STRING org.openpsa.calendar
@@ -129,9 +153,5 @@ Week #%s %s
 
 ---STRING week view
 Week view
----STRINGEND
-
----STRING back to calendar
-Back to calendar
 ---STRINGEND
 

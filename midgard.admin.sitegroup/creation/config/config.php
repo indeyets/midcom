@@ -13,7 +13,8 @@
  * 
  */
 
-class midgard_admin_sitegroup_creation_config {
+class midgard_admin_sitegroup_creation_config 
+{
     
     // all creators have a verbose option.
     var $verbose = false;
@@ -177,11 +178,13 @@ class midgard_admin_sitegroup_creation_config_host extends midgard_admin_sitegro
      * The topic to use for the midcom
      */
     var $topic_midcom = "";
+    
     /**
      * If there is not special topic to use for midcom, use this as the title for the topic.
      * @var string
      */
-    var $topic_name = " - root - ";
+    var $topic_name = "Midgardian";
+    
     /**
      * The path to the midcom installation
      */

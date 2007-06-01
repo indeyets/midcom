@@ -15,24 +15,24 @@
 @import "../midcom.helper.datamanager/htmlarea/htmlarea.css";
 
 
-form.datamanager label
+form.datamanager2 label
 {
   display: block;
   padding: 3px 0 3px 0;
   font-weight: bold;
 }
 
-form.datamanager fieldset
+form.datamanager2 fieldset
 {
     border: none;
 }
 
-form.datamanager fieldset.radio label
+form.datamanager2 fieldset.radio label
 {
     display: inline;
     font-weight: normal;
 }
-form.datamanager fieldset.radio label span
+form.datamanager2 fieldset.radio label span
 {
     font-weight: bold;
     margin: 0px;
@@ -45,69 +45,79 @@ form.datamanager fieldset.radio label span
     display: -moz-inline-box;
 }
 
-form.datamanager label input.shorttext,
-  form.datamanager label textarea.longtext,
-  form.datamanager label select.list,
-  form.datamanager label select.dropdown
+form.datamanager2 label input.shorttext,
+  form.datamanager2 label textarea.longtext,
+  form.datamanager2 label select.list,
+  form.datamanager2 label select.dropdown
 {
   margin: 0.5ex 0 0 0;
   display: block;
 }
 
-form.datamanager fieldset
+form.datamanager2 label input.radiobutton
+{
+    display: inline;
+}
+
+form.datamanager2 fieldset
 {
   margin: 1ex 0 1ex 0;
   padding: 3px 10px;
 }
 
-form.datamanager fieldset legend
+form.datamanager2 fieldset legend
 {
   font-weight: bold;
   /* border: 1px solid black; */
   padding: 1px 3px;
 }
 
-form.datamanager label.required
+form.datamanager2 label.required
 {
   font-weight: bold;
 }
 
-/*form.datamanager label.required span.field_text:after
+/*form.datamanager2 label.required span.field_text:after
 {
     content: "*";   
 }*/
 
-form.datamanager label.missing
+form.datamanager2 label span.field_text
+{
+    margin-right: 1em;
+}
+
+form.datamanager2 label.missing
 {
     color: red;   
 }
 
-form.datamanager fieldset.account legend,
-  form.datamanager fieldset.blob legend,
-  form.datamanager fieldset.image legend,
-  form.datamanager fieldset.collection legend,
-  form.datamanager fieldset.radiobox legend,
-  form.datamanager fieldset.date legend,
-  form.datamanager fieldset.mailtemplate legend
+form.datamanager2 fieldset.account legend,
+  form.datamanager2 fieldset.blob legend,
+  form.datamanager2 fieldset.image legend,
+  form.datamanager2 fieldset.collection legend,
+  form.datamanager2 fieldset.radiobox legend,
+  form.datamanager2 fieldset.date legend,
+  form.datamanager2 fieldset.mailtemplate legend
 {
        font-weight: normal;
 }
 
-form.datamanager fieldset.radiobox label
+form.datamanager2 fieldset.radiobox label
 {
     display: inline;
     margin: 0px 10px 0px 0px;
     white-space: nowrap;
 }
 
-form.datamanager fieldset.radiobox input
+form.datamanager2 fieldset.radiobox input
 {
     display: inline;
     vertical-align: top !important;
     vertical-align: baseline; /* This one is for IE */
 }
 
-form.datamanager fieldset.date
+form.datamanager2 fieldset.date
 {
     border: none;
     padding: 3px 0 3px 0;
@@ -115,13 +125,13 @@ form.datamanager fieldset.date
     display: inline !important;
 }
 
-form.datamanager fieldset.date input.date
+form.datamanager2 fieldset.date input.date
 {
     display: inline !important;
     width: 10em !important;
 }
 
-form.datamanager fieldset.date button.date
+form.datamanager2 fieldset.date button.date
 {
     display: inline;
     margin: 0px 0px 0px 5px;
@@ -131,8 +141,8 @@ form.datamanager fieldset.date button.date
     background-repeat: no-repeat;
 }
 
-form.datamanager div.blob_preview,
-  form.datamanager div.image_preview
+form.datamanager2 div.blob_preview,
+  form.datamanager2 div.image_preview
 {
     float: right;
     width: 180px;
@@ -142,7 +152,7 @@ form.datamanager div.blob_preview,
     text-align: center;
 }
 
-form.datamanager div.image_frame
+form.datamanager2 div.image_frame
 {
     width: 180px;
     height: 140px;
@@ -152,37 +162,37 @@ form.datamanager div.image_frame
     overflow: scroll;
 }
 
-form.datamanager fieldset.collection fieldset legend
+form.datamanager2 fieldset.collection fieldset legend
 {
     /* Hide the captions of all directly contained blobs, would look weird. */
     display: none;
 }
 
-form.datamanager label.communityhtml select
+form.datamanager2 label.communityhtml select
 {
     display: inline;
 }
 
-form.datamanager textarea.communityhtml
+form.datamanager2 textarea.communityhtml
 {
     width: 500px;
     height: 250px;
 }
 
-form.datamanager span.communityhtml_toolbar img
+form.datamanager2 span.communityhtml_toolbar img
 {
     border: none;
 }
 
 /* Save and cancel buttons */
-form.datamanager div.form_toolbar input.save
+form.datamanager2 div.form_toolbar input.save
 {
     padding-left: 18px;
     background-image: url('../stock-icons/16x16/save.png');
     background-repeat: no-repeat;
     background-position: left;
 }
-form.datamanager div.form_toolbar input.cancel
+form.datamanager2 div.form_toolbar input.cancel
 {
     padding-left: 18px;
     background-image: url('../stock-icons/16x16/cancel.png');
@@ -190,76 +200,15 @@ form.datamanager div.form_toolbar input.cancel
     background-position: left;
 }
 
-/* Contact chooser layouts */
-form.datamanager div.widget_contactchooser .hidden {
-    visibility: hidden;
-}
-form.datamanager div.widget_contactchooser label {
-    font-weight: normal;
-    clear: left;
-    padding-bottom: 2px;
-    padding-left: 6px;
-}
-form.datamanager ul.widget_contactchooser_selected {
-    margin: 0px;
-    padding: 0px;
-    list-style: none;
-    /* TODO: Figure out a good way to scale this on the fly untill set limit
-    overflow: auto;
-    max-height: 20em;
-    max-width: 16em;
-    */
-}
-form.datamanager ul.widget_contactchooser_selected li {
-    display: block;
-    clear: left;
-}
-form.datamanager ul.widget_contactchooser_selected input {
-    display: inline;
-}
-form.datamanager ul.widget_contactchooser_selected label {
-    display: inline;
-}
-form.datamanager ul.widget_contactchooser_resultset {
-    clear: left;
-    background-color: #EAE8E3;
-    color: #000000;
-    border: 1px solid #BAB5AB;
-    width: 60%;
-    z-index: 200;
-    padding: 0px;
-    margin: 0px;
-}
-form.datamanager ul.widget_contactchooser_resultset li {
-    list-style: none;
-}
-form.datamanager ul.widget_contactchooser_resultset li a {
-    text-decoration: none;
-    display: block;
-    padding-left: 2px;
-    padding-right: 2px;
-}
-form.datamanager ul.widget_contactchooser_resultset li a:hover {
-    text-decoration: none;
-    background-color: #BAB5AB;
-}
-form.datamanager div.widget_contactchooser input.ajax_editable {
-    background-position: right;
-    background-repeat: no-repeat;
-    background-image: url("../stock-icons/16x16/view.png");
-    padding-right: 18px;
-    display: block;
-    width: 60%;
-}
 
 /* Checkbox display */
-form.datamanager input.checkbox {
+form.datamanager2 input.checkbox {
     display: inline;
 }
-form.datamanager label.checkbox {
+form.datamanager2 label.checkbox {
     display: inline;
 }
-form.datamanager label.checkbox div {
+form.datamanager2 label.checkbox div {
     display: inline;
 }
 
@@ -274,31 +223,62 @@ div.form_multiselect ul li, div.form_contactchooser ul li
     list-style: none;
 }
 
-form.datamanager table.datamanager_table
+form.datamanager2 table.datamanager_table
 {
     margin: 1em;
 }
 
-form.datamanager table.datamanager_table td
+form.datamanager2 table.datamanager_table td
 {
     border: 0.2px solid #000000;
     text-align: center;
 }
 
-form.datamanager table.datamanager_table td.datamanager_table_rows_header
+form.datamanager2 table.datamanager_table td.datamanager_table_rows_header
 {
     font-weight:bold;
     padding:0.3em;
 }
 
-form.datamanager table.datamanager_table td input.shorttext
+form.datamanager2 table.datamanager_table td input.shorttext
 {
     border:none;
     background-color: #EAE8E3;
        text-align: left;
 }
 
-form.datamanager img.captcha
+form.datamanager2 img.captcha
 {
     display: block;
 }
+
+form.datamanager2 fieldset.checkbox
+{
+    border: none;
+}
+form.datamanager2 fieldset.checkbox input.radiobutton
+{
+    clear: left;
+    float: left;
+}
+
+/* image actions */
+div.midcom_helper_datamanager2_widget_image_actions_container
+{
+    clear: left;
+}
+
+div.midcom_helper_datamanager2_widget_image_actions_container ul.midcom_helper_datamanager2_widget_image_actions
+{
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+div.midcom_helper_datamanager2_widget_image_actions_container ul.midcom_helper_datamanager2_widget_image_actions li
+{
+    display: inline;
+    margin: 0px;
+    padding: 2px;
+}
+

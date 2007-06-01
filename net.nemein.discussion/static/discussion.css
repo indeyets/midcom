@@ -1,32 +1,1 @@
-div.net_nemein_discussion_index div.new-thread {  padding-left: 22px;  font-weight: bold;  background: url("stock_new-discussion-thread.png") no-repeat;}div.net_nemein_discussion_index div.thread h2, div.net_nemein_discussion_thread h2.comment_title, ul.net_nemein_discussion_replylist li {  padding-left: 22px;  background: url("stock-discussion.png") no-repeat;}div.net_nemein_discussion_index div.thread div.posts, div.net_nemein_discussion_index div.thread div.latest_post {  margin-left: 32px;  margin-top: 2px;}div.net_nemein_discussion_thread div.comment {  border-top: 1px dotted #999;  padding-top: 12px;}div.net_nemein_discussion_thread div.comment h2.comment_title {  margin-top: 2px;
-  padding-top: 0px;}
-
-div.net_nemein_discussion_thread div.comment_posted, div.net_nemein_discussion_index div.posts, div.net_nemein_discussion_index div.latest_post, ul.net_nemein_discussion_replylist li span.comment_posted {  font-size: 9px;  color: #777;}
-
-div.net_nemein_discussion_thread div.writecomment, div.net_nemein_discussion_new_thread {
-  padding: 7px;
-  border: 2px solid #c0c0c0;
-  background-color: #e0e0e0;
-  -moz-border-radius: 7px;
-}
-div.net_nemein_discussion_thread div.writecomment h2 {
-  margin-top: 0px;
-  padding-top: 0px;
-}
-
-div.net_nemein_discussion_thread div.comment_toolbar ul, div.net_nemein_discussion_thread div.thread_toolbar ul, ul.net_nemein_discussion_replylist {
-  margin-left: 0px;
-  padding-left: 0px;
-}
-
-ul.net_nemein_discussion_replylist li {
-  list-style: none;
-}
-
-div.net_nemein_discussion_thread div.comment_toolbar li, div.net_nemein_discussion_thread div.thread_toolbar li {  display: inline;  list-style: none;  padding: 0px 0.4em 0px 0.7em;  margin: 3px 0;  white-space: nowrap !important;}
-div.net_nemein_discussion_thread div.comment_toolbar li a, div.net_nemein_discussion_thread div.thread_toolbar li a {
-  text-decoration: none;
-}
-div.net_nemein_discussion_thread div.comment_toolbar li img, div.net_nemein_discussion_thread div.thread_toolbar li img {
-  border: 0px;
-}
+div.net_nemein_discussion_index div.new-thread {  padding-left: 22px;  font-weight: bold;  background: url("stock_new-discussion-thread.png") no-repeat;}div.net_nemein_discussion_index div.thread h2, div.net_nemein_discussion_thread h2.comment_title, ul.net_nemein_discussion_replylist li {  padding-left: 22px;  background: url("stock-discussion.png") no-repeat;}div.net_nemein_discussion_index div.thread div.posts, div.net_nemein_discussion_index div.thread div.latest_post {  margin-left: 32px;  margin-top: 2px;}div.net_nemein_discussion_thread div.comment {  border-top: 1px dotted #999;  padding-top: 12px;}div.net_nemein_discussion_thread div.comment h2.comment_title {  margin-top: 2px;  padding-top: 0px;}div.net_nemein_discussion_thread div.comment_posted, div.net_nemein_discussion_index div.posts, div.net_nemein_discussion_index div.latest_post, ul.net_nemein_discussion_replylist li span.comment_posted {  font-size: 9px;  color: #777;}div.net_nemein_discussion_thread div.writecomment, div.net_nemein_discussion_new_thread {  padding: 7px;  border: 2px solid #c0c0c0;  background-color: #e0e0e0;  -moz-border-radius: 7px;}div.net_nemein_discussion_thread div.writecomment h2 {  margin-top: 0px;  padding-top: 0px;}li.mfcomment ul.midcom_toolbar ul, div.net_nemein_discussion_thread div.thread_toolbar ul, ul.net_nemein_discussion_replylist {  margin-left: 0px;  padding-left: 0px;}div.net_nemein_discussion_thread ol{    margin: 0px;    padding: 0px;}div.net_nemein_discussion_thread ol.sublevel{    padding-left: 25px;}div.net_nemein_discussion_thread ol li {    list-style: none;}li.mfcomment ul.midcom_toolbar{    margin: 0px;    padding: 0px;    margin-top: 6px;    margin-bottom: 6px;}li.mfcomment ul.midcom_toolbar li, div.net_nemein_discussion_thread div.thread_toolbar li {  display: inline;  list-style: none;  padding: 0px 0.4em 0px 0.7em;  margin: 3px 0;  white-space: nowrap !important;}li.mfcomment ul.midcom_toolbar li a, li.mfcomment ul.midcom_toolbar li a {    text-decoration: none;    color: #000000;}li.mfcomment ul.midcom_toolbar li img, li.mfcomment ul.midcom_toolbar li img {  border: 0px;}li.mfcomment ul.midcom_toolbar li form, li.mfcomment ul.midcom_toolbar li button {    display: inline;    background-color: transparent;    border: none;    cursor: pointer;    color: #000000;}li.mfcomment abbr.dtcommented{    border: none;}li.mfcomment div.description{    padding-left: 10px;}

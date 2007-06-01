@@ -83,15 +83,21 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
         if (   $handler_id == 'index-category'
             || $handler_id == 'latest-category')
         {
-            if (!in_array($args[0], $this->_request_data['categories']))
+            $data['category'] = $args[0];
+            if (!in_array($data['category'], $this->_request_data['categories']))
             {
-                // TODO: In some cases we might want to allow displaying by custom categories
-                return false;
+                // This is not a predefined category from configuration, check if site maintainer allows us to show it
+                if (!$this->_config->get('categories_custom_enable'))
+                {
+                    return false;
+                }
+                // TODO: Check here if there are actually items in this cat
             }
-            $qb->add_constraint('extra1', 'LIKE', "%|{$args[0]}|%");
+
+            $qb->add_constraint('extra1', 'LIKE', "%|{$data['category']}|%");
 
             // Add category to title
-            $this->_request_data['page_title'] = sprintf($this->_request_data['l10n']->get('%s category %s'), $this->_topic->extra, $args[0]);
+            $this->_request_data['page_title'] = sprintf($this->_request_data['l10n']->get('%s category %s'), $this->_topic->extra, $data['category']);
         }
 
         // TODO: 1.7 support is only temporary, I'd rather drop it as soon as 1.8 goes somehting like RC.
@@ -140,8 +146,9 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
 
         if ($this->_articles)
         {
+            $total_count = count($this->_articles);
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-            foreach ($this->_articles as $article)
+            foreach ($this->_articles as $article_counter => $article)
             {
                 if (! $this->_datamanager->autoset_storage($article))
                 {
@@ -153,8 +160,26 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
                 }
 
                 $data['article'] =& $article;
+                $data['article_counter'] = $article_counter;
+                $data['article_count'] = $total_count;
                 $arg = $article->name ? $article->name : $article->guid;
-                $data['view_url'] = "{$prefix}view/{$arg}.html";
+                
+                if (   $this->_config->get('link_to_external_url')
+                    && !empty($article->url))
+                {
+                    $data['view_url'] = $article->url;
+                }
+                else
+                {
+                    if ($this->_config->get('view_in_url'))
+                    {
+                        $data['view_url'] = "{$prefix}view/{$arg}.html";
+                    }
+                    else
+                    {
+                        $data['view_url'] = "{$prefix}{$arg}.html";
+                    }
+                }
 
                 midcom_show_style('index-item');
             }

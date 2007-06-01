@@ -131,21 +131,16 @@ class midcom_services_cache_module_nap extends midcom_services_cache_module
     {
         if (! array_key_exists($guid, $this->_guid_backend_map))
         {
-            $topic = mgd_get_object_by_guid($guid);
+            $topic = new midcom_db_article($guid);
             // Don't use generate_error, as there is no MidCOM instance there yet.
             if (! $topic)
             {
                 debug_print_r("Retrieved topic was: ", $topic);
                 die("Tried to load the topic {$guid} for NAP cache backend creation, which failed: " . mgd_errstr());
             }
-            if ($topic->__table__ != 'topic')
-            {
-                debug_print_r("Retrieved topic was:", $topic);
-                die("Tried to load the topic {$guid} for NAP cache backend creation, which failed: GUID did not point to a MidgardTopic.");
-            }
             
             // Check, wether we are talking to AIS
-            if ($topic->midcom_component == 'midcom.admin.content')
+            if ($topic->component == 'midcom.admin.content')
             {
                 $member = 'midcom.admin.content_root_topic';
                 $real_guid = $topic->$member;

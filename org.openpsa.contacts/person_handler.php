@@ -6,7 +6,7 @@
  * @copyright Nemein Oy http://www.nemein.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
- 
+
 /**
  * org.openpsa.contacts person handler and viewer class.
  */
@@ -15,19 +15,19 @@ class org_openpsa_contacts_person_handler
     var $_datamanagers;
     var $_request_data;
     var $_toolbars;
-    
+
     function org_openpsa_contacts_person_handler(&$datamanagers, &$request_data)
     {
         $this->_datamanagers =& $datamanagers;
         $this->_request_data =& $request_data;
-        $this->_toolbars =& midcom_helper_toolbars::get_instance();        
+        $this->_toolbars =& midcom_helper_toolbars::get_instance();
     }
 
     function _load_person($identifier)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $person = new org_openpsa_contacts_person($identifier);
-        
+
         if (!is_object($person))
         {
             debug_add("Person object {$identifier} is not an object");
@@ -54,9 +54,9 @@ class org_openpsa_contacts_person_handler
             debug_pop();
             return false;
         }
-        
-        $_MIDCOM->set_pagetitle("{$person->firstname} {$person->lastname}");        
-        
+
+        $_MIDCOM->set_pagetitle("{$person->firstname} {$person->lastname}");
+
         debug_pop();
         return $person;
     }
@@ -88,27 +88,27 @@ class org_openpsa_contacts_person_handler
 
     function _handler_person_new($handler_id, $args, &$data)
     {
-        debug_push_class(__CLASS__, __FUNCTION__); 
+        debug_push_class(__CLASS__, __FUNCTION__);
         $_MIDCOM->auth->require_valid_user();
         $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_contacts_person');
-    
+
         if (!$this->_datamanagers['person']->init_creation_mode("newperson",$this,"_creation_dm_callback_person"))
         {
             $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
                 "Failed to initialize datamanger in creation mode for schema 'newperson'.");
-            // This will exit   
+            // This will exit
         }
-        
+
         if (count($args) > 0)
         {
             // Get the organization
             $this->_request_data['group'] = $this->_request_data['group_handler']->_load($args[0]);
-            
+
             if (!$this->_request_data['group'])
             {
                 return false;
             }
-            
+
             // Check permissions
             $_MIDCOM->auth->require_do('midgard:create', $this->_request_data['group']);
         }
@@ -116,12 +116,12 @@ class org_openpsa_contacts_person_handler
         switch ($this->_datamanagers['person']->process_form()) {
             case MIDCOM_DATAMGR_CREATING:
                 debug_add('First call within creation mode');
-                
+
                 // Add toolbar items
                 org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
-                
+
                 break;
-            
+
             case MIDCOM_DATAMGR_EDITING:
             case MIDCOM_DATAMGR_SAVED:
                 debug_add("First time submit, the DM has created an object");
@@ -131,7 +131,7 @@ class org_openpsa_contacts_person_handler
                 // Index the person
                 $indexer =& $GLOBALS['midcom']->get_service('indexer');
                 $indexer->index($this->_datamanagers['person']);
-                
+
                 // Add person to group if requested
                 if ($this->_request_data['group'])
                 {
@@ -139,7 +139,7 @@ class org_openpsa_contacts_person_handler
                     $member->uid = $this->_request_data['person']->id;
                     $member->gid = $this->_request_data['group']->id;
                     $member->create();
-                    
+
                     if ($member->id)
                     {
                         debug_add("Added person #{$this->_request_data['person']->id} to group #{$this->_request_data['group']->id} successfully");
@@ -153,10 +153,10 @@ class org_openpsa_contacts_person_handler
                         // This will exit
                     }
                 }
-                
+
                 // Relocate to group view
                 debug_pop();
-                $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);          
+                $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 $_MIDCOM->relocate("{$prefix}person/{$this->_request_data['person']->guid}/");
                 break;
 
@@ -198,7 +198,7 @@ class org_openpsa_contacts_person_handler
         $GLOBALS["view"] = $this->_datamanagers['person'];
         midcom_show_style("show-person-new");
     }
-    
+
     function _handler_person($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -212,7 +212,7 @@ class org_openpsa_contacts_person_handler
             debug_pop();
             return false;
         }
-        
+
         // Add toolbar items
         if (count($args) == 1)
         {
@@ -226,7 +226,7 @@ class org_openpsa_contacts_person_handler
                     MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_do('midgard:update', $this->_request_data['person']),
                 )
             );
-            
+
             $this->_toolbars->bottom->add_item(
                 Array(
                     MIDCOM_TOOLBAR_URL => "person/{$this->_request_data['person']->guid}/privileges.html",
@@ -236,7 +236,6 @@ class org_openpsa_contacts_person_handler
                     MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_do('midgard:privileges', $this->_request_data['person']),
                 )
             );
-            
             if ($this->_request_data['person']->username)
             {
                 $this->_toolbars->bottom->add_item
@@ -253,7 +252,7 @@ class org_openpsa_contacts_person_handler
             }
             else
             {
-                $this->_toolbars->top->add_item(
+                $this->_toolbars->bottom->add_item(
                     Array(
                         MIDCOM_TOOLBAR_URL => "person/{$this->_request_data['person']->guid}/account_create.html",
                         MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('create account'),
@@ -263,7 +262,7 @@ class org_openpsa_contacts_person_handler
                     )
                 );
             }
-            
+
             $cal_node = midcom_helper_find_node_by_component('org.openpsa.calendar');
             if (!empty($cal_node))
             {
@@ -284,7 +283,7 @@ class org_openpsa_contacts_person_handler
             }
 
             $qb = org_openpsa_contacts_buddy::new_query_builder();
-            $user =& $_MIDCOM->auth->user->get_storage();
+            $user = $_MIDCOM->auth->user->get_storage();
             $qb->add_constraint('account', '=', $user->guid);
             $qb->add_constraint('buddy', '=', $this->_request_data['person']->guid);
             $qb->add_constraint('blacklisted', '=', false);
@@ -315,7 +314,7 @@ class org_openpsa_contacts_person_handler
                     )
                 );
             }
-        
+
             if ($handler_id == 'person_view')
             {
                 $this->_toolbars->bottom->add_item(
@@ -339,13 +338,13 @@ class org_openpsa_contacts_person_handler
                         MIDCOM_TOOLBAR_ENABLED => true,
                     )
                 );
-                
+
                 // Load "Create X" buttons for all the related info
                 $relatedto_button_settings = org_openpsa_relatedto_handler::common_toolbar_buttons_defaults();
                 $relatedto_button_settings['wikinote']['wikiword'] = sprintf($this->_request_data['l10n']->get('notes for %s on %s'), $this->_request_data['person']->name, date('Y-m-d H:i'));
-                
+
                 unset($relatedto_button_settings['event']);
-                
+
                 org_openpsa_relatedto_handler::common_node_toolbar_buttons($this->_toolbars->top, $this->_request_data['person'], 'org.openpsa.contacts', $relatedto_button_settings);
             }
         }
@@ -353,7 +352,7 @@ class org_openpsa_contacts_person_handler
         debug_pop();
         return true;
     }
-    
+
     function _show_person($handler_id, &$data)
     {
         if ($handler_id == 'person_view')
@@ -368,12 +367,12 @@ class org_openpsa_contacts_person_handler
         }
     }
 
-    
+
     function _handler_person_action($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $_MIDCOM->auth->require_valid_user();
-        debug_add("Person action handler called"); 
+        debug_add("Person action handler called");
 
         // Check if we get the person
         if (!$this->_handler_person($handler_id, $args, &$data))
@@ -382,7 +381,7 @@ class org_openpsa_contacts_person_handler
             debug_pop();
             return false;
         }
-        
+
         // Check if the action is a valid one
         $this->_request_data['person_action'] = $args[1];
         debug_add("person_action: {$this->_request_data['person_action']}");
@@ -392,7 +391,7 @@ class org_openpsa_contacts_person_handler
                 debug_add("Entering privilege handler");
                 $_MIDCOM->auth->require_do('midgard:privileges', $this->_request_data['person']);
                 $user_object = $_MIDCOM->auth->get_user($this->_request_data['person']->guid);
-                
+
                 // Get the calendar root event
                 $_MIDCOM->componentloader->load('org.openpsa.calendar');
                 if (   isset($GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event'])
@@ -418,14 +417,14 @@ class org_openpsa_contacts_person_handler
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['contact_creation']['privilege_assignee'] = $user_object->id;
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['contact_editing']['privilege_assignee'] = $user_object->id;
                 */
-                
+
                 // Load project classes
                 $_MIDCOM->componentloader->load('org.openpsa.projects');
                 // Load invoice classes
                 $_MIDCOM->componentloader->load('org.openpsa.invoices');
                 // Load campaign classes
                 $_MIDCOM->componentloader->load('org.openpsa.directmarketing');
-                
+
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['organization_creation']['privilege_object'] = $user_object->get_storage();
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['organization_editing']['privilege_object'] = $user_object->get_storage();
 
@@ -434,6 +433,7 @@ class org_openpsa_contacts_person_handler
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['invoices_editing']['privilege_object'] = $user_object->get_storage();
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['campaigns_creation']['privilege_object'] = $user_object->get_storage();
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['campaigns_editing']['privilege_object'] = $user_object->get_storage();
+                $this->_datamanagers['acl']->_layoutdb['default']['fields']['salesproject_creation']['privilege_object'] = $user_object->get_storage();
 
                 $this->_datamanagers['acl']->init($this->_request_data['person']);
 
@@ -443,7 +443,7 @@ class org_openpsa_contacts_person_handler
 
                         // Add toolbar items
                         org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
-                        
+
                         debug_pop();
                         return true;
 
@@ -453,7 +453,7 @@ class org_openpsa_contacts_person_handler
                         $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                             . "person/" . $this->_request_data["person"]->guid . "/");
                         // This will exit()
-                                   
+
                     case MIDCOM_DATAMGR_CANCELLED:
                         $this->_view = "default";
                         debug_pop();
@@ -473,13 +473,13 @@ class org_openpsa_contacts_person_handler
 
             case "account_create":
                 $_MIDCOM->auth->require_do('midgard:update', $this->_request_data['person']);
-                
+
                 if ($this->_request_data['person']->username)
                 {
                     // Creating new account for existing account is not possible
                     return false;
                 }
-                
+
                 $this->_view = "area_person_account_create";
 
                 // Add toolbar items
@@ -488,12 +488,13 @@ class org_openpsa_contacts_person_handler
                 if (array_key_exists('midcom_helper_datamanager_submit', $_POST))
                 {
                     // User has tried to create account
-                    $stat = $this->_request_data['person']->set_account($_POST['org_openpsa_contacts_person_account_username'], $_POST['org_openpsa_contacts_person_account_password']);
-                    
+                    $plaintext = true;
+                    $stat = $this->_request_data['person']->set_account($_POST['org_openpsa_contacts_person_account_username'], $_POST['org_openpsa_contacts_person_account_password'], $plaintext);
+
                     if ($stat)
                     {
                         // Account created, redirect to person card
-                        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);          
+                        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                         $_MIDCOM->relocate($prefix."person/".$this->_request_data['person']->guid."/");
                     }
                     else
@@ -517,21 +518,42 @@ class org_openpsa_contacts_person_handler
 
                 // TODO: Generate random password
                 // We should do this by listing to /dev/urandom
-                $this->_request_data['default_password'] = substr(md5(microtime()), 5, 6);
+                //$this->_request_data['default_password'] = substr(md5(microtime()), 5, 6);
+                $d = $this->_request_data['config']->get('default_password_lenght');
+                // Safety
+                if ($d == 0)
+                {
+                    $d = 6;
+                }
+                if (function_exists('mt_rand'))
+                {
+                    $rand = 'mt_rand';
+                }
+                else
+                {
+                    $rand = 'rand';
+                }
+                // Valid characters for default password (PONDER: make configurable ?)
+                $passwdchars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@';
+                $this->_request_data['default_password'] = '';
+                while ($d--)
+                {
+                    $this->_request_data['default_password'] .= $passwdchars[$rand(0, strlen($passwdchars) - 1)];
+                }
                 return true;
-                
+
             case "account_edit":
                 $_MIDCOM->auth->require_do('midgard:update', $this->_request_data['person']);
-                
+
                 if ($this->_request_data['person']->id != $_MIDGARD['user'] && !$_MIDGARD['admin'])
                 {
                     return false;
                 }
-                
+
                 if (!$this->_request_data['person']->username)
                 {
                     // Account needs to be created first, relocate
-                    $prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);          
+                    $prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                     $GLOBALS['midcom']->relocate($prefix."person/".$this->_request_data['person']->guid."/account_create.html");
                 }
 
@@ -551,13 +573,16 @@ class org_openpsa_contacts_person_handler
                     }
                     else
                     {
+
+                        $plaintext = true;
+
                         // Update account
-                        $stat = $this->_request_data['person']->set_account($_POST['org_openpsa_contacts_person_account_username'], $_POST['org_openpsa_contacts_person_account_newpassword']);
+                        $stat = $this->_request_data['person']->set_account($_POST['org_openpsa_contacts_person_account_username'], $_POST['org_openpsa_contacts_person_account_newpassword'], $plaintext);
 
                         if ($stat)
                         {
                             // Account updated, redirect to person card
-                            $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);          
+                            $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                             $_MIDCOM->relocate($prefix."person/".$this->_request_data['person']->guid."/");
                         }
                         else
@@ -574,10 +599,10 @@ class org_openpsa_contacts_person_handler
                 // Group person listing, always work even if there are none
                 $this->_view = "area_person_memberships";
                 return true;
-                
+
             case "edit":
                 $_MIDCOM->auth->require_do('midgard:update', $this->_request_data['person']);
-                
+
                 if ($this->_request_data['person']->sitegroup != $_MIDGARD['sitegroup'])
                 {
                     return false;
@@ -590,7 +615,7 @@ class org_openpsa_contacts_person_handler
 
                         // Add toolbar items
                         org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
-                        
+
                         return true;
 
                     case MIDCOM_DATAMGR_SAVED:
@@ -600,7 +625,7 @@ class org_openpsa_contacts_person_handler
                         debug_add('indexing person started');
                         $indexer->index($this->_datamanagers['person']);
                         debug_add('indexing person done');
-                        
+
                         $this->_view = "default";
                         $relocate_to = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "person/" . $this->_request_data["person"]->guid();
                         debug_add("trying to relocate to: {$relocate_to}");
@@ -640,16 +665,16 @@ class org_openpsa_contacts_person_handler
         elseif ($this->_view == "area_person_memberships")
         {
             // This is most likely a dynamic_load
-            midcom_show_style("show-person-groups-header");    
-            $qb = $_MIDCOM->dbfactory->new_query_builder('midcom_baseclasses_database_member');        
+            midcom_show_style("show-person-groups-header");
+            $qb = $_MIDCOM->dbfactory->new_query_builder('midcom_baseclasses_database_member');
             $qb->add_constraint('uid', '=', $this->_request_data['person']->id);
-            $results = $_MIDCOM->dbfactory->exec_query_builder($qb);             
+            $results = $_MIDCOM->dbfactory->exec_query_builder($qb);
             if (count($results) > 0)
             {
                 foreach ($results as $member)
                 {
                     $this->_request_data['member'] = $member;
-                    
+
                     if ($member->extra == "")
                     {
                         $member->extra = $this->_request_data['l10n']->get('<title>');
@@ -665,7 +690,7 @@ class org_openpsa_contacts_person_handler
             }
             midcom_show_style("show-person-groups-footer");
         }
-        elseif ($this->_view == "privileges")        
+        elseif ($this->_view == "privileges")
         {
             // Default view, display the selected action
             $this->_request_data['acl_dm'] = $this->_datamanagers['acl'];
@@ -678,11 +703,11 @@ class org_openpsa_contacts_person_handler
             midcom_show_style("show-person-{$data['person_action']}");
         }
     }
-    
+
     /**
      * Does a QB query for persons, returns false or number of matched entries
      *
-     * Displays style element 'search-persons-empty' only if $displayEmpty is 
+     * Displays style element 'search-persons-empty' only if $displayEmpty is
      * set to true.
      */
     function _search_qb_persons($search, $displayEmpty=false, $displayOutput=true, $limit=false, $offset=false)
@@ -691,12 +716,12 @@ class org_openpsa_contacts_person_handler
         {
             return false;
         }
-        
+
         $search = str_replace('*', '%', $search);
-        
-        $qb_org = org_openpsa_contacts_person::new_query_builder();        
+
+        $qb_org = org_openpsa_contacts_person::new_query_builder();
         $qb_org->begin_group('OR');
-        
+
         // Search using only the fields defined in config
         $person_fields = explode(',', $this->_request_data['config']->get('person_search_fields'));
         if (   !is_array($person_fields)
@@ -704,7 +729,7 @@ class org_openpsa_contacts_person_handler
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Invalid person search configuration');
         }
-    
+
         foreach ($person_fields as $field)
         {
             if (empty($field))
@@ -713,7 +738,7 @@ class org_openpsa_contacts_person_handler
             }
             $qb_org->add_constraint($field, 'LIKE', $search);
         }
-        
+
         $qb_org->end_group();
         //Skip accounts in other sitegroups (sitegroup constraint is no longer dropped ?)
         $qb_org->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);

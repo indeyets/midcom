@@ -279,6 +279,84 @@ class midcom_helper__basicnav
 
 
     /**
+     * Constructor
+     *
+     * The only constructor of the Basicnav class. It will initialize Root-Topic,
+     * Current-Topic and all cache arrays. The function will load all nodes
+     * between root and current node.
+     *
+     * If the current node is behind an invisible or undecendable node, the last
+     * known good node will be used instead for the current node.
+     *
+     * The constructor retrievs all initialisation data from the component context.
+     * A special process is used, if the context in question is of the type
+     * MIDCOM_REQUEST_CONTENTADM: The system then goes into Administration Mode,
+     * querying the components for the administrative data instead of their regular
+     * data. In addition, the root topic is set to the administrated topic instead
+     * of the regular root topic. This way you can build up Admin Interface
+     * Navigation for "external" trees.
+     *
+     * @param int $context	The Context ID for which to create NAP data for, defaults to 0
+     */
+    function midcom_helper__basicnav($context = 0)
+    {
+        debug_push("_basicnav::constructor");
+
+        $tmp = $_MIDCOM->get_context_data($context, MIDCOM_CONTEXT_ROOTTOPIC);
+        $this->_root = $tmp->id;
+
+        // $this->_nap_cache =& $_MIDCOM->cache->nap->get_nap_cache($GLOBALS['midcom_config']['midcom_root_topic_guid']);
+
+        $this->_leaves = array();
+        
+        $this->_nodes = array();
+        $this->_loader =& $_MIDCOM->get_component_loader();
+        if ($_MIDCOM->get_context_data($context, MIDCOM_CONTEXT_REQUESTTYPE) == MIDCOM_REQUEST_CONTENTADM)
+        {
+            $this->_adminmode = true;
+        }
+        else
+        {
+            $this->_adminmode = false;
+        }
+
+        $current = $_MIDCOM->get_context_data($context, MIDCOM_CONTEXT_CONTENTTOPIC);
+        if (is_null($current))
+        {
+            $this->_current = $this->_root;
+        }
+        else
+        {
+            $this->_current = $current->id;
+        }
+        $this->_currentleaf = false;
+
+        $this->_lastgoodnode = -1;
+
+        switch ($this->_loadNode($this->_current))
+        {
+            case MIDCOM_ERROK:
+                break;
+
+            case MIDCOM_ERRFORBIDDEN:
+                debug_add("The current node is hidden behind a undescendable one.", MIDCOM_LOG_INFO);
+                debug_add("Activating last good node ({$this->_lastgoodnode}) as current node");
+                $this->_current = $this->_lastgoodnode;
+                break;
+
+            default:
+                debug_add("_loadNode failed, see above error for details.", MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;
+        }
+
+        // Reset the Root node's URL Parameter to an empty string.
+        $this->_nodes[$this->_root][MIDCOM_NAV_URL] = '';
+
+        debug_pop();
+    }
+
+    /**
      * This helper object will construct a complete node data structure for a given topic,
      * without any dependant objects like subtopics or leaves. It does not do any visibility
      * checks, it just prepares the object for later processing.
@@ -339,37 +417,46 @@ class midcom_helper__basicnav
      * Reads a node data structure from the database, completes all defaults and
      * derived properties (like ViewerGroups).
      *
+     * If the topic is missing a component, it will set the component to midcom.core.nullcomponent.
+     *
      * @param int $id The ID of the topic for which the NAP information is requested.
      * @return Array Node data structure or NULL in case no NAP information is available for this topic.
      * @access private
      */
-    function _get_node_from_database($id)
+    function _get_node_from_database($node)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
-        // Load the topic first.
-        $topic = new midcom_db_topic($id);
-        if (! $topic)
+        if (is_object($node))
         {
-            /*
-            // HOTFIX
-            // this is most probably an access denied error. don't bail here therefor.
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
-                "Cannot load NAP information, aborting: Could not load the topic {$id} from the database ("
-                . mgd_errstr() . ').');
-            // This will exit().
-            */
-            debug_add("Could not load the topic {$id} through DBA; assuming missing privileges.", MIDCOM_LOG_INFO);
-            debug_pop();
-            return null;
+            $topic = $node;
+        }
+        else
+        {
+            // Load the topic first.
+            $topic = new midcom_db_topic($node);
+            if (   ! $topic
+                || !$topic->guid)
+            {
+                debug_add("Could not load the topic {$node} through DBA; assuming missing privileges.", MIDCOM_LOG_INFO);
+                debug_pop();
+                return null;
+            }
         }
 
         debug_add("Trying to load NAP data for topic {$topic->name} (#{$topic->id})");
 
         // Retrieve a NAP instance
-
-        $path = $topic->parameter('midcom', 'component');
-        if ($path === false)
+        // if we are missing the component, use the nullcomponent.
+        if (!array_key_exists( $topic->component, $_MIDCOM->componentloader->manifests)) 
+        {
+            debug_add("The topic {$topic->id} has no component assigned to it, using nullcomponent.",
+                MIDCOM_LOG_ERROR);
+            $topic->component = 'midcom.core.nullcomponent';
+        }
+        $path = $topic->component;
+        /*
+        if (!$path)
         {
             debug_add("The topic {$topic->id} has no component assigned to it, cannot add it to the NAP list.",
                 MIDCOM_LOG_ERROR);
@@ -381,8 +468,16 @@ class midcom_helper__basicnav
                 MIDCOM_LOG_ERROR);
             return null;
         }
-        $nap =& $this->_loader->get_nap_class($path);
-        if (! $nap->set_object($topic))
+        */
+        $interface =& $this->_loader->get_interface_class($path);
+        if (!$interface)
+        {
+            debug_add("Could not get interface class of '{$path}' to the topic {$topic->id}, cannot add it to the NAP list.",
+                MIDCOM_LOG_ERROR);
+            return null;
+        }
+        
+        if (! $interface->set_object($topic))
         {
             debug_add("Could not set the NAP instance of '{$path}' to the topic {$topic->id}, cannot add it to the NAP list.",
                 MIDCOM_LOG_ERROR);
@@ -392,7 +487,7 @@ class midcom_helper__basicnav
         // Get the node data and verify this is a node that actually has any relevant NAP
         // information. Internal components like AIS or the L10n editor, which don't have
         // a NAP interface yet return null here, to be exempt from any NAP processing.
-        $nodedata = $nap->get_node();
+        $nodedata = $interface->get_node();
         if (is_null($nodedata))
         {
             debug_add("The component '{$path}' did return null for the topic {$topic->id}, indicating no NAP information is available.");
@@ -405,21 +500,15 @@ class midcom_helper__basicnav
 
         $nodedata[MIDCOM_NAV_URL] = $topic->name . '/';
         $nodedata[MIDCOM_NAV_NAME] = trim($nodedata[MIDCOM_NAV_NAME]) == '' ? $topic->name : $nodedata[MIDCOM_NAV_NAME];
-        $nodedata[MIDCOM_NAV_GUID] = $topic->guid();
+        $nodedata[MIDCOM_NAV_GUID] = $topic->guid;
         $nodedata[MIDCOM_NAV_ID] = $topic->id;
         $nodedata[MIDCOM_NAV_TYPE] = 'node';
         $nodedata[MIDCOM_NAV_SCORE] = $topic->score;
         $nodedata[MIDCOM_NAV_COMPONENT] = $path;
-        $nodedata[MIDCOM_NAV_SUBNODES] = null;
-        $nodedata[MIDCOM_NAV_LEAVES] = null;
 
-        if (!array_key_exists(MIDCOM_NAV_ICON, $nodedata)) {
-            $nodedata[MIDCOM_NAV_ICON] = null;
-        }
-
-        if (! array_key_exists(MIDCOM_NAV_TOOLBAR, $nodedata))
+        if (!array_key_exists(MIDCOM_NAV_ICON, $nodedata)) 
         {
-            $nodedata[MIDCOM_NAV_TOOLBAR] = null;
+            $nodedata[MIDCOM_NAV_ICON] = null;
         }
 
         if (! array_key_exists(MIDCOM_NAV_CONFIGURATION, $nodedata))
@@ -430,7 +519,7 @@ class midcom_helper__basicnav
         if (   ! array_key_exists(MIDCOM_NAV_NOENTRY, $nodedata)
             || $nodedata[MIDCOM_NAV_NOENTRY] == false)
         {
-            $nodedata[MIDCOM_NAV_NOENTRY] = (bool) $metadata->get('nav_noentry');
+            $nodedata[MIDCOM_NAV_NOENTRY] = (bool) $metadata->get('navnoentry');
         }
 
         if ($topic->id == $this->_root)
@@ -441,31 +530,20 @@ class midcom_helper__basicnav
         else
         {
             $nodedata[MIDCOM_NAV_NODEID] = $topic->up;
+                        
+            if (!array_key_exists($nodedata[MIDCOM_NAV_NODEID], $this->_nodes))
+            {
+                return null;
+            }
+            if (!array_key_exists(MIDCOM_NAV_RELATIVEURL, $this->_nodes[$nodedata[MIDCOM_NAV_NODEID]]))
+            {
+                return null;
+            }
+            
             $nodedata[MIDCOM_NAV_RELATIVEURL] = $this->_nodes[$nodedata[MIDCOM_NAV_NODEID]][MIDCOM_NAV_RELATIVEURL] . $nodedata[MIDCOM_NAV_URL];
         }
+        
         $nodedata[MIDCOM_NAV_OBJECT] = $topic;
-
-        // Collect Viewergroups
-        // A topic can be viewed by all groups by default
-        $nodedata[MIDCOM_NAV_VIEWERGROUPS] = null;
-
-        /*
-        $topic_viewers = $topic->listparameters("ViewerGroups");
-        if ($topic_viewers)
-        {
-            $groups = Array();
-            while ($topic_viewers->fetch())
-            {
-                if ($topic_viewers->name == 'all')
-                {
-                    // There is an "all" value, everybody can access this topic for sure.
-                    break;
-                }
-                $groups[] = $topic_viewers->name;
-            }
-            $nodedata[MIDCOM_NAV_VIEWERGROUPS] = $groups;
-        }
-        */
 
         // Temporary compatiblity value
         $nodedata[MIDCOM_NAV_VISIBLE] = true;
@@ -488,7 +566,11 @@ class midcom_helper__basicnav
     function _get_leaves($node)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Trying to load NAP leaf data for topic {$node[MIDCOM_NAV_OBJECT]->name} (#{$node[MIDCOM_NAV_OBJECT]->id})");
+
+        if (is_object($node[MIDCOM_NAV_OBJECT]))
+        {
+            debug_add("Trying to load NAP leaf data for topic {$node[MIDCOM_NAV_OBJECT]->name} (#{$node[MIDCOM_NAV_OBJECT]->id})");
+        }
 
         $entry_name = "{$node[MIDCOM_NAV_ID]}-leaves";
 
@@ -605,7 +687,7 @@ class midcom_helper__basicnav
         if (! $this->_nap_cache->exists($node[MIDCOM_NAV_ID]))
         {
             $this->_nap_cache->close();
-            debug_add("NAP Caching Engine: Tried to update the topic {$node[MIDCOM_NAV_OBJECT]->name} (#{$node[MIDCOM_NAV_OBJECT]->id}) "
+            debug_add("NAP Caching Engine: Tried to update the topic {$node[MIDCOM_NAV_NAME]} (#{$node[MIDCOM_NAV_OBJECT]->id}) "
                 . 'which was supposed to be in the cache already, but failed to load the object from the database. '
                 . 'Aborting write_to_cache, this is a critical cache inconsistency.', MIDCOM_LOG_WARN);
             debug_pop();
@@ -648,16 +730,22 @@ class midcom_helper__basicnav
         $topic = $node[MIDCOM_NAV_OBJECT];
 
         // Retrieve a NAP instance
-        $nap =& $this->_loader->get_nap_class($node[MIDCOM_NAV_COMPONENT]);
-        if (! $nap->set_object($topic))
+        $interface =& $this->_loader->get_interface_class($node[MIDCOM_NAV_COMPONENT]);
+        if (!$interface)
+        {
+            debug_add("Could not get interface class of '{$node[MIDCOM_NAV_COMPONENT]}' to the topic {$topic->id}, cannot add it to the NAP list.",
+                MIDCOM_LOG_ERROR);
+            return null;
+        }
+        if (! $interface->set_object($topic))
         {
             debug_print_r('Topic object dump:', $topic);
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
-                "Cannot load NAP information, aborting: Could not set the nap instance of {$path} to the topic {$topic->id}.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
+                "Cannot load NAP information, aborting: Could not set the nap instance of {$node[MIDCOM_NAV_COMPONENT]} to the topic {$topic->id}.");
             // This will exit().
         }
 
-        $leafdata = $nap->get_leaves();
+        $leafdata = $interface->get_leaves();
         $leaves = Array();
 
         foreach ($leafdata as $id => $leaf)
@@ -672,13 +760,12 @@ class midcom_helper__basicnav
             }
             else if (! array_key_exists(MIDCOM_NAV_GUID, $leaf))
             {
-                $leaf[MIDCOM_NAV_GUID] = $leaf[MIDCOM_NAV_OBJECT]->guid();
+                $leaf[MIDCOM_NAV_GUID] = $leaf[MIDCOM_NAV_OBJECT]->guid;
             }
             else if (! array_key_exists(MIDCOM_NAV_OBJECT, $leaf))
             {
-                $leaf[MIDCOM_NAV_OBJECT] = mgd_get_object_by_guid($leaf[MIDCOM_NAV_GUID]);
+                $leaf[MIDCOM_NAV_OBJECT] = $_MIDCOM->dbfactory->get_object_by_guid($leaf[MIDCOM_NAV_GUID]);
             }
-            $leaf[MIDCOM_NAV_VIEWERGROUPS] = $node[MIDCOM_NAV_VIEWERGROUPS];
 
             // Now complete the actual leaf information
 
@@ -745,7 +832,8 @@ class midcom_helper__basicnav
             $leaf[MIDCOM_NAV_ID] = "{$node[MIDCOM_NAV_ID]}-{$id}";
             $leaf[MIDCOM_NAV_NODEID] = $node[MIDCOM_NAV_ID];
             $leaf[MIDCOM_NAV_RELATIVEURL] = $node[MIDCOM_NAV_RELATIVEURL] . $leaf[MIDCOM_NAV_SITE][MIDCOM_NAV_URL];
-            if (!array_key_exists(MIDCOM_NAV_ICON, $leaf)) {
+            if (!array_key_exists(MIDCOM_NAV_ICON, $leaf)) 
+            {
                 $leaf[MIDCOM_NAV_ICON] = null;
             }
 
@@ -786,23 +874,6 @@ class midcom_helper__basicnav
             debug_add('Got a null value as napdata, so this object does not have any NAP info, so we cannot display it.');
             debug_pop();
             return false;
-        }
-
-        if (! is_null($napdata[MIDCOM_NAV_VIEWERGROUPS]))
-        {
-            $visible = false;
-            foreach ($napdata[MIDCOM_NAV_VIEWERGROUPS] as $guid)
-            {
-                if ($GLOBALS["midcom"]->check_memberships($guid))
-                {
-                    // User is member of a viewer group
-                    $visible = true;
-                }
-            }
-            if (! $visible)
-            {
-                return false;
-            }
         }
 
         // If in admin mode, we are always visible now.
@@ -864,19 +935,18 @@ class midcom_helper__basicnav
      * prevent dynamically loaded components from disrupting active leaf information,
      * as this can happen if dynamic_load is called before showing the navigation.
      *
-     * @param mixed $param	Topic to be processed.
-     * @param bool $idmode	$param is an integer if true, an MidgardTopic otherwise.
+     * @param mixed $node	Topic to be processed. Object or ID
      * @return int			One of the MGD_ERR constants
      */
-    function _loadNodeData($param, $idmode = true)
+    function _loadNodeData($node)
     {
         global $midcom_errstr;
         debug_push_class(__CLASS__, __FUNCTION__);
 
         // Load the object.
-        if ($idmode)
+        if (!is_object($node))
         {
-            $topic_id = $param;
+            $topic_id = $node;
             $topic = new midcom_db_topic($topic_id);
             if (!$topic)
             {
@@ -888,12 +958,13 @@ class midcom_helper__basicnav
         }
         else
         {
-            $topic = $param;
+            $topic = $node;
             $topic_id = $topic->id;
         }
 
         // Load the node data and check visibility.
-        $nodedata = $this->_get_node($topic->id);
+        $nodedata = $this->_get_node($topic);
+
         if (! $this->_is_object_visible($nodedata))
         {
             debug_pop();
@@ -907,14 +978,20 @@ class midcom_helper__basicnav
         // during get_leaf now.
         if ($this->_current == $topic->id)
         {
-            $nap =& $this->_loader->get_nap_class($nodedata[MIDCOM_NAV_COMPONENT]);
-            $currentleaf = $nap->get_current_leaf();
+            $interface =& $this->_loader->get_interface_class($nodedata[MIDCOM_NAV_COMPONENT]);
+            if (!$interface)
+            {
+                debug_add("Could not get interface class of '{$nodedata[MIDCOM_NAV_COMPONENT]}' to the topic {$topic->id}, cannot add it to the NAP list.",
+                    MIDCOM_LOG_ERROR);
+                return null;
+            }            
+            $currentleaf = $interface->get_current_leaf();
             if ($currentleaf !== false)
             {
                 $this->_currentleaf = "{$nodedata[MIDCOM_NAV_ID]}-{$currentleaf}";
             }
         }
-
+        
         debug_pop();
         return MIDCOM_ERROK;
     }
@@ -965,13 +1042,12 @@ class midcom_helper__basicnav
      * will be indicated with a corresponding return value and an error message
      * in $midcom_errstr.
      *
-     * @param int $nodeid	The ID of the topic to be loaded
+     * @param int $node_id	The ID of the topic to be loaded
      * @return int			MIDCOM_ERROK on succes, one of the MIDCOM_ERR... constants upon an error
      * @access private
      */
     function _loadNode($node_id)
     {
-        global $midcom_errstr;
         if (! is_numeric($node_id))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -983,67 +1059,65 @@ class midcom_helper__basicnav
         }
         $node_id = (int) $node_id;
 
+        // Check if we have a cached version of the node already
         if (array_key_exists($node_id, $this->_nodes))
         {
             return MIDCOM_ERROK;
         }
-
-        if (   $node_id != $this->_root
-            && ! mgd_is_in_topic_tree($this->_root, $node_id))
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            $midcom_errstr = "Node $node_id is not in the MidCOM content tree $this->_root. Aborting";
-            debug_add($midcom_errstr, MIDCOM_LOG_ERROR);
-            debug_pop();
-            return MIDCOM_ERRNOTFOUND;
-        }
-
+        
         $topic = new midcom_db_topic($node_id);
         if (!$topic)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            $midcom_errstr = "Could not load Topic $node_id: " . mgd_errstr();
-            debug_add($midcom_errstr, MIDCOM_LOG_ERROR);
+            debug_add("Could not load Topic #{$node_id}: " . mgd_errstr(), MIDCOM_LOG_ERROR);
             debug_pop();
             return MIDCOM_ERRCRIT;
         }
 
-        if (!array_key_exists($topic->up, $this->_nodes) && $topic->id != $this->_root)
+        if (   $topic->id != $this->_root
+            && !$topic->is_in_tree($this->_root, $topic->id))
         {
-            $toload = array();
-            $uplink = $topic;
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Node #{$topic->id} is not in the MidCOM content tree #{$this->_root}. Aborting", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return MIDCOM_ERRNOTFOUND;
+        }
+        
+        $up = $topic->up;
 
-            do
+        if (   !array_key_exists($up, $this->_nodes) 
+            && $up != 0)
+        {
+            // Load parent nodes also to cache
+            $uplinks = array();
+
+            while (   !array_key_exists($up, $this->_nodes)
+                   && $up != 0)
             {
-                $uplink = new midcom_db_topic($uplink->up);
+                $uplink = new midcom_db_topic($up);
                 if (!$uplink)
                 {
                     debug_push_class(__CLASS__, __FUNCTION__);
-                    $midcom_errstr = "Could not load Topic " . $node_id . ": " . mgd_errstr();
-                    debug_add($midcom_errstr, MIDCOM_LOG_ERROR);
+                    debug_add("Could not load Topic " . $node_id . ": " . mgd_errstr(), MIDCOM_LOG_ERROR);
                     debug_pop();
                     return MIDCOM_ERRCRIT;
                 }
-                $toload[] = $uplink->id;
+                $uplinks[] = $uplink;
+                $up = $uplink->up;
             }
-            while (   !array_key_exists ($uplink->up,$this->_nodes)
-                   && $uplink->id != $this->_root);
 
-            // pop each element of $toload off and call _loadNode on it.
-
-            $uplink = ($uplink->id == $this->_root) ? -1 : $uplink->up;
-            $id = array_pop($toload);
-
-            while (!is_null($id))
+            // Ensure root folder is first            
+            $uplinks = array_reverse($uplinks);
+            
+            foreach ($uplinks as $uptopic)
             {
-                $result = $this->_loadNodeData($id);
-
+                // Pass the full topic so _loadNodeData doesn't have to reload it
+                $result = $this->_loadNodeData(&$uptopic);
                 switch ($result)
                 {
                     case MIDCOM_ERRFORBIDDEN:
                         debug_push_class(__CLASS__, __FUNCTION__);
-                        $midcom_errstr = "The Node $id is invisible, could not satisfy the the dependency chain to Node $node_id";
-                        debug_add($midcom_errstr, MIDCOM_LOG_ERROR);
+                        debug_add("The Node {$uptopic->id} is invisible, could not satisfy the the dependency chain to Node #{$node_id}", MIDCOM_LOG_ERROR);
                         debug_pop();
                         return MIDCOM_ERRFORBIDDEN;
 
@@ -1051,92 +1125,11 @@ class midcom_helper__basicnav
                         return MIDCOM_ERRCRIT;
                 }
 
-                $this->_lastgoodnode = $id;
-                $id = array_pop($toload);
+                $this->_lastgoodnode = $uptopic->id;
             }
         }
 
-        return $this->_loadNodeData($topic->id);
-    }
-
-    /**
-     * Constructor
-     *
-     * The only constructor of the Basicnav class. It will initialize Root-Topic,
-     * Current-Topic and all cache arrays. The function will load all nodes
-     * between root and current node.
-     *
-     * If the current node is behind an invisible or undecendable node, the last
-     * known good node will be used instead for the current node.
-     *
-     * The constructor retrievs all initialisation data from the component context.
-     * A special process is used, if the context in question is of the type
-     * MIDCOM_REQUEST_CONTENTADM: The system then goes into Administration Mode,
-     * querying the components for the administrative data instead of their regular
-     * data. In addition, the root topic is set to the administrated topic instead
-     * of the regular root topic. This way you can build up Admin Interface
-     * Navigation for "external" trees.
-     *
-     * @param int $context	The Context ID for which to create NAP data for, defaults to 0
-     */
-    function midcom_helper__basicnav($context = 0)
-    {
-        global $midcom;
-
-        debug_push("_basicnav::constructor");
-
-        $tmp = $midcom->get_context_data($context, MIDCOM_CONTEXT_ROOTTOPIC);
-        $this->_root = $tmp->id;
-
-        // $this->_nap_cache =& $midcom->cache->nap->get_nap_cache($GLOBALS['midcom_config']['midcom_root_topic_guid']);
-
-        $this->_leaves = array();
-        $this->_nodes = array();
-        $this->_loader =& $midcom->get_component_loader();
-        if ($midcom->get_context_data($context, MIDCOM_CONTEXT_REQUESTTYPE) == MIDCOM_REQUEST_CONTENTADM)
-        {
-            $this->_adminmode = true;
-        }
-        else
-        {
-            $this->_adminmode = false;
-        }
-
-        $current = $midcom->get_context_data($context, MIDCOM_CONTEXT_CONTENTTOPIC);
-        if (is_null($current))
-        {
-            $this->_current = $this->_root;
-        }
-        else
-        {
-            $this->_current = $current->id;
-        }
-        $this->_currentleaf = false;
-
-        $this->_lastgoodnode = -1;
-
-        switch ($this->_loadNode($this->_current))
-        {
-            case MIDCOM_ERROK:
-                break;
-
-            case MIDCOM_ERRFORBIDDEN:
-                debug_add("The current node is hidden behind a undecendable one.", MIDCOM_LOG_INFO);
-                debug_add("Activating last good node ({$this->_lastgoodnode}) as current node");
-                $this->_current = $this->_lastgoodnode;
-                break;
-
-            default:
-                debug_add("_loadNode failed, see above error for details.", MIDCOM_LOG_ERROR);
-                debug_pop();
-                return false;
-        }
-
-        // Reset the Root node's URL Parameter to an empty string.
-
-        $this->_nodes[$this->_root][MIDCOM_NAV_URL] = "";
-
-        debug_pop();
+        return $this->_loadNodeData(&$topic);
     }
 
     /**
@@ -1194,7 +1187,6 @@ class midcom_helper__basicnav
         global $midcom_errstr;
 
         debug_push("_basicnav::list_nodes");
-
         if (! is_numeric($parent_node))
         {
             debug_add("Parameter passed is no integer: [$parent_node]", MIDCOM_LOG_ERROR);
@@ -1212,34 +1204,84 @@ class midcom_helper__basicnav
                 return false;
             }
         }
-
-        $qb = $_MIDCOM->dbfactory->new_query_builder('midcom_db_topic');
+        
+        $qb = midcom_db_topic::new_query_builder();
         $qb->add_constraint('up', '=', $parent_node);
+        $qb->add_constraint('component', '<>', '');
+        $qb->add_constraint('name', '<>', '');
+        if (!$show_noentry)
+        {
+            // Hide "noentry" items
+            $qb->add_constraint('metadata.navnoentry', '=', 0);
+        }
         $qb->add_order('score');
         $qb->add_order('extra');
-        $query_result = $_MIDCOM->dbfactory->exec_query_builder($qb);
-
-        if ($query_result === false)
-        {
-            $midcom_errstr = "Could not list topics: " . mgd_errstr();
-            debug_add($midcom_errstr, MIDCOM_LOG_ERROR);
-            debug_pop();
-            return false;
-        }
-
+        
+        $topics = $qb->execute();
+        
         $result = array();
-        foreach ($query_result as $topic)
+        
+        if (!$topics)
+        {
+            debug_add("Could not list topics under #{$parent_node}: " . mgd_errstr(), MIDCOM_LOG_INFO);
+            debug_pop();
+            return $result;
+        }
+        
+        foreach ($topics as $topic)
         {
             if ($this->_loadNode($topic->id) != MIDCOM_ERROK)
             {
                 debug_add("Node {$topic->id} could not be loaded, ignoring it", MIDCOM_LOG_INFO);
                 continue;
             }
-            if ($show_noentry || ! $this->_nodes[$topic->id][MIDCOM_NAV_NOENTRY])
-            {
-                $result[] = $topic->id;
-            }
+
+            $result[] = $topic->id;
+        }                
+        /*
+        TODO: Revert to collector when the bugs in it are fixed
+        $mc = midcom_db_topic::new_collector('up', $parent_node);
+        $mc->add_value_property('id');      
+        $mc->add_value_property('extra');  
+        $mc->add_constraint('component', '<>', '');
+        $mc->add_constraint('name', '<>', '');
+        
+        if (!$show_noentry)
+        {
+            // Hide "noentry" items
+            $mc->add_constraint('metadata.navnoentry', '=', 0);
         }
+        
+        $mc->add_order('score');
+        $mc->add_order('extra');
+        //mgd_debug_start();
+        $mc->execute();
+        //mgd_debug_stop();
+        
+        $topics = $mc->list_keys_unchecked();
+        
+        $result = array();
+        
+        if (!$topics)
+        {
+            debug_add("Could not list topics under #{$parent_node}: " . mgd_errstr(), MIDCOM_LOG_INFO);
+            debug_pop();
+            return $result;
+        }
+
+
+        foreach ($topics as $topic_guid => $value)
+        {
+            $topic_id = $mc->get_subkey($topic_guid, 'id');
+            if ($this->_loadNode($topic_id) != MIDCOM_ERROK)
+            {
+                debug_add("Node {$topic_id} could not be loaded, ignoring it", MIDCOM_LOG_INFO);
+                continue;
+            }
+
+            $result[] = $topic_id;
+        }
+        */
         debug_pop();
         return $result;
     }
@@ -1470,69 +1512,6 @@ class midcom_helper__basicnav
         debug_print_r("Node Cache Dump:", $this->_nodes, MIDCOM_LOG_DEBUG);
         debug_print_r("Leaf Cache Dump:", $this->_leaves, MIDCOM_LOG_DEBUG);
     }
-
-    /**
-     * This function returns the toolbar definition for the NAP object passed. This must
-     * superseed all calls to $nap_object[MIDCOM_NAV_TOOLBAR] as this information is
-     * not usable directly - it would result from the MidCOM cache and thus be out of date
-     * always (and especially not adapted to the current user).
-     *
-     * <b>Implementation note:</b> This is a hotfix, that works around the current problem.
-     * It is not very performant if you query large numbers of NAP toolbars at this time.
-     * We have some basic caching in this function, but nevertheless we need a better solution
-     * here.
-     *
-     * @param Array $nap_object The NAP data structure of the object for which a toolbar should be retrieved.
-     * @return Array Toolbar definition array as originally stored in the MIDCOM_NAV_TOOLBAR key (so this can be null as well).
-     */
-    function get_toolbar_definition ($nap_object)
-    {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_print_function_stack("XXXX DEPRECATED XXXX called from here:");
-        debug_pop();
-        return null;
-
-        static $cache = Array();
-
-        if (! is_array($nap_object))
-        {
-            debug_add('Invalid object for get_toolbar_definition: Not an array.', MIDCOM_LOG_INFO);
-            debug_print_r('Passed argument was:', $nap_object);
-            debug_pop();
-            return null;
-        }
-
-        debug_print_r('Looking up toolbar for this NAP object:', $nap_object);
-
-        $result = null;
-
-        if (array_key_exists($nap_object[MIDCOM_NAV_ID], $cache))
-        {
-            $result = $cache[$nap_object[MIDCOM_NAV_ID]][MIDCOM_NAV_TOOLBAR];
-        }
-        else if ($nap_object[MIDCOM_NAV_TYPE] == 'node')
-        {
-            $node = $this->_get_node_from_database($nap_object[MIDCOM_NAV_ID]);
-            $cache[$nap_object[MIDCOM_NAV_ID]] = $node;
-            $result = $cache[$nap_object[MIDCOM_NAV_ID]][MIDCOM_NAV_TOOLBAR];
-        }
-        else if ($nap_object[MIDCOM_NAV_TYPE] == 'leaf')
-        {
-            $node = $this->_get_node_from_database($nap_object[MIDCOM_NAV_NODEID]);
-            $leaves = $this->_get_leaves_from_database($node);
-            $cache = array_merge($cache, $leaves);
-            $result = $cache[$nap_object[MIDCOM_NAV_ID]][MIDCOM_NAV_TOOLBAR];
-        }
-        else
-        {
-            debug_add('Invalid object for get_toolbar_definition: Invalid MIDCOM_NAV_TYPE.', MIDCOM_LOG_INFO);
-            debug_print_r('Passed argument was:', $nap_object);
-        }
-
-        debug_pop();
-        return $result;
-    }
-
 }
 
 

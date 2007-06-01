@@ -15,8 +15,8 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
     var $to;          //string, simpler access to headers['To']
 
     var $htmlBody;    //text, HTML body (of MIME/multipart message)  reference to below
-    var $html_body;    //text, HTML body (of MIME/multipart message) 
-    var $attachments; /* array, primary keys are int, secondary keys for decoded array are: 'name' (filename), 'content' (file contents) and 'mimetype'. 
+    var $html_body;    //text, HTML body (of MIME/multipart message)
+    var $attachments; /* array, primary keys are int, secondary keys for decoded array are: 'name' (filename), 'content' (file contents) and 'mimetype'.
                        Array for encoding may in stead of 'content' have 'file' which is path to the file to be attached */
     var $embeds;      //array, like attachments but used for inline images
     var $encoding;    //string, character encoding in which the texts etc are
@@ -30,15 +30,16 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
     var $__mail;      //object, (Mail) holder
     var $__mailErr;   //bool/object, send error status
     var $__iconv;     //bool, when decoding mails, try to convert to desired charset.
-    var $__headConverted; //bool, used internally to determine if headers have already been converted
     var $__orig_encoding;  //string, original encoding of the message
+    var $__textBodyFound; //bool, used in part_decode
+    var $__htmlBodyFound; // --''--
 
     function org_openpsa_mail()
     {
         $this->_component = 'org.openpsa.mail';
         parent::midcom_baseclasses_components_purecode();
         $this->_initialize_pear();
-        
+
         $this->attachments = array();
         $this->embeds = array();
         $this->headers = array();
@@ -56,13 +57,12 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
         $this->headers['X-Originating-Ip'] = $_SERVER['REMOTE_ADDR'];
         $this->__mailErr = false;
         $this->htmlBody =& $this->html_body;
-          
+
         $this->encoding = $this->_i18n->get_current_charset();
-          
-        //Try to convert between charsets 
+
+        //Try to convert between charsets
         $this->__iconv = true;
         $this->__orig_encoding = '';
-        $this->__headConverted = false;
 
         //$this->__debug = true;
         $this->_backend = false;
@@ -111,7 +111,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
      */
     function initMail_mime()
     {
-        return $this->initMail_mime();
+        return $this->init_mail_mime();
     }
     function init_mail_mime()
     {
@@ -124,12 +124,12 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
         }
         $this->__mime = new Mail_mime("\n");
         $mime =& $this->__mime;
-          
+
         $mime->_build_params['html_charset'] = strtoupper($this->encoding);
         $mime->_build_params['text_charset'] = strtoupper($this->encoding);
         $mime->_build_params['head_charset'] = strtoupper($this->encoding);
         $mime->_build_params['text_encoding'] = '8bit';
-          
+
         //TODO: Convert to use MidCOM debugger
         if ($this->__debug)
         {
@@ -158,7 +158,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
                 {
                     $att['mimetype'] = "application/octet-stream";
                 }
-                
+
                 if (isset($att['file']) && strlen($att['file'])>0)
                 {
                     $aRet = $mime->addAttachment($att['file'], $att['mimetype'], $att['name'], true);
@@ -284,10 +284,10 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             $text = preg_replace('/<!--.*?-->/s', '', $text);
             //strip all remaining tags, just the tags
             $text = preg_replace('/(<[^>]*>)/', '', $text);
-            
+
             //Decode entities
             $text = $this->html_entity_decode($text);
-            
+
             //Trim whitespace from end of lines
             $text = preg_replace("/[ \t\f]+$/m", '', $text);
             //Trim whitespace from beginning of lines
@@ -303,14 +303,16 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
         return trim($text);
     }
 
-
     /**
-     * Decodes a Mail_mime part (recursive)
+     * Old name for part_decode(), compatibility wrapper.
      */
     function partDecode(&$part)
     {
         return $this->part_decode($part);
     }
+    /**
+     * Decodes a Mail_mime part (recursive)
+     */
     function part_decode(&$part)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -328,7 +330,9 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             }
             return;
         }
-        
+
+        // PONDER: How to handle multiple text bodies better (like in bounce messges)
+
         //Check attachment vs body
         if (   !isset($part->disposition)
             || (   $part->disposition == 'inline'
@@ -350,52 +354,15 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
                 case "plain": //Always use plaintext body if found
                     $this->body =& $part->body;
                     $this->__textBodyFound = true;
-                    //Convert character encodings
-                    if (   isset($part->ctype_parameters['charset'])
-                        && (strtolower($part->ctype_parameters['charset']) != strtolower($this->encoding))
-                        && function_exists('iconv')
-                        && $this->__iconv)
-                    {
-                        $temp = iconv($part->ctype_parameters['charset'], $this->encoding, $part->body);
-                        if ($temp !== false)
-                        {
-                              $part->body = $temp;
-                        }
-                    }
                     break;
-                case "html": 
+                case "html":
                     if (!$this->__textBodyFound)
                     {
                         //Try to translate HTML body only if plaintext alternative is not available
                         $this->body = $this->html2text($part->body);
-                        //Convert character encodings
-                        //TODO: refactor (all conversions) to a method
-                        if (   isset($part->ctype_parameters['charset'])
-                            && (strtolower($part->ctype_parameters['charset']) != strtolower($this->encoding))
-                            && function_exists('iconv')
-                            && $this->__iconv)
-                        {
-                            $temp = iconv($part->ctype_parameters['charset'], $this->encoding, $this->body);
-                            if ($temp !== false)
-                            {
-                                $this->body = $temp;
-                            }
-                        }
                     }
                     $this->html_body =& $part->body;
-                    //Convert character encodings
-                    //TODO: refactor (all conversions) to a method
-                    if (   isset($part->ctype_parameters['charset'])
-                        && (strtolower($part->ctype_parameters['charset']) != strtolower($this->encoding))
-                        && function_exists('iconv')
-                        && $this->__iconv)
-                    {
-                        $temp = iconv($part->ctype_parameters['charset'], $this->encoding, $part->body);
-                        if ($temp !== false)
-                        {
-                            $part->body = $temp;
-                        }
-                    }
+                    $this->__htmlBodyFound = true;
                     break;
             }
         }
@@ -426,26 +393,121 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
         debug_pop();
     }
 
+    /**
+     * No-op for now
+     */
     function _compatibility_checks()
     {
-        //Some (notably US based) mail providers report a charset without regard for the actual data, we skip conversions if we see them
-        $stupid_domains = $this->_config->get('no_iconv_domains');
-        if (!is_array($stupid_domains))
-        {
-            return;
-        }
-        foreach ($stupid_domains as $domain)
-        {
-            if (stristr($this->from, "@{$domain}"))
-            {
-                $this->__iconv = false;
-                return;
-            }
-        }
         return;
     }
 
+    /**
+     * Converts given string to $this->encoding
+     *
+     * @param string to be converted
+     * @param string encoding from header or such, used as default in case mb_detect_endoding is not available
+     * @return string converted string (or original string in case we cannot convert for some reason)
+     */
+    function charset_convert($data, $given_encoding = false)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        // Some headers are multi-dimensional, recurse if needed
+        if (is_array($data))
+        {
+            debug_add('Given data is an array, iterating trough it');
+            foreach($data as $k => $v)
+            {
+                debug_add("Recursing key {$k}");
+                $data[$k] = $this->charset_convert($v, $given_encoding);
+            }
+            debug_add('Done');
+            debug_pop();
+            return $data;
+        }
+        if ($this->__iconv === false)
+        {
+            debug_add('Conversions disabled ($this->__iconv is false), returning data as is',  MIDCOM_LOG_WARN);
+            debug_pop();
+            return $data;
+        }
+        if (empty($data))
+        {
+            debug_add('Data is empty, returning as is',  MIDCOM_LOG_WARN);
+            debug_pop();
+            return $data;
+        }
+        if (!function_exists('iconv'))
+        {
+            debug_add('Function \'iconv()\' not available, returning data as is',  MIDCOM_LOG_WARN);
+            debug_pop();
+            return $data;
+        }
+        $encoding = false;
+        if (   !function_exists('mb_detect_encoding')
+            && !empty($given_encoding))
+        {
+            $stupid_domains = $this->_config->get('incorrect_charset_domains');
+            if (!is_array($stupid_domains))
+            {
+                return;
+            }
+            foreach ($stupid_domains as $domain)
+            {
+                if (stristr($this->from, "@{$domain}"))
+                {
+                    debug_add("Detected incorrect_charset_domain '{$domain}' and 'mb_detect_encoding()' not available, aborting convert", MIDCOM_LOG_WARN);
+                    debug_pop();
+                    return $data;
+                }
+            }
+            $encoding =& $given_encoding;
+        }
+        else
+        {
+            $encoding = mb_detect_encoding($data, $this->_config->get('mb_detect_encoding_list'));
+        }
+        if (empty($encoding))
+        {
+            debug('Given/Detected encoding is empty, cannot convert, aborting', MIDCOM_LOG_WARN);
+            debug_pop();
+            return $data;
+        }
+        $encoding_lower = strtolower($encoding);
+        $this_encoding_lower = strtolower($this->encoding);
+        if (   $encoding_lower == $this_encoding_lower
+            || (   $encoding_lower == 'ascii'
+                /* ASCII is a subset of the following encodings, and thus requires no conversion to them */
+                && (   $this_encoding_lower == 'utf-8'
+                    || $this_encoding_lower == 'iso-8859-1'
+                    || $this_encoding_lower == 'iso-8859-15')
+                )
+            )
+        {
+            debug_add("Given/Detected encoding '{$encoding}' and desired encoding '{$this->encoding}' require no conversion between them", MIDCOM_LOG_INFO);
+            debug_pop();
+            return $data;
+        }
+        $append_target = $this->_config->get('iconv_append_target');
+        debug_add("Calling iconv('{$encoding_lower}', '{$this_encoding_lower}{$append_target}', \$data)");
+        $stat = @iconv($encoding_lower, $this_encoding_lower . $append_target, $data);
+        if (empty($stat))
+        {
+            debug_add("Failed to convert from '{$encoding}' to '{$this->encoding}'", MIDCOM_LOG_WARN);
+            debug_pop();
+            return $data;
+        }
+        debug_add("Converted from '{$encoding}' to '{$this->encoding}'", MIDCOM_LOG_INFO);
+        debug_pop();
+        return $stat;
+    }
 
+    /**
+     * Wrapper for old style compatibility
+     */
+    function mimeDecode()
+    {
+        return $this->mime_decode();
+    }
      /**
       * Decodes MIME content from $this->body
       */
@@ -460,7 +522,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
         }
 
         // Make sure we only have NL linebreaks
-        $this->body = preg_replace("/\n\r|\r\n|\r/","\n", $this->body);
+        $this->body = preg_replace("/\n\r|\r\n|\r/", "\n", $this->body);
 
         /* Check if we have mime boundary, in that case we need to make sure it does not exhibit certain
         corner cases which choke mail_mimedecode */
@@ -490,7 +552,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
                 $this->body = str_replace($boundary, $new_boundary, $this->body);
             }
         }
-        
+
         $args = array();
         $args['include_bodies'] = true;
         $args['decode_bodies'] = true;
@@ -508,6 +570,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             return false;
         }
 
+        // ucwords all header keys
         if (is_array($mime->headers))
         {
             reset ($mime->headers);
@@ -516,7 +579,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
                 $this->headers[str_replace(" ","-",ucwords(str_replace("-"," ",$k)))] =& $mime->headers[$k];
             }
         }
-        $this->subject =& $this->headers['Subject'];                  
+        $this->subject =& $this->headers['Subject'];
         $this->from =& $this->headers['From'];
         $this->to =& $this->headers['To'];
 
@@ -542,7 +605,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
                 break;
                 case "html":
                    $this->html_body =& $mime->body;
-                   $this->body = $this->html2text($mime->body);         
+                   $this->body = $this->html2text($mime->body);
                 break;
             }
             if (   isset($mime->ctype_parameters['charset'])
@@ -550,70 +613,22 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             {
                 $this->__orig_encoding = $mime->ctype_parameters['charset'];
             }
-            //Convert character encoding on the fly to DB encoding (if different)
-            //TODO: refactor (all conversions) to a method
-            if (   $this->__orig_encoding
-                && ($this->__orig_encoding != strtolower($this->encoding))
-                && function_exists('iconv')
-                && $this->__iconv)
-            {
-                if ($this->html_body)
-                {
-                    $temp = iconv($this->__orig_encoding, $this->encoding, $this->html_body);
-                    if ($temp !== false)
-                    {
-                        $this->html_body = $temp;
-                    }
-                }
-                $temp = iconv($this->__orig_encoding, $this->encoding, $this->body);
-                if ($temp !== false)
-                {
-                    $this->body = $temp;
-                }
-            }
         }
 
-        //Convert certain headers and attchement names to correct charset
-        if ($this->__orig_encoding && (strtolower($this->__orig_encoding) != strtolower($this->encoding)) && function_exists('iconv') && $this->__iconv && !$this->__headConverted) {
-           //Supposedly subject and from use same encoding as bodies (they might not, though...)
-           if (isset($this->headers['Subject'])) {
-               $temp = iconv($this->__orig_encoding, $this->encoding, $this->headers['Subject']);
-               if ($temp !== false) {
-                  $this->headers['Subject'] = $temp;
-               }
-           }
-           if (isset($this->headers['From'])) {
-               $temp = iconv($this->__orig_encoding, $this->encoding, $this->headers['From']);
-               if ($temp !== false) {
-                  $this->headers['From'] = $temp;
-               }
-           }
-           if (isset($this->headers['To'])) {
-               $temp = iconv($this->__orig_encoding, $this->encoding, $this->headers['To']);
-               if ($temp !== false) {
-                  $this->headers['To'] = $temp;
-               }
-           }
-           if (isset($this->headers['Cc'])) {
-               $temp = iconv($this->__orig_encoding, $this->encoding, $this->headers['Cc']);
-               if ($temp !== false) {
-                  $this->headers['Cc'] = $temp;
-               }
-           }
-           if (isset($this->attachments) && is_array($this->attachments)) {
-                reset($this->attachments);
-                while (list ($k, $attArr) = each ($this->attachments)) {
-                   if (isset($attArr['name'])) {
-                        $temp = iconv($this->__orig_encoding, $this->encoding, $attArr['name']);
-                       if ($temp !== false) { //Safeguard against iconv errors
-                           $this->attachments[$k]['name'] = $temp;
-                       }
-                   }
-                    //PONDER: Should we check attchement type and if it's text then decode the body as well ?
-              } reset($this->attachments);
-           }
-
-           $this->__headConverted = true;
+        // Charset conversions
+        debug_add('calling $this->charset_convert($this->body, $this->__orig_encoding);');
+        $this->body  = $this->charset_convert($this->body, $this->__orig_encoding);
+        debug_add('calling $this->charset_convert($this->html_body, $this->__orig_encoding);');
+        $this->html_body  = $this->charset_convert($this->html_body, $this->__orig_encoding);
+        foreach($this->headers as $header => $value)
+        {
+            debug_add("calling charset_convert for header '{$header}'");
+            $this->headers[$header] = $this->charset_convert($value, $this->__orig_encoding);
+        }
+        foreach ($this->attachments as $key => $data)
+        {
+            debug_add("calling charset_convert for attachment '{$data['name']}'");
+            $this->attachments[$key]['name'] = $this->charset_convert($data['name'], $this->__orig_encoding);
         }
 
         //Strip whitespace around bodies
@@ -625,28 +640,62 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
         return $mime;
     }
 
+    function _code_for_sort_encode_subject()
+    {
+        return <<<EOF
+        if (\$a == '=')
+        {
+            return -1;
+        }
+        if (\$b == '=')
+        {
+            return 1;
+        }
+        \$aord = ord(\$a);
+        \$bord = ord(\$b);
+        if (\$aord < \$bord)
+        {
+            return -1;
+        }
+        if (\$aord > \$bord)
+        {
+            return 1;
+        }
+        return 0;
+EOF;
+    }
+
     /**
      * Quoted-Printable encoding for message subject if neccessary
      */
     function encode_subject()
     {
-        preg_match_all("/[^\x21-\x7e]/", $this->subject, $matches);
-        if (count ($matches[0])>0) {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        preg_match_all("/[^\x21-\x39\x41-\x7e]/", $this->subject, $matches);
+        if (   count ($matches[0])>0
+            && !stristr($this->subject, '=?' . strtoupper($this->encoding) . '?Q?')
+            )
+        {
+            // Sort the results to make sure '=' gets encoded first (otherwise there will be double-encodes...)
+            usort($matches[0], create_function('$a,$b', $this->_code_for_sort_encode_subject()));
+            debug_add("matches[0]\n===\n" . sprint_r($matches) . "===\n");
             $cache = array();
             $newSubj = $this->subject;
             while (list ($k, $char) = each ($matches[0]))
             {
-                $code = "=".dechex(ord($char));
-                $hex = str_pad(strtoupper(dechex(ord($char))),2,"0", STR_PAD_LEFT);
+                $hex = str_pad(strtoupper(dechex(ord($char))), 2, '0', STR_PAD_LEFT);
                 if (isset($cache[$hex]))
                 {
                     continue;
                 }
-                $newSubj = str_replace($char, '=' . $hex, $newSubj);
+                $code = '=' . $hex;
+                debug_add("encoding  '{$char}' to '{$code}'");
+                $newSubj = str_replace($char, $code, $newSubj);
                 $cache[$hex] = true;
             }
             $this->subject = '=?' . strtoupper($this->encoding) . '?Q?' . $newSubj . '?=';
         }
+        debug_pop();
     }
 
      /**
@@ -693,7 +742,14 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             debug_add('Mail_mime object found, generating body and headers');
             $mime =& $this->__mime;
             $this->body = $mime->get();
+            // mime->headers() has some corner cases with UTF-8 so we encode at least the subject ourselves
+            $this->encode_subject();
+            debug_add("Headers before mime->headers\n===\n" . sprint_r($this->headers) . "===\n");
             $this->headers = $mime->headers($this->headers);
+            debug_add("Headers after mime->headers\n===\n" . sprint_r($this->headers) . "===\n");
+            // some MTAs manage to mangle multiline headers (RFC "folded"), here we make sure at least the content type is in single line
+            $this->headers['Content-Type'] = preg_replace('/\s+/', ' ', $this->headers['Content-Type']);
+            debug_add("Headers after multiline fix\n===\n" . sprint_r($this->headers) . "===\n");
         }
 
         // Encode subject (if neccessary) and set Content-Type (if not set already)
@@ -703,29 +759,53 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
         {
             $this->headers['Content-Type'] = "text/plain; charset={$this->encoding}";
         }
-        // Set Mime-version if not set already
-        if (   !isset($this->headers['Mime-version'])
-            || $this->headers['Mime-version'] == null)
+        // Set Mime-version if not set already (done this way to accommodate for various typings
+        $mime_header = false;
+        foreach ($this->headers as $k => $v)
         {
-            $this->headers['Mime-version'] = '1.0';
+            if (strtolower($k) == 'mime-version')
+            {
+                $mime_header = $k;
+                break;
+            }
         }
-        
+        if (   $mime_header === false
+            || $this->headers[$mime_header] == null
+            )
+        {
+            if ($mime_header === false)
+            {
+                $this->headers['Mime-version'] = '1.0';
+            }
+            else
+            {
+                $this->headers[$mime_header] = '1.0';
+            }
+        }
+
         //Make sure we don't send any empty headers
         reset ($this->headers);
         foreach ($this->headers as $header => $value)
         {
             if (empty($value))
             {
+                debug_add("Header '{$header}' has empty value, removing");
                 unset ($this->headers[$header]);
             }
+            $value_trimmed = trim($value);
+            if ($value_trimmed != $value)
+            {
+                debug_add("Header '{$header}' has whitespace around it's value, rewriting from\n===\n{$value}\n===\nto\n===\n{$value_trimmed}\n===\n");
+                $this->headers[$header] = $value_trimmed;
+            }
         }
-        
+
         //TODO: Encode from, cc and to if neccessary
-        
+
         debug_pop();
         return true;
     }
-    
+
     /**
      * Tries to load a send backend
      */
@@ -763,11 +843,11 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
                 foreach ($try_backends as $backend)
                 {
                     debug_add("Trying backend {$backend}");
-                    
+
                     if (   $this->_load_backend($backend)
                         && $this->_backend->is_available())
                     {
-                        debug_add('OK');
+                        debug_add("Backend {$backend} loaded OK");
                         break;
                     }
                     debug_add("backend {$backend} is not available");
@@ -841,10 +921,10 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
         fclose($fp);
         $mimetype = mime_content_type($filename);
         unlink($filename);
-        
+
         return $mimetype;
     }
-    
+
     /**
      * Whether given file definition is already in embeds
      */
@@ -869,24 +949,31 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             global $HTTP_SERVER_VARS;
             $_SERVER = $HTTP_SERVER_VARS;
         }
-        
+        $type_backup = $type;
+
         //Cache for embeds data
-        if (!array_key_exists('org_openpsa_mail_embeds_data_cache', $GLOBALS))
+        if (!isset($GLOBALS['org_openpsa_mail_embeds_data_cache']))
         {
             $GLOBALS['org_openpsa_mail_embeds_data_cache'] = array();
         }
         $embeds_data_cache =& $GLOBALS['org_openpsa_mail_embeds_data_cache'];
-        
-        
+
+
         reset($search);
         while (list ($k, $dummy) = each ($search['whole']))
         {
+            if ($type_backup == 'special:fromarray')
+            {
+                $type = $search['type'][$k];
+            }
+            debug_add("k: {$k}, type: {$type}, type_backup: {$type_backup}");
+
             $regExp_file = "/(.*\/|^)(.+?)$/";
             preg_match($regExp_file, $search['location'][$k], $match_file);
             debug_add("match_file:\n===\n".sprint_r($match_file)."===\n");
             $search['filename'][$k] = $match_file[2];
 
-            if (array_key_exists($search['location'][$k], $embeds_data_cache))
+            if (isset($embeds_data_cache[$search['location'][$k]]))
             {
                 $mode = 'cached';
             }
@@ -903,7 +990,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             { //URI is just the filename
                $mode = 'objFile';
             } else { //We cannot decide what to do
-               $mode = false; 
+               $mode = false;
             }
 
             debug_add('mode: '.$mode);
@@ -915,13 +1002,13 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
                         {
                             $embeds[] = $embeds_data_cache[$search['location'][$k]];
                         }
-                        switch ($type)
+                        switch (strtolower($type))
                         {
-                            case 'src':
-                                $html = str_replace($search['whole'][$k], 'src="' . $search['filename'][$k] . '"', $html);
-                                break;
                             case 'url':
                                 $html = str_replace($search['whole'][$k], 'url("' . $search['filename'][$k] . '")', $html);
+                                break;
+                            default:
+                                $html = str_replace($search['whole'][$k], $type . '="' . $search['filename'][$k] . '"', $html);
                                 break;
                         }
                     break;
@@ -937,15 +1024,15 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
                             $uri = 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . $search['location'][$k];
                             break;
                    }
-                    //NOTE: Fall-trough intentional
+                    // NOTE: Fall-trough intentional
                 case 'fullUri':
                     debug_add('Trying to fetch file: '.$uri);
                     $cont = @file_get_contents($uri); //Suppress errors, the url might be invalid but if so then we just silentry drop it
-                    if (  $cont 
+                    if (  $cont
                           && $cont != 'FAILED REDIRECT TO ERROR find does not point to valid object MGD_ERR_OK') //Aegir attachment server error
                     {
                         debug_add('Success!');
-                        $tmpArr2 = array();    
+                        $tmpArr2 = array();
                         $tmpArr2['name'] = $search['filename'][$k];
                         $tmpArr2['content'] = $cont;
                         if ($mimetype = $this->_get_mimetype($tmpArr2['content'], $tmpArr2['name']))
@@ -954,13 +1041,13 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
                         }
                         $embeds_data_cache[$search['location'][$k]] = $tmpArr2;
                         $embeds[] = $tmpArr2;
-                        switch ($type)
+                        switch (strtolower($type))
                         {
-                            case 'src':
-                                $html = str_replace($search['whole'][$k], 'src="' . $search['filename'][$k] . '"', $html);
-                                break;
                             case 'url':
                                 $html = str_replace($search['whole'][$k], 'url("' . $search['filename'][$k] . '")', $html);
+                                break;
+                            default:
+                                $html = str_replace($search['whole'][$k], $type . '="' . $search['filename'][$k] . '"', $html);
                                 break;
                         }
                         unset($tmpArr2, $cont);
@@ -979,7 +1066,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
                                 $fp = mgd_open_attachment($attObj->id, 'r');
                                 if ($fp)
                                 {
-                                    $tmpArr2 = array();    
+                                    $tmpArr2 = array();
                                     $tmpArr2['mimetype'] = $attObj->mimetype;
                                     $tmpArr2['name'] = $search['filename'][$k];
                                     while (!feof($fp))
@@ -1036,17 +1123,18 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             return false;
         }
 
-        //TODO: support for CSS images (NOTE: requires major work with _html_get_embeds_loop as well)
         //Anything with SRC = "" something in it (images etc)
-        $regExp_src = "/src=([\"'«])(((https?|ftp):\/\/)?(.*?))\\1/i";
+        $regExp_src = "/(src|background)=([\"'«])(((https?|ftp):\/\/)?(.*?))\\2/i";
         preg_match_all($regExp_src, $html, $matches_src);
         debug_add("matches_src:\n===\n" . sprint_r($matches_src) . "===\n");
-        $tmpArr = array();    
+        $tmpArr = array();
         $tmpArr['whole']    = $matches_src[0];
-        $tmpArr['uri']      = $matches_src[2];
-        $tmpArr['proto']    = $matches_src[3];
-        $tmpArr['location'] = $matches_src[5];
-        list ($html, $embeds) = $this->_html_get_embeds_loop($obj, $html, $tmpArr, $embeds, 'src');
+        $tmpArr['uri']      = $matches_src[3];
+        $tmpArr['proto']    = $matches_src[4];
+        $tmpArr['location'] = $matches_src[6];
+        $tmpArr['type']     = $matches_src[1];
+
+        list ($html, $embeds) = $this->_html_get_embeds_loop($obj, $html, $tmpArr, $embeds, 'special:fromarray');
 
         if ($this->embed_css_url)
         {
@@ -1054,7 +1142,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             $regExp_url = "/url\s*\(([\"'«])?(((https?|ftp):\/\/)?(.*?))\\1?\)/i";
             preg_match_all($regExp_url, $html, $matches_url);
             debug_add("matches_url:\n===\n" . sprint_r($matches_url) . "===\n");
-            $tmpArr = array();    
+            $tmpArr = array();
             $tmpArr['whole']    = $matches_url[0];
             $tmpArr['uri']      = $matches_url[2];
             $tmpArr['proto']    = $matches_url[3];
@@ -1062,7 +1150,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             debug_add("tmpArr:\n===\n" . sprint_r($tmpArr) . "===\n");
             list ($html, $embeds) = $this->_html_get_embeds_loop($obj, $html, $tmpArr, $embeds, 'url');
         }
-        
+
         //return array('html' => $html, 'embeds' => $embeds, 'debug' => $tmpArr);
         debug_pop();
         return array($html, $embeds);
@@ -1073,13 +1161,13 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
         $addresses = '';
         //TODO: Support array of addresses as well
         $addresses .= $this->to;
-        if (   array_key_exists('Cc', $this->headers)
+        if (   isset($this->headers['Cc'])
             && !empty($this->headers['Cc']))
         {
             //TODO: Support array of addresses as well
             $addresses .= ', '.$this->headers['Cc'];
         }
-        if (   array_key_exists('Bcc', $this->headers)
+        if (   isset($this->headers['Bcc'])
             && !empty($this->headers['Bcc']))
         {
             //TODO: Support array of addresses as well
@@ -1096,7 +1184,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
      */
     function _initialize_pear()
     {
-        if (!class_exists('Mail')) 
+        if (!class_exists('Mail'))
         {
            @include_once('Mail.php');
         }

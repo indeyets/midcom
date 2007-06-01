@@ -1,7 +1,7 @@
 <?php
 /**
  * @package org.openpsa.projects
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: relatedto.php,v 1.1 2006/05/12 16:49:50 rambo Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,7 +9,7 @@
 
 /**
  * project related to handler
- * 
+ *
  * @package org.openpsa.projects
  */
 class org_openpsa_projects_handler_relatedto extends org_openpsa_relatedto_handler_relatedto

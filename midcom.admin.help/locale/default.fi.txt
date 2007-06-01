@@ -1,0 +1,17 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING help
+Käyttöohjeet
+---STRINGEND
+
+---STRING help for %s in %s
+Käyttöohjeet toiminnolle %s komponentissa %s
+---STRINGEND
+
+---STRING midcom.admin.help
+Käyttöohjeet
+---STRINGEND
+

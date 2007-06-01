@@ -10,21 +10,64 @@
 
 /**
  * org.openpsa.projects NAP interface class.
- * 
- * NAP is mainly used for toolbar rendering in this component
- * 
- * ...
+ *
  * @package org.openpsa.projects
  */
 class org_openpsa_projects_navigation extends midcom_baseclasses_components_navigation
 {
 
+    /**
+     * Returns a static leaf list with access to the archive.
+     */
     function get_leaves()
     {
         $leaves = array();
+
+        $leaves["{$this->_topic->id}:tasks_open"] = array
+        (
+            MIDCOM_NAV_SITE => Array
+            (
+                MIDCOM_NAV_URL => "task/list/all/open/",
+                MIDCOM_NAV_NAME => $this->_l10n->get('open tasks'),
+            ),
+            MIDCOM_NAV_ADMIN => null,
+            MIDCOM_META_CREATOR => $this->_topic->creator,
+            MIDCOM_META_EDITOR => $this->_topic->revisor,
+            MIDCOM_META_CREATED => $this->_topic->created,
+            MIDCOM_META_EDITED => $this->_topic->revised
+        );
+
+        $leaves["{$this->_topic->id}:tasks_closed"] = array
+        (
+            MIDCOM_NAV_SITE => Array
+            (
+                MIDCOM_NAV_URL => "task/list/all/closed/",
+                MIDCOM_NAV_NAME => $this->_l10n->get('closed tasks'),
+            ),
+            MIDCOM_NAV_ADMIN => null,
+            MIDCOM_META_CREATOR => $this->_topic->creator,
+            MIDCOM_META_EDITOR => $this->_topic->revisor,
+            MIDCOM_META_CREATED => $this->_topic->created,
+            MIDCOM_META_EDITED => $this->_topic->revised
+        );
+
+        $leaves["{$this->_topic->id}:tasks_invoiceable"] = array
+        (
+            MIDCOM_NAV_SITE => Array
+            (
+                MIDCOM_NAV_URL => "task/list/all/invoiceable/",
+                MIDCOM_NAV_NAME => $this->_l10n->get('invoiceable tasks'),
+            ),
+            MIDCOM_NAV_ADMIN => null,
+            MIDCOM_META_CREATOR => $this->_topic->creator,
+            MIDCOM_META_EDITOR => $this->_topic->revisor,
+            MIDCOM_META_CREATED => $this->_topic->created,
+            MIDCOM_META_EDITED => $this->_topic->revised
+        );
+
         return $leaves;
     }
-    
+
     function get_node($toolbar = null)
     {
         $toolbar = Array();

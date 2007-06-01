@@ -9,16 +9,29 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
     var $resources = array(); // --''--
     var $old_contacts = array(); //For diffing the ones above
     var $old_resources = array(); // --''--
+    var $contacts2 = array(); // Shorthand access for contact members in DM2
+    var $resources2 = array(); // Shorthand access for resource members in DM2
     var $_locale_backup = '';
     var $_skip_acl_refresh = false;
     var $_skip_parent_refresh = false;
     var $status_comment = ''; //Shorthand access for the comment of last status
     var $status_time = false; //Shorthand access for the timestamp of last status
     var $status_type = '';    //Shorthand access to status type in simple format, eg. "ongoing"
+    var $resource_seek_type = 'none';
 
     function midcom_org_openpsa_task($id = null)
     {
         return parent::__midcom_org_openpsa_task($id);
+    }
+
+    /**
+     * Deny midgard:read by default
+     */
+    function get_class_magic_default_privileges()
+    {
+        $privileges = parent::get_class_magic_default_privileges();
+        $privileges['EVERYONE']['midgard:read'] = MIDCOM_PRIVILEGE_DENY;
+        return $privileges;
     }
 
     function get_parent_guid_uncached()
@@ -27,13 +40,13 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         if ($this->up != 0)
         {
             $parent = new org_openpsa_projects_task($this->up);
-            
+
             if ($parent->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_PROJECT)
             {
                 // The parent is a project instead
                 $parent = new org_openpsa_projects_project($this->up);
             }
-            
+
             return $parent;
         }
         else
@@ -53,6 +66,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
     function _on_created()
     {
         $this->get_members(true);
+        $this->_sync_from_dm2();
         $this->_update_members();
         $this->_locale_restore();
         $this->_workflow_checks('created');
@@ -61,14 +75,17 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
     function _on_loaded()
     {
         $this->get_members();
+        $this->_sync_to_dm2();
         /* This in theory can cause confusion if the actual DB status (cache) field is different.
           but it's better to get the correct value late than never, next update will make sure it's correct in DB as well */
         $this->status = $this->_get_status(true);
-        
+
         if ($this->title == "")
         {
             $this->title = "Task #{$this->id}";
         }
+        // Load seek type
+        $this->resource_seek_type = $this->get_parameter('org.openpsa.projects', 'resource_seek_type');
 
         return true;
     }
@@ -79,13 +96,80 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         if ($this->_prepare_save())
         {
             $this->get_members(true);
+            $this->_sync_from_dm2();
             $this->_update_members();
+            $this->_handle_resource_seek();
             return true;
         }
-
-        //If we return false here then _on_opdated() never gets called
+        //If we return false here then _on_updated() never gets called
         $this->_locale_restore();
         return false;
+    }
+
+    function _handle_resource_seek()
+    {
+        // act on seek type
+        switch($this->resource_seek_type)
+        {
+            case 'dbe':
+                // Start DBE search if it's not still in progress
+                $dbe_state = $this->get_parameter('org.openpsa.projects.projectbroker', 'remote_search');
+                if ($dbe_state != 'SEARCH_IN_PROGRESS')
+                {
+                    $this->set_parameter('org.openpsa.projects.projectbroker', 'remote_search', 'REQUEST_SEARCH');
+                    // TODO: Ping the DBE service to start search immediately in stead of waiting for interval check
+                }
+                // TODO: better way to prevent this being done on each update but also have reseek possible ??
+                $this->resource_seek_type = 'none';
+                // Fall-trough intentional
+            case 'openpsa':
+                $local_state = $this->get_parameter('org.openpsa.projects.projectbroker', 'local_search');
+                if ($local_state != 'SEARCH_IN_PROGRESS')
+                {
+                    // Register AT service background seek.
+                    $args = array
+                    (
+                        'task' => $this->guid,
+                        'membership_filter' => array(),
+                    );
+                    $this->set_parameter('org.openpsa.projects.projectbroker', 'local_search', 'REQUEST_SEARCH');
+                    $atstat = midcom_services_at_interface::register(time(), 'org.openpsa.projects', 'background_search_resources', $args);
+                    if (!$atstat)
+                    {
+                        // error handling ?
+                    }
+                }
+                // TODO: better way to prevent this being done on each update but also have reseek possible ??
+                $this->resource_seek_type = 'none';
+                break;
+            case 'organization':
+                $local_state = $this->get_parameter('org.openpsa.projects.projectbroker', 'local_search');
+                if ($local_state != 'SEARCH_IN_PROGRESS')
+                {
+                    // Background local seek with group limiter set to owner_group
+                    $args = array
+                    (
+                        'task' => $this->guid,
+                        'membership_filter' => array('owner_group'),
+                    );
+                    $this->set_parameter('org.openpsa.projects.projectbroker', 'local_search', 'REQUEST_SEARCH');
+                    $atstat = midcom_services_at_interface::register(time(), 'org.openpsa.projects', 'background_seach_resources', $args);
+                    if (!$atstat)
+                    {
+                        // error handling ?
+                    }
+                }
+                // TODO: better way to prevent this being done on each update but also have reseek possible ??
+                $this->resource_seek_type = 'none';
+                break;
+            case 'none':
+                // TODO: unset other search requests if any are pending ??
+                // Fall-trough intentional
+            default:
+                break;
+        }
+        // Store seek type
+        $this->set_parameter('org.openpsa.projects', 'resource_seek_type', $this->resource_seek_type);
     }
 
     function _on_updated()
@@ -100,7 +184,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
             debug_add("Synchronizing task ACLs to MidCOM");
             $sync = new org_openpsa_core_acl_synchronizer();
             $sync->write_acls($this, $this->orgOpenpsaOwnerWg, $this->orgOpenpsaAccesstype);
-            
+
             // Synchronize also the news topic
             if ($this->newsTopic)
             {
@@ -125,7 +209,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
                 $oldPerson = $this->_pid_to_obj($pid);
                 debug_add("Setting 'midgard:read' for {$oldPerson->id}");
                 $this->set_privilege('midgard:read', $oldPerson->id, MIDCOM_PRIVILEGE_ALLOW);
-                
+
                 if ($this->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_TASK)
                 {
                     // Resources must be permitted to create hour/expense reports into tasks
@@ -151,6 +235,46 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         $this->_locale_restore();
     }
 
+    function _on_deleting()
+    {
+        $this->update_cache(false);
+        if ($this->hourCache > 0)
+        {
+            $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('org.openpsa.projects', 'org.openpsa.projects'), $_MIDCOM->i18n->get_string('task deletion now allowed because of hour reports', 'org.openpsa.projects'), 'warn');
+            return false;
+        }
+
+        return parent::_on_deleting();
+    }
+
+    /**
+     * Generate an user-readable label for the task using the task/project hierarchy
+     */
+    function get_label()
+    {
+        $label = '';
+        $label_elements = array($this->title);
+        $task = $this;
+        while (   !is_null($task)
+               && $task = $task->get_parent())
+        {
+            if (   $task
+                && $task->guid
+                && isset($task->title))
+            {
+                $label_elements[] = $task->title;
+            }
+        }
+
+        $label_elements = array_reverse($label_elements);
+        foreach ($label_elements as $element)
+        {
+            $label .= "/ {$element} ";
+        }
+
+        return trim($label);
+    }
+
     /**
      * Populates contacts as resources lists
      */
@@ -160,7 +284,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         {
             return false;
         }
-        
+
         if ($old)
         {
             $prefix='old_';
@@ -169,9 +293,10 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         {
             $prefix='';
         }
-        
+
         $qb = new MidgardQueryBuilder('org_openpsa_task_resource');
         $qb->add_constraint('task', '=', $this->id);
+        $qb->add_constraint('orgOpenpsaObtype', '<>', ORG_OPENPSA_OBTYPE_PROJECTPROSPECT);
         $ret = @$qb->execute();
         if (   is_array($ret)
             && count($ret)>0)
@@ -187,7 +312,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
                         //fall-trough intentional
                     case ORG_OPENPSA_OBTYPE_PROJECTRESOURCE:
                         $varName=$prefix.'resources';
-                        break;                    
+                        break;
                 }
                 $property = &$this->$varName;
                 $property[$resource->person] = true;
@@ -197,9 +322,67 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         return true;
     }
 
+    function _sync_to_dm2()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("\$this->contacts before: \n===\n" . sprint_r($this->contacts) . "===\n");
+        debug_add("\$this->resources before: \n===\n" . sprint_r($this->resources) . "===\n");
+        debug_add("\$this->contacts2 before: \n===\n" . sprint_r($this->contacts2) . "===\n");
+        debug_add("\$this->resources2 before: \n===\n" . sprint_r($this->resources2) . "===\n");
+        debug_pop();
+        $this->contacts2 = array();
+        foreach ($this->contacts as $contact => $selected)
+        {
+            $this->contacts2[] = $contact;
+        }
+        $this->resources2 = array();
+        foreach ($this->resources as $resource => $selected)
+        {
+            $this->resources2[] = $resource;
+        }
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("\$this->contacts after: \n===\n" . sprint_r($this->contacts) . "===\n");
+        debug_add("\$this->resources after: \n===\n" . sprint_r($this->resources) . "===\n");
+        debug_add("\$this->contacts2 after: \n===\n" . sprint_r($this->contacts2) . "===\n");
+        debug_add("\$this->resources2 after: \n===\n" . sprint_r($this->resources2) . "===\n");
+        debug_pop();
+    }
+
+    function _sync_from_dm2()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("\$this->contacts before: \n===\n" . sprint_r($this->contacts) . "===\n");
+        debug_add("\$this->resources before: \n===\n" . sprint_r($this->resources) . "===\n");
+        debug_add("\$this->contacts2 before: \n===\n" . sprint_r($this->contacts2) . "===\n");
+        debug_add("\$this->resources2 before: \n===\n" . sprint_r($this->resources2) . "===\n");
+        debug_pop();
+        $this->contacts = array();
+        foreach ($this->contacts2 as $contact)
+        {
+            $this->contacts[$contact] = true;
+        }
+        $this->resources = array();
+        foreach ($this->resources2 as $resource)
+        {
+            $this->resources[$resource] = true;
+        }
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("\$this->contacts after: \n===\n" . sprint_r($this->contacts) . "===\n");
+        debug_add("\$this->resources after: \n===\n" . sprint_r($this->resources) . "===\n");
+        debug_add("\$this->contacts2 after: \n===\n" . sprint_r($this->contacts2) . "===\n");
+        debug_add("\$this->resources2 after: \n===\n" . sprint_r($this->resources2) . "===\n");
+        debug_pop();
+    }
+
     function _update_members()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("\$this->contacts: \n===\n" . sprint_r($this->contacts) . "===\n");
+        debug_add("\$this->resources: \n===\n" . sprint_r($this->resources) . "===\n");
+        debug_add("\$this->contacts2: \n===\n" . sprint_r($this->contacts2) . "===\n");
+        debug_add("\$this->resources2: \n===\n" . sprint_r($this->resources2) . "===\n");
+        debug_add("\$this->old_contacts: \n===\n" . sprint_r($this->old_contacts) . "===\n");
+        debug_add("\$this->old_resources: \n===\n" . sprint_r($this->old_resources) . "===\n");
         $ret['resources'] = Array();
         $ret['resources']['added'] = Array();
         $ret['resources']['removed'] = Array();
@@ -239,19 +422,21 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
 
         foreach ($removed_resources as $resourceId => $bool)
         {
-            $resObj = $this->_get_member_by_personid($resourceId);
-            if (is_object($resObj))
+            $resObj = $this->_get_member_by_personid($resourceId, ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
+            if (!is_object($resObj))
             {
-                $resObj->delete();
-                $ret['resources']['removed'][$resObj->person] = mgd_errstr();
+                debug_add("Could not get member object for person #{$resourceId} for removing resource", MIDCOM_LOG_WARN);
+                continue;
             }
+            $resObj->delete();
+            $ret['resources']['removed'][$resObj->person] = mgd_errstr();
         }
         // ** Done with resources
 
         // ** Start with contacts
         $added_contacts = array_diff_assoc($this->contacts, $this->old_contacts);
         $removed_contacts = array_diff_assoc($this->old_contacts, $this->contacts);
-        
+
         foreach ($added_contacts as $resourceId => $bool)
         {
             $resObj = new org_openpsa_projects_task_resource();
@@ -264,12 +449,14 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
 
         foreach ($removed_contacts as $resourceId => $bool)
         {
-            $resObj = $this->_get_member_by_personid($resourceId);
-            if (is_object($resObj))
+            $resObj = $this->_get_member_by_personid($resourceId, ORG_OPENPSA_OBTYPE_PROJECTCONTACT);
+            if (!is_object($resObj))
             {
-                $resObj->delete();
-                $ret['contacts']['removed'][$resObj->person] = mgd_errstr();
+                debug_add("Could not get membership object for person #{$resourceId} for removing contact", MIDCOM_LOG_WARN);
+                continue;
             }
+            $resObj->delete();
+            $ret['contacts']['removed'][$resObj->person] = mgd_errstr();
         }
         // ** Done with contacts
         debug_add("returning status array: \n===\n" . sprint_r($ret) . "===\n");
@@ -277,20 +464,23 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         return $ret;
     }
 
-    function _get_member_by_personid($id)
+    function _get_member_by_personid($id, $type=false)
     {
         //Find the correct eventmember by person ID
-        $finder = new org_openpsa_task_resource();
-        $finder->task = $this->id;
-        $finder->person = $id;
-        $finder->find();
-        if ($finder->N > 0)
+        //$qb = org_openpsa_task_resource::new_query_builder('org_openpsa_task_resource');
+        $qb = new MidgardQueryBuilder('org_openpsa_task_resource');
+        $qb->add_constraint('task', '=', $this->id);
+        $qb->add_constraint('person', '=', $id);
+        if (!empty($type))
         {
-            //There should be only one match in any case
-            $finder->fetch();
-            $resObj = new org_openpsa_projects_task_resource($finder->id);
-            return $resObj;
+            $qb->add_constraint('orgOpenpsaObtype', '=', $type);
         }
+        $results = $qb->execute();
+        if (empty($results))
+        {
+            return false;
+        }
+        return $results[0];
     }
 
     function _prepare_save()
@@ -329,7 +519,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         }
 
         $this->orgOpenpsaWgtype = ORG_OPENPSA_WGTYPE_NONE;
-        
+
         if ($this->agreement)
         {
             // Get customer company into cache from agreement's sales project
@@ -346,7 +536,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
             // No agreement, we can't be invoiceable
             $this->hoursInvoiceableDefault = false;
         }
-        
+
         // Update hour caches in this and agreement
         $this->update_cache(false);
 
@@ -364,7 +554,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
     {
         setlocale(LC_NUMERIC, $this->_locale_backup);
     }
-    
+
     /**
      * Update hour report caches
      */
@@ -374,52 +564,120 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         {
             return false;
         }
+
+        $hours = $this->list_hours();
+        $stat = true;
+
+        $this->hourCache = $hours['reported'];
+        $this->agreement = (int) $this->agreement;
         
-        $reported_hours = 0;
-        $approved_hours = 0;
-        $invoiced_hours = 0;
-        $invoiceable_hours = 0;
-        
-        $report_qb = org_openpsa_projects_hour_report::new_query_builder();
-        $report_qb->add_constraint('task', '=', $this->id);
-        $reports = $report_qb->execute();
-        foreach ($reports as $report)
+        if ($this->agreement)
         {
-            $reported_hours += $report->hours;
-            
-            if ($report->approved)
+            // Copy this task's hours as base
+            $agreement_hours = $hours;
+
+            // List hours from other tasks of the same agreement too
+            $qb = org_openpsa_projects_task::new_query_builder();
+            $qb->add_constraint('agreement', '=', $this->agreement);
+            $qb->add_constraint('id', '<>', $this->id);
+            $other_tasks = $qb->execute_unchecked();
+            foreach ($other_tasks as $task)
             {
-                $approved_hours += $report->hours;
+                $task_hours = $task->list_hours();
+                foreach ($task_hours as $type => $hours)
+                {
+                    // Add the hours of the task to agreement's totals
+                    $agreement_hours[$type] += $hours;
+                }
             }
-            
-            //if ($report->invoiced)
-            //{
-            //    $invoiced_hours += $report->hours;
-            //}
-            if ($report->invoiceable)
+
+            // Update units on the agreement with invoiceable hours
+            // list_hours does the needed checks on hour types
+            $agreement = new org_openpsa_sales_salesproject_deliverable($this->agreement);
+            if ($agreement)
             {
-                $invoiceable_hours += $report->hours;
+                $agreement->units = $agreement_hours['invoiceable'];
+                $agreement->uninvoiceableUnits = $agreement_hours['reported'] - ($agreement_hours['invoiceable'] + $agreement_hours['invoiced']);
+                $stat = $agreement->update();
             }
         }
+
+        if ($update)
+        {
+            $stat = $this->update();
+        }
+        return $stat;
+    }
+
+    function list_hours()
+    {
+        $hours = Array
+        (
+            'reported'    => 0,
+            'approved'    => 0,
+            'invoiced'    => 0,
+            'invoiceable' => 0,
+        );
         
-        $this->hourCache = $reported_hours;
-        
+        // Check agreement for invoceability rules
+        $invoice_approved = false;
+        $invoice_enable = false;
         if ($this->agreement)
         {
             $agreement = new org_openpsa_sales_salesproject_deliverable($this->agreement);
             if ($agreement)
             {
-                $agreement->units = $invoiceable_hours;
+                $invoice_enable = true;
+                if ($agreement->invoiceApprovedOnly)
+                {
+                    $invoice_approved = true;
+                }
             }
-            $agreement->update();
         }
-        
-        if ($update)
+
+        $report_qb = org_openpsa_projects_hour_report::new_query_builder();
+        $report_qb->add_constraint('task', '=', $this->id);
+        $reports = $report_qb->execute();
+        foreach ($reports as $report)
         {
-            $this->update();
+            $hours['reported'] += $report->hours;
+
+            if ($report->is_approved)
+            {
+                $hours['approved'] += $report->hours;
+            }
+
+            if (   $report->invoiced != '0000-00-00 00:00:00'
+                && $report->invoiced != '0000-00-00 00:00:00+0000'
+                && $report->invoiced)
+            {
+                $hours['invoiced'] += $report->hours;
+            }
+            elseif ($report->invoiceable)
+            {
+                // Check agreement for invoceability rules
+                if ($invoice_enable)
+                {
+                    if ($invoice_approved)
+                    {
+                        // Count only uninvoiced approved hours as invoiceable
+                        if ($report->is_approved)
+                        {
+                            $hours['invoiceable'] += $report->hours;
+                        }
+                    }
+                    else
+                    {
+                        // Count all uninvoiced invoiceable hours as invoiceable regardless of approval status
+                        $hours['invoiceable'] += $report->hours;
+                    }
+                }
+            }
         }
+
+        return $hours;
     }
-    
+
     function _update_parent()
     {
         if ($this->_skip_parent_refresh)
@@ -481,12 +739,12 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         if ($this->status > ORG_OPENPSA_TASKSTATUS_PROPOSED)
         {
             //Only get proposed status objects here if are not over that phase
-            $qb->add_constraint('type', '<>', ORG_OPENPSA_TASKSTATUS_PROPOSED); 
+            $qb->add_constraint('type', '<>', ORG_OPENPSA_TASKSTATUS_PROPOSED);
         }
         if (count($this->resources)>0)
         {
             //Do not ever set status to declined if we still have resources left
-            $qb->add_constraint('type', '<>', ORG_OPENPSA_TASKSTATUS_DECLINED); 
+            $qb->add_constraint('type', '<>', ORG_OPENPSA_TASKSTATUS_DECLINED);
         }
         $qb->add_order('timestamp', 'DESC');
         $qb->add_order('type', 'DESC'); //Our timestamps are not accurate enough so if we have multiple with same timestamp suppose highest type is latest
@@ -513,7 +771,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         }
 
         //TODO: Check various combinations of accept/decline etc etc
-        
+
         if ($set_comment)
         {
             $this->status_comment = $main_ret[0]->comment;
@@ -522,8 +780,8 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         {
             $this->status_time = $main_ret[0]->timestamp;
         }
-        
-        
+
+
         switch ($main_ret[0]->type)
         {
             case ORG_OPENPSA_TASKSTATUS_REJECTED:
@@ -549,20 +807,20 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
                 $this->status_type = 'on_hold';
                 break;
         }
-        
+
         debug_pop();
         return $main_ret[0]->type;
-    }    
-    
+    }
+
     function _propose_to_resources()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $propose_to = $this->resources;
-        
+
         //Remove those who already have a proposal from the list to propose to
         $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task_status');
         $qb->add_constraint('task', '=', $this->id);
-        $qb->add_constraint('type', '=', ORG_OPENPSA_TASKSTATUS_PROPOSED); 
+        $qb->add_constraint('type', '=', ORG_OPENPSA_TASKSTATUS_PROPOSED);
         //TODO: Make in when reliably supported
         $qb->begin_group('OR');
             foreach ($propose_to as $pid => $bool)
@@ -584,7 +842,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
                 }
             }
         }
-        
+
         //Go trough the remaining resources and set proposal
         foreach ($propose_to as $pid => $bool)
         {
@@ -610,7 +868,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         debug_pop();
         return true;
     }
-    
+
     /**
      * Accept the proposal
      */
@@ -646,7 +904,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         debug_pop();
         return false;
     }
-    
+
     /**
      * Decline the proposal
      */
@@ -683,11 +941,11 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         debug_pop();
         return true;
     }
-    
+
     /**
      * Mark task as started (in case it's not already done)
      */
-    function start()
+    function start($started_by = 0)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("task->start() called with user #{$_MIDGARD['user']}");
@@ -700,7 +958,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
             debug_pop();
             return true;
         }
-        $ret = $this->_create_status(ORG_OPENPSA_TASKSTATUS_STARTED);
+        $ret = $this->_create_status(ORG_OPENPSA_TASKSTATUS_STARTED, $started_by);
         if (!$ret)
         {
             debug_add('failed to create status object, errstr: ' . mgd_errstr());
@@ -715,7 +973,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         $this->_skip_acl_refresh = true;
         return $this->update();
     }
-    
+
     /**
      * Mark task as completed
      */
@@ -774,7 +1032,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         debug_pop();
         return $this->_drop_to_started($comment);
     }
-    
+
     /**
      * Drops tasks status to started
      */
@@ -808,7 +1066,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         debug_pop();
         return $ret;
     }
-    
+
     /**
      * Mark task as approved
      */
@@ -937,7 +1195,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
             if ($this->agreement)
             {
                 $agreement = new org_openpsa_sales_salesproject_deliverable($this->agreement);
-                
+
                 // Set agreement delivered if this is the only open task for it
                 $task_qb = org_openpsa_projects_task::new_query_builder();
                 $task_qb->add_constraint('agreement', '=', $this->agreement);
@@ -995,6 +1253,61 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
     }
 
     /**
+     * Connect the task to an invoice
+     */
+    function mark_invoiced($invoice)
+    {
+        // Register a relation between the invoice and the task
+        $relation = org_openpsa_relatedto_handler::create_relatedto($invoice, 'org.openpsa.invoices', $this, 'org.openpsa.projects');
+
+        // Mark the hour reports invoiced
+        $hours_marked = 0;
+        $report_qb = org_openpsa_projects_hour_report::new_query_builder();
+        $report_qb->add_constraint('task', '=', $this->id);
+        $report_qb->add_constraint('invoiced', '=', '0000-00-00 00:00:00');
+
+        // Check how the agreement deals with hour reports
+        $check_approvals = false;
+        if ($this->agreement)
+        {
+            $agreement = new org_openpsa_sales_salesproject_deliverable($this->agreement);
+            if ($agreement)
+            {
+                if ($agreement->invoiceApprovedOnly)
+                {
+                    // The agreement allows invoicing only approved hours, therefore don't mark unapproved
+                    $check_approvals = true;
+                }
+            }
+        }
+
+        $reports = $report_qb->execute();
+        foreach ($reports as $report)
+        {
+            if (   $check_approvals
+                && !$report->is_approved)
+            {
+                // We only invoice approved hours and this isn't. Skip
+                continue;
+            }
+            
+            $invoice_member = new org_openpsa_invoices_invoice_hour();
+            $invoice_member->hourReport = $report->id;
+            $invoice_member->invoice = $invoice->id;
+            if ($invoice_member->create())
+            {
+                $hours_marked += $report->hours;
+            }
+        }
+
+        // Update hour caches to agreement
+        $this->update_cache(false);
+
+        // Notify user
+        $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('org.openpsa.projects', 'org.openpsa.projects'), sprintf($_MIDCOM->i18n->get_string('marked %s hours as invoiced in task "%s"', 'org.openpsa.projects'), $hours_marked, $this->title), 'ok');
+    }
+
+    /**
      * Analyses current status and changes, then handles proposals etc
      */
     function _workflow_checks($mode)
@@ -1007,13 +1320,13 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
             debug_pop();
             return true;
         }
-        
+
         //TODO: The more complex checks...
-        
+
         //Always make sure we have proposals (DBE kind of follows these) in place (DM goes trough our create mode without any resources...)
         $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task_status');
         $qb->add_constraint('task', '=', $this->id);
-        $qb->add_constraint('type', '=', ORG_OPENPSA_TASKSTATUS_PROPOSED); 
+        $qb->add_constraint('type', '=', ORG_OPENPSA_TASKSTATUS_PROPOSED);
         //mgd_debug_start();
         $proposals_ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
         //mgd_debug_stop();
@@ -1023,9 +1336,30 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
             debug_add('We don\'t have any proposed status sets, creating those now');
             $this->_propose_to_resources();
         }
-        
+
         debug_pop();
         return true;
+    }
+
+    function get_task_resources()
+    {
+        $resource_array = array();
+        $view_data =& $_MIDCOM->get_custom_context_data('request_data');
+        if (!array_key_exists('task', $view_data))
+        {
+            return $resource_array;
+        }
+
+        $qb = org_openpsa_projects_task_resource::new_query_builder();
+        $qb->add_constraint('task', '=', $view_data['task']->id);
+        $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
+        $resources = $qb->execute();
+        foreach ($resources as $resource)
+        {
+            $person = new midcom_db_person($resource->person);
+            $resource_array[$person->id] = $person->rname;
+        }
+        return $resource_array;
     }
 
 }

@@ -64,7 +64,7 @@ class net_nemein_registrations_aqcallback extends midcom_baseclasses_components_
      */
     function _load_options()
     {
-        $this->_options = Array ('' => $this->_l10n->get('Not configured, please select one.'));
+        $this->_options = Array ('' => $this->_l10n->get('no selection, first defined schema will be used by default'));
         foreach ($this->_schemadb as $name => $schema)
         {
             if (   $name == $this->_config->get('registrar_schema')

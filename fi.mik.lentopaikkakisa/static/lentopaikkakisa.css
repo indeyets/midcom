@@ -1,0 +1,65 @@
+div.fi_mik_lentopaikkakisa_report table { margin-left: -3px; }
+
+div.fi_mik_lentopaikkakisa_report input, 
+div.fi_mik_lentopaikkakisa_report select 
+{
+   padding: 2px;
+   border: solid 1px #777;
+}
+
+div.fi_mik_lentopaikkakisa_report label
+{
+   display: block;
+   padding: 6px;
+   
+}
+
+div.fi_mik_lentopaikkakisa_report label span
+{
+   display: block;
+   clear: left;
+   float: left;
+   text-align: right;
+   font-weight: bold;
+   width: 130px;
+   padding-right: 6px;
+}
+
+div.fi_mik_lentopaikkakisa_report label span.info 
+{
+   display: inline;
+   clear: none;
+   float: none;
+   font-weight: normal;
+   font-size: 12px;
+}
+
+div.fi_mik_lentopaikkakisa_report label.line_top 
+{ 
+   border-top: 2px solid #ccc; 
+}
+
+
+div.fi_mik_lentopaikkakisa_report div.helptext {
+   border: 1px dotted #c4a000;
+   background: #fce94f;
+   font-size: 10px;
+   padding: 3px;
+}
+
+
+div.fi_mik_lentopaikkakisa_report #smallprint {
+   font-size: 8px;
+}
+
+div.fi_mik_lentopaikkakisa_report select {
+   width: 75px;
+}
+
+
+form.net_nehmer_account label {
+   font-weight:normal;
+   margin-right:12px;
+   width:66%;
+}
+

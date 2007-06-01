@@ -1,120 +1,69 @@
 <?php
+/**
+ * @package net.nemein.downloads
+ * @author The Midgard Project, http://www.midgard-project.org 
+ * @version $Id$
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
-/* NAP code, called by the "nap" interface class */
-
-class net_nemein_downloads_navigation {
-
-  var $_object;
-  var $_l10n;
-  var $_l10n_midcom;
-
-  function net_nemein_downloads_navigation() {
-    $this->_object = null;
-    $i18n =& $GLOBALS["midcom"]->get_service("i18n");
-    $this->_l10n = $i18n->get_l10n("net.nemein.downloads");
-    $this->_l10n_midcom = $i18n->get_l10n("midcom");
-  }
-
-
-  function is_internal() {
-
-    // return true if the current topic should not be displayed by NAP
-    return false;
-  }
-
-
-  function get_leaves() {
-
-    // list leaves under the current topic. for example:
-
-    $topic = &$this->_object;
-    $leaves = array ();
-    if ($articles = mgd_list_topic_articles($topic->id, "reverse created")) {
-      // Prep toolbar
-      $toolbar[50] = Array(
-          MIDCOM_TOOLBAR_URL => '',
-          MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
-          MIDCOM_TOOLBAR_HELPTEXT => null,
-          MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
-          MIDCOM_TOOLBAR_ENABLED => true
-      );
-      $toolbar[51] = Array(
-          MIDCOM_TOOLBAR_URL => '',
-          MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
-          MIDCOM_TOOLBAR_HELPTEXT => null,
-          MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
-          MIDCOM_TOOLBAR_ENABLED => true
-      );
-      while ($articles->fetch ()) {
-        // Match the toolbar to the correct URL.
-        $toolbar[50][MIDCOM_TOOLBAR_URL] = "edit/{$articles->id}.html";
-        $toolbar[51][MIDCOM_TOOLBAR_URL] = "delete/{$articles->id}.html";
-        $leaves[$articles->id] = array (
-          MIDCOM_NAV_SITE => Array (
-            MIDCOM_NAV_URL => $articles->name.".html",
-            MIDCOM_NAV_NAME => $articles->title),
-          MIDCOM_NAV_ADMIN => Array (
-            MIDCOM_NAV_URL => "view/" . $articles->id,
-            MIDCOM_NAV_NAME => $articles->title),
-          MIDCOM_NAV_GUID => $articles->guid(),
-          MIDCOM_NAV_TOOLBAR => $toolbar,
-          MIDCOM_META_CREATOR => $articles->creator,
-          MIDCOM_META_EDITOR => $articles->revisor,
-          MIDCOM_META_CREATED => $articles->created,
-          MIDCOM_META_EDITED => $articles->revised
-        );
-      }
+/**
+ * Download manager NAP interface class.
+ * 
+ * @package net.nemein.downloads
+ */
+class net_nemein_downloads_navigation extends midcom_baseclasses_components_navigation
+{
+    /**
+     * Simple constructor, calls base class.
+     */
+	function net_nemein_downloads_navigation() 
+    {
+        parent::midcom_baseclasses_components_navigation();
     }
-    return $leaves;
-  }
-
-
-  function get_node() {
-
-    // information about the current node (topic)
-    $topic = &$this->_object;
     
-    // Create Toolbar
-    $toolbar[100] = Array
-    (
-	    MIDCOM_TOOLBAR_URL => '',
-	    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('set current release'),
-	    MIDCOM_TOOLBAR_HELPTEXT => null,
-	    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
-	    MIDCOM_TOOLBAR_ENABLED => true
-    );
-    $toolbar[0] = Array(
-	    MIDCOM_TOOLBAR_URL => '',
-	    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('create new release'),
-	    MIDCOM_TOOLBAR_HELPTEXT => null,
-	    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_new.png',
-	    MIDCOM_TOOLBAR_ENABLED => true
-    );
-    
-    return array (
-      MIDCOM_NAV_URL => "",
-      MIDCOM_NAV_NAME => $topic->extra,
-      MIDCOM_NAV_TOOLBAR => $toolbar,
-      MIDCOM_META_CREATOR => $topic->creator,
-      MIDCOM_META_EDITOR => $topic->revisor,
-      MIDCOM_META_CREATED => $topic->created,
-      MIDCOM_META_EDITED => $topic->revised
-    );
-  }
+    /**
+     * Returns all leaves for the current content topic.
+     *
+     * It will hide the index leaf from the NAP information unless we are in Autoindex
+     * mode. The leaves' title are used as a description within NAP, and the toolbar will
+     * contain edit and delete links.
+     */
+    function get_leaves()
+    {
+        $qb = midcom_baseclasses_database_article::new_query_builder();
+        $qb->add_constraint('topic', '=', $this->_topic->id);
+        $qb->add_constraint('up', '=', 0);
+        $qb->add_order('title', 'DESC');
 
+        // Sort items with the same primary sort key by title.
+        $qb->add_order('title');
 
-  function set_object($object) {
+        $result = $qb->execute();
 
-    debug_add ("Component: setting NAP Element to " . $object->name ." [" . $object->id . "]");
-    $this->_object = $object;
-    return true;
-  }
+        // Prepare everything
+        $leaves = array();
 
+        foreach ($result as $article)
+        {
+            $leaves[$article->id] = array
+            (
+                MIDCOM_NAV_SITE => Array
+                (
+                    MIDCOM_NAV_URL => "{$article->name}.html",
+                    MIDCOM_NAV_NAME => ($article->title != '') ? $article->title : $article->name
+                ),
+                MIDCOM_NAV_ADMIN => null,
+                MIDCOM_NAV_GUID => $article->guid,
+                MIDCOM_NAV_OBJECT => $article,
+                MIDCOM_META_CREATOR => $article->creator,
+                MIDCOM_META_EDITOR => $article->revisor,
+                MIDCOM_META_CREATED => $article->created,
+                MIDCOM_META_EDITED => $article->revised
+            );
 
-  function get_current_leaf() {
-    return $GLOBALS["net_nemein_downloads_nap_activeid"];
-  }
-
-} // navigation
-
+        }
+        return $leaves;
+    }
+}
 ?>

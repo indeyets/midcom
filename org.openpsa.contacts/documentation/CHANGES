@@ -1,10 +1,65 @@
-                   org.openpsa.contacts Changelog
+org.openpsa.contacts Changelog
                    ------------------------------
 Legend:
 - All items marked with "!" represent a major API-Change that is
-  not guranteed to be backwards compatible to previous versions
-  which might even break existing functionality. 
-- All items marked with "+" represent completly new features.
+  not guaranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completely new features.
+
+2006-11-27 bergie
+  + Fixed account creation
+
+2006-11-03 rambo
+  + added link to invoices component (if in use) from group.
+  - version bump
+
+2006-10-31 bergie
+  + Added initial person delete support. For now this doesn't do anything
+    about dependencies
+
+2006-10-30 bergie
+  ! Ported contact display and editing to datamanager2
+  + Added support for probing semantic web information from company and
+    person URLs. Currently only geographical position is used
+  + Added support for using different editing fields for employees of "My
+    company" than of other contacts
+
+2006-10-17 rambo
+  - localized plaintext password prompt
+  - version bump
+
+2006-10-16 rambo
+  + Added possibility to store person password as plaintext
+  - changed crypt routines so that we never have nonprintable characters
+    in the hashed password (otherwise replication breaks)
+  - version bump
+
+2006-10-09 rambo
+  + added global variable to check before loading members array
+  - version bump
+
+2006-10-03 rambo
+  - added ignore_user_abort()s to duplicate cron handlers
+
+2006-09-04 rambo
+  - Finalized cron job to clean dangling duplicate references
+  + added the merge persons to navigation when merge is needed
+
+2006-08-31 rambo
+  - duplicate merge improvements
+  + Cron job to find and mark duplicates daily
+  + STUB Cron job to find and remove dangling duplicate marks
+
+2006-08-29 rambo
+  + duplicate merge now checks each component (contacts included) for
+    a method to merge the duplicates and if present calls it
+  + added the method mentioned above to contacts interface class.
+
+2006-08-28 rambo
+  - Made duplicate detection slightly better
+  + Added an exec method for searching duplicate persons and groups and marking them as such
+  + UI for managing duplicates
+  + STUB Helper for merging duplicates
 
 2006-08-25 rambo
   - changed default username creation logic (to email sans the domain part)
@@ -172,9 +227,9 @@ Legend:
 2005-06-08 bergie & rambo
   ! Changed to use MgdSchema based objects, currently breaks DataManager
     saves due to a Midgard core bug.
-  ! Refactored person and group handlers from viewer class to their own 
+  ! Refactored person and group handlers from viewer class to their own
     respective classes
-  
+
 2005-06-07 bergie & rambo
   + Implemented group and person searching using Query Builder
   + Added support for person creation into organizations

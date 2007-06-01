@@ -16,13 +16,11 @@
 
 class midgard_admin_sitewizard_viewer extends midcom_baseclasses_components_request
 {
-    var $_toolbars;
 
     function midgard_admin_sitewizard_viewer($topic, $config)
     {
         parent::midcom_baseclasses_components_request($topic, $config);
         
-        $this->_toolbars =& midcom_helper_toolbars::get_instance();
         
         // Match /
         $this->_request_switch['sitegroup'] = array(
@@ -70,6 +68,17 @@ class midgard_admin_sitewizard_viewer extends midcom_baseclasses_components_requ
                 'href' => MIDCOM_STATIC_URL.'/midgard.admin.sitewizard/sitewizard.css',
             )
         );
+        
+        // FIXME: Midgard 1.7 compatibility hack
+        if (version_compare(mgd_version(), '1.8alpha1', '>='))
+        {
+            $this->_request_data['17_compatibility'] = false;
+        }
+        else
+        {
+            $this->_request_data['17_compatibility'] = true;
+        }
+        
         return true;
     }
 }

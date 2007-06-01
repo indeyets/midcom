@@ -74,7 +74,9 @@ class siriux_photos_Photo {
         $this->errstr =& $GLOBALS["midcom"]->get_custom_context_data("errstr");
         
         $GLOBALS["view_l10n"] = $this->_l10n;
-        $this->datamanager = new midcom_helper_datamanager($this->_config->get("schemadb"));
+        //$this->datamanager = new midcom_helper_datamanager($this->_config->get("schemadb"));
+        // Hardcoded for conversion
+        $this->datamanager = new midcom_helper_datamanager('file:/net/siriux/photos/config/schemadb_default.inc');
         if (! $this->datamanager) {
             debug_add("Failed to create a datamanager instance, see above for details.");
             $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT,

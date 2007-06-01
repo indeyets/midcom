@@ -8,6 +8,27 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-05-31 bergie
+  + Enabled CSV export of blob and image fields (gives comma-separated list of file URLs)
+
+2007-04-17 adrenalin
+  - TinyMCE configuration change: HTML entity encoding set to raw as default
+
+2007-01-01 rambo
+  + bulletproofing to images handling
+
+2007-01-24 bergie
+  + Enabling readonly mode with the Universal Chooser
+
+2006-11-11 bergie
+  + Added support for multiple UniversalChooser per schema
+  + Added a "wide mode" for composites
+
+2006-09-27 bergie
+  + Made AJAX editing work on IE (no TinyMCE yet though)
+  + Fixed some DOM issues with AJAX editing
+  + Some consistency fixes to select and date rendering
+
 2006-07-21 rambo
   + universalchooser search backend and frontend to working order
 
@@ -44,3 +65,6 @@ Legend:
   ! Renamed the "privilege" type to "privilegeset"
   + Added the "privilege" type and widget designed to manage a
     single privilege.
+
+2006-09-21 Tarjei
+  + Fixed the tinymce 

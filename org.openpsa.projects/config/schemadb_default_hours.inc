@@ -1,7 +1,8 @@
 'default' => array (
-
     'name'        => 'default',
     'description' => 'hour report',
+    'locktimeout' => 0,
+    'lockoverride' => 'all',
     'fields'      => array (
         // Metadata
         //Hidden field for orgOpenpsaObtype
@@ -16,9 +17,9 @@
             'hidden'   => true,
             'location' => 'guid',
             'datatype' => 'text',
-        ),        
+        ),
         'task' => array (
-            'hidden'   => true,        
+            'hidden'   => true,
             'description' => 'task',
             'datatype'    => 'integer',
             'location'    => 'task',

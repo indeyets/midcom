@@ -3,7 +3,6 @@
 class midcom_helper_datamanager_midcom {
 
     function initialize() {
-        
         $prefix = MIDCOM_ROOT . "/midcom/helper/datamanager";
         
         require("{$prefix}/datamanager.php");

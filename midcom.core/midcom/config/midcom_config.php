@@ -1,7 +1,7 @@
 <?php
-
 /**
  * Core configuration defaults.
+ * @package midcom
  *
  * The global variable <i>midcom_config</i> will hold the current values of all these
  * options.
@@ -41,7 +41,7 @@
  * ?>
  * </code>
  *
- * <b>Confiugartion setting overview:</b>
+ * <b>Configuration setting overview:</b>
  *
  * The following configuration options are available for the MidCOM core along
  * with their defaults, shown in alphabetical order:
@@ -68,6 +68,8 @@
  *   has to specify the correct sitegroup always. The setting 'auto', which is the default,
  *   uses sitegrouped if the current host is in a sitegroup (that is, $_MIDGARD['sitegroup']
  *   is nonzero) or non-sitegrouped mode if we are in SG0.
+ * - <b>int auth_login_form_httpcode</b>: HTTP return code used in MidCOM login screens,
+ *   either 403 (403 Forbidden) or 200 (200 OK), defaulting to 403.
  *
  * <b>Authentication Backend configuration: "simple"</b>
  *
@@ -110,6 +112,11 @@
  *   done anyway, allowing for browser side caching. Essentially, the computing order is the
  *   same (no_cache for example is considered like usual), but the cache file is not stored.
  *   This defaults to false.
+ * - <b>string cache_module_content_headers_strategy:</b> Valid values are<br/>
+ *   'no-cache' activates no-cache mode that actively tries to circumvent all caching<br/>
+ *   'revalidate' is the default which sets 'must-revalidate' and presses the issue by setting Expires to current time<br/>
+ *   'public' and 'private' enable caching with the cache-control header of the same name, default expiry timestamps are generated using the cache_module_content_default_lifetime
+ * - <b>int cache_module_content_default_lifetime:</b> How many seconds from now to set the default Expires header to, defaults to one minute
  * - <b>Array cache_module_nap_backend:</b> The configuration of the nap/metadata cache backend.
  *   Check the documentation of midcom_services_cache_backend of what options are available here.
  *   In general, you should use this only to change the backend driver.
@@ -137,13 +144,6 @@
  * See also midcom_services_cache, the midcom_services_cache_backend class hierarchy and
  * the midcom_services_cache_module class hierarchy.
  *
- * <b>Cron Service</b>
- *
- * - <b>int cron_day_hours</b> and <b>int cron_day_minutes:</b> The time of day on which daily jobs
- *   should be executed, this defaults to 00:00 which will execute daily jobs at midnight.
- * - <b>int cron_hour_minute:</b> As above, but defines the minute within an hour which executes
- *   hourly jobs. Defaults to *:30.
- *
  * <b>Indexer configuration</b>
  *
  * - <b>string indexer_index_name:</b> The default Index to use when indexing the website. This defaults to
@@ -155,6 +155,8 @@
  * - <b>int indexer_reindex_memorylimit:</b> The memory limit to use when reindexing the entire site.
  *   This is required, as reindexing can require quite some amount of memory, as the complete NAP
  *   cache has to be loaded for example and binary indexing can take some memory too. Defaults to 250 MB.
+ * - <b>indexer_reindex_allowed_ips:</b> Array of IPs that don't need to basic authenticate themselves
+ *   to run MidCOM reindexing or cron.
  *
  * <b>Indexer backend configuration: XMLShell module</b>
  *
@@ -206,11 +208,18 @@
  *   configuration key can be used for Location headers. You must not use a relative
  *   URL. This key will be completed by the MidCOM Application constructor, before
  *   that, it might contain an URL which is not suitable for relcoations.
- * - <b>string midcom_tmpdir:</b> A temporary directory that can be used when components
+ * - <b>string midcom_tempdir:</b> A temporary directory that can be used when components
  *   need to write out files. Defaluts to '/tmp'.
  * - <b>int midcom_temporary_resource_timeout:</b> Temporary resources will be deleted
  *   after the amount of seconds set in this options. It defaults to 86400 = 1 day.
  *   The corresponding cron-job is run on hourly.
+ *
+ * <b>RCS system</b>
+ *
+ *  <b>string midcom_services_rcs_bin_dir</b>: the prefix for the rcs utilities (default: /usr/bin)
+ *  <b>string midcom_services_rcs_root </b>: the directory where the rcs files get placed. (default: must be set!)
+ *  <b>boolean midcom_services_rcs_enable</b>:  if set, midcom will fail hard if the rcs service is not operational. (default: false)
+ *  See also: http://www.midgard-project.org/documentation/midcom-services-rcs/
  *
  * <b>Style Engine</b>
  *
@@ -225,6 +234,8 @@
  * The CSS classes and IDs used by the toolbars service can be configured using these
  * options:
  *
+ * - <b>string toolbars_host_style_class:</b> defaults to "midcom_toolbar host_toolbar"
+ * - <b>string toolbars_host_style_id:</b> defaults to ""
  * - <b>string toolbars_node_style_class:</b> defaults to "midcom_toolbar node_toolbar"
  * - <b>string toolbars_node_style_id:</b> defaults to ""
  * - <b>string toolbars_view_style_class:</b> defaults to midcom_toolbar view_toolbar
@@ -234,7 +245,6 @@
  *   and is used to set the css for the toolbars used with onsite editing.
  * - <b>boolean toolbars_enable_centralized:</b> defaults to true, whether to enable the centralized,
  *   javascript-floating MidCOM toolbar that users can display with $_MIDCOM->toolbars->show();
- *
  *
  * <b>Utility Programs</b>
  *
@@ -266,16 +276,24 @@
  * - <b>string utility_diff:</b> The diff utility. Used to create diffs.
  * - <b>string utility_rcs:</b> The rcs revision controlsystem is needed for versioning.
  *
- * <b>Visibility settings (NAP)</b>
+ * <b>Multilingual content settings (NAP & DBA)</b>
+ *
+ * These options manage how multilingual content is displayed in the MidCOM environment.
+ *
+ * - <b>bool show_untranslated_content:</b> This flag indicates whether content not available
+ * in current content language should be shown on the site. The flag is ignored on sites that
+ * are set to use the default language (lang0)
+ *
+ * <b>Visibility settings (NAP and DBA)</b>
  *
  * Note: It is not recommended to activate these two options at this time, as the metadata
  * framework is not yet rewritten to a more efficient MidgardSchema driven solution. With
  * larger sites, having Metadata active can lead to serious performance impacts.
  *
- * - <b>bool show_hidden_objects:</b> This flag indicates wether objects that are
+ * - <b>bool show_hidden_objects:</b> This flag indicates whether objects that are
  *   invisible either by explicit hiding or by their scheduling should be shown anyway.
  *   This defaults to true at this time (due to Metadata performance problems).
- * - <b>bool show_unapproved_objects:</b> This flag indicates wether objects should be
+ * - <b>bool show_unapproved_objects:</b> This flag indicates whether objects should be
  *   shown even if they are not approved. This defaults to true.
  *
  * <b>Geopositioning settings</b>
@@ -310,6 +328,7 @@ $GLOBALS['midcom_config_default']['auth_frontend'] = 'form';
 $GLOBALS['midcom_config_default']['auth_sitegroup_mode'] = 'auto';
 $GLOBALS['midcom_config_default']['auth_check_client_ip'] = true;
 $GLOBALS['midcom_config_default']['auth_allow_sudo'] = true;
+$GLOBALS['midcom_config_default']['auth_login_form_httpcode'] = 403;
 
 $GLOBALS['midcom_config_default']['auth_backend_simple_cookie_id'] = $host->guid;
 $GLOBALS['midcom_config_default']['auth_backend_simple_cookie_path'] = $_MIDGARD['self'];
@@ -327,6 +346,8 @@ $GLOBALS['midcom_config_default']['cache_module_content_backend'] = Array();
 // $GLOBALS['midcom_config_default']['cache_module_content_multilang'] = true;
 // $GLOBALS['midcom_config_default']['cache_module_content_uncached'] = false;
 $GLOBALS['midcom_config_default']['cache_module_content_uncached'] = true; /* Temporary until the cache module is back working correctly */
+$GLOBALS['midcom_config_default']['cache_module_content_headers_strategy'] = 'revalidate';
+$GLOBALS['midcom_config_default']['cache_module_content_default_lifetime'] = 60; // Seconds, added to gmdate() for expiry timestamp (in case no other expiry is set)
 
 // NAP / Metadata Cache
 $GLOBALS['midcom_config_default']['cache_module_nap_backend'] = Array(); /* Auto-Detect */
@@ -352,7 +373,6 @@ $GLOBALS['midcom_config_default']['cron_hour_minutes'] = 30;
 // I18n Subsystem configuration
 $GLOBALS['midcom_config_default']['i18n_available_languages'] = null;
 $GLOBALS['midcom_config_default']['i18n_fallback_language'] = 'en';
-
 
 // Indexer Configuration
 $GLOBALS['midcom_config_default']['indexer_backend'] = false;
@@ -383,15 +403,20 @@ $GLOBALS['midcom_config_default']['midcom_site_url'] = '/';
 $GLOBALS['midcom_config_default']['midcom_tempdir'] = '/tmp';
 $GLOBALS['midcom_config_default']['midcom_temporary_resource_timeout'] = 86400;
 
+// MultiLang system
+$GLOBALS['midcom_config_default']['show_untranslated_content'] = false;
 
 // Visibility settings (NAP)
 $GLOBALS['midcom_config_default']['show_hidden_objects'] = true;
 $GLOBALS['midcom_config_default']['show_unapproved_objects'] = true;
+$GLOBALS['midcom_config_default']['i18n_multilang_strict'] = false;
 
 // Style Engine defaults
 $GLOBALS['midcom_config_default']['styleengine_default_styles'] = Array();
 
 // Toolbars service
+$GLOBALS['midcom_config_default']['toolbars_host_style_class'] = 'midcom_toolbar host_toolbar';
+$GLOBALS['midcom_config_default']['toolbars_host_style_id'] = null;
 $GLOBALS['midcom_config_default']['toolbars_node_style_class'] = 'midcom_toolbar node_toolbar';
 $GLOBALS['midcom_config_default']['toolbars_node_style_id'] = null;
 $GLOBALS['midcom_config_default']['toolbars_view_style_class'] = 'midcom_toolbar view_toolbar';
@@ -415,6 +440,24 @@ $GLOBALS['midcom_config_default']['utility_unrtf'] = 'unrtf';
 $GLOBALS['midcom_config_default']['utility_diff'] = 'diff';
 $GLOBALS['midcom_config_default']['utility_rcs'] = 'rcs';
 
+$GLOBALS['midcom_config_default']['midcom_services_rcs_bin_dir'] = '/usr/bin';
+
+// TODO: Would be good to include DB name into the path
+if (   $_MIDGARD['config']['prefix'] == '/usr' )
+{
+    $GLOBALS['midcom_config_default']['midcom_services_rcs_root'] = '/var/lib/midgard/rcs';
+}
+else if ( $_MIDGARD['config']['prefix'] == '/usr/local')
+{
+    $GLOBALS['midcom_config_default']['midcom_services_rcs_root'] = '/var/local/lib/midgard/rcs';
+}
+else
+{
+    $GLOBALS['midcom_config_default']['midcom_services_rcs_root'] =  "{$_MIDGARD['config']['prefix']}/var/lib/midgard/rcs";
+}
+
+$GLOBALS['midcom_config_default']['midcom_services_rcs_enable'] = true;
+
 // Metadata system
 // Be aware that these options are INTERMEDIATE until the actual rewrite to the
 // 1.8 Metadata system commences. Option names might change at that point (as might
@@ -425,6 +468,7 @@ $GLOBALS['midcom_config_default']['utility_rcs'] = 'rcs';
 // show_unapproved_objects). Disabled by default. Unsafe to Link Prefetching!
 $GLOBALS['midcom_config_default']['metadata_approval'] = false;
 $GLOBALS['midcom_config_default']['metadata_scheduling'] = false;
+$GLOBALS['midcom_config_default']['staging2live_staging'] = false;
 
 // Set the DM1 schema used by the Metadata Service
 $GLOBALS['midcom_config_default']['metadata_schema'] = 'file:/midcom/config/metadata_default.inc';

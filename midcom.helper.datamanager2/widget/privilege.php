@@ -68,7 +68,7 @@ class midcom_helper_datamanager2_widget_privilege extends midcom_helper_datamana
             MIDCOM_PRIVILEGE_ALLOW,
             $this->_l10n->get('widget privilege: allow'),
             MIDCOM_PRIVILEGE_ALLOW,
-            Array('class', 'radiobutton')
+            Array('class' => 'radiobutton')
         );
         $elements[] =& HTML_QuickForm::createElement
         (
@@ -77,7 +77,7 @@ class midcom_helper_datamanager2_widget_privilege extends midcom_helper_datamana
             MIDCOM_PRIVILEGE_DENY,
             $this->_l10n->get('widget privilege: deny'),
             MIDCOM_PRIVILEGE_DENY,
-            Array('class', 'radiobutton')
+            Array('class' => 'radiobutton')
         );
         $elements[] =& HTML_QuickForm::createElement
         (
@@ -86,7 +86,7 @@ class midcom_helper_datamanager2_widget_privilege extends midcom_helper_datamana
             MIDCOM_PRIVILEGE_INHERIT,
             $this->_l10n->get('widget privilege: inherit'),
             MIDCOM_PRIVILEGE_INHERIT,
-            Array('class', 'radiobutton')
+            Array('class' => 'radiobutton')
         );
         
         $this->_elements = $elements;

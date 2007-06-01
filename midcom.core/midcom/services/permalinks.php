@@ -82,7 +82,7 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
         {
             return $napobj[MIDCOM_NAV_FULLURL];
         }
-        
+                
         $object = $_MIDCOM->dbfactory->get_object_by_guid($guid);
         
         if (! $object)
@@ -92,7 +92,7 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
             debug_add('Last MidCOM error string: ' . mgd_errstr());
             debug_pop();
             return null;
-        }
+        }        
         
         $metadata =& midcom_helper_metadata::retrieve($object);
         if (! $metadata->is_object_visible_onsite())
@@ -116,7 +116,9 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
         // Ok, unfortunalety, this is not an immediate topic. We try to traverse
         // upwards in the object chain to find a topic.
         $topic = null;
+
         $parent = $object->get_parent();
+        
         while ($parent)
         {
             if ($parent->__table__ == 'topic')
@@ -130,7 +132,7 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
 	                break;
                 }
             }
-            $parent = $parent->get_parent();            
+            $parent = $parent->get_parent();           
         }
         
         if ($topic !== null)
@@ -142,12 +144,12 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
         // NAP needs to be tranversed for the guid.
         
         $unprocessed_node_ids = Array ($nav->get_root_node());
+
         while ( count ($unprocessed_node_ids) > 0)
         {
             $node_id = array_shift($unprocessed_node_ids);
             $node = $nav->get_node($node_id);
             $topic = $node[MIDCOM_NAV_OBJECT];
-            
             $result = $this->_resolve_permalink_in_topic($topic, $guid);
             if ($result !== null)
             {
@@ -169,7 +171,7 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
         // otherwise settle with a NAP scan
         // in any way, return in the same way as resolve_permalink itself.
         
-        $component = $topic->get_parameter('midcom', 'component');
+        $component = $topic->component;
         $interface =& $_MIDCOM->componentloader->get_interface_class($component);
         if ($interface === null)
         {

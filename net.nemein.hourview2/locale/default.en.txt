@@ -7,6 +7,22 @@
 Approval
 ---STRINGEND
 
+---STRING approval failed for hours
+Approval failed for hours
+---STRINGEND
+
+---STRING approved %s hour reports in task "%s"
+Approved %s hour reports in task "%s"
+---STRINGEND
+
+---STRING approved by %s on %s
+Approved by %s on %s
+---STRINGEND
+
+---STRING approved hours
+Approved hours
+---STRINGEND
+
 ---STRING comments
 Comments
 ---STRINGEND
@@ -15,8 +31,20 @@ Comments
 Hours
 ---STRINGEND
 
----STRING net.nemein.hourview
+---STRING mailed note to %s <%s>
+Mailed note to %s <%s>
+---STRINGEND
+
+---STRING net.nemein.hourview2
 Hour report viewer
+---STRINGEND
+
+---STRING no hour reports
+No hour reports
+---STRINGEND
+
+---STRING not approved hours
+Not approved hours
 ---STRINGEND
 
 ---STRING reporter
@@ -25,5 +53,9 @@ Reporter
 
 ---STRING send
 Send
+---STRINGEND
+
+---STRING processed hour reports in %s
+Processed hour reports in task %s
 ---STRINGEND
 

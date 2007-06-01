@@ -16,10 +16,10 @@ class org_openpsa_documents_navigation extends midcom_baseclasses_components_nav
 {
 
     function get_leaves() {
-    
+
         $leaves = array ();
         return $leaves;
-        
+
         // OLD STUFF:
         // List the metadata documents
         $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_documents_document');

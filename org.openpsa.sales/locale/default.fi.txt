@@ -11,6 +11,10 @@
 %s kautta, %s - %s
 ---STRINGEND
 
+---STRING %s planned
+%s arvioitua
+---STRINGEND
+
 ---STRING %s%% of %s
 %s%% %s:sta
 ---STRINGEND
@@ -31,6 +35,14 @@ Lisää tuote
 Laskutapa
 ---STRINGEND
 
+---STRING canceled
+Peruuntunut
+---STRINGEND
+
+---STRING code
+Projektinumero
+---STRINGEND
+
 ---STRING contacts
 Yhteyshenkilöt
 ---STRINGEND
@@ -45,6 +57,10 @@ Kulu
 
 ---STRING cost per unit
 Yksikkökulu
+---STRINGEND
+
+---STRING cost structure
+Kustannusrakenne
 ---STRINGEND
 
 ---STRING create document
@@ -75,6 +91,10 @@ Asiakas
 Toimitukset
 ---STRINGEND
 
+---STRING download as CSV
+Lataa CSV-tiedostona
+---STRINGEND
+
 ---STRING estimated closing date
 Arvioitu kaupantekopäivä
 ---STRINGEND
@@ -87,12 +107,28 @@ Arvioitu toimituspäivä
 Laskuta
 ---STRINGEND
 
+---STRING invoice approved only
+Laskuta vain hyväksytyt
+---STRINGEND
+
 ---STRING invoice by actual units
 Laskuta toteutuneen mukaan
 ---STRINGEND
 
+---STRING invoiced
+Laskutettu
+---STRINGEND
+
 ---STRING invoices
 Laskut
+---STRINGEND
+
+---STRING invoicing information
+Laskutustiedot
+---STRINGEND
+
+---STRING invoicing period
+Laskutuskausi
 ---STRINGEND
 
 ---STRING lost
@@ -123,12 +159,20 @@ Ei toimenpidettä
 Ei asiakasta
 ---STRINGEND
 
+---STRING ordered
+Tilattu
+---STRINGEND
+
 ---STRING org.openpsa.sales
 Myyntiprojektit
 ---STRINGEND
 
 ---STRING owner
 Omistaja
+---STRINGEND
+
+---STRING per unit
+per yksikkö
 ---STRINGEND
 
 ---STRING previous action
@@ -143,6 +187,14 @@ Hinta
 Yksikköhinta
 ---STRINGEND
 
+---STRING pricing
+Hinnoittelu
+---STRINGEND
+
+---STRING pricing information
+Hinnoittelutiedot
+---STRINGEND
+
 ---STRING probability
 Todennäköisyys
 ---STRINGEND
@@ -153,6 +205,14 @@ Tuote
 
 ---STRING profit
 Kate
+---STRINGEND
+
+---STRING proposed
+Tarjottu
+---STRINGEND
+
+---STRING purchase invoice
+Ostolasku OK
 ---STRINGEND
 
 ---STRING sales report
@@ -167,12 +227,36 @@ Myyntiraportti ajalle %s - %s
 Myyntiprojekti
 ---STRINGEND
 
+---STRING salesprojects won
+Voitetut myyntiprojektit
+---STRINGEND
+
+---STRING salesprojects: %s
+Myyntiprojektit: %s
+---STRINGEND
+
 ---STRING select product
 Valitse tuote
 ---STRINGEND
 
+---STRING single delivery
+Kertatoimitus
+---STRINGEND
+
+---STRING started
+Työ aloitettu
+---STRINGEND
+
 ---STRING status
 Tila
+---STRINGEND
+
+---STRING subscription
+Tilaus
+---STRINGEND
+
+---STRING subscription begins
+Tilaus alkaa
 ---STRINGEND
 
 ---STRING subscription ends
@@ -181,6 +265,10 @@ Tilaus päättyy
 
 ---STRING subscription starts
 Tilaus alkaa
+---STRINGEND
+
+---STRING supplier
+Toimittaja
 ---STRINGEND
 
 ---STRING title
@@ -193,6 +281,10 @@ Yhteensä
 
 ---STRING total cost
 Kulu yhteensä
+---STRINGEND
+
+---STRING unit
+yksikkö
 ---STRINGEND
 
 ---STRING units
@@ -211,7 +303,7 @@ Painotettu arvo
 Voitettu
 ---STRINGEND
 
----STRING canceled
-Peruuntunut
+---STRING action new_subscription_cycle
+Uuden tilaussyklin alku
 ---STRINGEND
 

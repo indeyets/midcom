@@ -10,7 +10,7 @@
 
 /**
  * org.openpsa.documents site interface class.
- * 
+ *
  * Document management and WebDAV file share
  */
 class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
@@ -28,9 +28,9 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
         parent::midcom_baseclasses_components_request($topic, $config);
 
         // Load datamanagers for main classes
-        $this->_initialize_datamanager('directory', $this->_config->get('schemadb_directory'));        
+        $this->_initialize_datamanager('directory', $this->_config->get('schemadb_directory'));
         $this->_initialize_datamanager('metadata', $this->_config->get('schemadb_metadata'));
-        
+
         // Pass topic to handlers
         $this->_request_data['directory'] = new org_openpsa_documents_directory($this->_topic->id);
         $this->_request_data['enable_versioning'] = $this->_config->get('enable_versioning');
@@ -88,13 +88,13 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
 
         /**
         * URL method disabled until MidCOM bug #235 is fixed
-        // Match /filename 
+        // Match /filename
         $this->_request_switch[] = array(
             'variable_args' => 1,
             'handler' => 'attachment'
         );
         */
-        
+
         // Match /
         $this->_request_switch[] = array(
             'handler' => array(&$this->_directory_handler,'directory'),
@@ -103,9 +103,9 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
         // This component uses the PEAR HTML_TreeMenu package, include the handler javascripts
         // TODO: State this AIS dependency somehow?
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/midcom.admin.content/TreeMenu.js");
-        
+
     }
-    
+
     function _initialize_datamanager($type, $schemadb_snippet)
     {
         // Load schema database snippet or file
@@ -117,10 +117,10 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
 
         if (!$this->_datamanagers[$type]) {
             $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
-            // This will exit. 	 
+            // This will exit.
         }
     }
-    
+
     function _handler_attachment($handler_id, $args, &$data)
     {
         // This hook is for direct PUT and GET of files
@@ -138,7 +138,7 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
 
             // Instantiate indexer
             $indexer =& $GLOBALS['midcom']->get_service('indexer');
-            
+
             // Add the search parameters
             $query = $_GET['search'];
             $query .= " AND __TOPIC_URL:\"{$node[MIDCOM_NAV_FULLURL]}*\"";
@@ -171,13 +171,13 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
                     $displayed++;
                 }
             }
-            midcom_show_style('show-search-results-footer');            
+            midcom_show_style('show-search-results-footer');
         }
         if ($displayed == 0)
         {
-            midcom_show_style('show-search-noresults');            
+            midcom_show_style('show-search-noresults');
         }
-        midcom_show_style('show-search-footer');        
+        midcom_show_style('show-search-footer');
     }
 
 }

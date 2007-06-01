@@ -1,7 +1,7 @@
 <?php
 /**
  * @package org.openpsa.interviews
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: report.php,v 1.2 2006/05/10 16:26:10 rambo Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,16 +9,16 @@
 
 /**
  * Phone interview report handler
- * 
+ *
  * @package org.openpsa.interviews
  */
 class org_openpsa_interviews_handler_report extends midcom_baseclasses_components_handler
 {
-    function org_openpsa_interviews_handler_campaign() 
+    function org_openpsa_interviews_handler_campaign()
     {
-        parent::midcom_baseclasses_components_handler();       
+        parent::midcom_baseclasses_components_handler();
     }
-    
+
     function _prepare_toolbar()
     {
         $this->_view_toolbar->add_item(
@@ -40,36 +40,36 @@ class org_openpsa_interviews_handler_report extends midcom_baseclasses_component
         {
             return false;
         }
-        
+
         $this->_prepare_toolbar();
 
         // List members who have been interviewed
         $qb = org_openpsa_directmarketing_campaign_member::new_query_builder();
         $qb->add_constraint('campaign', '=', $this->_request_data['campaign']->id);
         $qb->begin_group("OR");
-            $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_CAMPAIGN_MEMBER_INTERVIEWED);        
+            $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_CAMPAIGN_MEMBER_INTERVIEWED);
             $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_CAMPAIGN_MEMBER_UNSUBSCRIBED);
         $qb->end_group();
         $this->_request_data['members_interviewed'] = $qb->execute();
-        
+
         $schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
         $this->_request_data['datamanager'] = new midcom_helper_datamanager2_datamanager($schemadb);
-        
+
         return true;
     }
-    
+
     function _show_all($handler_id, &$data)
     {
         midcom_show_style('show-all-header');
-        
+
         foreach ($this->_request_data['members_interviewed'] as $member)
         {
             $this->_request_data['person'] = new midcom_db_person($member->person);
             $this->_request_data['datamanager']->autoset_storage($member);
             midcom_show_style('show-all-item');
         }
-        
+
         midcom_show_style('show-all-footer');
-    }    
+    }
 }
 ?>

@@ -1,28 +1,46 @@
-'name' => 'org.openpsa.mail',
-'purecode' => true,
-'privileges' =>  Array(),
-'class_definitions' => Array(),
-'version' => '2.0.6',
-'state' => 'stable',
-'package.xml' => Array(
+
+  'name' => 'org.openpsa.mail',
+  'purecode' => true,
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+  ),
+  'version' => '2.0.17beta1',
+  'state' => 'beta',
+  'package.xml' => 
+  array (
     'summary' => 'Email sending and decoding library',
     'description' => 'Library for handling outgoing and incoming emails, including HTML emails and attachments',
-    'maintainers' => Array(
-        'rambo' => Array(
-            'name' => 'Eero af Heurlin',
-            'email' => 'eero.afheurlin@iki.fi',
-            'role' => 'lead',
-        ),
+    'maintainers' => 
+    array (
+      'rambo' => 
+      array (
+        'name' => 'Eero af Heurlin',
+        'email' => 'eero.afheurlin@iki.fi',
+        'role' => 'lead',
+      ),
     ),
-    'dependencies' => Array(
-        'org.openpsa.helpers' => Array(),
-        'Mail' => Array
-        (
-            'channel' => 'pear.php.net',
-        ),
-        'Mail_Mime' => Array
-        (
-            'channel' => 'pear.php.net',
-        ),
-    ),            
-),
+    'dependencies' => 
+    array (
+      'org.openpsa.helpers' => 
+      array (
+      ),
+      'Mail' => 
+      array (
+        'channel' => 'pear.php.net',
+      ),
+      'Mail_Mime' => 
+      array (
+        'channel' => 'pear.php.net',
+      ),
+      'Net_SMTP' => 
+      array (
+        'channel' => 'pear.php.net',
+      ),
+      'midcom' => 
+      array (
+      ),
+    ),
+  ),

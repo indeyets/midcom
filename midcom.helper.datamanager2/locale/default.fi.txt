@@ -11,6 +11,30 @@
 (toista)
 ---STRINGEND
 
+---STRING You can only upload images here. This file will not be saved.
+Voit ainoastaan tuoda kuvia tänne. Tätä tiedostoa ei tallenneta
+---STRINGEND
+
+---STRING archived image
+Arkistoitu kuva
+---STRINGEND
+
+---STRING captcha image alt text
+Tämä on Captcha-kuva (http://en.wikipedia.org/wiki/Captcha). Sen näyttämiseen tarvitaan graafinen selain.
+---STRINGEND
+
+---STRING captcha message
+Tämä on <a target='_new' href="http://en.wikipedia.org/wiki/Captcha">Captcha</a>. Sinun täytyy syöttää kuvassa näkyvät merkit <em>ottaen isot ja pienet kirjaimet huomioon</em>.
+---STRINGEND
+
+---STRING captcha validation failed
+Syötetyt merkit eivät vastaa kuvaa.
+---STRINGEND
+
+---STRING could not figure out which image to show, listing files
+Ei kyetty päättelemään mikä kuva näytetään, listataan kaikki tiedostot:
+---STRINGEND
+
 ---STRING delete file
 Poista tiedosto
 ---STRINGEND
@@ -165,5 +189,17 @@ Ei asetettu (peritty)
 
 ---STRING widget select: other value
 Muu
+---STRINGEND
+
+---STRING rotate left
+Kierrä vasemmalle
+---STRINGEND
+
+---STRING rotate right
+Kierrä oikealle
+---STRINGEND
+
+---STRING type image: actions
+Kuvan toiminnot
 ---STRINGEND
 

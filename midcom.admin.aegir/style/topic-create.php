@@ -4,7 +4,7 @@ global $view_l10n;
 global $view_l10n_midcom;
 
 $prefix = $GLOBALS["view_contentmgr"]->viewdata["admintopicprefix"] . "topic/"; 
-$mgr =& $GLOBALS["midcom"]->get_component_loader();
+$mgr =& $_MIDCOM->get_component_loader();
 
 // Get parent component and navorder
 $parent_component = FALSE;
@@ -56,7 +56,7 @@ asort($components);
 
 function midcom_admin_content_list_groups_selector($up = NULL, $spacer = '') 
 {
-    $midgard = $GLOBALS["midcom"]->get_midgard();
+    $midgard = $_MIDCOM->get_midgard();
     if (array_key_exists("view", $GLOBALS))
     {
         $owner = $GLOBALS["view"]->owner;

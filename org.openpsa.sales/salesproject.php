@@ -9,23 +9,23 @@
 
 /**
  * Midcom wrapped base class, keep logic here
- * 
+ *
  * @package org.openpsa.sales
  */
 class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
 {
     var $contacts = array(); //Shorthand access for contact members
     var $old_contacts = array(); //For diffing the ones above
-    
+
     /* These two are filled correctly as arraus with the get_actions method */
-    var $prev_action = false; 
-    var $next_action = false; 
+    var $prev_action = false;
+    var $next_action = false;
 
     function midcom_org_openpsa_salesproject($id = null)
     {
         return parent::__midcom_org_openpsa_salesproject($id);
     }
-    
+
     /**
      * Calculates the prices of deliverables and adds them up to the salesproject
      * value
@@ -33,7 +33,8 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
     function calculate_price()
     {
         $value = 0;
-        
+        $cost = 0;
+
         $deliverable_qb = org_openpsa_sales_salesproject_deliverable::new_query_builder();
         $deliverable_qb->add_constraint('salesproject', '=', $this->id);
         $deliverable_qb->add_constraint('up', '=', 0);
@@ -41,9 +42,40 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
         $deliverables = $deliverable_qb->execute();
         foreach ($deliverables as $deliverable)
         {
-            $value = $value + $deliverable->price;
+            if ($deliverable->orgOpenpsaObtype == ORG_OPENPSA_PRODUCTS_DELIVERY_SUBSCRIPTION)
+            {
+                if ($deliverable->end == 0)
+                {
+                    // FIXME: Get this from config key 'subscription_profit_months'
+                    $cycles = $deliverable->calculate_cycles(12);
+                }
+                else
+                {
+                    $cycles = $deliverable->calculate_cycles();
+                }
+                $value = $value + ($deliverable->price * $cycles);
+                $cost = $cost + ($deliverable->cost * $cycles);
+            }
+            else
+            {
+                $value = $value + $deliverable->price;
+                $cost = $cost + $deliverable->cost;
+            }
         }
         $this->parameter('org.openpsa.sales', 'value', $value);
+        $this->parameter('org.openpsa.sales', 'profit', $value - $cost);
+    }
+
+    function generate_salesproject_number()
+    {
+        // TODO: Make configurable
+        $year = date('Y', time());
+        $qb = org_openpsa_sales_salesproject::new_query_builder();
+        $qb->add_order('created', 'DESC');
+        $qb->add_constraint('start', '>=', mktime(0, 0, 1, 1, 1, $year));
+        $previous = $qb->count_unchecked();
+
+        return sprintf('%d-%04d', $year, $previous + 1);
     }
 
     /**
@@ -68,7 +100,7 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
         );
         $this->prev_action = $default;
         $this->next_action = $default;
-        
+
         $qb = org_openpsa_relatedto_relatedto::new_query_builder();
         $qb->add_constraint('toGuid', '=', $this->guid);
         //In theory I could limit just by the class but this is more robust in the long run
@@ -147,7 +179,7 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
         usort($sort_next, 'org_openpsa_sales_salesproject_sort_action_by_time');
         debug_add("sort_next \n===\n" . sprint_r($sort_next) . "===\n");
         debug_add("sort_prev \n===\n" . sprint_r($sort_prev) . "===\n");
-        
+
         if (isset($sort_next[0]))
         {
             $this->next_action = $sort_next[0];
@@ -180,7 +212,7 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
         }
         return true;
     }
-    
+
     function _on_updating()
     {
         if (   $this->status != ORG_OPENPSA_SALESPROJECTSTATUS_ACTIVE
@@ -205,12 +237,12 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
     function _on_loaded()
     {
         $this->get_members(false);
-        
+
         if (empty($this->title))
         {
             $this->title = "salesproject #{$this->id}";
         }
-        
+
         return true;
     }
 
@@ -241,7 +273,7 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
         {
             return false;
         }
-        
+
         if ($old)
         {
             $prefix='old_';
@@ -250,7 +282,7 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
         {
             $prefix='';
         }
-        
+
         $qb = new MidgardQueryBuilder('org_openpsa_salesproject_member');
         $qb->add_constraint('salesproject', '=', $this->id);
         $ret = @$qb->execute();
@@ -270,7 +302,7 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
                         //fall-trough intentional
                     case ORG_OPENPSA_OBTYPE_SALESPROJECT_MEMBER:
                         $varName=$prefix . 'contacts';
-                        break;                    
+                        break;
                 }
                 $property = &$this->$varName;
                 $property[$contact->person] = true;
@@ -298,7 +330,7 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
         // ** Start with contacts
         $added_contacts = array_diff_assoc($this->contacts, $this->old_contacts);
         $removed_contacts = array_diff_assoc($this->old_contacts, $this->contacts);
-        
+
         foreach ($added_contacts as $resourceId => $bool)
         {
             $resObj = new org_openpsa_sales_salesproject_member();
@@ -319,7 +351,7 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
             }
         }
         // ** Done with contacts
-        
+
         debug_add("returning status array: \n===\n" . sprint_r($ret) . "===\n");
         debug_pop();
         return $ret;
@@ -346,7 +378,7 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
     {
         if ($this->up != 0)
         {
-            $parent = new midcom_org_openpsa_salesproject($this->up);            
+            $parent = new midcom_org_openpsa_salesproject($this->up);
             return $parent;
         }
         else
@@ -395,14 +427,14 @@ function org_openpsa_sales_salesproject_sort_action_by_time_reverse($a, $b)
 
 /**
  * Wrap the midcom class to component namespace
- * 
+ *
  * @package org.openpsa.sales
  */
 class org_openpsa_sales_salesproject extends midcom_org_openpsa_salesproject
 {
     function org_openpsa_sales_salesproject($identifier=NULL)
     {
-        return parent::midcom_org_openpsa_salesproject($identifier); 
+        return parent::midcom_org_openpsa_salesproject($identifier);
     }
 }
 ?>

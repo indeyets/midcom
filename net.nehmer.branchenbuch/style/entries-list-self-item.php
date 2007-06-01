@@ -3,7 +3,7 @@
 // of net_nehmer_account_handler_register
 //
 // Bind the view data, remember the reference assignment:
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $view = $data['entry_dm']->get_content_html();
 $branche_name = $data['branche']->get_full_name();
 $update_icon_url = MIDCOM_STATIC_URL . '/stock-icons/16x16/edit.png';

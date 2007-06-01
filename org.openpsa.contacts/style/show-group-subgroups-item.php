@@ -1,8 +1,8 @@
 <?php
 $nap = new midcom_helper_nav();
 $node = $nap->get_node($nap->get_current_node());
-$view_data =& $GLOBALS['midcom']->get_custom_context_data('request_data');
-$view_group = $view_data['subgroup'];
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$view_group = $data['subgroup'];
 $view_group_name = $view_group->official;
 if ($view_group_name == '')
 {
@@ -28,11 +28,11 @@ if ($view_group_name == '')
         {
             echo "<li>{$view_group->street}, {$view_group->city}</li>\n";
         }
-        
+
         if ($view_group->homepage)
         {
             echo "<li class=\"url\"><a href=\"{$view_group->homepage}\">{$view_group->homepage}</a></li>\n";
-        }        
+        }
         ?>
     </ul>
 </div>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package org.openpsa.calendar
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: ical.php,v 1.1 2006/06/06 20:05:30 rambo Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,25 +9,16 @@
 
 /**
  * Calendar ical handler
- * 
+ *
  * @package org.openpsa.calendar
  */
 class org_openpsa_calendar_handler_ical extends midcom_baseclasses_components_handler
 {
-    function org_openpsa_calendar_handler_ical() 
+    function org_openpsa_calendar_handler_ical()
     {
         parent::midcom_baseclasses_components_handler();
     }
 
-    /**
-     * Fetches current sitegroup object from database
-     */
-    function _get_sg()
-    {
-        // TODO: convert to MidCOM DBA API
-        $this->_request_data['sitegroup'] = mgd_get_sitegroup($_MIDGARD['sitegroup']);
-    }
-    
     /**
      * Strips last "file extension" from given string
      */
@@ -51,6 +42,11 @@ class org_openpsa_calendar_handler_ical extends midcom_baseclasses_components_ha
         // Display events two weeks back
         $qb->add_constraint('eid.start', '>', mktime(0, 0, 0, date('n'), date('j')-14, date('Y')));
         $qb->add_constraint('uid', '=', $this->request_data['person']->id);
+        if (class_exists('midgard_query_builder'))
+        {
+            // 1.8 support ordering by linked values
+            $qb->add_order('eid.start', 'ASC');
+        }
         $members = $qb->execute();
         if (is_array($members))
         {
@@ -79,10 +75,9 @@ class org_openpsa_calendar_handler_ical extends midcom_baseclasses_components_ha
      */
     function _handler_user_events($handler_id, $args, &$data)
     {
-        $this->_http_basic_auth();
-        
+        $_MIDCOM->auth->require_valid_user('basic');
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         $username = $this->_strip_extension($args[0]);
         $this->request_data['person'] = $this->_find_person_by_name($username);
         if (!is_object($this->request_data['person']))
@@ -92,13 +87,13 @@ class org_openpsa_calendar_handler_ical extends midcom_baseclasses_components_ha
         }
 
         $this->_get_events();
-        
+
         $this->_content_type();
-        
+
         debug_pop();
         return true;
     }
-    
+
     function _show_user_events($handler_id, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -112,35 +107,6 @@ class org_openpsa_calendar_handler_ical extends midcom_baseclasses_components_ha
         echo $event->vcal_footers();
 
         debug_pop();
-    }
-
-    /**
-     * handles http-basic authentication
-     *
-     * NOTE: Deprecate in favour of MidCOM core solution once it is implemented
-     *
-     */
-    function _http_basic_auth()
-    {
-        $this->_get_sg();
-        if (!isset($_SERVER['PHP_AUTH_USER']))
-        {
-            header("WWW-Authenticate: Basic realm=\"{$this->_request_data['sitegroup']->name}\"");
-            header('HTTP/1.0 401 Unauthorized');
-            echo "<h1>Authorization required</h1>\n";
-            exit();
-        }
-        else
-        {
-            if (!mgd_auth_midgard("{$_SERVER['PHP_AUTH_USER']}+{$this->_request_data['sitegroup']->name}", $_SERVER['PHP_AUTH_PW']))
-            {
-                // Wrong password: Recurse untill auth ok or user gives up
-                unset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
-                $this->_http_basic_auth();
-            }
-            // Figure out how to update midcom auth status
-            $_MIDCOM->auth->_initialize_user_from_midgard();
-        }
     }
 
     /**
@@ -184,7 +150,7 @@ class org_openpsa_calendar_handler_ical extends midcom_baseclasses_components_ha
         $this->request_data['person'] = $this->_find_person_by_name($username);
 
         $this->_get_events();
-        
+
         $this->_content_type();
         debug_pop();
         return true;

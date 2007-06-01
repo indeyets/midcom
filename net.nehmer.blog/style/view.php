@@ -1,10 +1,18 @@
 <?php
 // Available request keys: article, datamanager, edit_url, delete_url, create_urls
 
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $view = $data['view_article'];
 
-$published = sprintf($data['l10n']->get('posted on %s.'), strftime('%Y-%m-%d %T %Z', $data['article']->created));
+if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
+{
+    $publish_time = $data['article']->metadata->published;
+}
+else
+{
+    $publish_time = $data['article']->created;
+}
+$published = sprintf($data['l10n']->get('posted on %s.'), strftime('%Y-%m-%d %T %Z', $publish_time));
 $permalink = $_MIDCOM->permalinks->create_permalink($data['article']->guid);
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>

@@ -385,21 +385,34 @@ class midcom_helper_mailtemplate {
          */
         debug_push("Mailtemplate::send");
         
-        /* Determine all recipients */
-        $cc = explode(",", $this->_template["cc"]);
-        $bcc = explode(",", $this->_template["bcc"]);
+         /* Determine all recipients */
+        $all = array();
+        if ($this->_template['cc'] != '')
+        {
+            $cc = explode(",", $this->_template["cc"]);
+            $all = array_merge($all, $cc);
+            debug_print_r("CC Recipients:", $cc);
+        }
+        if ($this->_template['bcc'] != '') {
+            $bcc = explode(",", $this->_template["bcc"]);
+            $all = array_merge($all, $bcc);
+            debug_print_r("BCC Recipients:", $bcc);
+        }
         if (! is_array($to))
             $to = explode(",", $to);
-        $all = $cc;
-        $all = array_merge($all, $bcc);
         $all = array_merge($all, $to);
+        if ($to == '')
+        {
+            debug_add("Missing $to. Cannot sent email.");
+            debug_pop();
+            return false;
+        }
+
         
         $this->sent = Array();
         $this->failed = Array();
         
         debug_print_r("All Recipients:", $all);
-        debug_print_r("CC Recipients:", $cc);
-        debug_print_r("BCC Recipients:", $bcc);
         debug_print_r("To Recipients:", $to);
         
         $params = Array();

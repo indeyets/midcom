@@ -2,7 +2,7 @@
 // Available request keys: total_count, first_event, last_event, first_month, last_month, 
 // year_data
 
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 
 $summary = sprintf($data['l10n']->get('there is a total of %d events.'), $data['total_count']);
 

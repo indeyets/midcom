@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING allow_anonymous
+Salli kommentointi tunnistamattomille käyttäjille
+---STRINGEND
+
 ---STRING author
 Nimi
 ---STRINGEND
@@ -39,7 +43,31 @@ Kommentoi
 Kirjoittanut %s %s
 ---STRINGEND
 
----STRING allow_anonymous
-Salli kommentointi tunnistamattomille käyttäjille
+---STRING rated %s
+arvio: %s
+---STRINGEND
+
+---STRING rating
+Arvio
+---STRINGEND
+
+---STRING ratings
+Arviot
+---STRINGEND
+
+---STRING ratings_cache_to_object
+Tallenna arvioiden pisteet kommentoitavaan tietueeseen
+---STRINGEND
+
+---STRING ratings_cache_to_object_property
+Tallenna arvio olion kenttään
+---STRINGEND
+
+---STRING ratings_enable
+Salli arviointi
+---STRINGEND
+
+---STRING ratings_cache_total
+Tallenna summa tietueeseen keskiarvon sijaan
 ---STRINGEND
 

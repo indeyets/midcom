@@ -1,4 +1,4 @@
-'default' => array
+'privileges' => array
 (
     'description' => 'privileges',
     'l10n_db'     => 'midgard.admin.acl',

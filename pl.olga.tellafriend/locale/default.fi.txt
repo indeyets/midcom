@@ -1,0 +1,21 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING comment
+Viesti
+---STRINGEND
+
+---STRING recipient
+Vastaanottaja
+---STRINGEND
+
+---STRING sender name
+L&auml;hett&auml;j&auml;n nimi
+---STRINGEND
+
+---STRING sender email
+L&auml;hett&auml;j&auml;n s&auml;hk&ouml;posti
+---STRINGEND
+

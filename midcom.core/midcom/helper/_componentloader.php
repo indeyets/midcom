@@ -253,7 +253,7 @@ class midcom_helper__componentloader
      * This function will load the component specified by the MidCOM
      * path $path. If the component could not be loaded successfully due
      * to integrity errors (missing SnippetDirs, Classes, etc.), it will
-     * return false and populate $midcom_errstr accordingly.
+     * return false and populate $GLOBALS['midcom_errstr'] accordingly.
      *
      * @param string $path	The component to load.
      * @return bool Indicating success.
@@ -261,20 +261,26 @@ class midcom_helper__componentloader
      */
     function _load($path)
     {
-        global $midcom_errstr;
-        global $midcom;
-
-        debug_push_class(__CLASS__, __FUNCTION__);
-
-        $midcom_errstr = '';
-
-        debug_add("Trying to load component {$path}");
+        $GLOBALS['midcom_errstr'] = '';
+        
+        if (empty($path))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("No path given, aborting");
+            debug_pop();
+            $GLOBALS['midcom_errstr'] = 'No component path given.';
+            return false;
+        }
 
         // Check if this component is already loaded...
         if (array_key_exists($path, $this->_tried_to_load))
         {
+            /*
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("We have already tried to load {$path}, returning original result.");
             debug_pop();
+            */
+            $GLOBALS['midcom_errstr'] = 'Component already loaded.';
             return $this->_tried_to_load[$path];
         }
 
@@ -287,23 +293,25 @@ class midcom_helper__componentloader
         // (f.x. broken DBA classes).
         if (! array_key_exists($path, $this->manifests))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("The component {$path} was not found in the manifest list. Cannot load it.",
                 MIDCOM_LOG_WARN);
             debug_pop();
+            $GLOBALS['midcom_errstr'] = 'Component not in manifest list.';
             return false;
         }
 
         // Validate and translate url
         if (! $this->validate_url($path))
         {
-            debug_pop();
+            $GLOBALS['midcom_errstr'] = 'Component URL not valid.';
             return false;
         }
         $snippetpath = $this->path_to_snippetpath($path);
 
         if (! $this->validate_path($snippetpath))
         {
-            debug_pop();
+            $GLOBALS['midcom_errstr'] = 'Component path not valid.';
             return false;
         }
 
@@ -311,18 +319,22 @@ class midcom_helper__componentloader
         $directory = MIDCOM_ROOT . "{$snippetpath}/midcom";
         if (! is_dir($directory))
         {
-            $midcom_errstr = "Failed to access Snippetdir {$directory}: Directory not found.";
-            debug_add($midcom_errstr, MIDCOM_LOG_CRIT);
+            debug_push_class(__CLASS__, __FUNCTION__);
+            $GLOBALS['midcom_errstr'] = "Failed to access Snippetdir {$directory}: Directory not found.";
+            debug_add($GLOBALS['midcom_errstr'], MIDCOM_LOG_CRIT);
             debug_pop();
+            $GLOBALS['midcom_errstr'] = 'Directory not found.';
             return false;
         }
 
         // Load the interfaces.php snippet, abort if that file is not available.
         if (! file_exists("{$directory}/interfaces.php"))
         {
-            $midcom_errstr = "File {$directory}/interfaces.php is not present.";
-            debug_add($midcom_errstr, MIDCOM_LOG_CRIT);
+            debug_push_class(__CLASS__, __FUNCTION__);
+            $GLOBALS['midcom_errstr'] = "File {$directory}/interfaces.php is not present.";
+            debug_add($GLOBALS['midcom_errstr'], MIDCOM_LOG_CRIT);
             debug_pop();
+            $GLOBALS['midcom_errstr'] = 'Missing interfaces class.';
             return false;
         }
         require("{$directory}/interfaces.php");
@@ -333,7 +345,8 @@ class midcom_helper__componentloader
         $compat = false;
         if (class_exists("{$prefix}_midcom"))
         {
-            debug_add("Instantiating {$prefix}_midcom()");
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Instantiating {$prefix}_midcom(). Compatibility mode activated.");
             $classname = "{$prefix}_midcom";
             $this->_midcom_classes[$path] = new $classname();
             $this->_interface_classes[$path] = null;
@@ -341,25 +354,28 @@ class midcom_helper__componentloader
         }
         else if (class_exists("{$prefix}_interface"))
         {
-            debug_add("Instantiating {$prefix}_interface()");
             $classname = "{$prefix}_interface";
             $this->_interface_classes[$path] = new $classname();
             $this->_midcom_classes[$path] =& $this->_interface_classes[$path];
         }
         else
         {
-            $midcom_errstr = "Class {$prefix}_midcom or {$prefix}_interface does not exist.";
-            debug_add($midcom_errstr, MIDCOM_LOG_CRIT);
+            debug_push_class(__CLASS__, __FUNCTION__);
+            $GLOBALS['midcom_errstr'] = "Class {$prefix}_midcom or {$prefix}_interface does not exist.";
+            debug_add($GLOBALS['midcom_errstr'], MIDCOM_LOG_CRIT);
             debug_pop();
+            $GLOBALS['midcom_errstr'] = 'No interface class defined.';
             return false;
         }
 
         $comp_init_class =& $this->_midcom_classes[$path];
         if ($comp_init_class->initialize(false) == false)
         {
-            $midcom_errstr = "Initialize of Component {$path} failed.";
-            debug_add($midcom_errstr, MIDCOM_LOG_CRIT);
+            debug_push_class(__CLASS__, __FUNCTION__);
+            $GLOBALS['midcom_errstr'] = "Initialize of Component {$path} failed.";
+            debug_add($GLOBALS['midcom_errstr'], MIDCOM_LOG_CRIT);
             debug_pop();
+            $GLOBALS['midcom_errstr'] = 'Initialization failed.';
             return false;
         }
 
@@ -368,6 +384,7 @@ class midcom_helper__componentloader
             // Compatibility mode
             debug_add("Warning, the component {$path} is running in compatibility mode. You should rewrite its interface using the component interface baseclass.",
                 MIDCOM_LOG_WARN);
+            debug_pop();
             $this->_component_classes[$path] = null;
             $this->_contentadmin_classes[$path] = null;
             $this->_nap_classes[$path] = null;
@@ -387,23 +404,24 @@ class midcom_helper__componentloader
         {
             if (! class_exists ($prefix . "_component"))
             {
-                $midcom_errstr = "Class " . $prefix . "_component does not exist.";
-                debug_add($midcom_errstr, MIDCOM_LOG_CRIT);
+                debug_push_class(__CLASS__, __FUNCTION__);
+                $GLOBALS['midcom_errstr'] = "Class " . $prefix . "_component does not exist.";
+                debug_add($GLOBALS['midcom_errstr'], MIDCOM_LOG_CRIT);
                 debug_pop();
                 return false;
             }
 
             if (! class_exists ($prefix . "_nap"))
             {
-                $midcom_errstr = "Class " . $prefix . "_nap does not exist.";
-                debug_add($midcom_errstr, MIDCOM_LOG_CRIT);
+                debug_push_class(__CLASS__, __FUNCTION__);
+                $GLOBALS['midcom_errstr'] = "Class " . $prefix . "_nap does not exist.";
+                debug_add($GLOBALS['midcom_errstr'], MIDCOM_LOG_CRIT);
                 debug_pop();
                 return false;
             }
         }
         $this->_tried_to_load[$path] = true;
 
-        debug_pop();
         return true;
     }
 
@@ -465,7 +483,7 @@ class midcom_helper__componentloader
         {
             if (!$this->_load($path))
             {
-                $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT, $GLOBALS["midcom_errstr"]);
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to load component: {$GLOBALS['midcom_errstr']}");
             }
         }
 
@@ -480,8 +498,9 @@ class midcom_helper__componentloader
      * only one instance is always active for each component. Missing
      * components will be dynamically loaded into memory.
      *
+     *
      * @param string $path	The component name.
-     * @return mixed		A reference to the concept class in question.
+     * @return mixed		A reference to the concept class in question or null if the component is missing.
      * @deprecated This has been deprecated in MidCOM 2.4 in favor of the new component interface classes.
      */
     function & get_component_class($path)
@@ -492,14 +511,14 @@ class midcom_helper__componentloader
         debug_pop();
 
         global $midcom;
-        global $midcom_errstr;
 
         $prefix = $this->path_to_prefix($path);
-
+        // return null if the component is missing.
         if (! $this->is_loaded($path) && ! $this->_load($path))
         {
-            $midcom->generate_error(MIDCOM_ERRCRIT, $midcom_errstr);
-            // This will exit.
+            debug_pop( );
+            $ret = null; 
+            return $ret;
         }
 
         if (is_null ($this->_component_classes[$path]))
@@ -508,9 +527,9 @@ class midcom_helper__componentloader
 
             if ($this->manifests[$path]->purecode)
             {
-                $midcom_errstr = "Cannot retrieve the COMPONENT concept of the pure code library $path.";
-                debug_add($midcom_errstr, MIDCOM_LOG_CRIT);
-                $midcom->generate_error(MIDCOM_ERRCRIT, $midcom_errstr);
+                $GLOBALS['midcom_errstr'] = "Cannot retrieve the COMPONENT concept of the pure code library $path.";
+                debug_add($GLOBALS['midcom_errstr'], MIDCOM_LOG_CRIT);
+                $midcom->generate_error(MIDCOM_ERRCRIT, $GLOBALS['midcom_errstr']);
                 // This will exit.
             }
 
@@ -519,9 +538,9 @@ class midcom_helper__componentloader
 
             if ($this->_component_classes[$path] === false)
             {
-                $midcom_errstr = "Could not instantinate " . $prefix . "_component.";
-                debug_add($midcom_errstr, MIDCOM_LOG_CRIT);
-                $midcom->generate_error(MIDCOM_ERRCRIT, $midcom_errstr);
+                $GLOBALS['midcom_errstr'] = "Could not instantinate " . $prefix . "_component.";
+                debug_add($GLOBALS['midcom_errstr'], MIDCOM_LOG_CRIT);
+                $midcom->generate_error(MIDCOM_ERRCRIT, $GLOBALS['midcom_errstr']);
                 // This will exit.
             }
 
@@ -551,13 +570,11 @@ class midcom_helper__componentloader
         debug_pop();
 
         global $midcom;
-        global $midcom_errstr;
-
         $prefix = $this->path_to_prefix($path);
 
         if (! $this->is_loaded($path) && ! $this->_load($path))
         {
-            $midcom->generate_error(MIDCOM_ERRCRIT, $midcom_errstr);
+            $midcom->generate_error(MIDCOM_ERRCRIT, $GLOBALS['midcom_errstr']);
             // This will exit.
         }
 
@@ -567,17 +584,17 @@ class midcom_helper__componentloader
 
             if ($this->manifests[$path]->purecode)
             {
-                $midcom_errstr = "Cannot retrieve the Content Admin COMPONENT concept of the pure code library $path.";
-                debug_add($midcom_errstr, MIDCOM_LOG_CRIT);
-                $midcom->generate_error(MIDCOM_ERRCRIT, $midcom_errstr);
+                $GLOBALS['midcom_errstr'] = "Cannot retrieve the Content Admin COMPONENT concept of the pure code library $path.";
+                debug_add($GLOBALS['midcom_errstr'], MIDCOM_LOG_CRIT);
+                $midcom->generate_error(MIDCOM_ERRCRIT, $GLOBALS['midcom_errstr']);
                 // This will exit.
             }
 
             if (! class_exists ($prefix . "_contentadmin"))
             {
-                $midcom_errstr = "Class " . $prefix . "_contentadmin does not exist.";
-                debug_add($midcom_errstr, MIDCOM_LOG_CRIT);
-                $midcom->generate_error(MIDCOM_ERRCRIT, $midcom_errstr);
+                $GLOBALS['midcom_errstr'] = "Class " . $prefix . "_contentadmin does not exist.";
+                debug_add($GLOBALS['midcom_errstr'], MIDCOM_LOG_CRIT);
+                $midcom->generate_error(MIDCOM_ERRCRIT, $GLOBALS['midcom_errstr']);
                 // This will exit.
             }
 
@@ -586,9 +603,9 @@ class midcom_helper__componentloader
 
             if ($this->_contentadmin_classes[$path] === false)
             {
-                $midcom_errstr = "Could not instantinate " . $prefix . "_contentadmin.";
-                debug_add($midcom_errstr, MIDCOM_LOG_CRIT);
-                $midcom->generate_error(MIDCOM_ERRCRIT, $midcom_errstr);
+                $GLOBALS['midcom_errstr'] = "Could not instantinate " . $prefix . "_contentadmin.";
+                debug_add($GLOBALS['midcom_errstr'], MIDCOM_LOG_CRIT);
+                $midcom->generate_error(MIDCOM_ERRCRIT, $GLOBALS['midcom_errstr']);
                 // This will exit.
             }
 
@@ -618,13 +635,12 @@ class midcom_helper__componentloader
         debug_pop();
 
         global $midcom;
-        global $midcom_errstr;
 
         $prefix = $this->path_to_prefix($path);
 
         if (! $this->is_loaded($path) && ! $this->_load($path))
         {
-            $midcom->generate_error(MIDCOM_ERRCRIT, $midcom_errstr);
+            $midcom->generate_error(MIDCOM_ERRCRIT, $GLOBALS['midcom_errstr']);
             // This will exit.
         }
 
@@ -634,9 +650,9 @@ class midcom_helper__componentloader
 
             if ($this->manifests[$path]->purecode)
             {
-                $midcom_errstr = "Cannot retrieve the NAP concept of the pure code library $path.";
-                debug_add($midcom_errstr, MIDCOM_LOG_CRIT);
-                $midcom->generate_error(MIDCOM_ERRCRIT, $midcom_errstr);
+                $GLOBALS['midcom_errstr'] = "Cannot retrieve the NAP concept of the pure code library $path.";
+                debug_add($GLOBALS['midcom_errstr'], MIDCOM_LOG_CRIT);
+                $midcom->generate_error(MIDCOM_ERRCRIT, $GLOBALS['midcom_errstr']);
                 // This will exit.
             }
 
@@ -645,9 +661,9 @@ class midcom_helper__componentloader
 
             if ($this->_nap_classes[$path] === false)
             {
-                $midcom_errstr = "Could not instantinate " . $prefix . "_nap.";
-                debug_add($midcom_errstr, MIDCOM_LOG_CRIT);
-                $midcom->generate_error(MIDCOM_ERRCRIT, $midcom_errstr);
+                $GLOBALS['midcom_errstr'] = "Could not instantinate " . $prefix . "_nap.";
+                debug_add($GLOBALS['midcom_errstr'], MIDCOM_LOG_CRIT);
+                $midcom->generate_error(MIDCOM_ERRCRIT, $GLOBALS['midcom_errstr']);
                 // This will exit.
             }
 
@@ -774,14 +790,13 @@ class midcom_helper__componentloader
      */
     function validate_url($path)
     {
-        global $midcom_errstr;
         global $midcom;
 
         if (! ereg ("^[a-z][a-z0-9\.]*[a-z0-9]$", $path))
         {
-            $midcom_errstr = "Invalid URL: " . $path;
+            $GLOBALS['midcom_errstr'] = "Invalid URL: " . $path;
             debug_push("midcom_helper__componentloader::validate_url");
-            debug_add($midcom_errstr, MIDCOM_LOG_CRIT);
+            debug_add($GLOBALS['midcom_errstr'], MIDCOM_LOG_CRIT);
             debug_pop();
             return false;
         }
@@ -888,6 +903,7 @@ class midcom_helper__componentloader
      *
      * @param string $cache_identifier The cache indentifier to use to cache the mainfest
      *     loading queue.
+     * @todo investigate if we should unset the package.xml part of the arrays and serialize them
      */
     function _generate_class_manifest_cache($cache_identifier)
     {
@@ -896,21 +912,19 @@ class midcom_helper__componentloader
         // This does follow symlinks, which can be important when several
         // CVS commits are "merged" manually
         $directories = Array();
-        $manifest_files = Array();
         exec('find ' . MIDCOM_ROOT . ' -follow -type d -name "config"', $directories);
+        $code = "";
         foreach ($directories as $directory)
         {
             $filename = "{$directory}/manifest.inc";
             if (file_exists($filename))
             {
-                $manifest_files[] = $filename;
+                $manifest_data = file_get_contents($filename);
+                
+                $code .= "\$_MIDCOM->componentloader->load_manifest(
+                    new midcom_core_manifest(    
+                    '{$filename}', array({$manifest_data})));\n";
             }
-        }
-
-        $code = '';
-        foreach ($manifest_files as $file)
-        {
-            $code .= "\$_MIDCOM->componentloader->load_manifest('{$file}');\n";
         }
 
         if (! $_MIDCOM->cache->phpscripts->add($cache_identifier, $code))
@@ -922,6 +936,7 @@ class midcom_helper__componentloader
             debug_pop();
             eval($code);
         }
+        return;
     }
 
     /**
@@ -933,16 +948,10 @@ class midcom_helper__componentloader
      * - All defined DBA class sets are loaded. If an error occurs here,
      *   the manifest will be ignored and an error is logged.
      *
-     * @param string $filename The name of the manifest file to load.
+     *  @param $manifest object the manifest object to load.
      */
-    function load_manifest($filename)
+    function load_manifest($manifest)
     {
-        $manifest = new midcom_core_manifest($filename);
-        if (! $manifest)
-        {
-            return;
-        }
-
         // Make DBA Classes known, bail out if we encounter an invalid class
         foreach ($manifest->class_definitions as $file)
         {
@@ -1057,10 +1066,13 @@ class midcom_helper__componentloader
         }
         foreach ($components as $component)
         {
+            // FIXME: This causes a PHP notice
+            error_reporting(E_WARNING);
             if (! in_array($component, $this->_watch_notifications[$operation][$object_key]))
             {
                 $this->_watch_notifications[$operation][$object_key][] = $component;
             }
+            error_reporting(E_ALL);
         }
         debug_pop();
     }

@@ -1,5 +1,5 @@
 <?php
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 // Available request data: type_list, mode, result_url, search_data, type
 
 if ($data['type']) { ?>

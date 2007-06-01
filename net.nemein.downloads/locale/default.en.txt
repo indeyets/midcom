@@ -27,15 +27,15 @@ Edit release
 License
 ---STRINGEND
 
+---STRING net.nemein.downloads
+Download management
+---STRINGEND
+
 ---STRING set current release
 Set current release
 ---STRINGEND
 
 ---STRING view release
 View release
----STRINGEND
-
----STRING net.nemein.downloads
-Download management
 ---STRINGEND
 

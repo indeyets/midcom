@@ -1,4 +1,4 @@
 <?php
-global $view_title;
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 ?>
-<h1>&(view_title);</h1>
+<h1>&(data['folder_name']);</h1>

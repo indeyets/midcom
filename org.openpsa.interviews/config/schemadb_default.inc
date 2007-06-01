@@ -2,16 +2,16 @@
 (
     'description' => 'interview',
     'fields'      => array
-    (        
+    (
         'content' => Array
         (
             // COMPONENT-REQUIRED
             'title' => 'interview',
             'storage' => 'parameter',
             'type' => 'text',
-            'type_config' => Array 
-            ( 
-                'output_mode' => 'markdown' 
+            'type_config' => Array
+            (
+                'output_mode' => 'markdown'
             ),
             'widget' => 'textarea',
         ),

@@ -21,13 +21,13 @@ $cities_to_add = Array(
         'country'   => 'SE',
         'latitude'  => 58.4166667,
         'longitude' => 15.6166667,
-    ),  
+    ),
     Array(
         'city'      => 'Linköping',
         'country'   => 'SE',
         'latitude'  => 58.4166667,
         'longitude' => 15.6166667,
-    ),       
+    ),
     Array(
         'city'      => 'Curitiba',
         'country'   => 'BR',
@@ -61,7 +61,7 @@ foreach ($cities_to_add as $city)
     $new_city->country   = $city['country'];
     $new_city->latitude  = $city['latitude'];
     $new_city->longitude = $city['longitude'];
-    
+
     $stat = $new_city->create();
     if ($stat)
     {
@@ -87,7 +87,7 @@ while ($run < $run_times)
 {
     $run++;
     $start = microtime();
-    
+
     $closest = org_routamc_positioning_utils::get_closest('org_routamc_positioning_city_dba', $coordinates, 10);
 
     echo "<p>Closest places to you are:<br />";

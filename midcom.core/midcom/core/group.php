@@ -114,6 +114,16 @@ class midcom_core_group extends midcom_baseclasses_core_object
     {
         die ('The method ' . __CLASS__ . '::' . __FUNCTION__ . 'must be overridden.');
     }
+    
+    /**
+     * Retrieves a list of groups owned by this group.
+     *
+     * @return Array A list of midcom_core_group objects in which are owned by the current group, false on failure.
+     */
+    function list_subordinate_groups()
+    {
+         return array();
+    }
 
     /**
      * Retrieves a list of users for which are a member in this group.

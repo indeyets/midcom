@@ -17,10 +17,10 @@ function compat_getElementsByTagNameNS(ns, prefix, local, parentElem)
     }
     else
     {
-        // the namespace versions of this method 
+        // the namespace versions of this method
         // (getElementsByTagNameNS()) operate
         // differently in Safari and Mozilla, but both
-        // return value with just local name, provided 
+        // return value with just local name, provided
         // there aren't conflicts with non-namespace element
         // names
         //return parentElem.getElementsByTagName(local);
@@ -49,7 +49,7 @@ function ooAjaxSetClass(element, classstr, append)
     if (document.getElementById(element.id+'_ajaxPrefixClass'))
     {
         element.className = document.getElementById(element.id+'_ajaxPrefixClass').value + ' ' + classstr;
-    }    
+    }
     else
     {
         element.className = classstr;
@@ -65,11 +65,11 @@ function ooAjaxFocus(element)
 {
     //Make the style "focused"
     ooAjaxSetClass(element, 'ajax_editable ajax_focused', false);
-    
+
     // Copy element ID and old value
     active_element = element.id;
     old_value = element.value;
-    
+
     // Empty the default value
     if (document.getElementById(element.id+'_ajaxDefault') && (old_value == document.getElementById(element.id+'_ajaxDefault').value))
     {
@@ -96,8 +96,8 @@ function ooAjaxParseMode(modeStr)
     {
         return ret;
     }
-    
-    //explode comma separated values.    
+
+    //explode comma separated values.
     regex = /([^, ]+)/g;
     parsed = modeStr.match(regex);
     for (key in parsed)
@@ -119,7 +119,7 @@ function ooAjaxChange(element)
     {
         window.clearTimeout(ooAjaxChange_timeout_store[element.id]);
     }
-    
+
     //Make sure we have our handler set
     if (document.getElementById(element.id+'_ajaxFunction'))
     {
@@ -130,7 +130,7 @@ function ooAjaxChange(element)
         ooDisplayMessage('ooAjaxChange: Handler function for element id "' + element.id + '" cannot be found', 'error');
         return false;
     }
-    
+
     //Set new timeout
     ooAjaxChange_timeout_store[element.id] = window.setTimeout(handlerFunc.value+'(document.getElementById("' + element.id + '"));', 500);
     return true;
@@ -156,7 +156,7 @@ function ooAjaxUrl(element)
     {
         return false;
     }
-    
+
     return ajaxUrl;
 }
 
@@ -174,7 +174,7 @@ function ooAjaxBlur(element)
 
     // Make the style "editable"
     ooAjaxBlur_noSave(element);
-    
+
     // Check if user changed the field
     if (element.value != old_value)
     {
@@ -200,7 +200,7 @@ function ooAjaxSelect(element)
         //We return true, otherwise the we could never get out of focus!
         return true;
     }
-    
+
     //POST to given URL
     ooAjaxPost(ajaxUrl, element.name + '=' + element.options[element.selectedIndex].value, element, true);
 }
@@ -209,17 +209,17 @@ function ooAjaxSelect(element)
 function ooAjaxRequestor()
 {
     var xmlHttpReq = false;
-        
+
+    // IE
+    if (window.ActiveXObject)
+    {
+        xmlHttpReq = new ActiveXObject('Microsoft.XMLHTTP');
+    }
     // Mozilla/Safari
-    if (window.XMLHttpRequest)
+    else if (window.XMLHttpRequest)
     {
         xmlHttpReq = new XMLHttpRequest();
         xmlHttpReq.overrideMimeType('text/xml');
-    }
-    // IE
-    else if (window.ActiveXObject)
-    {
-        xmlHttpReq = new ActiveXObject('Microsoft.XMLHTTP');
     }
     return xmlHttpReq;
 }
@@ -233,14 +233,14 @@ function ooAjaxGet(strURL, strQuery, element, callback, timeout, type)
         //Default to 10s timeout
         timeout = 10000;
     }
-    
-    
+
+
     if (!type)
     {
         // Default to XML
         type = 'xml';
     }
-    
+
     xmlHttpReq = ooAjaxRequestor();
     if (xmlHttpReq)
     {
@@ -250,7 +250,7 @@ function ooAjaxGet(strURL, strQuery, element, callback, timeout, type)
         }
         xmlHttpReq_store[element.id] = xmlHttpReq;
         try
-        {   
+        {
             if (strQuery)
             {
                 xmlHttpReq_store[element.id].open('GET', strURL + '?' + strQuery, true);
@@ -262,7 +262,7 @@ function ooAjaxGet(strURL, strQuery, element, callback, timeout, type)
         }
         catch (e)
         {
-            window.clearTimeout(xmlHttpReq_timeout_store[element.id]);       
+            window.clearTimeout(xmlHttpReq_timeout_store[element.id]);
             ooDisplayMessage('ooAjaxGet: Request error: ' + e, 'error');
             ooAjaxSetClass(element, 'ajax_editable ajax_save_failed', false);
         }
@@ -273,11 +273,11 @@ function ooAjaxGet(strURL, strQuery, element, callback, timeout, type)
             {
                 if (xmlHttpReq_store[element.id].status == 200)
                 {
-                    window.clearTimeout(xmlHttpReq_timeout_store[element.id]);  
-                    
+                    window.clearTimeout(xmlHttpReq_timeout_store[element.id]);
+
                     // Uncomment to display raw XML return output:
-                    // ooDisplayMessage(xmlHttpReq.responseText); 
-                         
+                    // ooDisplayMessage(xmlHttpReq.responseText);
+
                     // Read XML response
                     if (type == 'xml')
                     {
@@ -296,7 +296,7 @@ function ooAjaxGet(strURL, strQuery, element, callback, timeout, type)
                 //Request failed
                 else
                 {
-                    window.clearTimeout(xmlHttpReq_timeout_store[element.id]);       
+                    window.clearTimeout(xmlHttpReq_timeout_store[element.id]);
                     ooDisplayMessage('ooAjaxGet: Request error: ' + xmlHttpReq.status + ', ' + xmlHttpReq.statusText, 'error');
                     ooAjaxSetClass(element, 'ajax_editable ajax_save_failed', false);
                 }
@@ -325,7 +325,7 @@ function ooAjaxPost(strURL, strSubmit, element, refreshWindow, callback)
     if (xmlHttpReq)
     {
         xmlHttpReq_timeout_store[element.id] = window.setTimeout("ooDisplayMessage('ooAjaxPost: Request timed out', 'error'); ooAjaxSetClass(document.getElementById('"+element.id+"'), 'ajax_editable ajax_save_failed');", 10000); //10 second timeout
-        xmlHttpReq_store[element.id] = xmlHttpReq;    
+        xmlHttpReq_store[element.id] = xmlHttpReq;
         xmlHttpReq_store[element.id].open('POST', strURL, true);
         xmlHttpReq_store[element.id].setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xmlHttpReq_store[element.id].onreadystatechange = function()
@@ -335,13 +335,13 @@ function ooAjaxPost(strURL, strSubmit, element, refreshWindow, callback)
             {
                 if (xmlHttpReq_store[element.id].status == 200)
                 {
-                    window.clearTimeout(xmlHttpReq_timeout_store[element.id]);       
+                    window.clearTimeout(xmlHttpReq_timeout_store[element.id]);
                     // Read XML response
                     response = xmlHttpReq_store[element.id].responseXML.documentElement;
-                    
+
                     // Uncomment to display raw XML return output:
-                    //ooDisplayMessage(xmlHttpReq_store[element.id].responseText); 
-                                       
+                    //ooDisplayMessage(xmlHttpReq_store[element.id].responseText);
+
                     //Check result tag
                     if (!response.getElementsByTagName('result')[0])
                     {
@@ -354,7 +354,7 @@ function ooAjaxPost(strURL, strSubmit, element, refreshWindow, callback)
                     {
                         result = response.getElementsByTagName('result')[0].firstChild.data;
                     }
-                    
+
                     //Check status tag
                     if (!response.getElementsByTagName('status')[0])
                     {
@@ -372,26 +372,26 @@ function ooAjaxPost(strURL, strSubmit, element, refreshWindow, callback)
                     {
                         element.value = response.getElementsByTagName('valueoverride')[0].firstChild.data;
                     }
-                    //Handler returned success                    
+                    //Handler returned success
                     if (result == 1)
                     {
                         ooAjaxSetClass(element, 'ajax_editable ajax_saved', false);
                         //We must access the element globally since setTimeout registers an event to global context (also we might have other saves as well in short succession)
                         setTimeout("ooAjaxSetClass(document.getElementById('"+element.id+"'), 'ajax_editable ajax_saved_fade', true);", 1000); //1 sec timeout
                         setTimeout("ooAjaxSetClass(document.getElementById('"+element.id+"'), 'ajax_editable', true);", 2000); //2 sec timeout
-                        
+
                         if (refreshWindow == true)
                         {
                             window.location.reload();
                         }
                         // ooDisplayMessage('Save ok', 'ok');
-                        
+
                         if (callback)
                         {
                             //eval(callback+'();');
                             eval(callback + "(xmlHttpReq_store['" + element.id + "'].responseXML.documentElement, document.getElementById('"+element.id+"'))");
                         }
-                        
+
                         return true;
                     }
                     //Handler returned failure
@@ -412,7 +412,7 @@ function ooAjaxPost(strURL, strSubmit, element, refreshWindow, callback)
                 //Request failed
                 else
                 {
-                    window.clearTimeout(xmlHttpReq_timeout_store[element.id]);       
+                    window.clearTimeout(xmlHttpReq_timeout_store[element.id]);
                     ooDisplayMessage('ooAjaxPost: Request error: ' + xmlHttpReq.status + ', ' + xmlHttpReq.statusText, 'error');
                     ooAjaxSetClass(element, 'ajax_editable ajax_save_failed', false);
                     return false;
@@ -427,4 +427,3 @@ function ooAjaxPost(strURL, strSubmit, element, refreshWindow, callback)
         xmlHttpReq_store[element.id].send(strSubmit);
     }
 }
-

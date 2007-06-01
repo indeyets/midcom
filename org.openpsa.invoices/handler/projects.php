@@ -1,7 +1,7 @@
 <?php
 /**
  * @package org.openpsa.invoices
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: projects.php,v 1.1 2006/06/01 15:28:20 rambo Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,7 +9,7 @@
 
 /**
  * invoice projects invoicing handler
- * 
+ *
  * @package org.openpsa.invoices
  */
 class org_openpsa_invoices_handler_projects extends midcom_baseclasses_components_handler
@@ -18,7 +18,7 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     function _generate_invoice()
     {
         $invoice = new org_openpsa_invoices_invoice();
@@ -50,19 +50,19 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
             if (!empty($invoice_sender_guid))
             {
                 $invoice->generate_invoicing_task($invoice_sender_guid);
-            }        
-            
-            $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('org.openpsa.invoices'), sprintf($this->_request_data['l10n']->get('invoice "%s" created'), $invoice->invoiceNumber), 'ok');        
+            }
+
+            $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('org.openpsa.invoices'), sprintf($this->_request_data['l10n']->get('invoice "%s" created'), $invoice->invoiceNumber), 'ok');
 
             $hours_marked = 0;
-            
+
             // Connect invoice to the tasks involved
             foreach ($_POST['org_openpsa_invoices_invoice_tasks'] as $task_id => $invoiceable)
             {
                 if ($invoiceable)
                 {
                     $relation = org_openpsa_relatedto_handler::create_relatedto($invoice, 'org.openpsa.invoices', $this->_request_data['tasks'][$task_id], 'org.openpsa.projects');
-            
+
                     // Mark the hour reports invoiced
                     foreach ($this->_request_data['hour_reports'][$invoice->customer][$task_id] as $hour_report)
                     {
@@ -77,10 +77,10 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
                 }
             }
             $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('org.openpsa.invoices'), sprintf($this->_request_data['l10n']->get('marked %s hours as invoiced'), $hours_marked), 'ok');
-            
-            $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);          
+
+            $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             $_MIDCOM->relocate("{$prefix}invoice/edit/{$invoice->guid}.html");
-            // This will exit        
+            // This will exit
         }
         else
         {
@@ -92,13 +92,13 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
     {
         $_MIDCOM->auth->require_valid_user();
         $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_invoices_invoice');
-        
-        $this->_component_data['active_leaf'] = $this->_topic->id.':from_projects';    
-        
+
+        $this->_component_data['active_leaf'] = $this->_topic->id.':from_projects';
+
         $this->_request_data['hour_reports'] = array();
         $this->_request_data['tasks'] = array();
         $this->_request_data['customers'] = array();
-        
+
         // List invoiceable uninvoiced hours for finished tasks
         $qb_hours = org_openpsa_projects_hour_report::new_query_builder();
         $qb_hours->add_constraint('invoiceable', '=', 1);
@@ -112,25 +112,25 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
             {
                  $this->_request_data['tasks'][$task_id] = new org_openpsa_projects_task($task_id);
             }
-            
+
             if ($this->_request_data['tasks'][$task_id]->customer)
             {
                 $customer_id = $this->_request_data['tasks'][$task_id]->customer;
                 if (!array_key_exists($customer_id, $this->_request_data['customers']))
                 {
                      $this->_request_data['customers'][$customer_id] = new org_openpsa_contacts_group($customer_id);
-                }     
+                }
             }
             else
             {
                 $customer_id = 'no';
-            }       
+            }
 
             if (!array_key_exists($customer_id, $this->_request_data['hour_reports']))
             {
                 $this->_request_data['hour_reports'][$customer_id] = array();
             }
-            
+
             if (!array_key_exists($task_id, $this->_request_data['hour_reports'][$customer_id]))
             {
                 $this->_request_data['hour_reports'][$customer_id][$task_id] = array();
@@ -138,13 +138,13 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
 
             $this->_request_data['hour_reports'][$customer_id][$task_id][] = $hour_report;
         }
-        
+
         // Check if we're sending an invoice here
         if (array_key_exists('org_openpsa_invoices_invoice', $_POST))
         {
             $this->_generate_invoice();
         }
-        
+
         return true;
     }
 
@@ -190,7 +190,7 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
                         $this->_request_data['invoiceable_hours'] += $hour_report->hours;
                     }
                 }
-                
+
                 if ($this->_config->get('default_hourly_price'))
                 {
                     $this->_request_data['default_price'] = $this->_request_data['invoiceable_hours'] * $this->_config->get('default_hourly_price');

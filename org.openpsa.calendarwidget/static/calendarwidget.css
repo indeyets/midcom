@@ -28,7 +28,7 @@ table.calendarwidget thead th {
     margin: 0px;
     text-align: left;
     font-size: 10px;
-    border-bottom: 1px solid #c0c0c0;  
+    border-bottom: 1px solid #c0c0c0;
 }
 table.calendarwidget tbody div.eventlist {
     position: relative;
@@ -46,8 +46,8 @@ table.calendarwidget tbody th {
     color: #333333;
     /*width: 100px;*/
     padding: 0px;
-    margin: 0px;    
-    text-align: left; 
+    margin: 0px;
+    text-align: left;
 }
 table.calendarwidget tbody tr:hover th {
     background-color: #e0e0e0;
@@ -57,17 +57,17 @@ table.calendarwidget tbody tr th:hover {
 }
 
 table.calendarwidget tbody tr {
-    line-height: 24px;    
+    line-height: 24px;
 }
 table.calendarwidget tbody td {
     border-bottom: 1px solid #c0c0c0;
     border-left: 1px solid #c0c0c0;
     padding: 0px;
-    margin: 0px;      
+    margin: 0px;
 }
 table.calendarwidget tbody td:hover {
     background-color: #EED680;
-    cursor: pointer;    
+    cursor: pointer;
 }
 table.calendarwidget .past {
     background-color: #f2f2f4;
@@ -77,7 +77,7 @@ table.calendarwidget .past {
 table.calendarwidget tbody div.vevent {
     position: absolute;
     top: 0px;
-    display: inline; 
+    display: inline;
     border: 1px solid #826647;
     background-color: #E0C39E;
     color: #000000;
@@ -115,13 +115,13 @@ table.calendarwidget tbody div.ending_after {
     border-right: none;
     padding-right: 2px;
     -moz-border-radius-topright: 0px;
-    -moz-border-radius-bottomright: 0px;    
+    -moz-border-radius-bottomright: 0px;
 }
 table.calendarwidget tbody div.starting_before {
     border-left: none;
     padding-left: 2px;
     -moz-border-radius-topleft: 0px;
-    -moz-border-radius-bottomleft: 0px;    
+    -moz-border-radius-bottomleft: 0px;
 }
 
 table.calendarwidget tbody span.assignee {
@@ -154,7 +154,7 @@ table.calendarwidget tbody span.assignee {
     margin: 0px;
     font-size: 17px;
     overflow: hidden;
-    white-space: nowrap;  
+    white-space: nowrap;
 }
 #org_openpsa_calendarwidget div.month div.day h2 {
     font-size: smaller;
@@ -176,7 +176,7 @@ table.calendarwidget tbody span.assignee {
     color: #314E6C;
     text-align: center;
     overflow: hidden;
-    white-space: nowrap;    
+    white-space: nowrap;
 }
 #org_openpsa_calendarwidget div.calendar_column:hover h3 {
     background-color: #4B6983;
@@ -206,7 +206,7 @@ table.calendarwidget tbody span.assignee {
     width: 19px;
     color: #000000;
     text-align: right;
-    font-weight: normal;    
+    font-weight: normal;
     background-color: transparent;
 }
 #org_openpsa_calendarwidget div.times div {
@@ -265,7 +265,7 @@ table.calendarwidget tbody span.assignee {
     border: none;
     padding: 0px;
     margin: 0px;
-    border-bottom: 1px solid #eeeeee;    
+    border-bottom: 1px solid #eeeeee;
     padding-top: 1px;
     background-color: #ffffff;
     -moz-border-radius: 0px;
@@ -273,8 +273,8 @@ table.calendarwidget tbody span.assignee {
 
 #org_openpsa_calendarwidget div.reservations .free:hover {
     background-color: #EED680;
-    border-top: 1px solid #EED680; 
-    padding-top: 0px;       
+    border-top: 1px solid #EED680;
+    padding-top: 0px;
 }
 #org_openpsa_calendarwidget div.reservations .past {
     background-color: #FAF8F3;

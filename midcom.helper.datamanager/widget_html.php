@@ -132,7 +132,7 @@ class midcom_helper_datamanager_widget_html extends midcom_helper_datamanager_wi
 
     /**
      * The constructor will add the corresponding Javascript code only if we are
-     * running AIS. On-Site usage is not yet possible.
+     * running AIS or enable outside AIS
      */
     function _constructor (&$datamanager, $field, $defaultvalue) {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -198,7 +198,7 @@ class midcom_helper_datamanager_widget_html extends midcom_helper_datamanager_wi
             // Disable HTMLArea language selection
             // The translations are incomplete, and missing strings break at least
             // the insert link popup due to jscript errors.
-            $GLOBALS["midcom"]->add_jscript("
+            $_MIDCOM->add_jscript("
 _editor_url = '{$urlprefix}';
 _editor_lang = '{$htmlarea_lang}';\n" .
         "var xinha_editors = Array();\n");
@@ -210,14 +210,14 @@ _editor_lang = '{$htmlarea_lang}';\n" .
             // default Mozilla (scripts may not copy/paste by default anymore).
             // TODO: Make this configurable.
             debug_add('adding editor plugins');
-            $GLOBALS["midcom"]->add_jscript("
+            $_MIDCOM->add_jscript("
 
 HTMLArea.loadPlugin('TableOperations');
 HTMLArea.loadPlugin('ContextMenu');\n");
 
-            $GLOBALS["midcom"]->add_jscript($this->_get_config_js());
+            $_MIDCOM->add_jscript($this->_get_config_js());
             debug_add('adding onload');
-            $GLOBALS["midcom"]->add_jsonload($this->_fieldname . "_init()");
+            $_MIDCOM->add_jsonload($this->_fieldname . "_init()");
             // fix so that HTMLArea doesn't break on slow lines.
             // Commented out due to caching issues.
             //$this->_preloadImages();

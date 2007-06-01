@@ -63,7 +63,7 @@ function midcom_get_snippet_content($path)
         $filename = MIDCOM_ROOT . substr($path, 5);
         if (! file_exists($filename))
         {
-            $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "Could not load the contents of the file {$filename}: File not found.");
             // This will exit.
         }
@@ -71,13 +71,14 @@ function midcom_get_snippet_content($path)
     }
     else
     {
-        if (! mgd_snippet_exists($path))
+        $snippet = new midcom_baseclasses_database_snippet();
+        $snippet->get_by_path($path);
+        if (!$snippet->guid)
         {
-            $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "Could not load the contents of the snippet {$path}: Snippet does not exist.");
             // This will exit.
         }
-        $snippet = mgd_get_snippet_by_path ($path);
         $data = $snippet->code;
     }
     return $data;
@@ -555,6 +556,7 @@ function mgd_get_style_by_name2 ($id, $name) {
     return false;
 }
 
+
 /**
  * Delete all extensions (parameters and attachments) to a
  * Midgard object
@@ -594,22 +596,21 @@ function mgd_delete_extensions(&$object) {
 
 
 // This function will be available in Midgard 1.6.0
-if (!function_exists('mgd_get_snippet_by_path')) {
-  /**
-   * @ignore
-   */
-  function mgd_get_snippet_by_path($path) {
-    if (mgd_snippet_exists($path) == false)
-        return false;
-    $args = explode ("/", $path);
-    $snippetname = array_pop($args);
-    $dirpath = implode ("/", $args);
-    $dir = mgd_get_snippetdir_by_path($dirpath);
-    if (!$dir)
-        return false;
-    $snippet = mgd_get_snippet_by_name ($dir->id, $snippetname);
-    return $snippet;
-  }
+if (!function_exists('mgd_get_snippet_by_path')) 
+{
+    /**
+     * @ignore
+     */
+    function mgd_get_snippet_by_path($path) 
+    {
+        $snippet = new midcom_baseclasses_database_snippet();
+        $snippet->get_by_path($path);
+        if (!$snippet->guid)
+        {
+            return false;
+        }
+        return $snippet;
+    }
 }
 
 /**
@@ -780,11 +781,13 @@ function ImageCopyResampleBicubic(&$dst_img, &$src_img, $dst_x, $dst_y, $src_x, 
  * Helper function for generating "clean" URL names from titles, etc.
  *
  * @param string $string	String to edit.
- * @param string $replacer	The replacement for invalid cahracters.
+ * @param string $replacer	The replacement for invalid characters.
  * @return string			Normalized name.
  */
 function midcom_generate_urlname_from_string($string, $replacer = "-")
 {
+    // TODO: sanity-check $replacer ?
+
     // Use the PHP transliteration extension if available
     if (function_exists("transliterate"))
     {
@@ -799,38 +802,135 @@ function midcom_generate_urlname_from_string($string, $replacer = "-")
 
         return $string;
     }
-    else
+
+    // Replacement map for most common characters
+    /**
+     * Use hex codes for characters to avoid issues with editors using charset other than UTF-8
+     * Add also uppercase codes, strotolower as default is not multibyte aware and you can't trust that
+     *   1. it is overloaded with mb_strtolower (if even available)
+     *   2. mb_strolower works in all cases as you suppose it would
+     */
+    $replace_characters = array(
+        // UTF-8, scandinavian lowercase
+        "\xC3\xA4" => "a",
+        "\xC3\xB6" => "o",
+        "\xC3\xA5" => "a",
+        "\xC3\xBC" => "u",
+        "\xC3\x9F" => "ss",
+
+        // UTF-8, scandinavian uppercase
+        "\xC3\x84" => "A",
+        "\xC3\x96" => "O",
+        "\xC3\x85" => "A",
+        "\xC3\x9C" => "U",
+
+        //UTF-8, Polish lowercase
+        "\xC4\x85" => "a",
+        "\xC4\x87" => "c",
+        "\xC4\x99" => "e",
+        "\xC5\x82" => "l",
+        "\xC5\x84" => "n",
+        "\xC3\xB3" => "o",
+        "\xC5\x9B" => "s",
+        "\xC5\xBA" => "z",
+        "\xC5\xBC" => "z",
+
+        // Latin-1, see http://en.wikipedia.org/wiki/ISO_8859-1
+        "\xE4" => "a",
+        "\xF6" => "o",
+        "\xE5" => "a",
+        "\xFC" => "u",
+        "\xDF" => "ss",
+
+        // Latin-1 uppercase
+        "\xC4" => "A",
+        "\xD6" => "O",
+        "\xC5" => "A",
+        "\xDC" => "U",
+
+        // Latin-2 lowercase
+        "\xB1" => "a",
+        "\xE6" => "c",
+        "\xEA" => "e",
+        "\xB3" => "l",
+        "\xF1" => "n",
+        "\xF3" => "o",
+        "\xB6" => "s",
+        "\xBC" => "z",
+        "\xBF" => "z",
+
+        // Latin-2 uppercase
+        "\xA1" => "A",
+        "\xC6" => "C",
+        "\xCA" => "E",
+        "\xA3" => "L",
+        "\xD1" => "N",
+        "\xD3" => "O",
+        "\xA6" => "S",
+        "\xAC" => "Z",
+        "\xAF" => "Z",
+
+    );
+
+    // Replace the characters in the map
+    static $search_arr = array();
+    static $replace_arr = array();
+    if (   empty($search_arr)
+        || empty($replace_arr))
     {
-        // Replacement map for most common characters
-        // only lower case characters needed, strtolower is done beforehand
-        $replace_characters = array(
-            // UTF-8
-            "ä" => "a",
-            "ö" => "o",
-            "å" => "a",
-            "ü" => "u",
-            "ß" => "ss",
-
-            // Latin-1, see http://en.wikipedia.org/wiki/ISO_8859-1
-            "\xE4" => "a",
-            "\xF6" => "o",
-            "\xE5" => "a",
-            "\xFC" => "u",
-            "\xDF" => "ss",
-        );
-
-        // Replace the characters in the map
         foreach ($replace_characters as $search => $replace)
         {
-            $string = str_replace($search,$replace,$string);
+            $search_arr[] = $search;
+            $replace_arr[] = $replace;
         }
-
-        // Regular expression for allowed characters
-        $regexp = '/[^a-zA-Z0-9_-]/';
-
-        // Run the string through the regexp
-        return strtolower(preg_replace($regexp, $replacer, $string));
     }
+    // this should be faster than calling the fuction for each search/replace pair separately
+    $string = str_replace($search_arr, $replace_arr, $string);
+
+    // Try to transliterate characters not in map with iconv if we can
+    if (   function_exists('iconv')
+        && function_exists('mb_detect_encoding'))
+    {
+        /**
+         * NOTE: the order of character sets is important and some sets look very similar to each other leading to possible
+         * mis-identifications
+         * Therefore: Do not touch unless you actually know how mb_detect_encoding actually works and how the character sets work
+         *
+         * Luckily nowadays all Midgard installs *should* use UTF-8 only, making our life easier.
+         **/
+        $encoding = mb_detect_encoding($string, 'ASCII,JIS,UTF-8,ISO-8859-1,EUC-JP,SJIS');
+        if (   !empty($encoding)
+            && $encoding != 'ASCII')
+        {
+            // silence in case we have misdetected the encoding and iconv complains
+            $stat = @iconv($encoding, 'ASCII//TRANSLIT', $string);
+            if (!empty($stat))
+            {
+                $string = $stat;
+            }
+        }
+    }
+
+    // Spaces around a dash to just dash
+    $string = preg_replace('/\s+-\s+/', '-', $string);
+    // Rest of spaces to underscores
+    $string = preg_replace('/\s+/', '_', $string);
+
+    // Regular expression for characters to replace (the ^ means an inverted character class, ie characters *not* in this class are replaced)
+    $regexp = '/[^a-zA-Z0-9_-]/';
+    // Replace the unsafe characters with the given replacer (which is supposed to be safe...)
+    $safe = preg_replace($regexp, $replacer, $string);
+
+    // Strip trailing {$replacer}s and underscores from start and end of string
+    $safe = preg_replace("/^[{$replacer}_]+|[{$replacer}_]+$/", '', $safe);
+
+    // Clean underscores around $replacer
+    $safe = preg_replace("/_{$replacer}|{$replacer}_/", $replacer, $safe);
+
+    // Any other cleanup routines ?
+
+    // We're done here, return $string lowercased
+    return strtolower($safe);
 }
 
 /**
@@ -1014,6 +1114,89 @@ function midcom_helper_find_node_by_component($component, $node_id = null, $nap 
     return $component_node;
 }
 
+if (!function_exists('midcom_helper_toc_formatter'))
+{
+    /**
+     * This function parses HTML content and looks for header tags, making index of them.
+     *
+     * What exactly it does is looks for all H<num> tags and converts them to named
+     * anchors, and prepends a list of links to them to the start of HTML.
+     *
+     * TODO: Parse the heading structure to create OL subtrees based on their relative levels
+     */
+    function midcom_helper_toc_formatter_prefix($level)
+    {
+        $prefix = '';
+        for ($i=0; $i < $level; $i++)
+        {
+            $prefix .= '    ';
+        }
+        return $prefix;
+    }
+    function midcom_helper_toc_formatter($data)
+    {
+        if (!preg_match_all("/(<(h([1-9][0-9]*))[^>]*?>)(.*?)(<\/\\2>)/i", $data, $headings))
+        {
+            echo mgd_format($data, 'h');
+            return;
+        }
+    
+        $current_tag_level = false;
+        $current_list_level = 1;
+        echo "\n<ol class=\"midcom_helper_toc_formatter level_{$current_list_level}\">\n";
+        foreach ($headings[4] as $key => $heading)
+        {
+            $anchor = md5($heading);
+            $tag_level =& $headings[3][$key];
+            $heading_code =& $headings[0][$key];
+            $heading_tag =& $headings[2][$key];
+            $heading_new_code = "<a name='{$anchor}'></a>{$heading_code}";
+            $data = str_replace($heading_code, $heading_new_code, $data);
+            $prefix = midcom_helper_toc_formatter_prefix($current_list_level);
+            if ($current_tag_level === false)
+            {
+                $current_tag_level = $tag_level;
+            }
+            if ($tag_level > $current_tag_level)
+            {
+                for ($i = $current_tag_level; $i < $tag_level; $i++)
+                {
+                    $current_tag_level = $tag_level;
+                    $current_list_level++;
+                    echo "{$prefix}<ol class=\"level_{$current_list_level}\">\n";
+                    $prefix .= '    ';
+                }
+            }
+            if ($tag_level < $current_tag_level)
+            {
+                for ($i = $current_tag_level; $i > $tag_level; $i--)
+                {
+                    $current_tag_level = $tag_level;
+                    if ($current_list_level > 1)
+                    {
+                        $current_list_level--;
+                        $prefix = midcom_helper_toc_formatter_prefix($current_list_level);
+                        echo "{$prefix}</ol>\n";
+                    }
+                }
+            }
+            echo "{$prefix}<li class='{$heading_tag}'><a href='#{$anchor}'>" . strip_tags($heading) .  "</a></li>\n";
+        }
+        for ($i = $current_list_level; $i > 0; $i--)
+        {
+            $prefix = midcom_helper_toc_formatter_prefix($i-1);
+            echo "{$prefix}</ol>\n";
+        }
+    
+        echo mgd_format($data, 'h');
+    }
+    
+    /**
+     * Register the formatter as "toc", meaning that &(variable:xtoc); will filter through it
+     */
+    mgd_register_filter('toc', 'midcom_helper_toc_formatter');
+}
+
 if (! function_exists('mgd_is_guid'))
 {
     /**
@@ -1056,6 +1239,7 @@ if (! function_exists('mgd_set_errno'))
 }
 
 // MGD_ERR Constants, only if not yet defined
+// TODO: Keep in sync with http://www.midgard-project.org/api-docs/midgard/core/1.8/group__midgard__error.html
 if (! defined('MGD_ERR_OK'))
 {
     define('MGD_ERR_OK', -0);
@@ -1079,4 +1263,100 @@ if (! defined('MGD_ERR_OK'))
     define('MGD_ERR_OBJECT_NO_PARENT', -18);
 }
 
+if (   (version_compare(phpversion(), '5.0') < 0)
+    && !function_exists('clone'))
+{
+    eval('
+    function clone($object) 
+    {
+        return $object;
+    }
+    ');
+}
+
+/**
+ * Helper function for encoding any data into JSON format
+ * http://www.json.org/
+ *
+ * If the PECL (or PHP 5.2) JSON extension is found it will be used. Otherwise
+ * the helper attempts to use the PEAR Services_JSON package.
+ *
+ * It will also set the MIME type of the page correctly as discussed in:
+ * http://jibbering.com/blog/?p=514
+ *
+ * @param mixed 
+ * @return string Data in JSON format
+ */
+function midcom_helper_json_encode($data)
+{
+    // Set correct MIME type
+    $_MIDCOM->cache->content->content_type('application/json');
+    $_MIDCOM->header('Content-type: application/json');
+    
+    if (function_exists('json_encode'))
+    {
+        // Use the json PHP extension
+        return json_encode($data);
+    }
+
+    // Use the PEAR Services_JSON package
+    @include_once('JSON.php');
+    if (!class_exists('Services_JSON'))
+    {
+        $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
+            'Services_JSON package not found in PEAR.');
+    }
+
+    $json = new Services_JSON();
+    return $json->encode($data);
+}
+
+/**
+ * Helper function for decoding any data from JSON format
+ * http://www.json.org/
+ *
+ * If the PECL (or PHP 5.2) JSON extension is found it will be used. Otherwise
+ * the helper attempts to use the PEAR Services_JSON package.
+ *
+ * @param string Data in JSON format
+ * @return mixed 
+ */
+function midcom_helper_json_decode($data)
+{   
+    if (function_exists('json_decode'))
+    {
+        // Use the json PHP extension
+        return json_decode($data);
+    }
+
+    // Use the PEAR Services_JSON package
+    @include_once('JSON.php');
+    if (!class_exists('Services_JSON'))
+    {
+        $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
+            'Services_JSON package not found in PEAR.');
+    }
+
+    $json = new Services_JSON();
+    return $json->decode($data);
+}
+
+if (!function_exists('get_ancestors'))
+{
+    /**
+     * Walk back class tree to get list of all parent classes
+     *
+     * @param string $class The class name the check
+     * @return array list of classes
+     */
+    function get_ancestors ($class)
+    {
+        $classes = array($class);
+        while($class = get_parent_class($class))
+        {
+            $classes[] = $class;
+        }
+        return $classes;
+    }
+}
 ?>

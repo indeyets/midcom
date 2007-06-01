@@ -1,0 +1,11 @@
+no.odindata.quickform2 ChangeLog
+-------------------
+
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guaranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completely new features.
+
+2006-Dec-Sat tarjei
+  + initial version

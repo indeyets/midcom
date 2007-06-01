@@ -6,7 +6,7 @@
         'name' => Array
         (
             // COMPONENT-REQUIRED
-            'title' => 'URL Name',
+            'title' => 'name',
             'storage' => 'extra',
             'required' => true,
             'type' => 'text',
@@ -15,7 +15,7 @@
         'title' => Array
         (
             // COMPONENT-REQUIRED
-            'title' => 'Event Title',
+            'title' => 'title',
             'storage' => 'title',
             'required' => true,
             'type' => 'text',
@@ -24,7 +24,7 @@
 
         'description' => Array
         (
-            'title' => 'Event Description',
+            'title' => 'description',
             'storage' => 'description',
             'required' => true,
             'type' => 'text',
@@ -35,7 +35,7 @@
         'start' => Array
         (
             // COMPONENT-REQUIRED
-            'title' => 'Start of Event',
+            'title' => 'start date',
             'storage' => 'start',
             'type' => 'date',
             'type_config' => Array ( 'storage_type' => 'UNIXTIME' ),
@@ -44,7 +44,7 @@
         'end' => Array
         (
             // COMPONENT-REQUIRED
-            'title' => 'End of Event',
+            'title' => 'end date',
             'storage' => 'end',
             'type' => 'date',
             'type_config' => Array ( 'storage_type' => 'UNIXTIME' ),
@@ -54,23 +54,25 @@
         'open_registration' => Array
         (
             // COMPONENT-REQUIRED
-            'title' => 'Open registration for event at',
-            'storage' => 'parameter',
+            'title' => 'open registration at',
+            'storage' => 'openregistration',
             'type' => 'date',
+            'type_config' => Array ( 'storage_type' => 'UNIXTIME' ),
             'widget' => 'jsdate',
         ),
         'close_registration' => Array
         (
             // COMPONENT-REQUIRED
-            'title' => 'Close registration for event at',
-            'storage' => 'parameter',
+            'title' => 'close registration at',
+            'storage' => 'closeregistration',
             'type' => 'date',
+            'type_config' => Array ( 'storage_type' => 'UNIXTIME' ),
             'widget' => 'jsdate',
         ),
         'additional_questions' => Array
         (
             // COMPONENT-REQUIRED
-            'title' => 'Schema to use for additional questions',
+            'title' => 'additional questions schema',
             'storage' => 'parameter',
             'type' => 'select',
             'required' => true,
@@ -83,7 +85,7 @@
         'notification_email' => Array
         (
             // COMPONENT-REQUIRED
-            'title' => 'Override global notification E-Mail; leave empty to use the global default',
+            'title' => 'override global notification e-mail',
             'storage' => 'parameter',
             'type' => 'text',
             'widget' => 'text',
@@ -120,7 +122,7 @@
     (
         'p_firstname' => Array
         (
-            'title' => 'First Name',
+            'title' => 'first name',
             'storage' => 'firstname',
             'required' => true,
             'type' => 'text',
@@ -128,7 +130,7 @@
         ),
         'p_lastname' => Array
         (
-            'title' => 'Last Name',
+            'title' => 'last name',
             'storage' => 'lastname',
             'required' => true,
             'type' => 'text',
@@ -137,7 +139,7 @@
         'p_email' => Array
         (
             // COMPONENT-REQUIRED
-            'title' => 'E-Mail Address',
+            'title' => 'emailadress',
             'storage' => 'email',
             'required' => true,
             'type' => 'text',
@@ -149,7 +151,7 @@
         /* Hidden fields required for component operation */
         'p_name' => Array
         (
-            'title' => 'Full Name',
+            'title' => 'full name',
             'storage' => 'name',
             'hidden' => true,
             'type' => 'text',
@@ -157,7 +159,7 @@
         ),
         'p_rname' => Array
         (
-            'title' => 'Full Name (reversed)',
+            'title' => 'full name reversed',
             'storage' => 'rname',
             'hidden' => true,
             'type' => 'text',
@@ -168,15 +170,15 @@
 
 'aq-default' => Array
 (
-    'description' => 'Default "Additional Questions" schema',
+    'description' => 'default additional questions schema',
     'fields' => Array
     (
         'aq_notes' => Array
         (
-            'title' => 'Notes',
+            'title' => 'notes',
             'storage' => 'extra',
             'type' => 'text',
-            'type_config' => Array ( 'output_mode' => 'midgard_f' ),
+            'type_config' => Array ( 'output_mode' => 'markdown' ),
             'widget' => 'textarea',
         ),
 

@@ -4,7 +4,7 @@
  */
 class org_openpsa_smslib extends midcom_baseclasses_components_purecode
 {
-    /* Common properties, all backends must handle these (if they have 
+    /* Common properties, all backends must handle these (if they have
     API specific names for them then they must create references to use them) */
     var $location = '';
     var $client_id = '';
@@ -17,10 +17,10 @@ class org_openpsa_smslib extends midcom_baseclasses_components_purecode
     {
         parent::midcom_baseclasses_components_purecode();
         $this->_component='org.openpsa.smslib';
-        
+
         return true;
     }
-    
+
     function factory($type='tambur')
     {
         $classname='org_openpsa_smslib_'.$type;
@@ -30,7 +30,7 @@ class org_openpsa_smslib extends midcom_baseclasses_components_purecode
         }
         return new $classname();
     }
-    
+
     function send_sms()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -46,7 +46,7 @@ class org_openpsa_smslib extends midcom_baseclasses_components_purecode
         debug_pop();
         return false;
     }
-    
+
     function msg_to_latin1($msg)
     {
         if (   function_exists('mb_detect_encoding')
@@ -59,8 +59,8 @@ class org_openpsa_smslib extends midcom_baseclasses_components_purecode
                 && (   $encoding != 'ISO-8859-1'
                     && $encoding != 'ASCII'))
             {
-                debug_add("converting msg from {$encoding} to ISO-8859-1", MIDCOM_LOG_WARN);
-                $stat = iconv($encoding, 'ISO-8859-1', $msg);
+                debug_add("converting msg from {$encoding} to ISO-8859-1 (with //TRANSLIT)", MIDCOM_LOG_WARN);
+                $stat = iconv($encoding, 'ISO-8859-1//TRANSLIT', $msg);
                 if ($stat)
                 {
                     $msg = $stat;

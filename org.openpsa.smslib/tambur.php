@@ -28,7 +28,7 @@ class org_openpsa_smslib_tambur extends org_openpsa_smslib
         }
         return true;
     }
-    
+
     /**
      * Returns either (int)balance on success or (bool)false on error
      */
@@ -108,11 +108,11 @@ class org_openpsa_smslib_tambur extends org_openpsa_smslib
         }
         $url = "{$this->uri}/sendsms?l={$this->user}&p={$this->password}";
         //TODO: Add support for array of numbers
-        //Strip invalid characters from number 
+        //Strip invalid characters from number
         //PONDER: leave + or not ?? (check API, works as is now though)
         $number = preg_replace('/[^0-9]+/', '', $number);
         $url .= "&msisdn={$number}";
-        
+
         //Try to make sure the message is in correct encoding.
         $msg = $this->msg_to_latin1($msg);
         $url .= '&msg=' . rawurlencode($msg);
@@ -134,7 +134,7 @@ class org_openpsa_smslib_tambur extends org_openpsa_smslib
         {
             $url .= "&clientid={$clientid}";
         }
-        
+
         //URL constructed, time to work
         $fp = @fopen($url, 'r');
         $this->_get_remote_error($http_response_header);
@@ -154,7 +154,7 @@ class org_openpsa_smslib_tambur extends org_openpsa_smslib
         fclose($fp);
         debug_add("Got content\n===\n{$content}===");
         //TODO: Parse the returned XML and get for example dlr IDs
-        
+
         debug_pop();
         return true;
     }

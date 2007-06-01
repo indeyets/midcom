@@ -7,6 +7,9 @@
 'allow_cancel_membership' => true,
 'allow_publish' => true,
 
+// add group id to automatically assign the user to it
+'assign_to_group' => null,
+
 'username_is_email' => false,
 'register_allow_types' => null,
 
@@ -53,5 +56,14 @@
 'password_reset_mail_body' => 'password_reset_mail_body', // Will be localized
 
 // see the docs of the viewer/admin classes for details about the plugin handlers
-'plugins' => null,
+'plugins' => array
+(
+    'notifications' => Array
+    (
+        'class' => 'org_openpsa_notifications_preferences',
+        'src' => 'file:/org/openpsa/notifications/preferences.php',
+        'name' => 'Notification preferences',
+        'config' => null,
+    ),
+),
 'admin_plugins' => null,

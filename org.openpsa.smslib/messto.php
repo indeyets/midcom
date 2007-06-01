@@ -28,7 +28,7 @@ class org_openpsa_smslib_messto extends org_openpsa_smslib
         }
         return true;
     }
-    
+
 
     /**
      * Method sends any SMS deliverable data, handles encoding so when sending logos
@@ -82,7 +82,7 @@ class org_openpsa_smslib_messto extends org_openpsa_smslib
             return false;
         }
         $url .= "&sms_dest=" . rawurlencode($number);
-        
+
         $msg = $this->msg_to_latin1($msg);
         $url .= '&sms_text=' . rawurlencode($msg);
         if ($sender)
@@ -105,7 +105,7 @@ class org_openpsa_smslib_messto extends org_openpsa_smslib
             $url .= "&clientid={$clientid}";
         }
         */
-        
+
         //URL constructed, time to work
         $fp = @fopen($url, 'r');
         $this->_get_remote_error($http_response_header);
@@ -133,7 +133,7 @@ class org_openpsa_smslib_messto extends org_openpsa_smslib
             debug_pop();
             return false;
         }
-        
+
         debug_pop();
         return true;
     }

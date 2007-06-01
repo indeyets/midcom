@@ -29,7 +29,7 @@ class org_routamc_positioning_importer_plazes extends org_routamc_positioning_im
     {
          parent::org_routamc_positioning_importer();
     }
-    
+
     /**
      * Seek users with Plazes account settings set
      *
@@ -52,74 +52,149 @@ class org_routamc_positioning_importer_plazes extends org_routamc_positioning_im
             }
         }
     }
-
-    function _fetch_plazes_position($plazes_username, $plazes_password)
+    
+    function _prepare_plazes_params($plazes_username, $plazes_password)
     {
         $plazes_password_md5 = md5("PLAZES{$plazes_password}");
         
         // These are the required XML-RPC parameters
-		$params = array
-		(
-			new XML_RPC_Value($plazes_username, 'string'),
-			new XML_RPC_Value($plazes_password_md5, 'string')
+        $params = array
+        (
+            new XML_RPC_Value($this->_config->get('plazes_developer_key'), 'string'),
+            new XML_RPC_Value($plazes_username, 'string'),
+            new XML_RPC_Value($plazes_password_md5, 'string')
         );
         
-		// Name of the XML-RPC method to be called
-		$msg = new XML_RPC_Message('plazes.whereami', $params);
-		
-		// URI of the XML-RPC stub
-		$cli = new XML_RPC_Client('/xmlrpc/whereami.php', 'http://www.plazes.com');
-		$resp = $cli->send($msg);
+        return $params;
+    }
 
-        if (!$resp) 
+    function _parse_w3cdtf($date_str) 
+    {
+        
+        # regex to match wc3dtf
+        $pat = "/(\d{4})(\d{2})(\d{2})T(\d{2}):(\d{2}):((\d{2}))?(?:([-+])(\d{2}):?(\d{2})|(Z))/";
+        
+        if ( preg_match( $pat, $date_str, $match ) ) 
         {
-        	$this->error = 'POSITIONING_PLAZES_CONNECTION_FAILED';
-        	return null;
+            list( $year, $month, $day, $hours, $minutes, $seconds) = 
+                array( $match[1], $match[2], $match[3], $match[4], $match[5], $match[6]);
+            
+            # calc epoch for current date assuming GMT
+            $epoch = gmmktime( $hours, $minutes, $seconds, $month, $day, $year);
+            
+            $offset = 0;
+            if ( $match[10] == 'Z' ) 
+            {
+                # zulu time, aka GMT
+            }
+            else 
+            {
+                $tz_mod = $match[8];
+                $tz_hour = $match[9];
+                $tz_min = $match[10];
+                
+                # zero out the variables
+                if (!$tz_hour)
+                {
+                    $tz_hour = 0;
+                }
+                if (!$tz_min)
+                {
+                    $tz_min = 0;
+                }
+            
+                $offset_secs = (($tz_hour * 60) + $tz_min) * 60;
+                
+                # is timezone ahead of GMT?  then subtract offset
+                #
+                if ( $tz_mod == '+' ) 
+                {
+                    $offset_secs = $offset_secs * -1;
+                }
+                
+                $offset = $offset_secs;
+            }
+            $epoch = $epoch + $offset;
+            return $epoch;
+        }
+        else 
+        {
+            return -1;
+        }
+    }
+
+    function _fetch_plazes_positions($plazes_username, $plazes_password, $days = 0)
+    {
+        $positions = array();
+    
+        $params = $this->_prepare_plazes_params($plazes_username, $plazes_password);
+        $params[] = new XML_RPC_Value($days, 'int');
+
+        // Name of the XML-RPC method to be called
+        $msg = new XML_RPC_Message('user.trazes', $params);
+
+        // URI of the XML-RPC stub
+        $cli = new XML_RPC_Client('/api/plazes/xmlrpc', 'http://beta.plazes.com');
+        $resp = @$cli->send($msg);
+
+        if (   !$resp
+            || !is_object($resp)
+            || !method_exists($resp, 'faultCode'))
+        {
+            $this->error = 'POSITIONING_PLAZES_CONNECTION_FAILED';
+            return null;
         }
 
-		if (!$resp->faultCode()) 
-		{
-			$results = $resp->value();
-			
-			if (isset($results))
+        if (!$resp->faultCode())
+        {
+            $results = $resp->value();
+
+            $trazes = @XML_RPC_decode($results);
+            
+            // Quick-and-dirty timezone handling since Plazes doesn't return timezone information like they should
+            // http://wwp.greenwichmeantime.com/time-zone/rules/eu.htm
+            $month = (int) date('m');
+            if (   $month < 4
+                || $month > 10)
             {
-				$plaze_lat = $results->structmem('plazelat');
-				$plaze_lat = $plaze_lat->scalarval();
-				$plaze_lon = $results->structmem('plazelon');
-                $plaze_lon = $plaze_lon->scalarval();
-				/*
-				$plaze_url = $results->structmem('plazeurl')->scalarval();
-				$plaze_name = $results->structmem('plazename')->scalarval();
-				$plaze_username = $results->structmem('username')->scalarval();
-				$plaze_state = $results->structmem('state')->scalarval();
-				*/
-				$plaze_country = $results->structmem('plazecountry');
-                $plaze_country = $plaze_country->scalarval();
-				$plaze_city = $results->structmem('plazecity');
-                $plaze_city = $plaze_city->scalarval();
-                
-				$position = array
-				(
-					'latitude'	=> $plaze_lat,
-					'longitude'	=> $plaze_lon,
-					'country'	=> $plaze_country,
-					'city'		=> $plaze_city,
-				);
-				return $position;
-			} 
-			else 
-			{
-            	$this->error = 'POSITIONING_PLAZES_CONNECTION_NORESULTS';
-            	return null;
-			}
-		} 
-		else 
-		{
+                // Plazes is in CET
+                $timezone = '+0100';
+            }
+            else
+            {
+                // Plazes is in CEST
+                $timezone = '+0200';
+            }
+            
+            if (count($trazes) > 0)
+            {
+                foreach ($trazes as $traze)
+                {
+                    @$positions[] = array
+                    (
+                        'plaze'       => $traze['plaze']['key'],
+                        'latitude'    => $traze['plaze']['latitude'],
+                        'longitude'   => $traze['plaze']['longitude'],
+                        'country'     => $traze['plaze']['country'],
+                        'city'        => $traze['plaze']['city'],
+                        'date'        => $this->_parse_w3cdtf("{$traze['start']}{$timezone}"),
+                    );
+                }
+                return $positions;
+            }
+            else
+            {
+                $this->error = 'POSITIONING_PLAZES_CONNECTION_NORESULTS';
+                return null;
+            }
+        }
+        else
+        {
             $this->error = 'POSITIONING_PLAZES_FAULT_' . $resp->faultCode();
             return null;
-		}
+        }
     }
-    
+
     /**
      * Get plazes location for an user
      *
@@ -129,34 +204,38 @@ class org_routamc_positioning_importer_plazes extends org_routamc_positioning_im
      */
     function get_plazes_location($user, $cache = true)
     {
-        $plazes_username = $user->parameter('org.routamc.positioning:plazes', 'username');        
+        $plazes_username = $user->parameter('org.routamc.positioning:plazes', 'username');
         $plazes_password = $user->parameter('org.routamc.positioning:plazes', 'password');
-        
+
         if (   $plazes_username
             && $plazes_password)
         {
-            $position = $this->_fetch_plazes_position($plazes_username, $plazes_password);
-            
-            if (is_null($position))
+            $positions = $this->_fetch_plazes_positions($plazes_username, $plazes_password);
+
+            if (   is_null($positions)
+                && !is_array($positions))
             {
                 return null;
             }
-            
+
             if ($cache)
             {
-                $this->import($position, $user->id);    
+                foreach ($positions as $position)
+                {
+                    $this->import($position, $user->id);
+                }
             }
-            
-            return $position;
+
+            return $positions[0];
         }
         else
         {
             $this->error = 'POSITIONING_PLAZES_NO_ACCOUNT';
         }
-        
+
         return null;
     }
-    
+
     /**
      * Import plazes log entry. The entries are associative arrays containing
      * all of the following keys:
@@ -173,15 +252,18 @@ class org_routamc_positioning_importer_plazes extends org_routamc_positioning_im
         $this->log = new org_routamc_positioning_log_dba();
         $this->log->importer = 'plazes';
         $this->log->person = $person_id;
-        
-        $this->log->date = time();
+
+        $this->log->date = (int) $position['date'];
         $this->log->latitude = (float) $position['latitude'];
         $this->log->longitude = (float) $position['longitude'];
         $this->log->altitude = 0;
-        $this->log->accuracy = ORG_ROUTAMC_POSITIONING_ACCURACY_PLAZES;   
+        $this->log->accuracy = ORG_ROUTAMC_POSITIONING_ACCURACY_PLAZES;
 
         // Try to create the entry
         $stat = $this->log->create();
+        
+        $this->log->parameter('org.routamc.positioning:plazes', 'plaze_key', $position['plaze']);
+        
         $this->error = mgd_errstr();
         return $stat;
     }

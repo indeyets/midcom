@@ -2,7 +2,7 @@
 /**
  * @package midcom.baseclasses
  * @author The Midgard Project, http://www.midgard-project.org
- * @version $Id:dbobject.php 3765 2006-07-31 08:51:39 +0000 (Mon, 31 Jul 2006) tarjei $
+ * @version $Id$
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
@@ -34,6 +34,31 @@
 class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
 {
     /**
+     * "Pre-flight" checks for update method
+     *
+     * Separated so that dbfactory->import() can reuse the code
+     **/
+    function update_pre_checks(&$object)
+    {
+        debug_push_class($object, __FUNCTION__);
+        if (! $_MIDCOM->auth->can_do('midgard:update', $object))
+        {
+            debug_add("Failed to load object, update privilege on the {$object->__table__} ID {$object->id} not granted for the current user.",
+                MIDCOM_LOG_ERROR);
+            mgd_set_errno(MGD_ERR_ACCESS_DENIED);
+            return false;
+        }
+        if (! $object->_on_updating())
+        {
+            debug_add("The _on_updating event handler returned false.");
+            debug_pop();
+            return false;
+        }
+        debug_pop();
+        return true;
+    }
+
+    /**
      * Execute a DB update of the object passed. This will call the corresponding
      * event handlers. Calling sequence with method signatures:
      *
@@ -49,15 +74,9 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     function update(&$object)
     {
         debug_push_class($object, __FUNCTION__);
-        if (! $_MIDCOM->auth->can_do('midgard:update', $object))
+        if (!midcom_baseclasses_core_dbobject::update_pre_checks($object))
         {
-            debug_add("Failed to load object, update privilege on the {$object->__table__} ID {$object->id} not granted for the current user.",
-                MIDCOM_LOG_ERROR);
-            return false;
-        }
-        if (! $object->_on_updating())
-        {
-            debug_add("The _on_updating event handler returned false.");
+            debug_add('Pre-flight check returned false', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
@@ -73,13 +92,35 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             return false;
         }
 
-        midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_unixdate($object);
+        midcom_baseclasses_core_dbobject::update_post_ops($object);
 
-        $object->_on_updated();
-        $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);
         debug_pop();
         return true;
     }
+
+    /**
+     * Post object creation operations for create
+     *
+     * Separated so that dbfactory->import() can reuse the code
+     **/
+    function update_post_ops(&$object)
+    {
+        debug_push_class($object, __FUNCTION__);
+
+        midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_unixdate($object);
+
+        if ($object->_use_rcs) 
+        {
+            $rcs =& $_MIDCOM->get_service('rcs');
+            $rcs->update(&$object, $object->get_rcs_message());
+        }
+
+        $object->_on_updated();
+        $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);       
+
+        debug_pop();
+    }
+
 
     /**
      * This is an internal helper which updates the revised/revisor timestamp on a
@@ -111,8 +152,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     }
 
     /**
-     * This is an internal helper which updates the created/creator timestamp on a
-     * record if the corresponding fields exists.
+     * This is an internal helper which updates the created and metadata.published timestamps 
+     * and the creator and metadata.authors links on a record if the corresponding fields exists.
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
      * @access private
@@ -120,22 +161,47 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     function _set_creator(&$object)
     {
         debug_push_class($object, __FUNCTION__);
+        
         if (array_key_exists('creator', $object))
         {
+            // Bypass MidCOM ACL here, at least for now.
             if (is_null($_MIDCOM->auth->user))
-            {
+            {        
                 $object->creator = 0;
             }
             else
             {
-                // Bypass MidCOM ACL here, at least for now.
                 $object->creator = $_MIDCOM->auth->user->_storage->id;
             }
         }
+        
         if (array_key_exists('created', $object))
         {
-            $object->created = gmstrftime('%Y-%m-%d %T');
+            $object->created = time();
         }
+        
+        if (!is_null($_MIDCOM->auth->user))
+        {
+            // Default the authors to current user
+            if (!$object->metadata->authors)
+            {
+                $creator = $_MIDCOM->auth->user->_storage->id;
+                $object->metadata->authors = "|{$_MIDCOM->auth->user->_storage->guid}|";
+            }
+        
+            // Default the owner to current user
+            if (!$object->metadata->owner)
+            {
+                $object->metadata->owner = $_MIDCOM->auth->user->_storage->guid;
+            }         
+        }
+             
+        // Default the publication time to current date/time
+        if (!$object->metadata->published)
+        {
+            $object->metadata->published = time();
+        }
+        
         debug_pop();
     }
 
@@ -176,6 +242,48 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     }
 
     /**
+     * "Pre-flight" checks for create method
+     *
+     * Separated so that dbfactory->import() can reuse the code
+     **/
+    function create_pre_checks(&$object)
+    {
+        debug_push_class($object, __FUNCTION__);
+
+        $parent = $object->get_parent();
+        if (! is_null($parent))
+        {
+            if (   ! $_MIDCOM->auth->can_do('midgard:create', $parent)
+                && ! $_MIDCOM->auth->can_user_do('midgard:create', null, get_class($object)))
+            {
+                debug_add("Failed to create object, create privilege on the parent {$parent->__table__} ID {$parent->id} or the actual object class not granted for the current user.",
+                    MIDCOM_LOG_ERROR);
+                mgd_set_errno(MGD_ERR_ACCESS_DENIED);
+                return false;
+            }
+        }
+        else
+        {
+            if (! $_MIDCOM->auth->can_user_do('midgard:create', null, get_class($object)))
+            {
+                debug_add("Failed to create object, general create privilege not granted for the current user.", MIDCOM_LOG_ERROR);
+                mgd_set_errno(MGD_ERR_ACCESS_DENIED);
+                return false;
+            }
+        }
+
+        if (! $object->_on_creating())
+        {
+            debug_add("The _on_creating event handler returned false.");
+            debug_pop();
+            return false;
+        }
+        
+        debug_pop();
+        return true;
+    }
+
+    /**
      * Execute a DB create of the object passed. This will call the corresponding
      * event handlers. Calling sequence with method signatures:
      *
@@ -192,37 +300,19 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     {
         debug_push_class($object, __FUNCTION__);
 
-        $parent = $object->get_parent();
-        if (! is_null($parent))
+        if (!midcom_baseclasses_core_dbobject::create_pre_checks($object))
         {
-            if (   ! $_MIDCOM->auth->can_do('midgard:create', $parent)
-                && ! $_MIDCOM->auth->can_user_do('midgard:create', null, get_class($object)))
-            {
-                debug_add("Failed to create object, create privilege on the parent {$parent->__table__} ID {$parent->id} or the actual object class not granted for the current user.",
-                    MIDCOM_LOG_ERROR);
-                return false;
-            }
-        }
-        else
-        {
-            if (! $_MIDCOM->auth->can_user_do('midgard:create', null, get_class($object)))
-            {
-                debug_add("Failed to create object, general create privilege not granted for the current user.", MIDCOM_LOG_ERROR);
-                return false;
-            }
-        }
-
-        if (! $object->_on_creating())
-        {
-            debug_add("The _on_creating event handler returned false.");
+            debug_add('Pre-flight check returned false', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
-
+        
         // Legacy Midgard Metadata emulation
         // Now, if possible, set created and creator.
         midcom_baseclasses_core_dbobject::_set_creator($object);
         midcom_baseclasses_core_dbobject::_set_revisor($object);
+        
+        midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_isodate($object);
 
         if (! $object->__exec_create() && $object->id == 0)
         {
@@ -230,6 +320,23 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             debug_pop();
             return false;
         }
+
+        midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_unixdate($object);
+
+        midcom_baseclasses_core_dbobject::create_post_ops($object);
+
+        debug_pop();
+        return true;
+    }
+
+    /**
+     * Post object creation operations for create
+     *
+     * Separated so that dbfactory->import() can reuse the code
+     **/
+    function create_post_ops(&$object)
+    {
+        debug_push_class($object, __FUNCTION__);
 
         // WORKAROUND START
         // Auto-populate the GUID as the core sometimes forgets this (#72) or
@@ -255,24 +362,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         }
         // END WORKAROUND
 
-        // WORKAROUND START
-        // Set published == created in case published is unset. (#125)
-        // Also update again to have revised/reviosr populated accordingly.
-        // We do this only with 1.8 of course.
-        if (array_key_exists('metadata', $object))
-        {
-            if (! $object->metadata->published)
-            {
-                $object->metadata->published = $object->metadata->created;
-            }
-
-            // Don't use DBA calls yet, we're still in the process of creating the record.
-            $object->__exec_update();
-        }
-        // END WORKAROUND
-
-        midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_unixdate($object);
-
         // Now assign all midgard privileges to the creator, this is neccessary to get
         // an owner like scheme to work by default.
         // TODO: Check if there is a better solution like this.
@@ -280,6 +369,38 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
 
         $object->_on_created();
         $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_CREATE, $object);
+        if ($object->_use_rcs) 
+        {
+            $rcs =& $_MIDCOM->get_service('rcs');
+            $rcs->update(&$object, $object->get_rcs_message());
+        }
+        debug_pop();
+    }
+
+    /**
+     * "Pre-flight" checks for delete method
+     *
+     * Separated so that dbfactory->import() can reuse the code
+     **/
+    function delete_pre_checks(&$object)
+    {
+        debug_push_class($object, __FUNCTION__);
+
+        if (! $_MIDCOM->auth->can_do('midgard:delete', $object))
+        {
+            debug_add("Failed to delete object, delete privilege on the {$object->__table__} ID {$object->id} not granted for the current user.",
+                MIDCOM_LOG_ERROR);
+            // debug_print_r('Object was:', $object);
+            mgd_set_errno(MGD_ERR_ACCESS_DENIED);
+            return false;
+        }
+        if (! $object->_on_deleting())
+        {
+            debug_add("The _on_deleting event handler returned false.");
+            debug_pop();
+            return false;
+        }
+
         debug_pop();
         return true;
     }
@@ -302,19 +423,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     {
         debug_push_class($object, __FUNCTION__);
 
-        if (! $_MIDCOM->auth->can_do('midgard:delete', $object))
-        {
-            debug_add("Failed to create object, delete privilege on the {$object->__table__} ID {$object->id} not granted for the current user.",
-                MIDCOM_LOG_ERROR);
-            // debug_print_r('Object was:', $object);
-            return false;
-        }
-        if (! $object->_on_deleting())
-        {
-            debug_add("The _on_deleting event handler returned false.");
-            debug_pop();
-            return false;
-        }
 
         // Delete all extensions:
         $list = $object->list_attachments();
@@ -328,9 +436,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 return false;
             }
         }
-        $query = new MidgardQueryBuilder('midgard_parameter');
-        $query->add_constraint('tablename', '=', $object->__table__);
-        $query->add_constraint('oid', '=', $object->id);
+        $query = new midgard_query_builder('midgard_parameter');
+        $query->add_constraint('parentguid', '=', $object->guid);
         $result = @$query->execute();
         if ($result)
         {
@@ -358,10 +465,68 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             debug_pop();
             return false;
         }
-        $object->_on_deleted();
-        $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_DELETE, $object);
+
+        // Explicitly set this in case someone needs to check against it
+        $object->metadata->deleted = true;
+        midcom_baseclasses_core_dbobject::delete_post_ops($object);
+
         debug_pop();
         return true;
+    }
+
+    /**
+     * Post object creation operations for delete
+     *
+     * Separated so that dbfactory->import() can reuse the code
+     **/
+    function delete_post_ops(&$object)
+    {
+        debug_push_class($object, __FUNCTION__);
+
+        $object->_on_deleted();
+        $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_DELETE, $object);
+        if ($object->_use_rcs) 
+        {
+            $rcs =& $_MIDCOM->get_service('rcs');
+            $rcs->update(&$object, $object->get_rcs_message());
+        }
+
+        debug_pop();
+    }
+
+    /**
+     * Copies values from oldobject to newobject in case the types are compatible
+     *
+     * @param MidgardObject $newobject A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
+     * @param MidgardObject $oldobject a parent objcet (usually a midgard_* base class) which to copy.
+     * @return bool Indicating success.
+     */
+    function cast_object(&$newobject, &$oldobject)
+    {
+        if (is_a($oldobject, $newobject->__new_class_name__))
+        {
+            $vars = get_object_vars($oldobject);
+            foreach ($vars as $name => $value)
+            {
+                if (   $name == '__res'
+                    || (  substr($name, 0, 2) == '__'
+                        && substr($name, -2) == '__'))
+                {
+                    // This is a special variable, we must not overwrite them.
+                    continue;
+                }
+                $newobject->$name = $value;
+            }
+            return true;
+        }
+        else
+        {
+            debug_push_class($newobject, __FUNCTION__);
+            debug_add('Failed to cast ' . get_class($oldobject) . " to a {$newobject->__new_class_name__}: Incompatible Types", MIDCOM_LOG_INFO);
+            midcom_baseclasses_core_dbobject::_clear_object($newobject);
+            debug_pop();
+            return false;
+        }
     }
 
     /**
@@ -381,32 +546,16 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      *     a Midgard database row-ID or a Midgard GUID, the latter is detected using mgd_is_guid(). In addition, you can
      *     specifiy a parent objcet (usually a midgard_* base class) which will then use a copy constructor semantics instead.
      * @return bool Indicating success.
+     * @see midcom_baseclasses_core_dbobject::post_db_load_checks
+     * @see midcom_baseclasses_core_dbobject::cast_object
      */
     function load(&$object, $id)
     {
         $object->id = 0;
         if (is_object($id))
         {
-            if (is_a($id, $object->__new_class_name__))
+            if (!midcom_baseclasses_core_dbobject::cast_object($object, $id))
             {
-                $vars = get_object_vars($id);
-                foreach ($vars as $name => $value)
-                {
-                    if (   substr($name, 0, 2) == '__'
-                        && substr($name, -2) == '__')
-                    {
-                        // This is a special variable, we must not overwrite them.
-                        continue;
-                    }
-                    $object->$name = $value;
-                }
-            }
-            else
-            {
-                debug_push_class($object, __FUNCTION__);
-                debug_add('Failed to cast ' . get_class($id) . " to a {$object->__new_class_name__}: Incompatible Types", MIDCOM_LOG_INFO);
-                midcom_baseclasses_core_dbobject::_clear_object($object);
-                debug_pop();
                 return false;
             }
         }
@@ -453,6 +602,36 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             debug_add("Failed to load the record identified by {$id}: " . mgd_errstr(), MIDCOM_LOG_INFO);
             debug_add('Midgard Version is too old, you should upgrade to latest 1.7 at least. get_by_id/guid is broken in this version.',
                 MIDCOM_LOG_CRIT);
+            midcom_baseclasses_core_dbobject::_clear_object($object);
+            debug_pop();
+            return false;
+        }
+        
+        return midcom_baseclasses_core_dbobject::post_db_load_checks($object);
+    }
+
+    /**
+     * After we instantiated the midgard object do some post processing and ACL checks
+     *
+     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
+     * @return bool Indicating success.
+     * @see midcom_baseclasses_core_dbobject::load
+     */
+    function post_db_load_checks(&$object)
+    {
+        // TODO: Do this with midgard_object_class::is_multilang($object) when it works
+        if (   $GLOBALS['midcom_config']['i18n_multilang_strict']
+            && isset($object->lang)
+            && !is_a($object, 'midgard_parameter')
+            && !is_a($object, 'midgard_attachment')
+            && $object->lang != $_MIDCOM->i18n->get_midgard_language())
+        {
+            // TODO: Some other error code might be nicer here
+            mgd_set_errno(MGD_ERR_ACCESS_DENIED);
+            
+            debug_push_class($object, __FUNCTION__);
+            debug_add("Failed to load object, language {$object->lang} does not match Midgard's global language setting.",
+                MIDCOM_LOG_INFO);
             midcom_baseclasses_core_dbobject::_clear_object($object);
             debug_pop();
             return false;
@@ -505,7 +684,25 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function _rewrite_timestamps_to_unixdate(&$object)
     {
-        $timestamps = Array('revised', 'created', 'locked', 'approved');
+        $timestamps = array
+        (
+            'revised', 
+            'created', 
+            'locked', 
+            'approved'
+        );
+        $metadata_timestamps = array
+        (
+            'created', 
+            'revised', 
+            'exported', 
+            'imported', 
+            'approved', 
+            'published',
+            'locked',
+            'schedulestart',
+            'scheduleend',
+        );
 
         foreach ($timestamps as $timestamp)
         {
@@ -526,6 +723,40 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                         $tmp = 0;
                     }
                     $object->$timestamp = @strtotime("{$object->$timestamp} GMT");
+                }
+            }
+        }
+
+        foreach ($metadata_timestamps as $timestamp)
+        {
+            if (array_key_exists($timestamp, $object->metadata))
+            {
+                if (   $object->metadata->$timestamp == '0000-00-00 00:00:00'
+                    || $object->metadata->$timestamp == '0000-00-00 00:00:00+0000'
+                    || !$object->metadata->$timestamp)
+                {
+                    $object->metadata->$timestamp = 0;
+                }
+                else
+                {
+                    // We do this silently to avoid problems with broken values. They are rewritten to a
+                    // zero timestamp silently. Also, we need special treatment for NULL timestamps, which
+                    // are cast to '0' (which is in theory wrong for a stamp like '0000-00-00 00:00:00').
+                    if (strlen($object->metadata->$timestamp) == 19)
+                    {
+                        // Old format, timestamp doesn't include timezone
+                        $tmp = @strtotime("{$object->metadata->$timestamp} GMT");
+                    }
+                    else
+                    {
+                        // New format, timezone included
+                        $tmp = @strtotime($object->metadata->$timestamp);
+                    }
+                    if ($tmp == -1)
+                    {
+                        $tmp = 0;
+                    }
+                    $object->metadata->$timestamp = $tmp;
                 }
             }
         }
@@ -551,7 +782,25 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function _rewrite_timestamps_to_isodate(&$object)
     {
-        $timestamps = Array('revised', 'created', 'locked', 'approved');
+        $timestamps = array
+        (
+            'revised', 
+            'created', 
+            'locked', 
+            'approved'
+        );
+        $metadata_timestamps = array
+        (
+            'created', 
+            'revised', 
+            'published', 
+            'exported', 
+            'imported', 
+            'approved', 
+            'locked',
+            'schedulestart',
+            'scheduleend',
+        );
 
         foreach ($timestamps as $timestamp)
         {
@@ -568,6 +817,30 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 else
                 {
                     $object->$timestamp = gmstrftime('%Y-%m-%d %T', $object->$timestamp);
+                }
+            }
+        }
+        
+        // Pre 1.8 doe not have the metadata property.
+        if (!isset($object->metadata))
+        {
+            return;
+        }
+        foreach ($metadata_timestamps as $timestamp)
+        {
+            if (array_key_exists($timestamp, $object->metadata))
+            {
+                if (! is_numeric($object->metadata->$timestamp))
+                {
+                    $object->metadata->$timestamp = 0;
+                }
+                if ($object->metadata->$timestamp == 0)
+                {
+                    $object->metadata->$timestamp = '0000-00-00 00:00:00';
+                }
+                else
+                {
+                    $object->metadata->$timestamp = gmstrftime('%Y-%m-%d %T', $object->metadata->$timestamp);
                 }
             }
         }
@@ -718,7 +991,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         }
         else
         {
-            debug_add("Failed to load the record identified by {$id}, last Midgard error was: " . mgd_errstr(), MIDCOM_LOG_INFO);
+            debug_add("Failed to load the record identified by path {$path}, last Midgard error was: " . mgd_errstr(), MIDCOM_LOG_INFO);
             debug_pop();
             return false;
         }
@@ -737,8 +1010,9 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         $vars = get_object_vars($object);
         foreach ($vars as $name => $value)
         {
-            if (   substr($name, 0, 2) == '__'
-                && substr($name, -2) == '__')
+            if (   $name == '__res'
+                || (  substr($name, 0, 2) == '__'
+                    && substr($name, -2) == '__'))
             {
                 // This is a special variable, we must not overwrite them.
                 continue;
@@ -757,7 +1031,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function _delete_privileges(&$object)
     {
-        $qb = new MidgardQueryBuilder('midcom_core_privilege_db');
+        $qb = new midgard_query_builder('midcom_core_privilege_db');
         $qb->add_constraint('objectguid', '=', $object->guid);
         $qb->add_constraint('value', '<>', MIDCOM_PRIVILEGE_INHERIT);
         $result = @$qb->execute();
@@ -801,19 +1075,31 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function get_parameter(&$object, $domain, $name)
     {
+        if (   ! $object->guid
+            && ! $object->id)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Cannot retrieve information on a non-persistant object.', MIDCOM_LOG_WARN);
+            debug_pop();
+            return false;
+        }
+        $value = $object->_parent_parameter($domain, $name);
+        return $value;
+        /*
         $parameter = midcom_baseclasses_core_dbobject::_get_parameter_object($object, $domain, $name);
         if (! $parameter)
         {
-            return false;
+            return null;
         }
 
         // Temporary workaround for missing delete support
         if ($parameter->value == '')
         {
-            return false;
+            return null;
         }
 
         return $parameter->value;
+        */
     }
 
     /**
@@ -828,7 +1114,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function _get_parameter_object(&$object, $domain, $name)
     {
-        if (! $object->id)
+        if (   ! $object->guid
+            && ! $object->id)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Cannot retrieve information on a non-persistant object.', MIDCOM_LOG_WARN);
@@ -836,9 +1123,17 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             return false;
         }
 
-        $query = new MidgardQueryBuilder('midgard_parameter');
-        $query->add_constraint('tablename', '=', $object->__table__);
-        $query->add_constraint('oid', '=', $object->id);
+        $query = new midgard_query_builder('midgard_parameter');
+        if (!$object->guid)
+        {
+            // FIXME: This way of fetching parameter objects is going to be deprected
+            $query->add_constraint('tablename', '=', $object->__table__);
+            $query->add_constraint('oid', '=', $object->id);
+        }
+        else
+        {
+            $query->add_constraint('parentguid', '=', $object->guid);
+        }
         $query->add_constraint('domain', '=', $domain);
         $query->add_constraint('name', '=', $name);
         $result = @$query->execute();
@@ -866,10 +1161,25 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         if (count($result) > 1)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Cannot retrieve the parameter {$domain} / {$name} for {$object->__table__} ID {$object->id}: The query returned more then one result, this should not happen and is most probably a DB incosistency.",
+            debug_add("We have multiple results for parameter {$domain} / {$name} for {$object->__table__} ID {$object->id}: The query returned more then one result, this should not happen and is most probably a DB incosistency.",
                 MIDCOM_LOG_INFO);
+            
+            $keep_parameter = null;
+            foreach ($result as $parameter)
+            {
+                // Keep first
+                if (is_null($keep_parameter))
+                {
+                    $keep_parameter = $parameter;
+                }
+                else
+                {
+                    $parameter->delete();
+                }
+            }
+            
             debug_pop();
-            return false;
+            return $keep_parameter;
         }
 
         return $result[0];
@@ -956,9 +1266,10 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     function _list_parameters_domain(&$object, $domain)
     {
         debug_push_class($object, __FUNCTION__);
-        $query = new MidgardQueryBuilder('midgard_parameter');
-        $query->add_constraint('tablename', '=', $object->__table__);
-        $query->add_constraint('oid', '=', $object->id);
+        
+        // TODO: Switch to collector
+        $query = new midgard_query_builder('midgard_parameter');
+        $query->add_constraint('parentguid', '=', $object->guid);
         $query->add_constraint('domain', '=', $domain);
 
         // Temporary workaround for missing delete support
@@ -996,10 +1307,10 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     function _list_parameters_all(&$object)
     {
         debug_push_class($object, __FUNCTION__);
-
-        $query = new MidgardQueryBuilder('midgard_parameter');
-        $query->add_constraint('tablename', '=', $object->__table__);
-        $query->add_constraint('oid', '=', $object->id);
+        
+        // TODO: Switch to collector
+        $query = new midgard_query_builder('midgard_parameter');
+        $query->add_constraint('parentguid', '=', $object->guid);
 
         // Temporary workaround for missing delete support
         $query->add_constraint('value', '<>', '');
@@ -1043,20 +1354,11 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     {
         debug_push_class($object, __FUNCTION__);
 
-        if (! $object->id)
+        if (! $object->guid)
         {
             debug_add('Cannot set parameters on a non-persistant object.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
-        }
-
-        if ($value == '' || $value === false || $value === null)
-        {
-            // Value is empty, so we delete the parameter, we relay this
-            // call to the corresponding member function.
-            // We're quite explicit here to avoid collisions with numeric zeros.
-            debug_pop();
-            return $object->delete_parameter($domain, $name);
         }
 
         if (   ! $_MIDCOM->auth->can_do('midgard:update', $object)
@@ -1065,13 +1367,16 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             debug_add("Failed to set parameters, midgard:update or midgard:parameters on the {$object->__table__} ID {$object->id} not granted for the current user.",
                 MIDCOM_LOG_ERROR);
             debug_pop();
+            mgd_set_errno(MGD_ERR_ACCESS_DENIED);
             return false;
         }
 
+        $result = $object->_parent_parameter($domain, $name, $value);
+        /*
         $parameter = midcom_baseclasses_core_dbobject::_get_parameter_object($object, $domain, $name);
         if (! $parameter)
         {
-            $result = midcom_baseclasses_core_dbobject::_create_parameter_object($object, $domain, $name, $value);
+            $result = midcom_baseclasses_core_dbobject::_create_parameter_object($object, $domain, $name, $value);   
         }
         else
         {
@@ -1080,14 +1385,15 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             $result = @$parameter->update();
         }
 
-        debug_pop();
-
         if (! $result)
         {
+            debug_pop();
             return false;
         }
+        */
 
         $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);
+        debug_pop();
         return true;
     }
 
@@ -1135,7 +1441,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     {
         debug_push_class($object, __FUNCTION__);
 
-        if (! $object->id)
+        if (! $object->guid)
         {
             debug_add('Cannot set parameters on a non-persistant object.', MIDCOM_LOG_WARN);
             debug_pop();
@@ -1145,22 +1451,25 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         if (   ! $_MIDCOM->auth->can_do('midgard:update', $object)
             || ! $_MIDCOM->auth->can_do('midgard:parameters', $object))
         {
-            debug_add("Failed to set parameters, midgard:update or midgard:parameters on the {$object->__table__} ID {$object->id} not granted for the current user.",
+            debug_add("Failed to delete parameters, midgard:update or midgard:parameters on the {$object->__table__} ID {$object->id} not granted for the current user.",
                 MIDCOM_LOG_ERROR);
             debug_pop();
+            mgd_set_errno(MGD_ERR_ACCESS_DENIED);
             return false;
         }
 
+        $result = $object->_parent_parameter($domain, $name, '');
+        /*
         $parameter = midcom_baseclasses_core_dbobject::_get_parameter_object($object, $domain, $name);
         if (! $parameter)
         {
-            // We don't have an object, so we're fine.
-            debug_add("Cannot delete the parameter {$domain}/{$name} for {$object->__table__} ID {$object->id}; the parameter does not exist. Ignoring silently.");
+            // We don't have an object, so we're fine.   
+            debug_add("Cannot delete the parameter {$domain}/{$name} for {$object->__table__} ID {$object->id}; the parameter does not exist. Ignoring silently.");      
             debug_pop();
             return true;
         }
-
         $result = @$parameter->delete();
+        */
         $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);
         debug_pop();
         return $result;
@@ -1224,6 +1533,15 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             debug_pop();
             return false;
         }
+        
+        // PONDER: will this cause issues with class based privileges ??
+        /* yes
+        if (   empty($classname)
+            && is_object($object))
+        {
+            $classname = get_class($object);
+        }
+        */
 
         if (is_a('midcom_core_privilege', $privilege))
         {
@@ -1342,8 +1660,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
 
         $obj = midcom_core_privilege::get_privilege($object, $privilege, $assignee, $classname);
 
-        return $obj;
         debug_pop();
+        return $obj;
     }
 
     /**
@@ -1629,7 +1947,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
      * @param mixed $person A midcom_baseclasses_database_person object or an identifier usable to retrieve one. You may set
-     * 	   this to NULL to use the currently authenticated user as a default.
+     *     this to NULL to use the currently authenticated user as a default.
      * @return bool True if the person is the owner of the selected object, false otherwise. (For all objects
      *     which are currently not supported, true is always returned as a stub implementation only.)
      */
@@ -1776,7 +2094,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     function is_object_visible_onsite($object)
     {
         debug_push_class($object, __FUNCTION__);
-
+        
         $metadata =& $object->get_metadata();
         if (! $metadata)
         {

@@ -1,122 +1,55 @@
 <?php
 /**
- * @package net.nemein.quickpoll
- * @author The Midgard Project, http://www.midgard-project.org 
- * @version $Id$
+ * @package net.nemein.quickpoll 
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @version $Id: navigation.php 4392 2006-10-22 08:39:17Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
 /**
- * Quickpoll NAP interface class.
- * 
+ * net.nemein.quickpoll NAP interface class
+ *
+ * See the individual member documentations about special NAP options in use.
+ *
  * @package net.nemein.quickpoll
  */
-class net_nemein_quickpoll_navigation {
-
-  var $_object;
-  var $_l10n;
-  var $_l10n_midcom;
-
-  function net_nemein_quickpoll_navigation() {
-    $this->_object = null;
-    $i18n =& $GLOBALS["midcom"]->get_service("i18n");
-    $this->_l10n = $i18n->get_l10n("net.nemein.quickpoll");
-    $this->_l10n_midcom = $i18n->get_l10n("midcom");
-  }
-
-
-  function get_leaves() {
-
-    // list leaves under the current topic. for example:
-
-    $topic = &$this->_object;
-    $leaves = array ();
-    if ($articles = mgd_list_topic_articles($topic->id, "alpha")) {
-      // Prep toolbar
-      $toolbar[50] = Array(
-          MIDCOM_TOOLBAR_URL => '',
-          MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
-          MIDCOM_TOOLBAR_HELPTEXT => null,
-          MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
-          MIDCOM_TOOLBAR_ENABLED => true
-      );
-      $toolbar[51] = Array(
-          MIDCOM_TOOLBAR_URL => '',
-          MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
-          MIDCOM_TOOLBAR_HELPTEXT => null,
-          MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
-          MIDCOM_TOOLBAR_ENABLED => true
-      );
-
-      while ($articles->fetch ()) {
-      
-        // TODO: add active/passive polls support
-        
-        $toolbar[50][MIDCOM_TOOLBAR_URL] = "edit/{$articles->id}.html";
-        $toolbar[51][MIDCOM_TOOLBAR_URL] = "delete/{$articles->id}.html";
-          // Regular quickpoll page
-          $leaves[$articles->id] = array (
-            MIDCOM_NAV_SITE => Array (
-              MIDCOM_NAV_URL => $articles->name.".html",
-              MIDCOM_NAV_NAME => $articles->title),
-            MIDCOM_NAV_ADMIN => Array (
-              MIDCOM_NAV_URL => "view/{$articles->id}.html",
-              MIDCOM_NAV_NAME => $articles->title),
-            MIDCOM_NAV_GUID => $articles->guid(),
-            MIDCOM_NAV_TOOLBAR => $toolbar,
-            MIDCOM_META_CREATOR => $articles->creator,
-            MIDCOM_META_EDITOR => $articles->revisor,
-            MIDCOM_META_CREATED => $articles->created,
-            MIDCOM_META_EDITED => $articles->revised
-          );
-
-      }
+class net_nemein_quickpoll_navigation extends midcom_baseclasses_components_navigation
+{
+    /**
+     * Simple constructor, calls base class.
+     */
+    function net_nemein_quickpoll_navigation()
+    {
+        parent::midcom_baseclasses_components_navigation();
     }
-    return $leaves;
-  }
-
-
-  function get_node() {
-
-    // information about the current node (topic)
-    $topic = &$this->_object;
-    
-    $toolbar[0] = Array
-    (
-        MIDCOM_TOOLBAR_URL => 'create.html',
-        MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('create'),
-        MIDCOM_TOOLBAR_HELPTEXT => null,
-        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_new.png',
-        MIDCOM_TOOLBAR_ENABLED => true            
-    );
-    $toolbar[100] = Array(
-        MIDCOM_TOOLBAR_URL => '',
-        MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
-        MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
-        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
-        MIDCOM_TOOLBAR_ENABLED => true
-    );
-    
-    return array (
-      MIDCOM_NAV_URL => "",
-      MIDCOM_NAV_NAME => $topic->extra,
-      MIDCOM_NAV_TOOLBAR => $toolbar,
-      MIDCOM_META_CREATOR => $topic->creator,
-      MIDCOM_META_EDITOR => $topic->revisor,
-      MIDCOM_META_CREATED => $topic->created,
-      MIDCOM_META_EDITED => $topic->revised
-    );
-  }
-
-
-  function set_object($object) {
-
-    debug_add ("Component: setting NAP Element to " . $object->name ." [" . $object->id . "]");
-    $this->_object = $object;
-    return true;
-  }
-
-} // navigation
+    /**
+     * Returns a static leaf list with access to the archive.
+     */
+    function get_leaves()
+    {
+        $leaves = array();
+        
+        if (   $this->_config->get('archive_enable')
+            && $this->_config->get('show_navigation_pseudo_leaves'))
+        {
+            $leaves[NET_NEMEIN_QUICKPOLL_LEAFID_ARCHIVE] = array
+            (
+                MIDCOM_NAV_SITE => Array
+                (
+                    MIDCOM_NAV_URL => "archive/",
+                    MIDCOM_NAV_NAME => $this->_l10n->get('archive'),
+                ),
+                MIDCOM_NAV_ADMIN => null,
+                MIDCOM_META_CREATOR => $this->_topic->creator,
+                MIDCOM_META_EDITOR => $this->_topic->revisor,
+                MIDCOM_META_CREATED => $this->_topic->created,
+                MIDCOM_META_EDITED => $this->_topic->revised
+            );
+        }
+        
+        return $leaves;
+    }
+}
 
 ?>

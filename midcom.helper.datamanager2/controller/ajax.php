@@ -23,6 +23,7 @@ class midcom_helper_datamanager2_controller_ajax extends midcom_helper_datamanag
 {
     var $form_identifier = '';
     var $window_mode = false;
+    var $wide_mode = false;
     var $_editable = null;
     
     /**
@@ -99,16 +100,16 @@ class midcom_helper_datamanager2_controller_ajax extends midcom_helper_datamanag
             return $state;
         }
 
-        // Debug helpers
-        //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/messages.js");
-        //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/ajaxutils.js");
-
         // Add the required JavaScript
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Prototype/prototype.js");
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Scriptaculous/scriptaculous.js");
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/midcom.helper.datamanager2/ajax.js");
         
-        if ($this->window_mode)
+        if ($this->wide_mode)
+        {
+            $_MIDCOM->add_jsonload("var dm2AjaxEditor_{$this->form_identifier} = new dm2AjaxEditor('{$this->form_identifier}', false, false, true);");
+        }
+        elseif ($this->window_mode)
         {
             $_MIDCOM->add_jsonload("var dm2AjaxEditor_{$this->form_identifier} = new dm2AjaxEditor('{$this->form_identifier}', false, true);");
         }

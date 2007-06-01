@@ -2,7 +2,7 @@
 // Available request keys:
 // event, registration, registrar
 
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $event =& $data['event'];
 $title = sprintf($data['l10n']->get('register for %s'), $event->title);
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);

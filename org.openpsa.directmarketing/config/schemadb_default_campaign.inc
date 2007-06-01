@@ -1,91 +1,99 @@
-'default' => array (
-
-    'name'        => 'default',
+'default' => array 
+(
     'description' => 'campaign',
-    'fields'      => array (
+    'fields'      => array 
+    (
         // Metadata
-        'title' => array (
-            'description' => 'title',
-            'datatype'    => 'text',
-            'location'    => 'title',
-            'start_fieldgroup' => array (
-                'title' => 'campaign',
-                'css_group' => 'area',
-            ),        
-            'required'    => true,
+        'title' => array 
+        (
+            // COMPONENT-REQUIRED
+            'title'    => 'title',
+            'type'     => 'text',
+            'widget'   => 'text',
+            'storage'  => 'title',
+            'required' => true,
         ),
-        'type' => array (
-            'description' => 'type',
-            'datatype'    => 'integer',
-            'location'    => 'orgOpenpsaObtype',
+        'type' => array 
+        (
+            'title'       => 'type',
+            'storage'     => 'orgOpenpsaObtype',
+            'type'        => 'select',
+            'type_config' => array
+            (
+                'options' => array 
+                (
+                    ORG_OPENPSA_OBTYPE_CAMPAIGN       => 'normal campaign',
+                    ORG_OPENPSA_OBTYPE_CAMPAIGN_SMART => 'smart campaign',
+                ),
+            ),
             'widget'      => 'select',
-            'widget_select_choices' => array (
-                ORG_OPENPSA_OBTYPE_CAMPAIGN       => 'normal campaign',
-                ORG_OPENPSA_OBTYPE_CAMPAIGN_SMART => 'smart campaign',
+        ),
+        'description' => array
+        (
+            'title' => 'description',
+            'storage' => 'description',
+            'type' => 'text',
+            'type_config' => array 
+            ( 
+                'output_mode' => 'markdown' 
             ),
+            'widget' => 'textarea',
         ),
-        'description' => array (
-            'description' => 'description',
-            'datatype'    => 'text',
-            'location'    => 'description',
-            'widget_text_inputstyle' => 'longtext',
-            'widget_text_height' => '8em',
-        ),
-        'watch_discussion' => array (
-            'description' => 'discussion forum to watch',
-            'datatype'    => 'text',
-            'location'    => 'config',
-            'config_domain' => 'org.openpsa.directmarketing',
-            'config_key'    => 'watch_discussion',
-            'hidden'      => true,
-        ),
-        'testers' => array (
-            'description' => 'testers',
-            'datatype'    => 'array',
-            'location'    => 'testers',
-            'widget'      => 'contactchooser',
-            'end_fieldgroup' => '',            
-        ),
+        'testers' => array 
+        (
+            'title'       => 'testers',
+            'storage'     => 'testers2',
+            'type'        => 'select',
+            'type_config' => array
+            (
+                'allow_multiple' => true,
+                'require_corresponding_option' => false,
+                'options' => array(),
+                'multiple_storagemode' => 'array',
+            ),
+            'widget' => 'universalchooser',
+            'widget_config' => array
+            (
+                'class'       => 'org_openpsa_contacts_person',
+                'component'   => 'org.openpsa.contacts',
+                'titlefield'  => 'name',
+                'idfield'     => 'id',
+                'constraints' => array(),
+                'searchfields'  => array
+                (
+                    'firstname',
+                    'lastname',
+                    'username',
+                ),
+                'orders'        => array
+                (
+                    array('lastname'    => 'ASC'), 
+                    array('firstname'    => 'ASC'), 
 
-        'archived' => array (
-            'description' => 'archived on',
-            'datatype'    => 'unixdate',
-            'widget_date_enable_outside_ais' => true,
-            'date_withtime' => true,
-            /*
-            'readonly' => true, 
-            'hidden' => true,
-            */
-            'location'    => 'archived',
-            'start_fieldgroup' => array (
-                'title' => 'archival',
-                'css_group' => 'area meta',
-            ),       
-            'end_fieldgroup' => '',                  
-        ),                   
-        'orgOpenpsaAccesstype' => array (
-            'description' => 'access type',
-            'location'    => 'config',
-            'config_domain' => 'org.openpsa.core',
-            'config_key' => 'orgOpenpsaAccesstype',
-            'datatype'     => 'integer',
-            'widget'       => 'select',
-            'widget_select_choices' => $GLOBALS['org_openpsa_core_acl_options'],
-            'start_fieldgroup' => array (
-                'title' => 'access control',
-                'css_group' => 'area acl',
+                ),
             ),
-            'index_merge_with_content' => false,            
         ),
-        'orgOpenpsaOwnerWg' => array (
-            'description'  => 'workgroup',
-            'location'     => 'orgOpenpsaOwnerWg',
-            'datatype'     => 'text',
-            'widget'       => 'select',
-            'widget_select_choices' => org_openpsa_helpers_workgroups(),   
-            'default' => $GLOBALS['org_openpsa_core_workgroup_filter'], 
-            'end_fieldgroup' => '',
-            'index_merge_with_content' => false,            
+        'orgOpenpsaAccesstype' => array 
+        (
+            'title'       => 'access type',
+            'storage'     => 'orgOpenpsaAccesstype',
+            'type'        => 'select',
+            'type_config' => array
+            (
+                'options' => $GLOBALS['org_openpsa_core_acl_options'],
+            ),
+            'widget'      => 'select',
+        ),
+        'orgOpenpsaOwnerWg' => array 
+        (
+            'title'       => 'workgroup',
+            'storage'     => 'orgOpenpsaOwnerWg',
+            'type'        => 'select',
+            'type_config' => array
+            (
+                'options' => org_openpsa_helpers_workgroups(),
+            ),
+            'widget'      => 'select',
         ),
     )
 ),

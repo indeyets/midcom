@@ -1,0 +1,135 @@
+MidCOM installation and site setup instructions
+===============================================
+
+These are quick instructions for setting up a MidCOM powered website
+with Midgard CMS. For more detailed instructions, see the online guide
+at:
+  http://www.midgard-project.org/documentation/getting-started/
+
+System Requirements:
+--------------------
+
+MidCOM 2.6 requires at least Midgard 1.7, as the new MgdSchema core is 
+now integrated into the MidCOM core. There are no known 
+problems with mod_midgard_preparser or the Apache 2 mod_midgard, but it
+has not been throughoutly tested.
+
+PHP 4.1.x is required at least, 4.3.x or newer is strongly recommended. You
+need the following PHP modules available:
+
+* iconv for character translation in the I18n subsystem
+* dba for flat file database support, one of the Berkly DB Handlers
+  is strongly recommended here, they are the only ones tested (db2, db3 or db4)
+* The Multibyte String extensions are required.
+* The build-in EXIF functions are strongly recommended if you plan to use
+  the image gallery. For broken PHP-Exif installations (PHP 4.1.x) there is 
+  a JHead fallback.
+* The PEAR Package PHP_Compat is required on all pre 4.3 installations.
+* The PEAR Packages Mail and Mail_mime are required for the E-Mail template 
+  engine (used by n.n.reservations and n.n.orders at this time).
+* The PEAR Package HTML_Quickform is required for the Datamamanagers 
+  extended Form validation support.
+* The PEAR Package HTML_Treemenu is needed to use the dhtml treemenu within
+  AIS.
+* The PEAR Package Date is required for the datamangager2's date type.
+* The memory limit of the PHP installation has to be increased to 20 MB at 
+  least for the AIS site.
+* The which utility is required as it is used to check for the presence of
+  other, optional utilities.
+
+Further, there are some recommendation about PHP configuration:
+
+* While register_globals is no longer needed by the MidCOM core, you will need
+  to leave this enabled if you use MidCOM Template (the default way now). It 
+  uses NemeinAuth, which is not yet able to run without register_globals.
+  So if you do this too, leave it on. If you instead run MidCOM with the 
+  classic selfmade way, turn it off.
+* You should increase the upload limits for the administrative sites, the 
+  2 MB limit default is a bit low in many cases. Especially if you plan to
+  use the bulk upload facility of net.siriux.photos, an upload limit of about
+  50 to 100 MB is recommended.
+* Magic quotes should be turned off, as MidCOM does its own quoting were 
+  required. Actually, you might break some things if you leave it on.
+
+Required System software, must be in $PATH of Apache:
+
+* The tool "which" is used to determine the existence of various helper
+  tools mentioned below. See also Bug #196.
+* A current ImageMagick installation is required for the image processing of
+  both MidCOM core and the image gallery component.
+* If you cannot use PHP's built-in EXIF function, there is a very simple
+  JHead fallback, you don't need JHead if the PHP-EXIF stuff works.
+
+The systems /tmp directory has to be writable by Apache in MidCOM's default
+configuration, as both logging and caching use /tmp by default.
+
+An important note for all MidCOM Template driven sites:
+
+Since NemeinAuthentication relies on PHP Sessions for authentication, you might
+want to adapt the session.gc_maxlifetime property of your php installation. The
+default of 1440 seconds (24 minutes) will invalidate idle MidCOM sessions (for
+example while editing a larger document) after that time, not the one-hour 
+timeout of NemeinAuthentication. You therefore might want to match these two
+values by setting gc_maxlifetime to 3660.
+
+Quick setup/upgrading instructions:
+-----------------------------------
+
+You need a working Midgard 1.7.0 or newer setup, with Aegir installed:
+  http://www.midgard-project.org/download/
+
+1. Extract the MidCOM sources to $PREFIX/share/midgard/midcom where
+   $PREFIX is your Midgard installation directory (check with 
+   "midgard-config" --prefix if in doubt).
+
+2. Symlink the static folder from the MidCOM tarfile into your document
+   root as "midcom-static". So Usually you will do something like this:
+   # ln -s $PREFIX/share/midgard/midcom/static $DOCROOT/midcom-static/
+   
+   Be aware that an Apache Alias will *not* work due to the way 
+   mod_midgard treats active pages.
+
+3. Import the MidCOM site template:
+   # repligard -a -i midcom-template.xml
+
+After this your MidCOM setup should be complete. To get started
+create a new website in Aegir (from template: MidCOM site template),
+log into that new site, use the provided initialization tool and
+start building the site structure.
+
+
+Updating MidCOM Template sites from Database MidCOM:
+----------------------------------------------------
+
+Do the same steps as above.
+
+Now your site should run with fs-midcom. To ensure this (if in doubt), you 
+should rename the top-level snippet dirs "midcom", "de", "net" and "pl" to 
+something like "midcom_old" etc. Note, that you might not have all of these.
+
+
+Using the String Localization Editor:
+-------------------------------------
+
+If you plan to edit the string translation tables shipped with MidCOM, you
+will need to modify the permissions of the extracted file tree so that the
+MidCOM driven L10n tool can actually update the files.
+
+Affected are all "locale" directories within the MidCOM source tree, so
+you can use some simple shell loop like this to update the permissions:
+
+# cd $PREFIX/share/midgard/midcom
+# find -type d -name locale -exec chown -R www-data {} \;
+
+Of course you need to set the correct user name that your web server is 
+using. The above line should work on Debian systems out-of-the-box, 
+your mileage may vary on other distributions.
+
+Note: You might want to use some more elaborate permissions at this point.
+When working with CVS I have moved to use 777 write permissions to all
+these files for ease of usage. Mainly because that way both Apache and 
+I retain full permissions to all files (required for some CVS checkin 
+stuff).
+
+
+$Id$

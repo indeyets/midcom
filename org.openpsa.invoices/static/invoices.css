@@ -7,6 +7,10 @@ div.org_openpsa_invoices table.invoices td.id
 {
     font-weight: bold;
 }
+div.org_openpsa_invoices table.invoices tr.even td
+{
+    background-color: #e0e0e0;
+}
 div.org_openpsa_invoices table.invoices
 {
     border-collapse: collapse;

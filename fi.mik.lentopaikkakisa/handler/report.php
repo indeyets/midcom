@@ -16,131 +16,83 @@
 class fi_mik_lentopaikkakisa_handler_report extends midcom_baseclasses_components_handler
 {
     /**
-     * The report which has been created
-     *
-     * @var fi_mik_lentopaikkakisa_report_dba
-     * @access private
-     */
-    var $_report = null;
-
-    /**
-     * The Controller of the article used for editing
-     *
-     * @var midcom_helper_datamanager2_controller_simple
-     * @access private
-     */
-    var $_controller = null;
-
-    /**
-     * The schema database in use, available only while a datamanager is loaded.
-     *
-     * @var Array
-     * @access private
-     */
-    var $_schemadb = null;
-
-    /**
-     * The schema to use for the new article.
-     *
-     * @var string
-     * @access private
-     */
-    var $_schema = null;
-
-    /**
-     * The defaults to use for the new article.
-     *
-     * @var Array
-     * @access private
-     */
-    var $_defaults = Array();
-
-    /**
-     * Simple helper which references all important members to the request data listing
-     * for usage within the style listing.
-     */
-    function _prepare_request_data()
-    {
-        $this->_request_data['controller'] =& $this->_controller;
-        $this->_request_data['thread'] =& $this->_thread;
-        $this->_request_data['parent_post'] =& $this->_parent_post;        
-        $this->_request_data['schema'] =& $this->_schema;
-        $this->_request_data['schemadb'] =& $this->_schemadb;
-    }
-
-
-    /**
      * Simple default constructor.
      */
     function fi_mik_lentopaikkakisa_handler_report()
     {
         parent::midcom_baseclasses_components_handler();
     }
-
-    /**
-     * Loads and prepares the schema database.
-     *
-     * Special treatement is done for the name field, which is set readonly for non-creates
-     * if the simple_name_handling config option is set. (using an auto-generated urlname based
-     * on the title, if it is missing.)
-     *
-     * The operations are done on all available schemas within the DB.
-     */
-    function _load_schemadb()
+    
+    function _seek_aerodrome($icao)
     {
-        $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
-        // TODO: Be extra smart here about populating/hiding fields
-        /*if ($_MIDCOM->auth->user)
+        // Look for the airports in database
+        $icao = strtoupper(substr($icao, 0, 4));
+        $airport_qb = org_routamc_positioning_aerodrome_dba::new_query_builder();
+        $airport_qb->add_constraint('icao', '=', $icao);
+        $results = $airport_qb->execute();
+        if (empty($results))
         {
-            $user =& $_MIDCOM->auth->user->get_storage();
-            foreach (array_keys($this->_schemadb) as $name)
+            if ($this->_config->get('create_missing_aerodromes'))
             {
-                $this->_schemadb[$name]->fields['reporter']['readonly'] = true;
-                $this->_defaults['reporter'] = $user->name;
+                // Create new aerodrome
+                $_MIDCOM->auth->request_sudo('fi.mik.lentopaikkakisa');
+                $airport = new org_routamc_positioning_aerodrome_dba();
+                $airport->icao = $icao;
+                $stat = $airport->create();
+                $_MIDCOM->auth->drop_sudo();
+                if (!$stat)
+                {
+                    // TODO: Report error
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("Failed to create missing aerodrome {$airport->icao}: " . mgd_errstr(), MIDCOM_LOG_WARN);
+                    debug_pop();                    
+                    return false;
+                }
+                $this->_request_data['new_aerodromes'][] = $airport;
+                return $airport->icao;
             }
-        }*/
-        $this->_defaults['date'] = time();
-        $this->_defaults['aerodrome'] = 'EFHF';
-    }
 
-    /**
-     * Internal helper, fires up the creation mode controller. Any error triggers a 500.
-     *
-     * @access private
-     */
-    function _load_controller()
-    {
-        $this->_load_schemadb();
-        $this->_controller =& midcom_helper_datamanager2_controller::create('create');
-        $this->_controller->schemadb =& $this->_schemadb;
-        $this->_controller->schemaname = $this->_schema;
-        $this->_controller->defaults = $this->_defaults;
-        $this->_controller->callback_object =& $this;
-        if (! $this->_controller->initialize())
-        {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");
-            // This will exit.
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Airport with code {$icao} not found, skipping", MIDCOM_LOG_WARN);
+            debug_pop();
+            return false;
         }
+        
+        return $results[0]->icao;    
     }
-
-    /**
-     * DM2 creation callback, binds to the current content topic.
-     */
-    function & dm2_create_callback (&$controller)
+    
+    function _create_flight($origin, $destination, $score_origin, $score_destination)
     {
-        $this->_report = new fi_mik_lentopaikkakisa_report_dba();
-
-        if (! $this->_report->create())
+        $flight = new fi_mik_flight_dba();
+        
+        // Common properties
+        $flight->pilot = $_MIDGARD['user'];
+        $flight->operator = $_POST['operator'];
+        $flight->aircraft = $_POST['aircraft'];
+        $flight->scoreorigin = $score_origin;
+        $flight->scoredestination = $score_destination;
+        
+        // Given end date
+        $flight->end = @strtotime($_POST['date']);
+        if ($flight->end == -1)
+        {
+            $flight->end = time();
+        }
+        
+        $flight->origin = $this->_seek_aerodrome($origin);
+        $flight->destination = $this->_seek_aerodrome($destination);
+        
+        if (!$flight->create())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_print_r('We operated on this object:', $this->_report);
-            debug_pop();
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                'Failed to create a new post, cannot continue. Last Midgard error was: '. mgd_errstr());
-            // This will exit.
+            debug_add("Failed to create flight report to {$destination}, " . mgd_errstr(), MIDCOM_LOG_WARN);
+            debug_pop();        
+            return false;
         }
-
-        return $this->_report;
+        
+        $this->_request_data['new_flights'][] = $flight;        
+        
+        return $flight;
     }
 
     /**
@@ -149,26 +101,118 @@ class fi_mik_lentopaikkakisa_handler_report extends midcom_baseclasses_component
     function _handler_new($handler_id, $args, &$data)
     {
         // FIXME: This doesn't work for some reason
-        $_MIDCOM->auth->require_user_do('midgard:create', null, 'fi_mik_lentopaikkakisa_report_dba');
+        $_MIDCOM->auth->require_user_do('midgard:create', null, 'fi_mik_flight_dba');
         $_MIDCOM->auth->require_valid_user();
 
-        $this->_load_controller();
-
-        switch ($this->_controller->process_form())
+        if (isset($_POST['save']))
         {
-            case 'save':
-                // Index the article
-                //$indexer =& $_MIDCOM->get_service('indexer');
-                //fi_mik_lentopaikkakisa_viewer::index($this->_controller->datamanager, $indexer, $this->_thread);
-
-                // *** FALL THROUGH ***
-
-            case 'cancel':
-                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
-                // This will exit.
+            $data['new_flights'] = array();
+            $data['new_aerodromes'] = array();
+            foreach ($_POST['destination'] as $identifier => $destination)
+            {
+                if (strlen($destination) != 4)
+                {
+                    continue;
+                }
+                
+                if (!isset($_POST['origin'][$identifier]))
+                {
+                    $origin = 'EFHF';
+                }
+                else
+                {
+                    $origin = $_POST['origin'][$identifier];
+                }                
+                
+                if (!isset($_POST['score_origin'][$identifier]))
+                {
+                    $score_origin = 0;
+                }
+                else
+                {
+                    $score_origin = $_POST['score_origin'][$identifier];
+                }
+                
+                if (!isset($_POST['score_destination'][$identifier]))
+                {
+                    $score_destination = 0;
+                }
+                else
+                {
+                    $score_destination = $_POST['score_destination'][$identifier];
+                }
+                
+                $stat = $this->_create_flight($origin, $destination, $score_origin, $score_destination);
+            }
+            
+            // Cache scores
+            $_MIDCOM->auth->request_sudo('fi.mik.lentopaikkakisa');
+            $person_scores = 0;
+            $person_aerodromes = array();
+            $person_flight_qb = fi_mik_flight_dba::new_query_builder();
+            $person_flight_qb->add_constraint('pilot', '=', $_MIDGARD['user']);
+            $flights = $person_flight_qb->execute();
+            foreach ($flights as $flight)
+            {
+                if (!array_key_exists($flight->origin, $person_aerodromes))
+                {
+                    // Only one score per aerodrome for the person
+                    $person_scores += $flight->scoreorigin;
+                    $person_aerodromes[$flight->origin] = $flight->scoreorigin;
+                }
+                
+                if (!array_key_exists($flight->destination, $person_aerodromes))
+                {
+                    // Only one score per aerodrome for the person
+                    $person_scores += $flight->scoredestination;
+                    $person_aerodromes[$flight->destination] = $flight->scoredestination;
+                }
+            }
+            $person = $_MIDCOM->auth->user->get_storage();
+            $person->parameter('fi.mik.lentopaikkakisa', 'person_scores', $person_scores);
+            
+            $organization_scores = 0;
+            $organization_aerodromes = array();
+            $organization_flight_qb = fi_mik_flight_dba::new_query_builder();
+            $organization_flight_qb->add_constraint('operator', '=', (int) $_POST['operator']);
+            $flights = $organization_flight_qb->execute();
+            foreach ($flights as $flight)
+            {
+                if (!array_key_exists($flight->pilot, $organization_aerodromes))
+                {
+                    $organization_aerodromes[$flight->pilot] = array();
+                }
+            
+                if (!array_key_exists($flight->origin, $organization_aerodromes[$flight->pilot]))
+                {
+                    // Only one score per aerodrome per person
+                    $organization_scores += $flight->scoreorigin;
+                    $organization_aerodromes[$flight->pilot][$flight->origin] = $flight->scoreorigin;
+                }
+                
+                if (!array_key_exists($flight->destination, $organization_aerodromes[$flight->pilot]))
+                {
+                    // Only one score per aerodrome per person
+                    $organization_scores += $flight->scoredestination;
+                    $organization_aerodromes[$flight->pilot][$flight->destination] = $flight->scoredestination;
+                }
+            }
+            $organization = new org_openpsa_contacts_group($_POST['operator']);
+            $organization->parameter('fi.mik.lentopaikkakisa', 'organization_scores', $organization_scores);
+            $_MIDCOM->auth->drop_sudo();
+            // Redirect to front page
+            $_MIDCOM->relocate('');
+        
         }
 
-        $this->_prepare_request_data();
+        $tmp = array();
+        $tmp[] = array
+        (
+            MIDCOM_NAV_URL => "report.html",
+            MIDCOM_NAV_NAME => $this->_l10n->get('report flight'),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+
         $_MIDCOM->set_pagetitle($this->_l10n->get('report flight'));
 
         return true;

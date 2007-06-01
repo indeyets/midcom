@@ -1,7 +1,7 @@
 <?php
 /**
  * @package org.openpsa.sales
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: edit.php,v 1.6 2006/07/17 14:57:13 rambo Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,14 +9,14 @@
 
 /**
  * salesproject edit/view handler
- * 
+ *
  * @package org.openpsa.sales
  */
 class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handler
 {
     var $_datamanagers;
     var $_schemadb_deliverable;
-    
+
     /**
      * Array of Datamanager 2 controllers for deliverable display and management
      *
@@ -44,12 +44,12 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
         if (!$this->_datamanagers[$type]) {
             debug_pop();
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
-            // This will exit. 	 
+            // This will exit.
         }
         debug_pop();
     }
 
-    
+
     function _load_salesproject($identifier)
     {
         if (!isset($this->_datamanagers['salesproject']))
@@ -57,25 +57,25 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
             $this->_initialize_datamanager('salesproject', $this->_config->get('schemadb_salesproject'));
         }
         $salesproject = new org_openpsa_sales_salesproject($identifier);
-        
+
         if (!is_object($salesproject))
         {
             return false;
         }
-        
+
         //Fill the customer field to DM
         debug_add("schema before \n===\n" . sprint_r($this->_datamanagers['salesproject']->_layoutdb['default']) . "===\n");
         org_openpsa_helpers_schema_modifier($this->_datamanagers['salesproject'], 'customer', 'widget', 'select', 'default', false);
         //Indidentally this helper works for salesprojects as well (same property names and logic)
         org_openpsa_helpers_schema_modifier($this->_datamanagers['salesproject'], 'customer', 'widget_select_choices', org_openpsa_helpers_task_groups($salesproject), 'default', false);
         debug_add("schema after \n===\n" . sprint_r($this->_datamanagers['salesproject']->_layoutdb['default']) . "===\n");
-        
+
         // Load the project to datamanager
         if (!$this->_datamanagers['salesproject']->init($salesproject))
         {
             return false;
         }
-        
+
         return $salesproject;
     }
 
@@ -86,7 +86,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
             "success" => false,
             "storage" => null,
         );
-        $salesproject = new org_openpsa_sales_salesproject();        
+        $salesproject = new org_openpsa_sales_salesproject();
         $stat = $salesproject->create();
         if ($stat)
         {
@@ -110,7 +110,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
     {
     }
 */
-    
+
     function _handler_view_salesproject($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -119,7 +119,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
         {
             return false;
         }
-        
+
         $_MIDCOM->set_pagetitle($this->_request_data['salesproject']->title);
 
         $this->_view_toolbar->add_item(
@@ -131,9 +131,9 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
                 MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_do('midgard:update', $this->_request_data['salesproject']),
             )
         );
-        
+
         $this->_view_toolbar->bind_to($this->_request_data['salesproject']);
-        
+
         // List deliverables
         $this->_schemadb_deliverable = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_deliverable'));
         $deliverable_qb = org_openpsa_sales_salesproject_deliverable::new_query_builder();
@@ -172,7 +172,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
         $_MIDCOM->auth->require_valid_user();
         $this->_request_data['salesproject'] = $this->_load_salesproject($args[0]);
         $_MIDCOM->auth->require_do('midgard:update', $this->_request_data['salesproject']);
-    
+
         switch ($this->_datamanagers['salesproject']->process_form())
         {
             case MIDCOM_DATAMGR_EDITING:
@@ -180,13 +180,13 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
                 org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
                 return true;
                 // This will break;
-                
-            case MIDCOM_DATAMGR_SAVED:                
+
+            case MIDCOM_DATAMGR_SAVED:
             case MIDCOM_DATAMGR_CANCELLED:
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                     . "salesproject/" . $this->_request_data['salesproject']->guid);
                 // This will exit()
-        
+
             case MIDCOM_DATAMGR_FAILED:
                 $this->errstr = "Datamanager: " . $GLOBALS["midcom_errstr"];
                 $this->errcode = MIDCOM_ERRCRIT;
@@ -215,11 +215,13 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
             $this->_initialize_datamanager('salesproject', $this->_config->get('schemadb_salesproject'));
         }
 
+        org_openpsa_helpers_schema_modifier($this->_datamanagers['salesproject'], 'code', 'default', org_openpsa_sales_salesproject::generate_salesproject_number(), 'newsalesproject', false);
+
         if (!$this->_datamanagers['salesproject']->init_creation_mode('newsalesproject',$this,'_creation_dm_callback'))
         {
             $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
                 "Failed to initialize datamanger in creation mode for schema 'newsalesproject'.");
-            // This will exit   
+            // This will exit
         }
 
         switch ($this->_datamanagers['salesproject']->process_form())
@@ -230,40 +232,40 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
                 // Add toolbar items
                 org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
                 break;
-            
+
             case MIDCOM_DATAMGR_EDITING:
                 debug_add("First time submit, the DM has created an object");
                 // Change schema setting
                 $this->_request_data['salesproject']->parameter('midcom.helper.datamanager','layout','default');
                 // TODO: index
-                                
+
                 // Relocate to main view
-                $prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);          
+                $prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 $GLOBALS['midcom']->relocate($prefix."salesproject/edit/".$this->_request_data['salesproject']->guid.".html");
                 break;
-            
-            case MIDCOM_DATAMGR_SAVED:                    
+
+            case MIDCOM_DATAMGR_SAVED:
                 debug_add("First time submit, the DM has created an object");
                 // Change schema setting
                 $this->_request_data['salesproject']->parameter('midcom.helper.datamanager','layout','default');
                 // TODO: index
-                                
+
                 // Relocate to main view
-                $prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);          
+                $prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 $GLOBALS['midcom']->relocate($prefix."salesproject/edit/".$this->_request_data['salesproject']->guid.".html");
                 break;
-            
+
             case MIDCOM_DATAMGR_CANCELLED_NONECREATED:
                 debug_add('Cancel without anything being created, redirecting to the welcome screen.');
                 $GLOBALS['midcom']->relocate('');
                 // This will exit
-            
+
             case MIDCOM_DATAMGR_CANCELLED:
                 $this->errcode = MIDCOM_ERRCRIT;
                 $this->errstr = 'Method MIDCOM_DATAMGR_CANCELLED unknown for creation mode.';
                 debug_pop();
                 return false;
-            
+
             case MIDCOM_DATAMGR_FAILED:
             case MIDCOM_DATAMGR_CREATEFAILED:
                 debug_add('The DM failed critically, see above.');
@@ -271,15 +273,15 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
                 $this->errcode = MIDCOM_ERRCRIT;
                 debug_pop();
                 return false;
-            
+
             default:
                 $this->errcode = MIDCOM_ERRCRIT;
                 $this->errstr = 'Method unknown';
                 debug_pop();
                 return false;
-            
+
         }
-        
+
         return true;
     }
 

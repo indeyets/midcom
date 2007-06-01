@@ -59,7 +59,7 @@ class midcom_db_person extends midcom_baseclasses_database_person
      */
     function add_to_group($name)
     {
-        $group =& $_MIDCOM->auth->get_midgard_group_by_name($name);
+        $group =& $_MIDCOM->auth->get_midgard_group_by_name($name,$this->sitegroup);
         if (! $group)
         {
             debug_push_class(__CLASS__, __FUNCTION__);

@@ -1,25 +1,51 @@
-'name' => 'fi.mik.lentopaikkakisa',
-'purecode' => false,
-'version' => '0.0.2',
-'state'   => 'devel',
-'privileges' =>  Array
-(
-	'moderation' => MIDCOM_PRIVILEGE_DENY, 
-),
-'class_definitions' => Array('midcom_dba_classes.inc'),
-'package.xml' => Array(
+
+  'name' => 'fi.mik.lentopaikkakisa',
+  'purecode' => false,
+  'version' => '0.2.2beta1',
+  'state' => 'beta',
+  'privileges' => 
+  array (
+    'moderation' => MIDCOM_PRIVILEGE_DENY,
+  ),
+  'class_definitions' => 
+  array (
+    0 => 'midcom_dba_classes.inc',
+  ),
+  'package.xml' => 
+  array (
     'summary' => 'Travel flight competition',
     'description' => 'Competition about flying to different aerodromes',
-    'maintainers' => Array(
-        'bergie' => Array(
-            'name' => 'Henri Bergius',
-            'email' => 'henri.bergius@iki.fi',
-            'role' => 'lead',
-        ),
+    'maintainers' => 
+    array (
+      'bergie' => 
+      array (
+        'name' => 'Henri Bergius',
+        'email' => 'henri.bergius@iki.fi',
+        'role' => 'lead',
+      ),
+      'tigert' => 
+      array (
+        'name' => 'Tuomas Kuosmanen',
+        'email' => 'tigert@gmail.com',
+        'role' => 'developer',
+      ),
     ),
-    'dependencies' => Array(
-        'midcom.helper.datamanager2' => Array(),
-        'midcom.helper.xml' => Array(),
-        'org.openpsa.qbpager' => Array(),
+    'dependencies' => 
+    array (
+      'org.openpsa.calendar' => 
+      array (
+      ),
+      'org.openpsa.contacts' => 
+      array (
+      ),
+      'org.openpsa.qbpager' => 
+      array (
+      ),
+      'org.routamc.positioning' => 
+      array (
+      ),
+      'midcom' => 
+      array (
+      ),
     ),
-),
+  ),

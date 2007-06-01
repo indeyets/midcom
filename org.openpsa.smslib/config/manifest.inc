@@ -1,17 +1,31 @@
-'name' => 'org.openpsa.smslib',
-'purecode' => true,
-'privileges' =>  Array(),
-'class_definitions' => Array(),
-'version' => '1.0.2',
-'state' => 'stable',
-'package.xml' => Array(
+
+  'name' => 'org.openpsa.smslib',
+  'purecode' => true,
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+  ),
+  'version' => '1.0.4beta1',
+  'state' => 'beta',
+  'package.xml' => 
+  array (
     'summary' => 'SMS sending library',
     'description' => 'Library for transmitting SMS messages through different gateways',
-    'maintainers' => Array(
-        'rambo' => Array(
-            'name' => 'Eero af Heurlin',
-            'email' => 'eero.afheurlin@iki.fi',
-            'role' => 'lead',
-        ),
+    'maintainers' => 
+    array (
+      'rambo' => 
+      array (
+        'name' => 'Eero af Heurlin',
+        'email' => 'eero.afheurlin@iki.fi',
+        'role' => 'lead',
+      ),
     ),
-),
+    'dependencies' => 
+    array (
+      'midcom' => 
+      array (
+      ),
+    ),
+  ),

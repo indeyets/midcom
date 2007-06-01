@@ -9,7 +9,6 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 //debug_print_r('_REQUEST',  $_REQUEST);
-
 // Common variables
 $encoding = 'UTF-8';
 
@@ -28,10 +27,13 @@ if (!isset($_REQUEST['search']))
     $_MIDCOM->finish();
     exit();
 }
+// Convert tradiotional wildcard to SQL wildcard
 $search = str_replace('*', '%', $_REQUEST['search']);
+// Make sure we don't have multiple successive wildcards (performance killer)
+$search = preg_replace('/%+/', '%', $search);
 
 // Get local copies of other variables from request
-$map = array('component', 'class', 'titlefield', 'idfield', 'searchfields', 'constraints', 'orders', 'hash');
+$map = array('component', 'class', 'titlefield', 'idsuffix', 'idfield', 'searchfields', 'constraints', 'orders', 'hash', 'auto_wildcards');
 foreach ($map as $varname)
 {
     if (isset($_REQUEST[$varname]))
@@ -57,7 +59,7 @@ else
     $shared_secret = $key_snippet->doc;
 }
 
-$hashsource = $class . $idfield . $shared_secret . $component;
+$hashsource = $class . $idfield . $shared_secret . $component . $idsuffix;
 if (is_array($constraints))
 {
     ksort($constraints);
@@ -87,10 +89,30 @@ if ($hash != md5($hashsource))
     exit();
 }
 
+// Handle automatic wildcards
+if (   !empty($auto_wildcards)
+    && strpos($search, '%') === false)
+{
+    switch($auto_wildcards)
+    {
+        case 'both':
+            $search = "%{$search}%";
+            break;
+        case 'start':
+            $search = "%{$search}";
+            break;
+        case 'end':
+            $search = "{$search}%";
+            break;
+        default:
+            debug_add("Don't know how to handle auto_wilcards value '{$auto_wilcards}'", MIDCOM_LOG_WARN);
+            break;
+    }
+}
 // Load component if required
 if (!class_exists($class))
 {
-    $_MIDCOM->componentloader->load($component);
+    $_MIDCOM->componentloader->load_graceful($component);
 }
 // Could not get required class defined, abort
 if (!class_exists($class))
@@ -124,7 +146,6 @@ if (   empty($titlefield)
 
 
 $qb = call_user_func(array($class, 'new_query_builder'));
-debug_print_r('constraints: ' , $constraints);
 if (is_array($constraints))
 {
     ksort($constraints);
@@ -146,13 +167,20 @@ if (is_array($constraints))
     }
 }
 
-$qb->begin_group('OR');
-foreach ($searchfields as $field)
+if (preg_match('/^%+$/', $search))
 {
-    debug_add("adding search (ORed) constraint: {$field} LIKE '{$search}'");
-    $qb->add_constraint($field, 'LIKE', $search);
+    debug_add('$search is all wildcards, don\'t was time with adding LIKE constraints');
 }
-$qb->end_group();
+else
+{
+    $qb->begin_group('OR');
+    foreach ($searchfields as $field)
+    {
+        debug_add("adding search (ORed) constraint: {$field} LIKE '{$search}'");
+        $qb->add_constraint($field, 'LIKE', $search);
+    }
+    $qb->end_group();
+}
 
 if (is_array($orders))
 {
@@ -167,7 +195,6 @@ if (is_array($orders))
         }
     }
 }
-
 $results = $qb->execute();
 if ($results === false)
 {
@@ -191,7 +218,7 @@ foreach ($results as $object)
     debug_add("adding result: id={$id} title='{$title}'");
     echo "      <line>\n";
     echo "          <id>{$id}</id>\n";
-    echo "          <title>{$title}</title>\n";
+    echo "          <title><![CDATA[{$title}]]></title>\n";
     echo "      </line>\n";
 }
 echo "    </results>\n";

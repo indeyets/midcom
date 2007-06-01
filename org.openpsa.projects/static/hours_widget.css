@@ -1,10 +1,11 @@
 table.org_openpsa_projects_hourlist_table {
     display: none;
-    border-collapse: collapse;    border-spacing: 0px;    
+    border-collapse: collapse;
+    border-spacing: 0px;
     border-right: 1px solid #c0c0c0;
 }
 table.org_openpsa_projects_hourlist_table tr {
-    vertical-align: top;    
+    vertical-align: top;
 }
 table.org_openpsa_projects_hourlist_table tfoot {
     border-top: 1px dashed #c0c0c0;
@@ -34,9 +35,9 @@ table.org_openpsa_projects_hourlist_table th {
     color: #000000;
     text-align: left;
     padding: 2px;
-    border-left: 1px solid #c0c0c0; 
+    border-left: 1px solid #c0c0c0;
     border-bottom: 2px solid #c0c0c0;
-    background-color: #eeeeee;     
+    background-color: #eeeeee;
 }
 table.org_openpsa_projects_hourlist_table td.hours, table.org_openpsa_projects_hourlist_table th.hours {
     text-align: right;
@@ -46,11 +47,28 @@ table.org_openpsa_projects_hourlist_table td.description {
     overflow: hidden;
 }
 table.org_openpsa_projects_hourlist_table tr {
-    background-position: right;    background-repeat: no-repeat;
+    background-position: right;
+    background-repeat: no-repeat;
     padding-right: 16px;
 }
 /* TODO: Figure out the real midcom static directory */
-table.org_openpsa_projects_hourlist_table tr.ajax_saving {    background-image: url("/midcom-static/stock-icons/16x16/new-html.png");    padding-right: 18px;}table.org_openpsa_projects_hourlist_table tr.ajax_save_failed {    color: red;    background-image: url("/midcom-static/stock-icons/16x16/not_approved.png");    padding-right: 18px;}table.org_openpsa_projects_hourlist_table tr.ajax_saved_fade  {    background-image: url("/midcom-static/stock-icons/16x16/approved_fade_50.png");    padding-right: 18px;}table.org_openpsa_projects_hourlist_table tr.ajax_saved {    background-image: url("/midcom-static/stock-icons/16x16/approved.png");    padding-right: 18px;}
+table.org_openpsa_projects_hourlist_table tr.ajax_saving {
+    background-image: url("/midcom-static/stock-icons/16x16/new-html.png");
+    padding-right: 18px;
+}
+table.org_openpsa_projects_hourlist_table tr.ajax_save_failed {
+    color: red;
+    background-image: url("/midcom-static/stock-icons/16x16/not_approved.png");
+    padding-right: 18px;
+}
+table.org_openpsa_projects_hourlist_table tr.ajax_saved_fade  {
+    background-image: url("/midcom-static/stock-icons/16x16/approved_fade_50.png");
+    padding-right: 18px;
+}
+table.org_openpsa_projects_hourlist_table tr.ajax_saved {
+    background-image: url("/midcom-static/stock-icons/16x16/approved.png");
+    padding-right: 18px;
+}
 
 /* extend DM values to outside form.datamanager */
 div.form_toolbar

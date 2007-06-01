@@ -1,0 +1,41 @@
+form.org_openpsa_directmarketing_edit_query
+{
+}
+
+form.org_openpsa_directmarketing_edit_query select
+{
+}
+
+form.org_openpsa_directmarketing_edit_query input
+{
+}
+
+form.org_openpsa_directmarketing_edit_query input.button
+{
+    padding: 2px;
+}
+
+form.org_openpsa_directmarketing_edit_query input.add_row
+{
+}
+
+form.org_openpsa_directmarketing_edit_query input.remove_row
+{
+}
+
+div.org_openpsa_directmarketing_edit_query_handler_buttons
+{
+    float: right;
+}
+
+form.org_openpsa_directmarketing_edit_query fieldset
+{
+    border: 0px;
+    padding: 5px;
+    margin: 0px;
+}
+
+form.org_openpsa_directmarketing_edit_query fieldset.odd
+{
+    background: #dfdfdf;
+}

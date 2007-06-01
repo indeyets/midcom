@@ -72,12 +72,14 @@ class net_nehmer_account_handler_edit extends midcom_baseclasses_components_hand
                     "The account '{$args[0]}' could not be loaded, last Mdigard error was: "
                     . mgd_errstr());
             }
+            net_nehmer_account_viewer::verify_person_privileges($this->_account);
             $return_url = "view/{$this->_account->guid}.html";
         }
         else
         {
             $_MIDCOM->auth->require_valid_user();
             $this->_account = $_MIDCOM->auth->user->get_storage();
+            net_nehmer_account_viewer::verify_person_privileges($this->_account);
             $_MIDCOM->auth->require_do('midgard:update', $this->_account);
             $_MIDCOM->auth->require_do('midgard:parameters', $this->_account);
             $return_url = '';
@@ -106,9 +108,16 @@ class net_nehmer_account_handler_edit extends midcom_baseclasses_components_hand
 
         $this->_prepare_request_data($return_url);
 
-        $_MIDCOM->substyle_append($this->_controller->datamanager->schema->name);
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => 'edit/',
+            MIDCOM_NAV_NAME => $this->_l10n->get('edit account'),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        $this->_view_toolbar->hide_item('edit/');
+                
+        $_MIDCOM->bind_view_to_object($this->_account, $this->_controller->datamanager->schema->name);
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
-        $this->_component_data['active_leaf'] = NET_NEHMER_ACCOUNT_LEAFID_EDIT;
         $_MIDCOM->set_pagetitle($this->_l10n->get('edit account'));
 
         return true;

@@ -2,8 +2,8 @@
 global $view_title;
 global $view_ids;
 global $view_startfrom;
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-$attachmentserver = $GLOBALS["midcom"]->midgard->self . "midcom-serveattachmentguid-";
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+$attachmentserver = $_MIDCOM->midgard->self . "midcom-serveattachmentguid-";
 
 // Create and prepare a toolbar
 $toolbar = new midcom_helper_toolbar('midcom_toolbar midcom_toolbar_in_content');

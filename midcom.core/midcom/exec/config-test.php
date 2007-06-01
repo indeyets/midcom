@@ -121,6 +121,30 @@ function check_for_utility ($name, $testname, $fail_code, $fail_recommendations)
     }
 }
 
+function check_rcs() 
+{
+    $config = $GLOBALS['midcom_config'];
+    if (array_key_exists('midcom_services_rcs_enable', $config) && $config['midcom_services_rcs_enable']) 
+    {
+        if (!is_writable($config['midcom_services_rcs_root'])) 
+        {
+            println("MidCOM RCS", ERROR, "You must make the directory <b>{$config['midcom_services_rcs_root']}</b> writable by your webserver!");
+        }
+        else if (!is_executable($config['midcom_services_rcs_bin_dir'] . "/ci"))
+        {
+            println("MidCOM RCS", ERROR, "You must make <b>{$config['midcom_services_rcs_bin_dir']}/ci</b> executable by your webserver!");
+        } 
+        else 
+        {
+            println("MidCOM RCS", OK);
+        }
+    } 
+    else 
+    {
+            println("MidCOM RCS", WARNING, "The MidCOM RCS service is disabled.");
+    }
+}
+
 // Some helpers
 $i18n =& $GLOBALS['midcom']->get_service('i18n');
 
@@ -359,6 +383,7 @@ println_check_for_include_file('HTML/QuickForm/RuleRegistry.php', 'PEAR Package:
 println_check_for_include_file('HTML/TreeMenu.php', 'PEAR Package: HTML_TreeMenu',
     WARNING, 'The HTML_TreeMenu package is required for the JS TreeMenu Navigation in AIS (disabled by default). You have to install it if you want to use the new navigation.');
 
+check_rcs();
 // Text_Diff
 println_check_for_include_file('Text/Diff.php', 'PEAR Package: Text_Diff', WARNING, 'The Text_Diff package is used by no.bergfald.rcs to show text diffs.');
 

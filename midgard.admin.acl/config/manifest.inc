@@ -1,20 +1,34 @@
-'name' => 'midgard.admin.acl',
-'purecode' => true,
-'privileges' =>  Array(),
-'class_definitions' => Array(),
-'version' => '1.0.1',
-'state' => 'stable',
-'package.xml' => Array(
+
+  'name' => 'midgard.admin.acl',
+  'purecode' => true,
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+  ),
+  'version' => '1.0.5beta1',
+  'state' => 'beta',
+  'package.xml' => 
+  array (
     'summary' => 'ACL editor',
     'description' => 'Tool for editing Access Control Lists',
-    'maintainers' => Array(
-        'bergie' => Array(
-            'name' => 'Henri Bergius',
-            'email' => 'henri.bergius@iki.fi',
-            'role' => 'lead',
-        ),  
+    'maintainers' => 
+    array (
+      'bergie' => 
+      array (
+        'name' => 'Henri Bergius',
+        'email' => 'henri.bergius@iki.fi',
+        'role' => 'lead',
+      ),
     ),
-    'dependencies' => Array(
-        'midcom.helper.datamanager2' => Array(),
+    'dependencies' => 
+    array (
+      'midcom.helper.datamanager2' => 
+      array (
+      ),
+      'midcom' => 
+      array (
+      ),
     ),
-),
+  ),

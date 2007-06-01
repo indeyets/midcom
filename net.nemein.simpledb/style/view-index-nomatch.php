@@ -1,8 +1,9 @@
 <?php
-global $view, $view_columns, $view_columns_count;
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$columns_count = count($data['columns']);
 ?>
 <tr>
-  <td colspan="&(view_columns_count);">
-    <?php echo $GLOBALS["view_l10n"]->get("no matches"); ?>
-  </td>
+    <td colspan="&(columns_count);">
+        <?php echo $data['l10n']->get('no matches'); ?>
+    </td>
 </tr>

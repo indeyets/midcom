@@ -1,13 +1,28 @@
 <?php
-$view_data =& $GLOBALS['midcom']->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $user = $_MIDCOM->auth->user->storage;
 $nap = new midcom_helper_nav();
 $node = $nap->get_node($nap->get_root_node());
 ?>
-<dl><?php/** Gravatar support, commented outif ($user->email)    {        $size = 25;        $grav_url = "http://www.gravatar.com/avatar.php?gravatar_id=".md5($user->email)."&size=".$size;        ?>          <img src="&(grav_url);" class="avatar" alt="&(user.name);" title="&(user.name);" style="float: left; margin-right: 4px;" />        <?php    }    */echo "<dt>{$user->firstname} {$user->lastname}</dt>\n";echo "<dd>\n";echo "    <ul>\n";
+<dl>
+<?php
+/** Gravatar support, commented out
+if ($user->email)
+    {
+        $size = 25;
+        $grav_url = "http://www.gravatar.com/avatar.php?gravatar_id=".md5($user->email)."&size=".$size;
+        ?>
+          <img src="&(grav_url);" class="avatar" alt="&(user.name);" title="&(user.name);" style="float: left; margin-right: 4px;" />
+        <?php
+    }
+    */
+echo "<dt>{$user->firstname} {$user->lastname}</dt>\n";
+echo "<dd>\n";
+echo "    <ul>\n";
 echo "<input id=\"org_openpsa_mypage_workgroups_ajaxUrl\" type=\"hidden\" value=\"{$node[MIDCOM_NAV_FULLURL]}savefilter.html\">\n";
 echo "<select id=\"org_openpsa_mypage_workgroups\" name=\"org_openpsa_workgroup_filter\" class=\"ajax_editable\" onChange=\"ooAjaxSelect(this);\">\n";
-foreach ($view_data['virtual_groups'] as $key => $vgroup){
+foreach ($data['virtual_groups'] as $key => $vgroup)
+{
     if (is_object($vgroup))
     {
         $key = str_replace('vgroup:', '', $key);
@@ -15,7 +30,7 @@ foreach ($view_data['virtual_groups'] as $key => $vgroup){
     }
     else
     {
-        $label = $vgroup;    
+        $label = $vgroup;
     }
 
     $selected = '';
@@ -23,5 +38,14 @@ foreach ($view_data['virtual_groups'] as $key => $vgroup){
     {
         $selected = ' selected="selected"';
     }
-            echo "<option value=\"{$key}\"{$selected}>{$label}</option>\n";}echo "</select>\n";
-echo "        <li><a href=\"?midcom_site[logout]=1\">Logout</a></li>\n";echo "    </ul>\n";echo "</dd>\n";?></dl>
+
+    echo "<option value=\"{$key}\"{$selected}>{$label}</option>\n";
+}
+echo "</select>\n";
+
+echo "        <li><a href=\"?midcom_site[logout]=1\">Logout</a></li>\n";
+
+echo "    </ul>\n";
+echo "</dd>\n";
+?>
+</dl>

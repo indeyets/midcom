@@ -10,9 +10,9 @@
 
 /**
  * org.openpsa.org NAP interface class.
- * 
+ *
  * NAP is mainly used for toolbar rendering in this component
- * 
+ *
  * ...
  * @package org.openpsa.contacts
  */
@@ -31,9 +31,31 @@ class org_openpsa_contacts_navigation extends midcom_baseclasses_components_navi
     function get_leaves()
     {
         $leaves = array();
+        $p_merger = new org_openpsa_contacts_duplicates_merge('person');
+        if ($p_merger->merge_needed())
+        {
+            $leaves['persons_merge'] = array
+            (
+                MIDCOM_NAV_SITE => array
+                (
+                    MIDCOM_NAV_URL => "duplicates/person.html",
+                    MIDCOM_NAV_NAME => $this->_l10n->get('merge persons'),
+                ),
+                MIDCOM_NAV_ADMIN => array
+                (
+                    MIDCOM_NAV_URL => "duplicates/person.html",
+                    MIDCOM_NAV_NAME => $this->_l10n->get('merge persons'),
+                ),
+                MIDCOM_NAV_GUID => false,
+                MIDCOM_META_CREATOR => $_MIDGARD['user'],
+                MIDCOM_META_EDITOR => $_MIDGARD['user'],
+                MIDCOM_META_CREATED => time(),
+                MIDCOM_META_EDITED => time(),
+            );
+        }
         return $leaves;
     }
-    
+
     function get_node($toolbar = null)
     {
         $toolbar = Array();

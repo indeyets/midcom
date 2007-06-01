@@ -1,0 +1,21 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING article %s will expire on %s
+Article %s will expire on %s
+---STRINGEND
+
+---STRING net.nemein.approvenotifier
+Approval notifications
+---STRINGEND
+
+---STRING this is the %s day advance notification
+This is the %s day advance notification.
+---STRINGEND
+
+---STRING link to page
+Link to page
+---STRINGEND
+

@@ -46,6 +46,9 @@
  */
 class midcom_core_privilege extends midcom_core_privilege_db
 {
+    var $guid = '';
+    var $id = 0;
+    
     /**
      * The GUID of the content object this privilege is valid for.
      *
@@ -105,22 +108,18 @@ class midcom_core_privilege extends midcom_core_privilege_db
      */
     function midcom_core_privilege($src = null)
     {
-        parent::midcom_core_privilege_db();
-
         if (! is_null($src))
         {
             // Explicity manual listing for performance reasons.
-            $this->guid = $src->guid;
-            $this->sitegroup = $src->sitegroup;
-            $this->id = $src->id;
-            $this->objectguid = $src->objectguid;
-            $this->name = $src->name;
-            $this->assignee = $src->assignee;
-            $this->classname = $src->classname;
-            $this->value = $src->value;
+            $this->guid = $src['guid'];
+            $this->id = $src['id'];
+            $this->objectguid = $src['objectguid'];
+            $this->name = $src['name'];
+            $this->assignee = $src['assignee'];
+            $this->classname = $src['classname'];
+            $this->value = $src['value'];
         }
     }
-
 
     /**
      * A copy of the object referenced by the guid value of this privilege.
@@ -132,7 +131,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
         if (is_null($this->_cached_object))
         {
             $this->_cached_object = $_MIDCOM->dbfactory->get_object_by_guid($this->objectguid);
-            if (! $this->_cached_object)
+            if (!is_object($this->_cached_object))
             {
                 return false;
             }
@@ -319,10 +318,10 @@ class midcom_core_privilege extends midcom_core_privilege_db
         }
 
         $object = $this->get_object();
-        if (! $object)
+        if (!is_object($object))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Could not retrieve the content object with the GUID '{$this->guid}'; see the debug level log for more information.",
+            debug_add("Could not retrieve the content object with the GUID '{$this->objectguid}'; see the debug level log for more information.",
                 MIDCOM_LOG_INFO);
             debug_pop();
             return false;
@@ -454,36 +453,49 @@ class midcom_core_privilege extends midcom_core_privilege_db
      */
     function _query_all_privileges($guid)
     {
-        $qb = new MidgardQueryBuilder('midcom_core_privilege_db');
-        $qb->add_constraint('objectguid', '=', $guid);
-        $qb->add_constraint('value', '<>', MIDCOM_PRIVILEGE_INHERIT);
-        $result = @$qb->execute();
-
-        if (! $result)
+        $result = array();
+        
+        $mc = new midgard_collector('midcom_core_privilege_db', 'objectguid', $guid);
+        $mc->add_constraint('value', '<>', MIDCOM_PRIVILEGE_INHERIT);
+        //FIXME: 
+        $mc->set_key_property('guid');
+        $mc->add_value_property('id');
+        $mc->add_value_property('name');
+        $mc->add_value_property('assignee');
+        $mc->add_value_property('classname');
+        $mc->add_value_property('value');
+        $mc->execute();
+        $privileges = $mc->list_keys();
+        
+        if (!$privileges)
         {
             if (mgd_errstr() != 'MGD_ERR_OK')
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to retrieve all privileges for the {$object->__table__} ID {$object->id}: " . mgd_errstr(), MIDCOM_LOG_INFO);
+                debug_add("Failed to retrieve all privileges for the Object GUID {$guid}: " . mgd_errstr(), MIDCOM_LOG_INFO);
                 debug_print_r('Result was:', $result);
                 if (isset($php_errormsg))
                 {
                     debug_add("Error message was: {$php_errormsg}", MIDCOM_LOG_ERROR);
                 }
-
+                debug_pop();
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     'The query builder failed to execute, see the log file for more information.');
                 // This will exit.
             }
 
-            return Array();
+            return $result;
         }
-
-        $return = Array();
-        foreach($result as $dbpriv)
+        
+        foreach($privileges as $privilege_guid => $value)
         {
-            $return[] = new midcom_core_privilege($dbpriv);
+            $privilege = $mc->get($privilege_guid);
+            $privilege['objectguid'] = $guid;
+            $privilege['guid'] = $privilege_guid;
+            $return[] = new midcom_core_privilege($privilege);
         }
+        
+        //$mc->destroy();
 
         return $return;
     }
@@ -548,8 +560,19 @@ class midcom_core_privilege extends midcom_core_privilege_db
             $privilege->value = MIDCOM_PRIVILEGE_INHERIT;
             return $privilege;
         }
+        
+        $priv = array
+        (
+            'guid' => $result[0]->guid,
+            'id' => $result[0]->id,
+            'objectguid' => $result[0]->objectguid,
+            'name' => $result[0]->name,
+            'assignee' => $result[0]->assignee,
+            'classname' => $result[0]->classname,
+            'value' => $result[0]->value,
+        );
 
-        return new midcom_core_privilege($result[0]);
+        return new midcom_core_privilege($priv);
     }
 
     /**
@@ -578,6 +601,8 @@ class midcom_core_privilege extends midcom_core_privilege_db
      */
     function collect_content_privileges(&$arg, $user = null)
     {
+        static $cached_collected_privileges = array();
+    
         if (is_null($user))
         {
             $user = $_MIDCOM->auth->user;
@@ -587,6 +612,11 @@ class midcom_core_privilege extends midcom_core_privilege_db
         {
             $object = null;
             $guid = $arg;
+            
+            if (array_key_exists($guid, $cached_collected_privileges))
+            {
+                return $cached_collected_privileges[$guid];
+            }
         }
         else if (is_object($arg))
         {
@@ -608,23 +638,44 @@ class midcom_core_privilege extends midcom_core_privilege_db
         $previous_sudo = $_MIDCOM->auth->_internal_sudo;
         $_MIDCOM->auth->_internal_sudo = true;
 
-        // We need to be careful here in case we have non-persistant objects.
+        $parent_guid = null;
+		// We need to be careful here in case we have non-persistant objects.
         if ($guid === null)
         {
             $tmp = $object->get_parent();
-            $parent = $tmp->guid;
+			if ($tmp)
+			{
+				$parent_guid = $tmp->guid;
+			}
         }
         else
         {
-            $parent = $_MIDCOM->dbfactory->get_parent_guid($guid);
+            if ($object)
+            {
+                $parent_class = $object->get_dba_parent_class();
+                $parent_guid = $_MIDCOM->dbfactory->get_parent_guid($object->guid, get_class($object));
+            }
+            else
+            {
+                $parent_class = null;
+                $parent_guid = $_MIDCOM->dbfactory->get_parent_guid($guid);
+            }
         }
-
 
         $_MIDCOM->auth->_internal_sudo = $previous_sudo;
 
-        if ($parent !== null)
+        if ($parent_guid !== null)
         {
-            $base_privileges = midcom_core_privilege::collect_content_privileges($parent, $user);
+            if ($parent_class !== null)
+            {
+                $parent_dummy_object = new $parent_class();
+                $parent_dummy_object->guid = $parent_guid;
+                $base_privileges = midcom_core_privilege::collect_content_privileges($parent_dummy_object, $user);
+            }
+            else
+            {
+                $base_privileges = midcom_core_privilege::collect_content_privileges($parent_guid, $user);
+            }
         }
         else
         {
@@ -753,8 +804,22 @@ class midcom_core_privilege extends midcom_core_privilege_db
             $base_privileges,
             $collected_privileges
         );
+        
+        $cached_collected_privileges[$guid] = $final_privileges;
 
         return $final_privileges;
+    }
+
+    /**
+     * Copy values of the midcom_core_privilege object to an Midgard-level object
+     */
+    function _copy_to_object(&$object)
+    {
+        $object->objectguid = $this->objectguid;
+        $object->name = $this->name;
+        $object->assignee = $this->assignee;
+        $object->classname = $this->classname;
+        $object->value = $this->value;
     }
 
     /**
@@ -854,7 +919,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
 
         if ($this->value == MIDCOM_PRIVILEGE_INHERIT)
         {
-            if ($this->id)
+            if ($this->guid)
             {
                 // Already a persistant record, drop it.
                 if (! $this->drop())
@@ -870,7 +935,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
                 // exit silently, as this is the desired final state.
                 $object = $this->get_object();
                 $privilege = $this->get_privilege($object, $this->name, $this->assignee, $this->classname);
-                if ($privilege->id != 0)
+                if (!empty($privilege->guid))
                 {
                     if (! $privilege->drop())
                     {
@@ -886,9 +951,11 @@ class midcom_core_privilege extends midcom_core_privilege_db
             }
         }
 
-        if ($this->id)
+        if ($this->guid)
         {
-            if (! parent::update())
+            $privilege = new midcom_core_privilege_db($this->guid);
+            $this->_copy_to_object($privilege);
+            if (!$privilege->update())
             {
                 return false;
             }
@@ -899,7 +966,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
         {
             $object = $this->get_object();
             $privilege = $this->get_privilege($object, $this->name, $this->assignee, $this->classname);
-            if ($privilege->id != 0)
+            if (!empty($privilege->guid))
             {
                 $privilege->value = $this->value;
                 if (! $privilege->store())
@@ -910,7 +977,6 @@ class midcom_core_privilege extends midcom_core_privilege_db
                     return false;
                 }
                 $this->guid = $privilege->guid;
-                $this->sitegroup = $privilege->sitegroup;
                 $this->id = $privilege->id;
                 $this->objectguid = $privilege->objectguid;
                 $this->name = $privilege->name;
@@ -925,7 +991,9 @@ class midcom_core_privilege extends midcom_core_privilege_db
             }
             else
             {
-                $result = parent::create();
+                $privilege = new midcom_core_privilege_db();
+                $this->_copy_to_object($privilege);
+                $result = $privilege->create();
                 if ($result)
                 {
                     $this->_invalidate_cache();
@@ -954,7 +1022,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      */
     function drop()
     {
-        if (! $this->id)
+        if (! $this->guid)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('We are not stored, ID is zero. Ignoring silently.');
@@ -970,13 +1038,18 @@ class midcom_core_privilege extends midcom_core_privilege_db
             debug_pop();
             return false;
         }
-
-        if (! parent::delete())
+        
+        $privilege = new midcom_core_privilege_db($this->guid);
+        if (!$privilege->delete())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('Failed to delete privilege record, aborting. mgd_errstr was: ' . mgd_errstr());
+            debug_add('Failed to delete privilege record, aborting. Error: ' . mgd_errstr());
             debug_pop();
             return false;
+        }
+        if (method_exists($privilege, 'purge'))
+        {
+            $privilege->purge();
         }
 
         $this->_invalidate_cache();
@@ -991,9 +1064,6 @@ class midcom_core_privilege extends midcom_core_privilege_db
     */
 
 }
-
-
-
 
 
 ?>

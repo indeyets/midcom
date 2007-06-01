@@ -67,6 +67,10 @@ Hyväksy ilmoittautuminen
 Hyväksynyt %s %s
 ---STRINGEND
 
+---STRING auto_approve
+Hyväksy ilmoittautumiset automaattisesti
+---STRINGEND
+
 ---STRING back to event overview
 Palaa tapahtumalistaan
 ---STRINGEND
@@ -89,6 +93,10 @@ Lisää vastaanottajia ilmoittautumissähköposteille ilmoittautujan lisäksi (p
 
 ---STRING click here to log out.
 Klikkaa kirjautuaksesi ulos.
+---STRINGEND
+
+---STRING close registration at
+Sulje tapahtuma ilmoittautumisilta ajankohtana
 ---STRINGEND
 
 ---STRING close the event for registration now
@@ -139,6 +147,10 @@ Rivien erotin
 Nykyiset asetukset
 ---STRINGEND
 
+---STRING default additional questions schema
+Oletuskysymykset
+---STRINGEND
+
 ---STRING default notification email
 Oletussähköpostiosoite ilmoittautumisten lähetykseen
 ---STRINGEND
@@ -165,6 +177,10 @@ Salasanan sisältävä sähköpostiosoite on lähetetty osoitteeseen %s.<br /> O
 
 ---STRING emailadress
 Sähköposti
+---STRINGEND
+
+---STRING event
+Tapahtuma
 ---STRINGEND
 
 ---STRING event description
@@ -231,12 +247,20 @@ Ilmoittautumisen %u avaaminen epäonnistui: %s
 Juuritason tapahtuman %s avaaminen epäonnistui: %s
 ---STRINGEND
 
+---STRING first name
+Etunimi
+---STRINGEND
+
 ---STRING group for active accounts
 Midgardin käyttäjäryhmä aktiivisille tunnuksille
 ---STRINGEND
 
 ---STRING group for pending accounts
 Midgardin käyttäjäryhmä aktivoimista odottaville tunnuksille
+---STRINGEND
+
+---STRING last name
+Sukunimi
 ---STRINGEND
 
 ---STRING list all events
@@ -263,6 +287,10 @@ Hallinnoi päätason tapahtumaa
 Ilmoittautumisten hallinta
 ---STRINGEND
 
+---STRING new registration pending for approval
+Uusi ilmoittautuminen odottaa hyväksyntää
+---STRINGEND
+
 ---STRING no events found
 Ei tapahtumia
 ---STRINGEND
@@ -287,6 +315,10 @@ Valintaa ei ole tehty, käytetään ensimmäistä tietokantakuvausta oletuksena.
 Ei, en halua poistaa ilmoittautumista
 ---STRINGEND
 
+---STRING notes
+Lisätietoja
+---STRINGEND
+
 ---STRING notification email
 Ilmoittautumisista tiedottamiseen käytettävä sähköpostiosoite (jätä tyhjäksi käyttääksesi oletusta)
 ---STRINGEND
@@ -299,8 +331,16 @@ avoinna ilmoittautumisille
 Avaa tapahtuma ilmoittautumisille
 ---STRINGEND
 
+---STRING open registration at
+Avaa tapahtuma ilmoittautumisille ajankohtana
+---STRINGEND
+
 ---STRING open the even for registration now
 Avaa tapahtuma ilmoittautumisille nyt
+---STRINGEND
+
+---STRING override global notification e-mail
+Oletuksen sijaan ilmoittautumisiin käytettävä sähköpostiosoite
 ---STRINGEND
 
 ---STRING please answer these questions to complete registration
@@ -321,6 +361,10 @@ Ilmoittaudu tapahtumaan %s
 
 ---STRING register for this event
 Ilmoittaudu tapahtumaan
+---STRINGEND
+
+---STRING registrar
+Ilmoittautuja
 ---STRINGEND
 
 ---STRING registrar identification
@@ -459,11 +503,7 @@ Olet jo ilmoittautunut tapahtumaan.
 Käyttäjätunnuksesi on aktivoitu onnistuneesti.
 ---STRINGEND
 
----STRING auto_approve
-Hyväksy ilmoittautumiset automaattisesti
----STRINGEND
-
----STRING event
-Tapahtuma
+---STRING privilege manage
+Ilmoittautumisten hallinta
 ---STRINGEND
 

@@ -1,7 +1,7 @@
 <?php
 // Available Request keys: persons, alpha_filter
 
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+// $data =& $_MIDCOM->get_custom_context_data('request_data');
 
 if ($data['config']->get('enable_alphabetical'))
 {

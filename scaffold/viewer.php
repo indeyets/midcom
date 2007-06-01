@@ -7,22 +7,12 @@
  */
 
 /**
- * This is the class that defines which url's should be handled by this module. 
+ * This is the class that defines which URLs should be handled by this module. 
  * 
  * @package ${module}
  */
-
 class ${module_class}_viewer extends midcom_baseclasses_components_request
 {
-    /**
-     * The topic in which to look for articles. This defaults to the current content topic
-     * unless overridden by the symlink topic feature.
-     *
-     * @var midcom_db_topic
-     * @access private
-     */
-    var $_content_topic = null;
-
     function ${module_class}_viewer($topic, $config)
     {
         parent::midcom_baseclasses_components_request($topic, $config);
@@ -35,27 +25,24 @@ class ${module_class}_viewer extends midcom_baseclasses_components_request
      */
     function _on_initialize()
     {
-        $this->_request_data['content_topic'] =& $this->_content_topic;
-
-        // *** Prepare the request switch ***
-        /*  */
-        $this->_request_switch['config'] = Array
+        /**
+         * Prepare the request switch, which contains URL handlers for the component
+         */
+         
+        // Handle /config
+        $this->_request_switch['config'] = array
         (
-            'handler' => Array('${module_class}_handler_configuration', 'configdm'),
+            'handler' => Array('midcom_core_handler_configdm', 'configdm'),
             'schemadb' => 'file:/${module_dir_basic}/config/schemadb_config.inc',
             'schema' => 'config',
             'fixed_args' => Array('config'),
         );
 
-    
-        $this->_request_switch['index'] = Array
+        // Handle /
+        $this->_request_switch['index'] = array
         (
             'handler' => Array('${module_class}_handler_index', 'index'),
         );
-
-        
-    
-
     }
 
     /**
@@ -104,8 +91,7 @@ class ${module_class}_viewer extends midcom_baseclasses_components_request
      * @access protected
      */
     function _populate_node_toolbar()
-    {
-        
+    {   
         /*
         if ($this->_content_topic->can_do('midgard:create'))
         {
@@ -126,12 +112,16 @@ class ${module_class}_viewer extends midcom_baseclasses_components_request
         if (   $this->_topic->can_do('midgard:update')
             && $this->_topic->can_do('midcom:component_config'))
         {
-            $this->_node_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => 'config.html',
-                MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
-                MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
-            ));
+            $this->_node_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => 'config.html',
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
+                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+                )
+            );
         }
         
     }

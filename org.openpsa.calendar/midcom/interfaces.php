@@ -1,37 +1,39 @@
 <?php
 /**
  * OpenPSA group calendar
- * 
- * 
+ *
+ *
  * @package org.openpsa.calendar
  */
 class org_openpsa_calendar_interface extends midcom_baseclasses_components_interface
 {
-    
+
     function org_openpsa_calendar_interface()
     {
         parent::midcom_baseclasses_components_interface();
-        
+
         $this->_component = 'org.openpsa.calendar';
         $this->_autoload_class_definitions = array('midcom_dba_classes.inc');
         $this->_autoload_files = array(
             'admin.php',
             'calendar_midcomdba.php',
             'participant_midcomdba.php',
+            'resource.php',
+            'event_resource.php',
             'viewer.php',
             'navigation.php',
         );
-        $this->_autoload_libraries = Array( 
-            'midcom.helper.datamanager', 
-            'org.openpsa.core', 
-            'org.openpsa.mail', 
+        $this->_autoload_libraries = Array(
+            'midcom.helper.datamanager',
+            'org.openpsa.core',
+            'org.openpsa.mail',
             'org.openpsa.helpers',
             'org.openpsa.calendarwidget',
-            'org.openpsa.relatedto', 
-            'org.openpsa.notifications', 
+            'org.openpsa.relatedto',
+            'org.openpsa.notifications',
         );
-        
-        /* 
+
+        /*
          * Calendar uses visibility permissions slightly differently than
          * midgard:read
          */
@@ -44,7 +46,7 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add('Load contacts classes');
         $_MIDCOM->componentloader->load('org.openpsa.contacts');
-        
+
         // Check for calendar event tree.
         $qb = org_openpsa_calendar_event::new_query_builder();
         $qb->add_constraint('title', '=', '__org_openpsa_calendar');
@@ -78,7 +80,7 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
                 $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event'] = $event;
             }
         }
-        
+
         debug_pop();
         return true;
     }
@@ -105,21 +107,21 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
                         MIDCOM_LOG_WARN);
                     continue;
                 }
-                
+
                 if (! $datamanager->init($event))
                 {
                     debug_add("Warning, failed to initialize datamanager for Event {$event->id}. See Debug Log for details.", MIDCOM_LOG_WARN);
                     debug_print_r('Event dump:', $event);
                     continue;
                 }
-                
+
                 $indexer->index($datamanager);
                 $datamanager->destroy();
             }
         }
         debug_pop();
     }
-    
+
     /**
      * Returns string of JS code for opening the new event popup
      */
@@ -168,7 +170,7 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
             debug_pop();
             return false;
         }
-        
+
         $height = $node[MIDCOM_NAV_CONFIGURATION]->get('calendar_popup_height');
         $width = $node[MIDCOM_NAV_CONFIGURATION]->get('calendar_popup_width');
 
@@ -178,7 +180,7 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
         debug_pop();
         return $js;
     }
-    
+
     /**
      * Returns string of correct window options for JS
      */
@@ -195,7 +197,7 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
         $ret .= "resizable=1";
         return $ret;
     }
-    
+
     /**
      * Verifies that given node has all we need to construct the popup
      */
@@ -220,19 +222,140 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $event = false;
-        
+
         $event = new org_openpsa_calendar_event($guid);
         debug_add("event: ===\n" . sprint_r($event) . "===\n");
-
-        switch (true)
+        if (   is_object($event)
+            && $event->id)
         {
-            case is_object($event):
-                debug_pop();
-                return "event/{$guid}/";
-                break;
+            debug_pop();
+            return "event/{$guid}/";
+            break;
         }
         debug_pop();
         return null;
+    }
+
+    /**
+     * Support for contacts person merge
+     */
+    function org_openpsa_contacts_duplicates_merge_person(&$person1, &$person2, $mode)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        switch($mode)
+        {
+            case 'all':
+                break;
+            /*
+            case 'future':
+                // Calendar should have future mode but we don't support it yet
+
+                break;
+            */
+            default:
+                // Mode not implemented
+                debug_add("mode {$mode} not implemented", MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;
+                break;
+        }
+        $qb = org_openpsa_calendar_eventmember::new_query_builder();
+        // Make sure we stay in current SG even if we could see more
+        $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
+        $qb->begin_group('OR');
+            // We need the remaining persons memberships later when we compare the two
+            $qb->add_constraint('uid', '=', $person1->id);
+            $qb->add_constraint('uid', '=', $person2->id);
+        $qb->end_group();
+        $members = $qb->execute();
+        if ($members === false)
+        {
+            // Some error with QB
+            debug_add('QB Error', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        // Transfer memberships
+        $membership_map = array();
+        foreach ($members as $member)
+        {
+            if ($member->uid != $person1->id)
+            {
+                debug_add("Transferred event membership #{$member->id} to person #{$person1->id} (from #{$member->uid})");
+                $member->uid = $person1->id;
+            }
+            if (   !isset($membership_map[$member->eid])
+                || !is_array($membership_map[$member->eid]))
+            {
+                $membership_map[$member->eid] = array();
+            }
+            $membership_map[$member->eid][] = $member;
+        }
+        unset($members);
+        // Merge memberships
+        foreach ($membership_map as $eid => $members)
+        {
+            foreach ($members as $key => $member)
+            {
+                if (count($members) == 1)
+                {
+                    // We only have one membership in this event, skip rest of the logic
+                    if (!$member->update())
+                    {
+                        // Failure updating member
+                        debug_add("Failed to update eventmember #{$member->id}, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+                        debug_pop();
+                        return false;
+                    }
+                    continue;
+                }
+
+                // TODO: Compare memberships to determine which of them are identical and thus not worth keeping
+
+                if (!$member->update())
+                {
+                    // Failure updating member
+                    debug_add("Failed to update eventmember #{$member->id}, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+                    debug_pop();
+                    return false;
+                }
+            }
+        }
+
+        // Transfer metadata dependencies from classes that we drive
+        $classes = array(
+            'org_openpsa_calendar_event',
+            'org_openpsa_calendar_eventmember',
+        );
+        foreach($classes as $class)
+        {
+            if ($version_not_18 = true)
+            {
+                switch($class)
+                {
+                    default:
+                        $metadata_fields = array(
+                            'creator' => 'id',
+                            'revisor' => 'id' // Though this will probably get touched on update we need to check it anyways to avoid invalid links
+                        );
+                        break;
+                }
+            }
+            else
+            {
+                // TODO: 1.8 metadata format support
+            }
+            $ret = org_openpsa_contacts_duplicates_merge::person_metadata_dependencies_helper($class, $person1, $person2, $metadata_fields);
+            if (!$ret)
+            {
+                // Failure updating metadata
+                debug_add("Failed to update metadata dependencies in class {$class}, errsrtr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;
+            }
+        }
+        debug_pop();
+        return true;
     }
 
 }

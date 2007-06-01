@@ -6,7 +6,7 @@
  * @copyright Nemein Oy http://www.nemein.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
- 
+
 /**
  * Baseclass for deliverables plugins
  */
@@ -15,7 +15,7 @@ class org_openpsa_projects_deliverables_interface_plugin
     var $_deliverable; //A deliverable object
     var $name; //Name of the plugin
     var $description; //Description of the plugin
-    
+
     function org_openpsa_projects_deliverables_interface_plugin($identifier=NULL)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -29,7 +29,7 @@ class org_openpsa_projects_deliverables_interface_plugin
         }
         debug_pop();
     }
-    
+
     /**
      * Returns true or false depending on whether the plugin considers the target
      * "delivered" or not.
@@ -56,7 +56,7 @@ class org_openpsa_projects_deliverables_interface_plugin
             return false;
         }
         debug_pop();
-        return "<div class=\"org_openpsa_projects_deliverables_interface_plugin\">{$this->name}</div>\n";        
+        return "<div class=\"org_openpsa_projects_deliverables_interface_plugin\">{$this->name}</div>\n";
     }
 
     /**
@@ -84,7 +84,7 @@ class org_openpsa_projects_deliverables_interface_plugin
         debug_pop();
         return true;
     }
-    
+
     /**
      * Depending on deliverable status this will either render a way to
      * create the target or a link to the target
@@ -127,5 +127,5 @@ class org_openpsa_projects_deliverables_interface_plugin
         return true;
     }
 }
- 
+
 ?>

@@ -6,8 +6,8 @@ global $view_enable_notes;
 $view_object = mgd_get_object_by_guid($view->view);
 
 $data = $view->datamanager->data;
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-$attachmentserver = $GLOBALS["midcom"]->midgard->self . "midcom-serveattachmentguid-";
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+$attachmentserver = $_MIDCOM->midgard->self . "midcom-serveattachmentguid-";
 ?>
 
 <h2><?php echo $GLOBALS["view_l10n"]->get("edit photo"); ?></h2>

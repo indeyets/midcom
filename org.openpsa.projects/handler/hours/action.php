@@ -1,7 +1,7 @@
 <?php
 /**
  * @package org.openpsa.projects
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: action.php,v 1.3 2006/05/13 11:36:45 rambo Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,18 +9,18 @@
 
 /**
  * Hour report action handler
- * 
+ *
  * @package org.openpsa.projects
  */
 class org_openpsa_projects_handler_hours_action extends midcom_baseclasses_components_handler
 {
     var $_datamanagers;
 
-    function org_openpsa_projects_handler_hours_action() 
+    function org_openpsa_projects_handler_hours_action()
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     function _on_initialize()
     {
         $this->_datamanagers =& $this->_request_data['datamanagers'];
@@ -37,24 +37,24 @@ class org_openpsa_projects_handler_hours_action extends midcom_baseclasses_compo
 
         if (!$this->_datamanagers[$type]) {
             $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
-            // This will exit. 	 
+            // This will exit.
         }
     }
 
     function _load_hours($identifier)
     {
-    
+
         $hours = new org_openpsa_projects_hour_report($identifier);
-        
+
         if (!is_object($hours))
         {
             return false;
         }
 
-        /* checkbox widget won't work with ajax editing existing hours unless 
+        /* checkbox widget won't work with ajax editing existing hours unless
            this is done already here */
         org_openpsa_projects_viewer::_hack_dm_for_ajax_hours();
-        
+
         // Load the hours to datamanager
         if (!$this->_datamanagers['hours']->init($hours))
         {
@@ -72,7 +72,7 @@ class org_openpsa_projects_handler_hours_action extends midcom_baseclasses_compo
             "storage" => null,
             "success" => false,
         );
-        
+
         $hour_report = new org_openpsa_projects_hour_report();
         // Be smart about the task
         if ($this->_list_type == 'task')
@@ -89,13 +89,13 @@ class org_openpsa_projects_handler_hours_action extends midcom_baseclasses_compo
             $hour_report->invoiceable = true;
         }
         //debug_add("about to create hour_report\n===\n" . sprint_r($hour_report) . "===\n");
-                
+
         if (!$hour_report->create())
         {
             debug_pop();
             return null;
         }
-        
+
         $this->_request_data['hour_report'] = new org_openpsa_projects_hour_report($hour_report->id);
         $result["storage"] =& $this->_request_data['hour_report'];
         $result["success"] = true;
@@ -105,7 +105,7 @@ class org_openpsa_projects_handler_hours_action extends midcom_baseclasses_compo
         debug_pop();
         return $result;
     }
-    
+
     function _handler_action($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -114,22 +114,22 @@ class org_openpsa_projects_handler_hours_action extends midcom_baseclasses_compo
         {
             return false;
         }
-        
+
         $this->_list_type = $args[0];
         $this->_list_identifier = $args[1];
         $action = $args[2];
-        
+
         switch ($this->_list_type)
         {
             case 'task':
                 $_MIDCOM->skip_page_style = true;
                 break;
-            default:  
-                return false;     
+            default:
+                return false;
         }
-        
+
         debug_add("Got POST:\n===\n" . sprint_r($_POST) . "===\n");
-        
+
         $ajax = new org_openpsa_helpers_ajax();
         switch ($action)
         {
@@ -166,12 +166,12 @@ class org_openpsa_projects_handler_hours_action extends midcom_baseclasses_compo
                         debug_pop();
                         $ajax->simpleReply(true, mgd_errstr());
                         // This will exit
-                                   
+
                     case MIDCOM_DATAMGR_CANCELLED:
                         debug_pop();
                         $ajax->simpleReply(false, 'MIDCOM_DATAMGR_CANCELLED');
                         // This will exit
-                        
+
                     case MIDCOM_DATAMGR_FAILED:
                         debug_pop();
                         $ajax->simpleReply(false, mgd_errstr());
@@ -181,7 +181,7 @@ class org_openpsa_projects_handler_hours_action extends midcom_baseclasses_compo
                         $ajax->simpleReply(false, 'Unknown DataManager return code');
                         // This will exit
                 }
-                
+
             case 'create':
                 /* Ajax booleans won't work on create unless we hack them before even loading the schema
                    so we kill the previous instance (if initialized) and go on to create a hacked one */
@@ -197,7 +197,7 @@ class org_openpsa_projects_handler_hours_action extends midcom_baseclasses_compo
                     debug_pop();
                     $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                         "Failed to initialize datamanger in creation mode for schema 'default'.");
-                    // This will exit   
+                    // This will exit
                 }
                 //Workaround to weird MidCOM issue
                 ini_set('error_reporting', E_ERROR);
@@ -209,31 +209,31 @@ class org_openpsa_projects_handler_hours_action extends midcom_baseclasses_compo
                         debug_pop();
                         $ajax->simpleReply(false, 'MIDCOM_DATAMGR_CREATING');
                         // This will exit
-                    
+
                     case MIDCOM_DATAMGR_EDITING:
-                    case MIDCOM_DATAMGR_SAVED:                    
+                    case MIDCOM_DATAMGR_SAVED:
                         debug_add("First time submit, the DM has created an object");
                         debug_pop();
                         $ajax->simpleReply(true, mgd_errstr());
                         // This will exit
-                                            
+
                     case MIDCOM_DATAMGR_CANCELLED_NONECREATED:
                         debug_add('Cancel without anything being created, redirecting to the welcome screen.');
                         debug_pop();
                         $ajax->simpleReply(false, 'MIDCOM_DATAMGR_CANCELLED_NONECREATED');
                         // This will exit
-                    
+
                     case MIDCOM_DATAMGR_CANCELLED:
                         debug_pop();
                         $ajax->simpleReply(false, 'MIDCOM_DATAMGR_CANCELLED');
                         // This will exit
-                        
+
                     case MIDCOM_DATAMGR_FAILED:
                     case MIDCOM_DATAMGR_CREATEFAILED:
                         debug_pop();
                         $ajax->simpleReply(false, mgd_errstr());
                         // This will exit
-                        
+
                     default:
                         debug_pop();
                         $ajax->simpleReply(false, 'Datamanger method unknown');

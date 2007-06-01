@@ -72,6 +72,7 @@ class net_nehmer_static_handler_admin extends midcom_baseclasses_components_hand
                 MIDCOM_TOOLBAR_URL => "edit/{$this->_article->guid}.html",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                MIDCOM_TOOLBAR_ACCESSKEY => 'e',
             ));
         }
         if ($this->_article->can_do('midgard:delete'))
@@ -80,6 +81,7 @@ class net_nehmer_static_handler_admin extends midcom_baseclasses_components_hand
                 MIDCOM_TOOLBAR_URL => "delete/{$this->_article->guid}.html",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                MIDCOM_TOOLBAR_ACCESSKEY => 'd',
             ));
         }
     }
@@ -195,6 +197,7 @@ class net_nehmer_static_handler_admin extends midcom_baseclasses_components_hand
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The article {$args[0]} was not found.");
             // This will exit.
         }
+        
         $this->_article->require_do('midgard:update');
 
         $this->_load_controller();
@@ -215,7 +218,8 @@ class net_nehmer_static_handler_admin extends midcom_baseclasses_components_hand
 
         $this->_prepare_request_data();
         $_MIDCOM->substyle_append($this->_controller->datamanager->schema->name);
-        $_MIDCOM->set_26_request_metadata($this->_article->revised, $this->_article->guid);
+        $_MIDCOM->substyle_append('admin');
+        $_MIDCOM->set_26_request_metadata($this->_article->metadata->revised, $this->_article->guid);
         $this->_view_toolbar->bind_to($this->_article);
         $this->_component_data['active_leaf'] = $this->_article->id;
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_article->title}");
@@ -280,7 +284,8 @@ class net_nehmer_static_handler_admin extends midcom_baseclasses_components_hand
 
         $this->_prepare_request_data();
         $_MIDCOM->substyle_append($this->_datamanager->schema->name);
-        $_MIDCOM->set_26_request_metadata($this->_article->revised, $this->_article->guid);
+        $_MIDCOM->substyle_append('admin');
+        $_MIDCOM->set_26_request_metadata($this->_article->metadata->revised, $this->_article->guid);
         $this->_view_toolbar->bind_to($this->_article);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_article->title}");
         $this->_component_data['active_leaf'] = $this->_article->id;

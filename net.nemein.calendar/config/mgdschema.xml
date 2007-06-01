@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+
+  <type name="net_nemein_calendar_event_db" table="event">
+    <!-- Start copied from midgard_event -->
+    <property name="id"       type="integer" primaryfield="id"/>
+    <property name="start"    type="integer"/>
+    <property name="end"      type="integer"/>
+    <property name="title"    type="string"/>
+    <property name="description" type="longtext"/>
+    <property name="type"     type="integer"/>
+    <property name="extra"    type="string"/>
+    <property name="busy"     type="boolean"/>
+    <property name="revised"  type="datetime"/>
+    <property name="revision" type="integer"/>
+    <property name="created"  type="datetime"/>
+    <property name="locked"   type="datetime"/>
+    <property name="owner"    type="integer" link="midgard_group:id"/>
+    <property name="creator"  type="integer" link="midgard_person:id"/>
+    <property name="revisor"  type="integer" link="midgard_person:id"/>
+    <property name="locker"   type="integer" link="midgard_person:id"/>
+    <property name="up"       upfield="up"/>
+    <!-- End copied from midgard_event -->
+    
+    <property name="openregistration" type="integer"/>
+    <property name="closeregistration" type="integer"/>
+    <property name="location" type="string" />
+  </type>
+  
+</Schema>

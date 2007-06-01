@@ -4,7 +4,7 @@ global $view;
 global $view_descriptions;
 global $view_id;
 
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
 
 <dl>

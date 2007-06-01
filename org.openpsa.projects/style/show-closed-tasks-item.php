@@ -1,14 +1,14 @@
 <?php
-$view_data =& $GLOBALS['midcom']->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $nap = new midcom_helper_nav();
 $node = $nap->get_node($nap->get_current_node());
 ?>
     <dt>
-        <a class="closed" href="<?php echo $node[MIDCOM_NAV_FULLURL]; ?>task/<?php echo $view_data['task']->guid; ?>/"><?php echo $view_data['task']->title; ?></a>
+        <a class="closed" href="<?php echo $node[MIDCOM_NAV_FULLURL]; ?>task/<?php echo $data['task']->guid; ?>/"><?php echo $data['task']->title; ?></a>
         <?php
-        if ($view_data['task']->up)
+        if ($data['task']->up)
         {
-            $parent = $view_data['task']->get_parent();
+            $parent = $data['task']->get_parent();
             if ($parent->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_PROJECT)
             {
                 $parent_url = "{$node[MIDCOM_NAV_FULLURL]}project/{$parent->guid}/";

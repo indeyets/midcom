@@ -67,6 +67,10 @@ Approve registration
 Approved by %s on %s
 ---STRINGEND
 
+---STRING auto_approve
+Automatically approve all registrations
+---STRINGEND
+
 ---STRING back to event overview
 Return to the event overview
 ---STRINGEND
@@ -89,6 +93,10 @@ Additional recipients for registration notification e-mails apart from the regis
 
 ---STRING click here to log out.
 Click here to log out.
+---STRINGEND
+
+---STRING close registration at
+Close the event from registrations at
 ---STRINGEND
 
 ---STRING close the event for registration now
@@ -137,6 +145,10 @@ Line separator
 
 ---STRING current configuration
 Current configuration
+---STRINGEND
+
+---STRING default additional questions schema
+Default "Additional Questions" schema
 ---STRINGEND
 
 ---STRING default notification email
@@ -235,12 +247,20 @@ Failed to open the registration %u: %s
 Failed to open the root event %s: %s
 ---STRINGEND
 
+---STRING first name
+First name
+---STRINGEND
+
 ---STRING group for active accounts
 Midgard user group for active accounts
 ---STRINGEND
 
 ---STRING group for pending accounts
 Midgard user group for pending accounts
+---STRINGEND
+
+---STRING last name
+Last name
 ---STRINGEND
 
 ---STRING list all events
@@ -295,6 +315,10 @@ No selection made yet, the first schema will be used by default.
 No, I do not want to delete this registration.
 ---STRINGEND
 
+---STRING notes
+Notes
+---STRINGEND
+
 ---STRING notification email
 E-Mail address to use for registration notifications (leave empty to use the default.)
 ---STRINGEND
@@ -307,8 +331,16 @@ registration open
 Open the event for registration
 ---STRINGEND
 
+---STRING open registration at
+Open the event for registration at
+---STRINGEND
+
 ---STRING open the even for registration now
 Open the event for registration now
+---STRINGEND
+
+---STRING override global notification e-mail
+Override global notification E-Mail; leave empty to use the global default
 ---STRINGEND
 
 ---STRING please answer these questions to complete registration
@@ -471,7 +503,7 @@ You have already registered for this event.
 Your account has been activated successfully.
 ---STRINGEND
 
----STRING auto_approve
-Automatically approve all registrations
+---STRING privilege manage
+Registration management
 ---STRINGEND
 

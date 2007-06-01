@@ -1,14 +1,14 @@
 <?php
 /**
  * Class for rendering calendar widgets
- * 
+ *
  * Calendarwidget uses the hCalendar microformat to produce output that is easy to style via CSS
  * and can be easily converted to machine-readable iCalendar.
- * 
+ *
  * Inspiration from http://www.meyerweb.com/eric/css/discuss/examples/notable-calendar.html
- * 
+ *
  * @package org.openpsa.calendarwidget
- * @author Henri Bergius, http://bergie.iki.fi 
+ * @author Henri Bergius, http://bergie.iki.fi
  * @version $Id: main.php,v 1.26 2006/07/21 08:40:58 rambo Exp $
  * @copyright Nemein Oy, http://www.nemein.com
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -17,9 +17,9 @@
 class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
 {
     /**
-     * Which calendar are we showing, 
+     * Which calendar are we showing,
      * Use constants like ORG_OPENPSA_CALENDARWIDGET_MONTH
-     * 
+     *
      * @var int
      */
     var $type = ORG_OPENPSA_CALENDARWIDGET_WEEK;
@@ -33,35 +33,35 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
 
     /**
      * Year being currently shown
-     * 
+     *
      * @var int
      */
     var $year;
 
     /**
      * Month being currently shown
-     * 
+     *
      * @var int
      */
     var $month;
 
     /**
      * Day being currently shown
-     * 
+     *
      * @var int
      */
     var $day;
-    
+
     /**
      * Hour to start the day view
-     * 
+     *
      * @var int
      */
     var $start_hour = 8;
 
     /**
      * Hour to end the day view
-     * 
+     *
      * @var int
      */
     var $end_hour = 17;
@@ -69,7 +69,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
     /**
      * How wide the reservation columns should be
      * Value must be a valid CSS size option (pixels, percentage, em)
-     * 
+     *
      * @var string
      */
     var $column_width = 30;
@@ -77,7 +77,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
     /**
      * How high the reservation cell units should be
      * Value must be integer of pixels
-     * 
+     *
      * @var int
      */
     var $cell_height = 40;
@@ -86,19 +86,19 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
      * Optional HTML attributes for reservation slot <div />s
      *
      * @var Array
-     */    
+     */
     var $reservation_div_options = array();
 
     /**
      * Optional HTML attributes for free slot <div />s
      *
      * @var Array
-     */    
+     */
     var $free_div_options = array();
 
     /**
      * Resources and reservations to be rendered in the calendar as PHP array
-     * 
+     *
      * Example:
      *
      * <code>
@@ -131,19 +131,19 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
      * Cache of reservations we've shown already
      *
      * @var Array
-     */    
+     */
     var $_reservations_shown = Array();
 
     /**
      * Cache of different timestamps used internally
      *
      * @var Array
-     */    
+     */
     var $_timestamp_cache = Array();
 
     /**
      * Initializes the class and sets the selected date to be shown
-     * 
+     *
      * @param int $year Selected year YYYY
      * @param int $month Selected month MM
      * @param int $day Selected day DD
@@ -151,7 +151,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
     function org_openpsa_calendarwidget($year = null, $month = null, $day = null)
     {
         parent::midcom_baseclasses_components_purecode();
-        
+
         // Default time shown is current
         if ($year)
         {
@@ -181,14 +181,14 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
         }
 
     }
-    
+
     function _calculate_height($start_time, $end_time, $cell_height = null)
     {
         if (!$cell_height)
         {
             $cell_height = $this->cell_height;
         }
-    
+
         if ($this->type == ORG_OPENPSA_CALENDARWIDGET_MONTH)
         {
             // TODO: Handle multiple day events
@@ -201,7 +201,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
             return ($cell_height / $this->calendar_slot_length) * $length;
         }
     }
-    
+
     /**
      * Get start timestamp of the current month
      * @return integer Timestamp showing first second of the month
@@ -214,7 +214,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
         }
         return $this->_timestamp_cache['month_start'];
     }
-    
+
     /**
      * Get end timestamp of the current month
      * @return integer Timestamp showing last second of the month
@@ -226,12 +226,12 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
             $this->_timestamp_cache['month_end'] = mktime(23, 59, 59, $this->month + 1, 0, $this->year);
         }
         return $this->_timestamp_cache['month_end'];
-    }    
-    
+    }
+
     /**
      * Get start timestamp of the current day
      * @return integer Timestamp showing first second of the day
-     */    
+     */
     function get_day_start()
     {
         if (!array_key_exists('day_start', $this->_timestamp_cache))
@@ -244,7 +244,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
     /**
      * Get end timestamp of the current day
      * @return integer Timestamp showing last second of the day
-     */  
+     */
     function get_day_end()
     {
         if (!array_key_exists('day_end', $this->_timestamp_cache))
@@ -259,7 +259,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
      * Get start timestamp of the selected week. Use this to tune queries for selecting reservations
      * @param integer $timestamp Timestamp to use instead of the current date
      * @return integer Timestamp showing first second of the week
-     */    
+     */
     function get_week_start($timestamp = null)
     {
         if ($timestamp)
@@ -277,13 +277,13 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
      * Get end timestamp of the selected week. Use this to tune queries for selecting reservations
      * @param integer $timestamp Timestamp to use instead of the current date
      * @return integer Timestamp showing last second of the week
-     */    
+     */
     function get_week_end($timestamp = null)
     {
         if ($timestamp)
         {
             return mktime(23, 59, 59, $this->month, strftime('%d', $this->get_week_start($timestamp)) + 6, $this->year);
-        }    
+        }
         if (!array_key_exists('week_end', $this->_timestamp_cache))
         {
             $this->_timestamp_cache['week_end'] = mktime(23, 59, 59, strftime('%m',$this->get_week_start()), strftime('%d',$this->get_week_start()) + 6, strftime('%Y',$this->get_week_start()));
@@ -295,13 +295,13 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
     {
         $reservations_found = array();
         $reservations_added = 0;
-                                            
+
         if (   !isset($resource['reservations'])
-	    || !is_array($resource['reservations']))
-	{
-	    debug_add('resource[reservations] is not an array, aborting', MIDCOM_LOG_WARN);
-	    return $reservations_found;
-	}
+        || !is_array($resource['reservations']))
+    {
+        debug_add('resource[reservations] is not an array, aborting', MIDCOM_LOG_WARN);
+        return $reservations_found;
+    }
         // TODO: This is friggin' slow
         foreach ($resource['reservations'] as $res_guid => $reservation)
         {
@@ -310,14 +310,14 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                 // We've shown this already. Skip.
                 continue;
             }
-                    
+
             if ($reservation['start'] >= $start && $reservation['start'] < $end)
             {
                 // This reservation starts in current slot
                 $reservation['guid'] = $res_guid;
                 $reservations_found[$reservations_added] = $reservation;
                 $reservations_added++;
-                continue;                        
+                continue;
             }
 
             if ($reservation['end'] <= $end)
@@ -326,9 +326,9 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                 $reservation['guid'] = $res_guid;
                 $reservations_found[$reservations_added] = $reservation;
                 $reservations_added++;
-                continue;                        
+                continue;
             }
-            
+
             if (   $reservation['end'] > $end
                 && $reservation['start'] < $start)
             {
@@ -352,10 +352,10 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
         {
             $slots[$slots_added] = 'before';
         }
-        
+
         $slot_start = mktime($this->start_hour, 0, 0, date('m',$current_day), date('d',$current_day), date('Y',$current_day));
         $slot_end = mktime($this->end_hour, 59, 0, date('m',$current_day), date('d',$current_day), date('Y',$current_day));
-        
+
         $current_time = $slot_start;
         while ($current_time <= $slot_end)
         {
@@ -363,7 +363,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
             $slots[$slots_added] = $current_time;
             $current_time = $current_time + $this->calendar_slot_length;
         }
-        
+
         if ($this->end_hour < 24)
         {
             $slots[$slots_added + 1] = 'after';
@@ -373,7 +373,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
 
     /**
      * Show the selected calendar. Outputs XHTML.
-     */    
+     */
     function show()
     {
         echo '<div id="org_openpsa_calendarwidget">';
@@ -391,7 +391,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
         }
         echo '</div>';
     }
-    
+
     function _show_month($start, $end)
     {
         $current_day = $this->get_week_start($start);
@@ -403,7 +403,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
             $next_day = mktime(0, 0, 0, date('m',$current_day), date('d',$current_day) + 1, date('Y',$current_day));
             if ($current_day < $start || $current_day > $end)
             {
-                echo "<div class=\"day\" style=\"width: {$this->column_width}px; height: {$this->cell_height}px;\"></div>"; 
+                echo "<div class=\"day\" style=\"width: {$this->column_width}px; height: {$this->cell_height}px;\"></div>";
             }
             else
             {
@@ -413,7 +413,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
         }
         echo '</div>';
     }
-    
+
     function _show_week_verbose($start, $end)
     {
         $current_day = $start;
@@ -427,9 +427,9 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
             $i--;
         }
     }
-    
+
     function _show_day($start, $end, $clean_weeks=true)
-    {        
+    {
         $additional_day_css = '';
         if ($clean_weeks)
         {
@@ -438,9 +438,9 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                 $additional_day_css .= ' clear: both;';
             }
         }
-        
+
         $event_shown_today = array();
-        
+
         $day_class = "day";
         if ($end < time())
         {
@@ -449,11 +449,11 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
         echo "\n\n";
         echo "<div class=\"{$day_class}\" style=\"width: {$this->column_width}px; height: {$this->cell_height}px;{$additional_day_css}\">";
         echo '<h2>'.strftime("%a", $start).' <span class="metadata">'.strftime("%x", $start).'</span></h2>';
-        
+
         // Show reservations as list
         foreach ($this->_resources as $guid => $resource)
         {
-            $resource['guid'] = $guid;        
+            $resource['guid'] = $guid;
             $reservations = $this->_get_reservations_between($resource, $start, $end);
             if (count($reservations) > 0)
             {
@@ -474,10 +474,10 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                         }
                         continue;
                     }
-                
+
                     $start_time = date('H:i', $reservation['start']);
                     $end_time = date('H:i', $reservation['end']);
-                    
+
                     $additional_attributes = "";
                     if (count($this->reservation_div_options) > 0)
                     {
@@ -485,24 +485,24 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                         {
                             // Do replacements
                             $value = str_replace('__GUID__', $reservation['guid'], $value);
-                            
+
                             $additional_attributes .= " {$attribute}=\"{$value}\"";
                         }
                     }
-                               
+
                     echo "<li title=\"{$start_time}-{$end_time}: {$reservation['name']}\">{$start_time}-{$end_time} <span class=\"reservation\"{$additional_attributes}\">{$reservation['name']}</span></li>\n";
                     if ($reservation['end'] < $end)
                     {
                         // This reservation ends here
                         $this->_reservations_shown["{$resource['guid']}_{$reservation['guid']}"] = true;
                         $event_shown_today[$guid] = true;
-                    }   
-                }      
-                echo '</ul>';   
-            }                  
+                    }
+                }
+                echo '</ul>';
+            }
         }
         echo '</div>';
-        
+
     }
 
     function _hcalendar_from_reservations($resource, $reservations, $start, $after_start, $end, $before_end, $resources_shown = false, $slots)
@@ -510,13 +510,13 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
         $previous_start = 0;
         $previous_end = 0;
         $previous_top = 0;
-        
+
         foreach ($reservations as $guid => $reservation)
-        {   
+        {
             // Calculate event width and position
             $event_left = 0;
             $event_width = 5;
-            
+
             if (!$resources_shown)
             {
                 $label_width = 100;
@@ -525,7 +525,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
             {
                 $label_width = 0;
             }
-            
+
             if (   $reservation['start'] < $before_end
                 && $reservation['end'] > $before_end
                 && $reservation['end'] < $after_start)
@@ -540,14 +540,14 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                 // This event starts in the "before" block and ends after the "after" slot
                 $event_left = $label_width;
                 $event_width = ((($after_start - $before_end) / $this->calendar_slot_length) * $this->column_width) + $this->column_width;
-            }                    
+            }
             elseif (   $reservation['start'] < $after_start
                 && $reservation['end'] > $after_start)
             {
                 // This event starts in "normal" block and ends in the "after" slot or some next day
                 $event_left = $label_width + ($this->column_width / 2) + (($reservation['start'] - $before_end) / $this->calendar_slot_length) * $this->column_width;
                 $event_width = ((($after_start - $reservation['start']) / $this->calendar_slot_length) * $this->column_width) + ($this->column_width / 2);
-            }                    
+            }
             elseif (   $reservation['start'] < $before_end
                     && $reservation['end'] <= $before_end)
             {
@@ -567,7 +567,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                 $event_left = round($label_width + ($this->column_width / 2) + (($reservation['start'] - $before_end) / $this->calendar_slot_length) * ($this->column_width));
                 $event_width = round((($reservation['end'] - $reservation['start']) / $this->calendar_slot_length) * $this->column_width);
             }
-            
+
             // Calculate top margin for overlap handling
             $event_top = 0;
             if ($reservation['start'] < $previous_end)
@@ -580,7 +580,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
             {
                 $previous_top = 0;
             }
-            
+
             if ($reservation['end'] > $previous_end)
             {
                 // Expand the overlapping zone from end
@@ -591,14 +591,14 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                 // Expand the overlapping zone from start
                 $previous_start = $reservation['start'];
             }
-            
+
             // Reduce paddings
             $event_width = $event_width - 4;
             if ($event_width < 5)
             {
                 $event_width = 5;
             }
-            
+
             // Do more styling based on status
             if (array_key_exists('css_class', $reservation))
             {
@@ -608,7 +608,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
             {
                 $additional_event_class = '';
             }
-            
+
             if ($reservation['end'] > $end)
             {
                 // This event ends after the day
@@ -619,7 +619,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                 // This event starts before the day
                 $additional_event_class .= ' starting_before';
             }
-            
+
             $additional_attributes = "";
             if (count($this->reservation_div_options) > 0)
             {
@@ -627,23 +627,23 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                 {
                     // Do replacements
                     $value = str_replace('__GUID__', $reservation['guid'], $value);
-                    
+
                     $additional_attributes .= " {$attribute}=\"{$value}\"";
                 }
-            }                    
+            }
 
             $start_time = date('H:i', $reservation['start']);
             $end_time = date('H:i', $reservation['end']);
-                        
+
             echo "          <div class=\"vevent{$additional_event_class}\"  title=\"{$start_time}-{$end_time}: {$reservation['name']}\" style=\"width: {$event_width}px; left: {$event_left}px; top: {$event_top}px;\"{$additional_attributes}>\n";
             echo "            <span class=\"time\">\n";
             echo "              <abbr class=\"dtstart\" title=\"".gmdate('Y-m-d\TH:i:s\Z', $reservation['start']). "\">{$start_time}</abbr>\n";
-            echo "              <abbr class=\"dtend\" title=\"".gmdate('Y-m-d\TH:i:s\Z', $reservation['end']). "\">{$end_time}</abbr>\n";                    
+            echo "              <abbr class=\"dtend\" title=\"".gmdate('Y-m-d\TH:i:s\Z', $reservation['end']). "\">{$end_time}</abbr>\n";
             echo "            </span>\n";
-                       
+
             echo "            <span class=\"summary\">{$reservation['name']}</span>\n";
             echo "          </div>\n";
-            
+
             if ($reservation['end'] < $end)
             {
                 // This reservation ends here
@@ -657,17 +657,17 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
     {
         // Get timestamps of the day's slots
         $slots = $this->_get_day_slots($start);
-        
+
         $event_shown_today = array();
-        
+
         static $resources_shown = false;
-        
+
         $before_end = null;
         $after_start = null;
-                    
+
         echo "\n\n";
         echo "<table class=\"calendarwidget\">\n";
-        
+
         if ($this->type != ORG_OPENPSA_CALENDARWIDGET_DAY)
         {
             echo "  <caption>".strftime("%A %e. %B", $start)."</caption>\n";
@@ -693,23 +693,23 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
             }
             else
             {
-                if (   is_null($before_end) 
+                if (   is_null($before_end)
                     || $slot_time < $before_end)
                 {
                     // This is the first real slot
                     $before_end = $slot_time;
                 }
-                
-                if (   is_null($after_start) 
+
+                if (   is_null($after_start)
                     || $slot_time + $this->calendar_slot_length > $after_start)
                 {
                     // This is the first real slot
                     $after_start = $slot_time + $this->calendar_slot_length;
-                }                
-            
+                }
+
                 $slot_label = strftime("%H:%M", $slot_time);
                 $css_class = "";
-                if (   $this->calendar_slot_length == 3600 
+                if (   $this->calendar_slot_length == 3600
                     || $this->calendar_slot_length == 7200)
                 {
                     // Slots are even hours, no minutes needed
@@ -726,25 +726,25 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
         echo "    </tr>\n";
         echo "  </thead>\n";
 
-        echo "  <tbody>\n";        
+        echo "  <tbody>\n";
         // Show reservations as list
         foreach ($this->_resources as $guid => $resource)
         {
             $resource['guid'] = $guid;
-            
+
             $css_class = '';
             if (array_key_exists('css_class', $resource))
             {
                 $css_class = " class=\"{$resource['css_class']}\"";
             }
-            
+
             echo "    <tr{$css_class}>\n";
-             
+
             if (!$resources_shown)
             {
                 echo "      <th>\n";
                 echo "        <div class=\"eventlist\">\n";
-                echo "          <span class=\"assignee\">{$resource['name']}</span>\n";     
+                echo "          <span class=\"assignee\">{$resource['name']}</span>\n";
                 $reservations = $this->_get_reservations_between($resource, $start, $end);
                 if (count($reservations) > 0)
                 {
@@ -753,7 +753,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                 echo "          </div>\n";
                 echo "      </th>\n";
             }
-            
+
             foreach ($slots as $slot_id => $slot_time)
             {
                 $additional_free_attributes = "";
@@ -773,11 +773,11 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                         }
                         $value = str_replace('__START__', $start_time, $value);
                         $value = str_replace('__RESOURCE__', $guid, $value);
-                            
+
                         $additional_free_attributes .= " {$attribute}=\"{$value}\"";
                     }
                 }
-            
+
                 if ($slot_time == "before")
                 {
                     $width = ($this->column_width / 2) - 1;
@@ -793,7 +793,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                         }
                         echo "          </div>\n";
                         echo "        </td>\n";
-                    
+
                     }
                     else
                     {
@@ -803,7 +803,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                 elseif ($slot_time == "after")
                 {
                     $width = ($this->column_width / 2) - 1;
-                    
+
                     echo "      <td class=\"end\" style=\"width: {$width}px;\"{$additional_free_attributes}>&nbsp;</td>\n";
                 }
                 else
@@ -814,9 +814,9 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                         $css_class = " class=\"past\"";
                     }
                     $slot_width = $this->column_width - 1;
-                    echo "      <td{$css_class} width=\"{$slot_width}\" style=\"width: {$slot_width}px;\"{$additional_free_attributes}>&nbsp;</td>\n";   
+                    echo "      <td{$css_class} width=\"{$slot_width}\" style=\"width: {$slot_width}px;\"{$additional_free_attributes}>&nbsp;</td>\n";
                 }
-            }              
+            }
         }
         //$resources_shown = true;
         echo "  </tbody>\n";
@@ -829,7 +829,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
         echo "\n\n";
         echo '<div class="day" style="width: ' . $day_width .'px;">';
         echo '<h2>'.strftime("%a", $start).' <span class="metadata">'.strftime("%x", $start).'</span></h2>';
-        
+
         // Get timestamps of the day's slots
         $slots = $this->_get_day_slots($start);
 
@@ -862,11 +862,11 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                     $css_class .= " past";
                 }
                 $height = $this->cell_height - 3;
-                echo "      <div class=\"{$css_class}\" style=\"height: {$height}px;\">$slot_label</div>\n";            
+                echo "      <div class=\"{$css_class}\" style=\"height: {$height}px;\">$slot_label</div>\n";
             }
         }
         echo '</div>';
-       
+
         // Display all given resources
         foreach ($this->_resources as $guid => $resource)
         {
@@ -881,16 +881,16 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
             $slot_start_time = $start;
             $column_contents = array();
             $skip_until = false;
-            
+
             foreach ($slots as $slot_id => $slot_time)
             {
                 $pixels = 0;
-                
+
                 if ($slot_time == "before")
                 {
                     $slot_end_time = $slots[$slot_id + 1] - 1;
                     $slot_height = $this->cell_height / 2;
-                } 
+                }
                 elseif ($slot_time == "after")
                 {
                     $slot_start_time = $slots[$slot_id - 1] + $this->calendar_slot_length;
@@ -903,7 +903,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                     $slot_end_time = $slot_time + $this->calendar_slot_length;
                     $slot_height = $this->cell_height;
                 }
-                
+
                 if ($skip_until)
                 {
                     if ($skip_until > $slot_end_time)
@@ -913,7 +913,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                     $slot_start_time = $skip_until;
                     $skip_until = false;
                 }
-                
+
                 $reservations = $this->_get_reservations_between($resource, $slot_start_time, $slot_end_time);
 
                 if (count($reservations) == 0)
@@ -943,7 +943,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                         {
                             $previous_reservation_end = $slot_start_time;
                         }
-                        
+
                         if (array_key_exists($reservation_id + 1, $reservations))
                         {
                             $next_reservation_start = $reservations[$reservation_id + 1]['start'];
@@ -967,7 +967,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                         }
                         elseif ($reservation['start'] > $slot_start_time)
                         {
-                            if (   $slot_time != "before" 
+                            if (   $slot_time != "before"
                                 && $slot_time != "after")
                             {
                                 // Reservation is first in slot and starts after slot's start time, pad with free time
@@ -981,7 +981,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                                 );
                             }
                         }
-                        
+
                         // Display the reservation
                         if ($reservation['start'] < $start)
                         {
@@ -991,13 +991,13 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                         {
                             $reservation['end'] = $end;
                         }
-                        
+
                         if ($reservation['end'] > $slot_end_time)
                         {
                             // Reservation continues to next slot
                             $skip_until = $reservation['end'];
-                        }                        
-                        
+                        }
+
                         $last_normal_slot = $slots[count($slots) - 2];
                         if ($reservation['end'] > ($last_normal_slot + $this->calendar_slot_length))
                         {
@@ -1012,22 +1012,22 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                         {
                             $height = $this->_calculate_height($reservation['start'], $reservation['end'], $slot_height);
                         }
-                        
+
                         if (   $slot_time == "before"
                             || $slot_time == "after")
                         {
                             $height = $slot_height;
                         }
 
-                        
+
                         $column_contents[] = Array(
                             'height' => $height,
                             'reservation' => $reservation
                         );
-                        
+
                         if ($reservation['end'] < $slot_end_time)
                         {
-                            if (   $slot_time != "before" 
+                            if (   $slot_time != "before"
                                 && $slot_time != "after")
                             {
                                 // Reservation is last in slot and ends before slot's end time, pad with free time
@@ -1040,7 +1040,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                                     'end'       => $slot_end_time,
                                 );
                             }
-                        }                        
+                        }
 
                         if ($reservation['end'] < $end)
                         {
@@ -1054,14 +1054,14 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
             // Show the contents of the column
             foreach ($column_contents as $element)
             {
-            
+
                 if (   array_key_exists('reservation', $element)
                     && $element['reservation'])
                 {
                     $start_time = date('H:i',$element['reservation']['start']);
                     $end_time = date('H:i',$element['reservation']['end']);
                     $height = $element['height'] - 6;
-                    
+
                     $additional_attributes = "";
                     if (count($this->reservation_div_options) > 0)
                     {
@@ -1069,7 +1069,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                         {
                             // Do replacements
                             $value = str_replace('__GUID__', $element['reservation']['guid'], $value);
-                            
+
                             $additional_attributes .= " {$attribute}=\"{$value}\"";
                         }
                     }
@@ -1077,12 +1077,12 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                     {
                         continue;
                     }
-                    
+
                     echo "  <div style=\"height: {$height}px;\" title=\"{$start_time}-{$end_time}\"{$additional_attributes}>{$element['reservation']['name']}</div>\n";
                 }
                 else
                 {
-                
+
                     $height = $element['height'] - 2;
                     $css_class = "";
                     if (array_key_exists('css_rules', $element))
@@ -1103,7 +1103,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                             // Do replacements
                             $value = str_replace('__START__', $element['start'], $value);
                             $value = str_replace('__RESOURCE__', $guid, $value);
-                            
+
                             $additional_free_attributes .= " {$attribute}=\"{$value}\"";
                         }
                     }
@@ -1111,7 +1111,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                     {
                         continue;
                     }
-                    
+
                     echo "  <div class=\"free{$css_class}\" style=\"height: {$height}px;\" title=\"{$start_time}-{$end_time}\"{$additional_free_attributes}></div>\n";
                 }
             }

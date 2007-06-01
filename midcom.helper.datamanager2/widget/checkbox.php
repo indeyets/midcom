@@ -15,11 +15,48 @@
  *
  * This widget supports the boolean type only.
  *
+ * <b>Available configuration options:</b>
+ *
+ * - <i>bool show_title:</i> This flag controls whether the title field is shown or not.
+ *   If this is flag, the whole title processing will be disabled. This flag is true
+ *   by default.
+ * - <i>array jsevents:</i> Array of event=>action pairs to control client side behavior.
+ *   Ex.:
+ *   
+ *   'onclick' => 'do_something(param1)',
+ * 
+ *   will add "onclick='do_something(param1)'" attribute to <input> tag.
+ * - <i>string description</i> Extra description of a QF element placed next to element.
  *
  * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_widget_checkbox extends midcom_helper_datamanager2_widget
 {
+
+	/**
+	 * JS actions bound to widget
+	 *
+	 * @var array
+	 */
+
+	var $jsevents=null;
+
+	/**
+	 * Whether to show field title or not.
+	 *
+	 * @var array
+	 */
+
+	var $show_title = true;
+
+    /**
+     * Additional text added to QF element
+     *
+     * @var array
+     */
+
+    var $description = '';
+
     /**
      * The initialization event handler validates the base type.
      *
@@ -42,7 +79,30 @@ class midcom_helper_datamanager2_widget_checkbox extends midcom_helper_datamanag
      */
     function add_elements_to_form()
     {
-        $this->_form->addElement('checkbox', $this->name, $this->_translate($this->_field['title']), '', Array('class' => 'checkbox'));
+
+        $attr = Array
+        (
+            'class' => 'checkbox',
+            'id'    => "{$this->_namespace}{$this->name}",  //need this for JS events
+        );
+
+        $title = $this->_translate($this->_field['title']);
+
+        if ($this->show_title === false)
+        {
+            $title = '';
+        }
+
+        if (is_array($this->jsevents) && count($this->jsevents))
+        {
+            foreach ($this->jsevents as $event => $action)
+            {
+                $attr[$event] = $action;
+            }
+        }
+
+        $this->_form->addElement('checkbox', $this->name, $title, $this->description, $attr );
+
     }
 
     function get_default()

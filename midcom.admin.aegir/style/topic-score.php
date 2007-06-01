@@ -11,7 +11,7 @@
 
   require_once (MIDCOM_ROOT . '/midcom/helper/itemlist.php');
   //$nav = midcom_helper_itemlist::factory( $view->parameter("midcom.helper.nav", "navorder"), &$nav , &$view);
-  $component = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_COMPONENT);
+  $component = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_COMPONENT);
   $leaves = false;
   if ($component == 'de.linkm.taviewer') {
       $leaves = $nav->list_leaves($nav->get_current_node());

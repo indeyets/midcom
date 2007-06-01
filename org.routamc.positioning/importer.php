@@ -8,7 +8,7 @@
  */
 
 /**
- * Position importing factory class. All importers inherit from this. 
+ * Position importing factory class. All importers inherit from this.
  *
  * @package org.routamc.positioning
  */
@@ -20,7 +20,7 @@ class org_routamc_positioning_importer extends midcom_baseclasses_components_pur
      * @var org_routamc_positioning_log
      */
     var $log = null;
-    
+
     /**
      * Error code from trying to import. Either an mgd_errstr() or an additional error code from component
      *
@@ -36,10 +36,10 @@ class org_routamc_positioning_importer extends midcom_baseclasses_components_pur
          $this->_component = 'org.routamc.positioning';
          parent::midcom_baseclasses_components_purecode();
     }
-    
+
     /**
      * Normalize coordinates into decimal values
-     * 
+     *
      * @return Array
      */
     function normalize_coordinates($latitude, $longitude)
@@ -49,7 +49,7 @@ class org_routamc_positioning_importer extends midcom_baseclasses_components_pur
             'latitude' => null,
             'longitude' => null,
         );
-        
+
         if (!is_float($latitude))
         {
             // TODO: Convert to decimal
@@ -61,10 +61,10 @@ class org_routamc_positioning_importer extends midcom_baseclasses_components_pur
             // TODO: Convert to decimal
         }
         $normalized_coordinates['longitude'] = $longitude;
-        
+
         return $normalized_coordinates;
     }
-    
+
     /**
      * Map locations that are not yet mapped to their nearest city
      */

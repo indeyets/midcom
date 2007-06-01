@@ -72,6 +72,7 @@ class midcom_baseclasses_database_article extends __midcom_baseclasses_database_
         if (count($matches) > 0)
         {
             // This name is already taken
+            mgd_set_errno(MGD_ERR_OBJECT_NAME_EXISTS);
             return false;
         }
         return true;
@@ -142,32 +143,126 @@ class midcom_baseclasses_database_article extends __midcom_baseclasses_database_
      */
     function get_parent_guid_uncached()
     {
-        if ($this->up != 0)
+        if (   isset($this->up)
+            && $this->up != 0)
         {
-            $parent = new midcom_baseclasses_database_article($this->up);
-            if (! $parent)
-            {
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Could not load Article ID {$this->up} from the database, aborting.",
-                    MIDCOM_LOG_INFO);
-                debug_pop();
-                return null;
-            }
+            return midcom_baseclasses_database_article::_get_parent_guid_uncached_static_article($this->up);
         }
-        else
-        {
-            $parent = new midcom_baseclasses_database_topic($this->topic);
-            if (! $parent)
-            {
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Could not load Topic ID {$this->topic} from the database, aborting.",
-                    MIDCOM_LOG_INFO);
-                debug_pop();
-                return null;
-            }
-        }
+        return midcom_baseclasses_database_article::_get_parent_guid_uncached_static_topic($this->topic);
+    }
 
-        return $parent->guid;
+    /**
+     * Statically callable method to get parent guid when object guid is given
+     * 
+     * Uses midgard_collector to avoid unneccessary full object loads
+     *
+     * @param guid $guid guid of topic to get the parent for
+     */
+    function get_parent_guid_uncached_static($guid)
+    {
+        if (empty($guid))
+        {
+            return null;
+        }
+        $mc_article = midcom_baseclasses_database_article::new_collector('guid', $guid);
+        $mc_article->add_value_property('up');
+        $mc_article->add_value_property('topic');
+        if (!$mc_article->execute())
+        {
+            // Error
+            return null;
+        }
+        $mc_article_keys = $mc_article->list_keys();
+        list ($key, $copy) = each ($mc_article_keys);
+        $up = $mc_article->get_subkey($key, 'up');
+        if ($up === false)
+        {
+            // error
+            return null;
+        }
+        if (!empty($up))
+        {
+            return midcom_baseclasses_database_article::_get_parent_guid_uncached_static_article($up);
+        }
+        $topic = $mc_article->get_subkey($key, 'topic');
+        if ($topic === false)
+        {
+            // error
+            return null;
+        }
+        return midcom_baseclasses_database_article::_get_parent_guid_uncached_static_topic($topic);
+    }
+
+    /**
+     * Get topic guid statically
+     *
+     * used by get_parent_guid_uncached_static
+     *
+     * @param id $parent_id id of topic to get the guid for
+     */
+    function _get_parent_guid_uncached_static_topic($parent_id)
+    {
+        if (empty($parent_id))
+        {
+            return null;
+        }
+        $mc_parent = midcom_baseclasses_database_topic::new_collector('id', $parent_id);
+        $mc_parent->add_value_property('guid');
+        if (!$mc_parent->execute())
+        {
+            // Error
+            return null;
+        }
+        $mc_parent_keys = $mc_parent->list_keys();
+        list ($key, $copy) = each ($mc_parent_keys);
+        $parent_guid = $mc_parent->get_subkey($key, 'guid');
+        if ($parent_guid === false)
+        {
+            // Error
+            return null;
+        }
+        return $parent_guid;
+    }
+
+    /**
+     * Get article guid statically
+     *
+     * used by get_parent_guid_uncached_static
+     *
+     * @param id $parent_id id of topic to get the guid for
+     */
+    function _get_parent_guid_uncached_static_article($parent_id)
+    {
+        if (empty($parent_id))
+        {
+            return null;
+        }
+        $mc_parent = midcom_baseclasses_database_article::new_collector('id', $parent_id);
+        $mc_parent->add_value_property('guid');
+        if (!$mc_parent->execute())
+        {
+            // Error
+            return null;
+        }
+        $mc_parent_keys = $mc_parent->list_keys();
+        list ($key, $copy) = each ($mc_parent_keys);
+        $parent_guid = $mc_parent->get_subkey($key, 'guid');
+        if ($parent_guid === false)
+        {
+            // Error
+            return null;
+        }
+        return $parent_guid;
+    }
+
+    function get_dba_parent_class()
+    {
+        if (   isset($this->up)
+            && $this->up != 0)
+        {
+            return 'midcom_baseclasses_database_article';
+        }
+        return 'midcom_baseclasses_database_topic';
     }
 
     /**

@@ -276,7 +276,10 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
      * @var array
      */
     var $customdata = Array();
-
+    /**
+     * the filename the manifest was loaded from
+     */
+    var $filename;
     /**#@-*/
 
     /**
@@ -285,15 +288,14 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
      * the file is accessed directly.
      *
      * @param string $filename The name of the mainfest file to load.
+     * @param array $values the values the manifest uses.
      */
-    function midcom_core_manifest($filename)
+    function midcom_core_manifest($filename,$values)
     {
-        parent::midcom_baseclasses_core_object();
-
-        if (! $this->_load_manifest($filename))
-        {
-            return false;
-        }
+        //parent::midcom_baseclasses_core_object();
+        $this->filename = $filename;
+        $this->_load_manifest($values);
+        
     }
 
     /**
@@ -302,35 +304,15 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
      * @param string $filename The name of the mainfest file to load.
      * @return bool True if the manifest was successfully loaded, false otherwise.
      * @access protected
+     * @todo: move this into the constructor, use isset.
      */
-    function _load_manifest($filename)
+    function _load_manifest($values )
     {
-        if ($filename{0} != '/')
+        $this->_raw_data = $values;
+        if (!is_array($this->_raw_data))
         {
-            $filename = MIDCOM_ROOT . "/{$filename}";
+            debug_add("Manifest read from file {$this->filename} does not evaluate properly", MIDCOM_LOG_ERROR);
         }
-
-        if (! file_exists($filename))
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Failed to load the file {$filename}: File does not exist.", MIDCOM_LOG_ERROR);
-            debug_pop();
-            return false;
-        }
-
-        $data = @file_get_contents($filename);
-        if (! $data)
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Failed to load the file {$filename}: Could not get contents.", MIDCOM_LOG_ERROR);
-            if (isset($php_errormsg))
-            {
-                debug_add("Last PHP error message: {$php_errormsg}");
-            }
-            debug_pop();
-            return false;
-        }
-        eval("\$this->_raw_data = Array ( {$data} \n );");
 
         $this->name = $this->_raw_data['name'];
 

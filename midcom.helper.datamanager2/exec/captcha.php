@@ -39,7 +39,8 @@ $options = Array
 
 // Generate a new Text_CAPTCHA object, Image driver
 $captcha = Text_CAPTCHA::factory('Image');
-$result = $captcha->init($width, $height, $passphrase, $options);
+//$result = $captcha->init($width, $height, $passphrase, $options);
+$result = $captcha->init($height, $width, $passphrase, $options);
 
 if (PEAR::isError($result))
 {

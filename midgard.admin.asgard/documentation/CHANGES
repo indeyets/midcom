@@ -1,0 +1,15 @@
+                   midgard.admin.asgard Changelog
+                   ------------------------------
+CVS Id: $Id: CHANGES 5537 2007-03-19 12:22:38Z bergie $
+
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+2007-05-04 bergie
+  + Initially created
+  + Added support for basic object operations: viewing, editing creating and deleting
+  + Added support for object parameter management using DM2 composites
+  + Added support for metadata editing

@@ -1,7 +1,7 @@
 <?php
 /**
  * Function newline etc encoding issues in serialized data
- * 
+ *
  * @package org.openpsa.helpers
  * @author Eero af Heurlin, http://www.iki.fi/rambo
  * @version $Id: fix_serialization.php,v 1.1 2006/02/13 13:33:12 rambo Exp $
@@ -22,12 +22,12 @@ function org_openpsa_helpers_fix_serialization($data = null)
     {
         return $data;
     }
-    
+
     $preg='/s:([0-9]+):"(.*?)";/ms';
     //echo "DEBUG: preg=$preg<br>\n";
     preg_match_all($preg, $data, $matches);
     $cache = array();
-    
+
     foreach ($matches[0] as $k => $origFullStr)
     {
           $origLen = $matches[1][$k];
@@ -39,13 +39,13 @@ function org_openpsa_helpers_fix_serialization($data = null)
              $newFullStr="s:$newLen:\"$origStr\";";
             //For performance we cache information on which strings have already been replaced
              if (!array_key_exists($origFullStr, $cache))
-             { 
+             {
                  $data = str_replace($origFullStr, $newFullStr, $data);
                  $cache[$origFullStr] = true;
              }
           }
     }
-    
-    return $data;    
+
+    return $data;
 }
 ?>

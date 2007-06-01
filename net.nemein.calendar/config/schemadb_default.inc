@@ -50,7 +50,43 @@
             'type_config' => Array ( 'output_mode' => 'html' ),
             'widget' => 'tinymce',
         ),
-        
+        'location' => Array
+        (
+            'title' => 'location',
+            'storage' => 'location',
+            'type' => 'text',
+            'widget' => 'text',
+        ),
+        /*
+        'categories' => Array
+        (
+            'title' => 'categories',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'net.nemein.calendar',
+                'name'     => 'categories',
+            ),
+            'type' => 'select',
+            'widget' => 'select',
+            'type_config' => Array 
+            ( 
+                'options'        => array
+                (
+                    'cat1' => 'Category number 1',
+                    'cat2' => 'Something completely different',
+                    'cat3' => 'foo',
+                ),
+                'allow_other'    => false,
+                'allow_multiple' => true,
+                'multiple_storagemode' => 'imploded_wrapped',
+            ),    
+            'widget_config' => Array 
+            ( 
+                'height' => 3,
+            ),        
+        ),
+        */         
     )
 ),
 

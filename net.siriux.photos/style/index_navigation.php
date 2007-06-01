@@ -4,7 +4,7 @@ global $view_thumbs_y;
 global $view_startfrom;
 global $view_total;
 
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
 $numpics = ($view_thumbs_x * $view_thumbs_y);
 $prev = $view_startfrom - $numpics;

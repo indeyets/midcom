@@ -1,5 +1,5 @@
 <?php
-$data =& $GLOBALS['midcom']->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $page_var = $data['prefix'] . 'page';
 $results_var =  $data['prefix'] . 'results';
 

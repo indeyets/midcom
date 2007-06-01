@@ -193,16 +193,14 @@ class midcom_services_cache_backend
         {
             if (! @mkdir($this->_cache_dir, 0755))
             {
-                // TODO: MidCOM is not yet available here
-                $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
-                    "Failed to create the cache base directory {$this->_cache_dir}: {$php_errormsg}");
+                // Note: MidCOM is not yet available here
+                die("Failed to create the cache base directory {$this->_cache_dir}: {$php_errormsg}");
                 // This will exit.
             }
         }
         else if (! is_dir($this->_cache_dir))
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
-                "Failed to create the cache base directory {$this->_cache_dir}: A file of the same name already exists.");
+            die("Failed to create the cache base directory {$this->_cache_dir}: A file of the same name already exists.");
             // This will exit.
         }
     }

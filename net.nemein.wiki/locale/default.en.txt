@@ -3,8 +3,16 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING action page_updated
+Page updated
+---STRINGEND
+
 ---STRING allow anonymous posting
 Allow anonymous posting
+---STRINGEND
+
+---STRING anonymous
+Anonymous
 ---STRINGEND
 
 ---STRING anonymous password
@@ -23,6 +31,14 @@ Anonymous user's username
 Author
 ---STRINGEND
 
+---STRING autogenerate table of contents
+Autogenerate table of contents for pages
+---STRINGEND
+
+---STRING change to %s
+Change to %s page
+---STRINGEND
+
 ---STRING click to create
 Click to create Wiki page
 ---STRINGEND
@@ -35,16 +51,48 @@ Content
 Create note
 ---STRINGEND
 
+---STRING create page %s
+Create page "%s"
+---STRINGEND
+
 ---STRING create pages by linking
 You can add pages to this <a href="http://en.wikipedia.org/wiki/Wiki">Wiki</a>  by linking to non-existing pages using <a href="http://www.midgard-project.org/midcom-permalink-7276f817dcdefcf40d30a9ec69a7241f">Wiki linking</a> format. Start by editing the wiki front page.
+---STRINGEND
+
+---STRING create redirection page %s
+Create redirection page "%s"
+---STRINGEND
+
+---STRING create wikipage %s
+Create wiki page "%s"
+---STRINGEND
+
+---STRING display related to items in page
+Display related to items in page
+---STRINGEND
+
+---STRING display settings
+Display settings
+---STRINGEND
+
+---STRING edit %s
+Edit %s
 ---STRINGEND
 
 ---STRING edit wikipage
 Edit Wiki page
 ---STRINGEND
 
+---STRING link to page
+Link to page
+---STRINGEND
+
 ---STRING login to create
 Login to create this missing page
+---STRINGEND
+
+---STRING look for %s in wikipedia
+Look for "%s" in Wikipedia
 ---STRINGEND
 
 ---STRING net.nemein.wiki
@@ -55,12 +103,64 @@ Wiki
 No links to this Wiki page
 ---STRINGEND
 
+---STRING no orphans
+No orphaned pages
+---STRINGEND
+
+---STRING orphaned pages
+Orphaned pages
+---STRINGEND
+
+---STRING orphaned pages in wiki %s
+Orphaned pages in wiki "%s"
+---STRINGEND
+
+---STRING page %s
+page "%s"
+---STRINGEND
+
+---STRING page %s added
+Wiki page "%s" has been created.
+---STRINGEND
+
+---STRING page %s deleted
+Wiki page "%s" has been deleted.
+---STRINGEND
+
+---STRING page %s has been updated by %s
+Page "%s" has been updated by %s
+---STRINGEND
+
+---STRING page %s not found in wiki %s
+Page "%s" not found in wiki %s.
+---STRINGEND
+
+---STRING page %s saved
+Wiki page "%s" has been saved.
+---STRINGEND
+
+---STRING page modifications
+Modifications to the page
+---STRINGEND
+
 ---STRING pages linking to %s
 Wiki pages linking to %s
 ---STRINGEND
 
 ---STRING really delete page
 Really delete page?
+---STRINGEND
+
+---STRING recipients
+Recipients
+---STRINGEND
+
+---STRING redirect page
+Page to redirect to
+---STRINGEND
+
+---STRING redirection
+Redirection
 ---STRINGEND
 
 ---STRING related notes
@@ -75,12 +175,36 @@ Related to
 Sender
 ---STRINGEND
 
+---STRING subscribe
+Subscribe to changes
+---STRINGEND
+
+---STRING subscribed to changes in %s
+You have been subscribed to changes in %s
+---STRINGEND
+
+---STRING tags
+Tags
+---STRINGEND
+
 ---STRING this page is stub
 This Wiki page does not have any content yet. Please click edit to add information.
 ---STRINGEND
 
+---STRING unsubscribe
+Unsubscribe from changes
+---STRINGEND
+
+---STRING unsubscribed from changes in %s
+You have been unsubscribed from changes in %s
+---STRINGEND
+
 ---STRING what links
 What links here
+---STRINGEND
+
+---STRING whole wiki %s
+whole wiki "%s"
 ---STRINGEND
 
 ---STRING wiki
@@ -99,7 +223,7 @@ Please read the [linking instructions][3] for more information.
 [3]: http://www.midgard-project.org/midcom-permalink-7276f817dcdefcf40d30a9ec69a7241f
 ---STRINGEND
 
----STRING recipients
-Recipients
+---STRING default schema
+Default page schema
 ---STRINGEND
 

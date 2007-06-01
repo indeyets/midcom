@@ -6,3 +6,5 @@
 'smslib_user' => null,
 'smslib_password' => null,
 'smslib_from' => null,
+
+'plazes_developer_key' => '4c637b4469bc11d13e73aa18a55ff6e6',

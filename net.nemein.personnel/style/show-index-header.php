@@ -1,7 +1,7 @@
 <?php
 // Available Request keys: persons
 
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+// $data =& $_MIDCOM->get_custom_context_data('request_data');
 $title = $data['topic']->extra;
 ?>
 <h1>&(title);</h1>

@@ -56,7 +56,7 @@ class net_nehmer_comments_comment extends __net_nehmer_comments_comment
         $qb = net_nehmer_comments_comment::new_query_builder();
         $qb->add_constraint('objectguid', '=', $guid);
 
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
+        if (version_compare(mgd_version(), '1.8', '>='))
         {        
             $qb->add_order('metadata.created');
         }
@@ -81,7 +81,7 @@ class net_nehmer_comments_comment extends __net_nehmer_comments_comment
         $qb = net_nehmer_comments_comment::new_query_builder();
         $qb->add_constraint('objectguid', '=', $guid);
         
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
+        if (version_compare(mgd_version(), '1.8', '>='))
         {        
             $qb->add_order('metadata.created');
         }

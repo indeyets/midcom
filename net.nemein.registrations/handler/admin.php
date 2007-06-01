@@ -93,7 +93,7 @@ class net_nemein_registrations_handler_admin extends midcom_baseclasses_componen
             if ($_REQUEST[$this->_request_data['select_guid']] != $this->_request_data['create_new_value'])
             {
                 $guid = $_REQUEST[$this->_request_data['select_guid']];
-                $event = new midcom_db_event($guid);
+                $event = new net_nemein_calendar_event($guid);
                 if (! $event)
                 {
                     $this->_processing_msg = sprintf($this->_l10n->get('failed to open root event %s: %s'), $guid, mgd_errstr());
@@ -117,7 +117,7 @@ class net_nemein_registrations_handler_admin extends midcom_baseclasses_componen
             }
             else
             {
-                $event = new midcom_db_event();
+                $event = new net_nemein_calendar_event();
                 $event->title = "registrations for {$this->_topic->extra} (#{$this->_topic->id})";
                 if (! $event->create())
                 {
@@ -171,7 +171,7 @@ class net_nemein_registrations_handler_admin extends midcom_baseclasses_componen
     function _show_rootevent($handler_id, &$data)
     {
         // Load list root events:
-        $qb = midcom_db_event::new_query_builder();
+        $qb = net_nemein_calendar_event::new_query_builder();
         $qb->add_constraint('up', '=', '');
         $this->_request_data['root_events'] = $qb->execute();
 

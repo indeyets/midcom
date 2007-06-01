@@ -2,7 +2,7 @@
 'schemadb' => 'file:/net/nehmer/static/config/schemadb_default.inc',
 'schemadbs'      => Array
 (
-    'file:/de/linkm/taviewer/config/schemadb_default.inc' => 'Default Schema Database',
+    'file:/net/nehmer/static/config/schemadb_default.inc' => 'Default Schema Database',
 ),
 
 // A valid sort order usable with QB

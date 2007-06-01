@@ -32,7 +32,8 @@
  *
  * @package midcom
  */
-class midcom_debug {
+class midcom_debug 
+{
 
     /**
      * Logfile name
@@ -77,9 +78,9 @@ class midcom_debug {
     /**
      * Standard constructor
      */
-    function midcom_debug()
+    function midcom_debug($filename)
     {
-        $this->_filename = $GLOBALS['midcom_config']['log_filename'];
+        $this->_filename = $filename;
         $this->_current_prefix = "";
         $this->_prefixes = array();
         $this->_enabled = true;
@@ -205,7 +206,8 @@ class midcom_debug {
 
         $file = fopen($this->_filename, 'a+');
 
-        if (MIDCOM_XDEBUG)
+        if (   MIDCOM_XDEBUG
+            && function_exists('xdebug_memory_usage'))
         {
             static $lastmem = 0;
             $curmem = xdebug_memory_usage();
@@ -213,7 +215,7 @@ class midcom_debug {
             $lastmem = $curmem;
 
             $prefix = sprintf("%s (%012.9f, %9s, %7s):\t",
-                date('M d H:i:s'),
+                date('M d Y H:i:s'),
                 xdebug_time_index(),
                 number_format($curmem, 0, ',', '.'),
                 number_format($delta, 0, ',', '.')
@@ -221,7 +223,7 @@ class midcom_debug {
         }
         else
         {
-            $prefix = date('M d H:i:s') . "\t";
+            $prefix = date('M d Y H:i:s') . "\t";
         }
 
         if (array_key_exists($loglevel, $this->_loglevels))
@@ -353,6 +355,11 @@ class midcom_debug {
         {
             return;
         }
+        
+        if (!function_exists('memory_get_usage'))
+        {
+            return false;
+        }
 
         static $lastmem = 0;
         $curmem = memory_get_usage();
@@ -368,9 +375,9 @@ class midcom_debug {
 /**
  * Global debugger instance
  *
- * @global midcom_debug $GLOBALS["midcom_debugger"]
+ * @global midcom_debug $GLOBALS['midcom_debugger']
  */
-$GLOBALS["midcom_debugger"] = new midcom_debug ();
+$GLOBALS['midcom_debugger'] = new midcom_debug($GLOBALS['midcom_config']['log_filename']);
 
 /**
  * Shortcut: Log a message
@@ -380,7 +387,7 @@ $GLOBALS["midcom_debugger"] = new midcom_debug ();
  */
 function debug_add($message, $loglevel = MIDCOM_LOG_DEBUG)
 {
-    $GLOBALS["midcom_debugger"]->log($message, $loglevel);
+    $GLOBALS['midcom_debugger']->log($message, $loglevel);
 }
 
 /**
@@ -392,7 +399,7 @@ function debug_add($message, $loglevel = MIDCOM_LOG_DEBUG)
  */
 function debug_print_r($message, &$variable, $loglevel = MIDCOM_LOG_DEBUG)
 {
-    $GLOBALS["midcom_debugger"]->print_r($message, $variable, $loglevel);
+    $GLOBALS['midcom_debugger']->print_r($message, $variable, $loglevel);
 }
 
 /**
@@ -403,7 +410,7 @@ function debug_print_r($message, &$variable, $loglevel = MIDCOM_LOG_DEBUG)
  */
 function debug_print_function_stack($message, $loglevel = MIDCOM_LOG_DEBUG)
 {
-   $GLOBALS["midcom_debugger"]->print_function_stack($message, $loglevel);
+   $GLOBALS['midcom_debugger']->print_function_stack($message, $loglevel);
 }
 
 /**
@@ -415,7 +422,7 @@ function debug_print_function_stack($message, $loglevel = MIDCOM_LOG_DEBUG)
  */
 function debug_print_type($message, &$variable, $loglevel = MIDCOM_LOG_DEBUG)
 {
-    $GLOBALS["midcom_debugger"]->print_type($message, $variable, $loglevel);
+    $GLOBALS['midcom_debugger']->print_type($message, $variable, $loglevel);
 }
 
 /**
@@ -426,7 +433,7 @@ function debug_print_type($message, &$variable, $loglevel = MIDCOM_LOG_DEBUG)
 */
 function debug_dump_mem($message, $loglevel = MIDCOM_LOG_DEBUG)
 {
-    $GLOBALS["midcom_debugger"]->print_dump_mem($message, $loglevel);
+    $GLOBALS['midcom_debugger']->print_dump_mem($message, $loglevel);
 }
 
 /**
@@ -436,7 +443,7 @@ function debug_dump_mem($message, $loglevel = MIDCOM_LOG_DEBUG)
  */
 function debug_push($prefix)
 {
-    $GLOBALS["midcom_debugger"]->push_prefix($prefix);
+    $GLOBALS['midcom_debugger']->push_prefix($prefix);
 }
 
 /**
@@ -450,11 +457,11 @@ function debug_push_class($object, $prefix)
 {
     if (is_string($object))
     {
-        $GLOBALS["midcom_debugger"]->push_prefix("{$object}::{$prefix}");
+        $GLOBALS['midcom_debugger']->push_prefix("{$object}::{$prefix}");
     }
     else
     {
-        $GLOBALS["midcom_debugger"]->push_prefix(get_class($object) . "::{$prefix}");
+        $GLOBALS['midcom_debugger']->push_prefix(get_class($object) . "::{$prefix}");
     }
 }
 
@@ -462,7 +469,7 @@ function debug_push_class($object, $prefix)
  * Shortcut: Restore the last debug prefix
  */
 function debug_pop() {
-    $GLOBALS["midcom_debugger"]->pop_prefix();
+    $GLOBALS['midcom_debugger']->pop_prefix();
 }
 
 ?>

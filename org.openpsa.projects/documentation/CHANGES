@@ -1,10 +1,54 @@
-                   org.openpsa.projects Changelog
+org.openpsa.projects Changelog
                    ------------------------------
 Legend:
 - All items marked with "!" represent a major API-Change that is
-  not guranteed to be backwards compatible to previous versions
-  which might even break existing functionality. 
-- All items marked with "+" represent completly new features.
+  not guaranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completely new features.
+
+2006-12-20 bergie
+  + Started allowing "orphaned" hour reports that are not in any task yet
+
+2006-11-06 bergie & rambo
+  + Added display of working times booked from calendar to task
+  + Enabled task deletion
+  + Enabled automatic seeking of resources for a task based on tag and
+    schedule matching
+  ! Switched hour report approvals to ISO datetime
+
+2006-10-31 bergie
+  + Added proper breadcrumb trail for task and project tree navigation
+  + Added new field for task dependencies
+
+2006-10-26 rambo
+  + started coding "project broker" that will look for persons suitable
+    to be resources to a task (skills, scheduling etc)
+  - added new object type constant related to the above for prospective resources
+
+2006-10-10 bergie
+  + Fixed issues in caching task's hours back to agreement's "invoiceable
+    units"
+  + Added exec/cache-invalidate.php script for regenerating all hour
+    report caches (both task and agreement)
+
+2006-10-03 rambo
+  - typo fixes
+  - version bump
+
+2006-09-27 bergie
+  ! Implemented AJAX composite editing for hour reports in task view
+
+2006-09-14 rambo
+  + added support for o.o.contacts person merge
+  - version bump
+
+2006-08-30 rambo & bergie
+  + added URL methods for tabular task lists to see all tasks in the system
+    (task/list/all/[open|closed|current|all]) (Rambo)
+  + Hour report and task invoicing APIs (Bergie)
+
+2006-xx-xx bergie
+  ! added agreements to task schema
 
 2006-07-06 rambo
   - fixed a bug in creating task to project due to end time inheritance
@@ -72,7 +116,7 @@ Legend:
 2005-12-20 rambo
   - better workgroup filter check in QB
   - qb null constraint extra checks to interfaces
-  - show-project-list-status-header opened unneccessary <div class="main">, 
+  - show-project-list-status-header opened unneccessary <div class="main">,
     removed that and the closing </div> from -footer.
 
 2005-10-26 rambo

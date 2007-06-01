@@ -116,6 +116,7 @@ class net_nehmer_account_handler_publish extends midcom_baseclasses_components_h
     {
         $_MIDCOM->auth->require_valid_user();
         $this->_account = $_MIDCOM->auth->user->get_storage();
+        net_nehmer_account_viewer::verify_person_privileges($this->_account);
         $this->_avatar = $this->_account->get_attachment('avatar');
         $this->_avatar_thumbnail = $this->_account->get_attachment('avatar_thumbnail');
         $_MIDCOM->auth->require_do('midgard:update', $this->_account);
@@ -127,10 +128,19 @@ class net_nehmer_account_handler_publish extends midcom_baseclasses_components_h
         // This might relocate to the ok screen.
         $this->_compute_fields();
         $this->_prepare_request_data();
-
-        $_MIDCOM->substyle_append($this->_datamanager->schema->name);
+        
+        $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name);
+        
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
-        $this->_component_data['active_leaf'] = NET_NEHMER_ACCOUNT_LEAFID_PUBLISH;
+
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => 'publish/',
+            MIDCOM_NAV_NAME => $this->_l10n->get('publish account details'),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        $this->_view_toolbar->hide_item('publish/');
+
         $_MIDCOM->set_pagetitle($this->_l10n->get('publish account details'));
 
         return true;

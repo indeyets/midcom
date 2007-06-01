@@ -4,7 +4,23 @@
 ---LANGUAGE fi
 
 ---STRING changes done in revision %s to %s
-Tietueen %s muutokset versiossa %s
+Version %s muutokset tietueeseen %s
+---STRINGEND
+
+---STRING changes from version %s
+Muutokset versiosta %s
+---STRINGEND
+
+---STRING date
+Päivämäärä
+---STRINGEND
+
+---STRING lines
+Rivit
+---STRINGEND
+
+---STRING message
+Viesti
 ---STRINGEND
 
 ---STRING no.bergfald.rcs
@@ -23,12 +39,24 @@ Palautus versioon %s epäonnistui, syy %s
 Palautus versioon %s onnistui
 ---STRINGEND
 
+---STRING revision
+Versio
+---STRINGEND
+
 ---STRING revision history of %s
 Muutoshistoria tietueelle %s
 ---STRINGEND
 
 ---STRING show history
 Näytä versiohistoria
+---STRINGEND
+
+---STRING user
+Käyttäjä
+---STRINGEND
+
+---STRING version %s
+Versio %s
 ---STRINGEND
 
 ---STRING view %s differences with next (%s)
@@ -45,5 +73,9 @@ Näytä tämä versio (%s)
 
 ---STRING viewing version %s of %s
 Versio %s tietueesta %s
+---STRINGEND
+
+---STRING back to %s
+Takaisin sivulle "%s"
 ---STRINGEND
 

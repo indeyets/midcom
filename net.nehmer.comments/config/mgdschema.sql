@@ -34,3 +34,5 @@ CREATE TABLE net_nehmer_comments_comment_db (
 
 CREATE INDEX net_nehmer_comments_comment_db_objectguid_idx
     ON net_nehmer_comments_comment_db(objectguid);
+
+ALTER TABLE net_nehmer_comments_comment_db ADD COLUMN rating INT(11) NOT NULL default 0;

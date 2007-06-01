@@ -35,7 +35,7 @@ class org_openpsa_reports_cron_clearold extends midcom_baseclasses_components_cr
             debug_pop();
             return;
         }
-        
+
         $th = time() - ($days * 3600 * 24);
         $qb = org_openpsa_reports_query::new_query_builder();
         $qb->add_constraint('created', '<', $th);

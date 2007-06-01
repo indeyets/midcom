@@ -105,7 +105,7 @@ class midcom_admin_aegir_navigation_ajaxmenu
      */
     function midcom_admin_aegir_navigation_treemenu()
     {
-        //$request_data =& $_MIDCOM->get_custom_context_data('request_data');
+        ////$data =& $_MIDCOM->get_custom_context_data('request_data');
 
         $this->_leaf_action = $this->_prefix."%s";
         $this->_node_action = $this->_prefix."%s";
@@ -118,7 +118,7 @@ class midcom_admin_aegir_navigation_ajaxmenu
     {
         $person = $_MIDCOM->auth->user->get_storage();
         $this->_sitegroup = $person->sitegroup;
-        $this->_request_data = & $_MIDCOM->get_custom_context_data('request_data');
+        //$this->_request_data = & $_MIDCOM->get_custom_context_data('request_data');
         $this->_prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         $this->_nav = & $this->_request_data['aegir_interface']->get_navigation();
     }

@@ -20,70 +20,49 @@ class fi_mik_lentopaikkakisa_handler_score extends midcom_baseclasses_components
         parent::midcom_baseclasses_components_handler();       
     }
 
-    function _handler_pilot($handler_id, $args, &$data)
+    function _handler_score($handler_id, $args, &$data)
     {
-        $this->_request_data['scores'] = Array();
-        $this->_request_data['total'] = 0;
+        $data['scores'] = Array();
+        $data['total'] = 0;
         
-        $this->_request_data['view_title'] = sprintf($this->_request_data['l10n']->get('scores by %s'), $this->_request_data['l10n']->get('pilot'));
-        $_MIDCOM->set_pagetitle($this->_request_data['view_title']);
-    
-        $qb = fi_mik_lentopaikkakisa_report_dba::new_query_builder();
-        $qb->add_order('sendername', 'DESC');
-        $reports = $qb->execute();
-        
-        foreach ($reports as $report)
+        switch ($handler_id)
         {
-            if (!array_key_exists($report->sendername, $this->_request_data['scores']))
-            {
-                $this->_request_data['scores'][$report->sendername] = $report->score;
-            }
-            else
-            {
-                $this->_request_data['scores'][$report->sendername] += $report->score;
-            }
-            $this->_request_data['total'] += $report->score;
+            case 'score_pilot':
+                $data['view_title'] = $this->_l10n->get('scores by pilot');
+                $this->_component_data['active_leaf'] = "{$this->_topic->id}:scores_pilot";
+                $report_type = 'person';
+                $report_class = 'org_openpsa_contacts_person';
+                $report_label = 'name';
+                break;
+            default:
+                $data['view_title'] = $this->_l10n->get('scores by organization');
+                $this->_component_data['active_leaf'] = "{$this->_topic->id}:scores_organization";
+                $report_type = 'organization';                
+                $report_class = 'org_openpsa_contacts_group';
+                $report_label = 'official';
+                break;
         }
-        arsort($this->_request_data['scores']);
+        
+        $_MIDCOM->set_pagetitle($data['view_title']);
+        
+        $qb = new MidgardQueryBuilder('midgard_parameter');
+        $qb->add_constraint('domain', '=', 'fi.mik.lentopaikkakisa');
+        $qb->add_constraint('name', '=', "{$report_type}_scores");
+        $qb->add_order('value', 'DESC');    
+        $scores = $qb->execute();
+        
+        foreach ($scores as $score)
+        {
+            $owner = new $report_class($score->parentguid);
+            $data['scores'][$owner->$report_label] = $score->value;
+            $data['total'] += $score->value;
+        }
         return true;
     }
     
-    function _show_pilot($handler_id, &$data)
+    function _show_score($handler_id, &$data)
     {
         midcom_show_style('view-scores');
-    }   
-
-    function _handler_organization($handler_id, $args, &$data)
-    {
-        $this->_request_data['scores'] = Array();
-        $this->_request_data['total'] = 0;
-
-        $this->_request_data['view_title'] = sprintf($this->_request_data['l10n']->get('scores by %s'), $this->_request_data['l10n']->get('club'));
-        $_MIDCOM->set_pagetitle($this->_request_data['view_title']);
-
-        $qb = fi_mik_lentopaikkakisa_report_dba::new_query_builder();
-        $qb->add_order('organization', 'DESC');
-        $reports = $qb->execute();
-        
-        foreach ($reports as $report)
-        {
-            if (!array_key_exists($report->organization, $this->_request_data['scores']))
-            {
-                $this->_request_data['scores'][$report->organization] = $report->score;
-            }
-            else
-            {
-                $this->_request_data['scores'][$report->organization] += $report->score;
-            }
-            $this->_request_data['total'] += $report->score;
-        }
-        arsort($this->_request_data['scores']);        
-        return true;
     }
-    
-    function _show_organization($handler_id, &$data)
-    {
-        midcom_show_style('view-scores');
-    }     
 }
 ?>

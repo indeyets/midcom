@@ -24,13 +24,16 @@ class midgard_admin_sitewizard_interface extends midcom_baseclasses_components_i
         parent::midcom_baseclasses_components_interface();
 
         $this->_component = 'midgard.admin.sitewizard';
-        $this->_autoload_files = Array(
+        $this->_autoload_files = array
+        (
             'viewer.php', 
             'admin.php', 
             'navigation.php'
         );
-        $this->_autoload_libraries = Array(
+        $this->_autoload_libraries = array
+        (
             'midgard.admin.sitegroup',
+            'midcom.helper.xml',
         );
     }
 }

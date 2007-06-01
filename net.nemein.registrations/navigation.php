@@ -21,7 +21,7 @@ class net_nemein_registrations_navigation extends midcom_baseclasses_components_
      *
      * Set on demand.
      *
-     * @var midcom_db_event
+     * @var net_nemein_calendar_event
      * @access private
      */
     var $_root_event = null;
@@ -36,7 +36,8 @@ class net_nemein_registrations_navigation extends midcom_baseclasses_components_
 
     function get_leaves()
     {
-        if (! $this->_config->get('root_event_guid'))
+        if (   !$this->_config->get('root_event_guid')
+            || !$this->_config->get('display_leaves'))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Component not configured for topic {$this->_topic->id}, not adding leaves.", MIDCOM_LOG_WARN);
@@ -47,7 +48,7 @@ class net_nemein_registrations_navigation extends midcom_baseclasses_components_
         $result = Array();
 
         $this->_load_root_event();
-        $qb = midcom_db_event::new_query_builder();
+        $qb = net_nemein_calendar_event::new_query_builder();
         $qb->add_constraint('up', '=', $this->_root_event->id);
         if ($this->_config->get('event_type') !== null)
         {
@@ -89,7 +90,7 @@ class net_nemein_registrations_navigation extends midcom_baseclasses_components_
         if (! $this->_root_event)
         {
             $guid = $this->_config->get('root_event_guid');
-            $this->_root_event = new midcom_db_event($guid);
+            $this->_root_event = new net_nemein_calendar_event($guid);
             if (! $this->_root_event)
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,

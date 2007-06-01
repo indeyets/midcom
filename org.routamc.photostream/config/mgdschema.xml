@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    <type name="org_routamc_photostream_photo" table="org_routamc_photostream_photo" parent="midgard_person" parentfield="photographer">
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="node" link="midgard_topic:id" reverse="no" type="integer"/>
+        
+        <!-- External IDs can be used to store identifier of the image in some external service, like Flickr -->
+        <property name="externalid" type="string"/>
+
+        <!-- Photographer is always a person in DB. If you want to store extra attribution data use parameters -->
+        <property name="photographer" link="midgard_person:id" reverse="no" type="integer" parentfield="photographer" />
+
+        <!-- Direct links to archival, "fullscale" and thumbnail attachments -->
+        <property name="archival" link="midgard_attachment:id" reverse="yes" type="integer"/>
+        <property name="main" link="midgard_attachment:id" reverse="yes" type="integer"/>
+        <property name="thumb" link="midgard_attachment:id" reverse="yes" type="integer"/>
+
+        <!-- Descriptive fields are MLd -->
+        <property name="title"       multilang="yes" table="org_routamc_photostream_photo_i" type="text" />
+        <property name="description" multilang="yes" table="org_routamc_photostream_photo_i" type="text" />
+        <property name="lang"        multilang="yes" table="org_routamc_photostream_photo_i" type="integer" />
+        <property name="sid"         multilang="yes" table="org_routamc_photostream_photo_i" type="integer" />
+
+        <!-- Timestamp when taken -->
+        <property name="taken" type="integer"/>
+
+        <!-- Integer for rating, typically of the "1-5 stars" variety -->
+        <property name="rating" type="integer"/>
+
+        <!-- required 1.7 metadata -->
+        <property name="revised" type="string"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->
+    </type>
+</Schema>

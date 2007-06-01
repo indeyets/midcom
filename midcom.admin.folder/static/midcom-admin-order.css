@@ -1,0 +1,34 @@
+#midcom_admin_folder_order_form div.midcom-admin-order ul.sortable li
+{
+  list-style: none;
+  cursor: move;
+  font-weight: normal;
+}
+
+#midcom_admin_folder_order_form div.midcom-admin-order ul.sortable li:hover
+{
+  font-weight: bold;
+}
+
+#midcom_admin_folder_show_save_info
+{
+  background-image: url('../midcom.helper.datamanager2/ajax-loading-black.gif');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: black;
+  color: white;
+  padding: 1em;
+  display: none;
+}
+
+#midcom_admin_folder_order_form input,
+#midcom_admin_folder_order_form img
+{
+  display: inline !important;
+}
+
+#midcom_admin_folder_order_form li
+{
+  display: block;
+  white-space: nowrap;
+}

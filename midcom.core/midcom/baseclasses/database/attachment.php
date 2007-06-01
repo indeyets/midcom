@@ -114,12 +114,28 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
             case 0:
                 $mode = 'default';
                 $this->_open_write_mode = true;
+                
+                if (!function_exists('mgd_open_attachment'))
+                {
+                    // Legacy API disabled, use the modern method
+                    $handle = MidgardAttachment::open($this->id);
+                    break;
+                }
+                
                 $handle = mgd_open_attachment($this->id);
                 break;
 
             case 1:
                 $mode = func_get_arg(0);
                 $this->_open_write_mode = ($mode{0} != 'r');
+
+                if (!function_exists('mgd_open_attachment'))
+                {
+                    // Legacy API disabled, use the modern method
+                    $handle = MidgardAttachment::open($this->id, $mode);
+                    break;
+                }
+
                 $handle = mgd_open_attachment($this->id, $mode);
                 break;
 
@@ -155,7 +171,7 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
         }
 
         fclose ($this->_open_handle);
-        $this->_open_hanlde = null;
+        $this->_open_handle = null;
 
         // We need to update the attachment now, this cannot be done in the Midgard Core
         // at this time.
@@ -192,6 +208,13 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
         }
 
         debug_pop();
+        
+        if (!function_exists('mgd_stat_attachment'))
+        {
+            // Legacy API disabled, use the modern method
+            return MidgardAttachment::stat($this->id);
+        }
+        
         return mgd_stat_attachment($this->id);
     }
 
@@ -214,7 +237,14 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
         {
             $base = $this->__table__;
             $base .= microtime();
-            $base .= $this->id;
+            if (isset($this->id))
+            {
+                $base .= $this->id;
+            }
+            elseif (isset($this->guid))
+            {
+                $base .= $this->id;                
+            }
             $base .= $_SERVER['SERVER_NAME'];
             $base .= $_SERVER['REMOTE_ADDR'];
             $base .= $_SERVER['REMOTE_PORT'];
@@ -224,10 +254,17 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
             // Check uniqueness
             $qb = midcom_baseclasses_database_attachment::new_query_builder();
             $qb->add_constraint('location', '=', $location);
-            if ($this->id)
+            if (   isset($this->id)
+                && !empty($this->id))
             {
                 // Add this one if and only if we are persistent already.
                 $qb->add_constraint('id', '<>', $this->id);
+            }
+            elseif (   isset($this->guid)
+                && !empty($this->guid))
+            {
+                // Add this one if and only if we are persistent already.
+                $qb->add_constraint('guid', '<>', $this->guid);
             }
             $result = $qb->execute();
 
@@ -250,6 +287,11 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
      */
     function _on_creating()
     {
+        if (empty($this->mimetype))
+        {
+            $this->mimetype = 'application/octet-stream';
+        }
+        
         if (! parent::_on_creating())
         {
             return false;
@@ -298,6 +340,29 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
     }
 
     /**
+     * Updates the contents of the attachments with the contents given.
+     *
+     * @param mixed $source File contents.
+     * @return bool Indicating success.
+     */
+    function copy_from_memory($source)
+    {
+        $dest = $this->open();
+        if (! $dest)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Could not open attachment for wrtiting, last Midgard error was: ' . mgd_errstr(), MIDCOM_LOG_WARN);
+            debug_pop();
+            return false;
+        }
+
+        fwrite($dest, $source);
+
+        $this->close();
+        return true;
+    }
+
+    /**
      * Updates the contents of the attachments with the contents of the resource identified
      * by the filehandle passed.
      *
@@ -310,7 +375,7 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
         if (! $dest)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('Could not open attachment for wrtiting, last Midgard error was: ' . mgd_errstr(), MIDCOM_LOG_WARN);
+            debug_add('Could not open attachment for writing, last Midgard error was: ' . mgd_errstr(), MIDCOM_LOG_WARN);
             debug_pop();
             return false;
         }

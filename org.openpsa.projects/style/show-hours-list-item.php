@@ -1,6 +1,6 @@
 <?php
-$view_data =& $GLOBALS['midcom']->get_custom_context_data('request_data');
-$view = $view_data['hour_entry'];
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$view = $data['hour_entry'];
 $view_array = $view->get_array();
 
 $editable = '';
@@ -9,7 +9,7 @@ if ($_MIDCOM->auth->can_do('midgard:update', $view->_storage))
     $editable = ' editable="true"';
 }
 
-echo "<report guid=\"{$view_data['hour_entry_guid']}\"{$editable}>\n";
+echo "<report guid=\"{$data['hour_entry_guid']}\"{$editable}>\n";
 foreach ($view_array as $key => $value)
 {
     if (substr($key, 0, 1) != '_')
@@ -47,4 +47,3 @@ foreach ($view_array as $key => $value)
 }
 echo "</report>\n";
 ?>
-

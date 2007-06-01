@@ -3,7 +3,7 @@
 // of net_nehmer_account_handler_register
 //
 // Bind the view data, remember the reference assignment:
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 ?>
 
 <h2><?php $data['l10n']->show('enter account details'); ?></h2>

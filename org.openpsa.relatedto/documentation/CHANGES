@@ -1,13 +1,21 @@
-                   org.openpsa.relatedto Changelog
+org.openpsa.relatedto Changelog
                    -------------------------------
 Legend:
 - All items marked with "!" represent a major API-Change that is
   not guaranteed to be backwards compatible to previous versions
-  which might even break existing functionality. 
+  which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
 TODO:
   - register delete watcher to remove links to the deleted object
+  - register cron handler to remove dangling links
+
+2006-10-05
+  - changed wiki creation url to new namespaces compatible one
+
+2006-08-29 rambo
+  + Added support for org.openpsa.contacts person merge
+  - made suspects duplicate check slightly less strict
 
 2006-06-01 bergie
   + Added support for displaying invoices as relations
@@ -27,7 +35,7 @@ TODO:
   - removed $_MIDCOM->skip_page_style from renderer prototype (bergie)
 
 2006-05-11 rambo & bergie
-  + interface method based system to query all components for possibly 
+  + interface method based system to query all components for possibly
     objects possibly related to the object given (rambo)
   - separated rendering methods for normal and email wikinotes
   - nicer renderings for supported link targets (bergie)

@@ -41,6 +41,7 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
             'de.bitfolge.feedcreator',
             'org.openpsa.qbpager',
             'net.nehmer.markdown',
+            'midcom.helper.xml',
         );
         $this->_acl_privileges['moderation'] = MIDCOM_PRIVILEGE_DENY;
 
@@ -49,7 +50,8 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
         define('NET_NEMEIN_DISCUSSION_ABUSE', 2);
         define('NET_NEMEIN_DISCUSSION_REPORTED_ABUSE', 3);
         define('NET_NEMEIN_DISCUSSION_NEW', 4);
-        define('NET_NEMEIN_DISCUSSION_MODERATED', 5);
+        define('NET_NEMEIN_DISCUSSION_NEW_USER', 5);
+        define('NET_NEMEIN_DISCUSSION_MODERATED', 6);
     }
 
     /**
@@ -60,12 +62,21 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
     {
         $thread_qb = net_nemein_discussion_thread_dba::new_query_builder();
         $thread_qb->add_constraint('node', '=', $topic->id);
+        $thread_qb->add_constraint('posts', '>', 0);
         $threads = $thread_qb->execute();
         
+        if (count($threads) == 0)
+        {
+            debug_pop();
+            return true;
+        }
+        
         $qb = net_nemein_discussion_post_dba::new_query_builder();
+        $qb->add_constraint('status', '>=', 'NET_NEMEIN_DISCUSSION_REPORTED_ABUSE');
         $qb->begin_group('OR');
         foreach ($threads as $thread)
         {
+            echo "{$thread->node} {$thread->title}\n";
             $qb->add_constraint('thread', '=', $thread->id);
         }
         $qb->end_group();
@@ -84,6 +95,7 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
 
             foreach ($posts as $post)
             {
+                echo "{$post->subject} {$post->status}\n";
                 if (! $datamanager->autoset_storage($post))
                 {
                     debug_add("Warning, failed to initialize datamanager for Post {$post->id}. Skipping it.", MIDCOM_LOG_WARN);

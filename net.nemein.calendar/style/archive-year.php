@@ -3,11 +3,15 @@
 // year_data, year, url, count, month_data
 // month data contains month => url, count pairs.
 
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 
 ?>
 
-<h2><a href="&(data['url']);">&(data['year']); (&(data['count']);)</a></h2>
+<h2><a href="&(data['url']);">&(data['year']); <?php
+    if ($data['count'] > 0)
+    {
+        ?> (&(data['count']);)</a><?php
+    }?></a></h2>
 
 <p>
 <?php
@@ -23,6 +27,11 @@ foreach ($data['month_data'] as $month => $month_data)
         echo " - ";
     }
     ?>
-    <a href="&(month_data['url']);">&(month_data['name']); (&(month_data['count']);)</a>
-<?php } ?>
+    <a href="&(month_data['url']);">&(month_data['name']);<?php
+    if ($month_data['count'] > 0)
+    {
+        ?> (&(month_data['count']);)</a><?php
+    }
+} 
+?>
 </p>

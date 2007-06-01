@@ -16,4 +16,3 @@ array(
     'new_class_name' => 'org_openpsa_salesproject_deliverable',
     'midcom_class_name' => 'org_openpsa_sales_salesproject_deliverable'
 ),
-

@@ -1,0 +1,12 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---LANGUAGE en
+
+---STRING This is the index
+This is the index
+---STRINGEND
+
+---STRING You can change this to something else :-)
+You can change this to something else :-)
+---STRINGEND
+

@@ -207,10 +207,10 @@ class midcom_baseclasses_components_navigation extends midcom_baseclasses_core_o
             MIDCOM_NAV_NAME => $this->_topic->extra,
             MIDCOM_NAV_TOOLBAR => $toolbar,
             MIDCOM_NAV_CONFIGURATION => $this->_config,
-            MIDCOM_META_CREATOR => $this->_topic->creator,
-            MIDCOM_META_EDITOR => $this->_topic->revisor,
-            MIDCOM_META_CREATED => $this->_topic->created,
-            MIDCOM_META_EDITED => $this->_topic->revised,
+            MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
+            MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
+            MIDCOM_META_CREATED => $this->_topic->metadata->created,
+            MIDCOM_META_EDITED => $this->_topic->metadata->revised,
         );
     }
 

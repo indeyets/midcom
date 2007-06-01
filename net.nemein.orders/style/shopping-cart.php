@@ -1,18 +1,18 @@
 <?php
 
 /*
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-$topic = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC);
-$config =& $GLOBALS["midcom"]->get_custom_context_data("configuration");
-$errstr =& $GLOBALS["midcom"]->get_custom_context_data("errstr");
-$root_order_event =& $GLOBALS["midcom"]->get_custom_context_data("root_order_event");
-$mailing_company_group =& $GLOBALS["midcom"]->get_custom_context_data("mailing_company_group");
-$auth =& $GLOBALS["midcom"]->get_custom_context_data("auth");
-$product =& $GLOBALS["midcom"]->get_custom_context_data("product");
-$order =& $GLOBALS["midcom"]->get_custom_context_data("order");
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+$topic = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC);
+$config =& $_MIDCOM->get_custom_context_data("configuration");
+$errstr =& $_MIDCOM->get_custom_context_data("errstr");
+$root_order_event =& $_MIDCOM->get_custom_context_data("root_order_event");
+$mailing_company_group =& $_MIDCOM->get_custom_context_data("mailing_company_group");
+$auth =& $_MIDCOM->get_custom_context_data("auth");
+$product =& $_MIDCOM->get_custom_context_data("product");
+$order =& $_MIDCOM->get_custom_context_data("order");
 */
 
-$cart =& $GLOBALS["midcom"]->get_custom_context_data("cart");
+$cart =& $_MIDCOM->get_custom_context_data("cart");
 $items = $cart->get_cart();
 
 if (count($items) > 0)

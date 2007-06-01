@@ -1,21 +1,23 @@
 <?php
-global $view;
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$view = $data['hour_report'];
+
 $view_date = strftime("%x",$view->date);
-$reporter = new midgard_person();
-$reporter->get_by_id($view->person);
+$reporter = new midcom_db_person($view->person);
+$reporter_card = new org_openpsa_contactwidget($reporter);
 ?>
 <tr<?php
-if ($GLOBALS["view_even"])
+if ($data['view_even'])
 {
     echo " class=\"even\"";
 }
 ?>>
     <td>&(view_date);</td>
-    <td>&(reporter.lastname); &(reporter.firstname);</td>
+    <td><?php echo $reporter_card->show_inline(); ?></td>
     <td>&(view.description);</td>
     <td class="hours">&(view.hours);</td>
     <td><?php
-        if ($view->approved == '0000-00-00 00:00:00')
+        if (!$view->is_approved)
         {
             ?>
             <input type="checkbox" name="net_nemein_hourview2_approve[<?php echo $view->id; ?>]" value="1" checked="checked" />
@@ -23,10 +25,9 @@ if ($GLOBALS["view_even"])
         }
         else
         {
-            $approver = new midgard_person();
-            $approver->get_by_id($view->approver);
-            $approved = strftime("%x", strtotime($view->approved));
-            echo sprintf("Approved by %s on %s", "{$approver->firstname} {$approver->lastname}", $approved);
+            $approver = new midcom_db_person($view->approver);
+            $approver_card = new org_openpsa_contactwidget($approver);
+            echo sprintf($data['l10n']->get('approved by %s on %s'), $approver_card->show_inline(), strftime("%x", $view->approved));
         }
         ?></td>
 </tr>

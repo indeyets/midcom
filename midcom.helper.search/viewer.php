@@ -102,7 +102,12 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
             case 'basic':
                 $data['query'] = trim($_REQUEST['query']);
                 
-				if( count(explode(" ", $data['query'])) == 1 ) $data['query'] .= "*";
+				if (   count(explode(' ', $data['query'])) == 1
+				    && !strstr($data['query'], '*'))
+				{
+				    // Single search term, append *
+				    $data['query'] .= '*';
+				}
 				
 				$result = $indexer->query($data['query']);
                 break;
@@ -110,12 +115,17 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
             case 'advanced':
                 $data['query'] = trim($_REQUEST['query']);
                 
-				if( count(explode(" ", $data['query'])) == 1 ) $data['query'] .= "*";
+				if (   count(explode(' ', $data['query'])) == 1
+				    && !strstr($data['query'], '*'))
+				{
+				    // Single search term, append *
+				    $data['query'] .= '*';
+				}
 				
 				$data['topic'] = trim($_REQUEST['topic']);
                 // $data['topic2'] = trim($_REQUEST['topic2']);
                 $data['component'] = trim($_REQUEST['component']);
-                $data['lastmodified'] = (integer) (trim($_REQUEST['lastmodified']));
+                $data['lastmodified'] = (integer) trim($_REQUEST['lastmodified']);
                 if ($data['lastmodified'] > 0)
                 {
                     $filter = new midcom_services_indexer_filter_date('__EDITED', $data['lastmodified'], 0);

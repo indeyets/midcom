@@ -1,0 +1,17 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING help
+Online help
+---STRINGEND
+
+---STRING midcom.admin.help
+Online help
+---STRINGEND
+
+---STRING help for %s in %s
+Online help for %s in %s
+---STRINGEND
+

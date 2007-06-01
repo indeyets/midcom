@@ -1,10 +1,17 @@
-                   org.openpsa.mypage Changelog
+org.openpsa.mypage Changelog
                    ----------------------------
 Legend:
 - All items marked with "!" represent a major API-Change that is
   not guaranteed to be backwards compatible to previous versions
-  which might even break existing functionality. 
+  which might even break existing functionality.
 - All items marked with "+" represent completly new features.
+
+2006-11-06 bergie
+  + Redesigned the main "my page" screen to show task user is currently
+    working on, etc
+
+2006-09-27 bergie
+  + Added new "week review" screen
 
 2006-06-13 rambo
   - bumped version for packaging

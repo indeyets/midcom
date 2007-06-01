@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-04-11 adrenalin
+  ! ported to MidCOM 2.6 and trunk
+
 2006-01-04 rambo
   - added manifest and this file
 

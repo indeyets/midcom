@@ -1,7 +1,7 @@
 <?php
 /**
  * @package org.openpsa.projects
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: list.php,v 1.1 2006/05/10 13:00:45 rambo Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,18 +9,18 @@
 
 /**
  * Hour report action handler
- * 
+ *
  * @package org.openpsa.projects
  */
 class org_openpsa_projects_handler_hours_list extends midcom_baseclasses_components_handler
 {
     var $_datamanagers;
 
-    function org_openpsa_projects_handler_hours_list() 
+    function org_openpsa_projects_handler_hours_list()
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     function _on_initialize()
     {
         $this->_datamanagers =& $this->_request_data['datamanagers'];
@@ -28,18 +28,18 @@ class org_openpsa_projects_handler_hours_list extends midcom_baseclasses_compone
 
     function _load_hours($identifier)
     {
-    
+
         $hours = new org_openpsa_projects_hour_report($identifier);
-        
+
         if (!is_object($hours))
         {
             return false;
         }
 
-        /* checkbox widget won't work with ajax editing existing hours unless 
+        /* checkbox widget won't work with ajax editing existing hours unless
            this is done already here */
         $this->_hack_dm_for_ajax();
-        
+
         // Load the hours to datamanager
         if (!$this->_datamanagers['hours']->init($hours))
         {
@@ -73,12 +73,12 @@ class org_openpsa_projects_handler_hours_list extends midcom_baseclasses_compone
         {
             $this->_list_type = $args[0];
             $this->_list_identifier = $args[1];
-            
+
             switch ($this->_list_type)
             {
                 case "task":
-                    $_MIDCOM->skip_page_style = true;                
-                    
+                    $_MIDCOM->skip_page_style = true;
+
                     // Run QB for the type
                     $qb = org_openpsa_projects_hour_report::new_query_builder();
                     $qb->add_constraint('task', '=', $this->_list_identifier);
@@ -93,10 +93,10 @@ class org_openpsa_projects_handler_hours_list extends midcom_baseclasses_compone
                             $this->_request_data['hours_entries'][$hour_report->guid] = $this->_datamanagers['hours'];
                         }
                     }
-                    
+
                     return true;
                 default:
-                    return false;                    
+                    return false;
             }
         }
 
@@ -111,7 +111,7 @@ class org_openpsa_projects_handler_hours_list extends midcom_baseclasses_compone
             $this->_request_data['hour_entry_guid'] = $guid;
             midcom_show_style("show-hours-list-item");
         }
-        midcom_show_style("show-hours-list-footer");        
-    }  
+        midcom_show_style("show-hours-list-footer");
+    }
 }
 ?>

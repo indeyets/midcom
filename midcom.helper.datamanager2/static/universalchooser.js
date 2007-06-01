@@ -178,7 +178,7 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
     add_result: function(key, title)
     {
         /* Render a result in the results list */
-        jsCall = 'javascript:midcom_helper_datamanager2_widget_universalchooser_add_option("' + this.idsuffix + '", "' + key + '", "' + title + '");';
+        jsCall = 'javascript:midcom_helper_datamanager2_widget_universalchooser_add_option("' + this.idsuffix + '", "' + key + '", \'' + title + '\');';
         result_li = this.create_element('li', null, false);
         result_link = this.create_element('a', 
                             {
@@ -186,10 +186,11 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
                                 'href': jsCall
                             }, 
                             {'display': 'block'},
-                            title
+                            ''
                             );
         result_li.appendChild(result_link);
         this.results_ul.appendChild(result_li);
+        new Insertion.Top(result_link, title);
     },
     
     input_exists: function(name)
@@ -229,7 +230,7 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
                     return;
                 }
                 input_name = this.fieldname;
-                html += '<input type="radio" id="' + input_id + '" value="' + key + '" name="' + input_name + '" class="radio"/>\n';
+                html += '<input type="radio" id="' + input_id + '" value="' + key + '" name="' + input_name + '" class="radiobutton"/>\n';
                 break;
             case 'multiple':
                 input_name = this.fieldname + '[' + key + ']';
@@ -254,16 +255,17 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
            MidCOM level errors are reported via the XML returned */
         Element.removeClassName(this.input_element, 'universalchooser_searching');
         Element.addClassName(this.input_element, 'universalchooser_search_fail');
-        new protoGrowl({type: 'error', title: 'Universal Chooser', message: 'Ajax level failure'})
+        new protoGrowl({type: 'error', title: 'Universal Chooser', message: 'Ajax request level failure'})
         /* TODO: Some kind of error handling ?? */
         return true;
     },
     
-    ajax_exception: function(request)
+    ajax_exception: function(request, exception)
     {
         /* This is called on xmlHttpRequest level exception */
         /* TODO: Some kind of exception handling ? */
-        alert('ajax_exception called');
+        //alert('ajax_exception called');
+        new protoGrowl({type: 'error', title: 'Universal Chooser (Ajax exception)', message: exception});
         return this.ajax_failure(request);
     },
     
@@ -278,7 +280,8 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
         }
         messages = request.responseXML.getElementsByTagName('errstr');
         status_value = statuses[0].firstChild.data
-        message_str = false;
+        message_str = '';
+
         if (   messages.lenght > 0
             && messages[0]
             && messages[0].firstChild)
@@ -296,7 +299,7 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
         }
         /* Default to returning true (yes, there was an error) */
         return true;
-    },
+    }
 }
 
 function midcom_helper_datamanager2_widget_universalchooser_search_onkeyup(idsuffix)

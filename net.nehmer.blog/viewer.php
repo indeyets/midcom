@@ -72,14 +72,6 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
             'variable_args' => 2,
         );
 
-        // View article
-        $this->_request_switch['view'] = Array
-        (
-            'handler' => Array('net_nehmer_blog_handler_view', 'view'),
-            'fixed_args' => Array('view'),
-            'variable_args' => 1,
-        );
-
         // Various Feeds and their index page
         $this->_request_switch['feed-index'] = Array
         (
@@ -112,6 +104,11 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nehmer_blog_handler_feed', 'feed'),
             'fixed_args' => Array('atom.xml'),
         );
+        $this->_request_switch['feed-rsd'] = Array
+        (
+            'handler' => Array('net_nehmer_blog_handler_api_metaweblog', 'rsd'),
+            'fixed_args' => Array('rsd.xml'),
+        );        
 
         // The Archive
         $this->_request_switch['archive-welcome'] = Array
@@ -154,6 +151,7 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
         $this->_request_switch['config'] = Array
         (
             'handler' => Array('net_nehmer_blog_handler_configuration', 'configdm'),
+            //FIXME: make configurable
             'schemadb' => 'file:/net/nehmer/blog/config/schemadb_config.inc',
             'schema' => 'config',
             'fixed_args' => Array('config'),
@@ -163,7 +161,39 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
         (
             'handler' => Array('net_nehmer_blog_handler_api_email', 'import'),
             'fixed_args' => Array('api', 'email'),
-        );        
+        );
+        
+        $this->_request_switch['api-metaweblog'] = Array
+        (
+            'handler' => Array('net_nehmer_blog_handler_api_metaweblog', 'server'),
+            'fixed_args' => Array('api', 'metaweblog'),
+        );
+
+        // View article
+        if ($this->_config->get('view_in_url'))
+        {
+            $this->_request_switch['view'] = Array
+            (
+                'handler' => Array('net_nehmer_blog_handler_view', 'view'),
+                'fixed_args' => Array('view'),
+                'variable_args' => 1,
+            );
+        }
+        else
+        {
+            $this->_request_switch['view'] = Array
+            (
+                'handler' => Array('net_nehmer_blog_handler_view', 'view'),
+                'variable_args' => 1,
+            );
+        }
+
+        if ($this->_config->get('rss_subscription_enable'))
+        {
+            $_MIDCOM->load_library('net.nemein.rss');
+            $rss_switches = net_nemein_rss_manage::get_plugin_handlers();
+            $this->_request_switch = array_merge($this->_request_switch, $rss_switches);
+        }  
     }
 
     /**
@@ -191,7 +221,8 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
                     'href'  => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'rss1.xml',
                 )
             );
-            $_MIDCOM->add_link_head(
+            $_MIDCOM->add_link_head
+            (
                 array(
                     'rel'   => 'alternate',
                     'type'  => 'application/rss+xml',
@@ -199,7 +230,8 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
                     'href'  => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'rss091.xml',
                 )
             );
-            $_MIDCOM->add_link_head(
+            $_MIDCOM->add_link_head
+            (
                 array(
                     'rel'   => 'alternate',
                     'type'  => 'application/atom+xml',
@@ -208,6 +240,18 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
                 )
             );
         }
+        
+        // RSD (Really Simple Discoverability) autodetection
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'EditURI',
+                'type' => 'application/rsd+xml',
+                'title' => 'RSD',
+                'href' => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'rsd.xml',
+            )
+        );
     }
 
     /**
@@ -229,8 +273,43 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
                         $this->_l10n->get($this->_request_data['schemadb'][$name]->description)
                     ),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'n',
                 ));
             }
+        }
+
+        if ($this->_config->get('rss_subscription_enable'))
+        {        
+            $this->_node_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => 'feeds/subscribe/',
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('subscribe feeds', 'net.nemein.rss'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_news.png',
+                    MIDCOM_TOOLBAR_ENABLED => $this->_topic->can_do('midgard:create'),
+                )
+            );
+            $this->_node_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => 'feeds/list/',
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('manage feeds', 'net.nemein.rss'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+                    MIDCOM_TOOLBAR_ENABLED => $this->_topic->can_do('midgard:create'),
+                )
+            );
+            $this->_node_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "feeds/fetch/all",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('refresh all feeds', 'net.nemein.rss'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_refresh.png',
+                    MIDCOM_TOOLBAR_ENABLED => $this->_topic->can_do('midgard:create'),
+                )
+            );
         }
 
         if (   $this->_topic->can_do('midgard:update')
@@ -366,14 +445,14 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
 
         $nav = new midcom_helper_nav();
         $node = $nav->get_node($topic->id);
-        $author = $_MIDCOM->auth->get_user($dm->storage->object->creator);
+        $author = $_MIDCOM->auth->get_user($dm->storage->object->metadata->creator);
 
         $document = $indexer->new_document($dm);
         $document->topic_guid = $topic->guid;
         $document->topic_url = $node[MIDCOM_NAV_FULLURL];
         $document->author = $author->name;
-        $document->created = $dm->storage->object->created;
-        $document->edited = $dm->storage->object->revised;
+        $document->created = $dm->storage->object->metadata->created;
+        $document->edited = $dm->storage->object->metadata->revised;
         $indexer->index($document);
     }
 
@@ -389,17 +468,21 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
         // Get last modified timestamp
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic', '=', $content_topic->id);
-        $qb->add_order('revised', 'DESC');
+        $qb->add_order('metadata.revised', 'DESC');
         $qb->set_limit(4);
         $articles = $qb->execute_unchecked();
 
         if ($articles)
         {
-            return max($topic->revised, $articles[0]->revised);
+            if (array_key_exists(0, $articles))
+            {
+                return max($topic->metadata->revised, $articles[0]->metadata->revised);
+            }
+            return $topic->metadata->revised;
         }
         else
         {
-            return $topic->revised;
+            return $topic->metadata->revised;
         }
     }
 

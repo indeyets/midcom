@@ -18,20 +18,17 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
     var $_datamanager;
     var $_selected_time = null;
     var $_dm_createfailed_event = null;
-    var $_toolbars = null;
 
     /**
      * Constructor.
-     * 
+     *
      * TODO: OpenPSA Calendar handles its URL space how?
      */
     function org_openpsa_calendar_viewer($topic, $config)
     {
         parent::midcom_baseclasses_components_request($topic, $config);
-        
+
         $this->_selected_time = time();
-        
-        $this->_toolbars =& midcom_helper_toolbars::get_instance();
 
         // Load schema database snippet or file
         debug_add("Loading Schema Database", MIDCOM_LOG_DEBUG);
@@ -43,9 +40,9 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
 
         if (!$this->_datamanager) {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
-            // This will exit. 	 
+            // This will exit.
         }
-        
+
         // Always run in uncached mode
         $_MIDCOM->cache->content->no_cache();
 
@@ -97,13 +94,13 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
                 'fixed_args' => array('event', 'new'),
                 'variable_args' => 2,
                 'handler' => 'event_new'
-            );           
+            );
             // Match /event/new/<person_guid>
             $this->_request_switch[] = array(
                 'fixed_args' => array('event', 'new'),
                 'variable_args' => 1,
                 'handler' => 'event_new'
-            );                
+            );
             // Match /event/new
             $this->_request_switch[] = array(
                 'fixed_args' => array('event', 'new'),
@@ -114,19 +111,19 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
                 'fixed_args' => array('event', 'raw'),
                 'variable_args' => 1,
                 'handler' => 'event'
-            );              
+            );
             // Match /event/<guid>/<action>
             $this->_request_switch[] = array(
                 'fixed_args' => 'event',
                 'variable_args' => 2,
                 'handler' => 'event_action'
-            );               
+            );
             // Match /event/<guid>
             $this->_request_switch['event_view'] = array(
                 'fixed_args' => 'event',
                 'variable_args' => 1,
                 'handler' => 'event'
-            );        
+            );
             //Match /debug
             $this->_request_switch[] = array(
                 'fixed_args' => 'debug',
@@ -141,30 +138,30 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
             $this->_request_switch['filters_edit'] = array(
                 'fixed_args' => Array('filters'),
                 'handler' => Array('org_openpsa_calendar_handler_filters', 'edit'),
-            ); 
+            );
 
             // Match /agenda/day/<timestamp>
             $this->_request_switch['agenda_day'] = array(
                 'fixed_args' => Array('agenda', 'day'),
                 'variable_args' => 1,
                 'handler' => Array('org_openpsa_calendar_handler_agenda', 'day'),
-            ); 
+            );
 
             // Match /ical/events/<username>
             $this->_request_switch['ical_user_feed'] = array(
                 'fixed_args' => Array('ical', 'events'),
                 'variable_args' => 1,
                 'handler' => Array('org_openpsa_calendar_handler_ical', 'user_events'),
-            ); 
+            );
 
             // Match /ical/busy/<username>
             $this->_request_switch['ical_user_busy'] = array(
                 'fixed_args' => Array('ical', 'busy'),
                 'variable_args' => 1,
                 'handler' => Array('org_openpsa_calendar_handler_ical', 'user_busy'),
-            ); 
+            );
 
-            
+
             // Match /config/
             $this->_request_switch['config'] = Array
             (
@@ -173,7 +170,7 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
                 'schema' => 'config',
                 'fixed_args' => Array('config'),
             );
-            
+
             //Add common relatedto request switches
             org_openpsa_relatedto_handler::common_request_switches($this->_request_switch, 'org.openpsa.calendar');
             //If you need any custom switches add them here
@@ -183,6 +180,16 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/ajaxutils.js");
         $this->_request_data['view'] = 'default';
         
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL."/org.openpsa.core/ui-elements.css",
+            )
+        );
+
     }
 
     function _handler_notinitialized($handler_id, $args, &$data)
@@ -196,7 +203,7 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
         midcom_show_style('show-not-initialized');
     }
 
-    
+
     function _creation_dm_callback(&$datamanager)
     {
         // This is what Datamanager calls to actually create an event
@@ -204,7 +211,7 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
             "storage" => null,
             "success" => false,
         );
-        
+
         $event = new org_openpsa_calendar_event();
         //Pre-populate some data to the event to allow consistency checks to work (I *really* hate the way DM handles creation)
         if (array_key_exists('midcom_helper_datamanager_field_participants', $_POST))
@@ -224,7 +231,7 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
             $event->end = strtotime($_POST['midcom_helper_datamanager_field_end']);
         }
         $event->send_notify = false;
-                
+
         $stat = $event->create();
         if ($stat)
         {
@@ -243,7 +250,7 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
         }
         return $result;
     }
-    
+
     function _get_datestring($from = false)
     {
         if (!$from)
@@ -253,7 +260,7 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
         $datestring = date('Y-m-d', $from);
         return $datestring;
     }
-    
+
     function _populate_toolbar($today_path = null)
     {
         // "New event" should always be in toolbar
@@ -261,7 +268,7 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
         $this_node = $nap->get_node($nap->get_current_node());
         if ($_MIDCOM->auth->can_do('midgard:create', $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']))
         {
-            $this->_toolbars->top->add_item(
+            $this->_view_toolbar->add_item(
                 Array(
                     MIDCOM_TOOLBAR_URL => "#",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('create event'),
@@ -279,8 +286,8 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
 
         if (   $this->_topic->can_do('midgard:update')
             && $this->_topic->can_do('midcom:component_config'))
-        {        
-            $this->_toolbars->top->add_item(
+        {
+            $this->_node_toolbar->add_item(
                 Array(
                     MIDCOM_TOOLBAR_URL => 'config.html',
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
@@ -289,10 +296,10 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
                 )
             );
         }
-        
+
         $prefix = MIDCOM_STATIC_URL . '/midcom.helper.datamanager/jscript-calendar';
         $_MIDCOM->add_jsfile("{$prefix}/calendar.js");
-                
+
         // Select correct locale
         $i18n =& $_MIDCOM->get_service("i18n");
         $language = $i18n->get_current_language();
@@ -308,7 +315,7 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
                 break;
         }
 
-        $_MIDCOM->add_jsfile("{$prefix}/calendar-setup.js");     
+        $_MIDCOM->add_jsfile("{$prefix}/calendar-setup.js");
 
         $dateopts = date('Y', $this->_selected_time).', ';
         $dateopts .= date('n', $this->_selected_time) - 1;
@@ -317,24 +324,24 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
         $_MIDCOM->add_jscript('
 var openPsaShowMonthSelectorCalendarShown = false;
 var openPsaShowMonthSelectorCalendarInitialized = false;
-function openPsaShowMonthSelectorHandler(calendar) 
+function openPsaShowMonthSelectorHandler(calendar)
 {
-    if (calendar.dateClicked) 
+    if (calendar.dateClicked)
     {
         var y = calendar.date.getFullYear();
         var m = new String(calendar.date.getMonth() + 1);
         if (m.length == 1)
         {
             m = "0"+m;
-        }        
+        }
         var d = calendar.date.getDate();
         // Relocate to correct view
         // TODO: It would be safer to use full URL
         window.location = y + "-" + m + "-" + d + ".html";
     }
 }
-        
-function openPsaShowMonthSelectorCalendar() 
+
+function openPsaShowMonthSelectorCalendar()
 {
     Calendar.setup(
         {
@@ -364,10 +371,10 @@ function openPsaShowMonthSelector()
         }
         openPsaShowMonthSelectorCalendarShown = true;
     }
-}  
+}
         ');
-        
-        $this->_toolbars->bottom->add_item(
+
+        $this->_view_toolbar->add_item(
             Array(
                 MIDCOM_TOOLBAR_URL => "#",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('go to'),
@@ -380,7 +387,7 @@ function openPsaShowMonthSelector()
                 ),
             )
         );
-        $this->_toolbars->bottom->add_item(
+        $this->_view_toolbar->add_item(
             Array(
                 MIDCOM_TOOLBAR_URL => "{$today_path}/" . $this->_get_datestring(time()) . ".html",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('today'),
@@ -389,7 +396,7 @@ function openPsaShowMonthSelector()
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
         );
-        $this->_toolbars->bottom->add_item(
+        $this->_view_toolbar->add_item(
             Array(
                 MIDCOM_TOOLBAR_URL => "filters.html?org_openpsa_calendar_returnurl={$_MIDGARD['uri']}",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('choose calendars'),
@@ -411,9 +418,9 @@ function openPsaShowMonthSelector()
             $resource_array['name'] = $this->_request_data['l10n']->get('me');
             $resource_array['css_class'] = 'blue';
         }
-        
+
         $qb = $_MIDCOM->dbfactory->new_query_builder('midcom_baseclasses_database_eventmember');
-        
+
         // Find all events that occur during [$from, $end]
         $qb->begin_group("OR");
             // The event begins during [$from, $to]
@@ -433,16 +440,16 @@ function openPsaShowMonthSelector()
             $qb->end_group();
         $qb->end_group();
 
-        $qb->add_constraint('eid.up', '=', $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']->id);      
-        $qb->add_constraint('uid', '=', $resource->id);
-        
+        $qb->add_constraint('eid.up', '=', (int)$GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']->id);
+        $qb->add_constraint('uid', '=', (int)$resource->id);
+
         $memberships = $_MIDCOM->dbfactory->exec_query_builder($qb);
         if ($memberships)
         {
             foreach ($memberships as $membership)
             {
-                $event = new org_openpsa_calendar_event($membership->eid);            
-            
+                $event = new org_openpsa_calendar_event($membership->eid);
+
                 // Customize label
                 $label_field = $this->_config->get('event_label');
                 if (!$label_field)
@@ -455,7 +462,7 @@ function openPsaShowMonthSelector()
                     $user = $_MIDCOM->auth->get_user($event->creator);
                     $label = $user->name;
                 }
-            
+
                 $resource_array['reservations'][$event->id] = array(
                     'name' => $label,
                     'location' => $event->location,
@@ -463,7 +470,7 @@ function openPsaShowMonthSelector()
                     'end' => $event->end,
                     'private' => false,
                 );
-                
+
                 if ($event->orgOpenpsaAccesstype == ORG_OPENPSA_ACCESSTYPE_PRIVATE)
                 {
                     $resource_array['reservations'][$event->id]['css_class'] = ' private';
@@ -471,13 +478,13 @@ function openPsaShowMonthSelector()
                 }
             }
         }
-        
+
         return $resource_array;
     }
-    
+
     function _populate_calendar_contacts($from, $to)
     {
-        $shown_persons = array();            
+        $shown_persons = array();
 
         $user = $_MIDCOM->auth->user->get_storage();
         if (   $this->_config->get('always_show_self')
@@ -495,7 +502,7 @@ function openPsaShowMonthSelector()
             $this->_request_data['calendar']->_resources[$person->guid] = $this->_populate_calendar_resource($person, $from, $to);
             $shown_persons[$person->id] = true;
         }
-        
+
         if ($this->_config->get('always_show_group'))
         {
             // Add this group to display as well
@@ -508,11 +515,11 @@ function openPsaShowMonthSelector()
                     if (array_key_exists($person->id, $shown_persons))
                     {
                         continue;
-                    }                    
+                    }
                     $person_object = $person->get_storage();
                     $this->_request_data['calendar']->_resources[$person_object->guid] = $this->_populate_calendar_resource($person_object, $from, $to);
                     $shown_persons[$person->id] = true;
-                }                
+                }
             }
         }
     }
@@ -546,8 +553,8 @@ function openPsaShowMonthSelector()
             }
         }
 
-        $this->_populate_toolbar('month');        
-        $this->_toolbars->bottom->add_item(
+        $this->_populate_toolbar('month');
+        $this->_view_toolbar->add_item(
             Array(
                 MIDCOM_TOOLBAR_URL => "week/".$this->_get_datestring().".html",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('week view'),
@@ -556,7 +563,7 @@ function openPsaShowMonthSelector()
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
         );
-        $this->_toolbars->bottom->add_item(
+        $this->_view_toolbar->add_item(
             Array(
                 MIDCOM_TOOLBAR_URL => "day/".$this->_get_datestring().".html",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('day view'),
@@ -574,7 +581,7 @@ function openPsaShowMonthSelector()
 
         $previous_month = date('Y-m-d', $this->_request_data['calendar']->get_month_start() - 100);
         $next_month = date('Y-m-d', $this->_request_data['calendar']->get_month_end() + 100);
-        $this->_toolbars->bottom->add_item(
+        $this->_view_toolbar->add_item(
             Array(
                 MIDCOM_TOOLBAR_URL => 'month/' . $previous_month . '.html',
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('previous'),
@@ -582,8 +589,8 @@ function openPsaShowMonthSelector()
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/up.png',
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
-        );   
-        $this->_toolbars->bottom->add_item(
+        );
+        $this->_view_toolbar->add_item(
             Array(
                 MIDCOM_TOOLBAR_URL => 'month/' . $next_month . '.html',
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('next'),
@@ -591,8 +598,8 @@ function openPsaShowMonthSelector()
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/down.png',
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
-        );          
-        
+        );
+
         // Clicking a free slot should bring up "new event" dialogue
         $nap = new midcom_helper_nav();
         $this_node = $nap->get_node($nap->get_current_node());
@@ -612,7 +619,7 @@ function openPsaShowMonthSelector()
 
         return true;
     }
-    
+
     function _show_month($handler_id, &$data)
     {
         $this->_request_data['selected_time'] = $this->_selected_time;
@@ -639,7 +646,7 @@ function openPsaShowMonthSelector()
         }
 
         $this->_populate_toolbar('week');
-        $this->_toolbars->bottom->add_item(
+        $this->_view_toolbar->add_item(
             Array(
                 MIDCOM_TOOLBAR_URL => "month/".$this->_get_datestring().".html",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('month view'),
@@ -648,7 +655,7 @@ function openPsaShowMonthSelector()
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
         );
-        $this->_toolbars->bottom->add_item(
+        $this->_view_toolbar->add_item(
             Array(
                 MIDCOM_TOOLBAR_URL => "day/".$this->_get_datestring().".html",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('day view'),
@@ -663,7 +670,7 @@ function openPsaShowMonthSelector()
         // Slots are 2 hours long
         $this->_request_data['calendar']->calendar_slot_length = $this->_config->get('week_slot_length') * 60;
         $this->_request_data['calendar']->start_hour = $this->_config->get('day_start_time');
-        $this->_request_data['calendar']->end_hour = $this->_config->get('day_end_time');        
+        $this->_request_data['calendar']->end_hour = $this->_config->get('day_end_time');
 
         // Clicking a free slot should bring up "new event" dialogue
         $nap = new midcom_helper_nav();
@@ -681,10 +688,10 @@ function openPsaShowMonthSelector()
 
         // Populate contacts
         $this->_populate_calendar_contacts($this->_request_data['calendar']->get_week_start(), $this->_request_data['calendar']->get_week_end());
-      
+
         $previous_week = date('Y-m-d', $this->_request_data['calendar']->get_week_start() - 100);
-        $next_week = date('Y-m-d', $this->_request_data['calendar']->get_week_end() + 100);  
-        $this->_toolbars->bottom->add_item(
+        $next_week = date('Y-m-d', $this->_request_data['calendar']->get_week_end() + 100);
+        $this->_view_toolbar->add_item(
             Array(
                 MIDCOM_TOOLBAR_URL => 'week/' . $previous_week . '.html',
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('previous'),
@@ -692,8 +699,8 @@ function openPsaShowMonthSelector()
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/up.png',
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
-        );   
-        $this->_toolbars->bottom->add_item(
+        );
+        $this->_view_toolbar->add_item(
             Array(
                 MIDCOM_TOOLBAR_URL => 'week/' . $next_week . '.html',
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('next'),
@@ -701,11 +708,11 @@ function openPsaShowMonthSelector()
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/down.png',
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
-        );        
+        );
 
         return true;
     }
-    
+
     function _show_week($handler_id, &$data)
     {
         $this->_request_data['selected_time'] = $this->_selected_time;
@@ -732,7 +739,7 @@ function openPsaShowMonthSelector()
         }
 
         $this->_populate_toolbar('day');
-        $this->_toolbars->bottom->add_item(
+        $this->_view_toolbar->add_item(
             Array(
                 MIDCOM_TOOLBAR_URL => "month/".$this->_get_datestring().".html",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('month view'),
@@ -741,7 +748,7 @@ function openPsaShowMonthSelector()
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
         );
-        $this->_toolbars->bottom->add_item(
+        $this->_view_toolbar->add_item(
             Array(
                 MIDCOM_TOOLBAR_URL => "week/".$this->_get_datestring().".html",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('week view'),
@@ -754,7 +761,7 @@ function openPsaShowMonthSelector()
         // Instantiate calendar widget
         $this->_request_data['calendar'] = new org_openpsa_calendarwidget(date('Y', $this->_selected_time), date('m', $this->_selected_time), date('d', $this->_selected_time));
         $this->_request_data['calendar']->type = ORG_OPENPSA_CALENDARWIDGET_DAY;
-        
+
         // Slots are 2 hours long
         $this->_request_data['calendar']->calendar_slot_length = $this->_config->get('day_slot_length') * 60;
         $this->_request_data['calendar']->start_hour = $this->_config->get('day_start_time');
@@ -763,7 +770,7 @@ function openPsaShowMonthSelector()
 
         $previous_day = date('Y-m-d', $this->_request_data['calendar']->get_day_start() - 100);
         $next_day = date('Y-m-d', $this->_request_data['calendar']->get_day_end() + 100);
-        $this->_toolbars->bottom->add_item(
+        $this->_view_toolbar->add_item(
             Array(
                 MIDCOM_TOOLBAR_URL => 'day/' . $previous_day . '.html',
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('previous'),
@@ -771,8 +778,8 @@ function openPsaShowMonthSelector()
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/up.png',
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
-        );   
-        $this->_toolbars->bottom->add_item(
+        );
+        $this->_view_toolbar->add_item(
             Array(
                 MIDCOM_TOOLBAR_URL => 'day/' . $next_day . '.html',
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('next'),
@@ -780,12 +787,12 @@ function openPsaShowMonthSelector()
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/down.png',
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
-        );    
-        
+        );
+
         // Clicking a free slot should bring up "new event" dialogue
         $nap = new midcom_helper_nav();
         $this_node = $nap->get_node($nap->get_current_node());
-        
+
         if ($_MIDCOM->auth->can_do('midgard:create', $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']))
         {
             $this->_request_data['calendar']->reservation_div_options = array(
@@ -798,10 +805,10 @@ function openPsaShowMonthSelector()
 
         // Populate contacts
         $this->_populate_calendar_contacts($this->_request_data['calendar']->get_day_start(), $this->_request_data['calendar']->get_day_end());
-                
+
         return true;
     }
-    
+
     function _show_day($handler_id, &$data)
     {
         $this->_request_data['selected_time'] = $this->_selected_time;
@@ -822,9 +829,9 @@ function openPsaShowMonthSelector()
     function _handler_event_new_toolbar()
     {
         // Add toolbar items
-        org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
+        org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
     }
-    
+
     function _handler_event_new($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -907,7 +914,7 @@ function openPsaShowMonthSelector()
         {
             $this->_selected_time = $args[1];
         }
-        
+
         if ($this->_selected_time > 0)
         {
             // Hack time fields
@@ -920,7 +927,7 @@ function openPsaShowMonthSelector()
             debug_pop();
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "Failed to initialize datamanger in creation mode for schema 'default'.");
-            // This will exit   
+            // This will exit
         }
 
 
@@ -928,7 +935,7 @@ function openPsaShowMonthSelector()
             case MIDCOM_DATAMGR_CREATING:
                 debug_add('First call within creation mode');
                 break;
-            
+
             case MIDCOM_DATAMGR_EDITING:
                 debug_add("First time submit, the DM has created an object");
                 // Change schema setting
@@ -943,35 +950,35 @@ function openPsaShowMonthSelector()
                     . "event/" . $this->_request_data["event"]->id. '/?reload=1');
                 //this will exit
                 break;
-            
-            case MIDCOM_DATAMGR_SAVED:                    
+
+            case MIDCOM_DATAMGR_SAVED:
                 debug_add("First time submit, the DM has created an object");
                 // Change schema setting
                 //$this->_request_data['metadata']->parameter("midcom.helper.datamanager","layout","default");
 
                 $indexer =& $GLOBALS['midcom']->get_service('indexer');
                 $indexer->index($this->_datamanager);
-                                
+
                 // Relocate to event view
                 debug_pop();
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                     . "event/" . $this->_request_data["event"]->id. '/?reload=1');
                 //this will exit
                 break;
-            
+
             case MIDCOM_DATAMGR_CANCELLED_NONECREATED:
                 debug_add('Cancel without anything being created, redirecting to the welcome screen.');
                 // Close the popup
                 $_MIDCOM->add_jsonload('window.close();');
                 debug_pop();
                 break;
-            
+
             case MIDCOM_DATAMGR_CANCELLED:
                 $this->errcode = MIDCOM_ERRCRIT;
                 $this->errstr = 'Method MIDCOM_DATAMGR_CANCELLED unknown for creation mode.';
                 debug_pop();
                 return false;
-            
+
             case MIDCOM_DATAMGR_FAILED:
             case MIDCOM_DATAMGR_CREATEFAILED:
                 //debug_add("failed hooked, datamanager\n===\n" .  sprint_r($this->_datamanager) . "===\n");
@@ -997,13 +1004,13 @@ function openPsaShowMonthSelector()
                 $this->errstr = 'Method unknown';
                 debug_pop();
                 return false;
-            
+
         }
         $this->_handler_event_new_toolbar();
         debug_pop();
         return true;
     }
-    
+
     function _event_resourceconflict_messages(&$conflict_event)
     {
         $messenger = new org_openpsa_helpers_uimessages();
@@ -1037,7 +1044,7 @@ function openPsaShowMonthSelector()
             }
         }
     }
-    
+
     function _show_event_new($handler_id, &$data)
     {
         if (   array_key_exists('view', $this->_request_data)
@@ -1066,20 +1073,20 @@ function openPsaShowMonthSelector()
         $_MIDCOM->auth->require_valid_user();
         debug_push_class(__CLASS__, __FUNCTION__);
         $this->_request_data['view'] = $args[1];
-        
+
         // Check if we get the event
         if (!$this->_handler_event($handler_id, $args, &$data))
         {
             debug_pop();
             return false;
         }
-        
+
         // Check if the action is a valid one
         switch ($args[1])
         {
             case "delete":
                 $_MIDCOM->auth->require_do('midgard:delete', $this->_request_data['event']);
-            
+
                 $this->_request_data['delete_succeeded'] = false;
                 if (array_key_exists('org_openpsa_calendar_deleteok', $_POST))
                 {
@@ -1099,7 +1106,7 @@ function openPsaShowMonthSelector()
                 }
                 else
                 {
-                    $this->_toolbars->bottom->add_item(
+                    $this->_view_toolbar->add_item(
                         Array(
                             MIDCOM_TOOLBAR_URL => 'event/'.$this->_request_data['event']->id.'/',
                             MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get("cancel"),
@@ -1113,41 +1120,41 @@ function openPsaShowMonthSelector()
                 return true;
             case "edit":
                 //debug_add("got POST\n===\n" .  sprint_r($_POST) . "===\n");
-                $_MIDCOM->auth->require_do('midgard:update', $this->_request_data['event']);            
-            
+                $_MIDCOM->auth->require_do('midgard:update', $this->_request_data['event']);
+
                 switch ($this->_datamanager->process_form()) {
                     case MIDCOM_DATAMGR_EDITING:
                         $this->_view = "default";
 
                         // Add toolbar items
-                        org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
-                        
+                        org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
+
                         debug_pop();
                         return true;
 
-                    case MIDCOM_DATAMGR_SAVED: 
+                    case MIDCOM_DATAMGR_SAVED:
                         $indexer =& $_MIDCOM->get_service('indexer');
                         $indexer->index($this->_datamanager);
-                        
+
                         $this->_view = "default";
                         debug_pop();
                         $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                             . "event/" . $this->_request_data["event"]->id. '/?reload=1');
-                        // This will exit()                        
-                                   
+                        // This will exit()
+
                     case MIDCOM_DATAMGR_CANCELLED:
                         $this->_view = "default";
                         debug_pop();
                         $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                             . "event/" . $this->_request_data["event"]->id. '/?reload=1');
                         // This will exit()
-                
+
                     case MIDCOM_DATAMGR_FAILED:
                         if (is_array( $this->_request_data['event']->busy_em))
                         {
                             debug_add('resource conflict hooked, handling it');
                             // Add toolbar items
-                            org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
+                            org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
                             $this->_event_resourceconflict_messages(&$this->_request_data['event']);
                             debug_pop();
                             return true;
@@ -1169,7 +1176,7 @@ function openPsaShowMonthSelector()
         }
         debug_pop();
     }
-    
+
     function _show_event_action($handler_id, &$data)
     {
         switch ($this->_request_data['view'])
@@ -1177,7 +1184,7 @@ function openPsaShowMonthSelector()
             case 'edit':
                 // Set title to popup
                 $this->_request_data['popup_title'] = sprintf($this->_request_data['l10n']->get('edit %s'), $this->_request_data['event']->title);
-                
+
                 // Show popup
                 midcom_show_style("show-popup-header");
                 $this->_request_data['event_dm'] =& $this->_datamanager;
@@ -1194,7 +1201,7 @@ function openPsaShowMonthSelector()
                 {
                     $this->_request_data['popup_title'] = $this->_request_data['l10n']->get('delete event');
                 }
-                
+
                 // Show popup
                 midcom_show_style("show-popup-header");
                 $this->_request_data['event_dm'] =& $this->_datamanager;
@@ -1217,14 +1224,14 @@ function openPsaShowMonthSelector()
         $_MIDCOM->auth->require_valid_user();
         // We're using a popup here
         $_MIDCOM->skip_page_style = true;
-    
+
         // Get the requested document metadata object
         $this->_request_data['event'] = $this->_load_event($args[0]);
         if (!$this->_request_data['event'])
         {
             return false;
         }
-        
+
         // Muck schema on private events
         if (!$this->_request_data['event']->can_do('org.openpsa.calendar:read'))
         {
@@ -1244,23 +1251,23 @@ function openPsaShowMonthSelector()
                 }
             }
         }
-        
-        // Load the document to datamanager        
+
+        // Load the document to datamanager
         if (!$this->_datamanager->init($this->_request_data['event']))
         {
             return false;
         }
-        
+
         // Reload parent if needed
         if (array_key_exists('reload',$_GET))
         {
             $_MIDCOM->add_jsonload('window.opener.location.reload();');
         }
-        
+
         // Add toolbar items
         if ($this->_request_data['view'] == 'default')
         {
-            $this->_toolbars->bottom->add_item(
+            $this->_view_toolbar->add_item(
                 Array(
                     MIDCOM_TOOLBAR_URL => 'event/'.$this->_request_data['event']->id.'/edit.html',
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get("edit"),
@@ -1268,8 +1275,8 @@ function openPsaShowMonthSelector()
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                     MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_do('midgard:update', $this->_request_data['event']),
                 )
-            );   
-            $this->_toolbars->bottom->add_item(
+            );
+            $this->_view_toolbar->add_item(
                 Array(
                     MIDCOM_TOOLBAR_URL => 'event/'.$this->_request_data['event']->id.'/delete.html',
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get("delete"),
@@ -1278,7 +1285,7 @@ function openPsaShowMonthSelector()
                     MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_do('midgard:delete', $this->_request_data['event']),
                 )
             );
-            $this->_toolbars->bottom->add_item(
+            $this->_view_toolbar->add_item(
                 Array(
                     MIDCOM_TOOLBAR_URL => 'javascript:window.print()',
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get("print"),
@@ -1287,18 +1294,18 @@ function openPsaShowMonthSelector()
                     MIDCOM_TOOLBAR_ENABLED => true,
                     MIDCOM_TOOLBAR_OPTIONS  => Array(
                         'rel' => 'directlink',
-                    ), 
+                    ),
                 )
             );
 
-            $user = $_MIDCOM->auth->user->get_storage();            
+            $user = $_MIDCOM->auth->user->get_storage();
             $relatedto_button_settings = Array(
                 'wikinote'      => array(
                     'node'  => false,
-                    'wikiword'  => sprintf($this->_request_data['l10n']->get($this->_config->get('wiki_title_skeleton')), $this->_request_data['event']->title, strftime('%x'), $user->name), 
+                    'wikiword'  => str_replace('/', '-', sprintf($this->_request_data['l10n']->get($this->_config->get('wiki_title_skeleton')), $this->_request_data['event']->title, strftime('%x'), $user->name)),
                 ),
             );
-            org_openpsa_relatedto_handler::common_node_toolbar_buttons($this->_toolbars->bottom, $this->_request_data['event'], $this->_component, $relatedto_button_settings);                   
+            org_openpsa_relatedto_handler::common_node_toolbar_buttons($this->_view_toolbar, $this->_request_data['event'], $this->_component, $relatedto_button_settings);
         }
         return true;
     }
@@ -1309,7 +1316,7 @@ function openPsaShowMonthSelector()
         {
             // Set title to popup
             $this->_request_data['popup_title'] = sprintf($this->_request_data['l10n']->get('event %s'), $this->_request_data['event']->title);
-            
+
             // Show popup
             midcom_show_style('show-popup-header');
             $this->_request_data['event_dm'] =& $this->_datamanager;
@@ -1326,17 +1333,17 @@ function openPsaShowMonthSelector()
     {
         $_MIDCOM->auth->require_valid_user();
         switch($this->_config->get('start_view'))
-    	{
+        {
             case 'day':
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                 . 'day/' . date('Y-m-d', $this->_selected_time) . '.html');
-	            // This will exit()
+                // This will exit()
             break;
             case 'month':
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                 . 'month/' . date('Y-m-d', $this->_selected_time) . '.html');
-	            // This will exit()
-	            break;
+                // This will exit()
+                break;
             default:
             case 'week':
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
@@ -1345,6 +1352,6 @@ function openPsaShowMonthSelector()
                 break;
         }
     }
-    
+
 }
 ?>

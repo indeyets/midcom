@@ -35,6 +35,10 @@ Customer
 Customer contact
 ---STRINGEND
 
+---STRING delete invoice
+Delete invoice
+---STRINGEND
+
 ---STRING due
 Due date
 ---STRINGEND
@@ -45,6 +49,10 @@ Invoice
 
 ---STRING invoice number
 Invoice number
+---STRINGEND
+
+---STRING invoiced hour reports
+Invoiced hour reports
 ---STRINGEND
 
 ---STRING invoicing information
@@ -134,3 +142,4 @@ Unsent invoices
 ---STRING vat
 VAT
 ---STRINGEND
+

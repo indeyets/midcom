@@ -1,8 +1,8 @@
 CREATE TABLE net_nehmer_mail_mailbox_db
 (
     id INT(11) NOT NULL auto_increment,
-    owner VARCHAR(200) NOT NULL DEFAULT '',
-    name VARCHAR(200) NOT NULL DEFAULT '',
+    owner VARCHAR(150) NOT NULL DEFAULT '',
+    name VARCHAR(180) NOT NULL DEFAULT '',
     quota INT(11) NOT NULL DEFAULT 0,
     sitegroup INT(11) NOT NULL DEFAULT 0,
     metadata_size INT(11) NOT NULL DEFAULT '0',

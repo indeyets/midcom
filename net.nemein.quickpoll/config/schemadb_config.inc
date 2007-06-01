@@ -1,44 +1,78 @@
-"config" => array (
- "name"        => "config",
- "description" => "Default Configuration Schema", /* This is a topic */
- "locktimeout" => 0, /* Don't lock this, we display the edit view always */
- "fields"      => array (
+'config' => array
+(
+    'name'        => 'config',
+    'description' => 'Default Configuration Schema',
+    'locktimeout' => 0,
+    'fields'      => array
+    (
 
+        'index_entries' => array
+        (
+            'description' => 'index_entries',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nemein.quickpoll',
+            'config_key' => 'index_entries',
+            'widget' => 'text',
+            'start_fieldgroup' => Array ( 'title' => 'blog settings' ),
+        ),
+        
+        'categories' => array
+        (
+            'description' => 'categories',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nemein.quickpoll',
+            'config_key' => 'categories',
+            'widget' => 'text',
+            'end_fieldgroup' => '',
+        ),
 
-  /* Anonymous posting settings */
+        'schemadb' => array
+        (
+            'description' => 'schemadb',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nemein.quickpoll',
+            'config_key' => 'schemadb',
+            'widget' => 'select',
+            'widget_select_choices' => $GLOBALS['net_nemein_quickpoll_schemadbs'],
+            'start_fieldgroup' => Array ( 'title' => 'schema settings' ),
+        ),
 
-  "allow_anonymous" => array (
-   "description" => $GLOBALS["view_l10n"]->get("allow anonymous voting"),
-   "datatype" => "boolean",
-   "location" => "config",
-   "config_domain" => "net.nemein.quickpoll",
-   "config_key" => "allow_anonymous",
-   "start_fieldgroup" => Array ( "title" => $GLOBALS["view_l10n"]->get("anonymous voting") ),
-  ),
-  "anonymous_username" => array (
-   "description" => $GLOBALS["view_l10n"]->get("anonymous username"),
-   "datatype" => "text",
-   "location" => "config",
-   "config_domain" => "net.nemein.quickpoll",
-   "config_key" => "anonymous_username",
-  ),
-  "anonymous_password" => array (
-   "description" => $GLOBALS["view_l10n"]->get("anonymous password"),
-   "datatype" => "text",
-   "location" => "config",
-   "config_domain" => "net.nemein.quickpoll",
-   "config_key" => "anonymous_password",
-   "end_fieldgroup" => "",
-  ),
-  "allow_multiple_votes" => array (
-   "description" => $GLOBALS["view_l10n"]->get("allow multiple votes for ip/username"),
-   "datatype" => "boolean",
-   "location" => "config",
-   "config_domain" => "net.nemein.quickpoll",
-   "config_key" => "allow_multiple_votes",
-   "start_fieldgroup" => Array ( "title" => $GLOBALS["view_l10n"]->get("vote limits") ),
-   "end_fieldgroup" => "",
-  ),
-
- ),
+        'archive_enable' => array
+        (
+            'description' => 'archive_enable',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nemein.quickpoll',
+            'config_key' => 'archive_enable',
+            'widget' => 'config_radiobox',
+            'widget_radiobox_choices' => Array
+            (
+                '' => 'default setting',
+                '1' => 'yes',
+                '0' => 'no',
+            ),
+        ),
+        
+        'show_navigation_pseudo_leaves' => array
+        (
+            'description' => 'show pseudo leaves in navigation',
+            'helptext' => 'set this to no if you want to hide feeds and archive links in navigation',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nemein.quickpoll',
+            'config_key' => 'show_navigation_pseudo_leaves',
+            'widget' => 'config_radiobox',
+            'widget_radiobox_choices' => array
+            (
+                '' => 'default setting',
+                '1' => 'yes',
+                '0' => 'no',
+            ),
+            'end_fieldgroup' => '',
+        ),
+       
+    ),
 ),

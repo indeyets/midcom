@@ -96,7 +96,72 @@ class net_nehmer_buddylist_interface extends midcom_baseclasses_components_inter
         return null;
     }
 
-
-
+    /**
+     * Support for merging persons via contacts, merges buddylist entries
+     */
+    function org_openpsa_contacts_duplicates_merge_person(&$person1, &$person2, $mode)
+    {
+        switch($mode)
+        {
+            case 'all':
+                break;
+            case 'future':
+                // Buddylist does not have future references so we have nothing to transfer...
+                return true;
+                break;
+            default:
+                // Mode not implemented
+                debug_add("mode {$mode} not implemented", MIDCOM_LOG_ERROR);
+                return false;
+                break;
+        }
+        $qb = net_nehmer_buddylist_entry::new_query_builder();
+        // Make sure we stay in current SG even if we could see more
+        $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
+        $qb->begin_group('OR');
+            // We need the remaining persons buddies later when we compare the two
+            $qb->add_constraint('buddy', '=', $person1->guid);
+            $qb->add_constraint('account', '=', $person1->guid);
+            $qb->add_constraint('buddy', '=', $person2->guid);
+            $qb->add_constraint('account', '=', $person2->guid);
+        $qb->end_group();
+        $buddies = $qb->execute();
+        if ($buddies === false)
+        {
+            // Some error with QB
+            return false;
+        }
+        // Transfer buddies
+        foreach ($buddies as $buddy)
+        {
+            if ($buddy->account == $person2->guid)
+            {
+                debug_add("Transferred buddy->account #{$buddy->id} to person #{$person->id} (from {$buddy->account})");
+                $buddy->account = $person1->guid;
+            }
+            if ($buddy->buddy == $person2->guid)
+            {
+                debug_add("Transferred buddy->buddy #{$buddy->id} to person #{$person->id} (from {$buddy->buddy})");
+                $buddy->buddy = $person1->guid;
+            }
+        }
+        
+        // TODO: Check for duplicates and remove those (also from the buddies array...)
+        
+        // Save updates to remaining buddies
+        foreach($buddies as $buddy)
+        {
+            if (!$buddy->update())
+            {
+                // Failure updating
+                return false;
+            }
+        }
+        
+        // TODO: check version and transfer 1.8 metadata where needed
+        
+        // All done
+        return true;
+    }
 }
 ?>

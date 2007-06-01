@@ -27,7 +27,7 @@ class fi_mik_lentopaikkakisa_navigation extends midcom_baseclasses_components_na
         // At the moment we have no leaves to show
         $leaves = array();
         
-        $leaves['lentopaikka_1'] = array
+        $leaves["{$this->_topic->id}:scores_organization"] = array
         (
             MIDCOM_NAV_SITE => Array
             (
@@ -40,7 +40,7 @@ class fi_mik_lentopaikkakisa_navigation extends midcom_baseclasses_components_na
             MIDCOM_META_CREATED => $this->_topic->created,
             MIDCOM_META_EDITED => $this->_topic->revised
         );
-        $leaves['lentopaikka_2'] = array
+        $leaves["{$this->_topic->id}:scores_pilot"] = array
         (
             MIDCOM_NAV_SITE => Array
             (

@@ -9,7 +9,7 @@
 
 /**
  * org.openpsa.interviews NAP interface class.
- * 
+ *
  * @package org.openpsa.interviews
  */
 class org_openpsa_interviews_navigation extends midcom_baseclasses_components_navigation

@@ -1,5 +1,5 @@
 <?php
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $view_form_prefix = 'midgard_admin_sitewizard_';
 ?>
 <script type="text/javascript">

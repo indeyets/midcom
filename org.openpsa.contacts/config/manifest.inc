@@ -1,31 +1,81 @@
-'name' => 'org.openpsa.contacts',
-'purecode' => false,
-'privileges' =>  Array(),
-'class_definitions' => Array('midcom_dba_classes.inc'),
-'version' => '2.0.5',
-'package.xml' => Array(
+
+  'name' => 'org.openpsa.contacts',
+  'purecode' => false,
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+    0 => 'midcom_dba_classes.inc',
+  ),
+  'version' => '2.1.8beta1',
+  'state' => 'beta',
+  'package.xml' => 
+  array (
     'summary' => 'Contact and user manager',
-    'description' => 'Application for managing contacts and users inside Midgard groups',
-    'maintainers' => Array(
-        'rambo' => Array(
-            'name' => 'Eero af Heurlin',
-            'email' => 'eero.afheurlin@iki.fi',
-            'role' => 'lead',
-        ),
-        'bergie' => Array(
-            'name' => 'Henri Bergius',
-            'email' => 'henri.bergius@iki.fi',
-            'role' => 'lead',
-        ),  
+    'description' => 'Application for managing contact persons and organizations, with support for user management and automatic finding of duplicates',
+    'maintainers' => 
+    array (
+      'rambo' => 
+      array (
+        'name' => 'Eero af Heurlin',
+        'email' => 'eero.afheurlin@iki.fi',
+        'role' => 'lead',
+      ),
+      'bergie' => 
+      array (
+        'name' => 'Henri Bergius',
+        'email' => 'henri.bergius@iki.fi',
+        'role' => 'lead',
+      ),
     ),
-    'dependencies' => Array(
-        'midcom.helper.datamanager' => Array(),
-        'org.openpsa.core'          => Array(),
-        'org.openpsa.helpers'       => Array(),
-        'org.openpsa.contactwidget' => Array(),
-        'org.openpsa.qbpager'       => Array(),
-        'org.openpsa.relatedto'     => Array(),
-        'org.openpsa.notifications' => Array(),        
-        'net.nehmer.buddylist'      => Array(),
-    ),    
-),
+    'dependencies' => 
+    array (
+      'midcom.helper.datamanager' => 
+      array (
+      ),
+      'org.openpsa.core' => 
+      array (
+      ),
+      'org.openpsa.helpers' => 
+      array (
+      ),
+      'org.openpsa.contactwidget' => 
+      array (
+      ),
+      'org.openpsa.qbpager' => 
+      array (
+      ),
+      'org.openpsa.relatedto' => 
+      array (
+      ),
+      'org.openpsa.notifications' => 
+      array (
+      ),
+      'net.nehmer.buddylist' => 
+      array (
+      ),
+      'org.routamc.positioning' => 
+      array (
+      ),
+      'midcom' => 
+      array (
+      ),
+    ),
+  ),
+  'customdata' => 
+  array (
+    'midcom.services.cron' => 
+    array (
+      0 => 
+      array (
+        'handler' => 'org_openpsa_contacts_cron_duplicates_mark',
+        'recurrence' => MIDCOM_CRON_DAY,
+      ),
+      1 => 
+      array (
+        'handler' => 'org_openpsa_contacts_cron_duplicates_clean',
+        'recurrence' => MIDCOM_CRON_DAY,
+      ),
+    ),
+  ),

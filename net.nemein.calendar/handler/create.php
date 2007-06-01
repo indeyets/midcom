@@ -44,7 +44,7 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
             $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
         }
         
-        $this->_request_data['root_event'] = new midcom_db_event();
+        $this->_request_data['root_event'] = new net_nemein_calendar_event();
         
         if (array_key_exists('master_event', $this->_request_data))
         {
@@ -164,9 +164,17 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
                 // This will exit.
         }
 
-        $title = sprintf($this->_l10n_midcom->get('create %s'), $this->_request_data['schemadb'][$this->_request_data['schemadb_schema']]->description);
+        $title = sprintf($this->_l10n_midcom->get('create %s'), $this->_l10n->get($this->_request_data['schemadb'][$this->_request_data['schemadb_schema']]->description));
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
 
+        // Set the breadcrumb
+        $breadcrumb[] = array
+        (
+            MIDCOM_NAV_URL => "create/event.html",
+            MIDCOM_NAV_NAME => sprintf($this->_l10n_midcom->get('create %s'), $this->_l10n->get($this->_request_data['schemadb'][$this->_request_data['schemadb_schema']]->description)),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
+        
         return true;
     }
 

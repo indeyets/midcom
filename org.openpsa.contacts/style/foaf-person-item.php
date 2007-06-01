@@ -5,5 +5,5 @@ global $view_person;
     <mgd:guid>&(view_person.guid);</mgd:guid>
     <mgd:id>&(view_person.id);</mgd:id>
     <foaf:firstName>&(view_person.firstname);</foaf:firstName>
-    <foaf:lastName>&(view_person.lastname);</foaf:lastName>    
+    <foaf:lastName>&(view_person.lastname);</foaf:lastName>
 </foaf:Person>

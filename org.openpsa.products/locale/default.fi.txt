@@ -3,6 +3,22 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING %s includes
+%s sisältää
+---STRINGEND
+
+---STRING %s is
+%s on
+---STRINGEND
+
+---STRING %s is at least
+%s on vähintään
+---STRINGEND
+
+---STRING %s is at most
+%s on enintään
+---STRINGEND
+
 ---STRING code
 Koodi
 ---STRINGEND
@@ -11,12 +27,16 @@ Koodi
 Komponentti
 ---STRINGEND
 
+---STRING component group
+Komponenttiryhmä
+---STRINGEND
+
 ---STRING cost
 Kulu
 ---STRINGEND
 
 ---STRING cost type
-kulutyyppi
+Kulutyyppi
 ---STRINGEND
 
 ---STRING day
@@ -91,6 +111,10 @@ Tuotteet
 kvartaali
 ---STRINGEND
 
+---STRING search
+Tuotehaku
+---STRINGEND
+
 ---STRING service
 Palvelu
 ---STRINGEND
@@ -99,8 +123,20 @@ Palvelu
 Kertatoimitus
 ---STRINGEND
 
+---STRING solution
+Ratkaisu
+---STRINGEND
+
 ---STRING subscription
 Toistuva tilaus
+---STRINGEND
+
+---STRING supplier
+Toimittaja
+---STRINGEND
+
+---STRING toplevel
+Päätaso
 ---STRINGEND
 
 ---STRING type
@@ -111,11 +147,15 @@ Tyyppi
 Yksikkö
 ---STRINGEND
 
+---STRING updated products
+Päivitetyt tuotteet
+---STRINGEND
+
 ---STRING year
 vuosi
 ---STRINGEND
 
----STRING toplevel
-Päätaso
+---STRING updated %s
+päivitetty %s
 ---STRINGEND
 

@@ -11,39 +11,39 @@ Medelande att visa i epost meddlandets sidhuvud
 Ska en kopia skickas till avsändaren o formuläret?
 ---STRINGEND
 
----STRING end_message
+---STRING message to show user after the form has been submitted
 Medelande att visa användaren efter formuläret är skickat.
 ---STRINGEND
 
----STRING end_message_help
+---STRING this message is displayed after the user has submitted the form
 Meddelanden som kommer att visas efter formuläret är skickat.
 ---STRINGEND
 
----STRING helptext_message_to_user
-Detta meddelande läggs till i epost huvudet  om "skicka kopia till användare" är avbockad.
+---STRING this message is appended on top of the email sent to user
+Detta meddelande läggs till i epost huvudet  om 'skicka kopia till användare' är avbockad.
 ---STRINGEND
 
----STRING mail_address_to
+---STRING email address to send the submitted form to
 Epost adfress att skicka formuläret till
 ---STRINGEND
 
----STRING mail_adress_help_text
+---STRING email address where the form will be sent
 När formuläret är skickat, så skickas det till den här adressen.
 ---STRINGEND
 
----STRING mail_itemgroup
+---STRING form email settings
 Formulärets inställningar
 ---STRINGEND
 
----STRING mail_new_item
+---STRING send an email to someone for each new item
 Skicka ett epostmedelande för varje nytt inlägg
 ---STRINGEND
 
----STRING topic_introduction
+---STRING text to place over the form
 Text att visa över formuläret
 ---STRINGEND
 
----STRING topic_introduction_help
+---STRING use this field to add a simple text above the form to help the user fill in the form
 Använd detta fältet för att lägga till en text ovanför formuläret som hjälp
 ---STRINGEND
 

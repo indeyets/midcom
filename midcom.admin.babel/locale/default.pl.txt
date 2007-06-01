@@ -1,0 +1,34 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE pl
+
+---STRING component
+Moduł
+---STRINGEND
+
+---STRING edit strings for %s [%s]
+Tłumaczenie modułu "%s" na %s
+---STRINGEND
+
+---STRING language
+Język
+---STRINGEND
+
+---STRING midcom.admin.babel
+Lokalizator
+---STRINGEND
+
+---STRING perm-denied text
+<p>Instalacja MidCOM'a nie pozwala serwerowi Apache na zapis do plików i folderów zawierających lokalizacje.<p>
+<p>Popraw uprawnienia i spróbuj ponownie.</p>
+---STRINGEND
+
+---STRING string-id
+Identyfikator napisu
+---STRINGEND
+
+---STRING select lang and component
+Wybierz język i moduł
+---STRINGEND
+

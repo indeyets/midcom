@@ -443,7 +443,16 @@ class midcom_services__i18n_l10n {
      * @param string $lang	Language code.
      * @see midcom_services_i18n::set_language()
      */
-    function set_language ($lang) {
+    function set_language($lang) 
+    {
+        if (!array_key_exists($lang, $this->_language_db))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Language {$lang} not found in the language database.", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+    
         $this->_language = $lang;
         $this->_charset = $this->_language_db[$lang]["encoding"];
     }

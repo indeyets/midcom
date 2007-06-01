@@ -82,7 +82,12 @@ class net_nemein_wiki_handler_delete extends midcom_baseclasses_components_handl
             $wikiword = $this->_page->title;
             if ($this->_page->delete())
             {
-                $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('net.nemein.wiki'), sprintf($this->_request_data['l10n']->get('page "%s" deleted'), $wikiword), 'ok');
+                $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('net.nemein.wiki'), sprintf($this->_request_data['l10n']->get('page %s deleted'), $wikiword), 'ok');
+                
+                // Update the index
+                $indexer =& $_MIDCOM->get_service('indexer');
+                $indexer->delete($this->_page->guid);
+                
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
             }
             else
@@ -128,7 +133,10 @@ class net_nemein_wiki_handler_delete extends midcom_baseclasses_components_handl
         $this->_request_data['wikipage_view'] = $this->_datamanager->get_content_html();
         
         // Replace wikiwords
-        $this->_request_data['wikipage_view']['content'] = preg_replace_callback($this->_config->get('wikilink_regexp'), array($this->_page, 'replace_wikiwords'), $this->_request_data['wikipage_view']['content']);
+        if (array_key_exists('content', $this->_request_data['wikipage_view']))
+        {
+            $this->_request_data['wikipage_view']['content'] = preg_replace_callback($this->_config->get('wikilink_regexp'), array($this->_page, 'replace_wikiwords'), $this->_request_data['wikipage_view']['content']);
+        }
                 
         midcom_show_style('view-wikipage-delete');
     }

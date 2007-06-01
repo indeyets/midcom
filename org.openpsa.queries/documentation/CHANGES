@@ -1,10 +1,15 @@
-                   org.openpsa.queries Changelog
+org.openpsa.queries Changelog
                    ----------------------------
 Legend:
 - All items marked with "!" represent a major API-Change that is
   not guaranteed to be backwards compatible to previous versions
-  which might even break existing functionality. 
+  which might even break existing functionality.
 - All items marked with "+" represent completly new features.
+
+2006-10-10 rambo
+  + added midgard:parameters and midgard:attachments to magic privileges list
+    (though they should be granted by default if update is also granted...)
+  - version bump
 
 2006-02-15 rambo
   - corrected PEAR packagin information

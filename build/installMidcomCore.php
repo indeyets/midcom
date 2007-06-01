@@ -74,7 +74,17 @@ class installMidcomCore extends Task
         'static'
     );
     
-    
+    protected $schema_dir = "";
+    public function setSchema_dir($str)
+    {
+        $this->schema_dir = $str;
+    }
+    protected $sql_dir = "";
+    public function setSql_dir($str)
+    {
+        $this->sql_dir = $str;
+    }
+
     
     /**
      * The installdir/midcom path
@@ -138,6 +148,36 @@ class installMidcomCore extends Task
             $this->make_symlink($from, $to);
         }
         
+        /***
+         * Symlink core MgdSchema
+         **/
+        $module_name = 'midcom_core';
+        $schema = sprintf("%s/config/mgdschema/midcom_dbobjects.xml", $this->from);
+        if (!file_exists($schema))
+        {
+            echo "PANIC: {$schema} not found\n";
+            exit(1);
+        }
+        if (empty($this->schema_dir))
+        {
+            echo "PANIC: this->schema_dir is empty\n";
+            exit(1);
+        }
+        echo "Symlinking schema {$schema} to " . $this->schema_dir . "/" . $module_name . ".xml\n";
+        $this->make_symlink($schema, $this->schema_dir . "/" . $module_name . ".xml");
+        $schema_sql = sprintf("%s/config/mgdschema/sql/midcom_dbobjects_full.sql", $this->from);
+        if (!file_exists($schema_sql))
+        {
+            echo "PANIC: {$schema_sql} not found\n";
+            exit(1);
+        }
+        if (empty($this->sql_dir))
+        {
+            echo "PANIC: this->sql_dir is empty\n";
+            exit(1);
+        }
+        echo "Symlinking schema {$schema_sql} to " . $this->sql_dir . "/" . $module_name . ".sql\n";
+        $this->make_symlink($schema_sql, $this->sql_dir . "/" . $module_name . ".sql");
     }
     /**
      * Creates the subdir and symlinks the files in it

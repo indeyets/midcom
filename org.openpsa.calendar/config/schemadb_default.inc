@@ -31,14 +31,14 @@
             'location'    => 'start',
             'date_withtime' => true,
             'widget_date_enable_outside_ais' => true,
-        ),        
+        ),
         'end' => array (
             'description' => 'end time',
             'datatype'    => 'unixdate',
             'location'    => 'end',
             'date_withtime' => true,
             'widget_date_enable_outside_ais' => true,
-        ),        
+        ),
         'description' => array (
             'description' => 'description',
             'datatype'    => 'markdown',
@@ -63,10 +63,10 @@
             'datatype'     => 'integer',
             'widget'       => 'select',
             'widget_select_choices' => array(
-                ORG_OPENPSA_ACCESSTYPE_PUBLIC => 'public',            
+                ORG_OPENPSA_ACCESSTYPE_PUBLIC => 'public',
                 ORG_OPENPSA_ACCESSTYPE_PRIVATE => 'private',
             ),
-        ),       
+        ),
         'busy' => array (
             'description' => 'dont allow overlapping',
             'datatype'    => 'integer',

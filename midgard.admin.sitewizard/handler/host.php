@@ -46,7 +46,11 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
                 'component' => $this->_config->get('default_component'),
             );
 
-            // Read form contents            
+            // Read form contents           
+            if (array_key_exists('midgard_admin_sitewizard_site_name', $_POST))
+            {
+                $host_settings['sitename'] = $_POST['midgard_admin_sitewizard_site_name'];
+            } 
             if (array_key_exists('midgard_admin_sitewizard_host_name', $_POST))
             {
                 $host_settings['hostname'] = $_POST['midgard_admin_sitewizard_host_name'];
@@ -206,15 +210,26 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
         $config->host_prefix = $host_settings['prefix'];
         $config->host_port = $host_settings['port'];
         $config->topic_midcom = $host_settings['component'];
+        $config->topic_name = $host_settings['sitename'];
         $config->verbose = true;
         
-        if ($session->exists("midgard_admin_sitewizard_17compat_{$this->_request_data['sitegroup']->id}"))
+        if ($this->_request_data['17_compatibility'])
         {
-            // FIXME: Midgard 1.7 compatibility hack
-            $auth = $session->get("midgard_admin_sitewizard_17compat_{$this->_request_data['sitegroup']->id}");
-            $config->set_username($auth[0]);
-            $config->set_password($auth[1]);
-            $session->remove("midgard_admin_sitewizard_17compat_{$this->_request_data['sitegroup']->id}");
+            if ($session->exists("midgard_admin_sitewizard_17compat_{$this->_request_data['sitegroup']->id}"))
+            {
+                // FIXME: Midgard 1.7 compatibility hack
+                $auth = $session->get("midgard_admin_sitewizard_17compat_{$this->_request_data['sitegroup']->id}");
+                $config->set_username($auth[0]);
+                $config->set_password($auth[1]);
+                $session->remove("midgard_admin_sitewizard_17compat_{$this->_request_data['sitegroup']->id}");
+            }
+            else
+            {
+                $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midgard.admin.sitewizard', 'midgard.admin.sitewizard'), 
+                            $_MIDCOM->i18n->get_string('you need to authenticate', 'midgard.admin.sitewizard'),
+                            'error');
+                $_MIDCOM->relocate('');
+            }
         }
         
         if (array_key_exists('template', $host_settings))

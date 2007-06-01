@@ -1,0 +1,21 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING article %s will expire on %s
+Artikkeli %s vanhenee %s
+---STRINGEND
+
+---STRING net.nemein.approvenotifier
+Hyväksyntään liittyvät ilmoitukset
+---STRINGEND
+
+---STRING this is the %s day advance notification
+Tämä on %s päivää ennen lähettävä varoitus.
+---STRINGEND
+
+---STRING link to page
+Linkki sivulle
+---STRINGEND
+

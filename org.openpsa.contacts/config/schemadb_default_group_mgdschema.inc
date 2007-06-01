@@ -13,7 +13,7 @@
                 'css_group' => 'area meta',
             ),
             'required'    => true,
-            'index_method' => 'title',            
+            'index_method' => 'title',
         ),
         'object_type'  => array(
             'description'  => 'organization type',
@@ -25,7 +25,7 @@
                 ORG_OPENPSA_OBTYPE_DAUGHTER     => 'daughter organization',
                 ORG_OPENPSA_OBTYPE_DEPARTMENT   => 'department',
             ),
-            'index_merge_with_content' => false,            
+            'index_merge_with_content' => false,
         ),
         'members' => array (
             'description' => 'contacts',
@@ -38,13 +38,15 @@
             'description' => 'Customer ID',
             'datatype'    => 'text',
             'location'    => 'customerId',
-            'index_merge_with_content' => false,            
+            'index_merge_with_content' => false,
+            'hidden'      => true,
         ),
         'company_id' => array (
             'description' => 'company id',
             'datatype'    => 'text',
             'location'    => 'name',
-            'index_merge_with_content' => false,            
+            'index_merge_with_content' => false,
+            'hidden'      => true,
         ),
         'categories' => array (
             'description' => 'categories',
@@ -55,18 +57,21 @@
                 'org_openpsa_category_client'   => 'client',
                 'org_openpsa_category_vendor'   => 'vendor',
             ),
-            'index_merge_with_content' => false,              
+            'index_merge_with_content' => false,
+            'hidden'      => true,
         ),
         'keywords' => array (
             'description' => 'keywords',
             'datatype'    => 'text',
             'location'    => 'keywords',
-        ),        
+            'hidden'      => true,
+        ),
         'logo' => array (
             'description' => 'logo',
             'datatype'    => 'image',
             'widget_image_simple' => true,
             'end_fieldgroup' => '',
+            'hidden'      => true,
         ),
         // Contact information
         'homepage' => array (
@@ -76,7 +81,7 @@
             'start_fieldgroup' => array (
                 'title' => 'contact information',
                 'css_group' => 'area contact',
-            ),            
+            ),
         ),
         'email' => array (
             'description' => 'email',
@@ -234,8 +239,42 @@
             'description' => 'homepage',
             'datatype'    => 'text',
             'location'    => 'homepage',
-            'end_fieldgroup' => '',    
+        ),
+        'email' => array (
+            'description' => 'email',
+            'datatype'    => 'text',
+            'location'    => 'email',
+        ),
+        'phone' => array (
+            'description' => 'phone',
+            'datatype'    => 'text',
+            'location'    => 'phone',
+            'end_fieldgroup' => '',
+        ),
+        'address_visiting_street' => array (
+            'description' => 'street address',
+            'datatype'    => 'text',
+            'location'    => 'street',
+            'start_fieldgroup' => array (
+                'title' => 'visiting address',
+                'css_group' => 'area',
+            ),
+        ),
+        'address_visiting_postcode' => array (
+            'description' => 'postcode',
+            'datatype'    => 'text',
+            'location'    => 'postcode',
+        ),
+        'address_visiting_city' => array (
+            'description' => 'city',
+            'datatype'    => 'text',
+            'location'    => 'city',
+        ),
+        'address_visiting_country' => array (
+            'description' => 'country',
+            'datatype'    => 'text',
+            'location'    => 'country',
+            'end_fieldgroup' => '',
         ),
     )
 )
-

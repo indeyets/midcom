@@ -20,7 +20,7 @@ class org_openpsa_documents_document extends midcom_org_openpsa_document
     {
         return parent::midcom_org_openpsa_document($identifier);
     }
-    
+
     function get_parent_guid_uncached()
     {
         // FIXME: Midgard Core should do this
@@ -35,22 +35,22 @@ class org_openpsa_documents_document extends midcom_org_openpsa_document
         }
         return $parent;
     }
-    
+
     function _on_loaded()
     {
         if ($this->title == "")
         {
             $this->title = "Document #{$this->id}";
         }
-        
+
         if (!$this->docStatus)
         {
             $this->docStatus = ORG_OPENPSA_DOCUMENT_STATUS_DRAFT;
         }
-                
+
         return true;
     }
-    
+
     function _on_creating()
     {
         $this->orgOpenpsaObtype = ORG_OPENPSA_OBTYPE_DOCUMENT;
@@ -58,7 +58,7 @@ class org_openpsa_documents_document extends midcom_org_openpsa_document
         $this->author = $user->id;
         return true;
     }
-    
+
     function _on_updated()
     {
         // Sync the object's ACL properties into MidCOM ACL system
@@ -66,12 +66,12 @@ class org_openpsa_documents_document extends midcom_org_openpsa_document
         $sync->write_acls($this, $this->orgOpenpsaOwnerWg, $this->orgOpenpsaAccesstype);
         return true;
     }
-    
+
     function backup_version()
     {
         // Instantiate the backup object
         $backup = new org_openpsa_documents_document();
-        
+
         // Copy current properties
         while (list($key, $value) = each($this))
         {
@@ -82,11 +82,11 @@ class org_openpsa_documents_document extends midcom_org_openpsa_document
         }
         $backup->nextVersion = $this->id;
         $stat = $backup->create();
-        
+
         if ($stat)
         {
             $backup = new org_openpsa_documents_document($backup->id);
-            
+
             // Find the attachment
             $attachments = $this->listattachments();
             if ($attachments)
@@ -97,14 +97,17 @@ class org_openpsa_documents_document extends midcom_org_openpsa_document
                     $stat = $backup->createattachment($original_attachment->name, $original_attachment->title, $original_attachment->mimetype);
                     if ($stat)
                     {
-                        $backup_attachment = new midcom_baseclasses_database_attachment($stat);                    
-                    
+                        $backup_attachment = new midcom_baseclasses_database_attachment($stat);
+
                         // Copy the contents
                         $original_handle = mgd_open_attachment($original_attachment->id, 'r');
                         $backup_handle = mgd_open_attachment($backup_attachment->id, 'w');
                         while (!feof($original_handle))
-                        {                            fwrite($backup_handle, fread($original_handle, 4096), 4096);                        }                        fclose($original_handle);
-                        
+                        {
+                            fwrite($backup_handle, fread($original_handle, 4096), 4096);
+                        }
+                        fclose($original_handle);
+
                         // Copy attachment parameters
                         $param_domains = $original_attachment->listparameters();
                         if ($param_domains)
@@ -137,7 +140,7 @@ class org_openpsa_documents_document extends midcom_org_openpsa_document
             return $stat;
         }
     }
-    
+
     function _pid_to_obj($pid)
     {
         return new midcom_baseclasses_database_person($pid);

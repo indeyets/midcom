@@ -73,6 +73,7 @@ class net_nehmer_static_viewer extends midcom_baseclasses_components_request
         $this->_request_switch['config'] = Array
         (
             'handler' => Array('net_nehmer_static_handler_configuration', 'configdm'),
+            //FIXME: Make configurable
             'schemadb' => 'file:/net/nehmer/static/config/schemadb_config.inc',
             'schema' => 'config',
             'fixed_args' => Array('config'),
@@ -96,6 +97,15 @@ class net_nehmer_static_viewer extends midcom_baseclasses_components_request
                 'handler' => Array('net_nehmer_static_handler_view', 'view'),
             );
         }
+        
+        // AJAX version of view, which skips style.
+        $this->_request_switch['view_raw'] = Array
+        (
+            'handler' => Array('net_nehmer_static_handler_view', 'view'),
+            'fixed_args' => ('raw'),
+            'variable_args' => 1,
+        );
+        
         $this->_request_switch['view'] = Array
         (
             'handler' => Array('net_nehmer_static_handler_view', 'view'),
@@ -205,6 +215,7 @@ class net_nehmer_static_viewer extends midcom_baseclasses_components_request
                         $this->_l10n->get($this->_request_data['schemadb'][$name]->description)
                     ),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'n',
                 ));
             }
         }

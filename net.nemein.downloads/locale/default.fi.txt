@@ -35,3 +35,7 @@ Valitse nykyinen tiedostopaketti
 Näytä tiedostopaketti
 ---STRINGEND
 
+---STRING net.nemein.downloads
+Tiedostolatausten hallinta
+---STRINGEND
+

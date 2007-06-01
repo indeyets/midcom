@@ -27,10 +27,6 @@ Generuj URL'e na podstawie tytulów
 Dodaj news
 ---STRINGEND
 
----STRING net.nehmer.blog
-Newsy
----STRINGEND
-
 ---STRING delete article
 Usuń
 ---STRINGEND
@@ -85,6 +81,10 @@ Ustawienia indeksu
 
 ---STRING list old items in index
 Pokaż stare elementy w indeksie
+---STRINGEND
+
+---STRING net.nehmer.blog
+Newsy
 ---STRINGEND
 
 ---STRING newsticker
@@ -173,5 +173,105 @@ Nie wybrano kategorii
 
 ---STRING visible
 Widoczny?
+---STRINGEND
+
+---STRING %s category %s
+%s: kategoria "%s"
+---STRINGEND
+
+---STRING ajax_enable
+Włącz obsługę AJAX
+---STRINGEND
+
+---STRING archive
+Archiwum
+---STRINGEND
+
+---STRING archive_enable
+Włącz wyświetlanie archiwum
+---STRINGEND
+
+---STRING article
+Artykuł
+---STRINGEND
+
+---STRING atom feed
+Wsad ATOM
+---STRINGEND
+
+---STRING available feeds
+Dostępne wsady
+---STRINGEND
+
+---STRING available feeds introduction
+Dostępne są następujące wsady
+---STRINGEND
+
+---STRING blog settings
+Ustawnienia bloga
+---STRINGEND
+
+---STRING categories
+Kategorie
+---STRINGEND
+
+---STRING comments_enable
+Włącz komentarze (wymaga net.nehmer.comments)
+---STRINGEND
+
+---STRING content
+Treść
+---STRINGEND
+
+---STRING first post was made on %s.
+Pierwszy post: %s
+---STRINGEND
+
+---STRING index_entries
+Liczba pozycji w indeksie
+---STRINGEND
+
+---STRING no news found.
+Brak newsów
+---STRINGEND
+
+---STRING not enough privileges to create articles
+Nie masz wystarczających uprawnień by stworzyć nowy artykuł
+---STRINGEND
+
+---STRING posted on %s.
+Wysłano %s.
+---STRINGEND
+
+---STRING rss 0.91 feed
+RSS 0.91
+---STRINGEND
+
+---STRING rss 1.0 feed
+RSS 1.0
+---STRINGEND
+
+---STRING rss 2.0 feed
+RSS 2.0
+---STRINGEND
+
+---STRING rss feed
+Wsad RSS
+---STRINGEND
+
+---STRING rss_subscription_enable
+Dodawaj newsy ze zdalnych wsadów RSS i ATOM
+---STRINGEND
+
+---STRING schema settings
+Ustawienia schematów
+---STRINGEND
+
+---STRING schemadb
+Baza schematów
+---STRINGEND
+
+---STRING there is a total of %d posts.
+%d postów.
 ---STRINGEND
 

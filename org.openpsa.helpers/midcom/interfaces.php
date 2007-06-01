@@ -1,16 +1,16 @@
 <?php
 /**
  * OpenPSA helpers library, helpers used around OpenPSA.
- * 
+ *
  * @package org.openpsa.helpers
  */
 class org_openpsa_helpers_interface extends midcom_baseclasses_components_interface
 {
-    
+
     function org_openpsa_helpers_interface()
     {
         parent::midcom_baseclasses_components_interface();
-        
+
         $this->_component = 'org.openpsa.helpers';
         $this->_purecode = true;
         $this->_autoload_files = Array(
@@ -25,6 +25,7 @@ class org_openpsa_helpers_interface extends midcom_baseclasses_components_interf
             'dm_savecancel.php',
             'task_groups.php',
             'vx_parser.php',
+            'array2code.php',
         );
     }
 }

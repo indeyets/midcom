@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING allow_anonymous
+Allow commenting by anonymous users
+---STRINGEND
+
 ---STRING author
 Name
 ---STRINGEND
@@ -39,7 +43,31 @@ Post a comment
 Published by %s on %s.
 ---STRINGEND
 
----STRING allow_anonymous
-Allow commenting by anonymous users
+---STRING rated %s
+rated %s
+---STRINGEND
+
+---STRING rating
+Rating
+---STRINGEND
+
+---STRING ratings
+Ratings
+---STRINGEND
+
+---STRING ratings_cache_to_object
+Cache ratings score to object being commented
+---STRINGEND
+
+---STRING ratings_cache_to_object_property
+Cache ratings in object property
+---STRINGEND
+
+---STRING ratings_enable
+Enable ratings support
+---STRINGEND
+
+---STRING ratings_cache_total
+Save total instead of average to object
 ---STRINGEND
 

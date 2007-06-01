@@ -1,10 +1,9 @@
 <?php
-global $view;
-global $view_datamanager;
-global $view_title;
-global $midcom;
-$prefix = $midcom->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
-<h1>&(view_title);: <?echo htmlspecialchars($view["title"]); ?></h1>
+<h1>&(data['folder_name']);: <?php echo $data['view_title']; ?></h1>
 
-<?php $view_datamanager->display_view(); ?>
+<?php 
+$data['datamanager']->display_view(); 
+?>

@@ -8,18 +8,18 @@ class org_openpsa_documents_directory extends midcom_baseclasses_database_topic
     {
         return parent::midcom_baseclasses_database_topic($identifier);
     }
-    
+
     function _on_created()
     {
         $this->parameter('midcom', 'component', 'org.openpsa.documents');
     }
-    
+
     function _on_updated()
     {
         $ownerwg = $this->parameter('org.openpsa.core', 'orgOpenpsaOwnerWg');
         $accesstype = $this->parameter('org.openpsa.core', 'orgOpenpsaAccesstype');
 
-        if (   $ownerwg 
+        if (   $ownerwg
             && $accesstype)
         {
             // Sync the object's ACL properties into MidCOM ACL system

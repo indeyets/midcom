@@ -1,15 +1,30 @@
-"schemadb" => "file:/net/nemein/organizations/config/schemadb_default.inc",
-"schemadbs" => Array (
-    "file:/net/nemein/organizations/config/schemadb_default.inc" => "Organizations Default Schema Database",
+'schema' => 'group',
+'schemadb' => 'file:/net/nemein/organizations/config/schemadb_default.inc',
+'schemadbs' => Array (
+    'file:/net/nemein/organizations/config/schemadb_default.inc' => 'Organzations Default Schema Database',
 ),
-"default_schema" => "default",
-"group" => false,
-"organizations_in_row" => 3,
-"preferred_organization" => false,
-"enable_alphabetical" => false,
-"enable_filtering" => true,
-"enable_foaf" => true,
-"enable_random" => true,
-"enable_vcard" => true,
-"filter_default" => true,
-"preferred_group" => null,
+
+// The GUID of the group to use
+'group' => null,
+
+// If this is defined and a valid user GUID, that user is shown first in
+// the group index. In case your boss wants publicity ;-).
+'preferred_group' => null,
+
+// Groups columns in the index view
+'groups_in_row' => 3,
+
+// Index view ordering sequence. This is a list of midcom_core_querybuidler::add_order
+// compatible field names. Use the "reverse" prefix for decending order.
+// Note, that these orders are relative to the *membership* table, not to the *group*
+// table.
+'index_order' => Array('official', 'city'),
+
+// Set this to true to enable the alphabetically ordered index by default.
+// Note that the preferred group setting is only taken into account on the
+// corresponding alphabetic page. The unqualified root page will show the 'A'
+// index page.
+//
+// Note that the original alphabetic index pages using GET parameters are not
+// supported by this new implementation.
+'enable_alphabetical' => false,

@@ -55,6 +55,7 @@ define('ORG_OPENPSA_MESSAGETYPE_EMAIL_HTML', 8006);
 define('ORG_OPENPSA_MESSAGERECEIPT_SENT', 8500); //Created when message has been sent successfully
 define('ORG_OPENPSA_MESSAGERECEIPT_DELIVERED', 8501); //Created if we get a delivery receipt
 define('ORG_OPENPSA_MESSAGERECEIPT_RECEIVED', 8502); //Created if we get some confirmation from the recipient
+define('ORG_OPENPSA_MESSAGERECEIPT_FAILURE', 8503); //Created when message has been send has failed
 //org.openpsa.directmarketing campaign member types
 define('ORG_OPENPSA_OBTYPE_CAMPAIGN_MEMBER', 9000);
 define('ORG_OPENPSA_OBTYPE_CAMPAIGN_TESTER', 9001);

@@ -9,7 +9,7 @@
 
 /**
  * org.openpsa.imp site interface class.
- * 
+ *
  * "SSO" to Horde/Imp
  */
 class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
@@ -35,13 +35,13 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
 
         // Match /redirect
         $this->_request_switch[] = array(
-            'fixed_args' => 'redirect',        
+            'fixed_args' => 'redirect',
             'handler' => 'redirect'
         );
 
         // Match /settings
         $this->_request_switch[] = array(
-            'fixed_args' => 'settings',        
+            'fixed_args' => 'settings',
             'handler' => 'settings'
         );
 
@@ -49,7 +49,7 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
         $this->_request_switch[] = array(
             'handler' => 'frontpage'
         );
-        
+
         debug_pop();
         return true;
     }
@@ -57,7 +57,7 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
     function _populate_toolbar()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         //Add icon for user settings
         $this->_toolbars->bottom->add_item(Array(
             MIDCOM_TOOLBAR_URL => 'settings.html',
@@ -66,7 +66,7 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
             MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
             MIDCOM_TOOLBAR_ENABLED => true
         ));
-        
+
         debug_pop();
         return true;
     }
@@ -85,7 +85,7 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
             debug_pop();
             return false;
         }
-                
+
         // Get server URI
         if ($this->_server_uri = $current_topic->parameter('org.openpsa.imp', 'imp_global_uri'))
         {
@@ -93,14 +93,14 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
             $this->_global_server = true;
         }
         else
-        {   
+        {
             $this->_server_uri = $current_user_dbobj->get_parameter('org.openpsa.imp', 'imp_uri');
         }
         if (!$this->_server_uri)
         {
             debug_add("Server URI not found", MIDCOM_LOG_ERROR);
             debug_pop();
-            return false;            
+            return false;
         }
 
         //Get username
@@ -111,7 +111,7 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
             debug_pop();
             return false;
         }
-        
+
         //Get password
         $this->_imp_password = $current_user_dbobj->get_parameter('org.openpsa.imp', 'imp_password');
         if (!$this->_imp_password)
@@ -120,7 +120,7 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
             debug_pop();
             return false;
         }
-        
+
         return true;
     }
 
@@ -132,12 +132,12 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
 
         $formData = false;
         $nextUri = false;
-        
+
         if (!$this->_check_imp_settings())
         {
             debug_add("Horde/Imp settings incomplete, aborting", MIDCOM_LOG_ERROR);
             debug_pop();
-            return false;            
+            return false;
         }
 
         //Try to get remote login form
@@ -157,9 +157,13 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
             preg_match_all('/<input[^>]*name="([^"]+)" (value="([^"]*)")?[^>]*>/', $HTMLBody, $matches2);
             preg_match('%(https?://[^/]+)(.*)%', $this->_server_uri, $matches3);
             $uriServer = $matches3[1];
-            if (!preg_match('%^/%', $actionUri))            {                preg_match('%(https?://.+/)(.*)%', $this->_server_uri, $matches4);                $uriServer=$matches4[1];            }
+            if (!preg_match('%^/%', $actionUri))
+            {
+                preg_match('%(https?://.+/)(.*)%', $this->_server_uri, $matches4);
+                $uriServer=$matches4[1];
+            }
             $nextUri = $uriServer . $actionUri;
-            
+
             $formData='<form id="org_openpsa_imp_autoSubmit" method="post" action="'.$nextUri.'">'."\n";
             while (list ($n, $k) = each ($matches2[1]))
             {
@@ -178,7 +182,7 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
                         break;
                  }
                  $formData.='    <input type="hidden" name="'.$k.'" value="'.$v.'" />'."\n";
-            } 
+            }
             reset ($matches2[1]);
             $formData.="<input type=\"submit\" value=\"".'log in'."\">\n</form>\n";
         }
@@ -190,41 +194,41 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
             debug_pop();
             $_MIDCOM->relocate($this->_server_uri);
             //This will exit
-        }        
+        }
 
         $this->_request_data['login_form_html'] = $formData;
-        
+
         // We're using a popup here
         $_MIDCOM->skip_page_style = true;
-        
+
         debug_pop();
         return true;
     }
-    
+
     function _show_redirect($handler_id, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         midcom_show_style("imp-redirect");
-        
+
         debug_pop();
         return true;
     }
- 
+
     function _handler_settings($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         $this->_check_imp_settings();
-        
+
         //Initialize/handle DM
-        debug_add("Loading Schema Database", MIDCOM_LOG_DEBUG);        
-        
+        debug_add("Loading Schema Database", MIDCOM_LOG_DEBUG);
+
         // Load the schema definition file
         $schemadb_contents = midcom_get_snippet_content($this->_config->get("schemadb_horde_account"));
         eval("\$schemadb = Array ( {$schemadb_contents} );");
-        
+
         //Choose schema
         if ($this->_global_server)
         {
@@ -235,20 +239,20 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
             $schema = 'default';
         }
         debug_add('Chose schema: "' . $schema . '"');
-        
+
         // Instantiate datamanager
         $this->_request_data['datamanager'] = new midcom_helper_datamanager($schemadb);
-        
+
         if (!$this->_request_data['datamanager']) {
             debug_pop();
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
-            // This will exit. 	 
+            // This will exit.
         }
-        
+
         // Load the person record into DM
         $person_record = $_MIDCOM->auth->user->get_storage();
         $this->_request_data['datamanager']->init($person_record, $schema);
-        
+
         // Process the form
         switch ($this->_request_data['datamanager']->process_form())
         {
@@ -272,21 +276,21 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
         debug_pop();
         return true;
     }
-    
+
     function _show_settings($handler_id, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         midcom_show_style("show-settings");
-        
+
         debug_pop();
         return true;
     }
-    
+
     function _handler_frontpage($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         //If settings are not complete redirect to settings page
         if (!$this->_check_imp_settings())
         {
@@ -296,19 +300,19 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
                                 . 'settings.html');
             //This will exit
         }
-        
+
         $this->_populate_toolbar();
 
         debug_pop();
         return true;
     }
-    
+
     function _show_frontpage($handler_id, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         midcom_show_style("show-frontpage");
-        
+
         debug_pop();
         return true;
     }

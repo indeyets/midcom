@@ -3,7 +3,7 @@
 // of net_nehmer_account_handler_edit
 //
 // Bind the view data, remember the reference assignment:
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $view = $data['datamanager']->get_content_html();
 $return_url = $GLOBALS['midcom_config']['midcom_site_url'];
 ?>

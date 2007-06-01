@@ -1,9 +1,0 @@
-"topic_mode" => "combined", // "combined" or "channels"
-"show_latest" => 6,         // integer, how many to show
-"topic_item_display" => "details", // "details" or "titles"
-"topic_name_display" => "remote", // "remote" or "local"
-"rss_description" => "",
-"rss_items" => 20,
-"subscription_mode" => "local", // "local" or "bloglines"
-"bloglines_username" => "",
-"bloglines_password" => "",

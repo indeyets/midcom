@@ -2,7 +2,7 @@
 // Required request keys:
 // edit_url, delete_url
 
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 $toolbar = new midcom_helper_toolbar();
 

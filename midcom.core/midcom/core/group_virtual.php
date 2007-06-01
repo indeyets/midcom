@@ -139,7 +139,7 @@ class midcom_core_group_virtual extends midcom_core_group
             if (is_null($members[$this->id]))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add('The component interface could not list the members of the vgroup {$this->id}.', MIDCOM_LOG_WARN);
+                debug_add("The component interface could not list the members of the vgroup {$this->id}.", MIDCOM_LOG_WARN);
                 debug_pop();
                 return false;
             }
@@ -162,7 +162,7 @@ class midcom_core_group_virtual extends midcom_core_group
 
         foreach ($_MIDCOM->auth->get_all_vgroups() as $id => $name)
         {
-            $vgroup =& $_MIDCOM->auth->get_group($id);
+            $vgroup =& $_MIDCOM->auth->get_group($id);            
             $members = $vgroup->list_members();
             if (! $members)
             {

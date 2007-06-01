@@ -1,5 +1,0 @@
-'name' => 'midcom.helper.helloworld',
-'purecode' => false,
-'version' => 1,
-'privileges' =>  Array(),
-'class_definitions' => Array(),

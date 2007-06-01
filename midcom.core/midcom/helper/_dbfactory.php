@@ -33,7 +33,15 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
      */
     function get_object_by_guid($guid)
     {
-        $tmp = mgd_get_new_object_by_guid($guid);
+        if (!mgd_is_guid($guid))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("The given GUID ({$guid}) is not valid ", MIDCOM_LOG_WARN);
+            debug_pop();
+            return null;
+        }
+
+        $tmp = midgard_object_class::get_object_by_guid($guid);
         if (! $tmp)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -42,6 +50,26 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
             return null;
         }
         return $this->convert_midgard_to_midcom($tmp);
+    }
+
+    /**
+     * This function will determine the correct type of midgard_collector that
+     * has to be created. It will also call the _on_prepare_new_collector event handler.
+     *
+     * Since this is to be called statically, it will take a class name, not a instance
+     * as argument.
+     *
+     * @param string $classname The name of the class for which you want to create a collector.
+     * @param string $domain The domain property of the collector instance
+     * @param mixed $value Value match for the collector instance
+     * @return The initialized instance of the query builder.
+     * @see midcom_core_querybuilder
+     */
+    function new_collector($classname, $domain, $value)
+    {
+        $mc = new midcom_core_collector($classname, $domain, $value);
+        $mc->initialize();
+        return $mc;
     }
 
     /**
@@ -165,13 +193,21 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
      * content getters are invoked.
      *
      * @param mixed $object Either a MidCOM DBA object instance, or a GUID string.
+     * @param string $class class name of object if known (so we can use get_parent_guid_uncached_static and avoid instantiating full object)
      * @return string The parent GUID, or null, if this is a top level object.
      */
-    function get_parent_guid($object)
+    function get_parent_guid($object, $class = null)
     {
         if (is_object($object))
         {
-            $object_guid = $object->guid;
+            if (!isset($object->guid))
+            {
+                $object_guid = null;
+            }
+            else
+            {
+                $object_guid = $object->guid;
+            }
             $the_object =& $object;
         }
         else
@@ -188,49 +224,345 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
                     'Tried to resolve an invalid GUID without an object being present. This cannot be done.');
                 // This will exit.
             }
-            $guid = false;
+            $parent_guid = false;
         }
         else
         {
-            $guid = $_MIDCOM->cache->memcache->lookup_parent_guid($object_guid);
+            $parent_guid = $_MIDCOM->cache->memcache->lookup_parent_guid($object_guid);
         }
 
-        if ($guid === false)
+        if ($parent_guid === false)
         {
-            // No cache hit, retrieve the actual object and update the cache.
-            if ($the_object === null)
+            // No cache hit, retvieve guid and update the cache
+            if ($class !== null)
             {
-                $the_object = $this->get_object_by_guid($object);
-                if (! is_object($the_object))
-                {
-                    return null;
-                   }
+                // Class defined, we can use the static method for fetching parent and avoiding full object instantiate
+                $parent_guid = call_user_func(array($class, 'get_parent_guid_uncached_static'), $object_guid);
             }
-
-            $guid = $the_object->get_parent_guid_uncached();
-            if (is_object($guid))
+            else
+            {
+                // class not defined, retrieve the full object by guid
+                if ($the_object === null)
+                {
+                    $the_object = $this->get_object_by_guid($object_guid);
+                    if (! is_object($the_object))
+                    {
+                        return null;
+                    }
+                }
+                $parent_guid = $the_object->get_parent_guid_uncached();
+            }
+            if (is_object($parent_guid))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add('Warning, get_parent_guid_uncached should not return an object. This feature is deprecated.',
                     MIDCOM_LOG_INFO);
                 debug_pop();
-                $guid = $guid->guid;
+                $parent_guid = $parent_guid->guid;
             }
 
             if (mgd_is_guid($object_guid))
             {
-                $_MIDCOM->cache->memcache->update_parent_guid($object_guid, $guid);
+                $_MIDCOM->cache->memcache->update_parent_guid($object_guid, $parent_guid);
             }
         }
 
-        if (! mgd_is_guid($guid))
+        if (! mgd_is_guid($parent_guid))
         {
             return null;
         }
         else
         {
-            return $guid;
+            return $parent_guid;
         }
+    }
+
+    /**
+     * Import object unserialized with midgard_replicator::unserialize()
+     *
+     * This method does ACL checks and triggers watchers etc.
+     *
+     * @param object $unserialized_object object gotten from midgard_replicator::unserialize()
+     * @param boolean $use_force set use of force for the midcom_helper_replicator_import_object() call
+     * @return boolean indicating success/failure
+     * @todo refactor to smaller methods
+     * @todo Add some magic to prevent importing of replication loops (see documentation/TODO for details about the potential problem)
+     * @todo Verify support for the special cases of privilege and virtual_group
+     */
+    function import(&$unserialized_object, $use_force = false)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        if (is_a($unserialized_object, 'midgard_blob'))
+        {
+            debug_add("You must use import_blob method to import BLOBs", MIDCOM_LOG_ERROR);
+            debug_pop();
+            mgd_set_errno(MGD_ERR_ERROR);
+            return false;
+        }
+        // We need this helper (workaround Zend bug)
+        if (!function_exists('midcom_helper_replicator_import_object'))
+        {
+            $_MIDCOM->componentloader->load('midcom.helper.replicator');
+        }
+
+        if (!$_MIDCOM->dbclassloader->is_mgdschema_object($unserialized_object))
+        {
+            debug_add("Unserialized object " . get_class($unserialized_object) . " is not recognized as supported MgdSchema class.", MIDCOM_LOG_ERROR);
+            debug_pop();
+            mgd_set_errno(MGD_ERR_ERROR);
+            return false;
+        }
+        
+        // Load the required component for DBA class
+        $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($unserialized_object);
+        if (! $_MIDCOM->dbclassloader->load_mgdschema_class_handler($midcom_dba_classname))
+        {
+            debug_add("Failed to load the handling component for {$midcom_dba_classname}, cannot import.", MIDCOM_LOG_ERROR);
+            debug_pop();
+            mgd_set_errno(MGD_ERR_ERROR);
+            return false;
+        }
+
+        // Get an object for ACL checks, use existing one if possible
+        $acl_object = new $midcom_dba_classname($unserialized_object->guid);
+        if (   is_object($acl_object)
+            && $acl_object->id)
+        {
+            if (!is_a($acl_object, get_class($unserialized_object)))
+            {
+                $acl_class = get_class($acl_object);
+                $unserialized_class = get_class($unserialized_object);
+                debug_add("The local object we got is not of compatible type ({$acl_class} vs {$unserialized_class}), this means duplicate GUID", MIDCOM_LOG_ERROR);
+                mgd_set_errno(MGD_ERR_DUPLICATE);
+                debug_pop();
+                return false;
+            }
+            // Got an existing object
+            $acl_object_in_db = true;
+            $actual_object_in_db = true;
+            /* PONDER: should we copy values from unserialized here as well ?? likely we should (think moving article)
+            midcom_baseclasses_core_dbobject::cast_object($acl_object, $unserialized_object)
+            */
+        }
+        else
+        {
+            $error_code = mgd_errno(); // switch is a loop, get the value only once this way
+            switch ($error_code)
+            {
+                case MGD_ERR_ACCESS_DENIED:
+                    $actual_object_in_db = true;
+                    debug_add("Could not instaniate ACL object due to ACCESS_DENIED error, this means we can abort early", MIDCOM_LOG_ERROR);
+                    debug_pop();
+                    return false;
+                    break;
+                case MGD_ERR_OBJECT_DELETED:
+                case MGD_ERR_OBJECT_PURGED:
+                    $actual_object_in_db = true;
+                    break;
+                default:
+                    $actual_object_in_db = false;
+                    break;
+            }
+            // Copy-construct
+            $acl_object_in_db = false;
+            $acl_object = new $midcom_dba_classname();
+            if (!midcom_baseclasses_core_dbobject::cast_object($acl_object, $unserialized_object))
+            {
+                debug_add('Failed to cast MidCOM DBA object for ACL checks from $unserialized_object', MIDCOM_LOG_ERROR);
+                debug_print_r('$unserialized_object: ', $unserialized_object);
+                debug_pop();
+                return false;
+            }
+        }
+
+        // Magic to check for various corner cases to determine the action to take later on
+        switch(true)
+        {
+            case ($unserialized_object->action == 'purged'):
+                // Purges not supported yet
+                debug_add("Purges not supported yet (they require extra special love)", MIDCOM_LOG_ERROR);
+                mgd_set_errno(MGD_ERR_OBJECT_PURGED);
+                debug_pop();
+                return false;
+                break;
+            // action is created but object is already in db, cast to update
+            case (   $unserialized_object->action == 'created'
+                  && $actual_object_in_db):
+                $handle_action = 'updated';
+                break;
+            // Core bug in earlier 1.8 branch versions set action to none
+            case (   $unserialized_object->action == 'none'
+                  && $actual_object_in_db):
+                $handle_action = 'updated';
+                break;
+            case (   $unserialized_object->action == 'none'
+                  && !$actual_object_in_db):
+                // Fall-through intentional
+            case (   $unserialized_object->action == 'updated'
+                  && !$actual_object_in_db):
+                $handle_action = 'created';
+                break;
+            default:
+                $handle_action = $unserialized_object->action;
+                break;
+        }
+
+        if (!$acl_object->_on_importing())
+        {
+            debug_add("The _on_importing event handler returned false.", MIDCOM_LOG_ERROR);
+            // set errno if not set
+            if (mgd_errno() === MGD_ERR_OK)
+            {
+                mgd_set_errno(MGD_ERR_ERROR);
+            }
+            debug_pop();
+            return false;
+        }
+        
+        switch ($handle_action)
+        {
+            case 'deleted':
+                if (!$actual_object_in_db)
+                {
+                    // we don't have the object locally created yet, so we just import via core and be done with it
+                    midcom_helper_replicator_import_object($unserialized_object, $use_force);
+                    break;
+                }
+                if (!midcom_baseclasses_core_dbobject::delete_pre_checks($acl_object))
+                {
+                    debug_add('delete pre-flight check returned false', MIDCOM_LOG_ERROR);
+                    debug_pop();
+                    return false;
+                }
+                // Actual import
+                if (!midcom_helper_replicator_import_object($unserialized_object, $use_force))
+                {
+                    debug_add('midcom_helper_replicator_import_object returned false, errstr: ' . mgd_errstr(), MIDCOM_LOG_ERROR);
+                    debug_pop();
+                    return false;
+                }
+                midcom_baseclasses_core_dbobject::delete_post_ops($acl_object);
+                break;
+            case 'updated':
+                if (!midcom_baseclasses_core_dbobject::update_pre_checks($acl_object))
+                {
+                    debug_add('update pre-flight check returned false', MIDCOM_LOG_ERROR);
+                    debug_pop();
+                    return false;
+                }
+                // Actual import
+                if (!midcom_helper_replicator_import_object($unserialized_object, $use_force))
+                {
+                    debug_add('midcom_helper_replicator_import_object returned false, errstr: ' . mgd_errstr(), MIDCOM_LOG_ERROR);
+                    debug_pop();
+                    return false;
+                }
+                // "refresh" acl_object
+                if (!midcom_baseclasses_core_dbobject::cast_object($acl_object, $unserialized_object))
+                {
+                    // this shouldn't happen, but shouldn't be fatal either...
+                }
+                midcom_baseclasses_core_dbobject::update_post_ops($acl_object);
+                break;
+            case 'created':
+                if (!midcom_baseclasses_core_dbobject::create_pre_checks($acl_object))
+                {
+                    debug_add('creation pre-flight check returned false', MIDCOM_LOG_ERROR);
+                    debug_pop();
+                    return false;
+                }
+                // Actual import
+                if (!midcom_helper_replicator_import_object($unserialized_object, $use_force))
+                {
+                    debug_add('midcom_helper_replicator_import_object returned false, errstr: ' . mgd_errstr(), MIDCOM_LOG_ERROR);
+                    debug_pop();
+                    return false;
+                }
+                // refresh object to avoid issues with _on_created requiring ID
+                $acl_object_refresh = new $midcom_dba_classname($unserialized_object->guid);
+                if (   is_object($acl_object_refresh)
+                    && $acl_object_refresh->id)
+                {
+                    $acl_object = $acl_object_refresh;
+                    midcom_baseclasses_core_dbobject::create_post_ops($acl_object);
+                }
+                else
+                {
+                    // refresh failed (it really shouldn't), what to do ??
+                }
+                break;
+            default:
+                debug_add("Do not know how to handle action '{$handle_action}'", MIDCOM_LOG_ERROR);
+                mgd_set_errno(MGD_ERR_ERROR);
+                debug_pop();
+                return false;
+                break;
+        }
+
+        $acl_object->_on_imported();
+        /* Do we need this ?? The action relevant handlers and watches are triggered in any case
+        $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_IMPORT, $object);
+        */
+        debug_pop();
+        return true;
+    }
+
+    /**
+     * Import midgard_blob unserialized with midgard_replicator::unserialize()
+     *
+     * This method does ACL checks and triggers watchers etc.
+     *
+     * @param midgard_blob $unserialized_object midgard_blob gotten from midgard_replicator::unserialize()
+     * @param string $xml XML the midgard_blob was unserialized from
+     * @param boolean $use_force set use of force for the midcom_helper_replicator_import_from_xml() call
+     * @return boolean indicating success/failure
+     */
+    function import_blob(&$unserialized_object, &$xml, $use_force = false)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        if (!is_a($unserialized_object, 'midgard_blob'))
+        {
+            debug_add("You should use the *import* method to import normal objects, passing control there", MIDCOM_LOG_WARNING);
+            debug_pop();
+            return $this->import($unserialized_object, $use_force);
+        }
+        // We need this helper (workaround Zend bug)
+        if (!function_exists('midcom_helper_replicator_import_object'))
+        {
+            $_MIDCOM->componentloader->load('midcom.helper.replicator');
+        }
+
+        $acl_object = $_MIDCOM->dbfactory->get_object_by_guid($unserialized_object->parentguid);
+        if (   empty($acl_object)
+            || !is_object($acl_object))
+        {
+            debug_add("Could not get parent object (GUID: {$unserialized_object->parentguid}), aborting", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+
+        // midgard_blob has no action, update is the best check for allowing import of blob data
+        if (!midcom_baseclasses_core_dbobject::update_pre_checks($acl_object))
+        {
+            $parent_class = get_class($acl_object);
+            debug_add("parent ({$parent_class} {$parent->guid}) update pre-flight check returned false", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        // Actual import
+        // NOTE: midgard_replicator::import_from_xml returns void, which evaluates to false, check mgd_errno instead
+        midcom_helper_replicator_import_from_xml($xml, $use_force);
+        if (mgd_errno() !== MGD_ERR_OK)
+        {
+            debug_add('midcom_helper_replicator_import_from_xml returned false, errstr: ' . mgd_errstr(), MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        // Trigger parent updated
+        midcom_baseclasses_core_dbobject::update_post_ops($acl_object);
+
+        debug_pop();
+        return true;
     }
 }
 

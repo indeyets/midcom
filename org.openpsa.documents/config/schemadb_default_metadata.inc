@@ -22,7 +22,7 @@
                 'css_group' => 'area',
             ),
             'required'    => true,
-        ),  
+        ),
         'document' => array (
             'description' => 'Document',
             'datatype'    => 'blob',
@@ -46,7 +46,7 @@
             'widget'      => 'contactchooser',
             'index_merge_with_content' => false,
             'default'     => $_MIDCOM->auth->user->id,
-        ),  
+        ),
         'abstract' => array (
             'description' => 'Abstract',
             'datatype'    => 'text',
@@ -64,7 +64,7 @@
                 ORG_OPENPSA_DOCUMENT_STATUS_FINAL  => 'Final',
             ),
             'end_fieldgroup' => '',
-            'index_merge_with_content' => false,            
+            'index_merge_with_content' => false,
         ),
         'orgOpenpsaAccesstype' => array (
             'description' => 'Access type',
@@ -76,17 +76,17 @@
                 'title' => 'Access control',
                 'css_group' => 'area acl',
             ),
-            'index_merge_with_content' => false,            
+            'index_merge_with_content' => false,
         ),
         'orgOpenpsaOwnerWg' => array (
             'description' => 'Workgroup',
             'location'    => 'orgOpenpsaOwnerWg',
             'datatype'     => 'text',
             'widget'       => 'select',
-            'widget_select_choices' => org_openpsa_helpers_workgroups(),   
-            'default' => $GLOBALS['org_openpsa_core_workgroup_filter'], 
+            'widget_select_choices' => org_openpsa_helpers_workgroups(),
+            'default' => $GLOBALS['org_openpsa_core_workgroup_filter'],
             'end_fieldgroup' => '',
-            'index_merge_with_content' => false,            
+            'index_merge_with_content' => false,
         ),
     )
 ),
@@ -120,7 +120,7 @@
                 'css_group' => 'area',
             ),
             'required'    => true,
-        ),           
+        ),
         'document' => array (
             'description' => 'Document',
             'datatype'    => 'blob',
@@ -138,18 +138,17 @@
                 'title' => 'Access control',
                 'css_group' => 'area acl',
             ),
-            'index_merge_with_content' => false,            
+            'index_merge_with_content' => false,
         ),
         'orgOpenpsaOwnerWg' => array (
             'description' => 'Workgroup',
             'location'    => 'orgOpenpsaOwnerWg',
             'datatype'     => 'text',
             'widget'       => 'select',
-            'widget_select_choices' => org_openpsa_helpers_workgroups(),   
-            'default' => $GLOBALS['org_openpsa_core_workgroup_filter'], 
+            'widget_select_choices' => org_openpsa_helpers_workgroups(),
+            'default' => $GLOBALS['org_openpsa_core_workgroup_filter'],
             'end_fieldgroup' => '',
-            'index_merge_with_content' => false,            
-        ),        
+            'index_merge_with_content' => false,
+        ),
     )
 )
-

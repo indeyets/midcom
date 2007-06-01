@@ -271,6 +271,9 @@ class midcom_helper_datamanager2_widget_image extends midcom_helper_datamanager2
         );
         $elements[] =& HTML_QuickForm::createElement('submit', "{$this->name}_delete", $this->_l10n->get('delete image'), $attributes);
 
+        // Add action buttons
+        $this->add_action_elements($elements);
+
         // Add the upload widget
         $static_html = "</td>\n</tr>\n" .
             "<tr>\n<td class='midcom_helper_datamanager2_widget_image_label'>" .
@@ -372,6 +375,7 @@ class midcom_helper_datamanager2_widget_image extends midcom_helper_datamanager2
     {
         parent::on_submit($results);
 
+        // TODO: refator these checks to separate methods
         if (array_key_exists("{$this->name}_delete", $results))
         {
             if (! $this->_type->delete_all_attachments())
@@ -384,6 +388,19 @@ class midcom_helper_datamanager2_widget_image extends midcom_helper_datamanager2
 
             // Adapt the form:
             $this->_cast_formgroup_to_upload();
+        }
+        else if (array_key_exists("{$this->name}_rotate", $results))
+        {
+            // The direction is the key (since the value is the point clicked on the image input)
+            list ($direction, $dummy) = each($results["{$this->name}_rotate"]);
+            if (! $this->_type->rotate($direction))
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Failed to rotate image on the field {$this->name}.",
+                    MIDCOM_LOG_ERROR);
+                debug_pop();
+            }
+
         }
         else if ($this->_upload_element->isUploadedFile())
         {
@@ -466,7 +483,27 @@ class midcom_helper_datamanager2_widget_image extends midcom_helper_datamanager2
         }
     }
 
-
+    /**
+     * Adds common image operations to the QF.
+     *
+     * @param array $elements reference to the elements array to add the actions to
+     */
+    function add_action_elements(&$elements)
+    {
+        // TODO: namespace the inputs properly (NOTE: the on_submit checks need to be changed accordingly!)
+        $static_html = "\n<div class='midcom_helper_datamanager2_widget_image_actions_container' id='{$this->_namespace}{$this->name}_image_actions_container'>\n";
+        $static_html .= "    <span class='field_text'>" . $this->_l10n->get('type image: actions') . ":</span>\n";
+        $static_html .= "    <ul class='midcom_helper_datamanager2_widget_image_actions' id='{$this->_namespace}{$this->name}_image_actions'>\n";
+        $static_html .= "        <li title='" . $this->_l10n->get('rotate left') . "'>\n";
+        $static_html .= "            <input type='image' name='{$this->name}_rotate[left]' src='".MIDCOM_STATIC_URL."/stock-icons/16x16/rotate_ccw.png' />\n";
+        $static_html .= "         </li>\n";
+        $static_html .= "         <li title='" . $this->_l10n->get('rotate right') . "'>\n";
+        $static_html .= "             <input type='image' name='{$this->name}_rotate[right]' src='".MIDCOM_STATIC_URL."/stock-icons/16x16/rotate_cw.png' />\n";
+        $static_html .= "         </li>\n";
+        $static_html .= "    </ul>\n";
+        $static_html .= "</div>\n";
+        $elements[] =& HTML_QuickForm::createElement('static', "{$this->name}_image_actions_static", '', $static_html);
+    }
 
 }
 

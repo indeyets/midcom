@@ -1,0 +1,118 @@
+#net_nemein_personnel_order li
+{
+  list-style: none;
+  cursor: move;
+}
+
+#net_nemein_personnel_groups input.net_nemein_personnel_inputfield
+{
+  border-style: none;
+  width: 50%;
+  padding-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+#net_nemein_personnel_order li:hover
+{
+  font-weight: bold;
+}
+
+#net_nemein_personnel_groups,
+#net_nemein_personnel_group_order div.groups_list
+{
+  background-color: #dddddd;
+  color: #000000;
+  padding: 0;
+  margin: 0 0 1em;
+}
+
+#net_nemein_personnel_group_order div.groups_list h2
+{
+  background-color: #bbbbbb;
+  color: #000000;
+  padding: 5px 3px;
+  margin: 10px 0 0;
+}
+
+#net_nemein_personnel_groups ul
+{
+  background-color: #eeeeee;
+  color: #000000;
+  padding: 5px 32px 32px;
+  margin: 0;
+}
+
+#net_nemein_personnel_groups li
+{
+  list-style: none;
+  color: #000000;
+}
+
+#net_nemein_personnel_groups li.sortable
+{
+  background-image: url('http://devel-xen-17.nemein.net/midcom-static/stock-icons/16x16/stock_person.png');
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding: 0 32px;
+  margin: 0;
+  cursor: move;
+  cursor: N-resize;
+}
+
+#net_nemein_personnel_groups li.sortable:hover
+{
+  font-weight: bold;
+  background-color: #fefefe;
+  color: #000000;
+}
+
+#net_nemein_personnel_groups li.group h3
+{
+  background-image: url('http://devel-xen-17.nemein.net/midcom-static/stock-icons/16x16/stock_people.png');
+  background-position: 4px center;
+  background-repeat: no-repeat;
+  padding: 0.5em 32px;
+  margin: 0;
+}
+
+#net_nemein_personnel_groups li.group h3.handle
+{
+  cursor: move;
+  cursor: N-resize;
+}
+
+#net_nemein_personnel_groups li.group h3.handle:hover
+{
+  background-color: #cccccc;
+  color: #000000;
+}
+
+#net_nemein_personnel_groups li.group:hover
+{
+  background-color: #cccccc;
+  color: #000000;
+}
+
+#net_nemein_personnel_groups li.group h3 span:hover
+{
+  background-image: url('http://devel-xen-17.nemein.net/midcom-static/stock-icons/16x16/edit.png');
+  background-repeat: no-repeat;
+  background-position: right center;
+  padding-right: 32px;
+  background-color: #ffff99;
+  color: #000000;
+}
+
+#net_nemein_personnel_groups p.unsorted
+{
+  font-style: Italic;
+  font-weight: bold;
+  padding: 0 3px;
+  margin: 0 0.2em;
+}
+
+#net_nemein_personnel_groups #net_nemein_personnel_group_list_unsorted
+{
+  padding-left: 3px;
+  padding-bottom: 12px;
+}

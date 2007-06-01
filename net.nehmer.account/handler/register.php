@@ -514,8 +514,19 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
 
             if ($this->_config->get('username_is_email'))
             {
-                $person->email = $person->username;
+                $person->username = $person->email;
                 $person->update();
+            }
+            
+			if ($this->_config->get('assign_to_group') != null)
+            {
+                $group_id = (int)$this->_config->get('assign_to_group');
+				$group = mgd_get_group($group_id);
+
+				if ($group)
+				{
+					$person->add_to_group($group->name);
+				}
             }
         }
         else if ($result != 'save')

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package net.nemein.hourview2
  * @author The Midgard Project, http://www.midgard-project.org 
@@ -13,8 +12,6 @@
  * 
  * Net.nemein.hourview2 is a component that integrates with the OpenPSA suite.
  * Base idea is that clients could approve project hours in extranet.
- * 
- * ...
  * 
  * @package net.nemein.hourview2
  */
@@ -36,24 +33,22 @@ class net_nemein_hourview2_interface extends midcom_baseclasses_components_inter
             'navigation.php', 
             'admin.php'
         );
+        
         $this->_autoload_libraries = Array
         (
-            'midcom.helper.datamanager'
+            'org.openpsa.contactwidget',
+            'org.openpsa.notifications',
         );
     }
 
-    /**
-     * Initialize
-     * 
-     * Initializing the component and OpenPSA Projects interfaces.
-     * We must tune down error reporting as the OpenPSA is not E_ALL compatible.
-     */
-
     function _on_initialize()
-    {   
+    {
+        // Load needed data classes
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.sales');
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.projects');
+    
         return true;
     }
-    
 }
 
 ?>

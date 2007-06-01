@@ -1,11 +1,11 @@
 <?php
 global $view;
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
 <div class="net_nemein_discussion_thread">
 <h1>&(view["title"]);</h1>
 
-<div class="comment_posted"><?php echo sprintf($GLOBALS["view_l10n"]->get("posted on %s by %s"),$view['created']['local_strfulldate'],$view["poster"]); ?></div>
+<div class="comment_posted"><?php echo sprintf($GLOBALS["view_l10n"]->get("posted on %s by %s"), $view['created']['local_strfulldate'], $view['poster']); ?></div>
 
 <?php echo $view["content"]["formatted"]; ?>
 

@@ -89,7 +89,7 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
     }
 
     /**
-     * Internal helper, loads the controller for the current article. Any error triggers a 500.
+     * Internal helper, loads the controller for the current person. Any error triggers a 500.
      *
      * @access private
      */
@@ -102,6 +102,24 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
         if (! $this->_controller->initialize())
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 controller instance for person {$this->_person->id}.");
+            // This will exit.
+        }
+    }
+
+    /**
+     * Internal helper, loads the controller for the current group. Any error triggers a 500.
+     *
+     * @access private
+     */
+    function _load_group_controller()
+    {
+        $this->_load_schemadb();
+        $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
+        $this->_controller->schemadb =& $this->_schemadb;
+        $this->_controller->set_storage($this->_group, $this->_config->get('schema_group'));
+        if (! $this->_controller->initialize())
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 controller instance for group {$this->_group->id}.");
             // This will exit.
         }
     }
@@ -167,10 +185,8 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
         switch ($this->_controller->process_form())
         {
             case 'save':
-                /*
                 $indexer =& $_MIDCOM->get_service('indexer');
-                net_nemein_personnel_viewer::index($this->_controller->datamanager, $indexer, $this->_content_topic);
-                */
+                net_nemein_personnel_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
 
                 // *** FALL-THROUGH ***
 
@@ -182,7 +198,7 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
         $this->_prepare_request_data();
         $_MIDCOM->substyle_append($this->_controller->datamanager->schema->name);
 
-        if (version_compare(mgd_version(), '1.7', '>'))
+        if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
         {
             $_MIDCOM->set_26_request_metadata($this->_person->metadata->revised, $this->_person->guid);
         }
@@ -257,10 +273,8 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
                     // This will exit.
                 }
 
-                /*
                 $indexer =& $_MIDCOM->get_service('indexer');
                 $indexer->delete($this->_person->guid);
-                */
 
                 // Delete ok, relocating to welcome.
                 $_MIDCOM->relocate('');
@@ -273,7 +287,7 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
 
         $this->_prepare_request_data();
 
-        if (version_compare(mgd_version(), '1.7', '>'))
+        if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
         {        
             $_MIDCOM->set_26_request_metadata($this->_person->metadata->revised, $this->_person->guid);
         }
@@ -374,11 +388,9 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
         switch ($this->_controller->process_form())
         {
             case 'save':
-                /*
                 // Index the article
                 $indexer =& $_MIDCOM->get_service('indexer');
-                net_nehmer_static_viewer::index($this->_controller->datamanager, $indexer, $this->_content_topic);
-                */
+                net_nemein_personnel_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
 
                 $_MIDCOM->relocate(net_nemein_personnel_viewer::get_url($this->_person));
                 // This will exit.
@@ -410,8 +422,58 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
     {
         midcom_show_style('admin-create');
     }
+    
+    function _handler_editgroup($handler_id, $args, &$data)
+    {
+        $this->_group = new midcom_db_group($args[0]);
+        $data['group'] =& $this->_group;
+        
+        if (   !$this->_group
+            || !$this->_group->id)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Group with GUID '{$args[0]} not found!");
+            // This will exit
+        }
+        
+        $this->_group->require_do('midgard:update');
+        
+        $this->_load_group_controller();
+        $data['controller'] =& $this->_controller;
+        
+        switch ($this->_controller->process_form())
+        {
+            case 'save':
+                // Index the group
+                $indexer =& $_MIDCOM->get_service('indexer');
+                net_nemein_personnel_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
 
+                $_MIDCOM->relocate("group/{$args[0]}/");
+                // This will exit.
 
+            case 'cancel':
+                $_MIDCOM->relocate("group/{$args[0]}/");
+                // This will exit.
+        }
+        
+        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: " . sprintf($this->_l10n->get('edit group %s'), $this->_group->official));
+        $this->_view_toolbar->bind_to($data['group']);
+        
+        $tmp = Array();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "admin/edit/group/{$this->_group->guid}/",
+            MIDCOM_NAV_NAME => sprintf($this->_l10n->get('edit group %s'), $this->_group->official),
+        );
+            
+        return true;
+    }
+    
+    /**
+     * Shows the loaded article.
+     */
+    function _show_editgroup ($handler_id, &$data)
+    {
+        midcom_show_style('admin-edit-group');
+    }
 }
-
 ?>

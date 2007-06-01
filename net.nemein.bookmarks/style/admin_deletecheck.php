@@ -2,7 +2,7 @@
 global $view_title;
 global $view;
 global $view_id;
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
 
 <h2><?php echo $GLOBALS["view_l10n"]->get("Delete bookmark"); ?>: &(view["title"]);</h2>

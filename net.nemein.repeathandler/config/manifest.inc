@@ -1,5 +1,39 @@
-'name' => 'net.nemein.repeathandler',
-'purecode' => true,
-'version' => 1,
-'privileges' =>  Array(),
-'class_definitions' => Array(),
+
+  'name' => 'net.nemein.repeathandler',
+  'purecode' => true,
+  'version' => '1.0.3beta1',
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+  ),
+  'state' => 'beta',
+  'package.xml' => 
+  array (
+    'summary' => 'Handler for repeated events',
+    'description' => 'A purecode class for creating repeated events',
+    'maintainers' => 
+    array (
+      'bergie' => 
+      array (
+        'name' => 'Henri Bergius',
+        'email' => 'henri.bergius@iki.fi',
+        'role' => 'lead',
+        'active' => 'yes',
+      ),
+      'adrenalin' => 
+      array (
+        'name' => 'Arttu Manninen',
+        'email' => 'arttu.manninen@protie.fi',
+        'role' => 'developer',
+        'active' => 'yes',
+      ),
+    ),
+    'dependencies' => 
+    array (
+      'midcom' => 
+      array (
+      ),
+    ),
+  ),

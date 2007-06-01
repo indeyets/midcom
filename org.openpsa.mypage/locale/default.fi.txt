@@ -1,10 +1,18 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.fi.txt,v 1.1 2006/05/10 16:22:05 rambo Exp $
+---CVS $Id$
 ---LANGUAGE fi
+
+---STRING %d hours (%d invoiceable) reported
+%d tuntia (%d laskutettavaa) raportoitu
+---STRINGEND
 
 ---STRING create event
 Luo tapahtuma
+---STRINGEND
+
+---STRING create person
+Luo henkilö
 ---STRINGEND
 
 ---STRING create task
@@ -19,6 +27,14 @@ Yhteenveto
 Henkilökohtainen yhteenveto
 ---STRINGEND
 
+---STRING preview for week %s
+Viikon %s esikatselu
+---STRINGEND
+
+---STRING review of week %s
+Viikon %s yhteenveto
+---STRINGEND
+
 ---STRING updated %s
 Päivitetty %s
 ---STRINGEND
@@ -31,7 +47,11 @@ Päivitetty tänään
 Päivitetty eilen
 ---STRINGEND
 
----STRING create person
-Luo henkilö
+---STRING week review
+Viikon yhteenveto
+---STRINGEND
+
+---STRING totals
+Yhteensä
 ---STRINGEND
 

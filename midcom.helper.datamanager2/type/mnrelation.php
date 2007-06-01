@@ -269,6 +269,10 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
             {
                 $this->selection[] = $key;
             }
+            else if (!$this->require_corresponding_option)
+            {
+                $this->selection[] = $key;
+            }
             else
             {
                 debug_push_class(__CLASS__, __FUNCTION__);

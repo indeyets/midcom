@@ -29,8 +29,9 @@ class net_nemein_repeathandler_calculator extends midcom_baseclasses_components_
     
     function event2instance($event)
     {
-        $instance = array(
-            'guid'  => $event->guid(),
+        $instance = array
+        (
+            'guid'  => $event->guid,
             'start' => $event->start,
             'end'   => $event->end,
         );
@@ -41,14 +42,15 @@ class net_nemein_repeathandler_calculator extends midcom_baseclasses_components_
      * Calculate the days where this repeat rule would place instances
      *
      * Instances are in array format sorted by date:
-     * YYYY-MM-DD = array(
+     * YYYY-MM-DD = array
+     * (
      *   'start' => timestamp,
      *   'end'   => timestamp,
      * );
      */
     function calculate_instances()
     {
-        $instances = Array();
+        $instances = array();
         
         $instances_calculated = false;
         
@@ -56,13 +58,16 @@ class net_nemein_repeathandler_calculator extends midcom_baseclasses_components_
         $instances[date('Y-m-d', $this->master_event->start)] = $this->event2instance($this->master_event);
         $previous_instance = $instances[date('Y-m-d', $this->master_event->start)];
         
+        $i = 0;
+        
         while (!$instances_calculated)
         {
             if (   array_key_exists('num', $this->rule)
+                && !is_null($this->rule['num'])
                 && count ($instances) >= $this->rule['num'])
             {
                 // We've now generated enough instances to fulfill the rule.
-                // Stop calculating here.                
+                // Stop calculating here.
                 $instances_calculated = true;
                 break;
             }
@@ -100,6 +105,7 @@ class net_nemein_repeathandler_calculator extends midcom_baseclasses_components_
             }
             
             if (   array_key_exists('to', $this->rule)
+                && !is_null($this->rule['to'])
                 && $next_instance['end'] > $this->rule['to'])
             {
                 // We're now generated enough instances to fulfill the rule.
@@ -110,6 +116,8 @@ class net_nemein_repeathandler_calculator extends midcom_baseclasses_components_
             
             $instances[date('Y-m-d', $next_instance['start'])] = $next_instance;
             $previous_instance = $next_instance;
+            
+            $i++;
         }
         
         return $instances;        
@@ -126,7 +134,8 @@ class net_nemein_repeathandler_calculator extends midcom_baseclasses_components_
         $interval = $this->rule['interval'] * $default_interval;
         
         // Use mktime instad of summing timestamps together to support DST changes
-        return array(
+        return array
+        (
             'start' => mktime(date('H', $previous_instance['start']), date('i', $previous_instance['start']), date('s', $previous_instance['start']), date('n', $previous_instance['start']), date('j', $previous_instance['start']) + $interval, date('Y', $previous_instance['start'])),
             'end'   => mktime(date('H', $previous_instance['end']), date('i', $previous_instance['end']), date('s', $previous_instance['end']), date('n', $previous_instance['end']), date('j', $previous_instance['end']) + $interval, date('Y', $previous_instance['end'])),
         );
@@ -139,7 +148,8 @@ class net_nemein_repeathandler_calculator extends midcom_baseclasses_components_
      */
     function _get_next_instance_for_date_in_month($previous_instance)
     {       
-        return array(
+        return array
+        (
             'start' => mktime(date('H', $previous_instance['start']), date('i', $previous_instance['start']), date('s', $previous_instance['start']), date('n', $previous_instance['start']) + $this->rule['interval'], date('j', $previous_instance['start']), date('Y', $previous_instance['start'])),
             'end'   => mktime(date('H', $previous_instance['end']), date('i', $previous_instance['end']), date('s', $previous_instance['end']), date('n', $previous_instance['end']) + $this->rule['interval'], date('j', $previous_instance['end']), date('Y', $previous_instance['end'])),
         );
@@ -205,7 +215,8 @@ class net_nemein_repeathandler_calculator extends midcom_baseclasses_components_
         }
         
         // Use mktime instad of summing timestamps together to support DST changes
-        return array(
+        return array
+        (
             'start' => mktime(date('H', $previous_instance['start']), date('i', $previous_instance['start']), date('s', $previous_instance['start']), date('n', $previous_instance['start']), date('j', $previous_instance['start']) + $day_change, date('Y', $previous_instance['start'])),
             'end'   => mktime(date('H', $previous_instance['end']), date('i', $previous_instance['end']), date('s', $previous_instance['end']), date('n', $previous_instance['end']), date('j', $previous_instance['end']) + $day_change, date('Y', $previous_instance['end'])),
         );

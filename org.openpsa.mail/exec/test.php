@@ -1,8 +1,9 @@
 <?php
-$_MIDCOM->auth->require_valid_user();
+$_MIDCOM->auth->require_admin_user();
 
 echo "<p>\n";
 
+$mail = new org_openpsa_mail();
 
 if (   !isset($_POST['to'])
     || empty($_POST['to'])
@@ -13,12 +14,18 @@ if (   !isset($_POST['to'])
     <h2>Send test email</h2>
     <form method="post">
         <p>
-            From: <input name="from" size=50 type="text" value="example@example.com"/><br/>
+            Backend: <select name="backend">
+                        <option value="try_default">Component default(s)</option>
+                        <option value="mail_smtp">PEAR Mail/SMTP</option>
+                        <option value="mail_sendmail">PEAR Mail/Sendmail</option>
+                        <option value="mail">PHP mail()</option>
+                     </select><br/>
+            From: <input name="from" size=50 type="text" value="noreply@openpsa.org"/><br/>
             To: <input name="to" size=50 type="text" value="test@nemein.com" /><br/>
             Subject: <input name="subject" size=50 type="text" value="Testing o.o.mail with special chars (ÄäÖöÅå€)"/><br/>
             Message:<br/>
             <textarea rows=40 cols=80 name="body">Test body with special chars (Ää Öö Åå €)
-            
+
 /Test person</textarea><br/>
             <input type="submit" value="Send" />
         </p>
@@ -27,13 +34,12 @@ if (   !isset($_POST['to'])
 }
 else
 {
-    $mail = new org_openpsa_mail();
     $mail->subject = $_POST['subject'];
     $mail->body = $_POST['body'];
     $mail->to = $_POST['to'];
     $mail->from = $_POST['from'];
-    $ret = $mail->send();
-    
+    $ret = $mail->send($_POST['backend']);
+
     echo "mail->send returned {$ret}<br>\n";
 }
 

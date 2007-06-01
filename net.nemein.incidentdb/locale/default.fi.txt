@@ -39,3 +39,7 @@ Juuritason tapausta ei ole vielä luotu, kirjaudu AIS:iin luodaksesi se
 Näytä tapaus
 ---STRINGEND
 
+---STRING net.nemein.incidentdb
+Tapaustietokanta
+---STRINGEND
+

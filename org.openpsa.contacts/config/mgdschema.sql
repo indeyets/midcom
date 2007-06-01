@@ -36,5 +36,20 @@ ALTER TABLE person ADD COLUMN orgOpenpsaAccesstype int(11) NOT NULL default 0;
 #These will be implemented in Midgard core/data as well in the near future
 #Increase username lenght
 alter table person modify username varchar(255) NOT NULL default '';
-#Increase parameter value size
-alter table record_extension modify value text NOT NULL default '';
+#Increase parameter value size (not needed anymore)
+#alter table record_extension modify value text NOT NULL default '';
+
+# 1.7 metadata
+#These confuse old-api
+#ALTER TABLE person ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
+#ALTER TABLE person ADD COLUMN creator int(11) NOT NULL default '0';
+#ALTER TABLE person ADD COLUMN revisor int(11) NOT NULL default '0';
+#ALTER TABLE person ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
+#ALTER TABLE person ADD COLUMN revision int(11) NOT NULL default '0';
+#
+ALTER TABLE grp ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE grp ADD COLUMN creator int(11) NOT NULL default '0';
+ALTER TABLE grp ADD COLUMN revisor int(11) NOT NULL default '0';
+ALTER TABLE grp ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE grp ADD COLUMN revision int(11) NOT NULL default '0';
+

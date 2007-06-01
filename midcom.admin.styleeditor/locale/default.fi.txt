@@ -3,191 +3,103 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
----STRING are you sure to delete
-Oletko varma että haluat poistaa tämän kansion ja kaiken sen alta?
+---STRING list of %s folders using the same style template path
+List komponenttia "%s" käyttävistä kansioista, joissa käytetään samaa tyylipolkua
 ---STRINGEND
 
----STRING articles first
-Artikkelit ensin, sitten kansiot (pisteytettyinä)
+---STRING style element list
+Tyylielementtilista
 ---STRINGEND
 
----STRING attachments for topic
-Liitteitä kansioon
+---STRING style elements for %s
+Tyylielementit tyylille %s
 ---STRINGEND
 
----STRING by score
-Pisteiden mukaan
+---STRING all style elements
+Kaikki tyylielementit
 ---STRINGEND
 
----STRING create attachment
-Luo liite
+---STRING component default
+Komponentin vakiotyyli
 ---STRINGEND
 
----STRING create subtopic
-Luo alakansio
+---STRING local element
+Paikallinen elementti
 ---STRINGEND
 
----STRING create topic
-Luo kansio
+---STRING copy to editor
+Kopioi editoriin
 ---STRINGEND
 
----STRING default
-Komponentin oletus
+---STRING style editor
+Ulkoasueditori
 ---STRINGEND
 
----STRING delete attachment
-Poista liite
+---STRING add text file
+Lisää tekstitiedosto
 ---STRINGEND
 
----STRING delete topic
-Poista kansio
+---STRING cascading style sheet
+CSS-tyylitiedosto
 ---STRINGEND
 
----STRING descendants are deleted
-Varoitus: myös alemman tason tiedot poistetaan
+---STRING edit element %s
+Muokkaa elementtiä %s
 ---STRINGEND
 
----STRING edit topic
-Muokkaa kansiota
+---STRING edit file %s
+Muokkaa tiedostoa %s
 ---STRINGEND
 
----STRING file
-Tiedosto
+---STRING edit layout template
+Muokkaa ulkoasupohjaa
+---STRINGEND
+
+---STRING edit text file
+Muokkaa tekstitiedostoa
+---STRINGEND
+
+---STRING file contents
+Tiedoston sisältö
+---STRINGEND
+
+---STRING file information
+Tiedoston tiedot
 ---STRINGEND
 
 ---STRING filename
 Tiedostonimi
 ---STRINGEND
 
----STRING inherit from parent
-Peri ylemmän tason elementiltä
+---STRING javascript
+JavaScript
 ---STRINGEND
 
----STRING inherit style
-Periytä tyyli alakansioille
+---STRING midcom.admin.styleeditor
+Tyylieditori
 ---STRINGEND
 
----STRING location
-Sijainti
+---STRING mimetype
+Tiedoston tyyppi
 ---STRINGEND
 
----STRING nav order
-Tietueiden ja alikansioiden järjestely
+---STRING style attachments
+Tyylin liitetiedostot
 ---STRINGEND
 
----STRING new filename
-Uusi tiedostonimi
+---STRING upload file
+Tuo tiedosto
 ---STRINGEND
 
----STRING no access restriction
-Ei pääsyrajoituksia
+---STRING url
+URL-osoite
 ---STRINGEND
 
----STRING no attachments found
-Ei liitteitä
+---STRING xml
+XML
 ---STRINGEND
 
----STRING no preview available
-Ei esikatselua
----STRINGEND
-
----STRING overview
-Näkymä
----STRINGEND
-
----STRING owner
-Omistaja
----STRINGEND
-
----STRING preview
-Esikatselu
----STRINGEND
-
----STRING score
-Arvo
----STRINGEND
-
----STRING short description
-Lyhyt kuvaus
----STRINGEND
-
----STRING sorting position
-Järjestys
----STRINGEND
-
----STRING style
-Tyyli
----STRINGEND
-
----STRING title
-Otsikko
----STRINGEND
-
----STRING topic administration
-Kansion ylläpito
----STRINGEND
-
----STRING topic attachments
-Kansion liitteet
----STRINGEND
-
----STRING topics first
-Kansiot ensin, sitten artikkelit (pisteytettyinä)
----STRINGEND
-
----STRING type
-Tyyppi
----STRINGEND
-
----STRING url name
-URL-nimi (pienet kirjaimet, ei ääkkösiä, välilyöntejä tai erikoismerkkejä)
----STRINGEND
-
----STRING view this page
-Palaa sivulle
----STRINGEND
-
----STRING view this page link unavailable
-Sivulle paluu ei sallittu
----STRINGEND
-
----STRING viewer groups
-Ryhmät joilla on oikeus katsella kansiota
----STRINGEND
-
----STRING Select arrow up or down and click on the element you want to move
-Klikkaa elementtiä siirtääksesi sitä navigaatiossa. Valitse suunta ylös tai alas nuolen perusteella.
----STRINGEND
-
----STRING Set order
-Järjestele
----STRINGEND
-
----STRING Sort articles
-Järjestele artikkeleita
----STRINGEND
-
----STRING Sort topics
-Järjestele kansioita
----STRINGEND
-
----STRING The objects in this topic cannot be sorted
-Tämän kansion artikkeleita ei voi järjestellä
----STRINGEND
-
----STRING edit metadata
-Muokkaa metadataa
----STRINGEND
-
----STRING edit order
-Järjestele kansiota
----STRINGEND
-
----STRING metadata for %s
-'%s':n metadata
----STRINGEND
-
----STRING midcom.admin.content
-Midgard-julkaisukäyttöliittymä
+---STRING plain text
+Normaali teksti
 ---STRINGEND
 

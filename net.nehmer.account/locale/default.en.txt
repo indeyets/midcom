@@ -3,14 +3,6 @@
 ---CVS $Id$
 ---LANGUAGE en
 
----STRING change email
-Change E-Mail
----STRINGEND
-
----STRING new email
-New E-Mail
----STRINGEND
-
 ---STRING account details not published.
 Account details have not yet been published.
 ---STRINGEND
@@ -45,15 +37,19 @@ Avatar
 ---STRINGEND
 
 ---STRING cancel membership
-cancel membership
+Cancel membership
 ---STRINGEND
 
 ---STRING cancel membership message
 Do you really want to cancel your membership?
 ---STRINGEND
 
+---STRING change email
+Change email
+---STRINGEND
+
 ---STRING change password
-Change Password
+Change password
 ---STRINGEND
 
 ---STRING change username
@@ -80,6 +76,14 @@ Enter account Details
 First login
 ---STRINGEND
 
+---STRING invalid username
+The username must be at least one character long and must not contain the characters +, * and !.
+---STRINGEND
+
+---STRING invalid username email
+The username must be a valid email Address.
+---STRINGEND
+
 ---STRING last login
 Last login
 ---STRINGEND
@@ -101,7 +105,11 @@ Membership cancelled
 ---STRINGEND
 
 ---STRING net.nehmer.account
-Account Management Component
+User account management
+---STRINGEND
+
+---STRING new email
+New email
 ---STRINGEND
 
 ---STRING new password
@@ -232,10 +240,3 @@ You must enter a new username.
 Your account has already been activated.
 ---STRINGEND
 
----STRING invalid username
-The username must be at least one character long and must not contain the characters +, * and !.
----STRINGEND
-
----STRING invalid username email
-The username must be a valid E-Mail Address.
----STRINGEND

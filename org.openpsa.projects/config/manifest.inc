@@ -1,27 +1,53 @@
-'name' => 'org.openpsa.projects',
-'purecode' => false,
-'privileges' =>  Array(),
-'class_definitions' => Array('midcom_dba_classes.inc'),
-'version' => '2.1.0',
-'package.xml' => Array(
+
+  'name' => 'org.openpsa.projects',
+  'purecode' => false,
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+    0 => 'midcom_dba_classes.inc',
+  ),
+  'version' => '2.3.5beta1',
+  'state' => 'beta',
+  'package.xml' => 
+  array (
     'summary' => 'Project/Task management and hour reporting',
     'description' => 'Manage tasks and projects, report hours towards them.',
-    'maintainers' => Array(
-        'bergie' => Array(
-            'name' => 'Henri Bergius',
-            'email' => 'henri.bergius@iki.fi',
-            'role' => 'lead',
-        ),  
-        'rambo' => Array(
-            'name' => 'Eero af Heurlin',
-            'email' => 'eero.afheurlin@iki.fi',
-            'role' => 'lead',
-        ),
+    'maintainers' => 
+    array (
+      'bergie' => 
+      array (
+        'name' => 'Henri Bergius',
+        'email' => 'henri.bergius@iki.fi',
+        'role' => 'lead',
+      ),
+      'rambo' => 
+      array (
+        'name' => 'Eero af Heurlin',
+        'email' => 'eero.afheurlin@iki.fi',
+        'role' => 'lead',
+      ),
     ),
-    'dependencies' => Array(
-        'org.openpsa.core'          => Array(),
-        'org.openpsa.helpers'       => Array(),
-        'midcom.helper.datamanager' => Array(),
-        'org.openpsa.contactwidget' => Array(),
+    'dependencies' => 
+    array (
+      'org.openpsa.core' => 
+      array (
+      ),
+      'org.openpsa.helpers' => 
+      array (
+      ),
+      'midcom.helper.datamanager' => 
+      array (
+      ),
+      'midcom.helper.datamanager2' => 
+      array (
+      ),
+      'org.openpsa.contactwidget' => 
+      array (
+      ),
+      'midcom' => 
+      array (
+      ),
     ),
-),
+  ),

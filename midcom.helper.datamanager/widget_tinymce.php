@@ -69,7 +69,14 @@ class midcom_helper_datamanager_widget_tinymce extends midcom_helper_datamanager
      * @access private
      */
     var $_customconfig;
-    
+
+    /**
+     * Whether to allow loading of the widget_html outside AIS
+     *
+     * @var bool
+     * @access private
+     */
+    var $_enable_outside_ais;
     
     /**
      * The constructor will add the corresponding Javascript code only if we are 
@@ -87,10 +94,17 @@ class midcom_helper_datamanager_widget_tinymce extends midcom_helper_datamanager
         }
         $this->_customconfig = $this->_field["widget_tinymce_customconfig"];
         
+        if (!array_key_exists("widget_tinymce_enable_outside_ais", $field))
+        {
+            $field["widget_tinymce_enable_outside_ais"] = false;
+        }
+        $this->_enable_outside_ais = $field["widget_tinymce_enable_outside_ais"];
+        
         $this->_read_formdata();
         
         // Ensure that AIS is running
-        if (array_key_exists("view_contentmgr", $GLOBALS)) 
+        if (   $this->_enable_outside_ais
+            || array_key_exists("view_contentmgr", $GLOBALS)) 
         {
             $midgard = $GLOBALS["midcom"]->get_midgard();
             
@@ -99,20 +113,64 @@ class midcom_helper_datamanager_widget_tinymce extends midcom_helper_datamanager
             
             /* TODO: do somethign with $i18n->get_current_language() */
             
-            /*
-             * This enables TinyMCE textareas on this page, although we can only use
-             * one configuration for all textareas. 
-             * TODO: Documentation on this
-             * TODO: Only add this code once!
-             */
-            if (! array_key_exists("midcom_helper_datamanager_tiny_mce__js_added", $GLOBALS)) {
-                $GLOBALS["midcom_helper_datamanager_tiny_mce__js_added"] = true;
-                $urlprefix = MIDCOM_STATIC_URL . '/midcom.helper.datamanager/tiny_mce/';
-                $GLOBALS["midcom"]->add_jsfile($urlprefix. 'tiny_mce.js', true);
-                $GLOBALS["midcom"]->add_jscript("tinyMCE.init({\nmode: 'specific_textareas',\n\n" . $this->_get_config_js(). " });\n");
-            }
-
+            $this->_add_external_html_elements();
+            $this->_add_initscript();
         }
+    }
+    
+    /**
+     * Adds the external HTML dependencies, both JS and CSS. A static flag prevents
+     * multiple insertions of these dependencies.
+     *
+     * Copied from DM2 widget tinymce
+     *
+     * @access private
+     */
+    function _add_external_html_elements()
+    {
+        static $executed = false;
+
+        if ($executed)
+        {
+            return;
+        }
+
+        $executed = true;
+
+        $prefix = MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/tinymce';
+        $_MIDCOM->add_jsfile("{$prefix}/tiny_mce.js", true);
+    }
+
+    /**
+     * This helper will construct the TinyMCE initscript based on the specified configuration.
+     * Copied from DM2 widget tinymce
+     */
+    function _add_initscript($mode = 'exact')
+    {
+        $language = $_MIDCOM->i18n->get_current_language();
+        // fix to use the correct langcode for norwegian.
+        if ($language == 'no')
+        {
+             $language = 'nb';
+        }
+        
+        // Compute the final script:
+        $script = <<<EOT
+tinyMCE.init({
+mode : "{$mode}",
+convert_urls : false,
+relative_urls : false,
+remove_script_host : true,
+elements : "{$this->_fieldname}",
+language : "{$language}",
+docs_language : "{$language}",
+theme_advanced_toolbar_align : "left",
+theme_advanced_toolbar_location : "top",
+paste_create_linebreaks : false
+});
+EOT;
+
+        $_MIDCOM->add_jscript($script);
     }
 
     function draw_view () 
@@ -122,70 +180,7 @@ class midcom_helper_datamanager_widget_tinymce extends midcom_helper_datamanager
     
     function draw_widget () 
     {
-        echo "<textarea class='htmleditor' mce_editable='true' id='{$this->_fieldname}' name='{$this->_fieldname}'>{$this->_value}</textarea>\n";
-    }
-    
-    
-    
-    /**
-     * Get the TinyMCE configuration
-     * This will be included in the "tinyMCE.init(...)" call
-     *
-     * - /$GLOBALS['midcom_config']['midcom_sgconfig_basedir']/midcom.helper.datamanager.widget_tinymce/config
-     * - file:/midcom/helper/datamanager/config/midcom.helper.datamanger.widget_tinymce
-     * - local fallback default configuration
-     *
-     * Look at the source of this function how your template should look like.
-     * 
-     * TODO: this does not work yet!
-     *
-     * @return string JS configuration code
-     */
-     
-    function _get_config_js ()
-    {
-        /*
-        if (mgd_snippet_exists("{$GLOBALS['midcom_config']['midcom_sgconfig_basedir']}/midcom.helper.datamanager.widget_tinymce/config"))
-        {
-            $snippet = mgd_get_snippet_by_path("{$GLOBALS['midcom_config']['midcom_sgconfig_basedir']}/midcom.helper.datamanager.widget_tinymce/config");
-            if (! $snippet)
-            {
-                return false;
-            }
-            eval ('?>' . mgd_preparse($snippet->code));
-        }
-        else if ( file_exists(MIDCOM_ROOT . '/midcom/helper/datamanager/config/midcom.helper.datamanger.widget_html') )
-        {
-            $code = file_get_contents(MIDCOM_ROOT . '/midcom/helper/datamanager/config/midcom.helper.datamanger.widget_html');
-            if ($code)
-            {
-                eval ('?>' . $code );
-            }
-        }
-        else
-        {
-        */
-            $result = <<<EOF
-
-// TinyMCE configuration for field '{$this->_fieldname}'
-
-theme: 'advanced',
-theme_advanced_toolbar_location: 'top',
-theme_advanced_toolbar_align: 'left',
-theme_advanced_path_location: 'bottom',
-	
-theme_advanced_buttons1: 'cut,copy,paste,spearator,undo,redo,separator,  link,unlink,image,table,charmap,separator, forecolor,backcolor,separator,  removeformat,code,cleanup,separator,  help',
-	
-theme_advanced_buttons2: 'formatselect,styleselect,separator,  bold,italic,underline,strikethrough,separator,  justifyleft,justifycenter,justifyright,justifyfull,separator,  bullist,numlist,outdent,indent',	
-	
-theme_advanced_buttons3: ''
-	
-{$this->_customconfig}
-
-
-EOF;
-        // }
-        return $result;
+        echo "<textarea class='htmleditor' id='{$this->_fieldname}' name='{$this->_fieldname}'>{$this->_value}</textarea>\n";
     }
 	
 }

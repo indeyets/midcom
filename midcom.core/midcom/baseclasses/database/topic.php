@@ -35,23 +35,66 @@ class midcom_baseclasses_database_topic extends __midcom_baseclasses_database_to
      */
     function get_parent_guid_uncached()
     {
-        if ($this->up == 0)
-        {
-            return null;
-        }
-
-        $parent = new midcom_baseclasses_database_topic($this->up);
-        if (! $parent)
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Could not load Topic ID {$this->up} from the database, aborting.",
-                MIDCOM_LOG_INFO);
-            debug_pop();
-            return null;
-        }
-
-        return $parent->guid;
+        return midcom_baseclasses_database_topic::get_parent_guid_uncached_static($this->guid);
     }
+
+    /**
+     * Statically callable method to get parent guid when object guid is given
+     * 
+     * Uses midgard_collector to avoid unneccessary full object loads
+     *
+     * @todo when 1.8.1 is released convert to use single collector with linked guid property
+     * @param guid $guid guid of topic to get the parent for
+     */
+    function get_parent_guid_uncached_static($guid)
+    {
+        if (empty($guid))
+        {
+            return null;
+        }
+        /* 1.8.1 version:
+        $mc_topic = midcom_baseclasses_database_topic::new_collector('guid', $guid);
+        $mc_topic->add_value_property('up.guid');
+        if (!$mc_topic->execute())
+        {
+            // Error
+            return null;
+        }
+        $mc_topic_keys = $mc_topic->list_keys();
+        list ($key, $copy) = each ($mc_topic_keys);
+        $parent_guid = $mc_topic->get_subkey($key, 'guid');
+        */
+        $mc_topic = midcom_baseclasses_database_topic::new_collector('guid', $guid);
+        $mc_topic->add_value_property('up');
+        if (!$mc_topic->execute())
+        {
+            // Error
+            return null;
+        }
+        $mc_topic_keys = $mc_topic->list_keys();
+        list ($key, $copy) = each ($mc_topic_keys);
+        $parent_id = $mc_topic->get_subkey($key, 'up');
+        $mc_parent = midcom_baseclasses_database_topic::new_collector('id', $parent_id);
+        $mc_parent->add_value_property('guid');
+        if (!$mc_parent->execute())
+        {
+            // Error
+            return null;
+        }
+        $mc_parent_keys = $mc_parent->list_keys();
+        list ($key2, $copy2) = each ($mc_parent_keys);
+        $parent_guid = $mc_parent->get_subkey($key2, 'guid');
+        if ($parent_guid === false)
+        {
+            return null;
+        }
+        return $parent_guid;
+    }
+
+    function get_dba_parent_class()
+    {
+        return 'midcom_baseclasses_database_topic';
+    }    
 }
 
 ?>

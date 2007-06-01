@@ -1,35 +1,50 @@
-'name' => 'net.nehmer.jobmarket',
-'version' => 1,
-'state' => 'stable',
-'class_definitions' => Array('midcomdba.inc'),
-'watches' => Array
-(
-    Array
-    (
-        'classes' => Array ('midgard_person'),
-        'operations' => MIDCOM_OPERATION_DBA_DELETE,
-    ),
-),
 
-'customdata' => Array
-(
-    'midcom.services.cron' => Array
-    (
-        Array
-        (
-            'handler' => 'net_nehmer_jobmarket_cron_cleanup',
-            'recurrence' => MIDCOM_CRON_DAY,
-        )
+  'name' => 'net.nehmer.jobmarket',
+  'version' => 'beta1',
+  'state' => 'beta',
+  'class_definitions' => 
+  array (
+    0 => 'midcomdba.inc',
+  ),
+  'watches' => 
+  array (
+    0 => 
+    array (
+      'classes' => 
+      array (
+        0 => 'midgard_person',
+      ),
+      'operations' => MIDCOM_OPERATION_DBA_DELETE,
     ),
-),
-'package.xml' => Array(
+  ),
+  'customdata' => 
+  array (
+    'midcom.services.cron' => 
+    array (
+      0 => 
+      array (
+        'handler' => 'net_nehmer_jobmarket_cron_cleanup',
+        'recurrence' => MIDCOM_CRON_DAY,
+      ),
+    ),
+  ),
+  'package.xml' => 
+  array (
     'summary' => 'Job market',
     'description' => 'Job posting bulletin board',
-    'maintainers' => Array(
-        'torben' => Array(
-            'name' => 'Torben Nehmer',
-            'email' => 'torber@nehmer.net',
-            'role' => 'lead',
-        ),
+    'maintainers' => 
+    array (
+      'torben' => 
+      array (
+        'name' => 'Torben Nehmer',
+        'email' => 'torber@nehmer.net',
+        'role' => 'lead',
+      ),
     ),
-),
+    'dependencies' => 
+    array (
+      'midcom' => 
+      array (
+      ),
+    ),
+  ),

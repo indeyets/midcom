@@ -46,7 +46,7 @@ class makeProjectList extends Task {
     {
         
         // dirs to skipp
-        $skipp = array ( '.' , '..', 'scaffold', 'midcom.core' );
+        $skipp = array ( '.' , '..', 'scaffold', 'midcom.core', 'crud' );
         $skipp = array_flip($skipp);
         $modules = array();    
     

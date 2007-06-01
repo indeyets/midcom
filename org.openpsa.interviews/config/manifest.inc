@@ -1,21 +1,40 @@
-'name' => 'org.openpsa.interviews',
-'purecode' => false,
-'version' => '0.0.1',
-'privileges' =>  Array(),
-'class_definitions' => Array(),
-'package.xml' => Array(
+
+  'name' => 'org.openpsa.interviews',
+  'purecode' => false,
+  'version' => '0.0.3beta1',
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+  ),
+  'package.xml' => 
+  array (
     'summary' => 'Interviews',
     'description' => 'Phone interview manager',
-    'maintainers' => Array(
-        'bergie' => Array(
-            'name' => 'Henri Bergius',
-            'email' => 'henri.bergius@iki.fi',
-            'role' => 'lead',
-        ),
+    'maintainers' => 
+    array (
+      'bergie' => 
+      array (
+        'name' => 'Henri Bergius',
+        'email' => 'henri.bergius@iki.fi',
+        'role' => 'lead',
+      ),
     ),
-    'dependencies' => Array(
-        'midcom.helper.datamanager2' => Array(),
-        'org.openpsa.contactwidget' => Array(),
-        'org.openpsa.directmarketing' => Array(),
+    'dependencies' => 
+    array (
+      'midcom.helper.datamanager2' => 
+      array (
+      ),
+      'org.openpsa.contactwidget' => 
+      array (
+      ),
+      'org.openpsa.directmarketing' => 
+      array (
+      ),
+      'midcom' => 
+      array (
+      ),
     ),
-),
+  ),
+  'state' => 'beta',

@@ -126,6 +126,16 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         foreach ($items as $item)
         {
             $info = explode(':', $item);
+            if (   !is_array($info)
+                || !array_key_exists(0, $info)
+                || !array_key_exists(1, $info))
+            {
+                // Broken item
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("item '{$item}' is broken!", MIDCOM_LOG_ERROR);
+                debug_pop();
+                continue;
+            }
             $identifier = $info[0];
             $guid = $info[1];
             $this->_load_attachment($identifier, $guid);
@@ -305,6 +315,10 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
             return false;
         }
 
+        // Ensure that the filename is URL safe (but allow multiple extensions)
+        // PONDER: make use of this configurable in type-config ??
+        $filename = midcom_helper_datamanager2_type_blobs::safe_filename($filename, false);
+
         $handle = @fopen($tmpname, 'r');
         if (! $handle)
         {
@@ -421,6 +435,10 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
             debug_pop();
             return false;
         }
+
+        // Ensure that the filename is URL safe (but allow multiple extensions)
+        // PONDER: make use of this configurable in type-config ??
+        $filename = midcom_helper_datamanager2_type_blobs::safe_filename($filename, false);
 
         // Obtain a temporary object if neccessary. This is the only place where this needs to be
         // done (all other I/O ops are logically behind the add operation).
@@ -701,8 +719,23 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
 
     function convert_to_csv()
     {
-        // TODO: Not yet supported
-        return '';
+        $results = array();
+        if ($this->attachments_info)
+        {
+            foreach ($this->attachments_info as $info)
+            {
+                $results[] = $info['url'];
+            }
+        }
+        
+        if (empty($results))
+        {
+            return '';
+        }
+        else
+        {
+            return implode(',', $results);
+        }
     }
 
     function convert_to_html()
@@ -728,7 +761,72 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         return $result;
     }
 
+    /**
+     * Rewrite a filename to URL safe form
+     *
+     * @param $filename string file name to rewrite
+     * @param $force_single_extension boolean force file to single extension (defaults to true)
+     * @return string rewritten filename
+     */
+    function safe_filename($filename, $force_single_extension = true)
+    {
+        $filename = trim($filename);
+        if ($force_single_extension)
+        {
+            $regex = '/^(.*)(\..*?)$/';
+        }
+        else
+        {
+            $regex = '/^(.*?)(\..*)$/';
+        }
+        if (preg_match($regex, $filename, $ext_matches))
+        {
+            $name = $ext_matches[1];
+            $ext = $ext_matches[2];
+        }
+        else
+        {
+            $name = $filename;
+            $ext = '';
+        }
+        return midcom_generate_urlname_from_string($name) . $ext;
+    }
 
+    /**
+     * Creates a working copy to filesystem from given attachment object
+     *
+     * @param $att the attachment object to copy
+     * @return string tmp file name (or false on failure)
+     */
+    function create_tmp_copy($att)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $src = mgd_open_attachment($att->id,'r');
+        if (!$src)
+        {
+            debug_add("Could not open attachment #{$att->id} for reading", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        $tmpname = tempnam($GLOBALS['midcom_config']['midcom_tempdir'], 'midcom_helper_datamanager2_type_blobs_');
+        $dst = fopen($tmpname, 'w+');
+        if (!$dst)
+        {
+            debug_add("Could not open file '{$tmpname}' for writing", MIDCOM_LOG_ERROR);
+            debug_pop();
+            unlink($tmpname);
+            return false;
+        }
+        while (! feof($src))
+        {
+            $buffer = fread($src, 131072); /* 128 kB */
+            fwrite($dst, $buffer, 131072);
+        }
+        fclose($src);
+        fclose($dst);
+        debug_pop();
+        return $tmpname;
+    }
 
 }
 

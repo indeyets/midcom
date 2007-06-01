@@ -14,5 +14,5 @@ if ($view_curcol > $view_thumbs_x) {
     $view_curcol = 1;
 }
 
-$GLOBALS["midcom"]->dynamic_load($GLOBALS['view_gallery_dl_url']);
+$_MIDCOM->dynamic_load($GLOBALS['view_gallery_dl_url']);
 ?>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package org.openpsa.calendar
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: filters.php,v 1.1 2006/06/08 16:24:37 rambo Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,14 +9,14 @@
 
 /**
  * Calendar filters handler
- * 
+ *
  * @package org.openpsa.calendar
  */
 class org_openpsa_calendar_handler_filters extends midcom_baseclasses_components_handler
 {
-    function org_openpsa_calendar_handler_filters() 
+    function org_openpsa_calendar_handler_filters()
     {
-        parent::midcom_baseclasses_components_handler();       
+        parent::midcom_baseclasses_components_handler();
     }
 
     function _handle_ajax()
@@ -42,7 +42,7 @@ class org_openpsa_calendar_handler_filters extends midcom_baseclasses_components
             }
             $errstr = mgd_errstr();
         }
-        
+
         $ajax = new org_openpsa_helpers_ajax();
         //This will exit.
         $ajax->simpleReply($update_succeeded, $errstr);
@@ -53,7 +53,7 @@ class org_openpsa_calendar_handler_filters extends midcom_baseclasses_components
         $_MIDCOM->auth->require_valid_user();
 
         $this->_request_data['user'] = $_MIDCOM->auth->user->get_storage();
-        
+
         if (   array_key_exists('org_openpsa_calendar_filters_add', $_POST)
             || array_key_exists('org_openpsa_calendar_filters_remove', $_POST))
         {
@@ -66,14 +66,14 @@ class org_openpsa_calendar_handler_filters extends midcom_baseclasses_components
 
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.calendar/filters.js");
         $_MIDCOM->add_jsonload("org_openpsa_calendar_filters_makeEditable();");
-        
+
         $this->_request_data['buddylist'] = array();
 
         $qb = org_openpsa_contacts_buddy::new_query_builder();
         $qb->add_constraint('account', '=', $this->_request_data['user']->guid);
         $qb->add_constraint('blacklisted', '=', false);
         $buddies = $qb->execute();
-        
+
         foreach ($buddies as $buddy)
         {
             $person = new org_openpsa_contacts_person($buddy->buddy);
@@ -82,7 +82,7 @@ class org_openpsa_calendar_handler_filters extends midcom_baseclasses_components
                 $this->_request_data['buddylist'][$person->id] = $person;
             }
         }
-        
+
         // Add user to the filter list if needed
         if (   !array_key_exists($this->_request_data['user']->id, $this->_request_data['buddylist'])
             && $_MIDCOM->auth->can_do('midgard:create', $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']))
@@ -102,12 +102,12 @@ class org_openpsa_calendar_handler_filters extends midcom_baseclasses_components
                 )
             );
         }
-        
+
         $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('choose calendars'));
-    
+
         return true;
     }
-    
+
     function _show_edit($handler_id, &$data)
     {
         if (count($this->_request_data['buddylist']) > 0)
@@ -122,12 +122,12 @@ class org_openpsa_calendar_handler_filters extends midcom_baseclasses_components
                 }
                 else
                 {
-                    $this->_request_data['subscribed'] = false;                    
+                    $this->_request_data['subscribed'] = false;
                 }
                 midcom_show_style("show-filters-item");
             }
             midcom_show_style("show-filters-footer");
         }
-    }    
+    }
 }
 ?>

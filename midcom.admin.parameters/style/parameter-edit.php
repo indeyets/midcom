@@ -7,6 +7,6 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  * 
  */
-$request_data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 
-$request_data['datamanager']->display_form();
+$data['datamanager']->display_form();

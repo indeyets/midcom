@@ -1,16 +1,16 @@
 <?php
 // Bind the view data, remember the reference assignment:
-$view =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 
-$data = $view['datamanager']->get_array();
+$dn_data= $data['datamanager']->get_array();
 
 if (array_key_exists('object_type' , $data) ) {
-    if ($view['object_type'] == 'article' ) {
-        $title = $view['l10n']->get('view article') .': '. htmlspecialchars($data['title']);
-    } elseif ($view['object_type'] == 'topic') {
-        $title = $view['l10n']->get('view topic') .': '. htmlspecialchars($data['name']);
-    } elseif (array_key_exists('title', $view)) {
-        $title = $view['title'];
+    if ($data['object_type'] == 'article' ) {
+        $title = $data['l10n']->get('view article') .': '. htmlspecialchars($data['title']);
+    } elseif ($data['object_type'] == 'topic') {
+        $title = $data['l10n']->get('view topic') .': '. htmlspecialchars($data['name']);
+    } elseif (array_key_exists('title', $data)) {
+        $title = $data['title'];
     }
 } else{
     $title = "";
@@ -19,4 +19,4 @@ if (array_key_exists('object_type' , $data) ) {
 
 <h2><?php echo $title ?></h2>
 
-<?php $view['datamanager']->display_view (); ?>
+<?php $data['datamanager']->display_view (); ?>

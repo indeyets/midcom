@@ -1,0 +1,230 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING account details not published.
+Käyttäjätietoja ei ole vielä julkaistu
+---STRINGEND
+
+---STRING account details published on %s.
+Käyttäjätiedot julkaistu %s.
+---STRINGEND
+
+---STRING account registration
+Rekisteröityminen
+---STRINGEND
+
+---STRING activation successful
+Tunnus aktivoitu
+---STRINGEND
+
+---STRING activation_mail_subject
+Rekisteröitymisesi
+---STRINGEND
+
+---STRING avatar
+Avatar
+---STRINGEND
+
+---STRING cancel membership
+peruuta jäsenyys
+---STRINGEND
+
+---STRING cancel membership message
+Oletko varma että haluat peruuttaa jäsenyytesi?
+---STRINGEND
+
+---STRING change email
+Vaihda sähköpostiosoite
+---STRINGEND
+
+---STRING change password
+Vaihda salasana
+---STRINGEND
+
+---STRING change username
+Vaihda käyttäjätunnus
+---STRINGEND
+
+---STRING confirm account details
+Vahvista käyttäjätiedot
+---STRINGEND
+
+---STRING edit account
+Muokkaa käyttäjätietoja
+---STRINGEND
+
+---STRING enter account details
+Lisää käyttäjätiedot
+---STRINGEND
+
+---STRING first login
+Ensimmäinen sisäänkirjautuminen
+---STRINGEND
+
+---STRING invalid username email
+Käyttäjätunnuksen täytyy olla oikea sähköpostiosoite
+---STRINGEND
+
+---STRING last login
+Viimeisin kirjautuminen
+---STRINGEND
+
+---STRING lost password
+Unohtunut salasana
+---STRINGEND
+
+---STRING make online state visible to other users
+Näytä kirjautuminen muille käyttäjille
+---STRINGEND
+
+---STRING membership cancelled
+Jäsenyys peruutettu
+---STRINGEND
+
+---STRING net.nehmer.account
+Käyttäjätunnusten hallinta
+---STRINGEND
+
+---STRING new email
+Uusi sähköpostiosoite
+---STRINGEND
+
+---STRING new password
+Uusi salasana
+---STRINGEND
+
+---STRING new username
+Uusi käyttäjätunnus
+---STRINGEND
+
+---STRING old password
+Vanha salasana
+---STRINGEND
+
+---STRING old password invalid.
+Vanha salasana oli väärä.
+---STRINGEND
+
+---STRING online state
+Kirjautumisen tila
+---STRINGEND
+
+---STRING password changed.
+Salasana vaihdettu
+---STRINGEND
+
+---STRING password minlength %d characters
+Salasanan täytyy olla vähintään %d merkkiä pitkä
+---STRINGEND
+
+---STRING password reset, mail sent.
+Salasana muutettu. Uusi salasana on lähetetty sähköpostitse
+---STRINGEND
+
+---STRING password_minlength
+Salasanan minimipituus
+---STRINGEND
+
+---STRING password_reset_mail_body
+Salasanasi on vaihdettu. Uusi  on: __PASSWORD__
+---STRINGEND
+
+---STRING password_reset_mail_subject
+Salasana on vaihdettu.
+---STRINGEND
+
+---STRING publish
+Julkaise
+---STRINGEND
+
+---STRING publish account details
+Julkaise käyttäjätiedot
+---STRINGEND
+
+---STRING publish_all_on_activation
+Julkaise kaikki tiedot automaattisesti kun käyttäjätunnus aktivoidaan
+---STRINGEND
+
+---STRING publishing successful.
+Käyttäjätietosi on julkaistu.
+---STRINGEND
+
+---STRING registration successful
+Rekisteröityminen onnistui
+---STRINGEND
+
+---STRING select account type
+Valitse tunnuksen tyyppi
+---STRINGEND
+
+---STRING select an account type
+Ole hyvä ja valitse tunnuksen tyyppi
+---STRINGEND
+
+---STRING the user is offline.
+Käyttäjä ei ole paikalla.
+---STRINGEND
+
+---STRING the user is online.
+Käyttäjä on paikalla.
+---STRINGEND
+
+---STRING the username is already in use.
+Käyttäjätunnus on varattu. Ole hyvä ja valitse toinen tunnus.
+---STRINGEND
+
+---STRING the username is unknown.
+Tuntematon käyttäjätunnus
+---STRINGEND
+
+---STRING username changed.
+Käyttäjätunnus vaihdettu.
+---STRINGEND
+
+---STRING welcome_mail_body
+Tervetuloa palveluun. Käyttäjätunnus on aktivoitu ja toiminnassa.
+---STRINGEND
+
+---STRING welcome_mail_subject
+Tervetuloa!
+---STRINGEND
+
+---STRING you may now log in to the system.
+Voit nyt kirjautua palveluun
+---STRINGEND
+
+---STRING you must enter a new username.
+Sinun täytyy syöttää uusi käyttäjätunnus.
+---STRINGEND
+
+---STRING your account has already been activated.
+Tunnuksesi on jo aktivoitu.
+---STRINGEND
+
+---STRING activation_mail_body
+Salasanasi on: __PASSWORD__
+
+Ennen kuin voit kirjautua järjestelmään sinun täytyy aktivoida tunnuksesi.
+
+Tehdäksesi sen mene seuraavalle web-sivulle:
+__ACTIVATIONLINK__
+---STRINGEND
+
+---STRING confirm account details explaination
+Vahvista että syöttämäsi tiedot ovat oikein. Mikäli haluat muuttaa tietoja mene takaisin edelliseen lomakkeeseen ennen rekisteröitymisen jatkamista.
+---STRINGEND
+
+---STRING invalid username
+Käyttäjätunnuksen pitää olla vähintään yhden merkin pituinen eikä se saa sisältää merkkejä +, * ja !.
+---STRINGEND
+
+---STRING lost password helptext
+Jos et muista salasanaasi syötä käyttäjätunnuksesi allaolevaan lomakkeeseen. Uusi salasana lähetetään tunnukseen tallennettuun sähköpostiosoitteeseen.
+---STRINGEND
+
+---STRING registration successful message
+Rekisteröityminen onnistui. Tunnuksen aktivointia käsittelevä sähköposti on lähetetty sähköpostiosoitteeseesi. Et voi käyttää tunnusta ennen sen aktivoimista.
+---STRINGEND
+

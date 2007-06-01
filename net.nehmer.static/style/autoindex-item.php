@@ -1,7 +1,5 @@
 <?php
 // Available request keys: filename, data
-
-$data =& $_MIDCOM->get_custom_context_data('request_data');
 $object = $data['data'];
 ?>
   <tr>

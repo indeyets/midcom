@@ -31,15 +31,15 @@ Failed to open root event %s: %s
 Incident Database
 ---STRINGEND
 
+---STRING net.nemein.incidentdb
+Incident database
+---STRINGEND
+
 ---STRING root event not yet present
 Root event has not been created yet. Go to the AIS to create it.
 ---STRINGEND
 
 ---STRING view incident
 View incident
----STRINGEND
-
----STRING net.nemein.incidentdb
-Incident database
 ---STRINGEND
 

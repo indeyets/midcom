@@ -14,7 +14,12 @@ function org_openpsa_helpers_resources()
     if (!array_key_exists('org_openpsa_helpers_resources', $GLOBALS))
     {
         $GLOBALS['org_openpsa_helpers_resources'] = array();
-        
+        //Safety
+        if (!isset($GLOBALS['org_openpsa_core_workgroup_filter']))
+        {
+            $GLOBALS['org_openpsa_core_workgroup_filter'] = 'all';
+        }
+
         if (   $GLOBALS['org_openpsa_core_workgroup_filter'] == 'all'
             && $_MIDCOM->auth->user)
         {
@@ -35,7 +40,7 @@ function org_openpsa_helpers_resources()
                 }
             }
         }
-    }    
+    }
     return $GLOBALS['org_openpsa_helpers_resources'];
 }
 ?>

@@ -1,57 +1,71 @@
 <?php
-$view_data =& $GLOBALS['midcom']->get_custom_context_data('request_data');
-$view = $view_data['project_dm'];
-$nap = new midcom_helper_nav();
-$node = $nap->get_node($nap->get_current_node());
-
-echo "<div class=\"org_openpsa_helper_box status\">\n";
-echo "<h3>".$view_data['l10n']->get('status')."</h3>\n";
-
-echo "<div class=\"current-status {$view_data['project']->status_type}\">".$view_data['l10n']->get('project status').': '.$view_data['l10n']->get($view_data['project']->status_type)."</div>\n";
-
-if (array_key_exists($_MIDGARD['user'], $view_data['project']->resources))
-{
-    echo $view_data['l10n']->get('you are project participant');
-}
-elseif (array_key_exists($_MIDGARD['user'], $view_data['project']->contacts))
-{
-    echo $view_data['l10n']->get('you are project subscriber');
-    echo '<form method="post" class="subscribe" action="'.$node[MIDCOM_NAV_FULLURL].'project/'.$view_data['project']->guid.'/unsubscribe/"><input type="submit" class="unsubscribe" value="'.$view_data['l10n']->get('unsubscribe').'" /></form>';
-}
-else
-{
-    echo $view_data['l10n']->get('you are not subscribed to project'); 
-    echo '<form method="post" class="subscribe" action="'.$node[MIDCOM_NAV_FULLURL].'project/'.$view_data['project']->guid.'/subscribe/"><input type="submit" value="'.$view_data['l10n']->get('subscribe').'" /></form>';
-}
-echo "</div>\n";
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$view = $data['view_project'];
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
-<div class="main">
-    <?php $view->display_view(); ?>
+<div class="main org_openpsa_projects_project">
+    <h1><?php echo $data['l10n']->get('project'); ?>: &(view['title']:h);</h1>
+        
+    <div class="status <?php echo $project->status_type; ?>"><?php echo $data['l10n']->get('project status') . ': ' . $data['l10n']->get($data['project']->status_type); ?></div>
+
+    <div class="time">&(view['start']:h); - &(view['end']:h);</div>
+            
+    &(view['description']:h);
+    
+    <?php
+    if (count($data['tasks']) > 0)
+    {
+        echo "<h2>" . $data['l10n']->get('tasks') . "</h2>\n";
+        echo "<ul class=\"tasks\">\n";
+        foreach ($data['tasks'] as $task)
+        {
+            echo "<li>\n";
+            echo "    <div class=\"title\"><a href=\"{$prefix}task/{$task->guid}/\">{$task->title}</a></div>\n";
+            echo "    <div class=\"time\">" . strftime('%x', $task->start) . ' - ' . strftime('%x', $task->end) . "</div>\n";
+            echo "    <div class=\"description\">" . substr($task->description, 0, 60) . "...</div>\n";
+            echo "</li>\n";
+        }
+        echo "</ul>\n";
+    }
+    // TODO: Show help message otherwise?
+    ?>
 </div>
 <div class="sidebar">
     <?php
-    $GLOBALS["midcom"]->dynamic_load($node[MIDCOM_NAV_RELATIVEURL]."task/list/project/{$view_data['project']->guid}/"); 
-    
-    if ($view_data['project']->newsTopic)
+    $customer = new org_openpsa_contacts_group($data['project']->customer);
+    if ($customer)
     {
-        $news_node = $nap->get_node($view_data['project']->newsTopic);
-        if ($news_node)
+        echo "<h2>" . $data['l10n']->get('customer') . "</h2>\n";
+        echo $customer->official;
+    }
+    
+    $manager = new org_openpsa_contacts_person($data['project']->manager);
+    if ($manager)
+    {
+        echo "<h2>" . $data['l10n']->get('manager') . "</h2>\n";
+        $contact = new org_openpsa_contactwidget($manager);
+        echo $contact->show_inline();
+    }
+    elseif (count($data['project']->resources) > 0)
+    {
+        echo "<h2>" . $data['l10n']->get('resources') . "</h2>\n";
+        foreach ($data['project']->resources as $contact_id => $display)
         {
-            echo "<div class=\"area\">\n";
-            $GLOBALS["midcom"]->dynamic_load($news_node[MIDCOM_NAV_RELATIVEURL]."latest/4"); 
-            echo "<p><a href=\"{$news_node[MIDCOM_NAV_FULLURL]}\">".$view_data['l10n']->get('news area')."</a></p>\n";            
-            echo "</div>\n";
+            $contact = new org_openpsa_contacts_person($contact_id);
+            $contact = new org_openpsa_contactwidget($contact);
+            echo $contact->show_inline() . " ";
         }
     }
-    if ($view_data['project']->forumTopic)
+
+    if (count($data['project']->contacts) > 0)
     {
-        $forum_node = $nap->get_node($view_data['project']->forumTopic);
-        if ($forum_node)
+        echo "<h2>" . $data['l10n']->get('contacts') . "</h2>\n";
+        foreach ($data['project']->contacts as $contact_id => $display)
         {
-            echo "<div class=\"area\">\n";
-            $GLOBALS["midcom"]->dynamic_load($forum_node[MIDCOM_NAV_RELATIVEURL]."latest/4"); 
-            echo "</div>\n";
+            $contact = new org_openpsa_contacts_person($contact_id);
+            $contact = new org_openpsa_contactwidget($contact);
+            echo $contact->show();
         }
-    }    
+    }
     ?>
 </div>

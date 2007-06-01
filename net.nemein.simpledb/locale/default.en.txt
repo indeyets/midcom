@@ -19,6 +19,10 @@ entry
 Go
 ---STRINGEND
 
+---STRING net.nemein.simpledb
+Simple database
+---STRINGEND
+
 ---STRING no entries
 No entries in database
 ---STRINGEND
@@ -47,7 +51,46 @@ Simple database
 View entry
 ---STRINGEND
 
----STRING net.nemein.simpledb
-Simple database
+---STRING really delete entry
+Really delete entry?
 ---STRINGEND
 
+---STRING database entry
+Database entry
+---STRINGEND
+
+---STRING sort order
+Sort order
+---STRINGEND
+
+---STRING database id
+Database ID
+---STRINGEND
+
+---STRING url name
+URL name
+---STRINGEND
+
+---STRING entry name
+Entry name
+---STRINGEND
+
+---STRING searchable 1
+Searchable 1
+---STRINGEND
+
+---STRING searchable 2
+Searchable 2
+---STRINGEND
+
+---STRING searchable 3
+Searchable 3
+---STRINGEND
+
+---STRING description
+Description
+---STRINGEND
+
+---STRING export database to excel
+Export database to Excel file
+---STRINGEND

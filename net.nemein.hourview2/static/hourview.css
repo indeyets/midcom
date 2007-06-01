@@ -1,0 +1,25 @@
+form.net_nemein_hourview2 div.process h2 {
+    margin-bottom: 0px;
+}
+form.net_nemein_hourview2 table {
+    border-spacing: 0px;
+}
+form.net_nemein_hourview2 thead th {
+    text-align: left;
+    border-bottom: 1px dashed #807D74;
+}
+form.net_nemein_hourview2 th, form.net_nemein_hourview2 td {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+form.net_nemein_hourview2 th.hours, form.net_nemein_hourview2 td.hours {
+    text-align: right;
+}
+form.net_nemein_hourview2 tr.even {
+    background-color: #EAE8E3;
+    color: #000000;
+}
+form.net_nemein_hourview2 textarea {
+    width: 500px;
+    height: 200px;
+}

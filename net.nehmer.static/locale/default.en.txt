@@ -23,12 +23,20 @@ Article
 Approve new articles by default
 ---STRINGEND
 
+---STRING simple_name_handling
+Should the article's URL be generated automatically?
+---STRINGEND
+
 ---STRING autoindex-notes
 The index page replaces the article with the URL name index and consists of a list of all articles and attachments of the current topic.
 ---STRINGEND
 
 ---STRING back to overview
 Back to overview
+---STRINGEND
+
+---STRING content
+Content
 ---STRINGEND
 
 ---STRING create article
@@ -135,7 +143,7 @@ View Article
 Should the topic be visible
 ---STRINGEND
 
----STRING content
-Content
+---STRING ajax_enable
+Enable AJAX on-site editing
 ---STRINGEND
 

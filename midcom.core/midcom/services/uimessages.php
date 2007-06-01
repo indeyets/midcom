@@ -116,7 +116,14 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
      * messages from user session.
      */
     function initialize()
-    {      
+    {
+        if (!$_MIDGARD['user'])
+        {
+            // Don't use sessioning for non-users as that kills cache usage
+            // TODO: Device a better approach for this
+            return true;
+        }
+    
         // Read messages from session
         $session = new midcom_service_session('midcom_services_uimessages');
         if ($session->exists('midcom_services_uimessages_stack'))
@@ -146,6 +153,12 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
         if (count($this->_message_stack) == 0)
         {
             // No unshown messages
+            return true;
+        }
+        
+        if (!$_MIDGARD['user'])
+        {
+            // Don't use sessioning for non-users as that kills cache usage
             return true;
         }
         

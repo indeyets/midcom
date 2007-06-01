@@ -2,7 +2,7 @@
 // Required request keys:
 // manage_form_url, approve_action, reject_action, rejectdelete_action, rejectnotice_fieldname
 
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 
 if ($data['manage_form_url'])
 {

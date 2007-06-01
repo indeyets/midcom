@@ -1,7 +1,7 @@
 <?php
 /**
  * @package org.openpsa.sales
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: list.php,v 1.6 2006/07/17 14:57:13 rambo Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,7 +9,7 @@
 
 /**
  * salesproject list handler
- * 
+ *
  * @package org.openpsa.sales
  */
 class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handler
@@ -21,7 +21,7 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
         parent::midcom_baseclasses_components_handler();
     }
 
-    function _handler_active($handler_id, $args, &$data)
+    function _handler_list($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
         if (!isset($this->_datamanagers['salesproject']))
@@ -35,8 +35,10 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
         $this->_request_data['customers'] = Array();
         $this->_request_data['owners'] = Array();
 
-        $this->_node_toolbar->add_item(
-            Array(
+        $this->_view_toolbar->add_item
+        (
+            array
+            (
                 MIDCOM_TOOLBAR_URL => 'salesproject/new/',
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('create salesproject'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
@@ -44,9 +46,37 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
                 MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_user_do('midgard:create', null, 'org_openpsa_sales_salesproject'),
             )
         );
-        
+
         $qb = org_openpsa_sales_salesproject::new_query_builder();
-        $qb->add_constraint('status', '=', ORG_OPENPSA_SALESPROJECTSTATUS_ACTIVE);
+
+        if ($handler_id == 'list_active')
+        {
+            $qb->add_constraint('status', '=', ORG_OPENPSA_SALESPROJECTSTATUS_ACTIVE);
+            $data['list_title'] = 'active';
+        }
+        else
+        {
+            $data['list_title'] = $args[0];
+            switch ($args[0])
+            {
+                case 'won':
+                    $this->_component_data['active_leaf'] = "{$this->_topic->id}:deliverable_won";
+                    $qb->add_constraint('status', '=', ORG_OPENPSA_SALESPROJECTSTATUS_WON);
+                    break;
+
+                case 'canceled':
+                    $qb->add_constraint('status', '=', ORG_OPENPSA_SALESPROJECTSTATUS_CANCELED);
+                    break;
+
+                case 'lost':
+                    $qb->add_constraint('status', '=', ORG_OPENPSA_SALESPROJECTSTATUS_LOST);
+                    break;
+
+                default:
+                    return false;
+            }
+        }
+
         // TODO: Enable listing sales projects of others
         //$qb->add_constraint('owner', '=', $_MIDGARD['user']);
         $salesprojects = $qb->execute();
@@ -73,7 +103,7 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
 
             // Populate previous/next actions in the project
             $salesproject->get_actions();
-            
+
             $this->_request_data['salesprojects'][$key] = $salesproject;
 
             // Muck the customers to DM
@@ -87,9 +117,9 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
             $this->_request_data['salesprojects_dm'][$key] = $this->_datamanagers['salesproject']->get_array();
             debug_add("salesproject_dm[{$key}]\n===\n" . sprint_r($this->_request_data['salesprojects_dm'][$key]) . "===\n");
         }
-        
+
         // TODO: Filtering
-        
+
         // Sorting
         if (isset($_REQUEST['org_openpsa_sales_sort_by']))
         {
@@ -100,6 +130,9 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
                     break;
                 case 'value':
                     uasort($this->_request_data['salesprojects_dm'], 'org_openpsa_sales_sort_by_value');
+                    break;
+                case 'profit':
+                    uasort($this->_request_data['salesprojects_dm'], 'org_openpsa_sales_sort_by_profit');
                     break;
                 case 'weighted_value':
                     uasort($this->_request_data['salesprojects_dm'], 'org_openpsa_sales_sort_by_weighted_value');
@@ -137,19 +170,20 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
             && strtolower($_REQUEST['org_openpsa_sales_sort_order']) == 'asc')
         {
             $this->_request_data['salesprojects_dm'] = array_reverse($this->_request_data['salesprojects_dm'], true);
-        } 
+        }
 
         return true;
     }
-    
-    function _show_active($handler_id, &$data)
+
+    function _show_list($handler_id, &$data)
     {
         if (count($this->_request_data['salesprojects']) > 0)
         {
             // Locate Contacts node for linking
             $this->_request_data['contacts_node'] = midcom_helper_find_node_by_component('org.openpsa.contacts');
-            
-            midcom_show_style('show-active-header');
+
+            midcom_show_style('show-list-header');
+            $this->_request_data['even'] = false;
             foreach ($this->_request_data['salesprojects_dm'] as $key => $project_dm)
             {
                 $project =& $this->_request_data['salesprojects'][$key];
@@ -171,9 +205,18 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
                 }
                 $this->_request_data['salesproject'] =& $project;
                 $this->_request_data['salesproject_dmdata'] =& $project_dm;
-                midcom_show_style('show-active-item');
+                midcom_show_style('show-list-item');
+
+                if ($this->_request_data['even'])
+                {
+                    $this->_request_data['even'] = false;
+                }
+                else
+                {
+                    $this->_request_data['even'] = true;
+                }
             }
-            midcom_show_style('show-active-footer');
+            midcom_show_style('show-list-footer');
         }
     }
 
@@ -187,10 +230,11 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
         // Initialize the datamanager with the schema
         $this->_datamanagers[$type] = new midcom_helper_datamanager($schemadb);
 
-        if (!$this->_datamanagers[$type]) {
+        if (!$this->_datamanagers[$type])
+        {
             debug_pop();
-            $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
-            // This will exit. 	 
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
+            // This will exit.
         }
         debug_pop();
     }

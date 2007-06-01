@@ -1,0 +1,15 @@
+# Using the shopping cart
+
+1. set up org.openpsa.products as your see fit
+2. create a topic for net.nemein.shoppingcart
+3. in your site style add call to display the cart
+    <?php
+    $_MIDCOM->componentloader->load('net.nemein.shoppingcart');
+    net_nemein_shoppingcart_render_shortlist_iframe();
+    ?>
+   (see net/nemein/shoppingcart/helpers.php if you wish to display it differently)
+4. Where displaying producst add call to create "add to cart" links
+    <?php net_nemein_shoppingcart_render_additem_shortlist($data['product']); ?>
+5. test the cart
+6. configure checkout backend
+7. profit

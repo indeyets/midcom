@@ -42,18 +42,24 @@ class org_routamc_positioning_log_dba extends __org_routamc_positioning_log_dba
 
         return null;
     }
-    
+
     /**
      * Don't save log if previous log is in same place
      */
     function _on_creating()
     {
         $previous = $this->get_previous();
-        if (   round($previous->longitude, 4) == round($this->longitude, 4)
+        if (   $previous
+            && round($previous->longitude, 4) == round($this->longitude, 4)
             && round($previous->latitude, 4) == round($this->latitude, 4)
-            && $previous->altitude == $this->altitude)
+            && $previous->altitude == $this->altitude
+            && date('Y-m-d', $previous->date) == date('Y-m-d', $this->date))
         {
-            // We don't need to save duplicate entries
+            // We don't need to save duplicate entries on same day
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Not saving log, previous log \"{$previous->guid}\" on same day is in same place.",
+                    MIDCOM_LOG_WARN);
+            debug_pop();
             return false;
         }
         return parent::_on_creating();
@@ -68,7 +74,7 @@ class org_routamc_positioning_log_dba extends __org_routamc_positioning_log_dba
     {
         $qb = org_routamc_positioning_log_dba::new_query_builder();
         $qb->add_constraint('person', '=', $this->person);
-        $qb->add_constraint('date', '<', $this->date);
+        $qb->add_constraint('date', '<=', $this->date);
         $qb->add_order('date', 'DESC');
         $qb->set_limit(1);
         $matches = $qb->execute_unchecked();
@@ -78,7 +84,7 @@ class org_routamc_positioning_log_dba extends __org_routamc_positioning_log_dba
         }
         return null;
     }
-    
+
     /**
      * Returns the next log entry by the person
      *
@@ -98,19 +104,19 @@ class org_routamc_positioning_log_dba extends __org_routamc_positioning_log_dba
         }
         return null;
     }
-    
+
     function _claim_location_entries()
     {
         $previous = $this->get_previous();
 
         if (is_object($previous))
-        {        
+        {
             $qb = org_routamc_positioning_location_dba::new_query_builder();
-            
+
             // Find locations reported to previous log but after
             // this log's date
             $qb->add_constraint('log', '=', $previous->id);
-            $qb->add_constraint('date', '>=', $this->date);   
+            $qb->add_constraint('date', '>=', $this->date);
 
             $matches = $qb->execute();
             if (count($matches) > 0)
@@ -125,7 +131,12 @@ class org_routamc_positioning_log_dba extends __org_routamc_positioning_log_dba
                     $location->update();
                 }
             }
-        }    
+        }
+    }
+
+    function get_city_string()
+    {
+        return org_routamc_positioning_utils::pretty_print_location($this->latitude, $this->longitude);
     }
 
     /**
@@ -135,7 +146,7 @@ class org_routamc_positioning_log_dba extends __org_routamc_positioning_log_dba
     function _on_created()
     {
         $this->_claim_location_entries();
-        
+
         return true;
     }
 }

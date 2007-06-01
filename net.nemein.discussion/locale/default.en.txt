@@ -15,6 +15,22 @@
 Back to forum
 ---STRINGEND
 
+---STRING confirm abuse
+Confirm abuse
+---STRINGEND
+
+---STRING confirm junk
+Confirm junk
+---STRINGEND
+
+---STRING confirmed_abuse
+Confirmed as abuse
+---STRINGEND
+
+---STRING confirmed_junk
+Confirmed as junk message
+---STRINGEND
+
 ---STRING content
 Content
 ---STRINGEND
@@ -31,8 +47,16 @@ Moderation history
 Discussion forum
 ---STRINGEND
 
+---STRING not abuse
+Not abuse
+---STRINGEND
+
 ---STRING post to
 Post to
+---STRINGEND
+
+---STRING privilege moderation
+Moderate
 ---STRINGEND
 
 ---STRING reply
@@ -51,11 +75,19 @@ Report abuse
 Reported as abuse
 ---STRINGEND
 
+---STRING reported_not_abuse
+Reported as not abuse
+---STRINGEND
+
 ---STRING sender
 Sender
 ---STRINGEND
 
 ---STRING subject
 Subject
+---STRINGEND
+
+---STRING re:
+Re:
 ---STRINGEND
 

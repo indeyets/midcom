@@ -34,8 +34,16 @@ class net_nehmer_static_interface extends midcom_baseclasses_components_interfac
         parent::midcom_baseclasses_components_interface();
 
         $this->_component = 'net.nehmer.static';
-        $this->_autoload_files = Array('viewer.php', 'admin.php', 'navigation.php');
-        $this->_autoload_libraries = Array('midcom.helper.datamanager', 'midcom.helper.datamanager2');
+        $this->_autoload_files = Array
+        (
+            'viewer.php',
+            'admin.php',
+            'navigation.php'
+        );
+        $this->_autoload_libraries = Array
+        (
+            'midcom.helper.datamanager2'
+        );
     }
 
     /**

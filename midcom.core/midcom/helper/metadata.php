@@ -23,7 +23,7 @@
  *
  * <b>Metadata Key Reference</b>
  *
- * See also the schema in /midcom/config/metadata_default.dat
+ * See also the schema in /midcom/config/metadata_default.inc
  *
  * - <b>timestamp schedule_start:</b> The time upon which the object should be made visible. 0 for no restriction.
  * - <b>timestamp schedule_end:</b> The time upon which the object should be made invisible. 0 for no restriction.
@@ -33,6 +33,8 @@
  * - <b>string description:</b> A short description for this object, should be used for META HTML headers.
  * - <b>string robots:</b> Search engine crawler instructions, one of '' (unset), 'noindex', 'index', 'follow' and 'nofollow'.
  * 	 See the corresponding META HTML header.
+ * - <b>timestamp published:</b> The publication time of the object, read-only.
+ * - <b>MidgardPerson publisher:</b> The person that published the object (i.e. author), read-only except on articles and pages.
  * - <b>timestamp created:</b> The creation time of the object, read-only unless an article is edited.
  * - <b>MidgardPerson creator:</b> The person that created the object, read-only.
  * - <b>timestamp edited:</b> The last-modified time of the object, read-only.
@@ -99,16 +101,23 @@ class midcom_helper_metadata
      * @access private
      * @var string
      */
-    var $_schemadb = null;
+    var $_schemadb_path = null;
 
     /**
      * Datamanager instance for the given object.
      *
      * @access private
-     * @var midcom_helper_datamanager
+     * @var midcom_helper_datamanager2
      */
     var $_datamanager = null;
-
+    
+    /**
+     * Translation array for the object
+     *
+     * @access private
+     * @var array
+     */
+    var $_translations = null;
 
     /**
      * This will construct a new metadata object for an existing content object.
@@ -130,7 +139,7 @@ class midcom_helper_metadata
     {
         $this->guid = $guid;
         $this->object = $object;
-        $this->_schemadb = $schemadb;
+        $this->_schemadb_path = $schemadb;
     }
 
 
@@ -183,31 +192,21 @@ class midcom_helper_metadata
      */
     function load_datamanager()
     {
-        /*
-         * This can't work, _schemadb is no array but just an URL
-         * 
-        if ($this->object->__table__ == 'article')
-        {
-            // Patch schema in case of articles.
-            $this->_schemadb['metadata']['fields']['created']['readonly'] = false;
-        }
-        // Patch approval until DM gets ACL awar
-        if (! $_MIDCOM->auth->can_do('midcom:approve', $this->object))
-        {
-            $this->_schemadb['metadata']['fields']['approved']['readonly'] = true;
-            $this->_schemadb['metadata']['fields']['approver']['readonly'] = true;
-        }
-         */
-
-        $_MIDCOM->load_library("midcom.helper.datamanager");
-        $this->_datamanager = new midcom_helper_datamanager($this->_schemadb);
+        $_MIDCOM->load_library('midcom.helper.datamanager2');
+        
+        $this->_schemadb = new midcom_helper_datamanager2_schema($this->_schemadb_path);
+        
+        $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_schemadb);
         if (! $this->_datamanager)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 'Failed to create the metadata datamanager instance, see the Debug Log for details.');
             // This will exit()
         }
-        if (! $this->_datamanager->init($this->object, 'metadata'))
+        
+        $this->_datamanager->set_schema('metadata');
+        
+        if (! $this->_datamanager->set_storage($this->object))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 'Failed to initialize the metadata datamanager instance, see the Debug Log for details.');
@@ -219,7 +218,6 @@ class midcom_helper_metadata
     {
         if (! is_null($this->_datamanager))
         {
-            $this->_datamanager->destroy();
             $this->_datamanager = null;
         }
     }
@@ -241,82 +239,52 @@ class midcom_helper_metadata
      */
     function set ($key, $value)
     {
-         debug_push('midcom.helper.metadata::set');
+        debug_push('midcom.helper.metadata::set');
         debug_print_r("We have to set {$key} to this value:", $value);
 
         switch ($key)
         {
+            // Read-only properties  
+            case 'creator':        
             case 'created':
-                // Special handling for articles:
-                if ($this->object->__table__ == 'article')
-                {
-                     if (!mgd_update_article_created($this->object->id, $value))
-                     {
-                        $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                            "Failed to set the created timestamp to {$value} on article ID {$this->object->id}.");
-                        // This will exit.
-                     }
-                     $this->object = new midcom_db_article($this->object->id);
-                     $this->on_update($key);
-
-                     // Explicitly return here, we mustn't set a parameter.
-                     debug_pop();
-                     return;
-                }
-                else
-                {
-                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                        "Cannot update the created fields of non-articles using the Metadata interface.");
-                    // This will exit.
-                }
-                break;
-
-            case 'creator':
-            case 'edited':
-            case 'editor':
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    "Cannot update the creator, edited and editor fields using the Metadata interface.");
-                // This will exit.
-                break;
-
+            case 'revisor':
+            case 'revised':
+            case 'revision':
+            case 'size':
+            case 'deleted':
+            case 'exported':
+            case 'imported':
+                mgd_set_errno(MGD_ERR_ACCESS_DENIED);
+                return false;
+                
+            // Writable properties
+            case 'locker':
+            case 'locked':
             case 'approver':
-                // If we have a guid, we don't worry further.
-                if (mgd_is_guid($value))
-                {
-                    break;
-                }
+            case 'approved':
+            case 'authors':
+            case 'owner':
+            case 'published':
+            case 'schedulestart':
+            case 'scheduleend':
+            case 'hidden':
+            case 'navnoentry':
+            case 'score':
+                $this->object->metadata->$key = $value;
+                $value = $this->object->update();
+                break;
 
-                // ... otherwise we try to convert the passed argument to a GUID.
-                if (is_object($value) && $value->__table__ == 'person')
-                {
-                    // This seems to be a MidgardPerson
-                    $value = $value->guid();
-                }
-                else if (is_numeric($value))
-                {
-                    // This seems to be an ID
-                    $person = new midcom_db_person($value);
-                    if (! $person)
-                    {
-                        $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                            "Could not load the Person with the ID {$value} while setting the approver.");
-                        // This will exit.
-                    }
-                    $value = $person->guid();
-                }
-                else
-                {
-                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                        "{$value} does not look like a GUID while setting the approver.");
-                    // This will exit.
-                }
+            // Fall-back for non-core properties
+            default:
+                $value = $this->object->parameter('midcom.helper.metadata', $key, $value);
                 break;
         }
-        $value = $this->object->parameter('midcom.helper.metadata', $key, $value);
-
+        
         // Update the corresponding cache variable
         $this->on_update($key);
         debug_pop();
+        
+        return $value;
     }
 
 
@@ -325,11 +293,12 @@ class midcom_helper_metadata
      * whenever metadata changes to synchronize the various backwards-compatibility
      * values in place throughout the system.
      *
-     * @param string $key The key that was updated. Leave empty for a complete update by the Datamanger.
+     * @param string $key The key that was updated. Leave empty for a complete update by the Datamanager.
      */
     function on_update($key = false)
     {
-        if ($key && array_key_exists($key, $this->_cache))
+        if (   $key 
+            && array_key_exists($key, $this->_cache))
         {
             unset ($this->_cache[$key]);
         }
@@ -338,15 +307,7 @@ class midcom_helper_metadata
             $this->_cache = Array();
         }
 
-        if (! $key || $key == 'approved')
-        {
-            if ($this->object->__table__ == 'article')
-            {
-                mgd_approve_article($this->object->id, ($this->get('approved') ? true : false));
-            }
-        }
-
-        // TODO: Add Caching Coide here, and do invalidation of the nap part manually.
+        // TODO: Add Caching Code here, and do invalidation of the nap part manually.
         // so that we don't loose the cache of the metadata already in place.
         // Just be intelligent here :)
 
@@ -380,43 +341,79 @@ class midcom_helper_metadata
     function _retrieve_value($key)
     {
         switch ($key)
-        {
+        {            
+            // Time-based properties          
             case 'created':
-                $value = @$this->object->$key;
-                if (   $value != ''
-                    && !is_numeric($value))
-                {
-                    // This is a MgdSchema ISO Date String
-                    $value = strtotime($value);
-                }
+            case 'revised':
+            case 'published':
+            case 'locked':
+            case 'approved':
+            case 'schedulestart':
+            case 'scheduleend':
+            case 'exported':
+            case 'imported':
+            case 'revised':
+                $value = $this->object->metadata->$key;
                 break;
-
-            case 'creator':
-                $value = @$this->object->$key;
-                if ($value == 0)
-                {
-                    $value = 1;
-                }
-                break;
-
+                
             case 'edited':
-                $value = @$this->object->revised;
-                if (   $value != ''
-                    && !is_numeric($value))
-                {
-                    // This is a MgdSchema ISO Date String
-                    $value = strtotime($value);
-                }
+                $value = $this->get('revised');
                 break;
 
-            case 'editor':
-                $value = @$this->object->revisor;
-                if ($value == 0)
+            // Person properties
+            case 'creator':
+            case 'revisor':
+            case 'locker':
+            case 'approver':
+            case 'authors':
+            case 'owner':
+                $value = $this->object->metadata->$key;
+                if (!$value)
                 {
+                    // Fall back to "Midgard admin" if person is not found
                     $value = 1;
                 }
                 break;
 
+            // Old, renamed MidCOM metadata properties
+            case 'author':
+                $value = $this->get('authors');
+                break;
+            case 'editor':
+                $value = $this->get('revisor');
+                break; 
+            case 'publisher':
+                if (   $this->object->__table__ == 'article'
+                    || $this->object->__table__ == 'page')
+                {
+                    $value = $this->object->author;
+                }
+                else
+                {
+                    $value = $this->get('authors');
+                }
+                break;
+            case 'hide':
+                $value = $this->get('hidden');
+                break;
+            case 'schedule_start':
+                $value = $this->get('schedulestart');
+                break;
+            case 'schedule_end':
+                $value = $this->get('scheduleend');
+                break; 
+                
+            // Other midgard_metadata properties
+            case 'revision':
+            case 'hidden':
+            case 'navnoentry':
+            case 'size':
+            case 'deleted':
+            case 'score':
+                $value = $this->object->metadata->$key;
+                break;
+
+            // Fall-back for non-core properties
             default:
                 $varname = "midcom.helper.metadata_{$key}";
                 if (! array_key_exists($varname, get_object_vars($this->object)))
@@ -428,47 +425,11 @@ class midcom_helper_metadata
                 {
                     $value = $this->object->$varname;
                 }
+                
                 break;
         }
 
-        /* Special key handling for various keys goes here.
-         * by default we just return the value directly.
-         *
-         * Empty keys stay untouched too.
-         */
-        if ($value)
-        {
-            switch ($key)
-            {
-                // Person GUIDs
-                case 'approver':
-                    $obj = mgd_get_object_by_guid($value);
-                     if (! $obj)
-                     {
-                          debug_push_class(__CLASS__, __FUNCTION__);
-                         debug_add("Could not load Approver {$value}:" . mgd_errstr(), MIDCOM_LOG_INFO);
-                        debug_pop();
-                        $obj = mgd_get_object_by_guid('f6b665f1984503790ed91f39b11b5392');
-                     }
-                     $value = $obj;
-                     break;
-
-                    // Person IDs
-                  case 'creator':
-                  case 'revisor':
-                      $obj = new midcom_db_person($value);
-                        if (! $obj)
-                        {
-                            debug_push_class(__CLASS__, __FUNCTION__);
-                            debug_add("Could not load {$key} {$value}:" . mgd_errstr(), MIDCOM_LOG_INFO);
-                            debug_pop();
-                            $obj = mgd_get_object_by_guid('f6b665f1984503790ed91f39b11b5392');
-                        }
-                        $value = $obj;
-                        break;
-             }
-            }
-         $this->_cache[$key] = $value;
+        $this->_cache[$key] = $value;
     }
 
 
@@ -482,7 +443,7 @@ class midcom_helper_metadata
     function is_approved()
     {
         if (   $this->get('approved')
-            && $this->get('approved') >= $this->get('edited'))
+            && $this->get('approved') >= $this->get('revised'))
         {
             return true;
         }
@@ -499,19 +460,19 @@ class midcom_helper_metadata
      */
     function is_visible()
     {
-        if ($this->get('hide'))
+        if ($this->get('hidden'))
         {
             return false;
         }
 
         $now = time();
-        if (   $this->get('schedule_start')
-            && $this->get('schedule_start') > $now)
+        if (   $this->get('schedulestart')
+            && $this->get('schedulestart') > $now)
         {
             return false;
         }
-        if (   $this->get('schedule_end')
-            && $this->get('schedule_end') < $now)
+        if (   $this->get('scheduleend')
+            && $this->get('scheduleend') < $now)
         {
             return false;
         }
@@ -545,14 +506,23 @@ class midcom_helper_metadata
      */
     function approve()
     {
-        $_MIDCOM->auth->require_valid_user();
+        //$_MIDCOM->auth->require_valid_user();
         $_MIDCOM->auth->require_do('midcom:approve', $this->object);
         $_MIDCOM->auth->require_do('midgard:update', $this->object);
         $_MIDCOM->auth->require_do('midgard:parameters', $this->object);
-
-        $person = $_MIDCOM->auth->user->get_storage();
+        
+        if (!$_MIDCOM->auth->user)
+        {
+            $approver = 'f6b665f1984503790ed91f39b11b5392';
+        }
+        else
+        {
+            $person = $_MIDCOM->auth->user->get_storage();
+            $approver = $person->guid;
+        }
+        
         $this->set('approved', time());
-        $this->set('approver', $person->guid);
+        $this->set('approver', $approver);
     }
 
     /**
@@ -568,10 +538,19 @@ class midcom_helper_metadata
         $_MIDCOM->auth->require_do('midcom:approve', $this->object);
         $_MIDCOM->auth->require_do('midgard:update', $this->object);
         $_MIDCOM->auth->require_do('midgard:parameters', $this->object);
-
-        $person = $_MIDCOM->auth->user->get_storage();
-        $this->set('approved', '');
-        $this->set('approver', $person->guid);
+        
+        if (!$_MIDCOM->auth->user)
+        {
+            $approver = 'f6b665f1984503790ed91f39b11b5392';
+        }
+        else
+        {
+            $person = $_MIDCOM->auth->user->get_storage();
+            $approver = $person->guid;
+        }
+        
+        $this->set('approved', 0);
+        $this->set('approver', $approver);
     }
 
 
@@ -605,7 +584,7 @@ class midcom_helper_metadata
         if (is_object($source))
         {
             $object = $source;
-            $guid = $source->guid();
+            $guid = $source->guid;
         }
         else
         {
@@ -685,12 +664,42 @@ class midcom_helper_metadata
 
         return $meta;
     }
+    
+    function get_languages()
+    {
+        if (is_null($this->_translations))
+        {
+            $this->_translations = array();
+                                    
+            $languages = @$this->object->get_languages();
+            if (   !$languages
+                || count($languages) == 0)
+            {
+                return $this->_translations;
+            }
+            
+            $language_hosts = $_MIDCOM->i18n->get_language_hosts();
+            
+            foreach ($languages as $language)
+            {
+                if (!array_key_exists($language->id, $language_hosts))
+                {
+                    // No host for this language, skip
+                    continue;
+                }
+                
+                $this->_translations[$language->id] = array
+                (
+                    'code' => $language->code,
+                    'name' => $language->name,
+                    'native' => $language->native,
+                    'host' => $language_hosts[$language->id],
+                    'url' => $_MIDCOM->generate_host_url($language_hosts[$language->id]),
+                );
+            }
+        }
+        
+        return $this->_translations;
+    }
 }
-
-
-
-
-
-
-
 ?>

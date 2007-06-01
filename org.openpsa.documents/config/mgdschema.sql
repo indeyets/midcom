@@ -31,4 +31,11 @@ ALTER TABLE org_openpsa_document ADD COLUMN orgOpenpsaWgtype INT(11) NOT NULL de
 ALTER TABLE org_openpsa_document ADD COLUMN orgOpenpsaAccesstype int(11) NOT NULL default '0';
 ALTER TABLE org_openpsa_document ADD COLUMN orgOpenpsaOwnerWg VARCHAR(255) NOT NULL default '';
 alter table org_openpsa_document add column guid varchar(80) NOT NULL default '';
+# 1.7 metadata
+#
+ALTER TABLE org_openpsa_document ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE org_openpsa_document ADD COLUMN creator int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_document ADD COLUMN revisor int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_document ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE org_openpsa_document ADD COLUMN revision int(11) NOT NULL default '0';
 

@@ -1,91 +1,56 @@
 <?php
-/**
- * About Midgard screen
- * TODO: Include the community and contributors somehow
- */
+echo '<?'.'xml version="1.0" encoding="UTF-8"?'.">\n";
+$_MIDCOM->add_link_head
+(
+    array
+    (
+        'rel' => 'stylesheet',
+        'type' => 'text/css',
+        'href' => MIDCOM_STATIC_URL.'/midcom.services.auth/style.css',
+    )
+);
+$title = 'About Midgard';
 $_MIDCOM->auth->require_valid_user();
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
     <head>
-        <title>About Midgard</title>
+        <title>Midgard CMS - <?php echo $title; ?></title>
+        <?php echo $_MIDCOM->print_head_elements(); ?>
         <style type="text/css">
-            body
+            <!--
+            #content
             {
-                font-family: "Bitstream Vera Sans", "Arial", "Helvetica", sans-serif;
-                margin: 0px;
-                padding: 20px;
-                padding-top: 45px;  
-                padding-left: 140px;
-                color: #333333;
-                background-color: #ffffff;
-                background-image: url('<?php echo MIDCOM_STATIC_URL; ?>/stock-icons/logos/midgard-fade.png');
-                background-position: top;
-                background-repeat: repeat-x;
-            }
-            #grouplogo
-            {
-                position: absolute;
-                left: 16px;
-                top: 10px;
-            }
-            #grouplogo img
-            {
-                border: 0px;
-            }
-            body a
-            {
-                text-decoration: none;
-                font-weight: bold;
-                color: #663822;
-                background-color: transparent;
-            }
-            body a:hover
-            {
-                text-decoration: underline;
-            }
-            body h1
-            {
-                margin-top: 0px; 
-                margin-bottom: 45px;            
-            }
-            body table caption
-            {
+                font-size: 1.2em;
                 text-align: left;
-                padding-bottom: 0px;
-                font-weight: bold;
+                width: 625px;
+                margin: 0px 20px;
+                height: 325px;
             }
-            body table td
+            #bottom #version
             {
-                padding-right: 10px;
-                vertical-align: top;
-                min-width: 100px;
+                padding-top: 50px;   
             }
-            body table td.warning
-            {
-                color: #cc0000;
-            }
-            body table
-            {
-                margin-bottom: 10px;
-            }            
+            -->
         </style>
-        <link rel="shortcut icon" type="image/ico" href="<?php echo MIDCOM_STATIC_URL; ?>/stock-icons/logos/favicon.ico" />
+        <link rel="shortcut icon" href="<?php echo MIDCOM_STATIC_URL; ?>/stock-icons/logos/favicon.ico" />
     </head>
-    <body>
-        <div id="grouplogo">
-            <a href="http://www.midgard-project.org/"><img src="<?php echo MIDCOM_STATIC_URL; ?>/stock-icons/logos/midgard-project.gif" alt="Midgard" /></a>
-        </div>
-        <div id="content">
-            <h1>About Midgard</h1>
-            <p>
-                <a href="http://www.midgard-project.org/">Midgard</a> is a Content management Toolkit. It is Free Software that can be used to construct interactive web applications. <a href="http://www.midgard-project.org/midgard/">Learn more &raquo;</a>
-            </p>
 
-            <p>
-                Copyright&copy;1999-<?php echo date('Y'); ?> <a href="http://www.midgard-project.org/community/">The Midgard Project</a>. <a href="">Some rights reserved</a>.
-            </p>
-            
+    <body>
+	<div id="container">
+	    <div id="branding">
+		<div id="title"><h1>Midgard CMS</h1><h2><?php echo $title; ?></h2></div>
+		<div id="grouplogo"><a href="http://www.midgard-project.org/"><img src="<?php echo MIDCOM_STATIC_URL; ?>/midcom.services.auth/images/midgard-project.gif" width="104" height="104" alt="Midgard" title="Midgard" /></a></div>
+	    </div>
+	    <div class="clear"></div>
+	    <div id="content">
+        	<p>
+            	    <a href="http://www.midgard-project.org/">Midgard</a> is a Content management Toolkit. It is Free Software that can be used to construct interactive web applications. <a href="http://www.midgard-project.org/midgard/">Learn more &raquo;</a>
+        	</p>
+        	<p>
+            	    Copyright&copy;1999-<?php echo date('Y'); ?> <a href="http://www.midgard-project.org/community/">The Midgard Project</a>. <a href="">Some rights reserved</a>.
+        	</p>            
             <?php
             if (   $_MIDGARD['admin']
                 && $_MIDGARD['sitegroup'] != 0
@@ -134,8 +99,8 @@ $_MIDCOM->auth->require_valid_user();
 
                 echo "    </tbody>\n";
                 echo "</table>\n";
-            }
-            ?>
+	    }
+?>
             
             <table class="apps">
                 <caption>Your installed applications</caption>
@@ -170,9 +135,20 @@ $_MIDCOM->auth->require_valid_user();
                     </tr>
                 </tbody>
             </table>
+            <p>See also list of <a href="<?php echo "{$_MIDGARD['self']}midcom-exec-midcom/credits.php"; ?>">MidCOM Components and Developers</a>.</p>
             <?php
             // TODO: Check if MidCOM is up to date
             ?>
-        </div>
+            </div>
+
+    	    <div id="footer">
+            	<div class="midgard">
+            	    Copyright &copy; 1998-2006 <a href="http://www.midgard-project.org/">The Midgard Project</a>. Midgard is <a href="http://en.wikipedia.org/wiki/Free_software">free software</a> available under <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.
+            	</div>
+                <div class="server">
+                    <?php echo "{$_SERVER['SERVER_NAME']}: {$_SERVER['SERVER_SOFTWARE']}"; ?>
+                </div>
+    	    </div>
+	</div>
     </body>
 </html>

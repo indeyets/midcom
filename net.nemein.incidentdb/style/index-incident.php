@@ -6,7 +6,7 @@ global $view_l10n;
 global $view_l10n_midcom;
 global $view_auth;
 
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 $data = $view_datamanager->get_array();
 $schemadb = $view_datamanager->get_layout_database();
 $schema = $schemadb[$view_datamanager->get_layout_name()];

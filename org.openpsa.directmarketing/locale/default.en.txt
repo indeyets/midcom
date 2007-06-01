@@ -1,7 +1,15 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.en.txt,v 1.6 2006/05/08 13:56:38 rambo Exp $
+---CVS $Id$
 ---LANGUAGE en
+
+---STRING % of clicks
+% of clicks
+---STRINGEND
+
+---STRING % of recipients
+% of recipients
+---STRINGEND
 
 ---STRING %d members
 %d members
@@ -19,12 +27,28 @@
 Add
 ---STRINGEND
 
+---STRING add rule
+Add rule
+---STRINGEND
+
 ---STRING add to campaign
 Add to campaign
 ---STRINGEND
 
 ---STRING address separator
 Address separator
+---STRINGEND
+
+---STRING advanced rule editor
+Advanced rule editor
+---STRINGEND
+
+---STRING all persons in market segment "%s" who have clicked on link "%s" in message #%d and have not unsubscribed from campaign #%d
+All persons in market segment "%s" who have clicked on link "%s" in message #%d and have not unsubscribed from campaign #%d
+---STRINGEND
+
+---STRING all persons who have clicked on link "%s" in message #%d and have not unsubscribed from campaign #%d
+All persons who have clicked on link "%s" in message #%d and have not unsubscribed from campaign #%d
 ---STRINGEND
 
 ---STRING archival
@@ -35,12 +59,44 @@ Archival
 Archived on
 ---STRINGEND
 
+---STRING bounced recipients
+Bounced recipients
+---STRINGEND
+
 ---STRING campaign
 Campaign
 ---STRINGEND
 
 ---STRING campaigns
 Campaigns
+---STRINGEND
+
+---STRING class:group
+Groups property
+---STRINGEND
+
+---STRING class:group parameters
+Groups parameter
+---STRINGEND
+
+---STRING class:membership
+Members property
+---STRINGEND
+
+---STRING class:membership parameters
+Members parameter
+---STRINGEND
+
+---STRING class:person
+Persons property
+---STRINGEND
+
+---STRING class:person parameters
+Persons parameter
+---STRINGEND
+
+---STRING contains
+contains
 ---STRINGEND
 
 ---STRING content
@@ -51,20 +107,80 @@ Content
 Create campaign
 ---STRINGEND
 
+---STRING create campaign from link
+Create campaign from link
+---STRINGEND
+
 ---STRING created on %s
 Created on %s
+---STRINGEND
+
+---STRING csv column
+CSV column
+---STRINGEND
+
+---STRING does not contain
+does not contain
+---STRINGEND
+
+---STRING edit rules
+Edit rules
 ---STRINGEND
 
 ---STRING email message
 Email message
 ---STRINGEND
 
+---STRING equals
+equals
+---STRINGEND
+
+---STRING error when saving rule, errstr: %s
+Error when saving rule, errstr: %s
+---STRINGEND
+
+---STRING example
+Example
+---STRINGEND
+
+---STRING export as csv
+Export subscribers as CSV
+---STRINGEND
+
+---STRING field separator
+Field separator
+---STRINGEND
+
 ---STRING file to import
 File to import
 ---STRINGEND
 
+---STRING first message sent on
+First message sent on
+---STRINGEND
+
 ---STRING from address
 From -address
+---STRINGEND
+
+---STRING from link "%s"
+From link "%s"
+---STRINGEND
+
+---STRING generated on %s by %s
+Generated on %s by %s
+---STRINGEND
+
+---STRING given rule could not be parsed
+Given rule could not be parsed
+---STRINGEND
+
+---STRING given rule is empty
+Given rule is empty
+---STRINGEND
+
+---STRING greater than
+is greater than
 ---STRINGEND
 
 ---STRING html email
@@ -73,6 +189,10 @@ HTML email
 
 ---STRING import
 Import
+---STRINGEND
+
+---STRING import csv
+Import CSV file
 ---STRINGEND
 
 ---STRING import email addresses
@@ -91,16 +211,68 @@ Import subscribers to "%s"
 Import vCards
 ---STRINGEND
 
----STRING instructions for new campaign
-Instructions for new campaign
+---STRING in domain
+in domain
 ---STRINGEND
 
----STRING instructions for new message
-Instructions for new message
+---STRING last message sent on
+Last message sent on
+---STRINGEND
+
+---STRING less than
+is less than
+---STRINGEND
+
+---STRING link
+Link
+---STRINGEND
+
+---STRING link and message limits
+Link and message limits
+---STRINGEND
+
+---STRING link statistics
+Link statistics
+---STRINGEND
+
+---STRING longtext:generated_from_found_in_adv_rule
+"generated_from" found in advanced rule, it has been automatically removed. please review the rule before saving this change
+---STRINGEND
+
+---STRING longtext:wizard_not_available
+This campaigns rules cannot be edited by the rule wizard, switched to advanced mode
+---STRINGEND
+
+---STRING match csv columns to database fields
+Match CSV columns to database fields
+---STRINGEND
+
+---STRING match:all
+all
+---STRINGEND
+
+---STRING match:any
+any
+---STRINGEND
+
+---STRING match:match
+Match
+---STRINGEND
+
+---STRING match:of the following
+of the following
 ---STRINGEND
 
 ---STRING message
 Message
+---STRINGEND
+
+---STRING message report
+Message report
+---STRINGEND
+
+---STRING message statistics
+Message statistics
 ---STRINGEND
 
 ---STRING messages
@@ -115,8 +287,24 @@ Messages sent
 New message
 ---STRINGEND
 
+---STRING no rule given
+No rule given
+---STRINGEND
+
 ---STRING normal campaign
 Normal campaign
+---STRINGEND
+
+---STRING not equals
+not equals
+---STRINGEND
+
+---STRING not-unsubscribed -limits
+Not-unsubscribed -limits
+---STRINGEND
+
+---STRING nothing sent yet
+Nothing sent yet
 ---STRINGEND
 
 ---STRING org.openpsa.directmarketing
@@ -127,8 +315,168 @@ Mass mailing and direct marketing
 Preview message
 ---STRINGEND
 
+---STRING property:birthdate
+Date of birth
+---STRINGEND
+
+---STRING property:city
+City
+---STRINGEND
+
+---STRING property:country
+Country
+---STRINGEND
+
+---STRING property:customerId
+Customer ID
+---STRINGEND
+
+---STRING property:email
+E-Mail
+---STRINGEND
+
+---STRING property:extra
+Extra
+---STRINGEND
+
+---STRING property:fax
+Fax
+---STRINGEND
+
+---STRING property:firstname
+First name
+---STRINGEND
+
+---STRING property:gid
+Group ID
+---STRINGEND
+
+---STRING property:guid
+GUID
+---STRINGEND
+
+---STRING property:handphone
+Cell phone
+---STRINGEND
+
+---STRING property:homepage
+Home page
+---STRINGEND
+
+---STRING property:homephone
+Home phone
+---STRINGEND
+
+---STRING property:id
+ID
+---STRINGEND
+
+---STRING property:invoiceCity
+City (invoicing address)
+---STRINGEND
+
+---STRING property:invoiceCountry
+Country (invoicing address)
+---STRINGEND
+
+---STRING property:invoicePostcode
+ZIP (invoicing address)
+---STRINGEND
+
+---STRING property:invoiceStreet
+Street address (invoicing address)
+---STRINGEND
+
+---STRING property:keywords
+Keywords
+---STRINGEND
+
+---STRING property:lastname
+Last name
+---STRINGEND
+
+---STRING property:name
+Company ID
+---STRINGEND
+
+---STRING property:official
+Official name
+---STRINGEND
+
+---STRING property:orgOpenpsaObtype
+Object type
+---STRINGEND
+
+---STRING property:owner
+Owner
+---STRINGEND
+
+---STRING property:pgpkey
+PGP Key
+---STRINGEND
+
+---STRING property:phone
+Phone
+---STRINGEND
+
+---STRING property:postalCity
+City (postal address)
+---STRINGEND
+
+---STRING property:postalCountry
+Country (postal address)
+---STRINGEND
+
+---STRING property:postalPostcode
+ZIP (postal address)
+---STRINGEND
+
+---STRING property:postalStreet
+Street addres (postal address)
+---STRINGEND
+
+---STRING property:postcode
+ZIP
+---STRINGEND
+
+---STRING property:street
+Street address
+---STRINGEND
+
+---STRING property:uid
+Person ID
+---STRINGEND
+
+---STRING property:username
+Username
+---STRINGEND
+
+---STRING property:workphone
+Work phone
+---STRINGEND
+
 ---STRING recipients
 Recipients
+---STRINGEND
+
+---STRING remove rule
+Remove rule
+---STRINGEND
+
+---STRING report for message %s
+Report for message %s
+---STRINGEND
+
+---STRING rule generation warning
+Rule generation warning
+---STRINGEND
+
+---STRING segment "%s" link statistics
+Segment "%s" link statistics
+---STRINGEND
+
+---STRING segment limits
+Segment limits
 ---STRINGEND
 
 ---STRING send message
@@ -155,6 +503,10 @@ Smart campaign
 SMS message
 ---STRINGEND
 
+---STRING store to field
+Store to field
+---STRINGEND
+
 ---STRING subject
 Subject
 ---STRINGEND
@@ -167,15 +519,47 @@ Testers
 Text email
 ---STRINGEND
 
+---STRING total clicks
+Total clicks
+---STRINGEND
+
+---STRING total recipients
+Total recipients
+---STRINGEND
+
 ---STRING type
 Type
+---STRINGEND
+
+---STRING unsubscribed between %s - %s
+Unsubscribed between %s - %s
+---STRINGEND
+
+---STRING unsubscribed since %s
+Unsubscribed since %s
+---STRINGEND
+
+---STRING with %s Midgard we can only support "%s" matching for multiple parameters
+With %s Midgard we can only support "%s" matching for multiple parameters
+---STRINGEND
+
+---STRING with name
+with name
+---STRINGEND
+
+---STRING you can import simple lists of email addresses here
+You can import simple lists of email addresses here
 ---STRINGEND
 
 ---STRING you can import vcards here
 Here you can import vCards to the campaign
 ---STRINGEND
 
----STRING you can import simple lists of email addresses here
-You can import simple lists of email addresses here
+---STRING you must select "%s" or "%s" for matching
+You must select "%s" or "%s" for matching
+---STRINGEND
+
+---STRING no segment
+No segment
 ---STRINGEND
 

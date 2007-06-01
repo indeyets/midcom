@@ -21,7 +21,29 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
      * @access private
      */
     var $_filters = Array();
+    
+    /**
+     * Viewed year for calendar view
+     * 
+     * @access private
+     */
+    var $_year;
 
+    /**
+     * Viewed month for calendar view
+     * 
+     * @access private
+     */
+    var $_month;
+    
+    /**
+     * Calendar display widget
+     *
+     * @var org_openpsa_calendarwidget_month
+     * @access private
+     */
+    var $_calendar;
+    
     /**
      * Simple default constructor.
      */
@@ -40,6 +62,84 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                 $this->_filters = $_REQUEST['net_nemein_calendar_filter'];
             }
         }
+    }
+
+    function _handler_open($handler_id, $args, &$data)
+    {
+        $this->_load_datamanager();
+        $this->_request_data['archive_mode'] = false;
+        
+        $this->_request_data['index_count'] = $args[0];
+        
+        // Bind toolbar by default to root event
+        $this->_view_toolbar->bind_to($this->_request_data['root_event']);        
+        
+        $this->_request_data['events'] = array();
+
+        $this->_load_filters();
+
+        // Filter the upcoming list by a type if required
+        $type_filter = $this->_config->get('type_filter_upcoming');
+        
+        $qb = net_nemein_calendar_event::new_query_builder();
+
+        // Add root event constraints
+        if ($this->_config->get('list_from_master'))
+        {
+            $qb->begin_group('OR');        
+            $rootevents_qb = net_nemein_calendar_event::new_query_builder();
+            $rootevents_qb->add_constraint('up', '=', $this->_request_data['master_event']);
+            $rootevents = $rootevents_qb->execute();
+            foreach ($rootevents as $rootevent)
+            {
+                $qb->add_constraint('up', '=', $rootevent->id);
+            }
+            $qb->end_group();
+        }
+        else
+        {
+            $qb->add_constraint('up', '=', $this->_request_data['root_event']->id);
+        }
+        
+        // Add filtering constraints
+        if (!is_null($type_filter))
+        {
+            $qb->add_constraint('type', '=', $type_filter);
+        }
+        foreach ($this->_filters as $field => $filter)
+        {
+            $qb->add_constraint($field, '=', $filter);            
+        }
+        // QnD category filter (only in 1.8)
+        if (   isset($_REQUEST['net_nemein_calendar_category'])
+            && class_exists('midgard_query_builder'))
+        {
+            $qb->begin_group('AND');
+                $qb->add_constraint('parameter.domain', '=', 'net.nemein.calendar');
+                $qb->add_constraint('parameter.name', '=', 'categories');
+                $qb->add_constraint('parameter.value', 'LIKE', "%|{$_REQUEST['net_nemein_calendar_category']}|%");
+            $qb->end_group();
+        }
+
+        // Show only events that haven't started
+        $qb->add_constraint('start', '>', time());
+        
+        // Show only open events
+        $qb->add_constraint('closeregistration', '>', time());
+        $qb->add_constraint('openregistration', '<=', time());
+
+        $qb->set_limit($this->_request_data['index_count']);
+        
+        $qb->add_order('closeregistration');
+        
+        $this->_request_data['events'] = $qb->execute();
+
+        return true;
+    }
+
+    function _show_open($handler_id, &$data)
+    {
+        $this->_show_event_listing($handler_id);
     }
 
     function _handler_upcoming($handler_id, $args, &$data)
@@ -64,7 +164,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         $this->_load_filters();
 
         // FIXME: This will be cleaner when done via QB
-        $epoch_end = mktime(0, 0, 0, 1, 19, 2038);
+        $epoch_end = mktime(0, 0, 0, 1, 18, 2038);
 
         // Get the events
         $this->_get_event_listing(time(), $epoch_end);
@@ -104,6 +204,14 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         // Get all events in the week
         $this->_get_event_listing($start, $end, true);
 
+        $breadcrumb[] = array
+        (
+            MIDCOM_NAV_URL => "week/{$args[0]}/",
+            MIDCOM_NAV_NAME => sprintf($this->_l10n->get('week %1$s of year %2$s'), strftime('%W', $requested_time), (string) strftime('%Y', $requested_time)),
+        );
+        
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
+        
         return true;
     }
 
@@ -139,6 +247,39 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         // Get all events in the requested time range
         $this->_get_event_listing($start, $end, true);
 
+        if ($this->_request_data['archive_mode'])
+        {
+            // Set the breadcrumb
+            $breadcrumb[] = array
+            (
+                MIDCOM_NAV_URL => "archive/",
+                MIDCOM_NAV_NAME => sprintf($this->_l10n->get('archive')),
+            );
+            
+            if ($start)
+            {
+                $breadcrumb[] = array
+                (
+                    MIDCOM_NAV_URL => "archive/between/{$args[0]}/{$args[1]}/",
+                    MIDCOM_NAV_NAME => strftime('%B %Y', $start),
+                );
+                $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
+            }
+        }
+        else
+        {
+            if ($start && $end)
+            {
+                $breadcrumb[] = array
+                (
+                    MIDCOM_NAV_URL => "/between/{$args[0]}/{$args[1]}/",
+                    MIDCOM_NAV_NAME => strftime('%x', $start) . ' - ' . strftime('%x', $end),
+                );
+                
+                $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
+            }
+        }
+        
         return true;
     }
 
@@ -185,8 +326,8 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         // Add root event constraints
         if ($this->_config->get('list_from_master'))
         {
-            $qb->begin_group("OR");        
-            $rootevents_qb = midcom_db_event::new_query_builder();
+            $qb->begin_group('OR');        
+            $rootevents_qb = net_nemein_calendar_event::new_query_builder();
             $rootevents_qb->add_constraint('up', '=', $this->_request_data['master_event']);
             $rootevents = $rootevents_qb->execute();
             foreach ($rootevents as $rootevent)
@@ -209,30 +350,45 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         {
             $qb->add_constraint($field, '=', $filter);            
         }
-        
+        // QnD category filter (only in 1.8)
+        if (   isset($_REQUEST['net_nemein_calendar_category'])
+            && class_exists('midgard_query_builder'))
+        {
+            $qb->begin_group('AND');
+                $qb->add_constraint('parameter.domain', '=', 'net.nemein.calendar');
+                $qb->add_constraint('parameter.name', '=', 'categories');
+                $qb->add_constraint('parameter.value', 'LIKE', "%|{$_REQUEST['net_nemein_calendar_category']}|%");
+            $qb->end_group();
+        }
+
         // Find all events that occur during [$from, $end]
-        $qb->begin_group("OR");
+        $qb->begin_group('OR');
             // The event begins during [$from, $to]
-            $qb->begin_group("AND");
-                $qb->add_constraint("start", ">=", $from);
-                $qb->add_constraint("start", "<=", $to);
+            $qb->begin_group('AND');
+                $qb->add_constraint('start', '>=', $from);
+                $qb->add_constraint('start', '<=', $to);
             $qb->end_group();
-            // The event begins before and ends after [$from, $to]
-            $qb->begin_group("AND");
-                $qb->add_constraint("start", "<=", $from);
-                $qb->add_constraint("end", ">=", $to);
-            $qb->end_group();
-            // The event ends during [$from, $to]
-            $qb->begin_group("AND");
-                $qb->add_constraint("end", ">=", $from);
-                $qb->add_constraint("end", "<=", $to);
-            $qb->end_group();
+            if ($this->_config->get('list_started'))
+            {
+                // The event begins before and ends after [$from, $to]
+                $qb->begin_group('AND');
+                    $qb->add_constraint('start', '<=', $from);
+                    $qb->add_constraint('end', '>=', $to);
+                $qb->end_group();
+                 // The event ends during [$from, $to]
+                $qb->begin_group('AND');
+                    $qb->add_constraint('end', '>=', $from);
+                    $qb->add_constraint('end', '<=', $to);
+                $qb->end_group();
+            }
         $qb->end_group();
 
         if (!$list_all)
         {
             $qb->set_limit($this->_request_data['index_count']);
         }
+        
+        $qb->add_order('start');
         
         $this->_request_data['events'] = $qb->execute();
     }
@@ -248,7 +404,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
 
         if (! $this->_datamanager)
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a DM2 instance.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a DM2 instance.');
             // This will exit.
         }
         $this->_request_data['datamanager'] =& $this->_datamanager;
@@ -273,7 +429,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         $event_url = '';
-        if (   $event->up == $this->_request_data['root_event']->id
+        if (   $event->up == $this->_request_data['root_event']
             || $this->_config->get('show_events_locally'))
         {
             if ($this->_request_data['archive_mode'])
@@ -337,7 +493,14 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             $this->_request_data['event_day'] = $day_shown;
 
             midcom_show_style('show_listing_year_header');
-            midcom_show_style('show_listing_month_header');
+            
+            if (   count($this->_request_data['events']) > 0
+                && array_key_exists(0, $this->_request_data['events'])
+                && $month_shown == date('m', $this->_request_data['events'][0]->start))
+            {
+                midcom_show_style('show_listing_month_header');
+            }
+            
             midcom_show_style('show_listing_day_header');
         }
         else
@@ -380,7 +543,6 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                 }
                 elseif ($this->_request_data['event_day'] > $day_shown)
                 {
-                    midcom_show_style('show_listing_end');
                     $day_shown = $this->_request_data['event_day'];
                     midcom_show_style('show_listing_day_header');
                 }
@@ -398,6 +560,104 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
 
         midcom_show_style('show_listing_end');
         midcom_show_style('show_listing_finished');
+    }
+    
+    /**
+     * Initializes calendar view
+     * 
+     * @access private
+     */
+    function _handler_calendar($handler_id, $args, &$data)
+    {
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'type' => 'text/css',
+                'rel'  => 'stylesheet',
+                'href' => MIDCOM_STATIC_URL . '/org.openpsa.calendarwidget/monthview.css',
+            )
+        );
+        
+        if ($this->_config->get('javascript_hover'))
+        {
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.openpsa.calendarwidget/hover.js');
+        }
+        
+        if (!array_key_exists(0, $args))
+        {
+            $this->_year = (int) date('Y');
+            $this->_month = (int) date('m');
+            return true;
+        }
+        
+        // Prevent the robots from ending in an "endless" parsing cycle
+        $_MIDCOM->add_meta_head
+        (
+            array
+            (
+                'name' => 'robots',
+                'content' => 'none',
+            )
+        );
+        
+        $this->_year = $args[0];
+        $this->_month = $args[1];
+        return true;
+    }
+    
+    /**
+     * Get the events from the component
+     * 
+     * @access private
+     */
+    function _add_calendar_events()
+    {
+        $this->_get_event_listing($this->_calendar->get_start(), $this->_calendar->get_end(), true);
+        
+        if (   !is_array($this->_request_data['events'])
+            || count($this->_request_data['events']) === 0)
+        {
+            return;
+        }
+        
+        foreach ($this->_request_data['events'] as $event)
+        {
+            $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+            $event->link = $prefix.$event->extra.'.html';
+            $this->_calendar->add_event($event);
+        }
+    }
+    
+    /**
+     * Shows the calendar styles
+     * 
+     * @access private
+     */
+    function _show_calendar($handler_id, &$data)
+    {
+        $this->_request_data['page_title'] = $this->_topic->extra;
+        midcom_show_style('show_calendar_header');
+        
+        // Initialize org.openpsa.calendarwidget.month to show the calendar
+        $this->_calendar = new org_openpsa_calendarwidget_month();
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        
+        $this->_calendar->set_year($this->_year, false);
+        $this->_calendar->set_month($this->_month);
+        
+        // Write month navigation with path instead of GET parameters
+        $this->_calendar->path_mode = true;
+        $this->_calendar->path = $prefix . 'calendar/';
+        
+        // Should we use JavaScript to emulate hovering effect?
+        $this->_calendar->use_javascript = $this->_config->get('javascript_hover');
+        
+        // Get the events
+        $this->_add_calendar_events();
+        
+        // Show the calendar
+        $this->_calendar->show();
     }
 }
 

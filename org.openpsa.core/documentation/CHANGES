@@ -1,10 +1,17 @@
-                   org.openpsa.core Changelog
+org.openpsa.core Changelog
                    --------------------------
 Legend:
 - All items marked with "!" represent a major API-Change that is
   not guranteed to be backwards compatible to previous versions
-  which might even break existing functionality. 
+  which might even break existing functionality.
 - All items marked with "+" represent completly new features.
+
+2006-10-10 bergie
+  + Bulletproofed ACL synchronizer for case of missing assignees
+
+2006-09-18 rambo
+  + Some css for dirmar message report
+  - added state to manifest, version bump
 
 2006-05-17 bergie
   + Moved metadata_tmp.sql to mgdschema.sql to force installation of
@@ -43,7 +50,7 @@ Legend:
     in persons campaigns list
 
 2006-02-13 rambo
-  ! org_openpsa_campaign object (and SQL) changed 
+  ! org_openpsa_campaign object (and SQL) changed
     (org_openpsa_query link removed, rulesSerialized text added)
 
 2006-01-03 rambo
@@ -148,8 +155,8 @@ Legend:
 
 2005-06-10 bergie & rambo
   ! Changes to existing MgdSchema definitions (expect more of these)
-  
+
 2005-06-09 bergie & rambo
   + Initial creation of the library
-  + The library automatically initializes a toolbar to 
+  + The library automatically initializes a toolbar to
     $GLOBALS['org_openpsa_core_toolbar']

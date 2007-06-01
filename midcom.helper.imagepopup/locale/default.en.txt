@@ -3,6 +3,14 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING files
+Files
+---STRINGEND
+
+---STRING folder attachments
+Folder attachments
+---STRINGEND
+
 ---STRING images
 Images
 ---STRINGEND
@@ -13,13 +21,5 @@ Image addition pop-up
 
 ---STRING page attachments
 Page attachments
----STRINGEND
-
----STRING folder attachments
-Folder attachments
----STRINGEND
-
----STRING files
-Files
 ---STRINGEND
 

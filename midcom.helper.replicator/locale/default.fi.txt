@@ -1,0 +1,69 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING POST to %s
+HTTP POST-lähetys osoitteeseen <code>%s</code>
+---STRINGEND
+
+---STRING archive to %s
+Arkistointi tiedostoon <code>%s</code>
+---STRINGEND
+
+---STRING exported
+Viety tietokannasta ulos
+---STRINGEND
+
+---STRING exporter
+Vientityyppi
+---STRINGEND
+
+---STRING from log file
+Lokitiedostosta
+---STRINGEND
+
+---STRING imported
+Tuotu ulkopuolelta tietokantaan
+---STRINGEND
+
+---STRING manage replication
+Hallinnoi replikointia
+---STRINGEND
+
+---STRING mirroring subscription
+Peilaus
+---STRINGEND
+
+---STRING replication information
+Replikointitiedot
+---STRINGEND
+
+---STRING replication information for %s
+Replikointitiedot: %s
+---STRINGEND
+
+---STRING replication queue is stored to %s
+Replikointijono tallennetaan hakemistoon %s
+---STRINGEND
+
+---STRING replication subscriptions
+Replikointijonot
+---STRINGEND
+
+---STRING staging2live subscription
+Esikatselu/tuotanto
+---STRINGEND
+
+---STRING subscription
+Jono
+---STRINGEND
+
+---STRING transporter
+Siirtotyyppi
+---STRINGEND
+
+---STRING never
+Ei koskaan
+---STRINGEND
+

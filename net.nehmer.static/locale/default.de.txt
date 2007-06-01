@@ -19,6 +19,10 @@ Freigeben
 Neue Artikel standardmässig freigegeben
 ---STRINGEND
 
+---STRING simple_name_handling
+URL für neue Artikel automatisch erzeugen
+---STRINGEND
+
 ---STRING autoindex-notes
 Die automatische Index-Seite ersetzt den Aritkel mit dem URL-Namen index und besteht aus einer Liste aller Artikel und Dateianhängen der aktuellen Rubrik.
 ---STRINGEND

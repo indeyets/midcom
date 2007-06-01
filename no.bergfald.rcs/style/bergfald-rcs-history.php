@@ -3,17 +3,16 @@
  * Created on Aug 17, 2005
  *
  */
-$request_data =& $_MIDCOM->get_custom_context_data('request_data');
-$history = $request_data['history'];
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$history = $data['history'];
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-$guid = $request_data['guid'];
-$source = $request_data['source'];
+$guid = $data['guid'];
 
-echo "<h1>{$request_data['view_title']}</h1>\n";
+echo "<h1>{$data['view_title']}</h1>\n";
 
 if (count($history) == 0) 
 {
-   echo $request_data['l10n']->get('No revisions exist.');
+   echo $data['l10n']->get('No revisions exist.');
 } 
 else 
 {
@@ -22,11 +21,11 @@ else
         <table>
             <thead>
                 <tr>
-                    <th><?php echo $request_data['l10n']->get('revision'); ?></th>
-                    <th><?php echo $request_data['l10n']->get('date'); ?></th>
-                    <th><?php echo $request_data['l10n']->get('user'); ?></th>
-                    <th><?php echo $request_data['l10n']->get('lines'); ?></th>
-                    <th><?php echo $request_data['l10n']->get('message'); ?></th>
+                    <th><?php echo $_MIDCOM->i18n->get_string('revision', 'no.bergfald.rcs'); ?></th>
+                    <th><?php echo $_MIDCOM->i18n->get_string('date', 'no.bergfald.rcs'); ?></th>
+                    <th><?php echo $_MIDCOM->i18n->get_string('user', 'no.bergfald.rcs'); ?></th>
+                    <th><?php echo $_MIDCOM->i18n->get_string('lines', 'no.bergfald.rcs'); ?></th>
+                    <th><?php echo $_MIDCOM->i18n->get_string('message', 'no.bergfald.rcs'); ?></th>
                     <th></th>
                 </tr>
             </thead>
@@ -35,15 +34,34 @@ else
             foreach ($history as $rev => $history) 
             {
                 echo "                <tr>\n";
-                echo "                    <td><a href='{$prefix}rcs/preview/$source/$guid/$rev'>{$rev}</a></td>\n";
-                echo "                    <td>".strftime('%x %X', $history['date'])."</td>\n";
+                echo "                    <td><a href='{$prefix}__ais/rcs/preview/$guid/$rev'>{$rev}</a></td>\n";
+                echo "                    <td>".strftime('%x %X Z', $history['date'])."</td>\n";
                 
                 if ($history['user'])
                 {
                     $user = $_MIDCOM->auth->get_user($history['user']);
-                    $person = $user->get_storage();
-                    $user_card = new org_openpsa_contactwidget($person);
-                    echo "                    <td>" . $user_card->show_inline() . "</td>\n";            
+                    if(is_object($user))
+                    {
+                        $person = $user->get_storage();
+                        if (class_exists('org_openpsa_contactwidget'))
+                        {
+                            $user_card = new org_openpsa_contactwidget($person);
+                            $person_label = $user_card->show_inline();
+                        }
+                        else
+                        {
+                            $person_label = $person->name;
+                        }
+                        echo "                    <td>{$person_label}</td>\n";
+                    }
+                    elseif ($history['ip'])
+                    {
+                        echo "                    <td>{$history['ip']}</td>\n";
+                    }
+                    else
+                    {
+                        echo "                    <td></td>\n";            
+                    }
                 }
                 elseif ($history['ip'])
                 {

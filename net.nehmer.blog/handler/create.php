@@ -215,7 +215,10 @@ class net_nehmer_blog_handler_create extends midcom_baseclasses_components_handl
         }
 
         $this->_prepare_request_data();
-        $_MIDCOM->set_26_request_metadata($this->_article->revised, $this->_article->guid);
+        if ( $this->_article != null ) 
+        {
+            $_MIDCOM->set_26_request_metadata($this->_article->revised, $this->_article->guid);
+        }
         $title = sprintf($this->_l10n_midcom->get('create %s'), $this->_schemadb[$this->_schema]->description);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
         $this->_update_breadcrumb_line($handler_id);

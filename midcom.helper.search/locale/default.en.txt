@@ -24,7 +24,7 @@ Search only this part of the site
 ---STRINGEND
 
 ---STRING midcom.helper.search
-MidCOM Indexer Frontend
+Site search
 ---STRINGEND
 
 ---STRING next page
@@ -90,7 +90,7 @@ The search help message to show
 ---STRINGEND
 
 ---STRING showing %s to %s.
-Showing docuemnts %s through %s.
+Showing documents %s - %s.
 ---STRINGEND
 
 ---STRING showing %s.

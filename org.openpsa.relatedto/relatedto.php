@@ -9,7 +9,7 @@
 
 /**
  * Midcom wrapped base class, keep logic here
- * 
+ *
  * @package org.openpsa.relatedto
  */
 class midcom_org_openpsa_relatedto extends __midcom_org_openpsa_relatedto
@@ -18,7 +18,7 @@ class midcom_org_openpsa_relatedto extends __midcom_org_openpsa_relatedto
     {
         return parent::__midcom_org_openpsa_relatedto($id);
     }
-    
+
     function _on_creating()
     {
         if (!$this->status)
@@ -28,7 +28,7 @@ class midcom_org_openpsa_relatedto extends __midcom_org_openpsa_relatedto
         //PONDER: Should we call check_db() here and prevent creation of multiple very similar links ??
         return true;
     }
-    
+
     function _on_loaded()
     {
         if (!$this->status)
@@ -46,8 +46,8 @@ class midcom_org_openpsa_relatedto extends __midcom_org_openpsa_relatedto
         }
         return true;
     }
-    
-    
+
+
     /**
      * Check database for essentially same relatedto object and returns id if found
      */
@@ -70,10 +70,10 @@ class midcom_org_openpsa_relatedto extends __midcom_org_openpsa_relatedto
         {
             return $ret[0]->id;
         }
-        
+
         return false;
     }
-    
+
     /**
      * By default all authenticated users should be able to do
      * whatever they wish with relatedto objects, later we can add
@@ -91,14 +91,14 @@ class midcom_org_openpsa_relatedto extends __midcom_org_openpsa_relatedto
 
 /**
  * Wrap the midcom class to component namespace
- * 
+ *
  * @package org.openpsa.relatedto
  */
 class org_openpsa_relatedto_relatedto extends midcom_org_openpsa_relatedto
 {
     function org_openpsa_relatedto_relatedto($identifier=NULL)
     {
-        return parent::midcom_org_openpsa_relatedto($identifier); 
+        return parent::midcom_org_openpsa_relatedto($identifier);
     }
 }
 ?>

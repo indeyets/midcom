@@ -2,7 +2,7 @@
 /**
  * @package net.nemein.organizations
  * @author The Midgard Project, http://www.midgard-project.org 
- * @version $Id$
+ * @version $Id: interfaces.php 4838 2006-12-28 16:18:40Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
@@ -24,9 +24,109 @@ class net_nemein_organizations_interface extends midcom_baseclasses_components_i
         parent::midcom_baseclasses_components_interface();
         
         $this->_component = 'net.nemein.organizations';
-        $this->_autoload_files = Array('viewer.php', 'admin.php', 'navigation.php');
-        $this->_autoload_libraries = Array('midcom.helper.datamanager');
+        $this->_autoload_files = array
+        (
+            'viewer.php', 
+            'admin.php', 
+            'navigation.php'
+        );
+        $this->_autoload_libraries = array
+        (
+            'midcom.helper.datamanager2'
+        );
     }
+    
+    /**
+     * Initialize
+     *
+     * Initialize the basic data structures needed by the component
+     */
+    function _on_initialize()
+    {
+        $_MIDCOM->componentloader->load('org.openpsa.contacts');
+        
+        return true;
+    }
+    
+    /**
+     * Iterate over all events and create index record using the custom indexer
+     * method.
+     * 
+     * @todo Rewrite to DM1 usage.
+     * @todo Prevent indexing of master-topic Calendars (they're for aggregation only)
+     */
+    function _on_reindex($topic, $config, &$indexer)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $group_guid = $config->get('group');
+        if (!$group_guid)
+        {
+            debug_add('Could not read group GUID from configuration', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        
+        $group = new midcom_db_group($group_guid);
+        if (!$group)
+        {
+            debug_add("Could not instantiate group {$group_guid}", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        
+        $qb = midcom_db_group::new_query_builder();
+        $qb->add_constraint('owner', '=', $group->id);
+        $groups = $qb->execute();
+
+        $schemadb = midcom_helper_datamanager2_schema::load_database($config->get('schemadb'));
+        $datamanager = new midcom_helper_datamanager2_datamanager($schemadb);
+        if (! $datamanager)
+        {
+            debug_add('Failed to create a datamanager instance with this schemapath:' . $config->get('schemadb'),
+                MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        
+        foreach ($groups as $group)
+        {   
+            if (! $datamanager->autoset_storage($group))
+            {
+                debug_add("Warning, failed to initialize datamanager for Group {$group->id}. Skipping it.", MIDCOM_LOG_WARN);
+                continue;
+            }
+
+            net_nemein_organizations_viewer::index($datamanager, $indexer, $topic);
+        }
+
+        debug_pop();
+        return true;
+    }
+
+    /**
+     * Simple lookup method which tries to map the guid to an article of out topic.
+     */
+    function _on_resolve_permalink($topic, $config, $guid)
+    {    
+        $group = new midcom_db_group($guid);
+        if (!$group)
+        {
+            return false;
+        }
+        
+        $parent_group = new midcom_db_group($config->get('group'));
+        if (!$parent_group)
+        {
+            return false;
+        }
+        
+        if ($group->owner != $parent_group->id)
+        {
+            return false;
+        }
+        
+        return net_nemein_organizations_viewer::get_url($group);
+    }    
 }
 
 ?>

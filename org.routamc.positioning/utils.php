@@ -9,7 +9,7 @@
 
 /**
  * Position handling utils, use static methods
- * 
+ *
  * @package org.routamc.positioning
  */
 class org_routamc_positioning_utils extends midcom_baseclasses_components_purecode
@@ -26,68 +26,68 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
         $dist = acos($dist);
         $dist = rad2deg($dist);
         $dist = $dist * 60 * 1.1515;
-        
-        if ($unit == "K") 
+
+        if ($unit == "K")
         {
             $dist *= 1.609344;
-        } 
-        else if ($unit == "N") 
+        }
+        else if ($unit == "N")
         {
             $dist *= 0.8684;
         }
-        
+
         if ($round)
         {
             $dist = round($dist, 1);
         }
         return $dist;
     }
-    
+
    /**
      * Get bearing from position to another
      *
      * Code from http://www.corecoding.com/getfile.php?file=25
-     */    
+     */
     function get_bearing($from, $to)
     {
-        if (round($from['longitude'], 1) == round($to['longitude'], 1)) 
+        if (round($from['longitude'], 1) == round($to['longitude'], 1))
         {
-            if ($from['latitude'] < $to['latitude']) 
+            if ($from['latitude'] < $to['latitude'])
             {
                 $bearing = 0;
-            } 
-            else 
+            }
+            else
             {
                 $bearing = 180;
             }
-        } 
-        else 
+        }
+        else
         {
             $dist = org_routamc_positioning_utils::get_distance($from, $to, 'N');
             $arad = acos((sin(deg2rad($to['latitude'])) - sin(deg2rad($from['latitude'])) * cos(deg2rad($dist / 60))) / (sin(deg2rad($dist / 60)) * cos(deg2rad($from['latitude']))));
             $bearing = $arad * 180 / pi();
-            if (sin(deg2rad($to['longitude'] - $from['longitude'])) < 0) 
+            if (sin(deg2rad($to['longitude'] - $from['longitude'])) < 0)
             {
                 $bearing = 360 - $bearing;
             }
         }
-    
+
         $dirs = array("N","E","S","W");
-    
+
         $rounded = round($bearing / 22.5) % 16;
-        if (($rounded % 4) == 0) 
+        if (($rounded % 4) == 0)
         {
             $dir = $dirs[$rounded / 4];
-        } 
-        else 
+        }
+        else
         {
             $dir = $dirs[2 * floor(((floor($rounded / 4) + 1) % 4) / 2)];
             $dir .= $dirs[1 + 2 * floor($rounded / 8)];
         }
-    
+
         return $dir;
-    }    
-    
+    }
+
     /**
      * Converts DMS ( Degrees / minutes / seconds ) to decimal format longitude / latitude
      *
@@ -96,7 +96,7 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
     function coordinate_to_decimal($deg, $min, $sec)
     {
         return $deg+((($min*60)+($sec))/3600);
-    }    
+    }
 
     /**
      * Converts decimal longitude / latitude to DMS ( Degrees / minutes / seconds )
@@ -122,7 +122,7 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
             'sec' => $sec
         );
         return $coordinate;
-    }      
+    }
 
     /**
      * Pretty-print a coordinate value (latitude or longitude)
@@ -146,14 +146,114 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
      *
      * @return string
      */
-    function pretty_print_coordinates($latitude, $longitude) 
+    function pretty_print_coordinates($latitude, $longitude)
     {
         return sprintf("%s %s, %s %s",
                  ($latitude>0)?"N":"S",  org_routamc_positioning_utils::pretty_print_coordinate($latitude),
                  ($longitude>0)?"E":"W", org_routamc_positioning_utils::pretty_print_coordinate($longitude)
         );
     }
+
+    /**
+     * Pretty print a position mapping either to a city or cleaned coordinates
+     *
+     * @return string
+     */
+    function pretty_print_location($latitude, $longitude)
+    {
+        $coordinates = array
+        (
+            'latitude'  => $latitude,
+            'longitude' => $longitude,
+        );
+        $closest = org_routamc_positioning_utils::get_closest('org_routamc_positioning_city_dba', $coordinates, 1);
+        $city_string = org_routamc_positioning_utils::pretty_print_coordinates($coordinates['latitude'], $coordinates['longitude']);
+        foreach ($closest as $city)
+        {
+            $city_coordinates = array
+            (
+                'latitude'  => $city->latitude,
+                'longitude' => $city->longitude,
+            );
+            $city_distance = round(org_routamc_positioning_utils::get_distance($coordinates, $city_coordinates));
+            if ($city_distance <= 4)
+            {
+                $city_string = "{$city->city}, {$city->country}";
+            }
+            else
+            {
+                $bearing = org_routamc_positioning_utils::get_bearing($city_coordinates, $coordinates);
+                $city_string = sprintf($_MIDCOM->i18n->get_string('%skm %s of %s', 'org.routamc.positioning'), $city_distance, $bearing, "{$city->city}, {$city->country}");
+            }
+        }
+        return $city_string;
+    }
     
+    /**
+     * Pretty print a position mapping Microformatted city name or other label
+     *
+     * @return string
+     */
+    function microformat_location($latitude, $longitude)
+    {
+        $coordinates = array
+        (
+            'latitude'  => $latitude,
+            'longitude' => $longitude,
+        );
+        $closest = org_routamc_positioning_utils::get_closest('org_routamc_positioning_city_dba', $coordinates, 1);
+
+        $latitude_string = org_routamc_positioning_utils::pretty_print_coordinate($latitude);
+        $latitude_string .= ($latitude > 0) ? " N" : " S";
+        $longitude_string = org_routamc_positioning_utils::pretty_print_coordinate($longitude);
+        $longitude_string .= ($longitude > 0) ? " E" : " W";
+                
+        if (count($closest) == 0)
+        {
+            // No city found, generate only geo microformat
+                    
+            $coordinates_string  = "<span class=\"geo\">";
+            $coordinates_string .= "<abbr class=\"latitude\" title=\"{$latitude}\">{$latitude_string}</abbr> ";
+            $coordinates_string .= "<abbr class=\"longitude\" title=\"{$longitude}\">{$longitude_string}</abbr>";
+            $coordinates_string .= "</span>";
+            
+            return $coordinates_string;
+        }
+
+        foreach ($closest as $city)
+        {
+            // City found, combine it and geo
+            
+            $city_string  = "<span class=\"geo adr\">";
+            $city_string .= "<abbr class=\"latitude\" title=\"{$latitude}\">{$latitude_string}</abbr> ";
+            $city_string .= "<abbr class=\"longitude\" title=\"{$longitude}\">{$longitude_string}</abbr> ";
+            
+            $city_coordinates = array
+            (
+                'latitude'  => $city->latitude,
+                'longitude' => $city->longitude,
+            );
+            
+            $city_distance = round(org_routamc_positioning_utils::get_distance($coordinates, $city_coordinates));
+            
+            $city_label  = "<span class=\"locality\">{$city->city}</span>, ";
+            $city_label .= "<span class=\"country-name\">{$city->country}</span>";
+                        
+            if ($city_distance <= 4)
+            {
+                $city_string .= $city_label;
+            }
+            else
+            {
+                $bearing = org_routamc_positioning_utils::get_bearing($city_coordinates, $coordinates);
+                $city_string .= sprintf($_MIDCOM->i18n->get_string('%skm %s of %s', 'org.routamc.positioning'), $city_distance, $bearing, $city_label);
+            }
+            
+            $city_string .= "</span>";
+        }
+        return $city_string;
+    }
+
     /**
      * Figure out which class to use for positioning
      * @param string $class MidCOM class name
@@ -177,7 +277,7 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
         }
         return $classname;
     }
-    
+
     /**
      * Get closest items
      *
@@ -197,43 +297,43 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
         {
             $direct = true;
         }
-        
+
         $qb =  $_MIDCOM->dbfactory->new_query_builder($classname);
-        
+
         if (!$direct)
         {
             // We're querying a regular DBA object through a location object
             $qb->add_constraint('parentclass', '=', $class);
         }
-        
+
         static $rounds = 0;
         $rounds++;
-        
+
         $from['latitude'] = $center['latitude'] + $modifier;
         if ($from['latitude'] > 90)
         {
             $from['latitude'] = 90;
         }
-        
+
         $from['longitude'] = $center['longitude'] - $modifier;
         if ($from['longitude'] < -180)
         {
             $from['longitude'] = -180;
         }
-        
+
         $to['latitude'] = $center['latitude'] - $modifier;
         if ($to['latitude'] < -90)
         {
             $to['latitude'] = -90;
         }
-        
+
         $to['longitude'] = $center['longitude'] + $modifier;
         if ($to['longitude'] > 180)
         {
             $to['longitude'] = 180;
         }
-        
-        
+
+
         $qb->begin_group('AND');
         $qb->add_constraint('latitude', '<', $from['latitude']);
         $qb->add_constraint('latitude', '>', (float) $to['latitude']);
@@ -244,7 +344,7 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
         $qb->end_group();
         $result_count = $qb->count();
         //echo "<br />Round {$rounds}, lat1 {$from['latitude']} lon1 {$from['longitude']}, lat2 {$to['latitude']} lon2 {$to['longitude']}: {$result_count} results\n";
-                
+
         if ($result_count < $limit)
         {
             if (   $from['latitude'] == 90
@@ -261,9 +361,9 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
                         'latitude' => $result->latitude,
                         'longitude' => $result->longitude,
                     );
-                    
+
                     $distance = sprintf("%05d", round(org_routamc_positioning_utils::get_distance($center, $result_coordinates)));
-                    
+
                     if (!$direct)
                     {
                         // Instantiate the real object as the result
@@ -271,18 +371,18 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
                         $result->latitude = $result_coordinates['latitude'];
                         $result->longitude = $result_coordinates['longitude'];
                     }
-                    
+
                     $closest[$distance . $result->guid] = $result;
                 }
                 ksort($closest);
                 reset($closest);
                 return $closest;
             }
-            
+
             $modifier = $modifier * 1.05;
             return org_routamc_positioning_utils::get_closest($class, $center, $limit, $modifier);
         }
-        
+
         $results = $qb->execute();
         $closest = Array();
         foreach ($results as $result)
@@ -292,7 +392,7 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
                 'longitude' => $result->longitude,
             );
             $distance = sprintf("%05d", round(org_routamc_positioning_utils::get_distance($center, $result_coordinates)));
-            
+
             if (!$direct)
             {
                 // Instantiate the real object as the result
@@ -300,17 +400,17 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
                 $result->latitude = $result_coordinates['latitude'];
                 $result->longitude = $result_coordinates['longitude'];
             }
-            
+
             $closest[$distance . $result->guid] = $result;
         }
-        
+
         ksort($closest);
         reset($closest);
         while(count($closest) > $limit)
         {
             array_pop($closest);
         }
-        
+
         return $closest;
     }
 }

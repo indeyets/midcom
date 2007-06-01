@@ -123,7 +123,7 @@ class midcom_services_cache
         require_once($filename);
         if (! class_exists($classname))
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "Tried to load the cache module {$name}, but the class {$classname} was not found in the file {$filename}");
             // This will exit.
         }

@@ -79,12 +79,29 @@ body div.midcom_helper_imagepopup h1
 {
     vertical-align: top;
 }
+
+#files table th {
+	border-bottom:solid 1px #D7DBD1; 
+	padding-bottom:3px;
+}
+#files input {
+	width: 8.5em;
+}
+#files input.file {
+	width: 21em;
+}
+#files table .new {
+	border-top:solid 1px #D7DBD1; 
+	margin-top:7px;
+}
+
 #files table td.filename
 {
-    text-align: center;
+    text-align: left;
     font-size: smaller;
-    width: 140px;
+    width: 50px;
     overflow: hidden;
+    padding-left:10px;
 }
 #files table td.filename a
 {

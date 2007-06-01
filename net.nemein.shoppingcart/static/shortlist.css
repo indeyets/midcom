@@ -1,0 +1,21 @@
+/**
+ * @package net.nemein.shoppingcart 
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @version $Id: navigation.php 4392 2006-10-22 08:39:17Z bergie $
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+@import url('actions.css');
+
+ul.shortlist, ul.shortlist li
+{
+    display: inline;
+    margin: 0px;
+    padding: 0px;
+}
+
+div.net_nemein_shoppingcart_cart_shortlist
+{
+    margin: 0px;
+    padding: 0px;
+}

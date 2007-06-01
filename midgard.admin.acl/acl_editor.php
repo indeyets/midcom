@@ -96,10 +96,31 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
         {
             $this->_privileges[] = $privilege;
         }
+        /*
+        echo "DEBUG: manifest <pre>\n";
+        print_r($current_manifest);
+        echo "</pre>\n";
+        */
+        if (   isset($current_manifest->customdata['midgard.admin.acl'])
+            && isset($current_manifest->customdata['midgard.admin.acl']['extra_privileges']))
+        {
+            foreach ($current_manifest->customdata['midgard.admin.acl']['extra_privileges'] as $privilege)
+            {
+                if (!strpos($privilege, ':'))
+                {
+                    // Only component specified
+                    // TODO: load components manifest and add privileges from there
+                    continue;
+                }
+                $this->_privileges[] = $privilege;
+            }
+        }
         
         // In addition, give component configuration privileges if we're in topic
         if (is_a($this->_object, 'midcom_baseclasses_database_topic'))
         {
+            $this->_privileges[] = 'midcom.admin.folder:topic_management';
+            $this->_privileges[] = 'midcom.admin.folder:template_management';
             $this->_privileges[] = 'midcom:component_config';
         }
     }
@@ -194,7 +215,7 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
         }
 
         // Add the "Add assignees" choices to schema
-        $this->_schemadb['default']->fields['add_assignee']['type_config']['options'] = $additional_assignees;
+        $this->_schemadb['privileges']->fields['add_assignee']['type_config']['options'] = $additional_assignees;
                 
         //$sitegroup = mgd_get_sitegroup($_MIDGARD['sitegroup']);
         
@@ -225,7 +246,7 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
                     $privilege_label = $_MIDCOM->i18n->get_string("privilege {$privilege_components[1]}", $privilege_components[0]);
                 }
                             
-                $this->_schemadb['default']->append_field(str_replace(':', '_', $assignee) . '_' . str_replace(':', '_', str_replace('.', '_', $privilege)), Array
+                $this->_schemadb['privileges']->append_field(str_replace(':', '_', $assignee) . '_' . str_replace(':', '_', str_replace('.', '_', $privilege)), Array
                     (
                         'title'       => $privilege_label,
                         'helptext'    => sprintf($_MIDCOM->i18n->get_string('sets privilege %s', 'midgard.admin.acl'), $privilege),
@@ -244,26 +265,6 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
             }
         }
     }
-    
-   /**
-     * Internal helper, loads the datamanager for the current article. Any error triggers a 500.
-     *
-     * @access private
-     */
-    function _load_datamanager()
-    {
-        // Populate the schema
-        $this->_load_schemadb();
-        
-        $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_schemadb);
-
-        if (   ! $this->_datamanager
-            || ! $this->_datamanager->autoset_storage($this->_object))
-        {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a DM2 instance for object {$this->_object->id}.");
-            // This will exit.
-        }
-    }
 
     /**
      * Internal helper, loads the controller for the current article. Any error triggers a 500.
@@ -276,7 +277,7 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
         $this->_load_schemadb();
         $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
         $this->_controller->schemadb =& $this->_schemadb;
-        $this->_controller->set_storage($this->_object);
+        $this->_controller->set_storage($this->_object, 'privileges');
         if (! $this->_controller->initialize())
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 controller instance for article {$this->_article->id}.");
@@ -293,7 +294,7 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
         }
         $this->_object->require_do('midgard:privileges');
         
-        if (get_class($this->_object) != 'midcom_baseclasses_database_topic')
+        if (!is_a($this->_object, 'midcom_baseclasses_database_topic'))
         {
             $_MIDCOM->bind_view_to_object($this->_object);
         }
@@ -325,13 +326,35 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
                 // This will exit.
         }  
         
-        // $_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('interview %s'), $this->_object->title));
-        
-        return true;
-    }
-    
-    function _show_edit($handler_id, &$data)
-    {
+        $tmp = Array();
+        if (is_a($this->_object, 'midcom_baseclasses_database_topic'))
+        {       
+            $tmp[] = Array
+            (
+                MIDCOM_NAV_URL => "__ais/acl/edit/{$this->_object->guid}.html",
+                MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('topic privileges', 'midgard.admin.acl'),
+            ); 
+            $this->_node_toolbar->hide_item("__ais/acl/edit/{$this->_object->guid}.html");
+        }
+        else
+        {
+            $tmp[] = Array
+            (
+                MIDCOM_NAV_URL => $_MIDCOM->permalinks->create_permalink($this->_object->guid),
+                MIDCOM_NAV_NAME => $this->_resolve_object_title($this->_object),
+            );
+            $tmp[] = Array
+            (
+                MIDCOM_NAV_URL => "__ais/acl/edit/{$this->_object->guid}.html",
+                MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('privileges', 'midgard.admin.acl'),
+            );
+            $this->_view_toolbar->hide_item("__ais/acl/edit/{$this->_object->guid}.html");
+        }
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+
+        // Add the toolbar items, if neccessary
+        $this->_view_toolbar->add_help_item('edit', 'midgard.admin.acl');
+
         // Figure out label for the object's class
         switch (get_class($this->_object))
         {
@@ -341,9 +364,18 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
             default:
                 $type_parts = explode('_', get_class($this->_object));
                 $type = $type_parts[count($type_parts)-1];
-        }    
+        }
+        $data['title'] = sprintf($_MIDCOM->i18n->get_string('permissions for %s %s', 'midgard.admin.acl'), $type, $this->_resolve_object_title($this->_object));
+        $_MIDCOM->set_pagetitle($data['title']);        
+        
+        // $_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('interview %s'), $this->_object->title));
+        
+        return true;
+    }
     
-        echo "<h1>".sprintf($_MIDCOM->i18n->get_string('permissions for %s %s', 'midgard.admin.acl'), $type, $this->_resolve_object_title($this->_object))."</h1>\n";
+    function _show_edit($handler_id, &$data)
+    {    
+        echo "<h1>{$data['title']}</h1>\n";
         $this->_controller->display_form();
     }
 }

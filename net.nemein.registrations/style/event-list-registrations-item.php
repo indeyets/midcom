@@ -3,7 +3,7 @@
 // event, view_url, edit_url, delete_url
 // registrations, registration, registration_url, approved
 
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $registration =& $data['registration'];
 $registrar =& $data['registrar'];
 if ($data['approved'])

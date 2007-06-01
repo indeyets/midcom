@@ -12,7 +12,7 @@ class org_openpsa_mail_backend_mail_sendmail
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add('constructor called');
-        if (!class_exists('Mail')) 
+        if (!class_exists('Mail'))
         {
             debug_add('class "Mail" not found trying to include Mail.php');
             @include_once('Mail.php');
@@ -52,15 +52,18 @@ class org_openpsa_mail_backend_mail_sendmail
 
         $this->_mail = Mail::factory('sendmail', $params);
         $mail =& $this->_mail;
-        $mailRet = $mail->send($mailclass->merge_address_headers(), $mailclass->headers, $mailclass->body);
-        debug_add("mail->send returned\n===\n" . sprint_r($mailRet) . "===\n");
+        $merged = $mailclass->merge_address_headers();
+        debug_add("address_headers_merged:\n===\n{$merged}\n===\nheaders:\n===\n" . sprint_r($mailclass->headers) . "===\n");
+        $mailRet = $mail->send($merged, $mailclass->headers, $mailclass->body);
+        //This gives *huge* log in case of error since the full org_openpsa_mail object is included in the PEAR error as well
+        //debug_add("mail->send returned\n===\n" . sprint_r($mailRet) . "===\n");
         if ($mailRet === true)
-        { 
+        {
             $ret = true;
             $this->error = false;
         }
         else
-        { 
+        {
             $ret = false;
             $this->error = $mailRet;
         }
@@ -91,6 +94,6 @@ class org_openpsa_mail_backend_mail_sendmail
     {
         return class_exists('Mail_sendmail');
     }
-} 
+}
 
 ?>

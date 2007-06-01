@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
-    <type name="org_openpsa_products_product" table="org_openpsa_products_product" parent="org_openpsa_products_product_group" parentfield="group">
+    <type name="org_openpsa_products_product" table="org_openpsa_products_product" parent="org_openpsa_products_product_group" parentfield="productGroup">
         <property name="id" type="integer" primaryfield="id"/>
-        <property name="productGroup" link="org_openpsa_products_product_group:id" reverse="no" type="integer"/>
+        <property name="productGroup" link="org_openpsa_products_product_group:id" reverse="no" type="integer" parentfield="productGroup"/>
 
-        <property name="code" type="text"/>
-        
-        <property name="title" type="text"/>
-        <property name="description" type="text"/>
-        
+        <property name="code" type="string"/>
+
+        <property name="title" multilang="yes" table="org_openpsa_products_product_i" type="string"/>
+        <property name="description" multilang="yes" table="org_openpsa_products_product_i" type="text"/>
+        <property name="lang" multilang="yes" table="org_openpsa_products_product_i" type="integer" />
+        <property name="sid" multilang="yes" table="org_openpsa_products_product_i" type="integer" />
+
         <!-- Pricing information -->
         <property name="price" type="float"/>
-        <property name="unit" type="text"/>
-        <property name="cost" type="text"/>
-        <property name="costType" type="text"/>
-                
+        <property name="unit" type="string"/>
+        <property name="cost" type="string"/>
+        <property name="costType" type="string"/>
+
         <!-- When product is "on market" -->
         <property name="start" type="integer"/>
         <property name="end" type="integer"/>
-        
+
         <property name="owner" link="midgard_person:id" reverse="no" type="integer"/>
         <property name="supplier" link="org_openpsa_organization:id" reverse="no" type="integer"/>
-        
+
         <!-- Delivery type: single or subscription -->
         <property name="delivery" type="integer"/>
 
@@ -31,7 +33,7 @@
         <property name="orgOpenpsaObtype" type="integer"/>
 
         <!-- /Common OpenPSA properties -->
-        
+
         <!-- required metadata -->
         <property name="revised" type="string"/>
         <property name="revision" type="integer"/>
@@ -39,24 +41,84 @@
         <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
         <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
         <!-- /required metadata -->
-    
+
     </type>
 
     <type name="org_openpsa_products_product_group" table="org_openpsa_products_product_group" parent="org_openpsa_products_product_group" parentfield="up">
         <property name="id" type="integer" primaryfield="id"/>
 
-        <property name="up" link="org_openpsa_products_product_group:id" reverse="no" type="integer"/>
+        <property name="up" parentfield="up" link="org_openpsa_products_product_group:id" reverse="no" type="integer"/>
 
-        <property name="code" type="text"/>
-        
-        <property name="title" type="text"/>
+        <property name="code" type="string"/>
+
+        <property name="title" multilang="yes" table="org_openpsa_products_product_group_i" type="string"/>
+        <property name="description" multilang="yes" table="org_openpsa_products_product_group_i" type="text"/>
+        <property name="lang" multilang="yes" table="org_openpsa_products_product_group_i" type="integer" />
+        <property name="sid" multilang="yes" table="org_openpsa_products_product_group_i" type="integer" />
+
+        <!-- Common OpenPSA properties -->
+
+        <!-- Used to a) distinguish OpenPSA objects in QB b) store object "subtype" (project vs task etc) -->
+        <property name="orgOpenpsaObtype" type="integer"/>
+
+        <!-- /Common OpenPSA properties -->
+
+        <!-- required metadata -->
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->
+    </type>
+
+    <type name="org_openpsa_products_product_member" table="org_openpsa_products_product_member" parent="org_openpsa_products_product" parentfield="product">
+        <property name="id" type="integer" primaryfield="id"/>
+
+        <property name="product" link="org_openpsa_products_product:id" reverse="no" type="integer" parentfield="product"/>
+        <property name="componentGroup" link="org_openpsa_products_product_group:id" reverse="no" type="integer"/>
+        <property name="component" link="org_openpsa_products_product:id" reverse="no" type="integer"/>
+
+        <property name="pieces" type="integer"/>
+
         <property name="description" type="text"/>
 
         <!-- Common OpenPSA properties -->
-        
+
         <!-- Used to a) distinguish OpenPSA objects in QB b) store object "subtype" (project vs task etc) -->
         <property name="orgOpenpsaObtype" type="integer"/>
-        
+
+        <!-- /Common OpenPSA properties -->
+
+        <!-- required metadata -->
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->
+    </type>
+
+    <type name="org_openpsa_products_businessarea" table="org_openpsa_products_businessarea" parent="org_openpsa_products_businessarea" parentfield="up">
+        <property name="id" type="integer" primaryfield="id"/>
+
+        <property name="up" link="org_openpsa_products_businessarea:id" reverse="no" parentfield="up" type="integer"/>
+
+        <property name="manager" link="midgard_person:id" reverse="no" type="integer"/>
+
+        <property name="code" type="string"/>
+
+        <property name="title" multilang="yes" table="org_openpsa_products_businessarea_i" type="string"/>
+        <property name="description" multilang="yes" table="org_openpsa_products_businessarea_i" type="text"/>
+        <property name="lang" multilang="yes" table="org_openpsa_products_businessarea_i" type="integer" />
+        <property name="sid" multilang="yes" table="org_openpsa_products_businessarea_i" type="integer" />
+
+
+        <!-- Common OpenPSA properties -->
+
+        <!-- Used to a) distinguish OpenPSA objects in QB b) store object "subtype" (project vs task etc) -->
+        <property name="orgOpenpsaObtype" type="integer"/>
+
         <!-- /Common OpenPSA properties -->
 
         <!-- required metadata -->
@@ -68,21 +130,15 @@
         <!-- /required metadata -->
     </type>
     
-    <type name="org_openpsa_products_product_member" table="org_openpsa_products_product_member" parent="org_openpsa_products_product" parentfield="product">
+    <type name="org_openpsa_products_businessarea_member" table="org_openpsa_products_businessarea_member" parent="org_openpsa_products_businessarea" parentfield="businessarea">
         <property name="id" type="integer" primaryfield="id"/>
 
-        <property name="product" link="org_openpsa_products_product:id" reverse="no" type="integer"/>
-        <property name="component" link="org_openpsa_products_product:id" reverse="no" type="integer"/>
-
-        <property name="pieces" type="integer"/>
-        
-        <property name="description" type="text"/>
-
-        <!-- Common OpenPSA properties -->
+        <property name="businessarea" link="org_openpsa_products_businessarea:id" reverse="no" parentfield="businessarea" type="integer"/>
+        <property name="grp" link="org_openpsa_products_product_group:id" reverse="no" type="integer"/>
         
         <!-- Used to a) distinguish OpenPSA objects in QB b) store object "subtype" (project vs task etc) -->
         <property name="orgOpenpsaObtype" type="integer"/>
-        
+
         <!-- /Common OpenPSA properties -->
 
         <!-- required metadata -->
@@ -92,5 +148,5 @@
         <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
         <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
         <!-- /required metadata -->
-    </type>
+    </type>        
 </Schema>

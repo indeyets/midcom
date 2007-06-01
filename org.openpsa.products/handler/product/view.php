@@ -23,6 +23,14 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
     var $_product = null;
 
     /**
+     * Simple default constructor.
+     */
+    function org_openpsa_products_handler_product_view()
+    {
+        parent::midcom_baseclasses_components_handler();
+    }
+
+    /**
      * Simple helper which references all important members to the request data listing
      * for usage within the style listing.
      */
@@ -30,12 +38,25 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
     {
         $this->_request_data['product'] =& $this->_product;
         $this->_request_data['enable_components'] = $this->_config->get('enable_components');
-        
+
         if ($this->_product->orgOpenpsaObtype == ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_COMPONENT)
         {
             $this->_request_data['enable_components'] = false;
         }
 
+        $this->_view_toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "product/edit/{$this->_product->guid}.html",
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                MIDCOM_TOOLBAR_ENABLED => $this->_product->can_do('midgard:update'),
+            )
+        );
+
+        /*
         if ($this->_request_data['product']->productGroup == 0)
         {
             $this->_view_toolbar->add_item
@@ -53,7 +74,7 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
         else
         {
             $parent = new org_openpsa_products_product_group_dba($this->_request_data['product']->productGroup);
-            
+
             $this->_view_toolbar->add_item
             (
                 array
@@ -65,7 +86,7 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
                     MIDCOM_TOOLBAR_ENABLED => true,
                 )
             );
-        }
+        }*/
 
         /*
         // Populate the toolbar
@@ -107,40 +128,53 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
     }
 
     /**
-     * Simple default constructor.
-     */
-    function org_openpsa_products_handler_product_view()
-    {
-        parent::midcom_baseclasses_components_handler();
-    }
-
-    /**
      * Looks up an product to display.
      */
     function _handler_view($handler_id, $args, &$data)
     {
-        $this->_product = new org_openpsa_products_product_dba($args[0]);
-        if (!$this->_product)
+        $qb = org_openpsa_products_product_dba::new_query_builder();
+        $qb->add_constraint('code', '=', $args[0]);
+        $qb->add_constraint('start', '<=', time());
+        $qb->begin_group('OR');
+            /*
+             * List products that either have no defined end-of-market dates
+             * or are still in market
+             */
+            $qb->add_constraint('end', '=', 0);
+            $qb->add_constraint('end', '>=', time());
+        $qb->end_group();
+        $results = $qb->execute();
+        if (count($results) == 0)
         {
-            return false;
+            if (!mgd_is_guid($args[0]))
+            {
+                return false;
+            }
+
+            $this->_product = new org_openpsa_products_product_dba($args[0]);
+            if (   !$this->_product
+                || !$this->_product->guid)
+            {
+                return false;
+            }
         }
-        
+        else
+        {
+            $this->_product = $results[0];
+        }
+
         $this->_modify_schema();
-        
+
         $this->_request_data['controller'] =& midcom_helper_datamanager2_controller::create('ajax');
         $this->_request_data['controller']->schemadb =& $this->_request_data['schemadb_product'];
         $this->_request_data['controller']->set_storage($this->_product);
         $this->_request_data['controller']->process_ajax();
 
-        $tmp = Array();
-        $tmp[] = Array
-        (
-            MIDCOM_NAV_URL => "product/{$this->_product->guid}.html",
-            MIDCOM_NAV_NAME => $this->_product->title,
-        );
-        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         $this->_prepare_request_data();
-        $this->_view_toolbar->bind_to($this->_product);
+        $_MIDCOM->bind_view_to_object($this->_product, $this->_request_data['controller']->datamanager->schema->name);
+
+        $breadcrumb = org_openpsa_products_viewer::update_breadcrumb_line($this->_product);
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
 
         $_MIDCOM->set_26_request_metadata($this->_product->revised, $this->_product->guid);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_product->title}");
@@ -154,7 +188,8 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
     function _show_view($handler_id, &$data)
     {
         // For AJAX handling it is the controller that renders everything
-        $this->_request_data['view_product'] = $this->_request_data['controller']->get_content_html();
+        $data['view_product'] = $data['controller']->get_content_html();
+        $data['datamanager'] =& $data['controller']->datamanager;
         midcom_show_style('product_view');
     }
 }

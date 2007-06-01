@@ -1,9 +1,64 @@
-body{  margin: 0px;  padding: 0px;}#container{  font-family: Verdana, Arial, Helvetica, sans-serif;  font-size: 0.75em;}
-#container a{  color: #24436e;}
-#container a:link,#container a:visited{  text-decoration: none;}
+body
+{
+  margin: 0px;
+  padding: 0px;
+}
+#container
+{
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 0.75em;
+}
+#container a
+{
+  color: #24436e;
+}
+#container a:link,
+#container a:visited
+{
+  text-decoration: none;
+}
 
-#org_openpsa_toolbar{  background-color: #ededeb;  background-image: url('org_openpsa_toolbar_gradient.gif');  background-repeat: repeat-x;  background-position: bottom left;  font-weight: bold;  font-size: 80%;  line-height: 16px;
-  margin-bottom: 4px;}#org_openpsa_toolbar ul{  margin: 0px;  padding: 0.5em 1em;  list-style-type: none;}#org_openpsa_toolbar ul a{  color: #000000;}#org_openpsa_toolbar ul a img{  border: none;}#org_openpsa_toolbar ul li{  border-left: solid 1px #000000;  display: inline;  padding: 0 0.5em;  white-space: nowrap;}#org_openpsa_toolbar ul li:first-child{  border: none;}
+#org_openpsa_toolbar
+{
+  background-color: #ededeb;
+  background-image: url('org_openpsa_toolbar_gradient.gif');
+  background-repeat: repeat-x;
+  background-position: bottom left;
+  font-weight: bold;
+  font-size: 80%;
+  line-height: 16px;
+  margin-bottom: 4px;
+}
+
+#org_openpsa_toolbar ul
+{
+  margin: 0px;
+  padding: 0.5em 1em;
+  list-style-type: none;
+}
+
+#org_openpsa_toolbar ul a
+{
+  color: #000000;
+}
+
+#org_openpsa_toolbar ul a img
+{
+  border: none;
+}
+
+#org_openpsa_toolbar ul li
+{
+  border-left: solid 1px #000000;
+  display: inline;
+  padding: 0 0.5em;
+  white-space: nowrap;
+}
+
+#org_openpsa_toolbar ul li:first-child
+{
+  border: none;
+}
 
 #org_openpsa_toolbar ul li.disabled
 {
@@ -17,6 +72,9 @@ body{  margin: 0px;  padding: 0px;}#container{  font-family: Verdana, Ari
   padding: 6px;
   padding-left: 2%;
   font-size: 1.4em;
-  background-image: url('nav_toolbar_gradient.gif');  background-repeat: repeat-x;  background-position: top left;  background-color: #3364a3;
-  color: #ffffff;  
+  background-image: url('nav_toolbar_gradient.gif');
+  background-repeat: repeat-x;
+  background-position: top left;
+  background-color: #3364a3;
+  color: #ffffff;
 }

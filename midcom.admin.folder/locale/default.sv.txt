@@ -1,0 +1,137 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING a folder with name %s already exists
+En katalog med namnet "%s" finns redan!
+---STRINGEND
+
+---STRING all descendants will be deleted
+Allting i den här katalogen kommer att ta bort:
+---STRINGEND
+
+---STRING are you sure you want to delete this folder
+Är du säker på att du vill ta bort denna katalog?
+---STRINGEND
+
+---STRING by score
+Manuell ordning
+---STRINGEND
+
+---STRING change component
+Ändra komponent
+---STRINGEND
+
+---STRING create folder under %s
+Skapa underkatalog under "%s"
+---STRINGEND
+
+---STRING create subfolder
+Skapa underkatalog
+---STRINGEND
+
+---STRING default
+Standard
+---STRINGEND
+
+---STRING default order selected
+Standard ordning vald
+---STRINGEND
+
+---STRING default sort order
+Standard sorterings ordning
+---STRINGEND
+
+---STRING delete folder
+Ta bort katalog
+---STRINGEND
+
+---STRING delete folder %s
+Ta bort katalog "%s"
+---STRINGEND
+
+---STRING edit folder
+Ändra katalog
+---STRINGEND
+
+---STRING edit folder %s
+Ändra katalog "%s"
+---STRINGEND
+
+---STRING edit folder metadata
+Ändra katalogens metadata
+---STRINGEND
+
+---STRING edit metadata
+Ändra metadata
+---STRINGEND
+
+---STRING edit metadata of %s
+Ändra metadata på "%s"
+---STRINGEND
+
+---STRING folder type
+Katalogtyp
+---STRINGEND
+
+---STRING folders first
+Katalog först
+---STRINGEND
+
+---STRING inherit style
+Ärv template till underkataloger
+---STRINGEND
+
+---STRING install more %s from %s
+Du kan installera flera <a href="%s">MidCOM komponenter</a> från <a href="%s">PEAR trädet</a>.
+---STRINGEND
+
+---STRING midcom.admin.folder
+Kataloghantering
+---STRINGEND
+
+---STRING nav order
+Ordning på navigations poster
+---STRINGEND
+
+---STRING no sortable elements found
+Inga sorteringsbara element funna
+---STRINGEND
+
+---STRING order navigation
+Ordra navigerings poster
+---STRINGEND
+
+---STRING order navigation in folder %s
+Orda nvaigering under katalog "%s"
+---STRINGEND
+
+---STRING pages first
+Sidor först
+---STRINGEND
+
+---STRING privilege topic_management
+Katalog hantering
+---STRINGEND
+
+---STRING select the ordering method first to sort the pages
+Väld sorteringsmetod för för att sortera sidor
+---STRINGEND
+
+---STRING sort by score
+Sortera efter score
+---STRINGEND
+
+---STRING sort folders
+Sortera kataloger
+---STRINGEND
+
+---STRING sort pages
+Sortera sidor
+---STRINGEND
+
+---STRING style
+Sortera efter template
+---STRINGEND
+ 

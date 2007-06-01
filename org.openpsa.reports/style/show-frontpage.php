@@ -1,16 +1,18 @@
 <?php
-$view_data =& $GLOBALS['midcom']->get_custom_context_data('request_data');
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
 <div class="main">
     <div class="area">
-        <h2><?php echo $view_data['l10n']->get('org.openpsa.reports'); ?></h2>
-        <p>In fact normal user should not reach this page normally, they will be redirected
-        to their default report subpage, this is here for testing for now.</p>
-    </div>
-</div>
-<div class="sidebar">
-    <div class="area">
-        <h2><?php echo $view_data['l10n_midcom']->get("instructions"); ?></h2> 
-        <p><?php echo $view_data['l10n']->get("instructions for frontpage"); ?></p>
+        <h2><?php echo $data['l10n']->get('org.openpsa.reports'); ?></h2>
+    <?php
+        foreach ($data['available_components'] as $component => $loc)
+        {
+            $parts = explode('.', $component);
+            $last = array_pop($parts);
+            $data['report_prefix'] = "{$prefix}{$last}/";
+            echo "            <h3><a href=\"{$data['report_prefix']}\">{$loc}</a></h3>\n";
+            midcom_show_style("show-{$component}-quick_reports");
+        }
+    ?>
     </div>
 </div>

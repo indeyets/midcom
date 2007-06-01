@@ -2,7 +2,7 @@
 // Available request keys:
 // events
 
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 ?>
 
 <li><?echo $data['l10n']->get('no events found'); ?></li>

@@ -773,7 +773,7 @@ class no_bergfald_objectbrowser_object extends midcom_baseclasses_components_han
         if (!$this->_object_create->create())
         {
             debug_add('Could not create object: '.$this->_type_create.mgd_errstr(), MIDCOM_LOG_WARN);
-            debug_add('Could not create object {$this->_object_create->name} , {$this->_object_create->object}: '.mgd_errstr(), MIDCOM_LOG_WARN);
+            debug_add("Could not create object {$this->_object_create->name} , {$this->_object_create->object}: " . mgd_errstr(), MIDCOM_LOG_WARN);
             debug_pop();
             return null;
         }

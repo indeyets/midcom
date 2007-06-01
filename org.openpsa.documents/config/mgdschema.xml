@@ -1,0 +1,65 @@
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+
+    <!-- org.openpsa.documents Objects -->
+    <type name="org_openpsa_document" table="org_openpsa_document" parentfield="topic" parent="midgard_topic">
+        <!-- Copied from NewMidgardArticle -->
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="score" type="integer"/>
+        <property name="approved" type="string"/>
+        <!-- required metadata -->
+        <property name="revised" type="string"/>
+        <property name="revision" type="integer"/>
+        <property name="created" type="string"/>
+        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
+        <!-- /required metadata -->
+        <property name="author" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="approver" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="topic" link="topic" type="integer"/>
+        <!-- /Copied from NewMidgardArticle -->
+
+        <!-- Does this work as expected (like article->up) ?? -->
+        <property name="nextVersion" upfield="nextVersion" type="integer"/>
+        <!-- Note: non-ML title -->
+        <property name="title" type="text"/>
+        <property name="abstract" type="text"/>
+        <property name="keywords" type="text"/>
+        <!-- For status flags like: DRAFT, etc, could even be a bitmask stored as integer -->
+        <!-- status seems to be a reserved word in some layer between DM -> DB -->
+        <property name="docStatus" type="integer"/>
+        <!-- plaintext representation of content, non-ML -->
+        <property name="content" type="text"/>
+
+
+        <!-- Common OpenPSA properties -->
+
+        <!-- Shortcut for various ACL scenarios -->
+        <property name="orgOpenpsaAccesstype" type="integer"/>
+        <!-- Used to a) distinguish OpenPSA objects in QB b) store object "subtype" (project vs task etc) -->
+        <property name="orgOpenpsaObtype" type="integer"/>
+        <!-- will contain bitmask as integer, 00(int=0) not a workgroup, 01(int=1) is workgroup
+             but not active, 11(int=3) active workgroup -->
+        <property name="orgOpenpsaWgtype" type="integer"/>
+        <!-- The "owner" workgroup of this object -->
+        <property name="orgOpenpsaOwnerWg" type="string"/>
+
+        <!-- /Common OpenPSA properties -->
+    </type>
+
+    <!-- I fear this won't work like this, need to talk with Piotras -->
+    <type name="org_openpsa_document_link_organization" table="org_openpsa_document_link" parentfield="">
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="did" link="org_openpsa_document:id"/>
+        <property name="gid" link="midgard_group:id"/>
+
+        <!-- Used to a) distinguish OpenPSA objects in QB b) store object "subtype" (project vs task etc) -->
+        <property name="orgOpenpsaObtype" type="integer"/>
+        <!-- will contain bitmask as integer, 00(int=0) not a workgroup, 01(int=1) is workgroup
+             but not active, 11(int=3) active workgroup -->
+        <property name="orgOpenpsaWgtype" type="integer"/>
+
+        <!-- /Common OpenPSA properties -->
+    </type>
+    <!-- /org.openpsa.documents Objects -->
+
+</Schema>

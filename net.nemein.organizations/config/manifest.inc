@@ -1,20 +1,37 @@
-'name' => 'net.nemein.organizations',
-'purecode' => false,
-'version' => '1.0.0',
-'state'   => 'stable',
-'privileges' =>  Array(),
-'class_definitions' => Array(),
-'package.xml' => Array(
-    'summary' => 'Company displayer',
-    'description' => 'Display and edit companies',
-    'maintainers' => Array(
-        'bergie' => Array(
-            'name' => 'Henri Bergius',
-            'email' => 'henri.bergius@iki.fi',
-            'role' => 'lead',
-        ),
+
+  'name' => 'net.nemein.organizations',
+  'purecode' => false,
+  'version' => '1.0.1beta1',
+  'state' => 'beta',
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+  ),
+  'package.xml' => 
+  array (
+    'summary' => 'Organization listing',
+    'description' => 'Component to display groups',
+    'maintainers' => 
+    array (
+      'bergie' => 
+      array (
+        'name' => 'Henri Bergius',
+        'email' => 'henri.bergius@iki.fi',
+        'role' => 'lead',
+      ),
     ),
-    'dependencies' => Array(
-        'midcom.helper.datamanager' => Array(),
+    'dependencies' => 
+    array (
+      'midcom.helper.datamanager2' => 
+      array (
+      ),
+      'org.openpsa.contacts' => 
+      array (
+      ),
+      'midcom' => 
+      array (
+      ),
     ),
-),
+  ),

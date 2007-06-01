@@ -1,7 +1,7 @@
 <?php
 /**
  * @package org.openpsa.sales
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: sort_helper.php,v 1.2 2006/07/21 11:42:12 rambo Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -155,6 +155,21 @@ function org_openpsa_sales_sort_by_value($a, $b)
     return 0;
 }
 
+function org_openpsa_sales_sort_by_profit($a, $b)
+{
+    $a = (float)$a['profit'];
+    $b = (float)$b['profit'];
+    if ($a > $b)
+    {
+        return 1;
+    }
+    if ($b > $a)
+    {
+        return -1;
+    }
+    return 0;
+}
+
 function org_openpsa_sales_sort_by_weighted_value($a, $b)
 {
     $a = (float)$a['value'] / 100 * $a['probability'];
@@ -176,7 +191,7 @@ function org_openpsa_sales_sort_by_next_action($a, $b)
     $bproject = $GLOBALS['org_openpsa_sales_project_cache'][$GLOBALS['org_openpsa_sales_project_map'][$b['_storage_id']]];
     $a_action = $aproject->next_action;
     $b_action = $bproject->next_action;
-    
+
     $a = (int)$a_action['time'];
     $b = (int)$b_action['time'];
     if ($a == 0)
@@ -204,7 +219,7 @@ function org_openpsa_sales_sort_by_prev_action($a, $b)
     $bproject = $GLOBALS['org_openpsa_sales_project_cache'][$GLOBALS['org_openpsa_sales_project_map'][$b['_storage_id']]];
     $a_action = $aproject->prev_action;
     $b_action = $bproject->prev_action;
-    
+
     $a = (int)$a_action['time'];
     $b = (int)$b_action['time'];
     if ($a == 0)

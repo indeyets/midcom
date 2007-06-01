@@ -22,22 +22,27 @@ class net_nemein_wiki_handler_feed extends midcom_baseclasses_components_handler
     function _handler_rss($handler_id, $args, &$data)
     {   
         $nap = new midcom_helper_nav();
-        $node = $nap->get_node($nap->get_current_node());
+        $data['node'] = $nap->get_node($nap->get_current_node());
         
         $_MIDCOM->cache->content->content_type("text/xml");
         $_MIDCOM->header("Content-type: text/xml; charset=UTF-8");
         
         $_MIDCOM->skip_page_style = true;
         
-        $rss = new UniversalFeedCreator();
-        $rss->title = $node[MIDCOM_NAV_NAME];
-        $rss->link = $node[MIDCOM_NAV_FULLURL];
-        $rss->syndicationURL = "{$node[MIDCOM_NAV_FULLURL]}rss.xml";
-        $rss->cssStyleSheet = false;
+        $data['rss_creator'] = new UniversalFeedCreator();
+        $data['rss_creator']->title = $data['node'][MIDCOM_NAV_NAME];
+        $data['rss_creator']->link = $data['node'][MIDCOM_NAV_FULLURL];
+        $data['rss_creator']->syndicationURL = "{$data['node'][MIDCOM_NAV_FULLURL]}rss.xml";
+        $data['rss_creator']->cssStyleSheet = false;
         
+        return true;
+    }
+    
+    function _show_rss($handler_id, &$data)
+    {
         $qb = net_nemein_wiki_wikipage::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_topic->id);
-        $qb->add_order('revised', 'DESC');
+        $qb->add_order('metadata.revised', 'DESC');
         $qb->set_limit($this->_config->get('rss_count'));
         $result = $qb->execute();        
         
@@ -46,20 +51,15 @@ class net_nemein_wiki_handler_feed extends midcom_baseclasses_components_handler
             $author = new midcom_db_person($wikipage->revisor);
             $item = new FeedItem();
             $item->title = $wikipage->title;
-            $item->link = "{$node[MIDCOM_NAV_FULLURL]}{$wikipage->name}/";
+            $item->link = "{$data['node'][MIDCOM_NAV_FULLURL]}{$wikipage->name}/";
             $item->date = $wikipage->revised;
             $item->author = $author->name;
             $item->description = Markdown(preg_replace_callback($this->_config->get('wikilink_regexp'), array($wikipage, 'replace_wikiwords'), $wikipage->content));
-            $rss->addItem($item);
+            $data['rss_creator']->addItem($item);
         }      
-        $this->_request_data['rss'] = $rss->createFeed('RSS2.0');
-        
-        return true;
-    }
+        $data['rss'] = $data['rss_creator']->createFeed('RSS2.0');
     
-    function _show_rss($handler_id, &$data)
-    {
-        echo $this->_request_data['rss'];
+        echo $data['rss'];
     }    
 }
 ?>

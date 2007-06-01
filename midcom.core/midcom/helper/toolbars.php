@@ -78,7 +78,6 @@ class midcom_helper_toolbars
      */
     function midcom_helper_toolbars($class_style = 'midcom_toolbar', $id_style = null) 
     {
-        require_once MIDCOM_ROOT . '/midcom/admin/content/toolbar.php';
         /*
          *         $GLOBALS['midcom_admin_content_toolbar_main'] = new midcom_admin_content_toolbar(false, 'midcom_toolbar midcom_toolbar_ais_main', null);
         $GLOBALS['midcom_admin_content_toolbar_component'] = new midcom_admin_content_toolbar(true, 'midcom_toolbar', null);
@@ -86,7 +85,10 @@ class midcom_helper_toolbars
          */
                  
         $this->top 					= new midcom_helper_toolbar();
+        /*
+        require_once MIDCOM_ROOT . '/midcom/admin/content/toolbar.php';
         $this->bottom				= new midcom_admin_content_toolbar(true, $class_style, 'midcom_toolbar_bottom');
+        */
         $this->meta                 = new midcom_helper_toolbar(false,$class_style . ' midcom_toolbar_ais_meta', 'midcom_toolbar_meta');
         $this->form                 = new midcom_helper_toolbar();
         $this->aegir_menu           = new midcom_helper_toolbar('midcom_toolbar_aegir_menu','ais_top_menu_list');

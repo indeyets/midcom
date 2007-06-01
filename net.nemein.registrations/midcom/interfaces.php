@@ -28,7 +28,7 @@
  *
  * During each request, these keys will always be available:
  *
- * - midcom_db_event 'root_event': The root event to use.
+ * - net_nemein_calendar_event 'root_event': The root event to use.
  * - array 'schemadb': The schemadb specified in the configuration.
  *
  * Be aware that this data isloaded during the _on_handle callback, which means that you can't make
@@ -79,25 +79,29 @@ class net_nemein_registrations_interface extends midcom_baseclasses_components_i
             'registrar.php',
             'registration.php',
         );
-        $this->_autoload_libraries = Array('midcom.helper.datamanager2');
+        $this->_autoload_libraries = Array
+        (
+            'midcom.helper.datamanager2',
+            'org.openpsa.mail',
+        );
     }
 
     function _on_reindex($topic, $config, &$indexer)
     {
-        $root_event = new midcom_db_event($config->get('root_event'));
+        $root_event = new net_nemein_calendar_event($config->get('root_event'));
         if (! $root_event)
         {
             debug_add("Failed to load root event, aborting.");
             return;
         }
-        $schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
+        $schemadb = midcom_helper_datamanager2_schema::load_database($config->get('schemadb'));
         if (! $schemadb)
         {
             debug_add("Failed to load schemadb, aborting.");
             return;
         }
 
-        $qb = midcom_db_event::new_query_builder();
+        $qb = net_nemein_calendar_event::new_query_builder();
         $qb->add_constraint('up', '=', $root_event->id);
         $result = $qb->execute();
 
@@ -123,7 +127,7 @@ class net_nemein_registrations_interface extends midcom_baseclasses_components_i
 
     function _on_resolve_permalink($topic, $config, $guid)
     {
-        $root_event = new midcom_db_event($config->get('root_event'));
+        $root_event = new net_nemein_calendar_event($config->get('root_event'));
         if (! $root_event)
         {
             return null;
@@ -131,7 +135,7 @@ class net_nemein_registrations_interface extends midcom_baseclasses_components_i
 
         $object = $_MIDCOM->dbfactory->get_object_by_guid($guid);
 
-        if (   is_a($object, 'midcom_db_event')
+        if (   is_a($object, 'net_nemein_calendar_event')
             && $object->up == $root_event->id)
         {
             return "event/view/{$guid}.html";
@@ -139,7 +143,7 @@ class net_nemein_registrations_interface extends midcom_baseclasses_components_i
 
         if (is_a($object, 'midcom_db_eventmember'))
         {
-            $event = new midcom_db_event($object->eid);
+            $event = new net_nemein_calendar_event($object->eid);
             if ($event->up == $root_event->id)
             {
                 return "registration/view/{$guid}.html";

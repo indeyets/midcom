@@ -40,6 +40,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
      * @access private
      */
     var $_guid = null;
+    
     /**
      * RCS backend
      * @access private
@@ -52,84 +53,62 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
      * @access private
      */
     var $_object = null;
-
-    /**
-     * The view toolbar for the current request context. Not available during the can_handle
-     * phase.
-     *
-     * @var midcom_helper_toolbar
-     * @see midcom_services_toolbars
-     */
-    var $_view_toolbar = null;
-
-    /**
-     * The args that has been requested.
-     */
-    var $_args = null;
-    
-    /**
-     * The source component
-     */
-    var $_source = null;
     
     function no_bergfald_rcs_handler() 
     {
         parent::midcom_baseclasses_components_handler();
     }
     
+    /**
+     * Get the localized strings
+     * 
+     * @access private
+     */
     function _l10n_get($string_id)
     {
         return $_MIDCOM->i18n->get_string($string_id, 'no.bergfald.rcs');
     }
     
     /**
+     * Deprecated interface, see get_plugin_handlers()
+     */
+    function get_request_switch()
+    {
+        return no_bergfald_rcs_handler::get_plugin_handlers();
+    }
+    
+    /**
      * Static function, returns the request array for the rcs functions.
-     * Add this to your _on_initialize function in the calling request:
-     * <pre>
-     * $rcs_array =  no_bergfald_rcs::get_request_switch();
-     * $this->request_switch = array_merge($this->request_switch, $rcs_array)
-     * </pre>
-     * 
      * @param none
      * @returns array of request params 
-     * 
      */
-    function get_request_switch() 
+    function get_plugin_handlers() 
     {
         $request_switch = array();
         
         $request_switch[] =  Array
         (
-            'fixed_args' => 'rcs',
             'handler' => array('no_bergfald_rcs_handler','history'),
+            'variable_args' => 1,
+        );
+        
+        $request_switch[] =  Array
+        (
+            'fixed_args' => array('preview'),
+            'handler' => array('no_bergfald_rcs_handler','preview'),
             'variable_args' => 2,
         );
-        
         $request_switch[] =  Array
         (
-            'fixed_args' => array('rcs','preview'),
-            'handler' => array('no_bergfald_rcs_handler','preview'),
-            'variable_args' => 3,
-        );
-        $request_switch[] =  Array
-        (
-            'fixed_args' => array('rcs', 'diff'),
+            'fixed_args' => array('diff'),
             'handler' => array('no_bergfald_rcs_handler','diff'),
-            'variable_args' => 4,
+            'variable_args' => 3,
         );
         $request_switch[] =  Array
         (
-            'fixed_args' => array('rcs', 'restore'),
+            'fixed_args' => array('restore'),
             'handler' => array('no_bergfald_rcs_handler','restore'),
-            'variable_args' => 3,
-        );
-        
-        $_MIDCOM->add_link_head(array
-            (
-                'rel' => 'stylesheet',
-                'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL."/no.bergfald.rcs/rcs.css",
-            )
+            'variable_args' => 2,
         );
         
         return $request_switch;
@@ -144,6 +123,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
     {
         switch ($field)
         {
+            case '_use_rcs':
             case '_topic':
             case 'realm':
             case 'guid':
@@ -175,9 +155,18 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
     function _on_initialize() 
     {
         // It is better to load this libraries here as the component isn't always loaded.
-        $_MIDCOM->load_library('midcom.helper.datamanager', 'midcom.helper.xml');
+        $_MIDCOM->load_library('midcom.helper.datamanager');
+        $_MIDCOM->load_library('midcom.helper.xml');
+
+        $_MIDCOM->add_link_head(array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL."/no.bergfald.rcs/rcs.css",
+            )
+        );
         
-        $this->_view_toolbar =& $_MIDCOM->toolbars->get_node_toolbar();
+        //$this->_view_toolbar =& $_MIDCOM->toolbars->get_view_toolbar();
     }
     
     /**
@@ -187,50 +176,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
      */
     function _do_callbacks() 
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        $this->_source = $this->_args[0];
-        $class = str_replace('.', '_' , $this->_args[0]);
-        $this->_request_data['source'] = $this->_source;
-        
-        if (! $_MIDCOM->componentloader->load_graceful($this->_args[0]) ) {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Could not load component {$this->_args[0]}");
-        }
-
-        if (array_key_exists('aegir_interface', $this->_request_data)) 
-        {
-            /*  */
-            foreach ($this->_request_data['aegir_interface']->registry as $key => $value)
-            {
-                if ($value['component'] == $this->_args[0]) 
-                {
-                    debug_add("Setting active component to $key");
-                    $this->_request_data['aegir_interface']->current = $key;
-                }
-            }
-        
-            if (class_exists($class. '_aegir_navigation')) 
-            {
-                $this->_request_data['aegir_interface']->_navigation_class = $class. '_aegir_navigation';
-            } else {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "could not find navigation class for $class". '_aegir_navigation');
-            }
-        } 
-        else
-        {
-            
-        
-            // FIXME: This part doesn't really work
-            /*
-            $viewer_class = "{$class}_viewer";
-            if (method_exists($viewer_class, 'bergfald_rcs_callback')) 
-            {
-                debug_add("Calling callback function on class $class");
-                $$viewer_class->bergfald_rcs_callback(&$this->_object);
-                //call_user_func($class . '_viewer', &$this->_object);
-            }*/
-        }
-        
-        debug_pop();
+        return false;
     }
     
     /**
@@ -243,26 +189,52 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($this->_guid);
         
         // for now, we only got the aegirrcs handler. Later we might have to reconsider this part.
-        $this->_backend = new no_bergfald_rcs_aegirrcs($this->_guid);
+        $rcs =& $_MIDCOM->get_service('rcs');
+        $this->_backend = $rcs->load_handler($this->_object);
+        
+        if (get_class($this->_object) != 'midcom_baseclasses_database_topic')
+        {
+            $_MIDCOM->bind_view_to_object($this->_object);
+        }
         
         debug_pop();
     }
+    
+    function _prepare_breadcrumb()
+    {
+        $tmp = Array();
+        if (!is_a($this->_object, 'midcom_baseclasses_database_topic'))
+        {
+            $tmp[] = Array
+            (
+                MIDCOM_NAV_URL => $_MIDCOM->permalinks->create_permalink($this->_object->guid),
+                MIDCOM_NAV_NAME => $this->_resolve_object_title(),
+            );
+        }
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "__ais/rcs/{$this->_object->guid}/",
+            MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('show history', 'no.bergfald.rcs'),
+        );
+        return $tmp;
+    }
+    
     /**
      * Call this after loading an object
      */
     function _prepare_toolbars($revision = '', $diff_view = false) 
     {
-        $this->_view_toolbar->add_item
-        (
+        $this->_view_toolbar->add_item(
             array
             (
-                MIDCOM_TOOLBAR_URL => "rcs/{$this->_source}/{$this->_guid}/",
-                MIDCOM_TOOLBAR_LABEL => $this->_l10n_get('show history'),
+                MIDCOM_TOOLBAR_URL => $_MIDCOM->permalinks->create_permalink($this->_guid),
+                MIDCOM_TOOLBAR_LABEL => sprintf($_MIDCOM->i18n->get_string('back to %s', 'no.bergfald.rcs'), $this->_resolve_object_title()),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_up.png',
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
         );
+    
         if ($revision == '') 
         {
             return;
@@ -272,25 +244,35 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         $before2 = $this->_backend->get_prev_version($before);
         $after  = $this->_backend->get_next_version($revision);
         
-        if (   $before != '' 
-            && $before2 != '') 
+        $show_previous = false;
+        if ($diff_view)
         {
-            if ($diff_view)
+            if (   $before != '' 
+                && $before2 != '') 
             {
                 // When browsing diffs we want to display buttons to previous instead of current
                 $first = $before2;
                 $second = $before;
+                $show_previous = true;
             }
-            else
+        }
+        else
+        {
+            if ($before != '')
             {
                 $first = $before;
                 $second = $revision;
+                $show_previous = true;
             }
-            
+        }
+        
+        if ($show_previous)
+        {
+        
             $this->_view_toolbar->add_item(
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "rcs/diff/{$this->_source}/{$this->_guid}/{$first}/{$second}.html",
+                    MIDCOM_TOOLBAR_URL => "__ais/rcs/diff/{$this->_guid}/{$first}/{$second}.html",
                     MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_get('view %s differences with previous (%s)'), $second, $first),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_left.png',
@@ -302,7 +284,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         $this->_view_toolbar->add_item(
             array
             (
-                MIDCOM_TOOLBAR_URL => "rcs/preview/{$this->_source}/{$this->_guid}/{$revision}.html",
+                MIDCOM_TOOLBAR_URL => "__ais/rcs/preview/{$this->_guid}/{$revision}.html",
                 MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_get('view this revision (%s)'), $revision),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/search.png',
@@ -316,7 +298,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
             $this->_view_toolbar->add_item(
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "rcs/restore/{$this->_source}/{$this->_guid}/{$revision}.html",
+                    MIDCOM_TOOLBAR_URL => "__ais/rcs/restore/{$this->_guid}/{$revision}.html",
                     MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_get('restore this revision (%s)'), $revision),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_task-recurring.png',
@@ -327,7 +309,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
             $this->_view_toolbar->add_item(
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "rcs/diff/{$this->_source}/{$this->_guid}/{$revision}/{$after}.html",
+                    MIDCOM_TOOLBAR_URL => "__ais/rcs/diff/{$this->_guid}/{$revision}/{$after}.html",
                     MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_get('view %s differences with next (%s)'), $revision, $after),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_right.png',
@@ -344,19 +326,21 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
     function _handler_history($handler_id, $args, &$data) 
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $this->_args = $args;   
         $this->_do_callbacks();
-        $this->_guid = $args[1];
-        $this->_prepare_toolbars();
+        $this->_guid = $args[0];
         $this->_load_object();
+        $this->_prepare_toolbars();
         
         // Disable the "Show history" button when we're at its view
-        $this->_view_toolbar->disable_item("rcs/{$this->_source}/{$this->_guid}/");
+        $this->_view_toolbar->hide_item("__ais/rcs/{$this->_guid}/");
         
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('no.bergfald.rcs');
         
-        $this->_request_data['view_title'] = sprintf($this->_l10n_get('revision history of %s'), $this->_resolve_object_title());
+        $tmp = $this->_prepare_breadcrumb();
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        
+        $this->_request_data['view_title'] = sprintf($_MIDCOM->i18n->get_string('revision history of %s', 'no.bergfald.rcs'), $this->_resolve_object_title());
         $_MIDCOM->set_pagetitle($this->_request_data['view_title']);
         
         debug_pop();
@@ -374,11 +358,11 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
     {
         $vars = get_object_vars($this->_object);
         
-        if ( array_key_exists('title', $vars) ) 
+        if ( array_key_exists('title', $vars)) 
         {
             return $this->_object->title;
         } 
-        elseif ( array_key_exists('name', $vars) ) 
+        elseif ( array_key_exists('name', $vars)) 
         {
             return $this->_object->name;
         }
@@ -394,18 +378,17 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
     function _handler_diff($handler_id, $args, &$data) 
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $this->_guid = $args[1];
-        $this->_args = $args;
+        $this->_guid = $args[0];
         $this->_do_callbacks(); 
         $this->_load_object();
         
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('no.bergfald.rcs');        
         
-        if (   !$this->_backend->version_exists($args[2])
-            || !$this->_backend->version_exists($args[3]) ) 
+        if (   !$this->_backend->version_exists($args[1])
+            || !$this->_backend->version_exists($args[2]) ) 
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "One of the revisions {$args[2]} or {$args[3]} does not exist.");
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "One of the revisions {$args[1]} or {$args[2]} does not exist.");
         }
         
         if (!class_exists('Text_Diff')) 
@@ -419,7 +402,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
             {
                 debug_add("Failed to load tet_diff libraries! These are needed for this handler. " , MIDCOM_LOG_CRIT);
                 $this->_request_data['libs_ok'] = false;
-                $this->_prepare_toolbars($args[3]);
+                $this->_prepare_toolbars($args[2]);
                 debug_pop();
                 return true;
             } 
@@ -433,15 +416,30 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
                 $this->_request_data['libs_ok'] = true;
         }    
         
-        $this->_prepare_toolbars($args[3], true);        
-        $this->_request_data['diff'] = $this->_backend->get_diff($args[2], $args[3]);
+        $this->_prepare_toolbars($args[2], true);        
+        $this->_request_data['diff'] = $this->_backend->get_diff($args[1], $args[2]);
 
-        $this->_request_data['comment'] = $this->_backend->get_comment($args[3]);
+        $this->_request_data['comment'] = $this->_backend->get_comment($args[2]);
                 
-        $this->_request_data['latest_revision'] = $args[3]; 
+        $this->_request_data['previous_revision'] = $args[1]; 
+        $this->_request_data['latest_revision'] = $args[2]; 
 
-        $this->_request_data['view_title'] = sprintf($this->_l10n_get('changes done in revision %s to %s'), $this->_request_data['latest_revision'], $this->_resolve_object_title());
+        $this->_request_data['view_title'] = sprintf($_MIDCOM->i18n->get_string('changes done in revision %s to %s', 'no.bergfald.rcs'), $this->_request_data['latest_revision'], $this->_resolve_object_title());
         $_MIDCOM->set_pagetitle($this->_request_data['view_title']);
+        
+        $tmp = $this->_prepare_breadcrumb();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "__ais/rcs/preview/{$this->_guid}/{$data['latest_revision']}.html",
+            MIDCOM_NAV_NAME => sprintf($_MIDCOM->i18n->get_string('version %s', 'no.bergfald.rcs'), $this->_request_data['latest_revision']),
+        );
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "__ais/rcs/diff/{$this->_guid}/{$data['previous_revision']}/{$data['latest_revision']}.html",
+            MIDCOM_NAV_NAME => sprintf($_MIDCOM->i18n->get_string('changes from version %s', 'no.bergfald.rcs'), $this->_request_data['previous_revision']),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);   
+        
         
         debug_pop();
         return true;
@@ -452,66 +450,44 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         if (!$this->_request_data['libs_ok']) 
         {
             $this->_request_data['error'] = "You are missing the PEAR library Text_Diff that is needed to show diffs.";
-            include ('style/bergfald-rcs-error.php');
+            midcom_show_style('bergfald-rcs-error');
             return;
         }
         midcom_show_style('bergfald-rcs-diff');
     }
     
     /**
-     * Restore to diff
-     */
-    function _handler_restore($handler_id, $args, &$data) 
-    {
-        $this->_guid = $args[1];
-        $this->_args = $args;
-        $this->_do_callbacks();
-        $this->_load_object();
-        
-        $this->_object->require_do('midgard:update');
-        // TODO: set another privilege for restoring?
-        
-        // Ensure we get the correct styles
-        $_MIDCOM->style->prepend_component_styledir('no.bergfald.rcs');        
-        
-        $this->_prepare_toolbars($args[2]);       
-        
-        if (   $this->_backend->version_exists($args[2]) 
-            && $this->_backend->restore_to_revision($args[2])) 
-        {
-            $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('no.bergfald.rcs', 'no.bergfald.rcs'), sprintf($_MIDCOM->i18n->get_string('restore to version %s successful', 'no.bergfald.rcs'), $args[2]), 'ok');
-            $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($this->_object->guid));
-        } 
-        else 
-        {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, sprintf($_MIDCOM->i18n->get_string('restore to version %s failed, reason %s', 'no.bergfald.rcs'), $args[2], $this->_backend->get_error()));
-        }
-    }
-    
-    /**
-     * View preevies
+     * View previews
      */
     function _handler_preview($handler_id, $args, &$data) 
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         /*1. hente ut ddiff */
-        $this->_guid = $args[1];
+        $this->_guid = $args[0];
         $this->_args = $args;
         $this->_do_callbacks();
         
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('no.bergfald.rcs');
         
-        $revision = $args[2];
+        $revision = $args[1];
         
         $this->_load_object();
         $this->_prepare_toolbars($revision);
         $this->_request_data['preview'] = $this->_backend->get_revision($revision);
         
-        $this->_view_toolbar->disable_item("rcs/preview/{$this->_source}/{$this->_guid}/{$revision}.html");
+        $this->_view_toolbar->hide_item("__ais/rcs/preview/{$this->_guid}/{$revision}.html");
         
-        $this->_request_data['view_title'] = sprintf($this->_l10n_get('viewing version %s of %s'), $revision, $this->_resolve_object_title());
-        $_MIDCOM->set_pagetitle($this->_request_data['view_title']);        
+        $this->_request_data['view_title'] = sprintf($_MIDCOM->i18n->get_string('viewing version %s of %s', 'no.bergfald.rcs'), $revision, $this->_resolve_object_title());
+        $_MIDCOM->set_pagetitle($this->_request_data['view_title']);     
+        
+        $tmp = $this->_prepare_breadcrumb();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "__ais/rcs/preview/{$this->_guid}/{$revision}.html",
+            MIDCOM_NAV_NAME => sprintf($_MIDCOM->i18n->get_string('version %s', 'no.bergfald.rcs'), $revision),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);   
         
         debug_pop();
         return true;
@@ -522,7 +498,35 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         midcom_show_style('bergfald-rcs-preview');
     }
 
-    
+    /**
+     * Restore to diff
+     */
+    function _handler_restore($handler_id, $args, &$data) 
+    {
+        $this->_guid = $args[0];
+        $this->_args = $args;
+        $this->_do_callbacks();
+        $this->_load_object();
+        
+        $this->_object->require_do('midgard:update');
+        // TODO: set another privilege for restoring?
+        
+        // Ensure we get the correct styles
+        $_MIDCOM->style->prepend_component_styledir('no.bergfald.rcs');        
+        
+        $this->_prepare_toolbars($args[1]);       
+        
+        if (   $this->_backend->version_exists($args[1]) 
+            && $this->_backend->restore_to_revision($args[1])) 
+        {
+            $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('no.bergfald.rcs', 'no.bergfald.rcs'), sprintf($_MIDCOM->i18n->get_string('restore to version %s successful', 'no.bergfald.rcs'), $args[1]), 'ok');
+            $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($this->_object->guid));
+        } 
+        else 
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, sprintf($_MIDCOM->i18n->get_string('restore to version %s failed, reason %s', 'no.bergfald.rcs'), $args[1], $this->_backend->get_error()));
+        }
+    } 
     
 }
 ?>

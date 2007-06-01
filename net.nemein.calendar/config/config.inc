@@ -6,6 +6,8 @@
 'type_filter_upcoming' => null,   // What type (int) to filter welcome page items with
 'list_from_master'     => false,  // Whether to list events from subdirectories of the master event. Disables creation
 'enable_filters'       => false,  // Whether to enable GET filters
-'show_events_locally'  => true,  // Whether to show events locally instead of via permalink
+'show_events_locally'  => true,   // Whether to show events locally instead of via permalink
+'list_started'         => true,   // Whether to list events that have already started
 
 'enable_ajax_editing'  => true,
+'javascript_hover'     => true,

@@ -1,0 +1,133 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING %d photos tagged with %s
+<span>%d photos tagged with </span>%s
+---STRINGEND
+
+---STRING all photos
+All photos
+---STRINGEND
+
+---STRING all photos rated as %s
+All photos rated as %s
+---STRINGEND
+
+---STRING all tags
+All tags
+---STRINGEND
+
+---STRING delete photo
+Delete photo
+---STRINGEND
+
+---STRING edit photo
+Edit photo
+---STRINGEND
+
+---STRING if checked only logged in users can see this photo
+If checked only logged in users can see this photo
+---STRINGEND
+
+---STRING if checked only you can see this photo
+If checked only you can see this photo
+---STRINGEND
+
+---STRING my photos
+My photos
+---STRINGEND
+
+---STRING my tags
+My tags
+---STRINGEND
+
+---STRING not public
+Not public
+---STRINGEND
+
+---STRING org.routamc.photostream
+Photo management
+---STRINGEND
+
+---STRING photo
+Photo
+---STRINGEND
+
+---STRING photo tags
+Photo tags
+---STRINGEND
+
+---STRING photo tags of %s
+Photo tags of %s
+---STRINGEND
+
+---STRING photographer
+Photographer
+---STRINGEND
+
+---STRING photos in batch %s
+Photos in batch %s
+---STRINGEND
+
+---STRING photos of %s
+Photos of %s
+---STRINGEND
+
+---STRING photos of %s rated as %s
+Photos of %s rated as %s
+---STRINGEND
+
+---STRING photos of %s tagged with %s
+Photos of %s tagged with "%s"
+---STRINGEND
+
+---STRING photos tagged with %s
+Photos tagged with "%s"
+---STRINGEND
+
+---STRING private
+Photo is private
+---STRINGEND
+
+---STRING rating
+Rating
+---STRINGEND
+
+---STRING recreate derived images
+Recreate derived images
+---STRINGEND
+
+---STRING start
+Start
+---STRINGEND
+
+---STRING taken
+Photo taken on
+---STRINGEND
+
+---STRING taken on %s
+Taken on %s
+---STRINGEND
+
+---STRING taken on %s in %s
+Taken on %s in %s
+---STRINGEND
+
+---STRING this operation will take some time
+This operation will take some time.
+---STRINGEND
+
+---STRING upload photos
+Upload photos
+---STRINGEND
+
+---STRING upload size limit
+Size limit for uploaded files
+---STRINGEND
+
+---STRING upload to gallery
+Upload to gallery
+---STRINGEND
+

@@ -119,7 +119,14 @@ class midcom_helper_datamanager2_type_date extends midcom_helper_datamanager2_ty
                 }
 
             case 'UNIXTIME':
-                return $this->value->getTime();
+                if ($this->is_empty())
+                {
+                    return 0;
+                }
+                else
+                {            
+                    return $this->value->getTime();
+                }
 
             default:
                 $_MIDCOM->generate_error("Invalid storage type for the Datamanger Date Type: {$this->storage_type}");
@@ -157,7 +164,16 @@ class midcom_helper_datamanager2_type_date extends midcom_helper_datamanager2_ty
             }
             else
             {
-                $format = $this->_l10n_midcom->get('short date') . ' %T';
+                // FIXME: This is not exactly an elegant way to do this
+                if (   array_key_exists('show_time', $this->storage->_schema->fields[$this->name]['widget_config'])
+                    && !$this->storage->_schema->fields[$this->name]['widget_config']['show_time'])
+                {
+                    $format = $this->_l10n_midcom->get('short date');
+                }
+                else
+                {
+                    $format = $this->_l10n_midcom->get('short date') . ' %T';
+                }
             }
             return htmlspecialchars($this->value->format($format));
         }

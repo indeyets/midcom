@@ -3,7 +3,7 @@
 // of net_nehmer_account_handler_publish
 //
 // Bind the view data, remember the reference assignment:
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 
 // Add a few keys to the request context for images in use:
 $data['view_imgurl_always'] = MIDCOM_STATIC_URL . '/stock-icons/16x16/stock_mark.png';

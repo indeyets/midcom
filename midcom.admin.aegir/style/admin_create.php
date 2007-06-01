@@ -1,24 +1,24 @@
 <?php
 // Bind the view data, remember the reference assignment:
-$request_data =& $_MIDCOM->get_custom_context_data('request_data');
-$data = $request_data['datamanager']->get_array();
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$dn_data= $data['datamanager']->get_array();
 
-if ($request_data['object_type'] == 'article' ) {
-    $title = $request_data['l10n']->get('create article') ;
-} elseif ($request_data['object_type'] == 'topic') {
-    $title = $request_data['l10n']->get('create topic') ;
-} elseif (array_key_exists('title', $request_data)) {
-    $title = $request_data['title'];
+if ($data['object_type'] == 'article' ) {
+    $title = $data['l10n']->get('create article') ;
+} elseif ($data['object_type'] == 'topic') {
+    $title = $data['l10n']->get('create topic') ;
+} elseif (array_key_exists('title', $data)) {
+    $title = $data['title'];
 
 } else{
     $title = "";
 }
 
-$fieldgroups = $request_data['datamanager']->get_fieldgroups();
+$fieldgroups = $data['datamanager']->get_fieldgroups();
 $current_fieldgroup = $fieldgroups[0];
 //$toolbar = new midcom_helper_toolbar('midcom_toolbar', 'midcom_toolbar');
 foreach ($fieldgroups as $key => $fieldgroup) {
-    $request_data['toolbars']->form->add_item(
+    $data['toolbars']->form->add_item(
                     Array 
                     (
                         MIDCOM_TOOLBAR_URL => "#", 
@@ -55,9 +55,9 @@ foreach ($fieldgroups as $key => $fieldgroup) {
 <script language="javascript" type="text/javascript">
 var currently_open = 'midcom_datamanager_fieldgroup_<? echo $current_fieldgroup;  ?>';
 </script>
-<?php echo $request_data['toolbars']->form->render(); ?>
+<?php echo $data['toolbars']->form->render(); ?>
 
 <h2><?php echo $title ?></h2>
 
 
-<?php $request_data['datamanager']->display_form (); ?>
+<?php $data['datamanager']->display_form (); ?>

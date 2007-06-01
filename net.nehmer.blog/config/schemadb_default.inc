@@ -20,7 +20,7 @@
             'required' => true,
             'type' => 'text',
             'widget' => 'text',
-        ),      
+        ),
         'abstract' => Array
         (
             // COMPONENT-REQUIRED
@@ -60,6 +60,36 @@
                 'height' => 3,
             ),        
         ),  
+    	'related' => array
+        (
+            'title' => 'Related stories',
+            'storage' => 'extra3',
+            'type' => 'select',
+            'type_config' => array
+            (
+                 'require_corresponding_option' => false,
+                 'options' => array(),
+            ),
+            'widget' => 'universalchooser',
+            'widget_config' => array
+            (
+                'class'       => 'midcom_db_article',
+                'component'   => 'net.nehmer.static',
+                'titlefield'  => 'title',
+                'idfield'     => 'guid',
+                'constraints' => array
+                (
+                ),
+                'searchfields'  => array
+                (
+                    'title',
+                ),
+                'orders'        => array
+                (
+                    array('title'  => 'ASC'), 
+                ),
+            ),            
+        ),
     )
-), // default
+),
 

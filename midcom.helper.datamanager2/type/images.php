@@ -8,7 +8,7 @@
  */
 
 /** @ignore */
-require_once('blobs.php');
+require_once('image.php');
 
 /**
  * Datamanger 2 Images type.
@@ -98,36 +98,8 @@ require_once('blobs.php');
  *
  * @package midcom.helper.datamanager2
  */
-class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_type_blobs
+class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_type_image
 {
-    /**
-     * Set this to true to keep the original file available as "original".
-     *
-     * @var bool
-     */
-    var $keep_original = false;
-
-    /**
-     * The filter chain to use to create the "main" image.
-     *
-     * @var string
-     * @see midcom_helper_imagefilter
-     */
-    var $filter_chain = null;
-
-    /**
-     * The list of derived images to construct.
-     *
-     * @var array
-     */
-    var $derived_images = null;
-
-    /**
-     * The maximum witdh/height (in this order) of the thumbnail to be auto-created.
-     *
-     * @var array.
-     */
-    var $auto_thumbnail = null;
 
     /**
      * The list of images. This is essentially a reordered version of the
@@ -165,93 +137,6 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
      */
     var $_attachment_map = Array();
 
-    /**
-     * The image title entered by the user. Stored in each attachments
-     * title field.
-     *
-     * Used during processing.
-     *
-     * @var string
-     * @access private
-     */
-    var $_title = null;
-
-    /**
-     * The original filename of the uploaded file.
-     *
-     * Used during processing.
-     *
-     * @access private
-     * @var string
-     */
-    var $_filename = null;
-
-    /**
-     * The name of the original temporary uploaded file (which will already be converted
-     * to a Web-Aware format).
-     *
-     * Used during processing.
-     *
-     * @access private
-     * @var string
-     */
-    var $_original_tmpname = null;
-
-    /**
-     * The current working file.
-     *
-     * Used during processing.
-     *
-     * @access private
-     * @var string
-     */
-    var $_current_tmpname = null;
-
-    /**
-     * The image-filter instance to use.
-     *
-     * Used during processing.
-     *
-     * @access private
-     * @var midcom_helper_imagefilter
-     */
-    var $_filter = null;
-
-    /**
-     * The target mimetype used after automatic conversion for all
-     * generated images.
-     *
-     * Used during processing.
-     *
-     * @access private
-     * @var string
-     */
-    var $_target_mimetype = null;
-
-    /**
-     * The original mimetype of the uploaded file.
-     *
-     * Used during processing.
-     *
-     * @access private
-     * @var string
-     */
-    var $_original_mimetype = null;
-
-    /**
-     * This list is used when updating an existing image. It keeps track
-     * of which attachments have been updated already when replacing an existing
-     * image. All attachments belonging to the image being updated still listed
-     * here after an set_image call will be deleted. This keeps attachment GUIDs
-     * stable during updates but also adds resilence against against changed type
-     * configuration.
-     *
-     * Used during processing.
-     *
-     * @access private
-     * @var Array
-     */
-    var $_pending_attachments = null;
 
     /**
      * The current image identifier to use when operating on images.
@@ -262,17 +147,14 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
     var $_identifier = null;
 
     /**
-     * Internal helper function, determines the mime-type of the specified file.
+     * The current image title to use when operating on images.
      *
-     * The call uses the "file" utility which must be present for this type to work.
-     *
-     * @param string $filename The file to scan
-     * @return string The autodetected mime-type
+     * @access private
+     * @var string
      */
-    function _get_mimetype($filename)
-    {
-        return exec("{$GLOBALS['midcom_config']['utility_file']} -ib {$filename} 2>/dev/null");
-    }
+    var $_title = null;
+
+    var $output_mode = 'html';
 
     /**
      * Adds a new image to the list.
@@ -297,7 +179,7 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
         {
             $identifier = md5(time() . $filename . $tmpname);
         }
-        if (! $this->_set_image($identifier, $filename, $tmpname, $title, $autodelete))
+        if (! $this->set_image($identifier, $filename, $tmpname, $title, $autodelete))
         {
             return false;
         }
@@ -323,7 +205,7 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
             return false;
         }
 
-        return $this->_set_image($identifier, $filename, $tmpname, $title, $autodelete);
+        return $this->set_image($identifier, $filename, $tmpname, $title, $autodelete);
     }
 
     /**
@@ -339,74 +221,31 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
      * @return bool Indicating success.
      * @access protected
      */
-    function _set_image($identifier, $filename, $tmpname, $title, $autodelete)
+    function set_image($identifier, $filename, $tmpname, $title, $autodelete)
     {
-        // First, ensure that the imagefilter helper is available.
-        require_once(MIDCOM_ROOT . '/midcom/helper/imagefilter.php');
-
-        // Prepare Internal Members
+        if (empty($identifier))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("identifier must not be empty", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
         $this->_identifier = $identifier;
         $this->_title = $title;
-        $this->_filename = $filename;
-        $this->_original_tmpname = $tmpname;
-        $this->_original_mimetype = $this->_get_mimetype($this->_original_tmpname);
-        $this->_filter = new midcom_helper_imagefilter();
         if (array_key_exists($this->_identifier, $this->images))
         {
-            $this->_pending_attachments = $this->images[$this->_identifier];
+            // PHP5-TODO: Must be copy-by-value
+            $force_pending_attachments = $this->images[$this->_identifier];
         }
         else
         {
-            $this->_pending_attachments = Array();
+            $force_pending_attachments = Array();
         }
-
-        // 1st step: original image storage and auto-conversion..
-        if (   ! $this->_save_original()
-            || ! $this->_filter->set_file($this->_original_tmpname)
-            || ! $this->_auto_convert_to_web_type())
+        if (!$this->_set_image($filename, $tmpname, $title, $autodelete, $force_pending_attachments))
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Failed to process the conversion batch 1 (save original & web conversion) for the uploaded file {$filename} in {$tmpname}, aborting type processing.",
-                MIDCOM_LOG_ERROR);
-            debug_pop();
-
-            // Clean up
-            $this->delete_image($this->_identifier);
-
             return false;
         }
-
-        // Prepare all other images.
-        if (   ! $this->_save_main_image()
-            || ! $this->_add_thumbnail_to_derived_images()
-            || ! $this->_save_derived_images())
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Failed to process the conversion batch 2 (derived images) for the uploaded file {$filename} in {$tmpname}, aborting type processing.",
-                MIDCOM_LOG_ERROR);
-            debug_pop();
-
-            // Clean up
-            $this->delete_image($this->_identifier);
-
-            return false;
-        }
-
-        // Clear up all attachments no longer in use:
-        foreach ($this->_pending_attachments as $name => $attachment_info)
-        {
-            $blob_identifier = "{$this->identifier}{$name}";
-            unset($this->_attachment_map[$blob_identifier]);
-            $this->delete_attachment($blob_identifier);
-        }
-
-        if ($autodelete)
-        {
-            unlink ($this->_original_tmpname);
-        }
-
         $this->_save_image_listing();
-
         return true;
     }
 
@@ -457,247 +296,6 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
     }
 
     /**
-     * Small internal helper function. It adds a derived 'thumbnail' image to the list
-     * used if and only if the auto_thumbnail option is set. Any existing thumbnail
-     * declaration will be silently overwritten!
-     *
-     * @return bool Indicating success.
-     */
-    function _add_thumbnail_to_derived_images()
-    {
-        if ($this->auto_thumbnail)
-        {
-            if (! $this->derived_images)
-            {
-                $this->derived_images = Array();
-            }
-            $this->derived_images['thumbnail'] = "resize({$this->auto_thumbnail[0]},{$this->auto_thumbnail[1]})";
-        }
-
-        return true;
-    }
-
-    /**
-     * This loops over the defined derived images (if any) and constructs
-     * each of them in turn.
-     *
-     * @return bool Indicating success.
-     */
-    function _save_derived_images()
-    {
-        if ($this->derived_images)
-        {
-            foreach ($this->derived_images as $name => $filter_chain)
-            {
-                if (! $this->_create_working_copy())
-                {
-                    return false;
-                }
-
-                $result = $this->_save_derived_image($name);
-                @unlink($this->_current_tmpname);
-                if (! $result)
-                {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
-     * This is the actual code which filters and saves a derived image.
-     *
-     * @param string $name The derived image to construct.
-     * @return bool Indicating success
-     */
-    function _save_derived_image($name)
-    {
-        if (! $this->_filter->process_chain($this->derived_images[$name]))
-        {
-            return false;
-        }
-
-        $blob_identifier = "{$this->_identifier}{$name}";
-
-        if (array_key_exists($name, $this->_pending_attachments))
-        {
-            unset($this->_pending_attachments[$name]);
-            return $this->update_attachment($blob_identifier,
-                                            "{$name}_{$this->_filename}",
-                                            $this->_title,
-                                            $this->_get_mimetype($this->_current_tmpname),
-                                            $this->_current_tmpname,
-                                            false);
-        }
-        else
-        {
-            $this->_attachment_map[$blob_identifier] = Array($this->_identifier, $name);
-            return $this->add_attachment($blob_identifier,
-                                         "{$name}_{$this->_filename}",
-                                         $this->_title,
-                                         $this->_get_mimetype($this->_current_tmpname),
-                                         $this->_current_tmpname,
-                                         false);
-        }
-    }
-
-    /**
-     * Saves the main image to the type, doing transformation work if configured to do so.
-     *
-     * @return bool Indicating success.
-     */
-    function _save_main_image()
-    {
-        if (! $this->_create_working_copy())
-        {
-            return false;
-        }
-
-        $result = true;
-
-        // Filter if neccessary.
-        if (   $this->filter_chain
-            && ! $this->_filter->process_chain($this->filter_chain))
-        {
-            $result = false;
-        }
-
-        if ($result)
-        {
-            $blob_identifier = "{$this->_identifier}main";
-            if (array_key_exists('main', $this->_pending_attachments))
-            {
-                unset($this->_pending_attachments['main']);
-                $result = $this->update_attachment($blob_identifier,
-                                                   $this->_filename,
-                                                   $this->_title,
-                                                   $this->_target_mimetype,
-                                                   $this->_current_tmpname,
-                                                   false);
-            }
-            else
-            {
-                $this->_attachment_map[$blob_identifier] = Array($this->_identifier, 'main');
-                $result = $this->add_attachment($blob_identifier,
-                                                $this->_filename,
-                                                $this->_title,
-                                                $this->_target_mimetype,
-                                                $this->_current_tmpname,
-                                                false);
-            }
-        }
-        @unlink($this->_current_tmpname);
-
-        return $result;
-    }
-
-    /**
-     * This function creates a new working copy and stores the filename in _current_tmpname.
-     * (Beware of consecutive uses with current_tmpname, which will be silently overwritten,
-     * the old file must be unlinked by the callee.) The filter instance will automatically
-     * be set to the new file.
-     *
-     * @access private
-     * @return bool Indicating success.
-     */
-    function _create_working_copy()
-    {
-        $this->_current_tmpname = tempnam("/tmp", "midcom_helper_datamanager2_type_image");
-        $src = fopen($this->_original_tmpname, 'r');
-        $dst = fopen($this->_current_tmpname, 'w+');
-        while (! feof($src))
-        {
-            $buffer = fread($src, 131072); /* 128 kB */
-            fwrite($dst, $buffer, 131072);
-        }
-        fclose($src);
-        fclose($dst);
-        return $this->_filter->set_file($this->_current_tmpname);
-    }
-
-    /**
-     * If we are configured to do so, we save the original image.
-     *
-     * @return bool Indicating success
-     */
-    function _save_original()
-    {
-        if ($this->keep_original)
-        {
-            $blob_identifier = "{$this->_identifier}original";
-            if (array_key_exists('original', $this->_pending_attachments))
-            {
-                unset($this->_pending_attachments['original']);
-                return $this->update_attachment($blob_identifier,
-                                                "original_{$this->_filename}",
-                                                $this->_title,
-                                                $this->_original_mimetype,
-                                                $this->_original_tmpname,
-                                                false);
-            }
-            else
-            {
-                $this->_attachment_map[$blob_identifier] = Array($this->_identifier, 'original');
-                return $this->add_attachment($blob_identifier,
-                                             "original_{$this->_filename}",
-                                             $this->_title,
-                                             $this->_original_mimetype,
-                                             $this->_original_tmpname,
-                                             false);
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Automatically convert the uploaded file to a web-compatible type. Uses
-     * only the first image of multi-page uploads (like PDFs) and populates the
-     * _target_mimetype member accordingly. The orignal_tmpname file is manipulated
-     * directly.
-     *
-     * Uploaded GIF, PNG and JPEG files are left untouched.
-     *
-     * In case of any conversions being done, the new extension will be appended
-     * to the uploaded file.
-     *
-     * @return bool Indicating success
-     */
-    function _auto_convert_to_web_type()
-    {
-        switch ($this->_original_mimetype)
-        {
-            case 'image/png':
-            case 'image/gif':
-            case 'image/jpeg':
-                $this->_target_mimetype = $this->_original_mimetype;
-                $conversion = null;
-                break;
-
-            case 'application/postscript':
-            case 'application/pdf':
-                $this->_target_mimetype = 'image/png';
-                $conversion = 'png';
-                break;
-
-            default:
-                $this->_target_mimetype = 'image/jpeg';
-                $conversion = 'jpg';
-                break;
-        }
-
-        if ($conversion)
-        {
-            $this->_filename .= ".{$conversion}";
-            return $this->_filter->convert($conversion);
-        }
-        else
-        {
-            return true;
-        }
-    }
-
-    /**
      * First, we load the attachment_map information so that we can collect all images
      * together. Then we call the base class.
      */
@@ -726,6 +324,18 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
         foreach ($items as $item)
         {
             $info = explode(':', $item);
+            if (   !is_array($info)
+                || !array_key_exists(0, $info)
+                || !array_key_exists(1, $info)
+                || !array_key_exists(2, $info)
+                )
+            {
+                // Broken item
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("item '{$item}' is broken!", MIDCOM_LOG_ERROR);
+                debug_pop();
+                continue;
+            }
             $this->_attachment_map[$info[0]] = Array($info[1], $info[2]);
         }
 
@@ -771,27 +381,73 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
     function convert_to_html()
     {
         $result = '';
-        if ($this->images)
+        if (empty($this->images))
         {
-            $result .= "<ul class='midcom_helper_datamanager2_type_images_list'>";
-            foreach ($this->images as $identifier => $images)
-            {
-                $result .= "<li>";
-                $main = $images['main'];
-                $title = ($main['description']) ? $main['description'] : $main['filename'];
+            return $result;
+        }
+        switch ($this->output_mode)
+        {
+            case 'html':
+                $result .= "<ul class='midcom_helper_datamanager2_type_images_list'>";
+                foreach ($this->images as $identifier => $images)
+                {
+                    $result .= "<li>";
+                    switch(true)
+                    {
+                        case (isset($images['main'])):
+                            $main = $images['main'];
+                            break;
+                        case (isset($images['original'])):
+                            $main = $images['original'];
+                            break;
+                        default:
+                            // ugly fallback...
+                            $images_copy = $images;
+                            $main = array_shift($images_copy);
+                            break;
+                    }
+                    if (   !isset($main['object'])
+                        || !is_object($main['object'])
+                        || !isset($main['object']->guid)
+                        || empty($main['object']->guid))
+                    {
+                        //Panic, broken identifier
+                        debug_push_class(__CLASS__, __FUNCTION__);
+                        debug_add("Identifier '{$identifier}' does not have a valid object behind it",  MIDCOM_LOG_ERROR);
+                        debug_pop();
+                        continue;
+                    }
+                    
+                    $title = ($main['description']) ? $main['description'] : $main['filename'];
                 
-                if (array_key_exists('thumbnail', $images))
-                {
-                    $thumb = $images['thumbnail'];
-                    $result .= "<a href='{$main['url']}'><img src='{$thumb['url']}' {$thumb['size_line']} alt='{$title}' title='{$title}' /></a>";
+                    if (array_key_exists('thumbnail', $images))
+                    {
+                        $thumb = $images['thumbnail'];
+                        $result .= "<a href='{$main['url']}'><img src='{$thumb['url']}' {$thumb['size_line']} alt='{$title}' title='{$title}' /></a>";
+                    }
+                    else
+                    {
+                        $result .= "<img src='{$main['url']}' {$main['size_line']} alt='{$title}' title='{$title}' />";
+                    }
+                    $result .= "</li>";
                 }
-                else
+                $result .= "</ul>";
+                break;
+
+            // FIXME: wouldn't it be better to access $dm2->types->imagesfield->images ??
+            case 'array':
+                $result = array();
+                // FIXME: this probably does not work as expected, look into this
+                foreach ($this->images as $identifier => $images)
                 {
-                    $result .= "<img src='{$main['url']}' {$main['size_line']} alt='{$title}' title='{$title}' />";
+                    $tmp = $images['main'];
+                    if (array_key_exists('thumbnail', $images))
+                    {
+                        $tmp['thumbnail'] = $images['thumbnail'];
+                    }
+                    $result[] = $tmp;
                 }
-                $result .= "</li>";
-            }
-            $result .= "</ul>";
+                break;
         }
         return $result;
     }
@@ -808,6 +464,30 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
         $data = Array();
         foreach ($this->attachments_info as $identifier => $info)
         {
+            if (empty($identifier))
+            {
+                // Identifier must not be empty
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("\$identifier is empty, this is not allowed.", MIDCOM_LOG_ERROR);
+                debug_pop();
+                continue;
+            }
+            if (!array_key_exists('images_identifier', $info))
+            {
+                // We have somehow broken data, try heuristics
+                $info['images_identifier'] = substr($identifier, 0, 32);
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("\$info['images_identifier'] was not set, used heuristics to set it to '{$info['images_identifier']}' (from '{$identifier}')", MIDCOM_LOG_WARN);
+                debug_pop();
+            }
+            if (!array_key_exists('images_name', $info))
+            {
+                // We have somehow broken data, try heuristics
+                $info['images_name'] = substr($identifier, 32);
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("\$info['images_name'] was not set, used heuristics to set it to '{$info['images_name']}' (from '{$identifier}')", MIDCOM_LOG_WARN);
+                debug_pop();
+            }
             $data[] = "{$identifier}:{$info['images_identifier']}:{$info['images_name']}";
         }
 
@@ -854,6 +534,15 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
             debug_pop();
             return;
         }
+        if (! array_key_exists($identifier, $this->attachments_info))
+        {
+            // Log and skip further processing.
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Could not find the attachment '{$identifier}' in the \$this->attachments_info. Skipping it.",
+                MIDCOM_LOG_ERROR);
+            debug_pop();
+            return;
+        }
 
         $images_identifier = $this->_attachment_map[$identifier][0];
         $images_name = $this->_attachment_map[$identifier][1];
@@ -882,10 +571,238 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
      * @param Array $a The first image list.
      * @param Array $b The second image list.
      * @return int A value according to the rules from strcmp().
+     * @todo compare based on metadata->score and filename (or title ???)
      */
     function _sort_images_callback($a, $b)
     {
-        return strcasecmp($a['main']['filename'], $b['main']['filename']);
+        // safety against broken images
+        if (   isset($a['main'])
+            && isset($a['main']['filename'])
+            && isset($b['main'])
+            && isset($b['main']['filename'])
+            )
+        {
+            return strcasecmp($a['main']['filename'], $b['main']['filename']);
+        }
+        // Try to read the sort values from some other key 
+        if (   is_array($a)
+            && is_array($b))
+        {
+            foreach($a as $key => $data)
+            {
+                if (   isset($a[$key]['filename'])
+                    && isset($b[$key])
+                    && isset($b[$key]['filename']))
+                {
+                    return strcasecmp($a[$key]['filename'], $b[$key]['filename']);
+                }
+            }
+        }
+        // we could not determine any source for comparison, return equal value
+        return 0;
+    }
+
+    /**
+     * Recreates derived images
+     */
+    function recreate_derived_images($force_prepare = true)
+    {
+        // This need separate implementation for this type
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Method not implemented for this type yet", MIDCOM_LOG_ERROR);
+        debug_pop();
+        return false;
+    }
+
+    /**
+     * Rotates applies a rotational filter to all images under given main identifier
+     *
+     * @param string $direction direction to rotate to
+     * @return boolean indicating success/faiilure
+     */
+    function rotate($images_identifier, $direction)
+    {
+        $filter = $this->_rotate_get_filter($direction);
+        if ($filter === false)
+        {
+            return false;
+        }
+        return $this->apply_filter_images($images_identifier, $filter);
+    }
+
+    /**
+     * Applies a given filter to all images (except original) under main identifier
+     *
+     * @param string $images_identifier identifier for $this->images array
+     * @param string $filter the midcom_helper_imagefilter filter chain to apply
+     * @return boolean indicating success/failure
+     */
+    function apply_filter_images($images_identifier, $filter)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        if (!array_key_exists($images_identifier, $this->images))
+        {
+            debug_add("identifier '{$identifier}' not found in \$this->images", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        foreach($this->images[$images_identifier] as $sub_identifier => $info)
+        {
+            if ($sub_identifier === 'original')
+            {
+                continue;
+            }
+            $identifier = "{$images_identifier}{$sub_identifier}";
+            if (!$this->apply_filter($identifier, $filter))
+            {
+                debug_add("Failed to apply filter '{$filter}' to image '{$identifier}', aborting", MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;
+            }
+        }
+        debug_pop();
+        return true;
+    }
+
+    function _batch_handler_cleanup($tmp_dir, $new_name)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("called with: '{$tmp_dir}', '{$new_name}'");
+        if (   empty($tmp_dir)
+            || $tmp_dir === '/'
+            /* TODO: better tmp dir matching */
+            || !preg_match('|^/tmp/|', $tmp_dir)
+            )
+        {
+            // Do somethign ? we cannot return as there's more work to do...
+        }
+        else
+        {
+            $cmd = "rm -rf {$tmp_dir}";
+            debug_add("executing '{$cmd}'");
+            exec($cmd, $output, $ret);
+        }
+        if (   empty($new_name)
+            /* TODO: better tmp dir matching */
+            || !preg_match('|^/tmp/|', $new_name)
+            )
+        {
+            debug_pop();
+            return;
+        }
+        $cmd = "rm -f {$new_name}";
+        debug_add("executing '{$cmd}'");
+        exec($cmd, $output, $ret);
+        debug_pop();
+    }
+
+    function _batch_handler($extension, $file_data)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+
+        $tmp_name =& $file_data['tmp_name'];
+        $new_name = "{$tmp_name}.{$extension}";
+        $mv_cmd = "mv -f {$tmp_name} {$new_name}";
+        exec($mv_cmd, $output, $ret);
+        if ($ret != 0)
+        {
+            // Move failed
+            debug_add("failed to execute '{$mv_cmd}'", MIDCOM_LOG_ERROR);
+            unlink($tmp_name);
+            debug_pop();
+            return false;
+        }
+        $tmp_dir = "{$tmp_name}_extracted";
+        if (!mkdir($tmp_dir))
+        {
+            // Could not create temp dir
+            debug_add("failed to create directory '{$tmp_dir}'", MIDCOM_LOG_ERROR);
+            $this->_batch_handler_cleanup(false, $new_name);
+            debug_pop();
+            return false;
+        }
+        $zj = false;
+        switch (strtolower($extension))
+        {
+            case 'zip':
+                $extract_cmd = "unzip -q -b -L -o {$new_name} -d {$tmp_dir}";
+                break;
+            case 'tgz':
+            case 'tar.gz':
+                $zj = 'z';
+            case 'tar.bz2':
+                if (!$zj)
+                {
+                    $zj = 'j';
+                }
+            case 'tar':
+                $extract_cmd = "tar -x{$zj} -C {$tmp_dir} -f {$new_name}";
+                break;
+            default:
+                // Unknown extension (we should never hit this)
+                debug_add("unusable extension '{$extension}'", MIDCOM_LOG_ERROR);
+                $this->_batch_handler_cleanup($tmp_dir, $new_name);
+                debug_pop();
+                return false;
+        }
+        debug_add("executing '{$extract_cmd}'");
+        exec($extract_cmd, $output, $ret);
+        if ($ret != 0)
+        {
+            // extract failed
+            debug_add("failed to execute '{$extract_cmd}'", MIDCOM_LOG_ERROR);
+            $this->_batch_handler_cleanup($tmp_dir, $new_name);
+            debug_pop();
+            return false;
+        }
+        $files = array();
+        // Handle archives with subdirectories correctly
+        $this->_batch_handler_get_files_recursive($tmp_dir, $files);
+
+        foreach ($files as $file)
+        {
+            // Set image
+            $basename = basename($file);
+			$this->add_image($basename, $file, $basename);
+        }
+
+        $this->_batch_handler_cleanup($tmp_dir, $new_name);
+        debug_pop();
+    }
+
+    function _batch_handler_get_files_recursive($path, &$files)
+    {
+        $dp = @opendir($path);
+        if (!$dp)
+        {
+            return;
+        }
+        while (($file = readdir($dp)) !== false)
+        {
+            if (preg_match('/(^\.)|(~$)/', $file))
+            {
+                // ignore dotfiles and backup files
+                continue;
+            }
+            $filepath = "{$path}/{$file}";
+            if (is_dir($filepath))
+            {
+                // It's a directory, recurse
+                $this->_batch_handler_get_files_recursive($filepath, $files);
+                continue;
+            }
+            if (is_link($filepath))
+            {
+                // Is a symlink, we can't do anything sensible with it
+                continue;
+            }
+            if (!is_readable($filepath))
+            {
+                // for some weird reason the file *we* extracted is not readable by us...
+                continue;
+            }
+            $files[] = $filepath;
+        }
     }
 
 }

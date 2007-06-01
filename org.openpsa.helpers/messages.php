@@ -11,7 +11,7 @@
  */
 class org_openpsa_helpers_uimessages extends midcom_baseclasses_components_purecode
 {
-    
+
     /**
      * Initializes the class and sets the following strings into the list of allowed classes:
      * normal, ok, warning and error
@@ -20,14 +20,14 @@ class org_openpsa_helpers_uimessages extends midcom_baseclasses_components_purec
     {
         parent::midcom_baseclasses_components_purecode();
     }
-    
+
     /**
      * Initialized the UI messages stack and adds correct JS headers
      */
     function initialize_stack()
     {
     }
-    
+
     /**
      * Adds message to the message queue. Calls the addMessage() method.
      * @param string $message The actual message to display to the user
@@ -45,7 +45,7 @@ class org_openpsa_helpers_uimessages extends midcom_baseclasses_components_purec
      * @param string $message The actual message to display to the user
      * @param string $class Optional CSS class of the message
      * @return boolean Whether addition was successful
-     */    
+     */
     function addMessage($message, $class='info')
     {
         if ($class == 'normal')
@@ -55,7 +55,7 @@ class org_openpsa_helpers_uimessages extends midcom_baseclasses_components_purec
         $_MIDCOM->uimessages->add('OpenPsa', $message, $class);
         return true;
     }
-    
+
     /**
      * Adds neccessary JavaScript calls to populate the messagearea based on the queue
      */

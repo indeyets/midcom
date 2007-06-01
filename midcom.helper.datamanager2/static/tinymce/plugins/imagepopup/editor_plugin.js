@@ -36,7 +36,7 @@ var TinyMCE_imagepopupPlugin = {
 			longname : 'Image pupup plugin',
 			author : 'Tarjei Huse',
 			authorurl : 'http://www.midgard-project.org',
-			infourl : 'http://www.yoursite.com/docs/template.html',
+			infourl : 'http://www.midgard-project.org/documentation/images-in-midcom/',
 			version : "1.0"
 		};
 	},
@@ -97,8 +97,12 @@ var TinyMCE_imagepopupPlugin = {
                     template['file'] = tinyMCE.getParam("plugin_imagepopup_popupurl");
 			//		template['file'] = '/static/midcom-exec-midcom.helper.imagepopup/runner.php/00000000c43d6b9fb85ce2c64ad81598'; // Relative to theme
 					template['width'] = 800;
-					template['height'] = 380;
-					tinyMCE.openWindow(template, {editor_id : editor_id, some_custom_arg : "somecustomdata"});
+					template['height'] = 400;
+					tinyMCE.setWindowArg('mce_windowresize', true);
+					tinyMCE.openWindow(template, {editor_id : editor_id, 
+											      resizable : 'yes',
+											      scrollbars: 'yes'
+													});
 
 					// Let TinyMCE know that something was modified
 					tinyMCE.triggerNodeChange(false);

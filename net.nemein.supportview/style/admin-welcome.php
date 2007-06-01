@@ -1,7 +1,7 @@
 <?php
 global $view_topic;
 global $view_config;
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
 
 <h1>Welcome to SupportView</h1>

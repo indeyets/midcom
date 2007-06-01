@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    <type name="org_routamc_statusmessage_message" table="org_routamc_statusmessage_message" parent="midgard_person" parentfield="person">
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="status" type="text" />
+        <property name="person" link="midgard_person:id" reverse="no" type="integer" parentfield="person"/>
+        
+        <!-- Midgard, Twitter, Jaiku ... -->
+        <property name="source" type="text" />
+        <property name="externalid" type="text" />
+    </type>
+</Schema>

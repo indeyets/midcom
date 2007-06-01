@@ -1,8 +1,8 @@
 <?php
- $request_data =& $_MIDCOM->get_custom_context_data('request_data');
+ //$data =& $_MIDCOM->get_custom_context_data('request_data');
  $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
- $a_id = $request_data['aegir_interface']->get_current_leaf();
- $a_name = $request_data['article_name'];
+ $a_id = $data['aegir_interface']->get_current_leaf();
+ $a_name = $data['article_name'];
 
 $session =  new midcom_service_session();
 $msg = "";
@@ -11,10 +11,10 @@ if ($session->exists('msg')) {
     $session->remove('msg');
 }
 ?>
-<div class="aish1"><h1><?php echo $request_data['l10n']->get("Move article"); ?>: &(a_name);</h1></div>
+<div class="aish1"><h1><?php echo $data['l10n']->get("Move article"); ?>: &(a_name);</h1></div>
 <p>
 <?php 
-    echo $request_data['l10n']->get("Select the topic you want to move the article to:"); ;
+    echo $data['l10n']->get("Select the topic you want to move the article to:"); ;
 ?>  
 </p>
 <script language="javascript" type="text/javascript">
@@ -26,7 +26,7 @@ function set_moveto_value(id) {
    document.f_move_article.f_moveto.value = id;
    
    //moveto.value = id;
-   if (window.confirm("<?php echo sprintf($request_data['l10n']->get("Move article '%s' to "), $a_name); ?>" + document.f_move_article.f_moveto.value + "?" )) {
+   if (window.confirm("<?php echo sprintf($data['l10n']->get("Move article '%s' to "), $a_name); ?>" + document.f_move_article.f_moveto.value + "?" )) {
     document.f_move_article.submit();
    } else {
     

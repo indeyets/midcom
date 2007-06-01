@@ -1,10 +1,18 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.en.txt,v 1.4 2006/05/03 19:04:56 rambo Exp $
+---CVS $Id$
 ---LANGUAGE en
+
+---STRING %d hours (%d invoiceable) reported
+%d hours (%d invoiceable) reported
+---STRINGEND
 
 ---STRING create event
 Create event
+---STRINGEND
+
+---STRING create person
+Create person
 ---STRINGEND
 
 ---STRING create task
@@ -19,6 +27,14 @@ My summary
 Personal Summary
 ---STRINGEND
 
+---STRING preview for week %s
+Preview for week %s
+---STRINGEND
+
+---STRING review of week %s
+Review of week %s
+---STRINGEND
+
 ---STRING updated %s
 Updated %s
 ---STRINGEND
@@ -31,7 +47,11 @@ Updated today
 Updated yesterday
 ---STRINGEND
 
----STRING create person
-Create person
+---STRING week review
+Week review
+---STRINGEND
+
+---STRING totals
+Totals
 ---STRINGEND
 

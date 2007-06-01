@@ -1,0 +1,37 @@
+net.nemein.personnel styles
+===========================
+
+Showing alphabetically sorted or flat organized personnel
+---------------------------------------------------------
+
+Listing will start with a <(show-index-header)> element. Each row will be started with a <(show-index-row-header)>, continued by configured amount of <(show-index-item)> elements on a row, each showing index details of one person.
+
+When the column count reaches configured limit (configuration key `persons_in_row`) <(show-index-row-footer)> will close the row and a new <(show-index-row-header)> will be displayed (if applicable).
+
+If a row is missing columns, each of the missing columns will be filled with a <(show-index-item-empty)> element.
+
+Showing phase is concluded with an element <(show-index-footer)>.
+
+If there are no persons to show, style element <(show-index-empty)> will be displayed instead of any of the elements above.
+
+
+Showing sub grouped personnel
+-----------------------------
+
+For historical reasons showing grouped personnel will include headers and footers for rows and place empty style elements to fill in the missing table cells.
+
+Showing grouped personnel will start by displaying <(show-grouped-header)>.
+
+For the beginning of each group <(show-group-header)> will be displayed.
+
+For each row a placeholder <(show-group-row-header)> will be shown. Then <(show-group-person)> will be displayed as many times as configured (configuration key `persons_in_row`) and <(show-group-row-footer)> will close the row (placeholder).
+
+If the last row is missing persons (e.g. only 2 out of 6 persons could shown on the last row), each of the empty cells will show a style element <(show-group-empty-cell)> until the row is full and <(show-group-row-footer)> will be displayed, following <(show-group-footer)>, which closes the group.
+
+When each group has been displayed the viewing phase will be concluded with <(show-grouped-footer)>.
+
+Showing selected person
+-----------------------
+
+To display the selected person <(show-person)> will be shown.
+

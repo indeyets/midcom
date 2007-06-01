@@ -3,6 +3,22 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING %s includes
+%s includes
+---STRINGEND
+
+---STRING %s is
+%s is
+---STRINGEND
+
+---STRING %s is at least
+%s is at least
+---STRINGEND
+
+---STRING %s is at most
+%s is at most
+---STRINGEND
+
 ---STRING code
 Code
 ---STRINGEND
@@ -11,12 +27,16 @@ Code
 Component
 ---STRINGEND
 
+---STRING component group
+Component group
+---STRINGEND
+
 ---STRING cost
 Cost
 ---STRINGEND
 
 ---STRING cost type
-cost type
+Cost type
 ---STRINGEND
 
 ---STRING day
@@ -91,6 +111,10 @@ Products
 quarter
 ---STRINGEND
 
+---STRING search
+Product search
+---STRINGEND
+
 ---STRING service
 Service
 ---STRINGEND
@@ -99,8 +123,20 @@ Service
 Single delivery
 ---STRINGEND
 
+---STRING solution
+Solution
+---STRINGEND
+
 ---STRING subscription
 Subscription
+---STRINGEND
+
+---STRING supplier
+Supplier
+---STRINGEND
+
+---STRING toplevel
+Top level
 ---STRINGEND
 
 ---STRING type
@@ -111,11 +147,15 @@ Type
 Unit
 ---STRINGEND
 
+---STRING updated products
+Updated products
+---STRINGEND
+
 ---STRING year
 year
 ---STRINGEND
 
----STRING toplevel
-Top level
+---STRING updated %s
+updated %s
 ---STRINGEND
 

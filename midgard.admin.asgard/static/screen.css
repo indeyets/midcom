@@ -1,0 +1,279 @@
+html
+{
+  height: 100%;
+}
+
+body
+{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Verdana', 'Arial', 'Helvetica', sans-serif;
+  font-size: 10pt;
+  background-color: white;
+  color: black;
+}
+
+#container-wrapper
+{
+  position: relative;
+  min-height: 100%;
+}
+
+* html #container-wrapper
+{
+  height: 100%;
+}
+
+#container
+{
+  padding: 1em 1em 58px;
+}
+
+#navigation,
+#content
+{
+  margin: 0em;
+}
+
+#navigation
+{
+  background-color: #d3d7cf;
+  width: 16em;
+  float: left;
+  padding: 1em;
+  -moz-border-radius: 6px;
+}
+
+#container > #navigation
+{
+  width: 14em;
+}
+
+#navigation div.grouplogo h2
+{
+  margin: 0;
+  font-size: 100%;
+}
+
+#navigation ul
+{
+  padding: 0 0 0 1.3em;
+  margin: 0;
+}
+
+#navigation div.section
+{
+  background-color: #eeeeec;
+  margin-bottom: 6px;
+}
+
+#navigation div.section.selected
+{
+  background-color: white;
+  padding-bottom: 1em;
+}
+
+#navigation div.section ul.midgard_admin_asgard_navigation
+{
+  margin: 0;
+  padding: 5px;
+  list-style-type: none;
+}
+#navigation div.section ul.midgard_admin_asgard_navigation ul
+{
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+  list-style-type: none;
+}
+#navigation div.section ul.midgard_admin_asgard_navigation li
+{
+    margin: 0px;
+    padding: 0px;
+    line-height: 18px;
+}
+#navigation div.section ul.midgard_admin_asgard_navigation ul li
+{
+    margin-left: 20px;
+}
+#navigation div.section ul.midgard_admin_asgard_navigation li.current a
+{
+    font-weight: bold;
+}
+#navigation div.section ul.midgard_admin_asgard_navigation li.current li a
+{
+    font-weight: normal;
+}
+#navigation div.section ul.midgard_admin_asgard_navigation li.midgard_topic > a,
+#navigation div.section ul.midgard_admin_asgard_navigation li.midcom_baseclasses_database_topic > a,
+#navigation div.section ul.midgard_admin_asgard_navigation li.midgard_style > a,
+#navigation div.section ul.midgard_admin_asgard_navigation li.midcom_baseclasses_database_style > a,
+#navigation div.section ul.midgard_admin_asgard_navigation li.midgard_page > a,
+#navigation div.section ul.midgard_admin_asgard_navigation li.midcom_baseclasses_database_page > a,
+#navigation div.section ul.midgard_admin_asgard_navigation li.midgard_snippetdir > a,
+#navigation div.section ul.midgard_admin_asgard_navigation li.midcom_baseclasses_database_snippetdir > a
+{
+    padding-left: 18px;
+    background: url('../stock-icons/16x16/stock_folder.png') left center no-repeat;
+}
+#navigation div.section ul.midgard_admin_asgard_navigation li.midgard_group > a,
+#navigation div.section ul.midgard_admin_asgard_navigation li.midcom_baseclasses_database_group > a,
+#navigation div.section ul.midgard_admin_asgard_navigation li.midcom_org_openpsa_organization > a
+{
+    padding-left: 18px;
+    background: url('../stock-icons/16x16/stock_people.png') left center no-repeat;
+}
+
+
+
+#navigation h3
+{
+  margin: 0;
+  padding: 0.2em 0.5em;
+  font-size: 110%;
+}
+
+#navigation h3 a
+{
+  color: black !important;
+}
+
+#content
+{
+  background-color: #d3d7cf;
+  margin-left: 17em;
+  padding: 1em;
+  -moz-border-radius: 6px;
+}
+#content div.page-title
+{
+  background-color: #555753;
+  color: #ffffff;
+  padding: 0.5em 0.5em;
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+  margin-top: -0.5em;
+  margin-bottom: 0.5em;
+  -moz-border-radius: 6px;
+}
+#content div.page-title h1
+{
+  font-size: 10pt;
+  margin: 0px;
+  width: 100%;
+}
+
+#container a:link,
+#container a:visited
+{
+  color: #204a87;
+  text-decoration: none;
+}
+
+#container a:hover,
+#container a:visited:hover
+{
+  text-decoration: underline;
+}
+
+#container #toolbar ul
+{
+  padding: 0;
+  margin: 0;
+  display: block;
+  list-style: none;
+  background-color: #eeeeef;
+  padding: 0.2em 1em;
+  -moz-border-radius: 6px;
+}
+
+#container #toolbar ul li
+{
+  display: inline;
+  margin: 0;
+  padding: 0 6px;
+}
+
+#container #toolbar ul li a
+{
+  margin: 0;
+  white-space: nowrap;
+}
+
+#container #toolbar ul li a img
+{
+    border: none;
+}
+
+#container #toolbar ul li:hover,
+#container #toolbar ul li:hover a,
+#container #toolbar ul li a:hover,
+#container #toolbar ul li.selected,
+#container #toolbar ul li.selected a
+{
+  background-color: white;
+}
+
+#breadcrumb
+{
+  margin-bottom: 1em;
+  font-size: 90%;
+  border-bottom: solid 1px black;
+}
+
+#siteinfo
+{
+  background-image: url('grid.png');
+  background-position: top left;
+  background-repeat: repeat-x;
+  height: 58px;
+  margin-top: -58px;
+  line-height: 28px;
+  padding-top: 30px;
+  padding-left: 1em;
+  vertical-align: middle;
+  overflow: hidden;
+  position: relative;
+  clear: both;
+}
+
+#siteinfo img
+{
+    vertical-align: middle;
+    margin-right: 1em;
+}
+
+html > body #siteinfo
+{
+  height: 28px;
+}
+
+#siteinfo span.copyrights
+{
+  font-size: 80%;
+}
+
+#siteinfo span.copyrights,
+#siteinfo a
+{
+  color: #555753;
+}
+
+#siteinfo a:link,
+#siteinfo a:visited
+{
+  text-decoration: none;
+}
+
+#siteinfo a:hover,
+#siteinfo a:visited:hover
+{
+  text-decoration: underline;
+}
+
+#object_metadata
+{
+  font-size: 80%;
+  margin-top: 2em;
+  border-top: solid 1px black;
+}

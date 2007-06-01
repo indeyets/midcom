@@ -7,7 +7,7 @@ global $view_tags;
 $creator = mgd_get_person($view["author"]);
 
 // Linkify tags
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 $tagline = "";
 $tags_shown = 0;
 foreach($view_tags as $tag)

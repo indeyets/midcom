@@ -1,3 +1,13 @@
-"schemadb_campaign" => "file:/org/openpsa/directmarketing/config/schemadb_default_campaign.inc",
-"schemadb_message" => "file:/org/openpsa/directmarketing/config/schemadb_default_message.inc",
+'schemadb_campaign'  => 'file:/org/openpsa/directmarketing/config/schemadb_default_campaign.inc',
+'schemadb_message'   => 'file:/org/openpsa/directmarketing/config/schemadb_default_message.inc',
+'schemadb_campaign_member' => 'file:/org/openpsa/directmarketing/config/schemadb_default_campaign_member.inc',
+'schemadb_person'    => 'file:/org/openpsa/contacts/config/schemadb_default_person.inc',
+'schemadb_organization' => 'file:/org/openpsa/contacts/config/schemadb_default_organization.inc',
+'schemadb_organization_member' => 'file:/org/openpsa/contacts/config/schemadb_default_member.inc',
 'send_token_max_age' => 45, //Tokens older than this many days are cleared from database, use zero for infinite (not recommended)
+'csv_export_memberships' => 'first', // Valid values 'first', 'last' and 'all', controls what membership/group data is exported, experiment.
+'csv_export_separator' => ';',
+'csv_export_quote' => '"',
+'csv_export_decimal' => '.', // NOTE: Must *not* be same as csv_export_separator (ie comma on both is forbidden)
+'csv_export_newline' => "\n",
+'csv_export_content_type' => 'appplication/csv',

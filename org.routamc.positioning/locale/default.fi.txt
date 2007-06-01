@@ -1,0 +1,33 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING html
+Ulkoisen HTML-tiedoston metatiedot
+---STRINGEND
+
+---STRING manual
+käsin syötetty
+---STRINGEND
+
+---STRING org.routamc.org
+Paikkatiedon käsittelykirjasto
+---STRINGEND
+
+---STRING org.routamc.positioning
+Paikkatiedon käsittelykirjasto
+---STRINGEND
+
+---STRING plazes
+Plazes-verkko
+---STRINGEND
+
+---STRING source %s
+lähde: %s
+---STRINGEND
+
+---STRING georss
+GeoRSS-syöte
+---STRINGEND
+

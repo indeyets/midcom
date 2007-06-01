@@ -569,6 +569,13 @@ var protoGrowls = {
     isExpired: function( id )
     {
         var growl = this.getprotoGrowl(id);
+        
+        if (growl.type == 'error')
+        {
+            // Error messages must be disposed by clicking the close button
+            return false;
+        }
+        
         var timestamp = new Date().getTime();
         var expires = growl.registered + growl.lifetime;
         if(expires <= timestamp) {

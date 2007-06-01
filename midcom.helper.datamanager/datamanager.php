@@ -876,6 +876,16 @@ class midcom_helper_datamanager {
      */
     function process_form ()
     {
+        // Make sure we have CSS loaded
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . "/midcom.helper.datamanager/datamanager.css",
+            )
+        );
         global $midcom_errstr;
 
         $this->errstr = "";

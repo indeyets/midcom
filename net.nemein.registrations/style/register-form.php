@@ -2,7 +2,7 @@
 // Available request keys:
 // event, controller
 
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $event =& $data['event'];
 $title = sprintf($data['l10n']->get('register for %s'), $event->title);
 // $event_dm =& $event->get_datamanager();

@@ -1,17 +1,17 @@
 <?php
 /**
  * OpenPSA Documents document management system
- * 
- * 
+ *
+ *
  * @package org.openpsa.documents
  */
 class org_openpsa_documents_interface extends midcom_baseclasses_components_interface
 {
-    
+
     function org_openpsa_documents_interface()
     {
         parent::midcom_baseclasses_components_interface();
-        
+
         $this->_component = 'org.openpsa.documents';
         $this->_autoload_class_definitions = array('midcom_dba_classes.inc');
         $this->_autoload_files = array(
@@ -21,15 +21,15 @@ class org_openpsa_documents_interface extends midcom_baseclasses_components_inte
             'admin.php',
             'navigation.php',
             'directory_handler.php',
-            'metadata_handler.php',                        
+            'metadata_handler.php',
         );
-        $this->_autoload_libraries = array( 
-            'org.openpsa.core', 
+        $this->_autoload_libraries = array(
+            'org.openpsa.core',
             'org.openpsa.helpers',
-            'midcom.helper.datamanager',            
+            'midcom.helper.datamanager',
             'org.openpsa.relatedto',
         );
-        
+
     }
 
     function _on_initialize()
@@ -38,7 +38,7 @@ class org_openpsa_documents_interface extends midcom_baseclasses_components_inte
         debug_pop();
         return true;
     }
-    
+
     /**
      * Iterate over all documents and create index record using the datamanager indexer
      * method.
@@ -64,14 +64,14 @@ class org_openpsa_documents_interface extends midcom_baseclasses_components_inte
                         MIDCOM_LOG_WARN);
                     continue;
                 }
-	                
+
                 if (!$datamanager->init($document_metadata))
                 {
                     debug_add("Warning, failed to initialize datamanager for Article {$article->id}. See Debug Log for details.", MIDCOM_LOG_WARN);
                     debug_print_r('Article dump:', $article);
                     continue;
                 }
-	                
+
                 $indexer->index($datamanager);
                 $datamanager->destroy();
             }
@@ -79,7 +79,7 @@ class org_openpsa_documents_interface extends midcom_baseclasses_components_inte
         debug_pop();
         return true;
     }
-    
+
     function _on_resolve_permalink($topic, $config, $guid)
     {
         $document = new org_openpsa_documents_document($guid);

@@ -128,7 +128,7 @@ class midcom_helper_configuration {
         }
 
         $array = $object->list_parameters($path);
-
+        
         /*
         if ($params) {
             while ($params->fetch())
@@ -139,7 +139,8 @@ class midcom_helper_configuration {
         */
 
 
-        if ($global) {
+        if ($global)
+        {
             $this->_global = $array;
             $this->_local = array();
             $this->_merged = $array;
@@ -158,10 +159,13 @@ class midcom_helper_configuration {
      */
     function _update_cache() {
         $this->_merged = $this->_global;
-        foreach ($this->_local as $key => $value)
-        {
-            $this->_merged[$key] = $value;
-        }
+		if ( !empty($this->_local) )
+		{
+	        foreach ($this->_local as $key => $value)
+	        {
+	            $this->_merged[$key] = $value;
+	        }			
+		}
     }
 
     /**
@@ -178,16 +182,19 @@ class midcom_helper_configuration {
      * @access private
      */
     function _check_local_array($array) {
-        foreach ($array as $key => $value)
-        {
-            if (! array_key_exists($key, $this->_global))
-            {
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("The key {$key} is not present in the global configuration array.", MIDCOM_LOG_INFO);
-                debug_print_r("Current global configuration:", $this->_global);
-                debug_pop();
-            }
-        }
+		if ( !empty($array) )
+		{
+	        foreach ($array as $key => $value)
+	        {
+	            if (! array_key_exists($key, $this->_global))
+	            {
+	                debug_push_class(__CLASS__, __FUNCTION__);
+	                debug_add("The key {$key} is not present in the global configuration array.", MIDCOM_LOG_INFO);
+	                debug_print_r("Current global configuration:", $this->_global);
+	                debug_pop();
+	            }
+	        }			
+		}
     }
 
     /**

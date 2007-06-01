@@ -71,3 +71,6 @@ Käyttöoikeudet
 Kansion käyttöoikeudet
 ---STRINGEND
 
+---STRING privilege reserve
+Varaus
+---STRINGEND

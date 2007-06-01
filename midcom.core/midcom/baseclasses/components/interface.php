@@ -503,7 +503,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
     function read_array_from_snippet ($snippetpath)
     {
         $snippet = mgd_get_snippet_by_path($snippetpath);
-        if ($snippet === false)
+        if ($snippet == false )
         {
             return false;
         }
@@ -707,6 +707,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      */
     function get_node()
     {
+        $this->_check_nap_instance();
         return $this->_nap_instance->get_node();
     }
 
@@ -717,6 +718,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      */
     function get_leaves()
     {
+        $this->_check_nap_instance();
         return $this->_nap_instance->get_leaves();
     }
 

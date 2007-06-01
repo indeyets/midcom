@@ -1,30 +1,50 @@
-'name' => 'org.openpsa.products',
-'purecode' => false,
-'version' => '0.0.2',
-'privileges' =>  Array(),
-'class_definitions' => Array('midcom_dba_classes.inc'),
-/**
- * This is used by the PEAR packaging.
- */
-'package.xml' => Array
-(
+
+  'name' => 'org.openpsa.products',
+  'purecode' => false,
+  'version' => '0.2.3beta1',
+  'state' => 'beta',
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+    0 => 'midcom_dba_classes.inc',
+  ),
+  'package.xml' => 
+  array (
     'summary' => 'Product database',
     'description' => 'Product database',
-    'maintainers' => Array
-    (
-        'bergie' => Array
-        (
-            'name' => 'Henri Bergius',
-            'email' => 'henri.bergius@iki.fi',
-            'role' => 'lead',
-        ),
+    'maintainers' => 
+    array (
+      'bergie' => 
+      array (
+        'name' => 'Henri Bergius',
+        'email' => 'henri.bergius@iki.fi',
+        'role' => 'lead',
+      ),
+      'netblade' => 
+      array (
+        'name' => 'Oskari Kokko',
+        'email' => 'oskari.kokko@nemein.com',
+        'role' => 'developer',
+      ),
     ),
-/* Define what modules this module depends on.  */
-    'dependencies' => Array
-    (
-        'midcom.helper.datamanager2' => Array(),
-        'org.openpsa.contacts' => Array(),
+    'dependencies' => 
+    array (
+      'de.bitfolge.feedcreator' => 
+      array (
+      ),
+      'midcom.helper.datamanager2' => 
+      array (
+      ),
+      'org.openpsa.contacts' => 
+      array (
+      ),
+      'org.openpsa.qbpager' => 
+      array (
+      ),
+      'midcom' => 
+      array (
+      ),
     ),
-),
-
-
+  ),

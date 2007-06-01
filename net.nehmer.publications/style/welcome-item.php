@@ -1,7 +1,7 @@
 <?php
 // Available request keys: filename, data, publication
 
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $view = $data['datamanager']->get_content_html();
 
 $published = sprintf($data['l10n']->get('posted on %s.'), $data['publication']->metadata->published);

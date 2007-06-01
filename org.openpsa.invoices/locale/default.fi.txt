@@ -35,6 +35,10 @@ Asiakas
 Asiakasyhteyshenkilö
 ---STRINGEND
 
+---STRING delete invoice
+Poista lasku
+---STRINGEND
+
 ---STRING due
 Eräpäivä
 ---STRINGEND
@@ -134,3 +138,8 @@ Lähettämättömät laskut
 ---STRING vat
 ALV
 ---STRINGEND
+
+---STRING invoiced hour reports
+Laskutetut tuntiraportit
+---STRINGEND
+

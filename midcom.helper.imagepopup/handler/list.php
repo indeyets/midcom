@@ -5,61 +5,14 @@
  * @package midcom.helper.imagepopup
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
- * 
- * This handler shows the attachments attached to object $object.
  */
  
+/**
+ * This handler shows the attachments attached to object $object.
+ * @package midcom.helper.imagepopup
+ */
 class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_components_handler
 {
-
-    /**
-     * The root or the listing, usually a topic.
-     * @var object
-     */
-    var $_object = null;
-    
-    /**
-     * The quickform object used to generate the form
-     * @var object
-     * @access private 
-     */
-    var $_form = null;
-    /**
-     * The list of attachments
-     * @var array
-     */
-    var $_files = array();
-    
-    /**
-     * Errordescription if it exists.
-     */
-    var $_error = "";
-    
-    /**
-     * prefix
-     * @var string
-     * @access private
-     */
-    var $_prefix = '';
-    
-    /**
-     * Imageinformation
-     * @var string
-     * @access private
-     */
-    var $_image_info = "var imagepopup_images = new Array();\n";
-    
-    /**
-     * Name of the schema to use
-     * @var string
-     */
-    var $_schemaname;
-    
-    /**
-     * The loaded schemaobject
-     * @var object midcom_helper_datamanager2_schema
-     */
-    var $_schemadb = null;
     /**
      * The datamanager controller
      * @var midcom_helper_datamanager2_controller_simple
@@ -70,116 +23,130 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
     {
         parent::midcom_baseclasses_components_handler();
     }
-    /**
-     * Used by midcom-exec. 
-     */
-    function exec_initialize() 
+    
+    function _handler_list($handler_id, $args, &$data)
     {
         $_MIDCOM->cache->content->no_cache();
         $_MIDCOM->auth->require_valid_user();
+        $_MIDCOM->skip_page_style = true;
         
-        /* Check for aegir or normal style: */
-        $style_attributes = array ( 
-        	'rel'   =>  "stylesheet" ,
-			'type'  =>  "text/css" ,
-			'media' =>  "screen"
+        $_MIDCOM->add_link_head
+        (
+            array 
+            ( 
+                'rel'   => 'stylesheet',
+                'type'  => 'text/css',
+                'media' => 'screen',
+                'href'  => MIDCOM_STATIC_URL ."/midcom.helper.imagepopup/styling.css",
+            )
         );
-        $style_attributes['href'] = MIDCOM_STATIC_URL ."/midcom.helper.imagepopup/styling.css";
-        $_MIDCOM->add_link_head( $style_attributes);
-        
-        $this->_request_data['error'] = '';
 
-        //$this->_prefix = $GLOBALS['midcom_config']['midcom_site_url'];
-        $this->_prefix = $_MIDGARD['self'];
-    }
-    
-    function _handler_list($id, $args)
-    {
-		if (count($args) < 3) 
-		{
-			return false;
-		}    
-		
-    	$this->_request_data['list_type'] = $id;
-	    $this->_request_data['topic_guid'] = $args[0];
-	    $this->_request_data['object_guid'] = $args[1];
-	    $this->_request_data['schema_name'] = $args[2];
-	    
-    	if ($id == 'list_object')
-    	{
-			$this->_object = $_MIDCOM->dbfactory->get_object_by_guid($this->_request_data['object_guid']);
-	        $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('page attachments'));
-        }
-        elseif ($id == 'list_topic')
+        $data['schema_name'] = $args[0];
+        $data['object'] = null;
+        $data['folder'] = $this->_topic;
+        
+        if ($handler_id != '____ais-imagepopup-list_folder_noobject')
         {
-        	$this->_object = new midcom_db_topic($this->_request_data['topic_guid']);        	
-	        $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('folder attachments'));  
+            $data['object'] = $_MIDCOM->dbfactory->get_object_by_guid($args[1]);
+            
+            if (!$data['object']) 
+            {
+                return false;
+            }
         }
         
-        if (!$this->_object ) 
+        switch ($handler_id)
         {
-            return false;
+            case '____ais-imagepopup-list_folder_noobject':
+            case '____ais-imagepopup-list_folder':
+                $data['list_type'] = 'folder';
+                $data['list_title'] = $_MIDCOM->i18n->get_string('folder attachments', 'midcom.helper.imagepopup');
+                break;
+                
+            case '____ais-imagepopup-list_object':
+                $data['list_type'] = 'page';
+                $data['list_title'] = $_MIDCOM->i18n->get_string('page attachments', 'midcom.helper.imagepopup');
+                break;
         }
         
-        $this->_schemaname = $this->_request_data['schema_name'];
+        // Run datamanager for handling the images
+        $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
+        $this->_controller->schemadb = $this->_load_schema($data['schema_name']);
+        $this->_controller->schemaname = $data['schema_name']; 
         
-        $this->_get_schema();
+        $_MIDCOM->set_pagetitle($data['list_title']);
         
-        switch ($this->_run_datamanager())
+        if ($data['list_type'] == 'page')
+        {
+            $this->_controller->set_storage($data['object']);
+        }
+        else
+        {
+            $this->_controller->set_storage($data['folder']);
+        }
+        
+        $this->_controller->initialize();
+        $this->_request_data['form'] = & $this->_controller;
+        switch ($this->_controller->process_form())
         {
             case 'cancel':
                 $_MIDCOM->add_jsonload("window.close();");
                 break;
         }
-        
-        $this->_image_info .= "imagepopup_images['prefix'] = \"{$this->_prefix}midcom-serveattachmentguid-\";\n"; 
 
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Prototype/prototype.js");
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/midcom.helper.imagepopup/functions.js");
-        $_MIDCOM->add_jscript($this->_image_info);
+        
+        $image_info = "var imagepopup_images = new Array();\n";
+        $image_info .= "imagepopup_images['prefix'] = \"{$_MIDGARD['self']}midcom-serveattachmentguid-\";\n"; 
+        $_MIDCOM->add_jscript($image_info);
+        
         //$_MIDCOM->add_jsonload("tinyMCEPopup.executeOnLoad('tinyMCEPopup.resizeToContent()');");
         $_MIDCOM->add_jsonload("imagePopupConvertImagesForAddition();imagePopupConvertFilesForAddition();");
         
+        // Ensure we get the correct styles
+        $_MIDCOM->style->prepend_component_styledir('midcom.helper.imagepopup');
+        
         return true;
     }
-    /**
-     * starts and runs the datamanger
-     */
-    function _run_datamanager() 
-    {
-        $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
-        //$schemas = array ( $this->_schemaname = & $this->_schema );
-        $this->_controller->schemadb =& $this->_schemadb ;
-        
-        $this->_controller->schemaname = $this->_schemaname; 
-        $this->_controller->set_storage($this->_object);
-        //$this->_controller->defaults = $defaults;
-        $this->_controller->initialize();
-        $this->_request_data['form'] = & $this->_controller;
-        return $this->_controller->process_form();
+    
+    function _show_list() 
+    {    
+        midcom_show_style('midcom_helper_imagepopup_init');
+        midcom_show_style('midcom_helper_imagepopup_list');
+        midcom_show_style('midcom_helper_imagepopup_finish');
     }
     
     /**
      * Loads and filters the schema from the session.
      */
-    function _get_schema() 
+    function _load_schema() 
     {
-        $key = $this->_schemaname . $this->_request_data['object_guid'];
+        if ($this->_request_data['object'])
+        {
+            $key = "{$this->_request_data['schema_name']}{$this->_request_data['object']->guid}";
+        }
+        else
+        {
+            $key = "{$this->_request_data['schema_name']}{$this->_request_data['folder']->guid}";
+        }
+        
         $session =& $_MIDCOM->get_service('session');
         
-        if (!$session->exists('midcom.helper.datamanager2',$key))
+        if (!$session->exists('midcom.helper.datamanager2', $key))
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,"Could not find session with key: {$key}. Quitting.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Could not find datamanager2 schema session with key: {$key}.");
             // this exits.
         }
         
-        $schema = $session->get('midcom.helper.datamanager2',$key);
-        //var_dump($schema);
+        $schema = $session->get('midcom.helper.datamanager2', $key);
+
         $imagetypes = array
         (
             'images'=> true,
             'image' => false,
         );
+        
         foreach ($schema['fields'] as  $key => $field)
         {
             
@@ -200,55 +167,37 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
             // No image fields natively in the schema, add one
             $schema['fields']['midcom_helper_imagepopup_images'] = Array
             (
-                'title' => $this->_request_data['l10n']->get('images'),
+                'title' => $_MIDCOM->i18n->get_string('images', 'midcom.helper.imagepopup'),
                 'storage' => null,
                 'type' => 'images',
                 'widget' => 'images',
+                'widget_config' => array (
+                	'set_name_and_title_on_upload' => false
+                	) ,
             );
 
             $schema['fields']['midcom_helper_imagepopup_files'] = Array
             (
-                'title' => $this->_request_data['l10n']->get('files'),
+                'title' => $_MIDCOM->i18n->get_string('files', 'midcom.helper.imagepopup'),
                 'storage' => null,
                 'type' => 'blobs',
                 'widget' => 'downloads',
             );        
         }
         
-        $schema_o = new midcom_helper_datamanager2_schema(array ($this->_schemaname => $schema));
-        $this->_schemadb = Array ( $this->_schemaname => $schema_o);
+        $schema_object = new midcom_helper_datamanager2_schema
+        (
+            array 
+            (
+                $this->_request_data['schema_name'] => $schema
+            )
+        );
         
-        return;        
-    }
-    
-    /**
-     * Add an extra file to the form.
-    function _add_file_to_form ($key)
-    {
-        $file = &$this->_files[$key];
-        $elements[] =& HTML_QuickForm::createElement('static',$file->get_name() , '', $file->get_preview(), array('style' => 'float:left;'));
+        $schemadb = Array
+        ( 
+            $this->_request_data['schema_name'] => $schema_object
+        );
         
-        $elements[] =& HTML_QuickForm::createElement('submit', 
-                                                     $file->object->guid, 
-                                                     $this->_l10n->get('delete'), 
-                                                     array('class' => 'image_action')
-                                                     );
-                                                     
-        $elements[] =& HTML_QuickForm::createElement('button', 
-                                                     $file->object->guid , 
-                                                     $this->_l10n->get('edit'), 
-                                                     array('class' => 'image_action', 
-                                                           'onclick' => "window.location ='{$this->_prefix}midcom-exec-midcom.helper.imagepopup/edit.php/{$file->object->guid}'"
-                                                           )
-                                                     );
-        $this->_form->addGroup($elements, $file->object->guid , null, "&nbsp;");
-        $this->_image_info .= $file->get_image_js_info();
-    }*/
-       
-    function _show_list() {
-        
-        midcom_show_style("list");
-    }
-    
-    
+        return $schemadb;        
+    }    
 }

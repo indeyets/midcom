@@ -55,6 +55,7 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
                 MIDCOM_TOOLBAR_URL => "edit/{$this->_article->guid}.html",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                MIDCOM_TOOLBAR_ACCESSKEY => 'e',
             ));
         }
         if ($this->_article->can_do('midgard:delete'))
@@ -63,6 +64,7 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
                 MIDCOM_TOOLBAR_URL => "delete/{$this->_article->guid}.html",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                MIDCOM_TOOLBAR_ACCESSKEY => 'd',
             ));
         }
     }
@@ -151,6 +153,11 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
 
             $this->_article = $result[0];
         }
+        
+        if ($handler_id == 'view_raw')
+        {
+            $_MIDCOM->skip_page_style = true;
+        }
 
         $this->_load_datamanager();
         
@@ -163,7 +170,7 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
         }
 
         $this->_prepare_request_data();
-        $_MIDCOM->set_26_request_metadata($this->_article->revised, $this->_article->guid);
+        $_MIDCOM->set_26_request_metadata($this->_article->metadata->revised, $this->_article->guid);
         $_MIDCOM->bind_view_to_object($this->_article, $this->_datamanager->schema->name);
 
         if (   $this->_config->get('indexinnav')

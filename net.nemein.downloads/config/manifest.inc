@@ -1,5 +1,34 @@
-'name' => 'net.nemein.downloads',
-'purecode' => false,
-'version' => 1,
-'privileges' =>  Array(),
-'class_definitions' => Array(),
+
+  'name' => 'net.nemein.downloads',
+  'purecode' => false,
+  'version' => '1.0.2beta1',
+  'state' => 'beta',
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+  ),
+  'package.xml' => 
+  array (
+    'summary' => 'Download management',
+    'description' => 'Management of downloadable files',
+    'maintainers' => 
+    array (
+      'bergie' => 
+      array (
+        'name' => 'Henri Bergius',
+        'email' => 'henri.bergius@iki.fi',
+        'role' => 'lead',
+      ),
+    ),
+    'dependencies' => 
+    array (
+      'midcom.helper.datamanager2' => 
+      array (
+      ),
+      'midcom' => 
+      array (
+      ),
+    ),
+  ),

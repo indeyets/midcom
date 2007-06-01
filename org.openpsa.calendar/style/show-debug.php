@@ -3,7 +3,7 @@
 
 
  echo '<p>Current locale (LC_ALL): '.setlocale(LC_ALL,'0')."</p>\n";
- 
+
 
 $finder=new org_openpsa_event();
 $finder->up=$GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']->id;

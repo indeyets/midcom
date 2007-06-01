@@ -564,6 +564,7 @@ function _HashHTMLBlocks_InHTML($text, $hash_function, $md_attr) {
     $depth		= 0;	# Current depth inside the tag tree.
     $block_text	= "";	# Temporary text holder for current text.
     $parsed		= "";	# Parsed text that will be returned.
+    $base_tag_name = null;
 
     #
     # Get the name of the starting tag.
@@ -1168,7 +1169,12 @@ function _DoTable_callback($matches) {
     $text .= "<thead>\n";
     $text .= "<tr>\n";
     foreach ($headers as $n => $header)
-        $text .= "  <th$attr[$n]>"._RunSpanGamut(trim($header))."</th>\n";
+    {
+        if (isset($attr[$n]))
+        {
+            $text .= "  <th$attr[$n]>"._RunSpanGamut(trim($header))."</th>\n";
+        }
+    }
     $text .= "</tr>\n";
     $text .= "</thead>\n";
 
@@ -1187,7 +1193,12 @@ function _DoTable_callback($matches) {
 
         $text .= "<tr>\n";
         foreach ($row_cells as $n => $cell)
-            $text .= "  <td$attr[$n]>"._RunSpanGamut(trim($cell))."</td>\n";
+        {
+            if (isset($attr[$n]))
+            {        
+                $text .= "  <td$attr[$n]>"._RunSpanGamut(trim($cell))."</td>\n";
+            }
+        }
         $text .= "</tr>\n";
     }
     $text .= "</tbody>\n";
@@ -1470,17 +1481,17 @@ function _DoCodeBlocks($text) {
 #	Process Markdown `<pre><code>` blocks.
 #
     global $md_tab_width;
-    $text = preg_replace_callback("{
+    $regex = "%
             (?:\\n\\n|\\A)
             (	            # $1 = the code block -- one or more lines, starting with a space/tab
               (?:
-                (?:[ ]\{$md_tab_width} | \\t)  # Lines must start with a tab or a tab-width of spaces
+                (?:[ ]{{$md_tab_width}} | \\t)  # Lines must start with a tab or a tab-width of spaces
                 .*\\n+
               )+
             )
             ((?=^[ ]{0,$md_tab_width}\\S)|\\Z)	# Lookahead for non-space at line-start, or end of doc
-        }xm",
-        '_DoCodeBlocks_callback', $text);
+            %xm";
+    $text = preg_replace_callback($regex, '_DoCodeBlocks_callback', $text);
 
     return $text;
 }

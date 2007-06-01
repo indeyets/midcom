@@ -1,7 +1,7 @@
 <?php
 /**
  * @package org.openpsa.invoices
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: edit.php,v 1.3 2006/06/01 15:28:20 rambo Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,7 +9,7 @@
 
 /**
  * invoice edit/view handler
- * 
+ *
  * @package org.openpsa.invoices
  */
 class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_handler
@@ -29,7 +29,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 
         if (!$this->_datamanager) {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
-            // This will exit. 	 
+            // This will exit.
         }
     }
 
@@ -47,21 +47,21 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         }
         org_openpsa_helpers_schema_modifier($this->_datamanager, 'customerContact', 'widget', 'select', 'default', false);
         org_openpsa_helpers_schema_modifier($this->_datamanager, 'customerContact', 'widget_select_choices', $persons_array, 'default', false);
-        
+
         // And display the organization too
         $organization_array = Array();
-        $organization_array[$customer->id] = $customer->official;                
-        org_openpsa_helpers_schema_modifier($this->_datamanager, 'customer', 'widget', 'select', 'default', false);        
+        $organization_array[$customer->id] = $customer->official;
+        org_openpsa_helpers_schema_modifier($this->_datamanager, 'customer', 'widget', 'select', 'default', false);
         org_openpsa_helpers_schema_modifier($this->_datamanager, 'customer', 'widget_select_choices', $organization_array, 'default', false);
     }
 
     function _modify_schema()
     {
-        debug_add("schema before \n===\n" . sprint_r($this->_datamanager->_layoutdb['default']) . "===\n");    
-        
+        debug_add("schema before \n===\n" . sprint_r($this->_datamanager->_layoutdb['default']) . "===\n");
+
         // Set default due date
         $due_date = ($this->_config->get('default_due_days') * 3600 * 24) + time();
-        org_openpsa_helpers_schema_modifier($this->_datamanager, 'due', 'default', $due_date, 'default', false);    
+        org_openpsa_helpers_schema_modifier($this->_datamanager, 'due', 'default', $due_date, 'default', false);
 
         // Generate invoice number
         // TODO: Check that a default hasn't already been set
@@ -77,7 +77,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
             {
                 $vat_values[$vat] = "{$vat}%";
             }
-            org_openpsa_helpers_schema_modifier($this->_datamanager, 'vat', 'widget', 'select', 'default', false);        
+            org_openpsa_helpers_schema_modifier($this->_datamanager, 'vat', 'widget', 'select', 'default', false);
             org_openpsa_helpers_schema_modifier($this->_datamanager, 'vat', 'widget_select_choices', $vat_values, 'default', false);
         }
 
@@ -95,9 +95,9 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
                     $organization = new org_openpsa_contacts_group($member->gid);
                     $organizations[$organization->id] = $organization->official;
                 }
-                
+
                 //Fill the customer field to DM
-                org_openpsa_helpers_schema_modifier($this->_datamanager, 'customer', 'widget', 'select', 'default', false);        
+                org_openpsa_helpers_schema_modifier($this->_datamanager, 'customer', 'widget', 'select', 'default', false);
                 org_openpsa_helpers_schema_modifier($this->_datamanager, 'customer', 'widget_select_choices', $organizations, 'default', false);
             }
             elseif ($this->_request_data['invoice']->customer)
@@ -105,7 +105,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
                 $customer = new org_openpsa_contacts_group($this->_request_data['invoice']->customer);
                 $this->_populate_schema_contacts_for_customer($customer);
             }
-                        
+
             if ($this->_request_data['invoice']->sent)
             {
                 org_openpsa_helpers_schema_modifier($this->_datamanager, 'sent', 'hidden', false, 'default', false);
@@ -125,34 +125,34 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
             else
             {
                 // We don't know company, present customer contact as contactchooser and hide customer field
-                org_openpsa_helpers_schema_modifier($this->_datamanager, 'customer', 'hidden', true, 'default', false);        
+                org_openpsa_helpers_schema_modifier($this->_datamanager, 'customer', 'hidden', true, 'default', false);
             }
         }
         debug_add("schema after \n===\n" . sprint_r($this->_datamanager->_layoutdb['default']) . "===\n");
     }
-    
+
     function _load_invoice($identifier)
     {
         if (!isset($this->_datamanager))
         {
             $this->_initialize_datamanager($this->_config->get('schemadb'));
         }
-        
+
         $this->_request_data['invoice'] = new org_openpsa_invoices_invoice($identifier);
-        
+
         if (!is_object($this->_request_data['invoice']))
         {
             return false;
         }
-        
-        $this->_modify_schema();        
-                
+
+        $this->_modify_schema();
+
         // Load the project to datamanager
         if (!$this->_datamanager->init($this->_request_data['invoice']))
         {
             return false;
         }
-        
+
         return $this->_request_data['invoice'];
     }
 
@@ -163,7 +163,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
             'success' => false,
             'storage' => null,
         );
-        $invoice = new org_openpsa_invoices_invoice();        
+        $invoice = new org_openpsa_invoices_invoice();
         $stat = $invoice->create();
         if ($stat)
         {
@@ -181,24 +181,24 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         {
             $_MIDCOM->generate_error(MIDCOM_ERRFORBIDDEN, 'Only POST requests are allowed here.');
         }
-            
+
         $_MIDCOM->auth->require_valid_user();
-        
-        $this->_request_data['invoice'] = $this->_load_invoice($args[0]);     
+
+        $this->_request_data['invoice'] = $this->_load_invoice($args[0]);
         if (!$this->_request_data['invoice'])
         {
             return false;
         }
-        
+
         $this->_request_data['invoice']->require_do('midgard:update');
 
         if (!$this->_request_data['invoice']->sent)
-        {        
+        {
             $this->_request_data['invoice']->sent = time();
             $this->_request_data['invoice']->update();
-            
+
             $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('org.openpsa.invoices'), sprintf($this->_request_data['l10n']->get('marked invoice "%s" sent'), $this->_request_data['invoice']->invoiceNumber), 'ok');
-            
+
             // Close "Send invoice" task
             $qb = org_openpsa_relatedto_relatedto::new_query_builder();
             $qb->add_constraint('toGuid', '=', $this->_request_data['invoice']->guid);
@@ -220,7 +220,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 
         }
 
-        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);          
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         $_MIDCOM->relocate("{$prefix}invoice/{$this->_request_data['invoice']->guid}.html");
         // This will exit
     }
@@ -233,15 +233,15 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         }
 
         $_MIDCOM->auth->require_valid_user();
-        
+
         $this->_request_data['invoice'] = $this->_load_invoice($args[0]);
         if (!$this->_request_data['invoice'])
         {
             return false;
-        }        
-        
+        }
+
         $this->_request_data['invoice']->require_do('midgard:update');
-        
+
         if (!$this->_request_data['invoice']->paid)
         {
             $this->_request_data['invoice']->paid = time();
@@ -250,11 +250,11 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
             $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('org.openpsa.invoices'), sprintf($this->_request_data['l10n']->get('marked invoice "%s" paid'), $this->_request_data['invoice']->invoiceNumber), 'ok');
         }
 
-        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);          
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         $_MIDCOM->relocate("{$prefix}invoice/{$this->_request_data['invoice']->guid}.html");
         // This will exit
     }
-    
+
     function _handler_view($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -263,7 +263,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         {
             return false;
         }
-        
+
         $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('invoice') . ' ' . $this->_request_data['invoice']->invoiceNumber);
 
         $this->_view_toolbar->add_item(
@@ -275,7 +275,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
                 MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_do('midgard:update', $this->_request_data['invoice']),
             )
         );
-        
+
         if (!$this->_request_data['invoice']->sent)
         {
             $this->_view_toolbar->add_item(
@@ -300,17 +300,112 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
                     MIDCOM_TOOLBAR_POST => true,
                     MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_do('midgard:update', $this->_request_data['invoice']),
                 )
-            );        
+            );
         }
-        
-        $this->_view_toolbar->bind_to($this->_request_data['invoice']);
+
+        $this->_view_toolbar->add_item(
+            Array(
+                MIDCOM_TOOLBAR_URL => "invoice/delete/{$this->_request_data['invoice']->guid}.html",
+                MIDCOM_TOOLBAR_LABEL => $data['l10n_midcom']->get('delete'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_do('midgard:delete', $this->_request_data['invoice']),
+            )
+        );
+
+        $this->_view_toolbar->bind_to($data['invoice']);
 
         return true;
     }
 
+    function _count_invoice_hours()
+    {
+        $_MIDCOM->componentloader->load('org.openpsa.projects');
+        $qb = org_openpsa_invoices_invoice_hour::new_query_builder();
+        $qb->add_constraint('invoice', '=', $this->_request_data['invoice']->id);
+        $hour_links = $qb->execute();
+        if (!is_array($hour_links))
+        {
+            return false;
+        }
+        $this->_request_data['sorted_reports'] = array
+        (
+            'reports' => array(),
+            'approved' => array
+            (
+                'hours' => 0,
+                'reports' => array(),
+            ),
+            'not_approved' => array
+            (
+                'hours' => 0,
+                'reports' => array(),
+            ),
+            'tasks' => array(),
+            // TODO other sorts ?
+        );
+        foreach ($hour_links as $link)
+        {
+            $report = new org_openpsa_projects_hour_report($link->hourReport);
+            if (!$report)
+            {
+                // Could not fetch report for some reason
+                continue;
+            }
+            $this->_request_data['sorted_reports']['reports'][$report->guid] = $report;
+            switch (true)
+            {
+                case ($report->is_approved):
+                    $sort =& $this->_request_data['sorted_reports']['approved'];
+                    break;
+                case (!$report->is_approved):
+                    $sort =& $this->_request_data['sorted_reports']['not_approved'];
+                    break;
+                default:
+                    // Could not figure correct sort key (switch is also a for statement so must continue two levels
+                    continue 2;
+                    break;
+            }
+            if (!array_key_exists($report->task, $this->_request_data['sorted_reports']['tasks']))
+            {
+                $this->_request_data['sorted_reports']['tasks'][$report->task] = array
+                (
+                    'hours' => 0,
+                    'reports' => array(),
+                );
+            }
+            $sort2 =& $this->_request_data['sorted_reports']['tasks'][$report->task];
+            $sort['hours'] += $report->hours;
+            $sort2['hours'] += $report->hours;
+            // PHP5-TODO: Must be copy-by-value
+            $sort['reports'][] =& $this->_request_data['sorted_reports']['reports'][$report->guid];
+            $sort2['reports'][] =& $this->_request_data['sorted_reports']['reports'][$report->guid];
+        }
+    }
+
     function _show_view($handler_id, &$data)
     {
-        $this->_request_data['invoice_dm']  = $this->_datamanager;
+        $data['invoice_dm']  = $this->_datamanager;
+        $this->_count_invoice_hours();
+        /*
+        // List hour reports invoiced in this invoice
+        $data['invoice_hours'] = array();
+        $hours_qb = org_openpsa_invoices_invoice_hour::new_query_builder();
+        $hours_qb->add_constraint('invoice', '=', $data['invoice']->id);
+        //TODO: 1.8 $hours_qb->add_order('hourReport.task');
+        //TODO: 1.8 $hours_qb->add_order('hourReport.date');
+        $hours = $hours_qb->execute();
+        foreach ($hours as $invoice_hour)
+        {
+            $hour_report = new org_openpsa_projects_hour_report($invoice_hour->hourReport);
+            if (!array_key_exists($hour_report->task, $data['invoice_hours']))
+            {
+                $data['invoice_hours'][$hour_report->task] = array();
+            }
+            $data['invoice_hours'][$hour_report->task][] = $hour_report;
+        }
+        */
+
         midcom_show_style('show-invoice');
     }
 
@@ -319,9 +414,9 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         $_MIDCOM->auth->require_valid_user();
         $this->_request_data['invoice'] = $this->_load_invoice($args[0]);
         $this->_request_data['invoice']->require_do('midgard:update');
-        
-        $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('invoice') . ' ' . $this->_request_data['invoice']->invoiceNumber);  
-    
+
+        $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('invoice') . ' ' . $this->_request_data['invoice']->invoiceNumber);
+
         switch ($this->_datamanager->process_form())
         {
             case MIDCOM_DATAMGR_EDITING:
@@ -329,13 +424,13 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
                 org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
                 return true;
                 // This will break;
-                
-            case MIDCOM_DATAMGR_SAVED:                
+
+            case MIDCOM_DATAMGR_SAVED:
             case MIDCOM_DATAMGR_CANCELLED:
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                     . "invoice/" . $this->_request_data['invoice']->guid);
                 // This will exit()
-        
+
             case MIDCOM_DATAMGR_FAILED:
                 $this->errstr = "Datamanager: " . $GLOBALS["midcom_errstr"];
                 $this->errcode = MIDCOM_ERRCRIT;
@@ -358,7 +453,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
     {
         $_MIDCOM->auth->require_valid_user();
         $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_invoices_invoice');
-        
+
         if (   $handler_id == 'invoice_new'
             && count($args) == 1)
         {
@@ -374,14 +469,14 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         {
             $this->_initialize_datamanager($this->_config->get('schemadb'));
         }
-        
+
         $this->_modify_schema();
 
         if (!$this->_datamanager->init_creation_mode('default', $this, '_creation_dm_callback'))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "Failed to initialize datamanger in creation mode for schema 'default'.");
-            // This will exit   
+            // This will exit
         }
 
         switch ($this->_datamanager->process_form())
@@ -392,36 +487,36 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
                 // Add toolbar items
                 org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
                 break;
-            
+
             case MIDCOM_DATAMGR_EDITING:
-            case MIDCOM_DATAMGR_SAVED:                    
+            case MIDCOM_DATAMGR_SAVED:
                 debug_add("First time submit, the DM has created an object");
 
                 $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('org.openpsa.invoices'), sprintf($this->_request_data['l10n']->get('invoice %s created'), $this->_request_data['invoice']->invoiceNumber), 'ok');
-                
+
                 // Generate "Send invoice" task
                 $invoice_sender_guid = $this->_config->get('invoice_sender');
                 if (!empty($invoice_sender_guid))
                 {
                     $this->_request_data['invoice']->generate_invoicing_task($invoice_sender_guid);
                 }
-                                
+
                 // Relocate to main view
-                $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);          
+                $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 $_MIDCOM->relocate("{$prefix}invoice/edit/{$this->_request_data['invoice']->guid}.html");
                 break;
-            
+
             case MIDCOM_DATAMGR_CANCELLED_NONECREATED:
                 debug_add('Cancel without anything being created, redirecting to the welcome screen.');
                 $_MIDCOM->relocate('');
                 // This will exit
-            
+
             case MIDCOM_DATAMGR_CANCELLED:
                 $this->errcode = MIDCOM_ERRCRIT;
                 $this->errstr = 'Method MIDCOM_DATAMGR_CANCELLED unknown for creation mode.';
                 debug_pop();
                 return false;
-            
+
             case MIDCOM_DATAMGR_FAILED:
             case MIDCOM_DATAMGR_CREATEFAILED:
                 debug_add('The DM failed critically, see above.');
@@ -429,17 +524,17 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
                 $this->errcode = MIDCOM_ERRCRIT;
                 debug_pop();
                 return false;
-            
+
             default:
                 $this->errcode = MIDCOM_ERRCRIT;
                 $this->errstr = 'Method unknown';
                 debug_pop();
                 return false;
-            
+
         }
 
         $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('create invoice'));
-        
+
         return true;
     }
 

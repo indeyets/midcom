@@ -27,6 +27,7 @@ ALTER TABLE org_openpsa_salesproject ADD COLUMN creator int(11) NOT NULL default
 ALTER TABLE org_openpsa_salesproject ADD COLUMN revisor int(11) NOT NULL default '0';
 ALTER TABLE org_openpsa_salesproject ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
 ALTER TABLE org_openpsa_salesproject ADD COLUMN revision int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_salesproject ADD COLUMN code varchar(80) NOT NULL default '';
 
 #SalesProject Member
 CREATE TABLE org_openpsa_salesproject_member (
@@ -80,6 +81,10 @@ ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN plannedCost float NO
 ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN costPerUnit float NOT NULL default '0';
 ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN costType varchar(1) NOT NULL default '';
 ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN invoiceByActualUnits int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN invoiceApprovedOnly int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN uninvoiceableUnits float NOT NULL default '0';
+ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN supplier int(11) NOT NULL default '0';
+ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN continuous int(11) NOT NULL default '0';
 #metadata fields
 ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
 ALTER TABLE org_openpsa_salesproject_deliverable ADD COLUMN creator int(11) NOT NULL default '0';

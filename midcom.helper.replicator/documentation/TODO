@@ -1,0 +1,10 @@
+midcom.helper.replicator TODO
+=============================
+
+## Stopping replication loops
+
+In 2-way many-to-many or one-to-one there is a significant risk of looping: When you import an object its watchers will be called (to propagate the replication onwards), and this would cause it also to be replicated back to where it came from.
+
+We need some way to prevent replicating change that we import back to its originators (which may be a long chain in some cases).
+
+Idea: Compare item's metadata.revision in DB to the one in XML, and then use that as a check whether we need to import the item.

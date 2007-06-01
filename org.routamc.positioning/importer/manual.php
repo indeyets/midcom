@@ -21,7 +21,7 @@ class org_routamc_positioning_importer_manual extends org_routamc_positioning_im
     {
          parent:: org_routamc_positioning_importer();
     }
-    
+
     /**
      * Import manually entered log entry. The entries are associative arrays containing
      * some or all of the following keys:
@@ -40,7 +40,7 @@ class org_routamc_positioning_importer_manual extends org_routamc_positioning_im
     {
         $this->log = new org_routamc_positioning_log_dba();
         $this->log->importer = 'manual';
-        
+
         // Set different person if required
         if (array_key_exists('person', $log))
         {
@@ -48,22 +48,22 @@ class org_routamc_positioning_importer_manual extends org_routamc_positioning_im
         }
         else
         {
-            $this->log->person = $_MIDGARD['user'];        
-        }        
+            $this->log->person = $_MIDGARD['user'];
+        }
         $this->log->date = time();
-        
+
         // Figure out which option we will use, starting from best option
-        
-        // Best option: we know coordinates            
+
+        // Best option: we know coordinates
         if (   array_key_exists('latitude', $log)
             && array_key_exists('longitude', $log))
         {
             // Manually entered positions are assumed to be only semi-accurate
             $this->log->accuracy = ORG_ROUTAMC_POSITIONING_ACCURACY_MANUAL;
-        
+
             // Normalize coordinates to decimal
             $coordinates = $this->normalize_coordinates($log['latitude'], $log['longitude']);
-            
+
             $this->log->latitude = $coordinates['latitude'];
             $this->log->longitude = $coordinates['longitude'];
         }
@@ -73,10 +73,10 @@ class org_routamc_positioning_importer_manual extends org_routamc_positioning_im
         {
             // Aerodrome position is not usually very accurate, except if we're at the airport of course
             $this->log->accuracy = ORG_ROUTAMC_POSITIONING_ACCURACY_CITY;
-            
+
             // Normalize aerodrome name
             $aerodrome = strtoupper($log['aerodrome']);
-            
+
             // Seek the aerodrome entry, first by accurate match
             $aerodrome_entry = null;
             $qb = org_routamc_positioning_aerodrome_dba::new_query_builder();
@@ -90,20 +90,20 @@ class org_routamc_positioning_importer_manual extends org_routamc_positioning_im
             {
                 $aerodrome_entry = $matches[0];
             }
-            
+
             if (is_null($aerodrome_entry))
             {
                 // Couldn't match the entered city to a location
                 $this->error = 'POSITIONING_AERODROME_NOT_FOUND';
                 return false;
             }
-        
+
             // Normalize coordinates
             $this->log->latitude = $aerodrome_entry->latitude;
             $this->log->longitude = $aerodrome_entry->longitude;
             $this->log->altitude = $aerodrome_entry->altitude;
         }
-        
+
         // City and country entered
         if (   array_key_exists('city', $log)
             && array_key_exists('country', $log))
@@ -113,7 +113,7 @@ class org_routamc_positioning_importer_manual extends org_routamc_positioning_im
             $this->log->altitude = 0;
             // Normalize country name
             $country = $this->normalize_country($log['country']);
-            
+
             // Seek the city entry, first by accurate match
             $city_entry = null;
             $qb = org_routamc_positioning_city_dba::new_query_builder();
@@ -137,25 +137,25 @@ class org_routamc_positioning_importer_manual extends org_routamc_positioning_im
                     $city_entry = $matches[0];
                 }
             }
-            
+
             if (is_null($city_entry))
             {
                 // Couldn't match the entered city to a location
                 $this->error = 'POSITIONING_CITY_NOT_FOUND';
                 return false;
             }
-        
+
             // Normalize coordinates
             $this->log->latitude = $city_entry->latitude;
             $this->log->longitude = $city_entry->longitude;
         }
-        
+
         // Save altitude if provided
         if (array_key_exists('altitude', $log))
         {
             $this->log->altitude = $log['altitude'];
-        }    
-        
+        }
+
         // Try to create the entry
         //print_r($this->log);
         //die();
@@ -163,7 +163,7 @@ class org_routamc_positioning_importer_manual extends org_routamc_positioning_im
         $this->error = mgd_errstr();
         return $stat;
     }
-    
+
     function normalize_country($country)
     {
         // TODO: Modify country to conform to ISO standards

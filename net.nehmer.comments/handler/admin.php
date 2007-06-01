@@ -25,7 +25,7 @@ class net_nehmer_comments_handler_admin extends midcom_baseclasses_components_ha
      */
     function _handler_welcome($handler_id, $args, &$data)
     {
-
+        $_MIDCOM->auth->require_valid_user();
         return true;
     }
 

@@ -55,6 +55,10 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
      */
     function _handler_report($handler_id, $args, &$data)
     {
+        if (!array_key_exists('mark', $_POST))
+        {
+            return false;
+        }    
     
         $this->_post = new net_nemein_discussion_post_dba($args[0]);
         if (!$this->_post)
@@ -64,11 +68,50 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
         
         $this->_post->require_do('midgard:update');
 
-        // Report the abuse
-        $this->_post->report_abuse();
+        switch ($_POST['mark'])
+        {
+            case 'abuse':
+                // Report the abuse
+                $this->_post->report_abuse();
+                // This will exit
+                
+            case 'confirm_abuse':
+                $this->_post->require_do('net.nemein.discussion:moderation');
+                // Confirm the message is abuse
+                $this->_post->confirm_abuse();
+                
+                // Update the index
+                $indexer =& $_MIDCOM->get_service('indexer');
+                $indexer->delete($this->_post->guid);
+                
+                break;
+                
+            case 'confirm_junk':
+                $this->_post->require_do('net.nemein.discussion:moderation');
+                // Confirm the message is abuse
+                $this->_post->confirm_junk();
+                
+                // Update the index
+                $indexer =& $_MIDCOM->get_service('indexer');
+                $indexer->delete($this->_post->guid);
+                
+                break;
+                
+            case 'not_abuse':
+                $this->_post->require_do('net.nemein.discussion:moderation');
+                // Confirm the message is abuse
+                $this->_post->report_not_abuse();
+                $_MIDCOM->relocate("read/{$this->_post->guid}.html");
+                // This will exit
+        }                
         
         $this->_thread = $this->_post->get_parent();
-        $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$this->_thread->name}/");
+        if ($this->_thread->posts > 0)
+        {
+            $_MIDCOM->relocate("{$this->_thread->name}/");
+            // This will exit.
+        }
+        $_MIDCOM->relocate('');
         // This will exit.
     }
 }

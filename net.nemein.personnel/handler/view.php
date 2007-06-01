@@ -26,19 +26,19 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
     /**
      * The persons to display on the index page, already ordered correctly.
      *
-     * @var Array
+     * @var array
      * @access private
      */
     var $_persons = null;
 
     /**
-     * The Datamanager of the article to display.
+     * The Datamanager of the person to display.
      *
      * @var midcom_helper_datamanager2_datamanager
      * @access private
      */
     var $_datamanager = null;
-
+    
     /**
      * The filter character used in alphabetic indexing mode.
      *
@@ -70,12 +70,12 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
      * Internal helper which wraps the membership->person transformation in an
      * ACL safe way.
      *
-     * @param Array $membership A resultset that was queried using midcom_baseclasses_database_member::new_query_builder()
-     * @return Array An array of midcom_baseclasses_database_person() objects.
+     * @param array $membership A resultset that was queried using midcom_baseclasses_database_member::new_query_builder()
+     * @return array An array of midcom_baseclasses_database_person() objects.
      */
     function _get_persons_for_memberships($memberships)
     {
-        $result = Array();
+        $result = array();
         foreach ($memberships as $membership)
         {
             $person = new midcom_db_person($membership->uid);
@@ -88,11 +88,13 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
         }
         return $result;
     }
-
+    
     /**
      * This function creates a DM2 Datamanager instance to without any set storage so far.
      * The configured schema will be selected, but no set_storage is done. The various
      * view handlers treat this differently.
+     * 
+     * @access private
      */
     function _load_datamanager()
     {
@@ -108,50 +110,93 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
     }
 
     /**
+     * This function creates a DM2 Datamanager instance to without any set storage so far.
+     * The configured schema will be selected, but no set_storage is done. The various
+     * view handlers treat this differently.
+     * 
+     * @access private
+     */
+    function _load_datamanager_for_groups()
+    {
+        $this->_dm_group = new midcom_helper_datamanager2_datamanager(
+            midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb')));
+
+        if (   ! $this->_dm_group
+            || ! $this->_dm_group->set_schema($this->_config->get('schema_group')))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a DM2 instance.');
+            // This will exit.
+        }
+    }
+
+    /**
      * Can-Handle check against the person username and GUID (in this order). We have to do
      * this explicitly in can_handle already, otherwise we would hide all subtopics as the
      * request switch accepts all argument count matches unconditionally.
      *
      * If an argument matches both a GUID and a username (highly improbable), the result is
      * undefined.
+     * 
+     * @access private
+     * @return boolean Indicating success
      */
     function _can_handle_person ($handler_id, $args, &$data)
     {
+        if ($handler_id === 'view-grouped-person')
+        {
+            $arg = $args[1];
+            $this->_group = new midcom_db_group($args[0]);
+        }
+        else
+        {
+            $arg = $args[0];
+        }
+        
         if (!$this->_config->get('group'))
         {
             return false;
         }
         $qb = midcom_db_member::new_query_builder();
 
-        if (version_compare(mgd_version(), '1.7', '>'))
+        if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
         {
             $qb->add_constraint('gid.guid', '=', $this->_config->get('group'));
             $qb->begin_group('OR');
-            $qb->add_constraint('uid.guid', '=', $args[0]);
-            $qb->add_constraint('uid.username', '=', $args[0]);
+            $qb->add_constraint('uid.guid', '=', $arg);
+            $qb->add_constraint('uid.username', '=', $arg);
             $qb->end_group();
         }
         else
         {
             $group = new midcom_db_group($this->_config->get('group'));
             $qb->add_constraint('gid.id', '=', $group->id);
-            $qb->add_constraint('uid.username', '=', $args[0]);
+            $qb->add_constraint('uid.username', '=', $arg);
         }
 
         $qb->set_limit(1);
         $qb->hide_invisible = false;
 
-        mgd_debug_start();
+        //mgd_debug_start();
         $result = $qb->execute_unchecked();
-        mgd_debug_stop();
+        //mgd_debug_stop();
 
         if (! $result)
         {
             if ($qb->denied)
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRDENIED,
-                    "You do not have sufficient privileges to view the memberships of person '{$args[0]}'.");
+                    "You do not have sufficient privileges to view the memberships of person '{$arg}'.");
                // This will exit.
+            }
+            elseif (mgd_is_guid($arg))
+            {
+                $person = new midcom_db_person($arg);
+                if (!$person)
+                {
+                    return false;
+                }
+                $this->_person = $person;
+                return true;
             }
             else
             {
@@ -165,7 +210,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
             if (mgd_errno() == MGD_ERR_ACCESS_DENIED)
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRDENIED,
-                    "You do not have sufficient privileges to view the person '{$args[0]}'.");
+                    "You do not have sufficient privileges to view the person '{$arg}'.");
                // This will exit.
             }
             else
@@ -188,6 +233,9 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
 
     /**
      * Displays the detail view of a given person.
+     * 
+     * @access private
+     * @return boolean Indicating success
      */
     function _handler_person($handler_id, $args, &$data)
     {
@@ -196,44 +244,84 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
 
         if ($this->_person->can_do('midgard:update'))
         {
-            $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "admin/edit/{$this->_person->guid}.html",
-                MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
-            ));
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "admin/edit/{$this->_person->guid}.html",
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'e',
+                )
+            );
         }
         if ($this->_person->can_do('midgard:delete'))
         {
-            $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "admin/delete/{$this->_person->guid}.html",
-                MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
-            ));
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "admin/delete/{$this->_person->guid}.html",
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'd',
+                )
+            );
         }
 
-        if (version_compare(mgd_version(), '1.7', '>'))
+        if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
         {
             $_MIDCOM->set_26_request_metadata($this->_person->metadata->revised, $this->_person->guid);
         }
+        
         $this->_view_toolbar->bind_to($this->_person);
         $this->_prepare_request_data();
 
-
-        $tmp = Array();
+        $tmp = array();
+        
         if ($this->_config->get('enable_alphabetical'))
         {
             $this->_alpha_filter = $this->_person->lastname[0];
-            $tmp[] = Array
+            $tmp[] = array
             (
                 MIDCOM_NAV_URL => "alpha/{$this->_alpha_filter}.html",
                 MIDCOM_NAV_NAME => $this->_alpha_filter,
             );
         }
-        $tmp[] = Array
-        (
-            MIDCOM_NAV_URL => net_nemein_personnel_viewer::get_url($this->_person),
-            MIDCOM_NAV_NAME => $this->_person->name,
-        );
+        
+        // Set the active navigation leaf
+        if ($handler_id === 'view-grouped-person')
+        {
+            switch ($this->_config->get('display_in_navigation'))
+            {
+                case 'groups':
+                    $this->_component_data['active_leaf'] = $this->_group->guid;
+                    $tmp[$this->_person->guid] = array
+                    (
+                        MIDCOM_NAV_URL => "group/{$this->_person->guid}/{$this->_person->guid}/",
+                        MIDCOM_NAV_NAME => $this->_person->name,
+                    );
+                    break;
+                    
+                case 'personnel':
+                    $this->_component_data['active_leaf'] = $this->_person->guid;
+                    break;
+                    
+                default:
+                    $tmp[$this->_group->guid] = array
+                    (
+                        MIDCOM_NAV_URL => "group/{$this->_group->guid}/",
+                        MIDCOM_NAV_NAME => ($this->_group->official) ? $this->_group->official : $this->_group->name,
+                    );
+                    $tmp[$this->_person->guid] = array
+                    (
+                        MIDCOM_NAV_URL => "group/{$this->_group->guid}/{$this->_person->guid}/",
+                        MIDCOM_NAV_NAME => $this->_person->name,
+                    );
+                
+            }
+        }
+        
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
 
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_person->name}");
@@ -256,7 +344,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
     {
         $qb = midcom_db_member::new_query_builder();
         
-        if (version_compare(mgd_version(), '1.7', '>'))
+        if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
         {
             $qb->add_constraint('gid.guid', '=', $this->_config->get('group'));
     
@@ -292,7 +380,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
      */
     function _process_preferred_person()
     {
-        $new_persons = Array();
+        $new_persons = array();
         $preferred_person = null;
         $preferred_person_guid = $this->_config->get('preferred_person');
 
@@ -314,7 +402,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
             $this->_persons = $new_persons;
         }
     }
-
+    
     /**
      * Renders the Person Index. If alphabetic indexing is enabled, the filter char
      * is extracted and set so that the index is limited accordingly. (Defaults to 'A'
@@ -326,6 +414,9 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
         {
             $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "config.html");
         }
+        
+        $this->_group = new midcom_db_group($this->_config->get('group'));
+        $data['group'] =& $this->_group;
     
         if ($this->_config->get('enable_alphabetical'))
         {
@@ -348,8 +439,8 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
             }
             $this->_request_data['alpha_filter'] = $this->_alpha_filter;
 
-            $tmp = Array();
-            $tmp[] = Array
+            $tmp = array();
+            $tmp[] = array
             (
                 MIDCOM_NAV_URL => "alpha/{$this->_alpha_filter}.html",
                 MIDCOM_NAV_NAME => $this->_alpha_filter,
@@ -357,15 +448,131 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
             $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
 
         }
-
-        $this->_load_index_persons();
+        
+        switch ($this->_config->get('sort_order'))
+        {
+            case 'sorted':
+                $this->_helper = new net_nemein_personnel_sorted_groups($this->_config->get('group'), true);
+                $this->_grouped_persons = $this->_helper->get_sorted_members();
+                
+                foreach ($this->_grouped_persons as $group => $persons)
+                {
+                    foreach ($persons as $person)
+                    {
+                        $this->_persons[] = $person;
+                    }
+                }
+                break;
+                
+            case 'sorted and grouped':
+                $this->_load_datamanager_for_groups();
+                $this->_helper = new net_nemein_personnel_sorted_groups($this->_config->get('group'), true);
+                $this->_persons = $this->_helper->get_sorted_members();
+                break;
+                
+            default:
+                $this->_load_index_persons();
+                break;
+        }
+        
         $this->_load_datamanager();
+
+        $this->_view_toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "admin/edit/group/{$data['group']->guid}/",
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('edit group'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_people.png',
+            )
+        );
 
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
         $this->_prepare_request_data();
         $_MIDCOM->set_pagetitle($this->_topic->extra);
-
+        
+        $this->_view_toolbar->bind_to($this->_group);
+        
         return true;
+    }
+    
+    /**
+     * Show grouped personnel records
+     * 
+     * @access private
+     */
+    function _show_grouped($handler_id, &$data)
+    {
+        $data['topic'] =& $this->_topic;
+        $data['root_group'] =& $this->_group;
+        
+        $this->_dm_group->set_storage($this->_group);
+        $data['datamanager'] =& $this->_dm_group;
+        
+        midcom_show_style('show-grouped-header');
+        
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        
+        $this->_display_group($this->_persons, &$data);
+        
+        midcom_show_style('show-grouped-footer');
+    }
+    
+    function _display_group($array, &$data)
+    {
+        $data['row'] = 1;
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        
+        foreach ($array as $group_id => $persons)
+        {
+            if (   $group_id === $this->_group->id
+                && $this->_config->get('show_unsorted') === false)
+            {
+                continue;
+            }
+            
+            $data['group'] = new midcom_db_group($group_id);
+            $this->_dm_group->set_storage($data['group']);
+            $data['datamanager'] =& $this->_dm_group;
+            
+            midcom_show_style('show-group-header');
+            
+            midcom_show_style('show-group-row-header');
+            
+            $i = 0;
+            foreach ($persons as $person)
+            {
+                $this->_datamanager->set_storage($person);
+                $data['datamanager'] =& $this->_datamanager;
+                $data['person'] =& $person;
+                
+                $url = net_nemein_personnel_viewer::get_url($person, $this->_group->guid);
+                
+                $data['column'] = (int) fmod($i, (int) $this->_config->get('persons_in_row')) + 1;
+                $data['view_url'] = "{$prefix}{$url}";
+                
+                midcom_show_style('show-group-person');
+                $i++;
+                
+                if ((int) fmod($i, (int) $this->_config->get('persons_in_row')) === 0)
+                {
+                    $data['row']++;
+                    midcom_show_style('show-group-row-footer');
+                    midcom_show_style('show-group-row-header');
+                }
+            }
+            
+            while ((int) fmod($i, (int) $this->_config->get('persons_in_row')) !== 0)
+            {
+                $data['column'] = (int) fmod($i, $this->_config->get('persons_in_row')) + 1;
+                midcom_show_style('show-group-empty-cell');
+                $i++;
+            }
+            
+            midcom_show_style('show-group-row-footer');
+            
+            midcom_show_style('show-group-footer');
+        }
     }
 
     /**
@@ -373,6 +580,12 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
      */
     function _show_index ($handler_id, &$data)
     {
+        if ($this->_config->get('sort_order') === 'sorted and grouped')
+        {
+            $this->_show_grouped($handler_id, &$data);
+            return;
+        }
+        
         if ($this->_persons)
         {
             midcom_show_style('show-index-header');
@@ -390,7 +603,8 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
                 // Finalize the request data
                 $this->_person = $person;
                 $this->_datamanager->set_storage($this->_person);
-                $url = net_nemein_personnel_viewer::get_url($this->_person);
+                $url = net_nemein_personnel_viewer::get_url($this->_person, $this->_group->guid);
+                
                 $data['view_url'] = "{$prefix}{$url}";
 
                 if ($current_col == 0)
@@ -425,5 +639,110 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
         {
             midcom_show_style('show-index-empty');
         }
+    }
+    
+    /**
+     * Check the request for showing people of one single group
+     * 
+     * @access private
+     * @return boolean Indicating success
+     */
+    function _handler_group($handler_id, $args, &$data)
+    {
+        $master_group = new midcom_db_group($this->_config->get('group'));
+        
+        if (   !$master_group
+            || !$master_group->id)
+        {
+            $_MIDCOM->relocate('config/');
+            // This will exit
+        }
+        
+        // Relocate back to master page if trying to request for a simple master group view
+        if ($args[0] === $this->_config->get('group'))
+        {
+            $_MIDCOM->relocate('');
+            // This will exit
+        }
+        
+        $this->_group = new midcom_db_group($args[0]);
+        $data['group'] =& $this->_group;
+        
+        if (   !$data['group']
+            || !$data['group']->id
+            || $data['group']->owner !== $master_group->id)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, 'The requested group was not found!');
+            // This will exit
+        }
+        
+        $this->_helper = new net_nemein_personnel_sorted_groups($args[0]);
+        $this->_persons = $this->_helper->get_sorted_members();
+        
+        $this->_view_toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "admin/edit/group/{$data['group']->guid}/",
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('edit group'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_people.png',
+            )
+        );
+        
+        $this->_view_toolbar->bind_to($data['group']);
+        
+        $this->_load_datamanager();
+        $this->_load_datamanager_for_groups();
+        
+        $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
+        $this->_prepare_request_data();
+        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['group']->official}");
+        
+        $this->_view_toolbar->bind_to($data['group']);
+        
+        switch ($this->_config->get('display_in_navigation'))
+        {
+            case 'groups':
+                $this->_component_data['active_leaf'] = $this->_group->guid;
+                $tmp[$this->_person->guid] = array
+                (
+                    MIDCOM_NAV_URL => "group/{$this->_person->guid}/{$this->_person->guid}/",
+                    MIDCOM_NAV_NAME => $this->_person->name,
+                );
+                break;
+                
+            default:
+                $tmp[$this->_group->guid] = array
+                (
+                    MIDCOM_NAV_URL => "group/{$this->_group->guid}/",
+                    MIDCOM_NAV_NAME => ($this->_group->official) ? $this->_group->official : $this->_group->name,
+                );
+        }
+        
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        
+        if ($this->_group->official)
+        {
+            $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_group->official}");
+        }
+        else
+        {
+            $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_group->name}");
+        }
+        
+        return true;
+    }
+    
+    /**
+     * 
+     * 
+     * 
+     */
+    function _show_group($handler_id, &$data)
+    {
+        $this->_dm_group->set_storage($data['group']);
+        $data['datamanager'] =& $this->_dm_group;
+        
+        $this->_display_group($this->_persons, &$data);
     }
 }

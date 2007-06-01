@@ -1,5 +1,6 @@
 // Schema database to use
 'schemadb' => 'file:/net/nehmer/blog/config/schemadb_default.inc',
+'schemadb_feed' => 'file:/net/nemein/rss/config/schemadb_default.inc',
 'schemadbs'      => Array
 (
     'file:/net/nehmer/blog/config/schemadb_default.inc' => 'Default Schema Database',
@@ -8,6 +9,8 @@
 // Use the content from another topic instead of the current one.
 // Do not overwrite this except on a per-topic level!!!
 'symlink_topic' => null,
+
+'view_in_url' => true,
 
 // Specifies how many entries should be shown in the index page.
 'index_entries' => 4,
@@ -31,6 +34,13 @@
 
 // Comma-separated list of categories enabled in this blog
 'categories' => '',
+'categories_custom_enable' => true,
 
 'api_email_enable' => false,
 'api_email_schema' => 'default',
+
+'api_metaweblog_enable' => true,
+'api_metaweblog_schema' => 'default',
+
+'rss_subscription_enable' => false,
+'link_to_external_url' => false,

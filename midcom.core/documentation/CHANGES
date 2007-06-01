@@ -1,0 +1,1220 @@
+                   Midgard Components Changelog
+                   ----------------------------
+CVS Id: $Id$
+
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guaranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completely new features.
+
+--------------------------------
+MidCOM Version 2.8.0beta1, 2007-04-25
+
+- Core
+  + Added support for multilingual content serving based on host lang
+    property
+  ! Moved topic component, style and style_inherit from parameters
+    to properties for much better performance. Requires Midgard 1.8.1
+    or manual changes to MgdObjects.xml
+  ! Switched metadata system to utilize midgard_metadata properties
+  ! Changed cron configuration so that different cron runs are called
+    separately
+  + Exposed metadata datetime properties as unix timestamps
+  + Added new midcom_collector wrapper to the MidCOM DBA
+  + Enabled running MidCOM with Midgard legacy API disabled (as implemented in Midgard 1.8.3+)
+  - Enabled caching of component manifests to a single file
+
+- NAP
+  ! Deprecated the NAP toolbar and navigation rendering methods
+  - NAP uses collector for some lists instead of Query Builder
+
+- Style Engine
+  ! Style elements are now loaded with collector instead of Query Builder.
+    This means empty elements are not shown
+
+- Miscellaneous
+  - Enabled replication tools and style editor in toolbars
+
+--------------------------------
+MidCOM Version 2.6.0, 2006-10-27
+
+- AIS / Aegir
+  + New special Aegir style of AIS
+  + Ais now uses divs+css instead of tables.
+
+- Authentication / Access Control
+  ! Added a full scale Access Control List system as outlined in mRFC 15.
+  + Added a MidCOM driven user/group framework.
+  + Added support for component-defined "virtual" groups. This requires changes
+    to the database structure as outlined in the release notes.
+  - Made the id suffix, domain and path of the simple auth backend's cookie
+    configurable.
+
+- Core
+  ! Moved to use the new $_MIDCOM autoglobal, deprecating $GLOBALS['midcom'].
+    Be aware that you can therefore no longer construct references to this
+    global variable due to some PHP limitations. Rewrite constructs like
+    $this->_midcom =& $GLOBALS['midcom']; to use the $_MIDCOM autoglobal
+    instead.
+  + Added support for automatically instantinated classes to the request base
+    classes. This introduced a new base class as well.
+  + Added support for skipping the page style during the handle phase, mainly
+    targeted for RSS feed and the like. Set $GLOBALS['midcom']->skip_page_style
+    to true to enable this behavoir during the handle phase of your component.
+    Will only be checked for context 0 requests, not dynamic_load runs.
+  - All error pages except the Internal Server Error have been made
+    customizable as outlined in
+    http://www.midgard-project.org/midcom-permalink-c5e99db3cfbb779f1108eff19d262a7c
+  ! Moved the Permalink system into its own service to avoid the requirement
+    of having all Permalink-reachable URLs in NAP (for performance reasons).
+    All subsystems which generate or resolve permalinks have been adapted to
+    use the new system, see the individual component changelogs for information
+    whether you components already make use of this feature.
+  ! The component loader now depends on a component manifest which provides
+    metadata about the component itself. This will allow the processing of
+    Privileges, Classes etc. without loading the full component.
+  + Introduced a temporary system to accociate a permalink and a last modified
+    timestamp with a context. This will be superseeded with a full request
+    rewrite after the release of MidCOM 2.6
+  - Live mode output (for example in the midcom-exec handlers) now allows for
+    HTTP Header sending if the current output buffer is still empty.
+  + Introduced a CRON Service that allows for scheduling all kinds of
+    operations within MidCOM with a single call to a MidCOM page.
+  + The toolbar helper now supports FORM based POST requests along the regular
+    A HREFs. This makes immediate toolbar commands Prefetching-safe.
+  + The SG-Config snippetdir is now made configurable to avoid having to use
+    the same config for multiple sites in the same SG. The original behavoir
+    does not change unless you configure new SG-Config dirs.
+  + The attachment server bundled with MidCOM can now be prevented from serving
+    attachments using the midgard:autoserve_attachment privilege in case
+    components want further control about attachment delivery.
+
+- Database Abstraction Layer
+  ! Introduced a complete database abstraction layer. It provides a full layer
+    between the Midgard core and MidCOM and its components. Be aware that the
+    usage of this layer is mandatory in post-2.6 MidCOM versions, MidCOM 2.6
+    will be the ONLY transition version in this respect. The interface classes
+    are automatically built using a class loader service, which creates stub
+    classes in a J2EE like way.
+
+- Datamanager
+  + The end_fieldgroup tag can now close multiple fieldgroups at once.
+  + An integer datatype has been added
+  - The Midgard object update has been optimized to run only once.
+  - There is now a next-generation Datamanger, called "DM2". It is not fully
+    data-compatible to this DM, its changelog can be found in its own
+    component.
+
+- I18n
+  + Added a shortcut to the i18n class to translate l10n string ids. See the
+    midcom_services_i18n::get_string().
+
+- NAP
+  + NAP now shows the configuration of a given Node in MIDCOM_NAV_CONFIGURATION.
+
+--------------------------------
+MidCOM Version 2.4.4, 2005-08-02
+
+- Cache
+  - The content cache module now adds appropriate Expires and
+    Cache-Control headers so that the browsers are forced to
+    revalidate after the end of the expiry.
+
+
+--------------------------------
+MidCOM Version 2.4.3, 2005-07-12
+
+- Baseclasses
+  - The Request base class now provides more information in the
+    _on_handle callback, matching the signature of other handler
+    callbacks.
+  - The Admin Request base class now provides three event handlers
+    which are called from the config handler (in order):
+    void _on_handler_config_dm_preparing()
+    void _on_handler_config_dm_prepared()
+    void _on_handler_config_dm_saved()
+
+- Cache
+  - Live mode now automatically sets the internal no_cache flag, this
+    avoids some headers-have-been-sent errors.
+  - Protected no_cache against already sent header situations.
+
+- Core
+  - The component loader now dumps a list of all loaded components at
+    the end of load_all, for easier debugging of component startup
+    failures.
+
+- Datamanager
+  - Added a finnsih localization of the date widget.
+  - Added an web-calendar icon to the date widget.
+
+
+--------------------------------
+MidCOM Version 2.4.2, 2005-07-06
+
+- Baseclasses
+  - Component Request base class now adds the topic to the request
+    data by default.
+  - Component Admin Request base class no longer mixes up the
+    meta and topic toolbars.
+
+- Datamanager
+  - Activated ENT_QUOTES mode for htmlspecialchars where neccessary.
+  - Fixed several typos for the smiley configuration of the
+    communityhtml datatype
+
+- Distribution
+  - Added the autoconf.php script
+
+- Indexer
+  - Fixed the query interface to correctly work with non-UTF8 sites,
+    this fixes #201.
+  - The documents now replace all HTML Tags by a space, instead of just
+    stripping them. This solves the <li>torben</li><li>nehmer</li>
+    problem outlined in #250, but introduces new problems with phrases,
+    as #255 shows.
+
+- NAP
+  - Added protection against infinite loops in get_breadcrumb_line.php
+
+
+--------------------------------
+MidCOM Version 2.4.1, 2005-06-22
+
+- Core
+  + Added support for the can_handle phase to the request base class.
+  + Added support for dynamically instantinated handler classes to the
+    request base class.
+
+- Datamanager
+  - Fixed a few minor typos.
+
+- NAP
+  - Protected against broken leaf ids while getting leaves.
+  - Decoupled the toolbar interface code from the NAP cache, it produced
+    broken toolbars when user permissions came into play. All requests
+    to $nap_object[MIDCOM_NAV_TOOLBAR] are therefore deprecated without
+    further delay, you have to use
+    midcom_helper_nav::get_toolbar_definition($nap_object) instead, which
+    will return exactly the same information. This is a hot-fix for #244.
+
+
+--------------------------------
+MidCOM Version 2.4.0, 2005-06-08
+
+- Core
+  ! Created a more standardized configuration mechanism. See the file
+    midcom/config/midcom_config.php for details. This will break any
+    site not using MidCOM-Template, which has been adapted to the new
+    config system.
+  + Added support for system-wide configuration options in
+    /etc/midgard/midcom.conf
+  + Added a script for automatic generation of /etc/midgard/midcom.conf
+    and a script to test the actual configuration of a MidCOM host.
+  - Moved code to use the PEAR Package PHP_Compat instead of my own
+    reimplementations.
+  + Added a whole set of base classes to aid component authoring, making
+    it significantly easier. See the documentation package midcom.baseclasses
+    for further details.
+  ! Adapted the component loader and all derived places to support the new
+    component baseclasses. A compatibility-layer for old-style components is
+    in place, but it will be deprecated in 2.6. Components not using the
+    new interface base class will then cease to work.
+  + Added a Metadata interface that is independant of the actual object.
+    It uses GUIDs to link to the conent objects, which can be retrieved
+    using NAP. This is finally a single way to set and retrieve metadata
+    for content objects. See the class midcom_helper_metadata.
+  - The sessioning service now force-opens the session with disabled error
+    reporting, as running session detection from NemeinAuth encoded sessions
+    does not really work.
+
+- AIS
+  + Integrated the new Metadata handler into the UI.
+  + Updated navigation classes that supports dynamic navigation
+  + Added configuraton interface.
+  ! Removed the "Go to page not available" links.
+
+- Caching Engine
+  + Added a uncached operation mode, where the cache is running normally
+    but doesn't write out cache files. This is better then disabling the
+    cache as the regular output control (including the headers added by
+    the engine) are still in place. Use the MidCOM configuration option
+    'cache_uncached' to enable this mode.
+  - When running under PHP 4.3+, the configuration process now tries to
+    autodetect the best available cache handler, currently only supporting
+    the db2, db3 and db4 handlers, as others haven't been tested with
+    MidCOM yet.
+  - Added a "live mode" that allows for the continuing uncached output to
+    the client, mainly geared for status logs (in use during reindexing and
+    n.s.photos bulk uploads).
+  + Added support for 304 Not Modified recognition, which should work even
+    in no_cache mode. Both Etag (If-None-Match) and Last-Modified (If-
+    Modified-Since) Headers are supported, if both are present, of course
+    both must match.
+  ! Completly rebuilt the caching infrastructure into an extensible backend/
+    module based solution. This is the basic building stone for the NAP/
+    Metadata cache. Be aware of the new configuration option naming in
+    midcom_config.php (you should be fine with most defaults though). The old
+    caching code is now deprecated, check the various midcom_services_cache
+    classes for further information. Quick hints: Invalidation is now done
+    on a per-object level (invalidate($guid)), all content-cache related
+    options like no-cache are now in $midcom->cache->content. Most components
+    have been adapted to utilize these fetaures.
+  + Added the NAP cache module, which should greatly speed up navigation
+    building and metadata processing. Whenever possible, use the objects
+    contained in MIDCOM_NAV_OBJECT when doing queries to the database, as
+    this automatically takes the visibility settings into account. Check
+    the documentation of NAP (resolve_guid) and the NAP cache classes in
+    the midcom.services API documentation package. Most components have
+    been adapted to utilize these features.
+  ! The midcom-cache-stats helper has not yet been reimplemented.
+
+- Datamanager
+  - The Datamaanger does now allow you to specify a schema upon
+    initialization. This was required for the Metadata interface to allow
+    editing the same MidgardObject with different schemas.
+  ! The longtext inputstyle has been moved to wrap text using nl2br when
+    displaying using the view mode of the widget.
+  + Added support to change the lables of the save and cancel buttons.
+    They are automatically translated as usual.
+  - Optimized the schema translation, it now only translates the schema
+    you actually need. The schema is not translated before calling init,
+    so when patching schemas during runtime, do it before initializing and
+    you will benefit from the automatic translation as well.
+  + Added support for leaf invalidation with creation mode awareness:
+    Under normal circumstances, only the leaf is invalidated, but if a
+    new object is created, NAP invalidates the current content topic
+    from the component context, assuming that this is the topic that
+    should be invalidated. There is no configurability in this behavoir
+    yet.
+  + Added a beta-grade widget using the TinyMCE editor. This has not
+    yet been tested, so use it at your own risk.
+
+- I18n
+  + The main i18n class midcom_service_i18n does now include two small
+    helper functions to convert any string between UTF-8 and the current
+    local charset. This should encaspulate all iconv calls in the future,
+    components should adapt to this until 2.6.0.
+  ! Centralized the iconv handling into the I18n service. You should no
+    longer call iconv directly, but use $i18n->iconv instead.
+
++ Indexer
+  - Added a new Indexer service. See the documentations on the various
+    midcom_services_indexer* classes and the corresponding MidCOM
+    technical notes.
+
+- NAP
+  ! Rewrote NAP to use the Metadata facilities for Visibility settings.
+    Invisible objects are now no longer passed into the on-site NAP data
+    and ViewerGroups hidden Items are also skipped within AIS. The key
+    MIDCOM_NAV_VISIBLE is now deprecated, the component's value is no longer
+    honored. The Metadata facilities are to be used instead. This fixes
+    these Bugs on components showing ViewerGroups hidden items:
+    #116 (Sitemap) and #113 (AIS).
+  ! The midcom_helper_nav constructor does now use the current context as a
+    default, not the root context. This is more intuitive then the original
+    solution, as you usually want to access the navigatonal data from the
+    context you are running in.
+  ! Integrated with the NAP cache backend, which stores all available
+    NAP objects in a BDB database for quick accesses. The Metadata code
+    does use the MIDCOM_NAV_OBJECT members by default and is therefore
+    operating cached as well.
+  + Optimized the GUID resolver code. First, the GUIDs of the various
+    NAP objects are now tracked by the NAP core, speeding up GUID lookups
+    for known objects greatly. During this, a interface function made
+    available for us in the external NAP API in midcom_helper_nav utilizes
+    this information so that resolve_guid works on the cached information
+    implicitly, as long as the corresponding leaves/nodes have already
+    been loaded.
+  + Rewrote the NAP parameter access code to utilize the
+    $object->$domain_$key syntax instead of $object->parameter to save
+    repeated database queries.
+
+
+--------------------------------
+MidCOM Version 2.2.2, 2005-04-04
+
+- Added a Polish translation
+- Datamanager
+  - Fixed the number type using its own storage handler, as the default
+    double from/to string conversion of PHP throws kommas and dots as
+    decimal separators together, breaking the reading code (decimals
+    got lost).
+- Logging Engine
+  + Added debug_push_class helper, for easily adding $classname::$methodname
+    logging prefixes. Use debug_push_class(__CLASS__, __FUNCTION__) if in
+    doubt.
+
+
+--------------------------------
+MidCOM Version 2.2.1, 2005-02-27
+
+- Core
+  - Fixed the error reporting of the attachment storage loader,
+    it intercepts unserialization failures and logs them
+    accordingly
+
+- Caching Engine
+  ! The cache now honors the currently authenticated user in the
+    cache database, for security reasons. A user can no longer
+    get any cache page which has not been created by a MidCOM
+    instance running with another user ID.
+  + HTTP POST data now automatically kicks in no_cache. See the
+    documentation of midcom_helper__cache_dbm for details. This
+    finally allows clean handling of n.n.discussion like in-page
+    discussion forms.
+  - Cache is now stored based on host ID and page GUID instead of
+    only page GUID to prevent problems on shared midcom-template
+    hosting situations.
+
+- NAP
+  - Fixed the list_child_elements code which did not correctly
+    treat the FALSE return values (typesafe checks needed).
+
+
+--------------------------------
+MidCOM Version 2.2.0, 2005-02-14
+
+- Core
+  - The toolbar interface system now supports optional additional
+    options to the generated links through MIDCOM_TOOLBAR_OPTIONS.
+  + Introduced midgard.* component tree for use with the new Site
+    wizard.
+  - The generate_url_name function does now use the translit package if
+    available.
+  + Added new interface functions to add additional Head tags other
+    then JScipt stuff: add_(link|style|object|meta)_head
+  ! Replaced print_jscripts() with print_head_elements(). (The old
+    method is deprecated but maps to the new one for some time.)
+  + Added an URL interface to the new Permalinks
+    (midcom-permalink-$guid). It redirects to the NAP objects'
+    MIDCOM_NAV_FULLURL in a MidCOM-cacheable manner.
+  - The cache now correctly treats pages with empty content (Location:
+    redirects). The ETag is generated from all headers in that case.
+  + Added a get_host_name helper which generates a fully qualified
+    URL to the host (https[s]://domain[:port]) for convenience.
+  + Added a get_host_prefix helper which generates a fully qualified
+    URL to the root of the host (https[s]://domain[:port]/prefix/)
+    for convenience.
+
+- AIS
+  + Fixed the sorting gui.
+  - Removed various reset buttons for consistency with the Datamanager.
+  + Added a new topic/article sorting GUI (curtesy of tarjei).
+
+- Datamanager
+  + Schemas now get automatically translated using the components and
+    the core l10n databases.
+  - The Datamanger generated forms now use WAI standards to render
+    the form. During this change, the widget codebase has been cleaned
+    up. No existing functionality has been touched here, just the way
+    they are implemented. The CSS sheets in use have also been rewritten.
+  - The reset button has been removed, as it made more trouble than it was
+    worth.
+  - The mailtemplate type now uses the site's default encoding as its
+    own default, instead of an hardcoded UTF-8.
+
+- I18N Framework
+  + Added a string available check to the l10n class the lets you verify
+    if a string is actually available in either the selected or the
+    fallback language. Used by the datamanager schema translation code.
+  - The l10n language databases are now stored as readable text files
+    instead of serialize dumps, for better CVS interactions.
+
+- NAP
+  - Enhanced the NAP toolbar permission checks to match the original
+    midcom-template code more closely. At the moment, special handling
+    for n.n.personnel topics has been added (users can edit only their
+    personal details).
+  + Added Permalink support using an intelligent reverse-GUID-lookup
+    mechanism. Fully qualified Permalinks are available through NAP
+    using MIDCOM_NAV_PERMALINK.
+  + Added a automatically computed fully qualified URL to the NAP
+    object accessible through MIDCOM_NAV_FULLURL. (This is a regular
+    URL, no Permalink.)
+
+
+--------------------------------
+MidCOM Version 2.0.2, 2005-01-27
+
+- Core
+  - Bug #121, incomplete serve_snippet permission checks
+  - Bug #154, mgd_save_var_as_attachment now calls $object->update to work
+    around repligard bugs, see Midgard Bug #25.
+
+- AIS
+  - Bug #141, invalid URL names for topics are now cleaned up automatically.
+
+- Datamanager
+  - Bug #180, added rel='nofollow' to all links generated by the
+    communityhtml type.
+
+
+--------------------------------
+MidCOM Version 2.0.1, 2005-01-14
+
+- Core
+  + Added new system for sorting topics and articles. See helpers/itemlist.php
+    details. (This was actually already in 2.0.0, we just forgot to changelog
+    it.)
+  ! The component loader no longer loads all files in the midcom component
+    directory, but only interfaces.php. This is sufficient for all existing
+    distribution components and makes things much easier with stuff like
+    backup files or Mac OSX metadata files.
+
+- AIS
+  - Bug #112, current location made clearer, did some AIS style cleanup along
+    the way.
+
+- NAP
+  - Bug #137, access control for NAP toolbars was incomplete.
+  - Index article was not treated correctly when generating a breadcrumb
+    line.
+
+- Datamanager
+  - Fixed a bug relating to the mailtemplate type in DM-Creation mode.
+  - The mailtemplate type now uses the current i18n charset as a default
+    for empty records, not a hardcoded utf-8.
+  - Some minor UI fixes
+
+
+--------------------------------------------------------
+MidCOM Version 2.0.0 (Filesystem Transition), 2004-12-20
+
+- Core
+  + Added the constants MIDCOM_ROOT (library root), MIDCOM_STATIC_ROOT
+    (static files root) and MIDCOM_STATIC_URL (URL prefix for static
+    files)
+  + Created a directory stock-icons in the static files and populated
+    it with the images from AIS
+  ! Deprecated the use of midcom_application::load_snippet, which is
+    now a wrapper for require(). This is here for transition purposes,
+    and will be removed before the final release!
+  + Added PHP-based replacement for mgd_include_snippet, that works
+    out of require() blocks.
+  - Rewrote the style engine to use mgd_preparse for all included style
+    snippets to restore usual Midgard semantics.
+  ! Removed support for the PHPMole receiver from the distribution
+  ! Removed the profiler class from the distribution, use xdebug
+    instead
+  + Added a toolbar class for programmatic generation and manipulation
+    of toolbars, mainly for AIS.
+  - Snippets and Attachment servers now have an improved expiry handling. The
+    default of 24 hours has been changed changed to the new magic value of
+    -1, which indicates that no Expires header should be sent. Browsers will
+    then have to use the Last-Modified headers to determine changes. This is
+    the new default as it makes changes to attachments visible immediately.
+  - Some minor fixes to the caching engine's expiry handling.
+  - Added a central set of stock-icons, almost all taken from Gnome-Stock.
+    Some of the old MidCOM icons have been replaced during this.
+  + Added new system for sorting topics and articles. See helpers/itemlist.php
+    details.
+
+- AIS
+  ! Dropped midcom.admin.main. It was not used anyway
+  ! Moved the AIS-CSS file into the static area of midcom.admin.content
+  - Adapted AIS to use the static stock images
+  ! Created central AIS toolbar mechanism; this requires adaption of
+    all components to the new system, as the topic heading is now
+    automatically rendered.
+  - Fixed Bug #5 (deprecated Topic Admin index page still in use)
+  - Changed the AIS style as proposed in Bug #112
+
+- Datamanager
+  + It is now possible, to load schemas from the filesystem, use
+    file:/path/relative/to/midcom/library/root.dat
+  - Changed widget code not to use &(); tags
+  - JSCalendar widget has been moved into the Filesystem and works
+    again
+  ! HTMLArea has been moved into the filesystem and works again.
+    Note that any custom configuration JScript you might have needs
+    to be adapted, as $prefix is no longer available; Path configuration
+    is now done by the Main Script. Just drop references to ImageURL and
+    PopupURL. See the file /lib/midcom/helper/datamanager/widget_html.php
+    for an reworked example.
+  ! The community-HTML widget and datatype have a slightly altered
+    configuration in that the smiley-images are no longer prefixed with
+    the Midgard Host, instead you have to give a complete url yourself.
+    The default now points to the images MIDCOM_STATIC_URL.
+
+- I18N/L10N
+  - L10n has been rewritten to use serialized Arrays as string tables.
+    This is quite fast, and the tables are cached for repeated use
+    within a request. The component API is the same.
+  + Support for multiple string tables within the same component
+    added, a second, optional constructor argument lets you specify
+    another filename as the "default.dat" default.
+  ! store, update and create calls no longer write to the filesystem
+    due to performance reasons. You have to call $l10n->flush()
+    explicitly to do this. Note, that Apache needs write permission
+    to the locale directories for this. The L10n Editor has been
+    adapted to this.
+  ! Deprecated the explicit create L10n string table entry, you can
+    and should now only use the update method.
+
+- NAP
+  - Cleaned up the NAP interface, so that all keys are now completed
+    with sensible defaults. This will make style building in the future
+    a bit easier again.
+  + Introduced MIDCOM_NAV_TOOLBAR, allowing components to put AIS
+    toolbar-like items into the NAP data, which then allows the style
+    code to create on-site content management toolbars using the
+    interface functions in midcom_helper_nav for midcom_helper_toolbar.
+
+--------------------------------
+MidCOM Version 1.4.0, 2004-11-28
+
+- Swedish translation added (courtesy of Johan Bernhardsson)
+- Norwegian translation added
+- short_open_tag off now supported
+
+- Core
+  + Introduced a relocation method into $midcom, which lets you
+    easily do site-local HTTP Location moves. It has support for
+    site-local redirects. See the docs of micdom_application::
+    relocate for details.
+  + Introduced an URL method based interface to the MidCOM debug
+    log in case shell access is not available. See the docs of
+    midcom_application for details about midcom-debuglog-$linecount
+    and its restrictions. It is disabled by default.
+  - There is now a global config parameter which lets you define
+    the log file name before including the MidCOM main snippet.
+    This is especially useful if you want to capture the complete
+    log of a request without missing the first few lines created
+    by including the main snippet.
+  + Implemented a sessioning service into the core. Look into the
+    docs of midcom_helper__sessioning and midcom_helper_session
+    for details.
+  + Added support for components to add their own data to the
+    current context. Note, that libraries need to be very careful
+    here, as they will use the component tag of the currently
+    active component automatically. In this case you must prefix
+    the stored data with your component tag (i.e. something like
+    midcom.helper.datamanager.currentform). See the docs of
+    midcom_application for details. You should prefer this
+    mechanism over global variables from now on.
+  + Added a E-Mail template engine to be used with the new
+    mailtemplate datamanager datatype.
+  + Added helper function midcom_generate_urlname_from_string() for
+    generating URL names for objects based on their title
+  + Added helper function midcom_probe_nemein_rcs() for fault-tolerant
+    loading and configuring of NemeinRCS (uses Aegir's version as default)
+  + Added helper function midcom_helper_purge_object() for cleaning up
+    objects for deletion
+  - Made the session code a bit more bulletproof against already
+    started sessions.
+
+- Debugger
+  - debug_print_r does now print the exact type of the variable.
+  + debug_print_type can print only the type of the variable, use
+    this when you might encounter objects that reference others
+    so that print_r doesn't work.
+
+- Datamanager
+  + Added support to show fields only within the AIS content admin
+    but not on the live-site. The field key "aisonly" has to be
+    set to true to trigger this special version of "hidden".
+  + Added support for the easy creation of CSV files using the
+    datamanager. The functions get_csv_line and get_csv_header_line
+    will create you a CSV-style line and give you the ability to
+    change field and line separators. Automatic quoting happens.
+    Each datatype does have its own chance to define what content
+    it wants to havce in a CSV file; this enables datatypes like
+    blob or image to work with this interface too. See the docs
+    of the datamanager for details.
+  + Added a very simple "communityhtml" datatype and widget. It is
+    a crude rich text system without WYSIWYG which can insert
+    some tags for simleys and the like. Mainly geared for
+    guestbooks and the like which just need to look cool ;-). It
+    should work out of the box, if you need to tweak it though,
+    look at the source. If you need serious editing capabilities,
+    stick to HTMLArea.
+  + Added support to store data in arbitary parameters using the
+    config storage method. See the schema documentation of the
+    datamanager's main class for details.
+  + Added an Account datatype/widget for use both with Midgard
+    Login information and custom login information stored as
+    string in an arbitary data field. It has crypt support, but
+    see the datatype's documentation for details.
+  + Added a Mailtemplate datatype and widget. They store all
+    information neccessary to dynamically build an E-Mail.
+    See the datatype_mailtemplate for details. There is no
+    configurability whatsoever, so datatype=>"mailtemplate" should
+    usually suffice. Poweruser see more fields, than normal
+    users.
+  + Added a helper function for creating a list of all available
+    groups in the current sitegroup for use with the (multi)select
+    datatype and widgets, see the snippet /midcom/helper/
+    datamanager/_code/helpers_select_lists and its documentation
+    for details.
+  + Added a schemaselect widget that can be used to select a schema
+    out of a schema database referenced by another field in the
+    current schema. See the doc field of the corresponding snippet
+    for details and examples.
+  + Added a helptext property to the fields. Currently this is
+    only shown when hovering over the newly added help icon. More
+    UI improvements to come. Known bug: Mozilla cuts the tooltips
+    after about 50 characters.
+  ! Added a locking mechanism to the datamanager. It will prevent
+    multiple from editing the same storage object simultaneously.
+    The locking can be configured both for lock timeout and for
+    lock override permissions. By default only powerusers and
+    admin users can override the lock, which expires after 60
+    minutes. While locked, an article cannot be edited by another
+    user unless he has sufficient privileges to steal the lock.
+    The locking mechanism can be disabled by setting the lock
+    timeout to 0. See the docs of the datamanager for details.
+  + Added a password inputstyle for widget_text, works like
+    shorttext, but uses a password form field instead. An
+    entered password is denoted by a single asterisk in the widget,
+    the actual value can only be queried through the datatype.
+  + Added Validation support. This feature requires HTML_Quickform
+    out of the PEAR archive installed. See the Datamanager's docs
+    for further details.
+  - The Fieldgroup function now has default styles acciociated with
+    them. This does only affect places, where you had fieldgroups
+    without any css declaration in place.
+  ! Upgraded to HTMLArea 3.0 RC 1. You might have to check your
+    configuration snippets vor vailidity, though there should be
+    no major problems here. Changes include: Better hyperlink
+    handling, a context menu, better plugin loading, Mozilla can
+    now insert <p>'s (hit enter twice) and, of course, loads of
+    bugfixes.
+  + Added a longtext_preformatted text widget format mode, which
+    shows the entered text in a <pre>-like manner both in form and
+    view mode.
+  + Added a number datatype to the datamanager with automatic
+    rounding to a given precision. See datatype_number.
+  ! The boolean datatype is now a real boolean, defaulting to an
+    empty string for false, and a "1" for true. Note, that this
+    can be misleading with parameters, where an empty string
+    is a delete indicator.
+  + Added a special radiobox widget variant, which does only a
+    strcmp instead of a "==". This is geared for configuration UIs
+    which need a strict difference between "" (parameter unset) and
+    "0" (mostly false), which is impossible to distinguish safly in an
+    PHP-supported auto-typecasted way.
+  + Added mgd_update_article_created() support to the unixdate datatype.
+    This works if the created field of an article is set to editable
+    in a schema and a parameter "update_article_created" is set to true
+  - The select widget now supportsthe option widget_select_display_key,
+    which, if set to true, will show the selection key as well in the
+    DM views.
+  - Fixed #89 (PHP code execution)
+  - Fixed #106 (HTML tag passthrough)
+  + Added support for external image modification functions to
+    datatype image with configuration key "datatype_image_filterfunction"
+  - Fixed Group listing helper (indentation was broken)
+  - widget_select now leaves &nbsp; in the values alone, as this is used
+    for indentation often.
+  + Added support for placing a sitewide HTMLAREA configuration in the snippet
+    /midcom/helper/datamanager/_config/widget_htmlArea_config.
+
+- NAP
+  + Added new optional NAP property MIDCOM_NAV_GUID for nodes and leaves
+  - The automatic breadcrumb line can now optionally skip a number
+    of topics from the beginning of the line. See the docs of
+    midcom_helper_nav::get_breadcrumb_line for details.
+  - The Breadcrumb helper supports now a distinct class for the selected
+    object.
+
+- AIS
+  - Modified the topic control toolbar to respect user privileges:
+    Admin users see everything; Powerusers that are topic owners
+    see everything; regular topic owners see only topic edit and
+    attachment links; all other users do not see topic controls.
+    The View  this page link stays visible all the time.
+  - L10n editor has been moved to Textareas to improve usability
+    with long strings,
+  - The topic edit dialog now supports style inheritance and
+    ViewerGroups.
+  ! Topic deletion and creation can now be restricted using the
+    topicadmin configuration. The default is, that topic owners
+    can create and delete topics without further restrictions.
+    Only if the new flags are set, these operations are restricted
+    to power users. With this change, explicit permission
+    checks are being done while executing the different topic
+    operations, yielding a FORBIDDEN error where appropriate.
+
+- Caching Engine
+  - The DBM-cache now supports operation both in multilang and
+    non-multilang mode. This is tied to MidCOM's i18n service
+    and has nothing to do with Midgard's Multilang Feature. It
+    basically is a matter of cache optimization (when you don't
+    need internationalized pages in the cache, don't generate
+    them).
+
+--------------------------------
+MidCOM Version 1.3.2, 2004-07-20
+
+- Replaced htmlentities with htmlspecialchars throughout the
+  packages, this fixes #34
+
+- Core
+  - The MidCOM error pages lost ther HTTP status code for an
+    unknown reason. This has been fixed.
+
+- Datamanager
+  - Fixed the handling of readonly or hidden fields within the
+    form processing code to prevent accidential overwrites of
+    the data (happend especially in create mode with preset
+    fields). The Datamanager will now leave fields tagged like
+    this alone.
+  - Made the loading of schema snippets more robust against
+    //-style comments
+  - Fix for #69 (do not up-scale images)
+
+- Content Manager
+  - Show only MidgardGroups from the current sitegroup in the
+    topic edit/create dialog, fixes bug #67.
+
+- Caching Engine
+  - Fixed critical UTF-8 / mb_string incompatibility that lead to
+    too small numbers in the Content-Length Headers.
+
+
+--------------------------------
+MidCOM Version 1.3.1, 2004-06-27
+
+- Datamanager
+  - Fixed a bug with the DHTML Date widget not finding $midcom at
+    times
+  - Fixed widget_select: Now always displays value instead of key,
+    some htmlentities calls have also been removed, fixes #52.
+  - The datamanager now visually distinguishes required fields
+    and missing required fields from regular ones. There are
+    two CSS classes to faciliate this.
+  - Fix for #58 (errors during upload of a PDF file)
+
+- NAP
+  - Fixed Bug #60 (back-to-page links fail)
+  - Partly fixed Bug #47 (back-to-page link unfriendly), there is
+    no image yet.
+
+
+---------------------------------
+MidCOM Version 1.3.0, 2004-05-13:
+
+- Core
+  - Added some new generic L10N strings to midcom.core.
+  - Moved the JavaScript output interface from midcom_admin_content
+    to midcom_application to make it available on live sites.
+    This allows components to output JavaScript code like AIS does,
+    as long as the Website layout honors the JavaScript hooks.
+  + Implemented a serve-snippet(guid) URL method with a similar
+    functionality as serve-attachment(guid). It will load the snippet
+    identified by the given id/GUID and prints the code field to
+    standard output. This is especially usefull for JavaScript
+    snippets and CSS snippets. See the documentation of the method
+    midcom::serve_snippet(...) for further details how to utilize
+    this feature.
+  - Documented all available URL methods of midcom_application.
+  - The ViewerGroups checks now deliver a 401 HTTP error upon a failed
+    check, no longer a 404.
+
+
++ Filesystem Caching Engine
+  ! The Filesystem cache is a new alternative to the DBM way. It is
+    currently incomplete in the point, that it does not support
+    languages within the cache. The system is yet undocumented, so
+    use it with care.
+
+- DBM Caching Engine
+  + The caching system now distinguishes pages on the locale they are
+    running in; this feature cannot be turned off currently, which can
+    lead to a huge increase in cache size on sites that essentially do
+    not need it.
+  ! There has been a small change in the naming scheme of the cache
+    files, you should manually delete all cache files after updating
+    to the new code.
+  - Reworked a part of the caching engine to provide greater robustness,
+    especially in respect to cache invalidation.
+  + The URL method midcom-cache-stat now displays a cache statistics
+    page, reachable only through the DBM cache.
+  + The cache does now automatically complete missing HTTP headers,
+    in detail Accept-Ranges, Content-Length and Last-Modified are added
+    if they are missing. The latter is taken out of the component
+    context and defaults to the current system time if missing there.
+
+
+- AIS
+  - Several layout enhancements and some minor fixes.
+  - Removed the JavaScript hooks from the content admin in favor to
+    those of the midcom core and replaced the existing functions with
+    stubs relaying the requests to $midcom for compatibility. Consider
+    this interface deprecated from now on.
+  - Made the AIS CSS style collection servesnippet compatible. You can
+    now do something like this:
+    1: <?php
+    2:     $midgard = mgd_get_midgard();
+    3:     $prefix = $midgard->self . "midcom-servesnippetguid-";
+    4: ?>
+    5: <LINK href="&(prefix);d1b86fafe6e89dc2bf071ab89893a502/ais.css"
+    6:  rel="stylesheet">
+    Interestingly, Mozilla renders fonts now larger then before.
+    This style sheet has to be checked for integrity therefore.
+  + Added view this page link support to the content admin, utilizing
+    the new NAP functions. You have to define the parameter
+    midcom.admin.content/site_prefix at the content admin topic for this
+    to be activated. Fill in the URL to the root page of the live web
+    site there. If it exists, an View this page link will appear in the
+    AIS' top toolbar.
+  - AIS is now flagging itself as uncachable in respect to the MidCOM
+    Caching engine.
+
+- Datamanager
+  + Incorporated an Interface to use Aegir's NemeinRCS configuration
+    if it is configured correctly. Absence will yield the old
+    behavoir.
+  - Fixed a bug with the datamanager not reporting errors from
+    Midgard update calls.
+  - Moved the NemeinRCS interface to an external function that can be
+    called from any place, e.g. any component. See
+    midcom_update_nemein_rcs($object) in the snippet
+    /midcom/helper/misc
+  - Fixed a bug in the Multiselect Datatype that prevented saving the
+    selection.
+  + The datamanger method display_view_field($name) can be used to draw
+    a fields content area anywhere you want it, which is especially
+    useful for database-like components. Note, that you should have
+    the AIS view CSS-classes available.
+  - The datamanager currently relies mostly on running AIS for editing
+    and viewing of complete records. A first step to decouple this
+    has been made, as the Datamanager now detects the right place
+    to invalidate the cache. More to go at this battlefield though.
+  - The widget's view CSS classes now no longer have the 5 em margin
+    left, this is added in an enclosing div automatically by the
+    datamanager using the div class form_viewfield. This now finaly
+    allows easy usage of the widget's draw_view method outside of the
+    datamanager as most of the default styles should be sufficient
+    here.
+  + There is a new Unix Timestamp datatype along with a JSCalendar
+    based DHTML Date widget. See the docs of widget_date and
+    datatype_unixdate in /midcom/helper/datamanager/_code for
+    further details. The pair provides a powerful tool for selecting
+    dates within an unix timestamp range.
+  + Implemented a (drumroll...) creation mode for the datamanager.
+    This will save you from a good deal of empty objects laying around
+    as long as the user never clicks save but cancel in the first
+    place. Basically, you can now initialize the datamanager with an
+    null object, a schema name and a record reation callback. This will
+    result in the datamanager only creating a new recored when he must
+    to, which is when the user clicks save (to either again display the
+    form in case of missing defaults or similar errors or to return to
+    the view). See the datamanager's core documentation for details how
+    to use this. The component de.linkm.taviewer currently holds a
+    reference implementation how to use this. Most code can probably be
+    duplicated at this point. (Yes, I know that this solution is still
+    far from perfect and not comfortable, but it is most probably the
+    best thing you can get out of the current datamanager.)
+  - Adapted the date Widget to use the JavaScript hooks in the core and
+    changed the inline JavaScript code to serve-snippet calls.
+  - Image Datatype now removes any ICC color profile in any generated
+    files (thumbs and, where neccessary, fullscale images), as they can
+    get quite big if they are present.
+  - Fixed a bug in the image datatype not honoring the jpeg thumbnail
+    quality configuration parameter.
+  - return_url support removed in favor of the NAP site/edit URL
+    interface. Resolves Issue #31.
+  ! Names of datamanager form fields are now prefixed with
+    midcom_helper_datamanager_field_ instead of field_
+
+- Style Engine
+  - Small Bugfix: midcom_show_style now relays the return value of the
+    show method correctly. Missing Elements are now a logged as Warning,
+    not as Error, it allows probing for customized Style elements.
+
+- NAP System
+  + Extended the NAP system with customized sorting. phr should fill
+    in the details here, it should be backwards compatible as far as
+    I know.
+  + Added helper functions to construct "view/edit this page" links.
+    Both require a base URL (root topic or content admin topic
+    respectivly), AIS now has support for this too.
+  - Added a couple of is_integer checks to the _basicnav interface to
+    avoid PHP errors if null values and the such are passed. This should
+    ease debugging in certain cases.
+  - Fixed issue #17, show_combined_nav was broken
+
+---------------------------------
+MidCOM Version 1.2.0, 2004-03-19:
+
+- Core
+  - Fixed an issue with the dyamic_load mechanismn not correctly
+    creating an URL Parser (no bug-id)
+  - Fixed an issue with the dynmic_load mechanismn creating wrong
+    argv arrays when the url ended on a "/" (no bug-id)
+  - Fixed Bug #459, bad anchor_prefix in component contexts
+  - Fixed Bug #292, missing global declaration of $midcom_errstr.
+  - Core now checks for missing root content topic upon
+    instantination of midcom_application. This fixes bug #227.
+  - Caching engine can be disabled now by setting the global variable
+    midcom_helper__cache_disable to true prior MidCOM initialization.
+    This solves Feature Request #490
+  - Changed several core classes to include trailing ";" in eval
+    statements. This affected AIS and Datamanger as well. It fixes
+    bug #495.
+  + MidCOM now creates ETag headers for all requests as long as the
+    caching engine is running. If it is, an MD5 Hash is created
+    usining the contents of the output buffer during finish_caching
+    and added as header to the current request. This even works with
+    the no_cache flage set for the given request. If you want a
+    really uncachebale page, remember to set the corresponding HTTP
+    headers (Pragma, Cache-Control etc.) for this as no_cache only
+    refers to MidCOMs internal caching engine. This implements
+    feature request #502.
+  - Included two helper functions in the midcom core that lets you
+    do a Bicubic Image resizing (borrowed from the PHP Manual User
+    contributeions): ImageCopyResampleBicubic for Truecolor images
+    and ImageCopyResampleBicubicPalette for palette-based images.
+    See the code for copyright notices.
+  - The PHPMole receiver has now been decoupled from MidCOM's core
+    so that it even works if things like midcom_application produce
+    parse errors. This could be really annoying... The old handler
+    code is no longer active.
+  + The Core now has a basic Object Service infrastructure. Service
+    Objects can be retrieved by name by the get_service method of
+    midcom_application. These classes must be accessed by reference
+    so that it is ensured only one instance is active at any one
+    time. Services are available directly after MidCOM has been
+    initialized in /midcom/midcom.
+  + Introduced the I18N Service (/midcom/services/i18n) which
+    currently gives you access to the Localziation Framework
+    See that snippet for further documentation. We now have full
+    localization services with this. The language is selected
+    through HTTP Content Negotiation (easiest way), Cookie (more
+    selective, can override HTTP Data) or manually through i18n
+    service method calls.
+  - The L10N subsystem does now use bas64 encoded strings to store
+    its data. Reaseon for this is the fact that Repligard cannot
+    export/import UTF-8 correctly. (Big Bug!) All l10n strings on
+    the devel server have been updated accordingly.
+  - Rewrote the Attachment Handler to not use mgd_serve_attachment
+    as this breaks PHPs output buffering (a very strange thing).
+    mgd_open_attachment + fpassthru is now used.
+  - Made outputbuffering of the caching engine more bullet proof
+  - Introduced the new component context value PAGETITLE which can
+    be used to set the title of the currently displayed page. It
+    can be set using midcom_application::set_pagetitle($string)
+    within the currently running context.
+  - Began to clean up error/debug messages
+  - Fixed a bug in style loader (sometimes wrong context)
+  - Added correct GNU LGPL headers to README and fixed INSTALL
+  - The Style system now implements style inheritance (Topic
+    parameter midcom.style_inherit inherits its style to its
+    children) (closes #0000579)
+  + Added ViewerGroups support like in Aegir:
+    Topic parameters "ViewerGroup/GUID=1"
+  + Added a new Filesystem Caching Engine which can do without any
+    DBM Interface.
+
+- Administration Interface System
+  + Implemented a way to include JavaScript code and onLoad Events
+    for editing UIs. This was mainly done for the HTLM WYSIWYG editor,
+    which is JavaScript driven. Five new member functions in the
+    midcom.admin.content component are there: add_jsfile, add_jscript,
+    add_jsonload, print_jscripts and print_jsonload.
+  - Created a lot of new style elements in the midcom.admin.content
+    default style code. This should make customization of the AIS
+    interfaces easier. Hooks for adding create/edit... images are now
+    there, though no default icons are available yet. Solves feature
+    request #448.
+  - Added HTTP Headers to midcom.admin.content to prevent browser-
+    side-caching, fixes Bug #442.
+  + Added Topic Owner selection. Solves feature request #422.
+  - Fixed a bug in the Topic Creation code which broke the relocation
+    on non-SSL hosts, this fixes Bug #480
+  + The Topic Administraton is now configurable. If a snippet called
+    /sitegroup-config/midcom.admin.content/topicadmin exists, it is
+    imported within an "Array (...)" boundary and used for the
+    component and style selectors. See the documentation of
+    /midcom/admin/content/_code/_cmdtopic for an configuration
+    example. If the above snippet is not defined, the system reverts
+    back to the original operations mode using simple input widgets.
+  + The New component midcom.admin.controls.l10n can be used to edit
+    the l10n tables.
+  - midcom.admin.content now features localization. English and
+    German string data is available.
+  - Fixed a possible bug in the handle phase of midcom.admin.content
+    which had problems with topic tree checking here and there.
+  + Redesigned some parts of the AIS to feature nice symbols instead
+    of the very basic ASCII Art I used before. The images are
+    accessible through the global Array $midcom_images, indexed by
+    their they return a complete img-tag valid in the current
+    MidCOM site. In the course of this there was also some CSS
+    tweaking.
+  - Rewrote big parts of the CSS and beautified the layout a bit
+  + AIS now redirects to its statpage automatically
+    (no more /ais/<id>/data links needed)
+
+- Datamanager
+  + Included the Datamanager of Interactivetools into the datamanager.
+    This provides us with an flexible HTML WYSIWYG Editing platform.
+    It is implemented in Datatype "html". Some changes have been made
+    to the internas of the HTMLAREA system to make it work with
+    Midgard/MidCOM.
+
+    HTMLAREA licencing disclaimer:
+
+    MidCOM datamanager includes HTMLAREA product, copyright
+    (c) 2002-2003, interactivetools.com, inc
+    HTMLAREA is available under a BSD-derived license. More information
+    at http://www.interactivetools.com/products/htmlarea/license.html
+  + Implemented a simple select widget with key-value data source, the
+    key gets transimtted to the underlying datatype. Solves features
+    request #457
+  + Implemented a simple radiobox editing widget adapting the source
+    of the select widget (see above).
+  - Fixed a place where the Blob-Datatype used mgd_get_midgard.
+  - Included the name of the currently active output schema in the
+    $view-Array at the index "_schema". This solves feature request
+    #463.
+  - BLOB-Datatype: Supressed error messages from getimagesize call
+    as this is handled by MidCOM properly.
+  ! BLOB-Datatype: Moved all parameters to the same domain. Everything
+    now is unter midcom.helper.datamanager.datatype.blob. This ensures
+    a cleaner parameter structure, though it can break backwards
+    compatibility where blob datatypes are already in use, especially
+    while using them with images. A conversion script is on my todo
+    list.
+  + Implemented a new IMAGE Datatype. It is derived from the BLOB
+    datatype. It supports JPEG, PNG-8 and PNG-24 and automatically
+    creates a thumbnail with given maximum dimensions using bicubic
+    interpolation to calculate the new image. The thumbnail is
+    available through the array key "thumbnail" in the regular BLOB
+    datatype data structure and looks alike (missing only the
+    description field). Tested with PHP 4.1.x, implements feature
+    request #441. This datatype requires imagemagic to be installed
+    as a command line utiltiy.
+  - Datamanager is now guarded against multiple invocations of
+    process_form. This can break several datatypes that assume they
+    only have to process their data once (having temporary data
+    deleted for instance). process_form returns the same errorcode
+    as in the first run but does nothing in reality. This fixes
+    Bug #500.
+  - Introduced a new Debug Log strategy throughout the datatypes that
+    lets you trace the calls thorugh this object hierarchy.
+  - Implemented a couple of bugfixes/workarounds into HTMLArea which
+    ease the IE 5.5 troubles I've been experiencing. For now this
+    fixes Bug #478
+  - Fixed some stupid format modifiers for Textbased Widges. They
+    can now be used to edit PHP Code. This fixes Bug #506
+  - Datamanager Widgets are now localized. English and German
+    stringtables are now available.
+  + BLOB-Datatype is now able to use a custom anchor prefix. This is
+    activated by adding the configuration directive
+    "datatype_blob_anchorprefix" which has to be added to the fields
+    that should use it. Currently this per-field selection is the
+    only possible way to specify this. This is an interim solution
+    which should be used until the reworked site configuration
+    system (1.3) is available.
+  - COLLECTION-Datatype: Fixed a bug that made it impossible to
+    create more then one collection per Schema.
+  + Add "boolean" datatype and the corresponding "checkbox" widget
+  + Kaukola added the TableOps patch for HTMLAREA
+  + Default Values added
+  + Optional simple File Upload Interface for IMAGE and BLOB i
+    Datatype
+  + Visual Grouping for Datamanager Fields
+  + Added multiselect datatype and widget. Uses key/value pairs for
+    storage in arbitary text fields.
+  + Required fields support
+
+- Navigation Access Point System
+  - Fixed Bug #474, Root Topic Tree can now be a non-root-topic.
+  + New or improved features in midcom_helper_nav:
+    - get_breadcrumb_line now has a second parameter with which you
+      can set the css class used for the generated A-tags.
+    + show_simple_nav is a method that allows you to build a
+      complete navigation system from scratch, using a simple
+      config array. It will create you everything neccessary, and
+      also features a negative indenting to support multiline
+      navigation entries. See the snippet documentation of
+      /midcom/helper/nav for details.
+  ! Topic sorting is now by "score" instead of "reverse score"
+    (breaks compatibility but is now consistent with most 'old'
+    Midgard apps) (closes
+  + Add ViewerGroups support
+
+
+--------------------------------------------
+MidCOM Version 1.1.1, 2003-04-09 18:05 MEST:
+
+- Core
+  - Fixed a bug in the componentloader, the list of reserved snippet
+    directory names was wrong ("_data" instead of "_doc").
+
+- Administration Interface System
+  - Fixed Bug 414 (Cache handler hardcoded for creating new objects),
+    in midcom.admin.content.main, it now listens to the global cache
+    configuration variables. Note, that this requires both the AIS
+    website and the real live website share the same cache
+    configuration.
+  - Begun English Translation, most should be done already.
+
+- Example Components:
+  - Begun English Translation, most should be done already.
+  - Multiple changes at the example components, many testbeds here,
+    if a component you don't use makes trouble, just drop it for a
+    start. Component Cleanup is still in progress.
+
+
+-----------------------------------------
+MidCOM Version 1.1, 2003-03-26 19:10 MET:
+
+- Core
+  - URL Processing changed again to work top-down, as performance
+    reasons are no longer important in combination with the caching
+    engine
+  - MidCOM now keeps track of the current processing stage in
+    midcom_application::_status, which can take one of the five values
+    MIDCOM_STATUS_PREPARE, MIDCOM_STATUS_CANHANDLE, MIDCOM_STATUS_HANDLE,
+    MIDCOM_STATUS_CONTENT, MIDCOM_STATUS_CLEANUP. These are integer
+    constants, so comparisons like $midcom->state > MIDCOM_STATUS_HANDLE
+    are possible. The old flag midcom_application::_codeinit is now
+    deprecated. The current Status can be queried by the method
+    midcom_application::get_status();
+  - Removed midcom_application::code_global, which was already deprecated
+    in MidCOM 1.0.
+  - The global variables $midcom_cachedir and $midcom_cachehandler can
+    now be used to change the defaults ("/tmp/", "db2") used by the
+    caching engine.
+
+- Administration Interface System
+  - Fix bug #413, missing parameters now either have defaults or emit
+    error messages.
+
+- Datamanager
+  - Readonly fields are now supported. If you set "readonly" => true
+    in the schema definition, the datamanger will not display the
+    editing widget in form mode, but only show call display_view()
+    there. Useful for URL Names and the like, which get set
+    automatically, but are not changeable by the user.
+  - Hidden fields are now supported. If you set "hidden" => true in the
+    schema definition, the datamanager will skip this field both during
+    draw_view and during draw_form.
+
+- Navigation Access Point System
+  - The Root Node now automatically has an empty MIDCOM_NAV_URL
+  - API-CHANGE: Changed the operation mode of NAP to no longer
+    distinguish between admin-mode and non-admin mode. This
+    results in a change of the NAP concept classes, dropping the
+    parameter $admin in set_object(). The NAP data to be returned now
+    holds two arrays called MIDCOM_NAV_SITE and MIDCOM_NAV_ADMIN each
+    of which consists of MIDCOM_NAV_URL and MIDCOM_NAV_NAME. See
+    the docs for midcom_helper__basicnav and the architecture
+    specification for further details.
+  - _loadNodeData now trims the NAME fields before checking them
+    against "" to avoid accidentially empty fields
+
+- Miscellaneous
+  - Updated the Documentation and Specification to match the current
+    state of MidCOM.
+  - Documented most of the not-yet-documented classes, but there is
+    still work to be done.
+  - Did some source reformatting.
+
+- Example Components
+  - Most of the components should now be updated to reflect the
+    changes introduced above.

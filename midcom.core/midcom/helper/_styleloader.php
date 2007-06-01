@@ -42,10 +42,11 @@
  * Styleinheritance
  *
  * The basic path the styleloader follows to find a styleelement is:
- * 1. topic style -> if the current topic has a style set
- * 2. inherited topic style -> if the topic inherits a style from another topic.
- * 3. midgard style -> the style of the midcomcomponent.
- * 4. The filestyle. This is usually the elements found in the components style directory.
+ * 1. Topic style -> if the current topic has a style set
+ * 2. Inherited topic style -> if the topic inherits a style from another topic.
+ * 3. Site-wide per-component default style -> if defined in MidCOM configuration key styleengine_default_styles
+ * 4. Midgard style -> the style of the MidCOM component.
+ * 5. The filestyle. This is usually the elements found in the components style directory.
  *
  * Regarding nr. 4:
  * It is possible to add extra filestyles if so is needed for example by a portalcomponent.
@@ -154,6 +155,39 @@ class midcom_helper__styleloader {
     }
 
     /**
+     * Returns the path of the style described by $id.
+     *
+     * @param int $id	Style id to look up path for
+     * @return	string Style path
+     * @access public
+     */
+    function get_style_path_from_id($id)
+    {
+        $path_parts = array();
+        
+        while (($style = new midcom_db_style($id)))
+        {
+            if (!$style->guid)
+            {
+                break;
+            }
+            
+            $path_parts[] = $style->name; 
+            $id = $style->up;
+                        
+            if ($style->up == 0)
+            {
+                break;
+            }
+        }
+        
+        $path_parts = array_reverse($path_parts);
+        
+        $path = '/' . implode('/', $path_parts);
+        return $path;
+    }
+
+    /**
      * Returns the id of the style described by $path.
      *
      * Note: $path already includes the element name, so $path looks like
@@ -162,44 +196,146 @@ class midcom_helper__styleloader {
      * @todo complete documentation
      * @param string $path		The path to retrieve
      * @param int $rootstyle_id	???
-     * @return	mixed			???
-     * @access private
+     * @return	int ID of the matching style or FALSE
+     * @access public
      */
-    function _get_style_id_from_path($path, $rootstyle_id = false)
+    function get_style_id_from_path($path, $rootstyle = 0)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
         $path = preg_replace("/^\/(.*)/", "$1", $path); // leading "/"
+        $path_array = explode('/', $path);
 
-        //debug_add("Trying to get substyle '$path'", MIDCOM_LOG_DEBUG);
-        $_path_array = split("/", $path);
-        $_current_style = null;
-        if ($rootstyle_id) {
-            $_current_style = mgd_get_style($rootstyle_id);
+        $current_style = $rootstyle;
+
+        if (count($path_array) == 0)
+        {
+            return false;
         }
-        $_current_path = "";
-        //debug_add("Starting from '" . $_current_style->name . "'", MIDCOM_LOG_DEBUG);
 
-        while (count($_path_array) > 0) {
-            $_current_path = array_shift($_path_array);
+        foreach ($path_array as $path_item)
+        {
+            if ($path_item == '')
+            {
+                // Skip
+                continue;
+            }
 
-            if (! $_current_style = mgd_get_style_by_name2($_current_style->id, $_current_path)) {
-                //debug_add("Substyle '$_current_path' not found", MIDCOM_LOG_INFO);
-                debug_pop();
+            //$mc = new midgard_collector('midgard_style', 'up', $current_style);
+            //$mc->set_key_property('guid');
+            $mc = midcom_db_style::new_collector('up', $current_style);
+            $mc->add_value_property('id');
+            $mc->add_constraint('name', '=', $path_item);
+            $mc->execute();
+            $styles = $mc->list_keys();
+
+            if (!$styles)
+            {
+                //$mc->destroy();
                 return false;
             }
+
+            foreach ($styles as $style_guid => $value)
+            {
+                $current_style = $mc->get_subkey($style_guid, 'id');
+            }
+            //$mc->destroy();
         }
 
-        if (isset($_current_style)) {
-            debug_add("Found substyle: id=" . $_current_style->id, MIDCOM_LOG_DEBUG);
-            debug_pop();
-            return $_current_style->id;
+        if ($current_style != 0)
+        {
+            return $current_style;
         }
 
-        //debug_add("no path given", MIDCOM_LOG_WARN);
-
-        debug_pop();
         return false;
+    }
+    
+    function _get_nodes_inheriting_style($node)
+    {
+        $nodes = array();
+        
+        $child_qb = midcom_db_topic::new_query_builder();
+        $child_qb->add_constraint('up', '=', $node->id);
+        $child_qb->add_constraint('style', '=', '');
+        $children = $child_qb->execute();
+        
+        foreach ($children as $child_node)
+        {
+            $nodes[] = $child_node;
+            $subnodes = $this->_get_nodes_inheriting_style($child_node);
+            $nodes = array_merge($nodes, $subnodes);
+        }
+        
+        return $nodes;
+    }
+    
+    /**
+     * Get list of topics using a particular style
+     *
+     * @param string $style Style path
+     * @return array List of folders
+     */
+    function get_nodes_using_style($style)
+    {
+        $style_nodes = array();
+        // Get topics directly using the style
+        $qb = midcom_db_topic::new_query_builder();
+        $qb->add_constraint('style', '=', $style);
+        $nodes = $qb->execute();
+        
+        foreach ($nodes as $node)
+        {
+            $style_nodes[] = $node;
+            
+            if ($node->styleInherit)
+            {
+                $child_nodes = $this->_get_nodes_inheriting_style($node);
+                $style_nodes = array_merge($style_nodes, $child_nodes);
+            }
+        }
+        
+        return $style_nodes;
+    }
+    
+    /**
+     * List the default template elements shipped with a component
+     * @param string $component Component to look elements for
+     * @return array List of elements found indexed by the element name
+     */
+    function get_component_default_elements($component)
+    {
+        $elements = array();
+        
+        // Path to the file system
+        $path = MIDCOM_ROOT . '/' . str_replace('.', '/', $component) . '/style';
+        
+        if (!is_dir($path))
+        {
+            debug_add("Directory {$path} not found.");
+            return $elements;
+        }
+        
+        $directory = dir($path);
+        
+        if (!$directory)
+        {
+            debug_add("Failed to read directory {$path}");
+            return $elements;
+        }
+        
+        while (($file = $directory->read()) !== false)
+        {
+            if (!ereg('\.php$', $file))
+            {
+                continue;
+            }
+        
+            $elements[str_replace('.php', '', $file)] = "{$path}/{$file}";
+        }
+        
+        $directory->close();
+
+        return $elements;
     }
 
     /**
@@ -209,30 +345,102 @@ class midcom_helper__styleloader {
      *
      * @param int $id		The style id to search in.
      * @param string $name	The element to locate.
-     * @return MidgardElement	The found element, or false on failure.
+     * @return string	Value of the found element, or false on failure.
      * @access private
      */
     function _get_element_in_styletree($id, $name)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
-        //debug_add("Trying to find '$name' in Style '$id'...", MIDCOM_LOG_DEBUG);
-
-        if ($_current_style = mgd_get_style($id)) {
-            while ($_current_style) {
-                if ($_element = mgd_get_element_by_name($_current_style->id, $name)) {
-           //         debug_add("Found element '{$_element->id}'.", MIDCOM_LOG_DEBUG);
-                    debug_pop();
-                    return $_element;
+        $style_mc = midcom_db_style::new_collector('id', $id);
+        $style_mc->add_value_property('up');
+        $style_mc->execute();
+        $styles = $style_mc->list_keys();
+        foreach ($styles as $style_guid => $value)
+        {
+            $element_mc = midcom_db_element::new_collector('style', $id);
+            $element_mc->add_value_property('value');
+            $element_mc->add_constraint('name', '=', $name);
+            $element_mc->execute();
+            $elements = $element_mc->list_keys();
+            if ($elements)
+            {
+                foreach ($elements as $element_guid => $value)
+                {
+                    //$style_mc->destroy();
+                    $value = $element_mc->get_subkey($element_guid, 'value');
+                    //$element_mc->destroy();
+                    return $value;
                 }
-                $_current_style = mgd_get_style($_current_style->up);
             }
-        } else {
-            debug_add("'$id' is no style", MIDCOM_LOG_DEBUG);
+            else
+            {
+                $up = $style_mc->get_subkey($style_guid, 'up');
+                if (   $up
+                    && $up != 0)
+                {
+                    //$style_mc->destroy();
+                    //$element_mc->destroy();
+                    return $this->_get_element_in_styletree($up, $name);
+                }
+            }
+        }
+        //$style_mc->destroy();
+        return false;
+    }
+    
+    function get_style_elements_and_nodes($style)
+    {
+        $results = array
+        (
+            'elements' => array(),
+            'nodes' => array(),
+        );
+        
+        $style_id = $this->get_style_id_from_path($style);
+        if (!$style_id)
+        {
+            return $results;
+        }
+        
+        $style_nodes = $_MIDCOM->style->get_nodes_using_style($style);
+        
+        foreach ($style_nodes as $node)
+        {            
+            if (!isset($results['nodes'][$node->component]))
+            {
+                $results['nodes'][$node->component] = array();
+            }
+            
+            $results['nodes'][$node->component][] = $node;
+        }
+        
+        foreach ($results['nodes'] as $component => $nodes)
+        {
+            // Get the list of style elements for the component
+            $results['elements'][$component] = $_MIDCOM->style->get_component_default_elements($component);
+
+            // Arrange elements in alphabetical order
+            ksort($results['elements'][$component]);
+        }
+        
+        $results['elements']['midcom'] = array
+        (
+            'style-init' => '',
+            'style-finish' => '',
+        );
+        
+        if ($style_id == $_MIDGARD['style'])
+        {
+            // We're in site main style, append elements from there to the list of "common elements"
+            $qb = midcom_db_element::new_query_builder();
+            $qb->add_constraint('style', '=', $_MIDGARD['style']);
+            $style_elements = $qb->execute();
+            foreach ($style_elements as $element)
+            {
+                $results['elements']['midcom'][$element->name] = '';
+            }
         }
 
-        debug_pop ();
-        return false;
+        return $results;
     }
 
     /**
@@ -268,7 +476,8 @@ class midcom_helper__styleloader {
             $_element = $matches[2];
         }
 
-        if (isset ($_stylepath) && $_styleid = $this->_get_style_id_from_path($_stylepath))
+        if (   isset ($_stylepath)
+            && $_styleid = $this->get_style_id_from_path($_stylepath))
         {
             array_unshift($this->_scope, $_styleid);
         }
@@ -283,11 +492,11 @@ class midcom_helper__styleloader {
             {
                 $_style = $this->_styles[$src];
             }
-            else if ($this->_scope[0] != "")
+            else if ($this->_scope[0] != '')
             {
                 if ($_result = $this->_get_element_in_styletree($this->_scope[0], $_element))
                 {
-                    $this->_styles[$src] = $_result->value;
+                    $this->_styles[$src] = $_result;
                     $_style = $this->_styles[$src];
                 }
             }
@@ -299,7 +508,7 @@ class midcom_helper__styleloader {
             $src = "{$this->_snippetdir}/{$_element}";
             if (array_key_exists($src, $this->_snippets))
             {
-              $_style = $this->_snippets[$src];
+                $_style = $this->_snippets[$src];
             }
             else
             {
@@ -309,8 +518,8 @@ class midcom_helper__styleloader {
                     if (file_exists($filename))
                     {
                         $_style = file_get_contents($filename);
-                        $this->_snippets[$src] = $_style;
                         $src = $filename;
+                        $this->_snippets[$src] = $_style;
                     }
                 }
             }
@@ -319,6 +528,7 @@ class midcom_helper__styleloader {
         if (isset($_style))
         {
             // This is a bit of a hack to allow &(); tags
+            $data =& $_MIDCOM->get_custom_context_data('request_data');
             $result = eval('?>' . mgd_preparse($_style));
             if ($result === false)
             {
@@ -350,8 +560,8 @@ class midcom_helper__styleloader {
      *
      * @todo Document
      *
-     * @param MidgardTopic $topic	???
-     * @returns mixed				???
+     * @param midcom_db_topic $topic	Current topic
+     * @return int Database ID if the style to use in current view or FALSE
      */
     function _getComponentStyle($topic)
     {
@@ -364,38 +574,50 @@ class midcom_helper__styleloader {
 
         // style inheritance
         // should this be cached somehow?
-        if ($_topic_style = $topic->parameter("midcom", "style"))
+        if ($topic->style)
         {
-            $_st = $this->_get_style_id_from_path($_topic_style);
+            $_st = $this->get_style_id_from_path($topic->style);
+            debug_add( "topic->style:" . $topic->style . "( $_st )" );
         }
-        else if (isset($midcom_style_inherited) && ($midcom_style_inherited))
+        else if (   isset($midcom_style_inherited)
+                 && ($midcom_style_inherited))
         {
             // get user defined style inherited from topic tree
-            $_st = $this->_get_style_id_from_path($midcom_style_inherited);
+            $_st = $this->get_style_id_from_path($midcom_style_inherited);
+            debug_add( 'Inherited styleid:' . $midcom_style_inherited );
         }
         else
         {
             // Get style from sitewide defaults.
-            $component = $topic->parameter('midcom', 'component');
+            $component = $topic->component;
             if (array_key_exists($component, $GLOBALS['midcom_config']['styleengine_default_styles']))
             {
-                $_st = $this->_get_style_id_from_path($GLOBALS['midcom_config']['styleengine_default_styles'][$component]);
+                $_st = $this->get_style_id_from_path($GLOBALS['midcom_config']['styleengine_default_styles'][$component]);
+                debug_add( 'Component_default styles: ' . $GLOBALS['midcom_config']['styleengine_default_styles'][$component]);
             }
         }
 
-        if (isset($_st)) {
+        if (isset($_st))
+        {
             debug_add("Current component has user defined style: $_st", MIDCOM_LOG_INFO);
-            $substyle = $_MIDCOM->get_context_data (MIDCOM_CONTEXT_SUBSTYLE);
-            if (isset($substyle)) {
+            $substyle = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_SUBSTYLE);
+            debug_add( 'Component substyle:' . $substyle );
+
+            if (isset($substyle)) 
+            {
                 $chain = explode('/', $substyle);
-                debug_print_r("substyles (from $substyle):", $chain);
+                //debug_print_r("substyles (from $substyle):", $chain);
                 foreach ($chain as $stylename)
                 {
-                    $_subst_id = $this->_get_style_id_from_path($stylename, $_st);
+                    $_subst_id = $this->get_style_id_from_path($stylename, $_st);
                     if ($_subst_id)
                     {
                         $_st = $_subst_id;
-                        debug_add("found substyle '$substyle', overriding component's user defined style.", MIDCOM_LOG_INFO);
+                        debug_add("Found substyle '$substyle', overriding component's user defined style.", MIDCOM_LOG_INFO);
+                    }
+                    else
+                    {
+                        debug_add("Substyle '$substyle' not found under {$_st}.", MIDCOM_LOG_INFO);
                     }
                 }
             }
@@ -420,8 +642,8 @@ class midcom_helper__styleloader {
     function _getComponentSnippetdir($topic)
     {
         // get component's snippetdir (for default styles)
-        $loader =& $GLOBALS["midcom"]->get_component_loader();
-        return $loader->path_to_snippetpath($topic->parameter("midcom", "component")) . "/style";
+        $loader =& $_MIDCOM->get_component_loader();
+        return $loader->path_to_snippetpath($topic->component) . "/style";
     }
 
     /**
@@ -506,7 +728,7 @@ class midcom_helper__styleloader {
     }
 
     /**
-     * Switches the context (see dymamic load). Private variables $_context, $_topic
+     * Switches the context (see dynamic load). Private variables $_context, $_topic
      * and $_snippetdir are adjusted.
      *
      * @todo check documentation
@@ -521,7 +743,7 @@ class midcom_helper__styleloader {
         array_unshift($this->_context, $context); // push into context stack
         debug_add("entering context $context", MIDCOM_LOG_DEBUG);
 
-        $this->_topic = $GLOBALS["midcom"]->get_content_topic();
+        $this->_topic = $_MIDCOM->get_content_topic();
 
         $_st = $this->_getComponentStyle($this->_topic);
         if (isset($_st)) {
@@ -530,14 +752,14 @@ class midcom_helper__styleloader {
 
         $this->_snippetdir = $this->_getComponentSnippetdir($this->_topic);
 
-        $this->_merge_styledirs($this->_snippetdir );
+        $this->_merge_styledirs($this->_snippetdir);
 
         debug_pop();
         return true;
     }
 
     /**
-     * Switches the context (see dymamic load). Private variables $_context, $_topic
+     * Switches the context (see dynamic load). Private variables $_context, $_topic
      * and $_snippetdir are adjusted.
      *
      * @todo check documentation
@@ -558,7 +780,7 @@ class midcom_helper__styleloader {
 
         // get our topic again
         // FIXME: does this have to be above _getComponentStyle($this->_topic) ??
-        $this->_topic = $GLOBALS["midcom"]->get_content_topic();
+        $this->_topic = $_MIDCOM->get_content_topic();
 
         $this->_snippetdir = $this->_getComponentSnippetdir($this->_topic);
 

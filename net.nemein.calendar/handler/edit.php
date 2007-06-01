@@ -105,6 +105,20 @@ class net_nemein_calendar_handler_edit extends midcom_baseclasses_components_han
 
         $this->_view_toolbar->bind_to($this->_request_data['event']);
 
+        // Set the breadcrumb
+        $breadcrumb[] = array
+        (
+            MIDCOM_NAV_URL => "{$this->_request_data['event']->extra}.html",
+            MIDCOM_NAV_NAME => $this->_request_data['event']->title,
+        );
+        $breadcrumb[] = array
+        (
+            MIDCOM_NAV_URL => "edit/{$this->_request_data['event']->guid}.html",
+            MIDCOM_NAV_NAME => sprintf($this->_l10n_midcom->get('edit')),
+        );
+        
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
+        
         return true;
     }
 

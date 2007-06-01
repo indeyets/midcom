@@ -180,6 +180,61 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
     {
         if ($this->_controller->process_form() == 'save')
         {
+            if (   $this->_config->get('allow_multiple')
+                && isset($this->_controller->datamanager->types['events'])
+                && isset($this->_controller->datamanager->types['events']->selection)
+                && is_array($this->_controller->datamanager->types['events']->selection)
+                && !empty($this->_controller->datamanager->types['events']->selection)
+                )
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add('entered handler for multiple events registration');
+                // We have multiple courses to process, start by verifying the registrar
+                $registar_created = false;
+                if ($this->_registrar)
+                {
+                    $this->_update_registrar();
+                }
+                else
+                {
+                    $this->_create_registrar();
+                    $registar_created = true;
+                }
+                // Make a backup copy
+                $this_event_backup = $this->_event;
+                $registration_ids = array();
+                foreach ($this->_controller->datamanager->types['events']->selection as $guid)
+                {
+                    $event = new net_nemein_registrations_event($guid);
+                    if (   !is_object($event)
+                        || empty($event->id))
+                    {
+                        // invalid id/guid
+                        debug_add("Identifier '{$guid}' does not point to a valid event", MIDCOM_LOG_ERROR);
+                        continue;
+                    }
+                    if (!$event->is_open())
+                    {
+                        // not open for registration
+                        debug_add("Event {$event->title} (#{$event->id}) is not open for registration", MIDCOM_LOG_ERROR);
+                        continue;
+                    }
+                    debug_add("Creating registration for event {$event->title} (#{$event->id})", MIDCOM_LOG_INFO);
+                    $this->_event = $event;
+                    // TODO: how to handle failure in the middle of successes ??
+                    $this->_create_registration(false);
+                    $registration_ids[] = $this->_registration->id;
+                }
+                // Restore backup
+                $this->_event = $this_event_backup;
+                // List the successfull registrations
+                $session = new midcom_service_session();
+                $session->set('registration_ids', $registration_ids);
+                // just to keep defaults from barfing
+                $session->set('registration_id', $this->_registration->id);
+                debug_pop();
+                $_MIDCOM->relocate('register/success.html');
+            }
             // First, update/create the person
             // Then, create the registration.
             if ($this->_registrar)
@@ -259,10 +314,19 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
         $event_dm =& $this->_event->get_datamanager();
 
         // Set the schema name on the object.
-        $this->_registration->set_parameter('midcom.helper.datamanager2', 'schema_name', $event_dm->types['additional_questions']->selection[0]);
+        if (count($event_dm->types['additional_questions']->selection) == 0)
+        {
+            $registration_schema = 'aq-default';
+        }
+        else
+        {
+            $registration_schema = $event_dm->types['additional_questions']->selection[0];
+        }
+        
+        $this->_registration->set_parameter('midcom.helper.datamanager2', 'schema_name', $registration_schema);
 
         // Update the account with the selected information
-        $controller =& $this->_registration->create_simple_controller($event_dm->types['additional_questions']->selection[0]);
+        $controller =& $this->_registration->create_simple_controller($registration_schema);
         if ($controller->process_form() != 'save')
         {
             if (! $_MIDCOM->auth->user)
@@ -303,7 +367,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
      * Sends the approval notification E-Mail to the configured notification Mail address
      *
      * @access private
-     * @todo Rewrite Mail handling to PEAR_Mail.
+     * @todo Rewrite Mail handling to org.openpsa.mail.
      */
     function _send_approval_notification()
     {
@@ -332,12 +396,16 @@ EOF;
                 // Skipping an empty cc line, perhaps a comma too much
                 continue;
             }
-            if (! mail ($email, $subject, $body, $headers))
+            $mail = new org_openpsa_mail();
+            $mail->to = $email;
+            $mail->subject = $subject;
+            $mail->body = $body;
+            $mail->from = $sender;
+            if (!$mail->send())
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Could not send E-Mail to '{$email}' with subject '{$subject}'.", MIDCOM_LOG_ERROR);
-                debug_print_r('Extra Headers:', $headers);
-                debug_print_r('Body:', $body);
+                debug_add("Could not send E-Mail to '{$email}' with subject '{$subject}', got error: " . $mail->get_error_message(), MIDCOM_LOG_ERROR);
+                //debug_print_r('Mail object:', $mail);
                 debug_pop();
             }
         }
@@ -445,6 +513,10 @@ EOF;
         else
         {
             $defaults = Array();
+            if ($this->_config->get('allow_multiple'))
+            {
+                $defaults['events'] = array($this->_event->guid => true);
+            }
         }
 
         $this->_controller =& midcom_helper_datamanager2_controller::create('nullstorage');
@@ -452,6 +524,10 @@ EOF;
         $this->_controller->schemaname = 'merged';
         $this->_controller->defaults = $defaults;
         $this->_controller->initialize();
+        if ($this->_config->get('allow_multiple'))
+        {
+            // TODO: figure out a way to select the "current" event
+        }
     }
 
     /**
@@ -467,7 +543,15 @@ EOF;
         // bottom of the field list.
         $registrar_schema = $this->_schemadb[$this->_config->get('registrar_schema')];
         $event_dm =& $this->_event->get_datamanager();
-        $registration_schema = $this->_schemadb[$event_dm->types['additional_questions']->selection[0]];
+        
+        if (count($event_dm->types['additional_questions']->selection) > 0)
+        {
+            $registration_schema = $this->_schemadb[$event_dm->types['additional_questions']->selection[0]];
+        }
+        else
+        {
+            $registration_schema = $this->_schemadb['aq-default'];
+        }
 
         if (   ! $registrar_schema
             || ! $registration_schema)
@@ -497,6 +581,11 @@ EOF;
         }
 
         $this->_nullstorage_schemadb['merged'] = $registrar_schema;
+        /*
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_print_r('Merged schema:', $registrar_schema);
+        debug_pop();
+        */
     }
 
     /**

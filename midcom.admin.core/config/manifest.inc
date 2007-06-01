@@ -1,18 +1,31 @@
-'name' => 'midcom.admin.core',
-'description' => 'This purecode module defines what onsite editing commands exist.',
-'purecode' => true,
-'version' => '0.8.0',
-'privileges' =>  Array(),
-'class_definitions' => Array(),
-'package.xml' => Array(  
-    'license' => 'GPL',  
-    'maintainers' => Array( 
-        'tarjei' => Array(  
-            'name' => 'Tarjei Huse',  
-            'email' => 'tarjei@nu.no',  
-            'role' => 'lead',  
-        ),  
-    ),  
-    'dependencies' => Array(
-    ),  
-),
+
+  'name' => 'midcom.admin.core',
+  'description' => 'This purecode module defines what onsite editing commands exist.',
+  'purecode' => true,
+  'version' => '0.8.2beta1',
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+  ),
+  'package.xml' => 
+  array (
+    'license' => 'GPL',
+    'maintainers' => 
+    array (
+      'tarjei' => 
+      array (
+        'name' => 'Tarjei Huse',
+        'email' => 'tarjei@nu.no',
+        'role' => 'lead',
+      ),
+    ),
+    'dependencies' => 
+    array (
+      'midcom' => 
+      array (
+      ),
+    ),
+  ),
+  'state' => 'beta',

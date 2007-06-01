@@ -14,6 +14,8 @@
 if (   array_key_exists('HTTP_X_MOZ', $_SERVER)
     && $_SERVER['HTTP_X_MOZ'] == 'prefetch')
 {
+    header('Cache-Control: no-cache');
+    header('Pragma: no-cache');
     header('HTTP/1.0 403 Forbidden');
     echo '403: Forbidden<br><br>Prefetching not allowed.';
     exit;
@@ -137,6 +139,7 @@ require('midcom/core/group_virtual.php');
 require('midcom/core/manifest.php');
 require('midcom/core/privilege.php');
 require('midcom/core/querybuilder.php');
+require('midcom/core/collector.php');
 
 // Helpers and First-Generation services
 require('midcom/helper/urlparser.php');
@@ -166,6 +169,8 @@ require('midcom/services/tmp.php');
 require('midcom/services/toolbars.php');
 require('midcom/services/uimessages.php');
 require('midcom/services/metadata.php');
+require('midcom/services/rcs.php');
+
 
 /////////////////////////////////////
 // Instantinate the MidCOM main class
@@ -174,5 +179,4 @@ require('midcom/application.php');
 $_MIDCOM = new midcom_application();
 $GLOBALS['midcom'] =& $_MIDCOM;
 $_MIDCOM->initialize();
-
 ?>

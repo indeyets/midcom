@@ -1,7 +1,7 @@
 <?php
 /**
  * @package org.openpsa.projects
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: new.php,v 1.1 2006/05/10 13:00:45 rambo Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,23 +9,23 @@
 
 /**
  * New project handler
- * 
+ *
  * @package org.openpsa.projects
  */
 class org_openpsa_projects_handler_project_new extends midcom_baseclasses_components_handler
 {
     var $_datamanagers;
 
-    function org_openpsa_projects_handler_project_new() 
+    function org_openpsa_projects_handler_project_new()
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     function _on_initialize()
     {
         $this->_datamanagers =& $this->_request_data['datamanagers'];
     }
-    
+
     function _creation_dm_callback(&$datamanager)
     {
         // This is what Datamanager calls to actually create a person
@@ -33,8 +33,8 @@ class org_openpsa_projects_handler_project_new extends midcom_baseclasses_compon
             "success" => false,
             "storage" => null,
         );
-        
-        $project = new org_openpsa_projects_project();        
+
+        $project = new org_openpsa_projects_project();
         $stat = $project->create();
         if ($stat)
         {
@@ -50,16 +50,16 @@ class org_openpsa_projects_handler_project_new extends midcom_baseclasses_compon
     function _handler_new($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_projects_project');
-    
+
         if (!$this->_datamanagers['project']->init_creation_mode("newproject",$this,"_creation_dm_callback"))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "Failed to initialize datamanger in creation mode for schema 'newproject'.");
-            // This will exit   
+            // This will exit
         }
-        
+
         $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get("create project"));
-                
+
         switch ($this->_datamanagers['project']->process_form()) {
             case MIDCOM_DATAMGR_CREATING:
                 debug_add('First call within creation mode');
@@ -67,40 +67,40 @@ class org_openpsa_projects_handler_project_new extends midcom_baseclasses_compon
                 // Add toolbar items
                 org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
                 break;
-            
+
             case MIDCOM_DATAMGR_EDITING:
                 debug_add("First time submit, the DM has created an object");
                 // Change schema setting
                 $this->_request_data['project']->parameter("midcom.helper.datamanager","layout","default");
                 // TODO: index
-                                
+
                 // Relocate to group view
-                $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);          
+                $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 $_MIDCOM->relocate($prefix."project/".$this->_request_data['project']->guid."/");
                 break;
-            
-            case MIDCOM_DATAMGR_SAVED:                    
+
+            case MIDCOM_DATAMGR_SAVED:
                 debug_add("First time submit, the DM has created an object");
                 // Change schema setting
                 $this->_request_data['project']->parameter("midcom.helper.datamanager","layout","default");
                 // TODO: index
-                                
+
                 // Relocate to group view
-                $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);          
+                $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 $_MIDCOM->relocate($prefix."project/".$this->_request_data['project']->guid."/");
                 break;
-            
+
             case MIDCOM_DATAMGR_CANCELLED_NONECREATED:
                 debug_add('Cancel without anything being created, redirecting to the welcome screen.');
                 $_MIDCOM->relocate('');
                 // This will exit
-            
+
             case MIDCOM_DATAMGR_CANCELLED:
                 $this->errcode = MIDCOM_ERRCRIT;
                 $this->errstr = 'Method MIDCOM_DATAMGR_CANCELLED unknown for creation mode.';
                 debug_pop();
                 return false;
-            
+
             case MIDCOM_DATAMGR_FAILED:
             case MIDCOM_DATAMGR_CREATEFAILED:
                 debug_add('The DM failed critically, see above.');
@@ -108,15 +108,15 @@ class org_openpsa_projects_handler_project_new extends midcom_baseclasses_compon
                 $this->errcode = MIDCOM_ERRCRIT;
                 debug_pop();
                 return false;
-            
+
             default:
                 $this->errcode = MIDCOM_ERRCRIT;
                 $this->errstr = 'Method unknown';
                 debug_pop();
                 return false;
-            
+
         }
-        
+
         debug_pop();
         return true;
     }

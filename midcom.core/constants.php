@@ -46,9 +46,9 @@ define ('MIDCOM_NAV_NOENTRY', 15);
 define ('MIDCOM_NAV_OBJECT', 16);
 define ('MIDCOM_NAV_RELATIVEURL', 17);
 define ('MIDCOM_NAV_ABSOLUTEURL', 18);
-define ('MIDCOM_NAV_SUBNODES', 19); /* Yet unused. */
-define ('MIDCOM_NAV_LEAVES', 20);
-define ('MIDCOM_NAV_VIEWERGROUPS', 21);
+//define ('MIDCOM_NAV_SUBNODES', 19); /* Yet unused. */
+//define ('MIDCOM_NAV_LEAVES', 20);
+//define ('MIDCOM_NAV_VIEWERGROUPS', 21);
 define ('MIDCOM_NAV_ACL', 22);
 define ('MIDCOM_NAV_ICON', 23);
 define ('MIDCOM_NAV_CONFIGURATION', 24);
@@ -216,6 +216,13 @@ define ('MIDCOM_TOOLBAR_NODE', 100);
  * @see midcom_services_toolbars
  */
 define ('MIDCOM_TOOLBAR_VIEW', 101);
+
+/**
+ * Identifier for a host toolbar for a request context.
+ *
+ * @see midcom_services_toolbars
+ */
+define ('MIDCOM_TOOLBAR_HOST', 104);
 
 /**
  * Identifier for a custom objcet toolbar.

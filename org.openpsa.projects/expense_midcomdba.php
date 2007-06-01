@@ -9,20 +9,20 @@ class midcom_org_openpsa_expense extends __midcom_org_openpsa_expense
     {
         return parent::__midcom_org_openpsa_expense($id);
     }
-    
+
     function get_parent_guid_uncached()
     {
         if ($this->task != 0)
         {
-            $parent = new org_openpsa_projects_task($this->task);            
+            $parent = new org_openpsa_projects_task($this->task);
             return $parent;
         }
         else
         {
             return null;
         }
-    }    
-    
+    }
+
     function _prepare_save()
     {
         //Make sure we have creator
@@ -52,7 +52,7 @@ class midcom_org_openpsa_expense extends __midcom_org_openpsa_expense
         }
         return true;
     }
-    
+
     function _locale_set()
     {
         $this->_locale_backup = setlocale(LC_NUMERIC, '0');
@@ -63,7 +63,7 @@ class midcom_org_openpsa_expense extends __midcom_org_openpsa_expense
     {
         setlocale(LC_NUMERIC, $this->_locale_backup);
     }
-    
+
     function _on_creating()
     {
         $this->_locale_set();
@@ -74,12 +74,12 @@ class midcom_org_openpsa_expense extends __midcom_org_openpsa_expense
     {
         $this->_locale_restore();
     }
-    
+
     function _on_updating()
     {
         $this->_locale_set();
         return $this->_prepare_save();
-    }        
+    }
 
     function _on_updated()
     {
@@ -91,11 +91,11 @@ class midcom_org_openpsa_expense extends __midcom_org_openpsa_expense
  * Another wrap level to get to component namespace
  * @package org.openpsa.projects
  */
-class org_openpsa_projects_expense extends __midcom_org_openpsa_expense
+class org_openpsa_projects_expense extends midcom_org_openpsa_expense
 {
     function org_openpsa_projects_expense($identifier=NULL)
     {
-        return parent::midcom_org_openpsa_expense($identifier); 
+        return parent::midcom_org_openpsa_expense($identifier);
     }
 }
 ?>

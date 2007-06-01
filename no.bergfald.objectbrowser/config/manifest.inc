@@ -1,22 +1,36 @@
-'name' =>'no.bergfald.objectbrowser',
-'purecode' => true,
-'version' => '0.5.0',
-'privileges' =>  Array(),
-'class_definitions' => Array(),
-'package.xml' => Array(  
-    'license' => 'GPL',  
-    'maintainers' => Array( 
-        'tarjei' => Array(  
-            'name' => 'Tarjei Huse',  
-            'email' => 'tarjei@nu.no',  
-            'role' => 'lead',  
-        ),  
-    ),  
-    'dependencies' => Array(
-    
-    'midcom.helper.datamanager' => Array(),
-    'midcom.helper.datamanager2' => Array(),
-    
-    ),  
-),
 
+  'name' => 'no.bergfald.objectbrowser',
+  'purecode' => true,
+  'version' => '0.5.2beta1',
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+  ),
+  'package.xml' => 
+  array (
+    'license' => 'GPL',
+    'maintainers' => 
+    array (
+      'tarjei' => 
+      array (
+        'name' => 'Tarjei Huse',
+        'email' => 'tarjei@nu.no',
+        'role' => 'lead',
+      ),
+    ),
+    'dependencies' => 
+    array (
+      'midcom.helper.datamanager' => 
+      array (
+      ),
+      'midcom.helper.datamanager2' => 
+      array (
+      ),
+      'midcom' => 
+      array (
+      ),
+    ),
+  ),
+  'state' => 'beta',

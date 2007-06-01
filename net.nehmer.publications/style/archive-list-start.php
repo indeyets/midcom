@@ -1,7 +1,7 @@
 <?php
 // Available request keys: start, end
 
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $start = $data['start']->format($data['l10n_midcom']->get('short date'));
 $end = $data['end']->format($data['l10n_midcom']->get('short date'));
 ?>

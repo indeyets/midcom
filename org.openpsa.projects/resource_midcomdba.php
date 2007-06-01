@@ -12,19 +12,19 @@ class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resourc
         return parent::__midcom_org_openpsa_task_resource($id);
     }
 
-    
+
     function get_parent_guid_uncached()
     {
         if ($this->task != 0)
         {
             $parent = new org_openpsa_projects_task($this->task);
-            
+
             if ($parent->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_PROJECT)
             {
                 // The parent is a project instead
                 $parent = new org_openpsa_projects_project($this->task);
             }
-            
+
             return $parent;
         }
         else
@@ -32,7 +32,7 @@ class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resourc
             return null;
         }
     }
-    
+
     function _add_to_buddylist_of($account)
     {
         if (!$_MIDCOM->auth->user)
@@ -46,7 +46,7 @@ class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resourc
         $qb->add_constraint('buddy', '=', $this->_personobject->guid);
         $qb->add_constraint('blacklisted', '=', false);
         $buddies = $qb->execute();
-        
+
         if (count($buddies) == 0)
         {
             // Cache the association to buddy list of the sales project owner
@@ -57,7 +57,37 @@ class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resourc
             return $buddy->create();
         }
     }
-    
+
+    function _find_duplicates()
+    {
+        $qb = org_openpsa_projects_task_resource::new_query_builder();
+        $qb->add_constraint('person', '=', $this->person);
+        $qb->add_constraint('task', '=', $this->task);
+        $qb->add_constraint('orgOpenpsaObtype', '=', $this->orgOpenpsaObtype);
+
+        if ($this->id)
+        {
+            $qb->add_constraint('id', '<>', $this->id);
+        }
+
+        $dupes = $qb->execute();
+        if (count($dupes) > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    function _on_creating()
+    {
+        if ($this->_find_duplicates())
+        {
+            return false;
+        }
+
+        return parent::_on_creating();
+    }
+
     function _on_created()
     {
         if ($this->person)
@@ -66,11 +96,11 @@ class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resourc
             $this->set_privilege('midgard:read', $this->_personobject->id, MIDCOM_PRIVILEGE_ALLOW);
             $this->set_privilege('midgard:delete', $this->_personobject->id, MIDCOM_PRIVILEGE_ALLOW);
             $this->set_privilege('midgard:update', $this->_personobject->id, MIDCOM_PRIVILEGE_ALLOW);
-            
+
             // Add resource to manager's buddy list
             $task = new org_openpsa_projects_task($this->task);
             $this->_add_to_buddylist_of($task->manager);
-            
+
             // Add resource to other resources' buddy lists
             $qb = org_openpsa_projects_task_resource::new_query_builder();
             $qb->add_constraint('task', '=', $this->task);
@@ -83,11 +113,65 @@ class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resourc
             }
         }
         return true;
-    }     
+    }
+
+    function _on_updating()
+    {
+        if ($this->_find_duplicates())
+        {
+            return false;
+        }
+
+        return parent::_on_updating();
+    }
 
     function _pid_to_obj($pid)
     {
         return $_MIDCOM->auth->get_user($pid);
+    }
+
+    function get_resource_tasks($key = 'id', $list_finished = false)
+    {
+        $task_array = array();
+        if (!$_MIDCOM->auth->user)
+        {
+            return $task_array;
+        }
+
+        $qb = org_openpsa_projects_task_resource::new_query_builder();
+        $qb->add_constraint('person', '=', $_MIDGARD['user']);
+        $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
+        $resources = $qb->execute();
+        foreach ($resources as $resource)
+        {
+            $task = new org_openpsa_projects_task($resource->task);
+            if (!$task)
+            {
+                continue;
+            }
+
+            if ($task->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_PROJECT)
+            {
+                // This is a project, not a task. Skip
+                continue;
+            }
+
+            if ($task->start >= time())
+            {
+                // This is not a current task yet. Skip
+                continue;
+            }
+
+            if (   $task->status >= ORG_OPENPSA_TASKSTATUS_COMPLETED
+                && !$list_finished)
+            {
+                // This task has been closed already. Skip
+                continue;
+            }
+
+            $task_array[$task->$key] = $task->get_label();
+        }
+        return $task_array;
     }
 }
 
@@ -99,7 +183,7 @@ class org_openpsa_projects_task_resource extends midcom_org_openpsa_task_resourc
 {
     function org_openpsa_projects_task_resource($identifier=NULL)
     {
-        return parent::midcom_org_openpsa_task_resource($identifier); 
+        return parent::midcom_org_openpsa_task_resource($identifier);
     }
 }
 ?>

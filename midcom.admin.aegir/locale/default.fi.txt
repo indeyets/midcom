@@ -3,6 +3,26 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING Select arrow up or down and click on the element you want to move
+Klikkaa elementtiä siirtääksesi sitä navigaatiossa. Valitse suunta ylös tai alas nuolen perusteella.
+---STRINGEND
+
+---STRING Set order
+Järjestele
+---STRINGEND
+
+---STRING Sort articles
+Järjestele artikkeleita
+---STRINGEND
+
+---STRING Sort topics
+Järjestele kansioita
+---STRINGEND
+
+---STRING The objects in this topic cannot be sorted
+Tämän kansion artikkeleita ei voi järjestellä
+---STRINGEND
+
 ---STRING are you sure to delete
 Oletko varma että haluat poistaa tämän kansion ja kaiken sen alta?
 ---STRINGEND
@@ -47,6 +67,14 @@ Poista kansio
 Varoitus: myös alemman tason tiedot poistetaan
 ---STRINGEND
 
+---STRING edit metadata
+Muokkaa metadataa
+---STRINGEND
+
+---STRING edit order
+Järjestele kansiota
+---STRINGEND
+
 ---STRING edit topic
 Muokkaa kansiota
 ---STRINGEND
@@ -69,6 +97,14 @@ Periytä tyyli alakansioille
 
 ---STRING location
 Sijainti
+---STRINGEND
+
+---STRING metadata for %s
+'%s':n metadata
+---STRINGEND
+
+---STRING midcom.admin.content
+Midgard-julkaisukäyttöliittymä
 ---STRINGEND
 
 ---STRING nav order
@@ -155,39 +191,7 @@ Sivulle paluu ei sallittu
 Ryhmät joilla on oikeus katsella kansiota
 ---STRINGEND
 
----STRING Select arrow up or down and click on the element you want to move
-Klikkaa elementtiä siirtääksesi sitä navigaatiossa. Valitse suunta ylös tai alas nuolen perusteella.
----STRINGEND
-
----STRING Set order
-Järjestele
----STRINGEND
-
----STRING Sort articles
-Järjestele artikkeleita
----STRINGEND
-
----STRING Sort topics
-Järjestele kansioita
----STRINGEND
-
----STRING The objects in this topic cannot be sorted
-Tämän kansion artikkeleita ei voi järjestellä
----STRINGEND
-
----STRING edit metadata
-Muokkaa metadataa
----STRINGEND
-
----STRING edit order
-Järjestele kansiota
----STRINGEND
-
----STRING metadata for %s
-'%s':n metadata
----STRINGEND
-
----STRING midcom.admin.content
-Midgard-julkaisukäyttöliittymä
+---STRING midcom.admin.aegir
+Aegir - pääkäyttäjän työkalu
 ---STRINGEND
 

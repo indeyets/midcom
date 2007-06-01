@@ -1,16 +1,16 @@
 <?php
 
 /*
-$config_dm =& $GLOBALS["midcom"]->get_custom_context_data("configuration_dm");
-$topic = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC);
-$product =& $GLOBALS["midcom"]->get_custom_context_data("product");
+$config_dm =& $_MIDCOM->get_custom_context_data("configuration_dm");
+$topic = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC);
+$product =& $_MIDCOM->get_custom_context_data("product");
 */
 
-$config =& $GLOBALS["midcom"]->get_custom_context_data("configuration");
-$l10n =& $GLOBALS["midcom"]->get_custom_context_data("l10n");
-$l10n_midcom =& $GLOBALS["midcom"]->get_custom_context_data("l10n_midcom");
+$config =& $_MIDCOM->get_custom_context_data("configuration");
+$l10n =& $_MIDCOM->get_custom_context_data("l10n");
+$l10n_midcom =& $_MIDCOM->get_custom_context_data("l10n_midcom");
 
-$order=& $GLOBALS["midcom"]->get_custom_context_data("order");
+$order=& $_MIDCOM->get_custom_context_data("order");
 $items = $order->get_order();
 $currsign = $config->get("currency_sign");
 

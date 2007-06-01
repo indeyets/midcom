@@ -1,29 +1,49 @@
-'name' => 'midgard.admin.sitewizard',
-'purecode' => false,
-'version' => '2.0.0beta',
-'privileges' =>  Array(),
-'class_definitions' => Array(),
-'package.xml' => Array
-(
+
+  'name' => 'midgard.admin.sitewizard',
+  'purecode' => false,
+  'version' => '2.0.2beta1',
+  'state' => 'beta',
+  'privileges' => 
+  array (
+  ),
+  'class_definitions' => 
+  array (
+  ),
+  'package.xml' => 
+  array (
     'summary' => 'Site creation wizard',
     'description' => 'Tool for creating companies, sites and styles',
-    'maintainers' => Array
-    (
-        'bergie' => Array
-        (
-            'name' => 'Henri Bergius',
-            'email' => 'henri.bergius@iki.fi',
-            'role' => 'lead',
-        ),
-        'w_i' => Array
-        (
-            'name' => 'Jerry Jalava',
-            'email' => 'jerry.jalava@incognito.fi',
-            'role' => 'lead',
-        ),
+    'maintainers' => 
+    array (
+      'bergie' => 
+      array (
+        'name' => 'Henri Bergius',
+        'email' => 'henri.bergius@iki.fi',
+        'role' => 'lead',
+      ),
+      'w_i' => 
+      array (
+        'name' => 'Jerry Jalava',
+        'email' => 'jerry.jalava@incognito.fi',
+        'role' => 'lead',
+      ),
+      'solt' => 
+      array (
+        'name' => 'Marcin Sołtysiak',
+        'email' => 'olga@olga.pl',
+        'role' => 'developer',
+      ),
     ),
-    'dependencies' => Array
-    (
-        'midgard.admin.sitegroup' => Array(),
+    'dependencies' => 
+    array (
+      'midgard.admin.sitegroup' => 
+      array (
+      ),
+      'template_Midgard' => 
+      array (
+      ),
+      'midcom' => 
+      array (
+      ),
     ),
-),
+  ),

@@ -38,21 +38,26 @@
  
 class net_nemein_ping_pinger extends midcom_baseclasses_components_purecode
 {
+    var $object = null;
+    var $node = null;
+    
     /**
-     * Initializes the class and stores the selected person to be shown
-     * The argument should be a MidgardPerson object. In the future DM
-     * Array format will also be supported.
+     * Initializes the pinger for an object
      * 
-     * @param mixed $person Person to display either as MidgardPerson or Datamanager array
+     * @param midcom_dba_object $object Object to ping
      */
-    function net_nemein_ping_pinger()
+    function net_nemein_ping_pinger($object)
     {
         $this->_component = 'net.nemein.ping';
+        
+        $this->object = $object;
     
         parent::midcom_baseclasses_components_purecode();
     }
 
-    /* Multi-purpose ping for any XML-RPC server that supports the Weblogs.Com interface. */
+    /**
+     * Makes a weblogUpdates.ping request to given server
+     */
     function ping($xml_rpc_server, $xml_rpc_port, $xml_rpc_path, $weblog_name, $weblog_url, $changes_url=null, $category=null)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -83,7 +88,7 @@ class net_nemein_ping_pinger extends midcom_baseclasses_components_purecode
         $response = $client->send($message);
         
         // Check error conditions
-        if ($response == 0) 
+        if (!is_object($response)) 
         {
             debug_add("XML-RPC communication error with {$xml_rpc_server}: {$client->errno} {$client->errstring}");
             debug_pop();
@@ -101,58 +106,152 @@ class net_nemein_ping_pinger extends midcom_baseclasses_components_purecode
         return true;     
     }
     
-    function ping_object($object)
+    /**
+     * Makes a weblogUpdates.extendedPing request to given server
+     */
+    function extended_ping($xml_rpc_server, $xml_rpc_port, $xml_rpc_path, $weblog_name, $weblog_url, $changes_url, $rss_url, $category=null)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        if ($this->_config->get('enable_weblog_pings'))
-        {
-            if (!$_MIDCOM->auth->can_do('midgard:read', $object, 'EVERYONE'))
-            {
-                debug_add("This object isn't publicly readable, don't ping");
-                debug_pop();
-                return false;
-            }
         
-            if (array_key_exists('view_contentmgr', $GLOBALS))
-            {
-                // FIXME: This isn't exactly pretty
-                debug_add("We're in AIS, instantiate NAP for its context");
-                $nav = new midcom_helper_nav($GLOBALS['view_contentmgr']->_context);
-            }
-            else
-            {
-                $nav = new midcom_helper_nav();
-            }
-            $node = $nav->get_node($object->topic);
+        // Build the required parameters
+        $parameters = array();
+        $parameters[] = new XML_RPC_Value($weblog_name, 'string');
+        $parameters[] = new XML_RPC_Value($weblog_url, 'string');
+        $parameters[] = new XML_RPC_Value($changes_url, 'string');
+        $parameters[] = new XML_RPC_Value($rss_url, 'string');
             
+        // Add optional parameters if provided
+        if ($category)
+        {
+            $parameters[] = new XML_RPC_Value($category, 'string');
+        }
+            
+        // Create the message
+        $message = new XML_RPC_Message('weblogUpdates.extendedPing', $parameters);
+        
+        // Start up the client
+        $client = new XML_RPC_Client($xml_rpc_path, $xml_rpc_server, $xml_rpc_port);
+        
+        // Make the request
+        $response = $client->send($message);
+        
+        // Check error conditions
+        if (!is_object($response)) 
+        {
+            debug_add("XML-RPC communication error with {$xml_rpc_server}: {$client->errno} {$client->errstring}", MIDCOM_LOG_WARN);
+            debug_pop();
+            return false;
+        }
+        if ($response->faultCode() != 0)  
+        {
+            debug_add("Error pinging {$xml_rpc_server}: ".$response->faultCode()." ".$response->faultString(), MIDCOM_LOG_WARN);
+            debug_pop();
+            return false;
+        }
+        
+        debug_add("Successfully pinged {$xml_rpc_server}");
+        debug_pop();
+        return true;     
+    }
+    
+    function check_pingability()
+    {
+        if (!$this->_config->get('enable_weblog_pings'))
+        {
+            return false;
+        }
+        
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        if (!$_MIDCOM->auth->can_do('midgard:read', $this->object, 'EVERYONE'))
+        {
+            debug_add("This object isn't publicly readable, don't ping");
+            debug_pop();
+            return false;
+        }
+    
+        if (array_key_exists('view_contentmgr', $GLOBALS))
+        {
+            // FIXME: This isn't exactly pretty
+            debug_add("We're in AIS, instantiate NAP for its context");
+            $nav = new midcom_helper_nav($GLOBALS['view_contentmgr']->_context);
+        }
+        else
+        {
+            $nav = new midcom_helper_nav();
+        }
+        
+        if (is_null($this->node))
+        {
+            $node = $nav->get_node($this->object->topic);
+        
             if (!$node)
             {
                 debug_add("Failed to resolve the object's topic into NAP node");
-                debug_print_r('Object', $object);
+                debug_print_r('Object', $this->object);
                 debug_pop();
                 return false;
             }
-            
-            if (in_array($node[MIDCOM_NAV_COMPONENT], $this->_config->get('components_to_ping')))
-            {
-                debug_add("The component {$node[MIDCOM_NAV_COMPONENT]} is one of the components to ping about");
-                
-                $ping_servers = $this->_config->get('weblog_ping_servers');
-                foreach ($ping_servers as $service_name => $service)
-                {
-                    debug_add("Pinging {$service_name}...");
-                    $this->ping($service['server'], $service['port'], $service['path'], $node[MIDCOM_NAV_NAME], $node[MIDCOM_NAV_FULLURL]);
-                }
-            }
-            
-            debug_pop();
-            return true;
+            $this->node = $node;
         }
-        else
+        
+        if (!in_array($this->node[MIDCOM_NAV_COMPONENT], $this->_config->get('components_to_ping')))
+        {
+            debug_add("The component {$this->node[MIDCOM_NAV_COMPONENT]} is not one of the components to ping about");
+            debug_pop();
+            return false;
+        }
+        debug_pop();
+        return true;
+    }
+    
+    /**
+     * Send a weblog ping about the object
+     *
+     * @return bool Whether pinging was successfull
+     */
+    function ping_object()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        if (!$this->check_pingability())
         {
             debug_pop();
             return false;
         }
+
+        // Handle different article URLs of different components
+        $article_url = "{$this->node[MIDCOM_NAV_FULLURL]}{$this->object->name}.html";
+        $rss_url = "{$this->node[MIDCOM_NAV_FULLURL]}rss.xml";
+        switch ($this->node[MIDCOM_NAV_COMPONENT])
+        {
+            case 'net.nehmer.blog':
+                $article_url = "{$this->node[MIDCOM_NAV_FULLURL]}view/{$this->object->name}.html";
+                break;
+            case 'net.nemein.wiki':
+                $article_url = "{$this->node[MIDCOM_NAV_FULLURL]}{$this->object->name}/";
+                break;
+        }
+            
+        $ping_servers = $this->_config->get('weblog_ping_servers');
+        foreach ($ping_servers as $service_name => $service)
+        {
+            // Run the actual pings
+            switch ($service['protocol'])
+            {
+                case 'ping':
+                    debug_add("Pinging {$service_name} using weblogUpdates.ping...");
+                    $stat = $this->ping($service['server'], $service['port'], $service['path'], $this->node[MIDCOM_NAV_NAME], $this->node[MIDCOM_NAV_FULLURL]);
+                    break;
+                case 'extendedPing':
+                    debug_add("Pinging {$service_name} using weblogUpdates.extendedPing...");
+                    $stat = $this->extended_ping($service['server'], $service['port'], $service['path'], $this->node[MIDCOM_NAV_NAME], $this->node[MIDCOM_NAV_FULLURL], $article_url, $rss_url);
+                    break;      
+            }
+        }
+        
+        debug_pop();
+        return true;
     }
 }
 ?>

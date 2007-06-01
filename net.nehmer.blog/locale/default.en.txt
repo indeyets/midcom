@@ -55,6 +55,10 @@ Blog settings
 Categories
 ---STRINGEND
 
+---STRING comments_enable
+Enable commenting to news items (requires the net.nehmer.comments component)
+---STRINGEND
+
 ---STRING content
 Content
 ---STRINGEND
@@ -219,6 +223,10 @@ Include full-size image from schema field "image" to RSS items
 Language
 ---STRINGEND
 
+---STRING rss_subscription_enable
+Enable creating news items from remote RSS and Atom feeds
+---STRINGEND
+
 ---STRING rss_title
 RSS Feed title (leave empty to use the topic's title)
 ---STRINGEND
@@ -233,6 +241,10 @@ Path to the schema database
 
 ---STRING schema settings
 Schema settings
+---STRINGEND
+
+---STRING schemadb
+Database schema to use for articles
 ---STRINGEND
 
 ---STRING select article type
@@ -263,7 +275,7 @@ There is a total of %d posts.
 Should the topic be visible
 ---STRINGEND
 
----STRING schemadb
-Database schema to use for articles
+---STRING link_to_external_url
+Link items to external URL if available
 ---STRINGEND
 

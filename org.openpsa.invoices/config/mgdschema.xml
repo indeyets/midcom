@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
-    <type name="org_openpsa_invoice" table="org_openpsa_invoice">
+    <type name="org_openpsa_invoice" table="org_openpsa_invoice" parent="midgard_group" parentfield="customer">
         <property name="id" type="integer" primaryfield="id"/>
-        
+
         <!-- Time related fields -->
         <property name="sent" type="integer"/>
         <property name="due" type="integer"/>
@@ -15,7 +15,7 @@
         <property name="vat" type="integer"/>
 
         <!-- Customer contacts -->
-        <property name="customer" link="midgard_group:id" reverse="no" type="integer"/>
+        <property name="customer" link="midgard_group:id" reverse="no" type="integer" parentfield="customer"/>
         <property name="customerContact" link="midgard_person:id" reverse="no" type="integer"/>
 
         <!-- Sender of the invoice -->
@@ -28,11 +28,11 @@
         <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
         <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
         <!-- /required metadata -->
-    
+
     </type>
-    <type name="org_openpsa_invoice_hour" table="org_openpsa_invoice_hour">
+    <type name="org_openpsa_invoice_hour" table="org_openpsa_invoice_hour" parent="org_openpsa_invoice" parentfield="invoice">
         <property name="id" type="integer" primaryfield="id"/>
-        <property name="invoice" link="org_openpsa_invoice:id" reverse="no" type="integer"/>
+        <property name="invoice" link="org_openpsa_invoice:id" reverse="no" type="integer" parentfield="invoice"/>
         <property name="hourReport" link="org_openpsa_hour_report:id" reverse="no" type="integer"/>
 
         <!-- required metadata -->

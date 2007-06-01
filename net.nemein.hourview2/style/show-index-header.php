@@ -1,18 +1,8 @@
 <?php
-global $view_topic, $view_messages;
-?>
-<h1>&(view_topic.extra);</h1>
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 
-<form method="post" class="datamanager net_nemein_hourview2">
-
-<?php
-if (count($view_messages) > 0)
-{
-    echo "<div class=\"processing_message\">\n";
-    foreach ($view_messages as $message)
-    {
-        echo $message."<br />\n";
-    }
-    echo "</div>\n";
-}
+$node = $data['node'];
 ?>
+<h1>&(node.extra);</h1>
+
+<form method="post" class="net_nemein_hourview2">

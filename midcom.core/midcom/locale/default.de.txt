@@ -1,14 +1,14 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id:default.de.txt 3765 2006-07-31 08:51:39 +0000 (Mon, 31 Jul 2006) tarjei $
+---CVS $Id$
 ---LANGUAGE de
-
----STRING copy
-Kopieren
----STRINGEND
 
 ---STRING Edit this page
 Diese Seite bearbeiten
+---STRINGEND
+
+---STRING More...
+Mehr...
 ---STRINGEND
 
 ---STRING OK
@@ -17,6 +17,10 @@ OK
 
 ---STRING abstract
 Zusammenfassung
+---STRINGEND
+
+---STRING access control
+Zugriffskontrolle
 ---STRINGEND
 
 ---STRING access denied
@@ -47,8 +51,24 @@ Zugriff verweigert. Sie müssen am System angemeldet sein.
 Fortgeschrittene Einstellungen zu Schema und Daten
 ---STRINGEND
 
+---STRING ais-deprecation-heading
+AIS wird für diese Komponente nicht mehr benutzt.
+---STRINGEND
+
+---STRING ais-deprecation-text
+Jegliche Administration für diese Komponente erfolgt jetzt direkt auf der Webseite.
+---STRINGEND
+
 ---STRING all
 alle
+---STRINGEND
+
+---STRING and
+und
+---STRINGEND
+
+---STRING anonymous
+Anonym
 ---STRINGEND
 
 ---STRING approval
@@ -83,12 +103,24 @@ Zurück zur Rubrik
 Text
 ---STRINGEND
 
+---STRING bottom
+nach unten
+---STRINGEND
+
 ---STRING by name
 nach Name
 ---STRINGEND
 
 ---STRING cancel
 Abbrechen
+---STRINGEND
+
+---STRING captcha field title
+Sicherheitscode
+---STRINGEND
+
+---STRING close configuration screen
+Konfiguration schliessen
 ---STRINGEND
 
 ---STRING component
@@ -103,6 +135,10 @@ Komponente konfigurieren
 Mit Hilfe dieses Menüs können Sie die spezifischen Einstellungen der Komponente für diese Rubrik ändern.
 ---STRINGEND
 
+---STRING copy
+Kopieren
+---STRINGEND
+
 ---STRING create
 Anlegen
 ---STRINGEND
@@ -113,10 +149,6 @@ Anlegen
 
 ---STRING create page
 Neue Seite erstellen
----STRINGEND
-
----STRING created
-Erstellt um
 ---STRINGEND
 
 ---STRING creator
@@ -141,6 +173,10 @@ Beschreibung
 
 ---STRING discussion in %s
 Diskussion in %s
+---STRINGEND
+
+---STRING down
+runter
 ---STRINGEND
 
 ---STRING download %s
@@ -331,6 +367,10 @@ Passwort
 Passwörter stimmen nicht überein.
 ---STRINGEND
 
+---STRING permalink
+Permalink
+---STRINGEND
+
 ---STRING photo in %s
 Bild in %s
 ---STRINGEND
@@ -463,6 +503,10 @@ Vorschau
 Titel
 ---STRINGEND
 
+---STRING top
+nach oben
+---STRINGEND
+
 ---STRING topic
 Rubrik
 ---STRINGEND
@@ -481,6 +525,10 @@ Sichtbar machen
 
 ---STRING unknown
 Unbekannt
+---STRINGEND
+
+---STRING up
+hoch
 ---STRINGEND
 
 ---STRING update
@@ -539,50 +587,51 @@ Nachricht schreiben
 Ja
 ---STRINGEND
 
----STRING permalink
-Permalink
+---STRING approve topic
+Ordner freigeben
 ---STRINGEND
 
----STRING close configuration screen
-Konfiguration schliessen
+---STRING component %s configuration for folder %s
+Komponente %s für Ordner "%s" konfigurieren
 ---STRINGEND
 
----STRING ais-deprecation-heading
-AIS wird für diese Komponente nicht mehr benutzt.
+---STRING created on
+Erstellt um
 ---STRINGEND
 
----STRING ais-deprecation-text
-Jegliche Administration für diese Komponente erfolgt jetzt direkt auf der Webseite.
+---STRING folder
+Ordner
 ---STRINGEND
 
----STRING up
-hoch
+---STRING host
+Website
 ---STRINGEND
 
----STRING down
-runter
+---STRING page
+Seite
 ---STRINGEND
 
----STRING top
-nach oben
+---STRING privileges
+Berechtigungen
 ---STRINGEND
 
----STRING bottom
-nach unten
+---STRING sitegroup
+Sitegroup
 ---STRINGEND
 
----STRING More...
-Mehr...
+---STRING test settings
+Einstellungen überprüfen
 ---STRINGEND
 
----STRING and
-und
+---STRING unapprove topic
+Ordner-Freigabe zurücknehmen
 ---STRINGEND
 
----STRING captcha field title
-Sicherheitscode
+---STRING visibility settings
+Einstellungen zur Sichtbarkeit
 ---STRINGEND
 
----STRING anonymous
-Anonym
+---STRING workgroup
+Arbeitsgruppe
 ---STRINGEND
+

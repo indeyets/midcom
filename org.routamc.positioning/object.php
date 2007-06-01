@@ -11,14 +11,14 @@
  * Positioning for a given Midgard object
  *
  * <b>Example:</b>
- * 
+ *
  * <code>
  * <?php
  * $object_position = new org_routamc_positioning_object($article);
  * $coordinates = $object_position->get_coordinates();
  * if (!is_null($coordinates))
  * {
- *     echo "<meta name=\"icbm\" value=\"{$coordinates['latitude']},{$coordinates['longitude']}\" />\n";
+ *     echo "<meta name=\"icbm\" content=\"{$coordinates['latitude']},{$coordinates['longitude']}\" />\n";
  * }
  * ?>
  * </code>
@@ -33,7 +33,7 @@ class org_routamc_positioning_object extends midcom_baseclasses_components_purec
      * @var midcom_core_dbobject
      */
     var $_object = null;
-    
+
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      */
@@ -53,7 +53,11 @@ class org_routamc_positioning_object extends midcom_baseclasses_components_purec
     {
         $qb = org_routamc_positioning_location_dba::new_query_builder();
         $qb->add_constraint('parent', '=', $this->_object->guid);
-        $qb->add_constraint('relation', '=', ORG_ROUTAMC_POSITIONING_RELATION_IN);
+        $qb->begin_group('OR');
+            $qb->add_constraint('relation', '=', ORG_ROUTAMC_POSITIONING_RELATION_IN);
+            $qb->add_constraint('relation', '=', ORG_ROUTAMC_POSITIONING_RELATION_LOCATED);
+        $qb->end_group('OR');
+        $qb->add_order('metadata.published', 'DESC');
         $matches = $qb->execute();
         if (count($matches) > 0)
         {
@@ -67,47 +71,90 @@ class org_routamc_positioning_object extends midcom_baseclasses_components_purec
      *
      * @return org_routamc_positioning_log_dba
      */
-    function seek_log_object()
+    function seek_log_object($person = null, $time = null)
     {
-        $qb = org_routamc_positioning_log_dba::new_query_builder();
-        // TODO: Switch to metadata
-        if (isset($this->_object->author))
+        if (   is_integer($person)
+            || is_string($person))
         {
-            $creator = $this->_object->author;
+            $person_guid = $person;
         }
-        elseif ($this->_object->creator)
+        elseif (is_null($person))
         {
-            $creator = $this->_object->creator;
+            if (isset($this->_object->metadata->author))
+            {
+                $person_guid = $this->_object->metadata->author;
+            }
+            elseif (isset($this->_object->metadata->creator))
+            {
+                $person_guid = $this->_object->metadata->creator;
+            }
+            elseif (isset($this->_object->author))
+            {
+                $person_guid = $this->_object->author;
+            }
+            else
+            {
+                return null;
+            }
         }
         else
         {
-            return null;
+            $person_guid = $person->guid;
         }
-        $qb->add_constraint('person', '=', $creator);
-        $qb->add_constraint('date', '<=', $this->_object->created);
+
+        if (is_null($time))
+        {
+            $time = $this->_object->metadata->published;
+        }
+        
+        $person = new midcom_db_person($person_guid);
+
+        $qb = org_routamc_positioning_log_dba::new_query_builder();
+        $qb->add_constraint('person', '=', $person->id);
+        $qb->add_constraint('date', '<=', $time);
         $qb->add_order('date', 'DESC');
         $qb->set_limit(1);
         $matches = $qb->execute_unchecked();
+        
         if (count($matches) > 0)
         {
             return $matches[0];
         }
         return null;
-    }   
+    }
 
     /**
      * Get coordinates of the object
      *
      * @return Array
      */
-    function get_coordinates($cache = true)
+    function get_coordinates($person = null, $time = null, $cache = true)
     {
-        $coordinates = Array(
+        $coordinates = array
+        (
             'latitude'  => null,
             'longitude' => null,
             'altitude'  => null,
         );
-    
+
+        if (   is_a($this->_object, 'midcom_baseclasses_database_person')
+            || is_a($this->_object, 'org_openpsa_contacts_person'))
+        {
+            // This is a person record. Seek log
+            $user_position = new org_routamc_positioning_person($this->_object);
+            return $user_position->get_coordinates($time);
+        }
+
+        if (is_null($time))
+        {
+            if (!isset($this->_object->metadata->published))
+            {
+                //return null;
+                $time = time();
+            }
+            $time = $this->_object->metadata->published;
+        }
+
         // Check if the object has a location set
         $location = $this->seek_location_object();
         if (is_object($location))
@@ -117,8 +164,7 @@ class org_routamc_positioning_object extends midcom_baseclasses_components_purec
             $coordinates['altitude'] = $location->altitude;
 
             // Consistency check
-            // TODO: Use metadata.published            
-            if ($location->date != $this->_object->created)
+            if ($location->date != $time)
             {
                 if ($location->log)
                 {
@@ -130,7 +176,7 @@ class org_routamc_positioning_object extends midcom_baseclasses_components_purec
                 else
                 {
                     // This location entry isn't coming from a log so it just needs to be rescheduled
-                    $location->date = $this->_object->created;
+                    $location->date = $time;
                     $location->update();
                     return $coordinates;
                 }
@@ -140,39 +186,37 @@ class org_routamc_positioning_object extends midcom_baseclasses_components_purec
                 return $coordinates;
             }
         }
-        
+
         // No location set, seek based on creator and creation time
-        $log = $this->seek_log_object();
+        $log = $this->seek_log_object($person, $time);
         if (is_object($log))
         {
             $coordinates['latitude'] = $log->latitude;
             $coordinates['longitude'] = $log->longitude;
             $coordinates['altitude'] = $log->altitude;
-            
             if ($cache)
             {
                 // Cache the object's location into a location object
                 $location = new org_routamc_positioning_location_dba();
                 $location->log = $log->id;
-                $location->type = ORG_ROUTAMC_POSITIONING_RELATION_IN;
-                // TODO: Use metadata.published
-                $location->date = $this->_object->created;
-                $location->parent = $this->_object->id;
-                $location->parentclass = get_class($this->_object->id);
+                $location->relation = (int) ORG_ROUTAMC_POSITIONING_RELATION_IN;
+                $location->date = $time;
+                $location->parent = $this->_object->guid;
+                $location->parentclass = get_class($this->_object);
                 // TODO: Save parent component
                 $location->latitude = $log->latitude;
                 $location->longitude = $log->longitude;
                 $location->altitude = $log->altitude;
                 $location->create();
             }
-            
+
             return $coordinates;
         }
-        
+
         // No coordinates found, return null
         return null;
     }
-    
+
     function set_metadata()
     {
         $coordinates = $this->get_coordinates();
@@ -181,7 +225,7 @@ class org_routamc_positioning_object extends midcom_baseclasses_components_purec
             // ICBM tag as defined by http://geourl.org/
             $_MIDCOM->add_meta_head
             (
-                Array
+                array
                 (
                     'name' => 'icbm',
                     'content' => "{$coordinates['latitude']},{$coordinates['longitude']}",

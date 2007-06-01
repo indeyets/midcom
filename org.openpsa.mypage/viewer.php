@@ -9,7 +9,7 @@
 
 /**
  * org.openpsa.mypage site interface class.
- * 
+ *
  * Personal summary page into OpenPSA
  */
 class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
@@ -22,9 +22,17 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
     function org_openpsa_mypage_viewer($topic, $config)
     {
         parent::midcom_baseclasses_components_request($topic, $config);
+    }
 
+    /**
+     * Initialize the request switch and the content topic.
+     *
+     * @access protected
+     */
+    function _on_initialize()
+    {
         $this->_toolbars =& midcom_helper_toolbars::get_instance();
-        
+
         // Always run in uncached mode
         $_MIDCOM->cache->content->no_cache();
 
@@ -42,10 +50,39 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
 
         // Match /updates
         $this->_request_switch[] = array(
-            'fixed_args' => 'updates',        
+            'fixed_args' => 'updates',
             'handler' => 'updates'
         );
-        
+
+        // Match /
+        $this->_request_switch['today'] = Array
+        (
+            'handler' => Array('org_openpsa_mypage_handler_today', 'today'),
+        );
+
+        // Match /day/<date>
+        $this->_request_switch['day'] = Array
+        (
+            'handler' => Array('org_openpsa_mypage_handler_today', 'today'),
+            'fixed_args' => Array('day'),
+            'variable_args' => 1,
+        );
+
+        // Match /weekreview/<date>
+        $this->_request_switch['weekreview'] = Array
+        (
+            'handler' => Array('org_openpsa_mypage_handler_weekreview', 'review'),
+            'fixed_args' => Array('weekreview'),
+            'variable_args' => 1,
+        );
+
+        // Match /weekreview/
+        $this->_request_switch['weekreview_redirect'] = Array
+        (
+            'handler' => Array('org_openpsa_mypage_handler_weekreview', 'redirect'),
+            'fixed_args' => Array('weekreview'),
+        );
+
         // Match /config/
         $this->_request_switch['config'] = Array
         (
@@ -54,16 +91,18 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
             'schema' => 'config',
             'fixed_args' => Array('config'),
         );
+    }
 
-        // Match /
-        $this->_request_switch[] = array(
-            'handler' => 'frontpage'
-        );
+    function _on_handle($handler, $args)
+    {
+        $_MIDCOM->auth->require_valid_user();
 
         // This component uses Ajax, include the handler javascripts
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/ajaxutils.js");
 
-        //$tmp_datamanager = new midcom_helper_datamanager();
+        $this->_request_data['schemadb_default'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_default'));
+
+        return parent::_on_handle($handler, $args);
     }
 
     function _handler_savefilter($handler_id, $args, &$data)
@@ -93,28 +132,28 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
             $this->_request_data['virtual_groups']['all'] = $this->_request_data['l10n']->get('all groups');
             $this->_request_data['virtual_groups'] += org_openpsa_helpers_workgroups();
         }
-        
+
         return true;
     }
-    
+
     function _show_userinfo($handler_id, &$data)
-    {    
+    {
         if ($_MIDCOM->auth->user)
-        {    
+        {
             midcom_show_style("show-userinfo");
         }
     }
-    
+
     function _handler_updates($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
         // Instantiate indexer
         $indexer =& $GLOBALS['midcom']->get_service('indexer');
-            
+
         $start = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
         $query = '__TOPIC_URL:"'.$_MIDCOM->get_host_name().'*"';
-        $filter = new midcom_services_indexer_filter_date('__EDITED', $start, 0);        
-        $this->_request_data['today'] = $indexer->query($query, $filter);    
+        $filter = new midcom_services_indexer_filter_date('__EDITED', $start, 0);
+        $this->_request_data['today'] = $indexer->query($query, $filter);
         $start = mktime(0, 0, 0, date('m'), date('d')-1, date('Y'));
         $end = mktime(23, 59, 59, date('m'), date('d')-1, date('Y'));
         $query = '__TOPIC_URL:"'.$_MIDCOM->get_host_name().'*"';
@@ -125,7 +164,7 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
 
     function _show_updates($handler_id, &$data)
     {
-        midcom_show_style("show-updates");       
+        midcom_show_style("show-updates");
     }
 
     function _handler_frontpage($handler_id, $args, &$data)
@@ -134,7 +173,7 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
         $this->_request_data['sidebar_items'] = array();
         $this->_request_data['main_items'] = array();
         $this->_request_data['wide_items'] = array();
-        
+
         $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('my summary'));
 
         // List toplevel nodes
@@ -158,7 +197,7 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
                 case 'net.nemein.discussion':
                     // List 4 latest comments in left sidebar
                     $this->_request_data['leftbar_items'][$node[MIDCOM_NAV_RELATIVEURL].'latest/all/4'] = $node;
-    
+
                     // Dynamically loaded hour reporting requires this too
                     $_MIDCOM->add_link_head(array(
                         'rel' => 'stylesheet',
@@ -177,7 +216,7 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
                             MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_user_do('midgard:create', null, 'org_openpsa_contacts_person'),
                         )
                     );
-                
+
                     // Show Buddy list in sidebar
                     if ($this->_config->get('show_buddylist'))
                     {
@@ -197,7 +236,7 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
                                 'rel' => 'directlink',
                                 'onclick' => org_openpsa_calendar_interface::calendar_newevent_js($node),
                             ),
-                        )                
+                        )
                     );
                      $this->_request_data['sidebar_items'][$node[MIDCOM_NAV_RELATIVEURL].'agenda/day/'.date('Y-m-d')] = $node;
                     break;
@@ -212,7 +251,7 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
                             MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new_task.png',
                             MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_user_do('midgard:create', null, 'org_openpsa_projects_task'),
                         )
-                    ); 
+                    );
                     // FIXME: Could be great to make d_l do this
                     $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/ajax_tableform.js");
                     $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.projects/hours_widget.js");
@@ -226,11 +265,11 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
                         'type' => 'text/css',
                         'href' => MIDCOM_STATIC_URL."/midcom.helper.datamanager/datamanager.css",
                     ));
-                    
+
                     // JSCalendar
                     $prefix = MIDCOM_STATIC_URL . '/midcom.helper.datamanager/jscript-calendar';
                     $_MIDCOM->add_jsfile("{$prefix}/calendar.js");
-                    
+
                     // Select correct locale
                     $i18n =& $_MIDCOM->get_service("i18n");
                     $language = $i18n->get_current_language();
@@ -245,12 +284,12 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
                             $_MIDCOM->add_jsfile("{$prefix}/calendar-en.js");
                             break;
                     }
-                                        
-                    $_MIDCOM->add_jsfile("{$prefix}/calendar-setup.js");        
+
+                    $_MIDCOM->add_jsfile("{$prefix}/calendar-setup.js");
                     break;
             }
         }
-        
+
         $root_node = $nap->get_node($nap->get_root_node());
         switch ($root_node[MIDCOM_NAV_COMPONENT])
         {
@@ -263,11 +302,11 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
                 else
                 {
                     // Show last modified items in right sidebar
-                    $this->_request_data['sidebar_items'][$root_node[MIDCOM_NAV_RELATIVEURL].'updates'] = $root_node;                
+                    $this->_request_data['sidebar_items'][$root_node[MIDCOM_NAV_RELATIVEURL].'updates'] = $root_node;
                 }
                 break;
         }
-        
+
         if (   $GLOBALS['org_openpsa_core_workgroup_filter'] != 'all'
             && strstr($GLOBALS['org_openpsa_core_workgroup_filter'], 'vgroup:org.openpsa.projects'))
         {
@@ -301,7 +340,7 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
 
         if (   $this->_topic->can_do('midgard:update')
             && $this->_topic->can_do('midcom:component_config'))
-        {        
+        {
             $this->_toolbars->top->add_item(
                 Array(
                     MIDCOM_TOOLBAR_URL => 'config.html',
@@ -311,12 +350,12 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
                 )
             );
         }
-        
+
         return true;
     }
-    
+
     function _show_frontpage($handler_id, &$data)
-    {    
+    {
         midcom_show_style("show-frontpage");
     }
 }

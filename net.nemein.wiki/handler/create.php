@@ -50,7 +50,7 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
      * @var string
      * @access private
      */
-    var $_schema = null;
+    var $_schema = 'default';
 
     /**
      * The defaults to use for the new article.
@@ -94,6 +94,9 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
         $this->_page->topic = $this->_topic->id;
         $this->_page->title = $this->_wikiword;
         $this->_page->author = $_MIDGARD['user'];
+        
+        // We can clear the session now
+        $this->_request_data['session']->remove('wikiword');
 
         if (! $this->_page->create())
         {
@@ -135,49 +138,172 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
 
         return $this->_page;
     }
-    
+
     function _check_unique_wikiword($wikiword)
     {
-        // Check for duplicates
-        // TODO: This is basically duplicate from functionality in DBA create method
-        $qb = net_nemein_wiki_wikipage::new_query_builder();
-        $qb->add_constraint('topic', '=', $this->_topic->id);
-        $qb->add_constraint('title', '=', $wikiword);
-        $result = $qb->execute();
-        if (count($result) > 0)
+        $resolver = new net_nemein_wiki_wikipage();
+        $resolver->topic = $this->_topic->id;
+        $resolved = $resolver->path_to_wikipage($wikiword, true, true);
+        if (!empty($resolved['latest_parent']))
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Wiki page with that name already exists.');
-            // This will exit.
+            $to_node =& $resolved['latest_parent'];
         }
+        else
+        {
+            $to_node =& $resolved['folder'];
+        }
+        $created_page = false;
+        switch (true)
+        {
+            case (strstr($resolved['remaining_path'], '/')):
+                    // One or more namespaces left, find first, create it and recurse
+                    $paths = explode('/', $resolved['remaining_path']);
+                    $folder_title = array_shift($paths);
+                    //echo "NOTICE: Creating new wiki topic '{$folder_title}' under #{$to_node[MIDCOM_NAV_ID]}<br/>\n";
+                    $topic = new midcom_db_topic();
+                    $topic->up = $to_node[MIDCOM_NAV_ID];
+                    $topic->extra = $folder_title;
+                    if (isset($topic->title))
+                    {
+                        // 1.8 topic->title support
+                        $topic->title = $folder_title;
+                    }
+                    $topic->name = midcom_generate_urlname_from_string($folder_title);
+                    if (isset($topic->component))
+                    {
+                        $topic->component = 'net.nemein.wiki';
+                    }
+                    if (!$topic->create())
+                    {
+                        $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Could not create wiki namespace '{$folder_title}'");
+                        // This will exit()
+                    }
+                    // refresh
+                    $topic = new midcom_db_topic($topic->id);
+                    // Set the component parameter (even if we have it in object)
+                    /*
+                    if (!isset($topic->component))
+                    {
+                    */
+                        $topic->set_parameter('midcom', 'component', 'net.nemein.wiki');
+                    //}
+                    
+                    // See if we have article with same title in immediate parent
+                    $qb = net_nemein_wiki_wikipage::new_query_builder();
+                    $qb->add_constraint('title', '=', $folder_title);
+                    $qb->add_constraint('topic', '=', $topic->up);
+                    $results = $qb->execute();
+                    /*
+                    echo "DEBUG: results for searching page '{$folder_title}' in topic #{$topic->up}<pre>\n";
+                    print_r($results);
+                    echo "</pre>\n";
+                    */
+                    if (   is_array($results)
+                        && count($results) == 1)
+                    {
+                        //echo "INFO: Found page with same title in parent, moving to be index of this new topic<br/>\n";
+                        $article =& $results[0];
+                        $article->name = 'index';
+                        $article->topic = $topic->id;
+                        if (!$article->update())
+                        {
+                            // Could not move article, do something ?
+                            //echo "FAILURE: Could not move the page, errstr: ". mgd_errstr() . "<br/>\n";
+                        }
+                    }
+                    else
+                    {
+                        $created_page = net_nemein_wiki_viewer::initialize_index_article($topic);
+                        if (!$created_page)
+                        {
+                            // Could not create index
+                            $topic->delete();
+                            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Could not create index for new topic, errstr: " . mgd_errstr());
+                            // This will exit()
+                        }
+                    }
+                    // We have created a new topic, now recurse to create the rest of the path.
+                    //echo "INFO: New topic created with id #{$topic->id}, now recursing the import to process next levels<br/>\n";
+                    return $this->_check_unique_wikiword($wikiword);
+                break;
+            case (is_object($resolved['wikipage'])):
+                    // Page exists
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Wiki page with that name already exists.');
+                    //This will exit()
+                break;
+            default:
+                    // No more namespaces left, create the page to latest parent
+                    if ($to_node[MIDCOM_NAV_ID] != $this->_topic->id)
+                    {
+                        // Last parent is not this topic, redirect there
+                        $wikiword_url = rawurlencode($resolved['remaining_path']);
+                        $_MIDCOM->relocate($to_node[MIDCOM_NAV_FULLURL] . "create/{$this->_schema}?wikiword={$wikiword_url}");
+                        // This will exit()
+                    }
+                break;
+        }
+        return true;
     }
-    
+
     function _handler_create($handler_id, $args, &$data)
     {
+        // Initialize sessioning first
+        $data['session'] = new midcom_service_session();
+        
+        if (!array_key_exists('wikiword', $_GET))
+        {
+            if (!$data['session']->exists('wikiword'))
+            {
+                // No wiki word given
+                return false;
+            }
+            else
+            {
+                $this->_wikiword = $data['session']->get('wikiword');
+            }
+        }
+        else
+        {
+            $this->_wikiword = $_GET['wikiword'];
+            $data['session']->set('wikiword', $this->_wikiword);
+        }
+    
         $this->_topic->require_do('midgard:create');
         
-        $this->_wikiword = $args[0];
+        if ($handler_id == 'create_by_word_schema')
+        {
+            $this->_schema = $args[0];
+        }
+        else
+        {
+            $this->_schema = $this->_config->get('default_schema');
+        }
+
+        if (!array_key_exists($this->_schema, $data['schemadb']))
+        {
+            return false;
+        }
+        
         $this->_check_unique_wikiword($this->_wikiword);
+                
         $this->_defaults['title'] = $this->_wikiword;
         
         $this->_load_controller();
         
-        if (count($args) == 0)
+        if ($handler_id == 'create_by_word_relation')
         {
-            return false;
-        }
-        if (count($args) == 3)
-        {
-            if (   mgd_is_guid($args[1])
-                && mgd_is_guid($args[2]))
+            if (   mgd_is_guid($args[0])
+                && mgd_is_guid($args[1]))
             {
                 // We're in "Related to" mode
                 $nap = new midcom_helper_nav();
                 $related_to_node = $nap->resolve_guid($args[1]);
                 if ($related_to_node)
                 {
-                    $this->_request_data['related_to'][$related_to_node[MIDCOM_NAV_GUID]] = array(
+                    $data['related_to'][$related_to_node[MIDCOM_NAV_GUID]] = array
+                    (
                         'node'   => $related_to_node,
-                        'target' => $args[2],
+                        'target' => $args[1],
                     );
                 }
                 else
@@ -194,13 +320,13 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
         switch ($this->_controller->process_form())
         {
             case 'save':                
-                // Index the article
-                //$indexer =& $_MIDCOM->get_service('indexer');
-                //net_nemein_discussion_viewer::index($this->_controller->datamanager, $indexer, $this->_thread);
+                // Reindex the article
+                $indexer =& $_MIDCOM->get_service('indexer');
+                net_nemein_wiki_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
 
-                $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('net.nemein.wiki'), sprintf($this->_request_data['l10n']->get('page "%s" added'), $this->_wikiword), 'ok');
+                $_MIDCOM->uimessages->add($this->_l10n->get('net.nemein.wiki'), sprintf($this->_l10n->get('page %s added'), $this->_wikiword), 'ok');
 
-                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$this->_page->name}.html");
+                $_MIDCOM->relocate("{$this->_page->name}/");
                 // This will exit.
 
             case 'cancel':
@@ -209,17 +335,26 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
                     // Save cancelled and we are likely to have data hanging around in session, clean it up
                     org_openpsa_relatedto_handler::get2session_cleanup();
                 }
-                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
+                $_MIDCOM->relocate('');
                 // This will exit.
         }
                 
-        $_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('create %s'), $this->_wikiword));
+        $_MIDCOM->set_pagetitle(sprintf($this->_l10n->get('create wikipage %s'), $this->_wikiword));
         
         // DM2 form action does not include our GET parameters, store them in session for a moment
         if (class_exists('org_openpsa_relatedto_handler'))
         {
             org_openpsa_relatedto_handler::get2session();
         }
+        
+        $tmp = Array();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "create/?wikiword=" . rawurlencode($this->_wikiword),
+            MIDCOM_NAV_NAME => sprintf($this->_l10n->get('create wikipage %s'), $this->_wikiword),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+      
         return true;
     }
     

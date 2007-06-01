@@ -58,6 +58,59 @@ class midcom_helper_imagefilter
      */
     var $_quality = "-quality 90";
 
+    function _imagemagick_available()
+    {
+        static $return = -1;
+        if ($return !== -1)
+        {
+            return $return;
+        }
+        $convert_cmd = escapeshellcmd("{$GLOBALS['midcom_config']['utility_imagemagick_base']}convert -version");
+        $output = array();
+        $ret = null;
+        exec($convert_cmd, $ouput, $ret);
+        if ($ret !== 0)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("ImageMagick, '{$convert_cmd}' (part of ImageMagick suite) returned failure", MIDCOM_LOG_ERROR);
+            debug_pop();
+            $return = false;
+            return $return;
+        }
+        $return = true;
+        return $return;
+    }
+
+    function _jpegtran_available()
+    {
+        static $return = -1;
+        if ($return !== -1)
+        {
+            return $return;
+        }
+        if (empty($GLOBALS['midcom_config']['utility_jpegtran']))
+        {
+            $return = false;
+            return $return;
+        }
+        $convert_cmd = escapeshellcmd("{$GLOBALS['midcom_config']['utility_jpegtran']} -h");
+        $output = array();
+        $ret = null;
+        exec($convert_cmd, $ouput, $ret);
+        if (   $ret !== 0
+            /* jpegtran does not have valid help switch, so lets check for generic error from program (command not found etc trhows different error code) */
+            && $ret !== 1)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("jpegtran, '{$convert_cmd}' (part of libjpeg suite) could not be executed", MIDCOM_LOG_ERROR);
+            debug_pop();
+            $return = false;
+            return $return;
+        }
+        $return = true;
+        return $return;
+    }
+
     /**
      * Sets the filename of the image currently being edited.
      * This must be the full path to the file, the fill will be
@@ -74,10 +127,18 @@ class midcom_helper_imagefilter
      */
     function set_file($filename)
     {
+        if (!$this->_imagemagick_available())
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("ImageMagick is not available, can't do any operations", MIDCOM_LOG_ERROR);
+            debug_pop();
+            $_MIDCOM->uimessages->add('midcom.helper.imagefilter', "ImageMagick is not available, can't process commands", 'error');
+            return false;
+        }
         if (! is_writeable($filename))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("The File {$filename} is not writeable.", MIDCOM_LOG_INFO);
+            debug_add("The File {$filename} is not writeable.", MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
@@ -137,7 +198,6 @@ class midcom_helper_imagefilter
      */
     function process_command($cmd)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         $i = preg_match('/([a-z_]*)\(([^)]*)\)/', $cmd, $matches);
         if (! $i)
         {
@@ -161,9 +221,11 @@ class midcom_helper_imagefilter
                 {
                     $gamma = 1.2;
                 }
+                debug_pop();
                 return $this->gamma($gamma);
 
             case 'exifrotate':
+                debug_pop();
                 return $this->exifrotate();
 
             case 'rotate':
@@ -177,6 +239,7 @@ class midcom_helper_imagefilter
                 {
                     $rotate = 0;
                 }
+                debug_pop();
                 return $this->rotate($rotate);
 
             case 'resize':
@@ -195,6 +258,7 @@ class midcom_helper_imagefilter
                 {
                     $y = 0;
                 }
+                debug_pop();
                 return $this->rescale($x, $y);
 
             case 'convert':
@@ -208,10 +272,12 @@ class midcom_helper_imagefilter
                 }
 
             case 'none':
+                debug_pop();
                 return true;
 
             default:
                 debug_add('This is no known command, we try to find a callback.');
+                debug_pop();
                 return $this->execute_user_callback($command, $args);
         }
     }
@@ -224,7 +290,7 @@ class midcom_helper_imagefilter
      */
     function _get_tempfile()
     {
-        return tempnam("/tmp", "midcom_helper_imagefilter");
+        return tempnam($GLOBALS['midcom_config']['midcom_tempdir'], "midcom_helper_imagefilter");
     }
 
     /**
@@ -266,7 +332,9 @@ class midcom_helper_imagefilter
     function execute_user_callback($command, $args) {
         if (! function_exists($command))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("The function {$command} could not be found, aborting", MIDCOM_LOG_ERROR);
+            debug_pop();
             return false;
         }
         $tmpfile = $this->_get_tempfile();
@@ -304,9 +372,11 @@ class midcom_helper_imagefilter
         }
         else
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("ImageMagick failed to convert the image, it returned with {$exit_code}, see LOG_DEBUG for details.", MIDCOM_LOG_ERROR);
             debug_print_r('The generated output was:', $output);
             debug_add("Command was: [{$cmd}]");
+            debug_pop();
             return false;
         }
     }
@@ -340,9 +410,11 @@ class midcom_helper_imagefilter
         else
         {
             unlink($tempfile);
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("ImageMagick failed to convert the image, it returned with {$exit_code}, see LOG_DEBUG for details.", MIDCOM_LOG_ERROR);
             debug_print_r('The generated output was:', $output);
             debug_add("Command was: [{$cmd}]");
+            debug_pop();
             return false;
         }
     }
@@ -395,20 +467,31 @@ class midcom_helper_imagefilter
      */
     function exifrotate()
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
         if (! function_exists("read_exif_data"))
         {
             debug_add("read_exif_data required for exifrotate.", MIDCOM_LOG_ERROR);
+            debug_pop();
             return false;
         }
-        $exif = read_exif_data($this->_filename);
-        if (! array_key_exists("Orientation", $exif))
+        // Silence this, gives warnings on images that do not contain EXIF data
+        $exif = @read_exif_data($this->_filename);
+        if (!is_array($exif))
         {
-            debug_add("EXIF information misses the orientation tag. Skipping.", MIDCOM_LOG_INFO);
+            debug_add("Could not read EXIF data, skipping.", MIDCOM_LOG_WARN);
+            debug_pop();
             return true;
         }
-        if (! $exif || $exif["Orientation"] == 1)
+        if (!array_key_exists('Orientation', $exif))
         {
+            debug_add("EXIF information misses the orientation tag. Skipping.", MIDCOM_LOG_INFO);
+            debug_pop();
+            return true;
+        }
+        if ($exif["Orientation"] == 1)
+        {   
             debug_add("No rotation neccessary.");
+            debug_pop();
             return true;
         }
 
@@ -416,7 +499,7 @@ class midcom_helper_imagefilter
         $imagesize = getimagesize($this->_filename);
 
         if (   $imagesize[2] == 2
-            && ! is_null($GLOBALS['midcom_config']['utility_jpegtran']))
+            && $this->_jpegtran_available())
         {
             /* jpegtran */
             switch ($exif["Orientation"])
@@ -431,6 +514,7 @@ class midcom_helper_imagefilter
                 default:
                     debug_add("Unsupported EXIF-Rotation tag encountered, ingoring: " . $exif["Orientation"],
                         MIDCOM_LOG_INFO);
+                    debug_pop();
                     return true;
             }
 
@@ -455,6 +539,7 @@ class midcom_helper_imagefilter
                 default:
                     debug_add("Unsupported EXIF-Rotation tag encountered, ingoring: " . $exif["Orientation"],
                         MIDCOM_LOG_INFO);
+                    debug_pop();
                     return true;
             }
 
@@ -462,6 +547,7 @@ class midcom_helper_imagefilter
                 . escapeshellarg($this->_filename);
         }
 
+        debug_add("executing: {$cmd}");
         exec($cmd, $output, $exit_code);
 
         if ($exit_code !== 0)
@@ -473,6 +559,7 @@ class midcom_helper_imagefilter
             {
                 unlink($tmpfile);
             }
+            debug_pop();
             return false;
         }
 
@@ -480,6 +567,7 @@ class midcom_helper_imagefilter
         {
             $this->_process_tempfile($tmpfile);
         }
+        debug_pop();
         return true;
     }
 
@@ -488,13 +576,14 @@ class midcom_helper_imagefilter
      *
      * Filter Syntax: rotate($rotate)
      *
-     * Where $gamma is a positive floating point number greater then 0
+     * Where $rotate is a positive floating point number greater then 0
      * and less then 360; if omitted, a NULL operation is done.
      *
      * @param $rotate Degrees of rotation clockwise, negative amounts possible
      * @returns true on success.
      */
-    function rotate($rotate) {
+    function rotate($rotate)
+    {
         // Do some normalizing on the argument
         while ($rotate < 0)
         {
@@ -510,6 +599,7 @@ class midcom_helper_imagefilter
             // We're happy as-is :)
             return true;
         }
+        debug_push_class(__CLASS__, __FUNCTION__);
 
         $do_unlink = false;
         $imagesize = getimagesize($this->_filename);
@@ -517,7 +607,7 @@ class midcom_helper_imagefilter
         // Try lossless jpegtran rotation if possible
         if (   $imagesize[2] == 2
             && ($rotate == 90 || $rotate == 180 || $rotate == 270)
-            && ! is_null($GLOBALS['midcom_config']['utility_jpegtran']))
+            && $this->_jpegtran_available())
         {
             $tmpfile = $this->_get_tempfile();
             $do_unlink = true;
@@ -543,6 +633,7 @@ class midcom_helper_imagefilter
             {
                 unlink($tmpfile);
             }
+            debug_pop();
             return false;
         }
 
@@ -550,6 +641,7 @@ class midcom_helper_imagefilter
         {
             $this->_process_tempfile($tmpfile);
         }
+        debug_pop();
         return true;
     }
 

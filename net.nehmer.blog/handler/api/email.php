@@ -165,16 +165,28 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
             }
         }
 
-        $_MIDCOM->auth->request_sudo();
+        $_MIDCOM->auth->request_sudo('net.nehmer.blog');
                 
         // Create article
         $this->_create_article($this->_decoder->subject);
         
         // Load the article to DM2
         $this->_load_datamanager();
+    
+        // Try to find tags in email content
+        $content = $this->_decoder->body;
+        $_MIDCOM->componentloader->load_graceful('net.nemein.tag');
+        if (class_exists('net_nemein_tag_handler'))
+        {
+            $content_tags = net_nemein_tag_handler::separate_machine_tags_in_content($content);
+            if (!empty($content_tags))
+            {
+                net_nemein_tag_handler::tag_object($this->_article, $content_tags);
+            }
+        }
 
         // Populate rest of the data        
-        $this->_datamanager->types['content']->value = $this->_decoder->body;
+        $this->_datamanager->types['content']->value = $content;
         $body_switched = false;
         
         foreach ($this->_decoder->attachments as $att)
@@ -198,15 +210,21 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
                 default:
                     $this->_add_attachment($att);
             }
-        }    
-        $this->_datamanager->save(); 
+        }
+        
+        if (!$this->_datamanager->save())
+        {
+            // Purge the article
+            $this->_article->delete();
+            
+            // Give error the the MDA so it doesn't delete the message
+            echo "ERROR: Datamanager failed to save the object. Midgard error was: " . mgd_errstr() . "\n";
+            $_MIDCOM->finish();
+        }
         
         // Index the article
         $indexer =& $_MIDCOM->get_service('indexer');
-        net_nehmer_blog_viewer::index($this->_controller->datamanager, $indexer, $this->_content_topic);             
-        
-        //Give us output from MDA
-        //echo "ERROR: just debugging\n";
+        net_nehmer_blog_viewer::index($this->_datamanager, $indexer, $this->_content_topic);
         
         $_MIDCOM->auth->drop_sudo();
         debug_pop();

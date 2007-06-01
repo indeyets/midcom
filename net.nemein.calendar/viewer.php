@@ -16,16 +16,33 @@
 
 class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
 {
-
+    /**
+     * Simple constructor, connect to the parent class constructor method
+     * 
+     * @access public
+     */
     function net_nemein_calendar_viewer($topic, $config)
     {
         parent::midcom_baseclasses_components_request($topic, $config);
     }
-
+    
+    /**
+     * Set the request switches
+     * 
+     * @access private
+     */
     function _on_initialize()
     {
 
         // Define the URL space
+
+        // /upcoming/N shows next N events
+        $this->_request_switch['open'] = Array
+        (
+            'handler' => Array('net_nemein_calendar_handler_list', 'open'),
+            'fixed_args' => Array('open'),
+            'variable_args' => 1,
+        );
 
         // / shows next N (configured number) events
         $this->_request_switch['upcoming'] = Array
@@ -75,6 +92,22 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             'variable_args' => 2,
         );
         
+        // Match /calendar/
+        $this->_request_switch['calendar_current'] = Array
+        (
+            'handler' => Array ('net_nemein_calendar_handler_list', 'calendar'),
+            'fixed_args' => Array('calendar'),
+            'variable_args' => 0,
+        );
+        
+        // Match /calendar/<year>/<month>/
+        $this->_request_switch['calendar_defined'] = Array
+        (
+            'handler' => Array ('net_nemein_calendar_handler_list', 'calendar'),
+            'fixed_args' => Array ('calendar'),
+            'variable_args' => 2,
+        );
+        
         // /archive.html Main archive page
         $this->_request_switch['archive-welcome'] = Array
         (
@@ -95,6 +128,14 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
         (
             'handler' => Array('net_nemein_calendar_handler_edit', 'edit'),
             'fixed_args' => Array('edit'),
+            'variable_args' => 1,
+        ); 
+
+        // /delete/<event guid>.html Event deletion view
+        $this->_request_switch['delete'] = Array
+        (
+            'handler' => Array('net_nemein_calendar_handler_delete', 'delete'),
+            'fixed_args' => Array('delete'),
             'variable_args' => 1,
         ); 
 
@@ -136,12 +177,34 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             )
         );
     }
-
+    
+    /**
+     * Load the root objects
+     * 
+     * @access private
+     * @return boolean
+     */
     function _on_can_handle($handler, $args)
     {
+        // Prevent infinite loops
+        if (in_array('rootevent', $args))
+        {
+            return true;
+        }
+        
         // Load master and root event
         if (count($args) > 0)
         {
+            $qb = midcom_db_topic::new_query_builder();
+            $qb->add_constraint('name', '=', (string) $args[0]);
+            $qb->add_constraint('up', '=', $this->_topic->id);
+            
+            if ($qb->count() > 0)
+            {
+                return true;
+            }
+            
+            // content topic nested
             $this->_load_root_objects($args[0]);
         }
         else
@@ -161,7 +224,8 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
         
             // Populate toolbars
             $this->_populate_node_toolbar();
-        }            
+        }
+        
         return true;
     }
     
@@ -174,29 +238,34 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
         }
         else
         {
-            $master_event = new midcom_db_event($this->_config->get('master_event'));
+            $master_event = new net_nemein_calendar_event($this->_config->get('master_event'));
             if (!$master_event)
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Master event not found: ".mgd_errstr());
             }
             $this->_request_data['master_event'] = $master_event->id;
-        }    
-
+        }
+        
+        
         // Load root event or redirect to creation
         if (is_null($this->_config->get('root_event')))
         {
-            if ($arg != 'rootevent')
+            if ($arg !== 'rootevent')
             {
-                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$this->_topic->name}/rootevent.html");
+                $nap = new midcom_helper_nav();
+                $node = $nap->get_node($this->_topic->id);
+                
+                $_MIDCOM->relocate("{$node[MIDCOM_NAV_FULLURL]}rootevent.html");
+                // This will exit
             }
         }
-        else
+        
+        $this->_request_data['root_event'] = new net_nemein_calendar_event($this->_config->get('root_event'));
+        
+        if (!is_object($this->_request_data['root_event']))
         {
-            $this->_request_data['root_event'] = new midcom_db_event($this->_config->get('root_event'));
-            if (!$this->_request_data['root_event'])
-            {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Root event not found: ".mgd_errstr());
-            }
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Root event not found: ".mgd_errstr());
+            // This will exit
         }
     }
 
@@ -219,6 +288,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
                         $this->_l10n->get($this->_request_data['schemadb'][$name]->description)
                     ),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'n',
                 ));
             }
         }
@@ -264,14 +334,34 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
 
         $nav = new midcom_helper_nav();
         $node = $nav->get_node($topic->id);
-        $author = $_MIDCOM->auth->get_user($dm->storage->object->creator);
+        $author = false;
+        if (   isset($dm->storage->object->metadata->authors)
+            && !empty($dm->storage->object->metadata->authors))
+        {
+            $authors = explode('|', $dm->storage->object->metadata->authors);
+            if (is_array($authors))
+            {
+                foreach ($authors as $author_guid)
+                {
+                    if (empty($author_guid))
+                    {
+                        continue;
+                    }
+                    $author = $_MIDCOM->auth->get_user($author_guid);
+                    break;
+                }
+            }
+        }
 
         $document = $indexer->new_document($dm);
         $document->topic_guid = $topic->guid;
         $document->topic_url = $node[MIDCOM_NAV_FULLURL];
-        $document->author = $author->name;
-        $document->created = $dm->storage->object->created;
-        $document->edited = $dm->storage->object->revised;
+        if (!empty($author))
+        {
+            $document->author = $author->name;
+        }
+        $document->created = $dm->storage->object->metadata->created;
+        $document->edited = $dm->storage->object->metadata->revised;
         $indexer->index($document);
     }
 

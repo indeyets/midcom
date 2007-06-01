@@ -52,20 +52,31 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
      * Can-Handle check against the current event GUID. We have to do this explicitly
      * in can_handle already, otherwise we would hide all subtopics as the request switch
      * accepts all argument count matches unconditionally.
+     * 
+     * @access private
+     * @return boolean
      */
     function _can_handle_view($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-
+        
+        // Prevent URL hijacking
+        $qb = midcom_db_topic::new_query_builder();
+        $qb->add_constraint('name', '=', (string) $args[0]);
+        $qb->add_constraint('up', '=', $this->_topic->id);
+        
+        if ($qb->count() !== 0)
+        {
+            return false;
+        }
+        
         $qb = net_nemein_calendar_event::new_query_builder();
         $qb->add_constraint('up', '=', $this->_request_data['root_event']->id);
         $qb->add_constraint('extra', '=', $args[0]);
         $events = $qb->execute();
         if (count($events) == 0)
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND,
-                "The event '{$args[0]}' has not been found in the content topic.");
-            // This will exit.
+            return false;
         }
         
         $this->_request_data['event'] = $events[0];
@@ -86,12 +97,28 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
         }
         if ($this->_request_data['event']->up == $this->_request_data['root_event']->id)
         {
-            $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "edit/{$this->_request_data['event']->guid}.html",
-                MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('edit'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
-                MIDCOM_TOOLBAR_ENABLED => $this->_request_data['event']->can_do('midgard:update'),
-            ));
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "edit/{$this->_request_data['event']->guid}.html",
+                    MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('edit'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                    MIDCOM_TOOLBAR_ENABLED => $this->_request_data['event']->can_do('midgard:update'),
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'e',
+                )
+            );
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "delete/{$this->_request_data['event']->guid}.html",
+                    MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('delete'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                    MIDCOM_TOOLBAR_ENABLED => $this->_request_data['event']->can_do('midgard:delete'),
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'd',
+                )
+            );
         }
         
         $this->_load_datamanager();
@@ -108,6 +135,15 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
         
         $_MIDCOM->bind_view_to_object($this->_request_data['event'], $this->_datamanager->schema->name);
 
+        // Set the breadcrumb
+        $breadcrumb[] = array
+        (
+            MIDCOM_NAV_URL => "{$this->_request_data['event']->extra}.html/",
+            MIDCOM_NAV_NAME => $this->_request_data['event']->title,
+        );
+        
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
+        
         return true;
     }
 

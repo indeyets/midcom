@@ -129,6 +129,19 @@ class midcom_core_group_midgard extends midcom_core_group
 
         return true;
     }
+    
+    /**
+     * Retrieves a list of groups owned by this group.
+     *
+     * @return Array A list of midcom_core_group_midgard objects in which are owned by the current group, false on failure.
+     */
+    function list_subordinate_groups()
+    {
+        $qb = new MidgardQueryBuilder('midgard_group');
+        $qb->add_constraint('owner', '=', $this->_storage->id);
+        $result = $qb->execute();
+        return $result;
+    }
 
     /**
      * Retrieves a list of users for which are a member in this group.
@@ -181,11 +194,11 @@ class midcom_core_group_midgard extends midcom_core_group
         $qb = new MidgardQueryBuilder('midgard_member');
         $qb->add_constraint('uid', '=', $user->_storage->id);
         $result = @$qb->execute();
-        if (! $result)
+        if (empty($result))
         {
-            $result = Array();
+            return $result;
         }
-
+        
         $return = Array();
         foreach ($result as $member)
         {

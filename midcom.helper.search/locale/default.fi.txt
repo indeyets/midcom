@@ -24,7 +24,7 @@ Hae vain tästä sivuston osasta
 ---STRINGEND
 
 ---STRING midcom.helper.search
-Hakukone
+Sivuston hakukone
 ---STRINGEND
 
 ---STRING next page

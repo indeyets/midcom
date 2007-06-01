@@ -2,7 +2,7 @@
 // Available request keys:
 // root_event, schemadb, processing_msg, create_new_value, select_action, select_guid, root_events
 
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 
 $selected_guid = ($data['root_event']) ? $data['root_event']->guid : false;
 ?>

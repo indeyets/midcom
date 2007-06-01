@@ -30,12 +30,12 @@ class fi_mik_lentopaikkakisa_interface extends midcom_baseclasses_components_int
             'viewer.php', 
             'admin.php', 
             'navigation.php',
-            'report.php',
+            'flight.php',
         );
-        $this->_autoload_libraries = Array(
-            'midcom.helper.datamanager2',
-            'midcom.helper.xml',
+        $this->_autoload_libraries = array
+        (
             'org.openpsa.qbpager',
+            'org.routamc.positioning',
         );
     }
     
@@ -43,6 +43,10 @@ class fi_mik_lentopaikkakisa_interface extends midcom_baseclasses_components_int
     {
         //With the plentyness of typecasting around any other numeric locale calls for trouble with floats
         setlocale(LC_NUMERIC, 'C');
+        
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.calendar');
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.contacts');        
+        
         return true;
     }
 }

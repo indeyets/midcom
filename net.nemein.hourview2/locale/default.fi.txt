@@ -3,12 +3,24 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
----STRING net.nemein.hourview
-Tuntiraporttien hyväksyntä
----STRINGEND
-
 ---STRING approval
 Hyväksyntä
+---STRINGEND
+
+---STRING approval failed for hours
+Tunnit joiden hyväksyntä epäonnistui
+---STRINGEND
+
+---STRING approved %s hour reports in task "%s"
+Hyväksytty %s tuntiraporttia tehtävässä "%s"
+---STRINGEND
+
+---STRING approved by %s on %s
+Hyväksynyt %s %s
+---STRINGEND
+
+---STRING approved hours
+Hyväksytyt tunnit
 ---STRINGEND
 
 ---STRING comments
@@ -19,11 +31,35 @@ Kommentit
 Tuntia
 ---STRINGEND
 
+---STRING mailed note to %s <%s>
+Viesti lähetetty käyttäjälle %s <%s>
+---STRINGEND
+
+---STRING net.nemein.hourview
+Tuntiraporttien hyväksyntä
+---STRINGEND
+
+---STRING net.nemein.hourview2
+Tuntiraporttien hyväksyntä
+---STRINGEND
+
+---STRING no hour reports
+Ei tuntiraportteja
+---STRINGEND
+
+---STRING not approved hours
+Hyväksymättä jätetyt tunnit
+---STRINGEND
+
 ---STRING reporter
 Raportoija
 ---STRINGEND
 
 ---STRING send
 Lähetä
+---STRINGEND
+
+---STRING processed hour reports in %s
+Tehtävän %s käsiteltyjä tuntiraportteja
 ---STRINGEND
 

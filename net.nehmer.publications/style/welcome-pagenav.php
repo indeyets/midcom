@@ -1,6 +1,6 @@
 <?php
 // Available Request keys: total, page, total_pages, first, last
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 
 if ($data['total'] > 0)
 {

@@ -10,31 +10,31 @@
 
 /**
  * org.openpsa.contacts site interface class.
- * 
+ *
  * Contact management, address book and user manager
  */
 class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
 {
     /**
      * The root-level MidgardGroup used by the Contacts
-     * 
+     *
      * @var MidgardGroup
      */
     var $_root_group = null;
-    
+
     var $_datamanagers = array();
-    
+
     var $_view = "default";
-    
+
     var $_person_handler = null;
     var $_group_handler = null;
     var $_toolbars = null;
-    
+
     //var $_node = null;
 
     /**
      * Constructor.
-     * 
+     *
      * OpenPSA Contacts handles its URL space following the convention:
      * - First parameter is the object type (person, group, salesproject, list)
      * - Second parameter is the object identifier (GUID, or some special filter like "all")
@@ -44,13 +44,13 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
     function org_openpsa_contacts_viewer($topic, $config)
     {
         parent::midcom_baseclasses_components_request($topic, $config);
-        
+
         // Always run in uncached mode
         $_MIDCOM->cache->content->no_cache();
-        
+
         $this->_request_data['enable_dbe'] = $this->_config->get('enable_dbe');
         $this->_request_data['config'] =& $this->_config;
-               
+
         // Load datamanagers for main classes
         $this->_initialize_datamanager('group', $this->_config->get('schemadb_group'));
         $this->_initialize_datamanager('person', $this->_config->get('schemadb_person'));
@@ -62,7 +62,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
         $this->_group_handler = new org_openpsa_contacts_group_handler(&$this->_datamanagers, &$this->_request_data);
         $this->_request_data['group_handler'] = &$this->_group_handler;
         $this->_person_handler = new org_openpsa_contacts_person_handler(&$this->_datamanagers, &$this->_request_data);
-    
+
         if (!$this->_is_initialized())
         {
             // Match /
@@ -72,12 +72,18 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
         }
         else
         {
+            // Match /duplicates/person
+            $this->_request_switch[] = array(
+                'fixed_args' => array('duplicates', 'person'),
+                'handler' => Array('org_openpsa_contacts_handler_duplicates_person', 'sidebyside'),
+            );
+
             // Match /buddylist/
             $this->_request_switch[] = array(
                 'fixed_args' => 'buddylist',
                 'handler' => Array('org_openpsa_contacts_handler_buddy_list', 'list'),
             );
-            
+
             // Match /buddylist/add/<person guid>
             $this->_request_switch[] = array(
                 'fixed_args' => Array('buddylist', 'add'),
@@ -91,7 +97,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
                 'variable_args' => 1,
                 'handler' => Array('org_openpsa_contacts_handler_buddy_list', 'remove'),
             );
-            
+
             // Match /search/<type>
             $this->_request_switch[] = array(
                 'fixed_args' => 'search',
@@ -106,9 +112,9 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
             // Match /group/new/<GUID>
             $this->_request_switch[] = array(
                 'fixed_args' => array('group','new'),
-                'variable_args' => 1,            
+                'variable_args' => 1,
                 'handler' => array(&$this->_group_handler,'new'),
-            );        
+            );
             // Match /group/<GUID>/<action>
             $this->_request_switch[] = array(
                 'fixed_args' => 'group',
@@ -132,26 +138,64 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
                 'variable_args' => 1,
                 'handler' => array(&$this->_person_handler,'person_new'),
             );
-            
+
             // Match /person/new
             $this->_request_switch[] = array(
                 'fixed_args' => array('person','new'),
                 'handler' => array(&$this->_person_handler,'person_new'),
-            );        
+            );
+
             // Match /person/GUID
-            $this->_request_switch['person_view'] = array(
+            $this->_request_switch['person_view'] = array
+            (
                 'fixed_args' => 'person',
                 'variable_args' => 1,
-                'handler' => array(&$this->_person_handler,'person'),
-            );      
-            
+                'handler' => array
+                (
+                    'org_openpsa_contacts_handler_person_view',
+                    'view'
+                ),
+            );
+
+            // Match /person/edit/GUID
+            $this->_request_switch['person_edit'] = array
+            (
+                'fixed_args' => array
+                (
+                    'person',
+                    'edit',
+                ),
+                'variable_args' => 1,
+                'handler' => array
+                (
+                    'org_openpsa_contacts_handler_person_admin',
+                    'edit'
+                ),
+            );
+
+            // Match /person/edit/GUID
+            $this->_request_switch['person_delete'] = array
+            (
+                'fixed_args' => array
+                (
+                    'person',
+                    'delete',
+                ),
+                'variable_args' => 1,
+                'handler' => array
+                (
+                    'org_openpsa_contacts_handler_person_admin',
+                    'delete'
+                ),
+            );
+
             // Match /person/related/GUID
             $this->_request_switch['person_related'] = array(
                 'fixed_args' => array('person', 'related'),
                 'variable_args' => 1,
                 'handler' => array(&$this->_person_handler,'person'),
-            );      
-            
+            );
+
             // Match /person/GUID/action
             $this->_request_switch[] = array(
                 'fixed_args' => 'person',
@@ -166,10 +210,15 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
                 'handler' => 'debug'
             );
             // Match /
-            $this->_request_switch[] = array(
-                'handler' => 'frontpage'
+            $this->_request_switch['frontpage'] = array
+            (
+                'handler' => array
+                (
+                    'org_openpsa_contacts_handler_frontpage',
+                    'frontpage'
+                ),
             );
-            
+
             // Match /config/
             $this->_request_switch['config'] = Array
             (
@@ -178,15 +227,41 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
                 'schema' => 'config',
                 'fixed_args' => 'config',
             );
-            
+
             //Add common relatedto request switches
             org_openpsa_relatedto_handler::common_request_switches($this->_request_switch, 'org.openpsa.contacts');
             //If you need any custom switches add them here
 
-        }        
+        }
         // This component uses Ajax, include the handler javascripts
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/ajaxutils.js");
-        
+
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL."/org.openpsa.core/ui-elements.css",
+            )
+        );
+    }
+
+    /**
+     * The handle callback populates the toolbars.
+     */
+    function _on_handle($handler, $args)
+    {
+        $_MIDCOM->auth->require_valid_user();
+    
+        // Safety
+        if (!class_exists('midcom_helper_datamanager2_schema'))
+        {
+            $_MIDCOM->load_library('midcom.helper.datamanager2');
+        }
+        $this->_request_data['schemadb_person'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_person_dm2'));
+
+        return true;
     }
 
     function _is_initialized()
@@ -197,10 +272,10 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
         {
             return false;
         }
-        
+
         debug_pop();
         return true;
-    }    
+    }
 
     function _handler_notinitialized($handler_id, $args, &$data)
     {
@@ -212,72 +287,25 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
     {
         midcom_show_style('show-not-initialized');
     }
-    
+
     function _initialize_datamanager($type, $schemadb_snippet)
     {
         // Load schema database snippet or file
         debug_add("Loading Schema Database", MIDCOM_LOG_DEBUG);
         $schemadb_contents = midcom_get_snippet_content($schemadb_snippet);
         eval("\$schemadb = Array ( {$schemadb_contents} );");
-        
+
         // Initialize the datamanager with the schema
         $this->_datamanagers[$type] = new midcom_helper_datamanager($schemadb);
 
         if (!$this->_datamanagers[$type]) {
             $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
-            // This will exit. 	 
+            // This will exit.
         }
     }
-      
-    function _handler_frontpage($handler_id, $args, &$data)
-    {
-        $_MIDCOM->auth->require_valid_user();
 
-        if ($_MIDCOM->auth->can_user_do('midgard:create', null, 'org_openpsa_contacts_person'))
-        {
-            $this->_toolbars->top->add_item(
-                Array(
-                    MIDCOM_TOOLBAR_URL => "person/new/",
-                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('create person'),
-                    MIDCOM_TOOLBAR_HELPTEXT => null,
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_person.png',
-                    MIDCOM_TOOLBAR_ENABLED => true,
-                )
-            );
-        }
-        if ($_MIDCOM->auth->can_user_do('midgard:create', null, 'org_openpsa_contacts_group'))
-        {
-            $this->_toolbars->top->add_item(
-                Array(
-                    MIDCOM_TOOLBAR_URL => 'group/new/',
-                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('create organization'),
-                    MIDCOM_TOOLBAR_HELPTEXT => null,
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-dir.png',
-                    MIDCOM_TOOLBAR_ENABLED => true,
-                )
-            );
-        }
-        if (   $this->_topic->can_do('midgard:update')
-            && $this->_topic->can_do('midcom:component_config'))
-        {        
-            $this->_toolbars->top->add_item(
-                Array(
-                    MIDCOM_TOOLBAR_URL => 'config.html',
-                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
-                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
-                )
-            );
-        }
 
-        return true;
-    }
-    
-    function _show_frontpage($handler_id, &$data)
-    {
-        midcom_show_style("show-frontpage");
-    }
-    
+
     function _handler_search_type($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -290,7 +318,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
         }
         return false;
     }
-    
+
     function _show_search_type($handler_id, &$data)
     {
         if ($this->_view == 'foaf')
@@ -308,12 +336,12 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
             }
         }
     }
-    
+
     function _handler_search($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
         //We always want to display *something*
-        
+
         if ($_MIDCOM->auth->can_user_do('midgard:create', null, 'org_openpsa_contacts_person'))
         {
             $this->_toolbars->top->add_item(
@@ -337,11 +365,11 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
                     MIDCOM_TOOLBAR_ENABLED => true,
                 )
             );
-        }        
-        
+        }
+
         return true;
     }
-    
+
     /**
      * Queries all Contacts objects for $_GET['search']
      *
@@ -369,7 +397,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
             }
         }
         midcom_show_style('search-footer');
-    }    
+    }
 
     function _handler_debug($handler_id, $args, &$data)
     {
@@ -377,7 +405,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
         $this->_request_data['config'] =& $this->_config;
         return true;
     }
-    
+
     function _show_debug($handler_id, &$data)
     {
         midcom_show_style("show-debug");

@@ -32,6 +32,8 @@ require_once('textarea.php');
  *   Any valid option for midcom_get_snippet_content() is allowed at this point.
  * - <i>string local_config:</i> Local configuration options which should overwrite the defaults
  *   from the config snippet. This defaults to an empty string.
+ * - <i>boolean tinymce_use_compressor:</i> TinyMCE's PHP Compressor can help to reduce the page 
+ *   load time. Defaults to false.
  * - <i>theme</i> use this to change between a simple and an advanced (i.e. more buttons)
  *   configuration of tinymce. Valid values: simple, advanced and tiny. The systemwide default
  *   for this value can be set in the tinymce_default_theme DM2 configuration option.
@@ -130,7 +132,14 @@ class midcom_helper_datamanager2_widget_tinymce extends midcom_helper_datamanage
         $executed = true;
 
         $prefix = MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/tinymce';
-        $_MIDCOM->add_jsfile("{$prefix}/tiny_mce.js", true);
+        if ($this->_config->get('tinymce_use_compressor'))
+        {
+            $_MIDCOM->add_jsfile("{$prefix}/tiny_mce_gzip.js", true);
+        }
+        else
+        {
+	        $_MIDCOM->add_jsfile("{$prefix}/tiny_mce.js", true);
+        }
     }
 
     /**
@@ -140,11 +149,16 @@ class midcom_helper_datamanager2_widget_tinymce extends midcom_helper_datamanage
     {
 
         $config = midcom_get_snippet_content_graceful($this->mce_config_snippet);
+        
         if (! $config)
         {
             $config = $this->_get_configuration();
+        } else {
+        	$popup = $this->_get_imagepopup_jsstring();
+        	$config = str_replace('{$popup}', $popup, $config);
         }
-
+		
+		
         $language = $_MIDCOM->i18n->get_current_language();
         // fix to use the correct langcode for norwegian.
         if ($language == 'no')
@@ -153,36 +167,38 @@ class midcom_helper_datamanager2_widget_tinymce extends midcom_helper_datamanage
         }
 
         $imagepopup_url = '';
-        if (   $this->use_imagepopup
-            && $this->_type->storage->object)
+        if ($this->use_imagepopup)
         {
-            $nap = new midcom_helper_nav();
-            $root_node = $nap->get_node($nap->get_root_node());
-            $topic = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC);
-            $imagepopup_url = "plugin_imagepopup_popupurl: \"";
-            //$imagepopup_url .= $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-            $imagepopup_url.= $root_node[MIDCOM_NAV_FULLURL];
-            $imagepopup_url.= "midcom-exec-midcom.helper.imagepopup/runner.php/";
-			
-            /*$imagepopup_url.= $topic->guid;
-            $imagepopup_url.= "/" . $this->_type->storage->object->guid;
-            $imagepopup_url.= "/" . $this->_schema->name . "\",";*/
-
-            // W_I
-            // Small check so there won't be invalid url's (MS IE doesn't open the popup if there is empty doubleslash ["//"] on the url )
-			$imagepopup_url.= $topic->guid."/";
-            $imagepopup_url.= $this->_type->storage->object->guid ;
-            if($this->_type->storage->object->guid != "") {
-                $imagepopup_url.= "/";
+            $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+            $imagepopup_url = "plugin_imagepopup_popupurl: \"{$prefix}__ais/imagepopup/";
+            
+            if ($this->_type->storage->object)
+            {
+                // We have an existing object, link to "page attachments"
+                $imagepopup_url .= "{$this->_schema->name}/{$this->_type->storage->object->guid}\",";
             }
-            $imagepopup_url.= $this->_schema->name . "\",";
-			
-	        }
+            else
+            {
+                // No object has been created yet, link to "folder attachments" without page specified
+                $imagepopup_url .= "folder/{$this->_schema->name}\",";
+            }
+        }
 
-
-//        $imagepopup_url = "{$root_node[MIDCOM_NAV_FULLURL]}/midcom-exec-midcom.helper.imagepopup/runner.php/";
-//        $imagepopup_url.= $this->_type->storage->object->guid;
-
+        if ($this->_config->get('tinymce_use_compressor'))
+        {
+        $script_gz = <<<EOT
+tinyMCE_GZ.init({
+{$config}
+{$this->local_config}
+languages : "{$language}",
+{$imagepopup_url}
+disk_cache : true,
+debug : false
+});
+EOT;
+        $_MIDCOM->add_jscript($script_gz);            
+        }
+               
         // Compute the final script:
         $script = <<<EOT
 tinyMCE.init({
@@ -201,7 +217,18 @@ EOT;
 
         $_MIDCOM->add_jscript($script);
     }
-
+	/**
+	 * Returns the string ,imagepopup that is added if we are editing a 
+	 * saved object (and thus can add attachments)
+	 * @return string empty or containing ",imagepopup"
+	 */
+	function _get_imagepopup_jsstring() {
+        if ($this->_type->storage !== null)
+        {
+            return ",imagepopup";
+        }
+        return "";
+	}
     /**
      * Returns the configuration theme based on the local_config_theme.
      * @return string
@@ -219,6 +246,11 @@ EOT;
             $function = "_get_{$this->theme}_configuration";
             return $this->$function();
         }
+        if ($this->mcs_config_snippet != '') 
+        {
+        	return $this->mcs_config_snippet;
+        }
+        
         return $this->_get_advanced_configuration();
     }
 
@@ -240,17 +272,12 @@ EOT;
      */
     function _get_simple_configuration()
     {
-        $popup = "";
-        // I need an object to attach the object to.
-        if ($this->_type->storage !== null)
-        {
-            $popup = ",imagepopup";
-        }
+		$popup = $this->_get_imagepopup_jsstring();    
         return <<<EOT
 theme : "advanced",
 button_title_map : false,
 apply_source_formatting : true,
-plugins : "table,contextmenu,advimage,advlink,paste,fullscreen{$popup}",
+plugins : "table,contextmenu,advimage,advlink,paste,fullscreen$popup",
 theme_advanced_buttons1 : "cut,copy,paste,separator,undo,redo,separator,justifyleft,justifycenter,justifyright,separator,outdent,indent,separator,code,fullscreen",
 theme_advanced_buttons2 : "formatselect,separator,bold,italic,,separator,bullist,numlist,separator,link,imagepopup",
 theme_advanced_buttons3 : "",
@@ -264,12 +291,7 @@ EOT;
      */
     function _get_advanced_configuration ()
     {
-        $popup = "";
-        // I need an object to attach the object to.
-        if ($this->_type->storage !== null)
-        {
-            $popup = ",imagepopup";
-        }
+    	$popup = $this->_get_imagepopup_jsstring();	
         return <<<EOT
 apply_source_formatting : true,
 theme : "advanced",
@@ -293,12 +315,7 @@ EOT;
      */
     function _get_tiny_configuration ()
     {
-        $popup = "";
-        // I need an object to attach the object to.
-        if ($this->_type->storage !== null)
-        {
-            $popup = ",imagepopup";
-        }
+        $popup = $this->_get_imagepopup_jsstring();
         return <<<EOT
 apply_source_formatting : true,
 theme : "advanced",
@@ -334,10 +351,19 @@ EOT;
         $this->height = 25;
         $this->width = 80;
 
-        if ($this->_type->storage->object !== null
-            && $this->use_imagepopup)
+        if ($this->use_imagepopup)
         {
-            $this->_schema->register_to_session($this->_type->storage->object->guid);
+            if ($this->_type->storage->object)
+            {
+                // We have an object, register the schema using that object
+                $this->_schema->register_to_session($this->_type->storage->object->guid);
+            }
+            else
+            {
+                // No object has been created yet. Therefore, we register the schema for the topic GUID
+                $topic = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC);
+                $this->_schema->register_to_session($topic->guid);
+            }
         }
     }
 

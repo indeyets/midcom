@@ -1,6 +1,6 @@
 <?php
-$data =& $_MIDCOM->get_custom_context_data('request_data');
-$prefix = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 $query = htmlspecialchars($data['query'], ENT_QUOTES);
 ?>
 <form method='GET' name='midcom_helper_search_form' action='&(prefix);result.html' class='midcom.helper.search'>

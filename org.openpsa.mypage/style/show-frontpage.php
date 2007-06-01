@@ -1,9 +1,9 @@
 <?php
-$view_data =& $GLOBALS['midcom']->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 ?>
 <div class="main">
     <?php
-    foreach ($view_data['wide_items'] as $path => $node)
+    foreach ($data['wide_items'] as $path => $node)
     {
         $_MIDCOM->dynamic_load($path);
     }
@@ -36,10 +36,10 @@ $view_data =& $GLOBALS['midcom']->get_custom_context_data('request_data');
 </div>
 <div class="content-text">
         <?php
-        if (   isset($view_data['leftbar_items'])
-            && is_array($view_data['leftbar_items']))
+        if (   isset($data['leftbar_items'])
+            && is_array($data['leftbar_items']))
         {
-            foreach ($view_data['leftbar_items'] as $path => $node)
+            foreach ($data['leftbar_items'] as $path => $node)
             {
                 if (strstr($node[MIDCOM_NAV_COMPONENT], 'org.openpsa'))
                 {
@@ -57,10 +57,10 @@ $view_data =& $GLOBALS['midcom']->get_custom_context_data('request_data');
 </div>
 <div class="content-text">
     <?php
-    if (   isset($view_data['main_items'])
-        && is_array($view_data['main_items']))
+    if (   isset($data['main_items'])
+        && is_array($data['main_items']))
     {
-        foreach ($view_data['main_items'] as $path => $node)
+        foreach ($data['main_items'] as $path => $node)
         {
             if (strstr($node[MIDCOM_NAV_COMPONENT], 'org.openpsa'))
             {
@@ -74,12 +74,12 @@ $view_data =& $GLOBALS['midcom']->get_custom_context_data('request_data');
             }
         }
     }
-        
+
     ?>
 </div>
 <div class="sidebar">
     <?php
-    foreach ($view_data['sidebar_items'] as $path => $node)
+    foreach ($data['sidebar_items'] as $path => $node)
     {
         if (strstr($node[MIDCOM_NAV_COMPONENT], 'org.openpsa'))
         {

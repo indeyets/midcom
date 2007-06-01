@@ -1,11 +1,11 @@
 <?php
-global $view, $view_form_prefix, $view_query;
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
-<form method="POST" action="&(prefix);">
-  <label for="net_nemein_simpledb_search">
-    <?php echo $GLOBALS["view_l10n"]->get("search"); ?>
-    <input id="net_nemein_simpledb_search" type="text" name="&(view_form_prefix);query" value="&(view_query);" />
-  </label>
-  <input type="submit" name="&(view_form_prefix);query_submit" value="<?php echo $GLOBALS["view_l10n"]->get("go"); ?>" />
+<form method="post" action="&(prefix);">
+    <label for="net_nemein_simpledb_search">
+        <?php echo $data['l10n']->get('search'); ?>
+        <input id="net_nemein_simpledb_search" type="text" name="net_nemein_simpledb_viewer_query" value="&(data['query']);" />
+    </label>
+    <input type="submit" name="net_nemein_simpledb_viewer_query_submit" value="<?php echo $data['l10n']->get('go'); ?>" />
 </form>

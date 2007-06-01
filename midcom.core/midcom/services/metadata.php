@@ -178,7 +178,11 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
         }
         
         $this->_metadata[$context_id][$metadata_type] =& midcom_helper_metadata::retrieve($object);
-        
+        if (!$this->_metadata[$context_id][$metadata_type])
+        {
+            return;
+        }
+                
         // Update MidCOM 2.6 request metadata if appropriate
         $request_metadata = $_MIDCOM->get_26_request_metadata($context_id);
         $edited = $this->_metadata[$context_id][$metadata_type]->get('edited');
@@ -253,7 +257,7 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
             $_MIDCOM->add_meta_head(
                 array(
                     'name' => 'dc.date',
-                    'content' => gmdate('Y-m-d', $view_metadata->get('created'))
+                    'content' => gmdate('Y-m-d', (int) $view_metadata->get('published'))
                 )
             );
             
@@ -268,7 +272,30 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
                 // Display position metadata
                 $object_position = new org_routamc_positioning_object($view_metadata->object);
                 $object_position->set_metadata();
-            }   
+            } 
+            
+            // Display links to language versions
+            $translations = $view_metadata->get_languages();
+            foreach ($translations as $translation)
+            {
+                if ($translation['host']->id == $_MIDGARD['host'])
+                {
+                    // This is the host we're in, no need to link
+                    continue;
+                }
+                
+                $_MIDCOM->add_link_head
+                (
+                    array
+                    (
+                        'rel'   => 'alternate',
+                        'type'  => 'text/html',
+                        'title' => "In {$translation['name']}",
+                        'hreflang' => $translation['code'],
+                        'href'  => "{$translation['url']}midcom-permalink-{$view_metadata->object->guid}",
+                    )
+                );
+            }
         }
     }
 }

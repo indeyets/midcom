@@ -115,7 +115,8 @@ class net_nehmer_marketplace_handler_submit extends midcom_baseclasses_component
     function _load_account_remote()
     {
         $guid = $this->_config->get('account_topic');
-        if (! $guid)
+
+		if (! $guid)
         {
             $tmp = midcom_helper_find_node_by_component('net.nehmer.account');
             if (! $tmp)
@@ -353,7 +354,7 @@ class net_nehmer_marketplace_handler_submit extends midcom_baseclasses_component
         $mapping_config = $this->_config->get('mapping');
         $type = $this->_account_remote->get_account_type();
 
-        if (array_key_exists($type, $mapping_config))
+        if (!empty($type) && array_key_exists($type, $mapping_config))
         {
             $mapping = $mapping_config[$type];
         }

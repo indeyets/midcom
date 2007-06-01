@@ -6,6 +6,21 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-03-08 bergie
+  + Added support for viewing only events that are open for registration
+  + Created own MgdSchema for net.nemein.calendar
+
+2007-01-11 adrenalin
+  + Fixed misbehaving relocate on case 'missing root event'
+  + Added breadcrumb lines for handlers
+
+2006-12-28 bergie
+  + Fixed reindexing of events
+
+2006-11-28 rambo
+  + QnD categories filter support (set ?net_nemein_calendar_category=category to use) in 1.8
+  - version bump
+
 2006-06-16 bergie
   ! Refactored to MidCOM 2.5 technology: QB, DBA, on-site admin etc
 

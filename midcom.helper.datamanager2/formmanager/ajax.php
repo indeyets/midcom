@@ -121,6 +121,7 @@ class midcom_helper_datamanager2_formmanager_ajax extends midcom_helper_datamana
                 case 'midcom_helper_datamanager2_type_date':
                 case 'midcom_helper_datamanager2_type_number':
                 case 'midcom_helper_datamanager2_type_boolean':
+                case 'midcom_helper_datamanager2_type_tags':
                     echo "<field name=\"{$name}\"><![CDATA[\n";
                     $element =& $this->form->getElement($name);
                     echo $element->toHtml();
@@ -172,7 +173,8 @@ class midcom_helper_datamanager2_formmanager_ajax extends midcom_helper_datamana
                 case 'midcom_helper_datamanager2_type_select':
                 case 'midcom_helper_datamanager2_type_date':
                 case 'midcom_helper_datamanager2_type_number':
-                case 'midcom_helper_datamanager2_type_boolean':                
+                case 'midcom_helper_datamanager2_type_boolean':
+                case 'midcom_helper_datamanager2_type_tags':                
                     echo "<field name=\"{$name}\"><![CDATA[\n";
                     echo $widget->render_content();
                     echo "]]></field>\n";
@@ -189,7 +191,7 @@ class midcom_helper_datamanager2_formmanager_ajax extends midcom_helper_datamana
      */
     function process_form()
     {
-        $this->_exitcode = parent::process_form();
+        $this->_exitcode = parent::process_form(true);
 
         // Process next/previous
 

@@ -32,6 +32,7 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
      * should be the root topic object for that site.
      * */
     var $topic = null;
+
     /**
      * The style to use for the site. If null, a very simple style will 
      * be created.
@@ -73,16 +74,20 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
 
         if ($config->get_value('topic') !== null)
         {
-            $this->style = $config->get_value('topic');
+            $this->topic = $config->get_value('topic');
         }
         
         $this->sitegroup_id = $this->config->get_value('sitegroup_id');
         
         if ($this->verbose)
         {
-            echo "Using sitegroup_id: " . $this->sitegroup_id . "\n"; 
+            echo "Using sitegroup_id: " . $this->sitegroup_id . " (current SG is {$_MIDGARD['sitegroup']})\n"; 
         }
 
+        if (!class_exists('midcom_helper_hostconfig'))
+        {
+        	require_once 'midcom/lib/midcom/helper/hostconfig.php';
+        }
     }
 
 
@@ -101,7 +106,7 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
         } 
         else 
         {
-            return new midgard_admin_sitegroup_creation_host_17 ($config);
+            return new midgard_admin_sitegroup_creation_host_17($config);
         }  
     }
     
@@ -137,9 +142,10 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
         }
         
         $this->_authenticate($this->sitegroup_id);
-        
+
         if ($this->topic === null)
         {
+    	    print "Creating root topic\n";
             if (!$this->_create_topic())
             {
                 if ($this->verbose)
@@ -150,10 +156,11 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
                 return false;
             }
         }
-        
 
         if ($this->style === null)
         {
+        
+    	    print "Creating root style\n";
             if (!$this->_create_style())
             {
                 if ($this->verbose)
@@ -164,9 +171,11 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
                 return false;
             }
         }
-
+        
+    	print "Creating root page\n";
         if (!$this->_create_page())
         {
+
             if ($this->verbose)
             {
                 print "Could not create page: ".mgd_errstr()."\n";
@@ -177,11 +186,13 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
 
         // Host must be created as SG0!
         $this->_authenticate(0);
+        
+    	print "Creating host\n";
         if (!$this->_create_host())
         {
             if ($this->verbose)
             {
-                print "Could not create host.\n";
+                print "Could not create host: ".mgd_errstr()."\n";
             }
             $this->_clean();            
             return false;
@@ -196,25 +207,43 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
      */
     function _clean()
     {
+        print "Cleaning up...\n";
         if ($this->host)
         {
             midcom_helper_purge_object($this->host->guid);
+            if ($this->verbose)
+            {
+                print "Deleting host {$this->host->guid}... " . mgd_errstr() . "\n";
+            }
         }
 
         if ($this->page)
         {
             midcom_helper_purge_object($this->page->guid);
+            if ($this->verbose)
+            {
+                print "Deleting page {$this->page->guid}... " . mgd_errstr() . "\n";
+            }
         }
 
         if ($this->style)
         {
             midcom_helper_purge_object($this->style->guid);
+            if ($this->verbose)
+            {
+                print "Deleting style {$this->style->guid}... " . mgd_errstr() . "\n";
+            }
         } 
             
         if ($this->topic)
         {
             midcom_helper_purge_object($this->topic->guid);
-        }     
+            if ($this->verbose)
+            {
+                print "Deleting topic {$this->topic->guid}... " . mgd_errstr() . "\n";
+            }
+        }
+
     }
     
     /**
@@ -230,6 +259,7 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
         if (   $_MIDGARD['admin']
             && !$this->config->get_username())
         {
+	    
             return true;
         }
         $midgard = mgd_get_midgard();
@@ -253,29 +283,27 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
      */
     function _create_host()
     {
-        $this->host = new midgard_host();
-        $this->host->name = $this->config->get_value('hostname');
+       $attributes  = Array
+        (
+            'name' => $this->config->get_value('hostname'),
+    	    'online' => true,
+    	    'sitegroup' => $this->sitegroup_id,
+    	    'root' => $this->page->id,
+    	);
         
         if ($this->config->get_value('host_prefix') != '/')
         {
-            $this->host->prefix = $this->config->get_value('host_prefix');
+            $attributes['prefix'] = $this->config->get_value('host_prefix');
         }
         
-        $this->host->online = true;
-        $this->host->sitegroup = $this->sitegroup_id;        
-        $this->host->root = $this->page->id;
-                
-        if (!$this->host->create())
-        {
+    	// Call the appropriate creation method for the Midgard version
+        if (!$this->_create_object("host", $attributes, $this->sitegroup_id, "host")){
             return false;
         }
-        $id = $this->host->id;
-
-        // as per mrfc0025
-        $this->host->parameter('midgard', "midcom-configuration-version", 1);
+                
         return true;
-
     }
+    
     /**
      *  @access private
      */
@@ -284,7 +312,10 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
         $attributes  = Array  
         (
             'name' => $this->config->get_value('hostname') . $this->config->get_value('host_prefix') . " root topic",
-            'extra' => $this->config->get_value('topic_name') 
+            'extra' => $this->config->get_value('topic_name'),
+            'component' => $this->config->get_value('topic_midcom'),
+            'style' => '/' . $this->config->get_value('extend_style'),
+            'styleInherit' => true,
         );
         
         // Call the appropriate creation method for the Midgard version
@@ -292,10 +323,10 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
         {
             return false;
         }
-
-        $this->topic->parameter('midcom', 'component', $this->config->get_value('topic_midcom'));
-        return true;
+        
+    	return true;
     }
+
     /**
      * Creates a basic style
      * @access private 
@@ -312,23 +343,34 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
             
             if (count($styles) > 0)
             {
-                $this->style = new midgard_style();
-                $this->style->up = $styles[0]->id;
-                $this->style->sitegroup = $this->sitegroup_id;
-                $this->style->name = sprintf('%s for %s', $this->config->get_value('extend_style'), $this->config->get_value('hostname').$this->config->get_value('host_prefix'));
-                return $this->style->create();
+                $attributes  = Array
+                (
+                    'up' => $styles[0]->id,
+                    'sitegroup' => $this->sitegroup_id,
+                    'name' => sprintf('%s for %s', $this->config->get_value('extend_style'), $this->config->get_value('hostname') . str_replace('/', ':', $this->config->get_value('host_prefix'))),
+                );
+                
+                if (!$this->_create_object('style', $attributes, $this->sitegroup_id, "style"))
+                {
+                    return false;
+                }
+    
+                return true;
             }
         }
         
         // Fallback, generate empty Midgard style
-        $this->style = new midgard_style();
-        $this->style->name = sprintf('%s for %s', $this->config->get_value('style_name'), $this->config->get_value('hostname').$this->config->get_value('host_prefix'));
-        $this->style->sitegroup = $this->sitegroup_id;
-        if (!$this->style->create())
+    	$attributes  = Array
+        (
+            'sitegroup' => $this->sitegroup_id,
+            'name' => sprintf('%s for %s', $this->config->get_value('style_name'), $this->config->get_value('hostname') . str_replace('/', ':', $this->config->get_value('host_prefix'))),
+        );
+
+        if (!$this->_create_object("style", $attributes, $this->sitegroup_id, "style"))
         {
             return false;
         }
-        
+
         return $this->_create_styleelements();
     }
     
@@ -378,15 +420,17 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
     function _create_page()
     {
 
-        $this->page = new midgard_page();
+        $attributes = array
+        (
+            'name' => $this->config->get_value('hostname') . $this->config->get_value('host_prefix') . " root",
+            'title' => $this->config->get_value('topic_name'),
+            'style' => $this->style->id,
+            'info' => 'active',
+            'content' => $this->config->get_value('root_page_content'),
+            'author' => 1,
+        );
 
-        $this->page->name = $this->config->get_value('hostname').$this->config->get_value('host_prefix')." root";
-        $this->page->style = $this->style->id;
-        $this->page->info = 'active';
-        $this->page->content = $this->config->get_value('root_page_content');
-        $this->page->sitegroup = $this->sitegroup_id;
-
-        if (!$this->page->create())
+    	if (!$this->_create_object("page", $attributes, $this->sitegroup_id, "page"))
         {
             if ($this->verbose)
             {
@@ -394,21 +438,21 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
             }
             return false;
         }
-        $id = $this->page->id;
-        $this->page = new midgard_page();
-        $this->page->get_by_id($id);
-        
-        // FIXME: Aegir 1 won't display page unless author is set
-        // $this->page->author = 1;
-        
-        $this->page->update();
 
-        if (   !$this->_create_codeinit() 
-            || !$this->_create_codefinish())
+        if ( !$this->_create_codeinit() )
         {
             if ($this->verbose)
             {
-                echo "Could not create root page elements!\n";
+                echo "Could not create codeinint elements!\n";
+            }
+            return false;
+        } 
+
+        if ( !$this->_create_codefinish())
+        {
+            if ($this->verbose)
+            {
+                echo "Could not create codefinish elements!\n";
             }
             return false;
         }
@@ -423,56 +467,64 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
     {
         if ($_MIDGARD['config']['prefix'] == '/usr')
         {
-            $prefix = '';
+            $prefix = '/var';
+        }
+        else if ($_MIDGARD['config']['prefix'] == '/usr/local')
+        {
+            $prefix = '/var/local';
         }
         else
         {
-            $prefix = $_MIDGARD['config']['prefix'];
+            $prefix = $_MIDGARD['config']['prefix'].'/var';
         }
-        $this->codeinit = new midgard_pageelement();
-        $this->codeinit->name = "code-init";
-        $hostconfig = new midgard_admin_sitegroup_hostconfig($this->page);
+        
+        $hostconfig = new midcom_helper_hostconfig($this->page);
         $hostconfig->set('midcom_root_topic_guid', $this->get_topic_guid());
-        $hostconfig->set('cache_base_directory', $prefix.'/var/cache/midgard/midcom/');
-        $hostconfig->set('log_filename', $prefix.'/var/log/midgard/midcom/'.$this->config->get_value('hostname').".log");
+        $hostconfig->set('cache_base_directory', $prefix.'/cache/midgard/midcom/');
+        $hostconfig->set('log_filename', $prefix.'/log/midgard/midcom/'.$this->config->get_value('hostname').".log");
         $hostconfig->set('midcom_path', $this->config->get_value('midcom_path'));
-        $this->codeinit->value = $hostconfig->get_code_init();
 
-        $this->codeinit->page = $this->page->id;
-        $this->codeinit->info = 'inherit';
+        $attributes = array
+        (
+            'name' => "code-init",
+            'value' => $hostconfig->get_code_init(),
+            'page' => $this->page->id,
+            'info' => 'inherit'
+        );
 
-        $this->codeinit->sitegroup = $this->sitegroup_id;
-
-        if (!$this->codeinit->create())
+        if (!$this->_create_object("pageelement", $attributes, $this->sitegroup_id, "codeinit"))
         {
+            if ($this->verbose)
+            {
+                echo "Could not create code-init!\n";
+            }
             return false;
         }
-        $id = $this->codeinit->id;
-        $this->codeinit = new midgard_pageelement();
-        $this->codeinit->get_by_id($id);
-        $this->codeinit->sitegroup = $this->sitegroup_id;
-        return $this->codeinit->update();
+
+	return true;
     }
 
     function _create_codefinish()
     {
-        $this->codefinish = new midgard_pageelement();
-        $this->codefinish->name = "code-finish";
-        $this->codefinish->value = "<? \$_MIDCOM->finish(); ?>";
-        $this->codefinish->page = $this->page->id;
-        $this->codefinish->info = 'inherit';
+        $attributes = array
+        (
+    	    'name' => "code-finish",
+    	    'value' => "<?php \$_MIDCOM->finish(); ?>",
+    	    'page' => $this->page->id,
+    	    'info' => 'inherit'
+    	);
 
-        $this->codefinish->sitegroup = $this->sitegroup_id;
-
-        if (!$this->codefinish->create())
+	if (!$this->_create_object("pageelement", $attributes, $this->sitegroup_id, "codefinish"))
         {
+            if ($this->verbose)
+            {
+                echo "Could not create code-finish!\n";
+            }
             return false;
         }
-        $id = $this->codefinish->id;
-        $this->codefinish = new midgard_pageelement();
-        $this->codefinish->get_by_id($id);
-        $this->codefinish->sitegroup = $this->sitegroup_id;
-        return $this->codefinish->update();
+
+        return true;
+
     }
     
     /**
@@ -498,6 +550,7 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
     {
         return false;
     }
+
     /**
      * All classes should have a validator method that must return true
      * for the class to run.
@@ -512,7 +565,7 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
         {
             if ($this->verbose)
             {
-                printf("User cannot create sitegroup!\n");
+                printf("Only root user can create hosts!\n");
             }
 
             return false;
@@ -592,30 +645,35 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
 }
 
 
-class midgard_admin_sitegroup_creation_host_17 extends midgard_admin_sitegroup_creation_host {
-
-
+class midgard_admin_sitegroup_creation_host_17 extends midgard_admin_sitegroup_creation_host 
+{
     /**
-     * 
      * @param string tablename 
      * @param array ( attributename => value ) attribtues to be created
      * @param string name of the attribute to save the storage in .
      * @param int the sitegroup the object should have
      * @return int id of object or 0 if not created.
      */
-    function _create_object($class, $attributes,$sitegroup,  $storage = null ) 
+    function _create_object($class, $attributes, $sitegroup, $storage = null ) 
     {
-        $classname = "mgd_get_$class";
-        if (!class_exists("midgard_{$class}"))
+        $classicapi = "mgd_get_{$class}";
+        if ($class == 'pageelement')
+        {
+            $classicapi = 'mgd_get_page_element';
+        }
+        
+        $classname = "midgard_{$class}";
+        
+        if (!class_exists($classname))
         {
             if ($this->verbose)
             {
-                print "Class $classname does not exist!\n";
+                print "Class {$classname} does not exist!\n";
             }
             return false;
         }
         
-        $obj = $classname();
+        $obj = new $classname();
         foreach ($attributes as $name => $value) 
         {
             $obj->$name = $value;
@@ -627,14 +685,16 @@ class midgard_admin_sitegroup_creation_host_17 extends midgard_admin_sitegroup_c
         {
             if ($this->verbose) 
             {
-                print "Could not create object $classname. Error: " . mgd_errstr() . "\n";
+                print "Could not create object {$classname}. Error: " . mgd_errstr() . "\n";
+        		print_r($obj);
             }
             return false;
         }
+        $id = $obj->id;
         
-        //$obj = $classname($id);                
-        $obj = new midgard_topic();
+        $obj = new $classname();
         $obj->get_by_id($id);
+        //$obj = $classicapi($id);
         if ($obj->sitegroup != $sitegroup)
         {
             if (!method_exists('setsitegroup', $obj))
@@ -643,6 +703,7 @@ class midgard_admin_sitegroup_creation_host_17 extends midgard_admin_sitegroup_c
                 {
                     echo "Class " . get_class($obj) . " doesn't have the 'setsitegroup' method (we're in SG {$_MIDGARD['sitegroup']}).\n";
                 }
+                print_r($obj);
                 $obj->delete();
                 return false;
             }
@@ -653,10 +714,12 @@ class midgard_admin_sitegroup_creation_host_17 extends midgard_admin_sitegroup_c
         }
         
         // get the object a third time to be sure it is correctly set.
-        if ($storage !== null) {
+        if ($storage !== null) 
+        {
             // we want to use the new kind of object to have a clean interface
             //$classname = "midgard_$class";
-            $this->$storage = $classname($obj->id);
+            $this->$storage = new $classname();
+            $this->$storage->get_by_id($obj->id);
         }
         return $this->$storage->id;
     }
@@ -673,6 +736,7 @@ class midgard_admin_sitegroup_creation_host_17 extends midgard_admin_sitegroup_c
             return $this->topic->guid();
         }
     }
+
     /**
      * set the correct sitegroup for the topic, host and page parameters. 
      */
@@ -711,17 +775,17 @@ class midgard_admin_sitegroup_creation_host_18 extends midgard_admin_sitegroup_c
         
         $object = new $classname();
         
-        foreach ($attributes as $name => $value) {
+        foreach ($attributes as $name => $value) 
+        {
             $object->$name = $value;
         }
         
         $object->sitegroup = $sitegroup;
-        
         if (!$object->create()) 
         {
             if ($this->verbose) 
             {
-                print "Could not create object $classname. Error: " . mgd_errstr() . "\n";
+                print "Could not create object $classname ($storage). Error: " . mgd_errstr() . "\n";
             }
             return false;
         }
@@ -742,7 +806,5 @@ class midgard_admin_sitegroup_creation_host_18 extends midgard_admin_sitegroup_c
     {
         return $this->topic->guid;
     }
-    
-    
 
 }

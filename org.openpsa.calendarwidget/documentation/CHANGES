@@ -2,13 +2,21 @@
                    ------------------------------------
 Legend:
 - All items marked with "!" represent a major API-Change that is
-  not guranteed to be backwards compatible to previous versions
-  which might even break existing functionality. 
+  not guaranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
 - All items marked with "+" represent completly new features.
+
+2007-05-31 adrenalin
+  - added support for entering custom GET parameters
+
+2007-03-23 rambo
+  - backported from trunk: more CSS controls, better ref date handling in 
+    render_timelabel()
+  - version bump
 
 2006-02-15 rambo & bergie
   - added PEAR packaging information to manifest
-  + Used old-style HTML width attributes for THs to prevent Firefox 
+  + Used old-style HTML width attributes for THs to prevent Firefox
     collapsing bug
 
 2005-12-21 bergie

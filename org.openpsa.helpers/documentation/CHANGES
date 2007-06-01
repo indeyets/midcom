@@ -1,10 +1,15 @@
-                   org.openpsa.helpers Changelog
+org.openpsa.helpers Changelog
                    ------------------------------
 Legend:
 - All items marked with "!" represent a major API-Change that is
   not guranteed to be backwards compatible to previous versions
-  which might even break existing functionality. 
+  which might even break existing functionality.
 - All items marked with "+" represent completly new features.
+
+2006-09-15 rambo
+  + moved the array2code helper from directmarketing smart campaigns here
+  - state to packaging info
+  - version bump
 
 2006-06-06 rambo
   + added vx_parser to load files list
@@ -45,7 +50,7 @@ Legend:
     in case a class we need is missing
 
 2005-08-02 rambo
-  - Added org_openpsa_helpers_projects(), some improvements to 
+  - Added org_openpsa_helpers_projects(), some improvements to
     org_openpsa_helpers_workgroups()
 
 2005-07-29 bergie
@@ -58,7 +63,7 @@ Legend:
     org_openpsa_helpers_workgroups() for populating workgroup lists
 
 2005-06-16 rambo
-  - hopefully converted vx_parser.php to use correct newlines 
+  - hopefully converted vx_parser.php to use correct newlines
 
 2005-06-15 rambo
   + sprint_r (print_r to string),  moved plenty of vCal/vCal parsing

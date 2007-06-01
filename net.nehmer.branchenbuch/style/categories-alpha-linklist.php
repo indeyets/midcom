@@ -1,5 +1,5 @@
 <?php
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
     . "category/list/alpha/{$data['type']->guid}/" ;

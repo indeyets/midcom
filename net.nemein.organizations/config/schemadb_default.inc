@@ -1,46 +1,79 @@
-"default" => array (
-
-    "name"        => "default",
-    "description" => "Default organization record",
-    "fields"      => array (
-        "name" => array (
-            "description" => "Index name",
-            "datatype"    => "text",
-            "location"    => "name",
+'group' => array 
+(
+    'description' => 'group card',
+    'fields'      => array 
+    (
+        'name' => array 
+        (
+            // COMPONENT-RECOMMENDED
+            'title'       => 'url name',
+            'storage'     => 'name',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'index_method' => 'noindex',
         ),
-        "official" => array (
-            "description" => "Official name",
-            "datatype"    => "text",
-            "location"    => "official"
+        'official' => array 
+        (
+            'title'       => 'official name',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'storage'     => 'official',
+            'index_method' => 'title',
         ),
-        "homepage" => array (
-            "description" => "Web site",
-            "datatype"    => "text",
-            "location"    => "homepage"
+        'email' => array 
+        (
+            'title'       => 'email',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'storage'     => 'email',
+            'validation'  => 'email',
         ),
-        "email" => array (
-            "description" => "Email address",
-            "datatype"    => "text",
-            "location"    => "email"
+        'street' => array 
+        (
+            'title'       => 'street address',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'storage'     => 'street'
         ),
-        "description" => array (
-            "description" => "Description",
-            "datatype"    => "text",
-            "widget_text_inputstyle"=>"longtext"
+        'street' => array 
+        (
+            'title'       => 'street address',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'storage'     => 'street'
         ),
-        "logo" => array (
-            "description" => "Logo",
-            "datatype"    => "image",
-            "location"    => "attachment",
-            "widget_image_simple" => true,
+        'postcode' => array 
+        (
+            'title'       => 'postal code',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'storage'     => 'postcode'
         ),
-        "inrandom" => array (
-            "description" => "Allow item to be listed in random filtering",
-            "datatype"    => "boolean",
-            "location"    => "config",
-            "config_domain" => "net.nemein.organizations",
-            "config_key"  => "in_random",
-        )
+        'city' => array 
+        (
+            'title'       => 'city',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'storage'     => 'city'
+        ),
+        'country' => array 
+        (
+            'title'       => 'country',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'storage'     => 'country'
+        ),
+        'description' => array 
+        (
+            'title'       => 'description',
+            'type'        => 'text',
+            'type_config' => array 
+            ( 
+                'output_mode' => 'html' 
+            ),
+            'widget'      => 'tinymce',
+            'storage'     => 'extra',
+        ),
     )
 
 )

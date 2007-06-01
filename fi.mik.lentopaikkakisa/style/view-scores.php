@@ -9,7 +9,15 @@ $data =& $_MIDCOM->get_custom_context_data('request_data');
     <?php
     foreach ($data['scores'] as $owner => $score)
     {
-        $percentage = 100 / $data['total'] * $score;
+        if (   $data['total'] == 0
+            || $score == 0)
+        {
+            $percentage = 0;
+        }
+        else
+        {
+            $percentage = 100 / $data['total'] * $score;
+        }
         echo "<tr>\n";
         echo "<td>{$owner}</td>\n";
         echo "<td>{$score}</td>\n";

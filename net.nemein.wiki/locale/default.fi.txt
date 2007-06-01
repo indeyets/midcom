@@ -3,8 +3,16 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING action page_updated
+Sivun päivitys
+---STRINGEND
+
 ---STRING allow anonymous posting
 Salli julkinen muokkaaminen
+---STRINGEND
+
+---STRING anonymous
+Tuntematon käyttäjä
 ---STRINGEND
 
 ---STRING anonymous password
@@ -23,6 +31,14 @@ Julkisen käyttäjän käyttäjätunnus
 Kirjoittaja
 ---STRINGEND
 
+---STRING autogenerate table of contents
+Luo automaattinen sisällysluettelo sivuille
+---STRINGEND
+
+---STRING change to %s
+Muuta %s-sivuksi
+---STRINGEND
+
 ---STRING click to create
 Klikkaa luodaksesi puuttuva Wiki-sivu
 ---STRINGEND
@@ -35,16 +51,48 @@ Sisältö
 Lisää muistiinpanot
 ---STRINGEND
 
+---STRING create page %s
+Luo sivu "%s"
+---STRINGEND
+
 ---STRING create pages by linking
 Voit lisätä sivuja tähän <a href="http://fi.wikipedia.org/wiki/Wiki">Wikiin</a> linkittämällä olemassa olemattomiin sivuihin käyttämällä <a href="http://www.midgard-project.org/midcom-permalink-7276f817dcdefcf40d30a9ec69a7241f">hakasulkeita</a>. Aloita muokkaamalla wikin etusivua.
+---STRINGEND
+
+---STRING create redirection page %s
+Luo uudelleenohjaus "%s"
+---STRINGEND
+
+---STRING create wikipage %s
+Luo wiki-sivu "%s"
+---STRINGEND
+
+---STRING display related to items in page
+Näytä sivuun liittyvät toiset sivut sisällössä
+---STRINGEND
+
+---STRING display settings
+Näyttöasetukset
+---STRINGEND
+
+---STRING edit %s
+Muokkaa sivua %s
 ---STRINGEND
 
 ---STRING edit wikipage
 Muokkaa Wiki-sivua
 ---STRINGEND
 
+---STRING link to page
+Linkki sivulle
+---STRINGEND
+
 ---STRING login to create
 Kirjaudu sisään luodaksesi tämän puuttuvan Wiki-sivun
+---STRINGEND
+
+---STRING look for %s in wikipedia
+Etsi aihetta "%s" Wikipediasta
 ---STRINGEND
 
 ---STRING net.nemein.wiki
@@ -55,12 +103,64 @@ Wiki
 Ei viittauksia tähän Wiki-sivuun
 ---STRINGEND
 
+---STRING no orphans
+Ei orposivuja
+---STRINGEND
+
+---STRING orphaned pages
+Orposivut
+---STRINGEND
+
+---STRING orphaned pages in wiki %s
+Orposivut wikissä "%s"
+---STRINGEND
+
+---STRING page %s
+sivulla "%s"
+---STRINGEND
+
+---STRING page %s added
+Wiki-sivu "%s" luotu.
+---STRINGEND
+
+---STRING page %s deleted
+Wiki-sivu "%s" poistettu.
+---STRINGEND
+
+---STRING page %s has been updated by %s
+Sivu "%s" päivitetty %s toimesta
+---STRINGEND
+
+---STRING page %s not found in wiki %s
+Sivua "%s" ei löydy wikistä %s.
+---STRINGEND
+
+---STRING page %s saved
+Wiki-sivu "%s" tallennettu.
+---STRINGEND
+
+---STRING page modifications
+Muutokset sivuun
+---STRINGEND
+
 ---STRING pages linking to %s
-Sivulle %s viittaavat Wiki-sivut
+Sivulle "%s" viittaavat sivut
 ---STRINGEND
 
 ---STRING really delete page
 Haluatko varmasti poistaa sivun?
+---STRINGEND
+
+---STRING recipients
+Vastaanottajat
+---STRINGEND
+
+---STRING redirect page
+Sivu jolle ohjataan
+---STRINGEND
+
+---STRING redirection
+Uudelleenohjaus
 ---STRINGEND
 
 ---STRING related notes
@@ -75,12 +175,36 @@ Liittyy aiheeseen
 Lähettäjä
 ---STRINGEND
 
+---STRING subscribe
+Tilaa muutostiedot
+---STRINGEND
+
+---STRING subscribed to changes in %s
+Olet tilannut muutokset %s
+---STRINGEND
+
+---STRING tags
+Tag-merkinnät
+---STRINGEND
+
 ---STRING this page is stub
 Tällä Wiki-sivulla ei vielä ole sisältöä. Klikkaa "Muokkaa"-nappia lisätäksesi tietoa.
 ---STRINGEND
 
+---STRING unsubscribe
+Poista muutosten tilaus
+---STRINGEND
+
+---STRING unsubscribed from changes in %s
+Olet poistanut tilauksesi muutoksiin %s
+---STRINGEND
+
 ---STRING what links
 Tänne viittaavat sivut
+---STRINGEND
+
+---STRING whole wiki %s
+koko wikissä "%s"
 ---STRINGEND
 
 ---STRING wiki
@@ -99,7 +223,7 @@ Lisätietoja linkittämisestä löytyy [wikin käyttöohjeista][3].
 [3]: http://www.midgard-project.org/midcom-permalink-7276f817dcdefcf40d30a9ec69a7241f
 ---STRINGEND
 
----STRING recipients
-Vastaanottajat
+---STRING default schema
+Sivujen oletustyyppi
 ---STRINGEND
 

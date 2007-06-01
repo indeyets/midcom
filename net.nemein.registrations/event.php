@@ -16,9 +16,20 @@
  *
  * @package net.nemein.registrations
  */
+$_MIDCOM->componentloader->load('net.nemein.calendar');
 
-class net_nemein_registrations_event extends midcom_db_event
+class net_nemein_registrations_event extends net_nemein_calendar_event
 {
+   /**
+    * Human readable start and end date
+    */
+    var $start_hr_date;
+    var $end_hr_date;
+    var $start2end_hr_date;
+    var $start_hr_datetime;
+    var $end_hr_datetime;
+    var $start2end_hr_datetime;
+
     /**
      * Request data information
      *
@@ -91,13 +102,28 @@ class net_nemein_registrations_event extends midcom_db_event
      */
     function net_nemein_registrations_event($id = null)
     {
-        parent::midcom_db_event($id);
+        parent::net_nemein_calendar_event($id);
         // Intercept failed class instantinations.
         if ($this)
         {
             $this->_bind_to_request_data();
             $this->_root_event =& $this->_request_data['root_event'];
         }
+    }
+
+    function _on_loaded()
+    {
+        if (!parent::_on_loaded())
+        {
+            return false;
+        }
+        $this->start_hr_date = strftime('%x', $this->start);
+        $this->end_hr_date = strftime('%x', $this->end);
+        $this->start_hr_datetime = strftime('%x', $this->start) . date(' H:i', $this->start);
+        $this->end_hr_datetime = strftime('%x', $this->end) . date(' H:i', $this->end);
+        $this->start2end_hr_datetime = net_nemein_calendar_functions_daylabel('start', $this->start, $this->end) . ' - ' . midcom_helper_generate_daylabel('end', $this->start, $this->end);
+        $this->start2end_hr_date = net_nemein_calendar_functions_daylabel('start', $this->start, $this->end, false) . ' - ' . midcom_helper_generate_daylabel('end', $this->start, $this->end, false);
+        return true;
     }
 
     /**
@@ -201,8 +227,15 @@ class net_nemein_registrations_event extends midcom_db_event
     function get_additional_questions_schema()
     {
         $this->_populate_dm();
-
-        return $this->_dm->types['additional_questions']->selection[0];
+        
+        if (count($this->_dm->types['additional_questions']->selection) > 0)
+        {
+            return $this->_dm->types['additional_questions']->selection[0];
+        }
+        else
+        {
+            return 'aq-default';
+        }
     }
 
     /**
@@ -210,13 +243,27 @@ class net_nemein_registrations_event extends midcom_db_event
      *
      * @return bool True if open.
      */
-    function is_open()
+    function is_open($use_dm = true)
     {
-        $this->_populate_dm();
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Called for event #{$this->id}");
+        debug_pop();
+        if (!class_exists('Date'))
+        {
+            require('Date.php');
+        }
 
         $now = new Date();
-        $open = $this->_dm->types['open_registration']->value;
-        $close = $this->_dm->types['close_registration']->value;
+        $open = new Date($this->openregistration);
+        $close = new Date($this->closeregistration);
+
+        /**
+         * FIXME: These calls foul up global server timezone configuration
+         * in mysterious ways leading time format functions to always return
+         * times in UTC in stead of local time.
+         *
+         * apparently they also don't quite work as they should
+         */
 
         // Sanity
         if ($close->before($open))
@@ -228,13 +275,22 @@ class net_nemein_registrations_event extends midcom_db_event
         {
             if ($close)
             {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("\$close is set, we return \$close->after(\$now)");
+                debug_pop();
                 return $close->after($now);
             }
             else
             {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("\$close is not set, returning true");
+                debug_pop();
                 return true;
             }
         }
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("\$open->before(\$now) returned false, so do we");
+        debug_pop();
 
         return false;
     }
@@ -251,6 +307,12 @@ class net_nemein_registrations_event extends midcom_db_event
         $this->_populate_dm();
 
         $this->_dm->types['open_registration']->value = new Date();
+        
+        // Handle closing time intelligently
+        if ($this->closeregistration < time())
+        {
+            $this->_dm->types['close_registration']->value = new Date($this->start);
+        }
 
         $this->_dm->save();
     }
@@ -424,11 +486,11 @@ class net_nemein_registrations_event extends midcom_db_event
      * Returns an initialized querybuilder which will list all registrations of this event
      * without further constraints or orderings.
      *
-     * This is essentially a reimplementation of the midcom_db_event::get_event_members_qb,
+     * This is essentially a reimplementation of the net_nemein_calendar_event::get_event_members_qb,
      * but with net_nemein_registrations_registration as type.
      *
      * @return midcom_core_querybuilder A prepared QB instance.
-     * @see midcom_db_event::get_event_members_qb
+     * @see net_nemein_calendar_event::get_event_members_qb
      */
     function get_registrations_qb()
     {
@@ -505,21 +567,56 @@ class net_nemein_registrations_event extends midcom_db_event
      *
      * @return Array A list of Events.
      */
-    function list_open()
+    function list_open($use_dm = true)
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
         $all_events = net_nemein_registrations_event::list_all();
         $result = Array();
+        $cnt = count($all_events);
+        debug_add("got {$cnt} events from net_nemein_registrations_event::list_all()");
         if ($all_events)
         {
             foreach ($all_events as $event)
             {
-                if ($event->is_open())
+                if (!$event->is_open($use_dm))
                 {
-                    $result[] = $event;
+                    debug_add("event #{$event->id} is not open for registration, skipping");
+                    continue;
                 }
+                debug_add("adding event #{$event->id}");
+                $result[] = $event;
             }
         }
+        debug_pop();
         return $result;
+    }
+
+    /**
+     * Lists open events in format suitable for DM2 select types
+     *
+     * NOTE: this is most often called before we can properly initialize DM2, thus 
+     * the is_open check is made bypass DM2 and use the default storage for checking
+     *
+     * @param $key string property to use as key
+     * @param $title string property to use as value
+     * @return Array DM2 select type options array
+     */
+    function list_open_optionsarray($key = 'guid', $title = 'title')
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $ret = array();
+        $events = net_nemein_registrations_event::list_open(false);
+        $cnt = count($events);
+        debug_add("got {$cnt} events from net_nemein_registrations_event::list_open()");
+        foreach ($events as $event)
+        {
+            $keyval = $event->$key;
+            $titleval = $event->$title;
+            debug_add("adding event #{$event->id} as '{$keyval}' => '{$titleval}'");
+            $ret[$keyval] = $titleval;
+        }
+        debug_pop();
+        return $ret;
     }
 
     /**
@@ -610,7 +707,7 @@ class net_nemein_registrations_event extends midcom_db_event
             '$registration_data["\1"]',
             $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
         );
-        $subject = $this->_encode_subject(preg_replace($search, $replace, $subject));
+        $subject = preg_replace($search, $replace, $subject);
         $body = preg_replace($search, $replace, $body);
         $headers = "From: {$sender}\r\nReply-To: {$sender}\r\nX-Mailer: PHP/" . phpversion();
 
@@ -625,17 +722,20 @@ class net_nemein_registrations_event extends midcom_db_event
                 debug_add('Skipping an empty cc line, perhaps a comma too much');
                 continue;
             }
-            if (! mail ($email, $subject, $body, $headers))
+            $mail = new org_openpsa_mail();
+            $mail->to = $email;
+            $mail->subject = $subject;
+            $mail->body = $body;
+            $mail->from = $sender;
+            if (!$mail->send())
             {
-                debug_add("Could not send E-Mail to {$email} with subject '{$subject}'.", MIDCOM_LOG_ERROR);
-                debug_print_r('Extra Headers:', $headers);
-                debug_print_r('Body:', $body);
+                debug_add("Could not send E-Mail to '{$email}' with subject '{$subject}', got error: " . $mail->get_error_message(), MIDCOM_LOG_ERROR);
+                //debug_print_r('Mail object:', $mail);
             }
             else
             {
                 debug_add("Sent E-Mail to {$email} with subject '{$subject}'.", MIDCOM_LOG_ERROR);
-                debug_print_r('Extra Headers:', $headers);
-                debug_print_r('Body:', $body);
+                //debug_print_r('Mail object:', $mail);
             }
         }
         debug_pop();
@@ -701,7 +801,7 @@ class net_nemein_registrations_event extends midcom_db_event
             $reason,
             $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
         );
-        $subject = $this->_encode_subject(preg_replace($search, $replace, $subject));
+        $subject = preg_replace($search, $replace, $subject);
         $body = preg_replace($search, $replace, $body);
         $headers = "From: {$sender}\r\nReply-To: {$sender}\r\nX-Mailer: PHP/" . phpversion();
 
@@ -716,17 +816,20 @@ class net_nemein_registrations_event extends midcom_db_event
                 debug_add('Skipping an empty cc line, perhaps a comma too much');
                 continue;
             }
-            if (! mail ($email, $subject, $body, $headers))
+            $mail = new org_openpsa_mail();
+            $mail->to = $email;
+            $mail->subject = $subject;
+            $mail->body = $body;
+            $mail->from = $sender;
+            if (!$mail->send())
             {
-                debug_add("Could not send E-Mail to {$email} with subject '{$subject}'.", MIDCOM_LOG_ERROR);
-                debug_print_r('Extra Headers:', $headers);
-                debug_print_r('Body:', $body);
+                debug_add("Could not send E-Mail to '{$email}' with subject '{$subject}', got error: " . $mail->get_error_message(), MIDCOM_LOG_ERROR);
+                //debug_print_r('Mail object:', $mail);
             }
             else
             {
                 debug_add("Sent E-Mail to {$email} with subject '{$subject}'.", MIDCOM_LOG_ERROR);
-                debug_print_r('Extra Headers:', $headers);
-                debug_print_r('Body:', $body);
+                //debug_print_r('Mail object:', $mail);
             }
         }
         debug_pop();
@@ -795,36 +898,13 @@ class net_nemein_registrations_event extends midcom_db_event
                 continue;
             }
 
-            $result .= $field["title"] . ":\n";
+            $result .= $this->_l10n->get($field['title']) . ":\n";
             $data = $dm->types[$name]->convert_to_csv();
             $result .= "  " . wordwrap ($data, 70, "\n  ");
             $result .= "\n\n";
         }
         return trim($result);
     }
-
-    /**
-     * Internal helper, encodes a mail subject line with Latin 1 encoding. This
-     * is hacky and needs an immediate rewrite to PEAR Mail (which'll deprecate
-     * this function).
-     *
-     * @todo Rewrite to PEAR_Mail.
-     */
-    function _encode_subject ($subject)
-    {
-        preg_match_all("/[^\x20-\x7e]/", $subject, $matches);
-        if (count ($matches[0])>0) {
-            $newSubj=$subject;
-            while (list ($k, $char) = each ($matches[0])) {
-                $code="=".dechex(ord($char));
-                $newSubj=str_replace($char, $code, $newSubj);
-            }
-            return "=?ISO-8859-1?Q?".$newSubj."?=";
-        } else {
-            return $subject;
-        }
-    }
-
 
     /**
      * Indexes an entry.

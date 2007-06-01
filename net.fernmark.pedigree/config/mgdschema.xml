@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    <type name="net_fernmark_pedigree_dog" table="net_fernmark_pedigree_dog" parent="midgard_topic" parentfield="node">
+        <property name="id" type="integer" primaryfield="id" />
+        <!-- "parent" is topic purely for ACL reasons, tree will be built on sire/dam links -->
+        <property name="node" link="midgard_topic:id" reverse="no" type="integer"  parentfield="node" />
+        <property name="dam" type="integer" link="net_fernmark_pedigree_dog:id" />
+        <property name="sire" type="integer" link="net_fernmark_pedigree_dog:id" />
+        <property name="sex" type="integer" />
+        <property name="breed" type="string" />
+        <property name="dob" type="datetime" />
+        <property name="tod" type="datetime" />
+        <property name="name" type="string" />
+        <property name="regno" type="string" />
+        <property name="titles" type="string" />
+        <property name="notes" type="longtext" />
+        <property name="owner" type="integer" link="midgard_person:id" reverse="no" />
+        <property name="breeder" type="integer" link="midgard_person:id" reverse="no" />
+        <property name="kennel" type="integer" link="midgard_group:id" reverse="no" />
+    </type>
+    <type name="net_fernmark_pedigree_dog_result" table="net_fernmark_pedigree_dog_result" parent="net_fernmark_pedigree_dog" parentfield="dog" upfield="judge">
+        <property name="id" type="integer" primaryfield="id" />
+        <property name="dog" link="net_fernmark_pedigree_dog:id" reverse="no" type="integer"  parentfield="dog" />
+        <property name="date" type="datetime" />
+        <property name="eventname" type="string" />
+        <property name="judge" type="integer" link="midgard_person:id" reverse="no" upfield="judge" />
+        <property name="result" type="string" />
+        <property name="critique" type="longtext" />
+    </type>
+</Schema>

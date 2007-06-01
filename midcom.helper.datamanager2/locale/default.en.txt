@@ -11,6 +11,14 @@
 (repeat)
 ---STRINGEND
 
+---STRING You can only upload images here. This file will not be saved.
+You can only upload images here. This file will not be saved.
+---STRINGEND
+
+---STRING archived image
+Archived image
+---STRINGEND
+
 ---STRING captcha image alt text
 This is a Captcha (http://en.wikipedia.org/wiki/Captcha), you need a graphical browser to display it.
 ---STRINGEND
@@ -24,6 +32,10 @@ characters displayed in the image <em>taking case sensitivity into account.</em>
 The characters entered do not match the image.
 ---STRINGEND
 
+---STRING could not figure out which image to show, listing files
+Could not figure out which image to show, listing files
+---STRINGEND
+
 ---STRING delete file
 Delete file
 ---STRINGEND
@@ -34,6 +46,10 @@ Delete image
 
 ---STRING denotes required field
 denotes required field
+---STRINGEND
+
+---STRING double click to edit
+Double click to edit
 ---STRINGEND
 
 ---STRING field %s is required
@@ -76,8 +92,20 @@ Replace file
 Replace image
 ---STRINGEND
 
+---STRING rotate left
+Rotate left
+---STRINGEND
+
+---STRING rotate right
+Rotate right
+---STRINGEND
+
 ---STRING type blobs: file size
 File size
+---STRINGEND
+
+---STRING type image: actions
+Image actions
 ---STRINGEND
 
 ---STRING type image: available sizes
@@ -174,9 +202,5 @@ Not set (inherited)
 
 ---STRING widget select: other value
 Other
----STRINGEND
-
----STRING double click to edit
-Double click to edit
 ---STRINGEND
 

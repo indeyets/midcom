@@ -9,7 +9,7 @@
 
 /**
  * org.openpsa.sales NAP interface class.
- * 
+ *
  * @package org.openpsa.sales
  */
 class org_openpsa_sales_navigation extends midcom_baseclasses_components_navigation
@@ -21,7 +21,22 @@ class org_openpsa_sales_navigation extends midcom_baseclasses_components_navigat
     function get_leaves()
     {
         $leaves = array();
-        
+
+        $leaves[$this->_topic->id.':deliverable_won'] = array
+        (
+            MIDCOM_NAV_SITE => Array
+            (
+                MIDCOM_NAV_URL => "list/won/",
+                MIDCOM_NAV_NAME => $this->_l10n->get('salesprojects won'),
+            ),
+            MIDCOM_NAV_ADMIN => null,
+            MIDCOM_META_CREATOR => $this->_topic->creator,
+            MIDCOM_META_EDITOR => $this->_topic->revisor,
+            MIDCOM_META_CREATED => $this->_topic->created,
+            MIDCOM_META_EDITED => $this->_topic->revised
+        );
+
+        /* Moved to reports
         $leaves[$this->_topic->id.':deliverable_report'] = array
         (
             MIDCOM_NAV_SITE => Array
@@ -35,6 +50,7 @@ class org_openpsa_sales_navigation extends midcom_baseclasses_components_navigat
             MIDCOM_META_CREATED => $this->_topic->created,
             MIDCOM_META_EDITED => $this->_topic->revised
         );
+        */
 
         return $leaves;
     }

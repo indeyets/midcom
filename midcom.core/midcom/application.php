@@ -129,7 +129,7 @@ class midcom_application {
      * @var Array
      * @access private
      */
-    var $_context;
+    var $_context = array();
 
     /**
      * Contains the ID of the currently active context or FALSE is none is active.
@@ -185,21 +185,11 @@ class midcom_application {
     var $_services;
 
     /**
-     * This array contains the GUIDs of all groups the user authenticated during the
-     * constructor was part of. It is used for check_memeberships.
-     *
-     * @var Array
-     * @access private
-     */
-    var $_memberships;
-
-    /**
      * Contains the output of get_midgard. You can directly access it here.
      *
      * @var MidgardObject
      */
     var $midgard = null;
-
 
     /**
      * I18n service class
@@ -349,7 +339,7 @@ class midcom_application {
      * Set this variable to true during the handle phase of your component to
      * not show the site's style around the component output. This is mainly
      * targeted at XML output like RSS feeds and similar things. The output
-     * handler of the site, including the style-init/-finish tags will be executed
+     * handler of the site, excluding the style-init/-finish tags will be executed
      * immediately after the handle phase, and midcom->finish() is called
      * automatically afterwards, thus ending the request.
      *
@@ -388,32 +378,6 @@ class midcom_application {
 
         $this->midgard = $this->get_midgard();
 
-        // ViewerGroups support
-        // loads all groups the current user is a memeber of
-        // TODO Deprecte in favor of ACL
-        $this->_memberships = Array();
-        if (isset($this->midgard->user))
-        {
-            // Read user's groups into array (once in the beginning of page)
-            $memberships = mgd_list_memberships($this->midgard->user);
-            if ($memberships)
-            {
-                while ($memberships->fetch())
-                {
-                    if ($memberships->gid == 0)
-                    {
-                      $this->_memberships[0] = true;
-                    }
-                    else
-                    {
-                        $grp = mgd_get_group($memberships->gid);
-                        $this->_memberships[] = $grp->guid();
-                    }
-                }
-            }
-        }
-        // End TODO Deprecate
-
         $this->_status = MIDCOM_STATUS_PREPARE;
 
         // Service startup
@@ -422,6 +386,8 @@ class midcom_application {
         $this->componentloader = new midcom_helper__componentloader();
         $this->dbclassloader = new midcom_services_dbclassloader();
         $this->dbclassloader->load_classes('midcom', 'legacy_classes.inc');
+        // 2007-03-27 rambo
+        $this->dbclassloader->load_classes('midcom', 'core_classes.inc');
         $this->dbfactory = new midcom_helper__dbfactory();
         $this->style = new midcom_helper__styleloader();
         $this->auth = new midcom_services_auth();
@@ -431,6 +397,8 @@ class midcom_application {
         $this->toolbars = new midcom_services_toolbars();
         $this->uimessages = new midcom_services_uimessages();
         $this->metadata = new midcom_services_metadata();
+        
+        $this->_services['rcs'] = new midcom_services_rcs($GLOBALS['midcom_config']);
         
         $this->componentloader->load_all_manifests();
 
@@ -442,14 +410,19 @@ class midcom_application {
         require('db/eventmember.php');
         require('db/group.php');
         require('db/host.php');
+        require('baseclasses/database/language.php');
         require('db/member.php');
-        require('baseclasses/database/page.php');
+        require('db/page.php');
         require('db/pageelement.php');
+        require('baseclasses/database/parameter.php');
         require('db/person.php');
         require('baseclasses/database/snippet.php');
         require('baseclasses/database/snippetdir.php');
         require('db/style.php');
         require('db/topic.php');
+        // 2007-03-27 rambo
+        require('db/privilege_dba.php');
+        require('db/group_virtual_dba.php');
         /*
          * sitegroup not defined in MgdSchema.xml
          *
@@ -468,8 +441,8 @@ class midcom_application {
             else
             {
                 $this->generate_error(MIDCOM_ERRCRIT,
-                    "Unable to load root topic with GUID='{$GLOBALS['midcom_config']['midcom_root_topic_guid']}'. " .
-                    'This is fatal, aborting. See the MidCOM log file for details.' .
+                    "Unable to load root topic with GUID='{$GLOBALS['midcom_config']['midcom_root_topic_guid']}'.<br />" .
+                    "This is fatal, aborting. See the MidCOM log file for details.<br />" .
                     'Last Midgard Error was: ' . mgd_errstr());
             }
             // This will exit.
@@ -538,6 +511,7 @@ class midcom_application {
         debug_print_r ("ARGC = {$GLOBALS['argc']}; ARGV =", $GLOBALS["argv"]);
 
         $this->_process();
+
         $this->_codeinit = false;
 
         $this->_currentcontext = $oldcontext;
@@ -700,7 +674,7 @@ class midcom_application {
         }
         else
         {
-            $this->_context[$context][MIDCOM_CONTEXT_ROOTTOPIC] = mgd_get_topic($topicid);
+            $this->_context[$context][MIDCOM_CONTEXT_ROOTTOPIC] = new midcom_db_topic($topicid);
         }
         $this->_context[$context][MIDCOM_CONTEXT_OUTPUT] = null;
         $this->_context[$context][MIDCOM_CONTEXT_NAP] = null;
@@ -888,8 +862,9 @@ class midcom_application {
                         $this->generate_error(MIDCOM_ERRNOTFOUND, "Failed to access snippet: Too many arguments for serve_snippet");
                     }
                     debug_add("Trying to serve snippet with ID " . $tmp[MIDCOM_HELPER_URLPARSER_VALUE], MIDCOM_LOG_INFO);
-                    $snippet = mgd_get_snippet($tmp[MIDCOM_HELPER_URLPARSER_VALUE]);
-                    if (!$snippet) {
+                    $snippet = new midcom_baseclasses_database_snippet($tmp[MIDCOM_HELPER_URLPARSER_VALUE]);
+                    if (!$snippet) 
+                    {
                         debug_add("Failed to access snippet: " . mgd_errstr(), MIDCOM_LOG_ERROR);
                         $this->generate_error(MIDCOM_ERRNOTFOUND, "Failed to access snippet: " . mgd_errstr());
                     }
@@ -904,8 +879,9 @@ class midcom_application {
                         $this->generate_error(MIDCOM_ERRNOTFOUND, "Failed to access snippet: Too many arguments for serve_snippet");
                     }
                     debug_add("Trying to serve snippet with GUID " . $tmp[MIDCOM_HELPER_URLPARSER_VALUE], MIDCOM_LOG_INFO);
-                    $snippet = mgd_get_object_by_guid($tmp[MIDCOM_HELPER_URLPARSER_VALUE]);
-                    if (!$snippet || $snippet->__table__ != "snippet") {
+                    $snippet = new midcom_baseclasses_database_snippet($tmp[MIDCOM_HELPER_URLPARSER_VALUE]);
+                    if (!$snippet) 
+                    {
                         debug_add("Failed to access snippet: " . mgd_errstr(), MIDCOM_LOG_ERROR);
                         $this->generate_error(MIDCOM_ERRNOTFOUND, "Failed to access snippet: " . mgd_errstr());
                     }
@@ -985,44 +961,10 @@ class midcom_application {
         do {
             $object = $this->_parser->fetch_object();
 
-            $path = $object->parameter("midcom","component");
+            $path = $object->component;
 
-            // Check for ViewerGroups-Style permissions
-            // Note that this is a littlebit hacky, due to the fact that the
-            // parameter value for these parameters are undefinied.
-            $viewable = true;
-            /*
-            if ($object->parameter("ViewerGroups","all")) {
-                // This topic can be viewed by all groups
-                $viewable = true;
-            } else {
-                $tmp_viewers = $object->listparameters("ViewerGroups");
-                if ($tmp_viewers) {
-                    while ($tmp_viewers->fetch()) {
-                        if ($this->check_memberships($tmp_viewers->name)) {
-                            // User is member of a viewer group
-                            $viewable = true;
-                        }
-                    }
-                } else {
-                    // We don't have any "ViewerGroups" parameters, default to
-                    // ViewerGroups = All for backwards compatibility
-                    $viewable = true;
-
-
-                }
-            }
-            */
-
-            if (!$viewable) {
-                $midcom_errstr = "Topic ". $object->name . " is not viewable because of ViewerGroups settings";
-                debug_add($midcom_errstr, MIDCOM_LOG_ERROR);
-                debug_pop();
-                $this->generate_error(MIDCOM_ERRAUTH, "You do not have the right ViewerGroups permissions to access this topic.");
-            }
-
-
-            if ($path === false) {
+            if (!$path) 
+            {
                 debug_add("No component defined for this Topic.", MIDCOM_LOG_ERROR);
                 $this->generate_error(MIDCOM_ERRCRIT, "No component defined for this Topic.");
             }
@@ -1048,22 +990,23 @@ class midcom_application {
                 $this->_context[$this->_currentcontext][MIDCOM_META_CREATED] = 0;
                 $this->_context[$this->_currentcontext][MIDCOM_META_EDITED] = 0;
 
-                $this->_handle($path);
-
+                //$this->_handle($path);
+                $this->_handle( $this->get_context_data( MIDCOM_CONTEXT_COMPONENT ) );
                 $success = true;
                 break;
             }
 
         } while ($this->_parser->fetch_topic() !== false);
 
-        if (mgd_errno() == MGD_ERR_ACCESS_DENIED)
-        {
-            $this->generate_error(MIDCOM_ERRFORBIDDEN, $this->i18n->get_string('access denied', 'midcom'));
-            // This will exit.
-        }
-
         if (! $success)
         {
+            // We couldn't fetch a topic due to access restrictions.
+            if (mgd_errno() == MGD_ERR_ACCESS_DENIED)
+            {
+                $this->generate_error(MIDCOM_ERRFORBIDDEN, $this->i18n->get_string('access denied', 'midcom'));
+                // This will exit.
+            }
+
             // Check if there is an Attachment, if yes, serve it and exit
 
             if ($this->_parser->fetch_attachment())
@@ -1132,7 +1075,7 @@ class midcom_application {
         switch ($this->get_context_data(MIDCOM_CONTEXT_REQUESTTYPE))
         {
             case MIDCOM_REQUEST_CONTENT:
-                $handler =& $this->componentloader->get_component_class($path);
+                $handler =& $this->componentloader->get_interface_class($path);
                 break;
 
             case MIDCOM_REQUEST_CONTENTADM:
@@ -1226,6 +1169,11 @@ class midcom_application {
         {
             case MIDCOM_REQUEST_CONTENT:
                 $concept_component =& $this->componentloader->get_component_class($path);
+                if ( $concept_component === Null ) {
+                    $path = 'midcom.core.nullcomponent';
+                    $this->_set_context_data($path,MIDCOM_CONTEXT_COMPONENT);
+                    $concept_component =& $this->componentloader->get_component_class( $path );
+                }
                 break;
 
             case MIDCOM_REQUEST_CONTENTADM:
@@ -1307,7 +1255,10 @@ class midcom_application {
 
         debug_add("We are operating in Context {$this->_currentcontext}.", MIDCOM_LOG_DEBUG);
 
-        midcom_show_style("style-init");
+        if (!$this->skip_page_style)
+        {
+            midcom_show_style('style-init');
+        }
 
         switch ($this->get_context_data(MIDCOM_CONTEXT_REQUESTTYPE))
         {
@@ -1326,7 +1277,10 @@ class midcom_application {
         }
         $component->show_content($this->_currentcontext);
 
-        midcom_show_style("style-finish");
+        if (!$this->skip_page_style)
+        {
+            midcom_show_style('style-finish');
+        }
 
         if ($this->_currentcontext != 0)
         {
@@ -1350,6 +1304,27 @@ class midcom_application {
      * Framework Access Helper functions
      */
 
+    function generate_host_url($host)
+    {
+        if ($host->port == 443)
+        {
+            $protocol = 'https';
+        }
+        else
+        {
+            $protocol = 'http';
+        }
+
+        $port = '';
+        if (   $host->port != 80
+            && $host->port != 443
+            && $host->port != 0)
+        {
+            $port = ':' . $host->port;
+        }
+
+        return "{$protocol}://{$host->name}{$port}{$host->prefix}/";
+    }
 
     /**
      * Retrieves the name of the current host, fully qualified with protocol and
@@ -1423,7 +1398,7 @@ class midcom_application {
         if (! $this->_cached_host_prefix)
         {
             $host_name = $this->get_host_name();
-            $host = mgd_get_host($_MIDGARD['host']);
+            $host = new midcom_db_host($_MIDGARD['host']);
             $host_prefix = $host->prefix;
             if ($host_prefix == '')
             {
@@ -1542,6 +1517,15 @@ class midcom_application {
         {
             $contextid = $param1;
             $key = $param2;
+        }
+        
+        if (!is_array($this->_context))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            $midcom_errstr = "Corrupted context data (should be array).";
+            debug_add ($midcom_errstr, MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
         }
 
         if (!array_key_exists($contextid, $this->_context))
@@ -1705,7 +1689,7 @@ class midcom_application {
         {
             debug_push("midcom_application::get_custom_context_data");
             $midcom_errstr = "Requested Key ID $key or the component $component is invalid.";
-            debug_add($midcom_errstr, MIDCOM_LOG_ERROR);
+            debug_add($midcom_errstr, MIDCOM_LOG_WARN);
             debug_pop();
             $result = false;
             return $result;
@@ -2238,6 +2222,7 @@ class midcom_application {
     }
 
     /**
+     * Deliver a snippet to the client.
      *
      * This function is a copy of serve_attachment, but instead of serving attachments
      * it can serve the code field of an arbitary snippet. There is no checking on
@@ -2289,6 +2274,7 @@ class midcom_application {
         header("Content-Type: $content_type");
         $this->cache->content->content_type($content_type);
 
+        // TODO: This should be made aware of the cache headers strategy for content cache module
         if ($expires > 0)
         {
             $this->header("Cache-Control: public max-age=$expires");
@@ -2303,7 +2289,7 @@ class midcom_application {
     }
 
     /**
-     * Deliver a snippet to the client.
+     * Deliver a blob to the client.
      *
      * This is a replacement for mgd_serve_attachment that should work around most of
      * its bugs: It is missing all important HTTP Headers concerning file size,
@@ -2342,6 +2328,7 @@ class midcom_application {
 
         $this->header("Last-Modified: " . gmdate("D, d M Y H:i:s", $stats[9]) . ' GMT');
         $this->header("Content-Length: " . $stats[7]);
+        // PONDER: Support ranges ("continue download") somehow ?
         $this->header("Accept-Ranges: none");
 
         header("Content-Type: $attachment->mimetype");
@@ -2353,6 +2340,7 @@ class midcom_application {
             // This will exit()
         }
 
+        // TODO: This should be made aware of the cache headers strategy for content cache module
         if ($expires > 0)
         {
             $this->header("Cache-Control: public max-age=$expires");
@@ -2414,6 +2402,7 @@ class midcom_application {
                 // This will exit
             }
             $this->componentloader->load($component);
+            $this->_set_context_data($component, MIDCOM_CONTEXT_COMPONENT);
             $path = MIDCOM_ROOT . $this->componentloader->path_to_snippetpath($component) . '/exec/';
         }
         $path .= $this->_parser->argv[0];
@@ -2454,24 +2443,6 @@ class midcom_application {
 
         $midgard->self .= $this->_prefix;
         return $midgard;
-    }
-
-    /**
-     * Check group memberships.
-     *
-     * Returns true if the user authenticated at the start of the Request is a member
-     * of the group with thie GUID $guid. This check will not reflect authentication
-     * changes due to mgd_auth_midgard.
-     *
-     * <b>Note:</b> Documentation incomplete, most probably ViewerGroups support code.
-     * It is f.x. used in _basicnav when doing viewergroup checks.
-     *
-     * @param GUID $guid the guid of the group to check against the current user.
-     * @return bool Returns the membership state.
-     */
-    function check_memberships($guid)
-    {
-        return in_array($guid, $this->_memberships);
     }
 
     /**
@@ -2915,10 +2886,7 @@ class midcom_application {
         $this->metadata->bind_metadata_to_object(MIDCOM_METADATA_VIEW, $object, $this->_currentcontext);
         $this->metadata->set_page_class($page_class, $this->_currentcontext);
         
-        if ($page_class != 'default')
-        {
-            $this->substyle_append($page_class);
-        }
+        $this->substyle_append($page_class);
     }
 
     /**

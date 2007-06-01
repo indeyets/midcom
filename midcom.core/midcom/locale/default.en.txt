@@ -1,11 +1,7 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id:default.en.txt 3765 2006-07-31 08:51:39 +0000 (Mon, 31 Jul 2006) tarjei $
+---CVS $Id$
 ---LANGUAGE en
-
----STRING copy
-Copy
----STRINGEND
 
 ---STRING Edit this page
 Edit this page
@@ -75,6 +71,10 @@ all
 und
 ---STRINGEND
 
+---STRING anonymous
+anonymous
+---STRINGEND
+
 ---STRING approval
 Approval
 ---STRINGEND
@@ -89,6 +89,10 @@ Approve folder
 
 ---STRING approved
 Approved
+---STRINGEND
+
+---STRING approved changes will be replicated within next minute
+Replication of approved changes will start in one minute
 ---STRINGEND
 
 ---STRING approver
@@ -127,6 +131,10 @@ by date created
 Cancel
 ---STRINGEND
 
+---STRING captcha field title
+Security code
+---STRINGEND
+
 ---STRING close configuration screen
 Close configuration screen
 ---STRINGEND
@@ -135,12 +143,20 @@ Close configuration screen
 Component
 ---STRINGEND
 
+---STRING component %s configuration for folder %s
+Component %s configuration for folder "%s"
+---STRINGEND
+
 ---STRING component configuration
 Component configuration
 ---STRINGEND
 
 ---STRING component configuration helptext
 Click this menu to configure the component settings specific to this folder.
+---STRINGEND
+
+---STRING copy
+Copy
 ---STRINGEND
 
 ---STRING create
@@ -157,6 +173,10 @@ Create page
 
 ---STRING created
 by date created (oldest first)
+---STRINGEND
+
+---STRING created on
+Created on
 ---STRINGEND
 
 ---STRING creator
@@ -239,6 +259,10 @@ Hidden
 Hide
 ---STRINGEND
 
+---STRING host
+Website
+---STRINGEND
+
 ---STRING id
 ID (internal)
 ---STRINGEND
@@ -257,6 +281,10 @@ Inherited from parent element
 
 ---STRING internal metadata
 Internal Metadata
+---STRINGEND
+
+---STRING invalidate cache
+Invalidate MidCOM's cache
 ---STRINGEND
 
 ---STRING keywords
@@ -367,6 +395,10 @@ opt.
 Owner
 ---STRINGEND
 
+---STRING page
+Page
+---STRINGEND
+
 ---STRING page %d of %d
 Page %d of %d
 ---STRINGEND
@@ -388,7 +420,7 @@ Photo in %s
 ---STRINGEND
 
 ---STRING previous
-Preivous
+Previous
 ---STRINGEND
 
 ---STRING previous page
@@ -457,6 +489,10 @@ Disallow Indexing
 
 ---STRING robots-not-specified
 Not specified, uses robots.txt.
+---STRINGEND
+
+---STRING run replication
+Run replication
 ---STRINGEND
 
 ---STRING save
@@ -571,12 +607,24 @@ How should leaves be sorted?
 Sorting position
 ---STRINGEND
 
+---STRING stagin2live
+Staging-to-live system
+---STRINGEND
+
 ---STRING start date
 Start date
 ---STRINGEND
 
 ---STRING stats
 website stats
+---STRINGEND
+
+---STRING tags
+Tags
+---STRINGEND
+
+---STRING test settings
+Test settings
 ---STRINGEND
 
 ---STRING text
@@ -667,6 +715,10 @@ Verify password
 View
 ---STRINGEND
 
+---STRING visibility settings
+Visibility settings
+---STRINGEND
+
 ---STRING visibilty settings
 Visibility Settings
 ---STRINGEND
@@ -683,14 +735,7 @@ Write mail
 Yes
 ---STRINGEND
 
----STRING page
-Page
+---STRING arrangement score
+Arrangement score
 ---STRINGEND
 
----STRING captcha field title
-Security code
----STRINGEND
-
----STRING anonymous
-anonymous
----STRINGEND

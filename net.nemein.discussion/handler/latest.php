@@ -43,7 +43,7 @@ class net_nemein_discussion_handler_latest extends midcom_baseclasses_components
         
         // Start up the post QB
         $qb = net_nemein_discussion_post_dba::new_query_builder();
-        $qb->add_order('created', 'DESC');
+        $qb->add_order('metadata.published', 'DESC');
         $qb->add_constraint('status', '>=', NET_NEMEIN_DISCUSSION_REPORTED_ABUSE); 
         $qb->set_limit($display_comments); 
         
@@ -99,7 +99,7 @@ class net_nemein_discussion_handler_latest extends midcom_baseclasses_components
         
         // Start up the post QB
         $qb = net_nemein_discussion_post_dba::new_query_builder();
-        $qb->add_order('created', 'DESC');
+        $qb->add_order('metadata.published', 'DESC');
         $qb->add_constraint('status', '>=', NET_NEMEIN_DISCUSSION_REPORTED_ABUSE); 
         $qb->set_limit($display_comments); 
         
@@ -190,7 +190,7 @@ class net_nemein_discussion_handler_latest extends midcom_baseclasses_components
             {
                 $item = new FeedItem();
                 $item->title = $post->subject;
-                $item->date = $post->created;
+                $item->date = $post->metadata->published;
                 $item->author = $post->sendername;
                 $item->description = Markdown($post->content);
                 

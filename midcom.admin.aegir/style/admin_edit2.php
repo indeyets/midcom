@@ -2,10 +2,10 @@
 // Bind the view data, remember the reference assignment:
 // This one works with datamanager2 datamanagers!
 
-$request_data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 
-if (array_key_exists('title', $request_data)) {
-    $title = $request_data['title'];
+if (array_key_exists('title', $data)) {
+    $title = $data['title'];
 } else{
     $title = "";
 }
@@ -14,5 +14,5 @@ if (array_key_exists('title', $request_data)) {
 
 <?php
  
-$request_data['datamanager']->display_form ();
+$data['datamanager']->display_form ();
 ?> 

@@ -1,11 +1,10 @@
 <?php
-global $view;
-global $view_id;
-global $midcom;
-$data = $view->get_array();
-$prefix = $midcom->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+// Available request keys: group, controller
+
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 ?>
 
-<h3><?php echo $GLOBALS["view_l10n"]->get("edit organization"); ?>: &(data["official"]);</h3>
+<h1><?php echo $data['topic']->extra; ?></h1>
+<h2><?php echo $data['l10n']->get('edit group'); ?>: <?php echo $data['group']->official; ?></h2>
 
-<?php $view->display_form(); ?>
+<?php $data['controller']->display_form (); ?>

@@ -1,6 +1,6 @@
 <?php
-$view_data =& $GLOBALS['midcom']->get_custom_context_data('request_data');
-$view = $view_data['salesproject_dm'];
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$view = $data['salesproject_dm'];
 ?>
 <div class="main">
     <?php $view->display_form(); ?>

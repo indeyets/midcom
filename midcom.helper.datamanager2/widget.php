@@ -299,7 +299,10 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     function freeze()
     {
         $element =& $this->_form->getElement($this->name);
-        $element->freeze();
+        if (method_exists($element, 'freeze'))
+        {
+            $element->freeze();
+        }
     }
 
     /**

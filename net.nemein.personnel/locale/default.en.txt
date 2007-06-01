@@ -91,3 +91,107 @@ Your account has insufficient permissions to access details of this person
 Group to display
 ---STRINGEND
 
+---STRING sort personnel manually
+Sort personnel manually
+---STRINGEND
+
+---STRING sorting order
+Sorting order
+---STRINGEND
+
+---STRING overrides alphabetical order
+Overrides alphabetical order
+---STRINGEND
+
+---STRING enable alphabetical ordering
+Enable alphabetical ordering
+---STRINGEND
+
+---STRING accessibility
+Accessibility
+---STRINGEND
+
+---STRING how many persons should be displayed in a row
+How many persons should be displayed in a row
+---STRINGEND
+
+---STRING preferred person
+Preferred person
+---STRINGEND
+
+---STRING this person will be displayed first
+This person will be displayed first
+---STRINGEND
+
+---STRING double click to edit
+Double click to edit.
+---STRINGEND
+
+---STRING no persons found
+No persons were found from the group!
+---STRINGEND
+
+---STRING sort personnel into sub groups
+Sort personnel into sub groups
+---STRINGEND
+
+---STRING drag and drop to sort
+Drag and drop to sort.
+---STRINGEND
+
+---STRING create a new group
+Create a new group
+---STRINGEND
+
+---STRING unsorted
+Unsorted
+---STRINGEND
+
+---STRING alphabetic
+Alphabetic
+---STRINGEND
+
+---STRING manually sorted and grouped
+Manually sorted and grouped
+---STRINGEND
+
+---STRING manually sorted
+Manually sorted
+---STRINGEND
+
+---STRING display in navigation
+Display in navigation
+---STRINGEND
+
+---STRING display nothing
+Display nothing
+---STRINGEND
+
+---STRING personnel
+Personnel
+---STRINGEND
+
+---STRING groups
+Groups
+---STRINGEND
+
+---STRING edit group
+Edit group
+---STRINGEND
+
+---STRING edit group %s
+Edit group "%s"
+---STRINGEND
+
+---STRING street address
+Street address
+---STRINGEND
+
+---STRING postal code
+Postal code
+---STRINGEND
+
+---STRING city
+City
+---STRINGEND
+

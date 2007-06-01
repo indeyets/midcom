@@ -105,7 +105,8 @@ class midcom_services_cron extends midcom_baseclasses_core_object
     var $_jobs = Array();
 
     /**
-     * The recurrence rule to use, one of the MIDCOM_CRON_* constants.
+     * The recurrence rule to use, one of the MIDCOM_CRON_* constants (MIDCOM_CRON_MINUTE, MIDCOM_CRON_HOUR, MIDCOM_CRON_DAY).
+     * Set in the constructor
      *
      * @var int
      * @access private
@@ -132,39 +133,10 @@ class midcom_services_cron extends midcom_baseclasses_core_object
     /**
      * Empty constuctor yet.
      */
-    function midcom_services_cron()
+    function midcom_services_cron($recurrence = MIDCOM_CRON_MINUTE)
     {
+        $this->_recurrence = $recurrence;
         parent::midcom_baseclasses_core_object();
-    }
-
-    /**
-     * Determine the recurrence rule:
-     *
-     * - If we have 00:00 on the clock Daily (and smaller) jobs execute.
-     * - If we have *:00 on the clock, Hourly (and smaller) jobs execute.
-     * - Otherwise we stick to the Minutely default.
-     */
-    function _determine_recurrence()
-    {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
-        $date = getdate();
-        if (   $date['hours'] == $GLOBALS['midcom_config']['cron_day_hours']
-            && $date['minutes'] == $GLOBALS['midcom_config']['cron_day_minutes'])
-        {
-            debug_add('MIDCOM_CRON_DAY');
-            $this->_recurrence = MIDCOM_CRON_DAY;
-        }
-        else if ($date['minutes'] == $GLOBALS['midcom_config']['cron_hour_minutes'])
-        {
-            debug_add('MIDCOM_CRON_HOUR');
-            $this->_recurrence = MIDCOM_CRON_HOUR;
-        }
-        else
-        {
-            debug_add('MIDCOM_CRON_MINUTE');
-        }
-        debug_pop();
     }
 
     /**
@@ -281,7 +253,15 @@ class midcom_services_cron extends midcom_baseclasses_core_object
                 debug_pop();
                 return false;
         }
-        return $job['recurrence'] <= $this->_recurrence;
+        
+        if ($job['recurrence'] == $this->_recurrence)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     /**
@@ -292,7 +272,8 @@ class midcom_services_cron extends midcom_baseclasses_core_object
      * @param string $handler_name The name of the handler to validate
      * @return bool Indicating success
      */
-    function _validate_handler($handler_name)    {
+    function _validate_handler($handler_name)
+    {
         if (class_exists($handler_name))
         {
             return true;
@@ -331,7 +312,6 @@ class midcom_services_cron extends midcom_baseclasses_core_object
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
-        $this->_determine_recurrence();
         $this->_load_jobs();
 
         foreach ($this->_jobs as $job)
@@ -366,10 +346,10 @@ class midcom_services_cron extends midcom_baseclasses_core_object
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             $msg = "Failed to execute a job for {$job['component']}: Handler class failed to initialize.";
-            debug_add($msg, MIDCOM_LOG_ERROR);
-            echo "ERROR: {$msg}\n";
+            debug_add($msg, MIDCOM_LOG_WARN);
+            //echo "ERROR: {$msg}\n";
             debug_pop();
-            return false;
+            //return false;
         }
         $handler->execute();
 

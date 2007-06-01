@@ -127,7 +127,7 @@ class midcom_admin_aegir_navigation_treemenu {
      */
     function midcom_admin_aegir_navigation_treemenu() 
     {
-        //$request_data =& $_MIDCOM->get_custom_context_data('request_data');
+        ////$data =& $_MIDCOM->get_custom_context_data('request_data');
         
         $this->_prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         
@@ -315,7 +315,7 @@ class midcom_admin_aegir_navigation_treemenu {
     {
         $this->_html .= '<script src="'.MIDCOM_STATIC_URL . '/midcom.admin.content/TreeMenu.js" language="JavaScript" type="text/javascript"></script>';
     
-        $this->_request_data =& $_MIDCOM->get_custom_context_data('request_data');
+        //$this->_request_data =& $_MIDCOM->get_custom_context_data('request_data');
         $this->_nav =  &$this->_request_data['aegir_interface']->get_navigation();
     	
 

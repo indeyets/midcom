@@ -10,32 +10,50 @@
 /**
  * org.openpsa.contacts group handler and viewer class.
  */
-class org_openpsa_contacts_group_handler
+class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
 {
     var $_datamanagers;
     var $_request_data;
-    var $_toolbars;
-    
+
+    /**
+     * The node toolbar for the current request context. Not available during the can_handle
+     * phase.
+     *
+     * @var midcom_helper_toolbar
+     * @see midcom_services_toolbars
+     */
+    var $_node_toolbar = null;
+
+    /**
+     * The view toolbar for the current request context. Not available during the can_handle
+     * phase.
+     *
+     * @var midcom_helper_toolbar
+     * @see midcom_services_toolbars
+     */
+    var $_view_toolbar = null;
+
     function org_openpsa_contacts_group_handler(&$datamanagers, &$request_data)
     {
         $this->_datamanagers = &$datamanagers;
         $this->_request_data = &$request_data;
-        $this->_toolbars =& midcom_helper_toolbars::get_instance();
+
+        parent::midcom_baseclasses_core_object();
     }
 
     function _load($identifier, $initialize_datamanager = true)
     {
         $group = new org_openpsa_contacts_group($identifier);
-        
+
         //$parent = $group->get_parent_guid_uncached();
         //$parent = new org_openpsa_contacts_group($parent);
         //die("can edit parent: ".$parent->can_do('midgard:update').", can edit group: ".$group->can_do('midgard:update'));
-        
+
         if (!$group)
         {
             return false;
         }
-        
+
         if ($initialize_datamanager)
         {
             // Load the group to datamanager
@@ -44,9 +62,9 @@ class org_openpsa_contacts_group_handler
                 return false;
             }
         }
-        
-        $_MIDCOM->set_pagetitle($group->official);      
-        
+
+        $_MIDCOM->set_pagetitle($group->official);
+
         return $group;
     }
 
@@ -57,9 +75,9 @@ class org_openpsa_contacts_group_handler
             "success" => false,
             "storage" => null,
         );
-        
+
         $group = new org_openpsa_contacts_group();
-        
+
         $group->owner = 0;
         if ($this->_request_data['parent_group'])
         {
@@ -82,25 +100,25 @@ class org_openpsa_contacts_group_handler
         debug_add("Object's create() method returned {$group->errstr} ({$group->errno})");
         return null;
     }
-    
+
     function _handler_new($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
         //$GLOBALS['midcom_debugger']->setLogLevel(MIDCOM_LOG_DEBUG);
-        
+
         $this->_request_data['parent_group'] = false;
         if (count($args) > 0)
         {
             // Get the parent organization
             $this->_request_data['parent_group'] = $this->_load($args[0]);
-            
+
             if (!$this->_request_data['parent_group'])
             {
                 return false;
             }
-            
+
             $_MIDCOM->auth->require_do('midgard:create', $this->_request_data['parent_group']);
-            
+
             // Set the default type to "department"
             org_openpsa_helpers_schema_modifier(&$this->_datamanagers['group'], 'object_type', 'default', ORG_OPENPSA_OBTYPE_DEPARTMENT, 'newgroup', false);
         }
@@ -109,32 +127,32 @@ class org_openpsa_contacts_group_handler
             // This is a root level organization, require creation permissions under the component root group
             $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_contacts_group');
         }
-        
+
         if (!$this->_datamanagers['group']->init_creation_mode("newgroup",$this,"_creation_dm_callback"))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "Failed to initialize datamanger in creation mode for schema 'newgroup'.");
-            // This will exit   
+            // This will exit
         }
-        
+
         $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get("new organization"));
-                
+
         switch ($this->_datamanagers['group']->process_form()) {
             case MIDCOM_DATAMGR_CREATING:
                 debug_add('First call within creation mode');
 
                 // Add toolbar items
-                org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
-                
+                org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
+
                 break;
-            
+
             case MIDCOM_DATAMGR_EDITING:
                 debug_add("First time submit, the DM has created an object");
                 // Change schema setting
                 $this->_request_data['group']->parameter("midcom.helper.datamanager","layout","default");
                 break;
-                
-            case MIDCOM_DATAMGR_SAVED:            
+
+            case MIDCOM_DATAMGR_SAVED:
                 debug_add("First time submit, the DM has created an object");
                 // Change schema setting
                 $this->_request_data['group']->parameter("midcom.helper.datamanager","layout","default");
@@ -144,21 +162,21 @@ class org_openpsa_contacts_group_handler
                 $indexer->index($this->_datamanagers['group']);
 
                 // Relocate to group view
-                $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);          
+                $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 $_MIDCOM->relocate($prefix."group/".$this->_request_data['group']->guid."/");
                 break;
-            
+
             case MIDCOM_DATAMGR_CANCELLED_NONECREATED:
                 debug_add('Cancel without anything being created, redirecting to the welcome screen.');
                 $GLOBALS['midcom']->relocate('');
                 // This will exit
-            
+
             case MIDCOM_DATAMGR_CANCELLED:
                 $this->errcode = MIDCOM_ERRCRIT;
                 $this->errstr = 'Method MIDCOM_DATAMGR_CANCELLED unknown for creation mode.';
                 debug_pop();
                 return false;
-            
+
             case MIDCOM_DATAMGR_FAILED:
             case MIDCOM_DATAMGR_CREATEFAILED:
                 debug_add('The DM failed critically, see above.');
@@ -166,26 +184,26 @@ class org_openpsa_contacts_group_handler
                 $this->errcode = MIDCOM_ERRCRIT;
                 debug_pop();
                 return false;
-            
+
             default:
                 $this->errcode = MIDCOM_ERRCRIT;
                 $this->errstr = 'Method unknown';
                 debug_pop();
                 return false;
-            
+
         }
-        
+
         debug_pop();
         return true;
 
     }
-    
+
     function _show_new($handler_id, &$data)
     {
         $this->_request_data['group_dm'] = $this->_datamanagers['group'];
         midcom_show_style("show-group-new");
     }
-    
+
     function _handler_view($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -195,11 +213,11 @@ class org_openpsa_contacts_group_handler
         {
             return false;
         }
-        
+
         // Add toolbar items
         if (count($args) == 1)
         {
-            $this->_toolbars->bottom->add_item(
+            $this->_view_toolbar->add_item(
                 Array(
                     MIDCOM_TOOLBAR_URL => "group/{$this->_request_data['group']->guid}/edit/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get("edit"),
@@ -209,7 +227,7 @@ class org_openpsa_contacts_group_handler
                 )
             );
 
-            $this->_toolbars->bottom->add_item(
+            $this->_view_toolbar->add_item(
                 Array(
                     MIDCOM_TOOLBAR_URL => "group/{$this->_request_data['group']->guid}/notifications.html",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get("notification settings"),
@@ -219,7 +237,7 @@ class org_openpsa_contacts_group_handler
                 )
             );
 
-            $this->_toolbars->bottom->add_item(
+            $this->_view_toolbar->add_item(
                 Array(
                     MIDCOM_TOOLBAR_URL => "group/{$this->_request_data['group']->guid}/privileges.html",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get("permissions"),
@@ -238,8 +256,8 @@ class org_openpsa_contacts_group_handler
             {
                 $allow_person_create = false;
             }
-            
-            $this->_toolbars->top->add_item(
+
+            $this->_view_toolbar->add_item(
                 Array(
                     MIDCOM_TOOLBAR_URL => "person/new/{$this->_request_data['group']->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('create person'),
@@ -248,8 +266,8 @@ class org_openpsa_contacts_group_handler
                     MIDCOM_TOOLBAR_ENABLED => $allow_person_create,
                 )
             );
-            
-            $this->_toolbars->top->add_item(
+
+            $this->_view_toolbar->add_item(
                 Array(
                     MIDCOM_TOOLBAR_URL => "group/new/{$this->_request_data['group']->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('create suborganization'),
@@ -257,13 +275,13 @@ class org_openpsa_contacts_group_handler
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_home.png',
                     MIDCOM_TOOLBAR_ENABLED => $this->_request_data['group']->can_do('midgard:update'),
                 )
-            );           
+            );
 
             $cal_node = midcom_helper_find_node_by_component('org.openpsa.calendar');
             if (!empty($cal_node))
             {
                 //TODO: Check for privileges somehow
-                $this->_toolbars->top->add_item(
+                $this->_node_toolbar->add_item(
                     Array(
                         MIDCOM_TOOLBAR_URL => "#",
                         MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('create event'),
@@ -277,16 +295,33 @@ class org_openpsa_contacts_group_handler
                     )
                 );
             }
+
+            $invoices_node = midcom_helper_find_node_by_component('org.openpsa.invoices');
+            if (!empty($invoices_node))
+            {
+                //TODO: Check for privileges somehow
+                $this->_view_toolbar->add_item(
+                    Array(
+                        MIDCOM_TOOLBAR_URL => $invoices_node[MIDCOM_NAV_FULLURL] . "list/customer/all/{$this->_request_data['group']->guid}",
+                        MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('customers invoices'),
+                        MIDCOM_TOOLBAR_HELPTEXT => null,
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail-open.png',
+                        MIDCOM_TOOLBAR_ENABLED => true,
+                    )
+                );
+            }
         }
-        
+
         $GLOBALS['midcom_component_data']['org.openpsa.contacts']['active_leaf'] = $this->_request_data['group']->id;
+
+        $_MIDCOM->bind_view_to_object($this->_request_data['group']);
         return true;
     }
-    
+
     function _show_view($handler_id, &$data)
     {
         $this->_request_data['group_dm'] = $this->_datamanagers['group'];
-        
+
         if ($this->_request_data['group']->owner != $GLOBALS['midcom_component_data']['org.openpsa.contacts']['contacts_root_group']->id)
         {
             $this->_request_data['parent_group'] = $this->_load($this->_request_data['group']->owner, false);
@@ -295,7 +330,7 @@ class org_openpsa_contacts_group_handler
         {
             $this->_request_data['parent_group'] = false;
         }
-        
+
         midcom_show_style("show-group");
     }
 
@@ -307,7 +342,7 @@ class org_openpsa_contacts_group_handler
         {
             return false;
         }
-        
+
         // Check if the action is a valid one
         $this->_request_data['action'] = $args[1];
         switch ($args[1])
@@ -318,31 +353,31 @@ class org_openpsa_contacts_group_handler
 
                 $this->_datamanagers['notifications']->init($this->_request_data['group']);
 
-                switch ($this->_datamanagers['notifications']->process_form()) 
+                switch ($this->_datamanagers['notifications']->process_form())
                 {
                     case MIDCOM_DATAMGR_EDITING:
                         $this->_view = "notifications";
 
                         // Add toolbar items
-                        org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
-                        
+                        org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
+
                         debug_pop();
                         return true;
 
-                    case MIDCOM_DATAMGR_SAVED:                    
+                    case MIDCOM_DATAMGR_SAVED:
                         $this->_view = "default";
                         debug_pop();
                         $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                             . "group/" . $this->_request_data["group"]->guid . "/");
                         // This will exit()
-                                   
-                    case MIDCOM_DATAMGR_CANCELLED:                    
+
+                    case MIDCOM_DATAMGR_CANCELLED:
                         $this->_view = "default";
                         debug_pop();
                         $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                             . "group/" . $this->_request_data["group"]->guid . "/");
                         // This will exit()
-                
+
                     case MIDCOM_DATAMGR_FAILED:
                         $this->errstr = "Datamanager: " . $GLOBALS["midcom_errstr"];
                         $this->errcode = MIDCOM_ERRCRIT;
@@ -357,7 +392,7 @@ class org_openpsa_contacts_group_handler
                 debug_add("Entering privilege handler");
                 $_MIDCOM->auth->require_do('midgard:privileges', $this->_request_data['group']);
                 $group_object = $_MIDCOM->auth->get_group("group:{$this->_request_data['group']->guid}");
-                
+
                 // Load project classes
                 $_MIDCOM->componentloader->load('org.openpsa.projects');
                 // Load campaign classes
@@ -365,8 +400,8 @@ class org_openpsa_contacts_group_handler
 
                 // Get the calendar root event
                 $_MIDCOM->componentloader->load('org.openpsa.calendar');
-                org_openpsa_helpers_schema_modifier(&$this->_datamanagers['acl'], 'calendar', 'privilege_object', $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']);        
-                
+                org_openpsa_helpers_schema_modifier(&$this->_datamanagers['acl'], 'calendar', 'privilege_object', $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']);
+
                 // Set the contacts root group into ACL
                 /* The persons are not neccessarily under the root group...
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['contact_creation']['privilege_object'] = $GLOBALS['midcom_component_data']['org.openpsa.contacts']['contacts_root_group'];
@@ -374,14 +409,14 @@ class org_openpsa_contacts_group_handler
                 */
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['contact_creation']['privilege_object'] =  $group_object->get_storage();
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['contact_editing']['privilege_object'] =  $group_object->get_storage();
-                
+
                 // Set the group as ACL assignee
                 /* Skip assignee to make it 'SELF'
-                $this->_datamanagers['acl']->_layoutdb['default']['fields']['contact_creation']['privilege_assignee'] = $group_object->id; 
+                $this->_datamanagers['acl']->_layoutdb['default']['fields']['contact_creation']['privilege_assignee'] = $group_object->id;
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['contact_editing']['privilege_assignee'] = $group_object->id;
                 */
 
-                
+
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['calendar']['privilege_assignee'] = $group_object->id;
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['organization_creation']['privilege_object'] = $group_object->get_storage();
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['organization_editing']['privilege_object'] = $group_object->get_storage();
@@ -390,7 +425,7 @@ class org_openpsa_contacts_group_handler
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['invoices_editing']['privilege_object'] = $group_object->get_storage();
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['campaigns_creation']['privilege_object'] = $group_object->get_storage();
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['campaigns_editing']['privilege_object'] = $group_object->get_storage();
-
+                $this->_datamanagers['acl']->_layoutdb['default']['fields']['salesproject_creation']['privilege_object'] = $group_object->get_storage();
 
                 $this->_datamanagers['acl']->init($this->_request_data['group']);
 
@@ -399,25 +434,25 @@ class org_openpsa_contacts_group_handler
                         $this->_view = "privileges";
 
                         // Add toolbar items
-                        org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
-                        
+                        org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
+
                         debug_pop();
                         return true;
 
-                    case MIDCOM_DATAMGR_SAVED:                    
+                    case MIDCOM_DATAMGR_SAVED:
                         $this->_view = "default";
                         debug_pop();
                         $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                             . "group/" . $this->_request_data["group"]->guid . "/");
                         // This will exit()
-                                   
-                    case MIDCOM_DATAMGR_CANCELLED:                    
+
+                    case MIDCOM_DATAMGR_CANCELLED:
                         $this->_view = "default";
                         debug_pop();
                         $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                             . "group/" . $this->_request_data["group"]->guid . "/");
                         // This will exit()
-                
+
                     case MIDCOM_DATAMGR_FAILED:
                         $this->errstr = "Datamanager: " . $GLOBALS["midcom_errstr"];
                         $this->errcode = MIDCOM_ERRCRIT;
@@ -426,8 +461,8 @@ class org_openpsa_contacts_group_handler
                 }
 
                 debug_pop();
-                return true;     
-        
+                return true;
+
             case "update_member_title":
                 // Ajax save handler
                 $update_succeeded = false;
@@ -450,7 +485,7 @@ class org_openpsa_contacts_group_handler
                 $ajax=new org_openpsa_helpers_ajax();
                 //This will exit.
                 $ajax->simpleReply($update_succeeded, $errstr);
-        
+
             case "members":
                 // Group person listing, always work even if there are none
                 $this->_view = "area_group_members";
@@ -460,27 +495,27 @@ class org_openpsa_contacts_group_handler
                 // Group person listing, always work even if there are none
                 $this->_view = "area_group_subgroups";
                 return true;
-        
+
             case "edit":
                 $_MIDCOM->auth->require_do('midgard:update', $this->_request_data['group']);
-                
+
                 // Make the members editable
                 $this->_datamanagers['group']->_layoutdb['default']['fields']['members']['hidden'] = false;
-            
+
                 switch ($this->_datamanagers['group']->process_form()) {
                     case MIDCOM_DATAMGR_EDITING:
                         $this->_view = "default";
 
                         // Add toolbar items
-                        org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
-                        
+                        org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
+
                         return true;
 
                     case MIDCOM_DATAMGR_SAVED:
                         // Index the organization
                         $indexer =& $GLOBALS['midcom']->get_service('indexer');
                         $indexer->index($this->_datamanagers['group']);
-                            
+
                         $this->_view = "default";
                         $GLOBALS['midcom']->relocate($GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                             . "group/" . $this->_request_data["group"]->guid());
@@ -491,7 +526,7 @@ class org_openpsa_contacts_group_handler
                         $GLOBALS['midcom']->relocate($GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                             . "group/" . $this->_request_data["group"]->guid());
                         // This will exit()
-                
+
                     case MIDCOM_DATAMGR_FAILED:
                         $this->errstr = "Datamanager: " . $GLOBALS["midcom_errstr"];
                         $this->errcode = MIDCOM_ERRCRIT;
@@ -510,19 +545,19 @@ class org_openpsa_contacts_group_handler
         if ($this->_view == "area_group_members")
         {
             // This is most likely a dynamic_load
-            $qb = new org_openpsa_qbpager('midcom_baseclasses_database_member', 'group_members');        
+            $qb = new org_openpsa_qbpager('midcom_baseclasses_database_member', 'group_members');
             $qb->add_constraint('gid', '=', $this->_request_data['group']->id);
             $qb->results_per_page = 10;
-            $results = $qb->execute(); 
-            $this->_request_data['members_qb'] = &$qb;  
-                        
+            $results = $qb->execute();
+            $this->_request_data['members_qb'] = &$qb;
+
             midcom_show_style("show-group-persons-header");
             if (count($results) > 0)
             {
                 foreach ($results as $member)
                 {
                     $this->_request_data['member'] = $member;
-                    
+
                     if ($member->extra == "")
                     {
                         $member->extra = $this->_request_data['l10n']->get('<title>');
@@ -539,24 +574,24 @@ class org_openpsa_contacts_group_handler
             }
             midcom_show_style("show-group-persons-footer");
         }
-        elseif ($this->_view == "notifications")        
+        elseif ($this->_view == "notifications")
         {
             // Default view, display the selected action
             $this->_request_data['notifications_dm'] = $this->_datamanagers['notifications'];
             midcom_show_style("show-notifications");
-        } 
-        elseif ($this->_view == "privileges")        
+        }
+        elseif ($this->_view == "privileges")
         {
             // Default view, display the selected action
             $this->_request_data['acl_dm'] = $this->_datamanagers['acl'];
             midcom_show_style("show-privileges");
-        }        
+        }
         elseif ($this->_view == "area_group_subgroups")
         {
             // This is most likely a dynamic_load
-            $qb = $_MIDCOM->dbfactory->new_query_builder('midcom_baseclasses_database_group');        
+            $qb = $_MIDCOM->dbfactory->new_query_builder('midcom_baseclasses_database_group');
             $qb->add_constraint('owner', '=', $this->_request_data['group']->id);
-            $results = $_MIDCOM->dbfactory->exec_query_builder($qb);             
+            $results = $_MIDCOM->dbfactory->exec_query_builder($qb);
             if (count($results) > 0)
             {
                 midcom_show_style("show-group-subgroups-header");
@@ -572,7 +607,7 @@ class org_openpsa_contacts_group_handler
         {
             // Default view, display the selected action
             $GLOBALS["view"] = $this->_datamanagers['group'];
-                    
+
             if ($this->_request_data['group']->owner != $GLOBALS['midcom_component_data']['org.openpsa.contacts']['contacts_root_group']->id)
             {
                 $this->_request_data['parent_group'] = $this->_load($this->_request_data['group']->owner, false);
@@ -581,15 +616,15 @@ class org_openpsa_contacts_group_handler
             {
                 $this->_request_data['parent_group'] = false;
             }
-            
+
             midcom_show_style("show-group-{$data['action']}");
         }
     }
-    
+
     /**
      * Does a QB query for groups, returns false or number of matched entries
      *
-     * Displays style element 'search-groups-empty' only if $displayEmpty is 
+     * Displays style element 'search-groups-empty' only if $displayEmpty is
      * set to true.
      */
     function _search_qb_groups($search, $displayEmpty=false, $displayOutput=true, $limit=false, $offset=false)
@@ -598,7 +633,7 @@ class org_openpsa_contacts_group_handler
         {
             return false;
         }
-        
+
         $qb_org = org_openpsa_contacts_group::new_query_builder();
         //$qb_org = new MidgardQuerybuilder('org_openpsa_organization');
         $qb_org->begin_group('OR');
@@ -610,7 +645,7 @@ class org_openpsa_contacts_group_handler
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Invalid organization search configuration');
         }
-    
+
         foreach ($org_fields as $field)
         {
             if (empty($field))

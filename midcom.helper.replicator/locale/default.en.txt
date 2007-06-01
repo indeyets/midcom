@@ -1,0 +1,69 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING POST to %s
+HTTP POST to <code>%s</code>
+---STRINGEND
+
+---STRING archive to %s
+Archive to <code>%s</code>
+---STRINGEND
+
+---STRING exported
+Exported from database
+---STRINGEND
+
+---STRING exporter
+Exporting type
+---STRINGEND
+
+---STRING from log file
+From log file
+---STRINGEND
+
+---STRING imported
+Imported to database
+---STRINGEND
+
+---STRING manage replication
+Manage replication
+---STRINGEND
+
+---STRING mirroring subscription
+Mirror
+---STRINGEND
+
+---STRING replication information
+Replication information
+---STRINGEND
+
+---STRING replication information for %s
+Replication information for %s
+---STRINGEND
+
+---STRING replication queue is stored to %s
+Replication queue is stored to %s
+---STRINGEND
+
+---STRING replication subscriptions
+Replication pipelines
+---STRINGEND
+
+---STRING staging2live subscription
+Staging/live
+---STRINGEND
+
+---STRING subscription
+Pipeline
+---STRINGEND
+
+---STRING transporter
+Transporting type
+---STRINGEND
+
+---STRING never
+Never
+---STRINGEND
+

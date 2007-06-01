@@ -163,6 +163,26 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
         return true;
     }
 
+    function _load_type_qfrules($fieldname)
+    {
+        $config = $this->_schema->fields[$fieldname];
+        $filename = MIDCOM_ROOT . "/midcom/helper/datamanager2/QuickForm_rules/{$config['type']}.php";
+        $classname = "midcom_helper_datamanager2_qfrule_{$config['type']}_manager";
+        if (class_exists($classname))
+        {
+            // We have already initialized rules for this type
+            return;
+        }
+        if (!file_exists($filename))
+        {
+            // no file for this type found, skip silently
+            return;
+        }
+        include_once($filename);
+        $manager = new $classname();
+        $manager->register_rules($this->form);
+    }
+
     /**
      * This function fully initializes the class for operation. This is not done during the
      * constructor call, to allow for full reference safety.
@@ -261,6 +281,10 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
             {
                 $accesskey = 's';
             }
+            elseif ($operation == 'cancel')
+            {
+                $accesskey = 'c';
+            }
             else
             {
                 $accesskey = '';
@@ -273,7 +297,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
         // Add form-wide validation rules
         foreach ($this->_schema->validation as $config)
         {
-            if (! function_exists($config['callback']))
+            if (! is_callable($config['callback']))
             {
                 // Try autoload:
                 if (array_key_exists('autoload_snippet', $config))
@@ -482,6 +506,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
      */
     function _add_rules_and_filters($name, $config)
     {
+        $this->_load_type_qfrules($name);
         $widget =& $this->widgets[$name];
         if ($config['readonly'])
         {
@@ -516,7 +541,42 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
                 $this->_l10n->get('field %s is required'),
                 $this->_schema->translate_schema_string($config['title'])
             );
-            $this->form->addRule($name, $message, 'required', '');
+            $type =& $this->_types[$name];
+            $type_class = get_class($type);
+            switch (true)
+            {
+                // Match single image types (image & photo ATM)
+                case (   is_a($type, 'midcom_helper_datamanager2_type_image')
+                      && !is_a($type, 'midcom_helper_datamanager2_type_images')):
+                    // 'required' does not work for uploads -> use 'uploadedfile'
+                    // OTOH: Does this mean it requires new upload each time ?? TODO: Test
+                    $this->form->addRule($name, $message, 'uploadedfile', '');
+                    break;
+                // Match all other blobs types (those allow multiple uploads which are kind of hard to validate)
+                case (is_a($type, 'midcom_helper_datamanager2_type_blobs')):
+                    // PONDER: How will you require-validate N uploads ?? (also see the point about existing files above)
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("types with multiple files cannot have required validation (field name: {$name})", MIDCOM_LOG_ERROR);
+                    debug_pop();
+                    break;
+                // Match select types (have array data, 'required' will choke on them)
+                case (   is_a($type, 'midcom_helper_datamanager2_type_select')
+                      && $type->allow_multiple):
+                    debug_add("Callign this->form->addRule('{$name}', '{$message}', 'requiremultiselect', '');");
+                    $stat = $this->form->addRule($name, $message, 'requiremultiselect', '');
+                    if (is_a($stat, 'pear_error'))
+                    {
+                        $msg = $stat->getMessage();
+                        debug_push_class(__CLASS__, __FUNCTION__);
+                        debug_add("Got PEAR error '{$msg}' from this->form->addRule('{$name}', '{$message}', 'required_multiselect', ''), when adding multiselect required rule", MIDCOM_LOG_WARN);
+                        debug_pop();
+                    }
+                    break;
+                // Other types should be fine with the default string validation offered by 'required'
+                default:
+                    $this->form->addRule($name, $message, 'required', '');
+                    break;
+            }
         }
 
         foreach ($config['validation'] as $key => $rule)
@@ -535,6 +595,19 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
             }
         }
     }
+
+    /**
+     * Set the value of a formelement. 
+     * @var $key the form field name
+     * @var $value the new value to set
+     */
+    function set_value( $key, $value )
+    {
+       $element =&   $this->_controller->formmanager->form->getElement( $key);
+       $element->setValue( $value );
+       return true;
+    }
+
 
     /**
      * Creates an instance of the renderer set in the system configuration. This is called
@@ -578,7 +651,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
     function display_form()
     {
         if (   ! $this->renderer
-            || $this->renderer == 'none')
+            ||  ( is_string($this->renderer) && $this->renderer == 'none')) 
         {
             echo $this->form->toHtml();
         }
@@ -626,6 +699,10 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
             || $exitcode == 'next')
         {
             // Validate the from.
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_print_r('this->form', $this->form);
+            debug_print_r("\$GLOBALS['_HTML_QuickForm_registered_rules']", $GLOBALS['_HTML_QuickForm_registered_rules']);
+            debug_pop();
             if (! $this->form->validate())
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
@@ -636,6 +713,16 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
             }
         }
         return $exitcode;
+    }
+    /**
+     * Use this function to get the values of submitted form without going through
+     * a storage backend.
+     * @return array the submitted values.
+     *
+     */
+    function get_submit_values(  ) 
+    {
+        return $this->form->getSubmitValues( true );
     }
 
     /**
@@ -648,8 +735,18 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
      *
      * @return string One of 'editing', 'save', 'next', 'previous' and 'cancel'
      */
-    function process_form()
+    function process_form($ajax_mode = false)
     {
+        // Make sure we have CSS loaded
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . "/midcom.helper.datamanager2/legacy.css",
+            )
+        );
         $_MIDCOM->cache->content->no_cache();
         $results = $this->form->getSubmitValues(true);
 
@@ -675,11 +772,21 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
             // types.
             foreach ($this->widgets as $name => $copy)
             {
-                if (! array_key_exists($name, $results))
+                if ($ajax_mode)
                 {
-                    $results[$name] = null;
+                    if (array_key_exists($name, $results))
+                    {
+                        $this->widgets[$name]->sync_type_with_widget($results);
+                    }
                 }
-                $this->widgets[$name]->sync_type_with_widget($results);
+                else
+                {
+                    if (!array_key_exists($name, $results))
+                    {
+                        $results[$name] = null;
+                    }
+                    $this->widgets[$name]->sync_type_with_widget($results);
+                }
             }
         }
 

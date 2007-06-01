@@ -3,8 +3,8 @@ global $view_title;
 global $view_startfrom;
 global $view_msg;
 
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-$attachmentserver = $GLOBALS["midcom"]->midgard->self . "midcom-serveattachmentguid-";
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+$attachmentserver = $_MIDCOM->midgard->self . "midcom-serveattachmentguid-";
 ?>
 
 <?php if ($view_msg != "") { ?>

@@ -6,6 +6,36 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-03-21 bergie
+  + Added support for manually updating all feeds
+  + If feed doesn't provide valid item timestamps the items will be dated to time of their initial importing
+
+2007-02-07 bergie
+  + Implemented feed author autodetection
+  + Implemented item tagging based on categories or possible rel-tag links in content
+
+2006-10-23 bergie
+  + Added support for deleting feeds
+  - Fixed OPML subscription
+
+2006-10-06 bergie
+  + Added better support for unresponsive feeds
+  + Added feed item URL to $article->url
+
+2006-10-05 bergie
+  + Added support for a "default author" of news items
+  ! Moved Snoopy PHP class from this package to org.openpsa.httplib
+
+2006-09-19 bergie
+  + Added configurable auto-approval of new items
+
+2006-09-14 bergie
+  + Added support for automatically deleting articles that are not in the feed
+
+2006-09-13 bergie
+  ! Complete rewrite. net.nemein.rss is now a plugin used by net.nehmer.blog.
+  + Feeds are now stored locally as articles, using RSS GUID for matching
+
 2005-08-09 bergie
   + Added support for Atom created timestamps
   - Fixed feed subscription by using $_MIDGARD['user']

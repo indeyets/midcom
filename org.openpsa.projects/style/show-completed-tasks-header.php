@@ -1,6 +1,6 @@
 <?php
-$view_data =& $GLOBALS['midcom']->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 ?>
 <div class="completed">
-    <h3><?php echo $view_data['l10n']->get('completed tasks'); ?></h3>
+    <h3><?php echo $data['l10n']->get('completed tasks'); ?></h3>
     <dl>

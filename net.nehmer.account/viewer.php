@@ -205,7 +205,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
                 'fixed_args' => Array('register', 'activate'),
                 'variable_args' => 2,
             );
-        }
+        }        
     }
 
     /**
@@ -217,12 +217,31 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      */
     function _on_can_handle($argc, $argv)
     {
+
         if (   $argc >= 2
             && $argv[0] == 'plugin')
         {
-            $this->_load_plugin($argv[1]);
+            /**
+             * We do not need to check result of this operation, it populates request switch
+             * if successfull and does nothing if not, this means normal request handling is enough
+             */
+            $this->_load_nna_plugin($argv[1]);
         }
 
+        return true;
+    }
+    
+    /**
+     * Generic request startup work:
+     *
+     * - Load the Schema Database
+     * - Add the LINK HTML HEAD elements
+     * - Populate the Toolbar
+     */
+    function _on_handle($handler, $args)
+    {
+        $this->_populate_toolbar();
+        
         return true;
     }
 
@@ -241,7 +260,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      *     option.
      * @access private
      */
-    function _load_plugin($name)
+    function _load_nna_plugin($name)
     {
         // Validate the plugin name and load the accociated configuration
         $plugins = $this->_config->get('plugins');
@@ -251,14 +270,14 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Failed to load the plugin {$name}, no plugins are configured or plugin not activated.");
             debug_pop();
-            return;
+            return false;
         }
         $plugin_config = $plugins[$name];
 
         // Load the plugin class, errors are logged by the callee
-        if (! $this->_load_plugin_class($name, $plugin_config))
+        if (! $this->_load_nna_plugin_class($name, $plugin_config))
         {
-            return;
+            return false;
         }
 
         // Load the configuration into the request data, add the configured plugin name as
@@ -275,10 +294,11 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
 
         // Load remaining configuration, and prepare the plugin, errors are logged by the callee.
         $handlers = call_user_func(array($plugin_config['class'], 'get_plugin_handlers'));
-        if (! $this->_prepare_plugin($name, $plugin_config, $handlers))
+        if (! $this->_prepare_nna_plugin($name, $plugin_config, $handlers))
         {
-            return;
+            return false;
         }
+        return true;
     }
 
     /**
@@ -292,7 +312,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      * @access private
      * @return bool Indicating Success
      */
-    function _prepare_plugin ($name, $plugin_config, $handlers)
+    function _prepare_nna_plugin ($name, $plugin_config, $handlers)
     {
         foreach ($handlers as $identifier => $handler_config)
         {
@@ -329,7 +349,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      * @access private
      * @return bool Indicating Success
      */
-    function _load_plugin_class($name, $plugin_config)
+    function _load_nna_plugin_class($name, $plugin_config)
     {
         // Sanity check, we return directly if the configured class name is already
         // available (dynamic_load could trigger this).
@@ -341,7 +361,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
         if (substr($plugin_config['src'], 0, 5) == 'file:')
         {
             // Load from file
-            require(substr($plugin_config['src'], 5));
+            require(MIDCOM_ROOT . substr($plugin_config['src'], 5));
         }
         else
         {
@@ -358,6 +378,106 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
         }
 
         return true;
+    }   
+    
+    /**
+     * Populates the toolbars depending on the users rights.
+     *
+     * @access protected
+     */
+    function _populate_toolbar()
+    {
+        if ($_MIDCOM->auth->user !== null)
+        {
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "edit/",
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('edit account'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'e',
+                )
+            );
+            
+            if ($this->_config->get('allow_publish'))
+            {
+                $this->_view_toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "publish/",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('publish account details'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new_task.png',
+                    )
+                );
+            }
+
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "password/",
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('change password'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
+                )
+            );
+            
+            if ($this->_config->get('allow_change_username'))
+            {
+                $this->_view_toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "username/",
+                        MIDCOM_TOOLBAR_LABEL => $this->_config->get('username_is_email') ? 
+                            $this->_l10n->get('change email') : $this->_l10n->get('change username'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
+                    )
+                );
+            }
+            
+            if ($this->_config->get('allow_cancel_membership'))
+            {
+                $this->_view_toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "cancel_membership/",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('cancel membership'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/cancel.png',
+                    )
+                );
+            }
+        }
+    }
+
+    function verify_person_privileges($person)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $person_user = $_MIDCOM->auth->get_user($person->id);
+        if (!is_a($person, 'midcom_db_person'))
+        {
+            $_MIDCOM->auth->request_sudo();
+            $person = new midcom_db_person($person->id);
+            $_MIDCOM->auth->drop_sudo();
+        }
+        debug_add("Checking privilege midgard:owner for person #{$person->id}");
+        if (!$_MIDCOM->auth->can_do('midgard:owner', $person, $person_user))
+        {
+            debug_add("Person #{$person->id} lacks privilege midgard:owner, adding");
+            $_MIDCOM->auth->request_sudo();
+            if (!$person->set_privilege('midgard:owner', $person_user, MIDCOM_PRIVILEGE_ALLOW))
+            {
+                debug_add("\$person->set_privilege('midgard:owner', \$person_user, MIDCOM_PRIVILEGE_ALLOW) failed, errstr: " . mgd_errstr(), MIDCOM_LOG_WARN);
+            }
+            else
+            {
+                debug_add("Added privilege 'midgard:owner' for person #{$person->id}", MIDCOM_LOG_INFO);
+            }
+            $_MIDCOM->auth->drop_sudo();
+        }
+        debug_pop();
     }
 }
 

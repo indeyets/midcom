@@ -1,10 +1,19 @@
-                   org.openpsa.reports Changelog
+org.openpsa.reports Changelog
                    ----------------------------
 Legend:
 - All items marked with "!" represent a major API-Change that is
   not guaranteed to be backwards compatible to previous versions
-  which might even break existing functionality. 
+  which might even break existing functionality.
 - All items marked with "+" represent completly new features.
+
+2007-02-01 bergie
+  + Fixed linking to report generator forms
+  + Implemented first quick report links
+
+2006-11-27 rambo
+  + refactored projects reporting to use on-demand handler
+  ! prefixed style elements with generator name (projects_ sales_ etc)
+  + sales deliverable report refactored for use in here
 
 2006-08-18 rambo
   + Added filters for invoiced and approved hours into project reports
@@ -64,7 +73,7 @@ Legend:
   - fixed a bug is the 'csv' context switch (used by the table2csv JS utility)
 
 2005-08-16 rambo
-  - basic analysis of hour data and grouping information is present but has 
+  - basic analysis of hour data and grouping information is present but has
     at least one bug.
 
 2005-08-05 rambo

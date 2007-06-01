@@ -6,12 +6,12 @@ function org_openpsa_calendar_filters_makeEditable()
 {
     var class = 'org_openpsa_calendar_filters_person';
     subscriptionFields = document.getElementsByClassName(class);
-    
-    for (i = 0; i < subscriptionFields.length; i++) 
+
+    for (i = 0; i < subscriptionFields.length; i++)
     {
         // Start watching for clicks
         Event.observe(this.subscriptionFields[i], 'click', org_openpsa_calendar_filters_watcher, false);
-    }    
+    }
 }
 
 function org_openpsa_calendar_filters_watcher(event)
@@ -36,10 +36,10 @@ function org_openpsa_calendar_filters_post(element, action)
     queryString = 'org_openpsa_calendar_filters_' + action + '=' + element.value;
 
     var ajaxRequest = new Ajax.Request(
-        location.href, 
+        location.href,
         {
-            method: 'post', 
-            parameters: queryString, 
+            method: 'post',
+            parameters: queryString,
             onComplete: org_openpsa_calendar_filters_onComplete.bind(element),
             onFailure: org_openpsa_calendar_filters_onFailure.bind(element)
         }
@@ -49,7 +49,7 @@ function org_openpsa_calendar_filters_post(element, action)
 function org_openpsa_calendar_filters_onComplete(request)
 {
     Element.removeClassName(element, 'ajax_saving');
-    
+
     result = request.responseXML.documentElement.getElementsByTagName('result')[0].firstChild.data;
     status = request.responseXML.documentElement.getElementsByTagName('status')[0].firstChild.data;
     if (result)
@@ -57,7 +57,7 @@ function org_openpsa_calendar_filters_onComplete(request)
         Element.addClassName(element, 'ajax_saved');
         var message = new protoGrowl(
             {
-                title: 'Calendar', 
+                title: 'Calendar',
                 message: 'Subscription status saved: ' + status
             }
         );
@@ -68,7 +68,7 @@ function org_openpsa_calendar_filters_onComplete(request)
     else
     {
         ooDisplayMessage('Subscription failed, reason ' + status);
-        Element.addClassName(element, 'ajax_save_failed');        
+        Element.addClassName(element, 'ajax_save_failed');
     }
 }
 

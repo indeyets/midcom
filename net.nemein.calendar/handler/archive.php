@@ -156,6 +156,16 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
         $this->_load_base_events();
         $this->_compute_welcome_data();
         $_MIDCOM->set_26_request_metadata($this->get_last_modified(), $this->_topic->guid);
+        
+        // Set the breadcrumb
+        $breadcrumb[] = array
+        (
+            MIDCOM_NAV_URL => "archive/",
+            MIDCOM_NAV_NAME => sprintf($this->_l10n->get('archive')),
+        );
+        
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
+        
         return true;
     }
 
@@ -240,7 +250,7 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
         else
         {
             $this->_request_data['last_event'] = null;
-            return null;
+            return Calendar_Factory::createByTimestamp('Month', time()+1);
         }
     }
     

@@ -3,7 +3,7 @@
 // of net_nehmer_account_handler_register
 //
 // Bind the view data, remember the reference assignment:
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $view = $data['entry_controller']->datamanager->get_content_html();
 ?>
 <h2><?php echo $data['topic']->extra; ?>: <?php echo $data['branche']->get_full_name(); ?></h2>

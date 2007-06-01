@@ -152,12 +152,17 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
             $_class_mapping_cache[$classname] = $baseclass;
         }
 
-        $this->_qb = new MidgardQueryBuilder($baseclass);
+        $this->_qb = new midgard_query_builder($baseclass);
         $this->_real_class = $classname;
 
         if (! array_key_exists("view_contentmgr", $GLOBALS))
         {
             $this->hide_invisible = true;
+            
+            if ($GLOBALS['midcom_config']['i18n_multilang_strict'])
+            {
+                $this->_qb->set_lang($_MIDCOM->i18n->get_midgard_language());
+            }
         }
     }
 
@@ -241,6 +246,8 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         $offset = $this->_offset;
         $skipped_objects = 0;
         $this->denied = 0;
+        // Workaround to ML bug where we get multiple results in non-strict mode
+        $seen_guids = array();
         foreach ($result as $key => $value)
         {
             if (   $this->_limit > 0
@@ -297,8 +304,18 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
                     continue;
                 }
             }
+            
+            if (isset($seen_guids[$object->guid]))
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("The {$classname} object {$object->guid} has already been seen, probably MultiLang bug", MIDCOM_LOG_WARN);
+                debug_pop();
+                continue;
+            }
 
-            $newresult[$key] = $object;
+            $newresult[] = $object;
+            
+            $seen_guids[$object->guid] = true;
 
             if ($this->_limit > 0)
             {

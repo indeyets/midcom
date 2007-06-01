@@ -8,6 +8,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2006-08-29 rambo
+  + added support for org.openpsa.contacts person merge
+
 2006-05-11 bergie
   + Added "blacklisted" property to the data model
 

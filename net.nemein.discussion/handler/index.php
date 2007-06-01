@@ -28,17 +28,6 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
     {
         $this->_request_data['forum'] =& $this->_topic;   
         
-        $this->_node_toolbar->add_item(
-            array
-            (
-                MIDCOM_TOOLBAR_URL => 'post.html',
-                MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('create thread'),
-                MIDCOM_TOOLBAR_HELPTEXT => null,
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail-reply.png',
-                MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_do('midgard:create', $this->_topic),
-            )
-        );
-        
         return true;
     }
     

@@ -24,54 +24,68 @@ class net_nemein_wiki_interface extends midcom_baseclasses_components_interface
         parent::midcom_baseclasses_components_interface();
 
         $this->_component = 'net.nemein.wiki';
-        $this->_autoload_files = Array(
+        $this->_autoload_files = array
+        (
             'wikipage.php',
+            'link.php',
             'viewer.php',
             'admin.php',
             'navigation.php',
             'notes.php',
         );
-        $this->_autoload_libraries = Array(
+        $this->_autoload_libraries = array
+        (
             'midcom.helper.datamanager2',
             'de.bitfolge.feedcreator',
             'net.nehmer.markdown',
-            'no.bergfald.rcs',
             'org.openpsa.contactwidget',
             'org.openpsa.relatedto',
+            'org.openpsa.notifications',
+            'net.nemein.tag',
         );
+    }
+    
+    function _on_initialize()
+    {
+        /* Try to do this dynamically only when needed
+        // Load needed data classes
+        $_MIDCOM->componentloader->load_graceful('org.routamc.photostream');
+        */
+        
+        return true;
     }
 
     /**
-     * Iterate over all articles and create index record using the datamanger indexer
+     * Iterate over all wiki pages and create index record using the datamanager2 indexer
      * method.
      */
     function _on_reindex($topic, $config, &$indexer)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        $qb = midcom_baseclasses_database_article::new_query_builder();
+        $qb = net_nemein_wiki_wikipage::new_query_builder();
         $qb->add_constraint('topic', '=', $topic->id);
-        $qb->add_order('title', 'ASC');
         $result = $qb->execute();
 
-        foreach ($result as $wikipage)
+        if ($result)
         {
-            $datamanager = new midcom_helper_datamanager($config->get('schemadb'));
+            $schemadb = midcom_helper_datamanager2_schema::load_database($config->get('schemadb'));
+            $datamanager = new midcom_helper_datamanager2_datamanager($schemadb);
             if (! $datamanager)
             {
-                debug_add('Warning, failed to create a datamanager instance with this schemapath:' . $this->_config->get('schemadb'),
+                debug_add('Warning, failed to create a datamanager instance with this schemapath:' . $config->get('schemadb'),
                     MIDCOM_LOG_WARN);
                 continue;
             }
 
-            if (! $datamanager->init($wikipage))
+            foreach ($result as $wikipage)
             {
-                debug_add("Warning, failed to initialize datamanager for Article {$article->id}. See Debug Log for details.", MIDCOM_LOG_WARN);
-                debug_print_r('Article dump:', $article);
-                continue;
-            }
+                if (! $datamanager->autoset_storage($wikipage))
+                {
+                    debug_add("Warning, failed to initialize datamanager for Wiki page {$wikipage->id}. Skipping it.", MIDCOM_LOG_WARN);
+                    continue;
+                }
 
-            $indexer->index($datamanager);
-            $datamanager->destroy();
+                net_nemein_wiki_viewer::index($datamanager, $indexer, $topic);
+            }
         }
 
         debug_pop();

@@ -39,7 +39,6 @@
  * 
  *
  */
-
 class midcom_helper_xml_toarray
 {
 

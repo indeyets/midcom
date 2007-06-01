@@ -110,7 +110,7 @@ class net_nemein_registrations_viewer extends midcom_baseclasses_components_requ
         (
             'handler' => Array('net_nemein_registrations_handler_event', 'export_csv'),
             'fixed_args' => Array('event', 'export', 'csv'),
-            'variable_args' => 1,
+            'variable_args' => 2,
         );
 
         // General Events management (listing, creation), everything not directly related
@@ -148,8 +148,12 @@ class net_nemein_registrations_viewer extends midcom_baseclasses_components_requ
         $this->_request_data['root_event'] = null;
         $this->_request_data['schemadb'] = null;
 
+        //echo "DEBUG: _on_handle: 1180179900 comes " . date('Y-m-d H:i:s T (Z)', 1180179900) . ") (TZ: " . getenv('TZ') . ")<br>\n";
+
         $this->_load_root_event($handler_id);
+        //echo "DEBUG: _on_handle (after load root event): 1180179900 comes " . date('Y-m-d H:i:s T (Z)', 1180179900) . ") (TZ: " . getenv('TZ') . ")<br>\n";
         $this->_load_schemadb();
+        //echo "DEBUG: _on_handle (after schemadb): 1180179900 comes " . date('Y-m-d H:i:s T (Z)', 1180179900) . ") (TZ: " . getenv('TZ') . ")<br>\n";
 
         return true;
     }

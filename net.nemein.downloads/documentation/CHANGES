@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2006-10-23 bergie
+  ! Refactored to MidCOM 2.6 technology
+
 2005-12-05 oskarik
   + Added archive-page.
 

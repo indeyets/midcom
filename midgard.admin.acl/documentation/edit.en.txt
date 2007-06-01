@@ -1,0 +1,83 @@
+Access Control List
+===================
+
+ACL or Access Control List is a security concept, which is for determining the privileges for different groups.
+
+It is possible to define the ACL rules for any Midgard object, although the most common practise is to define rules for folders.
+
+Inheritance
+-----------
+
+ACL rules will be inherited. This means that if a folder has certain set of rules, they will be inherited by pages that are in that folder unless page-specific rules override them. Page-specific rules then again do not affect the rules of the folder.
+
+Folders also inherit their rules. E.g. if a folder doesn't have a _Read_ rule defined, it will be checking its parent folder if the rule exists. If the parent folder doesn't contain the rule, its parents will be checked until the rule is met. If there are no rules anywhere in the
+parent folders, global defaults will be used.
+
+This will affect both ways: rules defined in a folder will affect all of its child folders and pages until otherwise specified.
+
+Adding a group
+--------------
+
+To add a group for assigning privilege rules
+
+1. Select the group from _Add group for privilege assignment_
+2. Click on _Save_ on the bottom of the page
+3. Assign the rules
+
+Removing group from privileges list
+-----------------------------------
+
+To remove a group from the privileges list
+
+1. Set all the privileges to _Not set (inherited)_
+2. Click on _Save_ on the bottom of the page
+
+[note: When a group doesn't have any privileges set, it will not appear on the privileges list. This means that privileges for that group are either inherited from the parent objects or the group doesn't have any privilege levels set at all.]
+
+Setting the rules
+-----------------
+
+The basic set of rules are the following:
+
+* Read
+* Create
+* Update
+* Owner
+* Approve
+* Configuration
+
+### Read
+
+_Read_ rule defines if a group is allowed to see the contents in the object.
+
+### Create
+
+_Create_ defines if specified group is allowed to create subobjects to the object in question. Creator of the article will automatically become the owner, who has privilege to update the object as well.
+
+### Update
+
+_Update_ gives the privilege to make changes to an object.
+
+[note: If there is a need for e.g. news folder, where a group (or everyone if that is the case) can publish news, but they should not be able to update other objects than their own creations should _Update_ privilege be given to only to administrative or editorial groups.]
+
+### Delete
+
+_Delete_ rule defines if the group is allowed to delete the object.
+
+### Owner
+
+_Owner_ rule groups the following rules into one single group:
+
+* Update
+* Create
+* Delete
+
+### Approve
+
+_Approve_ rule defines the groups, which are allowed to approve and unapprove pages. This ACL rule is invisible as a default and used only on sites, which have approval enabled.
+
+Read the manual for more information on [Approval|approvals].
+
+### Configuration
+
+_Configuration_ rule defines the groups, which are allowed to configure the folder.

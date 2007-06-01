@@ -177,14 +177,14 @@ class net_nemein_calendar_admin extends midcom_baseclasses_components_request_ad
         }
         else
         {
-            $master_event = new midcom_db_event($master_event_guid);
+            $master_event = new net_nemein_calendar_event($master_event_guid);
             if ($master_event)
             {
                 $this->_master_event = $master_event->id;
             }
             else
             {
-                $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, 'Configured master event was not found');
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Configured master event was not found');
                 // This will exit
             }
         }
@@ -193,7 +193,7 @@ class net_nemein_calendar_admin extends midcom_baseclasses_components_request_ad
   
         if (!is_null($root_event_guid))
         {
-            $this->_root_event = new midcom_db_event($root_event_guid);
+            $this->_root_event = new net_nemein_calendar_event($root_event_guid);
             
             // Did we get the root event instanced?
             if (is_object($this->_root_event)) 
@@ -243,7 +243,7 @@ class net_nemein_calendar_admin extends midcom_baseclasses_components_request_ad
             }
             else
             {
-                $GLOBALS['midcom']->generate_error(MIDCOM_ERRFORBIDDEN, "Could not create Root Event: " . mgd_errstr());
+                $_MIDCOM->generate_error(MIDCOM_ERRFORBIDDEN, "Could not create Root Event: " . mgd_errstr());
                 // This will exit
             }
         }
@@ -274,7 +274,7 @@ class net_nemein_calendar_admin extends midcom_baseclasses_components_request_ad
             {
                 debug_add('The schema database was empty, we cannot use this.', MIDCOM_LOG_ERROR);
                 debug_print_r('Evaluated data was:', $data);
-                $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     'Could not load the schema database accociated with this topic: The schema DB was empty.');
                 // This will exit.
             }
@@ -287,7 +287,7 @@ class net_nemein_calendar_admin extends midcom_baseclasses_components_request_ad
         {
             debug_add('The schema database was no array, we cannot use this.', MIDCOM_LOG_ERROR);
             debug_print_r('Evaluated data was:', $data);
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 'Could not load the schema database accociated with this topic. The schema DB was no array.');
             // This will exit.
         }
@@ -624,10 +624,10 @@ class net_nemein_calendar_admin extends midcom_baseclasses_components_request_ad
                 $session->remove('admin_create_id');
                 
                 // Reindex the event 
-                $indexer =& $GLOBALS['midcom']->get_service('indexer');
+                $indexer =& $_MIDCOM->get_service('indexer');
                 $indexer->index($this->_datamanager);
                 
-                $GLOBALS['midcom']->relocate("view/{$this->_event->id}.html");
+                $_MIDCOM->relocate("view/{$this->_event->id}.html");
                 // This will exit
 
             
@@ -642,7 +642,7 @@ class net_nemein_calendar_admin extends midcom_baseclasses_components_request_ad
                 else 
                 {
                     debug_add('Cancel without anything being created, redirecting to the welcome screen.');
-                    $GLOBALS['midcom']->relocate('');
+                    $_MIDCOM->relocate('');
                     // This will exit
                 }
             
@@ -659,12 +659,12 @@ class net_nemein_calendar_admin extends midcom_baseclasses_components_request_ad
                     debug_add('Cancel with a temporary object, deleting it and redirecting to the welcome screen.');
                     if (! mgd_delete_extensions($this->_event) || ! $this->_event->delete())
                     {
-                        $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+                        $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                             'Failed to remove temporary event or its dependants.');
                         // This will exit
                     }
                     $session->remove('admin_create_id');
-                    $GLOBALS['midcom']->relocate('');
+                    $_MIDCOM->relocate('');
                     // This will exit
                 }
             
@@ -729,16 +729,16 @@ class net_nemein_calendar_admin extends midcom_baseclasses_components_request_ad
 
             case MIDCOM_DATAMGR_SAVED:                
                 // Reindex the event
-                $indexer =& $GLOBALS['midcom']->get_service('indexer');
+                $indexer =& $_MIDCOM->get_service('indexer');
                 $indexer->index($this->_datamanager);
                 
                 // Redirect to view page.
-                $GLOBALS['midcom']->relocate("view/{$this->_event->id}.html");
+                $_MIDCOM->relocate("view/{$this->_event->id}.html");
                 // This will exit()
 
             case MIDCOM_DATAMGR_CANCELLED:
                 // Redirect to view page.
-                $GLOBALS['midcom']->relocate("view/{$this->_event->id}.html");
+                $_MIDCOM->relocate("view/{$this->_event->id}.html");
                 // This will exit()
                 
             case MIDCOM_DATAMGR_FAILED:
@@ -811,8 +811,8 @@ class net_nemein_calendar_admin extends midcom_baseclasses_components_request_ad
         {
             // This is a repeating instance, redirect user to edit repetition rules
             // of master event instead
-            $master = new midcom_db_event($this->_event->parameter('net.nemein.repeathandler', 'master_guid'));
-            $GLOBALS['midcom']->relocate("repeat/{$master->id}.html");
+            $master = new net_nemein_calendar_event($this->_event->parameter('net.nemein.repeathandler', 'master_guid'));
+            $_MIDCOM->relocate("repeat/{$master->id}.html");
         }
         
         // Load repetition information from DB and set defaults
@@ -946,12 +946,12 @@ class net_nemein_calendar_admin extends midcom_baseclasses_components_request_ad
                 }
             }
             
-            $GLOBALS['midcom']->cache->invalidate($this->_topic->guid());
+            $_MIDCOM->cache->invalidate($this->_topic->guid());
             
             if ($stat)
             {
-                $GLOBALS['midcom']->cache->invalidate($this->_topic->guid());
-                $GLOBALS['midcom']->relocate('');
+                $_MIDCOM->cache->invalidate($this->_topic->guid());
+                $_MIDCOM->relocate('');
                 // This will exit
             }
         }
@@ -989,7 +989,7 @@ class net_nemein_calendar_admin extends midcom_baseclasses_components_request_ad
             if (array_key_exists('net_nemein_calendar_deletecancel', $_REQUEST)) 
             {
                 // Redirect to view page.
-                $GLOBALS['midcom']->relocate("view/{$this->_event->id}.html");
+                $_MIDCOM->relocate("view/{$this->_event->id}.html");
                 // This will exit()
             } 
         }  
@@ -1030,14 +1030,14 @@ class net_nemein_calendar_admin extends midcom_baseclasses_components_request_ad
         }
         
         // Update the index
-        $indexer =& $GLOBALS['midcom']->get_service('indexer');
+        $indexer =& $_MIDCOM->get_service('indexer');
         $indexer->delete($guid);
             
         // Invalidate the cache modules
-        $GLOBALS['midcom']->cache->invalidate($guid);
+        $_MIDCOM->cache->invalidate($guid);
         
         // Redirect to welcome page.
-        $GLOBALS['midcom']->relocate($GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
+        $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
         // This will exit()
     }
   
@@ -1051,7 +1051,7 @@ class net_nemein_calendar_admin extends midcom_baseclasses_components_request_ad
       $stat = $this->_event->update_repeat("all");
       error_reporting(E_ALL);
 
-      $GLOBALS['midcom']->cache->invalidate($this->_event->guid());
+      $_MIDCOM->cache->invalidate($this->_event->guid());
       debug_add("Invalidated Midcom Cache.");
 
       debug_pop();

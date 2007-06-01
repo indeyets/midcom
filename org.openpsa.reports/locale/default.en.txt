@@ -1,9 +1,33 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.en.txt,v 1.1 2005/08/05 13:24:54 rambo Exp $
+---CVS $Id$
 ---LANGUAGE en
+
+---STRING define custom report
+Define a custom report
+---STRINGEND
+
+---STRING invoiceable hours last month
+Invoiceable hours last month
+---STRINGEND
+
+---STRING invoiceable hours this month
+Invoiceable hours this month
+---STRINGEND
+
+---STRING no results
+No results
+---STRINGEND
+
+---STRING no results found matching the report criteria
+No results matching the report criteria were found.
+---STRINGEND
 
 ---STRING org.openpsa.reports
 Report generator
+---STRINGEND
+
+---STRING download as CSV
+Download as CSV
 ---STRINGEND
 

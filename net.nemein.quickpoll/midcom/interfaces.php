@@ -1,15 +1,13 @@
 <?php
-
 /**
- * @package net.nemein.quickpoll
- * @author The Midgard Project, http://www.midgard-project.org 
- * @version $Id$
+ * @package net.nemein.quickpoll 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
 /**
- * Quickpoll MidCOM interface class.
+ * This is the interface class for net.nemein.quickpoll
  * 
  * @package net.nemein.quickpoll
  */
@@ -17,19 +15,33 @@ class net_nemein_quickpoll_interface extends midcom_baseclasses_components_inter
 {
     /**
      * Constructor.
-     * 
+     *
      * Nothing fancy, loads all script files and the datamanager library.
      */
     function net_nemein_quickpoll_interface()
     {
         parent::midcom_baseclasses_components_interface();
-        
-        $this->_component = 'net.nemein.quickpoll';
-        $this->_autoload_files = Array('viewer.php', 'admin.php', 'navigation.php');
-        $this->_autoload_libraries = Array('midcom.helper.datamanager');
-    }
-    
-    /* No _on_reindex, this component isn't indexed at this time. */
-}
 
+        define('NET_NEMEIN_QUICKPOLL_LEAFID_ARCHIVE', 1);
+
+        $this->_component = 'net.nemein.quickpoll';
+
+        // Load all mandatory class files of the component here
+        $this->_autoload_files = array
+        (
+            'viewer.php', 
+            'admin.php', 
+            'navigation.php',
+            'option.php',
+            'vote.php',
+        );
+        
+        // Load all libraries used by component here
+        $this->_autoload_libraries = array
+        (
+            'midcom.helper.datamanager2'
+        );
+    }
+
+}
 ?>

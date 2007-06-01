@@ -83,6 +83,8 @@ class midcom_services_indexer_document_midcom extends midcom_services_indexer_do
      */
     function _process_metadata()
     {
+        /*
+        FIXME: Convert to utilize DM2
         $datamanager =& $this->_metadata->get_datamanager();
         foreach ($datamanager->data as $key => $value)
         {
@@ -116,6 +118,7 @@ class midcom_services_indexer_document_midcom extends midcom_services_indexer_do
             }
         }
         $this->_metadata->release_datamanager();
+        */
     }
     
     /**

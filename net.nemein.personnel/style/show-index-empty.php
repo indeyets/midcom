@@ -1,10 +1,9 @@
 <?php
 // Available Request keys: persons
 
-$data =& $_MIDCOM->get_custom_context_data('request_data');
-$title = $data['topic']->extra;
+// $data =& $_MIDCOM->get_custom_context_data('request_data');
 ?>
-<h1>&(title);</h1>
+<h1><?php echo $data['topic']->extra; ?></h1>
 
 <?php midcom_show_style('index-alpha-bar'); ?>
 

@@ -10,9 +10,9 @@
 
 /**
  * org.openpsa.calendar NAP interface class.
- * 
+ *
  * NAP is mainly used for toolbar rendering in this component
- * 
+ *
  * ...
  * @package org.openpsa.calendar
  */
@@ -24,7 +24,7 @@ class org_openpsa_calendar_navigation extends midcom_baseclasses_components_navi
         $leaves = array();
         return $leaves;
     }
-    
+
     function get_node($toolbar = null)
     {
         $toolbar = Array();

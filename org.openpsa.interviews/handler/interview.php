@@ -1,7 +1,7 @@
 <?php
 /**
  * @package org.openpsa.interviews
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: interview.php,v 1.1 2006/05/08 13:18:40 rambo Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,7 +9,7 @@
 
 /**
  * Phone interview handler
- * 
+ *
  * @package org.openpsa.interviews
  */
 class org_openpsa_interviews_handler_interview extends midcom_baseclasses_components_handler
@@ -21,7 +21,7 @@ class org_openpsa_interviews_handler_interview extends midcom_baseclasses_compon
      * @access private
      */
     var $_member = null;
-    
+
     /**
      * The Datamanager of the member to display
      *
@@ -45,12 +45,12 @@ class org_openpsa_interviews_handler_interview extends midcom_baseclasses_compon
      * @access private
      */
     var $_schemadb = null;
-    
-    function org_openpsa_interviews_handler_edit() 
+
+    function org_openpsa_interviews_handler_edit()
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Loads and prepares the schema database.
      *
@@ -64,7 +64,7 @@ class org_openpsa_interviews_handler_interview extends midcom_baseclasses_compon
     {
         $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
     }
-    
+
    /**
      * Internal helper, loads the datamanager for the current article. Any error triggers a 500.
      *
@@ -110,30 +110,30 @@ class org_openpsa_interviews_handler_interview extends midcom_baseclasses_compon
         }
         $this->_member->require_do('midgard:update');
         $this->_request_data['campaign'] = new org_openpsa_directmarketing_campaign($this->_member->campaign);
-                
+
         $this->_load_controller();
-        
+
         switch ($this->_controller->process_form())
         {
             case 'save':
                 // Redirect to next interviewee
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "next/{$this->_request_data['campaign']->guid}.html");
                 // This will exit.
-                
+
             case 'cancel':
                 // Clear lock and return to summary
                 $this->_member->orgOpenpsaObtype = ORG_OPENPSA_OBTYPE_CAMPAIGN_MEMBER;
                 $this->_member->update();
-                
+
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "campaign/{$this->_request_data['campaign']->guid}.html");
                 // This will exit.
-        }  
-        
+        }
+
         // $_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('interview %s'), $this->_member->title));
-        
+
         return true;
     }
-    
+
     function _show_interview($handler_id, &$data)
     {
         $this->_request_data['controller'] =& $this->_controller;

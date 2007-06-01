@@ -1,0 +1,88 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING gallery settings
+Gallerian asetukset
+---STRINGEND
+
+---STRING gallery settings helptext
+Valitse kuinka kuvia näytetään galleriassa
+---STRINGEND
+
+---STRING org.routamc.gallery
+Valokuvagalleria
+---STRINGEND
+
+---STRING photo selection method
+Valokuvien valintatapa
+---STRINGEND
+
+---STRING photos with tags
+Tag-merkkejä vastaavat kuvat
+---STRINGEND
+
+---STRING hand picked photos
+Käsin valitut kuvat
+---STRINGEND
+
+---STRING sort photos
+Järjestele kuvia
+---STRINGEND
+
+---STRING sort photos by dragging and dropping
+Järjestele kuvat siirtämällä niitä
+---STRINGEND
+
+---STRING you can also create sub galleries for the current gallery
+Voit myös luoda aligallerioita nykyiselle gallerialle
+---STRINGEND
+
+---STRING approve automatically
+Hyväksy automaattisesti
+---STRINGEND
+
+---STRING create a new sub gallery
+Luo uusi aligalleria
+---STRINGEND
+
+---STRING create
+Luo
+---STRINGEND
+
+---STRING hide thumbnails
+Piilota pikkukuvat
+---STRINGEND
+
+---STRING number of navigation items
+Navigaatiossa näkyvien kohteiden määrä
+---STRINGEND
+
+---STRING sort order
+Näyttöjärjestys
+---STRINGEND
+
+---STRING hide items from navigation
+Piilota kohteet navigaatiosta
+---STRINGEND
+
+---STRING by score
+Järjestellyn mukaan
+---STRINGEND
+
+---STRING taken
+Kuvauspäivämäärä (vanhin ensin)
+---STRINGEND
+
+---STRING reverse taken
+Käänteinen kuvauspäivämäärä (uusin ensin)
+---STRINGEND
+
+---STRING reverse edited
+Käänteinen muokkauspäivämäärä
+---STRINGEND
+
+---STRING photos per page
+Kuvien lukumäärä sivua kohti
+---STRINGEND

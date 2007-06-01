@@ -189,7 +189,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
                 && $session->clientip != $clientip)
             {
                 debug_add("The session {$session->guid} (#{$session->id}) had mismatching client IP.", MIDCOM_LOG_INFO);
-                debug_add('Expected {$session->clientip}, got {$clientip}.');
+                debug_add("Expected {$session->clientip}, got {$clientip}.");
                 $valid = false;
             }
 
@@ -259,8 +259,18 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
 
         if ($mode == 'sitegrouped')
         {
-            $sitegroup = mgd_get_sitegroup($_MIDGARD['sitegroup']);
-            $username .= "+{$sitegroup->name}";
+            // TODO: convert to MidCOM DBA API
+            if (function_exists('mgd_get_sitegroup'))
+            {
+                $sitegroup = mgd_get_sitegroup($_MIDGARD['sitegroup']);
+                $username .= "+{$sitegroup->name}";
+            }
+            else
+            {
+                //$sitegroup = new midgard_sitegroup();
+                //$sitegroup->get_by_id($_MIDGARD['sitegroup']);
+                //$username .= "+{$sitegroup->name}";
+            }
         }
 
         if (! mgd_auth_midgard($username, $password))
@@ -346,6 +356,10 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
             debug_print_r('Object was:', $session);
             debug_pop();
             return false;
+        }
+        if (function_exists($session, 'purge'))
+        {
+            $session->purge();
         }
 
         unset ($this->_loaded_sessions[$sessionid]);

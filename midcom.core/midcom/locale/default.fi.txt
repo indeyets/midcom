@@ -1,7 +1,11 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id:default.fi.txt 3765 2006-07-31 08:51:39 +0000 (Mon, 31 Jul 2006) tarjei $
+---CVS $Id$
 ---LANGUAGE fi
+
+---STRING %s in %s
+%s kansiossa %s
+---STRINGEND
 
 ---STRING Edit this page
 Muokkaa sivua
@@ -9,6 +13,10 @@ Muokkaa sivua
 
 ---STRING More...
 Lisää...
+---STRINGEND
+
+---STRING OK
+OK
 ---STRINGEND
 
 ---STRING abstract
@@ -51,12 +59,24 @@ Tyyppi
 Tehokäyttäjän tietokanta-asetukset
 ---STRINGEND
 
+---STRING ais-deprecation-heading
+AIS ei ole enää käytössä tässä komponentissa
+---STRINGEND
+
+---STRING ais-deprecation-text
+Komponentin hallinnointi tehdään sivustolla
+---STRINGEND
+
 ---STRING all
 kaikki
 ---STRINGEND
 
 ---STRING and
 ja
+---STRINGEND
+
+---STRING anonymous
+tunnistamaton
 ---STRINGEND
 
 ---STRING approval
@@ -73,6 +93,10 @@ Hyväksy kansio
 
 ---STRING approved
 Hyväksytty
+---STRINGEND
+
+---STRING approved changes will be replicated within next minute
+Hyväksyttyjen muutosten replikointi alkaa minuutin kuluessa
 ---STRINGEND
 
 ---STRING approver
@@ -111,6 +135,10 @@ luontiajankohdan mukaan
 Peruuta
 ---STRINGEND
 
+---STRING captcha field title
+Turvatarkastus
+---STRINGEND
+
 ---STRING close configuration screen
 Sulje asetukset
 ---STRINGEND
@@ -119,12 +147,20 @@ Sulje asetukset
 Komponentti
 ---STRINGEND
 
+---STRING component %s configuration for folder %s
+Komponentin %s asetukset kansiossa "%s"
+---STRINGEND
+
 ---STRING component configuration
 Komponentin asetukset
 ---STRINGEND
 
 ---STRING component configuration helptext
 Klikkaa valikkoa muokataksesi komponentin tämän kansion kohtaisia asetuksia.
+---STRINGEND
+
+---STRING copy
+Kopioi
 ---STRINGEND
 
 ---STRING create
@@ -140,6 +176,10 @@ Luo sivu
 ---STRINGEND
 
 ---STRING created
+Luotu
+---STRINGEND
+
+---STRING created on
 Luotu
 ---STRINGEND
 
@@ -223,6 +263,10 @@ Piilotettu
 Piilota
 ---STRINGEND
 
+---STRING host
+Sivusto
+---STRINGEND
+
 ---STRING id
 ID-tunnus
 ---STRINGEND
@@ -241,6 +285,10 @@ Peritty ylemmältä tasolta
 
 ---STRING internal metadata
 Sisäinen metadata
+---STRINGEND
+
+---STRING invalidate cache
+Tyhjennä MidCOMin välimuisti
 ---STRINGEND
 
 ---STRING keywords
@@ -269,6 +317,10 @@ Käyttäjätunnus tai salasana oli virheellinen
 
 ---STRING logout
 Kirjaudu ulos
+---STRINGEND
+
+---STRING long date
+%x %X
 ---STRINGEND
 
 ---STRING lowercase, no special characters or spaces
@@ -345,6 +397,10 @@ val.
 
 ---STRING owner
 Omistaja
+---STRINGEND
+
+---STRING page
+Sivu
 ---STRINGEND
 
 ---STRING page %d of %d
@@ -439,6 +495,10 @@ Salli haut, hakukone ei saa seurata linkkejä
 Ei määritelty, käyttää robots.txt:tä
 ---STRINGEND
 
+---STRING run replication
+Käynnistä replikointi
+---STRINGEND
+
 ---STRING save
 Tallenna
 ---STRINGEND
@@ -487,6 +547,10 @@ Valitse
 Asetukset
 ---STRINGEND
 
+---STRING short date
+%d.%m.%Y
+---STRINGEND
+
 ---STRING shown from %s
 Näytä %s alkaen
 ---STRINGEND
@@ -503,6 +567,42 @@ Näytä %s asti
 Yritystietokanta
 ---STRINGEND
 
+---STRING sort_by_calendar
+Järjestä ajan mukaan
+---STRINGEND
+
+---STRING sort_by_name
+Järjestä nimen mukaan
+---STRINGEND
+
+---STRING sort_by_reverse_calendar
+Järjestä ajan mukaan (käänteisesti)
+---STRINGEND
+
+---STRING sort_by_reverse_name
+Järjestä nimen mukaan (käänteisesti)
+---STRINGEND
+
+---STRING sort_by_reverse_revised
+Järjestä muokkausajan mukaan (käänteisesti)
+---STRINGEND
+
+---STRING sort_by_reverse_score
+Järjestä arvon mukaan (käänteisesti)
+---STRINGEND
+
+---STRING sort_by_revised
+Järjestä muokkausajan mukaan
+---STRINGEND
+
+---STRING sort_by_score
+Järjestä arvon mukaan
+---STRINGEND
+
+---STRING sort_leaves
+Säilytä komponentin oletusjärjestys
+---STRINGEND
+
 ---STRING sort_order
 Kuinka sivut pitäis järjestellä?
 ---STRINGEND
@@ -511,12 +611,24 @@ Kuinka sivut pitäis järjestellä?
 sijainti järjestelyssä
 ---STRINGEND
 
+---STRING stagin2live
+Esikatselu-tuotanto -ympäristö
+---STRINGEND
+
 ---STRING start date
 Alkupäivämäärä
 ---STRINGEND
 
 ---STRING stats
 Statistiikka
+---STRINGEND
+
+---STRING tags
+Tag-merkinnät
+---STRINGEND
+
+---STRING test settings
+Testaa asetukset
 ---STRINGEND
 
 ---STRING text
@@ -607,6 +719,10 @@ Varmista salasana
 Näyttö
 ---STRINGEND
 
+---STRING visibility settings
+Näkyvyysasetukset
+---STRINGEND
+
 ---STRING visibilty settings
 Näkyvyysasetukset
 ---STRINGEND
@@ -623,7 +739,7 @@ Kirjoita sähköposti
 Kyllä
 ---STRINGEND
 
----STRING page
-Sivu
+---STRING arrangement score
+Järjestelyarvo
 ---STRINGEND
 

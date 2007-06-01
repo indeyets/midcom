@@ -43,9 +43,7 @@ class midcom_helper_datamanager_widget_contactchooser extends midcom_helper_data
         {
             // This component absolutely requires the URL, no sensible fallback
             // Autoprobe the URL via NAP
-            $nap = new midcom_helper_nav();
-            $node = $nap->get_root_node();
-            $this->_field['widget_contactchooser_contacts_url'] = $this->_find_contacts_url($node, $nap);
+            $this->_field['widget_contactchooser_contacts_url'] = $this->_find_contacts_url();
         }
         
         if (array_key_exists('datatype', $this->_field))
@@ -64,30 +62,14 @@ class midcom_helper_datamanager_widget_contactchooser extends midcom_helper_data
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/midcom.helper.datamanager/contactchooser_ajax.js");
 
     }
-    
-    function _find_contacts_url($node_id, $nap)
+
+    function _find_contacts_url()
     {
         $contacts_url = null;
-        $nodes = $nap->list_nodes($node_id);
-        if ($nodes)
+        $contacts_node = midcom_helper_find_node_by_component('org.openpsa.contacts');
+        if (isset($contacts_node[MIDCOM_NAV_FULLURL]))
         {
-            foreach ($nodes as $nodes_id)
-            {
-                $node = $nap->get_node($nodes_id);
-                if ($node[MIDCOM_NAV_COMPONENT] == 'org.openpsa.contacts')
-                {
-                    $contacts_url = $node[MIDCOM_NAV_FULLURL].'search/foaf/';
-                    return $contacts_url;
-                }
-                else
-                {
-                    $returned_url = $this->_find_contacts_url($node[MIDCOM_NAV_ID], $nap);
-                    if (!is_null($returned_url))
-                    {
-                        return $contacts_url;
-                    }
-                }
-            }
+            $contacts_url = $contacts_node[MIDCOM_NAV_FULLURL].'search/foaf/';
         }
         return $contacts_url;
     }

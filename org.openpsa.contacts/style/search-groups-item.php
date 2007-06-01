@@ -27,11 +27,11 @@ if ($view_group_name == '')
         {
             echo "<li>{$view_group->street}, {$view_group->city}</li>\n";
         }
-        
+
         if ($view_group->homepage)
         {
             echo "<li class=\"url\"><a href=\"{$view_group->homepage}\">{$view_group->homepage}</a></li>\n";
-        }        
+        }
         ?>
     </ul>
 </div>

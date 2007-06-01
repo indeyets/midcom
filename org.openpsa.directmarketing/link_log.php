@@ -8,7 +8,7 @@ class midcom_org_openpsa_link_log extends __midcom_org_openpsa_link_log
     {
         return parent::__midcom_org_openpsa_campaign_link_log($id);
     }
-    
+
     function _on_creating()
     {
         if (!$this->timestamp)
@@ -23,7 +23,7 @@ class midcom_org_openpsa_link_log extends __midcom_org_openpsa_link_log
         }
         return true;
     }
-    
+
 }
 
 /**

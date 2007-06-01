@@ -24,7 +24,7 @@ class midcom_admin_content_navigation_onelevel {
     
     function midcom_admin_content_navigation_onelevel () {
       global $view_contentmgr;
-      $this->_midcom = $GLOBALS['midcom'];
+      $this->_midcom = $_MIDCOM;
       $this->_view_contentmgr = $view_contentmgr;
       }
 

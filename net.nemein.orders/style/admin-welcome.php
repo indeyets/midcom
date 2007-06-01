@@ -1,23 +1,23 @@
 <?php
 
 /*
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-$config_dm =& $GLOBALS["midcom"]->get_custom_context_data("configuration_dm");
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+$config_dm =& $_MIDCOM->get_custom_context_data("configuration_dm");
 $topic = $config_dm->data;
-$errstr =& $GLOBALS["midcom"]->get_custom_context_data("errstr");
-$root_order_event =& $GLOBALS["midcom"]->get_custom_context_data("root_order_event");
-$mailing_company_group =& $GLOBALS["midcom"]->get_custom_context_data("mailing_company_group");
-$product =& $GLOBALS["midcom"]->get_custom_context_data("product");
-$order =& $GLOBALS["midcom"]->get_custom_context_data("order");
-$cart =& $GLOBALS["midcom"]->get_custom_context_data("cart");
+$errstr =& $_MIDCOM->get_custom_context_data("errstr");
+$root_order_event =& $_MIDCOM->get_custom_context_data("root_order_event");
+$mailing_company_group =& $_MIDCOM->get_custom_context_data("mailing_company_group");
+$product =& $_MIDCOM->get_custom_context_data("product");
+$order =& $_MIDCOM->get_custom_context_data("order");
+$cart =& $_MIDCOM->get_custom_context_data("cart");
 $items = $cart->get_cart();
 */
 
-$auth =& $GLOBALS["midcom"]->get_custom_context_data("auth");
-$config =& $GLOBALS["midcom"]->get_custom_context_data("configuration");
-$l10n =& $GLOBALS["midcom"]->get_custom_context_data("l10n");
-$l10n_midcom =& $GLOBALS["midcom"]->get_custom_context_data("l10n_midcom");
-$topic = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC);
+$auth =& $_MIDCOM->get_custom_context_data("auth");
+$config =& $_MIDCOM->get_custom_context_data("configuration");
+$l10n =& $_MIDCOM->get_custom_context_data("l10n");
+$l10n_midcom =& $_MIDCOM->get_custom_context_data("l10n_midcom");
+$topic = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC);
 
 /* no style defined yet, but prepared for it at least */
 $toolbar = new midcom_helper_toolbar('net_nemein_orders_admin_welcome_toolbar');

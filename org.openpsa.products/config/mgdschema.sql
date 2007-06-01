@@ -3,8 +3,6 @@ CREATE TABLE org_openpsa_products_product (
   id int(11) NOT NULL auto_increment,
   productGroup int(11) NOT NULL default 0,
   code varchar(255) NOT NULL default '',
-  title varchar(255) NOT NULL default '',
-  description text NOT NULL default '',
   price float NOT NULL default '0',
   unit varchar(255) NOT NULL default '',
   start int(11) NOT NULL default 0,
@@ -35,14 +33,28 @@ ALTER TABLE org_openpsa_products_product ADD COLUMN creator int(11) NOT NULL def
 ALTER TABLE org_openpsa_products_product ADD COLUMN revisor int(11) NOT NULL default 0;
 ALTER TABLE org_openpsa_products_product ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
 ALTER TABLE org_openpsa_products_product ADD COLUMN revision int(11) NOT NULL default 0;
+# Multilang table
+CREATE TABLE org_openpsa_products_product_i (
+  id int(11) NOT NULL auto_increment,
+  sid int(11) NOT NULL default 0,
+  title varchar(255) NOT NULL default '',
+  description longtext NOT NULL,
+  created datetime NOT NULL default '0000-00-00 00:00:00',
+  lang int(11) NOT NULL default 0,
+  sitegroup int(11) NOT NULL default 0,
+  PRIMARY KEY  (id),
+  KEY org_openpsa_products_product_i_sitegroup_idx (sitegroup),
+  KEY org_openpsa_products_product_i_sid_idx (sid,lang),
+  KEY org_openpsa_products_product_i_lang_idx (lang)
+);
+# it seems just about everyone wants to query by this field...
+CREATE INDEX org_openpsa_products_product_i_title_idx on org_openpsa_products_product_i(title(200));
 
 #Product Group
 CREATE TABLE org_openpsa_products_product_group (
   id int(11) NOT NULL auto_increment,
   up int(11) NOT NULL default 0,
   code varchar(255) NOT NULL default '',
-  title varchar(255) NOT NULL default '',
-  description text NOT NULL default '',
   orgOpenpsaObtype int(11) NOT NULL default 0,
   sitegroup int(11) NOT NULL default 0,
   guid varchar(80) NOT NULL default '',
@@ -57,6 +69,22 @@ ALTER TABLE org_openpsa_products_product_group ADD COLUMN creator int(11) NOT NU
 ALTER TABLE org_openpsa_products_product_group ADD COLUMN revisor int(11) NOT NULL default 0;
 ALTER TABLE org_openpsa_products_product_group ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
 ALTER TABLE org_openpsa_products_product_group ADD COLUMN revision int(11) NOT NULL default 0;
+# Multilang table
+CREATE TABLE org_openpsa_products_product_group_i (
+  id int(11) NOT NULL auto_increment,
+  sid int(11) NOT NULL default 0,
+  title varchar(255) NOT NULL default '',
+  description longtext NOT NULL,
+  created datetime NOT NULL default '0000-00-00 00:00:00',
+  lang int(11) NOT NULL default 0,
+  sitegroup int(11) NOT NULL default 0,
+  PRIMARY KEY  (id),
+  KEY org_openpsa_products_product_group_i_sitegroup_idx (sitegroup),
+  KEY org_openpsa_products_product_group_i_sid_idx (sid,lang),
+  KEY org_openpsa_products_product_group_i_lang_idx (lang)
+);
+# it seems just about everyone wants to query by this field...
+CREATE INDEX org_openpsa_products_product_group_i_title_idx on org_openpsa_products_product_group_i(title(200));
 
 
 #Product Member
@@ -80,3 +108,43 @@ ALTER TABLE org_openpsa_products_product_member ADD COLUMN creator int(11) NOT N
 ALTER TABLE org_openpsa_products_product_member ADD COLUMN revisor int(11) NOT NULL default 0;
 ALTER TABLE org_openpsa_products_product_member ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
 ALTER TABLE org_openpsa_products_product_member ADD COLUMN revision int(11) NOT NULL default 0;
+ALTER TABLE org_openpsa_products_product_member ADD COLUMN componentGroup int(11) NOT NULL default 0;
+
+CREATE TABLE org_openpsa_products_businessarea (
+  id int(11) NOT NULL auto_increment,
+  up int(11) NOT NULL default 0,
+  manager int(11) NOT NULL default 0,
+  code varchar(255) NOT NULL default '',
+  orgOpenpsaObtype int(11) NOT NULL default 0,
+  sitegroup int(11) NOT NULL default 0,
+  PRIMARY KEY (id),
+  KEY org_openpsa_products_businessarea_sitegroup_idx(sitegroup),
+  KEY org_openpsa_products_businessarea_manager_idx(manager),
+  KEY org_openpsa_products_businessarea_code_idx(code)
+);
+
+CREATE TABLE org_openpsa_products_businessarea_i (
+  id int(11) NOT NULL auto_increment,
+  sid int(11) NOT NULL default 0,
+  title varchar(255) NOT NULL default '',
+  description longtext NOT NULL,
+  created datetime NOT NULL default '0000-00-00 00:00:00',
+  lang int(11) NOT NULL default 0,
+  sitegroup int(11) NOT NULL default 0,
+  PRIMARY KEY  (id),
+  KEY org_openpsa_products_businessarea_i_sitegroup_idx (sitegroup),
+  KEY org_openpsa_products_businessarea_i_sid_idx (sid,lang),
+  KEY org_openpsa_products_businessarea_i_lang_idx (lang)
+);
+
+CREATE TABLE org_openpsa_products_businessarea_member (
+  id int(11) NOT NULL auto_increment,
+  businessarea int(11) NOT NULL default 0,
+  grp int(11) NOT NULL default 0,
+  orgOpenpsaObtype int(11) NOT NULL default 0,
+  sitegroup int(11) NOT NULL default 0,
+  PRIMARY KEY (id),
+  KEY org_openpsa_products_businessarea_member_sitegroup_idx(sitegroup),
+  KEY org_openpsa_products_businessarea_member_businessarea_idx(businessarea),
+  KEY org_openpsa_products_businessarea_member_grp_idx(grp)
+);

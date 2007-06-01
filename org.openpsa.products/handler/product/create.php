@@ -61,7 +61,7 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Simple helper which references all important members to the request data listing
      * for usage within the style listing.
@@ -82,7 +82,7 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
     function _load_schemadb()
     {
         $this->_schemadb =& $this->_request_data['schemadb_product'];
-        
+
         $this->_defaults['productGroup'] = $this->_request_data['up'];
     }
 
@@ -112,7 +112,7 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
     function & dm2_create_callback (&$controller)
     {
         $this->_product = new org_openpsa_products_product_dba();
-        //$this->_product->productGroup = $this->_request_data['up'];
+        $this->_product->productGroup = $this->_request_data['up'];
 
         if (! $this->_product->create())
         {
@@ -120,7 +120,7 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
             debug_print_r('We operated on this object:', $this->_product);
             debug_pop();
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                'Failed to create a new product product, cannot continue. Last Midgard error was: '. mgd_errstr());
+                "Failed to create a new product under product group #{$this->_request_data['up']}, cannot continue. Error: " . mgd_errstr());
             // This will exit.
         }
 
@@ -137,11 +137,11 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
      */
     function _handler_create($handler_id, $args, &$data)
     {
-        $this->_request_data['up'] = $args[0];
+        $this->_request_data['up'] = (int) $args[0];
 
         if ($this->_request_data['up'] == 0)
         {
-            $this->_topic->require_do('midgard:create');
+            $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_products_product_dba');
         }
         else
         {
@@ -153,6 +153,13 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
             $parent->require_do('midgard:create');
         }
 
+        $data['selected_schema'] = $args[1];
+        if (!array_key_exists($data['selected_schema'], $data['schemadb_product']))
+        {
+            return false;
+        }
+        $this->_schema =& $data['selected_schema'];
+
         $this->_load_controller();
 
         switch ($this->_controller->process_form())
@@ -160,7 +167,7 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
             case 'save':
                 $_MIDCOM->relocate("product/{$this->_product->guid}/");
                 // This will exit.
-                
+
             case 'cancel':
                 if ($this->_request_data['up'] == 0)
                 {
@@ -174,7 +181,11 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
         }
 
         $this->_prepare_request_data();
-        $_MIDCOM->set_26_request_metadata($this->_product->revised, $this->_product->guid);
+
+        if ($this->_product)
+        {
+            $_MIDCOM->set_26_request_metadata($this->_product->revised, $this->_product->guid);
+        }
         $this->_request_data['view_title'] = sprintf($this->_l10n_midcom->get('create %s'), $this->_schemadb[$this->_schema]->description);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_request_data['view_title']}");
 

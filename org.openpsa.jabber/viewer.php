@@ -9,7 +9,7 @@
 
 /**
  * org.openpsa.jabber site interface class.
- * 
+ *
  * Instant Messaging powered by JabberApplet
  */
 class org_openpsa_jabber_viewer extends midcom_baseclasses_components_request
@@ -27,13 +27,13 @@ class org_openpsa_jabber_viewer extends midcom_baseclasses_components_request
 
         // Match /applet
         $this->_request_switch[] = array(
-            'fixed_args' => 'applet',        
+            'fixed_args' => 'applet',
             'handler' => 'applet'
         );
 
         // Match /summary
         $this->_request_switch[] = array(
-            'fixed_args' => 'summary',        
+            'fixed_args' => 'summary',
             'handler' => 'summary'
         );
 
@@ -47,32 +47,32 @@ class org_openpsa_jabber_viewer extends midcom_baseclasses_components_request
     {
         $_MIDCOM->auth->require_valid_user();
         // We're using a popup here
-        $GLOBALS['midcom']->skip_page_style = true;    
+        $GLOBALS['midcom']->skip_page_style = true;
         return true;
     }
-    
+
     function _show_applet($handler_id, &$data)
     {
         midcom_show_style("jabber-applet");
     }
- 
+
      function _handler_summary($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
         return true;
     }
-    
+
     function _show_summary($handler_id, &$data)
     {
         midcom_show_style("show-summary");
     }
-    
+
     function _handler_frontpage($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
         return true;
     }
-    
+
     function _show_frontpage($handler_id, &$data)
     {
         midcom_show_style("show-frontpage");

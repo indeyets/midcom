@@ -83,6 +83,11 @@ class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
     {
         parent::midcom_baseclasses_components_handler();
     }
+    
+    function _on_initialize()
+    {
+        $_MIDCOM->load_library('midcom.helper.datamanager');
+    }
 
     /**
      * Helper function that prepares a datamanager instance for the configdm handler.
@@ -166,13 +171,17 @@ class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
         $this->_handler_configdm_prepare($handler_id, $data);
 
         // Add the toolbar items, if neccessary
-        $this->_view_toolbar->add_item(Array(
-            MIDCOM_TOOLBAR_URL => '',
-            MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('close configuration screen'),
-            MIDCOM_TOOLBAR_HELPTEXT => null,
-            MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_left.png',
-            MIDCOM_TOOLBAR_ENABLED => true
-        ));
+        $this->_view_toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => '',
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('close configuration screen'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_left.png',
+                MIDCOM_TOOLBAR_ENABLED => true
+            )
+        );
 
         switch ($data['datamanager']->process_form()) {
             case MIDCOM_DATAMGR_SAVED:
@@ -193,6 +202,34 @@ class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
                 debug_pop();
                 return false;
         }
+        
+        $_MIDCOM->add_link_head(
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL."/midcom.helper.datamanager/datamanager.css",
+            )
+        ); 
+        
+        // Add the view to breadcrumb trail
+        $tmp = Array();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => 'config.html',
+            MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('component configuration', 'midcom'),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);   
+
+        // Hide the button in toolbar
+        // TODO: Figure out the real URL of the config editor
+        // $this->_node_toolbar->hide_item('config.html');
+
+        // Set page title
+        $data['topic'] = $this->_topic;
+        $data['component'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_COMPONENT);
+        $data['title'] = sprintf($_MIDCOM->i18n->get_string('component %s configuration for folder %s', 'midcom'), $_MIDCOM->i18n->get_string($data['component'], $data['component']), $data['topic']->extra);
+        $_MIDCOM->set_pagetitle($data['title']);
 
         return true;
     }
@@ -226,7 +263,7 @@ class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
      */
     function _show_configdm($handler_id, &$data)
     {
-        echo '<h2>' . $this->_l10n_midcom->get('component configuration') . "</h2>\n";
+        echo "<h1>{$data['title']}</h1>\n";
         $data['datamanager']->display_form();
     }
 

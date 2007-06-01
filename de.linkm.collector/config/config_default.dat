@@ -1,9 +1,0 @@
-"id" => "collector_default",            // Unique ID
-"component" => "de.linkm.taviewer",     // Component name
-"style" => "",                          // Style
-"parameters" => "",                     // Path to a snippet with an array of all parameters to be set
-
-"schemadb" => "file:/de/linkm/collector/config/schemadb_default.dat", // Path to a snippet with the topic schema db
-"schemaname" => "default",              // The schema to use
-
-// We need an empty line here

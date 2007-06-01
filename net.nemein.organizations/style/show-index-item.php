@@ -1,18 +1,14 @@
 <?php
-global $view;
-global $view_link;
-global $view_name;
-$image = $view["logo"];
-$image_thumbnail = $image["thumbnail"];
-$prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+// Available request keys: groups, person, datamanager, view_url
+
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$view = $data['datamanager']->get_content_html();
 ?>
-<?php if ($image) { ?>
-  <a href="&(prefix);&(view_link);.html"><img src="&(image_thumbnail["url"]);" align="center" title="&(image["description"]);" alt="&(image["description"]);" &(image_thumbnail["size_line"]:h);></a><br />
+<td valign="bottom">
+<p>
+<b><a href="&(data['view_url']);">&(view['official']);</a></b><br />
+<?php if ($view['email']) { ?>
+  Email: <a href="mailto:&(view['email']);">&(view['email']);</a><br />
 <?php } ?>
-<dt><a href="&(prefix);&(view_link);.html">&(view_name);</a></dt>
-<dd><ul>
-<?php if ($view["homepage"]) { ?>
-  <li>Web site: <a href="&(view["homepage"]);">&(view["homepage"]);</a></li>
-<?php } ?>
-</ul>
-</dd>
+</p>
+</td>

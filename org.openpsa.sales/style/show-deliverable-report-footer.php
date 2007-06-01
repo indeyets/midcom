@@ -1,15 +1,15 @@
 <?php
-$view_data =& $_MIDCOM->get_custom_context_data('request_data');
-$sums_all = $view_data['sums_all'];
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$sums_all = $data['sums_all'];
 ?>
     </tbody>
     <tfoot>
         <?php
         $colspan = 4;
-        if ($view_data['handler_id'] != 'deliverable_report')
+        if ($data['handler_id'] != 'deliverable_report')
         {
             $colspan++;
-            foreach ($view_data['sums_per_person'] as $person_id => $sums)
+            foreach ($data['sums_per_person'] as $person_id => $sums)
             {
                 $owner = new midcom_db_person($person_id);
                 $owner_card = new org_openpsa_contactwidget($owner);
@@ -26,7 +26,7 @@ $sums_all = $view_data['sums_all'];
         }
         ?>
         <tr>
-            <td colspan="&(colspan);"><?php echo $view_data['l10n']->get('total'); ?></td>
+            <td colspan="&(colspan);"><?php echo $data['l10n']->get('total'); ?></td>
             <td>&(sums_all['price']);</td>
             <td>&(sums_all['cost']);</td>
             <td>&(sums_all['profit']);</td>

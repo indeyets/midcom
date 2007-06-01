@@ -177,8 +177,6 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
     {
         $this->_root_event =& $this->_request_data['root_event'];
         $this->_schemadb =& $this->_request_data['schemadb'];
-        
-        $_MIDCOM->auth->require_do('net.nemein.registration:manage', $this->_root_event);
     }
 
     /**
@@ -234,6 +232,8 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
         }
         $this->_registrar = $this->_registration->get_registrar();
         $this->_event = $this->_registration->get_event();
+        $this->_event->require_do('net.nemein.registration:manage');
+        
         $this->_datamanager =& $this->_registration->get_datamanager();
 
         $this->_prepare_request_data();

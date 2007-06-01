@@ -17,8 +17,8 @@
  *
  * <b>Available configuration options:</b>
  *
- * - <i>bool show_time:</i> Controls, if the stored value is to be shown with or without
- *   the time-of-day. If omitted, 00:00:00 is assumed. Defaults to
+ * - <i>bool show_time:</i> Boolean that controls, if the stored value is to be shown with or without
+ *   the time-of-day. If omitted, 00:00:00 is assumed. Defaults to true.
  * - <i>int minyear:</i> Minimum Year available for selection, default see below.
  * - <i>int maxyear:</i> Maximum Year available for selection, default see below.
  *
@@ -190,7 +190,7 @@ EOT;
 
         $attributes = Array
         (
-            'class' => 'date',
+            'class' => 'date_trigger',
             'id'    => "{$this->_namespace}{$this->name}_trigger",
         );
         $elements[] =& HTML_QuickForm::createElement('button', "{$this->name}_trigger", '...', $attributes);
@@ -243,6 +243,10 @@ EOT;
      */
     function get_default()
     {
+        if ($this->_type->value->year == 0)
+        {
+            $this->_type->value->year = '0000';
+        }
         if ($this->show_time)
         {
             $format = '%Y-%m-%d %H:%M:%S';

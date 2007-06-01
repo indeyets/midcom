@@ -31,6 +31,10 @@ Sisällysluettelo korvaa index-artikkelin ja sisältää listan kaikista kansios
 Takaisin etusivulle
 ---STRINGEND
 
+---STRING content
+Sisältö
+---STRINGEND
+
 ---STRING create article
 Luo artikkeli
 ---STRINGEND
@@ -135,7 +139,7 @@ Näytä artikkeli
 Onko kansio näkyvissä
 ---STRINGEND
 
----STRING content
-Sisältö
+---STRING ajax_enable
+Salli sisällön muokkaaminen AJAXilla suoraan sivulla
 ---STRINGEND
 

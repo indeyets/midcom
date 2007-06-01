@@ -56,6 +56,10 @@ class midcom_helper_datamanager2_widget_composite extends midcom_helper_datamana
         }
     }
     
+    function sync_type_with_widget($results)
+    {
+    }
+    
     function freeze()
     {
 

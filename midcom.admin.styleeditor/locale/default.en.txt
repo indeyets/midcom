@@ -3,199 +3,115 @@
 ---CVS $Id$
 ---LANGUAGE en
 
----STRING Select arrow up or down and click on the element you want to move
-Choose the direction by selecting up or down arrow and click on the element you want to move.
+---STRING add text file
+Add text file
 ---STRINGEND
 
----STRING Set order
-Set order
+---STRING all style elements
+All style elements
 ---STRINGEND
 
----STRING Sort articles
-Sort articles
+---STRING cascading style sheet
+Cascading Style Sheet
 ---STRINGEND
 
----STRING Sort topics
-Sort topics
+---STRING component default
+Component default
 ---STRINGEND
 
----STRING The objects in this topic cannot be sorted
-The articles in this topic cannot be sorted
+---STRING copy to editor
+Copy to editor
 ---STRINGEND
 
----STRING are you sure to delete
-Are you sure you want to delete this Topic with all its descendants?
+---STRING create new element
+Create new element
 ---STRINGEND
 
----STRING articles first
-Articles first, then topics (by score)
+---STRING edit element %s
+Edit element %s
 ---STRINGEND
 
----STRING attachments for topic
-Attachments for Topic
+---STRING edit file %s
+Edit file %s
 ---STRINGEND
 
----STRING by score
-by Score
+---STRING edit layout template
+Edit layout template
 ---STRINGEND
 
----STRING create attachment
-Create Attachment
+---STRING edit text file
+Edit text file
 ---STRINGEND
 
----STRING create subtopic
-Create Subtopic
+---STRING element %s exists
+Element '%s' exists
 ---STRINGEND
 
----STRING create topic
-Create Topic
+---STRING element from file
+Upload element
 ---STRINGEND
 
----STRING default
-Default for component
+---STRING element name
+Element name
 ---STRINGEND
 
----STRING default sort order
-Default component sort order
+---STRING file contents
+File contents
 ---STRINGEND
 
----STRING delete attachment
-Delete Attachment
----STRINGEND
-
----STRING delete topic
-Delete Topic
----STRINGEND
-
----STRING descendants are deleted
-Warning: descendants are also deleted.
----STRINGEND
-
----STRING edit metadata
-Edit metadata
----STRINGEND
-
----STRING edit order
-Edit topic order
----STRINGEND
-
----STRING edit topic
-Edit Topic
----STRINGEND
-
----STRING file
-File
+---STRING file information
+File information
 ---STRINGEND
 
 ---STRING filename
 Filename
 ---STRINGEND
 
----STRING inherit from parent
-Inherit from parent element
+---STRING javascript
+JavaScript
 ---STRINGEND
 
----STRING inherit style
-Make style inheritable
+---STRING midcom.admin.styleeditor
+Style editor
 ---STRINGEND
 
----STRING location
-Location
+---STRING mimetype
+File type
 ---STRINGEND
 
----STRING metadata for %s
-Metadata for '%s'
+---STRING plain text
+Plain text
 ---STRINGEND
 
----STRING midcom.admin.content
-MidCOM AIS
+---STRING style attachments
+Style attachments
 ---STRINGEND
 
----STRING nav order
-Sorting order of child elements
+---STRING style editor
+Style editor
 ---STRINGEND
 
----STRING new filename
-New filename
+---STRING style element list
+List of style elements
 ---STRINGEND
 
----STRING no access restriction
-No access restriction
+---STRING style elements for %s
+Style elements for style %s
 ---STRINGEND
 
----STRING no attachments found
-No Attachments found
+---STRING upload file
+Upload file
 ---STRINGEND
 
----STRING no preview available
-No preview available
+---STRING url
+URL
 ---STRINGEND
 
----STRING overview
-Overview
+---STRING xml
+XML
 ---STRINGEND
 
----STRING owner
-Owner
----STRINGEND
-
----STRING preview
-Preview
----STRINGEND
-
----STRING score
-Score
----STRINGEND
-
----STRING short description
-Short description
----STRINGEND
-
----STRING sorting position
-Sorting position
----STRINGEND
-
----STRING style
-Style
----STRINGEND
-
----STRING title
-Title
----STRINGEND
-
----STRING topic administration
-Topic Administration
----STRINGEND
-
----STRING topic attachments
-Topic Attachments
----STRINGEND
-
----STRING topics first
-Topics first, then articles (by score)
----STRINGEND
-
----STRING type
-Type
----STRINGEND
-
----STRING url name
-URL Name (lowercase, alphanumeric, no spaces, no special characters, etc.)
----STRINGEND
-
----STRING view this page
-Go to page
----STRINGEND
-
----STRING view this page link unavailable
-Go to page not allowed
----STRINGEND
-
----STRING viewer groups
-Groups which have the permission to view this topic
----STRINGEND
-
----STRING topics to delete
-Topic tree to delete
+---STRING element name required
+Element name is required
 ---STRINGEND
 

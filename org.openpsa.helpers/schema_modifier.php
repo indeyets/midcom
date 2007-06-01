@@ -16,7 +16,7 @@ function org_openpsa_helpers_schema_modifier(&$datamanager, $field, $key, $value
         {
             $datamanager->_layoutdb[$schema]['fields'][$field] = array();
         }
-        
+
         if (array_key_exists($field, $datamanager->_layoutdb[$schema]['fields']))
         {
             $datamanager->_layoutdb[$schema]['fields'][$field][$key] = $value;

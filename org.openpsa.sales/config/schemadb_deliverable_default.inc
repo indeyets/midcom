@@ -2,25 +2,77 @@
 (
     'description' => 'single delivery',
     'fields'      => array
-    (   
+    (
         'title' => Array
         (
             // COMPONENT-REQUIRED
             'title' => 'title',
             'storage' => 'title',
-            'required' => true,
             'type' => 'text',
             'widget'  => 'text',
+        ),
+        'tags' => Array
+        (
+            'title' => 'tags',
+            'storage' => null,
+            'type' => 'tags',
+            'widget' => 'text',
+        ),
+        'supplier' => array
+        (
+            'title'   => 'supplier',
+            'storage' => 'supplier',
+            'type' => 'select',
+            'type_config' => array
+            (
+                 'require_corresponding_option' => false,
+                 'options' => array(),
+            ),
+            'widget' => 'universalchooser',
+            'widget_config' => array
+            (
+                'class'       => 'org_openpsa_contacts_group',
+                'component'   => 'org.openpsa.contacts',
+                'titlefield'  => 'official',
+                'idfield'     => 'id',
+                'constraints' => array
+                (
+                ),
+                'searchfields'  => array
+                (
+                    'name',
+                    'official'
+                ),
+                'orders'        => array
+                (
+                    array('official'    => 'ASC'),
+                ),
+            ),
         ),
         'description' => Array
         (
             'title' => 'description',
             'storage' => 'description',
             'type' => 'text',
-            'type_config' => Array ( 
-                'output_mode' => 'markdown' 
+            'type_config' => Array (
+                'output_mode' => 'markdown'
             ),
             'widget' => 'textarea',
+        ),
+        'end' => Array
+        (
+            'title' => 'estimated delivery',
+            'storage' => 'end',
+            'type' => 'date',
+            'type_config' => Array
+            (
+                'storage_type' => 'UNIXTIME'
+            ),
+            'widget' => 'jsdate',
+            'widget_config' => Array
+            (
+                'show_time' => false,
+            ),
         ),
         'pricePerUnit' => Array
         (
@@ -38,7 +90,7 @@
             (
                 'options' => Array
                 (
-                    'p' => 'unit',       // per piece
+                    'p' => 'unit',    // per piece
                     'h' => 'hour',    // per hour
                     'd' => 'day',     // per day
                     'm' => 'month',   // per month
@@ -56,6 +108,13 @@
             'type' => 'number',
             'widget'  => 'text',
         ),
+        'plannedUnits' => Array
+        (
+            'title' => 'planned units',
+            'storage' => 'plannedUnits',
+            'type' => 'number',
+            'widget'  => 'text',
+        ),
         'price' => Array
         (
             'title' => 'price',
@@ -68,6 +127,13 @@
         (
             'title'   => 'invoice by actual units',
             'storage' => 'invoiceByActualUnits',
+            'type'    => 'boolean',
+            'widget'  => 'checkbox',
+        ),
+        'invoiceApprovedOnly' => Array
+        (
+            'title'   => 'invoice approved only',
+            'storage' => 'invoiceApprovedOnly',
             'type'    => 'boolean',
             'widget'  => 'checkbox',
         ),
@@ -102,21 +168,6 @@
             'widget'  => 'text',
             'readonly' => true,
         ),
-        'end' => Array
-        (
-            'title' => 'estimated delivery',
-            'storage' => 'end',
-            'type' => 'date',
-            'type_config' => Array 
-            ( 
-                'storage_type' => 'UNIXTIME' 
-            ),
-            'widget' => 'jsdate',
-            'widget_config' => Array 
-            ( 
-                'show_time' => false,
-            ),
-        ),
         'components' => Array
         (
             'title' => 'components',
@@ -129,6 +180,7 @@
                 'child_foreign_key_fieldname' => 'up',
                 'style_element_name' => 'deliverable',
                 'enable_creation' => false,
+                'area_element' => 'tr',
             ),
             'widget' => 'composite',
         ),
@@ -138,25 +190,99 @@
 (
     'description' => 'recurring subscription',
     'fields'      => array
-    (   
+    (
         'title' => Array
         (
             // COMPONENT-REQUIRED
             'title' => 'title',
             'storage' => 'title',
-            'required' => true,
             'type' => 'text',
             'widget'  => 'text',
+        ),
+        'tags' => Array
+        (
+            'title' => 'tags',
+            'storage' => null,
+            'type' => 'tags',
+            'widget' => 'text',
+        ),
+        'supplier' => array
+        (
+            'title'   => 'supplier',
+            'storage' => 'supplier',
+            'type' => 'select',
+            'type_config' => array
+            (
+                 'require_corresponding_option' => false,
+                 'options' => array(),
+            ),
+            'widget' => 'universalchooser',
+            'widget_config' => array
+            (
+                'class'       => 'org_openpsa_contacts_group',
+                'component'   => 'org.openpsa.contacts',
+                'titlefield'  => 'official',
+                'idfield'     => 'id',
+                'constraints' => array
+                (
+                ),
+                'searchfields'  => array
+                (
+                    'name',
+                    'official'
+                ),
+                'orders'        => array
+                (
+                    array('official'    => 'ASC'),
+                ),
+            ),
         ),
         'description' => Array
         (
             'title' => 'description',
             'storage' => 'description',
             'type' => 'text',
-            'type_config' => Array ( 
-                'output_mode' => 'markdown' 
+            'type_config' => Array (
+                'output_mode' => 'markdown'
             ),
             'widget' => 'textarea',
+        ),
+        'start' => Array
+        (
+            'title' => 'subscription begins',
+            'storage' => 'start',
+            'type' => 'date',
+            'type_config' => Array
+            (
+                'storage_type' => 'UNIXTIME'
+            ),
+            'widget' => 'jsdate',
+            'widget_config' => Array
+            (
+                'show_time' => false,
+            ),
+        ),
+        'end' => Array
+        (
+            'title' => 'subscription ends',
+            'storage' => 'end',
+            'type' => 'date',
+            'type_config' => Array
+            (
+                'storage_type' => 'UNIXTIME'
+            ),
+            'widget' => 'jsdate',
+            'widget_config' => Array
+            (
+                'show_time' => false,
+            ),
+        ),
+        'continuous' => Array
+        (
+            'title'   => 'continuous subscription',
+            'storage' => 'continuous',
+            'type'    => 'boolean',
+            'widget'  => 'checkbox',
         ),
         'pricePerUnit' => Array
         (
@@ -169,6 +295,13 @@
         (
             'title' => 'units',
             'storage' => 'units',
+            'type' => 'number',
+            'widget'  => 'text',
+        ),
+        'plannedUnits' => Array
+        (
+            'title' => 'planned units',
+            'storage' => 'plannedUnits',
             'type' => 'number',
             'widget'  => 'text',
         ),
@@ -205,6 +338,13 @@
             'type'    => 'boolean',
             'widget'  => 'checkbox',
         ),
+        'invoiceApprovedOnly' => Array
+        (
+            'title'   => 'invoice approved only',
+            'storage' => 'invoiceApprovedOnly',
+            'type'    => 'boolean',
+            'widget'  => 'checkbox',
+        ),
         'costPerUnit' => Array
         (
             'title' => 'cost per unit',
@@ -236,43 +376,6 @@
             'widget'  => 'text',
             'readonly' => true,
         ),
-        'start' => Array
-        (
-            'title' => 'subscription begins',
-            'storage' => 'start',
-            'type' => 'date',
-            'type_config' => Array 
-            ( 
-                'storage_type' => 'UNIXTIME' 
-            ),
-            'widget' => 'jsdate',
-            'widget_config' => Array 
-            ( 
-                'show_time' => false,
-            ),
-        ),
-        'end' => Array
-        (
-            'title' => 'subscription ends',
-            'storage' => 'end',
-            'type' => 'date',
-            'type_config' => Array 
-            ( 
-                'storage_type' => 'UNIXTIME' 
-            ),
-            'widget' => 'jsdate',
-            'widget_config' => Array 
-            ( 
-                'show_time' => false,
-            ),
-        ),
-        'continuous' => Array
-        (
-            'title'   => 'continuous subscription',
-            'storage' => 'continuous',
-            'type'    => 'boolean',
-            'widget'  => 'checkbox',
-        ),
         'components' => Array
         (
             'title' => 'components',
@@ -285,6 +388,7 @@
                 'child_foreign_key_fieldname' => 'up',
                 'style_element_name' => 'deliverable',
                 'enable_creation' => false,
+                'area_element' => 'tr',
             ),
             'widget' => 'composite',
         ),

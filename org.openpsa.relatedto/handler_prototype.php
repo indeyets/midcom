@@ -1,7 +1,7 @@
 <?php
 /**
  * @package org.openpsa.relatedto
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: handler_prototype.php,v 1.6 2006/06/01 12:25:32 rambo Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,13 +9,13 @@
 
 /**
  * relatedto ajax/ahah handler, extended by each component using relatedtos
- * 
+ *
  * @package org.openpsa.relatedto
  */
 class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_components_handler
 {
     var $realcomponent = false;
-    
+
     function org_openpsa_relatedto_handler_relatedto()
     {
         parent::midcom_baseclasses_components_handler();
@@ -52,7 +52,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             'in' => array(),
             'out' => array(),
         );
-        
+
         switch ($this->_request_data['mode'])
         {
             case 'in-paged':
@@ -75,7 +75,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
                 //Mode not supported
                 return false;
         }
-        
+
         //TODO: Add custom handler ID for skipping style
         //$_MIDCOM->skip_page_style = true;
         return true;
@@ -83,7 +83,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
 
     /**
      * Renders the selected view
-     * 
+     *
      * Due to this being a purecode component we can't use the MidCOM style engine
      * but opearations are divided into overrideable methods as much as possible so
      * components then can override them and then use the style engine within their
@@ -120,7 +120,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
                 break;
         }
     }
-    
+
     /**
      * Renders inbound links
      *
@@ -151,7 +151,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             echo "            <a name=\"{$this->_request_data['link_other_guid']}\"></a>\n";
             $this->_show_render_line();
         }
-        
+
         echo "        </ol>\n";
         echo "    </div>\n";
     }
@@ -259,7 +259,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
                 $this->_show_render_line_default();
                 break;
         }
-    
+
     }
 
     /**
@@ -269,26 +269,26 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
     {
         //TODO
         echo "<ul class=\"relatedto_toolbar\" id=\"org_openpsa_relatedto_toolbar_{$this->_request_data['link_obj']->guid}\">\n";
-        
+
         switch ($this->_request_data['link_obj']->fromComponent)
         {
             case 'net.nemein.wiki':
             case 'org.openpsa.calendar':
-                echo "<li><input type=\"button\" class=\"button\" id=\"org_openpsa_relatedto_details_button_{$this->_request_data['link_other_obj']->guid}\" onClick=\"ooToggleRelatedInfoDisplay('{$this->_request_data['link_other_obj']->guid}');\" class=\"info\" value=\"" . $_MIDCOM->i18n->get_string('details', 'org.openpsa.relatedto') . "\" /></li>\n";
+                echo "<li><input type=\"button\" class=\"button\" id=\"org_openpsa_relatedto_details_button_{$this->_request_data['link_other_obj']->guid}\" onclick=\"ooToggleRelatedInfoDisplay('{$this->_request_data['link_other_obj']->guid}');\" class=\"info\" value=\"" . $_MIDCOM->i18n->get_string('details', 'org.openpsa.relatedto') . "\" /></li>\n";
                 break;
         }
-        
+
         if ($this->_request_data['link_obj']->status == ORG_OPENPSA_RELATEDTO_STATUS_SUSPECTED)
         {
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             echo "    <span id=\"org_openpsa_relatedto_toolbar_confirmdeny_{$this->_request_data['link_obj']->guid}\">\n";
-            echo "        <li id=\"org_openpsa_relatedto_toolbar_confirm_{$this->_request_data['link_obj']->guid}\"><input type=\"button\" class=\"button\" value=\"" . $_MIDCOM->i18n->get_string('confirm relation', 'org.openpsa.relatedto') . "\" onClick=\"ooRelatedDenyConfirm('{$prefix}', 'confirm', '{$this->_request_data['link_obj']->guid}');\" /></li>\n";
-            echo "        <li id=\"org_openpsa_relatedto_toolbar_deny_{$this->_request_data['link_obj']->guid}\"><input type=\"button\" class=\"button\" value=\"" . $_MIDCOM->i18n->get_string('deny relation', 'org.openpsa.relatedto') . "\" onClick=\"ooRelatedDenyConfirm('{$prefix}', 'deny', '{$this->_request_data['link_obj']->guid}');\" /><li>\n";
+            echo "        <li id=\"org_openpsa_relatedto_toolbar_confirm_{$this->_request_data['link_obj']->guid}\"><input type=\"button\" class=\"button\" value=\"" . $_MIDCOM->i18n->get_string('confirm relation', 'org.openpsa.relatedto') . "\" onclick=\"ooRelatedDenyConfirm('{$prefix}', 'confirm', '{$this->_request_data['link_obj']->guid}');\" /></li>\n";
+            echo "        <li id=\"org_openpsa_relatedto_toolbar_deny_{$this->_request_data['link_obj']->guid}\"><input type=\"button\" class=\"button\" value=\"" . $_MIDCOM->i18n->get_string('deny relation', 'org.openpsa.relatedto') . "\" onclick=\"ooRelatedDenyConfirm('{$prefix}', 'deny', '{$this->_request_data['link_obj']->guid}');\" /><li>\n";
             echo "    </span>\n";
         }
         echo "</ul>\n";
     }
-    
+
     /**
      * If a component wishes to show hour_report lines it must override this method
      *
@@ -324,9 +324,9 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
         //PONDER: Slower but browser would like it better?
         //$document_url = $_MIDCOM->permalinks->resolve_permalink($document->guid);
         echo "                <span class=\"title\"><a href=\"{$document_url}\" target=\"document_{$document->guid}\">{$document->title}</a></span>\n";
-        
+
         echo "                <ul class=\"metadata\">\n";
-            
+
         // Time
         echo '                    <li class="time">' . strftime('%x', $document->created) . "</li>\n";
 
@@ -351,13 +351,13 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
         }
 
         echo '                   </li>';
-        
-        echo "                </ul>\n";       
-        
+
+        echo "                </ul>\n";
+
         echo "                <div id=\"org_openpsa_relatedto_details_{$document->guid}\" class=\"details hidden\" style=\"display: none;\">\n";
         echo "                TEST</div>\n";
         //TODO: get correct node and via it then handle details trough AHAH (and when we have node we can use proper link in document_url as well
-        
+
         $this->_show_render_line_controls();
         echo "            </li>\n";
     }
@@ -408,7 +408,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
         // Recipients
         $this->_show_render_line_wikipage_email_recipients($page);
         // End metadata UL
-        echo "                </ul>\n";            
+        echo "                </ul>\n";
 
         echo "                <div id=\"org_openpsa_relatedto_details_url_{$page->guid}\" style=\"display: none;\" title=\"{$node[MIDCOM_NAV_FULLURL]}raw/{$page->name}.html\"></div>\n";
         echo "                <div id=\"org_openpsa_relatedto_details_{$page->guid}\" class=\"details hidden\" style=\"display: none;\">\n";
@@ -459,7 +459,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
                 $seen_emails[$email] = true;
             }
         }
-        echo "                    </li>\n"; 
+        echo "                    </li>\n";
     }
 
     /**
@@ -483,7 +483,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             return;
         }
         echo "            <li class=\"note\" id=\"org_openpsa_relatedto_line_{$this->_request_data['link_obj']->guid}\">\n";
-        
+
         $nap = new midcom_helper_nav();
         $node = $nap->get_node($page->topic);
         if (!$node)
@@ -492,21 +492,21 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             return;
         }
         $page_url = "{$node[MIDCOM_NAV_FULLURL]}{$page->name}";
-        
+
         echo "                <span class=\"title\"><a href=\"{$page_url}\" target=\"wiki_{$page->guid}\">{$page->title}</a></span>\n";
 
         echo "                <ul class=\"metadata\">\n";
-            
+
         // Time
         echo '                    <li class="time">' . strftime('%x', $page->created) . "</li>\n";
-        
+
         // Author
         echo "                    <li class=\"members\">".$_MIDCOM->i18n->get_string('author', 'net.nemein.wiki').": ";
         $author = new midcom_db_person($page->author);
         $author_card = new org_openpsa_contactwidget($author);
         echo $author_card->show_inline()." ";
-        echo "                    </li>\n";            
-        echo "                </ul>\n";            
+        echo "                    </li>\n";
+        echo "                </ul>\n";
 
         echo "                <div id=\"org_openpsa_relatedto_details_url_{$page->guid}\" style=\"display: none;\" title=\"{$node[MIDCOM_NAV_FULLURL]}raw/{$page->name}.html\"></div>\n";
         echo "                <div id=\"org_openpsa_relatedto_details_{$page->guid}\" class=\"details hidden\" style=\"display: none;\">\n";
@@ -551,12 +551,12 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             $event_url = "{$cal_node[MIDCOM_NAV_FULLURL]}event/{$event->guid}";
             $event_js = org_openpsa_calendar_interface::calendar_editevent_js($event->guid, $cal_node);
             echo "                <span class=\"title\"><a href=\"{$event_url}\" onclick=\"{$event_js}\" target=\"event_{$event->guid}\">{$event->title}</a></span>\n";
-            
+
             echo "                <ul class=\"metadata\">\n";
-            
+
             // Time
             echo '                    <li class="time location">' . $event->format_timeframe() . ", {$event->location}</li>\n";
-            
+
             // Participants
             echo "                    <li class=\"members\">".$_MIDCOM->i18n->get_string('participants', 'org.openpsa.calendar').": ";
             foreach ($event->participants as $person_id => $confirmed)
@@ -565,8 +565,8 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
                 $participant_card = new org_openpsa_contactwidget($participant);
                 echo $participant_card->show_inline()." ";
             }
-            echo "                    </li>\n";            
-            echo "                </ul>\n";            
+            echo "                    </li>\n";
+            echo "                </ul>\n";
 
             echo "                <div id=\"org_openpsa_relatedto_details_url_{$event->guid}\" style=\"display: none;\" title=\"{$cal_node[MIDCOM_NAV_FULLURL]}event/raw/{$event->guid}/\"></div>\n";
             echo "                <div id=\"org_openpsa_relatedto_details_{$event->guid}\" class=\"details hidden\" style=\"display: none;\">\n";
@@ -620,10 +620,10 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             $task_url = "{$proj_node[MIDCOM_NAV_FULLURL]}task/{$task->guid}";
             echo "                <span class=\"title\"><a href=\"{$task_url}\" target=\"task_{$task->guid}\">{$task->title}</a></span>\n";
             echo "                <ul class=\"metadata\">\n";
-            
+
             // Deadline
             echo "                    <li>".$_MIDCOM->i18n->get_string('deadline', 'org.openpsa.projects').": ".strftime('%x', $task->end)."</li>";
-            
+
             // Resources
             echo "                    <li>".$_MIDCOM->i18n->get_string('resources', 'org.openpsa.projects').": ";
             foreach ($task->resources as $resource_id => $confirmed)
@@ -684,7 +684,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             $sales_url = "{$sales_node[MIDCOM_NAV_FULLURL]}salesproject/{$salesproject->guid}";
             echo "                <span class=\"title\"><a href=\"{$sales_url}\" target=\"task_{$salesproject->guid}\">{$salesproject->title}</a></span>\n";
             echo "                <ul class=\"metadata\">\n";
-            
+
             // Owner
             echo "                    <li>".$_MIDCOM->i18n->get_string('owner', 'midcom').": ";
             $owner = new midcom_db_person($salesproject->owner);
@@ -700,7 +700,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
                 echo $customer->official;
                 echo "</li>";
             }
-            
+
             echo "                </ul>\n";
             echo "                <div id=\"org_openpsa_relatedto_details_{$salesproject->guid}\" class=\"details hidden\" style=\"display: none;\">\n";
             echo "                </div>\n";
@@ -759,7 +759,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
                 $customer = new midcom_db_group($invoice->customer);
                 echo "                    <li>".$_MIDCOM->i18n->get_string('customer', 'org.openpsa.invoices').": {$customer->official}</li>";
             }
-            
+
             // Sum and due date
             if ($invoice->due < time())
             {
@@ -776,9 +776,9 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             {
                 $paid = '';
             }
-            
+
             echo "                    <li>".$_MIDCOM->i18n->get_string('sum', 'org.openpsa.invoices').": {$invoice->sum} (".$_MIDCOM->i18n->get_string('due', 'org.openpsa.invoices').": ".strftime('%x', $invoice->due)."{$paid})</li>";
-            
+
             echo "                    </li>\n";
             echo "                </ul>\n";
             echo "                <div id=\"org_openpsa_relatedto_details_{$invoice->guid}\" class=\"details hidden\" style=\"display: none;\">\n";
@@ -797,7 +797,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
         $this->_show_render_line_controls();
         echo "            </li>\n";
     }
-  
+
     /**
      * Default line rendering, used if a specific renderer cannot be found
      *
@@ -832,7 +832,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
                 echo "{$class} #{$this->_request_data['link_other_obj']->guid}";
         }
         echo "</span>\n";
-        
+
         $this->_show_render_line_controls();
         echo "</li>\n";
     }
@@ -880,10 +880,10 @@ EOF;
         return 0;
 EOF;
     }
-    
+
     /**
      * Default method for getting objects relatedtos (inbound ie toGuid == $obj->guid)
-     * 
+     *
      * Components handlers may need to override this to account
      * for specific object types and possible traversing of their children
      */
@@ -920,7 +920,7 @@ EOF;
 
     /**
      * Default method for getting objects relatedtos (outbound ie fromGuid == $obj->guid)
-     * 
+     *
      * Components handlers may need to override this to account
      * for specific object types and possible traversing of their children
      */

@@ -1,29 +1,29 @@
 <h2>Rambos playgound</h2>
 <?php
+
 /*
-$obj = new org_openpsa_projects_task(15);
-*/
-/*
-$obj = new midcom_core_group_virtual("org.openpsa.projects-ffc21bd10233c5a6440c231e35033a10");
-
-echo "obj <pre>\n";
-print_r($obj);
-echo "</pre>\n";
-
-$obj2 = $obj->get_storage();
-
-echo "obj <pre>\n";
-print_r($obj2);
-echo "</pre>\n";
+$made = mktime(1,2,3,4,5,2006);
+echo date("Y-m-d H:i:s", $made) . "<br>\n";;
+$_MIDCOM->componentloader->load_graceful('net.nemein.tag');
 */
 
+$task = new org_openpsa_projects_task('b093253a0c96d4cb7868787f8a2357fc');
+$broker = new org_openpsa_projects_projectbroker();
+$prospects = $broker->find_task_prospects($task);
+echo "prospects:\n<pre>\n" . sprint_r($prospects) . "</pre>\n";
+
 /*
-$hr = new org_openpsa_projects_hour_report();
-$hr->hours = 3;
-$hr->description = 'debuggingk';
-$hr->task = 155;
-$ret = $hr->create();
-echo "got {$ret}<br>\n";
+$_MIDCOM->componentloader->load_graceful('org.openpsa.contacts');
+$classes = array
+(
+    'midgard_person',
+    'midcom_db_person',
+    'midcom_org_openpsa_person',
+    'org_openpsa_contacts_person',
+);
+$tags = array('php', 'midgard');
+$persons = net_nemein_tag_handler::get_objects_with_tags($tags, $classes, 'OR');
+echo "persons:\n<pre>\n" . sprint_r($persons) . "</pre>\n";
 */
 
 ?>

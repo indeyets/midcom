@@ -1,0 +1,54 @@
+org.routamc.photostream ChangeLog
+---------------------------------
+
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guaranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completely new features.
+
+2007-05-06 rambo
+  + "Semi-public" privilege checkbox to default schema
+  + Upload photos directly to gallery
+
+2007-02-19 bergie
+  + Clarified photo regeneration UI
+  - Switched to larger "view-scale" image sizes
+
+2007-02-07 bergie
+  + Added support for importing photos from Flickr
+
+2007-01-29 bergie
+  - Fixed photo regeneration script to prevent timeouts
+  + Added new tag cloud view
+
+2006-11-12 rambo
+  - small display improvements to recreate derived images
+  - updated TODO
+  - updated manifest
+
+2006-11-11 rambo
+  + "derived images" (in this case 'main' is also "derived" [from archival])
+    recreation handler (requires also latest DM2)
+
+2006-11-07 rambo
+  - fixed a notice when prosessing images without EXIF data.
+  - version bump
+  + EXIF read test script.
+
+2006-10-28 rambo
+  + Started work on the EXIF read routines
+  + automatic title generation from filename (if not otherwise set)
+
+2006-10-22 bergie
+  + UI work, listing and viewing photos now works on basic level
+  + Created listings of all photos, photos by tag (Midgard 1.8 only)
+    and photos by rating
+  + Enabled AJAX editing of photo title and rating in the lists
+  + Added support for private photos
+
+2006-10-21 rambo
+  + Made photo upload work
+
+2006-10-10 rambo & bergie
+  + Initially created

@@ -81,7 +81,7 @@ class midcom_helper_datamanager2_controller_simple extends midcom_helper_dataman
         }
 
         $result = $this->formmanager->process_form();
-
+        
         // Handle successful save explicitly.
         if (   $result == 'save'
             || $result == 'next')

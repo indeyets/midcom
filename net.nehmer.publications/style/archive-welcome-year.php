@@ -2,7 +2,7 @@
 // Available request keys: total_count, first_post, year_data, year, url, count, month_data
 // month data contains month => url, count pairs.
 
-$data =& $_MIDCOM->get_custom_context_data('request_data');
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
 
 ?>
 

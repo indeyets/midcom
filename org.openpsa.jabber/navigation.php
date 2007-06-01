@@ -10,9 +10,9 @@
 
 /**
  * org.openpsa.jabber NAP interface class.
- * 
+ *
  * NAP is mainly used for toolbar rendering in this component
- * 
+ *
  * @package org.openpsa.jabber
  */
 class org_openpsa_jabber_navigation extends midcom_baseclasses_components_navigation
@@ -23,7 +23,7 @@ class org_openpsa_jabber_navigation extends midcom_baseclasses_components_naviga
         $leaves = array();
         return $leaves;
     }
-    
+
     function get_node($toolbar = null)
     {
         $toolbar = Array();

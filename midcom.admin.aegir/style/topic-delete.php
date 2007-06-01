@@ -33,7 +33,7 @@ function midcom_admin_content_topic_delete_recursor($nodeid = null)
         $node = $nap->get_node($nodeid);
         if (! $node)
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to load node {$nodeid} while recursing for the delete topic listing.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to load node {$nodeid} while recursing for the delete topic listing.");
             // This will exit.
         }
         echo "<ul><li>{$node[MIDCOM_NAV_NAME]} ({$node[MIDCOM_NAV_ABSOLUTEURL]})";
@@ -44,7 +44,7 @@ function midcom_admin_content_topic_delete_recursor($nodeid = null)
         $node = $nap->get_node($nodeid);
         if (! $node)
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to load node {$nodeid} while recursing for the delete topic listing.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to load node {$nodeid} while recursing for the delete topic listing.");
             // This will exit.
         }
     }
@@ -58,7 +58,7 @@ function midcom_admin_content_topic_delete_recursor($nodeid = null)
 	        $subnode = $nap->get_node($subnodeid);
 	        if (! $subnode)
 	        {
-	            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to load node {$subnodeid} while recursing for the delete topic listing.");
+	            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to load node {$subnodeid} while recursing for the delete topic listing.");
 	            // This will exit.
 	        }
 	        echo "<li>{$subnode[MIDCOM_NAV_NAME]} ({$subnode[MIDCOM_NAV_ABSOLUTEURL]})";

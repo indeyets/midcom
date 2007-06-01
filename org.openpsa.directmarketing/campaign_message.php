@@ -23,13 +23,13 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
     var $_chunk_num = 0;
     var $_chunk_max_recurse = 15; //How many times to recurse if all results are filtered (speed vs memory [and risk on crashing], higher is faster)
     var $token_size = 15;
-    
+
     function midcom_org_openpsa_campaign_message($id = null)
     {
         $stat = parent::__midcom_org_openpsa_campaign_message($id);
         if ($stat)
         {
-            /* To specify different values for MMS and SMS first unset the MMS 
+            /* To specify different values for MMS and SMS first unset the MMS
                values to destroy the reference, then set correct value */
             $this->mms_lib = &$this->sms_lib;
             $this->mms_lib_api = &$this->sms_lib_api;
@@ -40,18 +40,104 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         }
         return $stat;
     }
-    
+
+    function get_parent_guid_uncached()
+    {
+        if (empty($this->campaign))
+        {
+            return null;
+        }
+        if (method_exists($this, 'new_collector'))
+        {
+            // Use collector, it's faster
+            return org_openpsa_directmarketing_campaign_message::get_parent_guid_uncached_static($this->guid);
+        }
+        $campaign = new org_openpsa_directmarketing_campaign($this->campaign);
+        if (   !is_object($campaign)
+            || empty($campaign->id))
+        {
+            return null;
+        }
+        return $campaign->guid;
+    }
+
+    function get_parent_guid_uncached_static($guid)
+    {
+        if (empty($guid))
+        {
+            return null;
+        }
+        /* 1.8.1 version:
+        $mc = org_openpsa_directmarketing_campaign_message::new_collector('guid', $guid);
+        $mc->add_value_property('campaign.guid');
+        $stat = $mc->execute();
+        if (!$stat)
+        {
+            // error
+            return null;
+        }
+        $keys = $mc->list_keys();
+        list ($key, $copy) = each ($keys);
+        $campaign_guid = $mc->get_subkey($key, 'guid');
+        if ($campaign_guid === false)
+        {
+            // error
+            return null;
+        }
+        return $campaign_guid;
+        */
+        
+        $mc = org_openpsa_directmarketing_campaign_message::new_collector('guid', $guid);
+        $mc->add_value_property('campaign');
+        $stat = $mc->execute();
+        if (!$stat)
+        {
+            // error
+            return null;
+        }
+        $keys = $mc->list_keys();
+        list ($key, $copy) = each ($keys);
+        $campaign_id = $mc->get_subkey($key, 'campaign');
+        if ($campaign_id === false)
+        {
+            // error
+            return null;
+        }
+        $mc2 = org_openpsa_directmarketing_campaign::new_collector('id', $campaign_id);
+        $mc2->add_value_property('guid');
+        $stat = $mc2->execute();
+        if (!$stat)
+        {
+            // error
+            return null;
+        }
+        $keys2 = $mc2->list_keys();
+        list ($key2, $copy2) = each ($keys2);
+        $campaign_guid = $mc2->get_subkey($key2, 'guid');
+        if ($campaign_guid === false)
+        {
+            // error
+            return null;
+        }
+        return $campaign_guid;
+    }
+
+    function get_dba_parent_class()
+    {
+        return 'org_openpsa_directmarketing_campaign';
+    }
+
     function _on_created()
     {
         parent::_on_created();
-        
+
         if (!$this->orgOpenpsaObtype)
         {
             $this->orgOpenpsaObtype = ORG_OPENPSA_MESSAGETYPE_EMAIL_TEXT;
             $this->update();
         }
     }
-    
+
     function _on_loaded()
     {
         $this->title = trim($this->title);
@@ -62,7 +148,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         }
         return true;
     }
-    
+
     /**
      * Matches message type and calls correct subhandler
      */
@@ -100,7 +186,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
 
     /**
      * Sends $content to all members of the campaign
-     */    
+     */
     function send(&$content, &$from, &$subject, &$data_array)
     {
         //Disable limits, TODO: Make smarter if at all possible, see reindex.php from torben for ideas
@@ -157,7 +243,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
 
     /**
      * Sends $content to all members of the campaign
-     */    
+     */
     function send_bg($url_base, $batch, &$content, &$from, &$subject, &$data_array)
     {
         //Disable limits, TODO: Make smarter if at all possible, see reindex.php from torben for ideas
@@ -168,6 +254,15 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
             && !$this->test_mode)
         {
             $this->_check_campaign_up_to_date();
+        }
+        // Register sendStarted if not already set (and we're not in test mode)
+        if (!$this->test_mode)
+        {
+            if (!$this->sendStarted)
+            {
+                $this->sendStarted = time();
+                $this->update();
+            }
         }
         switch($this->orgOpenpsaObtype)
         {
@@ -198,7 +293,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
             break;
         }
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         debug_add("status: {$status}, reg_next: {$reg_next}");
         if ($reg_next)
         {
@@ -218,12 +313,21 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
                 return false;
             }
         }
-        
+        else
+        {
+            // Last batch done, register sendCompleted if we're not in test mode
+            if (!$this->test_mode)
+            {
+                $this->sendCompleted = time();
+                $this->update();
+            }
+        }
+
         debug_pop();
         return $status;
     }
 
-    
+
     function _qb_filter_results($results)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -252,7 +356,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
                 $qb_receipts->add_constraint('person', '=', $pid);
             }
             $qb_receipts->end_group();
-            
+
             //mgd_debug_start();
             //$receipts = $qb_receipts->execute_unchecked();
             $receipts = $qb_receipts->execute();
@@ -294,13 +398,13 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         $qb->set_limit($this->chunk_size);
         debug_pop();
     }
-    
+
     /**
-     * Loops trough send filter in chunks, adds some common constraints and checks for send-receipts. 
+     * Loops trough send filter in chunks, adds some common constraints and checks for send-receipts.
      */
-    function _qb_send_loop($qb)
+    function _qb_send_loop($callback_name)
     {
-        $ret = $this->_qb_single_chunk($qb);
+        $ret = $this->_qb_single_chunk($callback_name);
         $this->_chunk_num++;
         //Trivial rate limiting
         sleep(1);
@@ -323,22 +427,26 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         }
         else
         {
-            debug_add('REAL mode, adding constraint');
+            debug_add('REAL mode, adding constraints');
             //Fail safe way, exclude those we know we do not want, in case some wanted members have incorrect type...
             $qb->add_constraint('orgOpenpsaObtype', '<>', ORG_OPENPSA_OBTYPE_CAMPAIGN_TESTER);
             $qb->add_constraint('orgOpenpsaObtype', '<>', ORG_OPENPSA_OBTYPE_CAMPAIGN_MEMBER_UNSUBSCRIBED);
             $qb->add_constraint('orgOpenpsaObtype', '<>', ORG_OPENPSA_OBTYPE_CAMPAIGN_MEMBER_BOUNCED);
         }
-        /* Untill these are supported for real remove them: QB seems to choke in stead of just ignoring them
-        $qb->add_order('person.lastname', 'ASC');
-        $qb->add_order('person.firstname', 'ASC');
-        */
+        if (class_exists('midgard_query_builder'))
+        {
+            // In 1.8 sort by name
+            $qb->add_order('person.lastname', 'ASC');
+            $qb->add_order('person.firstname', 'ASC');
+            $qb->add_order('person.username', 'ASC');
+            $qb->add_order('person.id', 'ASC');
+        }
         debug_pop();
         return;
     }
-    
+
     /**
-     * Adds the common constraints and then returns "fast" (not ACL-checked) count of members matching any other 
+     * Adds the common constraints and then returns "fast" (not ACL-checked) count of members matching any other
      * constaints the QB object passed has
      */
     function _qb_count_members($qb)
@@ -349,7 +457,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         return $qb->count_unchecked();
         //return $qb->count();
     }
-    
+
     /**
      * Returns the count of matching members and message receipts
      */
@@ -361,7 +469,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         $this->_qb_common_constaints($qb_mem);
         //$valid_members = $qb_mem->count_unchecked();
         $valid_members = $qb_mem->count();
-        
+
         //$qb_receipts = org_openpsa_directmarketing_campaign_message_receipt::new_query_builder();
         $qb_receipts = new MidgardQueryBuilder('org_openpsa_campaign_message_receipt');
         $qb_receipts->add_constraint('message', '=', $this->id);
@@ -370,7 +478,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         //$send_receipts = $qb_receipts->count_unchecked();
         $send_receipts = $qb_receipts->count();
         //mgd_debug_stop();
-        
+
         return array($valid_members, $send_receipts);
     }
 
@@ -485,7 +593,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         //Set some List-xxx headers to avoid auto-replies and in general to be a good netizen
         $mail->headers['List-Id'] = "<{$this->guid}@{$_SERVER['SERVER_NAME']}>";
         $mail->headers['List-Unsubscribe'] =  '<' . $member->get_unsubscribe_url(false, $person) . '>';
-        
+
         debug_add('mail->from: '.$mail->from.', mail->to: '.$mail->to.', mail->subject: '.$mail->subject);
         switch($this->orgOpenpsaObtype)
         {
@@ -500,14 +608,24 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
                 {
                     $mail->body = $member->personalize_message($data_array['htmlemail_force_text_body'], $this->orgOpenpsaObtype, &$person);
                 }
+                // Allow sensing only HTML body if requested
                 if (   array_key_exists('htmlemail_onlyhtml', $data_array)
-                    && $data_array['htmlemail_onlyhtml'])
+                    && !empty($data_array['htmlemail_onlyhtml']))
                 {
                     $mail->allow_only_html = true;
                 }
-                //The mail class uses a caching scheme to avoid fetching embedded objects again.
-                list ($mail->html_body, $mail->embeds) = $mail->html_get_embeds($this, $mail->html_body, $mail->embeds);
-                
+                // Skip embedding if requested
+                if (   array_key_exists('htmlemail_donotembed', $data_array)
+                    && !empty($data_array['htmlemail_donotembed']))
+                {
+                    // Skip embedding, do something else ??
+                }
+                else
+                {
+                    //The mail class uses a caching scheme to avoid fetching embedded objects again.
+                    list ($mail->html_body, $mail->embeds) = $mail->html_get_embeds($this, $mail->html_body, $mail->embeds);
+                }
+
                 //Handle link detection
                 if (   array_key_exists('link_detector_address', $data_array)
                     && !empty($data_array['link_detector_address']))
@@ -527,22 +645,21 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
             break;
         }
 
-        //Go trough message array and add all files that look like they're from a datatype:blob field
-        reset($data_array);
-        foreach ($data_array as $field => $value)
+        //Go trough DM2 types array for attachments
+        reset($data_array['dm_types']);
+        foreach ($data_array['dm_types'] as $field => $typedata)
         {
-            if (   isset($value['filename'])
-                && isset($value['url'])
-                && isset($value['mimetype'])
-                && isset($value['object'])
-                && isset($value['object']->realm)
-                && $value['object']->realm == 'blobs')
+            if (   !isset($typedata->attachments_info)
+                || empty($typedata->attachments_info))
             {
-                //TODO: Check the schema for some "do not include this attachment" marker on the field
+                continue;
+            }
+            foreach ($typedata->attachments_info as $key => $attachment_data)
+            {
                 $att = array();
-                $att['name'] = $value['filename'];
-                $att['mimetype'] = $value['mimetype'];
-                $fp = mgd_open_attachment($value['object']->id, 'r');
+                $att['name'] = $attachment_data['filename'];
+                $att['mimetype'] = $attachment_data['mimetype'];
+                $fp = mgd_open_attachment($attachment_data['object']->id, 'r');
                 if (!$fp)
                 {
                     //Failed to open attachment for reading, skip the file
@@ -561,8 +678,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
                 unset($att);
             }
         }
-        
-        
+
         $status = $mail->send($data_array['mail_send_backend'], $data_array['mail_send_backend_params']);
         if ($status)
         {
@@ -584,9 +700,26 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         }
         else
         {
-            debug_add(sprintf('FAILED to send mail to: %s, reason: %s ', $mail->to, $mail->get_error_message()), MIDCOM_LOG_WARN);
+            $message = sprintf('FAILED to send mail to: %s, reason: %s', $mail->to, $mail->get_error_message());
+            debug_add($message, MIDCOM_LOG_WARN);
+            if (!$this->test_mode)
+            {
+                $params = array
+                (
+                    array
+                    (
+                        'domain' => 'org.openpsa.directmarketing',
+                        'name' => 'send_error_message',
+                        'value' => $message,
+                    ),
+                );
+                $_MIDCOM->auth->request_sudo('org.openpsa.directmarketing');
+                $member->create_receipt($this->id, ORG_OPENPSA_MESSAGERECEIPT_FAILURE, $token, $params);
+                $_MIDCOM->auth->drop_sudo();
+            }
             if ($this->send_output)
             {
+                $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('org.openpsa.directmarketing', 'org.openpsa.directmarketing'), sprintf($_MIDCOM->i18n->get_string('FAILED to send mail to: %s, reason: %s', 'org.openpsa.directmarketing'), $mail->to, $mail->get_error_message()), 'error');
                 /*
                 midcom_show_style('send-line-failure');
                 flush();
@@ -598,12 +731,17 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         debug_pop();
         return $status;
     }
-    
-    
-    function _qb_single_chunk(&$qb, $level = 0)
+
+
+    function _qb_single_chunk($callback_name, $level = 0)
     {
+        $callback_method = "_callback_get_qb_{$callback_name}";
+        if (!method_exists($this, $callback_method))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "method '{$callback_method}' does not exist");
+        }
+        $qb = $this->$callback_method();
         debug_push_class(__CLASS__, __FUNCTION__);
-        $qb_backup = $qb;
         $this->_qb_common_constaints($qb);
         $this->_qb_chunk_limits($qb);
 
@@ -625,10 +763,10 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         }
 
         $results = $this->_qb_filter_results($results);
-        
+
         debug_add('Have ' . count($results) . ' results left after filtering');
         debug_add("Recursion level is {$level}, limit is {$this->_chunk_max_recurse}");
-        /* Make sure we still have results left, if not just recurse... 
+        /* Make sure we still have results left, if not just recurse...
            (basically this is to avoid returning an empty array when everything is otherwise ok) */
         if (   count($results) == 0
             && ($level < $this->_chunk_max_recurse))
@@ -637,14 +775,15 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
             //Trivial rate limiting.
             sleep(1);
             $this->_chunk_num++;
-            return $this->_qb_single_chunk($qb_backup, $level+1);
+            return $this->_qb_single_chunk($callback_name, $level+1);
         }
 
-        debug_pop();
         reset($results);
+        //debug_add("returning results\n===\n" . sprint_r($results) . "\n===\n");
+        debug_pop();
         return $results;
     }
-    
+
     function send_email_bg(&$batch, &$subject, &$content, &$from, &$data_array)
     {
         //TODO: Figure out how to recognize errors and pass the info on
@@ -659,15 +798,18 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         {
             $subject = '[no subject]';
         }
+        /*
         $qb = org_openpsa_directmarketing_campaign_member::new_query_builder();
         $qb->add_constraint('person.email', 'LIKE', '%@%');
-        
+        */
+
         $this->_chunk_num = $batch-1;
-        
-        $results = $this->_qb_single_chunk($qb);
+
+        //$results = $this->_qb_single_chunk($qb);
+        $results = $this->_qb_single_chunk('send_email');
         //The method above might have incremented the counter for internal reasons
         $batch = $this->_chunk_num+1;
-        if (!$results)
+        if ($results === false)
         {
             $ret = array();
             $ret[] = true; //All should be ok
@@ -675,19 +817,26 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
             debug_pop();
             return $ret;
         }
-        
+
         foreach ($results as $member)
         {
             $this->_send_email_member($member, $subject, $content, $from, $data_array);
         }
-        
+
         $ret = array();
         $ret[] = true; //All should be ok
         $ret[] = true; //Register next batch to AT
         debug_pop();
         return $ret;
     }
-    
+
+    function &_callback_get_qb_send_email()
+    {
+        $qb = org_openpsa_directmarketing_campaign_member::new_query_builder();
+        $qb->add_constraint('person.email', 'LIKE', '%@%');
+        return $qb;
+    }
+
     /**
      * Sends an email to all members that have email address set
      */
@@ -704,15 +853,19 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         {
             $subject = '[no subject]';
         }
+        /*
         $qb = org_openpsa_directmarketing_campaign_member::new_query_builder();
         $qb->add_constraint('person.email', 'LIKE', '%@%');
+        */
 
         /*
         $this->sendStarted = time();
         $this->update();
         */
+        /*
         $GLOBALS['org_openpsa_directmarketing_campaign_message_send_count'] = $this->_qb_count_members($qb);
         $GLOBALS['org_openpsa_directmarketing_campaign_message_send_i'] = 0;
+        */
         //TODO: Rethink the styles, now we filter those who already had message sent to themm thus the total member count becomes meaningless
         if ($this->send_output)
         {
@@ -721,7 +874,11 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
             ob_flush(); //I Hope midcom doesn't wish to do any specific post-processing here...
         }
 
+        /*
         while ($results = $this->_qb_send_loop($qb))
+        {
+        */
+        while ($results = $this->_qb_send_loop('send_email'))
         {
             foreach ($results as $member)
             {
@@ -742,7 +899,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         debug_pop();
         return true;
     }
-    
+
     /**
      * Function tries to normalize the phone number to a single string of numbers
      */
@@ -751,7 +908,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         //Quite simplistic approach but works correctly on +358-(0)40-5401446
         return preg_replace("/(\([0-9]+\))|([^0-9+]+?)/", '', $phone);
     }
-    
+
     /**
      * Returns the count of matching members and message receipts
      */
@@ -763,17 +920,17 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         $this->_qb_common_constaints($qb_mem);
         //$valid_members = $qb_mem->count_unchecked();
         $valid_members = $qb_mem->count();
-        
+
         //$qb_receipts = org_openpsa_directmarketing_campaign_message_receipt::new_query_builder();
         $qb_receipts = new MidgardQueryBuilder('org_openpsa_campaign_message_receipt');
         $qb_receipts->add_constraint('message', '=', $this->id);
         $qb_receipts->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_MESSAGERECEIPT_SENT);
         //$send_receipts = $qb_receipts->count_unchecked();
         $send_receipts = $qb_receipts->count();
-        
+
         return array($valid_members, $send_receipts);
     }
-    
+
     function _send_sms_member(&$smsbroker, $member, &$content, &$from, &$data_array)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -788,7 +945,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
 
         //TODO: Add sender support
         $status = $smsbroker->send_sms($person->handphone, $content_p, $from);
-        
+
         if ($status)
         {
             debug_add('SMS sent to: '.$person->handphone);
@@ -809,9 +966,26 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         }
         else
         {
-            debug_add(sprintf('FAILED to send SMS to: %s, reason: %s ', $person->handphone, $smsbroker->errstr), MIDCOM_LOG_WARN);
+            $message = sprintf('FAILED to send SMS to: %s, reason: %s', $person->handphone, $smsbroker->errstr);
+            debug_add($message, MIDCOM_LOG_WARN);
+            if (!$this->test_mode)
+            {
+                $params = array
+                (
+                    array
+                    (
+                        'domain' => 'org.openpsa.directmarketing',
+                        'name' => 'send_error_message',
+                        'value' => $message,
+                    ),
+                );
+                $_MIDCOM->auth->request_sudo('org.openpsa.directmarketing');
+                $member->create_receipt($this->id, ORG_OPENPSA_MESSAGERECEIPT_FAILURE, $token, $params);
+                $_MIDCOM->auth->drop_sudo();
+            }
             if ($this->send_output)
             {
+                $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('org.openpsa.directmarketing', 'org.openpsa.directmarketing'), sprintf($_MIDCOM->i18n->get_string('FAILED to send SMS to: %s, reason: %s', 'org.openpsa.directmarketing'), $person->handphone, $smsbroker->errstr), 'error');
                 /*
                 midcom_show_style('send-line-failure');
                 flush();
@@ -822,7 +996,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         debug_pop();
         return $status;
     }
-    
+
     function send_sms_bg(&$batch, &$content, &$from, &$data_array)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -843,15 +1017,17 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         $smsbroker->client_id = $this->sms_lib_client_id;
         $smsbroker->user = $this->sms_lib_user;
         $smsbroker->password = $this->sms_lib_password;
-        
+
+        /*
         $qb = org_openpsa_directmarketing_campaign_member::new_query_builder();
         $qb->add_constraint('person.handphone', '<>', '');
-
+        */
 
         $this->_chunk_num = $batch-1;
-        
-        $results = $this->_qb_single_chunk($qb);
-        
+
+        //$results = $this->_qb_single_chunk($qb);
+        $results = $this->_qb_single_chunk('send_sms');
+
         if (!$this->_check_sms_balance($smsbroker, $results))
         {
             //PONDER: Echo to output as well so cron can log it ?
@@ -862,7 +1038,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
             debug_pop();
             return $ret;
         }
-        
+
         //The method above might have incremented the counter for internal reasons
         $batch = $this->_chunk_num+1;
         if (!$results)
@@ -873,12 +1049,12 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
             debug_pop();
             return $ret;
         }
-        
+
         foreach ($results as $member)
         {
             $status = $this->_send_sms_member($smsbroker, $member, $content, $from, $data_array);
         }
-        
+
         $ret = array();
         $ret[] = true; //All should be ok
         $ret[] = true; //Register next batch to AT
@@ -917,6 +1093,13 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         return true;
     }
 
+    function &_callback_get_qb_send_sms()
+    {
+        $qb = org_openpsa_directmarketing_campaign_member::new_query_builder();
+        $qb->add_constraint('person.handphone', '<>', '');
+        return $qb;
+    }
+
     /**
      * Sends an SMS to all members that have handphone number set
      */
@@ -936,16 +1119,20 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         $smsbroker->client_id = $this->sms_lib_client_id;
         $smsbroker->user = $this->sms_lib_user;
         $smsbroker->password = $this->sms_lib_password;
-        
+
+        /*
         $qb = org_openpsa_directmarketing_campaign_member::new_query_builder();
         $qb->add_constraint('person.handphone', '<>', '');
+        */
 
         /*
         $this->sendStarted = time();
         $this->update();
         */
+        /*
         $GLOBALS['org_openpsa_directmarketing_campaign_message_send_count'] = $this->_qb_count_members($qb);
         $GLOBALS['org_openpsa_directmarketing_campaign_message_send_i'] = 0;
+        */
         //TODO: Rethink the styles, now we filter those who already had message sent to themm thus the total member count becomes meaningless
         if ($this->send_output)
         {
@@ -953,8 +1140,11 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
             flush();
             ob_flush(); //I Hope midcom doesn't wish to do any specific post-processing here...
         }
-
+        /*
         while ($results = $this->_qb_send_loop($qb))
+        {
+        */
+        while ($results = $this->_qb_send_loop('send_sms'))
         {
             //Check that we have enough credits before starting
             //PONDER: Should this be moved outside this loop and to use the (not very reliable) total member count ?
@@ -988,9 +1178,9 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         debug_pop();
         return true;
     }
-    
-    
-    
+
+
+
     /**
      * Returns the count of matching members and message receipts
      */
@@ -1002,14 +1192,14 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         $this->_qb_common_constaints($qb_mem);
         //$valid_members = $qb_mem->count_unchecked();
         $valid_members = $qb_mem->count();
-        
+
         //$qb_receipts = org_openpsa_directmarketing_campaign_message_receipt::new_query_builder();
         $qb_receipts = new MidgardQueryBuilder('org_openpsa_campaign_message_receipt');
         $qb_receipts->add_constraint('message', '=', $this->id);
         $qb_receipts->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_MESSAGERECEIPT_SENT);
         //$send_receipts = $qb_receipts->count_unchecked();
         $send_receipts = $qb_receipts->count();
-        
+
         return array($valid_members, $send_receipts);
     }
 

@@ -1,61 +1,19 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id$
 ---LANGUAGE en
-
----STRING %d total votes
-%d total votes
----STRINGEND
-
----STRING allow anonymous voting
-Allow anonymous voting
----STRINGEND
-
----STRING anonymous password
-Anonymous password
----STRINGEND
-
----STRING anonymous username
-Anonymous username
----STRINGEND
-
----STRING anonymous voting
-Anonymous voting
----STRINGEND
-
----STRING edit quickpoll
-Edit poll
----STRINGEND
-
----STRING new option
-New option
----STRINGEND
-
----STRING option no %d
-Option #%d
----STRINGEND
-
----STRING poll options
-Poll options
----STRINGEND
-
----STRING poll subject
-Poll subject
----STRINGEND
-
----STRING quickpoll
-Quick poll
----STRINGEND
-
----STRING view quickpoll
-View poll
----STRINGEND
 
 ---STRING vote
 Vote
 ---STRINGEND
 
----STRING net.nemein.quickpoll
-Quick poll
+---STRING manage
+Manage options
 ---STRINGEND
 
+---STRING close manage
+Close options management
+---STRINGEND
+
+---STRING vote count
+Vote count
+---STRINGEND

@@ -4,9 +4,10 @@
  */
 class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
 {
-    var $testers = array(); //list of tests members (stored as campaign_members, referenced here for easier access)
+    var $testers = array(); // List of tests members (stored as campaign_members, referenced here for easier access)
+    var $testers2 = array(); // List of testers, in DM2 format
     var $rules = array(); //rules for smart-campaign
-    
+
     function midcom_org_openpsa_campaign($id = null)
     {
         $stat = parent::__midcom_org_openpsa_campaign($id);
@@ -17,6 +18,29 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
         }
         return $stat;
     }
+    
+    function _sync_to_dm2()
+    {
+        foreach ($this->testers as $tester => $selected)
+        {
+            $this->testers2[] = $tester;
+        }
+    }
+
+    function _sync_from_dm2()
+    {
+        foreach ($this->testers as $tester => $included)
+        {
+            if (!in_array($tester, $this->testers2))
+            {
+                unset($this->testers[$tester]);
+            }
+        }
+        foreach ($this->testers2 as $tester)
+        {
+            $this->testers[$tester] = true;
+        }
+    }
 
     function _on_updated()
     {
@@ -26,11 +50,12 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
         $sync = new org_openpsa_core_acl_synchronizer();
         $sync->write_acls($this, $this->orgOpenpsaOwnerWg, $this->orgOpenpsaAccesstype);
         return true;
-    }    
+    }
 
     function _on_loaded()
     {
         $this->_get_testers();
+        $this->_sync_to_dm2();
         $this->_unserialize_rules();
         if (!is_array($this->rules))
         {
@@ -41,12 +66,14 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
 
     function _on_creating()
     {
+        $this->_sync_from_dm2();
         $this->_serialize_rules();
         return true;
     }
 
     function _on_updating()
     {
+        $this->_sync_from_dm2();
         $this->_serialize_rules();
         return true;
     }
@@ -79,7 +106,7 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
             $this->testers[$member->person] = true;
         }
     }
-    
+
     /**
      * Updates the database according to the testers array
      */
@@ -148,18 +175,17 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
      */
     function _get_tester_by_personid($id)
     {
+        
         //Find the correct campaign tester by person ID
-        $finder = new org_openpsa_campaign_member();
-        $finder->campaign = $this->id;
-        $finder->person = $id;
-        $finder->orgOpenpsaObtype = ORG_OPENPSA_OBTYPE_CAMPAIGN_TESTER;
-        $finder->find();
-        if ($finder->N > 0)
+        $qb = org_openpsa_directmarketing_campaign_member::new_query_builder();
+        $qb->add_constraint('campaign', '=', $this->id);
+        $qb->add_constraint('person', '=', $id);
+        $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_CAMPAIGN_TESTER);
+        $result = $qb->execute();
+        
+        if (!empty($result))
         {
-            //There should be only one match in any case
-            $finder->fetch();
-            $resObj = new org_openpsa_directmarketing_campaign_member($finder->id);
-            return $resObj;
+            return $result[0];
         }
     }
 
@@ -184,7 +210,7 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
         }
         $this->rules = $unserRet;
     }
-    
+
     /**
      * Serializes rules to rulesSerialized
      */
@@ -192,7 +218,7 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
     {
         $this->rulesSerialized = serialize($this->rules);
     }
-    
+
     /**
      * Fixes newline etc encoding issues in serialized data
      *
@@ -201,7 +227,7 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
      */
     function _fix_serialization($data = null)
     {
-        return org_openpsa_helpers_fix_serialization($data);  
+        return org_openpsa_helpers_fix_serialization($data);
     }
 
     /**
@@ -230,7 +256,7 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
         $_MIDCOM->auth->request_sudo('org.openpsa.directmarketing');
         $this->parameter('org.openpsa.directmarketing_smart_campaign', 'members_update_failed', '');
         $this->parameter('org.openpsa.directmarketing_smart_campaign', 'members_update_started', time());
-        
+
         $solver = new org_openpsa_directmarketing_campaign_ruleresolver();
         $rret = $solver->resolve($this->rules);
         if (!$rret)
@@ -252,7 +278,7 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
             $_MIDCOM->auth->drop_sudo();
             return false;
         }
-        
+
         //Create some usefull maps
         $wanted_persons = array();
         $rule_persons_id_map = array();
@@ -261,7 +287,7 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
             $wanted_persons[] = $person->id;
             $rule_persons_id_map[$person->id] = $person->guid;
         }
-        
+
         //Delete (normal) members that should not be here anymore
         $qb_unwanted = org_openpsa_directmarketing_campaign_member::new_query_builder();
         $qb_unwanted->add_constraint('campaign', '=', $this->id);
@@ -288,7 +314,7 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
                 }
             }
         }
-        
+
         //List current non-tester members (including unsubscribed etc), and filter those out of rule_persons
         $qb_current = org_openpsa_directmarketing_campaign_member::new_query_builder();
         $qb_current->add_constraint('campaign', '=', $this->id);
@@ -309,7 +335,7 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
                 unset($rule_persons[$rule_persons_id_map[$member->person]]);
             }
         }
-        
+
         //Finally, create members of each person matched by rule left
         reset ($rule_persons);
         foreach ($rule_persons as $person)
@@ -325,14 +351,14 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
                 debug_add("Failed to create new member (linked to person #{$person->id}) in campaign #{$this->id}, reason: " . mgd_errstr(), MIDCOM_LOG_ERROR);
             }
         }
-        
+
         //All done, set last updated timestamp
         $this->parameter('org.openpsa.directmarketing_smart_campaign', 'members_updated', time());
-        
+
         $_MIDCOM->auth->drop_sudo();
         return true;
     }
-    
+
     /**
      * Schedules a background memberships update for a smart campaign
      */
@@ -369,7 +395,7 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
         debug_pop();
         return true;
     }
-    
+
     /**
      * Checks the parameters related to members update and returns string describing status or false if this is not
      * a smart campaign.

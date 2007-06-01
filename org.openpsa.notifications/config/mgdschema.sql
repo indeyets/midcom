@@ -1,0 +1,23 @@
+CREATE TABLE org_openpsa_notifications_notification (
+  id int(11) NOT NULL auto_increment,
+  component varchar(255) NOT NULL default '',
+  action varchar(255) NOT NULL default '',
+  recipient int(11) NOT NULL default '0',
+  sender int(11) NOT NULL default '0',
+  title varchar(255) NOT NULL default '',
+  abstract text NOT null default '',
+  content text NOT null default '',
+  created varchar(255) NOT NULL default '',
+  revisor int(11) NOT NULL default '0',
+  creator int(11) NOT NULL default '0',
+  revised varchar(255) NOT NULL default '',
+  revision int(11) NOT NULL default '0',
+  guid varchar(80) NOT NULL default '',
+  sitegroup int(11) NOT NULL default '0',
+  PRIMARY KEY  (id),
+  KEY org_openpsa_notifications_notification_guid_idx (guid),
+  KEY org_openpsa_notifications_notification_sitegroup_idx (sitegroup),
+  KEY org_openpsa_notifications_notification_recipient_idx (recipient),
+  KEY org_openpsa_notifications_notification_component_idx (component),
+  KEY org_openpsa_notifications_notification_action_idx (action)
+);

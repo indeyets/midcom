@@ -3,38 +3,71 @@
  * for the folder of your component
  */
 
-'config' => array (
+'config' => array 
+(
 	'name'        => 'config',
 	'description' => 'Default Configuration Schema', /* This is a topic */
 	'locktimeout' => 0, /* Don't lock this, we always display the edit view */
-	'fields'      => array (
-	 
-		/* This is the field for the sort order selection. Note, that the description
-		 * and the widget fields will be translated automatically.
-		 *
-		 * Name and config_key must match the corresponding configuration key, the domain
-		 * must match your component.
-		 *
-		 * Name of the field and its description is kept as-is, as the clear-text name is
-		 * set through the l10n database of this component.
-		 */
-		'sort_order' => array (
-			'description' => 'sort_order',
-			'datatype' => 'text',
-			'location' => 'config',
-			'config_domain' => 'org.openpsa.products',
-			'config_key' => 'sort_order',
-			'widget' => 'select',
-			'widget_select_choices' => Array (
-				'' => 'default setting',
-				'reverse score' => 'reverse score',
-				'score' => 'score',
-				'reverse title' => 'reverse title',
-				'title' => 'title',
-				'reverse created' => 'reverse created',
-				'created' => 'created',
-			),
-		),
-		
+	'fields'      => array 
+	(
+        'search_first' => array
+        (
+            'description' => 'display search on front page',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'org.openpsa.products',
+            'config_key' => 'search_first',
+            'widget' => 'config_radiobox',
+            'widget_radiobox_choices' => array
+            (
+                '' => 'default setting',
+                '1' => 'yes',
+                '0' => 'no',
+            ),
+            'start_fieldgroup' => array
+            ( 
+                'title' => 'display settings',
+            ),
+        ),
+        'products_per_page' => array
+        (
+            'description' => 'products per page',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'org.openpsa.products',
+            'config_key' => 'products_per_page',
+        ),        
+        'root_group' => array
+        (
+            'description' => 'root product group',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'org.openpsa.products',
+            'config_key' => 'root_group',
+            'widget' => 'select',
+            'widget_select_choices' => org_openpsa_products_product_group_dba::list_groups(0, '', 'guid'),
+            'end_fieldgroup' => '',
+        ),
+        'schemadb_product' => array
+        (
+            'description' => 'product schema database',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'org.openpsa.products',
+            'config_key' => 'schemadb_product',
+            'start_fieldgroup' => array
+            ( 
+                'title' => 'advanced schema and data settings',
+            ),
+        ),
+        'schemadb_group' => array
+        (
+            'description' => 'product group schema database',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'org.openpsa.products',
+            'config_key' => 'schemadb_group',
+            'end_fieldgroup' => '',
+        ),
 	)
 ),
