@@ -123,7 +123,8 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         if ($this->_reflector->get_midgard_type($first) == MGD_TYPE_LONGTEXT)
         {
             // This is a longtext field, they come next
-            if (in_array($second, $preferred_fields))
+            if (   in_array($second, $preferred_fields)
+                && $this->_reflector->get_midgard_type($second) != MGD_TYPE_LONGTEXT)
             {
                 return 1;
             }
@@ -527,6 +528,12 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         switch ($this->_controller->process_form())
         {
             case 'save':
+                if (   is_a($this->_object, 'midgard_style')
+                    || is_a($this->_object, 'midgard_element'))
+                {
+                    mgd_cache_invalidate();
+                }
+            
                 // Reindex the object
                 //$indexer =& $_MIDCOM->get_service('indexer');
                 //net_nemein_wiki_viewer::index($this->_request_data['controller']->datamanager, $indexer, $this->_topic);
@@ -585,16 +592,19 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         $create_type = $this->_new_type;
         $this->_new_object = new $create_type();
         
-        // Figure out the linking property
-        $link_info = $this->_find_linking_property($create_type);
-        if (!is_array($link_info))
+        if ($this->_object)
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Could not establish link between {$create_type} and " . get_class($this->_object));
-        }
+            // Figure out the linking property
+            $link_info = $this->_find_linking_property($create_type);
+            if (!is_array($link_info))
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Could not establish link between {$create_type} and " . get_class($this->_object));
+            }
         
-        $child_property = $link_info[0];
-        $parent_property = $link_info[1];
-        $this->_new_object->$child_property = $this->_object->$parent_property;
+            $child_property = $link_info[0];
+            $parent_property = $link_info[1];
+            $this->_new_object->$child_property = $this->_object->$parent_property;
+        }
 
         if (! $this->_new_object->create())
         {
@@ -621,27 +631,36 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "MgdSchema type '{$args[0]}' was not found.");
             // This will exit
         }
+        $data['new_type_arg'] = $args[0];        
         
-        $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[1]);
-        if (!$this->_object)
+        $defaults = array();        
+        if ($handler_id == '____mfa-asgard-object_create_toplevel')
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The GUID '{$args[1]}' was not found.");
-            // This will exit
+            $_MIDCOM->auth->require_user_do('midgard:create', null, $this->_new_type);
+            
+            $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('create %s', 'midgard.admin.asgard'), midgard_admin_asgard_plugin::get_type_label($data['new_type_arg']));
+            $data['asgard_toolbar'] = new midcom_helper_toolbar();
         }
-        
-        $data['new_type_arg'] = $args[0];
-        midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, &$data);
-        $this->_object->require_do('midgard:create');
-        
-        // Set "defaults"
-        $link_info = $this->_find_linking_property($this->_new_type);
-        if (!is_array($link_info))
+        else
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Could not establish link between {$this->_new_type} and " . get_class($this->_object));
+            $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[1]);
+            if (!$this->_object)
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The GUID '{$args[1]}' was not found.");
+                // This will exit
+            }
+            $this->_object->require_do('midgard:create');
+            midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, &$data);
+            
+            // Set "defaults"
+            $link_info = $this->_find_linking_property($this->_new_type);
+            if (!is_array($link_info))
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Could not establish link between {$this->_new_type} and " . get_class($this->_object));
+            }
+            $parent_property = $link_info[1];
+            $defaults[$link_info[0]] = $this->_object->$parent_property;
         }
-        $defaults = array();
-        $parent_property = $link_info[1];
-        $defaults[$link_info[0]] = $this->_object->$parent_property;
 
         $this->_load_schemadb($this->_new_type);
         $this->_schemadb['object']->fields['guid']['hidden'] = true;
@@ -660,6 +679,12 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         switch ($this->_controller->process_form())
         {
             case 'save':
+                if (   is_a($this->_new_object, 'midgard_style')
+                    || is_a($this->_new_object, 'midgard_element'))
+                {
+                    mgd_cache_invalidate();
+                }
+            
                 // Reindex the object
                 //$indexer =& $_MIDCOM->get_service('indexer');
                 //net_nemein_wiki_viewer::index($this->_request_data['controller']->datamanager, $indexer, $this->_topic);
@@ -718,6 +743,12 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to delete object {$args[0]}, last Midgard error was: " . mgd_errstr());
                 // This will exit.
+            }
+            
+            if (   is_a($this->_object, 'midgard_style')
+                || is_a($this->_object, 'midgard_element'))
+            {
+                mgd_cache_invalidate();
             }
 
             // Update the index

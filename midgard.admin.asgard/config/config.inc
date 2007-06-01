@@ -98,6 +98,8 @@
     /* These are core special cases */
     'midgard_parameter',
     'midgard_attachment',
+    'midgard_language',
+    'midgard_quota',
     /* These use GUID to link to many parents */
     'net_nemein_tag_link',
     'net_nehmer_comments_comment_db',
@@ -107,6 +109,7 @@
     'midcom_core_login_session_db',
     'midcom_core_temporary_object_db',
     'midcom_core_privilege_db',
+    'midcom_services_at_entry_db',
     /* And then some objects that just don't make sense to show as roots */
     'net_nemein_tag',
     'org_openpsa_query',

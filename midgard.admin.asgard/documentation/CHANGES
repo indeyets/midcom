@@ -8,6 +8,10 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-06-01 bergie
+  + Root-level object deletion support
+  + Midgard Page Cache invalidation support
+
 2007-05-04 bergie
   + Initially created
   + Added support for basic object operations: viewing, editing creating and deleting

@@ -66,6 +66,7 @@ body
 {
   background-color: #eeeeec;
   margin-bottom: 6px;
+  -moz-border-radius: 6px;
 }
 
 #navigation div.section.selected
@@ -79,6 +80,8 @@ body
   margin: 0;
   padding: 5px;
   list-style-type: none;
+  width: 90%;
+  overflow: auto;
 }
 #navigation div.section ul.midgard_admin_asgard_navigation ul
 {
@@ -128,9 +131,12 @@ body
 
 #navigation h3
 {
-  margin: 0;
-  padding: 0.2em 0.5em;
-  font-size: 110%;
+    background-color: #babdb6;
+    margin: 0;
+    padding: 0.2em 0.5em;
+    font-size: 110%;
+    -moz-border-radius-topleft: 6px;
+    -moz-border-radius-topright: 6px;
 }
 
 #navigation h3 a

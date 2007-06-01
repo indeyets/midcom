@@ -1,5 +1,12 @@
                     <?php
-                    $navigation = new midgard_admin_asgard_navigation($data['object'], &$data);
+                    if (isset($data['object']))
+                    {
+                        $navigation = new midgard_admin_asgard_navigation($data['object'], &$data);
+                    }
+                    else
+                    {
+                        $navigation = new midgard_admin_asgard_navigation(null, &$data);
+                    }
                     $navigation->draw();
                     ?>
                 </div>
