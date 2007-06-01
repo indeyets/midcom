@@ -27,6 +27,28 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         return array
         (
             /**
+             * Asgard "welcome page"
+             * 
+             * Match /asgard/
+             */
+            'welcome' => array
+            (
+                'handler' => array ('midgard_admin_asgard_handler_welcome', 'welcome'),
+                'fixed_args' => array(),
+                'variable_args' => 0,
+            ),
+            /**
+             * Front page of an MgdSchema
+             * 
+             * Match /asgard/
+             */
+            'type' => array
+            (
+                'handler' => array ('midgard_admin_asgard_handler_type', 'type'),
+                'fixed_args' => array(),
+                'variable_args' => 1,
+            ),
+            /**
              * View an object
              * 
              * Match /asgard/object/view/<guid>/
@@ -80,7 +102,18 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 'handler' => array ('midgard_admin_asgard_handler_object_manage', 'create'),
                 'fixed_args' => array ('object', 'create'),
                 'variable_args' => 2,
-            ),            
+            ),
+            /**
+             * Create a toplevel object
+             * 
+             * Match /asgard/object/create/type/<parent guid>/
+             */
+            'object_create_toplevel' => array
+            (
+                'handler' => array ('midgard_admin_asgard_handler_object_manage', 'create'),
+                'fixed_args' => array ('object', 'create'),
+                'variable_args' => 1,
+            ),          
             /**
              * Delete an object
              * 
