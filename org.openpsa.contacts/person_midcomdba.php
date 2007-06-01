@@ -49,38 +49,38 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
     function set_account($username, $password, $plaintext = false)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        static $srand_called = false;
+        static $rand = false;
+        if (empty($rand))
+        {
+            if (function_exists('mt_rand'))
+            {
+                $rand = 'mt_rand';
+            }
+            else
+            {
+                $rand = 'rand';
+            }
+        }
         if ($plaintext)
         {
             $password = "**{$password}";
         }
         else
         {
-            // Generate cryptographic seed
-            if (!$srand_called)
-            {
-                // srand() should be called only once per request
-                srand();
-                $srand_called = true;
-            }
-            /*
-            $salt = chr(rand(1,256)) . chr(rand(1,256));
-            // Encrypt the password
-            $password = crypt($password, $salt);
-            */
             /*
              It seems having nonprintable characters in the password breaks replication
              Here we recreate salt and hash untill we have a combination where only
              printable characters exist
             */
-            $password = false;
-            while (   empty($password)
-                   || preg_match('/[\x00-\x20\x7f-\xff]/', $password))
+            $crypted = false;
+            while (   empty($crypted)
+                   || preg_match('/[\x00-\x20\x7f-\xff]/', $crypted))
             {
-                $salt = chr(rand(33,125)) . chr(rand(33,125));
-                $password = crypt($password, $salt);
-                debug_add("created hashed password '{$password}'");
+                $salt = chr($rand(33,125)) . chr($rand(33,125));
+                $crypted = crypt($password, $salt);
             }
+            $password = $crypted;
+            unset($crypted);
         }
 
         $this->username = $username;
