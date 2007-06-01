@@ -1,0 +1,22 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+    <title>Tree</title>
+    <link href="/midcom-static/Javascript_protoToolkit/styles/protusTree.css" media="screen" rel="Stylesheet" type="text/css" />	
+    <script src="/midcom-static/Pearified/JavaScript/Prototype/prototype.js" type="text/javascript"></script>
+    <script src="/midcom-static/Javascript_protoToolkit/protusTree.js" type="text/javascript"></script>
+</head><body>
+    
+<p><div style="width:300px;height:140px">
+    <script type="text/javascript">
+//<![CDATA[
+var tree=new protusTree("tree",{
+    serverUrl: "/",
+    hideRootItem: true,
+    enableDragAndDrop: false,
+    dataUrl:"/__mfa/users/tree/json"
+});tree.render();
+//]]>
+</script>
+</div></p>
+
+</body></html>

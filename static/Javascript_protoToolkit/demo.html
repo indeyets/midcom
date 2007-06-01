@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+
+<script type="text/javascript" src="demo/prototype.js"></script>
+<script type="text/javascript" src="demo/effects.js"></script>
+<script type="text/javascript" src="demo/dragdrop.js"></script>
+
+<script type="text/javascript" src="protoToolkit.js?load=protomemory,prototoolbar"></script>
+
+
+<link rel="stylesheet" href="styles/protoToolbar.css" type="text/css" />
+
+<script type="text/javascript">
+
+function do_onload()
+{
+
+//var tb = new protoToolbar( {id: 'protoToolbar', create: 'no', debug: true} );
+var tb = new protoToolbar( {type: 'palette', create: 'yes', debug: false} );
+//var tb = new protoToolbar( {type: 'palette', debug: false} );
+
+}
+
+if(window.addEventListener)
+    window.addEventListener("load", do_onload, false);
+else if (window.attachEvent)
+    window.attachEvent("onload", do_onload);
+else if (document.getElementById)
+    window.onload=do_onload;
+</script>
+
+</head>
+
+<body>
+</body>
+</html>
