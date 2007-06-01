@@ -40,7 +40,7 @@ do
 
 $_MIDCOM->componentloader->load('org.openpsa.projects');
 $type = 'org_openpsa_task';
-$ref = new midgard_admin_asgard_reflector_tree($type);
+$ref = midgard_admin_asgard_reflector_tree::get($type);
 $label = $ref->get_class_label();
 echo "Class label for {$type} '{$label}'<br/>\n";
 $child_classes = $ref->get_child_classes();
@@ -49,7 +49,7 @@ print_r($child_classes);
 echo "</pre>\n";
 
 $type = 'midgard_topic';
-$ref = new midgard_admin_asgard_reflector_tree($type);
+$ref = midgard_admin_asgard_reflector_tree::get($type);
 $label = $ref->get_class_label();
 echo "Class label for {$type} '{$label}'<br/>\n";
 $child_classes = $ref->get_child_classes();
@@ -61,7 +61,7 @@ echo "</pre>\n";
 echo "<hr/>\nroot objects per type<br/>\n";
 foreach($root_types as $schema_type)
 {
-    $ref = new midgard_admin_asgard_reflector_tree($schema_type);
+    $ref = midgard_admin_asgard_reflector_tree::get($schema_type);
     $count = $ref->count_root_objects();
     echo "Found {$count} root objects for type <tt>{$schema_type}</tt><br/>\n";
 }
@@ -73,7 +73,7 @@ echo "</pre>\n";
 echo "<hr/>\nLink info per type<br/>\n";
 foreach ($_MIDGARD['schema']['types'] as $schema_type => $val)
 {
-    $ref = new midgard_admin_asgard_reflector($schema_type);
+    $ref = midgard_admin_asgard_reflector::get($schema_type);
     $label_pro = $ref->get_label_property();
     echo "label property for {$schema_type} is {$label_pro}<br>\n";    
     $info = $ref->get_link_properties();

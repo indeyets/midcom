@@ -265,7 +265,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
             if ($this->_reflector->is_link($key))
             {
                 $linked_type = $this->_reflector->get_link_name($key);
-                $linked_type_reflector = new midgard_admin_asgard_reflector($linked_type);
+                $linked_type_reflector = midgard_admin_asgard_reflector::get($linked_type);
                 $type = $this->_reflector->get_midgard_type($key);
                 
                 if ($key == 'up')
@@ -566,7 +566,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
     function _find_linking_property($new_type)
     {
         // Figure out the linking property
-        $new_type_reflector = new midgard_admin_asgard_reflector($new_type);
+        $new_type_reflector = midgard_admin_asgard_reflector::get($new_type);
         $link_properties = $new_type_reflector->get_link_properties();  
         $type_to_link_to =  midgard_admin_asgard_reflector::class_rewrite(get_class($this->_object));
         foreach ($link_properties as $new_type_property => $link)

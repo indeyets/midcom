@@ -99,7 +99,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         }
         if (!isset($this->_reflectors[$classname]))
         {
-            $this->_reflectors[$classname] = new midgard_admin_asgard_reflector_tree($object);
+            $this->_reflectors[$classname] = midgard_admin_asgard_reflector_tree::get($object);
         }
         return $this->_reflectors[$classname];
     }

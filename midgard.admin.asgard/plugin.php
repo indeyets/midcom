@@ -149,8 +149,8 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         // Tell our object to MidCOM
         $_MIDCOM->bind_view_to_object($object);
         $_MIDCOM->set_26_request_metadata($object->metadata->revised, $object->guid);
-        $data['object_reflector'] = new midgard_admin_asgard_reflector($object);
-        $data['tree_reflector'] = new midgard_admin_asgard_reflector_tree($object);
+        $data['object_reflector'] = midgard_admin_asgard_reflector::get($object);
+        $data['tree_reflector'] = midgard_admin_asgard_reflector_tree::get($object);
         
         // Populate toolbar
         $data['asgard_toolbar'] = midgard_admin_asgard_plugin::get_object_toolbar($object, $handler_id, &$data);
@@ -296,7 +296,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                && $i < 10)
         {
             $i++;
-            $parent_reflector = new midgard_admin_asgard_reflector($parent);
+            $parent_reflector = midgard_admin_asgard_reflector::get($parent);
             $parent_label_property = $parent_reflector->get_label_property();
             $breadcrumb[] = array
             (
