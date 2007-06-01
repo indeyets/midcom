@@ -75,6 +75,23 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         }
     }
 
+    function &get($src)
+    {
+        if (is_object($src))
+        {
+            $classname = get_class($src);
+        }
+        else
+        {
+            $classname = $src;
+        }
+        if (!isset($GLOBALS['midgard_admin_asgard_reflector_singletons'][$classname]))
+        {
+            $GLOBALS['midgard_admin_asgard_reflector_singletons'][$classname] =  new midgard_admin_asgard_reflector($src);
+        }
+        return $GLOBALS['midgard_admin_asgard_reflector_singletons'][$classname];
+    }
+
     /**
      * Gets a midcom_helper_l10n instance for component governing the type 
      *

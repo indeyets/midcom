@@ -24,6 +24,24 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         parent::midgard_admin_asgard_reflector($src);
     }
 
+    function &get($src)
+    {
+        if (is_object($src))
+        {
+            $classname = get_class($src);
+        }
+        else
+        {
+            $classname = $src;
+        }
+        if (!isset($GLOBALS['midgard_admin_asgard_reflector_tree_singletons'][$classname]))
+        {
+            $GLOBALS['midgard_admin_asgard_reflector_tree_singletons'][$classname] =  new midgard_admin_asgard_reflector_tree($src);
+        }
+        return $GLOBALS['midgard_admin_asgard_reflector_tree_singletons'][$classname];
+    }
+
+
     /**
      * Creates a QB instace for get_root_objects and count_root_objects
      *
