@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <project name="MidCOM" default="help" basedir=".">
     <!-- edit the properties in this file to your liking.
+
     -->
     <property file="build.properties"  />
     <property name="absolute_basedir" value="" />
