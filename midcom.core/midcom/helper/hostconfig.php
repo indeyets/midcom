@@ -178,7 +178,8 @@ class midcom_helper_hostconfig
         $codeinit .= "\n?><(code-init-before-midcom)><?php\n";
         
         $codeinit .= "\nif(!defined('MIDCOM_ROOT')) {";
-        $codeinit .= "\n    define('MIDCOM_ROOT','midcom/lib');";
+        
+        $codeinit .= "\n    define('MIDCOM_ROOT','".MIDCOM_ROOT."');";
         $codeinit .= "\n}\n";
         
         // Include MidCOM
