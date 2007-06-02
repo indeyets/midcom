@@ -102,7 +102,7 @@ class net_nemein_wiki_handler_delete extends midcom_baseclasses_components_handl
         $this->_view_toolbar->add_item(
             array
             (
-                MIDCOM_TOOLBAR_URL => "{$this->_page->name}.html",
+                MIDCOM_TOOLBAR_URL => "{$this->_page->name}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('cancel'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/cancel.png',
@@ -119,7 +119,7 @@ class net_nemein_wiki_handler_delete extends midcom_baseclasses_components_handl
         );
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "delete/{$this->_page->name}.html",
+            MIDCOM_NAV_URL => "delete/{$this->_page->name}/",
             MIDCOM_NAV_NAME => $this->_request_data['l10n_midcom']->get('delete'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);

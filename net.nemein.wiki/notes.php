@@ -191,7 +191,7 @@ class net_nemein_wiki_notes extends midcom_baseclasses_components_purecode
             }            
             foreach ($this->related as $guid => $wikipage)
             {
-                echo "<li><a rel=\"note\" target=\"{$this->link_target}\" href=\"{$this->wiki[MIDCOM_NAV_FULLURL]}{$wikipage->name}.html\">{$wikipage->title}</a></li>\n";
+                echo "<li><a rel=\"note\" target=\"{$this->link_target}\" href=\"{$this->wiki[MIDCOM_NAV_FULLURL]}{$wikipage->name}/\">{$wikipage->title}</a></li>\n";
             }
             echo "</ul>\n";
             echo "</div>\n";

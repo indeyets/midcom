@@ -66,7 +66,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
         $this->_view_toolbar->add_item(
             array
             (
-                MIDCOM_TOOLBAR_URL => "edit/{$this->_page->name}.html",
+                MIDCOM_TOOLBAR_URL => "edit/{$this->_page->name}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('edit'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -76,7 +76,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
         $this->_view_toolbar->add_item(
             array
             (
-                MIDCOM_TOOLBAR_URL => "delete/{$this->_page->name}.html",
+                MIDCOM_TOOLBAR_URL => "delete/{$this->_page->name}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('delete'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
@@ -95,7 +95,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
             $this->_view_toolbar->add_item(
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "change/{$this->_page->name}.html",
+                    MIDCOM_TOOLBAR_URL => "change/{$this->_page->name}/",
                     MIDCOM_TOOLBAR_LABEL => sprintf
                     (
                         $this->_l10n->get('change to %s'),
@@ -115,7 +115,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
         $this->_view_toolbar->add_item(
             array
             (
-                MIDCOM_TOOLBAR_URL => "whatlinks/{$this->_page->name}.html",
+                MIDCOM_TOOLBAR_URL => "whatlinks/{$this->_page->name}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('what links'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/jump-to.png',
@@ -132,7 +132,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "subscribe/{$this->_page->name}.html",
+                        MIDCOM_TOOLBAR_URL => "subscribe/{$this->_page->name}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('unsubscribe'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail.png',
@@ -150,7 +150,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "subscribe/{$this->_page->name}.html",
+                        MIDCOM_TOOLBAR_URL => "subscribe/{$this->_page->name}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('subscribe'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail.png',
@@ -258,7 +258,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
             {
                 // No matching redirection page found, relocate to editing
                 // TODO: Add UI message
-                $_MIDCOM->relocate("edit/{$this->_page->name}.html");
+                $_MIDCOM->relocate("edit/{$this->_page->name}/");
                 // This will exit
             }
             
@@ -393,7 +393,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
         $this->_load_datamanager();
         
         $this->_populate_toolbar();
-        $this->_view_toolbar->hide_item("whatlinks/{$this->_page->name}.html");
+        $this->_view_toolbar->hide_item("whatlinks/{$this->_page->name}/");
         
         $qb = net_nemein_wiki_link_dba::new_query_builder();
         $qb->add_constraint('topage', '=', $this->_page->title);

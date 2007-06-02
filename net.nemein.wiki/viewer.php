@@ -170,7 +170,7 @@ class net_nemein_wiki_viewer extends midcom_baseclasses_components_request
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "subscribe/index.html",
+                        MIDCOM_TOOLBAR_URL => "subscribe/index/",
                         MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('unsubscribe'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail.png',
@@ -189,7 +189,7 @@ class net_nemein_wiki_viewer extends midcom_baseclasses_components_request
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "subscribe/index.html",
+                        MIDCOM_TOOLBAR_URL => "subscribe/index/",
                         MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('subscribe'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail.png',
@@ -208,7 +208,7 @@ class net_nemein_wiki_viewer extends midcom_baseclasses_components_request
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "orphans.html",
+                MIDCOM_TOOLBAR_URL => "orphans/",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('orphaned pages'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/editcut.png',
@@ -222,7 +222,7 @@ class net_nemein_wiki_viewer extends midcom_baseclasses_components_request
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => 'config.html',
+                    MIDCOM_TOOLBAR_URL => 'config/',
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
                     MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',

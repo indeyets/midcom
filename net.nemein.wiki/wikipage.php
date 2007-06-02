@@ -405,7 +405,7 @@ class net_nemein_wiki_wikipage extends midcom_db_article
         }
         foreach ($pages as $page)
         {
-            $url = $node[MIDCOM_NAV_FULLURL] . "{$page->name}.html";
+            $url = $node[MIDCOM_NAV_FULLURL] . "{$page->name}/";
             $ret .= "    <li class=\"page\"><a href=\"{$url}\">{$page->title}</a></li>\n";
         }
         $ret .= "</ul>\n";
@@ -464,7 +464,7 @@ class net_nemein_wiki_wikipage extends midcom_db_article
                 // We only wish to link to wiki pages
                 continue;
             }
-            $url = $node[MIDCOM_NAV_FULLURL] . "{$page->name}.html";
+            $url = $node[MIDCOM_NAV_FULLURL] . "{$page->name}/";
             $ret .= "    <li class=\"page\"><a href=\"{$url}\">{$page->title}</a></li>\n";
         }
         $ret .= "</ul>\n";

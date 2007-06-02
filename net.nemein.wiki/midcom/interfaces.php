@@ -104,7 +104,7 @@ class net_nemein_wiki_interface extends midcom_baseclasses_components_interface
         {
             return '';
         }
-        return "{$article->name}.html";
+        return "{$article->name}/";
     }
     
     /**
