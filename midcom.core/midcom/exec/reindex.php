@@ -127,6 +127,7 @@ while (! is_null($nodeid))
     {
         // returned with failure
         echo "failure.\n   Background processing failed, error: {$http_client->error}\n";
+        echo "Url: " . $reindex_topic_uri . "?" . join("=", $post_variables);
         $body = $http_client->_client->getResponseBody();
         if (!empty($body))
         {
@@ -138,6 +139,7 @@ while (! is_null($nodeid))
     {
         // Does not end with 'Reindex complete for node...'
         echo "failure.\n   Background reindex returned unexpected data:\n---\n{$response}\n---\n\n";
+        echo "Url: " . $reindex_topic_uri . "?" . join("=", $post_variables);
     }
     else
     {
