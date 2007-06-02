@@ -218,6 +218,7 @@ class net_nemein_organizations_viewer extends midcom_baseclasses_components_requ
         $document->author = $author->name;
         $document->created = $dm->storage->object->metadata->created;
         $document->edited = $dm->storage->object->metadata->revised;
+        $document->component = $topic->component;
         $indexer->index($document);
     }
 

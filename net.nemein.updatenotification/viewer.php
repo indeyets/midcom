@@ -85,6 +85,7 @@ class net_nemein_updatenotification_viewer extends midcom_baseclasses_components
         $document = $indexer->new_document($dm);
         $document->topic_guid = $topic->guid;
         $document->topic_url = $node[MIDCOM_NAV_FULLURL];
+        $document->component = $topic->component;
         $document->author = $author->name;
         $document->created = $dm->storage->object->created;
         $document->edited = $dm->storage->object->revised;

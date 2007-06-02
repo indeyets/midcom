@@ -356,6 +356,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
         $document = $indexer->new_document($dm);
         $document->topic_guid = $topic->guid;
         $document->topic_url = $node[MIDCOM_NAV_FULLURL];
+        $document->component = $topic->component;
         if (!empty($author))
         {
             $document->author = $author->name;

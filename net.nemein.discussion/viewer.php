@@ -213,6 +213,7 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
         $document->author = $dm->storage->object->sendername;
         $document->created = $dm->storage->object->created;
         $document->edited = $dm->storage->object->revised;
+        $document->component = $topic->component;
         $indexer->index($document);
     }    
 }

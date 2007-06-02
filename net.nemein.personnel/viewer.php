@@ -349,6 +349,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
         $document->author = $author->name;
         $document->created = $dm->storage->object->metadata->created;
         $document->edited = $dm->storage->object->metadata->revised;
+        $document->component = $topic->component;
         $indexer->index($document);
     }
 

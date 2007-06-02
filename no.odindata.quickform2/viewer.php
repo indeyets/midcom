@@ -95,6 +95,7 @@ class no_odindata_quickform2_viewer extends midcom_baseclasses_components_reques
         $document->topic_url = $node[MIDCOM_NAV_FULLURL];
         $document->author = $author->name;
         $document->created = $dm->storage->object->created;
+        $document->component = $topic->component;
         $document->edited = $dm->storage->object->revised;
         $indexer->index($document);
     }

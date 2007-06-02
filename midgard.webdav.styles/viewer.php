@@ -126,6 +126,7 @@ $this->_request_switch['midcoms_stylelement'] = array(
         $document = $indexer->new_document($dm);
         $document->topic_guid = $topic->guid;
         $document->topic_url = $node[MIDCOM_NAV_FULLURL];
+        $document->component = $topic->component;
         $document->author = $author->name;
         $document->created = $dm->storage->object->created;
         $document->edited = $dm->storage->object->revised;

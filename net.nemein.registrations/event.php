@@ -943,6 +943,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
         $document->author = $author->name;
         $document->created = $dm->storage->object->created;
         $document->edited = $dm->storage->object->revised;
+        $document->component = $topic->component;
         $indexer->index($document);
     }
 

@@ -270,6 +270,7 @@ class net_nemein_wiki_viewer extends midcom_baseclasses_components_request
         $document->author = $author->name;
         $document->created = $dm->storage->object->created;
         $document->edited = $dm->storage->object->revised;
+        $document->component = $topic->component;
         $indexer->index($document);
     }  
     
