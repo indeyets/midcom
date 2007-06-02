@@ -52,7 +52,7 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
             mkdir($this->_dirname);
         }
         
-        debug_add("Flatfile Cache backend '{$this->_name}' initialized to directory: {$this->_dirname}");
+        //debug_add("Flatfile Cache backend '{$this->_name}' initialized to directory: {$this->_dirname}");
     }
 
         
