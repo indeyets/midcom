@@ -73,7 +73,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
     }
 
     /**
-     * This function will determine the correct type of MidgardQueryBuilder that
+     * This function will determine the correct type of midgard_query_builder that
      * has to be created. It will also call the _on_prepare_new_query_builder event handler.
      *
      * Since this is to be called statically, it will take a class name, not a instance
@@ -93,7 +93,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
     /**
      * This function will execute the Querybuilder.
      *
-     * @param MidgardQueryBuilder $qb An instance of the Query builder obtained by the new_query_builder
+     * @param midgard_query_builder $qb An instance of the Query builder obtained by the new_query_builder
      *     function of this class.
      * @return Array The result of the query builder. Note, that empty resultsets
      *     will return an empty array.

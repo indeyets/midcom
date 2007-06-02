@@ -1867,7 +1867,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      * object.
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @return MidgardQueryBuilder Prepared QueryBuilder or false on failure.
+     * @return midgard_query_builder Prepared QueryBuilder or false on failure.
      */
     function get_attachment_qb(&$object)
     {

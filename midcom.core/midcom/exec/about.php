@@ -70,7 +70,7 @@ $_MIDCOM->auth->require_valid_user();
                 if (   $_MIDGARD['config']['quota']
                     && class_exists('midgard_quota'))
                 {
-                    $qb = new MidgardQueryBuilder('midgard_quota');
+                    $qb = new midgard_query_builder('midgard_quota');
                     $qb->add_constraint('tablename', '=', 'wholesg');
                     $qb->add_constraint('typename', '=', '');
                     $quotas = $qb->execute();

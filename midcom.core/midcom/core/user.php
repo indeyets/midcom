@@ -742,7 +742,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
         }
 
         // Delete login sessions
-        $qb = new MidgardQueryBuilder('midcom_core_login_session_db');
+        $qb = new midgard_query_builder('midcom_core_login_session_db');
         $qb->add_constraint('userid', '=', $this->id);
         $result = @$qb->execute();
         if ($result)
@@ -755,7 +755,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
         }
 
         // Delete all ACL records which have the user as assignee
-        $qb = new MidgardQueryBuilder('midcom_core_privilege_db');
+        $qb = new midgard_query_builder('midcom_core_privilege_db');
         $qb->add_constraint('assignee', '=', $this->id);
         $result = @$qb->execute();
         if ($result)

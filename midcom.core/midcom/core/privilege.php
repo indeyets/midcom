@@ -521,7 +521,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      */
     function get_privilege(&$object, $name, $assignee, $classname = '')
     {
-        $qb = new MidgardQueryBuilder('midcom_core_privilege_db');
+        $qb = new midgard_query_builder('midcom_core_privilege_db');
         $qb->add_constraint('objectguid', '=', $object->guid);
         $qb->add_constraint('name', '=', $name);
         $qb->add_constraint('assignee', '=', $assignee);

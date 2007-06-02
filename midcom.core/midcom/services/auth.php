@@ -1585,7 +1585,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
         if (is_null($this->_vgroups))
         {
-            $qb = new MidgardQueryBuilder('midcom_core_group_virtual_db');
+            $qb = new midgard_query_builder('midcom_core_group_virtual_db');
             $result = @$qb->execute();
             if (! $result)
             {
@@ -1653,7 +1653,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      */
     function & get_user_by_name($name)
     {
-        $qb = new MidgardQueryBuilder('midgard_person');
+        $qb = new midgard_query_builder('midgard_person');
         $qb->add_constraint('username', '=', $name);
         $result = @$qb->execute();
         if (   ! $result
@@ -1680,7 +1680,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     function & get_midgard_group_by_name($name,$sg_id=null)
     {
 		//$sg_id = $sg_id == null || !is_integer($sg_id) ? $_MIDGARD['sitegroup'] : $sg_id;
-        $qb = new MidgardQueryBuilder('midgard_group');
+        $qb = new midgard_query_builder('midgard_group');
         $qb->add_constraint('name', '=', $name);
 		if (is_integer($sg_id))
 		{
@@ -1973,7 +1973,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         }
 
         // Check if the group does already exist
-        $qb = new MidgardQueryBuilder('midcom_core_group_virtual_db');
+        $qb = new midgard_query_builder('midcom_core_group_virtual_db');
         $qb->add_constraint('component', '=', $component);
         $qb->add_constraint('identifier', '=', $identifier);
         $tmp = @$qb->execute();

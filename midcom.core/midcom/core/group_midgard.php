@@ -137,7 +137,7 @@ class midcom_core_group_midgard extends midcom_core_group
      */
     function list_subordinate_groups()
     {
-        $qb = new MidgardQueryBuilder('midgard_group');
+        $qb = new midgard_query_builder('midgard_group');
         $qb->add_constraint('owner', '=', $this->_storage->id);
         $result = $qb->execute();
         return $result;
@@ -152,7 +152,7 @@ class midcom_core_group_midgard extends midcom_core_group
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
-        $qb = new MidgardQueryBuilder('midgard_member');
+        $qb = new midgard_query_builder('midgard_member');
         $qb->add_constraint('gid', '=', $this->_storage->id);
         $result = @$qb->execute();
         if (! $result)
@@ -191,7 +191,7 @@ class midcom_core_group_midgard extends midcom_core_group
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
-        $qb = new MidgardQueryBuilder('midgard_member');
+        $qb = new midgard_query_builder('midgard_member');
         $qb->add_constraint('uid', '=', $user->_storage->id);
         $result = @$qb->execute();
         if (empty($result))

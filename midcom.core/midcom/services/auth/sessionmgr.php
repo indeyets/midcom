@@ -158,7 +158,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
             $clientip = $_SERVER['REMOTE_ADDR'];
         }
 
-        $qb = new MidgardQueryBuilder('midcom_core_login_session_db');
+        $qb = new midgard_query_builder('midcom_core_login_session_db');
         $qb->add_constraint('userid', '=', $user->id);
         $result = @$qb->execute();
 
@@ -411,7 +411,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
      */
     function _update_user_password(&$user, $new)
     {
-        $qb = new MidgardQueryBuilder('midcom_core_login_session_db');
+        $qb = new midgard_query_builder('midcom_core_login_session_db');
         $qb->add_constraint('userid', '=', $user->id);
         $result = @$qb->execute();
 
@@ -439,7 +439,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
      */
     function _update_user_username(&$user, $new)
     {
-        $qb = new MidgardQueryBuilder('midcom_core_login_session_db');
+        $qb = new midgard_query_builder('midcom_core_login_session_db');
         $qb->add_constraint('userid', '=', $user->id);
         $result = @$qb->execute();
 
@@ -475,7 +475,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
         }
 
         $timed_out = time() - $GLOBALS['midcom_config']['auth_login_session_timeout'];
-        $qb = new MidgardQueryBuilder('midcom_core_login_session_db');
+        $qb = new midgard_query_builder('midcom_core_login_session_db');
         $qb->add_constraint('userid', '=', $user->id);
         $qb->add_constraint('timestamp', '>=', $timed_out);
         $result = @$qb->execute();
@@ -500,7 +500,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
     function get_online_users_count()
     {
         $timed_out = time() - $GLOBALS['midcom_config']['auth_login_session_timeout'];
-        $qb = new MidgardQueryBuilder('midcom_core_login_session_db');
+        $qb = new midgard_query_builder('midcom_core_login_session_db');
         $qb->add_constraint('timestamp', '>=', $timed_out);
         $result = @$qb->execute();
 
@@ -527,7 +527,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
     function get_online_users()
     {
         $timed_out = time() - $GLOBALS['midcom_config']['auth_login_session_timeout'];
-        $qb = new MidgardQueryBuilder('midcom_core_login_session_db');
+        $qb = new midgard_query_builder('midcom_core_login_session_db');
         $qb->add_constraint('timestamp', '>=', $timed_out);
         $query_result = @$qb->execute();
         $result = Array();

@@ -83,7 +83,7 @@ if (! mgd_auth_midgard($args->getValue('user'),$args->getValue('password'),false
 }
 
 // Map components
-$qb_component = new MidgardQueryBuilder('midgard_parameter');
+$qb_component = new midgard_query_builder('midgard_parameter');
 $qb_component->add_constraint('domain', '=', 'midcom');
 $qb_component->add_constraint('name', '=', 'component');
 $qb_component->add_constraint('tablename', '=', 'topic');
@@ -123,7 +123,7 @@ foreach ($component_params as $param)
 }
 
 // Clear style parameters
-$qb_style = new MidgardQueryBuilder('midgard_parameter');
+$qb_style = new midgard_query_builder('midgard_parameter');
 $qb_style->add_constraint('domain', '=', 'midcom');
 $qb_style->add_constraint('tablename', '=', 'topic');
 $qb_style->begin_group('OR');
@@ -144,7 +144,7 @@ foreach ($style_params as $param)
 }
 
 // Convert topic owner to midcom_core_privilege_db object
-$qb_topic = new MidgardQueryBuilder('midgard_topic');
+$qb_topic = new midgard_query_builder('midgard_topic');
 $qb_topic->add_constraint('owner', '<>', 0);
 $topics = $qb_topic->execute();
 $group_cache = array();
@@ -175,7 +175,7 @@ foreach ($topics as $topic)
 }
 
 // Convert old ViewerGroups parameters to midcom_core_privilege_db objects
-$qb_vg = new MidgardQueryBuilder('midgard_parameter');
+$qb_vg = new midgard_query_builder('midgard_parameter');
 $qb_vg->add_constraint('domain', '=', 'ViewerGroups');
 $qb_vg->add_constraint('tablename', '=', 'topic');
 $qb_vg->add_order('oid', 'ASC');
@@ -275,7 +275,7 @@ function mgd_get_att_parent_guid($obj)
     }
     return $obj->guid;
 }
-$qb_dm1p = new MidgardQueryBuilder('midgard_parameter');
+$qb_dm1p = new midgard_query_builder('midgard_parameter');
 $qb_dm1p->begin_group('OR');
     $qb_dm1p->add_constraint('domain', '=', 'midcom.helper.datamanager.datatype.blob');
     //$qb_dm1p->add_constraint('domain', '=', 'midcom.helper.datamanager.datatype.blob');
@@ -473,7 +473,7 @@ after you edit the domains and names to suit your needs.
 
 // Convert parameters metadata/keywords & metadata/target values CSV to PSV (and add extr pipes to start and end as well fro DM2s benefit)
 /*
-$qb_md = new MidgardQueryBuilder('midgard_parameter');
+$qb_md = new midgard_query_builder('midgard_parameter');
 $qb_md->add_constraint('domain', '=', 'metadata');
 $qb_md->begin_group('OR');
     $qb_md->add_constraint('name', '=', 'keywords');
@@ -494,7 +494,7 @@ foreach ($params as $param)
 
 // Clean up article expiry
 /*
-$qb_exp = new MidgardQueryBuilder('midgard_article');
+$qb_exp = new midgard_query_builder('midgard_article');
 $qb_exp->begin_group('OR');
     $qb_exp->add_constraint('extra1', 'LIKE', '%.%.%');
     $qb_exp->add_constraint('extra3', 'LIKE', '%.%.%');

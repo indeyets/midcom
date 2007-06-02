@@ -127,7 +127,7 @@ class export_style {
             {
                 continue;
             }
-            $qb = new MidgardQueryBuilder('midgard_style');
+            $qb = new midgard_query_builder('midgard_style');
             $qb->add_constraint('name', '=', $name);
             $qb->add_constraint('up', '=', $up);
             $qb->add_order('name');
@@ -231,7 +231,7 @@ class export_style {
      */
     function dump_style($style_id)
     {
-        $qb = new MidgardQueryBuilder('midgard_element');
+        $qb = new midgard_query_builder('midgard_element');
         $qb->add_constraint('style', '=', $style_id);
         $qb->add_order('name');
         $elements = $qb->execute();
@@ -246,7 +246,7 @@ class export_style {
             }
         }
         
-        $qb2 = new MidgardQueryBuilder('midgard_style');
+        $qb2 = new midgard_query_builder('midgard_style');
         $qb2->add_constraint('up', '=', $style_id);
         //mgd_debug_start();
         $substyles = $qb2->execute();

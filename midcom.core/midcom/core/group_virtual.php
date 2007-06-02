@@ -86,7 +86,7 @@ class midcom_core_group_virtual extends midcom_core_group
             $localname = $name_parts[1];
 
             // Try to load the VGroup from the database
-            $qb = new MidgardQueryBuilder('midcom_core_group_virtual_db');
+            $qb = new midgard_query_builder('midcom_core_group_virtual_db');
             $qb->add_constraint('component', '=', $component);
             $qb->add_constraint('identifier', '=', $localname);
             $result = @$qb->execute();

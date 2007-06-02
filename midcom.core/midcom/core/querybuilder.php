@@ -11,7 +11,7 @@
  * MidCOM DBA level wrapper for the Midgard Query Builder.
  *
  * This class must be used instead anyplace within MidCOM instead of the real
- * MidgardQueryBuilder object within the MidCOM Framework. This wrapper is
+ * midgard_query_builder object within the MidCOM Framework. This wrapper is
  * required for the correct operation of many MidCOM services.
  *
  * It essentially wraps the calls to midcom_helper__dbfactory::new_query_builder()
@@ -47,7 +47,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     /**
      * The query builder instance that is internally used.
      *
-     * @var MidgardQueryBuilder
+     * @var midgard_query_builder
      * @access private
      */
     var $_qb;
@@ -193,7 +193,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      * If the execution of the query fails for some reason all available error information is logged
      * and a MIDCOM_ERRCRIT level error is triggered, halting execution.
      *
-     * @param MidgardQueryBuilder $qb An instance of the Query builder obtained by the new_query_builder
+     * @param midgard_query_builder $qb An instance of the Query builder obtained by the new_query_builder
      *     function of this class.
      * @return Array The result of the query builder or null on any error. Note, that empty resultsets
      *     will return an empty array.
@@ -614,7 +614,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      * query if it has not yet been executed, thus breaking full API compatibility to the Midgard
      * core deliberatly on this point.
      *
-     * Therefore, it is currently <i>strongly discouraged</i> to assume MidgardQueryBuilder::count
+     * Therefore, it is currently <i>strongly discouraged</i> to assume midgard_query_builder::count
      * to be useful as-is. See http://midgard.tigris.org/issues/show_bug.cgi?id=56 for details.
      *
      * @return int The number of records found by the last query.

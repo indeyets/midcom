@@ -103,7 +103,7 @@ class midcom_core_temporary_object extends __midcom_core_temporary_object
 
         // Parameters, we handle them directly, without using the DBA API,
         // we cannot move parameters with DBA:
-        $query = new MidgardQueryBuilder('midgard_parameter');
+        $query = new midgard_query_builder('midgard_parameter');
         $query->add_constraint('tablename', '=', $this->__table__);
         $query->add_constraint('oid', '=', $this->id);
         $result = @$query->execute();
