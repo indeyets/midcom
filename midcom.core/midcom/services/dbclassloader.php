@@ -276,7 +276,7 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
 
         if ($cache_hit)
         {
-            debug_add("We had a cache hit for {$component}/{$filename}.");
+            //debug_add("We had a cache hit for {$component}/{$filename}.");
             debug_pop();
             return true;
         }
