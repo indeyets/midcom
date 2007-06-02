@@ -57,7 +57,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
             
             case 'advanced':
                 $data['query'] = (array_key_exists('query', $_REQUEST) ? $_REQUEST['query'] : '');
-                $data['topic'] = (array_key_exists('topic', $_REQUEST) ? $_REQUEST['topic'] : '');
+                //$data['topic'] = (array_key_exists('topic', $_REQUEST) ? $_REQUEST['topic'] : '');
                 $data['component'] = (array_key_exists('component', $_REQUEST) ? $_REQUEST['component'] : '');
                 $data['lastmodified'] = (array_key_exists('lastmodified', $_REQUEST) ? ((integer) $_REQUEST['lastmodified']) : 0);
                 break;
@@ -106,7 +106,10 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
 				    && !strstr($data['query'], '*'))
 				{
 				    // Single search term, append *
-				    $data['query'] .= '*';
+                    if ($GLOBALS['midcom_config']['indexer_backend'] != 'solr') 
+                    {
+				        $data['query'] .= '*';
+                    }
 				}
 				
 				$result = $indexer->query($data['query']);
@@ -116,14 +119,13 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
                 $data['query'] = trim($_REQUEST['query']);
                 
 				if (   count(explode(' ', $data['query'])) == 1
-				    && !strstr($data['query'], '*'))
+				    && !strstr($data['query'], '*') && $GLOBALS['midcom_config']['indexer_backend'] != 'solr' )
 				{
 				    // Single search term, append *
 				    $data['query'] .= '*';
 				}
 				
-				$data['topic'] = trim($_REQUEST['topic']);
-                // $data['topic2'] = trim($_REQUEST['topic2']);
+				$data['request_topic'] = trim($_REQUEST['topic']);
                 $data['component'] = trim($_REQUEST['component']);
                 $data['lastmodified'] = (integer) trim($_REQUEST['lastmodified']);
                 if ($data['lastmodified'] > 0)
@@ -135,56 +137,24 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
                     $filter = null;
                 }
                 
-                if ($data['query'] != '')
+                if ($data['query'] != '' )
                 {
-                    $final_query = "({$data['query']})";
+                    $final_query = ( $GLOBALS['midcom_config']['indexer_backend'] == 'solr' ) ? $data['query'] : "({$data['query']})";
                 }
                 else
                 {
                     $final_query = '';
                 }
                 
-                if ($data['topic'] != '')
+                if ($data['request_topic'] != '')
                 {
                     if ($final_query != '')
                     {
                         $final_query .= ' AND ';
                     }
-                    $final_query .= "__TOPIC_URL:\"{$data['topic']}*\"";
+                    $final_query .= "__TOPIC_URL:\"{$data['request_topic']}*\"";
                 }
-                /*
-                *This if makes able to search more than one topics
-                *You need to put in to the input value in the search form topics separated by ;
-                *no spaces
-                * /
-                if ($data['topic2'] != '')
-                {
-                	if ($final_query != '')
-                    {
-                        $final_query .= ' AND ';
-                    }
-                	$topic_arrays = explode(";" ,$data['topic2']);
-                	$final_tmp_query = "";
-                	
-                	foreach ($topic_arrays as $topic_tmp)
-                	{
-            	    	if ($final_tmp_query != '')
-        	            {
-    	                    $final_tmp_query .= ' OR ';
-	                    }
-	                    else
-	                    {
-		                    $final_tmp_query .= " ( ";
-	                    }
-                    	$final_tmp_query .= "__TOPIC_URL:\"{$topic_tmp}*\"";
-                	}
-                	$final_tmp_query .= " )";
-                	
-                	
-                    $final_query .= $final_tmp_query;
-                }
-                */
-                
+               
                 if ($data['component'] != '')
                 {
                     if ($final_query != '')

@@ -231,7 +231,6 @@ class midcom_services_indexer
         {
             return true;
         }
-
         return $this->_backend->delete_all();
     }
 
@@ -244,8 +243,6 @@ class midcom_services_indexer
      *
      * The query syntax is also dependant on the backend. Refer to its documentation
      * how queries should be built.
-     *
-     * Each result node is looked up in NAP/Metadata to verify its visibility.
      *
      * @param string $query The query, which must suite the backends query syntax. It is assumed to be in the site charset.
      * @param midcom_services_indexer_filter $filter An optional filter used to restrict the query.
@@ -292,6 +289,7 @@ class midcom_services_indexer
                 continue;
             }
 
+            // this checks acls!
             if ($document->is_a('midcom'))
             {
                 // Try to retrieve object:
@@ -303,71 +301,6 @@ class midcom_services_indexer
                     continue;
                 }
             }
-
-            // For all midcom doucments, check the metadata visibility state given by the source object.
-            // Do this only if MidCOM is configured to do so
-            if (   $document->is_a('midcom')
-                && (   $midcom_config['show_hidden_objects']
-                    || $midcom_config['show_unapproved_objects']))
-            {
-                $metadata =& midcom_helper_metadata::retrieve($document->source);
-
-                if (   $metadata
-                    && ! $metadata->is_object_visible_onsite())
-                {
-                    debug_add("Skipping the document {$document->title}, the metadata of the source document {$document->source} indicate no visibility.");
-                    continue;
-                }
-
-                // Drop the reference again.
-                unset($metadata);
-            }
-
-            // Check for additional security checks by the component or a custom callback
-            $component_loader =& $_MIDCOM->get_component_loader();
-            $security = explode(':', $document->security, 2);
-            switch ($security[0])
-            {
-                case 'component':
-                    // Component security, get the interface base class, if it exists, and
-                    // execute the corresponding handler.
-                    debug_add('Doing additional component-level security check');
-                    $interface =& $component_loader->get_interface_class($document->component);
-                    if (   $interface
-                        && $topic
-                        && ! $interface->check_document_permissions($document, $topic))
-                    {
-                        debug_add('Skipping the document, the callee returned false.');
-                        continue 2;
-                    }
-                    break;
-
-                case 'function':
-                    // Execute a custom callback to ascertain visbility.
-                    debug_add("We are in function security mode, executing the callback {$security[1]}.");
-                    if (! $security[1]($document, $topic))
-                    {
-                        debug_add('Skipping the document, the callee returned false.');
-                        continue 2;
-                    }
-                    break;
-
-                case 'class':
-                    die ('The class security callback is disabled, it is broken from the beginning.');
-                    // TODO: Fix this.
-
-                    // Execute a custom callback to ascertain visbility.
-                    debug_add("We are in function security mode, executing the callback {$security[1]}.");
-                    $class = $security[1];
-                    $instance =& $class->get_instance();
-                    if (! $instance->check_document_permissions($document, $topic))
-                    {
-                        debug_add('Skipping the document, the callee returned false.');
-                        continue 2;
-                    }
-                    break;
-            }
-
             $result[] = $document;
         }
         return $result;
