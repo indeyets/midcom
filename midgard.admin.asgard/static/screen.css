@@ -170,6 +170,11 @@ body
   width: 100%;
 }
 
+#content div.page-title h1 .object_language
+{
+    float: right;
+}
+
 #content div.backtosite
 {
   width: auto;
@@ -177,6 +182,12 @@ body
   margin-left: 0.5em;
   margin-right: 0.5em;
   margin-bottom: 0.5em;        
+}
+
+#content select.language_chooser option.exists
+{
+    font-weight: bold;
+    color: blue;
 }
 
 #container a:link,

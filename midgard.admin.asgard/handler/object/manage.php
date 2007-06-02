@@ -467,6 +467,8 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
      */
     function _handler_view($handler_id, $args, &$data)
     {
+        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
+    
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
         if (! $this->_object)
         {
@@ -486,6 +488,8 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         }
         
         midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, &$data);
+
+        midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
 
         return true;
     }
@@ -507,6 +511,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
      */
     function _handler_edit($handler_id, $args, &$data)
     {
+        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
         if (!$this->_object)
         {
@@ -538,17 +543,17 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 //$indexer =& $_MIDCOM->get_service('indexer');
                 //net_nemein_wiki_viewer::index($this->_request_data['controller']->datamanager, $indexer, $this->_topic);
                 // *** FALL-THROUGH ***
-                $_MIDCOM->relocate("__mfa/asgard/object/edit/{$this->_object->guid}");
+                $_MIDCOM->relocate("__mfa/asgard/object/edit/{$this->_object->guid}/{$data['language_code']}");
                 // This will exit.
 
             case 'cancel':
-                $_MIDCOM->relocate("__mfa/asgard/object/view/{$this->_object->guid}");
+                $_MIDCOM->relocate("__mfa/asgard/object/view/{$this->_object->guid}/{$data['language_code']}");
                 // This will exit.
         }
 
         $this->_prepare_request_data();
         midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, &$data);
-        
+        midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
         return true;
     }
 
@@ -690,11 +695,11 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 //net_nemein_wiki_viewer::index($this->_request_data['controller']->datamanager, $indexer, $this->_topic);
                 // *** FALL-THROUGH ***
                 $this->_new_object->set_parameter('midcom.helper.datamanager2', 'schema_name', 'default');
-                $_MIDCOM->relocate("__mfa/asgard/object/edit/{$this->_new_object->guid}");
+                $_MIDCOM->relocate("__mfa/asgard/object/edit/{$this->_new_object->guid}/{$data['language_code']}");
                 // This will exit.
 
             case 'cancel':
-                $_MIDCOM->relocate("__mfa/asgard/object/view/{$this->_object->guid}");
+                $_MIDCOM->relocate("__mfa/asgard/object/view/{$this->_object->guid}/{$data['language_code']}");
                 // This will exit.
         }
 
@@ -719,6 +724,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
      */
     function _handler_delete($handler_id, $args, &$data)
     {
+        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
         if (!$this->_object)
         {
@@ -757,19 +763,26 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
 
             // Delete ok, relocating to welcome.
             // TODO: Relocate to parent
-            $_MIDCOM->relocate('');
+            
+            if ($data['language_code'] != '')
+            {
+                // Relocate to lang0 view page
+                $_MIDCOM->relocate("__mfa/asgard/object/view/{$this->_object->guid}/");
+                // This will exit()
+            }
+            $_MIDCOM->relocate('__mfa/asgard/');
             // This will exit.
         }
 
         if (array_key_exists('midgard_admin_asgard_deletecancel', $_REQUEST))
         {
             // Redirect to view page.
-            $_MIDCOM->relocate("__mfa/asgard/object/view/{$this->_object->guid}/");
+            $_MIDCOM->relocate("__mfa/asgard/object/view/{$this->_object->guid}/{$data['language_code']}");
             // This will exit()
         }
         
         midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, &$data);
-
+        midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
         return true;
     }
 

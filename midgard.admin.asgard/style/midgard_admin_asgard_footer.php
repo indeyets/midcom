@@ -15,6 +15,44 @@
                                 echo sprintf($data['l10n']->get('last edited by %s on %s (revision %s)'), "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$editor->guid}/\">$editor->name</a>", strftime('%c', $edited), $revision) . "\n";
                             }
                         }
+                        
+                        if (   isset($data['object'])
+                            && isset($data['object']->lang)
+                            && !is_a($data['object'], 'midgard_host'))
+                        {
+                            // FIXME: It would be better to reflect whether object is MultiLang
+                            $object_langs = $data['object']->get_languages();
+                            $object_lang_ids = array();
+                            if (is_array($object_langs))
+                            {
+                                foreach ($object_langs as $object_lang)
+                                {
+                                    $object_lang_ids[] = $object_lang->id;
+                                }
+                            }
+    
+                            $lang_qb = midcom_baseclasses_database_language::new_query_builder();
+                            $langs = $lang_qb->execute();
+                            echo "<select class=\"language_chooser\" onchange=\"window.location='/__mfa/asgard/object/view/{$data['object']->guid}/' + this.options[this.selectedIndex].value;\">\n";
+                            echo "    <option value=\"\">" . $_MIDCOM->i18n->get_string('default language', 'midgard.admin.asgard') . "</option>\n";
+                            foreach ($langs as $lang)
+                            {
+                                $class_extra = '';
+                                if (in_array($lang->id, $object_lang_ids))
+                                {
+                                    $class_extra = ' exists';
+                                }
+                                
+                                $selected = '';
+                                if ($lang->code == $data['language_code'])
+                                {
+                                    $selected = ' selected="selected"';
+                                }
+                                
+                                echo "    <option value=\"{$lang->code}\" class=\"{$lang->code}{$class_extra}\"{$selected}>{$lang->name}</option>\n";
+                            }
+                            echo "</select>\n";
+                        }
                         ?>
                     </div>
                 </div>

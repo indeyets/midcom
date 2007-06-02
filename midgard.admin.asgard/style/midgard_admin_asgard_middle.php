@@ -13,7 +13,25 @@
                 <div id="content">
                     <div class="page-title">
                         <?php
-                        echo "<h1>{$data['view_title']}</h1>\n";
+                        echo "<h1>";
+                        
+                        if (   isset($data['object'])
+                            && isset($data['object']->lang))
+                        {
+                            // FIXME: It would be better to reflect whether object is MultiLang
+                            if (   $data['object']->lang == 0
+                                && $data['language_code'] != '')
+                            {
+                                echo "<span class=\"object_language\">" . $_MIDCOM->i18n->get_string('in fallback language', 'midgard.admin.asgard') . '</span>';
+                            }
+                            elseif ($data['object']->lang != 0)
+                            {
+                                $lang = new midcom_baseclasses_database_language($data['object']->lang);
+                               echo "<span class=\"object_language\">" .  sprintf($_MIDCOM->i18n->get_string('in %s', 'midgard.admin.asgard'), $lang->name) . '</span>';
+                            }
+                        }
+                        
+                        echo "{$data['view_title']}</h1>\n";
                         ?>
                     </div>
 
