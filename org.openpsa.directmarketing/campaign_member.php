@@ -27,6 +27,19 @@ class midcom_org_openpsa_campaign_member extends __midcom_org_openpsa_campaign_m
             return null;
         }
     }
+    
+    /**
+     * Human-readable label for cases like Asgard navigation
+     */
+    function get_label()
+    {
+        if ($this->person)
+        {
+            $person = new midcom_db_person($this->person);
+            return $person->name;
+        }
+        return "member #{$this->id}";
+    }
 
     /**
      * Checks for duplicate memberships returns true for NO duplicate memberships
