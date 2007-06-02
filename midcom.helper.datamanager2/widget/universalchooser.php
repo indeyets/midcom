@@ -279,7 +279,21 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
             debug_pop();
             return false;
         }
-        $titlefield =& $this->titlefield;
+        if (is_array($this->titlefield))
+        {
+        	foreach($this->titlefield as $field)
+        	{
+        		if (isset($object->$field))
+        		{
+        			$titlefield = $field;
+        			break;
+        		}
+        	}
+        }
+        else
+        {
+        	$titlefield =& $this->titlefield;
+        }
         $value = $object->$titlefield;
         debug_pop();
         return $value;

@@ -288,10 +288,22 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
                 }
                 $class = $this->storage->_schema->fields[$this->name]['widget_config']['class'];
                 $titlefield = $this->storage->_schema->fields[$this->name]['widget_config']['titlefield'];
+
                 $object = new $class($key);
                 if (!$object)
                 {
                     return null;
+                }
+                if (is_array($titlefield))
+                {
+                	foreach($titlefield as $field)
+                	{
+                		if ($object->$field)
+                		{
+                			$titlefield = $field;
+                			break;
+                		}
+                	}
                 }
                 return $object->$titlefield;
             }
