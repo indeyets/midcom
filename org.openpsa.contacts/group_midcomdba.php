@@ -7,6 +7,20 @@ class midcom_org_openpsa_organization extends __midcom_org_openpsa_organization
     {
         return parent::__midcom_org_openpsa_organization($id);
     }
+    
+    function get_label()
+    {
+    	if ($this->official)
+    	{
+    		$label = $this->official;
+    	}
+    	else
+    	{
+    		$label = $this->name;
+    	}
+    	
+    	return $label;
+    }
 }
 
 /**

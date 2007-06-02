@@ -245,6 +245,20 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
         // FIXME: Call duplicate checker's dependency handling methods
         return parent::_on_deleting();
     }
+    
+    function get_label()
+    {
+    	if ($this->rname)
+    	{
+    		$label = $this->rname;
+    	}
+    	else
+    	{
+    		$label = $this->username;
+    	}
+    	
+    	return $label;
+    }
 
 }
 
