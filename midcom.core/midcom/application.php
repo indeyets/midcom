@@ -961,6 +961,12 @@ class midcom_application {
         do {
             $object = $this->_parser->fetch_object();
 
+            if (!is_a($object,'midcom_db_topic'))
+            {
+            	debug_add("Root topic missing.", MIDCOM_LOG_ERROR);
+            	$this->generate_error(MIDCOM_ERRCRIT, "Root topic missing.");
+            }
+
             $path = $object->component;
 
             if (!$path) 
