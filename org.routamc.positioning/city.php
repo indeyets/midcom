@@ -18,7 +18,15 @@ class org_routamc_positioning_city_dba extends __org_routamc_positioning_city_db
     {
         return parent::__org_routamc_positioning_city_dba($id);
     }
-
+    
+    /**
+     * Human-readable label for cases like Asgard navigation
+     */
+    function get_label()
+    {
+        return $this->city;
+    }
+    
     /**
      * Don't save city if another city is in same place
      */

@@ -18,5 +18,13 @@ class org_routamc_positioning_aerodrome_dba extends __org_routamc_positioning_ae
     {
         return parent::__org_routamc_positioning_aerodrome_dba($id);
     }
+
+    /**
+     * Human-readable label for cases like Asgard navigation
+     */
+    function get_label()
+    {
+        return $this->icao;
+    }
 }
 ?>

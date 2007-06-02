@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
-    <type name="fi_mik_flight" table="fi_mik_flight">
+    <type name="fi_mik_flight" table="fi_mik_flight"  parentfield="pilot">
         <property name="id" type="integer" primaryfield="id"/>
         
         <property name="start" type="integer"/>
@@ -15,7 +15,7 @@
         <property name="aircraft" type="integer" link="org_openpsa_calendar_resource:id" reverse="no"/>
         
         <!-- Only a single pilot can be a PIC during a flight -->
-        <property name="pilot" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="pilot" parentfield="pilot" link="midgard_person:id" reverse="no" type="integer"/>
         
         <!-- In some cases it is important to know who operated the flight -->
         <property name="operator" link="org_openpsa_organization:id" reverse="no" type="integer"/>

@@ -42,6 +42,14 @@ class org_routamc_positioning_log_dba extends __org_routamc_positioning_log_dba
 
         return null;
     }
+    
+    /**
+     * Human-readable label for cases like Asgard navigation
+     */
+    function get_label()
+    {
+        return strftime('%x', $this->date) . ' ' . org_routamc_positioning_utils::pretty_print_coordinates($this->latitude, $this->longitude);
+    }
 
     /**
      * Don't save log if previous log is in same place

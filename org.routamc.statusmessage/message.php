@@ -31,5 +31,13 @@ class org_routamc_statusmessage_message_dba extends __org_routamc_statusmessage_
             return null;
         }
     }
+    
+    /**
+     * Human-readable label for cases like Asgard navigation
+     */
+    function get_label()
+    {
+        return strftime('%x', $this->metadata->published) . " {$this->status}";
+    }
 }
 ?>

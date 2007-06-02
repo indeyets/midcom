@@ -4,33 +4,25 @@
     <!-- City is used for mapping log entries to "real-world places" -->
     <type name="org_routamc_positioning_city" table="org_routamc_positioning_city">
         <property name="id" type="integer" primaryfield="id"/>
-        <property name="city" type="text"/>
+        <property name="city" type="string"/>
         <!-- Country in ISO 3166-1 alpha-2 two letter format -->
-        <property name="country" type="text"/>
-        <property name="region" type="text"/>
+        <property name="country" type="string"/>
+        <property name="region" type="string"/>
         <!-- TODO: Alternate names should probably be a MultiLang table -->
-        <property name="alternatenames" type="text"/>
+        <property name="alternatenames" type="string"/>
         <property name="population" type="integer"/>
         <!-- Coordinates in decimal format -->
         <property name="latitude" type="double"/>
         <property name="longitude" type="double"/>
         <property name="altitude" type="integer"/>
-
-        <!-- required metadata -->
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->
     </type>
 
     <!-- Airports are primarily used for getting METAR weather for users -->
     <type name="org_routamc_positioning_aerodrome" table="org_routamc_positioning_aerodrome" parent="org_routamc_positioning_city" parentfield="city">
         <property name="id" type="integer" primaryfield="id"/>
-        <property name="icao" type="text"/>
-        <property name="iata" type="text"/>
-        <property name="name" type="text"/>
+        <property name="icao" type="string"/>
+        <property name="iata" type="string"/>
+        <property name="name" type="string"/>
         <property name="city" link="org_routamc_positioning_city:id" reverse="no" type="integer" parentfield="city"/>
         <!-- Coordinates in decimal format -->
         <property name="latitude" type="float"/>
@@ -38,14 +30,6 @@
 
         <!-- Runway altitude in meters -->
         <property name="altitude" type="float"/>
-
-        <!-- required metadata -->
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->
     </type>
 
     <!-- Log entries are user's position entries -->
@@ -62,7 +46,7 @@
             manual: Manually entered position
             objectlocation: Location acquired through an object's location
         -->
-        <property name="importer" type="text"/>
+        <property name="importer" type="string"/>
 
         <!--
         Accuracy options:
@@ -81,29 +65,21 @@
 
         <!-- Bearing in degrees -->
         <property name="bearing" type="integer"/>
-
-        <!-- required metadata -->
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->
     </type>
 
     <!-- Locations are used for connecting any Midgard object into real-world positions -->
-    <type name="org_routamc_positioning_location" table="org_routamc_positioning_location">
+    <type name="org_routamc_positioning_location" table="org_routamc_positioning_location" parentfield="log">
         <property name="id" type="integer" primaryfield="id"/>
 
         <!-- Parent object GUID -->
-        <property name="parent" type="text"/>
+        <property name="parent" type="string"/>
         <!-- Parent object class -->
-        <property name="parentclass" type="text"/>
+        <property name="parentclass" type="string"/>
         <!-- Parent component -->
-        <property name="parentcomponent" type="text"/>
+        <property name="parentcomponent" type="string"/>
 
         <!-- Log entry this position information is based on if type is set to "10" -->
-        <property name="log" link="org_routamc_positioning_log:id" reverse="no" type="integer"/>
+        <property name="log" link="org_routamc_positioning_log:id" parentfield="log" reverse="no" type="integer"/>
         <property name="date" type="integer"/>
 
         <!--
@@ -120,13 +96,5 @@
 
         <!-- Altitude in meters -->
         <property name="altitude" type="float"/>
-
-        <!-- required metadata -->
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->
     </type>
 </Schema>
