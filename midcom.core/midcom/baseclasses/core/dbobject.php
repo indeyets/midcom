@@ -667,12 +667,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      * Midgard object which were in Unix Timestamp format before that and are in ISO format now.
      * It will convert all of these timestamps to be in Unix timestamp format again.
      *
-     * It processes these members, if present:
-     *
-     * - revised
-     * - created
-     * - locked
-     * - approved
+     * It processes all metadata timestamps.
      *
      * The following conversion rules apply:
      *
@@ -684,13 +679,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function _rewrite_timestamps_to_unixdate(&$object)
     {
-        $timestamps = array
-        (
-            'revised', 
-            'created', 
-            'locked', 
-            'approved'
-        );
         $metadata_timestamps = array
         (
             'created', 
@@ -703,29 +691,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             'schedulestart',
             'scheduleend',
         );
-
-        foreach ($timestamps as $timestamp)
-        {
-            if (array_key_exists($timestamp, $object))
-            {
-                if ($object->$timestamp == '0000-00-00 00:00:00')
-                {
-                    $object->$timestamp = 0;
-                }
-                else
-                {
-                    // We do this silently to avoid problems with broken values. They are rewritten to a
-                    // zero timestamp silently. Also, we need special treatment for NULL timestamps, which
-                    // are cast to '0' (which is in theory wrong for a stamp like '0000-00-00 00:00:00').
-                    $tmp = @strtotime($object->$timestamp);
-                    if ($tmp == -1)
-                    {
-                        $tmp = 0;
-                    }
-                    $object->$timestamp = @strtotime("{$object->$timestamp} GMT");
-                }
-            }
-        }
 
         foreach ($metadata_timestamps as $timestamp)
         {
@@ -766,12 +731,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      * This function prepares the previously converted UNIX timestamps again for saving by
      * converting them back to ISO 8859-1 Format.
      *
-     * It pprocesses these members, if present:
-     *
-     * - revised
-     * - created
-     * - locked
-     * - approved
+     * It processes all metadata timestamps.
      *
      * The following rules apply:
      *
@@ -782,13 +742,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function _rewrite_timestamps_to_isodate(&$object)
     {
-        $timestamps = array
-        (
-            'revised', 
-            'created', 
-            'locked', 
-            'approved'
-        );
         $metadata_timestamps = array
         (
             'created', 
@@ -802,30 +755,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             'scheduleend',
         );
 
-        foreach ($timestamps as $timestamp)
-        {
-            if (array_key_exists($timestamp, $object))
-            {
-                if (! is_numeric($object->$timestamp))
-                {
-                    $object->$timestamp = 0;
-                }
-                if ($object->$timestamp == 0)
-                {
-                    $object->$timestamp = '0000-00-00 00:00:00';
-                }
-                else
-                {
-                    $object->$timestamp = gmstrftime('%Y-%m-%d %T', $object->$timestamp);
-                }
-            }
-        }
-        
-        // Pre 1.8 doe not have the metadata property.
-        if (!isset($object->metadata))
-        {
-            return;
-        }
         foreach ($metadata_timestamps as $timestamp)
         {
             if (array_key_exists($timestamp, $object->metadata))
