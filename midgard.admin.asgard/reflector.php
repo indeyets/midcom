@@ -202,7 +202,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         }
 
         debug_push_class(__CLASS__, __FUNCTION__);
-        $obj = new $this->_original_class();
+        $obj = new $this->_mgdschema_class;
         $properties = get_object_vars($obj);
         if (empty($properties))
         {
@@ -221,6 +221,9 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             case (is_a($obj, 'midgard_topic')):
                 $property = 'extra';
                 break;
+            case (is_a($obj, 'midgard_person')):
+                $property = 'username';
+                break;
             case (array_key_exists('title', $properties)):
                 $property = 'title';
                 break;
@@ -230,7 +233,6 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             default:
                 $property = 'guid';
         }
-
         return $property;
     }
 
@@ -260,6 +262,16 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         	case (method_exists($obj,'get_label')):
         		$label = $obj->get_label();
         		break;
+            case (is_a($obj, 'midgard_person')):
+                if ($obj->rname)
+                {
+                	$label = $obj->rname;
+                }
+                else
+                {
+                	$label = $obj->username;
+                }
+                break;
         		
             case (is_a($obj, 'midgard_topic')):
                 if ($obj->extra)
