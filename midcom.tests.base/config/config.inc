@@ -1,5 +1,0 @@
-'username' => '',
-'password' => '',
-'hostname' => '',
-'port' => 80,
-'prefix' => '/test',

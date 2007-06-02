@@ -1,6 +1,6 @@
 'name' => 'midgard.admin.asgard',
 'purecode' => true,
-'version' => '2.0.0alpha1',
+'version' => '2.0.0alpha2',
 'state' => 'devel',
 'privileges' => array(),
 'class_definitions' => array(),
