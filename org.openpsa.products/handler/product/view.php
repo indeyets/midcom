@@ -176,7 +176,7 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
         $breadcrumb = org_openpsa_products_viewer::update_breadcrumb_line($this->_product);
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
 
-        $_MIDCOM->set_26_request_metadata($this->_product->revised, $this->_product->guid);
+        $_MIDCOM->set_26_request_metadata($this->_product->metadata->revised, $this->_product->guid);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_product->title}");
 
         return true;
