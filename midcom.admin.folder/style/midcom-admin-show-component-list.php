@@ -12,12 +12,12 @@
                 $selected = '';
             }
             ?>
-            <dt><label><input type="radio" name="f_type" value="&(path:h);"&(selected:h); /><strong>&(information['name']:h);</strong> (&(path:h);)</label></dt>
+            <dt class="&(information['state']:h);"><label><input type="radio" name="f_type" value="&(path:h);"&(selected:h); /><strong>&(information['name']:h);</strong> <span class="component">(&(path:h); <span class="version">&(information['version']:h);</span>)</span></label></dt>
             <?php
             if (array_key_exists('description', $information))
             {
                 ?>
-                <dd>&(information['description']:h);</dd>
+                <dd class="&(information['state']:h);">&(information['description']:h);</dd>
                 <?php
             }
         }

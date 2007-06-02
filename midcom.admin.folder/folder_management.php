@@ -216,7 +216,8 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
             }
             
             // Skip components beginning with midcom or midgard
-            if (ereg('^(midcom|midgard)\.', $manifest->name))
+            if (   ereg('^(midcom|midgard)\.', $manifest->name)
+                && $manifest->name != 'midcom.helper.search')
             {
                 continue;
             }
@@ -236,11 +237,13 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
             {
                 $description = '';
             }
-            
+
             $components[$manifest->name] = array
             (
-                'name' => $manifest->get_name_translated(),
+                'name'        => $manifest->get_name_translated(),
                 'description' => $description,
+                'state'       => $manifest->state,
+                'version'     => $manifest->version,
             );
         }
         

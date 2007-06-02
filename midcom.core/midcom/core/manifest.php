@@ -232,17 +232,18 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
     var $purecode = false;
 
     /**
-     * Old version number of the components, currently specified as integer. Not really
-     * used within the system, but you may (actually should) use it for your own versioning.
-     *
-     * Note, that this is now a string (was formerly an int) since the PEAR transition. This
-     * change should not affect anything as I do not know any component actually making use
-     * of this member yet. You should now use version_compare in context with this member
-     * always.
+     * Version number of the components.
      *
      * @var string
      */
-    var $version = 0;
+    var $version = '0.0.1';
+
+    /**
+     * State of the components.
+     *
+     * @var string
+     */
+    var $state = 'devel';
 
     /**
      * Privileges array definition. Indexes are the full privilege names (including the component
@@ -323,6 +324,10 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
         if (array_key_exists('version', $this->_raw_data))
         {
             $this->version = $this->_raw_data['version'];
+        }
+        if (array_key_exists('state', $this->_raw_data))
+        {
+            $this->state = $this->_raw_data['state'];
         }
         if (array_key_exists('privileges', $this->_raw_data))
         {

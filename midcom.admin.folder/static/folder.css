@@ -17,16 +17,28 @@ div.midcom_admin_content_componentlist div.note
 
 div.midcom_admin_content_componentlist dl
 {
-    height: 250px;
+    height: 300px;
     overflow-x: auto;
     border: 1px #f0f0f0 solid;
     padding: 6px;
     margin-top: 0px;
+    font-size: smaller;
 }
 
 div.midcom_admin_content_componentlist dl dd
 {
     margin-bottom: 6px;
+    margin-left: 22px;
+    margin-top: 2px;
+}
+
+div.midcom_admin_content_componentlist dl dt.devel,
+div.midcom_admin_content_componentlist dl dd.devel,
+div.midcom_admin_content_componentlist dl dt.alpha,
+div.midcom_admin_content_componentlist dl dd.alpha
+
+{
+    color: #c0c0c0;
 }
 
 .delete_folder ul.folder_list
