@@ -24,6 +24,10 @@ class org_routamc_positioning_aerodrome_dba extends __org_routamc_positioning_ae
      */
     function get_label()
     {
+        if (!empty($this->name))
+        {
+            return "{$this->icao} ({$this->name})";
+        }
         return $this->icao;
     }
 }

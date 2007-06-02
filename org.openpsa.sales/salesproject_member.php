@@ -18,6 +18,20 @@ class midcom_org_openpsa_salesproject_member extends __midcom_org_openpsa_salesp
     {
         return parent::__midcom_org_openpsa_salesproject_member($id);
     }
+    
+    /**
+     * Human-readable label for cases like Asgard navigation
+     */
+    function get_label()
+    {
+        if ($this->person)
+        {
+            $person = new midcom_db_person($this->person);
+            return $person->name;
+        }
+        return "member #{$this->id}";
+    }
+
 
     function _on_creating()
     {

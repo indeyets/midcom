@@ -18,6 +18,31 @@ class org_routamc_positioning_location_dba extends __org_routamc_positioning_loc
     {
         return parent::__org_routamc_positioning_location_dba($id);
     }
+    
+    /**
+     * Human-readable label for cases like Asgard navigation
+     */
+    function get_label()
+    {
+        if ($this->parent)
+        {
+            $parent = $this->get_parent();
+            if ($parent)
+            {
+                $label = $parent->guid;
+                if (isset($parent->title))
+                {
+                    $label = $parent->title;
+                }
+                elseif (method_exists($parent, 'get_label'))
+                {
+                    $label = $parent->get_label();
+                }
+                return "{$this->parentclass} {$label}";
+            }
+        }
+        return "{$this->parentclass} #{$this->id}";
+    }
 
     /**
      * Returns the person who reported the position
@@ -29,6 +54,14 @@ class org_routamc_positioning_location_dba extends __org_routamc_positioning_loc
         if (   $this->parent
             && $this->parentclass)
         {
+            if (!class_exists($this->parentclass))
+            {
+                if (empty($this->parentcomponent))
+                {
+                    return null;
+                }
+                $_MIDCOM->componentloader->load_graceful($this->parentcomponent);
+            }
             $classname = $this->parentclass;
             $parent = new $classname($this->parent);
             if (! $parent)
