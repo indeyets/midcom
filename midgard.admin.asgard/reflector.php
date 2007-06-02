@@ -271,8 +271,14 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
                 	$label = $obj->name;
                 }
                 break;
+            case (is_a($obj, 'midgard_member')):
+                $person = new midcom_db_person($obj->uid);
+                $grp = new midcom_db_group($obj->gid);
+                $label = sprintf($_MIDCOM->i18n->get_string('%s in %s', 'midcom'), $person->name, $grp->official);
+                break;
             case (is_a($obj, 'midgard_host')):
-                if ($obj->port && $obj->port != "80")
+                if (   $obj->port 
+                    && $obj->port != '80')
                 {
                 	$label = "{$obj->name}:{$obj->port}{$obj->prefix}";
                 }

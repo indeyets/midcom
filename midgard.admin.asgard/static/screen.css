@@ -94,6 +94,7 @@ body
     margin: 0px;
     padding: 0px;
     line-height: 18px;
+    white-space: nowrap;
 }
 #navigation div.section ul.midgard_admin_asgard_navigation ul li
 {
