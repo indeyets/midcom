@@ -51,7 +51,16 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
         $_MIDCOM->set_pagetitle($data['view_title']);
         
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
-
+        
+		$data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('back to site', 'midcom'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/gohome.png',
+            )
+        );
         return true;
     }
 

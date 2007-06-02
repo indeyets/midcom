@@ -16,7 +16,7 @@
                         echo "<h1>{$data['view_title']}</h1>\n";
                         ?>
                     </div>
-                
+
                     <div id="breadcrumb">
                         <?php
                         $nap = new midcom_helper_nav();
