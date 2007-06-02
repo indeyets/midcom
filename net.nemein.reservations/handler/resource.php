@@ -329,7 +329,7 @@ class net_nemein_reservations_handler_resource extends midcom_baseclasses_compon
         }
 
         $_MIDCOM->bind_view_to_object($this->_resource, $this->_datamanager->schema->name);
-        $_MIDCOM->set_26_request_metadata($this->_resource->revised, $this->_resource->guid);
+        $_MIDCOM->set_26_request_metadata($this->_resource->metadata->revised, $this->_resource->guid);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_resource->title}");
 
         return true;

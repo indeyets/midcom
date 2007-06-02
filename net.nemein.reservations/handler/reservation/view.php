@@ -128,7 +128,7 @@ class net_nemein_reservations_handler_reservation_view extends midcom_baseclasse
         );
 
         $_MIDCOM->bind_view_to_object($this->_event, $this->_datamanager->schema->name);
-        $_MIDCOM->set_26_request_metadata($this->_event->revised, $this->_event->guid);
+        $_MIDCOM->set_26_request_metadata($this->_event->metadata->revised, $this->_event->guid);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_event->title} " . strftime('%x', $this->_event->start));
 
         return true;
