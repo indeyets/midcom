@@ -9,6 +9,20 @@ class org_openpsa_calendar_event_resource_dba extends __org_openpsa_calendar_eve
     {
         return parent::__org_openpsa_calendar_event_resource_dba($id);
     }
+    
+    /**
+     * Human-readable label for cases like Asgard navigation
+     */
+    function get_label()
+    {
+        if ($this->resource)
+        {
+            $resource = new org_openpsa_calendar_resource_dba($this->resource);
+            $event = new org_openpsa_calendar_event($this->event);
+            return sprintf($_MIDCOM->i18n->get_string('%s for %s', 'midcom'), $resource->title, $event->title);
+        }
+        return "member #{$this->id}";
+    }
 
     function _verify_can_reserve()
     {

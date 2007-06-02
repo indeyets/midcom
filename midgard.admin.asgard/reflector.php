@@ -271,6 +271,22 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
                 	$label = $obj->name;
                 }
                 break;
+            case (is_a($obj, 'midgard_event')):
+            case (is_a($obj, 'org_openpsa_event')):
+                if ($obj->start == 0)
+                {
+                    $label = $obj->title;
+                }
+                else
+                {
+                    $label = strftime('%x', $obj->start) . " {$obj->title}";
+                }
+                break;
+            case (is_a($obj, 'midgard_eventmember')):
+                $person = new midcom_db_person($obj->uid);
+                $event = new midcom_db_event($obj->eid);
+                $label = sprintf($_MIDCOM->i18n->get_string('%s in %s', 'midcom'), $person->name, $event->title);
+                break;
             case (is_a($obj, 'midgard_member')):
                 $person = new midcom_db_person($obj->uid);
                 $grp = new midcom_db_group($obj->gid);
