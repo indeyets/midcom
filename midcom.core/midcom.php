@@ -31,9 +31,10 @@ require_once 'PEAR.php';
 
 //////////////////////////////////////////////////////////////////
 // Load the PEAR Compatibility package if we are not using PHP 4.3
+/* TODO: Remove completely
 require_once 'PHP/Compat.php';
 $components = PHP_Compat::loadVersion();
-
+ */
 ///////////////////////////////////
 // Try to be smart about the pahts:
 // Define default constants
@@ -93,10 +94,12 @@ require('midcom/debug.php');
 
 debug_add("Start of MidCOM run: {$_SERVER['REQUEST_URI']}", MIDCOM_LOG_INFO);
 
+/*
 if (! is_null($components))
 {
     debug_print_r ('PHP_Compat loaded these components:', $components);
 }
+ */
 
 ///////////////////////////////////
 // Load first-level supporting code

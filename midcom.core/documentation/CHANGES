@@ -37,6 +37,12 @@ MidCOM Version 2.8.0beta1, 2007-04-25
   - Enabled replication tools and style editor in toolbars
 
 --------------------------------
+MidCOM Version 3.0.0, 2007-09-01
+
+- Core
+ Removed dependency on PHP_Compat
+
+--------------------------------
 MidCOM Version 2.6.0, 2006-10-27
 
 - AIS / Aegir

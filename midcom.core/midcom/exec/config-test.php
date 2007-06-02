@@ -148,18 +148,10 @@ function check_rcs()
 // Some helpers
 $i18n =& $GLOBALS['midcom']->get_service('i18n');
 
-// Check the PHP Version and PHP_Compat availability
-
 $version = phpversion();
-if (version_compare($version, '4.1.0', '<'))
+if (version_compare($version, '5.1.0', '<'))
 {
-    println('PHP Version', ERROR, 'PHP 4.1.0 or greater is required for MidCOM, 4.3.0 or greater is recommended.');
-}
-else if (version_compare($version, '4.3.0', '<'))
-{
-    println('PHP Version', WARNING, 'PHP 4.3.0 or greater is recommended for MidCOM.');
-    println_check_for_include_file('PHP/Compat.php', 'PEAR Package: PHP_Compat', 
-        ERROR, 'The PEAR Package PHP_Compat is required for pre-4.3.0 installations.');
+    println('PHP Version', ERROR, 'PHP 5.1.0 or greater is required for MidCOM, 4.3.0 or greater is recommended.');
 }
 else
 {

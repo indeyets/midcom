@@ -14,7 +14,7 @@ now integrated into the MidCOM core. There are no known
 problems with mod_midgard_preparser or the Apache 2 mod_midgard, but it
 has not been throughoutly tested.
 
-PHP 4.1.x is required at least, 4.3.x or newer is strongly recommended. You
+PHP 5.1.x is required at least, 5.2 or newer is strongly recommended. You
 need the following PHP modules available:
 
 * iconv for character translation in the I18n subsystem
@@ -24,13 +24,10 @@ need the following PHP modules available:
 * The build-in EXIF functions are strongly recommended if you plan to use
   the image gallery. For broken PHP-Exif installations (PHP 4.1.x) there is 
   a JHead fallback.
-* The PEAR Package PHP_Compat is required on all pre 4.3 installations.
 * The PEAR Packages Mail and Mail_mime are required for the E-Mail template 
   engine (used by n.n.reservations and n.n.orders at this time).
 * The PEAR Package HTML_Quickform is required for the Datamamanagers 
   extended Form validation support.
-* The PEAR Package HTML_Treemenu is needed to use the dhtml treemenu within
-  AIS.
 * The PEAR Package Date is required for the datamangager2's date type.
 * The memory limit of the PHP installation has to be increased to 20 MB at 
   least for the AIS site.
@@ -39,11 +36,6 @@ need the following PHP modules available:
 
 Further, there are some recommendation about PHP configuration:
 
-* While register_globals is no longer needed by the MidCOM core, you will need
-  to leave this enabled if you use MidCOM Template (the default way now). It 
-  uses NemeinAuth, which is not yet able to run without register_globals.
-  So if you do this too, leave it on. If you instead run MidCOM with the 
-  classic selfmade way, turn it off.
 * You should increase the upload limits for the administrative sites, the 
   2 MB limit default is a bit low in many cases. Especially if you plan to
   use the bulk upload facility of net.siriux.photos, an upload limit of about
@@ -65,7 +57,7 @@ configuration, as both logging and caching use /tmp by default.
 
 An important note for all MidCOM Template driven sites:
 
-Since NemeinAuthentication relies on PHP Sessions for authentication, you might
+Since MidCOM Authentication relies on PHP Sessions for authentication, you might
 want to adapt the session.gc_maxlifetime property of your php installation. The
 default of 1440 seconds (24 minutes) will invalidate idle MidCOM sessions (for
 example while editing a larger document) after that time, not the one-hour 
@@ -75,7 +67,7 @@ values by setting gc_maxlifetime to 3660.
 Quick setup/upgrading instructions:
 -----------------------------------
 
-You need a working Midgard 1.7.0 or newer setup, with Aegir installed:
+You need a working Midgard 1.8.4 or newer setup, with Aegir installed:
   http://www.midgard-project.org/download/
 
 1. Extract the MidCOM sources to $PREFIX/share/midgard/midcom where
