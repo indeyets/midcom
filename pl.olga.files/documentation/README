@@ -1,4 +1,0 @@
-pl.olga.files provides an access to all files and dir 
-that would be accessible from DocumentRoot if there was no
-MidCOM installed :-). Useful when you have thousands of 
-flat files that you are publishing on your website.

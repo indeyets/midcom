@@ -1,8 +1,0 @@
-//"schemadb" => "file:/pl/olga/vv/config/schemadb_default.dat",
-//"schemadbs" => Array (
-//    "file:/pl/olga/vv/config/schemadb_default.dat" => "Discussion Default Schema Database",
-//),
-//"default_schema" => "default",
-"allow_create_by_uri" => false,
-"antispam" => true,
-"visible" =>false,
