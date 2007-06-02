@@ -20,6 +20,19 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
     {
         parent::__net_nehmer_buddylist_entry($id);
     }
+    
+    /**
+     * Human-readable label for cases like Asgard navigation
+     */
+    function get_label()
+    {
+        if ($this->buddy)
+        {
+            $buddy = new midcom_db_person($this->buddy);
+            return sprintf($_MIDCOM->i18n->get_string('buddy %s', 'net.nehmer.buddylist'), $buddy->name);
+        }
+        return "buddy #{$this->id}";
+    }
 
     /**
      * Internal helper, prepares the QB instance required for the unapproved
