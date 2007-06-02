@@ -239,6 +239,83 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         return $property;
     }
 
+    function get_object_label($obj)
+    {
+        // Check against static calling
+        if (   !isset($this->_mgdschema_class)
+            || empty($this->_mgdschema_class))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('May not be called statically', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $properties = get_object_vars($obj);
+        if (empty($properties))
+        {
+            debug_add("Could not list object properties, aborting", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+
+        switch(true)
+        {
+        	case (method_exists($obj,'get_asgard_label')):
+        		$label = $obj->get_label();
+        		break;
+        		
+            case (is_a($obj, 'midgard_topic')):
+                if ($obj->extra)
+                {
+                	$label = $obj->extra;
+                }
+                else
+                {
+                	$label = $obj->name;
+                }
+                break;
+            case (is_a($obj, 'midgard_article')
+            	|| is_a($obj, 'midgard_page')):
+                if ($obj->title)
+                {
+                	$label = $obj->title;
+                }
+                else
+                {
+                	$label = $obj->name;
+                }
+                break;
+            case (is_a($obj, 'midgard_host')):
+                if ($obj->port && $obj->port != "80")
+                {
+                	$label = "{$obj->name}:{$obj->port}{$obj->prefix}";
+                }
+                else
+                {
+                	$label = "{$obj->name}{$obj->prefix}";
+                }
+                break;
+            case (array_key_exists('title', $properties)):
+                $label = $obj->title;
+                break;
+            case (array_key_exists('official', $properties)):
+                $label = $obj->official;
+                break;  
+            case (array_key_exists('icao', $properties)):
+                $label = $obj->icao;
+                break;              
+            case (array_key_exists('name', $properties)):
+                $label = $obj->name;
+                break;
+            default:
+                $label = $obj->guid;
+        }
+
+        return $label;
+    }
+
     /**
      * Get class properties to use as search fields in univeralchooser etc
      *

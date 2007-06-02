@@ -167,8 +167,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
                     $this->shown_objects[$child->guid] = true;
                     
                     echo "{$prefix}    <li class=\"{$css_class}\">";
-                    $label_property = $ref->get_label_property();
-                    $label = htmlspecialchars($child->$label_property);
+                    $label = htmlspecialchars($ref->get_object_label($child));
                     if (empty($label))
                     {
                         $label = "#{$child->id}";
@@ -211,17 +210,17 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
             $this->_request_data['section_name'] = $ref->get_class_label();
             midcom_show_style('midgard_admin_asgard_navigation_section_header');
             if (   isset($root_object)
-                && is_a($root_object, $root_type)
+                && (is_a($root_object, $root_type) 
+                	|| midgard_admin_asgard_reflector::is_same_class($root_type,$root_object->__midcom_class_name__))
                 || in_array($root_type, $this->expanded_root_types))
             {
                 $root_objects = $ref->get_root_objects();
                 if (count($root_objects) > 0)
                 {
                     echo "<ul class=\"midgard_admin_asgard_navigation\">\n";
-                    
+             
                     foreach ($root_objects as $object)
                     {
-                        $label_property = $ref->get_label_property();
                         $selected = false;
                         $css_class = get_class($object);
                         if (in_array($object->guid, $this->_object_path))
@@ -239,7 +238,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
                         
                         echo "    <li class=\"{$css_class}\">";
                         
-                        $label = htmlspecialchars($object->$label_property);
+                        $label = htmlspecialchars($ref->get_object_label($object));
                         if (empty($label))
                         {
                             $label = "#{$object->id}";
