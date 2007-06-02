@@ -1,6 +1,6 @@
 'name' => 'midgard.admin.asgard',
 'purecode' => true,
-'version' => '2.0.0alpha2',
+'version' => '2.0.0alpha3',
 'state' => 'devel',
 'privileges' => array(),
 'class_definitions' => array(),
@@ -30,6 +30,12 @@
             'name' => 'Arttu Manninen',
             'email' => 'arttu@kaktus.cc',
             'role' => 'lead',
+        ),
+        'solt' => array
+        (
+        	'name' => 'Marcin Sołtysiak',
+        	'email' => 'olga@olga.pl',
+        	'role' => 'developer',
         ),
     ),
     /* Define what modules this module depends on.  */
