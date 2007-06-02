@@ -114,11 +114,11 @@ target_dir  = ${target_dir} // this is where pear packages are saved.
         <resolvePath propertyName="static_path" file="${project.basedir}/static"/>
         <resolvePath propertyName="template_path" file="${project.basedir}/../templates"/>
         <exec
-            command="ln -s ${static_path}/stock-icons ${static_dir}/stock-icons "
-            dir="${project.basedir}/../static" />
+            command="ln -s ${static_path}/stock-icons ${static_dir}/stock-icons"
+            dir="${static_path}" />
         <exec
             command="ln -s ${static_path}/Javascript_protoToolkit ${static_dir}/Javascript_protoToolkit"
-            dir="${project.basedir}/../static" />
+            dir="${static_path}" />
         <exec
             command="ln -s ${template_path}/* ${static_dir}/"
                 dir="${template_path}" />
