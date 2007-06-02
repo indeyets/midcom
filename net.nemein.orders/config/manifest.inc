@@ -1,5 +1,0 @@
-'name' => 'net.nemein.orders',
-'purecode' => false,
-'version' => 1,
-'privileges' =>  Array(),
-'class_definitions' => Array(),
