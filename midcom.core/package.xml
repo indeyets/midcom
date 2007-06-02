@@ -30,8 +30,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <date>2007-04-25</date>
     <time>15:10:53</time>
     <version>
-        <release>2.8.0beta1</release>
-        <api>2.8.0</api>
+        <release>2.9.0alpha1</release>
+        <api>3.0.0</api>
     </version>
     <stability>
         <release>beta</release>
