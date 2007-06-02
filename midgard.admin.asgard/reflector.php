@@ -214,21 +214,16 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         // TODO: less trivial implementation        
         switch(true)
         {
+        
+        	case (method_exists($obj,'get_label_property')):
+        		$label = $obj->get_label();
+        		break;
             case (is_a($obj, 'midgard_topic')):
                 $property = 'extra';
-                break;
-            case (is_a($obj, 'midgard_person')):
-                $property = 'name';
                 break;
             case (array_key_exists('title', $properties)):
                 $property = 'title';
                 break;
-            case (array_key_exists('official', $properties)):
-                $property = 'official';
-                break;  
-            case (array_key_exists('icao', $properties)):
-                $property = 'icao';
-                break;              
             case (array_key_exists('name', $properties)):
                 $property = 'name';
                 break;
@@ -239,7 +234,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         return $property;
     }
 
-    function get_object_label($obj)
+    function get_object_label(&$obj)
     {
         // Check against static calling
         if (   !isset($this->_mgdschema_class)
@@ -262,7 +257,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
 
         switch(true)
         {
-        	case (method_exists($obj,'get_asgard_label')):
+        	case (method_exists($obj,'get_label')):
         		$label = $obj->get_label();
         		break;
         		
@@ -270,17 +265,6 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
                 if ($obj->extra)
                 {
                 	$label = $obj->extra;
-                }
-                else
-                {
-                	$label = $obj->name;
-                }
-                break;
-            case (is_a($obj, 'midgard_article')
-            	|| is_a($obj, 'midgard_page')):
-                if ($obj->title)
-                {
-                	$label = $obj->title;
                 }
                 else
                 {
@@ -300,12 +284,6 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             case (array_key_exists('title', $properties)):
                 $label = $obj->title;
                 break;
-            case (array_key_exists('official', $properties)):
-                $label = $obj->official;
-                break;  
-            case (array_key_exists('icao', $properties)):
-                $label = $obj->icao;
-                break;              
             case (array_key_exists('name', $properties)):
                 $label = $obj->name;
                 break;

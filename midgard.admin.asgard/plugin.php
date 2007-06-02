@@ -187,9 +187,9 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 $title_string = $_MIDCOM->i18n->get_string('%s %s', 'midgard.admin.asgard');
                 break;
         }
-        $label_property = $data['object_reflector']->get_label_property();
+        $label = $data['object_reflector']->get_object_label($object);
         $type_label = midgard_admin_asgard_plugin::get_type_label(get_class($object));
-        $data['view_title'] = sprintf($title_string, $type_label, $object->$label_property);
+        $data['view_title'] = sprintf($title_string, $type_label, $label);
         $_MIDCOM->set_pagetitle($data['view_title']);
 
     }
@@ -292,11 +292,11 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         }
 
         $breadcrumb = array();
-        $label_property = $data['object_reflector']->get_label_property();
+        $label = $data['object_reflector']->get_object_label($object);
         $breadcrumb[] = array
         (
             MIDCOM_NAV_URL => "__mfa/asgard/object/view/{$object->guid}/",
-            MIDCOM_NAV_NAME => $object->$label_property,
+            MIDCOM_NAV_NAME => $label,
         );
                 
         $parent = $object->get_parent();
@@ -307,11 +307,11 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         {
             $i++;
             $parent_reflector = midgard_admin_asgard_reflector::get($parent);
-            $parent_label_property = $parent_reflector->get_label_property();
+            $parent_label = $parent_reflector->get_object_label($parent);
             $breadcrumb[] = array
             (
                 MIDCOM_NAV_URL => "__mfa/asgard/object/view/{$parent->guid}/",
-                MIDCOM_NAV_NAME => $parent->$parent_label_property,
+                MIDCOM_NAV_NAME => $parent_label,
             );
             $parent = $parent->get_parent();
         }

@@ -169,6 +169,15 @@ body
   width: 100%;
 }
 
+#content div.backtosite
+{
+  width: auto;
+  float: right;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;        
+}
+
 #container a:link,
 #container a:visited
 {
