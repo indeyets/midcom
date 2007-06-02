@@ -21,6 +21,20 @@ class midcom_org_openpsa_organization extends __midcom_org_openpsa_organization
     	
     	return $label;
     }
+    
+    function get_label_property()
+    {
+    	if ($this->official)
+    	{
+    		$property = 'official';
+    	}
+    	else
+    	{
+    		$property = 'name';
+    	}
+    	
+    	return $property;
+    }
 }
 
 /**
