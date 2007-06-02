@@ -222,7 +222,11 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
                 $property = 'extra';
                 break;
             case (is_a($obj, 'midgard_person')):
-                $property = 'username';
+                $property = array
+                (
+                	'rname',
+                	'username'
+                );
                 break;
             case (array_key_exists('title', $properties)):
                 $property = 'title';
