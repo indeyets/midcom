@@ -23,3 +23,7 @@ Image addition pop-up
 Page attachments
 ---STRINGEND
 
+---STRING unified search
+Unified search
+---STRINGEND
+

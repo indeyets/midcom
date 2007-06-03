@@ -19,9 +19,24 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
      */
     var $_controller = null;
     
+	/**
+	 * Listing type
+	 */
+	var $_list_type = null;
+
+	/**
+	 * Search results
+	 */
+	var $_search_results = array();
+	
     function midcom_helper_imagepopup_handler_list()  
     {
         parent::midcom_baseclasses_components_handler();
+    }
+
+    function _prepare_request_data()
+    {
+        $this->_request_data['datamanager'] =& $this->_datamanager;
     }
     
     function _handler_list($handler_id, $args, &$data)
@@ -67,32 +82,29 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
                 $data['list_type'] = 'page';
                 $data['list_title'] = $_MIDCOM->i18n->get_string('page attachments', 'midcom.helper.imagepopup');
                 break;
-        }
-        
-        // Run datamanager for handling the images
-        $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
-        $this->_controller->schemadb = $this->_load_schema($data['schema_name']);
-        $this->_controller->schemaname = $data['schema_name']; 
-        
-        $_MIDCOM->set_pagetitle($data['list_title']);
-        
-        if ($data['list_type'] == 'page')
-        {
-            $this->_controller->set_storage($data['object']);
-        }
-        else
-        {
-            $this->_controller->set_storage($data['folder']);
-        }
-        
-        $this->_controller->initialize();
-        $this->_request_data['form'] = & $this->_controller;
-        switch ($this->_controller->process_form())
-        {
-            case 'cancel':
-                $_MIDCOM->add_jsonload("window.close();");
+
+            case '____ais-imagepopup-list_unified_noobject':
+            case '____ais-imagepopup-list_unified':
+                $data['list_type'] = 'unified';
+                $data['list_title'] = $_MIDCOM->i18n->get_string('unified search', 'midcom.helper.imagepopup');
+				$data['query'] = (array_key_exists('query', $_REQUEST) ? $_REQUEST['query'] : '');
                 break;
         }
+        $this->_list_type = $data['list_type'];
+
+        $_MIDCOM->set_pagetitle($data['list_title']);
+
+		if ($data['list_type'] != 'unified')
+		{
+			$this->_create_controller($data);
+		}
+		else
+		{
+			if($data['query'] != '')
+			{
+				$this->_run_search($data);
+			}
+		}
 
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Prototype/prototype.js");
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/midcom.helper.imagepopup/functions.js");
@@ -102,19 +114,85 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
         $_MIDCOM->add_jscript($image_info);
         
         //$_MIDCOM->add_jsonload("tinyMCEPopup.executeOnLoad('tinyMCEPopup.resizeToContent()');");
-        $_MIDCOM->add_jsonload("imagePopupConvertImagesForAddition();imagePopupConvertFilesForAddition();");
         
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('midcom.helper.imagepopup');
         
         return true;
     }
+
+    function _create_controller(&$data)
+    {
+        // Run datamanager for handling the images
+        $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
+        $this->_controller->schemadb = $this->_load_schema($data['schema_name']);
+        $this->_controller->schemaname = $data['schema_name'];
+
+        if ($data['list_type'] == 'page')
+        {
+            $this->_controller->set_storage($data['object']);
+        }
+        else
+        {
+            $this->_controller->set_storage($data['folder']);
+        }
+
+        $this->_controller->initialize();
+        $this->_request_data['form'] = & $this->_controller;
+        switch ($this->_controller->process_form())
+        {
+            case 'cancel':
+                $_MIDCOM->add_jsonload("window.close();");
+                break;
+        }
+
+        $_MIDCOM->add_jsonload("imagePopupConvertImagesForAddition();imagePopupConvertFilesForAddition();");
+    }
+
+	function _run_search(&$data)
+	{
+		$qb = midcom_baseclasses_database_attachment::new_query_builder();
+		$query = str_replace('*', '%', $data['query']);
+		$qb->begin_group('OR');
+        	$qb->add_constraint('name', 'LIKE', $query);
+        	$qb->add_constraint('title', 'LIKE', $query);
+        	$qb->add_constraint('mimetype', 'LIKE', $query);
+		$qb->end_group();
+
+		$this->_search_results = $qb->execute();
+		
+		$_MIDCOM->add_jsonload("imagePopupConvertResultsForAddition();");
+	}
     
     function _show_list() 
     {    
         midcom_show_style('midcom_helper_imagepopup_init');
-        midcom_show_style('midcom_helper_imagepopup_list');
+		if ($this->_list_type == 'unified')
+		{
+			midcom_show_style('midcom_helper_imagepopup_search');
+			$this->_show_search_results();
+		}
+		else
+		{
+			midcom_show_style('midcom_helper_imagepopup_list');
+		}
         midcom_show_style('midcom_helper_imagepopup_finish');
+    }
+
+    function _show_search_results() 
+    {    
+		midcom_show_style('midcom_helper_imagepopup_search_result_start');
+		
+		if (count($this->_search_results) > 0)
+        {
+			foreach ($this->_search_results as $key => $result)
+			{
+				$this->_request_data['result'] = $result;
+				midcom_show_style('midcom_helper_imagepopup_search_result_item');	
+			}
+        }
+		
+		midcom_show_style('midcom_helper_imagepopup_search_result_end');
     }
     
     /**
@@ -172,8 +250,8 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
                 'type' => 'images',
                 'widget' => 'images',
                 'widget_config' => array (
-                	'set_name_and_title_on_upload' => false
-                	) ,
+                    'set_name_and_title_on_upload' => false
+                    ) ,
             );
 
             $schema['fields']['midcom_helper_imagepopup_files'] = Array

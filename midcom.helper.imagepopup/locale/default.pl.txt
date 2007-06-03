@@ -23,3 +23,6 @@ Dodawanie obrazów
 Załączniki strony
 ---STRINGEND
 
+---STRING unified search
+Unified search
+---STRINGEND

@@ -61,7 +61,7 @@ body div.midcom_helper_imagepopup h1
 
 
 
-#files
+#files, #search
 {
     padding-left: 2%;
     padding-right: 2%;
@@ -119,4 +119,24 @@ body div.midcom_helper_imagepopup h1
 #files div.form_toolbar
 {
     text-align: center;
+}
+
+.search-form
+{
+	margin: 10px 0 10px 0;
+}
+
+ul
+{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+ul li
+{
+	height: 59px;
+	margin: 0 0 5px 0;
+	padding: 5px;
+	border-bottom: 1px solid #D7DBD1;
+	
 }

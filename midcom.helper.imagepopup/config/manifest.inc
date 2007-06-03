@@ -2,7 +2,7 @@
   'name' => 'midcom.helper.imagepopup',
   'description' => 'Image upload and insertion tool',
   'purecode' => true,
-  'version' => '0.1.5beta1',
+  'version' => '0.1.6beta1',
   'state' => 'beta',
   'privileges' => 
   array (
@@ -31,6 +31,12 @@
       array (
         'name' => 'Oskari Kokko',
         'email' => 'oskari.kokko@nemein.com',
+        'role' => 'developer',
+      ),
+      'w_i' => 
+      array (
+        'name' => 'Jerry Jalava',
+        'email' => 'jerry.jalava@nemein.com',
         'role' => 'developer',
       ),
     ),

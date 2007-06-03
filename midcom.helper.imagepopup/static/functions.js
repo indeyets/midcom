@@ -191,3 +191,51 @@ function makeHtmlForInsertion(objId)
 	
 	return html_code;
 }
+
+function imagePopupConvertResultsForAddition()
+{
+    // We convert the image "size lists" into the addition clickers
+    resultRows = document.getElementsByClassName('midcom_helper_imagepopup_search_result_item');
+    if (resultRows)
+    {
+        for (i = 0; i < resultRows.length; i++) 
+        {
+            itemGuid = resultRows[i].getAttribute('title');
+            itemType = resultRows[i].getAttribute('rel');
+            if (itemGuid)
+            {
+                item = new Array();
+                item['guid'] = itemGuid;
+                item['type'] = itemType;
+				
+				informationBlocks = resultRows[i].getElementsByTagName('span');
+                if (!informationBlocks)
+                {
+                    alert("No metadata information available!");
+                }
+
+				for (ii = 0; ii < informationBlocks.length; ii++)
+				{
+					informationTitle = informationBlocks[ii].getAttribute('title');
+					item[informationTitle] = informationBlocks[ii].innerHTML;
+				}
+
+                imageLinks = resultRows[i].getElementsByTagName('a');
+
+                // Tweak the image links
+                for (iii = 0; iii < imageLinks.length; iii++) 
+                {
+                    imageLinks[iii].href = 'javascript:insertImage("' + itemGuid + '");';
+                    imageLinks[iii].target = '';
+                    imageLinks[iii].title = 'Click to insert';
+                }
+                
+                // Populate image to the image info Array
+                imagepopup_images[itemGuid] = new Array();
+                imagepopup_images[itemGuid]['title'] = item['title'];
+                imagepopup_images[itemGuid]['name'] = item['name'];
+                imagepopup_images[itemGuid]['type'] = itemType;
+            }
+        }
+    }
+}
