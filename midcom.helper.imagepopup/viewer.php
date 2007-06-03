@@ -40,6 +40,20 @@ class midcom_helper_imagepopup_viewer extends midcom_baseclasses_components_requ
             'fixed_args' => Array('folder'),
             'variable_args' => 1,            
         );
+
+	   // Match /unified/<schema>/<object guid>
+	   $object->_request_switch['list_unified'] = Array (
+	       'handler' => Array('midcom_helper_imagepopup_handler_list', 'list'),
+	       'fixed_args' => Array('unified'),
+	       'variable_args' => 2,
+	   );
+
+	   // Match /unified/<schema>
+	   $object->_request_switch['list_unified_noobject'] = Array (
+	       'handler' => Array('midcom_helper_imagepopup_handler_list', 'list'),
+	       'fixed_args' => Array('unified'),
+	       'variable_args' => 1,
+	   );
         
         // Match /<schema>/<object guid>
         $object->_request_switch['list_object'] = Array (
