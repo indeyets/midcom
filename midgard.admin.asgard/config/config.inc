@@ -44,6 +44,14 @@
     'homephone',
     'fax',
 ),
+'object_location_fields' => array
+(
+    'latitude',
+    'longitude',
+    'altitude',
+    'bearing',
+    'accuracy',
+),
 'object_skip_fields' => array
 (
     'guid',

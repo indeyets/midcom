@@ -106,6 +106,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         $timerange_fields = $this->_config->get('object_timerange_fields');
         $address_fields = $this->_config->get('object_address_fields');
         $phone_fields = $this->_config->get('object_phone_fields');
+        $location_fields = $this->_config->get('object_location_fields');
         
         // We handle the cases, and then their subcases
         if (   in_array($first, $preferred_fields)
@@ -206,13 +207,36 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
             
             return -1;
         }
+        
+        if (in_array($first, $location_fields))
+        {
+            if (   in_array($second, $preferred_fields)
+                || $this->_reflector->get_midgard_type($second) == MGD_TYPE_LONGTEXT
+                || $this->_reflector->is_link($second)
+                || in_array($second, $timerange_fields)
+                || in_array($second, $phone_fields)
+                || in_array($second, $address_fields))
+            {
+                return 1;
+            }
+            
+            if (in_array($second, $location_fields))
+            {
+                // Both are address fields, arrange them in proper order
+                return (array_search($first, $location_fields) < array_search($second, $location_fields)) ? -1 : 1;
+            }
+            
+            return -1;
+        }
+
 
         if (   in_array($second, $preferred_fields)
             || $this->_reflector->get_midgard_type($second) == MGD_TYPE_LONGTEXT
             || $this->_reflector->is_link($second)
             || in_array($second, $timerange_fields)
             || in_array($second, $phone_fields)
-            || in_array($second, $address_fields))
+            || in_array($second, $address_fields)
+            || in_array($second, $location_fields))
         {
             // First field was not a preferred field, but second is
             return 1;
