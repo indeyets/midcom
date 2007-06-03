@@ -6,7 +6,7 @@
         <property name="person" link="midgard_person:id" reverse="no" type="integer" parentfield="person"/>
         
         <!-- Midgard, Twitter, Jaiku ... -->
-        <property name="source" type="text" />
-        <property name="externalid" type="text" />
+        <property name="source" type="string" />
+        <property name="externalid" type="string" />
     </type>
 </Schema>
