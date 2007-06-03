@@ -1,4 +1,5 @@
 <?php
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 $item =& $data['result'];
 $mime_icon = null;
 $item_type = "image";
@@ -28,10 +29,10 @@ $item_type = "image";
 if ($item_type == "image")
 {
 ?>
-	<a href='http://mfadev/midcom-serveattachmentguid-&(item.guid);/&(item.name);'>
-		<img src='http://mfadev/midcom-serveattachmentguid-&(item.guid);/&(item.name);' width='75' height='54' align='texttop' />
+	<a href='&(prefix);midcom-serveattachmentguid-&(item.guid);/&(item.name);'>
+		<img src='&(prefix);midcom-serveattachmentguid-&(item.guid);/&(item.name);' width='75' height='54' align='texttop' />
 	</a>
-	<a href='http://mfadev/midcom-serveattachmentguid-&(item.guid);/&(item.name);'>
+	<a href='&(prefix);midcom-serveattachmentguid-&(item.guid);/&(item.name);'>
 		<span title="filename">&(item.name);</span>
 	</a>
 <?php	
@@ -40,7 +41,7 @@ else
 {
 ?>
 	<img src="&(mime_icon);" alt="&(item.mimetype);" align='texttop'/>
-	<a href='http://mfadev/midcom-serveattachmentguid-&(item.guid);/&(item.name);'>
+	<a href='&(prefix);midcom-serveattachmentguid-&(item.guid);/&(item.name);'>
 		&(item.name);
 	</a>
 <?php	
