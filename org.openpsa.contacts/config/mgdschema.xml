@@ -4,7 +4,7 @@
      Master include point when Piotras has solid support for it -->
 
     <!-- org.openpsa.contacts Objects-->
-    <type name="org_openpsa_organization" table="grp" parentfield="owner">
+    <type name="org_openpsa_organization" table="grp" upfield="owner">
         <!-- Clean extending not supported yet
              NewMidgardGrp properties -->
         <property name="id" type="integer" primaryfield="id"/>
@@ -13,7 +13,7 @@
         <property name="homepage" type="string"/>
         <property name="email" type="string"/>
         <property name="extra" type="text"/>
-        <property name="owner" link="midgard_group:id" reverse="no" type="integer" />
+        <property name="owner" link="midgard_group:id" reverse="no" type="integer" upfield="owner" />
         <property name="street" type="string"/>
         <property name="postcode" type="string"/>
         <property name="city" type="string"/>
