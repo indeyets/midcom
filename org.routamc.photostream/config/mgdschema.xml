@@ -16,7 +16,7 @@
         <property name="thumb" link="midgard_attachment:id" reverse="yes" type="integer"/>
 
         <!-- Descriptive fields are MLd -->
-        <property name="title"       multilang="yes" table="org_routamc_photostream_photo_i" type="text" />
+        <property name="title"       multilang="yes" table="org_routamc_photostream_photo_i" type="string" />
         <property name="description" multilang="yes" table="org_routamc_photostream_photo_i" type="text" />
         <property name="lang"        multilang="yes" table="org_routamc_photostream_photo_i" type="integer" />
         <property name="sid"         multilang="yes" table="org_routamc_photostream_photo_i" type="integer" />
@@ -26,12 +26,5 @@
 
         <!-- Integer for rating, typically of the "1-5 stars" variety -->
         <property name="rating" type="integer"/>
-
-        <!-- required 1.7 metadata -->
-        <property name="revised" type="string"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->
     </type>
 </Schema>

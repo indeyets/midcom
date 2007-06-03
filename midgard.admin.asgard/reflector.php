@@ -532,6 +532,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             unset($type);
 
             $target = $ref->get_link_target($property);
+
             debug_add("get_link_target returned '{$target}'");
             if (!empty($target))
             {

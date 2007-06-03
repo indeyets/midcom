@@ -21,6 +21,16 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
         parent::__net_nehmer_buddylist_entry($id);
     }
     
+    function get_parent_guid_uncached()
+    {
+        if ($this->account)
+        {
+            $parent = new midcom_db_person($this->account);
+            return $parent->guid;
+        }
+        return null;
+    }
+    
     /**
      * Human-readable label for cases like Asgard navigation
      */

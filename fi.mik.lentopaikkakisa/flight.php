@@ -12,6 +12,11 @@ class fi_mik_flight_dba extends __fi_mik_flight_dba
     
     function get_parent_guid_uncached()
     {
+        if ($this->pilot)
+        {
+            $pilot = new midcom_db_person($this->pilot);
+            return $pilot->guid;
+        }
         return null;
     }
     

@@ -534,7 +534,9 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         {
             case 'save':
                 if (   is_a($this->_object, 'midgard_style')
-                    || is_a($this->_object, 'midgard_element'))
+                    || is_a($this->_object, 'midgard_element')
+                    || is_a($this->_object, 'midgard_page')
+                    || is_a($this->_object, 'midgard_pageelement'))
                 {
                     mgd_cache_invalidate();
                 }
@@ -572,14 +574,13 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
     {
         // Figure out the linking property
         $new_type_reflector = midgard_admin_asgard_reflector::get($new_type);
-        $link_properties = $new_type_reflector->get_link_properties();  
+        $link_properties = $new_type_reflector->get_link_properties();
         $type_to_link_to =  midgard_admin_asgard_reflector::class_rewrite(get_class($this->_object));
         foreach ($link_properties as $new_type_property => $link)
         {
             $linked_type = midgard_admin_asgard_reflector::class_rewrite($link['class']);
-            //echo "{$type_to_link_to} : {$linked_type}<br />\n";
-            if (   $linked_type == $type_to_link_to
-                || is_a($this->_object, $linked_type))
+
+            if (midgard_admin_asgard_reflector::is_same_class( $linked_type, $type_to_link_to))
             {
                 $parent_property = $link['target'];
                 return array($new_type_property, $parent_property);
@@ -746,6 +747,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         if (array_key_exists('midgard_admin_asgard_deleteok', $_REQUEST))
         {
             // Deletion confirmed.
+            $parent = $this->_object->get_parent();
             if (! $this->_object->delete())
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to delete object {$args[0]}, last Midgard error was: " . mgd_errstr());
@@ -762,8 +764,6 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
             $indexer =& $_MIDCOM->get_service('indexer');
             $indexer->delete($this->_object->guid);
 
-            // Delete ok, relocating to welcome.
-            // TODO: Relocate to parent
             
             if ($data['language_code'] != '')
             {
@@ -771,6 +771,13 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 $_MIDCOM->relocate("__mfa/asgard/object/view/{$this->_object->guid}/");
                 // This will exit()
             }
+            
+            if ($parent)
+            {
+                $_MIDCOM->relocate("__mfa/asgard/object/view/{$parent->guid}/");
+                // This will exit()
+            }
+            
             $_MIDCOM->relocate('__mfa/asgard/');
             // This will exit.
         }

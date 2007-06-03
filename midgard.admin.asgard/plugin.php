@@ -163,15 +163,8 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
     
     function get_type_label($type)
     {
-        // Figure out nice short name for the type
-        $type_parts = explode('_', $type);
-        $type_label = $type_parts[count($type_parts) - 1];
-        if (   $type_label == 'dba'
-            || $type_label == 'db')
-        {
-            $type_label = $type_parts[count($type_parts) - 2];
-        }
-        return $_MIDCOM->i18n->get_string($type_label, 'midgard.admin.asgard');
+        $ref = midgard_admin_asgard_reflector_tree::get($type);
+        return $ref->get_class_label();
     }
 
     function init_language($handler_id, $args, &$data)
