@@ -174,7 +174,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
                 array_shift($classname_parts);
                 array_shift($classname_parts);
             }
-            $use_label = implode('_', $classname_parts);
+            $use_label = str_replace('openpsa_', '', str_replace('database_', '', implode('_', $classname_parts)));
             $label = $component_l10n->get($use_label);
             if ($use_label == $label)
             {
