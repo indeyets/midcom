@@ -194,7 +194,6 @@ function makeHtmlForInsertion(objId)
 
 function imagePopupConvertResultsForAddition()
 {
-    // We convert the image "size lists" into the addition clickers
     resultRows = document.getElementsByClassName('midcom_helper_imagepopup_search_result_item');
     if (resultRows)
     {
@@ -211,7 +210,7 @@ function imagePopupConvertResultsForAddition()
 				informationBlocks = resultRows[i].getElementsByTagName('span');
                 if (!informationBlocks)
                 {
-                    alert("No metadata information available!");
+                    alert("No metadata information available for object "+item['guid']+"!");
                 }
 
 				for (ii = 0; ii < informationBlocks.length; ii++)
@@ -232,7 +231,7 @@ function imagePopupConvertResultsForAddition()
                 
                 // Populate image to the image info Array
                 imagepopup_images[itemGuid] = new Array();
-                imagepopup_images[itemGuid]['title'] = item['title'];
+                imagepopup_images[itemGuid]['title'] = item['title'] == undefined ? item['name'] : item['title'];
                 imagepopup_images[itemGuid]['name'] = item['name'];
                 imagepopup_images[itemGuid]['type'] = itemType;
             }
