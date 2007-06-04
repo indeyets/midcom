@@ -220,9 +220,10 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
      *
      * @param mixed $object A reference to either a MidCOM DBA class or a subclass of
      *     midcom_helper_datamanager2_storage.
+     * @param bool $strict Whether we should strictly use only the schema given by object params
      * @return bool Indicating success.
      */
-    function autoset_storage(&$object)
+    function autoset_storage(&$object, $strict = false)
     {
         if (is_a($object, 'midcom_helper_datamanager2_storage'))
         {
@@ -238,9 +239,25 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
             $schema = null;
         }
 
-        if (! $this->set_schema($schema))
+        if (!$this->set_schema($schema))
         {
-            return false;
+            if (   $strict
+                || $schema == null)
+            {
+                return false;
+            }
+            else
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Given schema name {$schema} was not found, reverting to default.", MIDCOM_LOG_INFO);
+                debug_pop();
+                // Schema database has probably changed so we should be graceful here
+                if (!$this->set_schema(null))
+                {
+                    return false;
+                }
+            }
+
         }
         return $this->set_storage($object);
     }
