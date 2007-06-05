@@ -23,6 +23,48 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
     {
         parent::midcom_baseclasses_core_object();
     }
+    
+    /**
+     * Return DateTime object
+     *
+     * Usage example:
+     *
+     * $date = $_MIDCOM->dbfactory->from_core_date($object->date);
+     * echo $date->format('Y-m-d');
+     *
+     * @param string $datetime datetime property as provided by Midgard core
+     * @return DateTime The given datetime property as a PHP native DateTime object
+     */
+    function from_core_date($datetime)
+    {
+        // TODO: Once midgard-php maps datetime properties directly to DateTime we can just return the param here
+        return new DateTime($datetime);
+    }
+    
+    /**
+     * Return DateTime in format preferred by Midgard Core
+     *
+     * Usage example:
+     *
+     * $date = new DateTime('yesterday');
+     * $qb->add_constraint('date', '>=', $_MIDCOM->dbfactory->to_core_date($date));
+     *
+     * @param DateTime Datetime property as a PHP native DateTime object
+     * @return string The given datetime property as a UTC ISO date as preferred by Midgard core
+     */
+    function to_core_date($datetime)
+    {
+        // TODO: Once midgard-php maps datetime properties directly to DateTime we can just return the param here
+        static $tz = null;
+        if (is_null($tz))
+        {
+            // Midgard internally keeps everything in UTC
+            $tz = new DateTimeZone('UTC');
+        }
+        $midgard_datetime = clone($datetime);
+        $midgard_datetime->setTimeZone($tz);
+        return $midgard_datetime->format(DateTime::ISO8601);
+    }
 
     /**
      * This is a replacement for the original mgd_get_object_by_guid function, which takes
