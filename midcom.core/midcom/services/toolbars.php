@@ -631,7 +631,6 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                     MIDCOM_TOOLBAR_HELPTEXT => $_MIDCOM->i18n->get_string('unapproved', 'midcom'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/not_approved.png',
                     MIDCOM_TOOLBAR_POST => true,
-                    MIDCOM_TOOLBAR_POST => true,
                     MIDCOM_TOOLBAR_POST_HIDDENARGS => Array
                     (
                         'guid' => $object->guid,
