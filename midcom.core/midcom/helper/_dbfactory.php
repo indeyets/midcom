@@ -38,7 +38,16 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
     function from_core_date($datetime)
     {
         // TODO: Once midgard-php maps datetime properties directly to DateTime we can just return the param here
-        return new DateTime($datetime);
+        static $local_tz = null;
+        if (is_null($local_tz))
+        {
+            // We need to use local time here as Midgard returns every datetime as UTC
+            // TODO: Would be great to make the timezone configurable
+            $local_tz = new DateTimeZone(date_default_timezone_get());
+        }
+        $midcom_datetime = new DateTime("{$datetime}+0000");
+        $midcom_datetime->setTimeZone($local_tz);
+        return $midcom_datetime;
     }
     
     /**
@@ -55,14 +64,14 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
     function to_core_date($datetime)
     {
         // TODO: Once midgard-php maps datetime properties directly to DateTime we can just return the param here
-        static $tz = null;
-        if (is_null($tz))
+        static $mgd_tz = null;
+        if (is_null($mgd_tz))
         {
             // Midgard internally keeps everything in UTC
-            $tz = new DateTimeZone('UTC');
+            $mgd_tz = new DateTimeZone('UTC');
         }
         $midgard_datetime = clone($datetime);
-        $midgard_datetime->setTimeZone($tz);
+        $midgard_datetime->setTimeZone($mgd_tz);
         return $midgard_datetime->format(DateTime::ISO8601);
     }
 
