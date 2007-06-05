@@ -287,3 +287,22 @@ Ulkoasueditori
 Tallennetaan muutos
 ---STRINGEND
 
+---STRING alpha
+Alfa
+---STRINGEND
+
+---STRING beta
+Beta
+---STRINGEND
+
+---STRING %s state
+%s-aste
+---STRINGEND
+
+---STRING experimental, use with your own risk
+Kokeellinen, käytä omalla vastuulla
+---STRINGEND
+
+---STRING this component is still being developed and tested and might contain undocumented features
+Tätä komponenttia kehitetään ja testataan edelleen ja se saattaa sisältää kartoittamattomia toiminnallisuuksia
+---STRINGEND

@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-06-03
+  - Added component state display
+
 2007-04-20 adrenalin
   - Fixed bug in sorting more than 9 mixed objects (inserted leading zeros for each ID before
     sorting the elements alphabetically)

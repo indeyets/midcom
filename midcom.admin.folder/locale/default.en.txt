@@ -294,3 +294,23 @@ Warning! Might result in data loss!
 ---STRING move %s
 Move %s
 ---STRINGEND
+
+---STRING alpha
+Alpha
+---STRINGEND
+
+---STRING beta
+Beta
+---STRINGEND
+
+---STRING %s state
+%s state
+---STRINGEND
+
+---STRING experimental, use with your own risk
+Experimental, use with your own risk
+---STRINGEND
+
+---STRING this component is still being developed and tested and might contain undocumented features
+This component is still being developed and tested and might contain undocumented features
+---STRINGEND
