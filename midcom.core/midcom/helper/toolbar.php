@@ -792,8 +792,8 @@ class midcom_helper_toolbar {
 
         if ($item[MIDCOM_TOOLBAR_ENABLED])
         {
-            $output .= "  <form method='post' action='{$item[MIDCOM_TOOLBAR_URL]}'>\n";
-            $output .= "    <button type='submit' name='midcom_helper_toolbar_submit'";
+            $output .= "  <form method=\"post\" action=\"{$item[MIDCOM_TOOLBAR_URL]}\">\n";
+            $output .= "    <button type=\"submit\" name=\"midcom_helper_toolbar_submit\"";
 
             if ( count($item[MIDCOM_TOOLBAR_OPTIONS]) > 0 )
             {
@@ -804,11 +804,11 @@ class midcom_helper_toolbar {
             }
             if ($item[MIDCOM_TOOLBAR_ACCESSKEY])
             {
-                $output .= " class='accesskey' accesskey='{$item[MIDCOM_TOOLBAR_ACCESSKEY]}' ";
+                $output .= " class=\"accesskey\" accesskey=\"{$item[MIDCOM_TOOLBAR_ACCESSKEY]}\" ";
             }
             if ($item[MIDCOM_TOOLBAR_HELPTEXT])
             {
-                $output .= " title='${item[MIDCOM_TOOLBAR_HELPTEXT]}' ";
+                $output .= " title=\"${item[MIDCOM_TOOLBAR_HELPTEXT]}\" ";
             }
             $output .= ">";
         }
@@ -816,11 +816,11 @@ class midcom_helper_toolbar {
         if ($item[MIDCOM_TOOLBAR_ICON])
         {
             $url = MIDCOM_STATIC_URL . "/{$item[MIDCOM_TOOLBAR_ICON]}";
-            $output .= "<img src='{$url}' alt='{$item[MIDCOM_TOOLBAR_ICON]}' title='{$item[MIDCOM_TOOLBAR_ICON]}' />";
+            $output .= "<img src=\"{$url}\" alt=\"\" title=\"{$item[MIDCOM_TOOLBAR_HELPTEXT]}\" />";
         }
 
         $label = $this->_generate_item_label($item);
-        $output .= "&nbsp;{$label}";
+        $output .= " {$label}";
 
         if ($item[MIDCOM_TOOLBAR_ENABLED])
         {
@@ -831,7 +831,7 @@ class midcom_helper_toolbar {
                 {
                     $key = htmlspecialchars($key);
                     $value = htmlspecialchars($value);
-                    $output .= "    <input type='hidden' name='{$key}' value='{$value}'/>\n";
+                    $output .= "    <input type=\"hidden\" name=\"{$key}\" value=\"{$value}\"/>\n";
                 }
             }
             $output .= "  </form>\n";
