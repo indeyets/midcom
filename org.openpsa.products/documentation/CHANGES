@@ -4,6 +4,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-06-06 bergie
+  + Initial REST API documentation
+
 2007-05-29 bergie
   + Started working on REST API for product management
 

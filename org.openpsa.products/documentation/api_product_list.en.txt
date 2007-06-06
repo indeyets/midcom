@@ -17,7 +17,11 @@ TODO
 
 ## Error Codes
 
+200: OK
+:    The requested was succesfull
+
 404: Not found
 :    The requested product group could not be found
+
 500: Internal Server Error
 :    Some error state has happened in the database

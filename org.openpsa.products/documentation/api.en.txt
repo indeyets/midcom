@@ -19,3 +19,14 @@ Information fetching APIs are to be accessed via HTTP GET requests to their spec
 
 [/api/product/get/`Product GUID`](api_product_get.html)
 :    Get information about a product
+
+## Methods for managing information
+
+[/api/product/create/`Product GUID`](api_product_create.html)
+:    Create a product
+
+[/api/product/update/`Product GUID`](api_product_update.html)
+:    Update a product
+
+[/api/product/delete/`Product GUID`](api_product_delete.html)
+:    Delete a product

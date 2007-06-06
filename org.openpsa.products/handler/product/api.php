@@ -42,7 +42,6 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
         //Content-Type
         $_MIDCOM->skip_page_style = true;
         $_MIDCOM->cache->content->no_cache();
-        $_MIDCOM->cache->content->content_type('text/xml');
         
         $this->_load_datamanager();
         $_MIDCOM->load_library('midcom.helper.xml');
@@ -69,13 +68,10 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
     /**
      * DM2 creation callback, binds to the current content topic.
      */
-    function _create_product($title)
-    {
-        $author = $_MIDCOM->auth->user->get_storage();
-    
+    function _create_product($title, $productgroup)
+    {    
         $product = new org_openpsa_products_product_dba();
-        //$product->topic = $this->_content_topic->id;
-        // FIXME: Set productgroup
+        $product->productGroup = $productgroup;
         $product->title = $title;
         
         if (! $product->create())
@@ -110,170 +106,7 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
         return $product;
     }
 
-    // products.create_product
-    function create_product($message) 
-    {
-        $args = $this->_params_to_args($message);
-        
-        if ($args[0] != $this->_content_topic->guid)
-        {
-            return new XML_RPC_Response(0, mgd_errno(), 'Blog ID does not match this folder.');
-        }
-        
-        if (!mgd_auth_midgard($args[1], $args[2]))
-        {
-            return new XML_RPC_Response(0, mgd_errno(), 'Authentication failed.');
-        }
-        $_MIDCOM->auth->initialize();
-        
-        if (   !array_key_exists('title', $args[3])
-            || $args[3]['title'] == '')
-        {
-            // Create product with title coming from datetime
-            $new_title = strftime('%x %X');
-        }
-        else
-        {
-            if (version_compare(phpversion(), '5.0.0', '>=')) 
-            {
-                $new_title = html_entity_decode($args[3]['title'], ENT_QUOTES, 'UTF-8');
-            }
-            else
-            {
-                $new_title = $args[3]['title'];
-            }
-        }
-
-        $product = $this->_create_product($new_title);
-        if (   !$product
-            || !$product->guid)
-        {
-            return new XML_RPC_Response(0, mgd_errno(), 'Failed to create product: ' . mgd_errstr());
-        }
-        
-        if (!$this->_datamanager->autoset_storage($product))
-        {
-            return new XML_RPC_Response(0, mgd_errno(), 'Failed to initialize DM2 for product: ' . mgd_errstr());
-        }
-
-        foreach ($args[3] as $field => $value)
-        {
-            switch ($field)
-            {
-                case 'title':
-                    $this->_datamanager->types['title']->value = $new_title;
-                    break;
-
-                case 'mt_excerpt':
-                    $this->_datamanager->types['abstract']->value = $value;
-                    break;
-                    
-                case 'description':
-                    $this->_datamanager->types['content']->value = $value;
-                    break;
-                    
-                case 'link':
-                    // TODO: We may have to bulletproof this a bit
-                    $this->_datamanager->types['name']->value = str_replace('.html', '', basename($args[3]['link']));
-                    break;
-                    
-                case 'categories':
-                    if (array_key_exists('categories', $this->_datamanager->types))
-                    {
-                        $this->_datamanager->types['categories']->selection = $value;
-                        break;
-                    }
-            }
-        }
-        
-        if (!$this->_datamanager->save())
-        {
-            $product->delete();
-            return new XML_RPC_Response(0, mgd_errno(), 'Failed to update product: ' . mgd_errstr());
-        }
-
-        // TODO: Map the publish property to approval
-        
-        // Index the product
-        $indexer =& $_MIDCOM->get_service('indexer');
-        net_nehmer_blog_viewer::index($this->_datamanager, $indexer, $this->_content_topic);
-        
-        return new XML_RPC_Response(new XML_RPC_Value($product->guid, 'string'));
-    }
-
-    // products.update_product
-    function update_product($message) 
-    {
-        $args = $this->_params_to_args($message);
-        
-        if (!mgd_auth_midgard($args[1], $args[2]))
-        {
-            return new XML_RPC_Response(0, mgd_errno(), 'Authentication failed.');
-        }
-        $_MIDCOM->auth->initialize();
-        
-        $product = new org_openpsa_products_product_dba($args[0]);
-        if (!$product)
-        {
-            return new XML_RPC_Response(0, mgd_errno(), 'Article not found: ' . mgd_errstr());
-        }
-        
-        if (!$this->_datamanager->autoset_storage($product))
-        {
-            return new XML_RPC_Response(0, mgd_errno(), 'Failed to initialize DM2 for product: ' . mgd_errstr());
-        }
-
-        foreach ($args[3] as $field => $value)
-        {
-            switch ($field)
-            {
-                case 'title':
-                    if (version_compare(phpversion(), '5.0.0', '>=')) 
-                    {
-                        $this->_datamanager->types['title']->value = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
-                    }
-                    else
-                    {
-                        $this->_datamanager->types['title']->value = $value;
-                    }
-                    break;
-                    
-                case 'mt_excerpt':
-                    $this->_datamanager->types['abstract']->value = $value;
-                    break;
-                    
-                case 'description':
-                    $this->_datamanager->types['content']->value = $value;
-                    break;
-                    
-                case 'link':
-                    // TODO: We may have to bulletproof this a bit
-                    $this->_datamanager->types['name']->value = str_replace('.html', '', basename($args[3]['link']));
-                    break;
-                
-                case 'categories':
-                    if (array_key_exists('categories', $this->_datamanager->types))
-                    {
-                        $this->_datamanager->types['categories']->selection = $value;
-                        break;
-                    }
-            }
-        }
-        
-        if (!$this->_datamanager->save())
-        {
-            return new XML_RPC_Response(0, mgd_errno(), 'Failed to update product: ' . mgd_errstr());
-        }
-        
-        // TODO: Map the publish property to approval
-        
-        // Index the product
-        $indexer =& $_MIDCOM->get_service('indexer');
-        net_nehmer_blog_viewer::index($this->_datamanager, $indexer, $this->_content_topic);
-    
-        return new XML_RPC_Response(new XML_RPC_Value($product->guid, 'string'));
-    }
-
+    /*
     // products.list_product_groups
     function list_product_groups($message) 
     {
@@ -283,8 +116,7 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
         {
             return new XML_RPC_Response(0, mgd_errno(), 'Authentication failed.');
         }
-        $_MIDCOM->auth->initialize();
-        
+        $_MIDCOM->auth->initialize();        
         if ($args[0] == 0)
         {
             $product_group_id = 0;
@@ -387,36 +219,8 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
         );
         return new XML_RPC_Response(new XML_RPC_Value($attachment_array, 'struct'));
     }
-
-    // products.delete_product
-    function delete_product($message) 
-    {
-        $args = $this->_params_to_args($message);
-        
-        if (!mgd_auth_midgard($args[2], $args[3]))
-        {
-            return new XML_RPC_Response(0, mgd_errno(), 'Authentication failed.');
-        }
-        $_MIDCOM->auth->initialize();
-        
-        $product = new org_openpsa_products_product_dba($args[1]);
-        if (!$product)
-        {
-            return new XML_RPC_Response(0, mgd_errno(), 'Article not found: ' . mgd_errstr());
-        }
-        
-        if (!$product->delete())
-        {
-            return new XML_RPC_Response(0, mgd_errno(), 'Failed to delete product: ' . mgd_errstr());
-        }
-        
-        // Update the index
-        $indexer =& $_MIDCOM->get_service('indexer');
-        $indexer->delete($product->guid);
-        
-        return new XML_RPC_Response(new XML_RPC_Value(true, 'boolean'));
-    }
-
+    */
+    
     function _handler_product_get($handler_id, $args, &$data)
     {   
         $this->_product = new org_openpsa_products_product_dba($args[0]);
@@ -431,6 +235,8 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Product {$args[0]} could not be loaded with Datamanager.");
             // This will exit
         }
+        
+        $_MIDCOM->cache->content->content_type('text/xml');        
         
         return true;
     }
@@ -469,7 +275,8 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
                 $qb->add_constraint('productGroup', '=', $product_group->id);
             }
         }
-        
+        $_MIDCOM->cache->content->content_type('text/xml');
+                
         $qb->add_order('code');
         $qb->add_order('title');
         
@@ -499,6 +306,118 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
             midcom_show_style('api_product_list_item');
         }
         midcom_show_style('api_product_list_footer');
+    }
+
+    function _handler_product_create($handler_id, $args, &$data)
+    {
+        $_MIDCOM->auth->require_valid_user('basic');
+ 
+         if (!isset($_REQUEST['title']))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Missing argument: string title');
+            // This will exit
+        }
+        
+        if (!isset($_REQUEST['productgroup']))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Missing argument: int productgroup');
+            // This will exit
+        }
+            
+        $this->_product = $this->_create_product($_REQUEST['title'], (int) $_REQUEST['productgroup']);
+        if (   !$this->_product
+            || !$this->_product->guid)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create product: ' . mgd_errstr());
+            // This will exit
+        }
+                
+        if (!$this->_datamanager->autoset_storage($this->_product))
+        {
+            $errstr = mgd_errstr();
+            $this->_product->delete();        
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize DM2 for product: {$errstr}");
+            // This will exit
+        }
+        
+        foreach($this->_datamanager->types as $key => $type)
+        {
+            if (isset($_REQUEST[$key]))
+            {
+                $this->_datamanager->types[$key]->value = $_REQUEST[$key];
+            }
+        }
+        
+        if (!$this->_datamanager->save())
+        {
+            $errstr = mgd_errstr();
+            $this->_product->delete();
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create product: {$errstr}");
+            // This will exit
+        }
+        
+        $_MIDCOM->generate_error(MIDCOM_ERROK, 'Product created: ' . mgd_errstr());
+        // This will exit
+    }
+
+    function _handler_product_update($handler_id, $args, &$data)
+    {
+        $_MIDCOM->auth->require_valid_user('basic');
+            
+        $this->_product = new org_openpsa_products_product_dba($args[0]);
+        if (!$this->_product)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Product {$args[0]} could not be found.");
+            // This will exit
+        }
+                
+        if (!$this->_datamanager->autoset_storage($this->_product))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to initialize DM2 for product: ' . mgd_errstr());
+            // This will exit
+        }
+        
+        foreach($this->_datamanager->types as $key => $type)
+        {
+            if (isset($_POST[$key]))
+            {
+                $this->_datamanager->types[$key]->value = $_POST[$key];
+            }
+        }
+        
+        if (!$this->_datamanager->save())
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to update product: ' . mgd_errstr());
+            // This will exit
+        }
+        
+        $_MIDCOM->generate_error(MIDCOM_ERROK, 'Product updated: ' . mgd_errstr());
+        // This will exit
+    }
+
+    function _handler_product_delete($handler_id, $args, &$data)
+    {
+        $_MIDCOM->auth->require_valid_user('basic');
+            
+        $this->_product = new org_openpsa_products_product_dba($args[0]);
+        if (!$this->_product)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Product {$args[0]} could not be found.");
+            // This will exit
+        }
+                
+        if (!$this->_product->delete())
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to delete product: ' . mgd_errstr());
+            // This will exit
+        }
+        
+        // Update the index
+        $indexer =& $_MIDCOM->get_service('indexer');
+        $indexer->delete($this->_product->guid);
+        
+        $_MIDCOM->generate_error(MIDCOM_ERROK, 'Product deleted: ' . mgd_errstr());
+        // This will exit
     }
 
 }

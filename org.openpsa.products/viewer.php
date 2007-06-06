@@ -182,6 +182,29 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('api', 'product', 'list'),
             'variable_args' => 1,
         );
+
+        // Handle /api/product/create/
+        $this->_request_switch['api_product_create'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_product_api', 'product_create'),
+            'fixed_args' => Array('api', 'product', 'create'),
+        );
+
+        // Handle /api/product/update/<guid>
+        $this->_request_switch['api_product_update'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_product_api', 'product_update'),
+            'fixed_args' => Array('api', 'product', 'update'),
+            'variable_args' => 1,
+        );
+        
+        // Handle /api/product/delete/<guid>
+        $this->_request_switch['api_product_delete'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_product_api', 'product_delete'),
+            'fixed_args' => Array('api', 'product', 'delete'),
+            'variable_args' => 1,
+        );
     }
 
     /**
