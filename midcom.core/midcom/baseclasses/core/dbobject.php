@@ -426,14 +426,17 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
 
         // Delete all extensions:
         $list = $object->list_attachments();
-        foreach ($list as $attachment)
+        if (is_array($list))
         {
-            if (! $attachment->delete())
+            foreach ($list as $attachment)
             {
-                debug_add("Failed to delete attachment ID {$attachment->id}", MIDCOM_LOG_ERROR);
-                // debug_print_r('Full record:', $attachment);
-                debug_pop();
-                return false;
+                if (! $attachment->delete())
+                {
+                    debug_add("Failed to delete attachment ID {$attachment->id}", MIDCOM_LOG_ERROR);
+                    // debug_print_r('Full record:', $attachment);
+                    debug_pop();
+                    return false;
+                }
             }
         }
         $query = new midgard_query_builder('midgard_parameter');

@@ -2097,6 +2097,12 @@ class midcom_application {
 
         switch ($httpcode)
         {
+            case MIDCOM_ERROK:
+                $header = "HTTP/1.0 200 OK";
+                $title = "OK";
+                $code = 200;
+                break;
+        
             case MIDCOM_ERRNOTFOUND:
                 $header = "HTTP/1.0 404 Not Found";
                 $title = "Not Found";
