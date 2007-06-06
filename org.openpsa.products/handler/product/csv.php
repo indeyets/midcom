@@ -35,3 +35,4 @@ class org_openpsa_products_handler_product_csv extends midcom_baseclasses_compon
     }
 
 }
+?>
