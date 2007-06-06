@@ -205,6 +205,22 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('api', 'product', 'delete'),
             'variable_args' => 1,
         );
+        
+        // Handle /api/product/csv
+        $this->_request_switch['api_product_csv'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_product_csv', 'csv'),
+            'fixed_args' => Array('api', 'product', 'csv'),
+        );
+        
+        // Handle /api/product/csv/<filename>
+        $this->_request_switch['api_product_csv_filename'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_product_csv', 'csv'),
+            'fixed_args' => Array('api', 'product', 'csv'),
+            'variable_args' => 1,
+        );
+
     }
 
     /**
