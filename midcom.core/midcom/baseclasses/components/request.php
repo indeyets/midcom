@@ -714,6 +714,11 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
 
         $method = "_handler_{$this->_handler['handler'][1]}";
         $result = $handler->$method($this->_handler['id'], $this->_handler['args'], $this->_request_data);
+        if ($result == false)
+        {
+            // Default the error code to ERRCRIT (HTTP Error 500)
+            $this->errcode = MIDCOM_ERRCRIT;
+        }
 
         // Check wether this request should not be cached by default:
         if ($this->_handler['no_cache'] == true)
