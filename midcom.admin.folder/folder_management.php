@@ -242,7 +242,7 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
             (
                 'name'        => $manifest->get_name_translated(),
                 'description' => $description,
-                'state'       => $manifest->state,
+                'state'       => @$manifest->state,
                 'version'     => $manifest->version,
             );
         }
