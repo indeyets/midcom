@@ -13,7 +13,7 @@ This method requires HTTP Basic authentication
 
 ### HTTP POST arguments
 
-TODO: Document schema fields
+[callback:schemafields2postargs]
 
 ## Error Codes
 

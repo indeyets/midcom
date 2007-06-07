@@ -9,9 +9,7 @@ This method requires HTTP Basic authentication
 
 ## HTTP POST arguments
 
-`title` and `productgroup` are required.
-
-TODO: Document schema fields
+[callback:schemafields2postargs]
 
 ## Error Codes
 

@@ -222,6 +222,39 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
         );
 
     }
+    
+    /**
+     * Generate markdown documentation for API docs based on schema
+     *
+     * @return string documentation
+     */
+    function help_schemafields2postargs()
+    {
+        $schema_string = '';
+        foreach ($this->_request_data['schemadb_product'] as $schema_name => $schema)
+        {
+            foreach ($schema->fields as $fieldname => $field_setup)
+            {
+                $schema_string .= "\n_{$field_setup['type']}_ `{$fieldname}`";
+                if ($field_setup['required'])
+                {
+                    $schema_string .= " __*__";
+                }
+
+                $schema_string .= "\n";
+                $schema_string .= ":    {$field_setup['title']}.";
+                
+                if (   $field_setup['type'] == 'select'
+                    && isset($field_setup['type_config']['options']))
+                {
+                    $schema_string .= " Options: _" . implode(', ', array_keys($field_setup['type_config']['options'])) . "_.";
+                }
+                
+                $schema_string .= "\n";
+            }
+        }
+        return $schema_string;
+    }
 
     /**
      * Indexes a product
