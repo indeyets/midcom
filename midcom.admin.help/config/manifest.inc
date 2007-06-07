@@ -2,7 +2,7 @@
   'name' => 'midcom.admin.help',
   'description' => 'On-site help displayer',
   'purecode' => true,
-  'version' => '1.0.2beta1',
+  'version' => '1.0.2beta2',
   'state' => 'beta',
   'privileges' => 
   array (
@@ -20,6 +20,12 @@
         'name' => 'Tarjei Huse',
         'email' => 'tarjei@nu.no',
         'role' => 'lead',
+      ),
+      'adrenalin' =>
+      array (
+        'name' => 'Arttu Manninen',
+        'email' => 'arttu@kaktus.cc',
+        'role' => 'developer',
       ),
       'bergie' => 
       array (

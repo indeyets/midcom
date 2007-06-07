@@ -6,7 +6,8 @@ Legend:
   which might even break existing functionality. 
 - All items marked with "+" represent completly new features.
 
-
+2007-06-07 bergie & adrenalin
+        + Added support for including return values of callback methods from component to document contents
 
 2006-01-29 tarjei
 	+ Initial creation
