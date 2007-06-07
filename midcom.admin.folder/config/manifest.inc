@@ -1,6 +1,6 @@
 'name' => 'midcom.admin.folder',
 'purecode' => true,
-'version' => '1.2.0beta1',
+'version' => '1.2.0beta2',
 'state' => 'beta',
 'privileges' => array
 (

@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-06-07 adrenalin
+  - Masked PHP notices on component listings for possible missing 'state' keys in manifests
+
 2007-06-03
   - Added component state display
 
