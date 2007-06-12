@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-06-12 adrenalin
+  - Added (again) 'untranslated' to class name for multilang
+
 2007-05-23 adrenalin
   - Fixed someone's buggy implementation of setting the ID of the root ul element
 

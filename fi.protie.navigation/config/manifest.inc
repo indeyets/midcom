@@ -1,6 +1,6 @@
 'name' => 'fi.protie.navigation',
-'version' => '1.0.7',
-'state' => 'stable',
+'version' => '1.1.0beta1',
+'state' => 'beta',
 'purecode' => true,
 'package.xml' => Array
 (
