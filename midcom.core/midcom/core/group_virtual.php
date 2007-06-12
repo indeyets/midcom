@@ -158,8 +158,10 @@ class midcom_core_group_virtual extends midcom_core_group
      */
     function list_memberships($user)
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
         $result = Array();
-
+        
         foreach ($_MIDCOM->auth->get_all_vgroups() as $id => $name)
         {
             $vgroup =& $_MIDCOM->auth->get_group($id);            
@@ -174,7 +176,9 @@ class midcom_core_group_virtual extends midcom_core_group
                 $result[$vgroup->id] = $vgroup;
             }
         }
-
+        
+        debug_pop();
+        
         return $result;
     }
 
