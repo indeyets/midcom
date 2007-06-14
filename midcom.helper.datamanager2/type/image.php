@@ -592,8 +592,6 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
         if ($force_pending_attachments === false)
         {
             // PHP5-TODO: Must be copy-by-value
-            echo "catch 595\n";
-            die();
             $this->_pending_attachments = $this->attachments;
         }
         else
