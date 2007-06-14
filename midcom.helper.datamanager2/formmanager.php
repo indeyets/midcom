@@ -13,7 +13,7 @@ require_once "HTML/QuickForm.php";
 /**
  * Datamanger 2 Form Manager core class.
  *
- * This class controls all form rendering and basic form data i/o. It works independant
+ * This class controls all form rendering and basic form data i/o. It works independent
  * of any data storage, getting its defaults from some external controlling instance in
  * the form of a type array (f.x. a datamanager class can provide this). The list of types
  * is taken by-reference.

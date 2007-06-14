@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Data storage implementation: Temporary storage object.
+ * Datamanager 2 Data storage implementation: Temporary storage object.
  *
  * This class is aimed to provide a dummy storage object, used as intermediate backend between
  * nullstorage based creations and final save operations if and only if attachments or parameters

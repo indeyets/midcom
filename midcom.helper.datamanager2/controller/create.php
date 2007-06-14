@@ -152,7 +152,10 @@ class midcom_helper_datamanager2_controller_create extends midcom_helper_dataman
         {
             $tmpid = $_REQUEST[$this->_tmpid_fieldname];
             $object = $_MIDCOM->tmp->request_object($tmpid);
-            if ($object)
+            
+            if (   $object
+                && isset($object->guid)
+                && $object->guid)
             {
                 $storage = new midcom_helper_datamanager2_storage_tmp($this->schemadb[$this->schemaname], $this->defaults, $object);
             }
