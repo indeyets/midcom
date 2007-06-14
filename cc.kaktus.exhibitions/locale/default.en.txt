@@ -1,0 +1,177 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id: default.fi.txt 4914 2007-01-11 13:04:43Z rambo $
+---LANGUAGE en
+
+---STRING cc.kaktus.exhibitions
+Exhibitions tool
+---STRINGEND
+
+---STRING back to the exhibition main page
+Back to the exhibition main page
+---STRINGEND
+
+---STRING subpage
+Subpage
+---STRINGEND
+
+---STRING artist
+Artist
+---STRINGEND
+
+---STRING exhibition
+Exhibition
+---STRINGEND
+
+---STRING exhibitions
+Exhibitions
+---STRINGEND
+
+---STRING start
+Start
+---STRINGEND
+
+---STRING end
+End
+---STRINGEND
+
+---STRING exhibition name
+Exhibition name
+---STRINGEND
+
+---STRING year %s
+Year %s
+---STRINGEND
+
+---STRING one exhibition
+One exhibition
+---STRINGEND
+
+---STRING %s exhibitions
+%s exhibitions
+---STRINGEND
+
+---STRING for year %s
+for year %s
+---STRINGEND
+
+---STRING exhibitions for year %s
+Exhibitions for year %s
+---STRINGEND
+
+---STRING create an exhibition subpage
+Create an exhibition subpage
+---STRINGEND
+
+---STRING back to the exhibition page
+Back to the exhibition page
+---STRINGEND
+
+---STRING date
+Date
+---STRINGEND
+
+---STRING edit
+Edit
+---STRINGEND
+
+---STRING edit %s
+Edit %s
+---STRINGEND
+
+---STRING delete %s
+Delete %s
+---STRINGEND
+
+---STRING create a subpage
+Create a subpage
+---STRINGEND
+
+---STRING create an attachment
+Create an attachment
+---STRINGEND
+
+---STRING create an exhibition
+Create an exhibition
+---STRINGEND
+
+---STRING create an exhibition attachment
+Create an exhibition attachment
+---STRINGEND
+
+---STRING picture
+Picture
+---STRINGEND
+
+---STRING list attachments
+List attachments
+---STRINGEND
+
+---STRING list subpages
+List subpages
+---STRINGEND
+
+---STRING subpages
+Subpages
+---STRINGEND
+
+---STRING attachment
+attachment
+---STRINGEND
+
+---STRING attachments
+Attachments
+---STRINGEND
+
+---STRING %s for event %s
+%s for event %s
+---STRINGEND
+
+---STRING drag and drop to sort
+Drag and drop to sort
+---STRINGEND
+
+---STRING delete
+Delete
+---STRINGEND
+
+---STRING drag here the leaves to be deleted
+Drag here the leaves to be deleted
+---STRINGEND
+
+---STRING no exhibitions have been held yet
+No exhibitions have been held yet
+---STRINGEND
+
+---STRING past
+Past
+---STRINGEND
+
+---STRING current
+Current
+---STRINGEND
+
+---STRING future
+Future
+---STRINGEND
+
+---STRING no current exhibition
+No current exhibition
+---STRINGEND
+
+---STRING we are at the moment building the next exhibition
+We are at the moment building the next exhibition
+---STRINGEND
+
+---STRING future exhibitions
+Future exhibitions
+---STRINGEND
+
+---STRING past exhibitions
+Past exhibitions
+---STRINGEND
+
+---STRING current exhibitions
+Current exhibition
+---STRINGEND
+

@@ -1,0 +1,47 @@
+#cc_kaktus_exhibitions_sorter ul.sortable
+{
+  padding: 1em 0;
+  list-style: none;
+  border-style: solid none;
+  border-width: 1px;
+  border-color: black;
+}
+
+#cc_kaktus_exhibitions_sorter div.trash
+{
+  background-color: #eeeeec;
+  color: black !important;
+  padding: 0 1em 1em;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  -moz-border-radius: 10px;
+  margin: 0 0 1em;
+}
+
+#cc_kaktus_exhibitions_sorter li
+{
+  cursor: N-resize;
+  padding: 0.5em;
+}
+
+#cc_kaktus_exhibitions_sorter li:hover,
+#cc_kaktus_exhibitions_sorter li:hover a
+{
+  background-color: #eeeeec;
+  color: black !important;
+}
+
+#cc_kaktus_exhibitions_sorter div.trash li:hover,
+#cc_kaktus_exhibitions_sorter div.trash li:hover a
+{
+  background-color: #ffffff;
+}
+
+#cc_kaktus_exhibitions_sorter li span.edit
+{
+  display: block;
+  float: right;
+  height: 1em;
+  margin-top: -1em;
+}

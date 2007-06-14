@@ -1,0 +1,177 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id: default.fi.txt 4914 2007-01-11 13:04:43Z rambo $
+---LANGUAGE fi
+
+---STRING cc.kaktus.exhibitions
+Näyttelytyökalu
+---STRINGEND
+
+---STRING back to the exhibition main page
+Takaisin näyttelyn pääsivulle
+---STRINGEND
+
+---STRING subpage
+Alasivu
+---STRINGEND
+
+---STRING artist
+Taiteilija
+---STRINGEND
+
+---STRING exhibition
+Näyttely
+---STRINGEND
+
+---STRING exhibitions
+Näyttelyt
+---STRINGEND
+
+---STRING start
+Alku
+---STRINGEND
+
+---STRING end
+Loppu
+---STRINGEND
+
+---STRING exhibition name
+Näyttelyn nimi
+---STRINGEND
+
+---STRING year %s
+Vuosi %s
+---STRINGEND
+
+---STRING one exhibition
+Yksi näyttely
+---STRINGEND
+
+---STRING %s exhibitions
+%s näyttelyä
+---STRINGEND
+
+---STRING for year %s
+vuodelle %s
+---STRINGEND
+
+---STRING exhibitions for year %s
+Näyttelyt vuonna %s
+---STRINGEND
+
+---STRING create an exhibition subpage
+Luo näyttelyn alasivu
+---STRINGEND
+
+---STRING back to the exhibition page
+Takaisin näyttelyn sivulle
+---STRINGEND
+
+---STRING date
+Päivämäärä
+---STRINGEND
+
+---STRING edit
+Muokkaa
+---STRINGEND
+
+---STRING edit %s
+Muokkaa kohdetta %s
+---STRINGEND
+
+---STRING delete %s
+Poista kohde %s
+---STRINGEND
+
+---STRING create a subpage
+Luo alasivu
+---STRINGEND
+
+---STRING create an attachment
+Luo liitetiedosto
+---STRINGEND
+
+---STRING create an exhibition
+Luo näyttely
+---STRINGEND
+
+---STRING create an exhibition attachment
+Luo näyttelyn liite
+---STRINGEND
+
+---STRING picture
+Kuva
+---STRINGEND
+
+---STRING list attachments
+Näytä liitetiedostot
+---STRINGEND
+
+---STRING list subpages
+Näytä alasivut
+---STRINGEND
+
+---STRING subpages
+Alasivut
+---STRINGEND
+
+---STRING attachment
+liite
+---STRINGEND
+
+---STRING attachments
+Liitteet
+---STRINGEND
+
+---STRING %s for event %s
+%s tapahtumalle %s
+---STRINGEND
+
+---STRING drag and drop to sort
+Siirrä ja pudota järjestelläksesi
+---STRINGEND
+
+---STRING delete
+Poista
+---STRINGEND
+
+---STRING drag here the leaves to be deleted
+Siirrä tänne poistettavaksi tarkoitetut kohteet
+---STRINGEND
+
+---STRING no exhibitions have been held yet
+Yhtään näyttelyä ei ole vielä pidetty
+---STRINGEND
+
+---STRING past
+Menneet
+---STRINGEND
+
+---STRING current
+Nykyinen
+---STRINGEND
+
+---STRING future
+Tulevat
+---STRINGEND
+
+---STRING no current exhibition
+Ei nykyistä näyttelyä
+---STRINGEND
+
+---STRING we are at the moment building the next exhibition
+Rakennamme parhaillaan uutta näyttelyä
+---STRINGEND
+
+---STRING future exhibitions
+Tulevat näyttelyt
+---STRINGEND
+
+---STRING past exhibitions
+Menneet näyttelyt
+---STRINGEND
+
+---STRING current exhibition
+Tämänhetkinen näyttely
+---STRINGEND
+
