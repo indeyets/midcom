@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Data Manager AJAX controller class.
+ * Datamanager 2 Data Manager AJAX controller class.
  *
  * This is an AJAX-enabled controller class intended for usage directly with a storage backend.
  * It has no creation support whatsoever, but the multi-edit loop will work without problems.

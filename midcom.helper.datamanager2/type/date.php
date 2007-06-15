@@ -11,7 +11,7 @@
 require_once('Date.php');
 
 /**
- * Datamanger 2 date datatype. The type is based on the PEAR date types
+ * Datamanager 2 date datatype. The type is based on the PEAR date types
  * types.
  *
  * <b>Available configuration options:</b>
@@ -129,7 +129,7 @@ class midcom_helper_datamanager2_type_date extends midcom_helper_datamanager2_ty
                 }
 
             default:
-                $_MIDCOM->generate_error("Invalid storage type for the Datamanger Date Type: {$this->storage_type}");
+                $_MIDCOM->generate_error("Invalid storage type for the Datamanager Date Type: {$this->storage_type}");
                 // This will exit.
         }
     }

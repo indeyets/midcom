@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Simple text datatype. The text value encaspulated by this type is
+ * Datamanager 2 Simple text datatype. The text value encaspulated by this type is
  * passed as-is to the storage layers, no specialieties done, just a string.
  *
  * <b>Available configuration options:</b>

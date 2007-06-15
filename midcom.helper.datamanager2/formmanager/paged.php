@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Paged Form Manager class.
+ * Datamanager 2 Paged Form Manager class.
  *
  * This class uses special operations to allow for paged forms.
  *

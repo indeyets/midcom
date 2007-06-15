@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Data Manager core class.
+ * Datamanager 2 Data Manager core class.
  *
  * This class controls all type I/O operations, including entering and exitting
  * editing operations and creation support. It brings Types, Schemas and Storage objects
@@ -164,8 +164,8 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
         {
             $this->storage =& $object;
         }
-
-        // For reasons I do not completly comprehend PHP drops the storage references into the types
+        
+        // For reasons I do not completely comprehend, PHP drops the storage references into the types
         // in the lines above. Right now the only solution (except debugging this 5 hours long line
         // by line) I see is explicitly setting the storage references in the types.
         foreach ($this->types as $type => $copy)

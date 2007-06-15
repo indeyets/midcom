@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 table type. 
+ * Datamanager 2 table type. 
  * 
  * <b>Configuration options:</b>
  * <i>callback_name - name of the class to be used for populating the rows and colums.</i>

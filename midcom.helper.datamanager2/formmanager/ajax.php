@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 ajax Form Manager class.
+ * Datamanager 2 ajax Form Manager class.
  *
  * This class uses special operations to allow for ajax forms.
  *

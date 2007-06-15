@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 images widget
+ * Datamanager 2 images widget
  *
  * As with all subclasses, the actual initialization is done in the initialize() funciton,
  * not in the constructor, to allow for error handling.
@@ -43,7 +43,7 @@
  *
  * 2. CSS names
  *
- * The table gets the Name of the field as id and midcom_helper_datamanger2_widget_images
+ * The table gets the Name of the field as id and midcom_helper_datamanager2_widget_images
  * as class. Each column also gets its own CSS class: filename, title, file, upload and delete.
  * An additionalclass is assigned depending wether this is a row for an existing item (exist) or
  * a new one (new). So a full class for the new filename element would be "new filename". Note,
@@ -133,7 +133,7 @@ END;
     {
         if ($frozen)
         {
-            $html = "<table class='midcom_helper_datamanger2_widget_images' id='{$this->_namespace}{$this->name}' />\n" .
+            $html = "<table class='midcom_helper_datamanager2_widget_images' id='{$this->_namespace}{$this->name}' />\n" .
                     "<tr>\n" .
                     "<th class='filename'>" . $this->_l10n_midcom->get('name') . "</th>\n" .
                     "<th class='title'>" . $this->_l10n_midcom->get('title') . "</th>\n" .
@@ -141,7 +141,7 @@ END;
         }
         else
         {
-            $html = "<table class='midcom_helper_datamanger2_widget_images' id='{$this->_namespace}{$this->name}' />\n" .
+            $html = "<table class='midcom_helper_datamanager2_widget_images' id='{$this->_namespace}{$this->name}' />\n" .
                     "<tr>\n" .
                     "<th class='filename'>" . $this->_l10n_midcom->get('name') . "</th>\n" .
                     "<th class='title'>" . $this->_l10n_midcom->get('title') . "</th>\n" .
@@ -319,7 +319,7 @@ END;
 
 
         // Filename column
-        $html = "<tr title='{$info['guid']}' class='midcom_helper_datamanger2_widget_images_image'>\n" .
+        $html = "<tr title='{$info['guid']}' class='midcom_helper_datamanager2_widget_images_image'>\n" .
                 "<td class='exist filename' title='{$info['filename']}'>" .
                 "{$preview}<br /><a href='{$info['url']}'>{$info['filename']}</a>" .
                 "</td>\n";

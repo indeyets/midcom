@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 JS date widget
+ * Datamanager 2 JS date widget
  *
  * This widget is built around the JS date calendar, thus being mostly equivalent
  * with the DM1 date widget.

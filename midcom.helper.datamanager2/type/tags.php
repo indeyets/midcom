@@ -11,7 +11,7 @@
 require_once('text.php');
 
 /**
- * Datamanger 2 tag datatype. The text value encapsulated by this type is
+ * Datamanager 2 tag datatype. The text value encapsulated by this type is
  * passed to the net.nemein.tag library and corresponding tag objects and
  * relations will be handled there.
  *

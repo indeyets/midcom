@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 midgard_person compatible password datatype
+ * Datamanager 2 midgard_person compatible password datatype
  *
  * This encaspulates a Midgard password. When loading, the type automatically detects
  * crypted and plain text passwords. A crypted password is represented by a null value

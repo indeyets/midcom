@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Simple privilege datatype.
+ * Datamanager 2 Simple privilege datatype.
  *
  * The class encaspulates a single privilege record with its three states of 
  * ALLOWED, DENIED and INHERITED.

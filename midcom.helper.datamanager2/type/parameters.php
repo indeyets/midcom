@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 parameters type. This allows the editing of all parameters of 
+ * Datamanager 2 parameters type. This allows the editing of all parameters of 
  * the storage object.
  * 
  * <b>Configuration options:</b>

@@ -11,7 +11,7 @@
 require_once('image.php');
 
 /**
- * Datamanger 2 Images type.
+ * Datamanager 2 Images type.
  *
  * This type encaspulates a unlimited list of uploaded images each along with an optional
  * number of derived images like thumbnails. Both the main image and the derived thumbnails
@@ -311,7 +311,7 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
             return;
         }
 
-        $raw_list = $this->storage->object->get_parameter('midcom.helper.datamanger2.type.images', "attachment_map_{$this->name}");
+        $raw_list = $this->storage->object->get_parameter('midcom.helper.datamanager2.type.images', "attachment_map_{$this->name}");
         if (! $raw_list)
         {
             // No attachments found.
@@ -496,7 +496,7 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
         // an object, we set the parameter unconditionally, to get all deletions.
         if ($this->storage->object)
         {
-            $this->storage->object->set_parameter('midcom.helper.datamanger2.type.images', "attachment_map_{$this->name}", implode(',', $data));
+            $this->storage->object->set_parameter('midcom.helper.datamanager2.type.images', "attachment_map_{$this->name}", implode(',', $data));
         }
         else if ($data)
         {

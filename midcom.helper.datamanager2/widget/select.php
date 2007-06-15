@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 simple select widget.
+ * Datamanager 2 simple select widget.
  *
  * It can only be bound to a select type (or subclass thereoff), and inherits the confguration
  * from there as far as possible.

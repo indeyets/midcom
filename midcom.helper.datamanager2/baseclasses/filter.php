@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Form Manager data filter base class.
+ * Datamanager 2 Form Manager data filter base class.
  *
  * This class allows you to create form data filter subclasses, see the schema documentation
  * in the Midgard Wiki for details.

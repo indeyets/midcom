@@ -11,7 +11,7 @@
 require_once('textarea.php');
 
 /**
- * Datamanger 2 TinyMCE driven textarea widget
+ * Datamanager 2 TinyMCE driven textarea widget
  *
  * As with all subclasses, the actual initialization is done in the initialize() function,
  * not in the constructor, to allow for error handling.

@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Data storage implementation: NULL storage object.
+ * Datamanager 2 Data storage implementation: NULL storage object.
  *
  * This class is aimed to provide a dummy storage object, useable for stuff like mailback forms.
  * Usually, you won't save datamanagers running with this storage backend, accessing the types

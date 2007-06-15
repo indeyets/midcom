@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 captcha base type. Does not provide any functionality, just an
+ * Datamanager 2 captcha base type. Does not provide any functionality, just an
  * empty base type so that the DM2 Formmanager can link into the system.
  * All configuration is set using the widget code. The type should be set to the
  * null storage target.

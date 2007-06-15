@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 download widget
+ * Datamanager 2 download widget
  *
  * As with all subclasses, the actual initialization is done in the initialize() funciton,
  * not in the constructor, to allow for error handling.
@@ -45,7 +45,7 @@
  *
  * 2. CSS names
  *
- * The table gets the Name of the field as id and midcom_helper_datamanger2_widget_downloads
+ * The table gets the Name of the field as id and midcom_helper_datamanager2_widget_downloads
  * as class. Each column also gets its own CSS class: filename, title, file, upload and delete.
  * An additionalclass is assigned depending wether this is a row for an existing item (exist) or
  * a new one (new). So a full class for the new filename element would be "new filename". Note,
@@ -107,7 +107,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
     {
         if ($frozen)
         {
-            $html = "<table class='midcom_helper_datamanger2_widget_downloads' id='{$this->_namespace}{$this->name}' />\n" .
+            $html = "<table class='midcom_helper_datamanager2_widget_downloads' id='{$this->_namespace}{$this->name}' />\n" .
                     "<tr>\n" .
                     "<th class='filename'>" . $this->_l10n_midcom->get('name') . "</th>\n" .
                     "<th class='title'>" . $this->_l10n_midcom->get('title') . "</th>\n" .
@@ -115,7 +115,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
         }
         else
         {
-            $html = "<table class='midcom_helper_datamanger2_widget_downloads' id='{$this->_namespace}{$this->name}' />\n" .
+            $html = "<table class='midcom_helper_datamanager2_widget_downloads' id='{$this->_namespace}{$this->name}' />\n" .
                     "<tr>\n" .
                     "<th class='filename'>" . $this->_l10n_midcom->get('name') . "</th>\n" .
                     "<th class='title'>" . $this->_l10n_midcom->get('title') . "</th>\n" .
@@ -189,7 +189,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
     function _add_attachment_row($identifier, $info, $frozen)
     {
         // Filename column
-        $html = "<tr class='midcom_helper_datamanger2_widget_downloads_download' title='{$info['guid']}'>\n" .
+        $html = "<tr class='midcom_helper_datamanager2_widget_downloads_download' title='{$info['guid']}'>\n" .
                 "<td class='exist filename' title='{$info['filename']}'>" .
                 "<a href='{$info['url']}'>{$info['filename']}</a>" .
                 "</td>\n";

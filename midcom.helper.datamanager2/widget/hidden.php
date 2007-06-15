@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 simple text widget
+ * Datamanager 2 simple text widget
  *
  * As with all subclasses, the actual initialization is done in the initialize() funciton,
  * not in the constructor, to allow for error handling.

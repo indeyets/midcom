@@ -11,7 +11,7 @@
 require_once('Text/Password.php');
 
 /**
- * Datamanger 2 captcha widget
+ * Datamanager 2 captcha widget
  *
  * Uses the PEAR Text_CAPTCHA package to provide Captcha authentification to a form.
  * Uses the PEAR Text_Password package to generate a captcha passphrase.

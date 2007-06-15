@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Data Manager simple controller class.
+ * Datamanager 2 Data Manager simple controller class.
  *
  * This is a very simple controller class intended for usage directly with a storage backend.
  * It has no creation support whatsoever, but the multi-edit loop will work without problems.

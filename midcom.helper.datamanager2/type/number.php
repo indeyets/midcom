@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Simple number datatype. The type is based on the PHP floating point
+ * Datamanager 2 Simple number datatype. The type is based on the PHP floating point
  * types, not an arbitary precision number system.
  *
  * <b>Available configuration options:</b>

@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 simple privilege
+ * Datamanager 2 simple privilege
  *
  * As with all subclasses, the actual initialization is done in the initialize() function,
  * not in the constructor, to allow for error handling.

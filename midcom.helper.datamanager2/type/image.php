@@ -11,7 +11,7 @@
 require_once('blobs.php');
 
 /**
- * Datamanger 2 Image type.
+ * Datamanager 2 Image type.
  *
  * This type encaspulates a sinlge uploaded image along with an optional number of
  * derived images like thumbnails. Both the main image and the derived thumbnails

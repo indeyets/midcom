@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Data Manager object creation controller class.
+ * Datamanager 2 Data Manager object creation controller class.
  *
  * This class replaces the legacy "creation mode" of DM1. It requires a callback that
  * creates the actual object that should be created in a correct way. The implementation
@@ -264,7 +264,7 @@ class midcom_helper_datamanager2_controller_create extends midcom_helper_dataman
     }
 
     /**
-     * This funciton wraps the form manager processing. If processing is successful and the form is
+     * This function wraps the form manager processing. If processing is successful and the form is
      * in 'save'ed state, the storage backend is cast to a standard midgard object, any temporary
      * resources are moved to there, and the formdata is saved.
      *
@@ -291,6 +291,8 @@ class midcom_helper_datamanager2_controller_create extends midcom_helper_dataman
      */
     function process_form()
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
         if ($this->formmanager === null)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'You must initialize a controller class before using it.');
@@ -329,6 +331,9 @@ class midcom_helper_datamanager2_controller_create extends midcom_helper_dataman
                 // Delete the object as saving failed
                 $this->datamanager->storage->object->delete();
                 
+                debug_add('Failed to save the data to disk');
+                debug_pop();
+                
                 // We seem to have a critical error.
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     "Failed to save the data to disk: {$midgard_error}. Check the debug level log for more information.");
@@ -344,10 +349,10 @@ class midcom_helper_datamanager2_controller_create extends midcom_helper_dataman
             // Save temporary object ID.
             $this->formmanager->form->addElement('hidden', $this->_tmpid_fieldname, $this->datamanager->storage->object->id);
         }
-
+        
         return $result;
     }
-
+    
     /**
      * cast $storage to a simple midgard storage implementation. the reference should propagate this.
      * use a callback to work.
@@ -355,11 +360,20 @@ class midcom_helper_datamanager2_controller_create extends midcom_helper_dataman
     function _cast_to_storage_object()
     {
         $object =& $this->callback_object->{$this->callback_method}($this);
-
+        
         // Process temporary object
         if ($this->datamanager->storage->object)
         {
-            $tmp_object = $this->datamanager->storage->object;
+            $tmp_object =& $this->datamanager->storage->object;
+            
+            if (   !$tmp_object
+                || !isset($tmp_object->guid)
+                || !$tmp_object->guid)
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to get the temporary object');
+                // This will exit
+            }
+            
             $tmp_object->move_extensions_to_object($object);
             $tmp_object->delete();
         }

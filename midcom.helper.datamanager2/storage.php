@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Data storage base class.
+ * Datamanager 2 Data storage base class.
  *
  * It implements the basic interface required for data storage operations. Naturally,
  * only the construction of storage backends is suspect to class specific code, the actual

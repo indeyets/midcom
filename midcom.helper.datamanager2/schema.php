@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Schema class.
+ * Datamanager 2 Schema class.
  *
  * This class encaspulates Datamanager Schemas. It contains all information required to construct
  * the types and widgets of a given data schema. The base class constructs out of a Datamanager 2

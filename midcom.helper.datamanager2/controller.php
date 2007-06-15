@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Data Manager controller base class.
+ * Datamanager 2 Data Manager controller base class.
  *
  * This class encaspulates a controlling instance of the Datamanager class system. You do not
  * need to use it, it is possible to implement your own, custom form processing solely on the
@@ -119,7 +119,7 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
 
     /**
      * Sets the current datamanager instance to the storage object given, which may either
-     * be a MidCOM DBA object (which is encaspulated by a midgard datamanger storage instance).
+     * be a MidCOM DBA object (which is encaspulated by a midgard datamanager storage instance).
      *
      * You must load a schema database before actually
      *

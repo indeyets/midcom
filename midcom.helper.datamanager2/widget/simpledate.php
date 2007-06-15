@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 simple date widget
+ * Datamanager 2 simple date widget
  *
  * This widget is built around the PEAR QuickForm Date widget, which effectivly
  * consists of a set of input fields for each part of the date/time. It is limited

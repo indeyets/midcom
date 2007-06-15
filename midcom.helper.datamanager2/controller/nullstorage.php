@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Data Manager null storage controller class.
+ * Datamanager 2 Data Manager null storage controller class.
  *
  * This is a very simple controller class intended for usage directly without a true storage
  * backend. Its main intent is for forms you don't need in the database directly.
@@ -84,7 +84,7 @@ class midcom_helper_datamanager2_controller_nullstorage extends midcom_helper_da
      * ones. At this time, the integration of type validation is rudimentary and will
      * transparently return edit instead of validation.
      *
-     * Note, that this call does not actually execute the save call to the datamanger, there
+     * Note, that this call does not actually execute the save call to the datamanager, there
      * is nothing to save at this point.
      *
      * @return string One of 'save', 'cancel', 'next', 'previous', 'edit', depending on the schema

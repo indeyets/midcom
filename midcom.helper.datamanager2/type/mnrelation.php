@@ -11,7 +11,7 @@
 require_once('select.php');
 
 /**
- * Datamanger 2 m:n membership management type.
+ * Datamanager 2 m:n membership management type.
  *
  * This subclass provides specialized I/O procedures which allow implicit management of
  * m:n object mappings. For example this can cover the person member assignements of a

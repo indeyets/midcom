@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Blob management type.
+ * Datamanager 2 Blob management type.
  *
  * This type allows you to control an arbitary number of attachments on a given object.
  * It can only operate if the storage implementaion provides it with a Midgard Object.
@@ -279,9 +279,9 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         else if ($data)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("We were told to store attachment GUIDs, but no storage object was present. This should not happen, ignoring silently.",
+            debug_add('We were told to store attachment GUIDs, but no storage object was present. This should not happen, ignoring silently.',
                 MIDCOM_LOG_WARN);
-            debug_print_r("This data should have been stored:", $data);
+            debug_print_r('This data should have been stored:', $data);
             debug_pop();
         }
     }
@@ -335,7 +335,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         {
             fclose($handle);
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Failed to create attachment, see above for details.");
+            debug_add('Failed to create attachment, see above for details.');
             debug_pop();
             return false;
         }
@@ -345,7 +345,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
             if (! @unlink($tmpfile))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to automatically delete the source file, ignoring silently.", MIDCOM_LOG_WARN);
+                debug_add('Failed to automatically delete the source file, ignoring silently.', MIDCOM_LOG_WARN);
                 if (isset($php_errormsg))
                 {
                     debug_add("Last PHP error was: {$php_errormsg}", MIDCOM_LOG_WARN);
@@ -369,36 +369,36 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         $data = @getimagesize($filename);
         if ($data)
         {
-            $this->attachments[$identifier]->parameter("midcom.helper.datamanager2.type.blobs", "size_x", $data[0]);
-            $this->attachments[$identifier]->parameter("midcom.helper.datamanager2.type.blobs", "size_y", $data[1]);
-            $this->attachments[$identifier]->parameter("midcom.helper.datamanager2.type.blobs", "size_line", $data[3]);
+            $this->attachments[$identifier]->parameter('midcom.helper.datamanager2.type.blobs', 'size_x', $data[0]);
+            $this->attachments[$identifier]->parameter('midcom.helper.datamanager2.type.blobs', 'size_y', $data[1]);
+            $this->attachments[$identifier]->parameter('midcom.helper.datamanager2.type.blobs', 'size_line', $data[3]);
             if (! $this->attachments[$identifier]->mimetype)
             {
                 switch ($data[2])
                 {
                     case 1:
-                        $this->attachments[$identifier]->mimetype = "image/gif";
+                        $this->attachments[$identifier]->mimetype = 'image/gif';
                         $this->attachments[$identifier]->update();
                         break;
 
                     case 2:
-                        $this->attachments[$identifier]->mimetype = "image/jpeg";
+                        $this->attachments[$identifier]->mimetype = 'image/jpeg';
                         $this->attachments[$identifier]->update();
                         break;
 
                     case 3:
-                        $this->attachments[$identifier]->mimetype = "image/png";
+                        $this->attachments[$identifier]->mimetype = 'image/png';
                         $this->attachments[$identifier]->update();
                         break;
 
                     case 6:
-                        $this->attachments[$identifier]->mimetype = "image/bmp";
+                        $this->attachments[$identifier]->mimetype = 'image/bmp';
                         $this->attachments[$identifier]->update();
                         break;
 
                     case 7:
                     case 8:
-                        $this->attachments[$identifier]->mimetype = "image/tiff";
+                        $this->attachments[$identifier]->mimetype = 'image/tiff';
                         $this->attachments[$identifier]->update();
                         break;
                 }
@@ -452,7 +452,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         if (! $attachment)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Failed to create attachment record, see above for details.", MIDCOM_LOG_INFO);
+            debug_add('Failed to create attachment record, see above for details.', MIDCOM_LOG_INFO);
             debug_pop();
             return false;
         }
@@ -480,7 +480,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         else
         {
             // TODO: needs create temporary copy function.
-            die ("TODO");
+            die ('TODO');
         }
 
         $this->_update_attachment_info($identifier);
@@ -564,7 +564,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         {
             fclose($handle);
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Failed to create attachment, see above for details.");
+            debug_add('Failed to create attachment, see above for details.');
             debug_pop();
             return false;
         }
@@ -574,7 +574,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
             if (! @unlink($tmpfile))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to automatically delete the source file, ignoring silently.", MIDCOM_LOG_WARN);
+                debug_add('Failed to automatically delete the source file, ignoring silently.', MIDCOM_LOG_WARN);
                 if (isset($php_errormsg))
                 {
                     debug_add("Last PHP error was: {$php_errormsg}", MIDCOM_LOG_WARN);
@@ -634,7 +634,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         if (! $attachment->update())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Failed to update the attachment record.", MIDCOM_LOG_INFO);
+            debug_add('Failed to update the attachment record.', MIDCOM_LOG_INFO);
             debug_pop();
             return false;
         }
@@ -652,7 +652,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         else
         {
             // TODO: needs create temporary copy function.
-            die ("TODO");
+            die ('TODO');
         }
 
         $this->_update_attachment_info($identifier);
@@ -672,7 +672,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         if (! array_key_exists($identifier, $this->attachments))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Failed to delete the attachment record: The identifier is unknown.", MIDCOM_LOG_INFO);
+            debug_add('Failed to delete the attachment record: The identifier is unknown.', MIDCOM_LOG_INFO);
             debug_pop();
             return false;
         }
@@ -681,7 +681,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         if (! $attachment->delete())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Failed to delete the attachment record: DBA delete call returned false.", MIDCOM_LOG_INFO);
+            debug_add('Failed to delete the attachment record: DBA delete call returned false.', MIDCOM_LOG_INFO);
             debug_pop();
             return false;
         }

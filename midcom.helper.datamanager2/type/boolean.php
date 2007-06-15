@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Simple boolean datatype.
+ * Datamanager 2 Simple boolean datatype.
  *
  * Storage is done in number format, where 0 is false and 1 is true. When reading
  * the storage, the PHP boolean conversion is used, so other representations (for legacy

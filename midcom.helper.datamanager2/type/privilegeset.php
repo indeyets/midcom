@@ -11,7 +11,7 @@
 require_once('boolean.php');
 
 /**
- * Datamanger 2 privilege set datatype.
+ * Datamanager 2 privilege set datatype.
  *
  * This type encaspulates a simple privilege or set thereoff. You need to specifiy privilege name,
  * assignee and value. If the corresponding checkbox is set, all privileges will be set accordingly.

@@ -11,7 +11,7 @@
 require_once('checkbox.php');
 
 /**
- * Datamanger 2 privilege checkbox widget.
+ * Datamanager 2 privilege checkbox widget.
  *
  * Based on the regular checkbox widget but with advanced checks that hide the form elelments
  * in case the user does not have sufficient privileges.

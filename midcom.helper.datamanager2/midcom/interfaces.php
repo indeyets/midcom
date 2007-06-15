@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Component Interface Class. This is a pure code library.
+ * Datamanager 2 Component Interface Class. This is a pure code library.
  *
  * @package midcom.helper.datamanager2
  */

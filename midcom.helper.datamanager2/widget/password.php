@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 password widget
+ * Datamanager 2 password widget
  *
  * This is a simple widget to request a password. It will render two password input fields,
  * whose values need to be identical for the password to be accepted. HTML_QuickForm compare

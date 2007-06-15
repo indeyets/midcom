@@ -8,7 +8,7 @@
  */
 
 /**
- * Datamanger 2 Simple select type. This allows the selection of one or more values
+ * Datamanager 2 Simple select type. This allows the selection of one or more values
  * from a given list. It is possible to enable adding "unreferenced" items in a "others"
  * listing, but those are outside the normal processing.
  *

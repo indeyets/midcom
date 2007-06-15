@@ -12,7 +12,7 @@ die('The class midcom_helper_datamanager2_widget_table has been disabled, it' .
     'same form.');
 
 /**
- * Datamanger 2 simple table widget
+ * Datamanager 2 simple table widget
  *
  * As with all subclasses, the actual initialization is done in the initialize() funciton,
  * not in the constructor, to allow for error handling.
