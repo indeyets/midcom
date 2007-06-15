@@ -100,36 +100,28 @@ class midcom_core_temporary_object extends __midcom_core_temporary_object
         $object->require_do('midgard:privileges');
         $object->require_do('midgard:parameters');
         $object->require_do('midgard:attachments');
-
-        // Parameters, we handle them directly, without using the DBA API,
-        // we cannot move parameters with DBA:
-        $query = new midgard_query_builder('midgard_parameter');
-        $query->add_constraint('tablename', '=', $this->__table__);
-        $query->add_constraint('oid', '=', $this->id);
-        $result = @$query->execute();
-        if ($result)
+        
+        // Copy parameters from temporary object
+        $parameters = $this->list_parameters();
+        
+        foreach ($parameters as $domain => $array)
         {
-            foreach ($result as $parameter)
+            foreach ($array as $name => $value)
             {
-                $parameter->tablename = $object->__table__;
-                $parameter->oid = $object->id;
-                $parameter->update();
+                $object->set_parameter($domain, $name, $value);
             }
         }
-
-        // Attachments are handled using the DBA API, we can move them there.
-        $query = $this->get_attachment_qb();
-        $result = $query->execute();
-        if ($result)
+        
+        // Move attachments from temporary object
+        $attachments = $this->list_attachments();
+        foreach ($attachments as $attachment)
         {
-            foreach ($result as $attachment)
-            {
-                $attachment->ptable = $object->__table__;
-                $attachment->pid = $object->id;
-                $attachment->update();
-            }
+            $attachment->ptable = $object->__table__;
+            $attachment->pid = $object->id;
+            $attachment->parent_guid = $object->guid;
+            $attachment->update();
         }
-
+        
         // Privileges are moved using the DBA API as well.
         $privileges = $this->get_privileges();
         if ($privileges)
