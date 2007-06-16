@@ -280,6 +280,9 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
             $tagname = net_nemein_tag_handler::tag_link2tagname($link, $tag);
             $tags[$tagname] = $tag->url;
         }
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_print_r("Tags for {$object->guid}: ", $tags);
+        debug_pop();
         return $tags;
     }
 
@@ -414,12 +417,19 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
      */
     function separate_machine_tags_in_content(&$content)
     {
-        $regex = '/(.*)(tags:)\s+?(.*?)(\.\s*)?$/i';
+        $regex = '/^(.*)(tags:)\s+?(.*?)(\.?\s*)?$/si';
         if (!preg_match($regex, $content, $tag_matches))
         {
             return '';
         }
-        $content = $tag_matches[1];
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_print_r('tag_matches: ', $tag_matches);
+        debug_pop();
+        // safety
+        if (!empty($tag_matches[1]))
+        {
+            $content = rtrim($tag_matches[1]);
+        }
         return trim($tag_matches[3]);
     }
 
@@ -600,6 +610,84 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
             $return[] = $map['object'];
         }
         return $return;
+    }
+
+    /**
+     * Parses a string into tag_array usable with tag_object
+     *
+     * @see net_nemein_tag_handler::tag_object()
+     * @param string $from_string string to parse tags from
+     * @return array of correct format
+     */
+    function string2tag_array($from_string)
+    {
+        $tag_array = array();
+        // Clean all whitespace sequences to single space
+        $tags_string = preg_replace('/\s+/', ' ', $from_string);
+        // Parse the tags string byte by byte
+        $tags = array();
+        $current_tag = '';
+        $quote_open = false;
+        for ($i = 0; $i < (strlen($tags_string)+1); $i++)
+        {
+            $char = substr($tags_string, $i, 1);
+            $hex = strtoupper(dechex(ord($char)));
+            //echo "DEBUG: iteration={$i}, char={$char} (\x{$hex})\n";
+            if (   (   $char == ' '
+                    && !$quote_open)
+                || $i == strlen($tags_string))
+            {
+                $tags[] = $current_tag;
+                $current_tag = '';
+                continue;
+            }
+            if ($char === $quote_open)
+            {
+                $quote_open = false;
+                continue;
+            }
+            if (   $char === '"'
+                || $char === "'")
+            {
+                $quote_open = $char;
+                continue;
+            }
+            $current_tag .= $char;
+        }
+        foreach ($tags as $tag)
+        {
+            // Just to be sure there is not extra whitespace in beginning or end of tag
+            $tag = trim($tag);
+            if (empty($tag))
+            {
+                continue;
+            }
+            $tag_array[$tag] = '';
+        }
+        return $tag_array;
+    }
+
+    /**
+     * Creates string representation of the tag array
+     *
+     * @param array $tags 
+     * @return string representation
+     */
+    function tag_array2string($tags)
+    {
+        $ret = '';
+        foreach ($tags as $tag => $url)
+        {
+            if (strpos($tag, ' '))
+            {
+                // This tag contains whitespace, surround with quotes
+                $tag = "\"{$tag}\"";
+            }
+            
+            // Simply place the tags into a string
+            $ret .= "{$tag} ";
+        }
+        return trim($ret);
     }
 }
 ?>

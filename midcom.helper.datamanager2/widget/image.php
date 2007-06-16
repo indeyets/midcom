@@ -466,7 +466,8 @@ class midcom_helper_datamanager2_widget_image extends midcom_helper_datamanager2
      */
     function sync_type_with_widget($results)
     {
-        if ($this->show_title)
+        if (   $this->show_title
+            && isset($results["{$this->name}_title"]))
         {
             $this->_type->title = $results["{$this->name}_title"];
         }
