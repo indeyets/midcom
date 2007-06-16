@@ -159,9 +159,15 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
         $this->_parse_email_persons();
         foreach ($this->_request_data['schemadb'][$this->_config->get('api_email_schema')]->fields as $name => $field)
         {
-            if ($field['type'] == 'image')
+            // FIXME: use datamanager->types and check is_a($type, 'midcom_helper_datamanager2_type_image')
+            if (   $field['type'] == 'image'
+                || $field['type'] == 'photo')
             {
                 $this->_request_data['image_field'] = $name;
+            }
+            if ($field['type'] == 'tags')
+            {
+                $data['tags_field'] = $name;
             }
         }
 
@@ -175,30 +181,42 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
     
         // Try to find tags in email content
         $content = $this->_decoder->body;
+        $content_tags = '';
         $_MIDCOM->componentloader->load_graceful('net.nemein.tag');
         if (class_exists('net_nemein_tag_handler'))
         {
+            // unconditionally tag
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("content before machine tag separation\n===\n{$content}\n===\n");
             $content_tags = net_nemein_tag_handler::separate_machine_tags_in_content($content);
             if (!empty($content_tags))
             {
-                net_nemein_tag_handler::tag_object($this->_article, $content_tags);
+                debug_add("found machine tags string: {$content_tags}");
+                net_nemein_tag_handler::tag_object($this->_article, net_nemein_tag_handler::string2tag_array($content_tags));
             }
+            debug_add("content AFTER machine tag separation\n===\n{$content}\n===\n");
+            debug_pop();
         }
 
         // Populate rest of the data        
         $this->_datamanager->types['content']->value = $content;
+        if (!empty($data['tags_field']))
+        {
+            // if we have tags field put content_tags value there as well or they will get deleted!
+            $this->_datamanager->types[$data['tags_field']]->value = $content_tags;
+        }
         $body_switched = false;
         
         foreach ($this->_decoder->attachments as $att)
         {
             debug_add("processing attachment {$att['name']}");
             
-            switch ($att['mimetype'])
+            switch (true)
             {
-                case 'image/jpeg':
+                case (strpos($att['mimetype'], 'image/') !== false):
                     $this->_add_image($att);
                     break;
-                case 'text/plain':
+                case (strtolower($att['mimetype']) == 'text/plain'):
                     if (!$body_switched)
                     {
                         // Use first text/plain part as the content
@@ -220,6 +238,7 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
             // Give error the the MDA so it doesn't delete the message
             echo "ERROR: Datamanager failed to save the object. Midgard error was: " . mgd_errstr() . "\n";
             $_MIDCOM->finish();
+            exit();
         }
         
         // Index the article
@@ -314,10 +333,10 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
         }
         
         // Save image to a temp file
-        $tmp_name = '/tmp/net_nehmer_blog_handler_api_email_' . time();
+        $tmp_name = tempnam('/tmp', 'net_nehmer_blog_handler_api_email_');
         $fp = fopen($tmp_name, 'w');
 
-        if (!fwrite($fp, $att['content'], strlen($att['content'])))
+        if (!fwrite($fp, $att['content']))
         {
             //Could not write, clean up and continue
             debug_add("Error when writing file {$tmp_name}, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
@@ -325,7 +344,7 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
             return false;
         }
         
-        $this->_datamanager->types[$this->_request_data['image_field']]->set_image($att['name'], $tmp_name, $att['name']);
+        return $this->_datamanager->types[$this->_request_data['image_field']]->set_image($att['name'], $tmp_name, $att['name']);
     }
     
     function _add_attachment($att)
