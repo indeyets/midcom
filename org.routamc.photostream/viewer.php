@@ -304,6 +304,20 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             'variable_args' => 0,
         );
 
+        $this->_request_switch['api-email'] = Array
+        (
+            'handler' => Array('org_routamc_photostream_handler_api_email', 'import'),
+            'fixed_args' => Array('api', 'email'),
+        );
+        
+        /* not implemented yet
+        $this->_request_switch['api-metaweblog'] = Array
+        (
+            'handler' => Array('org_routamc_photostream_handler_api_metaweblog', 'server'),
+            'fixed_args' => Array('api', 'metaweblog'),
+        );
+        */
+
         // Handle /
         $this->_request_switch['index'] = array
         (
