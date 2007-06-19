@@ -19,6 +19,7 @@ class org_openpsa_products_handler_product_csv extends midcom_baseclasses_compon
     
     function _load_schemadb()
     {
+        $this->_schema = $this->_config->get('csv_export_schema');
         return $this->_request_data['schemadb_product'];
     }
 
