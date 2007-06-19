@@ -22,6 +22,8 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
      */
     var $_datamanager = null;
     
+    var $_schema = null;
+    
     var $_objects = array();
     
     function midcom_baseclasses_components_handler_dataexport()
@@ -46,23 +48,29 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
      */
     function _load_datamanager($schemadb)
     {
+        if (empty($this->_schema))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Export schema ($this->_schema) must be defined, hint: do it in "_load_schemadb"');
+            // This will exit
+        }
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($schemadb);
 
-        if (!$this->_datamanager)
+        if (   ! $this->_datamanager
+            || ! $this->_datamanager->set_schema($this->_schema))
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a DM2 instance for schemadb.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a DM2 instance for schemadb schema '{$this->_schema}'.");
             // This will exit.
         }
     }
     
     function _load_schemadb()
     {
-        die("Must be overridden in implementation");
+        $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Method "_load_schemadb" must be overridden in implementation');
     }
 
     function _load_data()
     {
-        die("Must be overridden in implementation");
+        $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Method "_load_data" must be overridden in implementation');
     }
     
     function _handler_csv($handler_id, $args, &$data)
@@ -87,26 +95,164 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
             // This will exit
         }
         
-        // TODO: Make configurable
+        $this->_init_csv_variables();
+        $_MIDCOM->skip_page_style = true;
+        //$_MIDCOM->cache->content->content_type('text/plain');
+        // FIXME: Use global configuration
         $_MIDCOM->cache->content->content_type('application/csv');
-        
+        //$_MIDCOM->cache->content->content_type($this->_config->get('csv_export_content_type'));
+
         return true;
     }
 
+    function _init_csv_variables()
+    {
+        // FIXME: Use global configuration
+        if (   !isset($this->csv['s'])
+            || empty($this->csv['s']))
+        {
+            $this->csv['s'] = ';';
+            //$this->csv['s'] = $this->_config->get('csv_export_separator');
+        }
+        if (   !isset($this->csv['q'])
+            || empty($this->csv['q']))
+        {
+            $this->csv['q'] = '"';
+            //$this->csv['q'] = $this->_config->get('csv_export_quote');
+        }
+        if (   !isset($this->csv['d'])
+            || empty($this->csv['d']))
+        {
+            $this->csv['d'] = '.';
+            //$this->csv['d'] = $this->_config->get('csv_export_decimal');
+        }
+        if (   !isset($this->csv['nl'])
+            || empty($this->csv['nl']))
+        {
+            $this->csv['nl'] = "\n";
+            //$this->csv['nl'] = $this->_config->get('csv_export_newline');
+        }
+        if (   !isset($this->csv['charset'])
+            || empty($this->csv['charset']))
+        {
+            $this->csv['charset'] = 'iso-8859-15';
+            //$this->csv['charset'] = $this->_config->get('csv_export_charset');
+        }
+        if ($this->csv['s'] == $this->csv['d'])
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "CSV decimal separator (configured as '{$this->csv['d']}') may not be the same as field separator (configured as '{$this->csv['s']}')");
+        }
+    }
+
+    function _encode_csv($data, $add_separator = true, $add_newline = false)
+    {
+        /* START: Quick'n'Dirty on-the-fly charset conversion */
+        if (function_exists('iconv'))
+        {
+            $append_target = '//TRANSLIT';
+            //$append_target = $this->_config->get('iconv_append_target');
+            $to_charset = strtolower($this->csv['charset']) . $append_target;
+            /*
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("calling iconv('utf-8', {$to_charset}, {$data})");
+            */
+            $stat = @iconv('utf-8', $to_charset, $data);
+            //debug_add("got back '{$stat}'");
+            if (!empty($stat))
+            {
+                debug_add('overwriting $data');
+                $data = $stat;
+            }
+            debug_pop();
+        }
+        /* END: Quick'n'Dirty on-the-fly charset conversion */
+        
+        // Strings and numbers beginning with zero are quoted
+        if (   (   !is_numeric($data)
+                || preg_match('/^[0+]/', $data))
+            && !empty($data))
+        {
+            // Make sure we have only newlines in data
+            $data = preg_replace("/\n\r|\r\n|\r/", "\n", $data);
+            // Escape quotes (PONDER: make configurable between doubling the character and escaping)
+            $data = str_replace($this->csv['q'], '\\' . $this->csv['q'], $data);
+            // Escape newlines
+            $data = str_replace("\n", '\\n', $data);
+            // Quote
+            $data = "{$this->csv['q']}{$data}{$this->csv['q']}";
+        }
+        else
+        {
+            // Decimal point format
+            $data = str_replace('.', $this->csv['s'], $data);
+        }
+        if ($add_separator)
+        {
+            $data .= $this->csv['s'];
+        }
+        if ($add_newline)
+        {
+            $data .= $this->csv['nl'];
+        }
+        return $data;
+    }
+
+
     function _show_csv($handler_id, &$data)
     {
+        // Make real sure we're dumping data live
+        $_MIDCOM->cache->content->enable_live_mode();
+        while(@ob_end_flush());
+
+        // Dump headers
+        echo $this->_encode_csv('GUID', true, false);
+        $i = 0;
+        $datamanager =& $this->_datamanager;
+        foreach ($datamanager->schema->field_order as $name)
+        {
+            $i++;
+            if ($i < count($datamanager->schema->field_order))
+            {
+                echo $this->_encode_csv($datamanager->schema->fields[$name]['title'], true, false);
+            }
+            else
+            {
+                echo $this->_encode_csv($datamanager->schema->fields[$name]['title'], false, true);
+            }
+        }
+
+        // Dump objects
         foreach ($this->_objects as $object)
         {
-            if (!$this->_datamanager->autoset_storage($object))
+            if (!$this->_datamanager->set_storage($object))
             {
                 // Object failed to load, skip
                 continue;
             }
             
-            // TODO: Do the fancy CSV cleaning here
-            
-            echo implode(',',$this->_datamanager->get_content_csv()) . "\n";
+            echo $this->_encode_csv($object->guid, true, false);
+            $i = 0;
+            foreach ($datamanager->schema->field_order as $fieldname)
+            {
+                $i++;
+                $data = '';
+                $data = $datamanager->types[$fieldname]->convert_to_csv();
+                if ($i < count($datamanager->schema->field_order))
+                {
+                    echo $this->_encode_csv($data, true, false);
+                }
+                else
+                {
+                    echo $this->_encode_csv($data, false, true);
+                }
+                $data = '';
+                // Prevent buggy types from leaking their old value over
+                $datamanager->types[$fieldname]->value = false;
+            }
+            flush();
         }
+        // restart ob to keep MidCOM happy
+        ob_start();
     }
 }
 ?>
