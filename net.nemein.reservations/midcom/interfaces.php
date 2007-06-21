@@ -56,5 +56,21 @@ class net_nemein_reservations_interface extends midcom_baseclasses_components_in
         
         return true;
     }
+
+    function _on_resolve_permalink(&$topic, &$config, $guid)
+    {
+        $root_event =& $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event'];
+        if ($root_event->guid == $guid)
+        {
+            return '';
+        }
+        $event = new org_openpsa_calendar_event($guid);
+        if (   $event
+            && $event->up == $root_event->id)
+        {
+            return "reservation/{$event->guid}/";
+        }
+        return null;
+    }
 }
 ?>
