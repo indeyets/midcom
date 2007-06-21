@@ -27,6 +27,10 @@ Sähköposti
 Etunimi
 ---STRINGEND
 
+---STRING username
+Käyttäjätunnus
+---STRINGEND
+
 ---STRING job title
 Titteli
 ---STRINGEND
@@ -194,3 +198,101 @@ Postinumero
 ---STRING city
 Postitoimipaikka
 ---STRINGEND
+
+---STRING amount
+Määrä
+---STRINGEND
+
+---STRING user account
+Käyttäjätili
+---STRINGEND
+
+---STRING edit user account
+Muokkaa käyttäjätiliä
+---STRINGEND
+
+---STRING password
+Salasana
+---STRINGEND
+
+---STRING retype password
+Kirjoita salasana uudelleen
+---STRINGEND
+
+---STRING generate random passwords
+Luo satunnaisia salasanoja
+---STRINGEND
+
+---STRING opens in a new window
+Avautuu uuteen ikkunaan
+---STRINGEND
+
+---STRING amount
+Määrä
+---STRINGEND
+
+---STRING maximum %s
+Maksimi %s
+---STRINGEND
+
+---STRING password length
+Salasanan pituus
+---STRINGEND
+
+---STRING prevent repeating characters
+Estä toistuvat merkit
+---STRINGEND
+
+---STRING prevent similar characters
+Estä samankaltaiset merkit
+---STRINGEND
+
+---STRING generate
+Luo
+---STRINGEND
+
+---STRING passwords did not match
+Salasanat eivät täsmänneet
+---STRINGEND
+
+---STRING illegal characters
+Laittomia merkkejä
+---STRINGEND
+
+---STRING use only characters
+Käytä vain merkkejä
+---STRINGEND
+
+---STRING username contains illegal characters
+Käyttäjätunnus sisältää laittomia merkkejä
+---STRINGEND
+
+---STRING enter the same password twice
+Syötä sama salasana kahdesti
+---STRINGEND
+
+---STRING passwords did not match
+Salasanat eivät täsmänneet
+---STRINGEND
+
+---STRING user account updated successfully
+Käyttäjätili päivitetty onnistuneesti
+---STRINGEND
+
+---STRING send password by email to
+Lähetä salasana sähköpostilla osoitteeseen
+---STRINGEND
+
+---STRING invalid email address
+Virheellinen sähköpostiosoite
+---STRINGEND
+
+---STRING sending of the email failed
+Sähköpostin lähettäminen epäonnistui
+---STRINGEND
+
+---STRING email sent
+Sähköposti lähetetty
+---STRINGEND
+
+ 

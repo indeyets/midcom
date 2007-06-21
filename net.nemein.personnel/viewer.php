@@ -24,11 +24,13 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
      */
     function _on_initialize()
     {
+        // Show list of the persons
         $this->_request_switch['view-index'] = array
         (
             'handler' => array('net_nemein_personnel_handler_view', 'index'),
         );
-
+        
+        // Show alphabetical order
         if ($this->_config->get('enable_alphabetical'))
         {
             $this->_request_switch['view-index-alpha'] = array
@@ -39,6 +41,8 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             );
         }
         
+        // Show a subgroup list
+        // Match /group/<group guid>/
         $this->_request_switch['subgroup-list'] = array
         (
             'handler' => array ('net_nemein_personnel_handler_view', 'group'),
@@ -46,16 +50,8 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
         
-        if ($this->_config->get('sort_order') === 'sorted')
-        {
-            // Sorting of the personnel
-            $this->_request_switch['sort_order'] = array
-            (
-                'handler' => array('net_nemein_personnel_handler_order', 'order'),
-                'fixed_args' => array ('order'),
-            );
-        }
-        
+        // Sort the personnel
+        // Match /order
         if ($this->_config->get('sort_order') === 'sorted and grouped')
         {
             // Sorting of the personnel
@@ -66,9 +62,8 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             );
         }
         
-
-        // The view handler checks against GUIDs or usernames. The index handler
-        // takes care to avoid users named "vcard.vcf" and "foaf.rdf".
+        // View person in a group
+        // Match /group/<group guid>/<person identificator>
         $this->_request_switch['view-grouped-person'] = array
         (
             'handler' => array('net_nemein_personnel_handler_view', 'person'),
@@ -76,13 +71,32 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             'variable_args' => 2,
         );
         
-        // The view handler checks against GUIDs or usernames. The index handler
-        // takes care to avoid users named "vcard.vcf" and "foaf.rdf".
+        // Create a user account
+        // Match /account/<person identificator>
+        $this->_request_switch['account'] = array
+        (
+            'handler' => array('net_nemein_personnel_handler_account', 'account'),
+            'fixed_args' => array('account'),
+            'variable_args' => 1,
+        );
+        
+        // Generate random passwords
+        // Match /passwords
+        $this->_request_switch['passwords'] = array
+        (
+            'handler' => array('net_nemein_personnel_handler_account', 'passwords'),
+            'fixed_args' => array('passwords'),
+        );
+        
+        // Show a person according to the username or GUID
+        // Match /<person identificator>
         $this->_request_switch['view-person'] = array
         (
             'handler' => array('net_nemein_personnel_handler_view', 'person'),
             'variable_args' => 1,
         );
+        
+        // 
         
         /*
          * not yet implemented

@@ -116,3 +116,14 @@
   padding-left: 3px;
   padding-bottom: 12px;
 }
+
+#net_nemein_personnel_groups img.button
+{
+  padding: 1px 0.2em;
+  cursor: pointer;
+}
+
+#net_nemein_personnel_groups img.button:hover
+{
+  background-color: white;
+}

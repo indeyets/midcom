@@ -11,7 +11,7 @@ else
 }
 ?>
         <li class="group" id="net_nemein_personnel_group_<?php echo $data['index']; ?>">
-            <h3 onDblClick="javascript:alter_title(this);" class="handle">
+            <h3 onDblClick="javascript:alter_title(this,'group');" class="handle">
                 <input type="hidden" name="sortable[]" value="group::group_<?php echo $data['group']->guid; ?>::&(title:h);" />
                 <span title="<?php echo $data['l10n']->get('double click to edit').' '.$data['l10n']->get('drag and drop to sort'); ?>">&(title:h);</span>
             </h3>

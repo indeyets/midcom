@@ -41,6 +41,23 @@
 // supported by this new implementation.
 'enable_alphabetical' => false,
 
+// Emailing the user account details
+'email_from' => "WWW-data <www-data@{$_SERVER['SERVER_NAME']}>",
+'email_subject' => "{$_SERVER['SERVER_NAME']}: your user account details",
+'email_body' => "
+Your user account to http://{$_SERVER['SERVER_NAME']}{$_MIDGARD['self']} has been either created or updated.
+
+Username:    [USERNAME]
+Password:    [PASSWORD]
+
+This is an automatically generated message, do not reply!
+
+
+-- 
+WWW-data <www-data@{$_SERVER['SERVER_NAME']}
+[TIMESTAMP]
+",
+
 /*
  * These options are currently not implemented
  *

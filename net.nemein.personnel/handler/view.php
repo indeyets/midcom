@@ -137,7 +137,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
      * If an argument matches both a GUID and a username (highly improbable), the result is
      * undefined.
      * 
-     * @access private
+     * @access public
      * @return boolean Indicating success
      */
     function _can_handle_person ($handler_id, $args, &$data)
@@ -234,7 +234,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
     /**
      * Displays the detail view of a given person.
      * 
-     * @access private
+     * @access public
      * @return boolean Indicating success
      */
     function _handler_person($handler_id, $args, &$data)
@@ -268,7 +268,18 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
                 )
             );
         }
-
+        
+        $this->_view_toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "account/{$this->_person->guid}.html",
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('user account'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                MIDCOM_TOOLBAR_ACCESSKEY => 'a',
+            )
+        );
+        
         if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
         {
             $_MIDCOM->set_26_request_metadata($this->_person->metadata->revised, $this->_person->guid);
@@ -499,7 +510,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
     /**
      * Show grouped personnel records
      * 
-     * @access private
+     * @access public
      */
     function _show_grouped($handler_id, &$data)
     {
@@ -644,7 +655,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
     /**
      * Check the request for showing people of one single group
      * 
-     * @access private
+     * @access public
      * @return boolean Indicating success
      */
     function _handler_group($handler_id, $args, &$data)
@@ -734,9 +745,9 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
     }
     
     /**
+     * Show a group listing
      * 
-     * 
-     * 
+     * @access public
      */
     function _show_group($handler_id, &$data)
     {

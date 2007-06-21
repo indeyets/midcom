@@ -27,6 +27,10 @@ Email
 First name
 ---STRINGEND
 
+---STRING username
+Username
+---STRINGEND
+
 ---STRING job title
 Title
 ---STRINGEND
@@ -193,5 +197,101 @@ Postal code
 
 ---STRING city
 City
+---STRINGEND
+
+---STRING amount
+Amount
+---STRINGEND
+
+---STRING user account
+User account
+---STRINGEND
+
+---STRING edit user account
+Edit user account
+---STRINGEND
+
+---STRING password
+Password
+---STRINGEND
+
+---STRING retype password
+Retype password
+---STRINGEND
+
+---STRING generate random passwords
+Generate random passwords
+---STRINGEND
+
+---STRING opens in a new window
+Opens in a new window
+---STRINGEND
+
+---STRING amount
+Amount
+---STRINGEND
+
+---STRING maximum %s
+Maximum %s
+---STRINGEND
+
+---STRING password length
+Password length
+---STRINGEND
+
+---STRING prevent repeating characters
+Prevent repeating characters
+---STRINGEND
+
+---STRING prevent similar characters
+Prevent similar characters
+---STRINGEND
+
+---STRING generate
+Generate
+---STRINGEND
+
+---STRING passwords did not match
+Passwords did not match
+---STRINGEND
+
+---STRING illegal characters
+Illegal characters
+---STRINGEND
+
+---STRING use only characters
+Use only characters
+---STRINGEND
+
+---STRING username contains illegal characters
+Username contains illegal characters
+---STRINGEND
+
+---STRING enter the same password twice
+Enter the same password twice
+---STRINGEND
+
+---STRING passwords did not match
+Passwords did not match
+---STRINGEND
+
+---STRING user account updated successfully
+User account updated successfully
+---STRINGEND
+
+---STRING send password by email to
+Send password by email to
+---STRINGEND
+
+---STRING invalid email address
+Invalid email address
+---STRINGEND
+
+---STRING sending of the email failed
+Sending of the email failed
+---STRINGEND
+
+---STRING email sent
+Email sent
 ---STRINGEND
 
