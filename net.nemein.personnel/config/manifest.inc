@@ -1,6 +1,6 @@
 'name' => 'net.nemein.personnel',
 'purecode' => false,
-'version' => '1.0.1beta2',
+'version' => '1.0.1beta3',
 'state' => 'beta',
 'privileges' => array (),
 'class_definitions' => array (),

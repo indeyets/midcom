@@ -44,7 +44,7 @@
 // Emailing the user account details
 'email_from' => "WWW-data <www-data@{$_SERVER['SERVER_NAME']}>",
 'email_subject' => "{$_SERVER['SERVER_NAME']}: your user account details",
-'email_body' => "
+'email_content' => "
 Your user account to http://{$_SERVER['SERVER_NAME']}{$_MIDGARD['self']} has been either created or updated.
 
 Username:    [USERNAME]

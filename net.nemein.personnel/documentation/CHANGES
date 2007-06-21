@@ -6,7 +6,10 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
-2007-02-27
+2007-06-21 adrenalin
+  - Added support for creating and editing user account details
+
+2007-02-27 adrenalin
   - Fixed a foreach bug (trying to foreach uninitialized array in sorting mode)
 
 2007-02-21 adrenalin
