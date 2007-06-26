@@ -271,6 +271,22 @@ class midcom_application {
     var $_jshead;
 
     /**
+     * String with all prepend JavaScript declarations for the page's head.
+     *
+     * @var string
+     * @access private
+     */
+    var $_prepend_jshead;
+
+    /**
+     * Array with all JQuery state scripts for the page's head.
+     *
+     * @var array
+     * @access private
+     */
+    var $_jquery_states = array();
+
+    /**
      * Array with all methods for the BODY's onload event.
      *
      * @var Array
@@ -963,8 +979,8 @@ class midcom_application {
 
             if (!is_a($object,'midcom_db_topic'))
             {
-            	debug_add("Root topic missing.", MIDCOM_LOG_ERROR);
-            	$this->generate_error(MIDCOM_ERRCRIT, "Root topic missing.");
+                debug_add("Root topic missing.", MIDCOM_LOG_ERROR);
+                $this->generate_error(MIDCOM_ERRCRIT, "Root topic missing.");
             }
 
             $path = $object->component;
@@ -2527,13 +2543,46 @@ class midcom_application {
      * @see midcom_application::print_jscripts();
      * @see midcom_application::print_jsonload();
      */
-    function add_jscript($script, $defer = "") {
+    function add_jscript($script, $defer = "", $prepend = false) {
 
         $js_call = '<script type="text/javascript" '. $defer . '>' . "\n";
         $js_call .= trim($script) . "\n";
         $js_call .= "</script>\n";
-        $this->_jshead[] = $js_call;
+        if ($prepend)
+        {
+            $this->_prepend_jshead[] = $js_call;            
+        }
+        else
+        {
+            $this->_jshead[] = $js_call;
+        }
     }
+
+    /**
+     * Register JavaScript snippets to JQuery states.
+     *
+     * This allows MidCOM components to register JavaScript code
+     * to the Jquery states.
+     * Possible ready states: document.ready
+     *
+     * @param string $script    The code to be included in the state.
+     * @param string $state    The state where to include the code to. Defaults to document.ready
+     * @see midcom_application::print_jquery_statuses();
+     */
+    function add_jquery_state_script($script, $state = "document.ready")
+    {
+        $js_call = "\n" . trim($script) . "\n";
+
+        if (!isset($this->_jquery_states[$state]))
+        {
+            $this->_jquery_states[$state] = $js_call;
+        }
+        else
+        {
+            $this->_jquery_states[$state] .= $js_call;
+        }
+    }
+
     /**
      * Register some object tags to be added to the head element.
      *
@@ -2761,6 +2810,13 @@ class midcom_application {
      * @see midcom_application::add_jscript();
      */
     function print_head_elements() {
+        if (!empty($this->_prepend_jshead))
+        {
+            foreach ($this->_prepend_jshead as $js_call)
+            {
+                echo $js_call;
+            }           
+        }
         echo $this->_link_head;
         echo $this->_object_head;
         echo $this->_style_head;
@@ -2769,6 +2825,39 @@ class midcom_application {
         {
             echo $js_call;
         }
+        $this->print_jquery_statuses();
+    }
+
+    /**
+     * Echo the jquery statuses
+     * This function echos the scripts added by the add_jquery_state_script
+     * method.
+     *
+     * This method is called from print_head_elements method.
+     *
+     * @see midcom_application::add_jquery_state_script
+     * @see midcom_application::print_head_elements
+     */
+    function print_jquery_statuses()
+    {
+        if (empty($this->_jquery_states))
+        {
+            return;
+        }
+        
+        echo '<script type="text/javascript">' . "\n";
+        
+        foreach ($this->_jquery_states as $status => $scripts)
+        {
+            $status_parts = explode('.',$status);
+            $status_target = $status_parts[0];
+            $status_method = $status_parts[1];
+            echo "\n" . '$j(' . $status_target . ').' . $status_method . '(function() {'."\n";
+            echo $scripts;
+            echo "\n" . '});' . "\n";           
+        }
+
+        echo '</script>' . "\n";
     }
 
     /**
