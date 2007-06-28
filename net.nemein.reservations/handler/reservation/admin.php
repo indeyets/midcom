@@ -290,7 +290,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
         
         $this->_event->require_do('midgard:delete');
         
-        $data['dependencies'] = true;
+        $data['dependencies'] = false;
         
         // If repeats are set with net.nemein.repeathandler, events should
         if (   $this->_event->get_parameter('net.nemein.repeathandler', 'master_guid')
@@ -304,6 +304,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
                 $qb->add_constraint('parameter.value', '=', $guid);
                 
                 $results = $qb->execute_unchecked();
+                $data['dependant_events'] = $results;
             }
             else
             {
@@ -319,6 +320,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
                 {
                     $results[] = new org_openpsa_calendar_event($parameter->oid);
                 }
+                $data['dependant_events'] = $results;
             }
             
             // Dependencies found, block deleting

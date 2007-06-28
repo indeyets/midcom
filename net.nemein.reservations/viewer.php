@@ -30,7 +30,7 @@ class net_nemein_reservations_viewer extends midcom_baseclasses_components_reque
         /*  */
         $this->_request_switch['config'] = array
         (
-            'handler' => array('net_nemein_reservations_handler_configuration', 'configdm'),
+            'handler' => array('midcom_core_handler_configdm', 'configdm'),
             'schemadb' => 'file:/net/nemein/reservations/config/schemadb_config.inc',
             'schema' => 'config',
             'fixed_args' => array('config'),
