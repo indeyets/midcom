@@ -6,6 +6,10 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-06-29 adrenalin
+  - Added support for automatically approving memberships and groups after sorting
+  - Fixed sorting of subgrouped personnel
+
 2007-06-21 adrenalin
   - Added support for creating and editing user account details
 

@@ -478,6 +478,13 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
             case 'sorted and grouped':
                 $this->_load_datamanager_for_groups();
                 $this->_helper = new net_nemein_personnel_sorted_groups($this->_config->get('group'), true);
+                
+                // Show multiple group memberships for a single person if defined in configuration
+                if ($this->_config->get('allow_multiple_memberships'))
+                {
+                    $this->_helper->exclusive = false;
+                }
+                
                 $this->_persons = $this->_helper->get_sorted_members();
                 break;
                 

@@ -295,4 +295,6 @@ Sähköpostin lähettäminen epäonnistui
 Sähköposti lähetetty
 ---STRINGEND
 
- 
+---STRING approve changes automatically
+Hyväksy muutokset automaattisesti
+---STRINGEND

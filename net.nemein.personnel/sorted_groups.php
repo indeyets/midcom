@@ -27,9 +27,26 @@ class net_nemein_personnel_sorted_groups
      * List of groups
      * 
      * @access private
-     * @var mixed Array containing midcom_db_group objects
+     * @var Array containing midcom_db_group objects
      */
     var $groups = array();
+    
+    /**
+     * List of ids of persons already found
+     * 
+     * @access private
+     * @var Array
+     */
+    var $ids = array();
+    
+    /**
+     * Switch to determine if the persons should belong exclusively to some group (true)
+     * or if they can belong to many groups at the same time (false)
+     * 
+     * @access public
+     * @var boolean
+     */
+    var $exclusive = true;
     
     /**
      * Simple constructor
@@ -51,6 +68,12 @@ class net_nemein_personnel_sorted_groups
         }
     }
     
+    /**
+     * Get sorted list of groups
+     *
+     * @access private
+     * return Array
+     */
     function _get_groups()
     {
         // Temporary storage for sorting by score
@@ -92,7 +115,7 @@ class net_nemein_personnel_sorted_groups
      * 
      * array[<midcom_db_topic ID>][<midcom_db_member GUID>] = <midcom_db_person OBJECT>
      * 
-     * @return mixed Array
+     * @return Array
      */
     function get_sorted_members()
     {
@@ -103,20 +126,19 @@ class net_nemein_personnel_sorted_groups
             $this->_get_groups();
         }
         
-        $qb = midcom_db_member::new_query_builder();
-        $qb->add_constraint('gid', '=', $this->master_group->id);
         if (version_compare(mgd_version(), '1.8.2', '>='))
         {
-            $qb->add_order('metadata.score', 'DESC');
-            $qb->add_order('uid.lastname');
-            $qb->add_order('uid.firstname');
-            
-            $results = $qb->execute_unchecked();
+            return $this->modern_query_builder();
         }
         else
         {
+            $qb = midcom_db_member::new_query_builder();
+            $qb->add_constraint('gid', '=', $this->master_group->id);
+            
             $temp = array ();
-            foreach ($qb->execute_unchecked() as $membership)
+            $memberships = $qb->execute_unchecked();
+            
+            foreach ($memberships as $membership)
             {
                 $temp[$membership->guid] = $membership->get_parameter('net.nemein.personnel', 'score');
             }
@@ -177,6 +199,54 @@ class net_nemein_personnel_sorted_groups
             // Place the membership under the grouped
             $result = $qb->execute_unchecked();
             $members[$result[0]->gid][$result[0]->guid] = new midcom_db_person($result[0]->uid);
+        }
+        
+        return $members;
+    }
+    
+    /**
+     * Use modern query builder constraints to get the list of members
+     * 
+     * Returned array will be formed like this
+     * 
+     * array[<midcom_db_topic ID>][<midcom_db_member GUID>] = <midcom_db_person OBJECT>
+     * 
+     * @return mixed Array
+     */
+    function modern_query_builder()
+    {
+        $members = array();
+        
+        // Get members of each group
+        foreach ($this->groups as $group)
+        {
+            // Initialize group specific memberships list
+            $members[$group->id] = array();
+            
+            // Initialize the query builder
+            $qb = midcom_db_member::new_query_builder();
+            $qb->add_constraint('gid', '=', $group->id);
+            $qb->add_order('metadata.score', 'DESC');
+            $qb->add_order('uid.lastname');
+            $qb->add_order('uid.firstname');
+            
+            $memberships = $qb->execute_unchecked();
+            
+            // Get the group specific results
+            foreach ($memberships as $membership)
+            {
+                // Skip already selected members if applicable
+                if (   $this->exclusive
+                    && in_array($membership->uid, $this->ids))
+                {
+                    continue;
+                }
+                
+                $this->ids[] = $membership->uid;
+                
+                // Get the person record
+                $members[$group->id][$membership->guid] = new midcom_db_person($membership->uid);
+            }
         }
         
         return $members;

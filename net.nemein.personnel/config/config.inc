@@ -23,6 +23,9 @@
 // Show unsorted, manually arranged persons
 'show_unsorted' => true,
 
+// Show the person in multiple groups
+'allow_multiple_memberships' => false,
+
 // Navigation configuration
 'display_in_navigation' => 'empty',
 
