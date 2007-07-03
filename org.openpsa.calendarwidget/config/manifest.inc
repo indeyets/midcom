@@ -2,7 +2,7 @@
 'purecode' => true,
 'privileges' => array(),
 'class_definitions' => array (),
-'version' => '2.1.3',
+'version' => '2.1.4',
 'state' => 'stable',
 'package.xml' => array
 (
@@ -26,6 +26,12 @@
         (
             'name' => 'Arttu Manninen',
             'email' => 'arttu.manninen@protie.fi',
+            'role' => 'lead',
+        ),
+        'netblade' => array
+        (
+            'name' => 'Oskari Kokko',
+            'email' => 'oskari.kokko@iki.fi',
             'role' => 'lead',
         ),
     ),
