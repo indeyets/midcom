@@ -412,7 +412,7 @@ class fi_protie_navigation
                 $component = str_replace('.', '_', $item[MIDCOM_NAV_COMPONENT]);
             }
             
-            $this->_display_element($item, $indent, $active, $selected, $component, $url_name_to_class, $first_last, $has_childs));
+            $this->_display_element($item, $indent, $active, $selected, $component, $url_name_to_class, $first_last, $has_childs);
         }
         echo "{$indent}</ul>\n";
     }
