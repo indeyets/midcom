@@ -108,7 +108,12 @@ class net_nemein_personnel_handler_account extends midcom_baseclasses_components
             $this->_process_email();
         }
         
-        $this->_errors[] = 'user account updated successfully';
+        // Show confirmation for the user
+        $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('net.nemein.personnel'), sprintf($this->_l10n->get('user account updated successfully'), $this->_person->name));
+        
+        // Relocate back to page
+        $_MIDCOM->relocate(net_nemein_personnel_viewer::get_url($this->_person));
+        // This will exit.
     }
     
     /**
@@ -149,10 +154,9 @@ class net_nemein_personnel_handler_account extends midcom_baseclasses_components
             $this->_errors[] = 'sending of the email failed';
             return false;
         }
-        else
-        {
-            $this->_errors[] = 'email sent';
-        }
+
+        // Show confirmation for the user
+        $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('net.nemein.personnel'), sprintf($this->_l10n->get('password sent by email to the user'), $this->_person->name));
         
         return true;
     }

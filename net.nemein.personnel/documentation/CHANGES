@@ -8,6 +8,7 @@ Legend:
 
 2007-07-04 adrenalin
   - Fixed some minor inconsistencies in breadcrumb
+  - Improved usability by implementing UI messages
 
 2007-07-02 adrenalin
   - Added configuration option for hiding empty groups from multiple group listing

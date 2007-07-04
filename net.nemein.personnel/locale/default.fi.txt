@@ -295,4 +295,27 @@ Sähköpostin lähettäminen epäonnistui
 Sähköposti lähetetty
 ---STRINGEND
 
- 
+---STRING order saved
+Järjestys tallennettu!
+---STRINGEND
+
+---STRING person %s saved
+Henkilö '%s tallennettu
+---STRINGEND
+
+---STRING person %s created
+Henkilö '%s' luotu
+---STRINGEND
+
+---STRING password sent by email to the user
+Salasana lähetetty sähköpostitse käyttäjälle
+---STRINGEND
+
+---STRING group %s saved
+Ryhmä '%s' tallennettu
+---STRINGEND
+
+---STRING user account updated successfully
+Käyttäjätili päivitetty
+---STRINGEND
+

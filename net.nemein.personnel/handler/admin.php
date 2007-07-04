@@ -188,6 +188,9 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
                 $indexer =& $_MIDCOM->get_service('indexer');
                 net_nemein_personnel_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
 
+                // Show confirmation for the user
+                $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('net.nemein.personnel'), sprintf($this->_l10n->get('person %s saved'), $this->_person->name));
+                
                 // *** FALL-THROUGH ***
 
             case 'cancel':
@@ -394,6 +397,9 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
                 $indexer =& $_MIDCOM->get_service('indexer');
                 net_nemein_personnel_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
 
+                // Show confirmation for the user
+                $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('net.nemein.personnel'), sprintf($this->_l10n->get('person %s created'), $this->_person->name));
+
                 $_MIDCOM->relocate(net_nemein_personnel_viewer::get_url($this->_person));
                 // This will exit.
 
@@ -457,6 +463,9 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
                 // Index the group
                 $indexer =& $_MIDCOM->get_service('indexer');
                 net_nemein_personnel_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
+
+                // Show confirmation for the user
+                $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('net.nemein.personnel'), sprintf($this->_l10n->get('group %s saved'), $this->_group->official));
 
                 $_MIDCOM->relocate("group/{$args[0]}/");
                 // This will exit.

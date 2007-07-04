@@ -295,3 +295,27 @@ Sending of the email failed
 Email sent
 ---STRINGEND
 
+---STRING order saved
+Order saved!
+---STRINGEND
+
+---STRING person %s saved
+Person '%s' saved
+---STRINGEND
+
+---STRING person %s created
+Person '%s' created
+---STRINGEND
+
+---STRING password sent by email to the user
+Password sent by email to the user
+---STRINGEND
+
+---STRING group %s saved
+Group '%s' saved
+---STRINGEND
+
+---STRING user account updated successfully
+User account updated successfully
+---STRINGEND
+

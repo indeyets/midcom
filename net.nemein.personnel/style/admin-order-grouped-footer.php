@@ -1,10 +1,21 @@
-<?php
-// $data =& $_MIDCOM->get_custom_context_data('request_data');
-?>
     </ul>
     </div>
-    <input type="submit" name="f_submit" value="<?php echo $_MIDCOM->i18n->get_string('save', 'midcom'); ?>" />
-    <input type="submit" name="f_cancel" value="<?php echo $_MIDCOM->i18n->get_string('cancel', 'midcom'); ?>" />
+<?php
+if ($data['can_approve'])
+{
+?>
+    <div class="approvals">
+        <label for="auto_approve">
+            <input type="checkbox" id="auto_approve" name="auto_approve" value="1" /> <?php echo $data['l10n']->get('approve changes automatically'); ?>
+        </label>
+<?php
+}
+?>
+    </div>
+    <div class="form_toolbar">
+        <input type="submit" class="save" name="f_submit" value="<?php echo $_MIDCOM->i18n->get_string('save', 'midcom'); ?>" />
+        <input type="submit" class="cancel" name="f_cancel" value="<?php echo $_MIDCOM->i18n->get_string('cancel', 'midcom'); ?>" />
+    </div>
 </form>
 <script type="text/javascript">
     // <!--
