@@ -1,5 +1,5 @@
 'name' => 'fi.protie.navigation',
-'version' => '1.1.0beta1',
+'version' => '1.1.1beta1',
 'state' => 'beta',
 'purecode' => true,
 'package.xml' => Array
@@ -18,6 +18,12 @@
         (
             'name' => 'Tarjei Huse',
             'email' => 'tarjei@nu.no',
+            'role' => 'lead',
+        ),
+        'netblade' => Array
+        (
+            'name' => 'Oskari Kokko',
+            'email' => 'oskari.kokko@iki.fi',
             'role' => 'lead',
         ),
     ),

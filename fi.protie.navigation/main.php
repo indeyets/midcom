@@ -166,6 +166,54 @@ class fi_protie_navigation
      */
     var $component_name_to_class = false;
     
+     /**
+     * Add first and last-class names to list item ul class name
+     * 
+     * @access public
+     * @var boolean
+     */
+    var $first_and_last_to_class = false;
+    
+    /**
+     * CSS class for first
+     * 
+     * @access public
+     * @var string
+     */
+    var $css_first = 'first';
+    
+    /**
+     * CSS class for last
+     * 
+     * @access public
+     * @var string
+     */
+    var $css_last = 'last';
+    
+    /**
+     * CSS class for first and last together
+     * 
+     * @access public
+     * @var string
+     */
+    var $css_first_last = 'first_last';
+    
+    /**
+     * Check if item has childs and if so, add childs-class to list item ul class name
+     * 
+     * @access public
+     * @var boolean
+     */
+    var $has_childs_to_class = false;
+    
+    /**
+     * CSS class for has childs
+     * 
+     * @access public
+     * @var string
+     */
+    var $css_has_childs = 'childs';
+    
     /**
      * CSS class for nodes
      * 
@@ -308,21 +356,50 @@ class fi_protie_navigation
         }
         
         echo "{$indent}<ul class=\"{$this->css_list_style} node-{$id}\"{$element_id}>\n";
-        
+
+        $item_count = count($children);
+        $item_counter = 0;
+
         // Draw each child element
         foreach ($children as $child)
         {
+            $item_counter++;
+            
             $selected = '';
             $active = '';
             $component = '';
             $url_name_to_class = '';
-            
+            $first_last = '';
+            $has_childs = '';
+
+            if($item_counter == 1 && $item_counter == $item_count)
+            {
+                $first_last = $this->css_first_last;
+            }
+            elseif($item_counter == 1)
+            {
+                $first_last = $this->css_first;
+            }
+            elseif($item_counter == $item_count)
+            {
+                $first_last = $this->css_last;
+            }
+
             $item = $this->_nap->get_node($child);
             
             if (   $item[MIDCOM_NAV_ID] === $this->_nap->get_current_node()
                 && !$this->_nap->get_current_leaf())
             {
                 $active = $this->css_active;
+            }
+            
+            if($this->has_childs_to_class)
+            {
+                $childs = $this->_nap->list_nodes($child[MIDCOM_NAV_ID]);
+                if(count($childs)>0)
+                {
+                    $has_childs = $this->css_has_childs;
+                }
             }
             
             if (in_array($item[MIDCOM_NAV_ID], $this->node_path))
@@ -335,7 +412,7 @@ class fi_protie_navigation
                 $component = str_replace('.', '_', $item[MIDCOM_NAV_COMPONENT]);
             }
             
-            $this->_display_element($item, $indent, $active, $selected, $component, $url_name_to_class);
+            $this->_display_element($item, $indent, $active, $selected, $component, $url_name_to_class, $first_last, $has_childs));
         }
         echo "{$indent}</ul>\n";
     }
@@ -372,15 +449,44 @@ class fi_protie_navigation
         }
         
         echo "{$indent}<ul class=\"{$this->css_list_style} node-{$id}\"{$element_id}>\n";
-        
+
+        $item_count = count($children);
+        $item_counter = 0;
+
         // Draw each child element
         foreach ($children as $child)
         {
+            $item_counter++;
+            
             $selected = '';
             $active = '';
             $component = '';
             $url_name_to_class = '';
+            $first_last = '';
+            $has_childs = '';
             
+            if($item_counter == 1 && $item_counter == $item_count)
+            {
+                $first_last = $this->css_first_last;
+            }
+            elseif($item_counter == 1)
+            {
+                $first_last = $this->css_first;
+            }
+            elseif($item_counter == $item_count)
+            {
+                $first_last = $this->css_last;
+            }
+            
+            if($this->has_childs_to_class)
+            {
+                $childs = $this->_nap->list_child_elements($child[MIDCOM_NAV_ID]);
+                if(is_array($childs) && count($childs)>0)
+                {
+                    $has_childs = $this->css_has_childs;
+                }
+            }
+
             if ($child[MIDCOM_NAV_TYPE] === 'node')
             {
                 // If the listing of nodes is set to false, skip this item and proceed to the next
@@ -419,13 +525,13 @@ class fi_protie_navigation
                 }
             }
             
-            $this->_display_element($item, $indent, $active, $selected, $component, $url_name_to_class);
+            $this->_display_element($item, $indent, $active, $selected, $component, $url_name_to_class, $first_last, $has_childs);
         }
         
         echo "{$indent}</ul>\n";
     }
     
-    function _display_element($item, $indent, $active, $selected, $component, $url_name_to_class)
+    function _display_element($item, $indent, $active, $selected, $component, $url_name_to_class, $first_last, $has_childs)
     {
         // Check if user has requested URL name to be included in class
         if ($this->url_name_to_class)
@@ -452,6 +558,18 @@ class fi_protie_navigation
         if ($url_name_to_class !== '')
         {
             $css_class .= ' '.$url_name_to_class;
+        }
+        
+        // Check if the first or last is supposed to be drawn
+        if ($this->first_and_last_to_class && $first_last !== '')
+        {
+            $css_class .= ' '.$first_last;
+        }
+        
+         // Check if the has childs is supposed to be drawn
+        if ($this->has_childs_to_class && $has_childs !== '')
+        {
+            $css_class .= ' '.$has_childs;
         }
         
         // Add information about the object's translation status
