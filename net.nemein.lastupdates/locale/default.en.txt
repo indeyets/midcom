@@ -1,0 +1,41 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING could not find any documents modified since %s
+Could not find any documents modified since %s
+---STRINGEND
+
+---STRING fetch list
+Fetch list
+---STRINGEND
+
+---STRING last month
+Last month
+---STRINGEND
+
+---STRING last week
+Last week
+---STRINGEND
+
+---STRING list documents modified since
+List documents modified since
+---STRINGEND
+
+---STRING modified since %s
+Modified since %s
+---STRINGEND
+
+---STRING updated on %s
+Updated on %s
+---STRINGEND
+
+---STRING updated on %s by %s
+Updated on %s by %s
+---STRINGEND
+
+---STRING net.nemein.lastupdates
+Latest updates
+---STRINGEND
+

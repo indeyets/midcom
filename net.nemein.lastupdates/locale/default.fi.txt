@@ -1,0 +1,41 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING could not find any documents modified since %s
+%s jälkeen muokattuja dokumenttejä ei löytynyt
+---STRINGEND
+
+---STRING fetch list
+Hae lista
+---STRINGEND
+
+---STRING last month
+Viime kuu
+---STRINGEND
+
+---STRING last week
+Viime viikko
+---STRINGEND
+
+---STRING list documents modified since
+Näytä dokumentit muokattu jälkeen
+---STRINGEND
+
+---STRING modified since %s
+Muokattu %s jälkeen
+---STRINGEND
+
+---STRING updated on %s
+Päivitetty %s
+---STRINGEND
+
+---STRING updated on %s by %s
+Päivitetty %s %s:n toimesta
+---STRINGEND
+
+---STRING net.nemein.lastupdates
+Viimeksi päivitetty
+---STRINGEND
+
