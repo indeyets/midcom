@@ -203,6 +203,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
         if ($handler === 'config')
         {
             $this->_get_members();
+            $this->_get_schemadbs();
         }
         
         return true;
@@ -246,6 +247,20 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
         
         $GLOBALS['net_nemein_personnel_members'] = $members;
     }
+
+    function _get_schemadbs()
+    {
+        $GLOBALS['net_nemein_personnel_schemadbs'] = array_merge
+        (
+            Array
+            (
+                '' => $this->_l10n->get('default setting')
+            ),
+            $this->_config->get('schemadbs')
+        );
+    }
+
+
 
     /**
      * Populates the node toolbar depending on the users rights.

@@ -31,12 +31,15 @@
             'location' => 'config',
             'config_domain' => 'net.nemein.personnel',
             'config_key' => 'schemadb',
+			'widget' => 'select',
+   			'widget_select_choices' => $GLOBALS['net_nemein_personnel_schemadbs'],
             'start_fieldgroup' => array
             (
                 'title' => 'advanced schema and data settings'
             ),
             'end_fieldgroup' => '',
         ),
+
         
         'sort_order' => array
         (
