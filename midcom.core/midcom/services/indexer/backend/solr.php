@@ -109,9 +109,9 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
     {
         if ($filter !== null) 
         {
-            if ($filter->type = 'datefilter') 
+            if ($filter->type == 'datefilter') 
             {
-                $format = "o-m-dTH:i:s"  ; //1995-12-31T23:59:59Z
+                $format = "Y-m-dTH:i:s"  ; //1995-12-31T23:59:59Z
                 $query .= sprintf(" AND %s:[%s TO %s]", 
                                     $filter->get_field(), 
                                     gmdate($format, $filter->get_start()) . "Z", 
