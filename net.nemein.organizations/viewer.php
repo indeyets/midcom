@@ -193,7 +193,7 @@ class net_nemein_organizations_viewer extends midcom_baseclasses_components_requ
      */
     function index(&$dm, &$indexer, $topic)
     {
-        if (is_object($topic))
+        if (!is_object($topic))
         {
             $tmp = new midcom_db_topic($topic);
             if (! $tmp)
@@ -210,14 +210,11 @@ class net_nemein_organizations_viewer extends midcom_baseclasses_components_requ
 
         $nav = new midcom_helper_nav();
         $node = $nav->get_node($topic->id);
-        $author = $_MIDCOM->auth->get_user($dm->storage->object->metadata->author);
 
         $document = $indexer->new_document($dm);
         $document->topic_guid = $topic->guid;
         $document->topic_url = $node[MIDCOM_NAV_FULLURL];
-        $document->author = $author->name;
-        $document->created = $dm->storage->object->metadata->created;
-        $document->edited = $dm->storage->object->metadata->revised;
+        $document->read_metadata_from_object($dm->storage->object);
         $document->component = $topic->component;
         $indexer->index($document);
     }

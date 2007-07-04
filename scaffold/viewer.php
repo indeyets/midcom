@@ -57,7 +57,7 @@ class ${module_class}_viewer extends midcom_baseclasses_components_request
      */
     function index(&$dm, &$indexer, $topic)
     {
-        if (is_object($topic))
+        if (!is_object($topic))
         {
             $tmp = new midcom_db_topic($topic);
             if (! $tmp)
@@ -80,9 +80,7 @@ class ${module_class}_viewer extends midcom_baseclasses_components_request
         $document->topic_guid = $topic->guid;
         $document->component = $topic->component;
         $document->topic_url = $node[MIDCOM_NAV_FULLURL];
-        $document->author = $author->name;
-        $document->created = $dm->storage->object->created;
-        $document->edited = $dm->storage->object->revised;
+        $document->read_metadata_from_object($dm->storage->object);
         $indexer->index($document);
     }
 

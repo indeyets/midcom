@@ -341,7 +341,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
      */
     function index(&$dm, &$indexer, $topic)
     {
-        if (is_object($topic))
+        if (!is_object($topic))
         {
             $tmp = new midcom_db_topic($topic);
             if (! $tmp)
@@ -358,15 +358,12 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
 
         $nav = new midcom_helper_nav();
         $node = $nav->get_node($topic->id);
-        $author = $_MIDCOM->auth->get_user($dm->storage->object->creator);
 
         $document = $indexer->new_document($dm);
         $document->topic_guid = $topic->guid;
         $document->component = $topic->component;
         $document->topic_url = $node[MIDCOM_NAV_FULLURL];
-        $document->author = $author->name;
-        $document->created = $dm->storage->object->created;
-        $document->edited = $dm->storage->object->revised;
+        $document->read_metadata_from_object($dm->storage->object);
         $indexer->index($document);
     }
 

@@ -203,7 +203,7 @@ class net_nehmer_branchenbuch_entry extends __net_nehmer_branchenbuch_entry
      */
     function index(&$dm, &$indexer, $topic)
     {
-        if (is_object($topic))
+        if (!is_object($topic))
         {
             $tmp = new midcom_db_topic($topic);
             if (! $tmp)
@@ -221,13 +221,14 @@ class net_nehmer_branchenbuch_entry extends __net_nehmer_branchenbuch_entry
         $nav = new midcom_helper_nav();
         $node = $nav->get_node($topic->id);
         $entry = $dm->storage->object;
-        $author = $_MIDCOM->auth->get_user($entry->account);
 
         $document = $indexer->new_document($dm);
         $document->security = 'component';
         $document->component = 'net.nehmer.branchenbuch';
         $document->topic_guid = $topic->guid;
         $document->topic_url = $node[MIDCOM_NAV_FULLURL];
+        $document->read_metadata_from_object($dm->storage->object);
+        $author = $_MIDCOM->auth->get_user($entry->account);
         $document->author = $author->name;
         $document->created = time();
         $document->edited = time();

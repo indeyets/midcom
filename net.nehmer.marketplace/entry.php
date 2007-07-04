@@ -156,7 +156,7 @@ class net_nehmer_marketplace_entry extends __net_nehmer_marketplace_entry
      */
     function index(&$dm, &$indexer, $topic)
     {
-        if (is_object($topic))
+        if (!is_object($topic))
         {
             $tmp = new midcom_db_topic($topic);
             if (! $tmp)
@@ -173,15 +173,15 @@ class net_nehmer_marketplace_entry extends __net_nehmer_marketplace_entry
 
         $nav = new midcom_helper_nav();
         $node = $nav->get_node($topic->id);
-        $author = $_MIDCOM->auth->get_user($dm->storage->object->account);
 
         $document = $indexer->new_document($dm);
         $document->security = 'component';
         $document->component = 'net.nehmer.marketplace';
         $document->topic_guid = $topic->guid;
         $document->topic_url = $node[MIDCOM_NAV_FULLURL];
+        $document->read_metadata_from_object($dm->storage->object);
+        $author = $_MIDCOM->auth->get_user($dm->storage->object->account);
         $document->author = $author->name;
-        $document->created = $dm->storage->object->published;
         $document->edited = time();
         $type = $dm->storage->object->ask ? 'ask' : 'bid';
         $document->add_keyword('_type', $type);

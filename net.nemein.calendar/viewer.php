@@ -317,7 +317,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
      */
     function index(&$dm, &$indexer, $topic)
     {
-        if (is_object($topic))
+        if (!is_object($topic))
         {
             $tmp = new midcom_db_topic($topic);
             if (! $tmp)
@@ -334,35 +334,12 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
 
         $nav = new midcom_helper_nav();
         $node = $nav->get_node($topic->id);
-        $author = false;
-        if (   isset($dm->storage->object->metadata->authors)
-            && !empty($dm->storage->object->metadata->authors))
-        {
-            $authors = explode('|', $dm->storage->object->metadata->authors);
-            if (is_array($authors))
-            {
-                foreach ($authors as $author_guid)
-                {
-                    if (empty($author_guid))
-                    {
-                        continue;
-                    }
-                    $author = $_MIDCOM->auth->get_user($author_guid);
-                    break;
-                }
-            }
-        }
 
         $document = $indexer->new_document($dm);
         $document->topic_guid = $topic->guid;
         $document->topic_url = $node[MIDCOM_NAV_FULLURL];
         $document->component = $topic->component;
-        if (!empty($author))
-        {
-            $document->author = $author->name;
-        }
-        $document->created = $dm->storage->object->metadata->created;
-        $document->edited = $dm->storage->object->metadata->revised;
+        $document->read_metadata_from_object($dm->storage->object);
         $indexer->index($document);
     }
 

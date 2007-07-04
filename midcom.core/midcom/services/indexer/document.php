@@ -711,6 +711,169 @@ class midcom_services_indexer_document
             $this->type .= "_{$type}";
         }
     }
+
+    /**
+     * Tries to resolve created,revised,author,editor and creator for the document from Midgard object
+     *
+     * @param midgard_object $object object to use as source for the info
+     */
+    function read_metadata_from_object(&$object)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Called for {$object->guid} (" . get_class($object) . ')');
+        switch (true)
+        {
+            // Published is set to non-empty value, use it as creation data
+            case (   isset($object->metadata->published)
+                  && !empty($object->metadata->published)
+                  && !preg_match('/0{1,4}-0{1,2}0{1,2}\s+0{1,2}:0{1,2}:0{1,2}/', $object->metadata->published)):
+                $this->created = $this->_read_metadata_from_object_to_unixtime($object->metadata->published);
+                debug_add("Set \$this->created to {$this->created} from \$object->metadata->published ({$object->metadata->published})");
+                break;
+            case (isset($object->metadata->created)):
+                $this->created = $this->_read_metadata_from_object_to_unixtime($object->metadata->created);
+                debug_add("Set \$this->created to {$this->created} from \$object->metadata->created ({$object->metadata->created})");
+                break;
+            case (isset($object->created)):
+                $this->created = $this->_read_metadata_from_object_to_unixtime($object->created);
+                debug_add("Set \$this->created to {$this->created} from \$object->created ({$object->created})");
+                break;
+        }
+        // Revised
+        if (isset($object->metadata->revised))
+        {
+            $this->edited = $this->_read_metadata_from_object_to_unixtime($object->metadata->revised);
+            debug_add("Set \$this->edited to {$this->edited} from \$object->metadata->revised ({$object->metadata->revised})");
+        }
+        else if (isset($object->revised))
+        {
+            $this->edited = $this->_read_metadata_from_object_to_unixtime($object->revised);
+            debug_add("Set \$this->edited to {$this->edited} from \$object->revised ({$object->revised})");
+        }
+        // Heuristics to determine author
+        switch (true)
+        {
+            case (   isset($object->metadata->authors)
+                  && !empty($object->metadata->authors)):
+                $this->author = $this->_read_metadata_from_object_to_authorname($object->metadata->authors);
+                debug_add("Set \$this->author to '{$this->author}' from \$object->metadata->authors ({$object->metadata->authors})");
+                break;
+            case (   isset($object->author)
+                  && !empty($object->author)):
+                $this->author = $this->_read_metadata_from_object_to_authorname($object->author);
+                debug_add("Set \$this->author to '{$this->author}' from \$object->author ({$object->author})");
+                break;
+            case (   isset($object->metadata->creator)
+                  && !empty($object->metadata->creator)):
+                $this->author = $this->_read_metadata_from_object_to_authorname($object->metadata->creator);
+                debug_add("Set \$this->author to '{$this->author}' from \$object->metadata->creator ({$object->metadata->creator})");
+                break;
+            case (   isset($object->creator)
+                  && !empty($object->creator)):
+                $this->author = $this->_read_metadata_from_object_to_authorname($object->creator);
+                debug_add("Set \$this->author to '{$this->author}' from \$object->creator ({$object->creator})");
+                break;
+        }
+        // Creator
+        if (isset($object->metadata->creator))
+        {
+            $this->creator = $this->_read_metadata_from_object_get_person_cached($object->metadata->creator);
+            debug_add("Set \$this->creator from \$object->metadata->creator ({$object->metadata->creator})");
+        }
+        else if (isset($object->creator))
+        {
+            $this->creator = $this->_read_metadata_from_object_get_person_cached($object->creator);
+            debug_add("Set \$this->creator from \$object->creator ({$object->creator})");
+        }
+        // Editor
+        if (isset($object->metadata->revisor))
+        {
+            $this->editor = $this->_read_metadata_from_object_get_person_cached($object->metadata->revisor);
+            debug_add("Set \$this->editor from \$object->metadata->revisor ({$object->metadata->revisor})");
+        }
+        else if (isset($object->revisor))
+        {
+            $this->editor = $this->_read_metadata_from_object_get_person_cached($object->revisor);
+            debug_add("Set \$this->editor from \$object->revisor ({$object->revisor})");
+        }
+        
+        debug_pop();
+    }
+
+    /**
+     * Heuristics to determine how to convert given timestamp to local unixtime
+     *
+     * @see $this->read_metadata_from_object
+     * @param string $stamp ISO or unix datetime
+     * @return unixtime
+     */
+    function _read_metadata_from_object_to_unixtime($stamp)
+    {
+        if (preg_match('/[0-9]{4}-[0-9]{2}-[0-9]{2}/', $stamp))
+        {
+            // ISO Datetime
+            return @strtotime($stamp);
+        }
+        // Unix timestamp
+        return (int)$stamp;
+    }
+
+    /**
+     * Get person by given ID, caches results.
+     *
+     * @see $this->read_metadata_from_object
+     * @param string $id GUID or ID to get person for
+     * @return midcom_db_person object
+     */
+    function _read_metadata_from_object_get_person_cached($id)
+    {
+        static $cache = array();
+        if (isset($cache[$id]))
+        {
+            return $cache[$id];
+        }
+        $person =  new midcom_db_person($id);
+        if (!$person)
+        {
+            return false;
+        }
+        $cache[$person->guid] = $person;
+        $cache[$person->id] =& $cache[$person->guid];
+        // In case the given $id is not id or GUID but something else than can be resolved
+        $cache[$id] =& $cache[$person->guid];
+        return $cache[$id];
+    }
+
+    /**
+     * Gets person name for given ID (in case it's imploded_wrapped of multiple GUIDs it will use the first)
+     *
+     * @see $this->read_metadata_from_object
+     * @param string $id GUID or ID to get person for
+     * @return string $author->name
+     */
+    function _read_metadata_from_object_to_authorname($id)
+    {
+        // Check for imploded_wrapped DM2 select storage.
+        if (strpos($id, '|') !== false)
+        {
+            $id_arr = explode('|', $id);
+            // Find first non-empty value in the array and use that
+            foreach ($id_arr as $id_val)
+            {
+                if (!empty($id_val))
+                {
+                    $id = $id_val;
+                    break;
+                }
+            }
+        }
+        $author = $_MIDCOM->auth->get_user($id);
+        if (!$author)
+        {
+            return '';
+        }
+        return $author->name;
+    }
 }
 
 

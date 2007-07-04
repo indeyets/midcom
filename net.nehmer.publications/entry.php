@@ -74,7 +74,7 @@ class net_nehmer_publications_entry extends __net_nehmer_publications_entry
      */
     function index(&$dm, &$indexer, $topic)
     {
-        if (is_object($topic))
+        if (!is_object($topic))
         {
             $tmp = new midcom_db_topic($topic);
             if (! $tmp)
@@ -96,8 +96,7 @@ class net_nehmer_publications_entry extends __net_nehmer_publications_entry
         $document->component = 'net.nehmer.publications';
         $document->topic_guid = $topic->guid;
         $document->topic_url = $node[MIDCOM_NAV_FULLURL];
-        $document->created = strtotime($this->metadata->created);
-        $document->edited = strtotime($this->metadata->revised);
+        $document->read_metadata_from_object($dm->storage->object);
         $indexer->index($document);
     }
 
