@@ -345,7 +345,8 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
                 "Failed to load the configured group '{$group}', cannot continue. Last Midgard error was: ". mgd_errstr());
             // This will exit.
         }
-
+        
+        // Create a new person
         $this->_person = new midcom_db_person();
         if (! $this->_person->create())
         {
@@ -356,7 +357,8 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
                 'Failed to create a new person, cannot continue. Last Midgard error was: '. mgd_errstr());
             // This will exit.
         }
-
+        
+        // Create a new membership
         $member = new midcom_db_member();
         $member->uid = $this->_person->id;
         $member->gid = $group->id;
@@ -423,6 +425,14 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
         midcom_show_style('admin-create');
     }
     
+    /**
+     * Handler for editing group details
+     * 
+     * @access public
+     * @param String $handler_id    ID of the request handler that requests the handler
+     * @param Array $args           Variable arguments passed for the method
+     * @param Array $data           Miscellaneous request data
+     */
     function _handler_editgroup($handler_id, $args, &$data)
     {
         $this->_group = new midcom_db_group($args[0]);
@@ -440,6 +450,7 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
         $this->_load_group_controller();
         $data['controller'] =& $this->_controller;
         
+        // Handle the form data
         switch ($this->_controller->process_form())
         {
             case 'save':
@@ -455,21 +466,49 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
                 // This will exit.
         }
         
-        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: " . sprintf($this->_l10n->get('edit group %s'), $this->_group->official));
+        // Set the active leaf
+        $this->_component_data['active_leaf'] = $this->_group->guid;
+        
+        if ($this->_group->official)
+        {
+            $data['name'] = $this->_group->official;
+        }
+        else
+        {
+            $data['name'] = $this->_group->name;
+        }
+        
+        // Bind to context
+        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: " . $this->_l10n->get('edit group'));
         $this->_view_toolbar->bind_to($data['group']);
         
+        // Set the breadcrumb
         $tmp = Array();
+        if (   $this->_config->get('display_in_navigation') !== 'groups'
+            && $this->_group->guid !== $this->_config->get('group'))
+        {
+            $tmp[] = Array
+            (
+                MIDCOM_NAV_URL => "group/{$this->_group->guid}/",
+                MIDCOM_NAV_NAME => $data['name'],
+            );
+        }
+        
         $tmp[] = Array
         (
             MIDCOM_NAV_URL => "admin/edit/group/{$this->_group->guid}/",
-            MIDCOM_NAV_NAME => sprintf($this->_l10n->get('edit group %s'), $this->_group->official),
+            MIDCOM_NAV_NAME => $this->_l10n->get('edit group'),
         );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
             
         return true;
     }
     
     /**
      * Shows the loaded article.
+     * 
+     * @param String $handler_id    ID of the request handler that requests the handler
+     * @param Array $data           Miscellaneous request data
      */
     function _show_editgroup ($handler_id, &$data)
     {

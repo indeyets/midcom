@@ -295,6 +295,3 @@ Sending of the email failed
 Email sent
 ---STRINGEND
 
----STRING approve changes automatically
-Approve changes automatically
----STRINGEND

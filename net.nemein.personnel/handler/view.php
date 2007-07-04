@@ -549,6 +549,13 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
                 continue;
             }
             
+            // Skip empty groups
+            if (    $this->_config->get('hide_empty_groups')
+                && count($persons) === 0)
+            {
+                continue;
+            }
+            
             $data['group'] = new midcom_db_group($group_id);
             $this->_dm_group->set_storage($data['group']);
             $data['datamanager'] =& $this->_dm_group;
@@ -718,15 +725,19 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
         
         $this->_view_toolbar->bind_to($data['group']);
         
+        // Set the breadcrumb
         switch ($this->_config->get('display_in_navigation'))
         {
             case 'groups':
                 $this->_component_data['active_leaf'] = $this->_group->guid;
-                $tmp[$this->_person->guid] = array
-                (
-                    MIDCOM_NAV_URL => "group/{$this->_person->guid}/{$this->_person->guid}/",
-                    MIDCOM_NAV_NAME => $this->_person->name,
-                );
+                if (isset($this->_person))
+                {
+                    $tmp[] = array
+                    (
+                        MIDCOM_NAV_URL => "group/{$this->_person->guid}/{$this->_person->guid}/",
+                        MIDCOM_NAV_NAME => $this->_person->name,
+                    );
+                }
                 break;
                 
             default:

@@ -6,6 +6,12 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-07-04 adrenalin
+  - Fixed some minor inconsistencies in breadcrumb
+
+2007-07-02 adrenalin
+  - Added configuration option for hiding empty groups from multiple group listing
+
 2007-06-29 adrenalin
   - Added support for automatically approving memberships and groups after sorting
   - Fixed sorting of subgrouped personnel

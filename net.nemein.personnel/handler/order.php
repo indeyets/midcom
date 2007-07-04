@@ -125,15 +125,6 @@ class net_nemein_personnel_handler_order extends midcom_baseclasses_components_h
                 {
                     debug_add("Update successful!");
                 }
-                
-                // Set the approval status
-                if (   $this->_topic->can_do('midgard:approve')
-                    && isset($_POST['auto_approve']))
-                {
-                    debug_add('Maintaining the approval status: setting the object back to be approved.');
-                    $metadata =& midcom_helper_metadata::retrieve($membership);
-                    $metadata->approve();
-                }
             }
             else
             {
@@ -309,13 +300,7 @@ class net_nemein_personnel_handler_order extends midcom_baseclasses_components_h
                         // This will exit
                     }
                     
-                    if (    $this->_topic->can_do('midgard:approve')
-                        && isset($_POST['auto_approve']))
-                    {
-                        debug_print_r('Created a new midcom_db_group object', $group);
-                        $metadata =& midcom_helper_metadata::retrieve($group);
-                        $metadata->approve();
-                    }
+                    debug_print_r('Created a new midcom_db_group object', $group);
                 }
                 else
                 {
@@ -369,9 +354,7 @@ class net_nemein_personnel_handler_order extends midcom_baseclasses_components_h
                 
                 // Maintain the approval status - if the object had been approved before
                 // it should still be kept as approved
-                if (   $approval_status
-                    || ($this->_topic->can_do('midgard:approve')
-                        && isset($_POST['auto_approve'])))
+                if ($approval_status)
                 {
                     debug_add('Maintaining the approval status: setting the object back to be approved.');
                     $metadata =& midcom_helper_metadata::retrieve($group);
@@ -438,9 +421,7 @@ class net_nemein_personnel_handler_order extends midcom_baseclasses_components_h
                     
                     // Maintain the approval status - if the object had been approved before
                     // it should still be kept as approved
-                    if (   $approval_status
-                        || ($this->_topic->can_do('midgard:approve')
-                            && isset($_POST['auto_approve'])))
+                    if ($approval_status)
                     {
                         debug_add('Maintaining the approval status: setting the object back to be approved.');
                         $metadata =& midcom_helper_metadata::retrieve($new_membership);
@@ -479,30 +460,19 @@ class net_nemein_personnel_handler_order extends midcom_baseclasses_components_h
                 
                 $result = $qb->execute_unchecked();
                 
-                if (   !$result[0]
-                    || !isset($result[0]->guid)
-                    || !$result[0]->guid)
-                {
-                    continue;
-                }
-                
-                $root_membership =& $result[0];
-                
                 // Set the score order
                 if (version_compare(mgd_version(), '1.8.2', '>='))
                 {
-                    $root_membership->metadata->score = $count - $i;
+                    $result[0]->metadata->score = $count - $i;
                 }
                 else
                 {
-                    $root_membership->set_parameter('net.nemein.personnel', 'score', $count - $i);
+                    $result[0]->set_parameter('net.nemein.personnel', 'score', $count - $i);
                 }
                 
                 // Maintain the approval status - if the object had been approved before
                 // it should still be kept as approved
-                if (   $approval_status
-                    || ($this->_topic->can_do('midgard:approve')
-                        && isset($_POST['auto_approve'])))
+                if ($approval_status)
                 {
                     debug_add('Maintaining the approval status: setting the object back to be approved.');
                     $metadata =& midcom_helper_metadata::retrieve($result[0]);
@@ -598,8 +568,6 @@ class net_nemein_personnel_handler_order extends midcom_baseclasses_components_h
     function _show_grouped($handler_id, &$data)
     {
         $data['root_group'] =& $this->_group;
-        $data['can_approve'] = $this->_topic->can_do('midgard:approve');
-        
         midcom_show_style('admin-order-grouped-header');
         
         foreach ($this->_helper->groups as $i => $group)
@@ -638,4 +606,3 @@ class net_nemein_personnel_handler_order extends midcom_baseclasses_components_h
         midcom_show_style('admin-order-grouped-footer');
     }
 }
-?>

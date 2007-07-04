@@ -88,7 +88,7 @@ class net_nemein_personnel_handler_account extends midcom_baseclasses_components
         
         // Set the credentials
         $this->_person->username = $_POST['f_username'];
-        $this->_person->password = "**{$_POST['f_password'][0]}";
+        $this->_person->password = "**{$_POST['f_password']}";
         
         // Finally update the person object
         if (!$this->_person->update())

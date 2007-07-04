@@ -107,7 +107,7 @@
         'official' => array
         (
             // COMPONENT-RECOMMENDED
-            'title'       => 'official name',
+            'title'       => 'name',
             'storage'     => 'name',
             'type'        => 'text',
             'widget'      => 'text',
