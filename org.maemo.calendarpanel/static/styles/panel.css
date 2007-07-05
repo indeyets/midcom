@@ -1,0 +1,89 @@
+.panel {
+	width: 200px;
+	max-height: 380px;
+	background-color: #FF9900;
+	color: #333333;
+	position: absolute;
+	top: 0px;
+	left: 1px;
+	overflow: hidden;
+	text-align: left;
+}
+.panel-header {
+	height: 22px;
+	font-size: 9pt;
+	font-weight: bold;
+	padding: 0 0 0 10px;
+	line-height: 18px;
+	color: #333333;
+	background: url(../images/panel-toggle-bg.gif) top left no-repeat #FF9900;
+	cursor: pointer;
+}
+.panel-header span {
+}
+.panel-content {
+	padding: 0;
+}
+
+#main-panel-accordion {
+	width: 200px;
+}
+
+#main-panel-accordion ul
+{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+#main-panel-accordion ul ul
+{
+	margin: 2px 0 2px 5px;
+}
+#main-panel-accordion ul li,
+#main-panel-accordion ul ul li
+{
+	margin: 0 0 3px 0;
+	padding: 0;
+	height: 19px;
+	line-height: 19px;
+	background-color: #FFFFFF;
+}
+#main-panel-accordion ul li div,
+#main-panel-accordion ul ul li div
+{
+	margin: 0 3px 0 3px;
+	padding: 0;
+	float: left;
+	clear: right;
+}
+
+#main-panel-accordion ul li div.calendar-visibility input {
+	margin: 2px 0 0 0;
+}
+#main-panel-accordion ul li div.calendar-name {
+	width: 125px;
+	height: 15px;
+	line-height: 17px;
+	color: #333333;
+	padding: 0 0 0 5px;
+	margin: 2px 0 0 0;
+	-moz-border-radius: 0.6em 0.6em 0.6em 0.6em;
+	cursor: pointer;
+}
+#main-panel-accordion ul li div.calendar-order {
+	width: 16px;
+	margin: 1px 3px 0 3px;
+}
+#main-panel-accordion ul li.first-item div.calendar-order a.graph-arrowUp {
+	display: none;
+}
+#main-panel-accordion ul li.first-item div.calendar-order a.graph-arrowDown {
+	top: 9px;
+}
+#main-panel-accordion ul li.last-item div.calendar-order a.graph-arrowDown {
+	display: none;
+}
+#main-panel-accordion ul li div.calendar-actions {
+	margin: 2px 0 0 0;
+	clear: none;
+}

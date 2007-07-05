@@ -1,0 +1,16 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---LANGUAGE en
+
+---STRING toggle panel
+Toggle panel
+---STRINGEND
+
+---STRING calendar
+Calendar
+---STRINGEND
+
+---STRING buddylist
+Buddylist
+---STRINGEND
+

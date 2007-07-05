@@ -1,0 +1,336 @@
+/* Header */
+.header div.date-selection-block
+{
+	height: 21px;
+	width: 207px;
+	margin-right: 5px;
+}
+.selection-previous
+{
+	margin-right: 5px;
+}
+.selection-next
+{
+	margin-left: 5px;
+}
+/* Opera 7> Hack */
+@media all and (min-width: 0px)
+{
+	.header div.date-selection-block
+	{
+		height: 20px;
+		width: 203px;
+		margin-right: 1px;
+	}
+	.selection-previous
+	{
+		margin-right: 2px;
+	}
+	.selection-next
+	{
+		margin-left: 2px;
+	}	
+}
+
+.header div.zoom-block
+{
+	height: 21px;
+	margin-right: 5px;
+}
+/* Opera 7> Hack */
+@media all and (min-width: 0px)
+{
+	.header div.zoom-block
+	{
+		margin-right: 2px;
+	}
+}
+
+.header div.timezone-block
+{
+	height: 20px;
+	padding-top: 2px;
+	margin-right: 5px;
+}
+/* Opera 7> Hack */
+@media all and (min-width: 0px)
+{
+	.header div.timezone-block
+	{
+		padding-top: 0px;
+		margin-right: 2px;
+	}
+}
+
+/* Accordion */
+
+.accordion {
+	width: 100%;
+	background-color: #FFFFFF;
+	border-top: 1px solid #826647;
+	border-bottom: 1px solid #826647;
+}
+.accordion .accordion-leaf-header {
+	height: 24px;
+	line-height: 24px;
+	padding: 0 10px;
+	font-weight: bold;
+	color: #fff;
+	background: url(../images/panel-accordion-bg.gif) top left no-repeat;
+	cursor: pointer;
+}
+.accordion .accordion-leaf-body {
+	padding: 5px;
+	margin: 0;
+	border-left: 1px solid #826647;
+	border-right: 1px solid #826647;
+	overflow: auto;
+}
+.accordion .accordion-leaf-body p {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+}
+.accordion .accordion-leaf-hover
+{
+	background-color: #90ef30;
+}
+.accordion .accordion-leaf-active
+{
+	background-color: #6CAF00;
+}
+
+/* Graph elements */
+
+a.graph-arrowDown {
+	height: 9px;
+	width: 16px;
+	text-decoration: none;
+	text-align: center;
+	border: 0;
+	background-attachment: scroll;
+	background-image: url(../images/arrowdown.png);
+	background-position: bottom center;
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	padding: 0px 0px 0px 0px;
+	margin: 0px 5px 0px 2px;
+	position: relative;
+	top: 0px; left: 0px;
+	display: block;
+}
+a.graph-arrowDown:hover {
+	background-position: -19px 0px;
+}
+
+a.graph-arrowUp {
+	height: 9px;
+	width: 16px;
+	text-decoration: none;
+	text-align: center;
+	border: 0;
+	background-attachment: scroll;
+	background-image: url(../images/arrowup.png);
+	background-position: bottom center;
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	margin: 0px 5px 0px 2px;
+	position: relative;
+	top: 0px; left: 0px;	
+	display: block;	
+}
+a.graph-arrowUp:hover {
+	background-position: -19px 0px;
+}
+
+/* Calendar Objects */
+
+div.calendar-object-event
+{
+	position: absolute;
+	width: 60px;
+	background-color: #FFF;
+	-moz-border-radius: 8px 0 8px 0;
+}
+div.calendar-object-event-header
+{
+	height: 16px;
+	line-height: 16px;
+	text-align: left;
+	padding: 0 3px 0 3px;
+	background-color: #d3d7cf;
+	border-bottom: 1px solid #b5b7b3;
+	-moz-border-radius: 8px 0 0 0;
+}
+span.event-timelabel
+{
+	font-weight: bold;
+}
+div.event-toolbar-button
+{
+	background: url(../images/event-toolbox-button.png) top left no-repeat;
+	width: 16px;
+	height: 16px;
+	cursor: pointer;
+	position: absolute;
+	right: 0;
+	top: 0;
+	margin: 0;
+}
+
+div.calendar-object-event-content
+{
+	line-height: 13px;
+	text-align: left;
+	padding: 0 3px 0 3px;
+	overflow: hidden;
+}
+
+div.event-toolbar-menu
+{
+	background-color: #d3d7cf;
+	border: 1px solid #b5b7b3;
+	height: 16px;
+	text-align: left;
+}
+div.event-toolbar-float
+{
+	background-color: #d3d7cf;
+	border: 1px solid #b5b7b3;
+	width: 120px;
+	text-align: left;
+}
+div.event-toolbar-menu div.event-toolbar-content
+{
+	padding: 0 2px 0 2px;
+}
+div.event-toolbar-float div.event-toolbar-content
+{
+	padding: 2px 0 0 0;
+}
+div.event-toolbar-menu div.event-toolbar-content ul, div.event-toolbar-menu div.event-toolbar-content ul li
+{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+div.event-toolbar-float div.event-toolbar-content ul, div.event-toolbar-float div.event-toolbar-content ul li
+{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+div.event-toolbar-menu div.event-toolbar-content ul li
+{
+	height: 14px;
+	line-height: 14px;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-right: 2px;
+	border-right: 1px dotted #b5b7b3;
+	text-decoration: none;
+	color: #292928;
+	cursor: pointer;
+	font-weight: bold;
+	float: left;
+}
+div.event-toolbar-float div.event-toolbar-content ul li
+{
+	height: 14px;
+	line-height: 14px;
+	padding-left: 5px;
+	margin-bottom: 2px;
+	border-bottom: 1px dotted #b5b7b3;
+	text-decoration: none;
+	color: #292928;
+	cursor: pointer;
+	font-weight: bold;
+}
+div.event-toolbar-menu div.event-toolbar-content ul li.last
+div.event-toolbar-float div.event-toolbar-content ul li.last
+{
+	border: 0;
+}
+
+
+
+/* Ajax stuff */
+
+#calendar-loading
+{
+	width: 100%;
+	height: 335px;
+	background-color: #CCCCCC;
+	text-align: center;
+	display: none;
+	opacity: 70;
+}
+#calendar-loading img
+{
+	margin-top: 155px;
+}
+
+#calendar-modal-window,
+div.standalone-window
+{
+	display: none;
+	width: 400px;
+	height: 205px;
+	background-color: #CCCCCC;
+	position: absolute;
+	top: 7%;
+	left: 15%;
+	z-index: 3500;
+	padding: 10px;
+	-moz-border-radius: 10px;
+	border: 1px solid #3c3c3c;
+}
+#calendar-modal-window h1
+{
+	margin: 0 0 5px 0;
+}
+
+
+/* Event editing/creation */
+
+div.event-form
+{
+	margin: 5px 0 5px 0;
+}
+
+div.block
+{
+	display: block;
+	background-color: #fff;
+	border: 1px solid #3c3c3c;
+	margin-bottom: 3px;
+}
+div.block-content
+{
+	margin: 3px;
+}
+
+div.standalone-window
+{
+	display: block;	
+	width: 600px;
+	height: 300px;
+	position: relative;
+	top: 0;
+	left: 0;
+	margin: 10px;
+	padding: 5px;
+}
+div.standalone-window-content
+{
+	height: 100%;
+	overflow: scroll;
+	o\verflow: -moz-scrollbars-vertical;
+	o\verflow-y: scroll;
+	o\verflow-x: hidden;	
+}
+
+/* Javascript popup calendar */
+div.calendar
+{
+	z-index: 3600;
+}

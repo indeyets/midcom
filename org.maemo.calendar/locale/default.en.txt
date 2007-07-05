@@ -1,0 +1,16 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---LANGUAGE en
+
+---STRING my_calendar
+Personal
+---STRINGEND
+
+---STRING calendar_title
+Community Calendar
+---STRINGEND
+
+---STRING current view
+Current view
+---STRINGEND
+
