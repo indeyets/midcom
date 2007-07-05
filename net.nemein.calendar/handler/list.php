@@ -104,7 +104,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         // Add filtering constraints
         if (!is_null($type_filter))
         {
-            $qb->add_constraint('type', '=', $type_filter);
+            $qb->add_constraint('type', '=', (int) $type_filter);
         }
         foreach ($this->_filters as $field => $filter)
         {
@@ -344,7 +344,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         // Add filtering constraints
         if (!is_null($type_filter))
         {
-            $qb->add_constraint('type', '=', $type_filter);
+            $qb->add_constraint('type', '=', (int) $type_filter);
         }
         foreach ($this->_filters as $field => $filter)
         {
