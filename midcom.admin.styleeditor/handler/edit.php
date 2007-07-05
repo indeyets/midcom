@@ -86,6 +86,7 @@ class midcom_admin_styleeditor_handler_edit extends midcom_baseclasses_component
             MIDCOM_NAV_NAME => sprintf($_MIDCOM->i18n->get_string('edit element %s', 'midcom.admin.styleeditor'), "<({$this->_request_data['style_element']})>"),
         );
 
+
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
     
@@ -169,6 +170,27 @@ class midcom_admin_styleeditor_handler_edit extends midcom_baseclasses_component
     function _handler_edit($handler_id, $args, &$data)
     {
         $this->_topic->require_do('midcom.admin.styleeditor:template_management');
+
+        $this->_view_toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/styleeditor/create/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create new element', 'midcom.admin.styleeditor'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/text-x-generic-template.png',
+            )
+        );        
+        $this->_view_toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/styleeditor/files/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
+            )
+        );
+
+
             
         $data['style_element'] = $args[0];
         

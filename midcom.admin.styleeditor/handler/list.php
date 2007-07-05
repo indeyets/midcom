@@ -113,21 +113,22 @@ class midcom_admin_styleeditor_handler_list extends midcom_baseclasses_component
         (
             array
             (
+                MIDCOM_TOOLBAR_URL => "__mfa/styleeditor/create/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create new element', 'midcom.admin.styleeditor'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/text-x-generic-template.png',
+            )
+        );        
+        $this->_view_toolbar->add_item
+        (
+            array
+            (
                 MIDCOM_TOOLBAR_URL => "__mfa/styleeditor/files/",
                 MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
             )
         );
 
-        $this->_view_toolbar->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => "__mfa/styleeditor/create/",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create new element', 'midcom.admin.styleeditor'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/text-x-generic-template.png',
-            )
-        );        
+
         // Set the variables
         $this->_component = $this->_topic->component;
         
