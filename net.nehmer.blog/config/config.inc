@@ -26,6 +26,7 @@
 'rss_use_image' => false, // Set this to true to include the image field into RSS content
 
 'archive_enable' => true,
+'archive_item_order' => 'ASC',
 
 'comments_enable' => false,
 

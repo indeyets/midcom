@@ -360,13 +360,13 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
         {
             $qb->add_constraint('metadata.published', '>=', $this->_start->getDate());
             $qb->add_constraint('metadata.published', '<', $this->_end->getDate());
-            $qb->add_order('metadata.published');
+            $qb->add_order('metadata.published', $this->_config->get('archive_item_order'));
         }
         else
         {
             $qb->add_constraint('created', '>=', $this->_start->getDate());
             $qb->add_constraint('created', '<', $this->_end->getDate());
-            $qb->add_order('created');
+            $qb->add_order('created', $this->_config->get('archive_item_order'));
         }
         $this->_articles = $qb->execute();
 
