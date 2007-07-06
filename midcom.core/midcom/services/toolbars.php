@@ -211,8 +211,15 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 $GLOBALS['midcom_config']['toolbars_host_style_class'],
                 $GLOBALS['midcom_config']['toolbars_host_style_id']
             );
+        $this->_toolbars[$context_id][MIDCOM_TOOLBAR_HELP] =
+            new midcom_helper_toolbar
+            (
+                $GLOBALS['midcom_config']['toolbars_help_style_class'],
+                $GLOBALS['midcom_config']['toolbars_help_style_id']
+            );
         $this->add_topic_management_commands($this->_toolbars[$context_id][MIDCOM_TOOLBAR_NODE], $context_id);
         $this->add_host_management_commands($this->_toolbars[$context_id][MIDCOM_TOOLBAR_HOST], $context_id);
+        $this->add_help_management_commands($this->_toolbars[$context_id][MIDCOM_TOOLBAR_HELP], $context_id);
     }
 
     /**
@@ -559,6 +566,103 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         
     }
 
+
+
+    /**
+     * Adds the Help management commands to the specified toolbar.
+     *
+     * Repeated calls to the same toolbar are intercepted accordingly.
+     *
+     * @todo This is an intermediate implementation to link to the current proof-of-concept
+     *     Folder management code. This needs adaption to Aegir2!
+     * @todo Better privilege checks
+     * @todo Localize
+     *
+     * @param midcom_helper_toolbar $toolbar A reference to the toolbar to use.
+     * @param int $context_id The context to use (the topic is drawn from there). This defaults
+     *     to the currently active context.
+     */
+    function add_help_management_commands(&$toolbar, $context_id = null)
+    {
+        if (array_key_exists('midcom_service_toolbars_bound_to_help', $toolbar->customdata))
+        {
+            // We already processed this toolbar, skipping further adds.
+            return;
+        }
+        else
+        {
+            $toolbar->customdata['midcom_service_toolbars_bound_to_help'] = true;
+        }
+
+        $calling_componentname = $_MIDCOM->get_context_data($context_id, MIDCOM_CONTEXT_COMPONENT);
+        $has_documentation_file = true; 
+        if ($has_documentation_file)
+        {
+            $toolbar->add_item
+            (
+                 array
+                 (
+                     MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}midcom-exec-midcom/showhelp.php?c=$calling_componentname",
+                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('Show help page', 'midcom'),
+                     MIDCOM_TOOLBAR_ACCESSKEY => 'h',
+                     MIDCOM_TOOLBAR_OPTIONS => array('target' => '_blank'),
+                 )
+            );
+        }
+        else
+        {
+            $toolbar->add_item
+            (
+                 array
+                 (
+                     MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}midcom-exec-midcom/showhelp.php?c=$calling_componentname",
+                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('Create help page', 'midcom'),
+                     MIDCOM_TOOLBAR_ACCESSKEY => 'h',
+                     MIDCOM_TOOLBAR_OPTIONS => array('target' => '_blank'),
+                 )
+            );
+        }
+
+
+
+        $toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "http://www.midgard-project.org/discussion",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('User forum', 'midcom'),
+                MIDCOM_TOOLBAR_OPTIONS => array('target' => '_blank'),
+            )
+        );
+        $toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "http://www.midgard-project.org/documentation",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('Online docs', 'midcom'),
+                MIDCOM_TOOLBAR_OPTIONS => array('target' => '_blank'),
+            )
+        );
+        $toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}midcom-exec-midcom/about-component.php?c=$calling_componentname",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('About component', 'midcom'),
+                MIDCOM_TOOLBAR_OPTIONS => array('target' => '_blank'),
+            )
+        );
+        $toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}midcom-exec-midcom/about.php",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('About Midgard', 'midcom'),
+                MIDCOM_TOOLBAR_OPTIONS => array('target' => '_blank'),
+            )
+        );
+    }
+
     /**
      * Binds the a toolbar to a DBA object. This will append a number of globally available
      * toolbar options. For example, expect Metadata- and Version Control-related options
@@ -791,6 +895,21 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
     {
         return $this->_render_toolbar(MIDCOM_TOOLBAR_HOST, $context_id);
     }
+    
+    /**
+     * Renders the help toolbar for the indicated context. If the toolbar is undefined,
+     * an empty string is returned. If you want to show the toolbar directly, look for
+     * the show_xxx_toolbar methods.
+     *
+     * @param int $context_id The context to retrieve the node toolbar for, this
+     *     defaults to the current context.
+     * @return string The rendered toolbar
+     * @see midcom_helper_toolbar::render()
+     */
+    function render_help_toolbar($context_id = null)
+    {
+        return $this->_render_toolbar(MIDCOM_TOOLBAR_HELP, $context_id);
+    }
 
     /**
      * Displays the node toolbar for the indicated context. If the toolbar is undefined,
@@ -844,6 +963,23 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
     }
 
     /**
+     * Displays the help toolbar for the indicated context. If the toolbar is undefined,
+     * an empty string is returned.
+     *
+     * @param int $context_id The context to retrieve the node toolbar for, this
+     *     defaults to the current context.
+     * @see midcom_helper_toolbar::render()
+     */
+    function show_help_toolbar($context_id = null)
+    {
+        if ($this->_centralized_mode)
+        {
+            return;
+        }
+        echo $this->render_help_toolbar();
+    }
+
+    /**
      * Displays the combined MidCOM toolbar system
      *
      * @param int $context_id The context to retrieve the node toolbar for, this
@@ -877,6 +1013,10 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         echo "        <div id=\"item-host\" class=\"item\">\n";
         echo "            <span class=\"toolbar_list_class host\">". $_MIDCOM->i18n->get_string('host', 'midcom') . "</span>\n";
         echo $this->render_host_toolbar();
+        echo "        </div>\n";
+        echo "        <div id=\"item-help\" class=\"item\">\n";
+        echo "            <span class=\"toolbar_list_class help\">". $_MIDCOM->i18n->get_string('Help', 'midcom') . "</span>\n";
+        echo $this->render_help_toolbar();
         echo "        </div>\n";
         echo "    </div>\n";
         echo "     <div class=\"dragbar\"></div>\n";

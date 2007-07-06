@@ -225,6 +225,13 @@ define ('MIDCOM_TOOLBAR_VIEW', 101);
 define ('MIDCOM_TOOLBAR_HOST', 104);
 
 /**
+ * Identifier for a help toolbar for a request context.
+ *
+ * @see midcom_services_toolbars
+ */
+define ('MIDCOM_TOOLBAR_HELP', 105);
+
+/**
  * Identifier for a custom objcet toolbar.
  *
  * @see midcom_services_toolbars
