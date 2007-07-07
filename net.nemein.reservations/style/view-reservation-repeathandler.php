@@ -1,5 +1,7 @@
 <?php
 $rules = $data['rules'];
+$duplicate_reservations = $data['duplicate_reservations'];
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
 if (   isset($data['errors'])
     && count($data['errors']) > 0)
@@ -13,6 +15,48 @@ if (   isset($data['errors'])
 }
 ?>
 <h2><?php echo $data['l10n']->get('repeat rules'); ?></h2>
+<?php
+if(count($duplicate_reservations['resources']) > 0 || count($duplicate_reservations['members']) > 0)
+{
+    ?><div class="net_nemein_repeathandler_duplicate_reservations">
+    <h2><?php echo $data['l10n']->get('duplicate reservations'); ?></h2>
+    <?php
+    if(count($duplicate_reservations['resources']) > 0)
+    {
+        echo $data['l10n']->get('duplicate reservations in resources');
+        echo "<ul>";
+        foreach($duplicate_reservations['resources'] as $count => $duplicate_resource)
+        {
+            foreach($duplicate_resource as $guid);
+            {
+                $duplicate_event = new org_openpsa_calendar_event($guid);
+                $rendered_widget = new org_openpsa_calendarwidget_event($duplicate_event);
+                $rendered = $rendered_widget->render_timelabel(0);
+                echo "<li><a href=\"" . $prefix . $duplicate_event->guid ."\">" . $duplicate_event->title . ", " . $duplicate_event->location . "</a> ( " . $rendered . " ) </li>\n";
+            }
+        }
+        echo "</ul>";
+    }
+    if(count($duplicate_reservations['members']) > 0)
+    {
+        echo $data['l10n']->get('duplicate reservations in members');
+        echo "<ul>";
+        foreach($duplicate_reservations['members'] as $count => $duplicate_resource)
+        {
+            foreach($duplicate_resource as $guid);
+            {
+                $duplicate_event = new org_openpsa_calendar_event($guid);
+                $rendered_widget = new org_openpsa_calendarwidget_event($duplicate_event);
+                $rendered = $rendered_widget->render_timelabel(0);
+                echo "<li><a href=\"" . $prefix . $duplicate_event->guid ."\">" . $duplicate_event->title . ", " . $duplicate_event->location . "</a> ( " . $rendered . " ) </li>\n";
+            }
+        }
+        echo "</ul>";
+    }
+    ?><br /><br /></div><?php
+}
+?>
+
 <form method="post" id="net_nemein_repeathandler_form" class="datamanager2">
     <select name="type" onchange="javascript:check_visibility(this.value);">
         <option value=""><?php echo $data['l10n']->get('choose the repeat option'); ?></option>

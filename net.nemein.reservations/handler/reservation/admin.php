@@ -240,6 +240,8 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
 
         $this->_load_controller();
 
+        // TODO: Check for resourcing conflict
+
         switch ($this->_controller->process_form())
         {
             case 'save':

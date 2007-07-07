@@ -194,3 +194,15 @@ Enable javascrip hover for displaying reservations
 ---STRING add creator to reservation
 Add creator to reservation
 ---STRINGEND
+
+---STRING duplicate reservations
+Duplicate reservations
+---STRINGEND
+
+---STRING duplicate reservations in resources
+Duplicate reservations in resources
+---STRINGEND
+
+---STRING duplicate reservations in members
+Duplicate reservations in members
+---STRINGEND

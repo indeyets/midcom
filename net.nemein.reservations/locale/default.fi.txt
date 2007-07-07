@@ -194,3 +194,15 @@ Salli javascript-hover varausten näyttöön
 ---STRING add creator to reservation
 Lisää varauksen luoja varaukseen
 ---STRINGEND
+
+---STRING duplicate reservations
+P&auml;&auml;llekk&auml;isi&auml; varauksia
+---STRINGEND
+
+---STRING duplicate reservations in resources
+P&auml;&auml;llekk&auml;isi&auml; varauksia varattavissa tiloissa
+---STRINGEND
+
+---STRING duplicate reservations in members
+P&auml;&auml;llekk&auml;isi&auml; varauksia osallistujissa
+---STRINGEND

@@ -89,6 +89,9 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
         }
         
         $this->_event->require_do('midgard:update');
+        $this->_duplicate_reservations = array();
+        $this->_duplicate_reservations['resources'] = array();
+        $this->_duplicate_reservations['members'] = array();
         
         if (isset($_POST['f_submit']))
         {
@@ -178,6 +181,7 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
     function _show_repeat($handler_id, &$data)
     {
         $this->_request_data['view_reservation'] = $this->_datamanager->get_content_html();
+        $this->_request_data['duplicate_reservations'] = $this->_duplicate_reservations;
         
         midcom_show_style('view-reservation');
         midcom_show_style('view-reservation-repeathandler');
@@ -190,6 +194,7 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
      */
     function _form_handling()
     {
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.calendar');
         debug_push_class(__CLASS__, __FUNCTION__);
         $master_guid = $this->_event->guid;
         
@@ -264,29 +269,60 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
         
         $this->_event->set_parameter('net.nemein.repeathandler', 'master_guid', $this->_event->guid);
         
-        $repeat_handler = new net_nemein_repeathandler(&$this->_event);
-        $repeat_handler->delete_stored_repeats($this->_event->guid());
-        
-        foreach ($instances as $date => $instance)
+        $duplicate_reservations_resource = array();
+        $duplicate_reservations_members = array();
+        foreach($instances as $date => $instance)
         {
-            if (array_key_exists('guid', $instance))
+            $resolver = new org_openpsa_calendar_event();
+            $resolver->resources = $this->_event->resources;
+            $resolver->participants = $this->_event->resources;
+            $resolver->start = $instance['start'];
+            $resolver->end = $instance['end'];
+            $resolver->busy = 1;
+            if (!$resolver->busy_em())
             {
-                $previous_guid = $instance['guid'];
+                // no conflicts, skip processing
+                continue;
             }
-            else
-            {
-                // These are the instances we must create
-                $previous_guid = $repeat_handler->create_event_from_instance($instance, $previous_guid);
-                if ($previous_guid)
-                {
-                    $instance['guid'] = $previous_guid;
-                    $instances[$date] = $instance;
-                }
-            }
+
+            // handle conflicts
+            $duplicate_reservations_resource[] = $resolver->busy_er[2];
+            $duplicate_reservations_members[] = $resolver->busy_em[2];
         }
         
-        $_MIDCOM->relocate("reservation/{$this->_event->guid}/");
-        // This will exit
+        $this->_duplicate_reservations['resources'] = $duplicate_reservations_resource;
+        $this->_duplicate_reservations['members'] = $duplicate_reservations_members;
+        
+        if(count($duplicate_reservations_resource) == 0 && count($duplicate_reservations_members) == 0)
+        {
+            $repeat_handler = new net_nemein_repeathandler(&$this->_event);
+            $repeat_handler->delete_stored_repeats($this->_event->guid());
+            
+            foreach ($instances as $date => $instance)
+            {
+                if (array_key_exists('guid', $instance))
+                {
+                    $previous_guid = $instance['guid'];
+                }
+                else
+                {
+                    // These are the instances we must create
+                    $previous_guid = $repeat_handler->create_event_from_instance($instance, $previous_guid);
+                    if ($previous_guid)
+                    {
+                        $instance['guid'] = $previous_guid;
+                        $instances[$date] = $instance;
+                    }
+                }
+            }
+            
+            $_MIDCOM->relocate("reservation/{$this->_event->guid}/");
+            // This will exit
+        }
+        else
+        {
+            return true;
+        }
     }
 }
 ?>
