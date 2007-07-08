@@ -758,34 +758,34 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
             }
 
 
-			// DBA types can provide 'noasgard' property for navigation hiding
-			/*
-			 * Example:
-			 *
-			 * class pl_olga_test_dba extends __pl_olga_test_dba
-			 * {
-			 * 
-			 *     var $noasgard = true;
-			 * 
-			 *     function pl_olga_test_dba($id = null)    {
-			 *         return parent::__pl_olga_test_dba($id);
-			 *     }
-			 * 
-			 * }
-			 * 
-			 */
+            // DBA types can provide 'noasgard' property for navigation hiding
+            /*
+             * Example:
+             *
+             * class pl_olga_test_dba extends __pl_olga_test_dba
+             * {
+             * 
+             *     var $noasgard = true;
+             * 
+             *     function pl_olga_test_dba($id = null)    {
+             *         return parent::__pl_olga_test_dba($id);
+             *     }
+             * 
+             * }
+             * 
+             */
 
-			if (class_exists("{$schema_type}_dba"))
-			{
-				$test_class_name= "{$schema_type}_dba";
-				$test_class = new $test_class_name();
+            if (class_exists("{$schema_type}_dba"))
+            {
+                $test_class_name= "{$schema_type}_dba";
+                $test_class = new $test_class_name();
 
-				if ($test_class->noasgard)
-				{
-					debug_add("Type {$schema_type} has 'noagsard' property set, thus cannot be root class");
-                	continue;
-				}
-			}
+                if ($test_class->noasgard)
+                {
+                    debug_add("Type {$schema_type} has 'noagsard' property set, thus cannot be root class");
+                    continue;
+                }
+            }
 
             $root_classes[] = $schema_type;
         }
