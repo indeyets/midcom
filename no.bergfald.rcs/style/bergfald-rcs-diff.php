@@ -24,6 +24,11 @@ foreach ($diff as $attribute => $values)
     {
         continue;
     }
+    
+    if (is_array($values))
+    {
+        continue;
+    }
 
     echo "<dt>{$attribute}</dt>\n";
     echo "    <dd>\n";

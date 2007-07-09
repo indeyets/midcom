@@ -26,6 +26,11 @@ foreach ($preview as $attribute => $value)
         continue;
     }
     
+    if (is_array($value))
+    {
+        continue;
+    }
+    
     echo "<dt>{$attribute}</dt>\n";
     echo "    <dd>" . nl2br($value) . "</dd>\n";
 }
