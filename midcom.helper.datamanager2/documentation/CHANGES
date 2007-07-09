@@ -10,6 +10,7 @@ Legend:
 
 2007-07-09 bergie
   + Implemented new "rcsmessage" type for change log messages in objects
+  + Implemented new "markdown" widget for editing Markdown-formatted content
 
 2007-06-14 adrenalin
   ! Fixed misspelled 'Datamanger' to 'Datamanager' and implemented backwards compatibility
