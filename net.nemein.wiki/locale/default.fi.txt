@@ -67,6 +67,10 @@ Luo uudelleenohjaus "%s"
 Luo wiki-sivu "%s"
 ---STRINGEND
 
+---STRING default schema
+Sivujen oletustyyppi
+---STRINGEND
+
 ---STRING display related to items in page
 Näytä sivuun liittyvät toiset sivut sisällössä
 ---STRINGEND
@@ -223,7 +227,7 @@ Lisätietoja linkittämisestä löytyy [wikin käyttöohjeista][3].
 [3]: http://www.midgard-project.org/midcom-permalink-7276f817dcdefcf40d30a9ec69a7241f
 ---STRINGEND
 
----STRING default schema
-Sivujen oletustyyppi
+---STRING change message
+Muutosviesti
 ---STRINGEND
 

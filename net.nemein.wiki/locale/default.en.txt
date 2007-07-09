@@ -67,6 +67,10 @@ Create redirection page "%s"
 Create wiki page "%s"
 ---STRINGEND
 
+---STRING default schema
+Default page schema
+---STRINGEND
+
 ---STRING display related to items in page
 Display related to items in page
 ---STRINGEND
@@ -223,7 +227,7 @@ Please read the [linking instructions][3] for more information.
 [3]: http://www.midgard-project.org/midcom-permalink-7276f817dcdefcf40d30a9ec69a7241f
 ---STRINGEND
 
----STRING default schema
-Default page schema
+---STRING change message
+Change message
 ---STRINGEND
 
