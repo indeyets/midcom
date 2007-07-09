@@ -355,6 +355,9 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
       
+        // Set the help object in the toolbar
+        $this->_view_toolbar->add_help_item('markdown', 'net.nemein.wiki');
+        
         return true;
     }
     

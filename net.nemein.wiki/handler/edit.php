@@ -118,7 +118,12 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
             return false;
         }
     }
-
+    
+    /**
+     * Check the edit request
+     * 
+     * @access public
+     */
     function _handler_edit($handler_id, $args, &$data)
     {
         if (!$this->_load_page($args[0]))
@@ -203,6 +208,7 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
         
         $_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('edit %s'), $this->_page->title));
 
+        // Set the breadcrumb pieces
         $tmp = Array();
         $tmp[] = Array
         (
@@ -215,6 +221,9 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
             MIDCOM_NAV_NAME => $this->_request_data['l10n_midcom']->get('edit'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        
+        // Set the help object in the toolbar
+        $this->_view_toolbar->add_help_item('markdown', 'net.nemein.wiki');
         
         return true;
     }
