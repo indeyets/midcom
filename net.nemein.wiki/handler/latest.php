@@ -109,7 +109,7 @@ class net_nemein_wiki_handler_latest extends midcom_baseclasses_components_handl
         
         $i = 0;
         while (   $this->_updated_pages < $this->_max_pages
-               && $i < 4)
+               && $i < 20)
         {
             // Expand seek by another two weeks
             $to = $from;
@@ -117,6 +117,9 @@ class net_nemein_wiki_handler_latest extends midcom_baseclasses_components_handl
             $this->_seek_updated($from, $to);
             $i++;
         }
+
+        $data['view_title'] = sprintf($this->_request_data['l10n']->get('latest updates in %s'), $this->_topic->extra);
+        $_MIDCOM->set_pagetitle($data['view_title']);
 
         return true;
     }

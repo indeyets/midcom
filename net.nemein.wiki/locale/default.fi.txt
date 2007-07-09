@@ -35,6 +35,10 @@ Kirjoittaja
 Luo automaattinen sisällysluettelo sivuille
 ---STRINGEND
 
+---STRING change message
+Muutosviesti
+---STRINGEND
+
 ---STRING change to %s
 Muuta %s-sivuksi
 ---STRINGEND
@@ -227,7 +231,7 @@ Lisätietoja linkittämisestä löytyy [wikin käyttöohjeista][3].
 [3]: http://www.midgard-project.org/midcom-permalink-7276f817dcdefcf40d30a9ec69a7241f
 ---STRINGEND
 
----STRING change message
-Muutosviesti
+---STRING latest updates in %s
+Viimeisimmät päivitykset wikissä %s
 ---STRINGEND
 

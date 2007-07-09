@@ -35,6 +35,10 @@ Author
 Autogenerate table of contents for pages
 ---STRINGEND
 
+---STRING change message
+Change message
+---STRINGEND
+
 ---STRING change to %s
 Change to %s page
 ---STRINGEND
@@ -227,7 +231,7 @@ Please read the [linking instructions][3] for more information.
 [3]: http://www.midgard-project.org/midcom-permalink-7276f817dcdefcf40d30a9ec69a7241f
 ---STRINGEND
 
----STRING change message
-Change message
+---STRING latest updates in %s
+Latest updates in %s
 ---STRINGEND
 
