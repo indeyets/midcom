@@ -6,6 +6,10 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-07-09 bergie
+  + Added support for user-provided change messages
+  + Fixed "latest updates" to show all revisions of an object inside the timeframe instead of just latest
+
 2007-03-06 bergie
   + Added support for switching page type between all schemas in schema database
   + Added support for configurable default schema per topic

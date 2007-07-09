@@ -29,6 +29,13 @@
                 'width' => 80,
             ),
         ),
+        'changemessage' => Array
+        (
+            'title' => 'change message',
+//            'storage' => '_changemessage',
+            'type' => 'rcsmessage',
+            'widget' => 'text',
+        ),
         'tags' => Array
         (
             'title' => 'tags',

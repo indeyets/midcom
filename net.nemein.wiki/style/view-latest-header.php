@@ -4,4 +4,5 @@
 <div class="net_nemein_wiki">
 <h2>&(data['wikiname']);</h2>
 
-<ul class="net_nemein_wiki_latest related">
+<table class="net_nemein_wiki_latest related">
+    <tbody>
