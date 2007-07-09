@@ -780,7 +780,8 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
                 $test_class_name= "{$schema_type}_dba";
                 $test_class = new $test_class_name();
 
-                if ($test_class->noasgard)
+                if (   isset($test_class->noasgard)
+                    && $test_class->noasgard)
                 {
                     debug_add("Type {$schema_type} has 'noagsard' property set, thus cannot be root class");
                     continue;
