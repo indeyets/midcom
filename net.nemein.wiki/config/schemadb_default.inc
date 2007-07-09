@@ -22,17 +22,16 @@
             ( 
                 'output_mode' => 'markdown' 
             ),
-            'widget' => 'textarea',
+            'widget' => 'markdown',
             'widget_config' => Array
             (
                 'height' => 26,
-                'width' => 80,
+                'width'  => 80,
             ),
         ),
         'changemessage' => Array
         (
             'title' => 'change message',
-//            'storage' => '_changemessage',
             'type' => 'rcsmessage',
             'widget' => 'text',
         ),
