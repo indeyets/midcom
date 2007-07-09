@@ -7,6 +7,7 @@ Legend:
 - All items marked with "+" represent completly new features.
 
 2007-07-09 bergie
+  + Added "Preview" mode for forms-based editing
   + Added support for user-provided change messages
   + Fixed "latest updates" to show all revisions of an object inside the timeframe instead of just latest
 

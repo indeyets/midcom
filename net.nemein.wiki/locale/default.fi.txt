@@ -91,6 +91,10 @@ Muokkaa sivua %s
 Muokkaa Wiki-sivua
 ---STRINGEND
 
+---STRING latest updates in %s
+Viimeisimmät päivitykset wikissä %s
+---STRINGEND
+
 ---STRING link to page
 Linkki sivulle
 ---STRINGEND
@@ -231,7 +235,7 @@ Lisätietoja linkittämisestä löytyy [wikin käyttöohjeista][3].
 [3]: http://www.midgard-project.org/midcom-permalink-7276f817dcdefcf40d30a9ec69a7241f
 ---STRINGEND
 
----STRING latest updates in %s
-Viimeisimmät päivitykset wikissä %s
+---STRING preview
+Esikatselu
 ---STRINGEND
 

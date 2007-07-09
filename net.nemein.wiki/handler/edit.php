@@ -46,6 +46,8 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
      */
     var $_schemadb = null;
     
+    var $_preview = false;
+    
     function net_nemein_wiki_handler_edit() 
     {
         parent::midcom_baseclasses_components_handler();
@@ -63,6 +65,15 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
     function _load_schemadb()
     {
         $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
+        
+        $operations = Array();
+        $operations['save'] = '';
+        $operations['preview'] = $this->_l10n->get('preview');
+        $operations['cancel'] = '';
+        foreach ($this->_schemadb as $name => $schema)
+        {
+            $this->_schemadb[$name]->operations = $operations;
+        }
     }
     
    /**
@@ -70,13 +81,13 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
      *
      * @access private
      */
-    function _load_datamanager()
+    function _load_datamanager($page)
     {
         $this->_load_schemadb();
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_schemadb);
 
         if (   ! $this->_datamanager
-            || ! $this->_datamanager->autoset_storage($this->_page))
+            || ! $this->_datamanager->autoset_storage($page))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a DM2 instance for article {$this->_article->id}.");
             // This will exit.
@@ -136,6 +147,10 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
         
         switch ($this->_controller->process_form())
         {
+            case 'preview':
+                $this->_preview = true;
+                $data['formmanager'] =& $this->_controller->formmanager;
+                break;
             case 'save':
                 // Reindex the article
                 $indexer =& $_MIDCOM->get_service('indexer');
@@ -206,7 +221,8 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
         
         $_MIDCOM->bind_view_to_object($this->_page, $this->_controller->datamanager->schema->name);
         
-        $_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('edit %s'), $this->_page->title));
+        $data['view_title'] = sprintf($this->_request_data['l10n']->get('edit %s'), $this->_page->title);
+        $_MIDCOM->set_pagetitle($data['view_title']);
 
         // Set the breadcrumb pieces
         $tmp = Array();
@@ -230,7 +246,47 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
     
     function _show_edit($handler_id, &$data)
     {
-        $this->_request_data['controller'] =& $this->_controller;
+        $data['controller'] =& $this->_controller;
+        $data['preview_mode'] = $this->_preview;
+
+        if ($this->_preview)
+        {
+            // Populate preview page with values from form
+            $data['preview_page'] = clone($this->_page);
+            foreach ($this->_controller->datamanager->schema->fields as $name => $type_definition)
+            {
+                if (!is_a($this->_controller->datamanager->types[$name], 'midcom_helper_datamanager2_type_text'))
+                {
+                    // Skip fields of other types
+                    continue;
+                }
+                switch ($type_definition['storage'])
+                {
+                    case 'parameter':
+                    case 'configuration':
+                    case 'metadata':
+                        // Skip
+                        continue;
+                    default:
+                        $location = $type_definition['storage']['location'];
+                }
+                $data['preview_page']->$location = $this->_controller->datamanager->types[$name]->convert_to_storage();                
+            }
+
+            // Load DM for rendering the page
+            $datamanager = new midcom_helper_datamanager2_datamanager($this->_schemadb);
+            $datamanager->autoset_storage($data['preview_page']);
+            
+            $data['wikipage_view'] = $datamanager->get_content_html();
+            $data['wikipage'] =& $data['preview_page'];
+            $data['autogenerate_toc'] = false;
+            $data['display_related_to'] = false;
+            
+            // Replace wikiwords
+            // TODO: We should somehow make DM2 do this so it would also work in AJAX previews
+            $data['wikipage_view']['content'] = preg_replace_callback($this->_config->get('wikilink_regexp'), array($data['preview_page'], 'replace_wikiwords'), $data['wikipage_view']['content']);
+        }
+        
         midcom_show_style('view-wikipage-edit');
     }
     
