@@ -1,5 +1,5 @@
 'name' => 'net.nehmer.blog',
-'version' => '1.3.0beta1',
+'version' => '1.3.0beta2',
 'state' => 'stable',
 'package.xml' => array
 (

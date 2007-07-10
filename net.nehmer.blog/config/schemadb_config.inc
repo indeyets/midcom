@@ -162,6 +162,22 @@
                 '1' => 'yes',
                 '0' => 'no',
             ),
+        ),
+        'view_in_url' => array
+        (
+            'description' => 'use view prefix in url',
+            'helptext' => 'set this to no if you want to hide view/ from the url e.g. for de.linkm.newsticker compatibility',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nehmer.blog',
+            'config_key' => 'view_in_url',
+            'widget' => 'config_radiobox',
+            'widget_radiobox_choices' => array
+            (
+                '' => 'default setting',
+                '1' => 'yes',
+                '0' => 'no',
+            ),
             'end_fieldgroup' => '',
         ),
         

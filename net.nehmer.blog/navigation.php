@@ -99,13 +99,23 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
         $qb->add_order('metadata.published', 'DESC');
         $qb->set_limit((int) $this->_config->get('index_entries'));
         
+        // Checkup for the url prefix
+        if ($this->_config->get('view_in_url'))
+        {
+            $prefix = 'view/';
+        }
+        else
+        {
+            $prefix = '';
+        }
+        
         foreach ($qb->execute_unchecked() as $article)
         {
             $leaves[$article->id] = array
             (
                 MIDCOM_NAV_SITE => array
                 (
-                    MIDCOM_NAV_URL => "view/{$article->name}.html",
+                    MIDCOM_NAV_URL => "{$prefix}{$article->name}.html",
                     MIDCOM_NAV_NAME => ($article->title != '') ? $article->title : $article->name,
                 ),
                 MIDCOM_NAV_ADMIN => null,

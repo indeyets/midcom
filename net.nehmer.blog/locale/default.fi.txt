@@ -306,3 +306,11 @@ Näytä valesivut navigaatiossa
 ---STRING set this to no if you want to hide feeds and archive links in navigation
 Aseta tämä kohtaan 'ei' jos haluat piilottaa linkit 'Syötteet' ja 'Arkisto' navigaatiosta
 ---STRINGEND
+
+---STRING use view prefix in url
+Käytä 'view'-etuliitettä osoitteissa
+---STRINGEND
+
+---STRING set this to no if you want to hide view/ from the url e.g. for de.linkm.newsticker compatibility
+Aseta tämä kohtaan ei, mikäli haluat piilottaa view/-etuliitteen osoitteesta (esim. saavuttaaksesi de.linkm.newsticker-yhteensopivuuden)
+---STRINGEND

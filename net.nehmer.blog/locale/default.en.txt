@@ -306,3 +306,11 @@ Show pseudo leaves in navigation
 ---STRING set this to no if you want to hide feeds and archive links in navigation
 Set this to 'no' if you want to hide 'Feeds' and 'Archive' links in navigation
 ---STRINGEND
+
+---STRING use view prefix in url
+Use 'view' prefix in url
+---STRINGEND
+
+---STRING set this to no if you want to hide view/ from the url e.g. for de.linkm.newsticker compatibility
+Set this to no if you want to hide the prefix view/ from the url (e.g. for gaining de.linkm.newsticker compatibility)
+---STRINGEND
