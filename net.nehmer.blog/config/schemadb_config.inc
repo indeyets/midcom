@@ -166,7 +166,7 @@
         'view_in_url' => array
         (
             'description' => 'use view prefix in url',
-            'helptext' => 'set this to no if you want to hide view/ from the url e.g. for de.linkm.newsticker compatibility',
+            'helptext' => 'set to no for de.linkm.newsticker compatibility',
             'datatype' => 'text',
             'location' => 'config',
             'config_domain' => 'net.nehmer.blog',

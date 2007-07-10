@@ -311,6 +311,6 @@ Set this to 'no' if you want to hide 'Feeds' and 'Archive' links in navigation
 Use 'view' prefix in url
 ---STRINGEND
 
----STRING set this to no if you want to hide view/ from the url e.g. for de.linkm.newsticker compatibility
-Set this to no if you want to hide the prefix view/ from the url (e.g. for gaining de.linkm.newsticker compatibility)
+---STRING set to no for de.linkm.newsticker compatibility
+Set to no for de.linkm.newsticker compatibility
 ---STRINGEND
