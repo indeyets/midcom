@@ -787,21 +787,12 @@ function ImageCopyResampleBicubic(&$dst_img, &$src_img, $dst_x, $dst_y, $src_x, 
 function midcom_generate_urlname_from_string($string, $replacer = "-")
 {
     // TODO: sanity-check $replacer ?
+    echo "{$string}: ";
 
-    // Use the PHP transliteration extension if available
-    if (function_exists("transliterate"))
-    {
-
-        $string = transliterate($string, array(
-            "normalize_ligature",
-            "lowercase_latin",
-            "spaces_to_underscore",
-            "remove_punctuation",
-            "cyrillic_transliterate"
-        ));
-
-        return $string;
-    }
+    // Try to transliterate non-latin strings to URL-safe format
+    require_once('utf8_to_ascii.php');
+    $string = utf8_to_ascii($string, '_');
+    echo "{$string}: ";
 
     // Replacement map for most common characters
     /**
