@@ -105,7 +105,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
             (
                 MIDCOM_NAV_SITE => array
                 (
-                    MIDCOM_NAV_URL => "{$article->name}.html",
+                    MIDCOM_NAV_URL => "view/{$article->name}.html",
                     MIDCOM_NAV_NAME => ($article->title != '') ? $article->title : $article->name,
                 ),
                 MIDCOM_NAV_ADMIN => null,
