@@ -85,7 +85,6 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
         $this->_request_data['end'] =& $this->_end;
     }
 
-
     /**
      * Shows the archive welcome page: A listing of years/months along with total post counts
      * and similar stuff.
@@ -360,13 +359,13 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
         {
             $qb->add_constraint('metadata.published', '>=', $this->_start->getDate());
             $qb->add_constraint('metadata.published', '<', $this->_end->getDate());
-            $qb->add_order('metadata.published', $this->_config->get('archive_item_order'));
+            $qb->add_order('created', $this->_config->get('archive_item_order'));
         }
         else
         {
             $qb->add_constraint('created', '>=', $this->_start->getDate());
             $qb->add_constraint('created', '<', $this->_end->getDate());
-            $qb->add_order('created', $this->_config->get('archive_item_order'));
+            $qb->add_order('metadata.published', $this->_config->get('archive_item_order'));
         }
         $this->_articles = $qb->execute();
 
@@ -467,7 +466,6 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
             // This will exit.
         }
 
-
         if ($month == 12)
         {
             $endyear = $year + 1;
@@ -494,9 +492,10 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
 
         if ($this->_articles)
         {
+            $total_count = count($this->_articles);
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
-            foreach ($this->_articles as $article)
+            foreach ($this->_articles as $article_counter => $article)
             {
                 if (! $this->_datamanager->autoset_storage($article))
                 {
@@ -508,6 +507,8 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
                 }
 
                 $data['article'] =& $article;
+                $data['article_counter'] = $article_counter;
+                $data['article_count'] = $total_count;
                 $arg = $article->name ? $article->name : $article->guid;
 
                 if (   $this->_config->get('link_to_external_url')
@@ -538,9 +539,5 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
         midcom_show_style('archive-list-end');
         return true;
     }
-
-
-
 }
-
 ?>

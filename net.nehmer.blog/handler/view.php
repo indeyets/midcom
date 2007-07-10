@@ -8,11 +8,10 @@
  */
 
 /**
- * Newsticker index page handler
+ * Blog index page handler
  *
  * @package net.nehmer.blog
  */
-
 class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
 {
     /**
@@ -69,7 +68,6 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
             ));
         }
     }
-
 
     /**
      * Simple default constructor.
@@ -241,9 +239,5 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
 
         midcom_show_style('view');
     }
-
-
-
 }
-
 ?>

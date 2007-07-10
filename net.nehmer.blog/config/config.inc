@@ -25,10 +25,15 @@
 'rss_use_content' => true, // Set this to false to use only the abstract field instead of the content field.
 'rss_use_image' => false, // Set this to true to include the image field into RSS content
 
+// Archive status
 'archive_enable' => true,
 'archive_item_order' => 'ASC',
 
 'comments_enable' => false,
+
+// Navigation
+'show_latest_in_navigation' => false,  // Set this to true if you want to show latest news in navigation
+'show_navigation_pseudo_leaves' => true,   // Set this to false if you want to hide archive and feeds navigation items
 
 // Set this to true if you want to enable on-site AJAX editing
 'enable_ajax_editing' => false,

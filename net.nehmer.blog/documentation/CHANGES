@@ -8,6 +8,11 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-07-10 adrenalin
+  - Uniforming changes made to different versions
+  + Added configurable choices for navigation
+  ! Deprecated support for Midgard 1.7
+
 2007-07-05 bergie
   + Made archive item ordering configurable
 

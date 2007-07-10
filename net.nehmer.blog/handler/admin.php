@@ -87,7 +87,6 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
         }
     }
 
-
     /**
      * Simple default constructor.
      */
@@ -197,7 +196,6 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
 
-
     /**
      * Displays an article edit view.
      *
@@ -248,7 +246,6 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
 
         return true;
     }
-
 
     /**
      * Shows the loaded article.
@@ -319,7 +316,6 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
         return true;
     }
 
-
     /**
      * Shows the loaded article.
      */
@@ -327,9 +323,5 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
     {
         midcom_show_style('admin-delete');
     }
-
-
-
 }
-
 ?>

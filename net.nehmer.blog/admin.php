@@ -8,7 +8,7 @@
  */
 
 /**
- * TAViewer AIS interface class
+ * Blog AIS interface class
  *
  * Stub class only
  *

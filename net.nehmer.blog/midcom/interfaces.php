@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package net.nehmer.blog
  * @author The Midgard Project, http://www.midgard-project.org
@@ -9,11 +8,11 @@
  */
 
 /**
- * TAViewer MidCOM interface class.
+ * Blog MidCOM interface class.
  *
  * Compatibility Notes:
  *
- * This component is a complete refactoring of de.linkm.taviewer. It specifically drops
+ * This component is a complete refactoring of de.linkm.newsticker. It specifically drops
  * a good number of legacies in the old component and thus does not guranntee 100%
  * data compatibility. Specifically:
  *
@@ -139,7 +138,5 @@ class net_nehmer_blog_interface extends midcom_baseclasses_components_interface
             return "{$arg}.html";
         }
     }
-
-
 }
 ?>

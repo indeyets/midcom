@@ -83,15 +83,7 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_content_topic->id);
 
-        // TODO: 1.7 support is only temporary, I'd rather drop it as soon as 1.8 goes somehting like RC.
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
-        {
-            $qb->add_order('metadata.published', 'DESC');
-        }
-        else
-        {
-            $qb->add_order('created', 'DESC');
-        }
+        $qb->add_order('metadata.published', 'DESC');
 
         if ($handler_id == 'feed-category-rss2')
         {
@@ -104,7 +96,25 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
             // TODO: Check for ".xml" suffix
             $this->_request_data['category'] = $args[0];
 
-            $qb->add_constraint('extra1', 'LIKE', "%|{$this->_request_data['category']}|%");
+            $multiple_categories = true;
+            // TODO: check schema storage to get fieldname
+            if (   isset($this->_request_data['schemadb']['default']->fields['categories'])
+                && array_key_exists('allow_multiple', $this->_request_data['schemadb']['default']->fields['categories']['type_config'])
+                && !$this->_request_data['schemadb']['default']->fields['categories']['type_config']['allow_multiple'])
+            {
+                $multiple_categories = false;
+            }
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("multiple_categories={$multiple_categories}");
+            debug_pop();
+            if ($multiple_categories)
+            {
+                $qb->add_constraint('extra1', 'LIKE', "%|{$this->_request_data['category']}|%");
+            }
+            else
+            {
+                $qb->add_constraint('extra1', '=', (string)$this->_request_data['category']);
+            }
         }
 
         $qb->set_limit($this->_config->get('rss_count'));
@@ -170,17 +180,7 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
         }
         
         $item->guid = $_MIDCOM->permalinks->create_permalink($article->guid);
-
-        // TODO: 1.7 support is only temporary, I'd rather drop it as soon as 1.8 goes somehting like RC.
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
-        {
-            $item->date = $article->metadata->published;
-        }
-        else
-        {
-            $item->date = $article->created;
-        }
-
+        $item->date = $article->metadata->published;
         $item->description = '';
 
         if ($article->abstract != '')
@@ -301,7 +301,6 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
         }
     }
 
-
     /**
      * Shows a simple available-feeds page.
      */
@@ -319,8 +318,5 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
     {
         midcom_show_style('feeds');
     }
-
-
 }
-
 ?>

@@ -42,9 +42,16 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
      */
     function get_leaves()
     {
+        // Check for symlink
+        if (!$this->_content_topic)
+        {
+            $this->_determine_content_topic();
+        }
+        
         $leaves = array();
         
-        if ($this->_config->get('archive_enable'))
+        if (   $this->_config->get('archive_enable')
+            && $this->_config->get('show_navigation_pseudo_leaves'))
         {
             $leaves[NET_NEHMER_BLOG_LEAFID_ARCHIVE] = array
             (
@@ -54,13 +61,14 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
                     MIDCOM_NAV_NAME => $this->_l10n->get('archive'),
                 ),
                 MIDCOM_NAV_ADMIN => null,
-                MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
-                MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
-                MIDCOM_META_CREATED => $this->_topic->metadata->created,
-                MIDCOM_META_EDITED => $this->_topic->metadata->revised
+                MIDCOM_META_CREATOR => $this->_content_topic->metadata->creator,
+                MIDCOM_META_EDITOR => $this->_content_topic->metadata->revisor,
+                MIDCOM_META_CREATED => $this->_content_topic->metadata->created,
+                MIDCOM_META_EDITED => $this->_content_topic->metadata->revised,
             );
         }
-        if ($this->_config->get('rss_enable'))
+        if (   $this->_config->get('rss_enable')
+            && $this->_config->get('show_navigation_pseudo_leaves'))
         {
             $leaves[NET_NEHMER_BLOG_LEAFID_FEEDS] = array
             (
@@ -70,10 +78,43 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
                     MIDCOM_NAV_NAME => $this->_l10n->get('available feeds'),
                 ),
                 MIDCOM_NAV_ADMIN => null,
-                MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
-                MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
-                MIDCOM_META_CREATED => $this->_topic->metadata->created,
-                MIDCOM_META_EDITED => $this->_topic->metadata->revised
+                MIDCOM_META_CREATOR => $this->_content_topic->metadata->creator,
+                MIDCOM_META_EDITOR => $this->_content_topic->metadata->revisor,
+                MIDCOM_META_CREATED => $this->_content_topic->metadata->created,
+                MIDCOM_META_EDITED => $this->_content_topic->metadata->revised,
+            );
+        }
+        
+        // Return the request here if latest items aren't requested to be shown in navigation
+        if (!$this->_config->get('show_latest_in_navigation'))
+        {
+            return $leaves;
+        }
+        
+        // Get the latest content topic articles
+        $qb = midcom_db_article::new_query_builder();
+        $qb->add_constraint('topic', '=', $this->_content_topic->id);
+        $qb->add_constraint('up', '=', 0);
+        
+        $qb->add_order('metadata.published', 'DESC');
+        $qb->set_limit((int) $this->_config->get('index_entries'));
+        
+        foreach ($qb->execute_unchecked() as $article)
+        {
+            $leaves[$article->id] = array
+            (
+                MIDCOM_NAV_SITE => array
+                (
+                    MIDCOM_NAV_URL => "{$article->name}.html",
+                    MIDCOM_NAV_NAME => ($article->title != '') ? $article->title : $article->name,
+                ),
+                MIDCOM_NAV_ADMIN => null,
+                MIDCOM_NAV_GUID => $article->guid,
+                MIDCOM_NAV_OBJECT => $article,
+                MIDCOM_META_CREATOR => $article->metadata->creator,
+                MIDCOM_META_EDITOR => $article->metadata->revisor,
+                MIDCOM_META_CREATED => $article->metadata->created,
+                MIDCOM_META_EDITED => $article->metadata->published,
             );
         }
 
@@ -123,8 +164,5 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
         }
 
     }
-
-
 }
-
 ?>

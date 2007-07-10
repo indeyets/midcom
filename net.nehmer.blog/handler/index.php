@@ -72,6 +72,7 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
      */
     function _handler_index ($handler_id, $args, &$data)
     {
+        $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_content_topic->id);
         $qb->add_constraint('up', '=', 0);
@@ -94,36 +95,50 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
                 // TODO: Check here if there are actually items in this cat
             }
 
-            $qb->add_constraint('extra1', 'LIKE', "%|{$data['category']}|%");
+            // TODO: check schema storage to get fieldname
+            $multiple_categories = true;
+            if (   isset($this->_request_data['schemadb']['default']->fields['categories'])
+                && array_key_exists('allow_multiple', $this->_request_data['schemadb']['default']->fields['categories']['type_config'])
+                && !$this->_request_data['schemadb']['default']->fields['categories']['type_config']['allow_multiple'])
+            {
+                $multiple_categories = false;
+            }
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("multiple_categories={$multiple_categories}");
+            debug_pop();
+            if ($multiple_categories)
+            {
+                $qb->add_constraint('extra1', 'LIKE', "%|{$this->_request_data['category']}|%");
+            }
+            else
+            {
+                $qb->add_constraint('extra1', '=', (string)$this->_request_data['category']);
+            }
 
             // Add category to title
             $this->_request_data['page_title'] = sprintf($this->_request_data['l10n']->get('%s category %s'), $this->_topic->extra, $data['category']);
         }
 
-        // TODO: 1.7 support is only temporary, I'd rather drop it as soon as 1.8 goes somehting like RC.
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
+        $qb->add_order('metadata.published', 'DESC');
+        
+        switch ($handler_id)
         {
-            $qb->add_order('metadata.published', 'DESC');
+            case 'latest':
+                $qb->set_limit((int) $args[0]);
+                break;
+            
+            case 'latest-category':
+                $qb->set_limit((int) $args[1]);
+                break;
+                
+            case 'index':
+            case 'index-category':
+            default:
+                $qb->set_limit($this->_config->get('index_entries'));
+                break;
         }
-        else
-        {
-            $qb->add_order('created', 'DESC');
-        }
-        if (   $handler_id == 'index'
-            || $handler_id == 'index-category')
-        {
-            $qb->set_limit($this->_config->get('index_entries'));
-        }
-        else if ($handler_id == 'latest')
-        {
-            $qb->set_limit($args[0]);
-        }
-        else if ($handler_id == 'latest-category')
-        {
-            $qb->set_limit($args[1]);
-        }
+        
         $this->_articles = $qb->execute_unchecked();
-        $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
 
         $this->_prepare_request_data();
         $_MIDCOM->set_26_request_metadata(net_nehmer_blog_viewer::get_last_modified($this->_topic, $this->_content_topic), $this->_topic->guid);
@@ -132,7 +147,6 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
 
     /**
      * Displays the index page
-     *
      */
     function _show_index($handler_id, &$data)
     {
@@ -192,7 +206,5 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
         midcom_show_style('index-end');
         return true;
     }
-
 }
-
 ?>
