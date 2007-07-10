@@ -291,3 +291,18 @@ Should the topic be visible
 Link items to external URL if available
 ---STRINGEND
 
+---STRING navigation options
+Navigation options
+---STRINGEND
+
+---STRING show latest items in navigation
+Show latest items in navigation
+---STRINGEND
+
+---STRING show pseudo leaves in navigation
+Show pseudo leaves in navigation
+---STRINGEND
+
+---STRING set this to no if you want to hide feeds and archive links in navigation
+Set this to 'no' if you want to hide 'Feeds' and 'Archive' links in navigation
+---STRINGEND

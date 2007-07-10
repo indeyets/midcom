@@ -291,3 +291,18 @@ Näytetäänkö kansio
 Linkitä artikkelit ulkoiseen osoitteeseen jos saatavilla
 ---STRINGEND
 
+---STRING navigation options
+Navigaatioasetukset
+---STRINGEND
+
+---STRING show latest items in navigation
+Näytä viimeisimmät kohteet navigaatiossa
+---STRINGEND
+
+---STRING show pseudo leaves in navigation
+Näytä valesivut navigaatiossa
+---STRINGEND
+
+---STRING set this to no if you want to hide feeds and archive links in navigation
+Aseta tämä kohtaan 'ei' jos haluat piilottaa linkit 'Syötteet' ja 'Arkisto' navigaatiosta
+---STRINGEND
