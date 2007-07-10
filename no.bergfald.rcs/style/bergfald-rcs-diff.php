@@ -25,7 +25,7 @@ foreach ($diff as $attribute => $values)
         continue;
     }
     
-    if (is_array($values))
+    if (is_array($values['diff']))
     {
         continue;
     }
