@@ -338,8 +338,10 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
                 $_MIDCOM->relocate('');
                 // This will exit.
         }
-                
-        $_MIDCOM->set_pagetitle(sprintf($this->_l10n->get('create wikipage %s'), $this->_wikiword));
+
+        $data['view_title'] = sprintf($this->_request_data['l10n']->get('create wikipage %s'), $this->_wikiword);
+        $_MIDCOM->set_pagetitle($data['view_title']);
+        $data['preview_mode'] = false;
         
         // DM2 form action does not include our GET parameters, store them in session for a moment
         if (class_exists('org_openpsa_relatedto_handler'))
