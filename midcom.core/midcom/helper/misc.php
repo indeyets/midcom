@@ -787,12 +787,10 @@ function ImageCopyResampleBicubic(&$dst_img, &$src_img, $dst_x, $dst_y, $src_x, 
 function midcom_generate_urlname_from_string($string, $replacer = "-")
 {
     // TODO: sanity-check $replacer ?
-    echo "{$string}: ";
 
     // Try to transliterate non-latin strings to URL-safe format
     require_once('utf8_to_ascii.php');
     $string = utf8_to_ascii($string, '_');
-    echo "{$string}: ";
 
     // Replacement map for most common characters
     /**
