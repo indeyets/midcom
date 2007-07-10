@@ -273,6 +273,10 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
         $duplicate_reservations_members = array();
         foreach($instances as $date => $instance)
         {
+            if($instance['start'] == $this->_event->start && $instance['end'] == $this->_event->end)
+            {
+                continue;
+            }
             $resolver = new org_openpsa_calendar_event();
             $resolver->resources = $this->_event->resources;
             $resolver->participants = $this->_event->resources;
