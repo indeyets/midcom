@@ -787,121 +787,28 @@ function ImageCopyResampleBicubic(&$dst_img, &$src_img, $dst_x, $dst_y, $src_x, 
 function midcom_generate_urlname_from_string($string, $replacer = "-")
 {
     // TODO: sanity-check $replacer ?
-
+    $orig_string = $string;
     // Try to transliterate non-latin strings to URL-safe format
     require_once('utf8_to_ascii.php');
-    $string = utf8_to_ascii($string, '_');
+    $string = utf8_to_ascii($string, $replacer);
+    $string = trim(str_replace('[?]', '', $string));
 
-    // Replacement map for most common characters
-    /**
-     * Use hex codes for characters to avoid issues with editors using charset other than UTF-8
-     * Add also uppercase codes, strotolower as default is not multibyte aware and you can't trust that
-     *   1. it is overloaded with mb_strtolower (if even available)
-     *   2. mb_strolower works in all cases as you suppose it would
-     */
-    $replace_characters = array(
-        // UTF-8, scandinavian lowercase
-        "\xC3\xA4" => "a",
-        "\xC3\xB6" => "o",
-        "\xC3\xA5" => "a",
-        "\xC3\xBC" => "u",
-        "\xC3\x9F" => "ss",
-
-        // UTF-8, scandinavian uppercase
-        "\xC3\x84" => "A",
-        "\xC3\x96" => "O",
-        "\xC3\x85" => "A",
-        "\xC3\x9C" => "U",
-
-        //UTF-8, Polish lowercase
-        "\xC4\x85" => "a",
-        "\xC4\x87" => "c",
-        "\xC4\x99" => "e",
-        "\xC5\x82" => "l",
-        "\xC5\x84" => "n",
-        "\xC3\xB3" => "o",
-        "\xC5\x9B" => "s",
-        "\xC5\xBA" => "z",
-        "\xC5\xBC" => "z",
-
-        // Latin-1, see http://en.wikipedia.org/wiki/ISO_8859-1
-        "\xE4" => "a",
-        "\xF6" => "o",
-        "\xE5" => "a",
-        "\xFC" => "u",
-        "\xDF" => "ss",
-
-        // Latin-1 uppercase
-        "\xC4" => "A",
-        "\xD6" => "O",
-        "\xC5" => "A",
-        "\xDC" => "U",
-
-        // Latin-2 lowercase
-        "\xB1" => "a",
-        "\xE6" => "c",
-        "\xEA" => "e",
-        "\xB3" => "l",
-        "\xF1" => "n",
-        "\xF3" => "o",
-        "\xB6" => "s",
-        "\xBC" => "z",
-        "\xBF" => "z",
-
-        // Latin-2 uppercase
-        "\xA1" => "A",
-        "\xC6" => "C",
-        "\xCA" => "E",
-        "\xA3" => "L",
-        "\xD1" => "N",
-        "\xD3" => "O",
-        "\xA6" => "S",
-        "\xAC" => "Z",
-        "\xAF" => "Z",
-
-    );
-
-    // Replace the characters in the map
-    static $search_arr = array();
-    static $replace_arr = array();
-    if (   empty($search_arr)
-        || empty($replace_arr))
+    // Ultimate fall-back, if we couldn't get anything out of the transliteration we use the UTF-8 character hexes as the name string to have *something*
+    if (   empty($string)
+        || preg_match("/^{$replacer}+$/", $string))
     {
-        foreach ($replace_characters as $search => $replace)
+        $i = 0;
+        // make sure this is not mb_strlen (ie mb automatic overloading off)
+        $len = strlen($orig_string);
+        $string = '';
+        while ($i < $len)
         {
-            $search_arr[] = $search;
-            $replace_arr[] = $replace;
-        }
-    }
-    // this should be faster than calling the fuction for each search/replace pair separately
-    $string = str_replace($search_arr, $replace_arr, $string);
-
-    // Try to transliterate characters not in map with iconv if we can
-    if (   function_exists('iconv')
-        && function_exists('mb_detect_encoding'))
-    {
-        /**
-         * NOTE: the order of character sets is important and some sets look very similar to each other leading to possible
-         * mis-identifications
-         * Therefore: Do not touch unless you actually know how mb_detect_encoding actually works and how the character sets work
-         *
-         * Luckily nowadays all Midgard installs *should* use UTF-8 only, making our life easier.
-         **/
-        $encoding = mb_detect_encoding($string, 'ASCII,JIS,UTF-8,ISO-8859-1,EUC-JP,SJIS');
-        if (   !empty($encoding)
-            && $encoding != 'ASCII')
-        {
-            // silence in case we have misdetected the encoding and iconv complains
-            $stat = @iconv($encoding, 'ASCII//TRANSLIT', $string);
-            if (!empty($stat))
-            {
-                $string = $stat;
-            }
+            $byte = $orig_string[$i];
+            $string .= str_pad(dechex(ord($byte)), '0', STR_PAD_LEFT);
+            $i++;
         }
     }
 
-    // Spaces around a dash to just dash
-    $string = preg_replace('/\s+-\s+/', '-', $string);
     // Rest of spaces to underscores
     $string = preg_replace('/\s+/', '_', $string);
 
