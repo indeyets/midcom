@@ -89,7 +89,7 @@
         ),
         'archive_item_order' => array
         (
-            'description' => 'archive_enable',
+            'description' => 'archive item order',
             'datatype' => 'text',
             'location' => 'config',
             'config_domain' => 'net.nehmer.blog',
@@ -98,8 +98,8 @@
             'widget_radiobox_choices' => array
             (
                 '' => 'default setting',
-                '1' => 'yes',
-                '0' => 'no',
+                'ASC' => 'ascending',
+                'DESC' => 'descending',
             ),
         ),
         'rss_subscription_enable' => array

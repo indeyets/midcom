@@ -27,6 +27,18 @@ Arkisto
 Salli arkistojen käyttö
 ---STRINGEND
 
+---STRING archive item order
+Arkiston järjestys
+---STRINGEND
+
+---STRING ascending
+Nouseva
+---STRINGEND
+
+---STRING descending
+Laskeva
+---STRINGEND
+
 ---STRING article
 Artikkeli
 ---STRINGEND

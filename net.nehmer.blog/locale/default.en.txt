@@ -27,6 +27,18 @@ Archive
 Enable archive browsing
 ---STRINGEND
 
+---STRING archive item order
+Archive item order
+---STRINGEND
+
+---STRING ascending
+Ascending
+---STRINGEND
+
+---STRING descending
+Descending
+---STRINGEND
+
 ---STRING article
 Article
 ---STRINGEND
