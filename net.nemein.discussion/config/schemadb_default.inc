@@ -42,7 +42,7 @@
             ( 
                 'output_mode' => 'markdown' 
             ),
-            'widget' => 'textarea',
+            'widget' => 'markdown',
             'widget_config' => Array
             (
                 'height' => 24,
