@@ -491,7 +491,9 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
                 $data['comment'] =& $comment;
                 midcom_show_style('comments-item');
 
-                if ($_MIDCOM->auth->admin)
+                if (   $_MIDCOM->auth->admin
+                    || (   $_MIDCOM->auth->user
+                        && $comment->can_do('midgard:delete'))
                 {
                     midcom_show_style('comments-admintoolbar');
                 }
