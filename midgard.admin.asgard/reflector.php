@@ -149,11 +149,8 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
 
     function get_class_label()
     {
-        static $component_l10n = false;
-        if (!$component_l10n)
-        {
-            $component_l10n = $this->get_component_l10n();
-        }
+
+        $component_l10n = $this->get_component_l10n();
         $use_classname = $this->_mgdschema_class;
         $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($this->_dummy_object);
         if (!empty($midcom_dba_classname))
