@@ -17,14 +17,14 @@
 			<img src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/indicator.gif" alt="" /> Loading...
 		</div>
 		<div class="container-helper">		
-			<div id="calendar-holder">		
 			<!-- Calendar start -->
+			<div id="calendar-holder">		
 			<?php
 			$data['maemo_calender']->show();
 			?>	
+			</div>
 			<!-- Calendar end -->
-				<div class="event-toolbar-holder">
-				</div>
+			<div class="event-toolbar-holder">
 			</div>
 		</div>		
 	</div>

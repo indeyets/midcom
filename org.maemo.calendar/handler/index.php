@@ -27,8 +27,11 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
 	
 	var $layer_data = array();
 
-	var $available_tags = array();
-	
+	var $user_tags = array();
+	var $default_tag = array();
+
+    var $_buddies = array();
+    
     /**
      * Simple default constructor.
      */
@@ -144,7 +147,10 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
 		$buddylist_leaf = new org_maemo_calendarpanel_buddylist_leaf();
 		
 		$calendar_leaf->add_calendars(&$this->layer_data['calendars']);
-//		print_r($this->layer_data['calendars']);
+
+		$buddylist_leaf->add_buddies(&$this->_buddies);
+        
+        
 		$this->_request_data['panel']->add_leaf('calendar', &$calendar_leaf);
 		$this->_request_data['panel']->add_leaf('buddylist', &$buddylist_leaf);
 	}
@@ -158,6 +164,8 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
 		$_MIDCOM->componentloader->load_graceful('net.nemein.tag');
 		$persons = $this->_get_persons();
 		$all_events = $this->_get_users_events($persons, $this->_request_data['maemo_calender']->from_date, $this->_request_data['maemo_calender']->to_date);
+
+        $this->_create_default_calendars();
 		
 		foreach($all_events as $guid => $event)
 		{
@@ -169,10 +177,64 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
 		debug_pop();
 	}
 	
+	function _create_default_calendars()
+	{
+		$default_calendar_id = $this->current_user->guid;
+		$default_calendar_name = $this->current_user->username;
+		if (   !empty($this->current_user->firstname)
+		    || !empty($this->current_user->lastname))
+		{
+		    $default_calendar_name = "{$this->current_user->lastname}, {$this->current_user->firstname}";
+		}
+
+		if (! isset($this->layer_data['calendars'][$default_calendar_id]))
+		{
+			$this->layer_data['calendars'][$default_calendar_id] = array(
+				'events' => array(),
+				'tags' => $this->user_tags,
+				'owner' => $this->current_user,
+				'name' => $default_calendar_name,
+				'color' => $this->user_tags[0]['color']
+			);
+		}
+		
+		foreach ($this->_buddies as $person_id => $person)
+		{
+		    $calendar_id = $person->guid;
+    		$calendar_name = $person->username;
+    		if (   !empty($person->firstname)
+    		    || !empty($person->lastname))
+    		{
+        		$calendar_name = "{$person->lastname}, {$person->firstname}";
+    		}
+            
+            $public_tags = org_maemo_calendar_common::fetch_available_user_tags($person->guid, true);
+
+            $calendar_color = $this->user_tags[0]['color'];            
+            if (count($public_tags) > 0)
+            {
+                $calendar_color = $public_tags[0]['color'];
+            }
+            
+    		if (! isset($this->layer_data['calendars'][$calendar_id]))
+    		{
+    			$this->layer_data['calendars'][$calendar_id] = array(
+    				'events' => array(),
+    				'tags' => $public_tags,
+    				'owner' => $person->guid,
+    				'name' => $calendar_name,
+    				'color' => $calendar_color
+    			);
+    		}    		
+		}
+	}
+	
 	function _parse_event(&$event)
 	{
 		debug_push_class(__CLASS__, __FUNCTION__);
 		debug_add("Called for #{$event->id} ({$event->title})");		
+		
+		$default_calendar_id = $this->current_user->guid;
 		
         if (class_exists('net_nemein_tag_handler'))
         {
@@ -183,42 +245,50 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
 			 * Make sure we put the event to our Calendar if we own or are participant in it.
 			 */
 			if (   array_key_exists($this->current_user->id, $event->participants)
-				|| ($event->creator == $this->current_user->id
-				&& $event->metadata->creator == $this->current_user->guid)
-				|| array_key_exists('org_maemo_calendar_my_calendar_tag', $tags) )
+				|| $event->metadata->creator == $this->current_user->guid)
 			{
-				// if (!array_key_exists('org_maemo_calendar_my_calendar_tag', $tags)) //if (!array_key_exists($_MIDGARD['user'], $tags))
-				// {
-				// 	$tag_string = 'org_maemo_calendar_my_calendar_tag ';
-				// 	$tag_string .= net_nemein_tag_handler::tag_array2string($tags);
-				// 	$tag_array = net_nemein_tag_handler::string2tag_array($tag_string);
-				// 	
-				// 	$tag_added = net_nemein_tag_handler::tag_object($event,$tag_array,'org.openpsa.calendar');
-				// 	if (!$tag_added)
-				// 	{
-				// 		debug_add("Failed adding tag 'org_maemo_calendar_my_calendar_tag' to event #{$event->id} ({$event->title})");
-				// 	}
-				// }
+				if ( empty($tags))
+				{
+                    $tag_string = $this->user_tags[0]['id'] . ' ';
+                    $tag_array = net_nemein_tag_handler::string2tag_array($tag_string);
+                    $tag_added = net_nemein_tag_handler::tag_object($event,$tag_array);
+                    if (!$tag_added)
+                    {
+                        debug_add("Failed adding tag '{$this->user_tags[0]['id']}' to event #{$event->id} ({$event->title})");
+                    }
+                    else
+                    {
+                        debug_add("Successfully added tag '{$this->user_tags[0]['id']}' to event #{$event->id} ({$event->title})");
+                    }				    
+				}
 
-				if (!isset($this->layer_data['calendars']['org_maemo_calendar_my_calendar_tag']))
+				$this->layer_data['calendars'][$default_calendar_id]['events'][] = $event;
+				if (!isset($this->layer_data['busy'][$default_calendar_id]))
 				{
-					$this->layer_data['calendars']['org_maemo_calendar_my_calendar_tag'] = array(
-						'events' => array(),
-						'tags' => $this->user_tags,
-						'owner' => $this->current_user,
-						'name' => $this->_request_data['l10n']->get('my_calendar')
-					);
+					$this->layer_data['busy'][$default_calendar_id] = array();
 				}
-				$this->layer_data['calendars']['org_maemo_calendar_my_calendar_tag']['events'][] = $event;
-				if (!isset($this->layer_data['busy']['org_maemo_calendar_my_calendar_tag']))
-				{
-					$this->layer_data['busy']['org_maemo_calendar_my_calendar_tag'] = array();
-				}
-				$this->layer_data['busy']['org_maemo_calendar_my_calendar_tag'][$event->guid] = array( 'start' => $event->start, 'end' => $event->end );
+				$this->layer_data['busy'][$default_calendar_id][$event->guid] = array( 'start' => $event->start, 'end' => $event->end );
+			}
+			else
+			{        		
+        		foreach ($this->_buddies as $person_id => $person)
+        		{
+            		$calendar_id = $person->guid;
+            		
+            		if (array_key_exists($person_id, $event->participants))
+            		{
+                        $this->layer_data['calendars'][$calendar_id]['events'][] = $event;
+        				if (!isset($this->layer_data['busy'][$calendar_id]))
+        				{
+        					$this->layer_data['busy'][$calendar_id] = array();
+        				}
+        				$this->layer_data['busy'][$calendar_id][$event->guid] = array( 'start' => $event->start, 'end' => $event->end );            		    
+            		}
+        		} 			    
 			}
 			
-			// $tags = net_nemein_tag_handler::get_object_tags($event);
-			// debug_print_r('final tags', $tags);
+            $tags = net_nemein_tag_handler::get_object_tags($event);
+            debug_print_r('final tags', $tags);
 		}
 		else
 		{
@@ -242,8 +312,13 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
 		debug_push_class(__CLASS__, __FUNCTION__);
 		$ret = array();
 		
+		$this->_get_buddies();		
+		foreach ($this->_buddies as $person_id => $person)
+		{
+		    $ret[] = $person_id;
+		}
+		
 		$ret[] = $this->current_user->id;
-		//TODO: Get buddies
 		
 		$person_count = count($ret);
 		debug_add("Persons {$person_count}");		
@@ -251,6 +326,58 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
 		debug_pop();
 		
 		return $ret;
+	}
+	
+	function _get_buddies()
+	{
+	    debug_push_class(__CLASS__, __FUNCTION__);
+        
+        //$this->_dummy_add_buddy('a9215ef4304c11dc85400b8f9328cb19cb19');
+
+        $qb = net_nehmer_buddylist_entry::new_query_builder();
+        $qb->add_constraint('account', '=', $this->current_user->guid);
+        //$qb->add_constraint('isapproved', '=', true);
+        $qb->add_constraint('blacklisted', '=', false);
+        $buddies_qb = $qb->execute();
+
+        foreach ($buddies_qb as $buddy)
+        {
+            $person = new midcom_db_person($buddy->buddy);
+            if ($person)
+            {
+                $this->_buddies[$person->id] = $person;
+            }
+        }        
+        
+        debug_print_r('Buddies: ',$this->_buddies);
+        
+		debug_pop();
+	}
+	
+	function _dummy_add_buddy($user_guid)
+	{
+        // Check we're not buddies already
+        $qb = net_nehmer_buddylist_entry::new_query_builder();
+        $qb->add_constraint('account', '=', $this->current_user->guid);
+        $qb->add_constraint('buddy', '=', $user_guid);
+        $qb->add_constraint('isapproved', '=', true);
+        $buddies = $qb->execute();
+        if (count($buddies) > 0)
+        {
+            return false;
+        }
+
+        $buddy = new net_nehmer_buddylist_entry();
+        $buddy->account = $this->current_user->guid;
+        $buddy->buddy = $user_guid;
+        $buddy->isapproved = true;
+        if (!$buddy->create())
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to add buddy, reason ".mgd_errstr());
+            // This will exit
+        }
+        
+        return true;
 	}
 
 	function _get_users_events($user_ids, $from, $to)
