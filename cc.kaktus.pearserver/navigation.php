@@ -32,30 +32,23 @@ class cc_kaktus_pearserver_navigation extends midcom_baseclasses_components_navi
         // Prepare everything
         $leaves = array ();
         
-        return $leaves;
-        
-        /*
-        foreach ($result as $article)
-        {
-            $leaves[$article->id] = array
+        $leaves["{$this->_topic->id}_upload"] = array
+        (
+            MIDCOM_NAV_SITE => array
             (
-                MIDCOM_NAV_SITE => Array
-                (
-                    MIDCOM_NAV_URL => "{$article->name}.html",
-                    MIDCOM_NAV_NAME => ($article->title != '') ? $article->title : $article->name
-                ),
-                MIDCOM_NAV_ADMIN => null,
-                MIDCOM_NAV_GUID => $article->guid,
-                MIDCOM_NAV_OBJECT => $article,
-                MIDCOM_META_CREATOR => $article->creator,
-                MIDCOM_META_EDITOR => $article->revisor,
-                MIDCOM_META_CREATED => $article->created,
-                MIDCOM_META_EDITED => $article->revised
-            );
-
-        }
+                MIDCOM_NAV_URL => 'upload/',
+                MIDCOM_NAV_NAME => $this->_l10n->get('upload a release'),
+            ),
+            MIDCOM_NAV_ADMIN => null,
+            MIDCOM_NAV_GUID => null,
+            MIDCOM_NAV_OBJECT => null,
+            MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
+            MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
+            MIDCOM_META_CREATED => $this->_topic->metadata->created,
+            MIDCOM_META_EDITED => $this->_topic->metadata->revised,
+        );
+        
         return $leaves;
-        /* */
     }
 }
 ?>

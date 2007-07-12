@@ -14,21 +14,11 @@
  */
 class cc_kaktus_pearserver_handler_upload extends midcom_baseclasses_components_handler
 {
-    /**
-     * DM2 Controller instance
-     * 
-     * @access private
-     * @var midcom_helper_datamanager2_controller;
-     */
-    var $_controller = null;
+    var $_tmpdir;
+    var $_tmpfile;
+    var $_filename;
     
-    /**
-     * Release object
-     * 
-     * @access private
-     * @var org_openpsa_products_product_dba
-     */
-    var $_product = null;
+    var $_attachment;
     
     /**
      * Constructor. Ties to the parent class constructor.
@@ -42,47 +32,202 @@ class cc_kaktus_pearserver_handler_upload extends midcom_baseclasses_components_
     }
     
     /**
-     * Loads the DM2 create controller instance
+     * Unpack the file for processing
      * 
      * @access private
-     * @return boolean Indicating success
+     * @return boolean
      */
-    function _load_controller()
+    function _unpack()
     {
-        $this->_controller =& midcom_helper_datamanager2_controller::create('create');
-        $this->_controller->schemadb = $this->_request_data['schemadb'];
-        $this->_controller->schemaname = 'upload';
-        $this->_controller->callback_object =& $this;
+        debug_push_class(__CLASS__, __FUNCTION__);
         
-        if (! $this->_controller->initialize())
+        // Check the extension
+        if (!preg_match('/\.(zip|tar(\.gz|\.bz2)?|tgz)$/', strtolower($this->_filename), $regs))
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");
-            // This will exit.
+            debug_add("Illegal file extension: '{$this->_filename}'");
+            debug_pop();
+            
+            $_MIDCOM->uimessages->add($this->_l10n->get('cc.kaktus.pearserver'), sprintf($this->_l10n->get("unknown file type %s"), $regs[1]));
+            return false;
         }
+        
+        $extension = $regs[1];
+        $this->_tmpdir = "{$this->_tmpfile}_extracted";
+        
+        // Get the correct unpacking routine
+        switch (strtolower($extension))
+        {
+            case 'zip':
+                $extract_cmd = "unzip -q -b -L -o {$this->_tmpfile} -d {$this->_tmpdir}";
+                break;
+            case 'tgz':
+            case 'tar.gz':
+                $zj = 'z';
+            case 'tar.bz2':
+                if (!$zj)
+                {
+                    $zj = 'j';
+                }
+            case 'tar':
+                $extract_cmd = "tar -x{$zj} -C {$this->_tmpdir} -f {$this->_tmpfile}";
+                break;
+            default:
+                // Unknown extension (we should never hit this)
+                debug_add("Illegal file extension: '{$this->_tmpfile}'");
+                debug_pop();
+                
+                $_MIDCOM->uimessages->add($this->_l10n->get('cc.kaktus.pearserver'), sprintf($this->_l10n->get("unknown file type %s"), $extension));
+                return false;
+        }
+        
+        // Create a temporary directory for unpacking
+        if (!mkdir($this->_tmpdir))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Failed to create a temporary directory. Check the write permissions of the HTTPD services', MIDCOM_LOG_ERROR);
+            debug_pop();
+            
+            $this->_flush($this->_tmpfile);
+            
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a temporary directory. See error level log for details");
+            // This will exit
+        }
+        
+        // Extract the package
+        debug_add("Executing '{$extract_cmd}'");
+        exec($extract_cmd, $output, $ret);
+        if ($ret != 0)
+        {
+            // extract failed
+            debug_add("Failed to execute '{$extract_cmd}'", MIDCOM_LOG_ERROR);
+            debug_pop();
+            
+            // Flush the temporary files
+            $this->_flush();
+            return false;
+        }
+        
+//        $cmd = 'cp ' . escapeshellarg($v) . ' ' . escapeshellarg($new_v);
+        
+        // Print the file listing
+        $this->_check_shell_args();
+        
+        // Get the package XML
+        $this->_parse_package();
+        
+        // Flush the temporary files
+        $this->_flush();
+        
+        return true;
+    }
+    
+    function _parse_package()
+    {
+        if (!file_exists("{$this->_tmpdir}/package.xml"))
+        {
+            $_MIDCOM->uimessages->add($this->_l10n->get('cc.kaktus.pearserver'), $this->_l10n->get('could not find the package.xml'));
+            return false;
+        }
+        
+        $contents = file_get_contents("{$this->_tmpdir}/package.xml");
+        echo "<pre>{$contents}</pre>\n";
+        
+        $this->_package = $contents;
         
         return true;
     }
     
     /**
-     * DM2 creation callback, binds to the topic PEAR group
+     * Before accepting the package files should be checked to verify that the extracted files do not contain
+     * shell arguments
+     * 
+     * @access private
      */
-    function & dm2_create_callback (&$controller)
+    function _check_shell_args()
     {
-        $this->_request_data['release'] = new org_openpsa_products_product_dba();
-        $this->_request_data['release']->productGroup = $this->_request_data['root_group']->id;
-
-        if (! $this->_request_data['release']->create())
+        $dp = @opendir($this->_tmpdir);
+        if (!$dp)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_print_r('We operated on this object:', $this->_request_data['release']);
-            debug_pop();
-            
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                'Failed to upload a new release, cannot continue. Last Midgard error was: '. mgd_errstr());
-            // This will exit.
+            return;
         }
-
-        return $this->_request_data['release'];
+        
+        // TODO: write a checkup routine
+        while (($file = readdir($dp)) !== false)
+        {
+            echo "{$file}\n";
+        }
+         
+        return true;
+    }
+    
+    /**
+     * Empty the temporary files and directories
+     * 
+     * @access private
+     */
+    function _flush()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        debug_add("Removing the temporary file '{$this->_tmpfile}'");
+        unlink($this->_tmpfile);
+        
+        if (is_dir("{$this->_tmpdir}"))
+        {
+            $cmd = "rm -rf {$this->_tmpdir}";
+            debug_add("Removing the temporary directory: executing command '{$cmd}'");
+            
+            exec($cmd, $output, $ret);
+            
+            if ($ret != 0)
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to flush the directory: {$output}");
+                // This will exit
+            }
+        }
+        
+        // UI messages
+        $_MIDCOM->uimessages->add($this->_l10n->get('cc.kaktus.pearserver'), $this->_l10n->get('temporary files deleted'));
+        
+        debug_pop();
+    }
+    
+    /**
+     * Process the POST form
+     * 
+     * @access private
+     */
+    function _process_form()
+    {
+        if (isset($_POST['f_cancel']))
+        {
+            $_MIDCOM->uimessages->add($this->_l10n->get('cc.kaktus.pearserver'), $this->_l10n->get('upload cancelled'));
+            $_MIDCOM->relocate('');
+            // This will exit
+        }
+        
+        if (!isset($_POST['f_submit']))
+        {
+            return;
+        }
+        
+        // Add UI messages to tell the user what happened
+        $_MIDCOM->uimessages->add($this->_l10n->get('cc.kaktus.pearserver'), $this->_l10n->get('file uploaded'));
+        
+        // Set the temporary filename
+        $this->_filename = $_FILES['release']['name'];
+        $this->_tmpfile = $_FILES['release']['tmp_name'];
+        
+        echo "<pre>\n";
+        
+        // Unpack the temporary file
+        if (!$this->_unpack())
+        {
+            return false;
+        }
+        
+        echo "</pre>\n";
+        die();
     }
     
     /**
@@ -94,20 +239,8 @@ class cc_kaktus_pearserver_handler_upload extends midcom_baseclasses_components_
     function _handler_upload($handler_id, $args, &$data)
     {
         $this->_topic->require_do('midgard:update');
-        $this->_load_controller();
         
-        switch ($this->_controller->process_form())
-        {
-            case 'cancel':
-                $_MIDCOM->relocate('');
-                // This will exit
-                break;
-            
-            case 'save':
-                $_MIDCOM->relocate("process/{$this->_request_data['release']->guid}/");
-                // This will exit
-        }
-        
+        $this->_process_form();
         return true;
     }
     

@@ -33,6 +33,13 @@ class cc_kaktus_pearserver_viewer extends midcom_baseclasses_components_request
             'handler' => array ('cc_kaktus_pearserver_handler_welcome', 'welcome'),
         );
         
+        // Configuration screen
+        $this->_request_switch['config'] = array
+        (
+            'handler' => array ('cc_kaktus_pearserver_handler_config', 'config'),
+            'fixed_args' => array ('config'),
+        );
+        
         // Upload a release
         // Match /upload/
         $this->_request_switch['upload'] = array

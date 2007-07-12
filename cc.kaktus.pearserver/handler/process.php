@@ -169,6 +169,7 @@ class cc_kaktus_pearserver_handler_process extends midcom_baseclasses_components
         $qb->add_constraint('ptable', '=', 'org_openpsa_products_product');
         $this->_attachments = $qb->execute_unchecked();
         
+        print_r($this->_attachments);
         
         foreach ($this->_attachments as $attachment)
         {

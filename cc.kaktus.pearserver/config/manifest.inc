@@ -3,6 +3,12 @@
 'purecode'    => false,
 'version' => '0.0.1',
 'state' => 'alpha',
+/* Check the ACL's in some point
+'privileges' => array
+(
+    'upload' => MIDCOM_PRIVILEGE_ALLOW,
+),
+/* */
 'package.xml' => Array
 (
     'summary' => 'PEAR server',
@@ -13,7 +19,7 @@
         (
             'name' => 'Arttu Manninen',
             'email' => 'arttu@kaktus.cc',
-            'role' => 'developer',
+            'role' => 'lead',
         ),
     ),
     'dependencies' => array
@@ -21,7 +27,7 @@
 //        'PHP5' => array (),
         'midcom' => array
         (
-//            'version' => '2.8'
+            'version' => '2.8.0beta'
         ),
         'midgard' => array
         (

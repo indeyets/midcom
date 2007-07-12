@@ -1,0 +1,27 @@
+---string cc.kaktus.pearserver
+PEAR server
+---string
+
+---string upload cancelled
+Upload cancelled
+---string
+
+---string upload a release
+Upload a release
+---string
+
+---string file
+File
+---string
+
+---string schemadb
+Schema database
+---string
+
+---string root group
+Root group
+---string
+
+---string configuration saved
+Configuration saved
+---string
