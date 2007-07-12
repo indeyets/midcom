@@ -910,7 +910,7 @@ class midcom_application {
                     {
                         $this->cache->content->enable_live_mode();
                         $this->cache->invalidate_all();
-                        die ("Cache invalidation successful.");
+                        $this->uimessages->add($_MIDCOM->i18n->get_string('MidCOM', 'midcom'), "Cache invalidation successful.", 'info');
                     }
                     else if ($tmp[MIDCOM_HELPER_URLPARSER_VALUE] == "nocache")
                     {
