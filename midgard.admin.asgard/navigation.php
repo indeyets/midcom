@@ -107,7 +107,6 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
     function get_object_path()
     {
         $object_path = array();
-        
         if (!is_object($this->_object))
         {
             return $object_path;
@@ -167,13 +166,15 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
                     $this->shown_objects[$child->guid] = true;
                     
                     echo "{$prefix}    <li class=\"{$css_class}\">";
+
                     $label = htmlspecialchars($ref->get_object_label($child));
+                    $icon = $ref->get_object_icon($child);
                     if (empty($label))
                     {
                         $label = "#{$child->id}";
                     }
                     
-                    echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$child->guid}/\">{$label}</a>\n";
+                    echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$child->guid}/\">{$icon}{$label}</a>\n";
                     
 
                     if ($selected)
@@ -237,15 +238,16 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
                         $this->shown_objects[$object->guid] = true;
                         
                         echo "    <li class=\"{$css_class}\">";
-                        
+
                         $label = htmlspecialchars($ref->get_object_label($object));
+                        $icon = $ref->get_object_icon($object);
                         if (empty($label))
                         {
                             $label = "#{$object->id}";
                         }
                         
-                        echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$object->guid}/\">{$label}</a>\n";
-                        
+                        echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$object->guid}/\">{$icon}{$label}</a>\n";
+
                         if ($selected)
                         {
                             $this->_list_child_elements($root_object);

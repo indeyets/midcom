@@ -138,3 +138,4 @@
 (
 ),
 
+'experimental_root_class_detection' => false,

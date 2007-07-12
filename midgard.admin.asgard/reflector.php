@@ -330,6 +330,68 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         return $label;
     }
 
+    function get_object_icon(&$obj)
+    {
+        // Check against static calling
+        if (   !isset($this->_mgdschema_class)
+            || empty($this->_mgdschema_class))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('May not be called statically', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $properties = get_object_vars($obj);
+        if (empty($properties))
+        {
+            debug_add("Could not list object properties, aborting", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+
+        switch(true)
+        {
+        	case (method_exists($obj,'get_icon')):
+        		$icon = $obj->get_icon();
+        		break;
+            case (is_a($obj, 'midgard_person')):
+                $icon = 'stock_person.png';
+                break;
+        		
+            case (is_a($obj, 'midgard_topic')):
+            case (is_a($obj, 'midgard_snippetdir'));
+            case (is_a($obj, 'midgard_style')):
+                $icon='stock_folder.png';
+                break;
+            case (is_a($obj, 'midgard_event')):
+            case (is_a($obj, 'org_openpsa_event')):
+                $icon='stock_event.png';
+                break;
+            case (is_a($obj, 'midgard_eventmember')):
+            case (is_a($obj, 'midgard_member')):
+            case (is_a($obj, 'midgard_group')):
+                $icon='stock_people.png';
+                break;
+            case (is_a($obj, 'midgard_host')):
+                $icon='stock_internet.png';
+                break;
+            case (is_a($obj, 'midgard_pageelement')):
+            case (is_a($obj, 'midgard_element')):
+
+                $icon = 'new-html.png';
+                break;
+
+            default:
+                $icon = 'new-text.png';
+        }
+
+        $icon = "<img src='/midcom-static/stock-icons/16x16/{$icon}' align='absmiddle' border='0' /> ";
+
+        return $icon;
+    }
+
     /**
      * Get class properties to use as search fields in univeralchooser etc
      *

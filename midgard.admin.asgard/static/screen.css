@@ -108,27 +108,6 @@ body
 {
     font-weight: normal;
 }
-#navigation div.section ul.midgard_admin_asgard_navigation li.midgard_topic > a,
-#navigation div.section ul.midgard_admin_asgard_navigation li.midcom_baseclasses_database_topic > a,
-#navigation div.section ul.midgard_admin_asgard_navigation li.midgard_style > a,
-#navigation div.section ul.midgard_admin_asgard_navigation li.midcom_baseclasses_database_style > a,
-#navigation div.section ul.midgard_admin_asgard_navigation li.midgard_page > a,
-#navigation div.section ul.midgard_admin_asgard_navigation li.midcom_baseclasses_database_page > a,
-#navigation div.section ul.midgard_admin_asgard_navigation li.midgard_snippetdir > a,
-#navigation div.section ul.midgard_admin_asgard_navigation li.midcom_baseclasses_database_snippetdir > a
-{
-    padding-left: 18px;
-    background: url('../stock-icons/16x16/stock_folder.png') left center no-repeat;
-}
-#navigation div.section ul.midgard_admin_asgard_navigation li.midgard_group > a,
-#navigation div.section ul.midgard_admin_asgard_navigation li.midcom_baseclasses_database_group > a,
-#navigation div.section ul.midgard_admin_asgard_navigation li.midcom_org_openpsa_organization > a
-{
-    padding-left: 18px;
-    background: url('../stock-icons/16x16/stock_people.png') left center no-repeat;
-}
-
-
 
 #navigation h3
 {
