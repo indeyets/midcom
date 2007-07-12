@@ -275,7 +275,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         if (!is_object($object))
         {
             // Could not object, or got wrong type of object
-            debug_add("Could not get object for key: {$key}", MIDCOM_LOG_WARN);
+            debug_add("Could not get object for key: {$key}", MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
@@ -283,7 +283,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         {
         	foreach($this->titlefield as $field)
         	{
-        		if (isset($object->$field))
+        		if ($object->$field)
         		{
         			$titlefield = $field;
         			break;
@@ -294,6 +294,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         {
         	$titlefield =& $this->titlefield;
         }
+debug_add("Pole: $titlefield",MIDCOM_LOG_ERROR);
         $value = $object->$titlefield;
         debug_pop();
         return $value;

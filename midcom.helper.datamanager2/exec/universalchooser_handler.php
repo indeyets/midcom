@@ -214,8 +214,22 @@ foreach ($results as $object)
 {
     // Silence to avoid notices breaking the XML in case of nonexistent field
     $id = @$object->$idfield;
-    $title = @$object->$titlefield;
-    debug_add("adding result: id={$id} title='{$title}'");
+    if (is_array($titlefield))
+    {
+        ksort($titlefield);
+        foreach($titlefield as $field)
+        {
+            if ($object->$field)
+            {
+                $gotfield = $field;
+                break;
+            }
+        }
+    }
+    reset($titlefield);
+
+    $title = @$object->$gotfield;
+    debug_add("adding result: id={$id} title='{$title}' titlefield='{$gotfield}'");
     echo "      <line>\n";
     echo "          <id>{$id}</id>\n";
     echo "          <title><![CDATA[{$title}]]></title>\n";
