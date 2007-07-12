@@ -225,8 +225,13 @@ foreach ($results as $object)
                 break;
             }
         }
+        reset($titlefield);
     }
-    reset($titlefield);
+    else
+    {
+        $gotfield = $titlefield;
+    }
+
 
     $title = @$object->$gotfield;
     debug_add("adding result: id={$id} title='{$title}' titlefield='{$gotfield}'");
