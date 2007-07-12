@@ -3,6 +3,14 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING Select root to show
+Select root to show
+---STRINGEND
+
+---STRING Show levels
+Show levels
+---STRINGEND
+
 ---STRING de.linkm.sitemap
 Sitemap
 ---STRINGEND
@@ -19,26 +27,19 @@ Display the root node
 Hide leaves
 ---STRINGEND
 
+---STRING root topic
+Root topic
+---STRINGEND
+
 ---STRING root topic to use
 Root folder to use
+---STRINGEND
+
+---STRING skip topics
+Select topics to skip in sitemapview
 ---STRINGEND
 
 ---STRING use google sitemap mode
 Use Google Sitemap mode to output the site structure in XML
 ---STRINGEND
 
----STRING root topic
-Root topic
----STRINGEND
-
----STRING Select root to show
-Select root to show
----STRINGEND
-
----STRING Show levels
-Show levels
----STRINGEND
-
----STRING skip topics
-Select topics to skip in sitemapview
----STRINGEND

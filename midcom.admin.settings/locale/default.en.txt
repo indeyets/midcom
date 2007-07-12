@@ -127,6 +127,10 @@ Website configuration
 Fallback language for missing localizations
 ---STRINGEND
 
+---STRING i18n_multilang_strict
+Hide untranslated content
+---STRINGEND
+
 ---STRING indexer_backend
 Full-text indexing backend
 ---STRINGEND
@@ -301,9 +305,5 @@ Path to unrtf application
 
 ---STRING utility_unzip
 Path to unzip application
----STRINGEND
-
----STRING i18n_multilang_strict
-Hide untranslated content
 ---STRINGEND
 

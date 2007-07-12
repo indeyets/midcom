@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE pl
 
+---STRING %s category %s
+%s: kategoria "%s"
+---STRINGEND
+
 ---STRING add a new entry
 Dodaj
 ---STRINGEND
@@ -11,8 +15,52 @@ Dodaj
 Zaawansowane
 ---STRINGEND
 
+---STRING ajax_enable
+Włącz obsługę AJAX
+---STRINGEND
+
+---STRING archive
+Archiwum
+---STRINGEND
+
+---STRING archive_enable
+Włącz wyświetlanie archiwum
+---STRINGEND
+
+---STRING article
+Artykuł
+---STRINGEND
+
+---STRING atom feed
+Wsad ATOM
+---STRINGEND
+
+---STRING available feeds
+Dostępne wsady
+---STRINGEND
+
+---STRING available feeds introduction
+Dostępne są następujące wsady
+---STRINGEND
+
 ---STRING back to overview
 Powrót
+---STRINGEND
+
+---STRING blog settings
+Ustawnienia bloga
+---STRINGEND
+
+---STRING categories
+Kategorie
+---STRINGEND
+
+---STRING comments_enable
+Włącz komentarze (wymaga net.nehmer.comments)
+---STRINGEND
+
+---STRING content
+Treść
 ---STRINGEND
 
 ---STRING create article
@@ -71,12 +119,20 @@ Dołącz podkategorie do Indeksu oraz RSS
 Zaawansowane
 ---STRINGEND
 
+---STRING first post was made on %s.
+Pierwszy post: %s
+---STRINGEND
+
 ---STRING index count
 Ilość pozycji w indeksie
 ---STRINGEND
 
 ---STRING index settings
 Ustawienia indeksu
+---STRINGEND
+
+---STRING index_entries
+Liczba pozycji w indeksie
 ---STRINGEND
 
 ---STRING list old items in index
@@ -95,8 +151,20 @@ Aktualności
 Zarządzanie aktualnościami
 ---STRINGEND
 
+---STRING no news found.
+Brak newsów
+---STRINGEND
+
 ---STRING no schema available
 Brak schematów
+---STRINGEND
+
+---STRING not enough privileges to create articles
+Nie masz wystarczających uprawnień by stworzyć nowy artykuł
+---STRINGEND
+
+---STRING posted on %s.
+Wysłano %s.
 ---STRINGEND
 
 ---STRING public posting
@@ -115,8 +183,24 @@ Schemat danych w trybie "Książki gości"
 Użytkownik Midgarda w trybie "Książki gości"
 ---STRINGEND
 
+---STRING rss 0.91 feed
+RSS 0.91
+---STRINGEND
+
+---STRING rss 1.0 feed
+RSS 1.0
+---STRINGEND
+
+---STRING rss 2.0 feed
+RSS 2.0
+---STRINGEND
+
 ---STRING rss export settings
 Ustawienia RSS
+---STRINGEND
+
+---STRING rss feed
+Wsad RSS
 ---STRINGEND
 
 ---STRING rss_count
@@ -139,6 +223,10 @@ Dołącz pełnowymiarowy obraz z pola "obraz" do elementów RSS
 Język
 ---STRINGEND
 
+---STRING rss_subscription_enable
+Dodawaj newsy ze zdalnych wsadów RSS i ATOM
+---STRINGEND
+
 ---STRING rss_title
 Tytul RSS (puste - tytuł kategorii)
 ---STRINGEND
@@ -149,6 +237,14 @@ Adres email webmastera
 
 ---STRING schema database
 Ścieżka bazy schematów
+---STRINGEND
+
+---STRING schema settings
+Ustawienia schematów
+---STRINGEND
+
+---STRING schemadb
+Baza schematów
 ---STRINGEND
 
 ---STRING select article type
@@ -171,107 +267,51 @@ Link do innej kategorii ("symlink")
 Nie wybrano kategorii
 ---STRINGEND
 
+---STRING there is a total of %d posts.
+%d postów.
+---STRINGEND
+
 ---STRING visible
 Widoczny?
 ---STRINGEND
 
----STRING %s category %s
-%s: kategoria "%s"
+---STRING archive item order
+Kolejność w archiwum
 ---STRINGEND
 
----STRING ajax_enable
-Włącz obsługę AJAX
+---STRING ascending
+Rosnąco
 ---STRINGEND
 
----STRING archive
-Archiwum
+---STRING descending
+Malejąco
 ---STRINGEND
 
----STRING archive_enable
-Włącz wyświetlanie archiwum
+---STRING link_to_external_url
+Linkuj do zewnętrznych URLi jeśli możliwe
 ---STRINGEND
 
----STRING article
-Artykuł
+---STRING navigation options
+Opcje nawigacji
 ---STRINGEND
 
----STRING atom feed
-Wsad ATOM
+---STRING set this to no if you want to hide feeds and archive links in navigation
+Wybierz 'Nie' jeśli chcesz ukryć link do Archiwum i Wsadów w nawigacji.
 ---STRINGEND
 
----STRING available feeds
-Dostępne wsady
+---STRING set to no for de.linkm.newsticker compatibility
+Wybierz 'Nie' żeby włączyć zgodność z de.linkm.newsticker
 ---STRINGEND
 
----STRING available feeds introduction
-Dostępne są następujące wsady
+---STRING show latest items in navigation
+Pokaż ostatnie wpisy w nawigacji
 ---STRINGEND
 
----STRING blog settings
-Ustawnienia bloga
+---STRING show pseudo leaves in navigation
+Pokaż pseudo strony w nawigacji
 ---STRINGEND
 
----STRING categories
-Kategorie
----STRINGEND
-
----STRING comments_enable
-Włącz komentarze (wymaga net.nehmer.comments)
----STRINGEND
-
----STRING content
-Treść
----STRINGEND
-
----STRING first post was made on %s.
-Pierwszy post: %s
----STRINGEND
-
----STRING index_entries
-Liczba pozycji w indeksie
----STRINGEND
-
----STRING no news found.
-Brak newsów
----STRINGEND
-
----STRING not enough privileges to create articles
-Nie masz wystarczających uprawnień by stworzyć nowy artykuł
----STRINGEND
-
----STRING posted on %s.
-Wysłano %s.
----STRINGEND
-
----STRING rss 0.91 feed
-RSS 0.91
----STRINGEND
-
----STRING rss 1.0 feed
-RSS 1.0
----STRINGEND
-
----STRING rss 2.0 feed
-RSS 2.0
----STRINGEND
-
----STRING rss feed
-Wsad RSS
----STRINGEND
-
----STRING rss_subscription_enable
-Dodawaj newsy ze zdalnych wsadów RSS i ATOM
----STRINGEND
-
----STRING schema settings
-Ustawienia schematów
----STRINGEND
-
----STRING schemadb
-Baza schematów
----STRINGEND
-
----STRING there is a total of %d posts.
-%d postów.
+---STRING use view prefix in url
+Używaj elementu 'view' w URLach
 ---STRINGEND
 

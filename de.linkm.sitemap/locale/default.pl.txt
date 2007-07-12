@@ -7,3 +7,39 @@
 Mapa serwisu
 ---STRINGEND
 
+---STRING Select root to show
+Wybierz początek mapy
+---STRINGEND
+
+---STRING Show levels
+Pokaż poziomy
+---STRINGEND
+
+---STRING display leaves first
+Pokaż strony przed folderami
+---STRINGEND
+
+---STRING display root node
+Pokaż początek mapy
+---STRINGEND
+
+---STRING hide leaves
+Ukryj strony
+---STRINGEND
+
+---STRING root topic
+Początek mapy
+---STRINGEND
+
+---STRING root topic to use
+Wybierz początek mapy
+---STRINGEND
+
+---STRING skip topics
+Wybierz foldery do ukrycia
+---STRINGEND
+
+---STRING use google sitemap mode
+Włącz Google Sitemaps
+---STRINGEND
+

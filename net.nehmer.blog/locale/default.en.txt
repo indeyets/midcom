@@ -23,24 +23,20 @@ Enable AJAX on-site editing
 Archive
 ---STRINGEND
 
----STRING archive_enable
-Enable archive browsing
----STRINGEND
-
 ---STRING archive item order
 Archive item order
 ---STRINGEND
 
----STRING ascending
-Ascending
----STRINGEND
-
----STRING descending
-Descending
+---STRING archive_enable
+Enable archive browsing
 ---STRINGEND
 
 ---STRING article
 Article
+---STRINGEND
+
+---STRING ascending
+Ascending
 ---STRINGEND
 
 ---STRING atom feed
@@ -89,6 +85,10 @@ Create news article
 
 ---STRING delete article
 Delete Article
+---STRINGEND
+
+---STRING descending
+Descending
 ---STRINGEND
 
 ---STRING display settings
@@ -147,8 +147,16 @@ Index settings
 List this many items on index page
 ---STRINGEND
 
+---STRING link_to_external_url
+Link items to external URL if available
+---STRINGEND
+
 ---STRING list old items in index
 List old items in Index
+---STRINGEND
+
+---STRING navigation options
+Navigation options
 ---STRINGEND
 
 ---STRING net.nehmer.blog
@@ -263,8 +271,24 @@ Database schema to use for articles
 Select Article type
 ---STRINGEND
 
+---STRING set this to no if you want to hide feeds and archive links in navigation
+Set this to 'no' if you want to hide 'Feeds' and 'Archive' links in navigation
+---STRINGEND
+
+---STRING set to no for de.linkm.newsticker compatibility
+Set to no for de.linkm.newsticker compatibility
+---STRINGEND
+
 ---STRING settings
 Settings
+---STRINGEND
+
+---STRING show latest items in navigation
+Show latest items in navigation
+---STRINGEND
+
+---STRING show pseudo leaves in navigation
+Show pseudo leaves in navigation
 ---STRINGEND
 
 ---STRING sort order
@@ -283,34 +307,11 @@ No topic selected
 There is a total of %d posts.
 ---STRINGEND
 
----STRING visible
-Should the topic be visible
----STRINGEND
-
----STRING link_to_external_url
-Link items to external URL if available
----STRINGEND
-
----STRING navigation options
-Navigation options
----STRINGEND
-
----STRING show latest items in navigation
-Show latest items in navigation
----STRINGEND
-
----STRING show pseudo leaves in navigation
-Show pseudo leaves in navigation
----STRINGEND
-
----STRING set this to no if you want to hide feeds and archive links in navigation
-Set this to 'no' if you want to hide 'Feeds' and 'Archive' links in navigation
----STRINGEND
-
 ---STRING use view prefix in url
 Use 'view' prefix in url
 ---STRINGEND
 
----STRING set to no for de.linkm.newsticker compatibility
-Set to no for de.linkm.newsticker compatibility
+---STRING visible
+Should the topic be visible
 ---STRINGEND
+

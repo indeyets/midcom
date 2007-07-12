@@ -171,3 +171,15 @@ Spróbuj ponownie
 Wyślij plik
 ---STRINGEND
 
+---STRING failed to update the storage object
+Błąd zapisu obiektu.
+---STRINGEND
+
+---STRING no
+Nie
+---STRINGEND
+
+---STRING yes
+Tak
+---STRINGEND
+

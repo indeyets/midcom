@@ -63,6 +63,10 @@ Update
 Permissions for %s %s
 ---STRINGEND
 
+---STRING privilege reserve
+Reserve
+---STRINGEND
+
 ---STRING privileges
 Permissions
 ---STRINGEND
@@ -71,6 +75,3 @@ Permissions
 Folder permissions
 ---STRINGEND
 
----STRING privilege reserve
-Reserve
----STRINGEND

@@ -11,6 +11,10 @@ Only show approved articles
 Automatically create an index page for this topic?
 ---STRINGEND
 
+---STRING ajax_enable
+Enable AJAX on-site editing
+---STRINGEND
+
 ---STRING approve
 Approve
 ---STRINGEND
@@ -21,10 +25,6 @@ Article
 
 ---STRING auto_approved
 Approve new articles by default
----STRINGEND
-
----STRING simple_name_handling
-Should the article's URL be generated automatically?
 ---STRINGEND
 
 ---STRING autoindex-notes
@@ -119,6 +119,10 @@ Select Schema
 Settings
 ---STRINGEND
 
+---STRING simple_name_handling
+Should the article's URL be generated automatically?
+---STRINGEND
+
 ---STRING symlink_topic
 Get content from another topic ("symlink")
 ---STRINGEND
@@ -141,9 +145,5 @@ View Article
 
 ---STRING visible
 Should the topic be visible
----STRINGEND
-
----STRING ajax_enable
-Enable AJAX on-site editing
 ---STRINGEND
 

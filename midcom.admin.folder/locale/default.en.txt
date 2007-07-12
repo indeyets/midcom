@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING %s state
+%s state
+---STRINGEND
+
 ---STRING a folder with name %s already exists
 A folder with name "%s" already exists!
 ---STRINGEND
@@ -15,6 +19,10 @@ Everything under this folder will be deleted:
 All style elements
 ---STRINGEND
 
+---STRING alpha
+Alpha
+---STRINGEND
+
 ---STRING are you sure you want to delete this folder
 Are you sure you want to delete this folder?
 ---STRINGEND
@@ -25,6 +33,10 @@ Author
 
 ---STRING authors
 Authors
+---STRINGEND
+
+---STRING beta
+Beta
 ---STRINGEND
 
 ---STRING by score
@@ -111,6 +123,10 @@ Edit metadata
 Edit metadata of '%s'
 ---STRINGEND
 
+---STRING experimental, use with your own risk
+Experimental, use with your own risk
+---STRINGEND
+
 ---STRING exported
 Exported
 ---STRINGEND
@@ -157,6 +173,14 @@ Local element
 
 ---STRING midcom.admin.folder
 Folder management
+---STRINGEND
+
+---STRING move
+Move
+---STRINGEND
+
+---STRING move %s
+Move %s
 ---STRINGEND
 
 ---STRING nav order
@@ -219,6 +243,10 @@ Revision
 Revisor
 ---STRINGEND
 
+---STRING saving changes
+Saving changes
+---STRINGEND
+
 ---STRING schedule end
 Display until (leave empty for unlimited display)
 ---STRINGEND
@@ -267,50 +295,15 @@ List of style elements
 Style elements for style %s
 ---STRINGEND
 
----STRING title is empty
-Title is empty!
----STRINGEND
-
----STRING warning, might result in data loss
-Warning! Might result in data loss!
----STRINGEND
-
----STRING saving changes
-Saving changes
----STRINGEND
-
----STRING move
-Move
----STRINGEND
-
----STRING title is empty
-Title is empty!
----STRINGEND
-
----STRING warning, might result in data loss
-Warning! Might result in data loss!
----STRINGEND
-
----STRING move %s
-Move %s
----STRINGEND
-
----STRING alpha
-Alpha
----STRINGEND
-
----STRING beta
-Beta
----STRINGEND
-
----STRING %s state
-%s state
----STRINGEND
-
----STRING experimental, use with your own risk
-Experimental, use with your own risk
----STRINGEND
-
 ---STRING this component is still being developed and tested and might contain undocumented features
 This component is still being developed and tested and might contain undocumented features
 ---STRINGEND
+
+---STRING title is empty
+Title is empty!
+---STRINGEND
+
+---STRING warning, might result in data loss
+Warning! Might result in data loss!
+---STRINGEND
+

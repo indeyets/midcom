@@ -60,7 +60,7 @@ Klasy <strong>NemeinCalendar</strong> nie zostały zainstalowane. Zainstaluj <a 
 ---STRINGEND
 
 ---STRING net.nemein.calendar
-Kalendarz grupowy
+Kalendarz
 ---STRINGEND
 
 ---STRING no participants
@@ -125,5 +125,69 @@ Do
 
 ---STRING weekly
 Tygodniowo
+---STRINGEND
+
+---STRING archive
+Archiwum
+---STRINGEND
+
+---STRING back to archive.
+Powrót do archiwum.
+---STRINGEND
+
+---STRING display settings
+Ustawienia wyświetlania
+---STRINGEND
+
+---STRING edit event
+Edytuj wydarzenie
+---STRINGEND
+
+---STRING enable GET filters
+Włącz filtry
+---STRINGEND
+
+---STRING first event started on %s.
+Pierwsze wydarzenie rozpoczyna się %s.
+---STRINGEND
+
+---STRING index count
+Liczba wydarzeń na stronie głównej.
+---STRINGEND
+
+---STRING list events from master event
+Pokaż wszystkie wydarzenia.
+---STRINGEND
+
+---STRING master event guid
+GUID głównego wydarzenia
+---STRINGEND
+
+---STRING numbers in parantheses show ongoing events.
+Liczby w nawiasach oznaczają ilość nadchodzących wydarzeń.
+---STRINGEND
+
+---STRING root event guid
+GUID głównego wydarzenia
+---STRINGEND
+
+---STRING show events locally
+Pokazuj wszystkie wydarzenia
+---STRINGEND
+
+---STRING syndicated
+Dostępne w RSS
+---STRINGEND
+
+---STRING there is a total of %d events.
+Wydarzenia: %d
+---STRINGEND
+
+---STRING type filter for upcoming
+Filtr typu listy wydarzeń
+---STRINGEND
+
+---STRING week %1$s of year %2$s
+Tydzień %1$s roku %2$s
 ---STRINGEND
 

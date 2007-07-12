@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING back to %s
+Back to page "%s"
+---STRINGEND
+
 ---STRING changes done in revision %s to %s
 Changes done in revision %s to %s
 ---STRINGEND
@@ -73,9 +77,5 @@ View this revision (%s)
 
 ---STRING viewing version %s of %s
 Version %s of %s
----STRINGEND
-
----STRING back to %s
-Back to page "%s"
 ---STRINGEND
 

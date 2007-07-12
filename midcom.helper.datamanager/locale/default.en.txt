@@ -107,6 +107,10 @@ X-Mailer name
 MIME type
 ---STRINGEND
 
+---STRING no
+No
+---STRINGEND
+
 ---STRING no file
 No file
 ---STRINGEND
@@ -177,9 +181,5 @@ Upload file
 
 ---STRING yes
 Yes
----STRINGEND
-
----STRING no
-No
 ---STRINGEND
 

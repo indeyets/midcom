@@ -103,6 +103,10 @@ revalidate
 (Domyślnie: %s )
 ---STRINGEND
 
+---STRING failed to save settings, reason %s
+Błąd zapisu konfiguracji: %s
+---STRINGEND
+
 ---STRING host configuration
 Konfiguracja serwisu.
 ---STRINGEND
@@ -145,6 +149,18 @@ Poziom logowania
 
 ---STRING log_tailurl_enable
 Wyświetlaj log w serwisie
+---STRINGEND
+
+---STRING metadata_approval
+Włącz zatwierdzanie treści
+---STRINGEND
+
+---STRING metadata_scheduling
+Włącz kolejkowanie publikacji treśći
+---STRINGEND
+
+---STRING metadata_schema
+Schemat edycji metadanych
 ---STRINGEND
 
 ---STRING midcom.admin.settings
@@ -207,6 +223,10 @@ Czas przechowywania plików tymczasowych (sekundy)
 Włącz geopozycjonowanie treści
 ---STRINGEND
 
+---STRING settings saved successfully
+Ustawienia zostały zapisane
+---STRINGEND
+
 ---STRING show_hidden_objects
 Pokaż ukrytą treść
 ---STRINGEND
@@ -267,23 +287,23 @@ Plik polecenia unrtf
 Plik polecenia unzip
 ---STRINGEND
 
----STRING failed to save settings, reason %s
-Błąd zapisu konfiguracji: %s
+---STRING auth_login_form_httpcode
+Kod HTTP w formularzach autoryzacji
 ---STRINGEND
 
----STRING metadata_approval
-Włącz zatwierdzanie treści
+---STRING auth_login_form_httpcode_200
+200 OK
 ---STRINGEND
 
----STRING metadata_scheduling
-Włącz kolejkowanie publikacji treśći
+---STRING auth_login_form_httpcode_403
+403 Forbidden
 ---STRINGEND
 
----STRING metadata_schema
-Schemat edycji metadanych
+---STRING i18n_multilang_strict
+Ukryj zawartość nieprzetłumaczoną
 ---STRINGEND
 
----STRING settings saved successfully
-Ustawienia zostały zapisane
+---STRING staging2live_staging
+Serwis testowy
 ---STRINGEND
 

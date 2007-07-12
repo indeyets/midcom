@@ -111,3 +111,87 @@ Tylko tytuly
 Bez tytułu
 ---STRINGEND
 
+---STRING %s items
+Elementów zaimportowanych: %s
+---STRINGEND
+
+---STRING approve new items automatically
+Automatycznie zatwierdzaj nowe elementy
+---STRINGEND
+
+---STRING bloglines
+Bloglines
+---STRINGEND
+
+---STRING bloglines account
+Konto Bloglines
+---STRINGEND
+
+---STRING default author for items
+Domyślny autor
+---STRINGEND
+
+---STRING delete feed
+Usuń wsad
+---STRINGEND
+
+---STRING edit feed %s
+Edytuj wsad "%s"
+---STRINGEND
+
+---STRING fetch feed %s
+Pobrano wsad "%s"
+---STRINGEND
+
+---STRING keep removed items
+Zachowaj lokalnekopie usuniętych elementów wsadu
+---STRINGEND
+
+---STRING latest fetch %s
+Ostatnie pobranie: %s
+---STRINGEND
+
+---STRING latest item from %s
+Ostatni element: %s
+---STRINGEND
+
+---STRING local item
+Lokalna kopia elementu
+---STRINGEND
+
+---STRING manage feeds
+Zarządzaj wsadami
+---STRINGEND
+
+---STRING manage feeds of %s
+Zarządzaj wsadami w folderze "%s"
+---STRINGEND
+
+---STRING n/a
+N/A
+---STRINGEND
+
+---STRING no items found in feed
+Brak elementów
+---STRINGEND
+
+---STRING refresh all feeds
+Odśwież wszystkie wsady
+---STRINGEND
+
+---STRING refresh feed
+Odśwież wsad
+---STRINGEND
+
+---STRING remote item
+Element wsadu
+---STRINGEND
+
+---STRING subscribe feeds
+Dodaj wsady
+---STRINGEND
+
+---STRING subscribe feeds for %s
+Dodaj wsady do folderu "%s"
+---STRINGEND
+

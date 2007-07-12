@@ -55,6 +55,10 @@ Upload element
 Element name
 ---STRINGEND
 
+---STRING element name required
+Element name is required
+---STRINGEND
+
 ---STRING file contents
 File contents
 ---STRINGEND
@@ -109,9 +113,5 @@ URL
 
 ---STRING xml
 XML
----STRINGEND
-
----STRING element name required
-Element name is required
 ---STRINGEND
 

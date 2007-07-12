@@ -31,10 +31,6 @@ Wstecz
 Utwórz artykuł
 ---STRINGEND
 
----STRING net.nehmer.static
-Treść statyczna
----STRINGEND
-
 ---STRING default_schema
 Domyślny schemat artykułu
 ---STRINGEND
@@ -73,6 +69,10 @@ Rozmiar pliku
 
 ---STRING filetype
 Typ pliku
+---STRINGEND
+
+---STRING net.nehmer.static
+Treść statyczna
 ---STRINGEND
 
 ---STRING no files in this directory
@@ -125,5 +125,25 @@ Pokaż artykuł
 
 ---STRING visible
 Folder jest widoczny
+---STRINGEND
+
+---STRING ajax_enable
+Włącz edycję poprzez AJAX
+---STRINGEND
+
+---STRING article
+Artykuł
+---STRINGEND
+
+---STRING content
+Treść
+---STRINGEND
+
+---STRING indexinnav
+Pokaż indeks w nawigacji
+---STRINGEND
+
+---STRING simple_name_handling
+Automatyczne tworzenie URLi.
 ---STRINGEND
 

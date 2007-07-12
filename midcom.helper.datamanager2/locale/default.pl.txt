@@ -179,3 +179,27 @@ Nie ustawione (dziedziczone)
 Inne
 ---STRINGEND
 
+---STRING You can only upload images here. This file will not be saved.
+Tylko obrazy. Inne pliki nie zostaną zapisane.
+---STRINGEND
+
+---STRING archived image
+Zapisany obraz
+---STRINGEND
+
+---STRING could not figure out which image to show, listing files
+Nie wiem, który obraz pokazać - wyświetlam listę.
+---STRINGEND
+
+---STRING rotate left
+Obróć w lewo
+---STRINGEND
+
+---STRING rotate right
+Obróć w prawo
+---STRINGEND
+
+---STRING type image: actions
+Operacje
+---STRINGEND
+

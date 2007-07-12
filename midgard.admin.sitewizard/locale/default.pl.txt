@@ -52,7 +52,7 @@ Typ serwisu
 ---STRINGEND
 
 ---STRING midgard uses sitegroups for organizing data
-Midgard korzysta z wirualnych baz danych (sitegroups), w których przechowuje dane poszczególnych firm.<br /><br />Aby rpozpocząć podaj nazwę firmy oraz konto administracyjne dla tej firmy.
+Midgard korzysta z wirualnych baz danych (sitegroups), w których przechowuje dane poszczególnych firm.<br /><br />Aby rozpocząć podaj nazwę firmy oraz konto administracyjne dla tej firmy.
 ---STRINGEND
 
 ---STRING midgard.admin.sitewizard
@@ -85,5 +85,33 @@ Szablon MidCOM
 
 ---STRING use existing organization
 Użyj istniejącej firmy
+---STRINGEND
+
+---STRING change style
+Wybierz styl
+---STRINGEND
+
+---STRING completely empty style
+Pusty - utwórz własny styl
+---STRINGEND
+
+---STRING congratulations, your site has been set up to %s
+Gratulacje. Właśnie stworzyłeś serwis %s
+---STRINGEND
+
+---STRING custom
+Własny styl
+---STRINGEND
+
+---STRING modify site setup
+Zmień konfigurację
+---STRINGEND
+
+---STRING to work the site must have been set up in apache configuration and dns
+Pamiętaj aby dodać konfigurację VirtualHost do Apache'a
+---STRINGEND
+
+---STRING you need to authenticate
+Podaj nazwę użytkownika i hasło
 ---STRINGEND
 

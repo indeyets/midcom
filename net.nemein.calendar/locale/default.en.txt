@@ -183,11 +183,11 @@ Unsubscribed event - Click to subscribe
 Until date
 ---STRINGEND
 
----STRING weekly
-Weekly
----STRINGEND
-
 ---STRING week %1$s of year %2$s
 Week %1$s of year %2$s
+---STRINGEND
+
+---STRING weekly
+Weekly
 ---STRINGEND
 

@@ -24,11 +24,35 @@ Lokalizator
 <p>Popraw uprawnienia i spróbuj ponownie.</p>
 ---STRINGEND
 
+---STRING select lang and component
+Wybierz język i moduł
+---STRINGEND
+
 ---STRING string-id
 Identyfikator napisu
 ---STRINGEND
 
----STRING select lang and component
-Wybierz język i moduł
+---STRING core component status
+Status (core)
+---STRINGEND
+
+---STRING default
+domyślnie
+---STRINGEND
+
+---STRING other component status
+Status (inne)
+---STRINGEND
+
+---STRING read information from midgard wiki on how to add languages
+Więcej informacji o dodawaniu języków:  <a href="http://www.midgard-project.org/midcom-permalink-ded2437586408cd03cd4582ba45b91f2">Midgard Wiki</a>.
+---STRINGEND
+
+---STRING select language to translate
+Wybierz język
+---STRINGEND
+
+---STRING translation status for language %s
+Stan tłumaczenia
 ---STRINGEND
 

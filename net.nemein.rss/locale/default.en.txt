@@ -119,6 +119,10 @@ Manage feeds
 Manage feeds of folder "%s"
 ---STRINGEND
 
+---STRING n/a
+N/A
+---STRINGEND
+
 ---STRING net.nemein.rss
 RSS and Atom news aggregator
 ---STRINGEND
@@ -189,9 +193,5 @@ Titles only
 
 ---STRING untitled
 Untitled
----STRINGEND
-
----STRING n/a
-N/A
 ---STRINGEND
 
