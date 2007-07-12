@@ -99,6 +99,10 @@ Replication of approved changes will start in one minute
 Approved by
 ---STRINGEND
 
+---STRING arrangement score
+Arrangement score
+---STRINGEND
+
 ---STRING back
 Back
 ---STRINGEND
@@ -733,9 +737,5 @@ Write mail
 
 ---STRING yes
 Yes
----STRINGEND
-
----STRING arrangement score
-Arrangement score
 ---STRINGEND
 

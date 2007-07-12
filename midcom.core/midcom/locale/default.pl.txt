@@ -15,6 +15,10 @@ Edytuj stronę
 Więcej...
 ---STRINGEND
 
+---STRING OK
+OK
+---STRINGEND
+
 ---STRING abstract
 Skrót
 ---STRINGEND
@@ -137,6 +141,10 @@ Zamknij konfigurację
 
 ---STRING component
 Moduł
+---STRINGEND
+
+---STRING component %s configuration for folder %s
+Konfiguracja modułu %s w folderze %s
 ---STRINGEND
 
 ---STRING component configuration
@@ -288,7 +296,7 @@ Login
 ---STRINGEND
 
 ---STRING login message - insufficient privileges
-Brak wymaganych upawnień.
+Brak wymaganych uprawnień.
 ---STRINGEND
 
 ---STRING login message - please enter credencials
@@ -361,6 +369,14 @@ Nie
 
 ---STRING not hidden
 Widoczne
+---STRINGEND
+
+---STRING offline
+Offline
+---STRINGEND
+
+---STRING online
+Online
 ---STRINGEND
 
 ---STRING online state
@@ -535,6 +551,10 @@ Wyświetlane od %s do %s
 Wyświetlane do %s
 ---STRINGEND
 
+---STRING sitegroup
+Sitegroup
+---STRINGEND
+
 ---STRING sort_by_calendar
 wg daty utworzenia
 ---STRINGEND
@@ -699,23 +719,23 @@ Napisz maila
 Tak
 ---STRINGEND
 
----STRING OK
-OK
+---STRING approved changes will be replicated within next minute
+Replikacja zatwierdzonych zmian rozpocznie się za minutę.
 ---STRINGEND
 
----STRING component %s configuration for folder %s
-Konfiguracja modułu %s w folderze %s
+---STRING invalidate cache
+Odśwież pamięć podręczną systemu
 ---STRINGEND
 
----STRING offline
-Offline
+---STRING run replication
+Uruchom replikację
 ---STRINGEND
 
----STRING online
-Online
+---STRING stagin2live
+Serwis produkcyjno-rozwojowy
 ---STRINGEND
 
----STRING sitegroup
-Sitegroup
+---STRING tags
+Tagi
 ---STRINGEND
 
