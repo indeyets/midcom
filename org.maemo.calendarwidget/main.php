@@ -1246,7 +1246,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 		{
 			$this->show_calendar($layer_tag);
 			
-			$html .= "   <div class=\"calendar-layer\" id=\"{$layer_tag}\">\n";
+			$html .= "   <div class=\"calendar-layer\" id=\"calendar-layer-{$layer_tag}\">\n";
 
 			$html .= $this->_render_events($layer_data['events'], $layer_tag);
 
@@ -1335,12 +1335,12 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 		return $html;
 	}
 	
-	function _render_event(&$event, $layer_tag, $override_start=false, $override_end=false)
+	function _render_event(&$event, $layer_tag, $override_start=false, $override_end=false, $multiday_event_id=null)
 	{
 		// debug_push_class(__CLASS__, __FUNCTION__);
 		// debug_add("Called for {$event->title}");
 		
-		$html = '';		
+		$html = '';
 		
 		$event_start = $event->start;
 		$event_end = $event->end;
@@ -1360,10 +1360,28 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 		$start_time = date('H:i',$event_start);
 		$end_time = date('H:i',$event_end);
 		
+		$toolbar_config = '';
 		$bg_color = 'FFFF99';
 		$event_element_id = "event-{$event->guid}";
 		
+		if ($multiday_event_id != null)
+		{
+            $event_element_id = $event_element_id . '_' . $multiday_event_id;
+            $toolbar_config .= " md: true";		    
+		}
+		
 		$event_type_class = "";
+
+        $event_tags = net_nemein_tag_handler::get_object_tags($event);
+		
+		$event_tag_classes = '';
+		if (! empty($event_tags))
+		{
+		    foreach ($event_tags as $tag => $data)
+		    {
+    		    $event_tag_classes .= "tag-{$tag}";		        
+		    }
+		}
 		
 		$position = $this->_calculate_position($event_start, $event_end);			
 		$height = $this->_calculate_height($event_start, $event_end);
@@ -1380,7 +1398,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 			|| $this->type == ORG_MAEMO_CALENDARWIDGET_DAY )
         {
 			$html .= "<div id=\"{$event_element_id}\" ";
-			$html .= "title=\"{$event->title}\" class=\"calendar-object-event {$event_type_class}\" ";
+			$html .= "title=\"{$event->title}\" class=\"calendar-object-event {$event_type_class} {$event_tag_classes}\" ";
 			$html .= "style=\"height: {$height}{$this->cell_height_unit}; top: {$position['top']}px; left: {$position['left']}%; background-color: #{$bg_color};\">\n";
 
 			$html .= "   <div class=\"calendar-object-event-header\">\n";
@@ -1390,16 +1408,17 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 
 			$html .= "   <div class=\"calendar-object-event-content\">\n";
 			$html .= "      <span class=\"event-title\">{$event->title}</span>\n";
+			$html .= "      <span class=\"event-time\">{$start_time} - {$end_time}</span>\n";
 			$html .= "   </div>\n";
 
 			$html .= "</div>\n\n";
-
-			$this->_jscripts .= '$j("#' . $layer_tag . ' #' . $event_element_id . '").eventToolbar({});'."\n";
+            
+			$this->_jscripts .= '$j("#calendar-layer-' . $layer_tag . ' #' . $event_element_id . '").eventToolbar({' . $toolbar_config . '});'."\n";
 			//$this->_jscripts .= 'console.log("layer_tag: "+$j("#' . $layer_tag . ' #' . $event_element_id . '")[0]);'."\n";
         }
 		else
 		{
-			$html .= "<li id=\"{$event_element_id}\" class=\"{$event_type_class}\" style=\"background-color: #{$bg_color};\">";
+			$html .= "<li id=\"{$event_element_id}\" class=\"{$event_type_class} {$event_tag_classes}\" style=\"background-color: #{$bg_color};\">";
 			$html .= "<span class=\"event-start-time\">{$start_time}</span>";
 			$html .= "<a class=\"event-title-link\" href=\"#\" title=\"{$event->title}\">{$event->title}</a>";
 			$html .= "</li>\n";
@@ -1416,10 +1435,11 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 		
 		$start = $event->start;
 		$end = mktime(23, 59, 59, date('m',$start), date('d',$start), date('Y',$start));
-		$html .= $this->_render_event($event, $layer_tag, $start, $end);
+		$html .= $this->_render_event($event, $layer_tag, $start, $end, 0);
 		
 		$current_day = mktime(0, 0, 0, date('m',$start), date('d',$start) + 1, date('Y',$start));
-
+        
+        $i = 1;
 		while ($end != $event->end)
 		{
 			$next_start = mktime(0, 0, 0, date('m',$current_day), date('d',$current_day) + 1, date('Y',$current_day));
@@ -1429,9 +1449,10 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 				$end = $event->end;
 			}
 			
-			$html .= $this->_render_event($event, $layer_tag, $current_day, $end);
+			$html .= $this->_render_event($event, $layer_tag, $current_day, $end, $i);
 			
 			$current_day = $next_start;
+			$i++;
 		}
 		
 		return $html;		

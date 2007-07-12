@@ -15,6 +15,7 @@ jQuery.fn.eventToolbar = function(settings) {
 	settings = jQuery.extend({
 		type: "menu", // float, menu
 		event_type: "public",
+		md: false, //is multiday event?
 		visible: true
 	}, settings);
 	
@@ -25,37 +26,82 @@ jQuery.fn.eventToolbar = function(settings) {
 	var toolbar_visible = false;
 	var toolbar_left = 0;
 	var toolbar_top = 0;
-	var insert_to = element;
+	var insert_to = "div.event-toolbar-holder";
+	var target = jQuery(insert_to);
 	var toolbar_position_type = "absolute";
+	var toolbar_id_prefix = element[0].id;
+		
+	if (settings.md)
+	{
+		element_id_parts = toolbar_id_prefix.split('_');
+		toolbar_id_prefix = element_id_parts[0];
+	}
 	
+	var toolbar_id = toolbar_id_prefix + '-toolbox';
+
+	var _already_exists = false;
+
 	if (settings.type == "menu")
 	{
-		insert_to = "#calendar-holder";
 		toolbar_position_type = "relative";
 	}
-	
-	_create_toolbar();
-	
-	if (settings.type == "float")
-	{
-		_save_position();
+
+	var childs = target.children();	
+	for (var i=0; i<childs.length; i++)
+	{	
+		if (childs[i].id == toolbar_id)
+		{
+			//console.log("We found a existing toolbar for the event!");
+			toolbar_div = jQuery(toolbar_id,target);
+			var correct_child = childs[i];
+			_already_exists = true;
+		}
 	}
 	
-	handler.click(toggle_toolbar);//.bind('mouseover', _save_position);
+	if (! _already_exists)
+	{
+		//console.log('Toolbar '+toolbar_id + ' doesnt exist. Create!');
+		_create_toolbar();
+		
+		if (settings.type == "float")
+		{
+			_save_position();
+		}
+	}
+	
+	handler.click(toggle_toolbar);
 	
 	function toggle_toolbar()
 	{
-		if (toolbar_visible == false)
-		{
-			toolbar_visible = true;
-			toolbar_div.show();
+		var childs = target.children();	
+		for (var i=0; i<childs.length; i++)
+		{	
+			if (childs[i].id != toolbar_id)
+			{
+				if (childs[i].style.display == 'block')
+				{
+					childs[i].style.display = 'none';
+				}					
+			}
+		}
+		
+		if (toolbar_div[0] == undefined)
+		{						
+			if (correct_child.style.display == 'none')
+			{
+				correct_child.style.display = 'block';
+			}
+			else
+			{
+				correct_child.style.display = 'none';	
+			}
 		}
 		else
 		{
-			toolbar_visible = false;
-			toolbar_div.hide();
-			//handler.bind('mouseover', _save_position);
+			toolbar_div.toggle();			
 		}
+
+		toolbar_visible = !toolbar_visible;
 	}
 	
 	function _save_position() //event
@@ -104,20 +150,38 @@ jQuery.fn.eventToolbar = function(settings) {
 			left: toolbar_left + 'px',
 			top: toolbar_top + 'px'
 		});
-		
-		// console.log("toolbar_left: "+toolbar_left);
-		// console.log("toolbar_top: "+toolbar_top);
-				
-		//handler.unbind('mouseover');
 	}
 	
 	function _create_toolbar()
 	{	
 		toolbar_div = jQuery("<div/>").attr({
-            id: element[0].id + '-toolbox',
+            id: toolbar_id,
             title: element[0].title + ' - toolbox',
             className: "event-toolbar-" + settings.type
-        }).insertAfter( insert_to ).hide().css({ position: toolbar_position_type, zIndex: 3000 });
+        }).hide().css({ position: toolbar_position_type, zIndex: 3000 });
+
+		target.append( toolbar_div );
+		
+		/*.insertAfter( insert_to ).hide().css({ position: toolbar_position_type, zIndex: 3000 });
+		
+		if (settings.type == "menu")
+		{
+			res = target.add( toolbar_div );
+			
+			toolbar_div = res[1];
+		}*/
+		// if (settings.type == "menu")
+		// {
+		// 	var target = jQuery(insert_to);
+		// 	toolbar_div.hide().css({ position: toolbar_position_type, zIndex: 3000 });
+		// 	//target.html( '' );
+		// 	target.html( toolbar_div );
+		// }
+		// else
+		// {
+			//toolbar_div.insertAfter( insert_to ).hide().css({ position: toolbar_position_type, zIndex: 3000 });
+		// }
+
 //appendTo('body').hide().css({ position: 'absolute', zIndex: 3000 });
 		// var contentHolder = toolbar_div.append( "<div class='event-toolbar-content'>" );
 		// var contentList = contentHolder.prepend( "<ul>" );
