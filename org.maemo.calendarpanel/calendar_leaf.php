@@ -40,6 +40,11 @@ class org_maemo_calendarpanel_calendar_leaf extends midcom_baseclasses_component
 		$this->_calendars = $calendars;
 	}
 	
+	function _get_available_calendars()
+	{
+		return $this->_calendars;
+	}
+
 	function generate_content()
 	{
 		$html = "";
@@ -47,11 +52,6 @@ class org_maemo_calendarpanel_calendar_leaf extends midcom_baseclasses_component
 		$html .= $this->_render_calendar_list();
 		
 		return $html;
-	}
-	
-	function _get_available_calendars()
-	{
-		return;
 	}
 	
 	function _render_calendar_list()
@@ -82,6 +82,14 @@ class org_maemo_calendarpanel_calendar_leaf extends midcom_baseclasses_component
 			{
 				$item_class = 'first-item';
 			}
+			if ($total_calendars == 1)
+			{
+			    $tag_item_class = 'only-item';
+			}			
+			if ($i % 2 == 0)
+			{
+				$item_class .= ' odd';
+			}	
 			
 			$visible = $this->calendarwidget->is_calendar_visible($calendar_tag);
 			$visibility = 'checked="checked"';
@@ -91,14 +99,18 @@ class org_maemo_calendarpanel_calendar_leaf extends midcom_baseclasses_component
 			}
 			
 			$bg_color = 'FFFF99';
+			if (! empty($calendar_data['color']))
+			{
+			    $bg_color = $calendar_data['color'];
+			}
 			
 			$html .= "   <li class=\"{$item_class}\" id=\"calendar-list-item-{$calendar_tag}\">\n";
-			$html .= "      <div class=\"calendar-visibility\"><input type=\"checkbox\" name=\"\" value=\"\" {$visibility}/></div>\n";
+			$html .= "      <div class=\"calendar-visibility\"><input type=\"checkbox\" name=\"\" value=\"\" {$visibility}/ onclick=\"toggle_layer_visibility('{$calendar_tag}');\"></div>\n";
 			$html .= "      <div class=\"calendar-name\" style=\"background-color: #{$bg_color};\" onclick=\"toggle_tag_listing('{$calendar_tag}');\">{$calendar_data['name']}</div>\n";
-			$html .= "      <div class=\"calendar-order\">\n";
-			$html .= "         <a class=\"graph-arrowUp\"></a>\n";
-			$html .= "         <a class=\"graph-arrowDown\"></a>\n";
-			$html .= "      </div>\n";
+            $html .= "      <div class=\"calendar-order\">\n";
+            // $html .= "         <a class=\"graph-arrowUp\"></a>\n";
+            // $html .= "         <a class=\"graph-arrowDown\"></a>\n";
+            $html .= "      </div>\n";
 			$html .= "      <div class=\"calendar-actions\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/icon-properties.png\" alt=\"Properties\" width=\"16\" height=\"16\" /></div>\n";
 			$html .= "   </li>\n";
 			
@@ -106,6 +118,8 @@ class org_maemo_calendarpanel_calendar_leaf extends midcom_baseclasses_component
 			{
 				$html .= "   <div class=\"calendar-tag-list\" id=\"calendar-list-item-{$calendar_tag}-tags\">\n";
 				$html .= "      <ul>\n";
+
+				$total_tags = count($calendar_data['tags']);
 				foreach ($calendar_data['tags'] as $k => $tag_data)
 				{
 					$visible = $this->calendarwidget->is_calendar_tag_visible($tag_data['id']);
@@ -115,15 +129,37 @@ class org_maemo_calendarpanel_calendar_leaf extends midcom_baseclasses_component
 						$visibility = '';
 					}
 					
+					$tag_item_class = '';
+        			if ($k == $total_tags-1)
+        			{
+        				$tag_item_class = 'last-item';
+        			}
+        			if ($k == 0)
+        			{
+        				$tag_item_class = 'first-item';
+        			}
+        			if ($total_tags == 1)
+        			{
+        			    $tag_item_class = 'only-item';
+        			}
+        			if ($k % 2 == 0)
+        			{
+        				$tag_item_class .= ' odd';
+        			}					
+					
 					$bg_color = 'FFFF99';
 					if ($tag_data['color'])
 					{
 						$bg_color = $tag_data['color'];
 					}
 					
-					$html .= "         <li>\n";
-					$html .= "            <div class=\"calendar-visibility\"><input type=\"checkbox\" name=\"\" value=\"\" {$visibility}/></div>\n";
+					$html .= "         <li class=\"{$tag_item_class}\" id=\"calendar-list-item-{$tag_data['id']}\">\n";
+					$html .= "            <div class=\"calendar-visibility\"><input type=\"checkbox\" name=\"\" value=\"\" {$visibility}/ onclick=\"toggle_tag_visibility('{$calendar_tag}', '{$tag_data['id']}');\"></div>\n";
 					$html .= "            <div class=\"calendar-name\" style=\"background-color: #{$bg_color};\">{$tag_data['name']}</div>\n";
+        			$html .= "            <div class=\"calendar-order\">\n";
+        			$html .= "               <a class=\"graph-arrowUp\"></a>\n";
+        			$html .= "               <a class=\"graph-arrowDown\"></a>\n";
+        			$html .= "            </div>\n";
 					$html .= "            <div class=\"calendar-actions\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/icon-properties.png\" alt=\"Properties\" width=\"16\" height=\"16\" /></div>\n";
 					$html .= "         </li>\n";
 				}

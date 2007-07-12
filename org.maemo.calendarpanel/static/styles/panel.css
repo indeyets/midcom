@@ -70,17 +70,23 @@
 	-moz-border-radius: 0.6em 0.6em 0.6em 0.6em;
 	cursor: pointer;
 }
+#main-panel-accordion ul ul li div.calendar-name {
+	width: 120px;
+}
 #main-panel-accordion ul li div.calendar-order {
 	width: 16px;
 	margin: 1px 3px 0 3px;
 }
-#main-panel-accordion ul li.first-item div.calendar-order a.graph-arrowUp {
+#main-panel-accordion ul ul li.first-item div.calendar-order a.graph-arrowUp {
 	display: none;
 }
-#main-panel-accordion ul li.first-item div.calendar-order a.graph-arrowDown {
+#main-panel-accordion ul ul li.first-item div.calendar-order a.graph-arrowDown {
 	top: 9px;
 }
-#main-panel-accordion ul li.last-item div.calendar-order a.graph-arrowDown {
+#main-panel-accordion ul ul li.last-item div.calendar-order a.graph-arrowDown {
+	display: none;
+}
+#main-panel-accordion ul ul li.only-item div.calendar-order a.graph-arrowDown, #main-panel-accordion ul ul li.only-item div.calendar-order a.graph-arrowUp {
 	display: none;
 }
 #main-panel-accordion ul li div.calendar-actions {
