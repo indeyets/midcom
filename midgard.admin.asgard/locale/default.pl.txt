@@ -1,0 +1,61 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE pl
+
+---STRING asgard
+Asgard
+---STRINGEND
+
+---STRING back to site
+Powrót do serwisu
+---STRINGEND
+
+---STRING create %s under %s
+Utwórz %s w %s
+---STRINGEND
+
+---STRING created by %s on %s
+Utworzono %s przez %s
+---STRINGEND
+
+---STRING default language
+Język domyślny
+---STRINGEND
+
+---STRING delete %s %s
+Usuń %s %s
+---STRINGEND
+
+---STRING edit %s %s
+Edytuj %s %s
+---STRINGEND
+
+---STRING in %s
+w %s
+---STRINGEND
+
+---STRING in fallback language
+W języku podstawowym
+---STRINGEND
+
+---STRING last edited by %s on %s (revision %s)
+Ostatnia zmiana: %s przez %s (Wersja %s)
+---STRINGEND
+
+---STRING metadata of %s %s
+Metadane of %s %s
+---STRINGEND
+
+---STRING midgard.admin.asgard
+Administracja Midgarda
+---STRINGEND
+
+---STRING parameters of %s %s
+Parametry %s %s
+---STRINGEND
+
+---STRING under %s
+W %s
+---STRINGEND
+
