@@ -1,9 +1,9 @@
 <table style="width: 100%;">
     <thead>
         <tr>
-            <th style="width: 20%;"><?php echo $data['l10n']->get('domain'); ?></th>
-            <th style="width: 20%;"><?php echo $data['l10n']->get('name'); ?></th>
-            <th style="width: 50%;"><?php echo $data['l10n_midcom']->get('value'); ?></th>
+            <th style="width: 20%;"><?php echo $_MIDCOM->i18n->get_string('domain', 'midgard.admin.asgard'); ?></th>
+            <th style="width: 20%;"><?php echo $_MIDCOM->i18n->get_string('name', 'midgard.admin.asgard'); ?></th>
+            <th style="width: 50%;"><?php echo $_MIDCOM->i18n->get_string('value', 'midgard.admin.asgard'); ?></th>
         </tr>
     </thead>
     <tbody>
