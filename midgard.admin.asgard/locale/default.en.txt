@@ -1,5 +1,6 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
+---CVS $Id$
 ---LANGUAGE en
 
 ---STRING This is the index
@@ -8,5 +9,61 @@ This is the index
 
 ---STRING You can change this to something else :-)
 You can change this to something else :-)
+---STRINGEND
+
+---STRING asgard
+Asgard
+---STRINGEND
+
+---STRING back to site
+Back to site
+---STRINGEND
+
+---STRING create %s under %s
+Create %s under %s
+---STRINGEND
+
+---STRING created by %s on %s
+Created by %s on %s
+---STRINGEND
+
+---STRING default language
+Default language
+---STRINGEND
+
+---STRING delete %s %s
+Delete %s %s
+---STRINGEND
+
+---STRING edit %s %s
+Edit %s %s
+---STRINGEND
+
+---STRING in %s
+in %s
+---STRINGEND
+
+---STRING in fallback language
+In fallback language
+---STRINGEND
+
+---STRING last edited by %s on %s (revision %s)
+Last edited by %s on %s (revision %s)
+---STRINGEND
+
+---STRING metadata of %s %s
+Metadata of %s %s
+---STRINGEND
+
+---STRING midgard.admin.asgard
+Midgard Administration UI
+---STRINGEND
+
+---STRING parameters of %s %s
+Parameters of %s %s
+---STRINGEND
+
+---STRING under %s
+Under %s
 ---STRINGEND
 
