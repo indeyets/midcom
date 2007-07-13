@@ -415,10 +415,14 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
 
         $qb->add_order('eid.start', 'ASC');
 
+        mgd_debug_start();
         $memberships = $qb->execute();
+        mgd_debug_stop();
         unset($qb);
         if (empty($memberships))
         {
+            debug_add('QB returned empty resultset');
+            debug_pop();
             return $events;
         }
         $seen_events = array();

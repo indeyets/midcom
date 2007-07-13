@@ -207,6 +207,7 @@
             'widget' => 'text',
             'hidden' => true,
         ),
+        /* BAD idea to hide fields like this, rather keep them out of the schema alltogether
         'participants' => array (
             'title' => 'participants',
             'description' => 'participants',
@@ -248,6 +249,17 @@
             ),
             'hidden' => true,
         ),
+        'busy' => array (
+            'title' => 'dont allow overlapping',
+            'description' => 'dont allow overlapping',
+            'type'    => 'boolean',
+            'widget'      => 'checkbox',
+            'storage'    => 'busy',
+            'default'     => 0,
+            'hidden' => true,
+        ),
+        */
+        // FIXME: This might not work as expected, a better way to handle it ?
         'orgOpenpsaAccesstype' => array (
             'title' => 'access type',
             'description' => 'access type',
@@ -257,21 +269,12 @@
             (
                 'options' => array
                 (
-                    ORG_OPENPSA_ACCESSTYPE_PUBLIC => 'public',
                     ORG_OPENPSA_ACCESSTYPE_PRIVATE => 'private',
+                    ORG_OPENPSA_ACCESSTYPE_PUBLIC => 'public',
                 ),
             ),
             'widget' => 'select',
             'required' => true,
-            'hidden' => true,
-        ),
-        'busy' => array (
-            'title' => 'dont allow overlapping',
-            'description' => 'dont allow overlapping',
-            'type'    => 'boolean',
-            'widget'      => 'checkbox',
-            'storage'    => 'busy',
-            'default'     => 0,
             'hidden' => true,
         ),
     ),

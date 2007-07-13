@@ -99,7 +99,7 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
         
         $this->_defaults['end'] = $this->_defaults['start'] + 3600;
 
-        $this->_defaults['tags'] = 'default';
+        // TODO: populate current user to default participants list if not there already
         
         $session =& new midcom_service_session();
         if ($session->exists('failed_POST_data'))
