@@ -3,7 +3,7 @@
 'version'           => '0.0.1',
 'state'             => 'beta',
 'privileges'        => Array(),
-'class_definitions' => Array(),
+'class_definitions' => Array('midcom_dba_classes.inc'),
 'watches'           => Array(),
 'package.xml' => Array
 (  

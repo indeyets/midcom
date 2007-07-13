@@ -31,9 +31,14 @@ class net_nemein_favourites_admin extends midcom_baseclasses_components_request_
 	    }
 	    else
 	    {
+	        $midcom_i18n =& $_MIDCOM->get_service('i18n');
+	        $l10n =& $midcom_i18n->get_l10n('net.nemein.favourites');
+
 	        $url = $node[MIDCOM_NAV_FULLURL];
-                echo "<a href=\"{$url}create/{$objectType}/{$guid}.html\" class=\"net_nemein_favourites_create\">Add to favourites</a>";
-                return true;
+
+                echo "<a href=\"{$url}create/{$objectType}/{$guid}.html\" class=\"net_nemein_favourites_create\">{$l10n->get('add to favourites')}</a>";
+                
+		return true;
 	    }
 	}
     }

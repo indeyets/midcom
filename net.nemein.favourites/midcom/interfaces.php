@@ -18,6 +18,7 @@ class net_nemein_favourites_interface extends midcom_baseclasses_components_inte
         $this->_component = 'net.nemein.favourites';
         $this->_autoload_files = array
         (
+	    'favourite.php',
 	    'viewer.php', 
 	    'admin.php', 
 	    'navigation.php'
