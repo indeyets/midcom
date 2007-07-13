@@ -132,6 +132,9 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
             case 'html':
                 return $this->value;
 
+            case 'code':
+                return '<pre style="overflow:auto">'.htmlspecialchars($this->value).'</pre>';
+
             case 'specialchars':
                 return htmlspecialchars($this->value);
 
