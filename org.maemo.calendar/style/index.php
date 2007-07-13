@@ -5,6 +5,8 @@
  */
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
 ?>
+<div class="application">
+    
 	<!-- Header start -->
 <?php midcom_show_style("application_header"); ?>
 	<!-- Header end -->
@@ -34,3 +36,5 @@
 $data['panel']->show();
 ?>
 	<!-- Panel end -->
+	
+</div> <!-- Application end -->

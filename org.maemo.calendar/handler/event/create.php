@@ -118,12 +118,18 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
      *
      * @access private
      */
-    function _load_controller()
+    function _load_controller($handler_id)
     {
 		$this->_load_schemadb();
         $this->_controller =& midcom_helper_datamanager2_controller::create('create');
-        $this->_controller->schemadb =& $this->_schemadb;
+        $this->_controller->schemadb =& $this->_schemadb;        
+
         $this->_controller->schemaname = 'default';
+        if ($handler_id == 'ajax-event-create')
+        {
+            $this->_controller->schemaname = 'ajax';         
+        }
+
         $this->_controller->defaults = $this->_defaults;
         $this->_controller->callback_object =& $this;
         if (! $this->_controller->initialize())
@@ -217,7 +223,7 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
 		
 		debug_add("requested time: {$this->_request_data['selected_day']}");
 		
-        $this->_load_controller();
+        $this->_load_controller($handler_id);
         $this->_prepare_request_data();
 		
 		switch ($this->_controller->process_form())
@@ -239,7 +245,8 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
 	{
 		if ($handler_id == 'ajax-event-create')
 		{
-			midcom_show_style('event_create_small');			
+			midcom_show_style('event_create_ajax');
+//			midcom_show_style('event_create_small');
 		}
 		else
 		{

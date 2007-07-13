@@ -1,12 +1,12 @@
 function finishCalendarLoad(id) {
-	//run_scripts($j('#'+id)[0]);
-	$j('#'+id).fadeIn("",function(){
+	//run_scripts(jQuery('#'+id)[0]);
+	jQuery('#'+id).fadeIn("",function(){
 		var bodyClass = calendar_config["types_classes"][calendar_config["type"]];	
 		if (   bodyClass == 'week'
 			|| bodyClass == 'day')
 		{
 			//console.log("type == week/day start_hour_x: "+calendar_config["start_hour_x"]);
-			$j('div.calendar-timeline-holder')[0].scrollTop = calendar_config["start_hour_x"];
+			jQuery('div.calendar-timeline-holder')[0].scrollTop = calendar_config["start_hour_x"];
 		}		
 	});
 }
@@ -57,13 +57,13 @@ function zoom_view(zoom_in, url)
 		timeout: 12000,
 		error: function() {
 			alert("Failed to zoom");
-			$j('#calendar-holder').show();
+			jQuery('#calendar-holder').show();
 		},
 		success: function(r) {
-			$j('#calendar-holder').html(unescape(r));
+			jQuery('#calendar-holder').html(unescape(r));
 
 			var bodyClass = calendar_config["types_classes"][calendar_config["type"]];
-			$j('body').attr('class', bodyClass);
+			jQuery('body').attr('class', bodyClass);
 
 			setTimeout("finishCalendarLoad('calendar-holder')", 400);
 		}
@@ -73,7 +73,7 @@ function zoom_view(zoom_in, url)
 }
 
 function change_date() {
-	var form = $j('#date-selection-form');
+	var form = jQuery('#date-selection-form');
 	var currentDate = new Date();
 
 	var inputs = [];
@@ -82,7 +82,7 @@ function change_date() {
 	var year = currentDate.getFullYear();
 	calendar_timestamp = currentDate.getTime()/1000.0;
 	
-	$j(':input', form).each(function() {
+	jQuery(':input', form).each(function() {
 		if (this.name == "month-select")
 		{
 			month = this.value-1;
@@ -116,10 +116,10 @@ function change_date() {
 		timeout: 12000,
 		error: function() {
 			alert("Failed to change date");
-			$j('#calendar-holder').show();
+			jQuery('#calendar-holder').show();
 		},
 		success: function(r) {
-			$j('#calendar-holder').html(unescape(r));
+			jQuery('#calendar-holder').html(unescape(r));
 
 			var bodyClass = calendar_config["types_classes"][calendar_config["type"]];
 			
@@ -159,26 +159,26 @@ function create_event(timestamp)
 function close_create_event()
 {	
 	//jQuery("#calendar-modal-window").html('');
-	// $j("#calendar-modal-window").hide();
+	// jQuery("#calendar-modal-window").hide();
 //	var win = jQuery("#calendar-modal-window");
 	jQuery("#calendar-modal-window").hide();
 	//jQuery.unblockUI(win);
 	return;
 }
 
-$j(document).ready(function() {
-	$j.extend($j.blockUI.defaults.overlayCSS, { backgroundColor: '#b39169' });
-	$j('#calendar-loading').ajaxStart(function() {
-		$j('#calendar-holder').hide();
-		//$j(this).fadeIn();
+jQuery(document).ready(function() {
+	jQuery.extend(jQuery.blockUI.defaults.overlayCSS, { backgroundColor: '#b39169' });
+	jQuery('#calendar-loading').ajaxStart(function() {
+		jQuery('#calendar-holder').hide();
+		//jQuery(this).fadeIn();
 		var indicator_url = MIDCOM_STATIC_URL + "/org.maemo.calendar/images/indicator.gif";
-		$j.blockUI('<img src="' + indicator_url + '" alt="Loading..." /> Please wait');
-		//$j(this).show();
+		jQuery.blockUI('<img src="' + indicator_url + '" alt="Loading..." /> Please wait');
+		//jQuery(this).show();
 	}).ajaxStop(function() {
-		//$j('#calendar-loading').fadeOut(); 
-		$j.unblockUI();
-		//$j(this).hide();
-		//$j('#calendar-holder').show();
+		//jQuery('#calendar-loading').fadeOut(); 
+		jQuery.unblockUI();
+		//jQuery(this).hide();
+		//jQuery('#calendar-holder').show();
 	});
 
 });

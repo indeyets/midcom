@@ -60,7 +60,19 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
 		   'handler' => Array('org_maemo_calendar_handler_event_create', 'create'),
 	       'fixed_args' => array('ajax', 'event', 'create'),
 	       'variable_args' => 1,
-	   );	
+	   );
+	   
+       // Match /ajax/buddylist/add
+       $this->_request_switch['ajax-buddylist-add'] = array(
+          'handler' => Array('org_maemo_calendar_handler_buddylist_admin', 'add'),
+          'fixed_args' => array('ajax', 'buddylist', 'add'),
+       );
+        // Match /ajax/buddylist/add/<guid>
+        $this->_request_switch['ajax-buddylist-add'] = array(
+           'handler' => Array('org_maemo_calendar_handler_buddylist_admin', 'add'),
+           'fixed_args' => array('ajax', 'buddylist', 'add'),
+           'variable_args' => 1,
+        );	   
 	
 	   // Match /ajax/change/date/<timestamp>
 	   $this->_request_switch['ajax-change-date'] = array(
