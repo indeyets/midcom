@@ -1,4 +1,5 @@
-<form method="get" action="&(_MIDGARD['uri']:h);">
+<form method="get" action="&(_MIDGARD['uri']:h);" id="net_nemein_reservations_resource_list">
+&(data['hidden_fields']:h);
     <label for="new_resource">
         <?php echo $data['l10n']->get('select resources to compare'); ?>
     </label>

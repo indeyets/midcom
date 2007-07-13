@@ -261,6 +261,18 @@ class net_nemein_reservations_handler_resource extends midcom_baseclasses_compon
         }
         
         $data['suffix'] = '';
+        $data['hidden_fields'] = '';
+        
+        // Store the year and month parameters if available
+        if (isset($_GET['year']))
+        {
+            $data['hidden_fields'] .= '<input type="hidden" name="year" value="' . $_GET['year'] . '" />'."\n";
+        }
+            
+        if (isset($_GET['month']))
+        {
+            $data['hidden_fields'] .= '<input type="hidden" name="month" value="' . $_GET['month'] . '" />'."\n";
+        }
         
         // Populate the comparison calendars
         if (   $this->_config->get('enable_multiple_calendars')
