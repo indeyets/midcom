@@ -1,3 +1,76 @@
+.accordion {
+	width: 100%;
+	background-color: #FFFFFF;
+	border-top: 1px solid #826647;
+	border-bottom: 1px solid #826647;
+}
+.accordion .accordion-leaf-header {
+	height: 24px;
+	line-height: 24px;
+	padding: 0 10px;
+	font-weight: bold;
+	color: #fff;
+	background: url(../images/panel-accordion-bg.gif) top left no-repeat;
+	cursor: pointer;
+}
+.accordion .accordion-leaf-body {
+	padding: 5px;
+	margin: 0;
+	border-left: 1px solid #826647;
+	border-right: 1px solid #826647;
+	overflow: auto;
+}
+.accordion .accordion-leaf-body p {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+}
+.accordion .accordion-leaf-body .accordion-leaf-menu
+{
+	height: 18px;
+	margin-bottom: 3px;
+	padding: 1px 3px 1px 3px;
+	background-color: #d7c5b0;
+	-moz-border-radius: 4px;
+}
+.accordion .accordion-leaf-body .accordion-leaf-menu ul.leaf-menu
+{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+.accordion .accordion-leaf-body .accordion-leaf-menu ul.leaf-menu li
+{
+	height: 18px;
+	line-height: 18px;
+	margin: 0;
+	margin-right: 3px;
+	padding: 0;
+	padding-right: 3px;
+	border-right: 1px solid #826647;
+	float: left;
+	background-color: #d7c5b0;
+	
+}
+.accordion .accordion-leaf-body .accordion-leaf-menu ul.leaf-menu li a
+{
+	height: 18px;
+	line-height: 18px;
+	margin-right: 3px;
+	/*background-color: #b39169;*/
+}
+.accordion .accordion-leaf-body .accordion-leaf-menu ul.leaf-menu li a img
+{
+	border: none;
+}
+.accordion .accordion-leaf-hover
+{
+	background-color: #90ef30;
+}
+.accordion .accordion-leaf-active
+{
+	background-color: #6CAF00;
+}
+
 .panel {
 	width: 200px;
 	max-height: 380px;
@@ -29,18 +102,18 @@
 	width: 200px;
 }
 
-#main-panel-accordion ul
+.accordion-leaf-body ul
 {
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
 }
-#main-panel-accordion ul ul
+.accordion-leaf-body ul ul
 {
 	margin: 2px 0 2px 5px;
 }
-#main-panel-accordion ul li,
-#main-panel-accordion ul ul li
+.accordion-leaf-body ul li,
+.accordion-leaf-body ul ul li
 {
 	margin: 0 0 3px 0;
 	padding: 0;
@@ -48,8 +121,8 @@
 	line-height: 19px;
 	background-color: #FFFFFF;
 }
-#main-panel-accordion ul li div,
-#main-panel-accordion ul ul li div
+.accordion-leaf-body ul li div,
+.accordion-leaf-body ul ul li div
 {
 	margin: 0 3px 0 3px;
 	padding: 0;
@@ -57,10 +130,10 @@
 	clear: right;
 }
 
-#main-panel-accordion ul li div.calendar-visibility input {
+.accordion-leaf-body ul li div.calendar-visibility input {
 	margin: 2px 0 0 0;
 }
-#main-panel-accordion ul li div.calendar-name {
+.accordion-leaf-body ul li div.calendar-name {
 	width: 125px;
 	height: 15px;
 	line-height: 17px;
@@ -70,26 +143,26 @@
 	-moz-border-radius: 0.6em 0.6em 0.6em 0.6em;
 	cursor: pointer;
 }
-#main-panel-accordion ul ul li div.calendar-name {
+.accordion-leaf-body ul ul li div.calendar-name {
 	width: 120px;
 }
-#main-panel-accordion ul li div.calendar-order {
+.accordion-leaf-body ul li div.calendar-order {
 	width: 16px;
 	margin: 1px 3px 0 3px;
 }
-#main-panel-accordion ul ul li.first-item div.calendar-order a.graph-arrowUp {
+.accordion-leaf-body ul ul li.first-item div.calendar-order a.graph-arrowUp {
 	display: none;
 }
-#main-panel-accordion ul ul li.first-item div.calendar-order a.graph-arrowDown {
+.accordion-leaf-body ul ul li.first-item div.calendar-order a.graph-arrowDown {
 	top: 9px;
 }
-#main-panel-accordion ul ul li.last-item div.calendar-order a.graph-arrowDown {
+.accordion-leaf-body ul ul li.last-item div.calendar-order a.graph-arrowDown {
 	display: none;
 }
-#main-panel-accordion ul ul li.only-item div.calendar-order a.graph-arrowDown, #main-panel-accordion ul ul li.only-item div.calendar-order a.graph-arrowUp {
+.accordion-leaf-body ul ul li.only-item div.calendar-order a.graph-arrowDown, #main-panel-accordion ul ul li.only-item div.calendar-order a.graph-arrowUp {
 	display: none;
 }
-#main-panel-accordion ul li div.calendar-actions {
+.accordion-leaf-body ul li div.calendar-actions {
 	margin: 2px 0 0 0;
 	clear: none;
 }
