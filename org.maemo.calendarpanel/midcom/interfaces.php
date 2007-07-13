@@ -23,8 +23,8 @@ class org_maemo_calendarpanel_interface extends midcom_baseclasses_components_in
         parent::midcom_baseclasses_components_interface();
 
         $this->_component = 'org.maemo.calendarpanel';
-		$this->_purecode = true;
-		
+        $this->_purecode = true;
+        
         // Load all mandatory class files of the component here
         $this->_autoload_files = array
         (
@@ -42,8 +42,8 @@ class org_maemo_calendarpanel_interface extends midcom_baseclasses_components_in
 
     function _on_initialize()
     {
-		return true;
-	}
+        return true;
+    }
 
 }
 ?>
