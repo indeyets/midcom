@@ -49,7 +49,7 @@ function zoom_view(zoom_in, url)
 		calendar_config["type"] -= 1;		
 	}
 	
-	var ajax_url = url + calendar_config["timestamp"] + '/' + calendar_config["type"];
+	var ajax_url = APPLICATION_PREFIX + url + calendar_config["timestamp"] + '/' + calendar_config["type"];
 	
 	jQuery.ajaxSetup({global: true});
 	jQuery.ajax({
@@ -107,7 +107,7 @@ function change_date() {
 			
 	calendar_config["timestamp"] = timestamp;
 	
-	var ajax_url = form[0].action + calendar_config["timestamp"] + '/' + calendar_config["type"];
+	var ajax_url = APPLICATION_PREFIX + form[0].action + calendar_config["timestamp"] + '/' + calendar_config["type"];
 
 	jQuery.ajaxSetup({global: true});
 	jQuery.ajax({
@@ -136,7 +136,7 @@ function create_event(timestamp)
 	jQuery.ajaxSetup({global: false});
 	jQuery.ajax({
 		type: "GET",
-		url: "/ajax/event/create/" + timestamp,
+		url: APPLICATION_PREFIX + "ajax/event/create/" + timestamp,
 		timeout: 12000,
 		error: function() {
 			alert("Failed to load event creation window");

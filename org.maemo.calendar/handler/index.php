@@ -128,6 +128,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
 		);
 		
 		$script = 'const MIDCOM_STATIC_URL = "' . MIDCOM_STATIC_URL . '";'."\n";
+		$script .= 'const APPLICATION_PREFIX = "' . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . '";'."\n";
 		$script .= 'var calendar_config = {'."\n";
 		$script .= ' type: ' . $this->_request_data['maemo_calender']->type . ',' ."\n";
 		$script .= ' start_hour_x: ' . $scrollTop . ',' ."\n";

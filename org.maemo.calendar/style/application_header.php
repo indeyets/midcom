@@ -11,7 +11,7 @@ $timezone_identifiers = DateTimeZone::listIdentifiers();
 ?>
 	<div class="header">
 		<div class="timezone-block">
-			<form id="timezone-selection-form" action="/ajax/change/timezone/" method="GET">
+			<form id="timezone-selection-form" action="ajax/change/timezone/" method="GET">
 			<select name="timezone" size="1">
 				<option value="0">Select Timezone</option>
 				<?php
@@ -33,7 +33,7 @@ $timezone_identifiers = DateTimeZone::listIdentifiers();
 			<img src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/icons/zoom-out.png" width="16" height="16" onclick="zoom_view(false,'/ajax/change/view/');" />
 		</div>
 		<div class="date-selection-block">
-			<form id="date-selection-form" action="/ajax/change/date/" method="GET">
+			<form id="date-selection-form" action="ajax/change/date/" method="GET">
 			<img class="selection-previous" src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/icons/go-previous.png" alt="Previous week" align="left" />
 			<img class="selection-next" src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/icons/go-next.png" alt="Next week" align="right" />
 			<select name="month-select" size="1" onchange="change_date();">
