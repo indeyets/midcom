@@ -51,7 +51,7 @@ jQuery.fn.eventToolbar = function(settings) {
     {   
         if (childs[i].id == toolbar_id)
         {
-            //console.log("We found a existing toolbar for the event!");
+            // console.log("We found a existing toolbar for the event!");
             toolbar_div = jQuery(toolbar_id,target);
             var correct_child = childs[i];
             _already_exists = true;
@@ -60,7 +60,7 @@ jQuery.fn.eventToolbar = function(settings) {
     
     if (! _already_exists)
     {
-        //console.log('Toolbar '+toolbar_id + ' doesnt exist. Create!');
+        // console.log('Toolbar '+toolbar_id + ' doesnt exist. Create!');
         _create_toolbar();
         
         if (settings.type == "float")

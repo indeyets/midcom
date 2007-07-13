@@ -706,7 +706,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         $html .= "</table>\n";
         
         $html .= '<script>';
-        $html .= $this->_jscripts;
+        $html .= 'jQuery().ready(function(){' . $this->_jscripts . '});';
         $html .= "</script>\n\n";
         
         if ($render_only)
@@ -1411,7 +1411,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 
             $html .= "   <div class=\"calendar-object-event-content\">\n";
             $html .= "      <span class=\"event-title\">{$event->title}</span>\n";
-            $html .= "      <span class=\"event-time\">{$start_time} - {$end_time}</span>\n";
+            $html .= "      <span class=\"event-time\" style=\"display: none;\">{$start_time} - {$end_time}</span>\n";
             $html .= "   </div>\n";
 
             $html .= "</div>\n\n";
