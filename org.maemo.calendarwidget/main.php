@@ -849,7 +849,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 		$html .= "            <div class=\"calendar-timeline-holder\">\n";
 		
 		$slots = $this->_get_day_slots($start);
-		$this->_render_active_layers();
+		$html .= $this->_render_active_layers();
 
 		$html .= "               <table width=\"100%\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"calendar-timetable\">\n";
 		$html .= "                  <tbody>\n";
@@ -905,7 +905,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 		$html .= "            <div class=\"calendar-timeline-holder\">\n";
 		
 		$slots = $this->_get_day_slots($start);
-		$html .= $this->_render_active_layers();
+		
 
 		$html .= "               <table width=\"100%\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"calendar-timetable\">\n";
 		$html .= "                  <tbody>\n";
@@ -946,9 +946,9 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 				// $onclick .= 'onHide: function(h){h.o.remove();h.w.fadeOut(888);finishCalendarLoad(\'calendar-holder\')}, overlay: 0, ';
 				// $onclick .= 'onLoad: function(h){$j.ajaxSetup({global: false})} });
 				// } });';
-				$onclick = "create_event({$create_date});";
+				$onclick = "create_event('{$create_date}');";
 				
-				$html .= "                        <td id=\"addevent-{$create_date}\" width=\"{$this->column_width}%\" class=\"jqModal {$class_name}\" height=\"{$this->cell_height}\" onclick=\"{$onclick}\">&nbsp;</td>\n";
+				$html .= "                        <td id=\"addevent-{$create_date}\" width=\"{$this->column_width}%\" class=\"{$class_name}\" height=\"{$this->cell_height}\" onclick=\"{$onclick}\">&nbsp;</td>\n";
 				//onclick=\"window.location='/event/create/{$create_date}';\"
 
 				// $this->_jscripts .= '$j' . "('#calendar-loading').jqm({ajax: '/event/create/" . $create_date . "'});\n";
@@ -964,6 +964,9 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 		}
 		$html .= "                  </tbody>\n";
 		$html .= "               </table>\n";
+
+		$html .= $this->_render_active_layers();
+
 		$html .= "            </div>\n";
 		$html .= "         </td>\n";
 		$html .= "      </tr>\n";
