@@ -406,6 +406,14 @@ class org_openpsa_calendarwidget_month
      * @var string
      */
     var $css_outside_month = 'outside-month';
+    
+    /**
+     * Additional link-text for showing detailed events
+     *
+     * @access public
+     * @var string
+     */
+    var $additional_name_for_links = '';
 
     /**
      * Simple constructor method. Initializes
@@ -927,7 +935,7 @@ class org_openpsa_calendarwidget_month
 
         if ($this->use_javascript)
         {
-            return " onMouseOver=\"org_openpsa_calendarwidget_month_show_box('org_openpsa_calendarwidget_month_{$timestamp}');\" onMouseOut=\"org_openpsa_calendarwidget_month_hide_box('org_openpsa_calendarwidget_month_{$timestamp}');\"";
+            return " onMouseOver=\"org_openpsa_calendarwidget_month_show_box('org_openpsa_calendarwidget_month_{$timestamp}_{$this->additional_name_for_links}');\" onMouseOut=\"org_openpsa_calendarwidget_month_hide_box('org_openpsa_calendarwidget_month_{$timestamp}_{$this->additional_name_for_links}');\"";
         }
     }
 
@@ -1028,7 +1036,7 @@ class org_openpsa_calendarwidget_month
         if ($this->use_javascript)
         {
             $style = ' style="display: none;"';
-            $ticker = "<span class=\"{$this->css_close_checker}\" onClick=\"hide_box('org_openpsa_calendarwidget_month_{$timestamp}');\" title=\"Close window\">X</span>";
+            $ticker = "<span class=\"{$this->css_close_checker}\" onClick=\"hide_box('org_openpsa_calendarwidget_month_{$timestamp}_{$this->additional_name_for_links}');\" title=\"Close window\">X</span>";
             $class .= ' hover';
         }
         else
@@ -1039,7 +1047,7 @@ class org_openpsa_calendarwidget_month
 
 
         // Initialize details box
-        echo "                <div id=\"org_openpsa_calendarwidget_month_{$timestamp}\"{$style} class=\"{$class}\">\n";
+        echo "                <div id=\"org_openpsa_calendarwidget_month_{$timestamp}_{$this->additional_name_for_links}\"{$style} class=\"{$class}\">\n";
         echo "                    <ul class=\"{$this->css_event_list}\">\n";
 
         // Loop through events
