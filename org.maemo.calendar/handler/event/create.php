@@ -100,7 +100,7 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
         $this->_defaults['end'] = $this->_defaults['start'] + 3600;
 
         $this->_defaults['tags'] = 'default';
-		
+        
         $session =& new midcom_service_session();
         if ($session->exists('failed_POST_data'))
         {
@@ -109,7 +109,7 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
         }
         unset($session);
 
-		$this->_request_data['defaults'] = $this->_defaults;
+        $this->_request_data['defaults'] = $this->_defaults;
 
     }
 
@@ -120,7 +120,7 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
      */
     function _load_controller($handler_id)
     {
-		$this->_load_schemadb();
+        $this->_load_schemadb();
         $this->_controller =& midcom_helper_datamanager2_controller::create('create');
         $this->_controller->schemadb =& $this->_schemadb;        
 
@@ -145,6 +145,7 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
     function &dm2_create_callback(&$controller)
     {
         $this->_event = new org_openpsa_calendar_event();
+        $this->_event->up = $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']->id;
 
         // Populate the resource
         if ($_MIDCOM->auth->user)
@@ -163,9 +164,13 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
         {
             $this->_event->end = strtotime($_POST['end']);
         }
+        if (array_key_exists('title', $_POST))
+        {
+            $this->_event->title = $_POST['title'];
+        }
 
         // TODO: Add support for tentatives?
-        $this->_event->busy = false;	
+        $this->_event->busy = false;    
 
         if (! $this->_event->create())
         {
@@ -203,57 +208,62 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
         }
 
         return $this->_event;
-	}
+    }
 
-	function _handler_create($handler_id, $args, &$data)
+    function _handler_create($handler_id, $args, &$data)
     {
-		debug_push_class(__CLASS__, __FUNCTION__);
-		
-		if ($handler_id == 'ajax-event-create')
-		{
-			$_MIDCOM->skip_page_style = true;
-		}
-		
-		$this->_request_data['selected_day'] = time();
-		$requested_time = $args[0];//@strtotime($args[0]);
-		if ($requested_time)
-		{
-			$this->_request_data['selected_day'] = $requested_time;
-		}
-		
-		debug_add("requested time: {$this->_request_data['selected_day']}");
-		
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        if ($handler_id == 'ajax-event-create')
+        {
+            $_MIDCOM->skip_page_style = true;
+        }
+        
+        $this->_request_data['selected_day'] = time();
+        $requested_time = $args[0];//@strtotime($args[0]);
+        if ($requested_time)
+        {
+            $this->_request_data['selected_day'] = $requested_time;
+        }
+        
+        debug_add("requested time: {$this->_request_data['selected_day']}");
+        
         $this->_load_controller($handler_id);
         $this->_prepare_request_data();
-		
-		switch ($this->_controller->process_form())
+        
+        switch ($this->_controller->process_form())
         {
             case 'save':
-                $_MIDCOM->relocate("/");
+                if ($handler_id == 'ajax-event-create')
+                {
+                    // Change to default schema on the fly
+                    $this->_event->set_parameter('midcom.helper.datamanager2', 'schema', 'default');
+                }
+                $_MIDCOM->relocate('');
                 // this will exit.
 
             case 'cancel':
-                $_MIDCOM->relocate("");
+                $_MIDCOM->relocate('');
                 // This will exit.
-        }		
-		
-		debug_pop();
-		return true;
-	}
-	
-	function _show_create($handler_id, &$data)
-	{
-		if ($handler_id == 'ajax-event-create')
-		{
-			midcom_show_style('event_create_ajax');
-//			midcom_show_style('event_create_small');
-		}
-		else
-		{
-			midcom_show_style('event_create');
-		}
-	}
-	
+        }       
+        
+        debug_pop();
+        return true;
+    }
+    
+    function _show_create($handler_id, &$data)
+    {
+        if ($handler_id == 'ajax-event-create')
+        {
+            midcom_show_style('event_create_ajax');
+//          midcom_show_style('event_create_small');
+        }
+        else
+        {
+            midcom_show_style('event_create');
+        }
+    }
+    
 }
 
 ?>
