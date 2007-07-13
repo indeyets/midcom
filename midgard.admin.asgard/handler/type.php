@@ -56,7 +56,7 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
     
         $this->_prepare_request_data();
 
-        $data['view_title'] = $this->_l10n->get($this->type);
+        $data['view_title'] = midgard_admin_asgard_plugin::get_type_label($this->type);
         $_MIDCOM->set_pagetitle($data['view_title']);
         
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
@@ -79,7 +79,7 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
             array
             (
                 MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('back to site', 'midcom'),
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('back to site', 'midgard.admin.asgard'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/gohome.png',
             )
         );
@@ -94,7 +94,20 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
     {
         midcom_show_style('midgard_admin_asgard_header');
         $data['current_type'] = $this->type;
-        midcom_show_style('midgard_admin_asgard_middle');    
+        midcom_show_style('midgard_admin_asgard_middle');
+
+        $dummy = new $this->type;
+        $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($dummy);
+        $component = $_MIDCOM->dbclassloader->_mgdschema_class_handler[$midcom_dba_classname];
+        if ( $component == 'midcom')
+        {
+            $component = "midgard.admin.asgard";
+        }
+
+        $help = new midcom_admin_help_help();
+        $data['help'] =  $help->get_help_contents('asgard_'.$this->type, $component);
+        $data['component'] =  $component;
+        $data['type'] = $this->type;
         midcom_show_style('midgard_admin_asgard_type');
         midcom_show_style('midgard_admin_asgard_footer');
     }

@@ -369,14 +369,25 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                     break;
                 case MGD_TYPE_LONGTEXT:
                     // Figure out nice size for the editing field
+
+                    $output_mode = "";
+                    $widget = "textarea";
+
+
                     switch ($key)
                     {
                         case 'content':
-                        case 'value':
                         case 'description':
+                            $height = 30;
+                            $output_mode = "html";
+                            $widget = "tinymce";
+                            break;
+                        case 'value':
                         case 'code':
                             // These are typical "large" fields
                             $height = 30;
+                            $output_mode = "code";
+                            $widget = "textarea";
                             break;
                             
                         default:
@@ -392,7 +403,11 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                             'title'       => $key,
                             'storage'     => $key,
                             'type'        => 'text',
-                            'widget'      => 'textarea',
+                            'type_config' => Array
+                            (
+                                'output_mode' => $output_mode,
+                            ),
+                            'widget'      => $widget,
                             'widget_config' => Array
                             (
                                 'height' => $height,
@@ -669,7 +684,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         {
             $_MIDCOM->auth->require_user_do('midgard:create', null, $this->_new_type);
             
-            $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('create %s', 'midgard.admin.asgard'), midgard_admin_asgard_plugin::get_type_label($data['new_type_arg']));
+            $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('create %s', 'midcom'), midgard_admin_asgard_plugin::get_type_label($data['new_type_arg']));
             $data['asgard_toolbar'] = new midcom_helper_toolbar();
         }
         else
@@ -725,7 +740,16 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 // This will exit.
 
             case 'cancel':
-                $_MIDCOM->relocate("__mfa/asgard/object/view/{$this->_object->guid}/{$data['language_code']}");
+                if ($this->_object)
+                {
+                    $objecturl = "object/view/{$this->_object->guid}/";
+                }
+                else
+                {
+                    $objecturl = $args[0];
+                }
+
+                $_MIDCOM->relocate("__mfa/asgard/{$objecturl}{$data['language_code']}");
                 // This will exit.
         }
 
