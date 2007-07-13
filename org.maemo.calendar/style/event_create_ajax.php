@@ -7,9 +7,9 @@
 
 <div class="event-form">
 
-	<?php 
-	$data['controller']->display_form(); 
-	?>
+    <?php 
+    $data['controller']->display_form(); 
+    ?>
 
 </div>
 

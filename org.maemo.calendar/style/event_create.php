@@ -2,18 +2,18 @@
 ?>
 
 <div class="standalone-window">
-	<div class="standalone-window-content">
+    <div class="standalone-window-content">
 
-		<h1>Create event</h1>
-		<div onclick="history.back();">Close</div>
+        <h1>Create event</h1>
+        <div onclick="history.back();">Close</div>
 
-		<div class="event-form">
+        <div class="event-form">
 
-			<?php 
-			$data['controller']->display_form(); 
-			?>
+            <?php 
+            $data['controller']->display_form(); 
+            ?>
 
-		</div>
+        </div>
 
-	</div>
+    </div>
 <div>

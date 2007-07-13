@@ -61,7 +61,7 @@ class org_maemo_calendar_handler_admin  extends midcom_baseclasses_components_ha
         $this->_root_event =& $this->_request_data['root_event'];
         $this->_schemadb =& $this->_request_data['schemadb'];
     }
-	
+    
 }
 
 ?>

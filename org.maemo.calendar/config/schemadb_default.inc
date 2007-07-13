@@ -9,13 +9,13 @@
             'hidden'   => true,
             'storage' => 'orgOpenpsaObtype',
             'type' => 'number',
-			'widget' => 'text',
+            'widget' => 'text',
         ),
         'title' => array (
             'title' => 'title',
             'description' => 'title',
             'type'    => 'text',
-			'widget'	=> 'text',
+            'widget'    => 'text',
             'storage'    => 'title',
             'required'    => true,
         ),
@@ -23,7 +23,7 @@
             'title' => 'location',
             'description' => 'location',
             'type'    => 'text',
-			'widget'	=> 'text',
+            'widget'    => 'text',
             'storage'    => 'location',
         ),
         'start' => array (
@@ -36,7 +36,7 @@
                 'storage_type' => 'UNIXTIME'
             ),
             'widget' => 'jsdate',
-			'required' => true,
+            'required' => true,
         ),
         'end' => array (
             'title' => 'end time',
@@ -48,17 +48,17 @@
                 'storage_type' => 'UNIXTIME'
             ),
             'widget' => 'jsdate',
-			'required' => true,
+            'required' => true,
         ),
         'description' => array (
-	        'title' => 'description',
-	        'storage' => 'description',
-	        'type' => 'text',
-	        'type_config' => array 
-	        ( 
-	            'output_mode' => 'markdown' 
-	        ),
-	        'widget' => 'textarea',
+            'title' => 'description',
+            'storage' => 'description',
+            'type' => 'text',
+            'type_config' => array 
+            ( 
+                'output_mode' => 'markdown' 
+            ),
+            'widget' => 'textarea',
         ),
         'tags' => Array
         (
@@ -117,12 +117,12 @@
             (
                 'options' => array
                 (
-	                ORG_OPENPSA_ACCESSTYPE_PUBLIC => 'public',
-	                ORG_OPENPSA_ACCESSTYPE_PRIVATE => 'private',
+                    ORG_OPENPSA_ACCESSTYPE_PUBLIC => 'public',
+                    ORG_OPENPSA_ACCESSTYPE_PRIVATE => 'private',
                 ),
             ),
             'widget' => 'select',
-			'required' => true,
+            'required' => true,
         ),
         'busy' => array (
             'title' => 'dont allow overlapping',
@@ -145,13 +145,13 @@
             'hidden'   => true,
             'storage' => 'orgOpenpsaObtype',
             'type' => 'number',
-			'widget' => 'text',
+            'widget' => 'text',
         ),
         'title' => array (
             'title' => 'title',
             'description' => 'title',
             'type'    => 'text',
-			'widget'	=> 'text',
+            'widget'    => 'text',
             'storage'    => 'title',
             'required'    => true,
         ),
@@ -159,7 +159,7 @@
             'title' => 'location',
             'description' => 'location',
             'type'    => 'text',
-			'widget'	=> 'text',
+            'widget'    => 'text',
             'storage'    => 'location',
             'hidden' => true,
         ),
@@ -173,7 +173,7 @@
                 'storage_type' => 'UNIXTIME'
             ),
             'widget' => 'jsdate',
-			'required' => true,
+            'required' => true,
         ),
         'end' => array (
             'title' => 'end time',
@@ -185,17 +185,17 @@
                 'storage_type' => 'UNIXTIME'
             ),
             'widget' => 'jsdate',
-			'required' => true,
+            'required' => true,
         ),
         'description' => array (
-	        'title' => 'description',
-	        'storage' => 'description',
-	        'type' => 'text',
-	        'type_config' => array 
-	        ( 
-	            'output_mode' => 'markdown' 
-	        ),
-	        'widget' => 'textarea',
+            'title' => 'description',
+            'storage' => 'description',
+            'type' => 'text',
+            'type_config' => array 
+            ( 
+                'output_mode' => 'markdown' 
+            ),
+            'widget' => 'textarea',
             'hidden' => true,
         ),
         'tags' => Array
@@ -257,12 +257,12 @@
             (
                 'options' => array
                 (
-	                ORG_OPENPSA_ACCESSTYPE_PUBLIC => 'public',
-	                ORG_OPENPSA_ACCESSTYPE_PRIVATE => 'private',
+                    ORG_OPENPSA_ACCESSTYPE_PUBLIC => 'public',
+                    ORG_OPENPSA_ACCESSTYPE_PRIVATE => 'private',
                 ),
             ),
             'widget' => 'select',
-			'required' => true,
+            'required' => true,
             'hidden' => true,
         ),
         'busy' => array (
