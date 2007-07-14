@@ -312,7 +312,7 @@ Nicht in der Navigation anzeigen
 ---STRINGEND
 
 ---STRING nav_noentry_helptext
-Objekte ohne Eintrag in der Navigtion können weiterhin aufgerufen werden, solange die URL bekannt ist.
+Objekte ohne Eintrag in der Navigation können weiterhin aufgerufen werden, solange die URL bekannt ist.
 ---STRINGEND
 
 ---STRING new
@@ -408,7 +408,7 @@ Indizierung erlauben
 ---STRINGEND
 
 ---STRING robots-nofollow
-Indizierung erlauben, Links dürfen nichtverfolgt werden.
+Indizierung erlauben, Links dürfen nicht verfolgt werden.
 ---STRINGEND
 
 ---STRING robots-noindex
@@ -448,7 +448,7 @@ Zeitsteuerung
 ---STRINGEND
 
 ---STRING schema database
-Schema Datenbank
+Schema-Datenbank
 ---STRINGEND
 
 ---STRING search
@@ -488,7 +488,7 @@ Startdatum
 ---STRINGEND
 
 ---STRING stats
-Website Statistiken
+Website-Statistiken
 ---STRINGEND
 
 ---STRING text
