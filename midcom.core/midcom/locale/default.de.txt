@@ -79,6 +79,10 @@ Freigabe
 Freigeben
 ---STRINGEND
 
+---STRING approve topic
+Ordner freigeben
+---STRINGEND
+
 ---STRING approved
 Freigegeben
 ---STRINGEND
@@ -127,6 +131,10 @@ Konfiguration schliessen
 Komponente
 ---STRINGEND
 
+---STRING component %s configuration for folder %s
+Komponente %s für Ordner "%s" konfigurieren
+---STRINGEND
+
 ---STRING component configuration
 Komponente konfigurieren
 ---STRINGEND
@@ -149,6 +157,10 @@ Anlegen
 
 ---STRING create page
 Neue Seite erstellen
+---STRINGEND
+
+---STRING created on
+Erstellt um
 ---STRINGEND
 
 ---STRING creator
@@ -215,6 +227,10 @@ Verschlüsselt
 Enddatum
 ---STRINGEND
 
+---STRING folder
+Ordner
+---STRINGEND
+
 ---STRING get help
 Hilfe
 ---STRINGEND
@@ -225,6 +241,10 @@ Versteckt
 
 ---STRING hide
 Verstecken
+---STRINGEND
+
+---STRING host
+Website
 ---STRINGEND
 
 ---STRING id
@@ -355,6 +375,10 @@ optional
 Besitzer
 ---STRINGEND
 
+---STRING page
+Seite
+---STRINGEND
+
 ---STRING page %d of %d
 Seite %d von %d
 ---STRINGEND
@@ -383,6 +407,10 @@ Vorheriger
 Vorherige Seite
 ---STRINGEND
 
+---STRING privileges
+Berechtigungen
+---STRINGEND
+
 ---STRING reject
 Ablehnen
 ---STRINGEND
@@ -408,7 +436,7 @@ Indizierung erlauben
 ---STRINGEND
 
 ---STRING robots-nofollow
-Indizierung erlauben, Links dürfen nicht verfolgt werden.
+Indizierung erlauben, Links dürfen nichtverfolgt werden.
 ---STRINGEND
 
 ---STRING robots-noindex
@@ -448,7 +476,7 @@ Zeitsteuerung
 ---STRINGEND
 
 ---STRING schema database
-Schema-Datenbank
+Schema Datenbank
 ---STRINGEND
 
 ---STRING search
@@ -479,6 +507,10 @@ Wird von %s bis %s angezeigt
 Wird bis %s angezeigt
 ---STRINGEND
 
+---STRING sitegroup
+Sitegroup
+---STRINGEND
+
 ---STRING sorting position
 Position in Sortierreihenfolge
 ---STRINGEND
@@ -488,7 +520,11 @@ Startdatum
 ---STRINGEND
 
 ---STRING stats
-Website-Statistiken
+Website Statistiken
+---STRINGEND
+
+---STRING test settings
+Einstellungen überprüfen
 ---STRINGEND
 
 ---STRING text
@@ -513,6 +549,10 @@ Rubrik
 
 ---STRING unapprove
 Freigabe zurücknehmen
+---STRINGEND
+
+---STRING unapprove topic
+Ordner-Freigabe zurücknehmen
 ---STRINGEND
 
 ---STRING unapproved
@@ -575,8 +615,16 @@ Passwort bestätigen
 Ansicht
 ---STRINGEND
 
+---STRING visibility settings
+Einstellungen zur Sichtbarkeit
+---STRINGEND
+
 ---STRING visibilty settings
 Einstellungen zur Sichtbarkeit
+---STRINGEND
+
+---STRING workgroup
+Arbeitsgruppe
 ---STRINGEND
 
 ---STRING write mail
@@ -587,51 +635,27 @@ Nachricht schreiben
 Ja
 ---STRINGEND
 
----STRING approve topic
-Ordner freigeben
+---STRING approved changes will be replicated within next minute
+Die freigegebenen Änderungen werden innerhalb der nächsten Minute überspielt
 ---STRINGEND
 
----STRING component %s configuration for folder %s
-Komponente %s für Ordner "%s" konfigurieren
+---STRING arrangement score
+Score für Sortierung
 ---STRINGEND
 
----STRING created on
-Erstellt um
+---STRING invalidate cache
+MidCOM-Cache leeren
 ---STRINGEND
 
----STRING folder
-Ordner
+---STRING run replication
+Replikation durchführen
 ---STRINGEND
 
----STRING host
-Website
+---STRING stagin2live
+Staging2live-System
 ---STRINGEND
 
----STRING page
-Seite
----STRINGEND
-
----STRING privileges
-Berechtigungen
----STRINGEND
-
----STRING sitegroup
-Sitegroup
----STRINGEND
-
----STRING test settings
-Einstellungen überprüfen
----STRINGEND
-
----STRING unapprove topic
-Ordner-Freigabe zurücknehmen
----STRINGEND
-
----STRING visibility settings
-Einstellungen zur Sichtbarkeit
----STRINGEND
-
----STRING workgroup
-Arbeitsgruppe
+---STRING tags
+Tags
 ---STRINGEND
 
