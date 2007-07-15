@@ -11,20 +11,60 @@ Einen neuen Eintrag hinzufügen
 Erweiterte Einstellungen zu Schema und Daten
 ---STRINGEND
 
+---STRING ajax_enable
+AJAX-basierte on-site-Bearbeitung aktivieren
+---STRINGEND
+
 ---STRING archive
 Archiv
 ---STRINGEND
 
+---STRING archive item order
+Reihenfolge der Einträge im Archiv
+---STRINGEND
+
+---STRING archive_enable
+Archivzugriff aaktivieren
+---STRINGEND
+
+---STRING article
+Artikel
+---STRINGEND
+
+---STRING ascending
+Aufsteigend
+---STRINGEND
+
 ---STRING atom feed
-ATOM Feed
+ATOM-Feed
 ---STRINGEND
 
 ---STRING available feeds
 Verfügbare Newsfeeds
 ---STRINGEND
 
+---STRING available feeds introduction
+Die folgenden Formate zur Content Syndication sind verfügbar:
+---STRINGEND
+
 ---STRING back to overview
 Zurück zur Übersicht
+---STRINGEND
+
+---STRING blog settings
+Blog-Einstellungen
+---STRINGEND
+
+---STRING categories
+Kategorien
+---STRINGEND
+
+---STRING comments_enable
+Kommentare zu News-Beiträgen erlauben (benötigt die net.nehmer.comments-Komponente)
+---STRINGEND
+
+---STRING content
+Inhalt
 ---STRINGEND
 
 ---STRING create article
@@ -43,6 +83,10 @@ Neue Nachricht erstellen
 Artikel löschen
 ---STRINGEND
 
+---STRING descending
+Absteigend
+---STRINGEND
+
 ---STRING display settings
 Konfiguration der Anzeige
 ---STRINGEND
@@ -56,11 +100,11 @@ Fernzugriff über die MetaWebLog API aktivieren
 ---STRINGEND
 
 ---STRING enable date filters get
-Datum-Filter via HTTP GET aktivieren
+Datumsfilter via HTTP GET aktivieren
 ---STRINGEND
 
 ---STRING enable date filters path
-Datum-Filter via URL (.../JJJJ/MM/TT) aktivieren
+Datumsfilter via URL (.../JJJJ/MM/TT) aktivieren
 ---STRINGEND
 
 ---STRING enable details
@@ -68,7 +112,7 @@ Detail-Seiten aktivieren
 ---STRINGEND
 
 ---STRING enable filters get
-Feld-Filter via HTTP GET aktivieren
+Feldfilter via HTTP GET aktivieren
 ---STRINGEND
 
 ---STRING enable public posting
@@ -76,7 +120,7 @@ Feld-Filter via HTTP GET aktivieren
 ---STRINGEND
 
 ---STRING enable subdirectories
-News-Artikel aus untergeordneten Rubriken in die Übersicht einbeziehen (auch RSS)
+News-Artikel aus Unterordnern in die Übersicht einbeziehen (auch RSS)
 ---STRINGEND
 
 ---STRING expert settings
@@ -95,8 +139,20 @@ Anzahl Artikel in der Übersicht
 Übersichts-Einstellungen
 ---STRINGEND
 
+---STRING index_entries
+Wieviele Einträge sollen auf der Übersichtsseite angezeigt werden
+---STRINGEND
+
+---STRING link_to_external_url
+Einträge mit externer URL verknüpfen falls möglich
+---STRINGEND
+
 ---STRING list old items in index
 Vergangene Artikel in der Übersicht
+---STRINGEND
+
+---STRING navigation options
+Navigations-Optionen
 ---STRINGEND
 
 ---STRING net.nehmer.blog
@@ -120,7 +176,7 @@ Keine Schemata verfügbar
 ---STRINGEND
 
 ---STRING not enough privileges to create articles
-Sie haben keine ausreichenden Berechtigungen um neue Artikel erstellen zu können.
+Sie haben keine ausreichenden Berechtigungen, um neue Artikel erstellen zu können.
 ---STRINGEND
 
 ---STRING posted on %s.
@@ -172,15 +228,23 @@ Beschreibung
 ---STRINGEND
 
 ---STRING rss_enable
-RSS Export aktivieren (stellt die URLs rss.xml und rss/$anzahl.xml bereit)
+RSS-Export aktivieren (stellt die URLs rss.xml und rss/$anzahl.xml bereit)
+---STRINGEND
+
+---STRING rss_include_image
+Das Bild aus dem Schema-Feld "image" den RSS-Einträgen in voller Auflösung hinzufügen
 ---STRINGEND
 
 ---STRING rss_language
 Sprache
 ---STRINGEND
 
+---STRING rss_subscription_enable
+Das Erstellen von Einträgen über entfernte RSS- und ATOM-Feeds zulassen
+---STRINGEND
+
 ---STRING rss_title
-Titel des RSS-Feeds (keine Eingabe verwendet den Titel der Rubrik als Standardwert)
+Titel des RSS-Feeds (keine Eingabe verwendet den Titel des Ordners als Standardwert)
 ---STRINGEND
 
 ---STRING rss_webmaster
@@ -191,12 +255,32 @@ Webmaster
 Pfad zur Schema-Datenbank
 ---STRINGEND
 
+---STRING schema settings
+Schema-Einstellungen
+---STRINGEND
+
+---STRING schemadb
+Schema-Datenbank für Artikel
+---STRINGEND
+
 ---STRING select article type
 Artikel-Typ auswählen
 ---STRINGEND
 
+---STRING set this to no if you want to hide feeds and archive links in navigation
+Wählen Sie hier "Nein", um Feed- und Archiv-Links aus der Navigation auszublenden
+---STRINGEND
+
 ---STRING settings
 Einstellungen
+---STRINGEND
+
+---STRING show latest items in navigation
+Die letzten Einträge in der Navigation anzeigen
+---STRINGEND
+
+---STRING show pseudo leaves in navigation
+Pseudo-Leaves in der Navigation anzeigen
 ---STRINGEND
 
 ---STRING sort order
@@ -204,22 +288,21 @@ Sortierreihenfolge
 ---STRINGEND
 
 ---STRING symlink_topic
-Daten aus einer anderen Rubrik nehmen ("Symlink")
+Daten aus einem anderen Ordner nehmen ("Symlink")
 ---STRINGEND
 
 ---STRING symlink_topic disabled
-Keine Rubrik ausgewählt
+Kein Ordner ausgewählt
 ---STRINGEND
 
 ---STRING there is a total of %d posts.
 Es sind insgesamt %d Nachrichten vorhanden.
 ---STRINGEND
 
+---STRING use view prefix in url
+'view' als URL-Präfix verwenden
+---STRINGEND
+
 ---STRING visible
-Soll die Rubrik angezeigt werden
+Ordner-Sichtbarkeit
 ---STRINGEND
-
----STRING available feeds introduction
-Die folgenden Formate zur Content Syndication sind verfügbar:
----STRINGEND
-

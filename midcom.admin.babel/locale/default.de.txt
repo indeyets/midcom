@@ -3,8 +3,56 @@
 ---CVS $Id: default.de.txt 367 2005-01-18 08:20:22Z torben $
 ---LANGUAGE de
 
+---STRING component
+Komponente
+---STRINGEND
+
+---STRING core component status
+Status (Haupt-Komponenten)
+---STRINGEND
+
+---STRING default
+standard
+---STRINGEND
+
+---STRING edit strings for %s [%s]
+Strings aus %s auf %s übersetzen
+---STRINGEND
+
+---STRING language
+Sprache
+---STRINGEND
+
+---STRING midcom.admin.babel
+MidCOM-Übersetzungswerkzeug
+---STRINGEND
+
+---STRING other component status
+Status (andere)
+---STRINGEND
+
 ---STRING perm-denied text
-<p>Diese MidCOM Installation is nicht korrekt konfiguriert. Sie erlaubt keinen Schreibzugriff auf die String-Datenbanken.</p>
+<p>Diese MidCOM-Installation ist nicht korrekt konfiguriert. Sie erlaubt keinen Schreibzugriff auf die String-Datenbanken.</p>
 <p>Bitte stellen Sie sicher, daß der Apache-Benutzer Schreibberechtigung auf alle locale-Verzeichnisse und -Dateien besitzt. Bitte lesen Sie die Installationsanweisungen für MidCOM für genauere Anweisungen (siehe Datei INSTALL).</p>
+---STRINGEND
+
+---STRING read information from midgard wiki on how to add languages
+Informationen über das Hinzufügen neuer Interface-Sprachen finden Sie im <a href="http://www.midgard-project.org/midcom-permalink-ded2437586408cd03cd4582ba45b91f2">Midgard-Wiki</a>.
+---STRINGEND
+
+---STRING select lang and component
+Wählen Sie Sprache und Komponente
+---STRINGEND
+
+---STRING select language to translate
+Wählen Sie die zu übersetzende Sprache
+---STRINGEND
+
+---STRING string-id
+String-ID
+---STRINGEND
+
+---STRING translation status for language %s
+Übersetzungs-Status für %s
 ---STRINGEND
 
