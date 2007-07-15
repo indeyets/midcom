@@ -16,11 +16,7 @@ Freigeben
 ---STRINGEND
 
 ---STRING auto_approved
-Neue Artikel standardmässig freigegeben
----STRINGEND
-
----STRING simple_name_handling
-URL für neue Artikel automatisch erzeugen
+Neue Artikel standardmäßig freigegeben
 ---STRINGEND
 
 ---STRING autoindex-notes
@@ -68,11 +64,15 @@ Dateiname
 ---STRINGEND
 
 ---STRING filesize
-Dateigrösse
+Dateigröße
 ---STRINGEND
 
 ---STRING filetype
-Dateiart
+Dateityp
+---STRINGEND
+
+---STRING indexinnav
+Soll der Index-Artikel in die Navigation aufgenommen werden, wenn der Autoindex-Modus deaktiviert ist?
 ---STRINGEND
 
 ---STRING net.nehmer.static
@@ -84,7 +84,7 @@ In diesem Verzeichnis gibt es keine Dateien
 ---STRINGEND
 
 ---STRING no index article
-Diese Rubrik hat keinen <strong>index</strong> Artikel. Bitte legen Sie einen Artikel mit dem URL Namen <strong>index</strong> an oder aktivieren Sie den Autoindex-Modus.
+Dieser Ordner hat keinen <strong>index</strong>-Artikel. Bitte legen Sie einen Artikel mit dem URL Namen <strong>index</strong> an oder aktivieren Sie den Autoindex-Modus.
 ---STRINGEND
 
 ---STRING no schemas available
@@ -92,11 +92,11 @@ Keine Schemata verfügbar
 ---STRINGEND
 
 ---STRING schema settings
-Datenschemata
+Datenschema-Einstellungen
 ---STRINGEND
 
 ---STRING schemadb
-Schema-Datenbank, die für diese Rubrik verwendet werden soll
+Schema-Datenbank, die für diesen Ordner verwendet werden soll
 ---STRINGEND
 
 ---STRING select schema
@@ -108,11 +108,11 @@ Einstellungen
 ---STRINGEND
 
 ---STRING symlink_topic
-Daten aus einer anderen Rubrik nehmen ("Symlink")
+Daten aus einem anderen Ordner nehmen ("Symlink")
 ---STRINGEND
 
 ---STRING symlink_topic disabled
-Keine Rubrik ausgewählt
+Kein Ordner ausgewählt
 ---STRINGEND
 
 ---STRING taviewer
@@ -124,13 +124,22 @@ Freigabe zurücknehmen
 ---STRINGEND
 
 ---STRING view article
-Artkel anzeigen
+Artikel anzeigen
 ---STRINGEND
 
 ---STRING visible
-Soll die Rubrik angezeigt werden
+Ordner-Sichtbarkeit
 ---STRINGEND
 
----STRING indexinnav
-Soll der Index-Artikel in die Navigation aufgenommen werden, wenn der Autoindex-Modus deaktiviert ist?
+---STRING ajax_enable
+AJAX-basierte on-site-Bearbeitung aktivieren
 ---STRINGEND
+
+---STRING article
+Artikel
+---STRINGEND
+
+---STRING content
+Inhalt
+---STRINGEND
+
