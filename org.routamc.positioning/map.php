@@ -91,6 +91,11 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
             $marker['title'] = $object->guid;
         }
         
+        if (isset($object->abstract))
+        {
+            $marker['abstract'] = $object->abstract;
+        }
+        
         return $this->add_marker($marker);
     }
     
@@ -213,6 +218,11 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
         echo "var marker_{$i} = new Marker(new LatLonPoint({$marker['coordinates']['latitude']}, {$marker['coordinates']['longitude']}))\n";
         
         echo "marker_{$i}.setLabel('{$marker['title']}');\n";
+        
+        if (isset($marker['abstract']))
+        {
+            echo "marker_{$i}.setInfoBubble('{$marker['abstract']}');\n";
+        }
         
         // TODO: Set other marker properties
         
