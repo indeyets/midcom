@@ -12,7 +12,7 @@
  *
  * Example usage:
  *
- * $map = new org_routamc_positioning_map('my_example_map', 'openstreetmap');
+ * $map = new org_routamc_positioning_map('my_example_map');
  * $map->add_object($article);
  * $map->add_object($another_article);
  * $map->show();
