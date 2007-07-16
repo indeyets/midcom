@@ -18,6 +18,28 @@ class org_routamc_positioning_aerodrome_dba extends __org_routamc_positioning_ae
     {
         return parent::__org_routamc_positioning_aerodrome_dba($id);
     }
+    
+    /**
+     * @return org_routamc_positioning_city_dba City the airport caters for
+     */
+    function get_parent_guid_uncached()
+    {
+        if ($this->city)
+        {
+            $parent = new org_routamc_positioning_city_dba($this->city);
+            if (! $parent)
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Could not load City ID {$this->city} from the database, aborting.",
+                    MIDCOM_LOG_INFO);
+                debug_pop();
+                return null;
+            }
+            return $parent->guid;
+        }
+
+        return null;
+    }
 
     /**
      * Human-readable label for cases like Asgard navigation

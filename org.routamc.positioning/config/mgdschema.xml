@@ -12,8 +12,8 @@
         <property name="alternatenames" type="string"/>
         <property name="population" type="integer"/>
         <!-- Coordinates in decimal format -->
-        <property name="latitude" type="double"/>
-        <property name="longitude" type="double"/>
+        <property name="latitude" type="float"/>
+        <property name="longitude" type="float"/>
         <property name="altitude" type="integer"/>
     </type>
 
