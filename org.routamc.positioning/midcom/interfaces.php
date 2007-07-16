@@ -32,6 +32,7 @@ class org_routamc_positioning_interface extends midcom_baseclasses_components_in
             'city.php',
             'location.php',
             'log.php',
+            'map.php',
         );
         $this->_autoload_libraries = array
         (

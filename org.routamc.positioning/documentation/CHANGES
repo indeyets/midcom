@@ -7,6 +7,10 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2007-07-16 bergie
+  + Bundled the mapstraction map display library
+  + Created a new org_routamc_positioning_map wrapper for map display
+
 2007-04-11 bergie
   + Initial, quick-and-dirty handling of timezoneless Plazes trace information
 
