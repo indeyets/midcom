@@ -686,6 +686,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
             
             $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('create %s', 'midcom'), midgard_admin_asgard_plugin::get_type_label($data['new_type_arg']));
             $data['asgard_toolbar'] = new midcom_helper_toolbar();
+            $data['current_type'] = $args[0];
         }
         else
         {

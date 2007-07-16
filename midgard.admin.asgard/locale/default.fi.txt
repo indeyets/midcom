@@ -1,69 +1,69 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE fi
 
 ---STRING asgard
 Asgard
 ---STRINGEND
 
 ---STRING back to site
-Back to site
+Takaisin sivustolle
 ---STRINGEND
 
 ---STRING create %s under %s
-Create %s under %s
+Luo %s %s:n alle
 ---STRINGEND
 
 ---STRING created by %s on %s
-Created by %s on %s
+Luonut %s %s
 ---STRINGEND
 
 ---STRING default language
-Default language
+Oletuskieli
 ---STRINGEND
 
 ---STRING delete %s %s
-Delete %s %s
+Poista %s %s
 ---STRINGEND
 
 ---STRING edit %s %s
-Edit %s %s
+Muokkaa %s %s
 ---STRINGEND
 
 ---STRING in %s
-in %s
+%s:ssa
 ---STRINGEND
 
 ---STRING in fallback language
-In fallback language
+oletuskielellä
 ---STRINGEND
 
 ---STRING last edited by %s on %s (revision %s)
-Last edited by %s on %s (revision %s)
+Viimeksi muokannut %s %s (muutos %s)
 ---STRINGEND
 
 ---STRING metadata of %s %s
-Metadata of %s %s
+%s %s metatiedot
 ---STRINGEND
 
 ---STRING midgard.admin.asgard
-Midgard Administration UI
+Midgardin hallintakäyttöliittymä
 ---STRINGEND
 
 ---STRING parameters of %s %s
-Parameters of %s %s
+%s %s parametrit
 ---STRINGEND
 
 ---STRING this is a midgard core type
-This is a Midgard CMS core type.
+Tämä tyyppi on osa Midgard-julkaisujärjestelmää.
 ---STRINGEND
 
 ---STRING under %s
-Under %s
+%s alla
 ---STRINGEND
 
 ---STRING this type belongs to %s component
-This type belongs to %s component.
+Tämä tyyppi on osa komponenttia %s.
 ---STRINGEND
 

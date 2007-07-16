@@ -101,7 +101,7 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
         $component = $_MIDCOM->dbclassloader->_mgdschema_class_handler[$midcom_dba_classname];
         if ( $component == 'midcom')
         {
-            $component = "midgard.admin.asgard";
+            $component = 'midgard';
         }
 
         $help = new midcom_admin_help_help();

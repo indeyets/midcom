@@ -53,6 +53,11 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         }
 
         // Instantiate midgard reflector
+        if (!class_exists($this->_mgdschema_class))
+        {
+            $x = false;
+            return $x;
+        }
         $this->_mgd_reflector = new midgard_reflection_property($this->_mgdschema_class);
         if (!$this->_mgd_reflector)
         {
@@ -192,7 +197,8 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
     {
         // Check against static calling
         if (   !isset($this->_mgdschema_class)
-            || empty($this->_mgdschema_class))
+            || empty($this->_mgdschema_class)
+            || !class_exists($this->_mgdschema_class))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('May not be called statically', MIDCOM_LOG_ERROR);
