@@ -185,6 +185,12 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
         echo "<script type=\"text/javascript\">\n";
         echo "var mapstraction_{$this->id} = new Mapstraction('{$this->id}','{$this->type}');\n";
         
+        if ($this->type == 'google')
+        {
+            // Workaround, Google requires you to start with a center
+            echo "mapstraction_{$this->id}.setCenter(new LatLonPoint(0, 0));\n";
+        }
+        
         foreach ($this->markers as $marker)
         {
             $marker_instance = $this->create_js_marker($marker);
