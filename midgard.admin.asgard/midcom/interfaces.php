@@ -42,6 +42,9 @@ class midgard_admin_asgard_interface extends midcom_baseclasses_components_inter
         if (!version_compare(mgd_version(), '1.8.3', 'gt'))
         {
             // Only works on 1.8.4 RC and above
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Asgard can only by used on Midgard 1.8.4 RC and newer', MIDCOM_LOG_ERROR);
+            debug_pop();
             return false;
         }
         return true;
