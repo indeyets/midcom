@@ -105,7 +105,7 @@ if (   !empty($auto_wildcards)
             $search = "{$search}%";
             break;
         default:
-            debug_add("Don't know how to handle auto_wilcards value '{$auto_wilcards}'", MIDCOM_LOG_WARN);
+            debug_add("Don't know how to handle auto_wildcards value '{$auto_wildcards}'", MIDCOM_LOG_WARN);
             break;
     }
 }
