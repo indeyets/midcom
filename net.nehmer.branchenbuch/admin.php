@@ -116,7 +116,7 @@ class net_nehmer_branchenbuch_admin extends midcom_baseclasses_components_reques
                     'The net.nehmer.account topic specified in the configuration could not be loaded: Topic does not exist.');
                 // This will exit.
             }
-            if ($test->get_parameter('midcom', 'component') != 'net.nehmer.account')
+            if ($test->component != 'net.nehmer.account')
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     'The net.nehmer.account topic specified in the configuration could not be loaded: Invalid topic (wrong component).');
