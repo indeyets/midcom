@@ -145,7 +145,7 @@ class net_nehmer_static_viewer extends midcom_baseclasses_components_request
             // This will exit.
         }
 
-        if ($this->_content_topic->get_parameter('midcom', 'component') != 'net.nehmer.static')
+        if ($this->_content_topic->component != 'net.nehmer.static')
         {
             debug_print_r('Retrieved topic was:', $this->_content_topic);
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,

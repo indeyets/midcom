@@ -109,7 +109,7 @@ class net_nehmer_static_interface extends midcom_baseclasses_components_interfac
                 // This will exit.
             }
 
-            if ($topic->get_parameter('midcom', 'component') != 'net.nehmer.static')
+            if ($topic->component != 'net.nehmer.static')
             {
                 debug_print_r('Retrieved topic was:', $topic);
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,

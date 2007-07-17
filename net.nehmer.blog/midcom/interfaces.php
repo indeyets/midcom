@@ -112,7 +112,7 @@ class net_nehmer_blog_interface extends midcom_baseclasses_components_interface
                 // This will exit.
             }
 
-            if ($topic->get_parameter('midcom', 'component') != 'net.nehmer.blog')
+            if ($topic->component != 'net.nehmer.blog')
             {
                 debug_print_r('Retrieved topic was:', $topic);
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,

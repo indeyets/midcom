@@ -184,7 +184,7 @@ class org_routamc_gallery_handler_sort extends midcom_baseclasses_components_han
                         }
                         
                         // Set the component information
-                        $topic->set_parameter('midcom', 'component', $this->_topic->get_parameter('midcom', 'component'));
+                        $topic->component = $this->_topic->component;
                         foreach ($this->_topic->list_parameters('org.routamc.gallery') as $name => $value)
                         {
                             $topic->set_parameter('org.routamc.gallery', $name, $value);
