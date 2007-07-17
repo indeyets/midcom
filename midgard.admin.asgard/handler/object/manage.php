@@ -318,6 +318,8 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 {
                     case MGD_TYPE_INT:
                     case MGD_TYPE_STRING:
+                    	$class = $_MIDCOM->dbclassloader->get_midcom_class_name_for_legacy_midgard_class($linked_type);
+                    	$component = $_MIDCOM->dbclassloader->_mgdschema_class_handler[$class];
                         $this->_schemadb['object']->append_field
                         (
                             $key, 
@@ -335,8 +337,8 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                                 'widget' => 'universalchooser',
                                 'widget_config' => array
                                 (
-                                    'class' => $_MIDCOM->dbclassloader->get_midcom_class_name_for_legacy_midgard_class($linked_type),
-                                    'component' => 'midgard.admin.asgard', // TODO: Try to get managing component from DBclassloader
+                                    'class' => $class,
+                                    'component' => $component,
                                     'titlefield' => $linked_type_reflector->get_label_property(),
                                     'idfield' => $this->_reflector->get_link_target($key),
                                     'searchfields' => $linked_type_reflector->get_search_properties(),
