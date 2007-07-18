@@ -286,7 +286,7 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
      * @param integer $limit How many results to return
      * @return Array Array of MidCOM DBA objects sorted by proximity
      */
-    function get_closest($class, $center, $limit, $modifier = 0.05)
+    function get_closest($class, $center, $limit, $modifier = 0.15)
     {
         $classname = org_routamc_positioning_utils::get_positioning_class($class);
         if ($classname != $class)
@@ -333,14 +333,20 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
             $to['longitude'] = 180;
         }
 
+		// dirty hack to cast coords to dotted decimal format
+		$from['latitude'] = number_format($from['latitude'],6);
+		$to['latitude'] = number_format($to['latitude'],6);
+		$from['longitude'] = number_format($from['longitude'],6);
+        $to['longitude'] = number_format($to['longitude'],6);
+
 
         $qb->begin_group('AND');
-        $qb->add_constraint('latitude', '<', $from['latitude']);
-        $qb->add_constraint('latitude', '>', (float) $to['latitude']);
+        $qb->add_constraint('latitude', '<=', $from['latitude']);
+        $qb->add_constraint('latitude', '>=', $to['latitude']);
         $qb->end_group();
         $qb->begin_group('AND');
-        $qb->add_constraint('longitude', '>', (float) $from['longitude']);
-        $qb->add_constraint('longitude', '<', (float) $to['longitude']);
+        $qb->add_constraint('longitude', '>=', $from['longitude']);
+        $qb->add_constraint('longitude', '<=', $to['longitude']);
         $qb->end_group();
         $result_count = $qb->count();
         //echo "<br />Round {$rounds}, lat1 {$from['latitude']} lon1 {$from['longitude']}, lat2 {$to['latitude']} lon2 {$to['longitude']}: {$result_count} results\n";
@@ -401,7 +407,7 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
                 $result->longitude = $result_coordinates['longitude'];
             }
 
-            $closest[$distance . $result->guid] = $result;
+            $closest[$distance ."-". $result->guid] = $result;
         }
 
         ksort($closest);
