@@ -9,5 +9,5 @@
 
 'plazes_developer_key' => '4c637b4469bc11d13e73aa18a55ff6e6',
 
-'map_provider' => 'openstreetmap',
+'map_provider' => 'google',
 'map_api_key'  => '',
