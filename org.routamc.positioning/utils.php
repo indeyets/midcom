@@ -407,7 +407,7 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
                 $result->longitude = $result_coordinates['longitude'];
             }
 
-            $closest[$distance ."-". $result->guid] = $result;
+            $closest[$distance . $result->guid] = $result;
         }
 
         ksort($closest);
