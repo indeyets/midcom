@@ -25,14 +25,13 @@ class net_nemein_favourites_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('create'),
 	    'variable_args' => 2,
 	);
-	/*
-	$this->_request_switch['createindex'] = Array
+	$this->_request_switch['delete'] = Array
         (
-	    'handler' => Array('net_nehmer_static_handler_create', 'create'),
-	    'fixed_args' => Array('createindex'),
+	    'handler' => Array('net_nemein_favourites_handler_create', 'delete'),
+	    'fixed_args' => Array('delete'),
             'variable_args' => 1,
         );
-	*/
+	
         $this->_request_switch['index'] = Array
 	(
 	    'handler' => Array('net_nemein_favourites_handler_view', 'view'),

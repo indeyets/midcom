@@ -85,9 +85,31 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
 
     function _show_create($handler_id, &$data)
     {
+
         $this->_request_data['favourite_title'] = $this->_favourite_title;
 	$this->_request_data['my_way_back'] = $this->_my_way_back;
         midcom_show_style('show_add_favourite');
+    }
+
+    
+    function _handler_delete($handler_id, $args, &$data)
+    {
+        $favourite = new net_nemein_favourites_favourite_dba();
+	$favourite->get_by_guid($args[0]);
+
+        $favourite->require_do('midgard:delete');
+        
+	if (!$favourite->delete())
+        {
+            // handle error
+	}
+
+        return true;
+    }
+
+    function _show_delete($handler_id, &$data)
+    {
+        $_MIDCOM->relocate('');
     }
 }
 
