@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    <type name="net_nemein_featured_item" table="net_nemein_featured_item">
+         <property name="id" type="integer" primaryfield="id" />
+         <property name="objectLocation" type="text"/>
+         <property name="topicGuid" type="text"/>
+         <property name="groupName" type="text"/>
+    </type>
+</Schema>

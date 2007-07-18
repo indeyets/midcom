@@ -1,0 +1,47 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id: default.en.txt 6059 2007-05-25 17:29:41Z flack $
+---LANGUAGE en
+
+---STRING title
+Title
+---STRINGEND
+
+---STRING submit
+Submit
+---STRINGEND
+
+---STRING edit
+Edit
+---STRINGEND
+
+---STRING delete
+Delete
+---STRINGEND
+
+---STRING move up
+Move up
+---STRINGEND
+
+---STRING move down
+Move down
+---STRINGEND
+
+---STRING edit featured
+Edit featured item
+---STRINGEND
+
+---STRING create featured
+Create featured item
+---STRINGEND
+
+---STRING group name
+Group name
+---STRINGEND
+
+---STRING object location
+Object location
+---STRINGEND
+
+
+
