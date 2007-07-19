@@ -185,6 +185,13 @@ class midcom_application {
     var $_services;
 
     /**
+     * The service loader.
+     *
+     * @var midcom_helper_serviceloader
+     */
+    public $serviceloader;
+
+    /**
      * Contains the output of get_midgard. You can directly access it here.
      *
      * @var MidgardObject
@@ -409,6 +416,7 @@ class midcom_application {
         $this->auth = new midcom_services_auth();
         $this->auth->initialize();
         $this->permalinks = new midcom_services_permalinks();
+        $this->serviceloader = new midcom_helper_serviceloader();        
         $this->tmp = new midcom_services_tmp();
         $this->toolbars = new midcom_services_toolbars();
         $this->uimessages = new midcom_services_uimessages();

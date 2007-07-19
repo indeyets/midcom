@@ -155,6 +155,7 @@ require('midcom/helper/itemlist.php');
 require('midcom/helper/metadata.php');
 require('midcom/helper/configuration.php');
 require('midcom/helper/mailtemplate.php');
+require('midcom/helper/serviceloader.php');
 require('midcom/helper/toolbar.php');
 require('midcom/helper/toolbars.php');
 require('midcom/helper/list_helpers.php');

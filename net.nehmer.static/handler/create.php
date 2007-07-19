@@ -197,8 +197,16 @@ class net_nehmer_static_handler_create extends midcom_baseclasses_components_han
                 if (   $this->_config->get('simple_name_handling')
                     && $this->_article->name == '')
                 {
-                    $this->_article->name = midcom_generate_urlname_from_string($this->_article->title);
-                    $this->_article->update();
+                    if ($_MIDCOM->serviceloader->can_load('midcom_core_service_urlgenerator'))
+                    {
+                        $urlgenerator = $_MIDCOM->serviceloader->load('midcom_core_service_urlgenerator');
+                        $this->_article->name = $urlgenerator->from_string($this->_article->title);
+                        $this->_article->update();
+                    }
+                    else
+                    {
+                        $this->_article->name = $this->_article->title;
+                    }
                 }
             
                 // Index the article

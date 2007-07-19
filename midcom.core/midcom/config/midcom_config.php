@@ -427,6 +427,9 @@ $GLOBALS['midcom_config_default']['toolbars_object_style_class'] = 'midcom_toolb
 $GLOBALS['midcom_config_default']['toolbars_css_path'] = MIDCOM_STATIC_URL . "/Javascript_protoToolkit/styles/protoToolbar.css";
 $GLOBALS['midcom_config_default']['toolbars_enable_centralized'] = true;
 
+// Service implementation defaults
+$GLOBALS['midcom_config_default']['service_midcom_core_service_urlgenerator'] = 'midcom_core_service_implementation_urlgeneratori18n';
+
 // Utilities
 $GLOBALS['midcom_config_default']['utility_imagemagick_base'] = '';
 $GLOBALS['midcom_config_default']['utility_jpegtran'] = 'jpegtran';
