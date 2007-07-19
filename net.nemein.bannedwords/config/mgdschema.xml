@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    <type name="net_nemein_bannedwords_word" table="net_nemein_bannedwords_word">
+         <property name="id" type="integer" primaryfield="id" />
+         <property name="bannedWord" type="text"/>
+    </type>
+</Schema>

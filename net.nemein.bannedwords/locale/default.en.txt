@@ -1,0 +1,16 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id: default.en.txt 6059 2007-05-25 17:29:41Z flack $
+---LANGUAGE en
+
+---STRING censored
+Censored
+---STRINGEND
+
+---STRING submit
+Submit
+---STRINGEND
+
+---STRING delete
+Delete
+---STRINGEND
