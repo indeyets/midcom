@@ -86,7 +86,12 @@ class midcom_helper_serviceloader
             // This will exit
         }  
         
-        // TODO: Check that class defined in config really implements the interface
+        if (!array_key_exists($service, class_implements($implementation_class)))
+        {
+            // TODO: Exception here
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Class {$implementation_class} does not implement {$service}");
+            // This will exit
+        }
         // TODO: Also run the check method of the class itself
         
         return true;
