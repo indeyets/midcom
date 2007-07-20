@@ -47,19 +47,26 @@
       ),
     ),
   ),
-  'customdata' => 
-  array (
-    'midcom.services.cron' => 
-    array (
-      0 => 
-      array (
-        'handler' => 'midcom_helper_replicator_cron_processqueue',
-        'recurrence' => MIDCOM_CRON_MINUTE,
-      ),
-      1 => 
-      array (
-        'handler' => 'midcom_helper_replicator_cron_queuenondba',
-        'recurrence' => MIDCOM_CRON_HOUR,
-      ),
+  'customdata' => array 
+    (
+        'request_handler_plugin' => array
+        (
+            'class' => 'midcom_helper_replicator_manager',
+            'src' => 'file:/midcom/helper/replicator/manager.php',
+            'name' => 'Replication management',
+            'config' => null,
+        ),
+        'midcom.services.cron' => array
+        (
+            0 => array 
+            (
+                'handler' => 'midcom_helper_replicator_cron_processqueue',
+                'recurrence' => MIDCOM_CRON_MINUTE,
+            ),
+            1 => array 
+            (
+                'handler' => 'midcom_helper_replicator_cron_queuenondba',
+                'recurrence' => MIDCOM_CRON_HOUR,
+            ),
+        ),
     ),
-  ),
