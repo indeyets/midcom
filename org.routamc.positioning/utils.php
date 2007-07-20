@@ -297,7 +297,6 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
         {
             $direct = true;
         }
-
         $qb =  $_MIDCOM->dbfactory->new_query_builder($classname);
 
         if (!$direct)
@@ -333,20 +332,20 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
             $to['longitude'] = 180;
         }
 
-		// dirty hack to cast coords to dotted decimal format
-		$from['latitude'] = number_format($from['latitude'],6);
-		$to['latitude'] = number_format($to['latitude'],6);
-		$from['longitude'] = number_format($from['longitude'],6);
-        $to['longitude'] = number_format($to['longitude'],6);
 
+		if (!isset($current_locale))
+		{
+			$current_locale = setlocale(LC_NUMERIC,"0");
+			setlocale(LC_NUMERIC,"C");
+		}
 
         $qb->begin_group('AND');
-        $qb->add_constraint('latitude', '<=', $from['latitude']);
-        $qb->add_constraint('latitude', '>=', $to['latitude']);
+        $qb->add_constraint('latitude', '<', (float) $from['latitude']);
+        $qb->add_constraint('latitude', '>', (float) $to['latitude']);
         $qb->end_group();
         $qb->begin_group('AND');
-        $qb->add_constraint('longitude', '>=', $from['longitude']);
-        $qb->add_constraint('longitude', '<=', $to['longitude']);
+        $qb->add_constraint('longitude', '>', (float) $from['longitude']);
+        $qb->add_constraint('longitude', '<', (float) $to['longitude']);
         $qb->end_group();
         $result_count = $qb->count();
         //echo "<br />Round {$rounds}, lat1 {$from['latitude']} lon1 {$from['longitude']}, lat2 {$to['latitude']} lon2 {$to['longitude']}: {$result_count} results\n";
@@ -386,6 +385,7 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
             }
 
             $modifier = $modifier * 1.05;
+			setlocale(LC_NUMERIC,$current_locale);
             return org_routamc_positioning_utils::get_closest($class, $center, $limit, $modifier);
         }
 
@@ -416,7 +416,7 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
         {
             array_pop($closest);
         }
-
+		setlocale(LC_NUMERIC,$current_locale);
         return $closest;
     }
 }
