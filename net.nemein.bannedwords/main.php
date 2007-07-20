@@ -125,8 +125,8 @@ class net_nemein_bannedwords_handler extends midcom_baseclasses_components_purec
         $content = strip_tags($content);
 
 	// Not working for some reason
-	$order = array('\r\n', '\r', '\n');
-	str_replace($order, " ", $content);
+	$order = array("\r\n", "\r", "\n");
+	$content = str_replace($order, " ", $content);
 
         if (!empty($this->_banned_words))
 	{
