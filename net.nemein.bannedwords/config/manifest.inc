@@ -17,3 +17,11 @@
       'midcom' => array (),
     ),
   ),
+  'customdata' => array(
+    'request_handler_plugin' => array(
+      'class' => 'net_nemein_bannedwords_edit_handler',
+      'src' => 'file:/net/nemein/bannedwords/editor.php',
+      'name' => 'Banned words editor',
+      'config' => null,
+    ),
+  ),

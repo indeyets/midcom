@@ -14,3 +14,7 @@ Submit
 ---STRING delete
 Delete
 ---STRINGEND
+
+---STRING banned editor
+Banned words editor
+---STRINGEND

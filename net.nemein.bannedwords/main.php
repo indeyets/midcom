@@ -10,6 +10,8 @@ class net_nemein_bannedwords_handler extends midcom_baseclasses_components_purec
 
     var $_sitegroup = null;
 
+    var $_language = "en";
+
     function net_nemein_bannedwords_handler()
     {
         $this->_sitegroup = $_MIDGARD['sitegroup'];
@@ -18,10 +20,29 @@ class net_nemein_bannedwords_handler extends midcom_baseclasses_components_purec
 	$this->_populate_word_list();
     }
 
+    function set_language($language)
+    {
+        $this->_language = $language;
+    }
+
     function _populate_word_list()
     {
         $qb = net_nemein_bannedwords_word_dba::new_query_builder();
-	$qb->add_constraint('sitegroup', '=', $this->_sitegroup);
+	$qb->add_constraint('language', '=', $this->_language);
+
+	if ($this->_config->get('use_global_word_library') && $this->_config->get('use_local_word_library'))
+	{
+	    $qb->add_constraint('sitegroup', 'IN', array(0, $this->_sitegroup));
+	}
+	elseif ($this->_config->get(use_global_word_library))
+	{
+            $qb->add_constraint('sitegroup', '=', 0);
+	}
+	elseif ($this->_config->get('use_local_word_library'))
+	{
+            $qb->add_constraint('sitegroup', '=', $this->_sitegroup);
+	}
+
         $banned_objects = $qb->execute();
 
 	foreach($banned_objects as $banned)
@@ -41,8 +62,40 @@ class net_nemein_bannedwords_handler extends midcom_baseclasses_components_purec
     {
         if (!empty($this->_banned_words))
 	{
+            $censored_start = "";
+	    $censored_end = "";
+	    $censored_word_id = "";
+	    $censored_custom_word = "";
+
+	    if ($this->_config->get('censored_start'))
+	    {
+                $censored_start = $this->_config->get('censored_start');
+	    }
+	    if ($this->_config->get('censored_end'))
+	    {
+	        $censored_end = $this->_config->get('censored_end');
+	    }
+	    if ($this->_config->get('censored_word_id'))
+	    {
+                $censored_word_id = $this->_config->get('censored_word_id');
+	    }
+	    if ($this->_config->get('censored_custom_word'))
+	    {
+                $censored_custom_word = $this->_config->get('censored_custom_word');
+	    }
+
             $regexp = $this->_build_regexp();
-	    $censored = "<span class=\"net_nemein_bannedwords_censored\">***{$this->_l10n->get('censored')}***</span>";
+	    $censored = "<span class=\"net_nemein_bannedwords_censored\">{$censored_start}";
+	    if (!empty($censored_custom_word))
+	    {
+                $censored .= $censored_custom_word;
+	    }
+	    else
+	    {
+	        $censored .= $this->_l10n->get($censored_word_id);
+	    }
+	    $censored .= "{$censored_end}</span>";
+	    
             $processed_content = eregi_replace($regexp, $censored, $content);
         
 	    return $processed_content;
@@ -65,6 +118,34 @@ class net_nemein_bannedwords_handler extends midcom_baseclasses_components_purec
 	{
             return $processed_content;
 	}
+    }
+
+    function search_banned_words($content)
+    {
+        $content = strip_tags($content);
+
+	// Not working for some reason
+	$order = array('\r\n', '\r', '\n');
+	str_replace($order, " ", $content);
+
+        if (!empty($this->_banned_words))
+	{
+	    $matches = array();
+            $regexp = $this->_build_regexp();
+            $words = explode(" ", $content);
+
+	    foreach($words as $key => $word)
+	    {
+	        if (eregi($regexp, $word))
+		{
+                     $matches[$key] = $word;
+		}
+	    }
+
+	    return $matches;
+	}
+
+	return false;
     }
 
     function is_banned($word)

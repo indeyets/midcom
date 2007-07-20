@@ -3,5 +3,7 @@
     <type name="net_nemein_bannedwords_word" table="net_nemein_bannedwords_word">
          <property name="id" type="integer" primaryfield="id" />
          <property name="bannedWord" type="text"/>
+         <property name="description" type="text"/>
+         <property name="language" type="text"/>
     </type>
 </Schema>
