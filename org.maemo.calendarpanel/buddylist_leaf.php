@@ -43,7 +43,23 @@ class org_maemo_calendarpanel_buddylist_leaf extends midcom_baseclasses_componen
     function generate_content()
     {
         $html = "";
+        $html .= $this->_render_menu();
         $html .= $this->_render_buddylist();
+        
+        return $html;
+    }
+    
+    function _render_menu()
+    {
+        $html = "";
+        
+        $html .= "<div class=\"accordion-leaf-menu\">\n";
+        $html .= "   <ul class=\"leaf-menu\">\n";
+
+        $html .= "      <li><a href=\"#\" onclick=\"\" title=\"Add buddy\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/contact-new.png\" alt=\"Add buddy\" /></a></li>\n";
+
+        $html .= "   </ul>\n";
+        $html .= "</div>\n";
         
         return $html;
     }

@@ -30,7 +30,8 @@ class org_maemo_calendarpanel_interface extends midcom_baseclasses_components_in
         (
             'main.php',
             'calendar_leaf.php',
-            'buddylist_leaf.php'
+            'buddylist_leaf.php',
+            'shelf_leaf.php'
         );
         
         // // Load all libraries used by component here

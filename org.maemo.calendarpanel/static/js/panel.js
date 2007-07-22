@@ -15,6 +15,6 @@ function toggle_layer_visibility(calendar_id)
 
 function toggle_tag_visibility(calendar_id, tag_id)
 {   
-    var search_string = "#calendar-layer-" + calendar_id + " div.tag-" + tag_id + "";
+    var search_string = "#calendar-layer-" + calendar_id + " div.tag-" + tag_id + "[@in_shelf=false]";
     jQuery(search_string).toggle();
 }
