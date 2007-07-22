@@ -197,6 +197,8 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
     
     var $_slot_count = 0;
     
+    var $scrollTop = 0;
+    
     /**
      * Initializes the class and sets the selected date to be shown
      *
@@ -704,6 +706,10 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         }
 
         $html .= "</table>\n";
+
+        $this->scrollTop = $this->cell_height * ($this->start_hour * (3600 / $this->calendar_slot_length));
+        
+        $this->_jscripts .= "jQuery('div.calendar-timeline-holder')[0].scrollTop = {$this->scrollTop};\n";
         
         $html .= '<script>';
         $html .= 'jQuery().ready(function(){' . $this->_jscripts . '});';
@@ -905,7 +911,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         $html .= "            <div class=\"calendar-timeline-holder\">\n";
         
         $slots = $this->_get_day_slots($start);
-        
+        $html .= $this->_render_active_layers();        
 
         $html .= "               <table width=\"100%\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"calendar-timetable\">\n";
         $html .= "                  <tbody>\n";
@@ -964,8 +970,6 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         }
         $html .= "                  </tbody>\n";
         $html .= "               </table>\n";
-
-        $html .= $this->_render_active_layers();
 
         $html .= "            </div>\n";
         $html .= "         </td>\n";
@@ -1275,7 +1279,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
                 $html .= $this->_render_week_events(&$events, $layer_tag);
                 break;
             case ORG_MAEMO_CALENDARWIDGET_DAY:
-                $html .= $this->_render_day_events(&$events, $layer_tag);
+                $html .= $this->_render_week_events(&$events, $layer_tag);
                 break;
         }
 
@@ -1340,14 +1344,17 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
     
     function _render_event(&$event, $layer_tag, $override_start=false, $override_end=false, $multiday_event_id=null)
     {
-        // debug_push_class(__CLASS__, __FUNCTION__);
+        debug_push_class(__CLASS__, __FUNCTION__);
         // debug_add("Called for {$event->title}");
         
         $html = '';
         
+        $active_timezone = org_maemo_calendar_common::active_timezone();
+        $utc_timezone = timezone_open("UTC");
+        
         $event_start = $event->start;
         $event_end = $event->end;
-                
+        
         if ($override_start)
         {
             $event_start = $override_start;         
@@ -1356,15 +1363,33 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         {
             $event_end = $override_end;         
         }
+        
+        // date_default_timezone_set(timezone_name_get($active_timezone));
 
-        // debug_add("Event start " . strftime("%d.%m.%y %H:%M",$event_start));
-        // debug_add("Event end " . strftime("%d.%m.%y %H:%M",$event_end));
-                        
+        $event_start_dt = date_create("@$event_start",$utc_timezone);
+        $event_end_dt = date_create("@$event_end",$utc_timezone);
+        
+        debug_add("event_start_dt before timezone change: " . $event_start_dt->format("H:i"));
+        
+        $start_offset = $active_timezone->getOffset($event_start_dt);
+        debug_add("offset {$start_offset} (in hours): " . ($start_offset/(60*60)));
+        $end_offset = $active_timezone->getOffset($event_end_dt);
+        
+        $event_start_dt->setTimezone($active_timezone);
+        
+        debug_add("event_start_dt after timezone change: " . $event_start_dt->format("H:i"));
+        debug_add("event_end_dt after timezone change: " . $event_end_dt->format("H:i"));
+        
+        $event_start = $event_start + $start_offset;
+        $event_end = $event_end + $end_offset;
+
+        debug_add("event_start after timezone change calculation: " . date("H:i",$event_start));
+                                
         $start_time = date('H:i',$event_start);
         $end_time = date('H:i',$event_end);
         
         $toolbar_config = '';
-        $bg_color = 'FFFF99';
+        $bg_color = $this->_calendars[$layer_tag]['color'];
         $event_element_id = "event-{$event->guid}";
         
         if ($multiday_event_id != null)
@@ -1382,7 +1407,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         {
             foreach ($event_tags as $tag => $data)
             {
-                $event_tag_classes .= "tag-{$tag}";             
+                $event_tag_classes .= "tag-{$tag} ";
             }
         }
         
@@ -1400,7 +1425,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         if (   $this->type == ORG_MAEMO_CALENDARWIDGET_WEEK
             || $this->type == ORG_MAEMO_CALENDARWIDGET_DAY )
         {
-            $html .= "<div id=\"{$event_element_id}\" ";
+            $html .= "<div id=\"{$event_element_id}\" in_shelf=\"false\"";
             $html .= "title=\"{$event->title}\" class=\"calendar-object-event {$event_type_class} {$event_tag_classes}\" ";
             $html .= "style=\"height: {$height}{$this->cell_height_unit}; top: {$position['top']}px; left: {$position['left']}%; background-color: #{$bg_color};\">\n";
 
@@ -1416,8 +1441,21 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 
             $html .= "</div>\n\n";
             
-            $this->_jscripts .= '$j("#calendar-layer-' . $layer_tag . ' #' . $event_element_id . '").eventToolbar({' . $toolbar_config . '});'."\n";
-            //$this->_jscripts .= 'console.log("layer_tag: "+$j("#' . $layer_tag . ' #' . $event_element_id . '")[0]);'."\n";
+            $menu_items[] = "{ className: 'first', name: '" . $this->_l10n->get("show") . "', action: function(){load_modal_window('ajax/event/show/".$event->guid."');} }";
+            if ($event->can_do('midgard:update'))
+            {
+                $menu_items[] = "{ name: '" . $this->_l10n_midcom->get("edit") . "', action: function(){load_modal_window('ajax/event/edit/".$event->guid."');} }";
+                $event_data = "{ title: '{$event->title}' }";
+                $menu_items[] = "{ name: '" . $this->_l10n->get("to shelf") . "', action: \"move_event_to_shelf('{$event->guid}', {$event_data});\" }";
+            }
+            if ($event->can_do('midgard:delete'))
+            {
+                $menu_items[] = "{ name: '" . $this->_l10n_midcom->get("delete") . "', action: function(){window.location = APPLICATION_PREFIX + \"event/remove/".$event->guid."\";} }";        
+            }
+                                    
+            $menu_items_str = implode(",",$menu_items);
+            
+            $this->_jscripts .= '$j("#calendar-layer-' . $layer_tag . ' #' . $event_element_id . '").eventToolbar({' . $toolbar_config . '},['.$menu_items_str.']);'."\n";
         }
         else
         {
@@ -1427,7 +1465,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
             $html .= "</li>\n";
         }
         
-        // debug_pop();
+        debug_pop();
         
         return $html;
     }

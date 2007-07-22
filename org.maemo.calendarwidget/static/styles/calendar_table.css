@@ -121,7 +121,7 @@ body.week div.calendar-timeline-holder
 {
     position: relative;
     width: 100%;
-    height: 295px;
+    height: 300px;
     overflow: scroll;
     o\verflow: -moz-scrollbars-vertical;
     o\verflow-y: scroll;

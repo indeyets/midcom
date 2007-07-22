@@ -11,7 +11,7 @@
  *
  */
 
-jQuery.fn.eventToolbar = function(settings) {
+jQuery.fn.eventToolbar = function(settings,items) {
     settings = jQuery.extend({
         type: "menu", // float, menu
         event_type: "public",
@@ -22,7 +22,8 @@ jQuery.fn.eventToolbar = function(settings) {
     var element = this;
     var handler = jQuery(this).find('div.event-toolbar-button');
     var toolbar_div = null;
-    var toolbar_items = new Array();
+    var toolbar_div_list = null;
+    var menu_items = items || Array();
     var toolbar_visible = false;
     var toolbar_left = 0;
     var toolbar_top = 0;
@@ -30,7 +31,8 @@ jQuery.fn.eventToolbar = function(settings) {
     var target = jQuery(insert_to);
     var toolbar_position_type = "absolute";
     var toolbar_id_prefix = element[0].id;
-        
+    var event_guid = element[0].id.split('-')[1];
+    
     if (settings.md)
     {
         element_id_parts = toolbar_id_prefix.split('_');
@@ -154,13 +156,17 @@ jQuery.fn.eventToolbar = function(settings) {
     
     function _create_toolbar()
     {   
-        toolbar_div = jQuery("<div/>").attr({
-            id: toolbar_id,
-            title: element[0].title + ' - toolbox',
-            className: "event-toolbar-" + settings.type
-        }).hide().css({ position: toolbar_position_type, zIndex: 3000 });
-
-        target.append( toolbar_div );
+        // toolbar_div = jQuery("<div/>").attr({
+        //     id: toolbar_id,
+        //     title: element[0].title + ' - toolbox',
+        //     className: "event-toolbar-" + settings.type
+        // }).hide().css({ position: toolbar_position_type, zIndex: 3000 });
+        // 
+        // target.append( toolbar_div );
+        
+        toolbar_div = jQuery(target).createAppend(
+            'div', { id: toolbar_id, title: element[0].title + ' - toolbox', className: 'event-toolbar event-toolbar-type-' + settings.type }
+        ).hide().css({ position: toolbar_position_type, zIndex: 3000 });        
         
         /*.insertAfter( insert_to ).hide().css({ position: toolbar_position_type, zIndex: 3000 });
         
@@ -188,57 +194,49 @@ jQuery.fn.eventToolbar = function(settings) {
         // 
         // console.log("contentHolder: "+contentHolder[0]);
         // console.log("contentList: "+contentList[0]);
-        
-        var toolbar_div_content = document.createElement('div');
-        toolbar_div_content.setAttribute('class', 'event-toolbar-content');
-        toolbar_div[0].appendChild(toolbar_div_content);
-        
-        var toolbar_div_list = document.createElement('ul');
-        toolbar_div_content.appendChild(toolbar_div_list);
+
+        var toolbar_div_content = jQuery(toolbar_div).createAppend(
+            'div', { className: 'event-toolbar-content' }
+        );
+
+        toolbar_div_list = jQuery(toolbar_div_content).createAppend(
+            'ul', {}
+        );
         
         _create_toolbar_items();
-
-        for(var i=0; i<toolbar_items.length; i++)
-        {
-            toolbar_div_list.appendChild(toolbar_items[i]);
-        }
-        
-        // var contentHTML = "<div class='event-toolbar-content'>\n<ul>";
-        // contentHTML += "\n<li><a href='#'>Edit</a></li>\n";
-        // contentHTML += "\n<li><a href='#'>Move</a></li>\n";
-        // contentHTML += "\n<li><a href='#'>Remove</a></li>\n";
-        // contentHTML += "\n<li class='last'><a href='#'>Close</a></li>\n";
-        // contentHTML += "</ul>\n</div>";
-        // 
-        // toolbar_div.append( contentHTML );
     }
     
     function _create_toolbar_items()
-    {       
-        var toolbar_div_list_item = document.createElement('li');
-        toolbar_div_list_item.setAttribute('class', 'first');
-        toolbar_div_list_item.innerHTML = 'Show';
-        jQuery( toolbar_div_list_item ).click(toggle_toolbar);
-
-        toolbar_items.push(toolbar_div_list_item);
-        
-        var toolbar_div_list_item = document.createElement('li');
-        toolbar_div_list_item.setAttribute('class', 'last');
-        toolbar_div_list_item.innerHTML = 'Close';
-        jQuery( toolbar_div_list_item ).click(toggle_toolbar);
-        
-        // var link_element = document.createElement('a');
-        // link_element.setAttribute('href', '#');
-        // link_element.innerHTML = 'Close';
-        // toolbar_div_list_item.appendChild(link_element);
-        // jQuery( link_element ).click(test_bind);
-        
-        toolbar_items.push(toolbar_div_list_item);
-    }
-    
-    function test_bind()
     {
-        // console.log("Bind succesfull");
+        for (var i=0; i<menu_items.length; i++)
+        {
+            _add_menu_item(menu_items[i]);
+        }
+        
+        jQuery(toolbar_div_list).createAppend(
+            'li', { className: 'last', onclick: toggle_toolbar }, 'Close'
+        );
     }
     
+    function edit_event_action()
+    {        
+        window.location = APPLICATION_PREFIX + 'event/edit/' + event_guid;
+    }
+    
+    function _add_menu_item(data)
+    {
+        data = jQuery.extend({
+            className: '',
+            onclick: '',
+            name: ''
+        }, data);
+        
+        var tpl = function() {
+            return [
+                'li', { className: this.className, onclick: this.action }, this.name
+            ];
+        };
+
+        jQuery(toolbar_div_list).tplAppend(data, tpl);        
+    }
 };
