@@ -98,8 +98,31 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
 //mktime(date('H', $this->_request_data['selected_day']), date('i', $this->_request_data['selected_day']), 0, date('m', $this->_request_data['selected_day']), date('d', $this->_request_data['selected_day']), date('Y', $this->_request_data['selected_day']));
         
         $this->_defaults['end'] = $this->_defaults['start'] + 3600;
-
-        // TODO: populate current user to default participants list if not there already
+        
+        //$user_tags = org_maemo_calendar_common::fetch_available_user_tags();
+        
+        // Insert users default tag
+        //$_MIDCOM->componentloader->load_graceful('net.nemein.tag');
+        //$this->_defaults['tags'] = net_nemein_tag_handler::string2tag_array($user_tags[0]['id']);
+        //$this->_defaults['tags'] = $user_tags[0]['id'];
+        
+        // Populate the participants
+        if ($_MIDCOM->auth->user)
+        {
+            //$this->_defaults['participants'] = '|'.$_MIDGARD['user'].'|';
+            // $this->_defaults['participants'] = array
+            // (
+            //     $_MIDGARD['user'],
+            // );
+            $this->_defaults['participants'] = serialize( array
+            (
+                $_MIDGARD['user'],
+            ) );
+            // $this->_defaults['participants'] = array
+            // (
+            //     $_MIDGARD['user'] = true,
+            // );
+        }
         
         $session =& new midcom_service_session();
         if ($session->exists('failed_POST_data'))
@@ -144,17 +167,70 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
      */
     function &dm2_create_callback(&$controller)
     {
-        $this->_event = new org_openpsa_calendar_event();
-        $this->_event->up = $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']->id;
+        $this->_event = new org_maemo_calendar_event();
+        $this->_event->up = $this->_request_data['root_event_id'];
 
-        // Populate the resource
-        if ($_MIDCOM->auth->user)
+        // Populate the participants
+        $participants = array();
+        if (   empty($_POST['participants'])
+            || !is_array($_POST['participants']) )
         {
-            $this->_event->participants = array
-            (
-                $_MIDGARD['user'] => true,
-            );
+            $participants = array( $_MIDGARD['user'] => true );
         }
+        // debug_print_r('_POST[participants]: ',$_POST['participants']);
+        foreach ($_POST['participants'] as $participant_id)
+        {
+            //$participants[$participant_id] = true;
+            $participants[] = array( $participant_id => true );
+            
+            // $this->_event->participants = array
+            // (
+            //     $_MIDGARD['user'] => true,
+            // );
+        
+            // $this->_event->participants = serialize( array
+            // (
+            //     $_MIDGARD['user'],
+            // ) );
+        }
+        
+        $this->_event->participants = $participants;
+        //$this->_event->participants = $_POST['participants'];
+        
+        //debug_print_r('this->_event->participants before create: ',$this->_event->participants);
+
+        debug_add("Make sure the start/end times are saved with UTC timezone");
+        
+        $event_start = strtotime($_POST['start']);
+        debug_add("event_start before timezone change: " . $event_start . " (" . date("H:i:s",$event_start) . ")");
+        $event_end = strtotime($_POST['end']);
+        $event_start_dt = date_create("@$event_start", $utc_timezone);
+        $event_end_dt = date_create("@$event_end", $utc_timezone);
+        $start_tz_name = $event_start_dt->getTimeZone()->getName();
+        debug_add("start_tz_name: ".$start_tz_name);
+        $event_start_dt->setTimezone($active_timezone);
+        $start_tz_name = $event_start_dt->getTimeZone()->getName();
+        debug_add("start_tz_name after set: ".$start_tz_name);
+        $event_end_dt->setTimezone($active_timezone);
+        $start_offset = $event_start_dt->format('Z');//$active_timezone->getOffset($event_start);
+        debug_add("offset {$start_offset} (in hours): " . ($start_offset/(60*60)));
+        $end_offset = $event_end_dt->format('Z');//$active_timezone->getOffset($event_end);
+        
+        if ($start_offset > 0)
+        {
+            $event_start = $event_start - $start_offset;
+            $event_end = $event_end - $end_offset;                
+        }
+        else
+        {
+            $event_start = $event_start + $start_offset;
+            $event_end = $event_end + $end_offset;                
+        }
+        
+        debug_add("event_start after timezone change: " . $event_start . " (" . date("H:i:s",$event_start) . ")");
+
+        $_POST['start'] = date("Y-m-d H:i:s", $event_start);
+        $_POST['end'] = date("Y-m-d H:i:s", $event_end);
 
         if (array_key_exists('start', $_POST))
         {
@@ -173,7 +249,7 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
         $this->_event->busy = false;    
 
         if (! $this->_event->create())
-        {
+        {            
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_print_r('We operated on this object:', $this->_event);
             debug_pop();
@@ -207,12 +283,17 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
             }
         }
 
+        //debug_print_r('this->_event->participants after create: ',$this->_event->participants);
+
         return $this->_event;
     }
 
     function _handler_create($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
+
+        $active_timezone = org_maemo_calendar_common::active_timezone();
+        date_default_timezone_set(timezone_name_get($active_timezone));
         
         if ($handler_id == 'ajax-event-create')
         {
@@ -227,17 +308,18 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
         }
         
         debug_add("requested time: {$this->_request_data['selected_day']}");
-        
+                
         $this->_load_controller($handler_id);
         $this->_prepare_request_data();
-        
+                
         switch ($this->_controller->process_form())
         {
             case 'save':
                 if ($handler_id == 'ajax-event-create')
                 {
                     // Change to default schema on the fly
-                    $this->_event->set_parameter('midcom.helper.datamanager2', 'schema', 'default');
+                    //$this->_event->set_parameter('midcom.helper.datamanager2', 'schema', 'default');
+                    $this->_event->set_parameter('midcom.helper.datamanager2', 'schema_name', 'default');
                 }
                 $_MIDCOM->relocate('');
                 // this will exit.

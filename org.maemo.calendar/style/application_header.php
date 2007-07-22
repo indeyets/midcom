@@ -3,29 +3,82 @@
 $current_date = array(  'day' => date('d'),
                         'month' => date('m'),
                         'year' => date('Y') );
-$current_timezone = timezone_open('Europe/Helsinki');
+$current_timezone = org_maemo_calendar_common::active_timezone();
 
 //$timezone_abbreviations = DateTimeZone::listAbbreviations();
-$timezone_identifiers = DateTimeZone::listIdentifiers();
+//$timezone_identifiers = DateTimeZone::listIdentifiers();
 
 ?>
     <div class="header">
         <div class="timezone-block">
             <form id="timezone-selection-form" action="ajax/change/timezone/" method="GET">
-            <select name="timezone" size="1">
+            <select name="timezone" size="1" onchange="change_timezone();">
                 <option value="0">Select Timezone</option>
-                <?php
-                for($i=0;$i<count($timezone_identifiers);$i++)
-                {
-                    $selected = "";
-                    if($timezone_identifiers[$i] == timezone_name_get($current_timezone))
+            <?php
+            function render_timezone_list($selected_zone) {
+                $structure = '';
+                $timezone_identifiers = timezone_identifiers_list();
+                $i = 0;
+                foreach ($timezone_identifiers as $zone) {
+                    $zone = explode('/',$zone);
+                    if (isset($zone[1]))
                     {
-                        $selected = ' selected="selected"';
+                        $zones[$i]['continent'] = $zone[0];
+                        $zones[$i]['city'] = $zone[1];
+                        $i++;                        
                     }
-                    //echo '<option value="'.$timezone_identifiers[$i].'" '.$selected.'>'.$timezone_identifiers[$i].'</option>';
                 }
-                ?>
-            </select>
+                asort($zones);
+                foreach ($zones as $zone) {
+                    extract($zone);
+                    if (   $continent == 'Africa'
+                        || $continent == 'America'
+                        || $continent == 'Antarctica'
+                        || $continent == 'Arctic'
+                        || $continent == 'Asia'
+                        || $continent == 'Atlantic'
+                        || $continent == 'Australia'
+                        || $continent == 'Europe'
+                        || $continent == 'Indian'
+                        || $continent == 'Pacific')
+                    {
+                        if (! isset($current_continent))
+                        {
+                            $structure .= "<optgroup label=\"{$continent}\">\n"; // continent                            
+                        }
+                        elseif ($current_continent != $continent)
+                        {
+                            $structure .= "</optgroup>\n<optgroup label=\"{$continent}\">\n"; // continent
+                        }
+                        
+                        $selected = "";
+                        if ($city != '')
+                        {
+                            $value = "{$continent}/{$city}";
+                            if ($value == $selected_zone)
+                            {
+                                $selected = "selected=\"selected\" ";
+                            }
+                            $structure .= "<option {$selected} value=\"{$value}\">" . str_replace('_',' ',$city) . "</option>\n"; //Timezone
+                        }
+                        else
+                        {
+                            if ($continent == $selected_zone)
+                            {
+                                $selected = "selected=\"selected\" ";
+                            }
+                            $structure .= "<option {$selected} value=\"{$continent}\">{$continent}</option>\n"; //Timezone                            
+                        }
+                        
+                        $current_continent = $continent;
+                    }
+                }
+                $structure .= "</optgroup>\n";
+                return $structure;
+            }
+            echo render_timezone_list(timezone_name_get($current_timezone));
+            ?>
+            </select>            
             </form>
         </div>
         <div class="zoom-block">

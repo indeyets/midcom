@@ -135,6 +135,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
         $script .= ' timestamp: ' . $this->_selected_time . ','."\n";
         $script .= ' types_classes: [\'' . implode("','",$class_names) . '\']' . "\n";
         $script .= '};'."\n";
+        $script .= 'var shelf_contents = Array();'."\n";
         $_MIDCOM->add_jscript($script,"",true);
         
         return true;        
@@ -146,14 +147,14 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
         
         $calendar_leaf = new org_maemo_calendarpanel_calendar_leaf($this->_request_data['maemo_calender']);
         $buddylist_leaf = new org_maemo_calendarpanel_buddylist_leaf();
-        
+        $shelf_leaf = new org_maemo_calendarpanel_shelf_leaf();
+                
         $calendar_leaf->add_calendars(&$this->layer_data['calendars']);
-
         $buddylist_leaf->add_buddies(&$this->_buddies);
-        
-        
+                
         $this->_request_data['panel']->add_leaf('calendar', &$calendar_leaf);
         $this->_request_data['panel']->add_leaf('buddylist', &$buddylist_leaf);
+        $this->_request_data['panel']->add_leaf('shelf', &$shelf_leaf);
     }
     
     function _fetch_calendars()
@@ -198,6 +199,10 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
                 'color' => $this->user_tags[0]['color']
             );
         }
+        if (!isset($this->layer_data['busy'][$default_calendar_id]))
+        {
+            $this->layer_data['busy'][$default_calendar_id] = array();
+        }        
         
         foreach ($this->_buddies as $person_id => $person)
         {
@@ -226,7 +231,11 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
                     'name' => $calendar_name,
                     'color' => $calendar_color
                 );
-            }           
+            }
+            if (!isset($this->layer_data['busy'][$calendar_id]))
+            {
+                $this->layer_data['busy'][$calendar_id] = array();
+            }                       
         }
     }
     
@@ -246,7 +255,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
              * Make sure we put the event to our Calendar if we own or are participant in it.
              */
             if (   array_key_exists($this->current_user->id, $event->participants)
-                || $event->metadata->creator == $this->current_user->guid)
+                ) //|| $event->metadata->creator == $this->current_user->guid
             {
                 if ( empty($tags))
                 {
@@ -264,10 +273,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
                 }
 
                 $this->layer_data['calendars'][$default_calendar_id]['events'][] = $event;
-                if (!isset($this->layer_data['busy'][$default_calendar_id]))
-                {
-                    $this->layer_data['busy'][$default_calendar_id] = array();
-                }
+
                 $this->layer_data['busy'][$default_calendar_id][$event->guid] = array( 'start' => $event->start, 'end' => $event->end );
             }
             else
@@ -279,10 +285,6 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
                     if (array_key_exists($person_id, $event->participants))
                     {
                         $this->layer_data['calendars'][$calendar_id]['events'][] = $event;
-                        if (!isset($this->layer_data['busy'][$calendar_id]))
-                        {
-                            $this->layer_data['busy'][$calendar_id] = array();
-                        }
                         $this->layer_data['busy'][$calendar_id][$event->guid] = array( 'start' => $event->start, 'end' => $event->end );                        
                     }
                 }               
@@ -410,7 +412,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
             $qb->end_group();
         $qb->end_group();
 
-        $qb->add_constraint('eid.up', '=', (int)$GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']->id);
+        $qb->add_constraint('eid.up', '=', $this->_request_data['root_event_id']);
         $qb->add_constraint('uid', 'IN', $user_ids);
 
         $qb->add_order('eid.start', 'ASC');
@@ -433,7 +435,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
                 debug_add("Ran into already seen event #{$membership->eid}, skipping");
                 continue;
             }
-            $event = new org_openpsa_calendar_event($membership->eid);
+            $event = new org_maemo_calendar_event($membership->eid);
             if (!$event)
             {
                 debug_add("Could not instantiate event #{$membership->eid}", MIDCOM_LOG_ERROR);

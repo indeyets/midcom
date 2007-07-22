@@ -148,70 +148,65 @@ div.calendar-object-event-content
     overflow: hidden;
 }
 
-div.event-toolbar-menu
+div.event-toolbar
 {
-    background-color: #d3d7cf;
+    background-color: #d3d7cf;    
     border: 1px solid #b5b7b3;
+    text-align: left;
+}
+div.event-toolbar div.event-toolbar-content ul, div.event-toolbar div.event-toolbar-content ul li
+{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+div.event-toolbar div.event-toolbar-content ul li
+{
+    height: 14px;
+    line-height: 14px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    padding-left: 5px;
+    text-decoration: none;
+    color: #292928;
+    cursor: pointer;
+    font-weight: bold;
+    float: none;
+}
+div.event-toolbar div.event-toolbar-content ul li.last
+{
+    border: 0;
+}
+div.event-toolbar-type-menu
+{
     height: 16px;
-    text-align: left;
 }
-div.event-toolbar-float
+div.event-toolbar-type-float
 {
-    background-color: #d3d7cf;
-    border: 1px solid #b5b7b3;
     width: 120px;
-    text-align: left;
 }
-div.event-toolbar-menu div.event-toolbar-content
+div.event-toolbar-type-menu div.event-toolbar-content
 {
     padding: 0 2px 0 2px;
 }
-div.event-toolbar-float div.event-toolbar-content
+div.event-toolbar-type-float div.event-toolbar-content
 {
     padding: 2px 0 0 0;
 }
-div.event-toolbar-menu div.event-toolbar-content ul, div.event-toolbar-menu div.event-toolbar-content ul li
+
+div.event-toolbar-type-menu div.event-toolbar-content ul li
 {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}
-div.event-toolbar-float div.event-toolbar-content ul, div.event-toolbar-float div.event-toolbar-content ul li
-{
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}
-div.event-toolbar-menu div.event-toolbar-content ul li
-{
-    height: 14px;
-    line-height: 14px;
-    padding-left: 5px;
     padding-right: 5px;
     margin-right: 2px;
     border-right: 1px dotted #b5b7b3;
-    text-decoration: none;
-    color: #292928;
-    cursor: pointer;
-    font-weight: bold;
     float: left;
 }
-div.event-toolbar-float div.event-toolbar-content ul li
+div.event-toolbar-type-float div.event-toolbar-content ul li
 {
-    height: 14px;
-    line-height: 14px;
     padding-left: 5px;
     margin-bottom: 2px;
     border-bottom: 1px dotted #b5b7b3;
-    text-decoration: none;
-    color: #292928;
-    cursor: pointer;
-    font-weight: bold;
-}
-div.event-toolbar-menu div.event-toolbar-content ul li.last
-div.event-toolbar-float div.event-toolbar-content ul li.last
-{
-    border: 0;
 }
 
 
@@ -232,7 +227,7 @@ div.event-toolbar-float div.event-toolbar-content ul li.last
     margin-top: 155px;
 }
 
-#calendar-modal-window,
+div.calendar-modal-window,
 div.standalone-window
 {
     display: none;
@@ -245,20 +240,19 @@ div.standalone-window
     z-index: 3500;
     padding: 10px;
     -moz-border-radius: 10px;
-    border: 1px solid #3c3c3c;
+    border: 1px solid #3c3c3c;    
 }
-#calendar-modal-window h1
+div.calendar-modal-window h1
 {
     margin: 0 0 5px 0;
 }
 
-
-/* Event editing/creation */
-
-div.event-form
+div.calendar-modal-window div.event-form
 {
     margin: 5px 0 5px 0;
 }
+
+/* Event editing/creation */
 
 div.block
 {
@@ -283,6 +277,7 @@ div.standalone-window
     margin: 10px;
     padding: 5px;
 }
+div.calendar-modal-window-content,
 div.standalone-window-content
 {
     height: 100%;

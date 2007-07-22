@@ -146,11 +146,77 @@ class org_maemo_calendar_handler_ajax extends org_maemo_calendar_handler_index
         return true;
     }
 
+    /*
+     * The handler for changing the current timezone
+     * @param mixed $handler_id the array key from the requestarray
+     * @param array $args the arguments given to the handler
+     * 
+     */
+    function _handler_ajax_change_timezone($handler_id, $args, &$data)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        //debug_add(sprintf('ajax_change_date got args "%s"', var_dump($args)));
+        
+        $_MIDCOM->skip_page_style = true;
+        
+        if (count($args) > 1)
+        {
+            $this->_selected_time = $args[0];
+            $this->_calendar_type = $args[1];
+        }
+        else
+        {
+            $this->_selected_time = $args[0];           
+        }
+        
+        if (! empty($_GET['timezone']))
+        {
+            if (in_array($_GET['timezone'],DateTimeZone::listIdentifiers()))
+            {
+                debug_add("We received proper timezone identifier {$_GET['timezone']}. Setting it as active...");
+                org_maemo_calendar_common::active_timezone($_GET['timezone']);
+            }
+        }
+
+        // debug_add(sprintf('_handler_ajax_change_date got _selected_time "%s"', $this->_selected_time));
+        // debug_add(sprintf('which makes "%s"', date('d.m.Y',$this->_selected_time)));
+        
+        $this->_request_data['maemo_calender'] = new org_maemo_calendarwidget(date('Y', $this->_selected_time), date('m', $this->_selected_time), date('d', $this->_selected_time));
+        $this->_request_data['maemo_calender']->set_type($this->_calendar_type);
+        
+        $this->_request_data['maemo_calender']->start_hour = $this->_config->get('day_start_hour');
+        $this->_request_data['maemo_calender']->end_hour = $this->_config->get('day_end_hour');
+                
+        switch ($this->_calendar_type)
+        {
+            case ORG_MAEMO_CALENDARWIDGET_WEEK:
+                $this->_request_data['maemo_calender']->calendar_slot_length = $this->_config->get('week_slot_length') * 60;
+            break;
+            case ORG_MAEMO_CALENDARWIDGET_MONTH:
+                $this->_request_data['maemo_calender']->calendar_slot_length = $this->_config->get('month_slot_length') * 60;
+                $this->_request_data['maemo_calender']->column_width = $this->_config->get('month_column_width');
+            break;
+        }
+        
+        $this->_fetch_calendars();
+        $this->_request_data['maemo_calender']->add_calendar_layers($this->layer_data);
+        
+        debug_pop();
+        
+        return true;
+    }
+
     function _show_ajax_change_date($handler_id, &$data)
     {
         $this->_update_scroll_top();
         $this->_request_data['maemo_calender']->show();
     }
+    
+    function _show_ajax_change_timezone($handler_id, &$data)
+    {
+        $this->_update_scroll_top();
+        $this->_request_data['maemo_calender']->show();
+    }    
 
     function _show_ajax_change_view($handler_id, &$data)
     {
@@ -160,7 +226,8 @@ class org_maemo_calendar_handler_ajax extends org_maemo_calendar_handler_index
     
     function _update_scroll_top()
     {
-        if ($this->_calendar_type == ORG_MAEMO_CALENDARWIDGET_WEEK)
+        if (   $this->_calendar_type == ORG_MAEMO_CALENDARWIDGET_WEEK
+            || $this->_calendar_type == ORG_MAEMO_CALENDARWIDGET_DAY)
         {
             $slh = 3600 / $this->_request_data['maemo_calender']->calendar_slot_length;
             $scrollTop = $this->_request_data['maemo_calender']->cell_height * ($this->_request_data['maemo_calender']->start_hour * $slh);

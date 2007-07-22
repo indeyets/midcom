@@ -5,6 +5,7 @@
     'fields'      => array (
         //Hidden field for orgOpenpsaObtype
         'object_type'  => array(
+            'title' => 'object type',
             'default'  => ORG_OPENPSA_OBTYPE_EVENT,
             'hidden'   => true,
             'storage' => 'orgOpenpsaObtype',
@@ -68,15 +69,19 @@
             'type' => 'tags',
             'widget' => 'text',
         ),
-        'participants' => array (
-            'title' => 'participants',
-            'description' => 'participants',
-            'storage'    => 'participants',
+        /*'participants' => array 
+        (
+            'title'   => 'participants',
+            'storage' => 'participants',
+            'required' => true,
             'type' => 'select',
             'type_config' => array
             (
                  'require_corresponding_option' => false,
                  'options' => array(),
+                 'allow_multiple' => true,
+                 'multiple_storagemode' => 'imploded_wrapped',
+                 'allow_other' => true,
             ),
             'widget' => 'universalchooser',
             'widget_config' => array
@@ -93,6 +98,72 @@
                         'op'    => '<>',
                         'value' => '',
                     ),
+                ),
+                'searchfields'  => array
+                (
+                    'firstname',
+                    'lastname',
+                    'username',
+                ),
+                'orders'        => array
+                (
+                    array('lastname'    => 'ASC'), 
+                    array('firstname'    => 'ASC'), 
+
+                ),
+            ),
+        ),*/     
+        /*'participants' => Array
+        (
+            'title' => 'participants',
+            'description' => 'participants',
+            'storage' => 'participants',
+            'type' => 'mnrelation',
+            'type_config' => Array
+            (
+                'option_callback' => 'org_maemo_calendar_callbacks_buddylister',
+                'option_callback_arg' => 1,
+                'mapping_class_name' => 'org_openpsa_calendar_eventmember',
+                'master_fieldname' => 'uid',
+                'member_fieldname' => 'eid',
+            ),
+            'widget' => 'radiocheckselect',
+        ),*/
+        //TODO: Add DM2 support to org_openpsa_event so we can use "participants2" as storage.
+        'participants' => array (
+            'title' => 'participants',
+            'description' => 'participants',
+            'storage'    => 'participants',
+            'type' => 'select',
+            'type_config' => array
+            (
+                 'require_corresponding_option' => false,
+                 'options' => array(),
+                 'allow_multiple' => true,
+                 /*'multiple_storagemode' => 'serialized',*/
+                 'allow_other' => true,
+            ),
+            'widget' => 'universalchooser',
+            'widget_config' => array
+            (
+                'class'       => 'org_maemo_calendar_eventparticipant',
+                'component'   => 'org.maemo.calendar',
+                'titlefield'  => 'name',
+                'idfield'     => 'id',
+                'constraints' => array
+                (
+                    array
+                    (
+                        'field' => 'username',
+                        'op'    => '<>',
+                        'value' => '',
+                    ),
+                    /*array
+                    (
+                        'field' => 'account',
+                        'op'    => '=',
+                        'value' => $_MIDCOM->auth->user->get_storage()->guid,
+                    ),*/                    
                 ),
                 'searchfields'  => array
                 (
@@ -141,6 +212,7 @@
     'fields'      => array (
         //Hidden field for orgOpenpsaObtype
         'object_type'  => array(
+            'title' => 'object type',
             'default'  => ORG_OPENPSA_OBTYPE_EVENT,
             'hidden'   => true,
             'storage' => 'orgOpenpsaObtype',
@@ -155,14 +227,14 @@
             'storage'    => 'title',
             'required'    => true,
         ),
-        'location' => array (
+        /*'location' => array (
             'title' => 'location',
             'description' => 'location',
             'type'    => 'text',
             'widget'    => 'text',
             'storage'    => 'location',
             'hidden' => true,
-        ),
+        ),*/
         'start' => array (
             'title' => 'start time',
             'description' => 'start time',
@@ -187,7 +259,7 @@
             'widget' => 'jsdate',
             'required' => true,
         ),
-        'description' => array (
+        /*'description' => array (
             'title' => 'description',
             'storage' => 'description',
             'type' => 'text',
@@ -206,59 +278,7 @@
             'type' => 'tags',
             'widget' => 'text',
             'hidden' => true,
-        ),
-        /* BAD idea to hide fields like this, rather keep them out of the schema alltogether
-        'participants' => array (
-            'title' => 'participants',
-            'description' => 'participants',
-            'storage'    => 'participants',
-            'type' => 'select',
-            'type_config' => array
-            (
-                 'require_corresponding_option' => false,
-                 'options' => array(),
-            ),
-            'widget' => 'universalchooser',
-            'widget_config' => array
-            (
-                'class'       => 'org_openpsa_contacts_person',
-                'component'   => 'org.openpsa.contacts',
-                'titlefield'  => 'name',
-                'idfield'     => 'id',
-                'constraints' => array
-                (
-                    array
-                    (
-                        'field' => 'username',
-                        'op'    => '<>',
-                        'value' => '',
-                    ),
-                ),
-                'searchfields'  => array
-                (
-                    'firstname',
-                    'lastname',
-                    'username',
-                ),
-                'orders'        => array
-                (
-                    array('lastname'    => 'ASC'), 
-                    array('firstname'    => 'ASC'), 
-
-                ),
-            ),
-            'hidden' => true,
-        ),
-        'busy' => array (
-            'title' => 'dont allow overlapping',
-            'description' => 'dont allow overlapping',
-            'type'    => 'boolean',
-            'widget'      => 'checkbox',
-            'storage'    => 'busy',
-            'default'     => 0,
-            'hidden' => true,
-        ),
-        */
+        ),*/
         // FIXME: This might not work as expected, a better way to handle it ?
         'orgOpenpsaAccesstype' => array (
             'title' => 'access type',

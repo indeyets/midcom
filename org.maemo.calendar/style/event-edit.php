@@ -4,10 +4,10 @@
 <div class="standalone-window">
     <div class="standalone-window-content">
 
-        <h1>Create event</h1>
+        <h1>Edit event</h1>
         <div onclick="history.back();">Close</div>
 
-        <div class="content">
+        <div class="event-form">
 
             <?php 
             $data['controller']->display_form(); 

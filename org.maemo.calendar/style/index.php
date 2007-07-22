@@ -15,8 +15,10 @@
         <div id="calendar-loading">
             <img src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/indicator.gif" alt="" />
         </div>      
-        <div id="calendar-modal-window">
-            <img src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/indicator.gif" alt="" /> Loading...
+        <div class="calendar-modal-window">
+            <div class="calendar-modal-window-content">
+                <img src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/indicator.gif" alt="" /> Loading...
+            </div>
         </div>
         <div class="container-helper">      
             <!-- Calendar start -->

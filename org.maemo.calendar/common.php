@@ -30,7 +30,7 @@ class org_maemo_calendar_common
             $user =& new midcom_db_person($user_guid);
         }
         
-        debug_print_r("User {$user_guid}: ",$user);
+        //debug_print_r("User {$user_guid}: ",$user);
         
         /* Read users tags */
         $users_tags = $user->list_parameters('org.maemo.calendar:tag');
@@ -137,7 +137,96 @@ class org_maemo_calendar_common
         }
         
         return $available_tags;
-    }   
+    }
+    
+    function get_user_timezone($user_guid=false)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        $logged_in = true;
+        $user = $_MIDCOM->auth->user->get_storage();
+        
+        if ($user_guid)
+        {
+            $logged_in = false;
+            $user =& new midcom_db_person($user_guid);
+        }
+        
+        $user_timezone_identifier = $user->get_parameter('org.maemo.calendar:user_timezone','identifier');
+        if (empty($user_timezone_identifier))
+        {
+            debug_add("No timezone defined! Adding the default timezone to users parameters.");
+            
+            if (   $logged_in
+                || (   !$logged_in
+                    && $_MIDCOM->auth->request_sudo()) )
+            {
+                $default_timezone_name = date_default_timezone_get();
+                $user->set_parameter('org.maemo.calendar:user_timezone','identifier',$default_timezone_name);
+                $user_timezone_identifier = $user->get_parameter('org.maemo.calendar:user_timezone','identifier');
+                
+                if (!$logged_in)
+                {
+                    $_MIDCOM->auth->drop_sudo();
+                }
+            }
+            else
+            {
+                debug_add('Couldn\'t get SUDO privileges! Timezone not added.');
+            }
+        }
+        
+        $timezone = timezone_open($user_timezone_identifier);
+        
+        debug_pop();
+        
+        return $timezone;
+    }
+    
+    function active_timezone($timezone_identifier=false,$update=false)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        debug_add("Called with parameters timezone_identifier:{$timezone_identifier}, update={$update}");
+        
+        $identifier = false;
+        if ($timezone_identifier)
+        {
+            $identifier = $timezone_identifier;
+            $update = true;
+        }
+        
+        if (! $identifier)
+        {
+            $session =& new midcom_service_session('org.maemo.calendarpanel');
+            if ($session->exists('active_timezone'))
+            {
+                $identifier = $session->get('active_timezone');                
+            }
+            else
+            {
+                $user_timezone = org_maemo_calendar_common::get_user_timezone();
+                $identifier = timezone_name_get($user_timezone);
+                $update = true;
+            }
+            unset($session);
+        }
+        
+        if ($update)
+        {
+            $session =& new midcom_service_session('org.maemo.calendarpanel');
+            $session->set('active_timezone',$identifier);
+            unset($session);            
+        }
+        
+        debug_add("Ended up using timezone identifier: {$identifier}");
+        
+        $timezone = timezone_open($identifier);
+        
+        debug_pop();
+        
+        return $timezone;
+    }
         
 }
 

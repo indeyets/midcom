@@ -26,10 +26,12 @@ class org_maemo_calendar_interface extends midcom_baseclasses_components_interfa
         // Load all mandatory class files of the component here
         $this->_autoload_files = array
         (
+            'calendar_midcomdba.php',
             'viewer.php', 
             'admin.php', 
             'navigation.php',
-            'common.php'
+            'common.php',
+            'event_participant.php'
         );
         
         // Load all libraries used by component here
