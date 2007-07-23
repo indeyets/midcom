@@ -40,12 +40,26 @@ class org_maemo_calendarpanel_buddylist_leaf extends midcom_baseclasses_componen
         }
     }
     
+    function add_penging_buddies($pending_buddies)
+    {
+        if (empty($pending_buddies))
+        {
+            return;
+        }
+        
+        foreach ($pending_buddies as $person_id => $person)
+        {
+            $this->_add_pending_buddy($person);
+        }
+    }    
+    
     function generate_content()
     {
         $html = "";
         $html .= $this->_render_menu();
         $html .= $this->_render_buddylist();
-        
+        $html .= $this->_render_pending_list();
+                
         return $html;
     }
     
@@ -56,7 +70,7 @@ class org_maemo_calendarpanel_buddylist_leaf extends midcom_baseclasses_componen
         $html .= "<div class=\"accordion-leaf-menu\">\n";
         $html .= "   <ul class=\"leaf-menu\">\n";
 
-        $html .= "      <li><a href=\"#\" onclick=\"\" title=\"Add buddy\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/contact-new.png\" alt=\"Add buddy\" /></a></li>\n";
+        $html .= "      <li><a href=\"#\" onclick=\"load_modal_window('/ajax/buddylist/search');\" title=\"Add buddy\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/contact-new.png\" alt=\"Add buddy\" /></a></li>\n";
 
         $html .= "   </ul>\n";
         $html .= "</div>\n";
@@ -91,11 +105,58 @@ class org_maemo_calendarpanel_buddylist_leaf extends midcom_baseclasses_componen
         return $html;
     }
     
+    function _render_pending_list()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);        
+
+        $html = "<div class=\"pending-title\">Pending requests</div>\n";
+        
+        if (empty($this->_pending_buddies))
+        {
+            $html .= "<span class=\"empty-pending-list\">No requests pending.</span>";
+            return $html;
+        }
+        
+        $html .= "<div class=\"pending-list\">\n";
+        $html .= "   <ul>\n";
+        
+        foreach ($this->_pending_buddies as $k => $person)
+        {
+            $html .= $this->_render_pending_item($person);            
+        }
+        
+        $html .= "   </ul>\n";      
+        $html .= "</div>\n";        
+
+        debug_pop();
+        
+        return $html;
+    }
+    
     function _render_buddylist_item(&$person)
     {
         $html = '';
         
-        $html .= "<li id=\"buddylist-item-{$person->guid}\">\n";
+        $user = $_MIDCOM->auth->user->get_storage();
+        $qb = net_nehmer_buddylist_entry::new_query_builder();
+        $qb->add_constraint('account', '=', $user->guid);
+        $qb->add_constraint('buddy', '=', $person->guid);
+        $buddy_qb = $qb->execute();
+        
+        if (count($buddy_qb) == 0)
+        {
+            return $html;
+        }
+        
+        $buddy = $buddy_qb[0];
+        
+        $buddy_status = 'approved';
+        if (! $buddy->isapproved)
+        {
+            $buddy_status = 'not-approved';
+        }
+        
+        $html .= "<li id=\"buddylist-item-{$person->guid}\" class=\"{$buddy_status}\">\n";
         $html .= "   <div class=\"buddy-details\">\n";
         
         $html .= "      <span class=\"vcard\" title=\"\">\n";
@@ -109,22 +170,55 @@ class org_maemo_calendarpanel_buddylist_leaf extends midcom_baseclasses_componen
         $html .= "   </div>\n";     
         $html .= "   <div class=\"buddy-online-status\">\n";
         
-        $online_class = 'offline';
-        $buddy_online_status = $this->_get_online_status($person);
-        if ($buddy_online_status['is_online'])
+        if ($buddy->isapproved)
         {
-            $online_class = 'online';
+            $online_class = 'offline';
+            $buddy_online_status = $this->_get_online_status($person);
+            if ($buddy_online_status['is_online'])
+            {
+                $online_class = 'online';
+            }
+
+            $html .= "      <span class=\"status-{$online_class}\" title=\"{$buddy_online_status['status_string']}\">&nbsp;</span>\n";            
         }
         
-        $html .= "      <span class=\"status-{$online_class}\" title=\"{$buddy_online_status['status_string']}\">&nbsp;</span>\n";
         $html .= "   </div>\n";
         $html .= "   <div class=\"buddy-actions\">\n";
         $html .= "<img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/icon-properties.png\" alt=\"Properties\" width=\"16\" height=\"16\" />";
+        $delete_action = "remove_person_from_buddylist('{$person->guid}');";
+        $html .= "<img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/trash.png\" alt=\"Delete\" width=\"16\" height=\"16\" onclick=\"{$delete_action}\"/>";        
         $html .= "   </div>\n";     
         $html .= "</li>\n";
                 
         return $html;
     }
+    
+    function _render_pending_item(&$person)
+    {
+        $html = '';
+        
+        $html .= "<li id=\"pending-list-item-{$person->guid}\">\n";
+        $html .= "   <div class=\"buddy-details\">\n";
+        
+        $html .= "      <span class=\"vcard\" title=\"\">\n";
+        $html .= "         <span class=\"uid\" style=\"display: none;\">{$person->guid}</span>\n";
+        $html .= "         <span class=\"n\">\n";
+        $html .= "            <span class=\"given-name\">{$person->firstname}</span> <span class=\"family-name\">{$person->lastname}</span>\n";
+        $html .= "         </span>\n";
+        
+        $html .= "      </span>\n";
+        
+        $html .= "   </div>\n";
+        $html .= "   <div class=\"buddy-actions\">\n";
+        $approve_action = "approve_buddy_request('{$person->guid}');";
+        $html .= "<img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/approve-buddy.png\" alt=\"Properties\" width=\"16\" height=\"16\" onclick=\"{$approve_action}\" />";
+        $deny_action = "deny_buddy_request('{$person->guid}');";
+        $html .= "<img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/buddy-deny.png\" alt=\"Delete\" width=\"16\" height=\"16\" onclick=\"{$deny_action}\" />";        
+        $html .= "   </div>\n";     
+        $html .= "</li>\n";
+                
+        return $html;
+    }    
     
     function _get_online_status(&$person)
     {
@@ -141,6 +235,11 @@ class org_maemo_calendarpanel_buddylist_leaf extends midcom_baseclasses_componen
     {
         $this->_buddies[] = $object;
     }
+    
+    function _add_pending_buddy(&$object)
+    {
+        $this->_pending_buddies[] = $object;
+    }    
     
     function _get_available_buddies()
     {
