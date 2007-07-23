@@ -1,0 +1,171 @@
+<?php
+/**
+ * @package org.maemo.calendar
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
+ * 
+ * @package org.maemo.calendar
+ */
+class org_maemo_calendar_handler_event_view  extends midcom_baseclasses_components_handler
+{
+    /**
+     * The events to register for
+     *
+     * @var array
+     * @access private
+     */
+    var $_event = null;
+
+    /**
+     * The schema database (taken from the request data area)
+     *
+     * @var Array
+     * @access private
+     */
+    var $_schemadb = null;
+
+    /**
+     * The Datamanager of the event to display.
+     *
+     * @var midcom_helper_datamanager2_datamanager
+     * @access private
+     */
+    var $_controller = null;
+            
+    function _prepare_request_data()
+    {
+        $this->_request_data['event'] =& $this->_event;
+        $this->_request_data['controller'] =& $this->_controller;
+    }
+    
+    /**
+     * Simple default constructor.
+     */
+    function org_maemo_calendar_handler_event_view()
+    {
+        parent::midcom_baseclasses_components_handler();
+    }
+
+    function _load_event($identifier,$hacked=false)
+    {
+        $event = new org_maemo_calendar_event($identifier);
+        if (!is_object($event))
+        {
+            return false;
+        }
+        
+        if ($hacked)
+        {
+            return $event->return_as_dm2_hacked();
+        }
+        
+        return $event;
+    }
+
+    /**
+     * Loads and prepares the schema database.
+     *
+     * Special treatement is done for the name field, which is set readonly for non-creates
+     * if the simple_name_handling config option is set. (using an auto-generated urlname based
+     * on the title, if it is missing.)
+     *
+     * The operations are done on all available schemas within the DB.
+     */
+    function _load_schemadb()
+    {
+        $this->_schemadb =& $this->_request_data['schemadb'];
+    }
+
+    /**
+     * Internal helper, fires up the creation mode controller. Any error triggers a 500.
+     *
+     * @access private
+     */
+    function _load_controller()
+    {
+        $this->_load_schemadb();
+
+        $this->_controller =& new midcom_helper_datamanager2_datamanager($this->_schemadb);
+
+        if (   ! $this->_controller
+            || ! $this->_controller->set_schema('default') )
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a DM2 instance.');
+            // This will exit.
+        }
+
+        $this->_controller->set_storage($this->_event);
+        // if (! $this->_controller->initialize())
+        // {
+        //     $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");
+        //     // This will exit.
+        // }
+    }
+
+    function _handler_show($handler_id, $args, &$data)
+    {
+        $_MIDCOM->auth->require_valid_user();
+        
+        if ($handler_id == 'ajax-event-show')
+        {
+            $_MIDCOM->skip_page_style = true;
+        }
+
+        $this->_event = $this->_load_event($args[0], true);
+        if (!$this->_event)
+        {
+            return false;
+        }
+
+        $this->_load_controller();
+        
+        // Muck schema on private events
+        if (!$this->_event->can_do('org.openpsa.calendar:read'))
+        {
+            foreach ($this->_controller->_layoutdb['default']['fields'] as $fieldname => $field)
+            {
+                switch ($fieldname)
+                {
+                    case 'title':
+                    case 'start':
+                    case 'end':
+                        break;
+                    default:
+                        $this->_controller->_layoutdb['default']['fields'][$fieldname]['hidden'] = true;
+                }
+            }
+        }
+        
+        $this->_prepare_request_data();
+        
+        // Load the document to datamanager
+        //$this->_controller->set_storage($this->_event);
+        // if (! $this->_controller->initialize($this->_event))
+        // {
+        //     $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");
+        //     // This will exit.
+        // }
+        
+        return true;
+    }
+    
+    function _show_show($handler_id, &$data)
+    {
+        if ($handler_id == 'ajax-event-show')
+        {
+            midcom_show_style('event-show-ajax');            
+        }
+        else
+        {
+            midcom_show_style('event-show');
+        }
+    }
+
+
+}
+
+?>

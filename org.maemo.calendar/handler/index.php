@@ -30,7 +30,9 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
     var $user_tags = array();
     var $default_tag = array();
 
-    var $_buddies = array();
+    var $_approved_buddies = array();
+    var $_all_buddies = array();
+    var $_pending_buddy_requests = array();
     
     /**
      * Simple default constructor.
@@ -150,7 +152,8 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
         $shelf_leaf = new org_maemo_calendarpanel_shelf_leaf();
                 
         $calendar_leaf->add_calendars(&$this->layer_data['calendars']);
-        $buddylist_leaf->add_buddies(&$this->_buddies);
+        $buddylist_leaf->add_buddies(&$this->_all_buddies);
+        $buddylist_leaf->add_penging_buddies(&$this->_pending_buddy_requests);
                 
         $this->_request_data['panel']->add_leaf('calendar', &$calendar_leaf);
         $this->_request_data['panel']->add_leaf('buddylist', &$buddylist_leaf);
@@ -204,7 +207,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
             $this->layer_data['busy'][$default_calendar_id] = array();
         }        
         
-        foreach ($this->_buddies as $person_id => $person)
+        foreach ($this->_approved_buddies as $person_id => $person)
         {
             $calendar_id = $person->guid;
             $calendar_name = $person->username;
@@ -278,7 +281,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
             }
             else
             {               
-                foreach ($this->_buddies as $person_id => $person)
+                foreach ($this->_approved_buddies as $person_id => $person)
                 {
                     $calendar_id = $person->guid;
                     
@@ -315,12 +318,12 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
         debug_push_class(__CLASS__, __FUNCTION__);
         $ret = array();
         
-        $this->_get_buddies();      
-        foreach ($this->_buddies as $person_id => $person)
+        $this->_get_buddies();
+        foreach ($this->_approved_buddies as $person_id => $person)
         {
             $ret[] = $person_id;
         }
-        
+                
         $ret[] = $this->current_user->id;
         
         $person_count = count($ret);
@@ -339,7 +342,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
 
         $qb = net_nehmer_buddylist_entry::new_query_builder();
         $qb->add_constraint('account', '=', $this->current_user->guid);
-        //$qb->add_constraint('isapproved', '=', true);
+        $qb->add_constraint('isapproved', '=', true);
         $qb->add_constraint('blacklisted', '=', false);
         $buddies_qb = $qb->execute();
 
@@ -348,11 +351,38 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
             $person = new midcom_db_person($buddy->buddy);
             if ($person)
             {
-                $this->_buddies[$person->id] = $person;
+                $this->_approved_buddies[$person->id] = $person;
+            }
+        }
+        
+        $qb = net_nehmer_buddylist_entry::new_query_builder();
+        $qb->add_constraint('account', '=', $this->current_user->guid);
+        $qb->add_constraint('blacklisted', '=', false);
+        $buddies_qb = $qb->execute();
+
+        foreach ($buddies_qb as $buddy)
+        {
+            $person = new midcom_db_person($buddy->buddy);
+            if ($person)
+            {
+                $this->_all_buddies[$person->id] = $person;
+            }
+        }
+        
+        $qb = net_nehmer_buddylist_entry::new_query_builder();
+        $qb->add_constraint('buddy', '=', $this->current_user->guid);
+        $qb->add_constraint('blacklisted', '=', false);
+        $qb->add_constraint('isapproved', '=', false);
+        $buddies_qb = $qb->execute();
+
+        foreach ($buddies_qb as $buddy)
+        {
+            $person = new midcom_db_person($buddy->account);
+            if ($person)
+            {
+                $this->_pending_buddy_requests[$person->id] = $person;
             }
         }        
-        
-        debug_print_r('Buddies: ',$this->_buddies);
         
         debug_pop();
     }

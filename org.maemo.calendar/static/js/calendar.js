@@ -356,11 +356,178 @@ function empty_shelf()
             jQuery('#shelf-item-list').html('');
             console.log('Emptied Shelf list with response from the server: '+r);
         }
+    });
+}
+
+function enable_buddylist_search()
+{
+    console.log('enable_buddylist_search');
+
+    var url = APPLICATION_PREFIX + 'midcom-exec-org.maemo.calendar/buddylist.php?action=search';
+        
+    jQuery.ajaxSetup({global: false});
+    var options = { 
+        beforeSubmit:  show_searching,
+        success:       render_buddylist_search_results,
+        url:       url,
+        type:      'post',
+        dataType:  'json',
+        timeout:   12000 
+    }; 
+     
+    jQuery('#buddylist-search-form').ajaxForm(options);    
+}
+
+function show_searching()
+{
+    jQuery('#search-indicator').show();
+    jQuery('#buddylist-search-result-count span').html(0);
+    jQuery('#buddylist-search-result-count').hide();
+    jQuery('#buddylist-search-results').html('');
+}
+
+function render_buddylist_search_results(results)
+{
+    console.log('render_buddylist_search_results count: '+results.count);
+    
+    var search_result_holder = jQuery('#buddylist-search-results');
+
+    var results_tpl = function() {
+        return [
+            'table', { width: "100%", border: 0, cellspacing: 0, cellpadding: 0 }, [
+                'thead', {}, [
+                    'tr', {}, this.header_items
+                ],
+                'tbody', {}, this.result_items
+            ]
+        ];
+    };
+    
+    var message_tpl = function() {
+        return [
+            'div', { class: "search-message" }, this.message
+        ];
+    };
+    
+    if (results.count > 0)
+    {
+        var data = jQuery.extend({
+            header_items: [],
+            result_items: []
+        }, results);
+        
+        console.log('found results!');
+        
+        jQuery('#buddylist-search-result-count span').html(results.count);
+        jQuery('#buddylist-search-result-count').show();
+        
+        jQuery(search_result_holder).tplAppend(data, results_tpl);
+    }
+    else
+    {
+        console.log('No results found!');
+        
+        var data = jQuery.extend({
+            message: ''
+        }, results);
+
+        jQuery(search_result_holder).tplAppend(data, message_tpl);
+    }
+    
+    jQuery('#search-indicator').hide();
+}
+
+function add_person_as_buddy(identifier)
+{
+    console.log('add_person_as_buddy: '+identifier);
+    
+    var url = 'ajax/buddylist/add/' + identifier;
+    jQuery.ajaxSetup({global: false});
+    jQuery.ajax({
+        type: "GET",
+        url: APPLICATION_PREFIX + url,
+        timeout: 12000,
+        error: function(obj, type, expobj) {
+            alert("Failed to add person as buddy! exception type: "+type);
+        },
+        success: function(msg) {
+            console.log('person added as buddy, with message: '+msg);
+        }
+    });    
+}
+function remove_person_from_buddylist(identifier)
+{
+    console.log('remove_person_from_buddylist: '+identifier);
+    
+    var url = 'ajax/buddylist/remove/' + identifier;
+    jQuery.ajaxSetup({global: false});
+    jQuery.ajax({
+        type: "GET",
+        url: APPLICATION_PREFIX + url,
+        timeout: 12000,
+        error: function(obj, type, expobj) {
+            console.log("Failed to remove person from buddylist! exception type: "+type);
+        },
+        success: function(msg) {
+            jQuery('#buddylist-item-'+identifier).fadeOut("slow",function(){
+               jQuery('#buddylist-item-'+identifier).remove();
+             });
+            console.log('person removed from buddylist, with message: '+msg);
+        }
+    });    
+}
+
+function refresh_buddylist()
+{
+    console.log('refresh_buddylist');
+}
+
+function approve_buddy_request(identifier)
+{
+    console.log('approve_buddy_request: '+identifier);
+    
+    var url = 'ajax/buddylist/action/approve/' + identifier;
+    jQuery.ajaxSetup({global: false});
+    jQuery.ajax({
+        type: "GET",
+        url: APPLICATION_PREFIX + url,
+        timeout: 12000,
+        error: function(obj, type, expobj) {
+            console.log("Failed to approve buddy request! exception type: "+type);
+        },
+        success: function(msg) {
+            jQuery('#pending-list-item-'+identifier).fadeOut("slow",function(){
+               jQuery('#pending-list-item-'+identifier).remove();
+             });
+            console.log('buddy request approved, with message: '+msg);
+        }
+    });    
+}
+
+function deny_buddy_request(identifier)
+{
+    console.log('deny_buddy_request: '+identifier);
+    
+    var url = 'ajax/buddylist/action/deny/' + identifier;
+    jQuery.ajaxSetup({global: false});
+    jQuery.ajax({
+        type: "GET",
+        url: APPLICATION_PREFIX + url,
+        timeout: 12000,
+        error: function(obj, type, expobj) {
+            console.log("Failed to deny buddy request! exception type: "+type);
+        },
+        success: function(msg) {
+            jQuery('#pending-list-item-'+identifier).fadeOut("slow",function(){
+               jQuery('#pending-list-item-'+identifier).remove();
+             });
+            console.log('buddy request denied, with message: '+msg);
+        }
     });    
 }
 
 jQuery(document).ready(function() {
-    //empty_shelf();    
+        
     jQuery.extend(jQuery.blockUI.defaults.overlayCSS, { backgroundColor: '#b39169' });
     jQuery('#calendar-loading').ajaxStart(function() {
         jQuery('#calendar-holder').hide();

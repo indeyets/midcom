@@ -103,7 +103,6 @@ function handler_empty()
 }
 
 debug_add('---exec-midcom-org.maemo.calendar-shelf END---');
-
 debug_pop();
 
 ?>

@@ -286,9 +286,36 @@ div.standalone-window-content
     o\verflow-y: scroll;
     o\verflow-x: hidden;    
 }
+div.no-scroll div.calendar-modal-window-content,
+div.no-scroll div.standalone-window-content
+{
+    height: 100%;
+    overflow: hidden;    
+}
 
 /* Javascript popup calendar */
 div.calendar
 {
     z-index: 3600;
 }
+
+/* Buddylist search */
+
+.search-block
+{
+	margin: 5px 0 5px 0;
+}
+.search-result-block
+{
+	margin: 5px 0 5px 0;
+	background-color: #FFFFFF; 
+	text-align: center;
+}
+
+.search-result-content .search-message
+{
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+/* Buddylist search end */

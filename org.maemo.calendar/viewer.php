@@ -88,18 +88,30 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
            'variable_args' => 1,
        );       
        
-       // Match /ajax/buddylist/add
-       $this->_request_switch['ajax-buddylist-add'] = array(
-          'handler' => Array('org_maemo_calendar_handler_buddylist_admin', 'add'),
-          'fixed_args' => array('ajax', 'buddylist', 'add'),
+       // Match /ajax/buddylist/search
+       $this->_request_switch['ajax-buddylist-search'] = array(
+          'handler' => Array('org_maemo_calendar_handler_buddylist_admin', 'search'),
+          'fixed_args' => array('ajax', 'buddylist', 'search'),
        );
         // Match /ajax/buddylist/add/<guid>
         $this->_request_switch['ajax-buddylist-add'] = array(
            'handler' => Array('org_maemo_calendar_handler_buddylist_admin', 'add'),
            'fixed_args' => array('ajax', 'buddylist', 'add'),
            'variable_args' => 1,
-        );     
-    
+        );
+        // Match /ajax/buddylist/remove/<guid>
+        $this->_request_switch['ajax-buddylist-remove'] = array(
+           'handler' => Array('org_maemo_calendar_handler_buddylist_admin', 'remove'),
+           'fixed_args' => array('ajax', 'buddylist', 'remove'),
+           'variable_args' => 1,
+        );
+        // Match /ajax/buddylist/action/<action>/<guid>
+        $this->_request_switch['ajax-buddylist-action'] = array(
+           'handler' => Array('org_maemo_calendar_handler_buddylist_admin', 'action'),
+           'fixed_args' => array('ajax', 'buddylist', 'action'),
+           'variable_args' => 2,
+        );
+            
        // Match /ajax/change/date/<timestamp>
        $this->_request_switch['ajax-change-date'] = array(
         'handler' => Array('org_maemo_calendar_handler_ajax', 'ajax_change_date'),
@@ -192,7 +204,8 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
         // //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.maemo.calendar/js/jqModal.js',true);
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.maemo.calendar/js/jquery.blockUI.js',false);
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.flydom-3.0.6.js');
-        
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.form-1.0.1.js');
+                
         //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.openpsa.helpers/ajaxutils.js', false);
         //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.openpsa.relatedto/related_to.js', false);
         //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/universalchooser.js', false);
