@@ -213,49 +213,12 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
 
-
-    /**
-     * Displays an event edit view.
-     *
-     * Note, that the event for non-index mode operation is automatically determined in the can_handle
-     * phase.
-     *
-     * If create privileges apply, we relocate to the index creation event,
-     */
-    function _handler_edit($handler_id, $args, &$data)
+    function _timezone_hack()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        
-        if ($handler_id == 'ajax-event-edit')
-        {
-            $_MIDCOM->skip_page_style = true;
-        }
-        
         $active_timezone = org_maemo_calendar_common::active_timezone();
-        // date_default_timezone_set(timezone_name_get($active_timezone));
         $utc_timezone = timezone_open("UTC");
         
-        $this->_event = new org_maemo_calendar_event($args[0]);
-        if (! $this->_event)
-        {
-            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The event {$args[0]} was not found.");
-            // This will exit.
-        }
-        
-        $this->_event->require_do('midgard:update');
-        
-        debug_print_r('Event participants', $this->_event->participants);
-        
-        $participants = array();
-        foreach ($this->_event->participants as $participant => $included)
-        {
-            $participants[] = $participant;
-        }
-        $this->_event->participants = serialize($participants);
-        
-        debug_print_r('Event participants after serialize', $this->_event->participants);
-        
-        if (empty($_POST))
+        if (empty($_POST) && is_object($this->_event))
         {
             debug_add("Alter the start/end times with timezone");
             $event_start = $this->_event->start;
@@ -306,7 +269,60 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
 
             $_POST['start'] = date("Y-m-d H:i:s", $event_start);
             $_POST['end'] = date("Y-m-d H:i:s", $event_end);
+        }        
+    }
+    
+    function _participant_hack()
+    {
+        if (! is_object($this->_event))
+        {
+            return false;
         }
+
+        debug_print_r('Event participants', $this->_event->participants);
+        
+        $participants = array();
+        foreach ($this->_event->participants as $participant => $included)
+        {
+            $participants[] = $participant;
+        }
+        $this->_event->participants = serialize($participants);
+        
+        debug_print_r('Event participants after serialize', $this->_event->participants);        
+    }
+
+    /**
+     * Displays an event edit view.
+     *
+     * Note, that the event for non-index mode operation is automatically determined in the can_handle
+     * phase.
+     *
+     * If create privileges apply, we relocate to the index creation event,
+     */
+    function _handler_edit($handler_id, $args, &$data)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        if ($handler_id == 'ajax-event-edit')
+        {
+            $_MIDCOM->skip_page_style = true;
+        }
+        
+        $this->_event = new org_maemo_calendar_event($args[0]);
+        if (! $this->_event)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The event {$args[0]} was not found.");
+            // This will exit.
+        }
+        
+        $this->_event->require_do('midgard:update');
+        
+        /*
+         * TODO: Get rid of this ugly hack, by changing few things on event schema, etc
+        */
+        $this->_participant_hack();
+        
+        $this->_timezone_hack();
         
         $this->_load_controller();
 
@@ -330,16 +346,83 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
         }
 
         $this->_prepare_request_data($handler_id);
-        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_event->title}");
         $_MIDCOM->bind_view_to_object($this->_event, $this->_request_data['controller']->datamanager->schema->name);
-        $this->_update_breadcrumb_line($handler_id);
+        
+        if ($handler_id != 'ajax-event-edit')
+        {
+            $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_event->title}");
+            $this->_update_breadcrumb_line($handler_id);
+        }
         
         debug_pop();
         
         return true;
     }
 
+    function _handler_move($handler_id, $args, &$data)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        if ($handler_id == 'ajax-event-move')
+        {
+            $_MIDCOM->skip_page_style = true;
+        }
 
+        $this->_event = new org_maemo_calendar_event($args[0]);
+        if (! $this->_event)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The event {$args[0]} was not found.");
+            // This will exit.
+        }
+        
+        $this->_event->require_do('midgard:update');
+        
+        /*
+         * TODO: Get rid of this ugly hack, by changing few things on event schema, etc
+        */
+        $this->_participant_hack();
+        
+        $this->_timezone_hack();
+
+        $event_length = $this->_event->end - $this->_event->start;
+        $this->_event->start = $args[1] + 1;
+        $this->_event->end = $event_length + $this->_event->start;
+        
+        $this->_load_controller();
+
+        // TODO: Check for resourcing conflict
+        switch ($this->_controller->process_form())
+        {
+            case 'save':
+                if ($handler_id == 'ajax-event-move')
+                {
+                    $session =& new midcom_service_session('org.maemo.calendarpanel');
+                    if ($session->exists('shelf_contents'))
+                    {
+                        $session->remove('shelf_contents');
+                    }
+                }
+
+            case 'cancel':
+                //$_MIDCOM->relocate("event/{$this->_event->guid}/");
+                $_MIDCOM->relocate("");
+                // This will exit.
+        }
+
+        $this->_prepare_request_data($handler_id);
+        $_MIDCOM->bind_view_to_object($this->_event, $this->_request_data['controller']->datamanager->schema->name);
+
+        if ($handler_id != 'ajax-event-move')
+        {
+            $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_event->title}");
+            $this->_update_breadcrumb_line($handler_id);
+        }
+        
+        debug_pop();
+        
+        return true;        
+    }
+    
     /**
      * Shows the loaded event.
      */
@@ -353,6 +436,18 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
         {
             midcom_show_style('event-edit');            
         }
+    }
+    
+    function _show_move($handler_id, &$data)
+    {
+        if ($handler_id == 'ajax-event-move')
+        {
+            midcom_show_style('event-edit-ajax');
+        }
+        else
+        {
+            midcom_show_style('event-edit');            
+        }        
     }
 
     /**

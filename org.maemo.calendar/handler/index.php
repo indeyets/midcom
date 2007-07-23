@@ -138,6 +138,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
         $script .= ' types_classes: [\'' . implode("','",$class_names) . '\']' . "\n";
         $script .= '};'."\n";
         $script .= 'var shelf_contents = Array();'."\n";
+        $script .= 'var active_shelf_item = false;'."\n";
         $_MIDCOM->add_jscript($script,"",true);
         
         return true;        

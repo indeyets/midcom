@@ -231,12 +231,12 @@ div.calendar-modal-window,
 div.standalone-window
 {
     display: none;
-    width: 400px;
-    height: 255px;
+    width: 430px;
+    height: 310px;
     background-color: #CCCCCC;
     position: absolute;
-    top: 7%;
-    left: 15%;
+    top: -30px;
+    left: 202px;
     z-index: 3500;
     padding: 10px;
     -moz-border-radius: 10px;

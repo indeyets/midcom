@@ -74,7 +74,13 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
            'fixed_args' => array('ajax', 'event', 'edit'),
            'variable_args' => 1,
        ); 
-       
+       // Match /ajax/event/move/<guid>/<timestamp>
+       $this->_request_switch['ajax-event-move'] = array(
+          'handler' => Array('org_maemo_calendar_handler_event_admin', 'move'),
+          'fixed_args' => array('ajax', 'event', 'move'),
+          'variable_args' => 2,
+       );
+             
        // Match /event/show/<guid>
        $this->_request_switch['event-show'] = array(
            'handler' => Array('org_maemo_calendar_handler_event_view', 'show'),
@@ -93,6 +99,11 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
           'handler' => Array('org_maemo_calendar_handler_buddylist_admin', 'search'),
           'fixed_args' => array('ajax', 'buddylist', 'search'),
        );
+       // // Match /ajax/buddylist/refresh
+       // $this->_request_switch['ajax-buddylist-refresh'] = array(
+       //    'handler' => Array('org_maemo_calendar_handler_buddylist_admin', 'refresh'),
+       //    'fixed_args' => array('ajax', 'buddylist', 'refresh'),
+       // );
         // Match /ajax/buddylist/add/<guid>
         $this->_request_switch['ajax-buddylist-add'] = array(
            'handler' => Array('org_maemo_calendar_handler_buddylist_admin', 'add'),

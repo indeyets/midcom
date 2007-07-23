@@ -10,6 +10,14 @@ switch ($_GET['action'])
     case 'search':
         handler_search(&$_POST);
         break;
+    case 'refresh_list':
+        handler_refresh_list(&$_POST);
+        break;        
+}
+
+function handler_refresh_list()
+{
+    echo org_maemo_calendarpanel_buddylist_leaf::refresh_buddylist_items();
 }
 
 function handler_search(&$form_data)
@@ -36,7 +44,7 @@ function handler_search(&$form_data)
         $json .= "result_items: [";
         foreach ($results['items'] as $key => $item)
         {
-            $json .= "'tr', {}, [";
+            $json .= "'tr', { id: 'result-item-{$item->guid}' }, [";
             foreach ($header_items as $key => $value)
             {
                 if (isset($item->$key))
@@ -170,18 +178,7 @@ function _search_persons(&$form_data)
         $results['count'] = count($items);
         $results['items'] = $items;
         $results['message'] = '';        
-    }
-                    
-    // $dummy_items = array();
-    // 
-    // $erkki = new midcom_db_person('a9215ef4304c11dc85400b8f9328cb19cb19');
-    // $dummy_items[] = $erkki;
-    // 
-    // $results = array(
-    //                 'count' => count($dummy_items),
-    //                 'items' => $dummy_items,
-    //                 'message' => ''
-    //                 );    
+    } 
     
     return $results;
 }

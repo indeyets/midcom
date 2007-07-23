@@ -17,6 +17,9 @@
 
 class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_components_handler 
 {
+    
+    var $_return_string = '';
+    
     /**
      * Simple default constructor.
      */
@@ -60,28 +63,10 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
         {
             return false;
         }
-
-        $this->_add_person_as_buddy($target);
         
-        // // Check we're not buddies already
-        // $qb = net_nehmer_buddylist_entry::new_query_builder();
-        // $qb->add_constraint('account', '=', $user->guid);
-        // $qb->add_constraint('buddy', '=', $target->guid);
-        // $buddies = $qb->execute();
-        // if (count($buddies) > 0)
-        // {
-        //     return false;
-        // }
-        // 
-        // $buddy = new net_nehmer_buddylist_entry();
-        // $buddy->account = $user->guid;
-        // $buddy->buddy = $target->guid;
-        // $buddy->isapproved = false;
-        // if (!$buddy->create())
-        // {
-        //     $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to add buddy, reason ".mgd_errstr());
-        //     // This will exit
-        // }
+        $this->_return_string = 'added';
+        
+        $this->_add_person_as_buddy($target);
         
         return true;        
     }
@@ -121,6 +106,8 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
             }
         }
         
+        $this->_return_string = 'deleted';
+        
         return true;
     }
     
@@ -146,6 +133,7 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
                 }
                 $buddy = $buddy_qb[0];
                 $buddy->approve();
+                $this->_return_string = 'approved';
                 $this->_add_person_as_buddy($buddy->get_account_user(), true);
                 break;
             case 'deny':
@@ -161,6 +149,7 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
                 }
                 $buddy = $buddy_qb[0];
                 $buddy->reject();
+                $this->_return_string = 'denied';
                 break;
         }
         
@@ -183,11 +172,6 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
                 // This will exit
             }
 
-            $buddy = new net_nehmer_buddylist_entry();
-            $buddy->buddy = $this->_entry->account;
-            $buddy->account = $this->_entry->buddy;
-            $buddy->create();
-
             if ($auto_approve)
             {
                 if (! $_MIDCOM->auth->request_sudo($this->_component))
@@ -203,7 +187,9 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
 
                 $_MIDCOM->auth->drop_sudo();
             }
-        }        
+            
+            $this->_return_string = 'added_new';
+        }
     }
     
     function _show_search($handler_id, &$data)
@@ -219,7 +205,7 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
         }
         else
         {
-            echo 'added';
+            echo $this->_return_string;
         }
     }
     
@@ -231,13 +217,13 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
         }
         else
         {
-            echo 'removed';
+            echo $this->_return_string;
         }
     }
     
     function _show_action($handler_id, &$data)
     {
-        echo 'action';
+        echo $this->_return_string;
     }
 }
 

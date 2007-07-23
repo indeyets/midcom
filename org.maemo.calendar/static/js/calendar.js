@@ -3,7 +3,8 @@ if (console == undefined)
     var console = {};
     console.log = function(string)
     {
-        alert(string);
+        //alert(string);
+        return;
     }
 }
 
@@ -177,38 +178,19 @@ function change_timezone() {
 };
 
 function create_event(timestamp)
-{
-    var win = jQuery("div.calendar-modal-window");
-    jQuery.ajaxSetup({global: false});
-    jQuery.ajax({
-        type: "GET",
-        url: APPLICATION_PREFIX + "ajax/event/create/" + timestamp,
-        timeout: 12000,
-        error: function(obj, type, expobj) {
-            alert("Failed to load event creation window");
-        },
-        success: function(r) {
-            win.html(unescape(r));
-            //jQuery.blockUI(win, {width: "90%", top: "12%", left: "22%"});
-            jQuery("div.calendar-modal-window").show();
-            //setTimeout("finishCalendarLoad(\'calendar-modal-window\')", 400);
-        }
-    });
-    // jQuery.get("/ajax/event/create/" + timestamp, function(data){
-    //  win.html(unescape(data));
-    //  //jQuery.blockUI(win, {width: "90%", top: "12%", left: "22%"});
-    //  jQuery("div.calendar-modal-window").show();
-    // });  
+{   
+    var url = "ajax/event/create/" + timestamp;
+
+    if (active_shelf_item)
+    {
+        url = "ajax/event/move/" + active_shelf_item + "/" + timestamp;
+    }
     
-    return false;   
+    load_modal_window(url)
 }
 function close_create_event()
 {   
-    //jQuery("div.calendar-modal-window").html('');
-    // jQuery("div.calendar-modal-window").hide();
-//  var win = jQuery("div.calendar-modal-window");
-    jQuery("div.calendar-modal-window").hide();
-    //jQuery.unblockUI(win);
+    close_modal_window();
     return;
 }
 
@@ -339,6 +321,51 @@ function move_event_to_shelf(identifier, event_data)
     }
 }
 
+function activate_shelf_item(identifier)
+{
+    console.log('activate_shelf_item: '+identifier);
+    
+    var existing = jQuery.grep( shelf_contents, function(n,i){
+       return n.guid == identifier;
+    });
+
+    jQuery('#shelf-item-list li.active').attr('class', '');
+    
+    if (existing.length > 0)
+    {
+        console.log('Event is in the shelf, activating.');
+        active_shelf_item = identifier;
+        jQuery('#shelf-list-item-'+identifier).attr('class', 'active');
+        
+        // var add_handles = jQuery('td[@id^=addevent]');
+        // console.log('add_handles.length: '+add_handles.length);
+        // 
+        // for (var i=0; i<add_handles.length; i++)
+        // {
+        //     var current_id = add_handles[i].id;
+        //     var id_parts = current_id.split("-");
+        //     var timestamp = id_parts[1];
+        //     
+        //     var new_id = 'attachitem-' + timestamp;
+        //     add_handles[i].id = new_id;
+        //     
+        //     jQuery(add_handles[i]).unbind("click");            
+        //     jQuery(add_handles[i]).bind("click", function(){
+        //         attach_active_shelf_item(timestamp,identifier);
+        //     });
+        // }
+    }
+    else
+    {
+        console.log('Event isnt in the shelf!');
+    }
+}
+
+function attach_active_shelf_item(timestamp, identifier)
+{
+    console.log("attach_active_shelf_item timestamp: "+timestamp+" identifier: "+identifier);
+}
+
 function empty_shelf()
 {
     var url = 'midcom-exec-org.maemo.calendar/shelf.php?action=empty';
@@ -363,13 +390,13 @@ function enable_buddylist_search()
 {
     console.log('enable_buddylist_search');
 
-    var url = APPLICATION_PREFIX + 'midcom-exec-org.maemo.calendar/buddylist.php?action=search';
+    var url = 'midcom-exec-org.maemo.calendar/buddylist.php?action=search';
         
     jQuery.ajaxSetup({global: false});
     var options = { 
         beforeSubmit:  show_searching,
         success:       render_buddylist_search_results,
-        url:       url,
+        url:       APPLICATION_PREFIX + url,
         type:      'post',
         dataType:  'json',
         timeout:   12000 
@@ -437,6 +464,23 @@ function render_buddylist_search_results(results)
     jQuery('#search-indicator').hide();
 }
 
+function remove_item_from_results(identifier)
+{
+    console.log("remove_item_from_results: "+identifier);
+    
+    var current_count = jQuery('#buddylist-search-result-count span')[0].innerHTML;
+    var new_count = current_count - 1;    
+    
+    console.log("current_count: "+current_count);
+    console.log("new_count: "+new_count);
+        
+    jQuery('#buddylist-search-result-count span').html(' '+new_count);
+
+    jQuery('#result-item-'+identifier).fadeOut("slow",function(){
+        jQuery('#result-item-'+identifier).remove();
+    });
+}
+
 function add_person_as_buddy(identifier)
 {
     console.log('add_person_as_buddy: '+identifier);
@@ -452,9 +496,13 @@ function add_person_as_buddy(identifier)
         },
         success: function(msg) {
             console.log('person added as buddy, with message: '+msg);
+            
+            remove_item_from_results(identifier)
+            refresh_buddylist();
         }
     });    
 }
+
 function remove_person_from_buddylist(identifier)
 {
     console.log('remove_person_from_buddylist: '+identifier);
@@ -470,16 +518,46 @@ function remove_person_from_buddylist(identifier)
         },
         success: function(msg) {
             jQuery('#buddylist-item-'+identifier).fadeOut("slow",function(){
-               jQuery('#buddylist-item-'+identifier).remove();
-             });
+                jQuery('#buddylist-item-'+identifier).remove();
+            });
+            jQuery('#buddylist-item-list').Highlight(800, '#4c4c4c');
+            clean_up_person(identifier);
             console.log('person removed from buddylist, with message: '+msg);
         }
     });    
 }
 
-function refresh_buddylist()
+function refresh_buddylist(ask_for_reload)
 {
     console.log('refresh_buddylist');
+    
+    var url = 'midcom-exec-org.maemo.calendar/buddylist.php?action=refresh_list';
+    var list = jQuery("#buddylist-item-list");
+
+    jQuery.ajaxSetup({global: false});
+    jQuery.ajax({
+        type: "GET",
+        url: APPLICATION_PREFIX + url,
+        timeout: 12000,
+        error: function(obj, type, expobj) {
+            console.log("Failed to refresh buddylist. Exception type: "+type);
+        },
+        success: function(r) {
+            list.html(unescape(r));
+            jQuery('#buddylist-item-list').Highlight(800, '#4c4c4c');
+            console.log("Buddylist refreshed!");
+            
+            if (ask_for_reload)
+            {
+                var refresh = confirm("You have approved new buddy. We should refresh to get that persons events. Refresh now?");
+
+                if (refresh)
+                {
+                    window.location.reload(true);
+                }                
+            }
+        }
+    });
 }
 
 function approve_buddy_request(identifier)
@@ -497,8 +575,16 @@ function approve_buddy_request(identifier)
         },
         success: function(msg) {
             jQuery('#pending-list-item-'+identifier).fadeOut("slow",function(){
-               jQuery('#pending-list-item-'+identifier).remove();
-             });
+                jQuery('#pending-list-item-'+identifier).remove();
+            });
+            
+            var ask_for_reload = false;
+            if (msg == 'added_new')
+            {
+                ask_for_reload = true;
+            }
+            
+            refresh_buddylist(ask_for_reload);
             console.log('buddy request approved, with message: '+msg);
         }
     });    
@@ -519,12 +605,29 @@ function deny_buddy_request(identifier)
         },
         success: function(msg) {
             jQuery('#pending-list-item-'+identifier).fadeOut("slow",function(){
-               jQuery('#pending-list-item-'+identifier).remove();
-             });
+                jQuery('#pending-list-item-'+identifier).remove();
+            });
             console.log('buddy request denied, with message: '+msg);
         }
     });    
 }
+
+function clean_up_person(identifier)
+{
+    //Remove calendar from list
+    var search_string = "#calendar-list-item-" + identifier;
+    jQuery(search_string).remove();
+    //Remove calendar tags from list
+    var search_string = "#calendar-list-item-" + identifier + "-tags";
+    jQuery(search_string).remove();
+    //Remove calendar layer
+    var search_string = "#calendar-layer-" + identifier;
+    jQuery(search_string).fadeOut("slow",function(){
+        jQuery(search_string).remove();
+    });
+}
+
+
 
 jQuery(document).ready(function() {
         
