@@ -202,6 +202,8 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
 
     function _handler_delete($handler_id, $args, &$data)
     {
+        $this->_content_topic->require_do('midgard:delete');
+
         if (array_key_exists("net_nemein_bannedwords_word_delete", $_POST))
 	{
             $guid = $args[0];
