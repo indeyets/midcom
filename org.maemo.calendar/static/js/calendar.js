@@ -328,32 +328,26 @@ function activate_shelf_item(identifier)
     var existing = jQuery.grep( shelf_contents, function(n,i){
        return n.guid == identifier;
     });
-
-    jQuery('#shelf-item-list li.active').attr('class', '');
     
     if (existing.length > 0)
     {
-        console.log('Event is in the shelf, activating.');
-        active_shelf_item = identifier;
-        jQuery('#shelf-list-item-'+identifier).attr('class', 'active');
+        console.log('Event is in the shelf');
         
-        // var add_handles = jQuery('td[@id^=addevent]');
-        // console.log('add_handles.length: '+add_handles.length);
-        // 
-        // for (var i=0; i<add_handles.length; i++)
-        // {
-        //     var current_id = add_handles[i].id;
-        //     var id_parts = current_id.split("-");
-        //     var timestamp = id_parts[1];
-        //     
-        //     var new_id = 'attachitem-' + timestamp;
-        //     add_handles[i].id = new_id;
-        //     
-        //     jQuery(add_handles[i]).unbind("click");            
-        //     jQuery(add_handles[i]).bind("click", function(){
-        //         attach_active_shelf_item(timestamp,identifier);
-        //     });
-        // }
+        if (   active_shelf_item
+            && jQuery('#shelf-item-list li.active')[0].id == 'shelf-list-item-'+identifier)
+        {
+            console.log('Already active, deactivating');
+            active_shelf_item = false;
+            jQuery('#shelf-item-list li.active').attr('class', '');
+        }
+        else
+        {
+            console.log('activating');
+            jQuery('#shelf-item-list li.active').attr('class', '');
+
+            active_shelf_item = identifier;
+            jQuery('#shelf-list-item-'+identifier).attr('class', 'active');            
+        }
     }
     else
     {
