@@ -149,6 +149,18 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
                 $this->_add_person_as_buddy($buddy->get_account_user(), true);
                 break;
             case 'deny':
+                $user = $_MIDCOM->auth->user->get_storage();
+                $qb = net_nehmer_buddylist_entry::new_query_builder();
+                $qb->add_constraint('account', '=', $args[1]);
+                $qb->add_constraint('buddy', '=', $user->guid);
+                $qb->add_constraint('isapproved', '=', false);
+                $buddy_qb = $qb->execute();
+                if (count($buddy_qb) == 0)
+                {
+                    return false;
+                }
+                $buddy = $buddy_qb[0];
+                $buddy->reject();
                 break;
         }
         
