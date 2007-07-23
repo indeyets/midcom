@@ -35,5 +35,12 @@ if (array_key_exists('comments_enable', $data))
         <p class="entry-excerpt">&(view['abstract']:h);</p>
         <?php
     }
+    
+    if ($data['index_fulltext'])
+    {
+        ?>
+        <div class="entry-content"">&(view['content']:h);</div>
+        <?php
+    }
     ?>
 </div>

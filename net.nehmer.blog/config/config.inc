@@ -13,7 +13,9 @@
 'view_in_url' => true,
 
 // Specifies how many entries should be shown in the index page.
-'index_entries' => 4,
+'index_entries' => 8,
+
+'index_fulltext' => false,
 
 // RSS export
 'rss_enable' => true,  // enable RSS export on rss/latest.xml

@@ -150,6 +150,8 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
      */
     function _show_index($handler_id, &$data)
     {
+        $data['index_fulltext'] = $this->_config->get('index_fulltext');
+    
         midcom_show_style('index-start');
 
         if ($this->_config->get('comments_enable'))
