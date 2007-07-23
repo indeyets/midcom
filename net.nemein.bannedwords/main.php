@@ -54,7 +54,6 @@ class net_nemein_bannedwords_handler extends midcom_baseclasses_components_purec
     function _build_regexp()
     {
         $regexp = implode("|", $this->_banned_words);
-    
         return $regexp;
     }
 
@@ -124,7 +123,7 @@ class net_nemein_bannedwords_handler extends midcom_baseclasses_components_purec
     {
         $content = strip_tags($content);
 
-	// Not working for some reason
+	// double spaces break the indes number
 	$order = array("\r\n", "\r", "\n");
 	$content = str_replace($order, " ", $content);
 
@@ -133,8 +132,22 @@ class net_nemein_bannedwords_handler extends midcom_baseclasses_components_purec
 	    $matches = array();
             $regexp = $this->_build_regexp();
             $words = explode(" ", $content);
+            $cleaned_words = array();
 
-	    foreach($words as $key => $word)
+            /**
+	     * str_replacing \r and \n will create multiple spaces so exploding the content with " " delimiter
+	     * will create empty values to $words array. These are removed here so that they don't affect
+	     * array keys
+	     */
+	    foreach($words as $word)
+	    {
+                if (!empty($word))
+		{
+                    $cleaned_words[] = $word;
+		}
+	    }
+
+	    foreach($cleaned_words as $key => $word)
 	    {
 	        if (eregi($regexp, $word))
 		{

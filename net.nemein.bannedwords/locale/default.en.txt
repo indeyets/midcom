@@ -15,6 +15,23 @@ Submit
 Delete
 ---STRINGEND
 
+---STRING cancel
+Cancel
+---STRINGEND
+
 ---STRING banned editor
 Banned words editor
 ---STRINGEND
+
+---STRING add banned
+Add banned word 
+---STRINGEND
+
+---STRING edit banned
+Edit banned word
+---STRINGEND
+
+---STRING language
+Language
+---STRINGEND
+

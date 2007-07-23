@@ -104,6 +104,12 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
 		'fixed_args' => 'delete',
 		'variable_args' => 1,
 	    ),
+	    'confirmdelete' => Array
+	    (
+	        'handler' => array('net_nemein_bannedwords_edit_handler', 'confirmdelete'),
+		'fixed_args' => 'confirmdelete',
+		'variable_args' => 1,
+	    ),
 	    
 	);
     }
@@ -196,20 +202,35 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
 
     function _handler_delete($handler_id, $args, &$data)
     {
-        $guid = $args[0];
-	$banned = new net_nemein_bannedwords_word_dba();
-	$banned->get_by_guid($guid);
-
-	if ($banned->delete())
+        if (array_key_exists("net_nemein_bannedwords_word_delete", $_POST))
 	{
-            // TODO: handle error
+            $guid = $args[0];
+            $banned = new net_nemein_bannedwords_word_dba();
+	    $banned->get_by_guid($guid);
+
+            if ($banned->delete())
+	    {
+	        // TODO: handle error
+    	    }
 	}
 
         return true;
     }
-    function _show_delete($handler_id, $args, &$data)
+
+    function _show_delete($handler_id, &$data)
     {
-         $_MIDCOM->relocate('__mfa/net.nemein.bannedwords');
+        $_MIDCOM->relocate('__mfa/net.nemein.bannedwords');
+    }
+
+    function _handler_confirmdelete($handler_id, $args, &$data)
+    {
+        $this->_request_data['delete_guid'] = $args[0];
+        return true;
+    }
+
+    function _show_confirmdelete($handler_id, &$data)
+    {
+        midcom_show_style('net_nemein_bannedwords_word_confirmdelete');    
     }
 }
 
