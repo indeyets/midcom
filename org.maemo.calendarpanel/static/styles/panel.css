@@ -167,6 +167,18 @@
     clear: none;
 }
 
+/* Buddylist panel */
+
+.pending-title
+{
+    font-weight: bold;
+    font-size: 1.0em;
+    margin-top: 5px;
+    margin-bottom: 3px;
+}
+
+/* Buddylist panel ends */
+
 /* Shelf panel */
 
 .accordion-leaf-body #shelf-item-list li.active {
