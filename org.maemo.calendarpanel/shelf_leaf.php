@@ -110,7 +110,7 @@ class org_maemo_calendarpanel_shelf_leaf extends midcom_baseclasses_components_p
         
         $item_data = "{ guid: '{$item->guid}',
                         title: '{$item->data->title}',
-                        action: '' }";
+                        action: \"activate_shelf_item('{$item->guid}')\" }";
         $js .= "jQuery('#shelf-item-list').tplAppend({$item_data}, shelf_item_tpl);\n";
         
         return $js;

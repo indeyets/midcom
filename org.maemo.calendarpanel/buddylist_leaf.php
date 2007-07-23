@@ -63,6 +63,34 @@ class org_maemo_calendarpanel_buddylist_leaf extends midcom_baseclasses_componen
         return $html;
     }
     
+    function refresh_buddylist_items()
+    {
+        $html = '';
+        $buddies = array();
+        
+        $user = $_MIDCOM->auth->user->get_storage();
+        $qb = net_nehmer_buddylist_entry::new_query_builder();
+        $qb->add_constraint('account', '=', $user->guid);
+        $qb->add_constraint('blacklisted', '=', false);
+        $buddies_qb = $qb->execute();
+
+        foreach ($buddies_qb as $buddy)
+        {
+            $person = new midcom_db_person($buddy->buddy);
+            if ($person)
+            {
+                $buddies[] = $person;
+            }
+        }
+
+        foreach ($buddies as $k => $person)
+        {
+            $html .= org_maemo_calendarpanel_buddylist_leaf::render_buddylist_item($person);            
+        }
+        
+        return $html;
+    }
+    
     function _render_menu()
     {
         $html = "";
@@ -90,11 +118,11 @@ class org_maemo_calendarpanel_buddylist_leaf extends midcom_baseclasses_componen
         }
         
         $html .= "<div class=\"buddylist\">\n";
-        $html .= "   <ul>\n";
+        $html .= "   <ul id=\"buddylist-item-list\">\n";
         
         foreach ($this->_buddies as $k => $person)
         {
-            $html .= $this->_render_buddylist_item($person);            
+            $html .= org_maemo_calendarpanel_buddylist_leaf::render_buddylist_item($person);            
         }
 
         $html .= "   </ul>\n";      
@@ -118,7 +146,7 @@ class org_maemo_calendarpanel_buddylist_leaf extends midcom_baseclasses_componen
         }
         
         $html .= "<div class=\"pending-list\">\n";
-        $html .= "   <ul>\n";
+        $html .= "   <ul id=\"pending-item-list\">\n";
         
         foreach ($this->_pending_buddies as $k => $person)
         {
@@ -133,7 +161,7 @@ class org_maemo_calendarpanel_buddylist_leaf extends midcom_baseclasses_componen
         return $html;
     }
     
-    function _render_buddylist_item(&$person)
+    function render_buddylist_item(&$person)
     {
         $html = '';
         
@@ -173,7 +201,7 @@ class org_maemo_calendarpanel_buddylist_leaf extends midcom_baseclasses_componen
         if ($buddy->isapproved)
         {
             $online_class = 'offline';
-            $buddy_online_status = $this->_get_online_status($person);
+            $buddy_online_status = org_maemo_calendarpanel_buddylist_leaf::get_online_status($person);
             if ($buddy_online_status['is_online'])
             {
                 $online_class = 'online';
@@ -220,7 +248,7 @@ class org_maemo_calendarpanel_buddylist_leaf extends midcom_baseclasses_componen
         return $html;
     }    
     
-    function _get_online_status(&$person)
+    function get_online_status(&$person)
     {
         $statuses = array(  'midcom' => false,
                             'skype' => false,
