@@ -4,30 +4,30 @@ body.style-editor
     font-size: 10pt;
 }
 
-body.style-editor #container div.breadcrumb
+#container div.breadcrumb
 {
     font-size: 80%;
     margin: 1em 0;
 }
 
-body.style-editor form.midcom_admin_folder_styleeditor textarea.element
+form.midcom_admin_folder_styleeditor textarea.element
 {
     width: 90%;
     height: 30em;
 }
 
-body.style-editor form.midcom_admin_folder_styleeditor pre
+form.midcom_admin_folder_styleeditor pre
 {
     width: 90%;
     overflow: auto;
 }
 
-body.style-editor fieldset legend
+fieldset legend
 {
     font-weight: bold;
 }
 
-body.style-editor fieldset.component_default legend
+fieldset.component_default legend
 {
     background-repeat: no-repeat;
     background-position: middle left;
@@ -36,16 +36,16 @@ body.style-editor fieldset.component_default legend
     cursor: hand;
 }
 
-body.style-editor fieldset.component_default div.content span.copy
+fieldset.component_default div.content span.copy
 {
     font-weight: bold;
     cursor: pointer;
     cursor: hand;
 }
 
-body.style-editor fieldset button,
-body.style-editor form input.save,
-body.style-editor form input.delete
+fieldset button,
+form input.save,
+form input.delete
 {
     background-repeat: no-repeat;
     background-position: middle left;
@@ -62,38 +62,38 @@ body.style-editor form input.delete
     border-width: 2px;
 }
 
-body.style-editor fieldset button:hover,
-body.style-editor form input.save:hover,
-body.style-editor form input.delete:hover
+fieldset button:hover,
+form input.save:hover,
+form input.delete:hover
 {
     background-color: #dddddd;
 }
 
-body.style-editor fieldset button.copy
+fieldset button.copy
 {
     background-image: url('../stock-icons/16x16/editcopy.png');
 }
 
-body.style-editor form input.save
+form input.save
 {
     background-image: url('../stock-icons/16x16/save.png');
 }
 
-body.style-editor form input.delete
+form input.delete
 {
     background-image: url('../stock-icons/16x16/trash.png');
 }
 
-body.style-editor #container a:link,
-body.style-editor #container a:visited
+#container a:link,
+#container a:visited
 {
     text-decoration: none;
     font-weight: bold;
     color: black;
 }
 
-body.style-editor #container a:hover,
-body.style-editor #container a:visited:hover
+#container a:hover,
+#container a:visited:hover
 {
     text-decoration: underline;
 }
@@ -139,7 +139,12 @@ body.style-editor #container a:visited:hover
 }
 
 /** File management styles */
-body.style-editor div.file-manager div.filelist
+div.file-manager
+{
+    margin-top: 1em;
+}
+
+div.file-manager div.filelist
 {
     float: left;
     width: 26%;
@@ -148,46 +153,44 @@ body.style-editor div.file-manager div.filelist
     background-color: #e9b96e;
     padding: 2%;
 }
-body.style-editor div.file-manager div.filelist ul
+div.file-manager div.filelist ul
 {
     margin: 0px;
     padding: 0px;
     white-space: nowrap;
 }
-body.style-editor div.file-manager div.filelist ul li a
+div.file-manager div.filelist ul li a
 {
     display: block;
     padding: 4px;
     -moz-border-radius: 6px;
     margin-bottom: 4px;
 }
-body.style-editor div.file-manager div.filelist ul li.selected a, 
-body.style-editor div.file-manager div.filelist ul li a:hover
+div.file-manager div.filelist ul li.selected a, 
+div.file-manager div.filelist ul li a:hover
 {
     background-color: #8f5902;
 }
-body.style-editor div.file-manager div.filelist ul li a img
+div.file-manager div.filelist ul li a img
 {
     border: none;
     vertical-align: middle;
 }
-body.style-editor div.file-manager div.main
+div.file-manager div.main
 {
-    float: left;
-    width: 68%;
-    margin-left: 2%;
+    margin-left: 32%;
 }
-body.style-editor div.file-manager div.main h1
+div.file-manager div.main h1
 {
     margin-top: 0px;
 }
-body.style-editor div.file-manager div.main form
+div.file-manager div.main form
 {
     border: 1px solid #ce5c00;
     padding: 6px;
     margin-bottom: 1em;
 }
-body.style-editor div.file-manager div.main form hr
+div.file-manager div.main form hr
 {
     margin-top: 1em;
     margin-bottom: 1em;
@@ -196,37 +199,37 @@ body.style-editor div.file-manager div.main form hr
     height: 1px;
     background-color: #ce5c00;
 }
-body.style-editor fieldset
+fieldset
 {
     border: none;
     margin-bottom: 6px;
 }
-body.style-editor fieldset legend
+fieldset legend
 {
     margin-left: 0px;
     padding-left: 0px;
     text-transform: uppercase;
 }
-body.style-editor div.file-manager div.main form label span
+div.file-manager div.main form label span
 {
     margin-top: 6px;
     display: block;
     font-weight: bold;
 }
-body.style-editor div.file-manager div.main form input, 
-body.style-editor div.file-manager div.main form textarea,
-body.style-editor div.file-manager div.main form select
+div.file-manager div.main form input, 
+div.file-manager div.main form textarea,
+div.file-manager div.main form select
 {
     display: block;
     margin-left: 2%;
 }
-body.style-editor form input.text,
-body.style-editor form textarea
+form input.text,
+form textarea
 {
     width: 90%;
 }
 
-body.style-editor div.file-manager div.main form.urlform a img
+div.file-manager div.main form.urlform a img
 {
     border: none;
     vertical-align: middle;
@@ -279,5 +282,5 @@ body.style-editor div.file-manager div.main form.urlform a img
 
 #midcom_admin_styleeditor_style div.message
 {
-	color: red;
+  color: red;
 }

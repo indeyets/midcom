@@ -23,8 +23,8 @@ Component default
 Copy to editor
 ---STRINGEND
 
----STRING create new element
-Create new element
+---STRING create a new element
+Create a new element
 ---STRINGEND
 
 ---STRING edit element %s
@@ -48,7 +48,7 @@ Element '%s' exists
 ---STRINGEND
 
 ---STRING element from file
-Upload element
+Upload an element
 ---STRINGEND
 
 ---STRING element name
@@ -115,3 +115,14 @@ URL
 XML
 ---STRINGEND
 
+---STRING local element
+Local element
+---STRINGEND
+
+---STRING style element %s updated
+Style element %s updated
+---STRINGEND
+
+---STRING style element %s created
+Style element %s created
+---STRINGEND

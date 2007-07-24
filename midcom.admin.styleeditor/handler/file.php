@@ -127,14 +127,14 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         $tmp = Array();
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => '__mfa/styleeditor/',
+            MIDCOM_NAV_URL => '__mfa/asgard_midcom.admin.styleeditor/',
             MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('edit layout template', 'midcom.admin.styleeditor'),
         );
         
 
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "__mfa/styleeditor/files/",
+            MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.styleeditor/files/",
             MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor'),
         );
 
@@ -143,7 +143,7 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
             case '____mfa-styleeditor-file_edit':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "__mfa/styleeditor/files/{$this->_request_data['filename']}/",
+                    MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.styleeditor/files/{$this->_request_data['filename']}/",
                     MIDCOM_NAV_NAME => sprintf($_MIDCOM->i18n->get_string('edit file %s', 'midcom.admin.styleeditor'), $this->_request_data['filename']),
                 );
                 break;
@@ -339,10 +339,11 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         }
         else
         {
-            $_MIDCOM->relocate("__mfa/styleeditor/files/{$filename}");
+            $_MIDCOM->relocate("__mfa/asgard_midcom.admin.styleeditor/files/{$filename}");
         }
         
         // Ensure we get the correct styles
+        $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
         $_MIDCOM->style->prepend_component_styledir('midcom.admin.styleeditor');
         
         $this->_update_breadcrumb($handler_id);
@@ -350,6 +351,31 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         
         // Skip the page styles
         $_MIDCOM->skip_page_style = true;
+        
+        // Set the Asgard toolbar
+        $data['asgard_toolbar'] = new midcom_helper_toolbar();
+        
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/create/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create a new element', 'midcom.admin.styleeditor'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/text-x-generic-template.png',
+            )
+        );        
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/files/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
+            )
+        );
+        
+        // Add the page title
+        $data['view_title'] = $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor');
         
         return true;
     }
@@ -363,7 +389,8 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
      */
     function _show_new($handler_id, &$data)
     {
-        midcom_show_style('midcom-admin-styleeditor-style-page-header');
+        midcom_show_style('midgard_admin_asgard_header');
+        midcom_show_style('midgard_admin_asgard_middle');
         
         $data['files'] =& $this->_files;
         midcom_show_style('midcom-admin-styleeditor-files-header');
@@ -371,7 +398,7 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         $data['text_types'] = $this->_config->get('text_types');
         midcom_show_style('midcom-admin-styleeditor-files-new');
         midcom_show_style('midcom-admin-styleeditor-files-footer');
-        midcom_show_style('midcom-admin-styleeditor-style-page-footer');
+        midcom_show_style('midgard_admin_asgard_footer');
     }
 
     /**
@@ -411,11 +438,12 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         {
             if ($filename != $data['filename'])
             {
-                $_MIDCOM->relocate("__mfa/styleeditor/files/{$filename}");
+                $_MIDCOM->relocate("__mfa/asgard_midcom.admin.styleeditor/files/{$filename}");
             }
         }
         
         // Ensure we get the correct styles
+        $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
         $_MIDCOM->style->prepend_component_styledir('midcom.admin.styleeditor');
         
         $this->_update_breadcrumb($handler_id);
@@ -423,6 +451,31 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         
         // Skip the page styles
         $_MIDCOM->skip_page_style = true;
+        
+        // Add the page title
+        $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('edit file %s', 'midcom.admin.styleeditor'), "'{$args[0]}'");
+        
+        // Set the Asgard toolbar
+        $data['asgard_toolbar'] = new midcom_helper_toolbar();
+        
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/create/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create a new element', 'midcom.admin.styleeditor'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/text-x-generic-template.png',
+            )
+        );        
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/files/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
+            )
+        );
         
         return true;
     }
@@ -436,7 +489,8 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
      */
     function _show_edit($handler_id, &$data)
     {
-        midcom_show_style('midcom-admin-styleeditor-style-page-header');
+        midcom_show_style('midgard_admin_asgard_header');
+        midcom_show_style('midgard_admin_asgard_middle');
         
         $data['files'] =& $this->_files;
         $data['file'] =& $this->_file;
@@ -445,7 +499,7 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         $data['text_types'] = $this->_config->get('text_types');
         midcom_show_style('midcom-admin-styleeditor-files-file');
         midcom_show_style('midcom-admin-styleeditor-files-footer');
-        midcom_show_style('midcom-admin-styleeditor-style-page-footer');
+        midcom_show_style('midgard_admin_asgard_footer');    
     }
 }
 ?>

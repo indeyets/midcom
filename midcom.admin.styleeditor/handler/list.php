@@ -90,7 +90,7 @@ class midcom_admin_styleeditor_handler_list extends midcom_baseclasses_component
         $tmp = Array();
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "__mfa/styleeditor/",
+            MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.styleeditor/",
             MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('edit layout template', 'midcom.admin.styleeditor'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
@@ -118,8 +118,8 @@ class midcom_admin_styleeditor_handler_list extends midcom_baseclasses_component
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "__mfa/styleeditor/create/",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create new element', 'midcom.admin.styleeditor'),
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/create/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create a new element', 'midcom.admin.styleeditor'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/text-x-generic-template.png',
             )
         );        
@@ -127,7 +127,7 @@ class midcom_admin_styleeditor_handler_list extends midcom_baseclasses_component
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "__mfa/styleeditor/files/",
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/files/",
                 MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
             )
@@ -159,7 +159,7 @@ class midcom_admin_styleeditor_handler_list extends midcom_baseclasses_component
         $this->_components = $style_information['nodes'];
 
         // Disable the "Edit template" button when we're at its view
-        $this->_view_toolbar->hide_item("__mfa/styleeditor/");
+        $this->_view_toolbar->hide_item("__mfa/asgard_midcom.admin.styleeditor/");
         
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
@@ -260,7 +260,6 @@ class midcom_admin_styleeditor_handler_list extends midcom_baseclasses_component
         
         midcom_show_style('midcom-admin-styleeditor-stylelist-footer');
         midcom_show_style('midgard_admin_asgard_footer');    
-
     }
 }
 ?>

@@ -56,7 +56,7 @@
         </div>
         
         <label><span><?php echo $_MIDCOM->i18n->get_string('url', 'midcom.admin.styleeditor'); ?></span>
-            <input class="text" type="text" value="&(file_url);" />
+            <input class="text" type="text" value="&(file_url);" readonly="readonly" />
         </label>
     </fieldset>
 </form>
