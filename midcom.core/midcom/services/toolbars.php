@@ -391,7 +391,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__mfa/styleeditor/",
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit layout template', 'midcom.admin.styleeditor'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/text-x-generic-template.png',
                     MIDCOM_TOOLBAR_ACCESSKEY => 't',
@@ -481,6 +481,17 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         
         if ($_MIDGARD['admin'] == true)
         {
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}__mfa/asgard/",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('midgard.admin.asgard', 'midgard.admin.asgard'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-master-document.png',
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'a',
+                )
+            );        
+        
             // Safety
             if (!isset($GLOBALS['midcom_config']['staging2live_staging']))
             {
