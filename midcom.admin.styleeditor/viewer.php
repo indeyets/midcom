@@ -94,6 +94,17 @@ class midcom_admin_styleeditor_viewer extends midcom_baseclasses_components_requ
                 'fixed_args' => array ('files'),
                 'variable_args' => 1,
             ),
+            /**
+             * Delete a file
+             * 
+             * Match /files/<filename>/delete/
+             */
+            'file_delete' => array
+            (
+                'handler' => array ('midcom_admin_styleeditor_handler_file', 'delete'),
+                'fixed_args' => array('files'),
+                'variable_args' => 2,
+            ),
         );
     }
 }

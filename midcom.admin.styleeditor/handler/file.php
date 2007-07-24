@@ -137,14 +137,26 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
             MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.styleeditor/files/",
             MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor'),
         );
-
+        
         switch ($handler_id)
         {
-            case '____mfa-styleeditor-file_edit':
+            case '____mfa-asgard_midcom.admin.styleeditor-file_edit':
                 $tmp[] = Array
                 (
                     MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.styleeditor/files/{$this->_request_data['filename']}/",
-                    MIDCOM_NAV_NAME => sprintf($_MIDCOM->i18n->get_string('edit file %s', 'midcom.admin.styleeditor'), $this->_request_data['filename']),
+                    MIDCOM_NAV_NAME => $this->_request_data['filename'],
+                );
+                break;
+            case '____mfa-asgard_midcom.admin.styleeditor-file_delete':
+                $tmp[] = array
+                (
+                    MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.styleeditor/files/{$this->_request_data['filename']}/",
+                    MIDCOM_NAV_NAME => sprintf($_MIDCOM->i18n->get_string('%s', 'midcom.admin.styleeditor'), $this->_request_data['filename']),
+                );
+                $tmp[] = array
+                (
+                    MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.styleeditor/files/{$this->_request_data['filename']}/delete/",
+                    MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('delete', 'midcom'),
                 );
                 break;
         }
@@ -294,7 +306,9 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
     {
         $qb = midcom_baseclasses_database_attachment::new_query_builder();
         $qb->add_constraint('parentguid', '=', $this->_style->guid);
+        
         $qb->add_constraint('name', '=', $filename);
+        
         $files = $qb->execute();
         if (empty($files))
         {
@@ -339,7 +353,7 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         }
         else
         {
-            $_MIDCOM->relocate("__mfa/asgard_midcom.admin.styleeditor/files/{$filename}");
+            $_MIDCOM->relocate("__mfa/asgard_midcom.admin.styleeditor/files/{$filename}/");
         }
         
         // Ensure we get the correct styles
@@ -404,7 +418,7 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
     /**
      * Handler method for listing style elements for the currently used component topic
      *
-     * @access private
+     * @access public
      * @param string $handler_id Name of the used handler
      * @param mixed $args Array containing the variable arguments passed to the handler
      * @param mixed $data Data passed to the show method
@@ -438,7 +452,7 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         {
             if ($filename != $data['filename'])
             {
-                $_MIDCOM->relocate("__mfa/asgard_midcom.admin.styleeditor/files/{$filename}");
+                $_MIDCOM->relocate("__mfa/asgard_midcom.admin.styleeditor/files/{$filename}/");
             }
         }
         
@@ -451,6 +465,9 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         
         // Skip the page styles
         $_MIDCOM->skip_page_style = true;
+        
+        // Add the codepress syntax highlight
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/codepress/codepress.js');
         
         // Add the page title
         $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('edit file %s', 'midcom.admin.styleeditor'), "'{$args[0]}'");
@@ -501,5 +518,111 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         midcom_show_style('midcom-admin-styleeditor-files-footer');
         midcom_show_style('midgard_admin_asgard_footer');    
     }
+    
+    /**
+     * Handler method for confirming file deleting for the requested file
+     *
+     * @access public
+     * @param string $handler_id Name of the used handler
+     * @param mixed $args Array containing the variable arguments passed to the handler
+     * @param mixed $data Data passed to the show method
+     * @return boolean Indicating successful request
+     */
+    function _handler_delete($handler_id, $args, &$data)
+    {
+        $this->_load_config();
+        $data['filename'] = $args[0];
+        if (!$this->_load_style())
+        {
+            return false;
+        }
+        $this->_topic->require_do('midcom.admin.styleeditor:template_management');
+        $this->_style->require_do('midgard:attachments');
+        
+        $this->_file = $this->_get_file($data['filename']);
+        if (!$this->_file)
+        {
+            return false;
+        }
+        
+        // Require delete privilege
+        $this->_file->require_do('midgard:delete');
+        
+        if (isset($_POST['f_cancel']))
+        {
+            $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midcom.admin.styleeditor', 'midcom.admin.styleeditor'), $_MIDCOM->i18n->get_string('delete cancelled', 'midcom.admin.styleeditor'));
+            $_MIDCOM->relocate("__mfa/asgard_midcom.admin.styleeditor/files/{$data['filename']}/");
+            // This will exit
+        }
+        
+        if (isset($_POST['f_confirm']))
+        {
+            if ($this->_file->delete())
+            {
+                $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midcom.admin.styleeditor', 'midcom.admin.styleeditor'), sprintf($_MIDCOM->i18n->get_string('file %s deleted', 'midcom.admin.styleeditor'), $data['filename']));
+                $_MIDCOM->relocate("__mfa/asgard_midcom.admin.styleeditor/files/");
+                // This will exit
+            }
+            
+            
+        }
+        
+        $_MIDCOM->bind_view_to_object($this->_file);
+        
+        // Ensure we get the correct styles
+        $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
+        $_MIDCOM->style->prepend_component_styledir('midcom.admin.styleeditor');
+        
+        $this->_update_breadcrumb($handler_id);
+        
+        // Skip the page styles
+        $_MIDCOM->skip_page_style = true;
+        
+        // Add the page title
+        $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('delete file %s', 'midcom.admin.styleeditor'), "'{$args[0]}'");
+        
+        // Set the Asgard toolbar
+        $data['asgard_toolbar'] = new midcom_helper_toolbar();
+        
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/create/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create a new element', 'midcom.admin.styleeditor'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/text-x-generic-template.png',
+            )
+        );        
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/files/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
+            )
+        );
+        
+        return true;
+    }
+    
+    /**
+     * Show the delete request
+     * 
+     * @access private
+     * @param string $handler_id Name of the used handler
+     * @param mixed $data Data passed to the show method
+     */
+    function _show_delete($handler_id, &$data)
+    {
+        midcom_show_style('midgard_admin_asgard_header');
+        midcom_show_style('midgard_admin_asgard_middle');
+        
+        $data['file'] =& $this->_file;
+        $data['text_types'] = $this->_config->get('text_types');
+        midcom_show_style('midcom-admin-styleeditor-files-delete');
+        midcom_show_style('midgard_admin_asgard_footer');    
+    }
+    
 }
 ?>

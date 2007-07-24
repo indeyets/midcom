@@ -126,3 +126,19 @@ Style element %s updated
 ---STRING style element %s created
 Style element %s created
 ---STRINGEND
+
+---STRING delete file %s
+Delete file '%s'
+---STRINGEND
+
+---STRING confirm delete of file %s
+Confirm delete of file '%s'
+---STRINGEND
+
+---STRING delete cancelled
+Delete cancelled
+---STRINGEND
+
+---STRING file %s deleted
+File '%s' deleted
+---STRINGEND

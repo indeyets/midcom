@@ -18,7 +18,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                     $class = ' class="selected"';
                 }
                 
-                echo "<li{$class}><a href=\"{$prefix}__mfa/styleeditor/files/{$file->name}\"><img src=\"{$mime_icon}\" /> {$file->name}</a></li>\n";
+                echo "<li{$class}><a href=\"{$prefix}__mfa/asgard_midcom.admin.styleeditor/files/{$file->name}/\"><img src=\"{$mime_icon}\" /> {$file->name}</a></li>\n";
             }
             echo "</ul>\n";
         }
