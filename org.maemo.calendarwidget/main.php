@@ -684,7 +684,9 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
     function show($render_only=false)
     {
         $html = '';
-        
+
+        $this->scrollTop = $this->cell_height * ($this->start_hour * (3600 / $this->calendar_slot_length));
+                
         $html .= '<table width="100%" border="1" cellpadding="0" cellspacing="0" class="calendar-body">'."\n";
         
         $html .= $this->_render_header();
@@ -699,17 +701,15 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
                 break;
             case ORG_MAEMO_CALENDARWIDGET_WEEK:
                 $html .= $this->_render_week($this->get_week_start(), $this->get_week_end());
+                $this->_jscripts .= "jQuery('div.calendar-timeline-holder')[0].scrollTop = {$this->scrollTop};\n";
                 break;
             case ORG_MAEMO_CALENDARWIDGET_DAY:
                 $html .= $this->_render_day($this->get_day_start(), $this->get_day_end());
+                $this->_jscripts .= "jQuery('div.calendar-timeline-holder')[0].scrollTop = {$this->scrollTop};\n";
                 break;
         }
 
         $html .= "</table>\n";
-
-        $this->scrollTop = $this->cell_height * ($this->start_hour * (3600 / $this->calendar_slot_length));
-        
-        $this->_jscripts .= "jQuery('div.calendar-timeline-holder')[0].scrollTop = {$this->scrollTop};\n";
         
         $html .= '<script>';
         $html .= 'jQuery().ready(function(){' . $this->_jscripts . '});';
@@ -1405,9 +1405,22 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         $event_tag_classes = '';
         if (! empty($event_tags))
         {
+            $first_tag = false;
             foreach ($event_tags as $tag => $data)
             {
+                if (! $first_tag)
+                {
+                    $first_tag = $tag;
+                }
                 $event_tag_classes .= "tag-{$tag} ";
+            }
+            
+            foreach ($this->_calendars[$layer_tag]['tags'] as $tag)
+            {
+                if ($tag['id'] == $first_tag)
+                {
+                    $bg_color = $tag['color'];                    
+                }
             }
         }
         
