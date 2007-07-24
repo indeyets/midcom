@@ -67,9 +67,6 @@ function handler_search(&$form_data)
     debug_add('response: '.$json);
     
     echo $json;
-
-    $_MIDCOM->finish();
-    exit();
 }
 
 function _search_persons(&$form_data)
@@ -185,5 +182,8 @@ function _search_persons(&$form_data)
 
 debug_add('---exec-midcom-org.maemo.calendar-buddylist END---');
 debug_pop();
+
+$_MIDCOM->finish();
+exit();
 
 ?>

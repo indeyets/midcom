@@ -1,6 +1,6 @@
 <?php
 /**
- * @package net.nemein.events
+ * @package org.maemo.calendar
  * @author The Midgard Project, http://www.midgard-project.net
  * @version $Id: admin.php 4152 2006-09-20 18:24:53Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.net
@@ -10,9 +10,7 @@
 /**
  * events edit/delete event handler
  *
- * Originally copied from net.nehmer.blog
- *
- * @package net.nemein.events
+ * @package org.maemo.calendar
  */
 class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_components_handler
 {

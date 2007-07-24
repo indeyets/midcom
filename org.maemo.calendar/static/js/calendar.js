@@ -186,7 +186,7 @@ function create_event(timestamp)
         url = "ajax/event/move/" + active_shelf_item + "/" + timestamp;
     }
     
-    load_modal_window(url)
+    load_modal_window(url);
 }
 function close_create_event()
 {   
@@ -621,7 +621,20 @@ function clean_up_person(identifier)
     });
 }
 
+function edit_calendar_layer_properties(layer_id)
+{
+    console.log('edit_calendar_layer_properties layer_id: '+layer_id);
 
+    var url = 'midcom-exec-org.maemo.calendar/layers.php?action=show_update&layer_id='+layer_id;
+    load_modal_window(url);
+}
+function edit_calendar_layer_tag_properties(layer_id, tag_id)
+{
+    console.log('edit_calendar_layer_tag_properties layer_id: '+layer_id+' tag_id: '+tag_id);
+
+    var url = 'midcom-exec-org.maemo.calendar/layers.php?action=show_update_tag&layer_id='+layer_id+'&tag_id='+tag_id;
+    load_modal_window(url);
+}
 
 jQuery(document).ready(function() {
         

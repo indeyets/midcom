@@ -147,7 +147,19 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
             'fixed_args' => array('ajax', 'change', 'timezone'),
             'variable_args' => 2,
         );
-
+        
+        // Match /ajax/profile/view/<guid>
+        $this->_request_switch['ajax-profile-view'] = array(
+            'handler' => Array('org_maemo_calendar_handler_profile_view', 'view'),
+            'fixed_args' => array('ajax', 'profile', 'view'),
+            'variable_args' => 1,
+        );
+        // Match /ajax/profile/edit/<guid>
+        $this->_request_switch['ajax-profile-edit'] = array(
+            'handler' => Array('org_maemo_calendar_handler_profile_admin', 'edit'),
+            'fixed_args' => array('ajax', 'profile', 'edit'),
+            'variable_args' => 1,
+        );
         
         $_MIDCOM->add_link_head
         (
