@@ -34,6 +34,7 @@ class midcom_admin_styleeditor_viewer extends midcom_baseclasses_components_requ
      */
     function get_plugin_handlers()
     {
+        $_MIDCOM->load_library('midgard.admin.asgard');
         $_MIDCOM->load_library('midcom.admin.folder');
         
         return array

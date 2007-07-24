@@ -109,7 +109,12 @@ class midcom_admin_styleeditor_handler_list extends midcom_baseclasses_component
     {
         $this->_topic->require_do('midcom.admin.styleeditor:template_management');
         
-        $this->_view_toolbar->add_item
+        $data['view_title'] = $_MIDCOM->i18n->get_string('edit style', 'midcom.admin.styleeditor');
+        $_MIDCOM->set_pagetitle($data['view_title']);
+        
+        $data['asgard_toolbar'] = new midcom_helper_toolbar();
+        
+        $data['asgard_toolbar']->add_item
         (
             array
             (
@@ -118,7 +123,7 @@ class midcom_admin_styleeditor_handler_list extends midcom_baseclasses_component
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/text-x-generic-template.png',
             )
         );        
-        $this->_view_toolbar->add_item
+        $data['asgard_toolbar']->add_item
         (
             array
             (
@@ -157,6 +162,7 @@ class midcom_admin_styleeditor_handler_list extends midcom_baseclasses_component
         $this->_view_toolbar->hide_item("__mfa/styleeditor/");
         
         // Ensure we get the correct styles
+        $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
         $_MIDCOM->style->prepend_component_styledir('midcom.admin.styleeditor');
         $_MIDCOM->skip_page_style = true;
         
@@ -181,7 +187,8 @@ class midcom_admin_styleeditor_handler_list extends midcom_baseclasses_component
      */
     function _show_list($handler_id, &$data)
     {
-        midcom_show_style('midcom-admin-styleeditor-style-page-header');
+        midcom_show_style('midgard_admin_asgard_header');
+        midcom_show_style('midgard_admin_asgard_middle');
         
         $data['nap'] = new midcom_helper_nav();
         $data['folder'] =& $this->_topic;
@@ -252,7 +259,8 @@ class midcom_admin_styleeditor_handler_list extends midcom_baseclasses_component
         midcom_show_style('midcom-admin-styleeditor-stylelist-all-footer');
         
         midcom_show_style('midcom-admin-styleeditor-stylelist-footer');
-        midcom_show_style('midcom-admin-styleeditor-style-page-footer');
+        midcom_show_style('midgard_admin_asgard_footer');    
+
     }
 }
 ?>

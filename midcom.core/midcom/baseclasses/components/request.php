@@ -1215,6 +1215,11 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
         {
             $manifest_plugins[$component] = $plugin_config;
         }
+        $customdata = $_MIDCOM->componentloader->get_all_manifest_customdata('asgard_plugin');
+        foreach ($customdata as $component => $plugin_config)
+        {
+            $manifest_plugins["asgard_{$component}"] = $plugin_config;
+        }
         
         $hardcoded_plugins = array
         (
@@ -1223,27 +1228,6 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
                 'class' => 'midgard_admin_asgard_plugin',
                 'src' => 'file:/midgard/admin/asgard/plugin.php',
                 'name' => 'Asgard',
-                'config' => null,
-            ),            
-            'users' => array
-            (
-                'class' => 'org_openpsa_contacts_mfa',
-                'src' => 'file:/org/openpsa/contacts/mfa.php',
-                'name' => 'User management',
-                'config' => null,
-            ),
-            'sitetemplate' => array
-            (
-                'class' => 'midgard_admin_sitewizard_sitetemplate',
-                'src' => 'file:/midgard/admin/sitewizard/sitetemplate.php',
-                'name' => 'Site template management',
-                'config' => null,
-            ),
-            'styleeditor' => array
-            (
-                'class' => 'midcom_admin_styleeditor_viewer',
-                'src' => 'file:/midcom/admin/styleeditor/viewer.php',
-                'name' => 'Style editing',
                 'config' => null,
             ),
         );

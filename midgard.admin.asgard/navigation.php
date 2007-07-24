@@ -189,8 +189,22 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         }
     }
     
+    function _draw_plugins()
+    {
+        $customdata = $_MIDCOM->componentloader->get_all_manifest_customdata('asgard_plugin');
+        foreach ($customdata as $component => $plugin_config)
+        {
+            $this->_request_data['section_url'] = "{$_MIDGARD['self']}__mfa/asgard_{$component}/";
+            $this->_request_data['section_name'] = $plugin_config['name'];
+            midcom_show_style('midgard_admin_asgard_navigation_section_header');
+            midcom_show_style('midgard_admin_asgard_navigation_section_footer');
+        }
+    }
+    
     function draw()
     {
+        $this->_draw_plugins();
+    
         if (!empty($this->_object_path))
         {
             $root_object = $_MIDCOM->dbfactory->get_object_by_guid($this->_object_path[0]);
