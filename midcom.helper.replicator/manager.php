@@ -140,23 +140,23 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
         $tmp = Array();
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => '__mfa/replication/',
+            MIDCOM_NAV_URL => '__mfa/asgard_midcom.helper.replicator/',
             MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('replication subscriptions', 'midcom.helper.replicator'),
         );
 
         switch ($handler_id)
         {
-            case '____mfa-replication-edit':
+            case '____mfa-asgard_midcom.helper.replicator-edit':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "__mfa/replication/edit/{$this->_subscription->guid}/",
+                    MIDCOM_NAV_URL => "__mfa/asgard_midcom.helper.replicator/edit/{$this->_subscription->guid}/",
                     MIDCOM_NAV_NAME => sprintf($this->_l10n_midcom->get('edit %s: %s'), $this->_request_data['view_type'], $this->_subscription->title),
                 );
                 break;
-            case '____mfa-replication-create':
+            case '____mfa-asgard_midcom.helper.replicator-create':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "__mfa/replication/create/{$this->_schema}.html",
+                    MIDCOM_NAV_URL => "__mfa/asgard_midcom.helper.replicator/create/{$this->_schema}.html",
                     MIDCOM_NAV_NAME => $this->_request_data['view_title'],
                 );
                 break;
