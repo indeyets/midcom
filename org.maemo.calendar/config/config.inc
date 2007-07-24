@@ -25,3 +25,7 @@
 "day_end_hour"     => 18,  // hour "working day" ends
 
 "month_column_width" => 14,
+
+
+'profile_schemadb' => 'file:/org/maemo/calendar/config/schemadb_default_profile.inc',
+'profile_schema' => 'default',

@@ -625,7 +625,7 @@ function edit_calendar_layer_properties(layer_id)
 {
     console.log('edit_calendar_layer_properties layer_id: '+layer_id);
 
-    var url = 'midcom-exec-org.maemo.calendar/layers.php?action=show_update&layer_id='+layer_id;
+    var url = 'midcom-exec-org.maemo.calendar/layers.php?action=show_update_layer&layer_id='+layer_id;
     load_modal_window(url);
 }
 function edit_calendar_layer_tag_properties(layer_id, tag_id)
@@ -634,6 +634,47 @@ function edit_calendar_layer_tag_properties(layer_id, tag_id)
 
     var url = 'midcom-exec-org.maemo.calendar/layers.php?action=show_update_tag&layer_id='+layer_id+'&tag_id='+tag_id;
     load_modal_window(url);
+}
+
+function enable_layer_update_form(layer_id, tag_id)
+{
+    console.log('enable_color_change_form layer_id: '+layer_id+' tag_id: '+tag_id);
+    
+    var type = 'layer';
+    var url = 'midcom-exec-org.maemo.calendar/layers.php?action=update_layer&layer_id='+layer_id;
+    if (tag_id != undefined)
+    {
+        type = 'layer_tag';
+        url = 'midcom-exec-org.maemo.calendar/layers.php?action=update_tag&layer_id='+layer_id+'&tag_id='+tag_id;
+    }
+        
+    jQuery.ajaxSetup({global: false});
+    var options = { 
+        beforeSubmit:  show_processing,
+        success:       processing_successfull,
+        url:       APPLICATION_PREFIX + url,
+        type:      'post',
+        //dataType:  'json',
+        timeout:   12000
+    }; 
+    
+    var form_id = '#update-' + type + '-form';    
+    jQuery(form_id).ajaxForm(options);
+}
+
+function show_processing(formData, jqForm, options)
+{
+    console.log('show_processing');
+}
+function processing_successfull(responseText, statusText)
+{
+    console.log('processing_successfull');
+    close_modal_window();
+    
+    if (responseText == 'updated')
+    {
+        window.location.reload(true);
+    }
 }
 
 jQuery(document).ready(function() {

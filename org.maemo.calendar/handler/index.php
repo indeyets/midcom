@@ -150,14 +150,21 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
         
         $calendar_leaf = new org_maemo_calendarpanel_calendar_leaf($this->_request_data['maemo_calender']);
         $buddylist_leaf = new org_maemo_calendarpanel_buddylist_leaf();
+        $profile_leaf = new org_maemo_calendarpanel_profile_leaf();
         $shelf_leaf = new org_maemo_calendarpanel_shelf_leaf();
                 
         $calendar_leaf->add_calendars(&$this->layer_data['calendars']);
         $buddylist_leaf->add_buddies(&$this->_all_buddies);
+        $profile_leaf->set_schemadb(
+            midcom_helper_datamanager2_schema::load_database( $this->_config->get('profile_schemadb') ),
+            $this->_config->get('profile_schema')
+        );
+        $profile_leaf->set_person(&$this->current_user);
         $buddylist_leaf->add_penging_buddies(&$this->_pending_buddy_requests);
                 
         $this->_request_data['panel']->add_leaf('calendar', &$calendar_leaf);
         $this->_request_data['panel']->add_leaf('buddylist', &$buddylist_leaf);
+        $this->_request_data['panel']->add_leaf('profile', &$profile_leaf);
         $this->_request_data['panel']->add_leaf('shelf', &$shelf_leaf);
     }
     
@@ -195,7 +202,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
                 'tags' => $this->user_tags,
                 'owner' => $this->current_user,
                 'name' => $default_calendar_name,
-                'color' => $this->user_tags[0]['color']
+                'color' => org_maemo_calendar_common::fetch_user_calendar_color()
             );
         }
         if (!isset($this->layer_data['busy'][$default_calendar_id]))
@@ -210,11 +217,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
             
             $public_tags = org_maemo_calendar_common::fetch_available_user_tags($person->guid, true);
 
-            $calendar_color = $this->user_tags[0]['color'];            
-            if (count($public_tags) > 0)
-            {
-                $calendar_color = $public_tags[0]['color'];
-            }
+            $calendar_color = org_maemo_calendar_common::fetch_user_calendar_color($person->guid);
             
             if (! isset($this->layer_data['calendars'][$calendar_id]))
             {

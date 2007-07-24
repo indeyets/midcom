@@ -319,3 +319,17 @@ div.calendar
 }
 
 /* Buddylist search end */
+
+.color-picker-toggle
+{
+    width: 16px;
+    height: 16px;
+    background: url(../images/icons/color-picker.png) top left no-repeat;
+}
+.color-picker
+{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin-right: 30px;
+}

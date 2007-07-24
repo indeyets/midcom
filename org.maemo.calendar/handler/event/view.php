@@ -35,12 +35,6 @@ class org_maemo_calendar_handler_event_view  extends midcom_baseclasses_componen
      * @access private
      */
     var $_controller = null;
-            
-    function _prepare_request_data()
-    {
-        $this->_request_data['event'] =& $this->_event;
-        $this->_request_data['controller'] =& $this->_controller;
-    }
     
     /**
      * Simple default constructor.
@@ -48,6 +42,12 @@ class org_maemo_calendar_handler_event_view  extends midcom_baseclasses_componen
     function org_maemo_calendar_handler_event_view()
     {
         parent::midcom_baseclasses_components_handler();
+    }
+
+    function _prepare_request_data()
+    {
+        $this->_request_data['event'] =& $this->_event;
+        $this->_request_data['controller'] =& $this->_controller;
     }
 
     function _load_event($identifier,$hacked=false)
@@ -68,12 +68,6 @@ class org_maemo_calendar_handler_event_view  extends midcom_baseclasses_componen
 
     /**
      * Loads and prepares the schema database.
-     *
-     * Special treatement is done for the name field, which is set readonly for non-creates
-     * if the simple_name_handling config option is set. (using an auto-generated urlname based
-     * on the title, if it is missing.)
-     *
-     * The operations are done on all available schemas within the DB.
      */
     function _load_schemadb()
     {
@@ -99,11 +93,6 @@ class org_maemo_calendar_handler_event_view  extends midcom_baseclasses_componen
         }
 
         $this->_controller->set_storage($this->_event);
-        // if (! $this->_controller->initialize())
-        // {
-        //     $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");
-        //     // This will exit.
-        // }
     }
 
     function _handler_show($handler_id, $args, &$data)

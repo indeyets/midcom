@@ -15,6 +15,151 @@ class org_maemo_calendar_common
     {
     }
     
+    function fetch_user_calendar_color($user_guid=false)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        $logged_in = true;
+        
+        $user = $_MIDCOM->auth->user->get_storage();
+        
+        if ($user_guid)
+        {
+            $logged_in = false;
+            $user =& new midcom_db_person($user_guid);
+        }
+        
+        $color = $user->get_parameter('org.maemo.calendar:preferences','calendar_color');
+        
+        if (empty($color))
+        {
+            if (   $logged_in
+                || (   !$logged_in
+                    && $_MIDCOM->auth->request_sudo()) )
+            {
+                $user->set_parameter('org.maemo.calendar:preferences','calendar_color','FFFF99');
+                $color = $user->get_parameter('org.maemo.calendar:preferences','calendar_color');
+                
+                if (!$logged_in)
+                {
+                    $_MIDCOM->auth->drop_sudo();
+                }
+            }
+            else
+            {
+                debug_add('Couldn\'t get SUDO privileges!');
+            }            
+        }
+        
+        debug_print_r("User calendar color: ",$color);        
+        debug_pop();
+
+        return $color;
+    }
+    
+    function update_user_calendar_color($color, $user_guid=false)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        $logged_in = true;
+        
+        $user = $_MIDCOM->auth->user->get_storage();
+        
+        if ($user_guid)
+        {
+            $logged_in = false;
+            $user =& new midcom_db_person($user_guid);
+        }
+
+        if (   $logged_in
+            || (   !$logged_in
+                && $_MIDCOM->auth->request_sudo()) )
+        {
+            $user->set_parameter('org.maemo.calendar:preferences','calendar_color',$color);
+            
+            if (!$logged_in)
+            {
+                $_MIDCOM->auth->drop_sudo();
+            }
+        }
+        else
+        {
+            debug_add('Couldn\'t get SUDO privileges!');
+        }
+
+        debug_pop();                
+        return true;
+    }
+    
+    function save_user_tag($tag_id, $data, $user_guid=false)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+
+        debug_print_r('save with: ', $data);
+        
+        $logged_in = true;
+        
+        $user = $_MIDCOM->auth->user->get_storage();
+        
+        if ($user_guid)
+        {
+            $logged_in = false;
+            $user =& new midcom_db_person($user_guid);
+        }
+        
+        if (   $logged_in
+            || (   !$logged_in
+                && $_MIDCOM->auth->request_sudo()) )
+        {            
+            $existing = $user->get_parameter('org.maemo.calendar:tag',$tag_id);
+        
+            if (empty($existing))
+            {
+                debug_add("Tag {$tag_id} doesn't exist. Create.");
+            }
+            else
+            {   
+                if (   empty($tag_id)
+                    || empty($data['color'])
+                    || empty($data['name'])
+                    || !isset($data['ispublic']) )
+                {
+                    debug_add("All required data wasn't available. quitting");
+                    return false;
+                }
+            }
+            
+            if (isset($data['color']))
+            {
+                $user->set_parameter('org.maemo.calendar:tag',$tag_id,$data['color']);                
+            }
+            if (isset($data['name']))
+            {
+                $user->set_parameter('org.maemo.calendar:tag_name',$tag_id,$data['name']);
+            }
+            if ($data['ispublic'])
+            {
+                $user->set_parameter('org.maemo.calendar:public_tag',$tag_id,true);
+            }
+            else
+            {
+                $user->set_parameter('org.maemo.calendar:public_tag',$tag_id);
+            }
+
+            if (!$logged_in)
+            {
+                $_MIDCOM->auth->drop_sudo();
+            }
+        }
+        else
+        {
+            debug_add('Couldn\'t get SUDO privileges! Tags not added.');
+        }
+             
+        debug_pop();
+        return true;
+    }
+    
     function fetch_available_user_tags($user_guid=false, $only_public=false)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -152,7 +297,7 @@ class org_maemo_calendar_common
             $user =& new midcom_db_person($user_guid);
         }
         
-        $user_timezone_identifier = $user->get_parameter('org.maemo.calendar:user_timezone','identifier');
+        $user_timezone_identifier = $user->get_parameter('org.maemo.calendar:preferences','timezone_identifier');
         if (empty($user_timezone_identifier))
         {
             debug_add("No timezone defined! Adding the default timezone to users parameters.");
@@ -162,8 +307,8 @@ class org_maemo_calendar_common
                     && $_MIDCOM->auth->request_sudo()) )
             {
                 $default_timezone_name = date_default_timezone_get();
-                $user->set_parameter('org.maemo.calendar:user_timezone','identifier',$default_timezone_name);
-                $user_timezone_identifier = $user->get_parameter('org.maemo.calendar:user_timezone','identifier');
+                $user->set_parameter('org.maemo.calendar:preferences','timezone_identifier',$default_timezone_name);
+                $user_timezone_identifier = $user->get_parameter('org.maemo.calendar:preferences','timezone_identifier');
                 
                 if (!$logged_in)
                 {
