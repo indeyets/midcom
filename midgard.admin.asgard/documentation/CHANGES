@@ -8,6 +8,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-07-24 bergie
+  + Started using validation for typical PHP code fields
+
 2007-06-02 bergie
   + Initial multilingual support
 

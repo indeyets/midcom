@@ -372,24 +372,25 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 case MGD_TYPE_LONGTEXT:
                     // Figure out nice size for the editing field
 
-                    $output_mode = "";
-                    $widget = "textarea";
-
+                    $output_mode = '';
+                    $widget = 'textarea';
+                    $dm_type = 'text';
 
                     switch ($key)
                     {
                         case 'content':
                         case 'description':
                             $height = 30;
-                            $output_mode = "html";
-                            $widget = "tinymce";
+                            $output_mode = 'html';
+                            $widget = 'tinymce';
                             break;
                         case 'value':
                         case 'code':
                             // These are typical "large" fields
                             $height = 30;
-                            $output_mode = "code";
-                            $widget = "textarea";
+                            $dm_type = 'php';
+                            $output_mode = 'code';
+                            $widget = 'codepress';
                             break;
                             
                         default:
@@ -404,7 +405,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                         (
                             'title'       => $key,
                             'storage'     => $key,
-                            'type'        => 'text',
+                            'type'        => $dm_type,
                             'type_config' => Array
                             (
                                 'output_mode' => $output_mode,
