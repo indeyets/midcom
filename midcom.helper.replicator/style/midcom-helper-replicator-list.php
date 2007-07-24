@@ -33,7 +33,7 @@ else
     <?php
 }
 
-$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . '__mfa/midcom.helper.replicator/';
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . '__mfa/asgard_midcom.helper.replicator/';
 if (count($data['subscriptions']) > 0)
 {
     ?>

@@ -75,6 +75,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
     
     function get_plugin_handlers()
     {
+        $_MIDCOM->load_library('midgard.admin.asgard');    
         return array
         (
             'list' => array
@@ -114,11 +115,11 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
         $this->_local_config = $component_data['config'];
         
         $this->_load_schemadb();
-        
-        $this->_node_toolbar =& $_MIDCOM->toolbars->get_node_toolbar();
+
+        midgard_admin_asgard_plugin::prepare_plugin('', &$this->_request_data);        
         foreach (array_keys($this->_schemadb) as $name)
         {
-            $this->_node_toolbar->add_item
+            $this->_request_data['asgard_toolbar']->add_item
             (
                 array
                 (
@@ -196,9 +197,15 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
     
     function _show_list($handler_id, &$data)
     {
+        midcom_show_style('midgard_admin_asgard_header');
+        midcom_show_style('midgard_admin_asgard_middle');
+    
         $data['schemadb'] =& $this->_schemadb;
         $data['local_config'] =& $this->_local_config;
         midcom_show_style('midcom-helper-replicator-list');
+        
+        midcom_show_style('midgard_admin_asgard_footer');
+
     }
 
     /**
@@ -262,11 +269,11 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
         switch ($this->_controller->process_form())
         {
             case 'save':
-                $_MIDCOM->relocate("__mfa/replication/edit/{$this->_subscription->guid}/");
+                $_MIDCOM->relocate("__mfa/asgard_midcom.helper.replicator/edit/{$this->_subscription->guid}/");
                 // This will exit.
 
             case 'cancel':
-                $_MIDCOM->relocate('__mfa/replication/');
+                $_MIDCOM->relocate('__mfa/asgard_midcom.helper.replicator/');
                 // This will exit.
         }  
 
@@ -282,8 +289,13 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
     
     function _show_edit($handler_id, &$data)
     {
+        midcom_show_style('midgard_admin_asgard_header');
+        midcom_show_style('midgard_admin_asgard_middle');
+    
         $data['controller'] =& $this->_controller;
-        midcom_show_style('midcom-helper-replicator-edit');    
+        midcom_show_style('midcom-helper-replicator-edit');
+        
+        midcom_show_style('midgard_admin_asgard_footer');
     }
     
     /**
@@ -331,11 +343,11 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
         switch ($this->_controller->process_form())
         {
             case 'save':
-                $_MIDCOM->relocate("__mfa/replication/edit/{$this->_subscription->guid}/");
+                $_MIDCOM->relocate("__mfa/asgard_midcom.helper.replicator/edit/{$this->_subscription->guid}/");
                 // This will exit.
 
             case 'cancel':
-                $_MIDCOM->relocate('__mfa/replication/');
+                $_MIDCOM->relocate('__mfa/asgard_midcom.helper.replicator/');
                 // This will exit.
         }
 
@@ -349,8 +361,13 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
     
     function _show_create($handler_id, &$data)
     {
+        midcom_show_style('midgard_admin_asgard_header');
+        midcom_show_style('midgard_admin_asgard_middle');
+
         $data['controller'] =& $this->_controller;
         midcom_show_style('midcom-helper-replicator-create');
+        
+        midcom_show_style('midgard_admin_asgard_footer');
     }
 
     function _resolve_object_title($object)
@@ -446,7 +463,13 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
     
     function _show_object($handler_id, &$data)
     {
+        midcom_show_style('midgard_admin_asgard_header');
+        midcom_show_style('midgard_admin_asgard_middle');
+
         midcom_show_style('midcom-helper-replicator-object');
+        
+        midcom_show_style('midgard_admin_asgard_footer');
+
     }
 }
 ?>

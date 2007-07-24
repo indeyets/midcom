@@ -49,7 +49,7 @@
   ),
   'customdata' => array 
     (
-        'request_handler_plugin' => array
+        'asgard_plugin' => array
         (
             'class' => 'midcom_helper_replicator_manager',
             'src' => 'file:/midcom/helper/replicator/manager.php',

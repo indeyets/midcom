@@ -28,6 +28,7 @@ class midgard_admin_asgard_interface extends midcom_baseclasses_components_inter
             'reflector.php',
             'reflector_tree.php',
             'navigation.php',
+            'plugin.php',
         );
 
         $this->_autoload_libraries = array

@@ -168,6 +168,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
     {
         $data['view_title'] = $title;
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
+        $_MIDCOM->skip_page_style = true;
         $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
     }
     
