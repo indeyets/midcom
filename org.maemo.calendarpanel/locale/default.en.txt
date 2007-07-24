@@ -17,3 +17,7 @@ Buddylist
 ---STRING shelf
 Event Shelf
 ---STRINGEND
+
+---STRING profile
+Personal profile
+---STRINGEND

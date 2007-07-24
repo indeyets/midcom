@@ -56,6 +56,7 @@ class org_maemo_calendarpanel_buddylist_leaf extends midcom_baseclasses_componen
     function generate_content()
     {
         $html = "";
+
         $html .= $this->_render_menu();
         $html .= $this->_render_buddylist();
         $html .= $this->_render_pending_list();

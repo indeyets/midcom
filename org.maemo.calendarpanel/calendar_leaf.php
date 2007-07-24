@@ -48,7 +48,7 @@ class org_maemo_calendarpanel_calendar_leaf extends midcom_baseclasses_component
     function generate_content()
     {
         $html = "";
-        
+
         $html .= $this->_render_calendar_list();
         
         return $html;
@@ -111,7 +111,14 @@ class org_maemo_calendarpanel_calendar_leaf extends midcom_baseclasses_component
             // $html .= "         <a class=\"graph-arrowUp\"></a>\n";
             // $html .= "         <a class=\"graph-arrowDown\"></a>\n";
             $html .= "      </div>\n";
-            $html .= "      <div class=\"calendar-actions\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/icon-properties.png\" alt=\"Properties\" width=\"16\" height=\"16\" /></div>\n";
+            
+            $properties_action = '';
+            if ($_MIDCOM->auth->user->guid == $calendar_tag)
+            {
+                $properties_action = "edit_calendar_layer_properties('{$calendar_tag}');";                
+            $html .= "      <div class=\"calendar-actions\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/icon-properties.png\" alt=\"Properties\" width=\"16\" height=\"16\" onclick=\"{$properties_action}\" /></div>\n";
+            }
+                        
             $html .= "   </li>\n";
             
             if (! empty($calendar_data['tags']))
@@ -160,7 +167,14 @@ class org_maemo_calendarpanel_calendar_leaf extends midcom_baseclasses_component
                     $html .= "               <a class=\"graph-arrowUp\"></a>\n";
                     $html .= "               <a class=\"graph-arrowDown\"></a>\n";
                     $html .= "            </div>\n";
-                    $html .= "            <div class=\"calendar-actions\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/icon-properties.png\" alt=\"Properties\" width=\"16\" height=\"16\" /></div>\n";
+
+                    $properties_action = '';
+                    if ($_MIDCOM->auth->user->guid == $calendar_tag)
+                    {
+                        $properties_action = "edit_calendar_layer_tag_properties('{$calendar_tag}', '{$tag_data['id']}');";
+                    $html .= "            <div class=\"calendar-actions\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/icon-properties.png\" alt=\"Properties\" width=\"16\" height=\"16\" onclick=\"{$properties_action}\" /></div>\n";
+                    }
+                    
                     $html .= "         </li>\n";
                 }
                 $html .= "      </ul>\n";
