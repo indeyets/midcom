@@ -69,5 +69,8 @@
                 devel-xen-devel.nemein.net: Apache/2.0.54 (Debian GNU/Linux) DAV/2 PHP/4.3.10-19 Midgard/1.8.3
             </span>
         </div>
+<?php
+$_MIDCOM->uimessages->show();
+?>
     </body>
 </html>
