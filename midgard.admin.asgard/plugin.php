@@ -161,6 +161,16 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         );
     }
     
+    /**
+     * Static method other plugins may use
+     */
+    function prepare_plugin($title, &$data)
+    {
+        $data['view_title'] = $title;
+        $data['asgard_toolbar'] = new midcom_helper_toolbar();
+        $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
+    }
+    
     function get_type_label($type)
     {
         $ref = midgard_admin_asgard_reflector_tree::get($type);
