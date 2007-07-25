@@ -64,11 +64,22 @@
         'tags' => Array
         (
             'title' => 'tags',
-            'storage' => 'parameter',
             'storage' => null,
             'type' => 'tags',
             'widget' => 'text',
         ),
+        'tags2' => Array
+        (
+            'title' => 'tags widget',
+            'storage' => 'null',
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array(),
+                'allow_multiple' => true,
+            ),
+            'widget' => 'tags',
+        ),        
         /*'participants' => array 
         (
             'title'   => 'participants',
@@ -258,7 +269,7 @@
             ),
             'widget' => 'jsdate',
             'required' => true,
-        ),
+        ),    
         /*'description' => array (
             'title' => 'description',
             'storage' => 'description',

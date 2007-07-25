@@ -226,10 +226,11 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
             )
         );
 
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery-1.1.3.1.pack.js', true);
-        $script = 'var $j = jQuery.noConflict();'."\n";
-        $_MIDCOM->add_jscript($script, "", false);
-        // 
+        // $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery-1.1.3.1.pack.js', true);
+        // $script = 'var $j = jQuery.noConflict();'."\n";
+        // $_MIDCOM->add_jscript($script, "", false);
+        $_MIDCOM->enable_jquery();
+
         // // Load required Javascripts
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.maemo.calendar/js/jquery.textSelection.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/interface/interface-1.2.js');
@@ -249,9 +250,15 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Prototype/prototype.js', true);        
 
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.maemo.calendar/js/calendar.js');
+
+        $script = 'const MIDCOM_STATIC_URL = "' . MIDCOM_STATIC_URL . '";'."\n";
+//        $script .= 'const APPLICATION_PREFIX = "' . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . '";'."\n";
+        $script .= 'const APPLICATION_PREFIX = "/";'."\n";
+
+        $_MIDCOM->add_jscript($script,"",true);
         
-        $script = '
-            $j("#main-panel-accordion").Accordion(
+        $script = '            
+            jQuery("#main-panel-accordion").Accordion(
                             {
                                 headerSelector  : "div.accordion-leaf-header",
                                 panelSelector   : "div.accordion-leaf-body",
@@ -261,7 +268,7 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
                                 speed           : 80
                             }
             );
-            $j("div.calendar-layerholder div.calendar-object-event-header").textSelection("disable");
+            jQuery("div.calendar-layerholder div.calendar-object-event-header").textSelection("disable");
             load_shelf_contents();
         '."\n";
         

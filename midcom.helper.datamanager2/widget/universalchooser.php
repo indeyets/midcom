@@ -200,7 +200,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
             $this->_shared_secret = $key_snippet->doc;
         }
 
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/Javascript/Prototype/prototype.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Prototype/prototype.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/universalchooser.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/protoGrowl.js');
         $_MIDCOM->add_link_head(
