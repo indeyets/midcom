@@ -12,8 +12,14 @@ $articles = $qb->execute();
 echo "<ul>\n";
 foreach ($articles as $article)
 {
-    $score = $calculator->calculate_article($article);
-    echo "<li><a href=\"{$article->url}\">{$article->title}</a> ({$score})</li>\n";
+    $scores = $calculator->calculate_article($article);
+    $score_string = '';
+    foreach ($scores as $source => $score)
+    {
+        $score_string .= " {$source}: {$score}";
+    }
+    $score_string = trim($score_string);
+    echo "<li><a href=\"{$article->url}\">{$article->title}</a> ({$score_string})</li>\n";
 }
 echo "</ul>\n";
 ?>

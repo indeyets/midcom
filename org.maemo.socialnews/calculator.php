@@ -80,21 +80,58 @@ class org_maemo_socialnews_calculator extends midcom_baseclasses_components_pure
         return $score;
     }
     
+    private function count_technorati($url)
+    {
+        $techurl = "http://api.technorati.com/cosmos?url=" . urlencode($url) . "&key=" . urlencode($this->_config->get('technorati_apikey'));
+        $xml = $this->http_request->get($techurl);
+        if (empty($xml))
+        {
+            return 0;
+        }
+        
+        $simplexml = simplexml_load_string($xml);
+        
+        $score = 0;
+        
+        if (isset($simplexml->document->result->inboundlinks))
+        {
+            $score = $simplexml->document->result->inboundlinks;
+        }
+        
+        /*
+        if (   isset($simplexml->document->item)
+            && is_array($simplexml->document->item))
+        {
+            foreach ($simplexml->document->item as $item)
+            {
+                // TODO: Here we could save links of blogs that link to this item if we wanted
+            }
+        }
+        */
+        
+        return $score;
+    }
+    
     private function calculate_object($guid, $url)
     {
         // Here we apply the special sauce
-        $score = 0;
+        $scores = array
+        (
+            'total' => 0,
+        );
         
         if ($this->_config->get('comments_enable'))
         {
-            $score += $this->count_comments($guid) * $this->_config->get('comments_modifier');
+            $scores['comments'] = $this->count_comments($guid) * $this->_config->get('comments_modifier');
+            $scores['total'] += $scores['comments'];
         }
         
         if ($this->_config->get('delicious_enable'))
         {
             if (!empty($url))
             {
-                $score += $this->count_delicious($url) * $this->_config->get('delicious_modifier');
+                $scores['delicious'] = $this->count_delicious($url) * $this->_config->get('delicious_modifier');
+                $scores['total'] += $scores['delicious'];
             }
         }
         
@@ -102,11 +139,21 @@ class org_maemo_socialnews_calculator extends midcom_baseclasses_components_pure
         {
             if (!empty($url))
             {
-                $score += $this->count_digg($url) * $this->_config->get('digg_modifier');
+                $scores['digg'] = $this->count_digg($url) * $this->_config->get('digg_modifier');
+                $scores['total'] += $scores['digg'];
             }
         }
         
-        return $score;
+        if ($this->_config->get('technorati_enable'))
+        {
+            if (!empty($url))
+            {
+                $scores['technorati'] = $this->count_technorati($url) * $this->_config->get('technorati_modifier');
+                $scores['total'] += $scores['technorati'];
+            }
+        }
+        
+        return $scores;
     }
     
     public function calculate_article($article)
@@ -120,11 +167,11 @@ class org_maemo_socialnews_calculator extends midcom_baseclasses_components_pure
         }
         */
     
-        $article_score = $this->calculate_object($article->guid, $article->url);
+        $article_scores = $this->calculate_object($article->guid, $article->url);
 
         // TODO: Count in article's (and feed's) local modifiers
         
-        return $article_score;
+        return $article_scores;
     }
 }
 ?>
