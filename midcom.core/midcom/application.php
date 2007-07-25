@@ -286,6 +286,14 @@ class midcom_application {
     var $_prepend_jshead;
 
     /**
+     * Boolean showing if jQuery is enabled
+     *
+     * @var Boolean
+     * @access private
+     */
+    var $_jquery_enabled = false;
+
+    /**
      * Array with all JQuery state scripts for the page's head.
      *
      * @var array
@@ -2834,6 +2842,26 @@ class midcom_application {
             echo $js_call;
         }
         $this->print_jquery_statuses();
+    }
+
+    /**
+     * Init jQuery
+     *
+     * This method adds jQuery support to the page
+     *
+     */
+    function enable_jquery($version="1.1.3.1")
+    {
+        if ($this->_jquery_enabled)
+        {
+            return;
+        }
+        
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/jQuery/jquery-{$version}.pack.js", true);
+        $script = 'var $j = jQuery.noConflict();'."\n";
+        $_MIDCOM->add_jscript($script, "", false);
+        
+        $this->_jquery_enabled = true;
     }
 
     /**
