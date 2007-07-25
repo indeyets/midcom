@@ -57,14 +57,16 @@ class midcom_helper_datamanager2_type_php extends midcom_helper_datamanager2_typ
      */
     function _on_validate()
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
         if (   is_array($this->value)
             || is_object($this->value))
         {
             $this->validation_error = $this->_l10n->get('type text: value may not be array or object');
+            debug_pop();
             return false;
         }
         
-        /*
+        /* bergie says this segfaults
         if (function_exists('parsekit_compile_string'))
         {
             // Use parsekit for evaluation if available
@@ -90,27 +92,32 @@ class midcom_helper_datamanager2_type_php extends midcom_helper_datamanager2_typ
                         $error_message .= "<br />\nline {$line}: {$error}";
                     }
                     $this->validation_error = sprintf($this->_l10n->get('type php: parse error %s'), $error_message);
+                    debug_pop();
                     return false;
                 }
             }
             
+            debug_pop();
             return true;
         }
         */
 
-        // TODO: Figure out safer way to do this
-        // Try to just run the code and see what happens
-        ob_start();
-        eval("?>{$this->value}");
-        $parse_results = ob_get_contents();
-        ob_end_clean();
-        
+        $tmpfile = tempnam('', 'midcom_helper_datamanager2_type_php_');
+        $fp = fopen($tmpfile, 'w');
+        fwrite($fp, $this->value);
+        fclose($fp);
+        $parse_results = `php -l {$tmpfile}`;
+        debug_add("'php -l {$tmpfile}' returned: \n===\n{$parse_results}\n===\n");
+        unlink($tmpfile);
+
         if (strstr($parse_results, 'Parse error'))
         {
             $this->validation_error = $this->_l10n->get('type php: parse error');
+            debug_pop();
             return false;
         }
-        
+
+        debug_pop();
         return true;
     }
 
