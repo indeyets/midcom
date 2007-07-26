@@ -61,22 +61,23 @@
             ),
             'widget' => 'textarea',
         ),
-        'tags' => Array
+        /*'tags' => Array
         (
             'title' => 'tags',
             'storage' => null,
             'type' => 'tags',
             'widget' => 'text',
-        ),
-        'tags2' => Array
+        ),*/
+        'tags' => Array
         (
             'title' => 'tags widget',
             'storage' => 'null',
-            'type' => 'select',
+            'type' => 'tagselect',
             'type_config' => array
             (
-                'options' => array(),
-                'allow_multiple' => true,
+                'option_callback' => 'org_maemo_calendar_callbacks_personstags',
+                'enable_saving_to_callback' => false,
+                'force_saving_to_tag_library' => true,
             ),
             'widget' => 'tags',
         ),        

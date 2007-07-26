@@ -201,6 +201,8 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
 
         debug_add("Make sure the start/end times are saved with UTC timezone");
         
+        $utc_timezone = timezone_open("UTC");
+        
         $event_start = strtotime($_POST['start']);
         debug_add("event_start before timezone change: " . $event_start . " (" . date("H:i:s",$event_start) . ")");
         $event_end = strtotime($_POST['end']);
