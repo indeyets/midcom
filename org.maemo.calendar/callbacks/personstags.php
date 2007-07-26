@@ -113,17 +113,18 @@ class org_maemo_calendar_callbacks_personstags extends midcom_baseclasses_compon
         return $this->_data;
     }
     
-    function save_values($values)
+    function save_values($tags)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_print_r('got values',$values);
+        debug_print_r('got tags',$tags);
         
-        foreach ($values as $id => $data)
+        foreach ($tags as $tag)
         {
-            if (! org_maemo_calendar_common::save_user_tag($id, $data, $this->_user->guid))
+            $data = $this->get_data_for_key($key);
+            if (! org_maemo_calendar_common::save_user_tag($tag, $data, $this->_user->guid))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Saving of tag {$id} failed! See debug log for more details.",
+                debug_add("Saving of tag {$tag} failed! See debug log for more details.",
                     MIDCOM_LOG_INFO);
                 debug_pop();            
             }
