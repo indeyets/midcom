@@ -10,7 +10,7 @@
 /**
  * Datamanager 2 Widget base class.
  *
- * As with all subclasses, the actual initialization is done in the initialize() funciton,
+ * As with all subclasses, the actual initialization is done in the initialize() function,
  * not in the constructor, to allow for error handling.
  *
  * Quick glance at the changes
@@ -290,7 +290,7 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     }
 
     /**
-     * Freezes all form elements accociated with the widget. The default implementation
+     * Freezes all form elements associated with the widget. The default implementation
      * works on the default field name, you don't need to override this function unless
      * you have multiple widgets in the form.
      *
@@ -306,7 +306,7 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     }
 
     /**
-     * Unfreezes all form elements accociated with the widget. The default implementation
+     * Unfreezes all form elements associated with the widget. The default implementation
      * works on the default field name, you don't need to override this function unless
      * you have multiple widgets in the form.
      *

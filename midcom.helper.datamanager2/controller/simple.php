@@ -46,7 +46,7 @@ class midcom_helper_datamanager2_controller_simple extends midcom_helper_dataman
     }
 
     /**
-     * This funciton wraps the form manager processing. Ifprocessing is successful, (that is,
+     * This function wraps the form manager processing. Ifprocessing is successful, (that is,
      * only 'save'). If editing was successful, the form is frozen in case you want
      * to display it again (usually you want to redirect to the view target).
      *

@@ -211,7 +211,7 @@ class midcom_services_indexer_document
 
     /**
      * The full path to the topic that houses the document. For external resources,
-     * this should be either a MidCOM topic, to which this resource is accociated or
+     * this should be either a MidCOM topic, to which this resource is associated or
      * some "directory" after which you could filter. You may also leave
      * it empty prohibiting it to appear on any topic-specific search.
      *
@@ -583,7 +583,7 @@ class midcom_services_indexer_document
     }
 
     /**
-     * This is a small helper that converts HTML to plain text (relativly simple):
+     * This is a small helper that converts HTML to plain text (relatively simple):
      *
      * Basically, JavaScript blocks and
      * HTML Tags are stripped, and all HTML Entities

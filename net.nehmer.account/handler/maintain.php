@@ -229,7 +229,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
     }
 
     /**
-     * Internal helper funciton, prepares a datamanager based on the current account.
+     * Internal helper function, prepares a datamanager based on the current account.
      */
     function _prepare_datamanager()
     {
@@ -711,7 +711,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
             if (! function_exists($callback['callback']))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to load the callback {$callback['callback']} for account deletion, the funciton is not defined.", MIDCOM_ERRCRIT);
+                debug_add("Failed to load the callback {$callback['callback']} for account deletion, the function is not defined.", MIDCOM_ERRCRIT);
                 debug_pop();
                 return;
             }

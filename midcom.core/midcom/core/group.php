@@ -184,13 +184,13 @@ class midcom_core_group extends midcom_baseclasses_core_object
      * This function will return a MidCOM DBA level storage object for the current group. Be aware,
      * that depending on ACL information, the retrival of the user may fail.
      *
-     * Also, as outlined in the member $_storage, not all groups may have a DBA object accociated
+     * Also, as outlined in the member $_storage, not all groups may have a DBA object associated
      * with them, therefore this call may return null.
      *
      * The default implementation will return an instance of midcom_baseclasses_database_group based
      * on the member $this->_storage->id if that object is defined, or null otherwise.
      *
-     * @return MidgardObject Any MidCOM DBA level object that holds the information accociated with
+     * @return MidgardObject Any MidCOM DBA level object that holds the information associated with
      *     this group, or null if there is no storage object.
      */
     function get_storage()

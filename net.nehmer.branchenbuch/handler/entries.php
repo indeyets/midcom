@@ -660,7 +660,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
     }
 
     /**
-     * This list handler shows all entries currently accociated to the active user.
+     * This list handler shows all entries currently associated to the active user.
      */
     function _handler_list_self($handler_id, $args, &$data)
     {

@@ -46,7 +46,7 @@
  * "net_nemein_payment_id" is reserved for ID usage to identify the correct handler in
  * the factory class..
  * 
- * You may define arbitary configuration options for the handler array, as long as they do 
+ * You may define arbitrary configuration options for the handler array, as long as they do 
  * not start with an underscore, which is reserved for library core parameters.
  * 
  * Any handler specific l10n strings should be prefixed with the name of the handler.
@@ -89,7 +89,7 @@ class net_nemein_payment_handler extends midcom_baseclasses_components_purecode
     var $_return_url = '';
     
     /**
-     * The payment reference accociated with this record. The exact allowed 
+     * The payment reference associated with this record. The exact allowed 
      * characters for this field varies with the actual handler, refer to their
      * class documentations for details.
      * 
@@ -105,7 +105,7 @@ class net_nemein_payment_handler extends midcom_baseclasses_components_purecode
     var $_reference = '';
     
     /**
-     * An arbitary message to the user, shown during payment processing (if supported
+     * An arbitrary message to the user, shown during payment processing (if supported
      * by the payment handler).
      * 
      * @var string

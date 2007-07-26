@@ -12,7 +12,7 @@
  * There are a number of limitations you have to deal with, when working with the 
  * Memory Cache.
  * 
- * Number One, you cannot put arbitary keys into the cache. Since the memcached 
+ * Number One, you cannot put arbitrary keys into the cache. Since the memcached 
  * php extension does not support key listings, you are bound to use MidCOM object
  * GUIDs as cache keys, whatever you do. To allow for different subsystems of the
  * Framework to share the cache, I have introduce "Data groups", which are suffixes

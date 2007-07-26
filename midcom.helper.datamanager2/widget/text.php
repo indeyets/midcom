@@ -10,7 +10,7 @@
 /**
  * Datamanager 2 simple text widget
  *
- * As with all subclasses, the actual initialization is done in the initialize() funciton,
+ * As with all subclasses, the actual initialization is done in the initialize() function,
  * not in the constructor, to allow for error handling.
  *
  * This widget supports all types which have a simple, plain text representation accessible

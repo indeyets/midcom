@@ -153,7 +153,7 @@ class midcom_services_cache
     }
 
     /**
-     * Invalidates all cache records accociated with a given content object.
+     * Invalidates all cache records associated with a given content object.
      *
      * @param mixed $guid This is either a GUID or a MidgardObject, in which case the Guid is auto-dtermined.
      * @param string $skip_module If specified, the module mentioned here is skipped during invalidation.

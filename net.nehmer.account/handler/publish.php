@@ -378,7 +378,7 @@ class net_nehmer_account_handler_publish extends midcom_baseclasses_components_h
     }
 
     /**
-     * Internal helper funciton, prepares a datamanager based on the current account.
+     * Internal helper function, prepares a datamanager based on the current account.
      */
     function _prepare_datamanager()
     {

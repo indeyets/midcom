@@ -112,7 +112,7 @@ class midcom_helper_datamanager2_type_video extends midcom_helper_datamanager2_t
     /**
      * The maximum witdh/height (in this order) of the thumbnail to be auto-created.
      *
-     * The passed values will be given to the rescale funciton of the imagefilter.
+     * The passed values will be given to the rescale function of the imagefilter.
      * This means that if you want to scale an image only by width, you still have
      * to set the height parameter to zero (auto_thumbnail => Array(100,0)).
      *

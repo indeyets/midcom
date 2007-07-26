@@ -304,7 +304,7 @@ class net_nehmer_mail_admin extends midcom_baseclasses_components_request_admin
     }
     
     /**
-     * This funciton handles the actual mailbox creation from the 'create' handler.
+     * This function handles the actual mailbox creation from the 'create' handler.
      * It depends on the request data to gain access to form/datamanager and will 
      * relocate to the mailbox view on success, or continue editing otherwise.
      * 

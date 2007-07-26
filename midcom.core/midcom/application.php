@@ -1185,8 +1185,8 @@ class midcom_application {
     /**
      * Check, wether a given component is able to handle the current request.
      *
-     * Used by _process(), it checks if the component accociated to $object is able
-     * to handle the request. First it will load the component accociated to $object.
+     * Used by _process(), it checks if the component associated to $object is able
+     * to handle the request. First it will load the component associated to $object.
      * Then it will fetch the COMPONENT class accoicated to the MidCOM. After the
      * local configuration is retrieved from the object in question the component will
      * be asked, if it can handle the request. TRUE or FALSE will be returned
@@ -1530,7 +1530,7 @@ class midcom_application {
     /**
      * Access the MidCOM component context
      *
-     * Returns Component Context Information accociated to the component with the
+     * Returns Component Context Information associated to the component with the
      * context ID $contextid idetentified by $key. Omitting $contextid will yield
      * the variable from the current context.
      *
@@ -1615,13 +1615,13 @@ class midcom_application {
     }
 
     /**
-     * Store arbitary, component-specific information in the component context
+     * Store arbitrary, component-specific information in the component context
      *
      * This method allows you to get custom data to a given context.
      * The system will automatically accociate this data with the component from the
      * currently active context. You cannot access the custom data of any other
      * component this way, it is private to the context. You may attach information
-     * to other contexts, which will be accociated with the current component, so
+     * to other contexts, which will be associated with the current component, so
      * you have a clean namespace independantly from which component or context you
      * are operating of. All calls honor references of passed data, so you can use
      * this for central controlling objects.
@@ -1663,9 +1663,9 @@ class midcom_application {
      * Also, be careful with the references you use here, things like this can easily
      * get quite confusing.
      *
-     * @param mixed $key        The key accociated to the value.
+     * @param mixed $key        The key associated to the value.
      * @param mixed $value    The value to store. (This is stored by-reference!)
-     * @param int $contextid    The context to accociated this data with (defaults to the current context)
+     * @param int $contextid    The context to associated this data with (defaults to the current context)
      * @see midcom_application::get_custom_context_data()
      */
     function set_custom_context_data ($key, &$value, $contextid = null) {
@@ -1676,7 +1676,7 @@ class midcom_application {
     }
 
     /**
-     * Retrieve arbitary, component-specific information in the component context
+     * Retrieve arbitrary, component-specific information in the component context
      *
      * The set call defaults to the current context, the get call's semantics are as
      * with get_context_data.
@@ -2269,7 +2269,7 @@ class midcom_application {
      * Deliver a snippet to the client.
      *
      * This function is a copy of serve_attachment, but instead of serving attachments
-     * it can serve the code field of an arbitary snippet. There is no checking on
+     * it can serve the code field of an arbitrary snippet. There is no checking on
      * permissions done here, the callee has to ensure this. See the URL methods
      * servesnippet(guid) for details.
      *

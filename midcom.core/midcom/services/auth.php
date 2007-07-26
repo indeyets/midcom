@@ -40,7 +40,7 @@
  * On content objects (generally every object in the system used during 'normal operation'):
  *
  * - A Midgard User encaspulated by a midcom_core_user object.
- * - A Midgard Group encaspulated by a midcom_core_group object or subtype thereoff.
+ * - A Midgard Group encaspulated by a midcom_core_group object or subtype thereof.
  * - The magic assignee 'EVERYONE', which applies the privilege to every user unconditionally,
  *   even to unauthenticated users.
  * - The magic assignee 'USERS', which applies to all authenticated users.
@@ -120,7 +120,7 @@
  *
  * <i>Content object privileges</i>
  *
- * This is the kind of privilege that will be used most often. They are accociated with any content
+ * This is the kind of privilege that will be used most often. They are associated with any content
  * object in the system, and are read on every access to a content object. As you can see in the
  * introduction, you have the most flexibility here.
  *
@@ -1877,7 +1877,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * exists by its name. Essentially this checks if a corresponding default privilege
      * has been registered in the system.
      *
-     * @todo This call should load the component accociated to the privilege on demand.
+     * @todo This call should load the component associated to the privilege on demand.
      *
      * @param string $name The name of the privilege to check.
      * @return bool Indicating whether the privilege does exist.
@@ -2088,7 +2088,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      *   privieleges is shown.
      * - Otherwise, no message is shown.
      *
-     * This funciton will exit() unconditionally.
+     * This function will exit() unconditionally.
      *
      * If the style element <i>midcom_services_auth_access_denied</i> is defined, it will be shown
      * instead of the default error page. The following variables will be available in the local

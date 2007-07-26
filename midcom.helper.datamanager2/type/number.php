@@ -9,7 +9,7 @@
 
 /**
  * Datamanager 2 Simple number datatype. The type is based on the PHP floating point
- * types, not an arbitary precision number system.
+ * types, not an arbitrary precision number system.
  *
  * <b>Available configuration options:</b>
  *
@@ -135,7 +135,7 @@ class midcom_helper_datamanager2_type_number extends midcom_helper_datamanager2_
     }
 
     /**
-     * Rounds the value according to the precision rules. If arbitary precision is set,
+     * Rounds the value according to the precision rules. If arbitrary precision is set,
      * no rounding is done, and the function exits without changing the value.
      */
     function _round_value()

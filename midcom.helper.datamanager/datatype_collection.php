@@ -275,7 +275,7 @@ class midcom_helper_datamanager_datatype_collection extends midcom_helper_datama
     }
     
     /**
-     * Relays the autoindex call if we have blobs or subtypes thereoff.
+     * Relays the autoindex call if we have blobs or subtypes thereof.
      */
     function autoindex()
     {

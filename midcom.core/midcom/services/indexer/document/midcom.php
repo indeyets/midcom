@@ -12,7 +12,7 @@
  * This is a base class which is targeted at MidCOM content object indexing. It should 
  * be used whenever MidCOM documents are indexed, either directly or as a base class.
  * 
- * It will take an arbitary Midgard Object, for which Metadata must be available.
+ * It will take an arbitrary Midgard Object, for which Metadata must be available.
  * The document class will then load the metadata information out of the database
  * and populate all metadata fields of the document from there. 
  * 

@@ -678,7 +678,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
     }
 
     /**
-     * Find event with arbitary GUID either in externalGuid or guid
+     * Find event with arbitrary GUID either in externalGuid or guid
      */
     function search_vCal_uid($uid)
     {

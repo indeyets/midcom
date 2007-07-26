@@ -23,7 +23,7 @@
  *   and can therefore be an empty array. It is used to customize cron job behavoir on a manifest
  *   level only (use your component configuration for more specific settings.)
  * - <i>int recurrence</i> must be one of MIDCOM_CRON_* constants.
- * - <i>string component (INTERNAL)</i> holds the name of the component this Cron job is accociated with.
+ * - <i>string component (INTERNAL)</i> holds the name of the component this Cron job is associated with.
  *   This key is created automatically.
  *
  * The Cron service uses <i>customdata</i> section of the manifest, using the key <i>midcom.services.cron</i>
@@ -196,7 +196,7 @@ class midcom_services_cron extends midcom_baseclasses_core_object
     /**
      * This function checks a jobs definition for validity.
      *
-     * @param string $component The name of the component the job is accociated with, used for error-tracking.
+     * @param string $component The name of the component the job is associated with, used for error-tracking.
      * @param Array $job The job to register.
      * @return bool Indicating validity.
      */

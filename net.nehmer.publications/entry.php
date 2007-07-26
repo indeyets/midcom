@@ -22,7 +22,7 @@ class net_nehmer_publications_entry extends __net_nehmer_publications_entry
     }
 
     /**
-     * This will delete the category mapping records accociated with this
+     * This will delete the category mapping records associated with this
      * publication.
      */
     function _on_deleting()

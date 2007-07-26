@@ -401,7 +401,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
     /**
      * Sets the form's renderer based on an existing renderer instance.
      *
-     * @param mixed $renderer A prepared HTML_QuickForm_Renderer (or subclass thereoff) instance.
+     * @param mixed $renderer A prepared HTML_QuickForm_Renderer (or subclass thereof) instance.
      * @return void
      */
     function set_renderer (&$renderer)

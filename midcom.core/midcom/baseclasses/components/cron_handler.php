@@ -52,7 +52,7 @@ class midcom_baseclasses_components_cron_handler extends midcom_baseclasses_core
     var $_component_data = null;
 
     /**
-     * The name of the component to which this handler is accociated.
+     * The name of the component to which this handler is associated.
      *
      * @var Array
      * @access protected

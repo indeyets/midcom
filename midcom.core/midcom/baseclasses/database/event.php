@@ -55,7 +55,7 @@ class midcom_baseclasses_database_event extends __midcom_baseclasses_database_ev
     }
 
     /**
-     * Deletes event membership records accociated with this event.
+     * Deletes event membership records associated with this event.
      */
     function _on_deleted()
     {

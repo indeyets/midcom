@@ -18,7 +18,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
     var $msg;
 
     /**
-     * The schema database accociated with articles.
+     * The schema database associated with articles.
      *
      * @var Array
      * @access private
@@ -26,7 +26,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
     var $_schemadb = Array();
 
     /**
-     * An index over the schema database accociated with the topic mapping
+     * An index over the schema database associated with the topic mapping
      * schema keys to their names. For ease of use.
      *
      * @var Array
@@ -292,7 +292,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
             if (count($this->_schemadb) == 0)
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    "Could not load the schema database accociated with this topic: The schema DB in {$path} was empty.");
+                    "Could not load the schema database associated with this topic: The schema DB in {$path} was empty.");
                 // This will exit.
             }
             foreach ($this->_schemadb as $schema)
@@ -303,7 +303,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         else
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                'Could not load the schema database accociated with this topic. The schema DB was no array.');
+                'Could not load the schema database associated with this topic. The schema DB was no array.');
             // This will exit.
         }
     }

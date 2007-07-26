@@ -10,7 +10,7 @@
 /**
  * Datamanager 2 simple select widget.
  *
- * It can only be bound to a select type (or subclass thereoff), and inherits the confguration
+ * It can only be bound to a select type (or subclass thereof), and inherits the confguration
  * from there as far as possible.
  *
  * <b>Available configuration options:</b>
@@ -66,7 +66,7 @@ class midcom_helper_datamanager2_widget_select extends midcom_helper_datamanager
         if (! is_a($this->_type, 'midcom_helper_datamanager2_type_select'))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Warning, the field {$this->name} is not a select type or subclass thereoff, you cannot use the select widget with it.",
+            debug_add("Warning, the field {$this->name} is not a select type or subclass thereof, you cannot use the select widget with it.",
                 MIDCOM_LOG_WARN);
             debug_pop();
             return false;

@@ -109,7 +109,7 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
             else
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add('The currently active account is not accociated with one of the known account types. Proceeding to use default type.',
+                debug_add('The currently active account is not associated with one of the known account types. Proceeding to use default type.',
                     MIDCOM_LOG_INFO);
                 debug_pop();
             }

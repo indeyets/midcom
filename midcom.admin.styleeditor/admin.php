@@ -19,7 +19,7 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
     var $_session = null;
 
     /**
-     * The schema database accociated with articles.
+     * The schema database associated with articles.
      * 
      * @var Array
      * @access private

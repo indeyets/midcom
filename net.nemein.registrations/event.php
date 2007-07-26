@@ -335,7 +335,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
 
 
     /**
-     * Returns a list of registrar records accociated with this object.
+     * Returns a list of registrar records associated with this object.
      *
      * @return Array of net_nemein_registration_registrar records.
      */
@@ -500,7 +500,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
     }
 
     /**
-     * Returns a list of registration records accociated with this object.
+     * Returns a list of registration records associated with this object.
      *
      * @return Array of net_nemein_registration_registration records.
      * @todo Once QB supports it, order by Names
@@ -520,7 +520,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
 
     /**
      * This function returns a query builder prepared to query all events linked to the
-     * root event accociated with the current request state. If an event type filter is
+     * root event associated with the current request state. If an event type filter is
      * configured, this is taken into account as well.
      *
      * No ordering whatsoever is done in this helper. Also there is no restriction regarding

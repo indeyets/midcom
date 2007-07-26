@@ -233,7 +233,7 @@ function net_nehmer_branchenbuch_index_to_topic_list()
     );
 
     // We use a Midgard QB to query the parameters, they are currently not covered
-    // by the DBA layer in terms of arbitary queries.
+    // by the DBA layer in terms of arbitrary queries.
     $query = new MidgardQueryBuilder('midgard_parameter');
     $query->add_constraint('tablename', '=', 'topic');
     $query->add_constraint('domain', '=', 'midcom');

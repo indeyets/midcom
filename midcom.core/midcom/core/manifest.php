@@ -19,7 +19,7 @@
  * alternative. See the <i>History</i> Section below for further information about this
  * background.
  *
- * The component manifest on-disk actually consists of a relativly simple accociative
+ * The component manifest on-disk actually consists of a relatively simple accociative
  * array which describes the component. The following example shows an average manifest
  * using all available options and should serve us as an example:
  *
@@ -149,7 +149,7 @@
  * consisting of MIDCOM_OPERATION_xxx flags.
  *
  * <i>Array customdata</i> is the run-of-the-mill extension place of the system. It lets
- * you place arbitary arrays indexed by components (like 'midcom.serivces.cron' or
+ * you place arbitrary arrays indexed by components (like 'midcom.serivces.cron' or
  * 'midcom.admin.aegir') into it along with meta-information relevant to that component
  * only. This is used to extend the information available through the context. No key
  * in here is mandatory, the default is an empty array.

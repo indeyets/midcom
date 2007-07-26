@@ -72,7 +72,7 @@ class net_nehmer_branchenbuch_branche extends __net_nehmer_branchenbuch_branche
     }
 
     /**
-     * This helper function returns the root category accociated with this instance. This
+     * This helper function returns the root category associated with this instance. This
      * is a copy of ourselves in case that we already look at a root cateogry. The lookup
      * is done using the type field.
      *
@@ -189,7 +189,7 @@ class net_nehmer_branchenbuch_branche extends __net_nehmer_branchenbuch_branche
     }
 
     /**
-     * This function returns the list of entries accociated with the current category.
+     * This function returns the list of entries associated with the current category.
      *
      * This requires the view_entries privilege.
      *

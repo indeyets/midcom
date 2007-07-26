@@ -69,7 +69,7 @@ class net_nehmer_comments_comment extends __net_nehmer_comments_comment
     }
 
     /**
-     * Returns the number of comments accociated with a given object. This is intended for
+     * Returns the number of comments associated with a given object. This is intended for
      * outside usage to render stuff like "15 comments". The count is executed unchecked.
      * 
      * May be called statically.

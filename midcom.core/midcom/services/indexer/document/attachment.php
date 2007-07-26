@@ -25,7 +25,7 @@
  * </code>
  * 
  * Where $attachment is the attachment to be indexed and $object is the object the object
- * is accociated with. The corresponding topic will be detected using the objects' GUID
+ * is associated with. The corresponding topic will be detected using the objects' GUID
  * through NAP. If this fails, you have to set the members $topic_guid, $topic_url and 
  * $component manually. 
  * 

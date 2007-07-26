@@ -1132,7 +1132,7 @@ class midcom_helper__componentloader
     }
 
     /**
-     * This small helper builds a complete set of custom data accociated with a given component
+     * This small helper builds a complete set of custom data associated with a given component
      * identifier. In case a given component does not have the key set and the boolean parameter
      * is set to true, an empty array is added implicitly.
      *

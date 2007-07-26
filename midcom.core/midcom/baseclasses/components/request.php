@@ -271,7 +271,7 @@
  * </code>
  *
  * The first argument of this call identifies the plugin namespace, the second
- * the list of classes accociated with this plugin. Each class gets its own
+ * the list of classes associated with this plugin. Each class gets its own
  * identifier. The namespace and class identifier is used to construct the
  * final plugin URL: {$anchor_prefix}/{$namespace}/{$class_identifier}/...
  * This gives fully unique URL namespaces to all registered plugins.
@@ -285,7 +285,7 @@
  * - class: The name of the class to use
  * - src: The source URL of the plugin class. This can be either a file:/...
  *   URL which is relative to MIDCOM_ROOT, snippet:/... which identifies an
- *   arbitary snippet loaded with mgd_include_snippet or, finally, component:...
+ *   arbitrary snippet loaded with mgd_include_snippet or, finally, component:...
  *   which will load the component specified. This is only used if the class
  *   is not yet available.
  * - name: This is the clear-text name of the plugin.
@@ -951,7 +951,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
 
     /**
      * Generic output initialization code. The return value lets you control wether the
-     * output method accociated with the handler declaration is called, return false to
+     * output method associated with the handler declaration is called, return false to
      * override this automatism, true, the default, will call the output handler normally.
      *
      * @param mixed $handler The ID (Array-Key) of the handler that is responsible to handle

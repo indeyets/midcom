@@ -84,7 +84,7 @@ class midcom_baseclasses_database_person extends __midcom_baseclasses_database_p
 
     /**
      * Deletes all group and event memberships of the original person record. SUDO privileges
-     * are used at this point, since only memberships are accociated to the groups, not persons
+     * are used at this point, since only memberships are associated to the groups, not persons
      * and event memberships belong to the event, again not to the person.
      */
     function _on_deleted()

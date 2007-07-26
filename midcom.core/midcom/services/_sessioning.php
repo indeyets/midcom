@@ -155,7 +155,7 @@ class midcom_service__sessioning
     }
 
     /**
-     * Removes the value accociated with the specified key. Returns null if the key
+     * Removes the value associated with the specified key. Returns null if the key
      * is non-existant or the value of the key just removed otherwise. Note, that
      * this is not neccessarily a valid non-existance check, as the sessioning
      * system does allow null values. Use the exists function if unsure.

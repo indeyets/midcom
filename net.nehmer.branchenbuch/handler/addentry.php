@@ -152,7 +152,7 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
         if (! $type)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                'The currently active account is not accociated with one of the known account types. Cannot continue.');
+                'The currently active account is not associated with one of the known account types. Cannot continue.');
             // This will exit.
         }
         else
@@ -316,7 +316,7 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
 
     /**
      * This is step three of the adding procedure. It will generate a form based on the schema
-     * accociated with the user account linked to the category set. The data entered will be
+     * associated with the user account linked to the category set. The data entered will be
      * put into the session storage area, so that no temporary object is needed at this point.
      */
     function _handler_details($handler_id, $args, &$data)
@@ -717,7 +717,7 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
         if (! $type)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                'The currently active account is not accociated with one of the known account types. Cannot continue.');
+                'The currently active account is not associated with one of the known account types. Cannot continue.');
             // This will exit.
         }
         else
@@ -729,7 +729,7 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
         if ($entry->account != $_MIDCOM->auth->user->guid)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                'The specified GUID is not accociated to the current user, cannot continue.');
+                'The specified GUID is not associated to the current user, cannot continue.');
             // This will exit.
         }
         $this->_request_data['new_entry'] = $entry;

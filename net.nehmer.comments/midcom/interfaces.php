@@ -12,7 +12,7 @@
 /**
  * Comments component.
  *
- * This is a component geared for communities offering a way to add comments on arbitary
+ * This is a component geared for communities offering a way to add comments on arbitrary
  * pages. It is primairly geared for dl'ed usage. Its regular welcome URL method only
  * shows the configuration interface, commenting the comments topic is prohibited as well.
  *
@@ -73,7 +73,7 @@ class net_nehmer_comments_interface extends midcom_baseclasses_components_interf
     }
 
     /**
-     * The delete handler will drop all entries accociated with any deleted object
+     * The delete handler will drop all entries associated with any deleted object
      * so that our DB is clean.
      * 
      * Uses SUDO to ensure privileges.

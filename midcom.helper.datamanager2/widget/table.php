@@ -14,7 +14,7 @@ die('The class midcom_helper_datamanager2_widget_table has been disabled, it' .
 /**
  * Datamanager 2 simple table widget
  *
- * As with all subclasses, the actual initialization is done in the initialize() funciton,
+ * As with all subclasses, the actual initialization is done in the initialize() function,
  * not in the constructor, to allow for error handling.
  *
  * This widget supports all types that export the <i>rows</i> variable as the place to get

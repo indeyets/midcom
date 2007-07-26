@@ -91,7 +91,7 @@ class net_nehmer_branchenbuch_schemamgr extends midcom_baseclasses_components_pu
      *     displayed by default.
      *
      * @param string $typename The name of the account type.
-     * @return Array The configuration accociated with this type.
+     * @return Array The configuration associated with this type.
      */
     function get_type_config($typename)
     {

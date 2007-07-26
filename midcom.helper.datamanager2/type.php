@@ -10,7 +10,7 @@
 /**
  * Datamanager 2 Data Type base class.
  *
- * As with all subclasses, the actual initialization is done in the initialize() funciton,
+ * As with all subclasses, the actual initialization is done in the initialize() function,
  * not in the constructor, to allow for error handling.
  *
  * <b>Type configuration:</b>

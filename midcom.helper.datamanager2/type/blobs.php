@@ -10,14 +10,14 @@
 /**
  * Datamanager 2 Blob management type.
  *
- * This type allows you to control an arbitary number of attachments on a given object.
+ * This type allows you to control an arbitrary number of attachments on a given object.
  * It can only operate if the storage implementaion provides it with a Midgard Object.
  * The storage location provided by the schema is unused at this time, as attachment
  * operations cannot be undone. Instead, the direct parameter calls are used to manage
- * the list of attachments in a parameter accociated to the domain of the type. The
+ * the list of attachments in a parameter associated to the domain of the type. The
  * storage IO calls will not do much, except synchronizing data where neccessary.
  *
- * The type can manage an arbitary number of attachments. Each attachment is identified
+ * The type can manage an arbitrary number of attachments. Each attachment is identified
  * by an handle (not its name!). It provides management functions for existing attachments,
  * which allow you to add, delete and update them in all variants. These functions
  * are executed immediately on the storage object, no undo is possible.

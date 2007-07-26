@@ -28,7 +28,7 @@ class net_nehmer_publications_categorymap extends __net_nehmer_publications_cate
     }
 
     /**
-     * Returns the publication accociated with this object.
+     * Returns the publication associated with this object.
      */
     function get_parent_guid_uncached()
     {
@@ -60,7 +60,7 @@ class net_nehmer_publications_categorymap extends __net_nehmer_publications_cate
     /**
      * Returns the parent publication. Faster then get_parent as it works on a known type.
      *
-     * @return net_nehmer_publications_entry The publication accociated to this mapping
+     * @return net_nehmer_publications_entry The publication associated to this mapping
      *     entry
      */
     function get_publication()

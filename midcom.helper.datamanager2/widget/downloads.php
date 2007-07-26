@@ -10,13 +10,13 @@
 /**
  * Datamanager 2 download widget
  *
- * As with all subclasses, the actual initialization is done in the initialize() funciton,
+ * As with all subclasses, the actual initialization is done in the initialize() function,
  * not in the constructor, to allow for error handling.
  *
- * This widget supports the blobs type or any subtype thereoff.
+ * This widget supports the blobs type or any subtype thereof.
  *
  * All processing is done during the on_submit handlers, enforcing immediate update of the
- * accociated storage objects. No other solition is possible, since we need to transfer
+ * associated storage objects. No other solition is possible, since we need to transfer
  * uploaded files somehow through multiple requests.
  *
  * Note, that this widget (as opposed to the image & co widgets) uses the blobs base type
@@ -32,7 +32,7 @@
  *
  * <b>Implementation notes:</b>
  *
- * The construnciton of the widget is relativly complex, it relies on a combination of
+ * The construnciton of the widget is relatively complex, it relies on a combination of
  * static and input elements to do its work. It should be fairly customizable using CSS.
  *
  * 1. Quickform Element Naming
@@ -88,7 +88,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
         if (! is_a($this->_type, 'midcom_helper_datamanager2_type_blobs'))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Warning, the field {$this->name} is not an blobs type or subclass thereoff, you cannot use the downloads widget with it.",
+            debug_add("Warning, the field {$this->name} is not an blobs type or subclass thereof, you cannot use the downloads widget with it.",
                 MIDCOM_LOG_WARN);
             debug_pop();
             return false;
@@ -282,7 +282,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
     /**
      * Checks whether a new file has been uploaded. If yes, it is processed.
      *
-     * @param Array $values The values accociated with our element group (not the full submit value list).
+     * @param Array $values The values associated with our element group (not the full submit value list).
      * @access private
      */
     function _check_new_upload($values)
@@ -332,7 +332,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
      * or during addition of new elements.
      *
      * @param string $identifier The attachment identifier to check for updates.
-     * @param Array $values The values accociated with our element group (not the full submit value list).
+     * @param Array $values The values associated with our element group (not the full submit value list).
      * @access private
      */
     function _check_for_update($identifier, $values)

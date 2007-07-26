@@ -10,10 +10,10 @@
 /**
  * Datamanager 2 Tags widget
  *
- * As with all subclasses, the actual initialization is done in the initialize() funciton,
+ * As with all subclasses, the actual initialization is done in the initialize() function,
  * not in the constructor, to allow for error handling.
  *
- * It can only be bound to a tagselect type (or subclass thereoff), and inherits the configuration
+ * It can only be bound to a tagselect type (or subclass thereof), and inherits the configuration
  * from there as far as possible.
  *
  * <b>Available configuration options:</b>
@@ -55,7 +55,7 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
         
         // if (is_a('midcom_helper_datamanager2_type_tagselect', $this->_type))
         // {
-        //     debug_add("Warning, the field {$this->name} is not a tagselect type or subclass thereoff, you cannot use the tags widget with it.",
+        //     debug_add("Warning, the field {$this->name} is not a tagselect type or subclass thereof, you cannot use the tags widget with it.",
         //         MIDCOM_LOG_WARN);
         //     debug_pop();
         //     return false;
@@ -232,7 +232,7 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
     }
 
     /**
-     * Unfreezes all form elements accociated with the widget. The default implementation
+     * Unfreezes all form elements associated with the widget. The default implementation
      * works on the default field name, you don't need to override this function unless
      * you have multiple widgets in the form.
      *

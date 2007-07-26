@@ -97,7 +97,7 @@ class midcom_services_cache_module_nap extends midcom_services_cache_module
     }
     
     /**
-     * Returns the NAP cache accociated with the topic tree identified by the
+     * Returns the NAP cache associated with the topic tree identified by the
      * parameter $root_topic_guid. The constructed cache database name will be
      * "NAP_{$root_topic_guid}".
      * 

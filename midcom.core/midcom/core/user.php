@@ -121,7 +121,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
      * be considered read-only.
      *
      * This is a multi level array. It holds regular privilege name/state arrays indexed by the
-     * name of the class (or subtype thereoff) for which they should apply.
+     * name of the class (or subtype thereof) for which they should apply.
      *
      * It is loaded on demand.
      *
@@ -550,7 +550,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
      * This function will return a MidCOM DBA level storage object for the current user. Be aware,
      * that depending on ACL information, the retrival of the user may fail.
      *
-     * @return midcom_db_person The user which is accociated with this record or false if the object cannot be accessed.
+     * @return midcom_db_person The user which is associated with this record or false if the object cannot be accessed.
      */
     function get_storage()
     {
@@ -712,7 +712,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
     }
 
     /**
-     * Deletes the current user account. This will cleanup all information accociated with
+     * Deletes the current user account. This will cleanup all information associated with
      * the user that is managed by the core (like login sessions and privilege records).
      *
      * This call requires the delete privilege on the storage object, this is enforced using

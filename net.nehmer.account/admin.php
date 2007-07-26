@@ -110,7 +110,7 @@ class net_nehmer_account_admin extends midcom_baseclasses_components_request_adm
      */
     function _load_plugin($name)
     {
-        // Validate the plugin name and load the accociated configuration
+        // Validate the plugin name and load the associated configuration
         $plugins = $this->_config->get('admin_plugins');
         if (   ! $plugins
             || ! array_key_exists($name, $plugins))
@@ -154,7 +154,7 @@ class net_nehmer_account_admin extends midcom_baseclasses_components_request_adm
      *
      * @param string $name The plugin name as registered in the plugins configuration
      *     option.
-     * @param Array $plugin_config The configuration accociated with the plugin.
+     * @param Array $plugin_config The configuration associated with the plugin.
      * @param Array $handlers The plugin specific handlers without the appropriate prefixes.
      * @access private
      * @return bool Indicating Success
@@ -192,7 +192,7 @@ class net_nehmer_account_admin extends midcom_baseclasses_components_request_adm
      *
      * @param string $name The plugin name as registered in the plugins configuration
      *     option.
-     * @param Array $plugin_config The configuration accociated with the plugin.
+     * @param Array $plugin_config The configuration associated with the plugin.
      * @access private
      * @return bool Indicating Success
      */

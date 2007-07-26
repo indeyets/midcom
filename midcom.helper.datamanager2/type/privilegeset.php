@@ -13,7 +13,7 @@ require_once('boolean.php');
 /**
  * Datamanager 2 privilege set datatype.
  *
- * This type encaspulates a simple privilege or set thereoff. You need to specifiy privilege name,
+ * This type encaspulates a simple privilege or set thereof. You need to specifiy privilege name,
  * assignee and value. If the corresponding checkbox is set, all privileges will be set accordingly.
  * If it is unset, all privileges will be set to INHERIT. This type only supports a checkbox as
  * widget.

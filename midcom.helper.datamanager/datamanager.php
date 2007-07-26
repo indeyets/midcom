@@ -9,8 +9,8 @@
  */
 
 /**
- * The main purpose of the Datamanager is to store arbitary data in an
- * arbitary Midgard object.
+ * The main purpose of the Datamanager is to store arbitrary data in an
+ * arbitrary Midgard object.
  *
  * The process of data storage and retrieval is completely automated and
  * controlled by the layout definition used for the object in question.
@@ -182,7 +182,7 @@
  * will not start or end a field group.
  *
  * The two options "config_domain" and "config_key" are both required for the
- * config storage method, which is in essence a way of setting any arbitary
+ * config storage method, which is in essence a way of setting any arbitrary
  * parameter, where config_domain is the parameter domain in question, and
  * config_key the parameter name. Apart from the extended configuration scheme,
  * this mode is otherwise identical to the storage method "parameter".
@@ -625,7 +625,7 @@ class midcom_helper_datamanager {
      *
      * The datamanager loads the object and
      * initializes all local fields accordingly. All datatypes get instantinated
-     * and the data array gets populated. If the object has no schema accociated with
+     * and the data array gets populated. If the object has no schema associated with
      * it, it defaults to the first layout in the database.
      *
      * If the passed object is not a MgdSchema type, it gets converted silently.

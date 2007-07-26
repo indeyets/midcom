@@ -168,7 +168,7 @@ class midcom_helper_toolbar {
     var $items;
 
     /**
-     * Allow our users to add arbitary data to the toolbar. This is for
+     * Allow our users to add arbitrary data to the toolbar. This is for
      * example used to track which items have been added to a toolbar
      * when it is possible that the adders are called repeatedly.
      *

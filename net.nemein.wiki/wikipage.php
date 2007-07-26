@@ -413,7 +413,7 @@ class net_nemein_wiki_wikipage extends midcom_db_article
     }
 
     /**
-     * Links to other wiki pages tagged with arbitary tags
+     * Links to other wiki pages tagged with arbitrary tags
      */
     function _replace_wikiwords_macro_tagged($macro_content, $fulltag, $after)
     {

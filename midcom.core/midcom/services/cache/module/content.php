@@ -602,7 +602,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
     }
 
     /**
-     * Use this funciton to put the cache into a "live mode". This will disable the
+     * Use this function to put the cache into a "live mode". This will disable the
      * cache during runtime, correctly flushing the output buffer and sending cache
      * control headers. You will not be able to send any additional headers after
      * executing this call therefore you should adjust the headers in advance.
@@ -691,7 +691,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      * @param int $last_modified The last modified timestamp of the current document. This timestamp
      *     is assumed to be in <i>local time</i>, and will be implicitly converted to a GMT time for
      *     correct HTTP header comparisons.
-     * @param string $etag The etag header accociated with the current document.
+     * @param string $etag The etag header associated with the current document.
      * @return bool True, if an 304 match was detected and the appropriate headers were sent.
      */
     function _check_not_modified($last_modified, $etag)

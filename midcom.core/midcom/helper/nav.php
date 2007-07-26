@@ -35,7 +35,7 @@ class midcom_helper_nav {
     var $_basicnav;
 
     /**
-     * The context ID we're accociated with.
+     * The context ID we're associated with.
      *
      * @var int
      * @access private
@@ -158,7 +158,7 @@ class midcom_helper_nav {
     }
 
     /**
-     * Returns the ID of the node to which $leaf_id is accociated to, false
+     * Returns the ID of the node to which $leaf_id is associated to, false
      * on failure.
      *
      * @param string $leaf_id	The Leaf-ID to search an uplink for.
@@ -170,7 +170,7 @@ class midcom_helper_nav {
     }
 
     /**
-     * Returns the ID of the node to which $node_id is accociated to, false
+     * Returns the ID of the node to which $node_id is associated to, false
      * on failure. The root node's uplink is -1.
      *
      * @param int $node_id	The Leaf-ID to search an uplink for.

@@ -29,7 +29,7 @@ $GLOBALS['midcom_debugger'] = null;
  * This is a component specific global data storage area, which should 
  * be used for stuff like default configurations etc. thus avoiding the
  * pollution of the global namespace. Each component has its own array 
- * in the global one, allowing storage of arbitary data indexed by arbitary
+ * in the global one, allowing storage of arbitrary data indexed by arbitrary
  * keys in there. The component-specific arrays are indexed by their
  * name.
  * 

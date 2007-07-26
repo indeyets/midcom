@@ -20,7 +20,7 @@
  * <b>E-Mail template language</b>
  * 
  * Four types of variables can be inserted into the E-Mail's subject or body. 
- * Every value has an accociated key, which is searched as array key in the 
+ * Every value has an associated key, which is searched as array key in the 
  * parameter array. Key-Names are matched case-sensitive. Note, that of course
  * the double-quotes in the identifier examples are only to distinguish them 
  * from the flowed text.

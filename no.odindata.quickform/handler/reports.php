@@ -43,7 +43,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
             if (count($this->_schemadb) == 0)
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    "Could not load the schema database accociated with this topic: The schema DB in {$path} was empty.");
+                    "Could not load the schema database associated with this topic: The schema DB in {$path} was empty.");
                 // This will exit.
             }
             foreach ($this->_schemadb as $schema)
@@ -54,7 +54,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
         else
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                'Could not load the schema database accociated with this topic. The schema DB was no array.');
+                'Could not load the schema database associated with this topic. The schema DB was no array.');
             // This will exit.
         }
     }

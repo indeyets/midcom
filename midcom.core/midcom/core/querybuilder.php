@@ -179,10 +179,10 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
 
     /**
      * This function will execute the Querybuilder and call the appropriate callbacks from the
-     * class it is accociated to. This way, class authors have full control over what is actually
+     * class it is associated to. This way, class authors have full control over what is actually
      * returned to the application.
      *
-     * The calling sequence of all event handlers of the accociated class is like this:
+     * The calling sequence of all event handlers of the associated class is like this:
      *
      * 1. bool _on_prepare_exec_query_builder(&$this) is called before the actual query execution. Return false to
      *    abort the operation.
@@ -542,7 +542,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      * SQL and will thus be evaluated with precedence over the normal out-of-group constraints.
      *
      * While the call lets you decide wether all constraints within the group are AND'ed or OR'ed,
-     * only OR constraints make logcially sense in this context, which is why this proxy funciton
+     * only OR constraints make logcially sense in this context, which is why this proxy function
      * sets 'OR' as the default operator.
      *
      * @param string $operator One of 'OR' or 'AND' denoting the logical operation with which all

@@ -15,7 +15,7 @@ require_once('radiocheckselect.php');
  *
  * Based on the radiocheckselect widget
  *
- * It can only be bound to a select type (or subclass thereoff), and inherits the configuration
+ * It can only be bound to a select type (or subclass thereof), and inherits the configuration
  * from there as far as possible.
  *
  * Note for this widget to work correctly you probably need these two set in type_config
@@ -144,7 +144,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         debug_push_class(__CLASS__, __FUNCTION__);
         if (is_a('midcom_helper_datamanager2_type_select', $this->_type))
         {
-            debug_add("Warning, the field {$this->name} is not a select type or subclass thereoff, you cannot use the universalchooser widget with it.",
+            debug_add("Warning, the field {$this->name} is not a select type or subclass thereof, you cannot use the universalchooser widget with it.",
                 MIDCOM_LOG_WARN);
             debug_pop();
             return false;
@@ -659,7 +659,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
     }
 
     /**
-     * Unfreezes all form elements accociated with the widget. The default implementation
+     * Unfreezes all form elements associated with the widget. The default implementation
      * works on the default field name, you don't need to override this function unless
      * you have multiple widgets in the form.
      *

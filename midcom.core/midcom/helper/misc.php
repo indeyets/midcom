@@ -202,7 +202,7 @@ function mgd_memberships_to_gid ($fetchable) {
 }
 
 /**
- * Save a number of variables into parameters on an arbitary Midgard object.
+ * Save a number of variables into parameters on an arbitrary Midgard object.
  *
  * This function will save
  * the Member-Variables specified in $array of the Midgard Object $object in
@@ -1096,7 +1096,7 @@ if (!function_exists('midcom_helper_toc_formatter'))
 if (! function_exists('mgd_is_guid'))
 {
     /**
-     * This funciton validates wether the argument passed is a syntactically valid GUID.
+     * This function validates wether the argument passed is a syntactically valid GUID.
      * The check is currently very basic (in favor of speed), and does only validate the
      * lentgth and type of the argument.
      *

@@ -27,7 +27,7 @@ class net_nemein_calendar_admin extends midcom_baseclasses_components_request_ad
     var $_event = null;
 
     /**
-     * The schema database accociated with the topic.
+     * The schema database associated with the topic.
      * 
      * @var Array
      * @access private
@@ -35,7 +35,7 @@ class net_nemein_calendar_admin extends midcom_baseclasses_components_request_ad
     var $_schemadb = Array();
     
     /**
-     * An index over the schema database accociated with the topic mapping
+     * An index over the schema database associated with the topic mapping
      * schema keys to their names. For ease of use.
      * 
      * @var Array
@@ -275,7 +275,7 @@ class net_nemein_calendar_admin extends midcom_baseclasses_components_request_ad
                 debug_add('The schema database was empty, we cannot use this.', MIDCOM_LOG_ERROR);
                 debug_print_r('Evaluated data was:', $data);
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    'Could not load the schema database accociated with this topic: The schema DB was empty.');
+                    'Could not load the schema database associated with this topic: The schema DB was empty.');
                 // This will exit.
             }
             foreach ($this->_schemadb as $schema)
@@ -288,7 +288,7 @@ class net_nemein_calendar_admin extends midcom_baseclasses_components_request_ad
             debug_add('The schema database was no array, we cannot use this.', MIDCOM_LOG_ERROR);
             debug_print_r('Evaluated data was:', $data);
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                'Could not load the schema database accociated with this topic. The schema DB was no array.');
+                'Could not load the schema database associated with this topic. The schema DB was no array.');
             // This will exit.
         }
         debug_pop();

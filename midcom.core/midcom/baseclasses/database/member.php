@@ -29,7 +29,7 @@ class midcom_baseclasses_database_member extends __midcom_baseclasses_database_m
     }
 
     /**
-     * Returns the group the membership record is accociated with. This allows group
+     * Returns the group the membership record is associated with. This allows group
      * owners to manage their members.
      *
      * @return midcom_baseclasses_database_group The owning group or null if the gid is undefined.

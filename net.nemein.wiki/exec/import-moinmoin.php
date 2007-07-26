@@ -730,7 +730,7 @@ class net_nemein_wiki_moinmoin_importer
                           $params['align'] = 'center';
                           $cell_content = str_replace('<:>', '', $cell_content);
                       }
-                      // Arbitary parameter
+                      // Arbitrary parameter
                       if (preg_match("/<(.*?)=([\"'])?(.*?)\\2?>/", $cell_content, $arbitary_matches))
                       {
                           $params[$arbitary_matches[1]] = $arbitary_matches[3];

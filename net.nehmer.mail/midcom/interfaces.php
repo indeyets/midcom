@@ -55,7 +55,7 @@ class net_nehmer_mail_interface extends midcom_baseclasses_components_interface
     }
 
     /**
-     * The delete handler will drop all mailboxes accociated with any person record that has been
+     * The delete handler will drop all mailboxes associated with any person record that has been
      * deleted. We don't need to check for watched classes at this time, since we have no other
      * watches defined.
      */

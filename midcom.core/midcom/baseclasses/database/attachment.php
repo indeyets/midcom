@@ -41,7 +41,7 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
      * Returns the Parent of the Attachment, which is identified by the table/id combination
      * in the attachment record. The table in question is used to identify the object to
      * use. If multiple objects are registered for a given table, the first matching class
-     * returned by the dbfactory is used (which is usually rather arbitary).
+     * returned by the dbfactory is used (which is usually rather arbitrary).
      *
      * @todo Not yet implemented.
      * @return MidgardObject Parent object.

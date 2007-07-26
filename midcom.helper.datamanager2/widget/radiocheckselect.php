@@ -10,7 +10,7 @@
 /**
  * Datamanager 2 simple checkbox / radiobox select widget.
  *
- * It can only be bound to a select type (or subclass thereoff), and inherits the confguration
+ * It can only be bound to a select type (or subclass thereof), and inherits the confguration
  * from there as far as possible.
  *
  * <b>Available configuration options:</b>
@@ -43,7 +43,7 @@ class midcom_helper_datamanager2_widget_radiocheckselect extends midcom_helper_d
         if (is_a('midcom_helper_datamanager2_type_select', $this->_type))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Warning, the field {$this->name} is not a select type or subclass thereoff, you cannot use the radiocheckbox widget with it.",
+            debug_add("Warning, the field {$this->name} is not a select type or subclass thereof, you cannot use the radiocheckbox widget with it.",
                 MIDCOM_LOG_WARN);
             debug_pop();
             return false;

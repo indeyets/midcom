@@ -96,7 +96,7 @@
  * requirements: The constructor must call the base class constructor and you have to override
  * the get_parent method where applicable:
  *
- * The <i>constructor</i> part is relativly trivial. Consider the article example above, the
+ * The <i>constructor</i> part is relatively trivial. Consider the article example above, the
  * subclass constructor looks like this:
  *
  * <pre>
@@ -908,7 +908,7 @@ EOF;
     /**
      * Returns a list of loaded classes that operate on the given table name. The
      * results are returned in the order the classes were registered, so it is rather
-     * arbitary. The only behavoir that can usually be counted on is to get the
+     * arbitrary. The only behavoir that can usually be counted on is to get the
      * MidCOM core baseclasses first, as they are already registered during framework
      * startup. Especially the wrappers for the legacy MidgardXXX Classes are the very
      * first classes registered.
@@ -1034,7 +1034,7 @@ EOF;
      * descriptions are loaded during system startup now, but the full-blown DBA class
      * is not available at that point (for performance reasons). It will load the components
      * in question when requested by any operation in the system that might have to convert
-     * to a yet unloaded class, mainly this covers the type conversion of arbitary objects
+     * to a yet unloaded class, mainly this covers the type conversion of arbitrary objects
      * retrieved by the GUID object getter.
      *
      * @param string $classname The name of the MidCOM DBA class that must be available.

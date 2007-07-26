@@ -341,7 +341,7 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
     }
 
     /**
-     * Returns the user object accociated with the account field.
+     * Returns the user object associated with the account field.
      *
      * @return midcom_core_user User account (beware of the reference).
      */
@@ -351,7 +351,7 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
     }
 
     /**
-     * Returns the user object accociated with the buddy field.
+     * Returns the user object associated with the buddy field.
      *
      * @return midcom_core_user User account (beware of the reference).
      */

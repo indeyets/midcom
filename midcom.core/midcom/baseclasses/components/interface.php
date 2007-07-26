@@ -321,7 +321,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
     var $_data = null;
 
     /**
-     * The component manifest instance accociated with this component. Read-Only and automatically
+     * The component manifest instance associated with this component. Read-Only and automatically
      * populated during initialization.
      *
      * @var midcom_core_manifest
@@ -536,7 +536,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      *
      * @param mixed $configuration A configuration data list, suitable for merging with a
      *     midcom_helper_configuration object.
-     * @param int $contextid The ID of the context we are accociated with.
+     * @param int $contextid The ID of the context we are associated with.
      * @param bool $adminmode Flag, indicating wether we are on-site (false) or in AIS (true).
      * @return bool Indication success.
      */
@@ -982,7 +982,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      * The default event handler does nothing.
      *
      * @param MidgardTopic $topic The topic to reindex.
-     * @param midgard_helper_config $config The configuration accociated with this topic.
+     * @param midgard_helper_config $config The configuration associated with this topic.
      * @param midcom_service_indexer The indexer object to use for indexing. (Passed by reference!)
      * @return bool Indicating success.
      */
@@ -1006,7 +1006,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      *
      * @param midcom_services_indexer_document $document The document to check. This object is passed by
      *     reference and may therefore be modified to match the current security policy.
-     * @param midcom_helper_configuration $config The configuration accociated with the topic.
+     * @param midcom_helper_configuration $config The configuration associated with the topic.
      * @param MidgardTopic $topic The topic this document is assigned to.
      * @return bool True if the object may be shown, false otherwise.
      */
@@ -1053,7 +1053,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      *
      * Be aware that this is the only event handler at this time which has a real default
      * implementation: If you do not override the base class implementation, it will iterate
-     * through all NAP leaves applicable to the node accociated with the topic. If a match
+     * through all NAP leaves applicable to the node associated with the topic. If a match
      * is found, its local URL will be returned. This will not be terribly efficient, so
      * you are strongly encouraged to have some more efficient solution instead. Obviously,
      * if you override the function, you shouldn't call the base class implementation unless

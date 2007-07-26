@@ -44,7 +44,7 @@ class net_nehmer_buddylist_interface extends midcom_baseclasses_components_inter
     }
 
     /**
-     * The delete handler will drop all entries accociated with any person record that has been
+     * The delete handler will drop all entries associated with any person record that has been
      * deleted. We don't need to check for watched classes at this time, since we have no other
      * watches defined.
      */
@@ -70,7 +70,7 @@ class net_nehmer_buddylist_interface extends midcom_baseclasses_components_inter
 
     /**
      * Checks the index documents' permission using the unindexed _anonymous_read field
-     * accociated with the document.
+     * associated with the document.
      */
     function _on_check_document_permissions (&$document, $config, $topic)
     {

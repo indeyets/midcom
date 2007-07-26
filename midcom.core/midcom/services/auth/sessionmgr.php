@@ -67,7 +67,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
      * @param string $clientip The client IP to which this session is assigned to. This
      *     defaults to the client IP reported by Apache.
      * @return Array An array holding the session identifier in the 'session_id' key and
-     *     the accociated user in the 'user' key (take this by reference!). Failure returns false.
+     *     the associated user in the 'user' key (take this by reference!). Failure returns false.
      */
     function create_login_session($username, $password, $clientip = null)
     {
@@ -96,7 +96,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
         if ($user->_storage->password == '')
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Refusing login as the user has no password accociated with him.", MIDCOM_LOG_ERROR);
+            debug_add("Refusing login as the user has no password associated with him.", MIDCOM_LOG_ERROR);
             debug_pop();
             // Undo Midgard auth.
             mgd_unsetuid();

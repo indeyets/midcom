@@ -12,7 +12,7 @@
  * 
  * This type will store floating point numbers with an specified precision. Values 
  * returned and stored will always be rounded to that precision. Background are the
- * floating point types of PHP, <i>not</i> an arbitary precision system.
+ * floating point types of PHP, <i>not</i> an arbitrary precision system.
  * 
  * If the precision is set to -1 ("infinite"), the full precision of the underlying
  * PHP type will be kept.

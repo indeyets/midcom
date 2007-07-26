@@ -253,13 +253,13 @@ class midcom_services_cache_backend
     function _close() { die ("The method " . __CLASS__ . "::" . __FUNCTION__ . " must be implemented."); } 
     
     /**
-     * Get the data accociated with the given key. 
+     * Get the data associated with the given key. 
      * 
      * The data store is opened either read-only or read-write when this
      * function executes.
      * 
      * @param string $key Key to look up.
-     * @return string $data The data accociated with the key.
+     * @return string $data The data associated with the key.
      */
     function _get($key) { die ("The method " . __CLASS__ . "::" . __FUNCTION__ . " must be implemented."); }
     
@@ -398,12 +398,12 @@ class midcom_services_cache_backend
     }
    
     /**
-     * Get the data accociated with the given key. If the data store has not yet
+     * Get the data associated with the given key. If the data store has not yet
      * been opened for reading, it will be opened automatically prior to the call,
      * and closed automatically again afterwards.
      * 
      * @param string $key Key to look up.
-     * @return string $data The data accociated with the key.
+     * @return string $data The data associated with the key.
      */
     function get($key)
     {

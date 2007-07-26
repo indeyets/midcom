@@ -803,7 +803,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
             if (! function_exists($callback['callback']))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to load the callback {$callback['callback']} for account activation, the funciton is not defined.", MIDCOM_ERRCRIT);
+                debug_add("Failed to load the callback {$callback['callback']} for account activation, the function is not defined.", MIDCOM_ERRCRIT);
                 debug_pop();
                 return;
             }

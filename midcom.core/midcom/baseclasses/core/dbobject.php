@@ -1626,7 +1626,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     }
 
     /**
-     * Retrieves an attac   hment on an arbitary object by its name.
+     * Retrieves an attac   hment on an arbitrary object by its name.
      * If multiple attachments match the name (should not happen in reality), the
      * first match will be returned.
      *
@@ -1662,7 +1662,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     }
 
     /**
-     * Delete an attachment on an arbitary object by its name.
+     * Delete an attachment on an arbitrary object by its name.
      * If multiple attachments match the name (should not happen in reality), the
      * first match will be deleted.
      *
@@ -1994,11 +1994,11 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     }
 
     /**
-     * This helper will return a reference to the metadata class accociated with the
+     * This helper will return a reference to the metadata class associated with the
      * given object instance.
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @return midcom_helper_metadata A reference to the metadata object accociated with this class or false on failure.
+     * @return midcom_helper_metadata A reference to the metadata object associated with this class or false on failure.
      */
     function & get_metadata($object)
     {

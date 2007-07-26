@@ -76,7 +76,7 @@
  * to the request switch. You can even add additional classes, in different files, if you ensure
  * their availablility to the request handler without problems (this currently mostly precludes
  * the use of the autoloading feature, as handlers can only be autoloaded from the midcom
- * installation directory, not from arbitary locations or snippets. (This might also change in
+ * installation directory, not from arbitrary locations or snippets. (This might also change in
  * the future.)
  *
  * Site administrators should also be aware of this general workings, so that they can put
@@ -262,7 +262,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      */
     function _load_nna_plugin($name)
     {
-        // Validate the plugin name and load the accociated configuration
+        // Validate the plugin name and load the associated configuration
         $plugins = $this->_config->get('plugins');
         if (   ! $plugins
             || ! array_key_exists($name, $plugins))
@@ -307,7 +307,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      *
      * @param string $name The plugin name as registered in the plugins configuration
      *     option.
-     * @param Array $plugin_config The configuration accociated with the plugin.
+     * @param Array $plugin_config The configuration associated with the plugin.
      * @param Array $handlers The plugin specific handlers without the appropriate prefixes.
      * @access private
      * @return bool Indicating Success
@@ -345,7 +345,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      *
      * @param string $name The plugin name as registered in the plugins configuration
      *     option.
-     * @param Array $plugin_config The configuration accociated with the plugin.
+     * @param Array $plugin_config The configuration associated with the plugin.
      * @access private
      * @return bool Indicating Success
      */

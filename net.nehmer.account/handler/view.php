@@ -22,7 +22,7 @@ require_once('Date.php');
  *
  * - datamanager: A reference to the DM2 Instance.
  * - visible_fields: A plain list of all visible field names.
- * - visible_data: The rendered data accociated with the visible fields.
+ * - visible_data: The rendered data associated with the visible fields.
  * - schema: A reference to the schema in use.
  * - account: A reference to the account in use.
  * - view_self: A bool indicating wether we display our own account, or not.
@@ -301,7 +301,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
     }
 
     /**
-     * Internal helper funciton, prepares a datamanager based on the current account.
+     * Internal helper function, prepares a datamanager based on the current account.
      */
     function _prepare_datamanager()
     {

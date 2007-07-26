@@ -441,13 +441,13 @@ class midcom_helper_datamanager_datatype {
     }
     
     /**
-     * Returns a reference of the Widget class accociated to this datatype
+     * Returns a reference of the Widget class associated to this datatype
      * instance. 
      * 
      * The default behavoir should be fine in most cases, which returns the member
      * _widget.
      * 
-     * @return midcom_helper_datamanager_widget The widget accociated with this type.
+     * @return midcom_helper_datamanager_widget The widget associated with this type.
      */
     function & get_widget() 
     {

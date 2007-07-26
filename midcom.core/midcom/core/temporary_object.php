@@ -80,7 +80,7 @@ class midcom_core_temporary_object extends __midcom_core_temporary_object
      * All records in questionwill just be moved, not copied!
      * Also, there will be <i>no</i> integrity checking in terms of already existing
      * parameters etc. This feature is mainly geared towards preparing a freshly
-     * created final object with the data accociated with this temporary object.
+     * created final object with the data associated with this temporary object.
      *
      * Any invalid object / missing privlege will trigger a generate_error.
      *
