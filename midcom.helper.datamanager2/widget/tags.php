@@ -110,6 +110,13 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
     var $id_field = null;
     
     /**
+     * The javascript to append to the page
+     *
+     * @var string
+     */    
+    var $_jscript = '';
+    
+    /**
      * The initialization event handler post-processes the maxlength setting.
      *
      * @return bool Indicating Success
@@ -323,7 +330,10 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
         $nav = new midcom_helper_nav();
         $root_node = $nav->get_node($nav->get_root_node());
         $this->_handler_url = $root_node[MIDCOM_NAV_FULLURL] . 'midcom-exec-midcom.helper.datamanager2/tags_handler.php';
-
+        
+        $this->_jscript .= '<script type="text/javascript">';
+        $this->_jscript .= 'jQuery().ready(function(){';
+        
         $script = "jQuery('#{$this->_input_element_id}').midcom_helper_datamanager2_widget_tags_widget('{$this->_handler_url}', {\n";
         foreach ($this->_js_widget_options as $key => $value)
         {
@@ -333,7 +343,7 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
         // jQuery('#{$this->_input_element_id}').midcom_helper_datamanager2_widget_tags_result(function(event, data, formatted) {
         //     tags_widget_add_item('{$this->_input_element_id}', data);
         // });        
-        $_MIDCOM->add_jquery_state_script($script);
+        $this->_jscript .= $script;
 
         // Add existing selection
         $existing_elements = $this->_type->selection;
@@ -346,9 +356,14 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
             debug_add("Got data: {$data}");
             $ee_script .= "jQuery('#{$this->_input_element_id}').midcom_helper_datamanager2_widget_tags_add_selection_item({$data});\n";
         }
-         $_MIDCOM->add_jquery_state_script($ee_script);
-         
-         debug_pop();
+        $this->_jscript .= $ee_script;
+        
+        $this->_jscript .= '});';
+        $this->_jscript .= '</script>';
+        
+        $this->_form->addElement('static', "{$this->name}_initscripts", '', $this->_jscript);
+        
+        debug_pop();
     }
     
     /**
