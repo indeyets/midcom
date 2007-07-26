@@ -20,7 +20,12 @@
  *
  * - <i>integer min_chars:</i> Minimum amount of chars to be inserted before search starts. Default: 1
  * - <i>integer result_limit:</i> Number max Limit the number of items in the select box.
- * Is also sent as a "limit" parameter with a remote request. Default: 10
+ *   Is also sent as a "limit" parameter with a remote request. Default: 10
+ * - <i>boolean autofill_enabled:</i> Fill the textinput while still selecting a value, replacing the value
+ *   if more is typed or something else is selected. Default: false
+ * - <i>boolean select_first:</i> If this is set to true, the first result will be automatically selected on tab/return. Default: true
+ * - <i>integer delay:</i> The delay in milliseconds that search waits after a keystroke before activating itself. Default: 400
+ * - <i>integer width:</i> Specify a custom width for the select box. Default: width of the input element
  *
  * Component
  * Class
@@ -103,6 +108,14 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
                 
         $this->_input_element_id = "{$this->_namespace}{$this->name}-tags-widget";
         
+        $this->_init_widget_options();
+        
+        debug_pop();
+        return true;
+    }
+    
+    function _init_widget_options()
+    {
         $this->_js_widget_options['widget_type_name'] = "'{$this->name}'";
         $this->_js_widget_options['min_chars'] = 1;
         $this->_js_widget_options['result_limit'] = 10;
@@ -120,22 +133,38 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
         {
             $this->_js_widget_options['max_results'] = $this->max_results;
         }
-        if (isset($this->match_inner))
+        if (isset($this->autofill_enabled))
         {
-            if ($this->match_inner)
+            if ($this->autofill_enabled)
             {
-                $this->_js_widget_options['match_inner'] = "true";
+                $this->_js_widget_options['autofill_enabled'] = "true";
             }
             else
             {
-                $this->_js_widget_options['match_inner'] = "false";
+                $this->_js_widget_options['autofill_enabled'] = "false";
             }
         }
-        
-        $this->_generate_extra_params();
-        
-        debug_pop();
-        return true;
+        if (isset($this->select_first))
+        {
+            if ($this->select_first)
+            {
+                $this->_js_widget_options['select_first'] = "true";
+            }
+            else
+            {
+                $this->_js_widget_options['select_first'] = "false";
+            }
+        }        
+        if (isset($this->delay))
+        {
+            $this->_js_widget_options['delay'] = $this->delay;
+        }
+        if (isset($this->width))
+        {
+            $this->_js_widget_options['width'] = $this->width;
+        }
+                        
+        $this->_generate_extra_params();        
     }
     
     function _generate_extra_params()

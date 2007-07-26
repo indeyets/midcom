@@ -22,6 +22,7 @@
  * @option Number width Specify a custom width for the select box. Default: width of the input element
  * @option Boolean autofill_enabled Fill the textinput while still selecting a value, replacing the value if more is typed or something else is selected. Default: false
  * @option Number result_limit Limit the number of items in the results box. Is also send as a "limit" parameter to backend on request. Default: 10
+ * @option Number width Specify a custom width for the select box. Default: width of the input element
  */
 
 jQuery.fn.extend({

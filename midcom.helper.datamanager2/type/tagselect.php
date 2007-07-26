@@ -534,7 +534,7 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
                                 
                 debug_print_r('new tags to be saved to callback',$tags);
                 
-                //$this->_callback->save_values($tags);
+                $this->_callback->save_values($tags);
                 debug_pop();
                 return null;
             }
@@ -651,7 +651,7 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
                             
             debug_print_r('new tags to be saved to callback',$tags);
             
-            //$this->_callback->save_values($tags);
+            $this->_callback->save_values($tags);
             debug_pop();
             return null;
         }
