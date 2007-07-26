@@ -80,7 +80,8 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
     function _on_initialize()
     {
         if (   $this->options === null
-            && $this->option_callback === null)
+            && $this->option_callback === null
+            && $this->use_tag_library == false)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Either 'options' or 'option_callback' must be defined for the field {$this->name}.", MIDCOM_LOG_ERROR);
@@ -149,11 +150,11 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
             $this->option_callback_args = array();
         }
         
-        debug_add("this->allow_multiple: {$this->allow_multiple}");
-        debug_add("this->multiple_storagemode: {$this->multiple_storagemode}");
-        debug_add("this->enable_saving_to_callback: {$this->enable_saving_to_callback}");
-        debug_add("this->use_tag_library: {$this->use_tag_library}");
-        debug_add("this->force_saving_to_tag_library: {$this->force_saving_to_tag_library}");
+        // debug_add("this->allow_multiple: {$this->allow_multiple}");
+        // debug_add("this->multiple_storagemode: {$this->multiple_storagemode}");
+        // debug_add("this->enable_saving_to_callback: {$this->enable_saving_to_callback}");
+        // debug_add("this->use_tag_library: {$this->use_tag_library}");
+        // debug_add("this->force_saving_to_tag_library: {$this->force_saving_to_tag_library}");
                                         
         debug_pop();
         return true;

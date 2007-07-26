@@ -25,10 +25,9 @@
  *   if more is typed or something else is selected. Default: false
  * - <i>boolean select_first:</i> If this is set to true, the first result will be automatically selected on tab/return. Default: true
  * - <i>integer delay:</i> The delay in milliseconds that search waits after a keystroke before activating itself. Default: 400
+ * - <i>boolean allow_create:</i> If this is set to true, then when user presses tab it creates a tag from current input value
+ *   if we don't have any results. Default: false (true if we are configured to work with component & class)
  * - <i>integer width:</i> Specify a custom width for the select box. Default: width of the input element
- *
- * Component
- * Class
  *
  * Example:
  'tags' => Array
@@ -43,6 +42,21 @@
          'force_saving_to_tag_library' => true,
      ),
      'widget' => 'tags',
+ ),
+ *
+ * OR
+ 'tags' => Array
+ (
+     'title' => 'tags',
+     'storage' => 'null',
+     'type' => 'tagselect',
+     'widget' => 'tags',
+     'widget_config' => array
+     (
+         'component' => 'net.nemein.wiki',
+         'class' => 'net_nemein_wiki_wikipage',
+         'id_field' => 'guid',
+     ),
  ),
  *
  * @package midcom.helper.datamanager2
@@ -66,6 +80,34 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
     var $_js_widget_options = array();
 
     var $_input_element = null;
+
+    /**
+     * Class to search for
+     *
+     * @var string
+     */
+    var $class = null;
+
+    /**
+     * Which component the searched class belongs to
+     *
+     * @var string
+     */
+    var $component = null;
+    
+    /**
+     * Objects id/guid which is to be tagged
+     *
+     * @var string
+     */
+    var $object_id = null;
+
+    /**
+     * Field/property to use as the key for object_id
+     *
+     * @var string
+     */
+    var $id_field = null;
     
     /**
      * The initialization event handler post-processes the maxlength setting.
@@ -82,6 +124,39 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
                 MIDCOM_LOG_WARN);
             debug_pop();
             return false;
+        }
+        
+        if (   !isset($this->component)
+            || empty($this->component))
+        {
+            if (   !isset($this->_type->option_callback)
+                || empty($this->_type->option_callback))
+            {
+                debug_add("You must give either object to be edited or callback for action handling!",
+                    MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;                
+            }
+        }
+        
+        if (   isset($this->component)
+            || !empty($this->component))
+        {
+            $object = $this->_type->storage->object;            
+            $idfield = $this->id_field;
+            $this->object_id = @$object->$idfield;
+            debug_add("We are using object which {$this->id_field} = {$this->object_id}.");
+            if (!isset($this->allow_create))
+            {
+                $this->allow_create = true;                
+            }
+            if (empty($this->object_id))
+            {
+                debug_add("We didn't manage to get object_id from type! Quitting now.",
+                    MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;             
+            }            
         }
         
         $_MIDCOM->enable_jquery();
@@ -123,6 +198,7 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
         $this->_js_widget_options['select_first'] = "true";
         $this->_js_widget_options['extra_params'] = "{}";
         $this->_js_widget_options['delay'] = 400;
+        $this->_js_widget_options['allow_create'] = "false";
         $this->_js_widget_options['width'] = 0;
                 
         if (isset($this->min_chars))
@@ -159,6 +235,17 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
         {
             $this->_js_widget_options['delay'] = $this->delay;
         }
+        if (isset($this->allow_create))
+        {
+            if ($this->allow_create)
+            {
+                $this->_js_widget_options['allow_create'] = "true";
+            }
+            else
+            {
+                $this->_js_widget_options['allow_create'] = "false";
+            }
+        }
         if (isset($this->width))
         {
             $this->_js_widget_options['width'] = $this->width;
@@ -173,10 +260,10 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
         
         $params = "{";
         
-        if (   isset($this->component)
-            && isset($this->class)
-            && isset($this->object_id)
-            && isset($this->id_field))
+        if (   !empty($this->component)
+            && !empty($this->class)
+            && !empty($this->object_id)
+            && !empty($this->id_field))
         {
             $params .= "component: '{$this->component}',";
             $params .= "class: '{$this->class}',";
@@ -310,7 +397,10 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
         
         foreach ($real_results as $key => $value)
         {
-            $this->_type->selection[] = $key;
+            if ($value > 0)
+            {
+                $this->_type->selection[] = $key;                
+            }
         }
         
         debug_print_r('real_results', $real_results);

@@ -23,6 +23,7 @@
  * @option Boolean autofill_enabled Fill the textinput while still selecting a value, replacing the value if more is typed or something else is selected. Default: false
  * @option Number result_limit Limit the number of items in the results box. Is also send as a "limit" parameter to backend on request. Default: 10
  * @option Number width Specify a custom width for the select box. Default: width of the input element
+ * @option Boolean allow_create If this is set to true, then when user presses tab it creates a tag from current input value if we don't have any results. Default: false
  */
 
 jQuery.fn.extend({
@@ -92,6 +93,20 @@ jQuery.midcom_helper_datamanager2_widget_tags = function(input, options) {
 				if( selectCurrent() ){
 					input_element.focus();
 					event.preventDefault();
+				}
+				else
+				{
+				    value = input_element.val();
+				    if (   options.allow_create == true
+				        && value != '')
+				    {
+				        var data = {
+				            id: value,
+				            name: value,
+				            color: '8596b6'
+				        };
+				        input_element.trigger("result", [data]);
+				    }
 				}
 				break;
 				
@@ -298,6 +313,7 @@ jQuery.midcom_helper_datamanager2_widget_tags.defaults = {
 	select_first: true,
 	result_limit: 10,
 	autofill_enabled: false,
+	allow_create: false,
 	width: 0
 };
 
@@ -521,7 +537,7 @@ jQuery.midcom_helper_datamanager2_widget_tags.SelectionHolder = function(options
 	
 	function remove(id)
 	{
-	    jQuery('#tag_'+id+' input', list).attr({ value: '' });
+	    jQuery('#tag_'+id+' input', list).attr({ value: 0 });
 	    jQuery('#tag_'+id).attr("deleted","true");
 	}
 	
