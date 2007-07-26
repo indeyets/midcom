@@ -50,13 +50,14 @@ input.tags_widget_input
 
 .tags_widget_selections
 {
+    width: 50%;
     background-color: #fff;
+    border: 1px solid #000;
 }
 
 .tags_widget_selections ul
 {
     height: 20px;
-    border: 1px solid WindowFrame;
     list-style-position: outside;
     list-style-type: none;
     margin: 0;
@@ -66,12 +67,12 @@ input.tags_widget_input
 .tags_widget_selections ul li
 {
     height: 16px;
-    margin: 1px 0 0 0;
+    margin: 2px 0 0 0;
     padding: 0 3px 0 3px;
     margin-right: 3px;
     -moz-border-radius: 3px;
     float: left;
-    color: HighlightText;
+    color: #ffffff;
     font-size: 0.9em;
 }
 
@@ -83,7 +84,6 @@ input.tags_widget_input
 
 .tags_widget_selection_item_deleted
 {
-	background-color: white;
 	color: black;
 	border: 1px solid red;
 }

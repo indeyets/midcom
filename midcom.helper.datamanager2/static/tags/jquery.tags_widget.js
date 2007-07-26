@@ -35,10 +35,10 @@ jQuery.fn.extend({
 		});
 	},
 	midcom_helper_datamanager2_widget_tags_add_selection_item: function(item) {
-		return this.trigger("add_selection_item",item);
+		return this.trigger("add_selection_item",[item]);
 	},
 	midcom_helper_datamanager2_widget_tags_remove_selection_item: function(item_id) {
-		return this.trigger("remove_selection_item",item_id);
+		return this.trigger("remove_selection_item",[item_id]);
 	}	
 });
 
@@ -103,9 +103,14 @@ jQuery.midcom_helper_datamanager2_widget_tags = function(input, options) {
 				timeout = setTimeout(onChange, options.delay);
 				break;
 		}
-	}).keypress(function() {
+	}).keypress(function(event) {
 		// having fun with opera - remove this binding and Opera submits the form when we select an entry via return
-		event.preventDefault();
+		switch(event.keyCode) {
+		    case KEY.TAB:
+		    case KEY:RETURN:
+		        event.preventDefault();
+		        break;
+	    }
 	}).focus(function(){
 		// track whether the field has focus, we shouldn't process any
 		// results if the field no longer has focus
@@ -415,11 +420,11 @@ jQuery.midcom_helper_datamanager2_widget_tags.SelectionHolder = function(options
 	var element = jQuery("<div>")
 		.hide()
 		.addClass('tags_widget_selections');
-	jQuery(input).after( element );
+	jQuery(input).before( element );
 
 	var list = jQuery("<ul>").appendTo(element);
 
-    var list_items,
+    var list_items = [],
         has_content = false;
 
 	function target(event) {
@@ -431,7 +436,7 @@ jQuery.midcom_helper_datamanager2_widget_tags.SelectionHolder = function(options
 		return element;
 	}
 	
-	function can_add()
+	function can_add(item_id)
 	{
 	    if (options.selection_limit > 0)
 	    {
@@ -440,6 +445,17 @@ jQuery.midcom_helper_datamanager2_widget_tags.SelectionHolder = function(options
 	            return false;
 	        }
 	    }
+	    
+	    var existing = false;
+        existing = jQuery.grep( list_items, function(n,i){
+           return n == item_id;
+        });
+        
+        if (existing == item_id)
+        {
+            jQuery('#tag_'+item_id,list).Highlight(800, 'yellow');
+            return false;
+        }
 	    
 	    return true;
 	}
@@ -451,7 +467,7 @@ jQuery.midcom_helper_datamanager2_widget_tags.SelectionHolder = function(options
 	    console.log('data.name: '+data.name);
 	    console.log('data.color: '+data.color);
 	    	    	    
-        if (! can_add())
+        if (! can_add(data.id))
         {
             return false;
         }
@@ -462,11 +478,13 @@ jQuery.midcom_helper_datamanager2_widget_tags.SelectionHolder = function(options
             element.show();
         }
 	    
-	    var input_elem_id = options.widget_type_name + "_tag[]";// + data.id + "]";
-	    
+	    var input_elem_name = options.widget_type_name + "_tags[" + data.id + "]";
+        
+        data.color = String(data.color).replace("#","");
+        
 	    var li_elem = jQuery("<li>")
 	    .attr({ id: 'tag_'+data.id })
-	    .css({background: data.color})
+	    .css({background: '#'+data.color})
         .mouseover( function(event) {
     		active = jQuery("li", list).removeClass(CLASSES.HOVER).index(target(event));
     		jQuery(target(event)).addClass(CLASSES.HOVER);
@@ -491,11 +509,13 @@ jQuery.midcom_helper_datamanager2_widget_tags.SelectionHolder = function(options
 	    .html( midcom_helper_datamanager2_widget_tags_format_item(data) )
 	    .appendTo(li_elem);
 	    var input_elem = jQuery("<input>")
-	    .attr({ type: 'checkbox', name: input_elem_id, value: data.id })
+	    .attr({ type: 'hidden', name: input_elem_name, value: 1, id: 'tags-widget_tag_'+data.id })
 	    .hide()
 	    .appendTo(li_elem);
 	    
 	    li_elem.appendTo(list);
+	    
+	    list_items.push(data.id);
 	}
 	
 	function remove(id)

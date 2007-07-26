@@ -10,10 +10,10 @@
 /**
  * Datamanager 2 Tags widget
  *
- * As with all subclasses, the actual initialization is done in the initialize() function,
+ * As with all subclasses, the actual initialization is done in the initialize() funciton,
  * not in the constructor, to allow for error handling.
  *
- * It can only be bound to a tagselect type (or subclass thereof), and inherits the configuration
+ * It can only be bound to a tagselect type (or subclass thereoff), and inherits the configuration
  * from there as far as possible.
  *
  * <b>Available configuration options:</b>
@@ -21,6 +21,24 @@
  * - <i>integer min_chars:</i> Minimum amount of chars to be inserted before search starts. Default: 1
  * - <i>integer result_limit:</i> Number max Limit the number of items in the select box.
  * Is also sent as a "limit" parameter with a remote request. Default: 10
+ *
+ * Component
+ * Class
+ *
+ * Example:
+ 'tags' => Array
+ (
+     'title' => 'event tags',
+     'storage' => 'null',
+     'type' => 'tagselect',
+     'type_config' => array
+     (
+         'option_callback' => 'org_maemo_calendar_callbacks_personstags',
+         'enable_saving_to_callback' => false,
+         'force_saving_to_tag_library' => true,
+     ),
+     'widget' => 'tags',
+ ),
  *
  * @package midcom.helper.datamanager2
  */
@@ -53,13 +71,13 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         
-        // if (is_a('midcom_helper_datamanager2_type_tagselect', $this->_type))
-        // {
-        //     debug_add("Warning, the field {$this->name} is not a tagselect type or subclass thereof, you cannot use the tags widget with it.",
-        //         MIDCOM_LOG_WARN);
-        //     debug_pop();
-        //     return false;
-        // }
+        if (is_a('midcom_helper_datamanager2_type_tagselect', $this->_type))
+        {
+            debug_add("Warning, the field {$this->name} is not a tagselect type or subclass thereoff, you cannot use the tags widget with it.",
+                MIDCOM_LOG_WARN);
+            debug_pop();
+            return false;
+        }
         
         $_MIDCOM->enable_jquery();
 
@@ -112,22 +130,59 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
             {
                 $this->_js_widget_options['match_inner'] = "false";
             }
-        } 
+        }
+        
+        $this->_generate_extra_params();
+        
         debug_pop();
         return true;
+    }
+    
+    function _generate_extra_params()
+    {
+        $map = array('component', 'class', 'object_id', 'id_field', 'callback', 'callback_args');
+        
+        $params = "{";
+        
+        if (   isset($this->component)
+            && isset($this->class)
+            && isset($this->object_id)
+            && isset($this->id_field))
+        {
+            $params .= "component: '{$this->component}',";
+            $params .= "class: '{$this->class}',";
+            $params .= "object_id: '{$this->object_id}',";
+            $params .= "id_field: '{$this->id_field}'";
+        }
+        else if (isset($this->_type->option_callback))
+        {
+            $params .= "callback: '{$this->_type->option_callback}'";
+            if (   isset($this->_type->option_callback_args)
+                && is_array($this->_type->option_callback_args))
+            {
+                $params .= ", callback_args: ".json_encode($this->_type->option_callback_args);
+            }
+        }
+        
+        $params .= "}";
+        
+        $this->_js_widget_options['extra_params'] = $params;
     }
     
     function _get_key_data($key)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
+        
+        $data = $this->_type->get_data_for_key($key);
+        
         $value = "{";
         
         $name = "Test";
-        $color = "4c4c4c";
+        $color = "#628ce4";
         
         $value .= "id: '{$key}',";
-        $value .= "name: '{$name}',";
-        $value .= "color: '{$color}',";
+        $value .= "name: '{$data['name']}',";
+        $value .= "color: '{$data['color']}'";
                 
         $value .= "}";
         debug_pop();
@@ -141,9 +196,6 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
     function add_elements_to_form()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
-        // $selections_html = "<div class='tags-widget-selections'></div>";
-        // $results_html = "<ul class='tags-widget-results'></ul>";
 
         $attributes = Array
         (
@@ -151,11 +203,12 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
             'id'    => $this->_input_element_id,
         );
 
-        $this->_form->addElement('text', "{$this->name}", $this->_translate($this->_field['title']), $attributes);
-        // $this->_form->addElement('static', $this->name.'_selections', '', $selections_html);
-        // $this->_form->addElement('static', $this->name.'_results', '', $results_html);
+        // $elements = array();
+        // $elements[] = & HTML_QuickForm::createElement('hidden', "default", '1', array());
+        // 
+        // $group =& $this->_form->addGroup($elements, $this->name, $this->_translate($this->_field['title']), "<br />");
         
-        //$this->_form->applyFilter($this->name, 'trim');
+        $this->_form->addElement('text', "{$this->name}_input", $this->_translate($this->_field['title']), $attributes);
 
         // Get url to search handler
         $nav = new midcom_helper_nav();
@@ -175,6 +228,7 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
 
         // Add existing selection
         $existing_elements = $this->_type->selection;
+        debug_print_r('existing_elements',$existing_elements);
         $ee_script = '';
         foreach ($existing_elements as $key)
         {
@@ -193,11 +247,19 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
       */
      function get_default()
      {
+         debug_push_class(__CLASS__, __FUNCTION__);
+         
+         //debug_print_r('this->_type',$this->_type);
+         
          $defaults = Array();
          foreach ($this->_type->selection as $key)
          {
              $defaults[$key] = true;
          }
+         
+         debug_print_r('defaults',$defaults);
+         
+         debug_pop();
          return Array($this->name => $defaults);
      }
     
@@ -211,11 +273,11 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
         debug_print_r('results:',$results);
         
         $this->_type->selection = Array();
-        if (!isset($results["{$this->name}_tag"]))
+        if (!isset($results["{$this->name}_tags"]))
         {
             return;
         }
-        $real_results =& $results["{$this->name}_tag"];
+        $real_results =& $results["{$this->name}_tags"];
         
         foreach ($real_results as $key => $value)
         {
@@ -230,16 +292,12 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
     function freeze()
     {
     }
-
-    /**
-     * Unfreezes all form elements associated with the widget. The default implementation
-     * works on the default field name, you don't need to override this function unless
-     * you have multiple widgets in the form.
-     *
-     * This maps to the HTML_QuickForm_element::unfreeze()unction.
-     */
     function unfreeze()
     {
+    }
+    function is_frozen()
+    {
+        return false;
     }
     
     function render_content()
@@ -253,7 +311,8 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
         {
             foreach ($this->_type->selection as $key)
             {
-                echo '<li>' . $this->_get_key_value($key) . '</li>';
+                $data = $this->_get_key_data($key);
+                echo '<li>' . $data['name'] . '</li>';
             }
         }
         echo '</ul>';
