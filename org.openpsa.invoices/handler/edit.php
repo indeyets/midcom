@@ -265,6 +265,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         }
 
         $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('invoice') . ' ' . $this->_request_data['invoice']->invoiceNumber);
+		$this->_update_breadcrumb_line();
 
         $this->_view_toolbar->add_item(
             Array(
@@ -416,6 +417,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         $this->_request_data['invoice']->require_do('midgard:update');
 
         $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('invoice') . ' ' . $this->_request_data['invoice']->invoiceNumber);
+		$this->_update_breadcrumb_line();
 
         switch ($this->_datamanager->process_form())
         {
@@ -534,7 +536,15 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         }
 
         $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('create invoice'));
+        $tmp = Array();
 
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "/",
+            MIDCOM_NAV_NAME => $this->_request_data['l10n']->get('create invoice'),
+        );
+
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         return true;
     }
 
@@ -542,6 +552,24 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
     {
         $this->_request_data['invoice_dm']  = $this->_datamanager;
         midcom_show_style('show-invoice-new');
+    }
+    
+    /**
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
+     * location.
+     *
+     */
+    function _update_breadcrumb_line()
+    {
+        $tmp = Array();
+
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "/",
+            MIDCOM_NAV_NAME => $this->_request_data['l10n']->get('invoice') . ' ' . $this->_request_data['invoice']->invoiceNumber,
+        );
+
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
 
 }
