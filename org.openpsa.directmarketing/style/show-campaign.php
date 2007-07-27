@@ -7,7 +7,7 @@ $nap = new midcom_helper_nav();
 $node = $nap->get_node($nap->get_current_node());
 $contacts_node = midcom_helper_find_node_by_component('org.openpsa.contacts');
 ?>
-<script language="javascript">
+<script type="text/javascript">
 function org_openpsa_directmarketing_ajax_unsubscribe(person_guid)
 {
     url = '&(node[MIDCOM_NAV_FULLURL]);campaign/<?php echo $data['campaign']->guid; ?>/ajax';

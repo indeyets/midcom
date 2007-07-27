@@ -96,4 +96,4 @@ while ($days >= 0)
   <input type="submit" name="&(form_prefix);cancel" value="<?php echo $data['l10n_midcom']->get("cancel"); ?>">
 </div>
 </form>
-<script language="javascript">    function &(form_prefix);checkRepeatType() {        typeSel=document.getElementById('&(form_prefix);Repeat_rule_type');        daysRow=document.getElementById('&(form_prefix);Repeat_rule_days');         if (typeSel[typeSel.selectedIndex].value=='weekly_by_day') {            daysRow.style.display='block';         } else {            daysRow.style.display='none';         }    }    &(form_prefix);checkRepeatType();</script>
+<script type="text/javascript">    function &(form_prefix);checkRepeatType() {        typeSel=document.getElementById('&(form_prefix);Repeat_rule_type');        daysRow=document.getElementById('&(form_prefix);Repeat_rule_days');         if (typeSel[typeSel.selectedIndex].value=='weekly_by_day') {            daysRow.style.display='block';         } else {            daysRow.style.display='none';         }    }    &(form_prefix);checkRepeatType();</script>

@@ -8,7 +8,7 @@ $ajax_url = "{$node[MIDCOM_NAV_FULLURL]}/message/send_status/{$msg_guid}/";
 <div id="org_openpsa_directmarketing_send_uimessages">
     <?php echo $data['l10n']->get('messages sent'); ?>: <div id="org_openpsa_directmarketing_send_uimessages_sent" style="display: inline">??</div> / <div id="org_openpsa_directmarketing_send_uimessages_total" style="display: inline">??</div>
 </div>
-<script language="javascript">
+<script type="text/javascript">
 function org_openpsa_directmarketing_get_send_status()
 {
     div = document.getElementById('org_openpsa_directmarketing_send_uimessages');

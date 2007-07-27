@@ -17,7 +17,7 @@ $node = $nap->get_node($nap->get_current_node());
             </div>
         </form>
 
-        <script language="javascript">
+        <script type="text/javascript">
             prospects_handler = new project_prospects_renderer('prospects_list', '<?php echo $node[MIDCOM_NAV_FULLURL]; ?>', '<?php echo $task->guid; ?>');
             /* TODO: Make interval */
             prospects_handler.get_prospect_list();

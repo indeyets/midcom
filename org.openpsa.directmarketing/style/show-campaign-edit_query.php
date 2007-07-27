@@ -108,7 +108,7 @@ echo "</pre>\n";
 
 ?>
 <!-- Automatically built on PHP level -->
-<script language="javascript">
+<script type="text/javascript">
     var org_openpsa_directmarketing_edit_query_property_map = {
 <?php
 $cnt = count($properties_map);
@@ -188,7 +188,7 @@ foreach ($properties_map as $class => $properties)
             <input name="midcom_helper_datamanager_submit" accesskey="s" class="save" value="<?php echo $data['l10n_midcom']->get('save'); ?>" type="submit">
             <input name="midcom_helper_datamanager_cancel" class="cancel" value="<?php echo $data['l10n_midcom']->get('cancel'); ?>" type="submit">
         </div>
-        <script language="javascript">
+        <script type="text/javascript">
 <?php
 if (($rowcount = count($generated_from['rows'])) > 0)
 {

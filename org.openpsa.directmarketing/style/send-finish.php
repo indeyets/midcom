@@ -1,4 +1,4 @@
 <p>Done.</p>
-<script language="javascript">
+<script type="text/javascript">
 clearInterval(repeater);
 </script>

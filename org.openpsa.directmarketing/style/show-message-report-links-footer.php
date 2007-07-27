@@ -19,7 +19,7 @@ $form_suffix =& $data['form_suffix'];
             $reports_prefix = $reports_node[MIDCOM_NAV_FULLURL];
             $filename = 'org_openpsa_directmarketing_' . date('Ymd_Hi');
     ?>
-<script language="javascript" src="<?php echo MIDCOM_STATIC_URL . '/org.openpsa.reports/table2csv.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo MIDCOM_STATIC_URL . '/org.openpsa.reports/table2csv.js'; ?>"></script>
 <form method="post" action="&(reports_prefix);csv/&(filename);.csv" onSubmit="return table2csv('org_openpsa_directmarketing_messagelinks&(form_suffix);');">
     <input type="hidden" id="csvdata" name="org_openpsa_reports_csv" value="" />
     <input class="button" type="submit" value="<?php echo $_MIDCOM->i18n->get_string('download as CSV', 'org.openpsa.reports'); ?>" />
