@@ -104,7 +104,7 @@ input
 
 </style>
 <div id="internalorders_search">
-<form method="GET" action="">
+<form method="get" action="">
 	<input type="hidden" value="<?php echo $_GET['inputID'] ?>" name="inputID" />
 	<input type="text" name="search" value="<?php echo $data['searchinput']; ?>" />
 	<input type="submit" value="hae" onclick="changeStatus();" />

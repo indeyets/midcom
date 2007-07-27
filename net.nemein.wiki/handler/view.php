@@ -328,7 +328,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
     
     function _handler_subscribe($handler_id, $args, &$data)
     {
-        if ($_SERVER['REQUEST_METHOD'] != 'POST')
+        if ($_SERVER['REQUEST_METHOD'] != 'post')
         {
             $_MIDCOM->generate_error(MIDCOM_ERRFORBIDDEN, 'Only POST requests are allowed here.');
         }

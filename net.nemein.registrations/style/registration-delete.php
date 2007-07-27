@@ -13,7 +13,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 <h2><?php echo $data['topic']->extra; ?>: &(title);</h2>
 
 <h3><?php $data['l10n']->show('delete registration'); ?>:</h3>
-<form action='' method='POST'><p>
+<form action='' method='post'><p>
     <input type='submit' name='net_nemein_registrations_deleteok' value="<?php $data['l10n']->show('yes, delete the registration'); ?>" />
     <input type='submit' name='net_nemein_registrations_deletecancel' value="<?php $data['l10n']->show('no, do not delete the registration'); ?>" />
 </p></form>

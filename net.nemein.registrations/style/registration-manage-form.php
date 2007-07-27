@@ -7,7 +7,7 @@
 if ($data['manage_form_url'])
 {
 ?>
-<form action="&(data['manage_form_url']);" method="POST">
+<form action="&(data['manage_form_url']);" method="post">
     <p>
         <input type="submit" name="&(data['approve_action']);" value="<?php $data['l10n']->show('approve registration'); ?>" />
         <input type="submit" name="&(data['reject_action']);" value="<?php $data['l10n']->show('reject registration'); ?>" />

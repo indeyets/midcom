@@ -49,7 +49,7 @@ while ($days >= 0)
 ?>
 <h2><?php echo sprintf($data['l10n']->get('set repeat for %s'),$data['event']->title); ?></h2>
 
-<form method="POST" name="&(form_prefix);form" action="&(_MIDGARD['uri']);">
+<form method="post" name="&(form_prefix);form" action="&(_MIDGARD['uri']);">
 <div class="form_description">
   <?php echo $data['l10n']->get('repeat type'); ?>
 </div>

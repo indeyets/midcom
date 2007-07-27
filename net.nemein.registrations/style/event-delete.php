@@ -9,7 +9,7 @@ $controller =& $event->create_simple_controller();
 <h2><?php echo $data['topic']->extra; ?>: &(event.title);</h2>
 
 <h3><?php $data['l10n']->show('delete event'); ?>:</h3>
-<form action='' method='POST'><p>
+<form action='' method='post'><p>
     <input type='submit' name='net_nemein_registrations_deleteok' value="<?php $data['l10n_midcom']->show('yes'); ?>" />
     <input type='submit' name='net_nemein_registrations_deletecancel' value="<?php $data['l10n_midcom']->show('no'); ?>" />
 </p></form>

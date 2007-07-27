@@ -9,7 +9,7 @@ $dn_data= $data['datamanager']->get_content_html();
 <?php $data['datamanager']->display_view (); ?>
 
 <p>
-<form action="" method="POST">
+<form action="" method="post">
     <input type="submit" name="net_nemein_calendar_deleteok" value="<?php echo $data['l10n_midcom']->get("delete"); ?>" />
     <input type="submit" name="net_nemein_calendar_deletecancel" value="<?php echo $data['l10n_midcom']->get("cancel"); ?>" />
 </form>

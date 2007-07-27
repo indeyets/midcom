@@ -45,7 +45,7 @@ function disableExisting() {
     document.getElementById('&(view_form_prefix);sitegroup_id').disabled = true;
 }
 </script>
-<form method="POST" name="&(view_form_prefix);sitegroup_select" action="<?php echo $_MIDGARD['uri']; ?>">
+<form method="post" name="&(view_form_prefix);sitegroup_select" action="<?php echo $_MIDGARD['uri']; ?>">
 <?php
 if ($data['17_compatibility'])
 {

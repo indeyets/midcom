@@ -9,7 +9,7 @@ $view = $data['datamanager']->get_content_html();
 
 <h2><?php $data['l10n']->show('cancel membership'); ?></h2>
 
-<form action="" method="POST">
+<form action="" method="post">
 
 <p><?php $data['l10n']->show('cancel membership message'); ?></p>
 

@@ -19,7 +19,7 @@ if (   !isset($_REQUEST['stream_node_guid'])
     }
 ?>
 <h2>Please select node to migrate the photos to</h2>
-<form method="GET">
+<form method="get">
     <select name="stream_node_guid">
         <option value="">please choose node</option>
 <?php

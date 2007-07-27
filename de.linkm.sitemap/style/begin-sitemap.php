@@ -4,7 +4,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
 <h1>&(data['view_title']);</h1>
 <div id="de_linkm_sitemap_settings">
-<form action="" method="POST">
+<form action="" method="post">
 <div style="float:left;" id="de_linkm_sitemap_settings_root">
 <?php echo $data['l10n']->get('Select root to show'); ?>
 <br />

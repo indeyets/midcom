@@ -6,7 +6,7 @@
 ?>
 
 <p>
-<form method="POST" action="list_by_key/">
+<form method="post" action="list_by_key/">
 <h1><?php echo $data['l10n']->get('Reports'); ?></h1>
 <p>
 <?php echo $data['l10n']->get('Article count'); ?>: &(data['articles_count']);

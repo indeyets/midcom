@@ -107,7 +107,7 @@ class net_nehmer_branchenbuch_handler_admin_manage extends midcom_baseclasses_co
         // name(edit) edit/create/delete icons
 
         echo '<li>';
-        echo "<form action='{$delete_url}' method='POST'>\n";
+        echo "<form action='{$delete_url}' method='post'>\n";
         echo "<a href='{$edit_url}'>{$category->name}</a>\n"
             . "<a href='{$edit_url}'><img src='" . MIDCOM_STATIC_URL . "/stock-icons/16x16/edit.png'></a>\n"
             . "<a href='{$create_url}'><img src='" . MIDCOM_STATIC_URL . "/stock-icons/16x16/stock_new.png'></a>\n";

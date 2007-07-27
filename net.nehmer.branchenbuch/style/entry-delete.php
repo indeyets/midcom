@@ -10,7 +10,7 @@ $schema =& $data['entry_dm']->schema;
 <h2><?php echo $data['topic']->extra; ?>: <?php echo $data['branche']->get_full_name(); ?></h2>
 <h3>&(view['firstname']); &(view['lastname']);</h3>
 
-<form action="" method="POST">
+<form action="" method="post">
 <p>
     <?php $data['l10n']->show('are you sure you want to delete this entry?'); ?>
     <input type="submit" name="net_nehmer_branchenbuch_deleteok" value="<?php $data['l10n_midcom']->show("yes"); ?>" /><br />

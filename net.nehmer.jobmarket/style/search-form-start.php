@@ -8,4 +8,4 @@ if ($data['type']) { ?>
 <h2><?php $data['l10n']->show("search {$data['mode']}s"); ?></h2>
 <?php } ?>
 
-<form action="&(data['result_url']);" method="POST">
+<form action="&(data['result_url']);" method="post">

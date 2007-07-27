@@ -12,7 +12,7 @@ if (!isset($_REQUEST['url']))
     <h2>basic auth (optional)</h2>
     Username: <input name="username" value="" /><br/>
     Password: <input name="password" value="" /><br/>
-    <input type="submit" value="POST" />
+    <input type="submit" value="post" />
 </form>
 <?php
 }

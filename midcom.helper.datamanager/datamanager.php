@@ -1310,7 +1310,7 @@ class midcom_helper_datamanager {
         {
             // Regular, submittable form
             echo "<form name='{$form_prefix}_form' action='{$this->url_me}' "
-                . "enctype='multipart/form-data' method='POST' class='datamanager'{$form_id}>\n";
+                . "enctype='multipart/form-data' method='post' class='datamanager'{$form_id}>\n";
         }
 
         if (is_array($this->_lock) && ! $this->_ourlock) {

@@ -15,7 +15,7 @@
 // FIXME: Determine a permission for this
 $_MIDCOM->auth->require_admin_user();
 
-if (   $_SERVER['REQUEST_METHOD'] != 'POST'
+if (   $_SERVER['REQUEST_METHOD'] != 'post'
     || !array_key_exists('return_to', $_POST))
 {
     $_MIDCOM->generate_error(MIDCOM_ERRFORBIDDEN, 'Only POST requests are allowed here.');

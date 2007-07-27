@@ -70,7 +70,7 @@
  * targets, using something like this:
  *
  * <code>
- * if ($_SERVER['REQUEST_METHOD'] != 'POST')
+ * if ($_SERVER['REQUEST_METHOD'] != 'post')
  * {
  *     $_MIDCOM->generate_error(MIDCOM_ERRFORBIDDEN, 'Only POST requests are allowed here.');
  * }

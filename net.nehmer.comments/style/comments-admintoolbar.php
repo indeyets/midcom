@@ -27,7 +27,7 @@ $ip = $comment->ip ? $comment->ip : '?.?.?.?';
 $metadata = sprintf($data['l10n']->get('creator: %s, created %s, source ip %s.'),
     $username, strftime('%x %X', $created), $ip);
 ?>
-<form action="&(_SERVER['REQUEST_URI']);" method="POST" class="net_nehmer_comment_admintoolbar">
+<form action="&(_SERVER['REQUEST_URI']);" method="post" class="net_nehmer_comment_admintoolbar">
 <input type="hidden" name="net_nehmer_comment_adminsubmit" value="1" />
 <input type="hidden" name="guid" value="&(comment.guid);" />
 

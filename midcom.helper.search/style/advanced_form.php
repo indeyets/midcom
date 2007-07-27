@@ -47,7 +47,7 @@ midcom_helper_search_process_node($nap->get_root_node(), $nap, $topics, $compone
 $query = htmlspecialchars($data['query'], ENT_QUOTES);
 
 ?>
-<form method='GET' name='midcom_helper_search_form' action='&(prefix);result.html' class='midcom.helper.search'>
+<form method='get' name='midcom_helper_search_form' action='&(prefix);result.html' class='midcom.helper.search'>
 <input type='hidden' name='type' value='advanced' />
 <input type='hidden' name='page' value='1' />
  

@@ -177,7 +177,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 
     function _handler_mark_sent($handler_id, $args, &$data)
     {
-        if ($_SERVER['REQUEST_METHOD'] != 'POST')
+        if ($_SERVER['REQUEST_METHOD'] != 'post')
         {
             $_MIDCOM->generate_error(MIDCOM_ERRFORBIDDEN, 'Only POST requests are allowed here.');
         }
@@ -227,7 +227,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 
     function _handler_mark_paid($handler_id, $args, &$data)
     {
-        if ($_SERVER['REQUEST_METHOD'] != 'POST')
+        if ($_SERVER['REQUEST_METHOD'] != 'post')
         {
             $_MIDCOM->generate_error(MIDCOM_ERRFORBIDDEN, 'Only POST requests are allowed here.');
         }

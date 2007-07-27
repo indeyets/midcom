@@ -8,7 +8,7 @@ $entry =& $data['entry'];
 
 <h2><?php echo $data['l10n']->get($data['mode']) . ": {$entry->title}"; ?></h2>
 
-<form action="" method="POST">
+<form action="" method="post">
 <p>
     <?php $data['l10n']->show('are you sure you want to delete this entry?'); ?>
     <input type="submit" name="net_nehmer_jobmarket_deleteok" value="<?php $data['l10n_midcom']->show("yes"); ?>" /><br />

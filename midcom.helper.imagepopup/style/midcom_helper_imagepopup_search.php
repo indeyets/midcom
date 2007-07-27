@@ -12,7 +12,7 @@ $object_guid = $data['object']->guid;
 	<div id="search">
 	
 	<div class="search-form">
-		<form method='GET' name='midcom_helper_imagepopup_search_form' action='&(prefix);unified/&(schema_name);/&(object_guid);' class='midcom.helper.imagepopup'>
+		<form method='get' name='midcom_helper_imagepopup_search_form' action='&(prefix);unified/&(schema_name);/&(object_guid);' class='midcom.helper.imagepopup'>
 			<label for="midcom_helper_imagepopup_query">
 				<?php echo $data['l10n']->get('query');?>:
 				<input type='text' size='60' name='query' id='midcom_helper_imagepopup_query' value='&(query);' />

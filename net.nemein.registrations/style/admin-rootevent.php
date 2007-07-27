@@ -12,7 +12,7 @@ $selected_guid = ($data['root_event']) ? $data['root_event']->guid : false;
 <div class='processing_message'>&(data['processing_msg']);</div>
 <?php } ?>
 
-<form method='POST' action=''>
+<form method='post' action=''>
 
 <h3><?php $data['l10n']->show('use existing root event'); ?></h3>
 <p>
