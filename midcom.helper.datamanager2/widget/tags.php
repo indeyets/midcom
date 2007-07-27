@@ -33,7 +33,7 @@
  'tags' => Array
  (
      'title' => 'event tags',
-     'storage' => 'null',
+     'storage' => null,
      'type' => 'tagselect',
      'type_config' => array
      (
@@ -48,7 +48,7 @@
  'tags' => Array
  (
      'title' => 'tags',
-     'storage' => 'null',
+     'storage' => null,
      'type' => 'tagselect',
      'widget' => 'tags',
      'widget_config' => array

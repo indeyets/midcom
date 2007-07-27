@@ -54,6 +54,15 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
      * @access public
      */
     var $force_saving_to_tag_library = false;
+
+    /**
+     * This flag controls wether we force net_nehmer_tag to be used as the location
+     * to read tags data on rendering or should we use callback or storage
+     *
+     * @var bool
+     * @access public
+     */    
+    var $force_rendering_from_tag_library = false;
     
     /**
      * The arguments to pass to the option callback constructor.
@@ -122,6 +131,7 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
                 debug_pop();
                 return false;
             }
+            
             $this->_callback = new $classname($this->option_callback_args);
             $this->_callback->set_type($this);
             
@@ -182,7 +192,8 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
             }
         }
         
-        if ($this->use_tag_library)
+        if (   $this->use_tag_library
+            || $this->force_rendering_from_tag_library)
         {
             debug_pop();
             return $key;
@@ -195,7 +206,7 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
             return $this->options[$key]['name'];
         }
         else
-        {
+        {            
             debug_add("get from callback");
             debug_pop();
             return $this->_callback->get_name_for_key($key);
@@ -226,7 +237,8 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
             }
         }
         
-        if ($this->use_tag_library)
+        if (   $this->use_tag_library
+            || $this->force_rendering_from_tag_library)
         {
             $data = $this->_data_template;
 
@@ -248,8 +260,10 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
         else
         {
             debug_add("get from callback");
+
             $data = $this->_callback->get_data_for_key($key);
             debug_print_r('got data from callback',$data);
+
             debug_pop();
             return $data;
         }
@@ -772,7 +786,7 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
         
         debug_pop();
         return true;
-    }       
+    }
 
 }
 
