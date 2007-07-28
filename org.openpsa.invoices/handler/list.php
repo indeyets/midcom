@@ -44,7 +44,7 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
     {
         $_MIDCOM->auth->require_valid_user();
 
-        $this->_node_toolbar->add_item(
+        $this->_view_toolbar->add_item(
             Array(
                 MIDCOM_TOOLBAR_URL => 'invoice/new/',
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('create invoice'),
