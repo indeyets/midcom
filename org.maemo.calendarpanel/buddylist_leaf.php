@@ -69,11 +69,15 @@ class org_maemo_calendarpanel_buddylist_leaf extends midcom_baseclasses_componen
         $html = '';
         $buddies = array();
         
+        $_MIDCOM->auth->request_sudo();
+        
         $user = $_MIDCOM->auth->user->get_storage();
         $qb = net_nehmer_buddylist_entry::new_query_builder();
         $qb->add_constraint('account', '=', $user->guid);
         $qb->add_constraint('blacklisted', '=', false);
         $buddies_qb = $qb->execute();
+
+        $_MIDCOM->auth->drop_sudo();
 
         foreach ($buddies_qb as $buddy)
         {
