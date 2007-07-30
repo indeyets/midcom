@@ -9,7 +9,7 @@ $current_timezone = org_maemo_calendar_common::active_timezone();
 //$timezone_identifiers = DateTimeZone::listIdentifiers();
 
 ?>
-    <div class="header">
+    <div class="header" style="display: none;">
         <div class="timezone-block">
             <form id="timezone-selection-form" action="ajax/change/timezone/" method="get">
             <select name="timezone" size="1" onchange="change_timezone();">
@@ -87,8 +87,9 @@ $current_timezone = org_maemo_calendar_common::active_timezone();
         </div>
         <div class="date-selection-block">
             <form id="date-selection-form" action="ajax/change/date/" method="get">
-            <img class="selection-previous" src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/icons/go-previous.png" alt="Previous week" align="left" />
-            <img class="selection-next" src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/icons/go-next.png" alt="Next week" align="right" />
+            <img width="16" height="16" class="selection-previous" src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/icons/go-previous.png" alt="Previous" align="left" onclick="goto_prev();" />
+            <img width="16" height="16" class="selection-home" src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/icons/go-home.png" alt="Today" align="left" onclick="goto_today();" />
+            <img width="16" height="16" class="selection-next" src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/icons/go-next.png" alt="Next" align="left" onclick="goto_next();" />
             <select name="month-select" size="1" onchange="change_date();">
                 <?php
                 $month = 1;

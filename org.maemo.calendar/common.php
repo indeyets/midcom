@@ -37,7 +37,7 @@ class org_maemo_calendar_common
                 || (   !$logged_in
                     && $_MIDCOM->auth->request_sudo()) )
             {
-                $user->set_parameter('org.maemo.calendar:preferences','calendar_color','FFFF99');
+                $user->set_parameter('org.maemo.calendar:preferences','calendar_color','ce8e4b');
                 $color = $user->get_parameter('org.maemo.calendar:preferences','calendar_color');
                 
                 if (!$logged_in)
@@ -209,32 +209,32 @@ class org_maemo_calendar_common
         /* Read users tags */
         $users_tags = $user->list_parameters('org.maemo.calendar:tag');
         
-        if (empty($users_tags))
-        {
-            debug_add("No tags defined! Creating the default tag to users parameters.");
-            
-            if (   $logged_in
-                || (   !$logged_in
-                    && $_MIDCOM->auth->request_sudo()) )
-            {
-                $_l10n =& $_MIDCOM->i18n->get_l10n('org.maemo.calendar');
-                $tag_name = $_l10n->get($this->_config->get('default_tag_name'));
-                $tag_id = org_maemo_calendar_common::_create_tag_id(&$user,$tag_name);
-                
-                $user->set_parameter('org.maemo.calendar:tag',$tag_id,'FFFF99');
-                $user->set_parameter('org.maemo.calendar:tag_name',$tag_id,$tag_name);
-                $users_tags = $user->list_parameters('org.maemo.calendar:tag');
-                
-                if (!$logged_in)
-                {
-                    $_MIDCOM->auth->drop_sudo();
-                }
-            }
-            else
-            {
-                debug_add('Couldn\'t get SUDO privileges! Tags not added.');
-            }
-        }
+        // if (empty($users_tags))
+        // {
+        //     debug_add("No tags defined! Creating the default tag to users parameters.");
+        //     
+        //     if (   $logged_in
+        //         || (   !$logged_in
+        //             && $_MIDCOM->auth->request_sudo()) )
+        //     {
+        //         $_l10n =& $_MIDCOM->i18n->get_l10n('org.maemo.calendar');
+        //         $tag_name = $_l10n->get($this->_config->get('default_tag_name'));
+        //         $tag_id = org_maemo_calendar_common::_create_tag_id(&$user,$tag_name);
+        //         
+        //         $user->set_parameter('org.maemo.calendar:tag',$tag_id,'FFFF99');
+        //         $user->set_parameter('org.maemo.calendar:tag_name',$tag_id,$tag_name);
+        //         $users_tags = $user->list_parameters('org.maemo.calendar:tag');
+        //         
+        //         if (!$logged_in)
+        //         {
+        //             $_MIDCOM->auth->drop_sudo();
+        //         }
+        //     }
+        //     else
+        //     {
+        //         debug_add('Couldn\'t get SUDO privileges! Tags not added.');
+        //     }
+        // }
         
         foreach ($users_tags as $tag_id => $color)
         {

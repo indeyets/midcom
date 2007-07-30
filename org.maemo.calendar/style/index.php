@@ -12,9 +12,9 @@
     <!-- Header end -->
 
     <div class="container">
-        <div id="calendar-loading">
-            <img src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/indicator.gif" alt="" />
-        </div>      
+        <div id="calendar-loading" style="display: block;">
+            <img src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/ajax-loading-big.gif" alt="" />
+        </div>
         <div class="calendar-modal-window">
             <div class="calendar-modal-window-content">
                 <img src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/indicator.gif" alt="" /> Loading...
@@ -22,7 +22,7 @@
         </div>
         <div class="container-helper">      
             <!-- Calendar start -->
-            <div id="calendar-holder">      
+            <div id="calendar-holder" style="display: none;">      
             <?php
             $data['maemo_calender']->show();
             ?>  
@@ -35,7 +35,7 @@
     
     <!-- Panel start -->
 <?php
-$data['panel']->show();
+$data['panel']->show(true);
 ?>
     <!-- Panel end -->
     

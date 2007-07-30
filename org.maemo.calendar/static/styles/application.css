@@ -28,7 +28,7 @@ body {
     left: 0;
     width: 100%;
     height: 23px;
-    text-align: right;
+    text-align: left;
     background-color: #eeeeec;
 }
 .header div
@@ -68,7 +68,7 @@ body {
     position: relative;
     top: 0;
     left: 0;
-    height: 350px;
+    height: 420px;
 }
 .container-helper {
     margin: 10px;

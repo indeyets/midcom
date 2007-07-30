@@ -84,6 +84,257 @@ function zoom_view(zoom_in, url)
     return false;   
 }
 
+function update_date_selection(day, month, year)
+{
+    var inputs = [];
+    
+    var form = jQuery('#date-selection-form');    
+    jQuery(':input', form).each(function() {
+        if (this.name == "month-select")
+        {
+            this.value = month;
+        }
+        if (this.name == "day-select")
+        {
+            this.value = day;
+        }
+        if (this.name == "year-select")
+        {
+            this.value = year;
+        }
+        inputs.push(this.name + '=' + escape(this.value));
+    });
+    
+    return inputs;
+}
+
+function goto_prev()
+{
+    var currentDate = new Date();
+    var day = currentDate.getDate();
+    var month = currentDate.getMonth();
+    var year = currentDate.getFullYear();
+
+    var newDate = new Date(
+        day, month, year
+        );
+        
+    var form = jQuery('#date-selection-form');    
+    jQuery(':input', form).each(function() {
+        if (this.name == "month-select")
+        {
+            month = this.value-1;
+        }
+        if (this.name == "day-select")
+        {
+            day = this.value;
+        }
+        if (this.name == "year-select")
+        {
+            year = this.value;
+        }
+    });
+    
+    newDate.setDate(day);
+    newDate.setMonth(month);
+    newDate.setYear(year);
+    
+    console.log("newDate before: "+newDate);
+
+    if (calendar_config["type"] == 1)
+    {
+        newDate.setYear(newDate.getFullYear() - 1);        
+    }
+    if (calendar_config["type"] == 2)
+    {
+        newDate.setMonth((newDate.getMonth() - 1));
+    }
+    if (calendar_config["type"] == 3)
+    {
+        newDate.setDate((newDate.getDate() - 7));
+    }
+    if (calendar_config["type"] == 4)
+    {
+        newDate.setDate((newDate.getDate() - 1));
+    }    
+    
+    var str_month = String((newDate.getMonth()+1));
+    if (str_month.length < 2)
+    {
+        str_month = "0" + str_month;
+    }
+    
+    var str_day = String((newDate.getDate()));
+    if (str_day.length < 2)
+    {
+        str_day = "0" + str_day;
+    }
+    
+    var inputs = update_date_selection(str_day, str_month, newDate.getFullYear());
+    
+    timestamp = newDate.getTime() / 1000.0;
+    
+    calendar_config["timestamp"] = timestamp;
+
+    var ajax_url = form[0].action + calendar_config["timestamp"] + '/' + calendar_config["type"];
+
+    jQuery.ajaxSetup({global: true});
+    jQuery.ajax({
+        data: inputs.join('&'),
+        url: ajax_url,
+        timeout: 12000,
+        error: function(obj, type, expobj) {
+            alert("Failed to change date");
+            jQuery('#calendar-holder').show();
+        },
+        success: function(r) {
+            jQuery('#calendar-holder').html(unescape(r));
+
+            //var bodyClass = calendar_config["types_classes"][calendar_config["type"]];
+            
+            setTimeout("finishCalendarLoad('calendar-holder')", 400);
+        }
+    });    
+}
+
+function goto_next()
+{
+    var currentDate = new Date();
+    var day = currentDate.getDate();
+    var month = currentDate.getMonth();
+    var year = currentDate.getFullYear();
+
+    var newDate = new Date(
+        day, month, year
+        );
+    
+    var form = jQuery('#date-selection-form');
+    jQuery(':input', form).each(function() {
+        if (this.name == "day-select")
+        {
+            day = this.value;
+        }
+        if (this.name == "month-select")
+        {
+            month = this.value-1;
+        }
+        if (this.name == "year-select")
+        {
+            year = this.value;
+        }
+    });
+
+    newDate.setDate(day);
+    newDate.setMonth(month);
+    newDate.setYear(year);
+    
+    console.log("newDate before: "+newDate);
+
+    if (calendar_config["type"] == 1)
+    {
+        newDate.setYear(newDate.getFullYear() + 1);        
+    }
+    if (calendar_config["type"] == 2)
+    {
+        newDate.setMonth((newDate.getMonth() + 1));
+    }
+    if (calendar_config["type"] == 3)
+    {
+        newDate.setDate((newDate.getDate() + 7));
+    }
+    if (calendar_config["type"] == 4)
+    {
+        newDate.setDate((newDate.getDate() + 1));
+    }    
+    
+    var str_month = String((newDate.getMonth()+1));
+    if (str_month.length < 2)
+    {
+        str_month = "0" + str_month;
+    }
+    
+    var str_day = String((newDate.getDate()));
+    if (str_day.length < 2)
+    {
+        str_day = "0" + str_day;
+    }
+    
+    var inputs = update_date_selection(str_day, str_month, newDate.getFullYear());
+
+    timestamp = newDate.getTime() / 1000.0;
+    
+    console.log("newDate: "+newDate);
+        
+    calendar_config["timestamp"] = timestamp;
+
+    var ajax_url = form[0].action + calendar_config["timestamp"] + '/' + calendar_config["type"];
+
+    jQuery.ajaxSetup({global: true});
+    jQuery.ajax({
+        data: inputs.join('&'),
+        url: ajax_url,
+        timeout: 12000,
+        error: function(obj, type, expobj) {
+            alert("Failed to change date");
+            jQuery('#calendar-holder').show();
+        },
+        success: function(r) {
+            jQuery('#calendar-holder').html(unescape(r));
+
+            //var bodyClass = calendar_config["types_classes"][calendar_config["type"]];
+            
+            setTimeout("finishCalendarLoad('calendar-holder')", 400);
+        }
+    });    
+}
+
+function goto_today()
+{
+    var form = jQuery('#date-selection-form');
+    var currentDate = new Date();
+
+    var day = currentDate.getDate();
+    var month = currentDate.getMonth();
+    var year = currentDate.getFullYear();
+
+    var cur_month = String((month+1));
+    if (cur_month.length < 2)
+    {
+        cur_month = "0" + cur_month;
+    }
+
+    var inputs = update_date_selection(day, cur_month, year);
+
+    var newDate = new Date (
+            year, month, day
+        );
+    timestamp = newDate.getTime() / 1000.0;
+            
+    calendar_config["timestamp"] = timestamp;
+
+    var ajax_url = form[0].action + calendar_config["timestamp"] + '/' + calendar_config["type"];
+
+    jQuery.ajaxSetup({global: true});
+    jQuery.ajax({
+        data: inputs.join('&'),
+        url: ajax_url,
+        timeout: 12000,
+        error: function(obj, type, expobj) {
+            alert("Failed to change date");
+            jQuery('#calendar-holder').show();
+        },
+        success: function(r) {
+            jQuery('#calendar-holder').html(unescape(r));
+
+            //var bodyClass = calendar_config["types_classes"][calendar_config["type"]];
+            
+            setTimeout("finishCalendarLoad('calendar-holder')", 400);
+        }
+    });
+    
+    return false;
+}
+
 function change_date() {
     var form = jQuery('#date-selection-form');
     var currentDate = new Date();
@@ -92,7 +343,6 @@ function change_date() {
     var day = currentDate.getDate();
     var month = currentDate.getMonth();
     var year = currentDate.getFullYear();
-    calendar_timestamp = currentDate.getTime()/1000.0;
     
     jQuery(':input', form).each(function() {
         if (this.name == "month-select")
@@ -196,20 +446,14 @@ function close_create_event()
     return;
 }
 
-function load_modal_window(url, is_exec)
+function load_modal_window(url)
 {
     var win = jQuery("div.calendar-modal-window");
-    var prefix = APPLICATION_PREFIX;
-    
-    if (is_exec)
-    {
-        prefix = EXEC_PREFIX;
-    }
     
     jQuery.ajaxSetup({global: false});
     jQuery.ajax({
         type: "GET",
-        url: prefix + url,
+        url: APPLICATION_PREFIX + url,
         timeout: 12000,
         error: function(request, type, expobj) {
             console.log("Failed to load modal window! type: "+type);
@@ -241,7 +485,7 @@ function load_shelf_contents()
     jQuery.ajaxSetup({global: false});
     jQuery.ajax({
         type: "GET",
-        url: EXEC_PREFIX + url,
+        url: APPLICATION_PREFIX + url,
         timeout: 12000,
         dataType: 'json',
         error: function(request, type, expobj) {
@@ -263,7 +507,7 @@ function save_shelf_contents()
     jQuery.ajaxSetup({global: false});
     jQuery.ajax({
         type: "POST",
-        url: EXEC_PREFIX + url,
+        url: APPLICATION_PREFIX + url,
         data: {data: protoToolkit.toJSON(shelf_contents)},
         timeout: 12000,
         error: function(obj, type, expobj) {
@@ -283,7 +527,7 @@ function update_shelf_panel_leaf()
     jQuery.ajaxSetup({global: false});
     jQuery.ajax({
         type: "GET",
-        url: EXEC_PREFIX + url,
+        url: APPLICATION_PREFIX + url,
         timeout: 12000,
         dataType: 'script',
         error: function(obj, type, expobj) {
@@ -384,7 +628,7 @@ function empty_shelf()
     jQuery.ajaxSetup({global: false});
     jQuery.ajax({
         type: "GET",
-        url: EXEC_PREFIX + url,
+        url: APPLICATION_PREFIX + url,
         timeout: 12000,
         error: function(obj, type, expobj) {
             alert("Failed to empty shelf list");
@@ -445,7 +689,7 @@ function enable_buddylist_search()
     var options = { 
         beforeSubmit:  show_searching,
         success:       render_buddylist_search_results,
-        url:       EXEC_PREFIX + url,
+        url:       APPLICATION_PREFIX + url,
         type:      'post',
         dataType:  'json',
         timeout:   12000 
@@ -586,7 +830,7 @@ function refresh_buddylist(ask_for_reload)
     jQuery.ajaxSetup({global: false});
     jQuery.ajax({
         type: "GET",
-        url: EXEC_PREFIX + url,
+        url: APPLICATION_PREFIX + url,
         timeout: 12000,
         error: function(obj, type, expobj) {
             console.log("Failed to refresh buddylist. Exception type: "+type);
@@ -707,7 +951,7 @@ function enable_layer_update_form(layer_id, tag_id)
     var options = { 
         beforeSubmit:  show_processing,
         success:       processing_successfull,
-        url:       EXEC_PREFIX + url,
+        url:       APPLICATION_PREFIX + url,
         type:      'post',
         //dataType:  'json',
         timeout:   12000
@@ -724,7 +968,7 @@ function enable_tag_create_form(layer_id)
     var options = { 
         beforeSubmit:  show_processing,
         success:       processing_successfull,
-        url:       EXEC_PREFIX + url,
+        url:       APPLICATION_PREFIX + url,
         type:      'post',
         //dataType:  'json',
         timeout:   12000
@@ -756,6 +1000,14 @@ function processing_successfull(responseText, statusText)
 function on_view_update()
 {
     hide_shelf_events_from_view();
+}
+
+function show_layout()
+{
+    jQuery('#calendar-loading').hide();
+    jQuery('#calendar-holder').show();
+    jQuery('div.application div.header').show();
+    jQuery('#main-panel').show();
 }
 
 jQuery(document).ready(function() {

@@ -261,7 +261,6 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/tags/jquery.bgiframe.min.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.dimensions.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/tags/jquery.tags_widget.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/tags/widget.js');
         
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/jscript-calendar/calendar-setup.js', true);
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/jscript-calendar/lang/calendar-en.js', true);
@@ -272,8 +271,6 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.maemo.calendar/js/calendar.js');
 
         $script = 'const MIDCOM_STATIC_URL = "' . MIDCOM_STATIC_URL . '";'."\n";
-        $script .= 'const APPLICATION_PREFIX = "' . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . '";'."\n";
-        $script .= 'const EXEC_PREFIX = "/";'."\n";
 
         $_MIDCOM->add_jscript($script,"",true);
         
@@ -290,6 +287,7 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
             );
             jQuery("div.calendar-layerholder div.calendar-object-event-header").textSelection("disable");
             load_shelf_contents();
+            show_layout();
         '."\n";
         
         $_MIDCOM->add_jquery_state_script($script);
