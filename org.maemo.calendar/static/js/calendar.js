@@ -196,13 +196,20 @@ function close_create_event()
     return;
 }
 
-function load_modal_window(url)
+function load_modal_window(url, is_exec)
 {
     var win = jQuery("div.calendar-modal-window");
+    var prefix = APPLICATION_PREFIX;
+    
+    if (is_exec)
+    {
+        prefix = EXEC_PREFIX;
+    }
+    
     jQuery.ajaxSetup({global: false});
     jQuery.ajax({
         type: "GET",
-        url: APPLICATION_PREFIX + url,
+        url: prefix + url,
         timeout: 12000,
         error: function(request, type, expobj) {
             console.log("Failed to load modal window! type: "+type);
@@ -234,7 +241,7 @@ function load_shelf_contents()
     jQuery.ajaxSetup({global: false});
     jQuery.ajax({
         type: "GET",
-        url: APPLICATION_PREFIX + url,
+        url: EXEC_PREFIX + url,
         timeout: 12000,
         dataType: 'json',
         error: function(request, type, expobj) {
@@ -256,7 +263,7 @@ function save_shelf_contents()
     jQuery.ajaxSetup({global: false});
     jQuery.ajax({
         type: "POST",
-        url: APPLICATION_PREFIX + url,
+        url: EXEC_PREFIX + url,
         data: {data: protoToolkit.toJSON(shelf_contents)},
         timeout: 12000,
         error: function(obj, type, expobj) {
@@ -276,7 +283,7 @@ function update_shelf_panel_leaf()
     jQuery.ajaxSetup({global: false});
     jQuery.ajax({
         type: "GET",
-        url: APPLICATION_PREFIX + url,
+        url: EXEC_PREFIX + url,
         timeout: 12000,
         dataType: 'script',
         error: function(obj, type, expobj) {
@@ -377,7 +384,7 @@ function empty_shelf()
     jQuery.ajaxSetup({global: false});
     jQuery.ajax({
         type: "GET",
-        url: APPLICATION_PREFIX + url,
+        url: EXEC_PREFIX + url,
         timeout: 12000,
         error: function(obj, type, expobj) {
             alert("Failed to empty shelf list");
@@ -438,7 +445,7 @@ function enable_buddylist_search()
     var options = { 
         beforeSubmit:  show_searching,
         success:       render_buddylist_search_results,
-        url:       APPLICATION_PREFIX + url,
+        url:       EXEC_PREFIX + url,
         type:      'post',
         dataType:  'json',
         timeout:   12000 
@@ -579,7 +586,7 @@ function refresh_buddylist(ask_for_reload)
     jQuery.ajaxSetup({global: false});
     jQuery.ajax({
         type: "GET",
-        url: APPLICATION_PREFIX + url,
+        url: EXEC_PREFIX + url,
         timeout: 12000,
         error: function(obj, type, expobj) {
             console.log("Failed to refresh buddylist. Exception type: "+type);
@@ -674,14 +681,14 @@ function edit_calendar_layer_properties(layer_id)
     console.log('edit_calendar_layer_properties layer_id: '+layer_id);
 
     var url = 'midcom-exec-org.maemo.calendar/layers.php?action=show_update_layer&layer_id='+layer_id;
-    load_modal_window(url);
+    load_modal_window(url, true);
 }
 function edit_calendar_layer_tag_properties(layer_id, tag_id)
 {
     console.log('edit_calendar_layer_tag_properties layer_id: '+layer_id+' tag_id: '+tag_id);
 
     var url = 'midcom-exec-org.maemo.calendar/layers.php?action=show_update_tag&layer_id='+layer_id+'&tag_id='+tag_id;
-    load_modal_window(url);
+    load_modal_window(url, true);
 }
 
 function enable_layer_update_form(layer_id, tag_id)
@@ -700,7 +707,7 @@ function enable_layer_update_form(layer_id, tag_id)
     var options = { 
         beforeSubmit:  show_processing,
         success:       processing_successfull,
-        url:       APPLICATION_PREFIX + url,
+        url:       EXEC_PREFIX + url,
         type:      'post',
         //dataType:  'json',
         timeout:   12000
@@ -717,7 +724,7 @@ function enable_tag_create_form(layer_id)
     var options = { 
         beforeSubmit:  show_processing,
         success:       processing_successfull,
-        url:       APPLICATION_PREFIX + url,
+        url:       EXEC_PREFIX + url,
         type:      'post',
         //dataType:  'json',
         timeout:   12000
