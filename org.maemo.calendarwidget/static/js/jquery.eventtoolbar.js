@@ -218,16 +218,11 @@ jQuery.fn.eventToolbar = function(settings,items) {
         );
     }
     
-    function edit_event_action()
-    {        
-        window.location = APPLICATION_PREFIX + 'event/edit/' + event_guid;
-    }
-    
     function _add_menu_item(data)
     {
         data = jQuery.extend({
             className: '',
-            onclick: '',
+            action: '',
             name: ''
         }, data);
         

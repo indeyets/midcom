@@ -219,6 +219,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
      */
     function org_maemo_calendarwidget($year = null, $month = null, $day = null)
     {
+        $this->_component = 'org.maemo.calendarwidget';
         parent::midcom_baseclasses_components_purecode();
         
         // Default time shown is current
@@ -277,7 +278,6 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 
         // Load required Javascript files
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.maemo.calendarwidget/js/jquery.eventtoolbar.js');
-
     }
     
     function get_type_name($type)
@@ -1470,16 +1470,16 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 
             $html .= "</div>\n\n";
             
-            $menu_items[] = "{ className: 'first', name: '" . $this->_l10n->get("show") . "', action: \"function(){load_modal_window('ajax/event/show/{$event->guid}');}\"}";
+            $menu_items[] = "{ className: 'first', name: '" . $this->_l10n->get("show") . "', action: function() {load_modal_window('ajax/event/show/{$event->guid}');} }";
             if ($event->can_do('midgard:update'))
             {
-                $menu_items[] = "{ name: '" . $this->_l10n_midcom->get("edit") . "', action: \"function(){load_modal_window('ajax/event/edit/{$event->guid}');}\"}";
+                $menu_items[] = "{ name: '" . $this->_l10n_midcom->get("edit") . "', action: function() {load_modal_window('ajax/event/edit/{$event->guid}');} }";
                 $event_data = "{ title: '{$event->title}', color: '{$bg_color}' }";
-                $menu_items[] = "{ name: '" . $this->_l10n->get("to shelf") . "', action: \"function(){move_event_to_shelf('{$event->guid}', {$event_data});}\"}";
+                $menu_items[] = "{ name: '" . $this->_l10n->get("to shelf") . "', action: function() {move_event_to_shelf('{$event->guid}', {$event_data});} }";
             }
             if ($event->can_do('midgard:delete'))
             {
-                $menu_items[] = "{ name: '" . $this->_l10n_midcom->get("delete") . "', action: \"function(){show_event_delete_form('{$event->guid}');}\"}";        
+                $menu_items[] = "{ name: '" . $this->_l10n_midcom->get("delete") . "', action: function() {show_event_delete_form('{$event->guid}');} }";
             }
                                     
             $menu_items_str = implode(",",$menu_items);
@@ -1596,14 +1596,13 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         {
             if ($overlapping_count > 0)
             {
-                debug_add("count > 0");
-                $this->_overlapping_event_moved_count[$ovmc_id]++;                
-                debug_add("_overlapping_event_moved_count {$this->_overlapping_event_moved_count[$ovmc_id]}");
-                if ($this->_overlapping_event_moved_count[$ovmc_id] > 0)
-                {
-                    debug_add("multiplied");
-                    $position['left'] += $event_width * ($overlapping_count - $this->_overlapping_event_moved_count[$ovmc_id]);
-                }
+                // debug_add("count > 0");
+                // $this->_overlapping_event_moved_count[$ovmc_id]++;                
+                // debug_add("_overlapping_event_moved_count {$this->_overlapping_event_moved_count[$ovmc_id]}");
+                // if ($this->_overlapping_event_moved_count[$ovmc_id] > 0)
+                // {
+                    $position['left'] += $event_width * ($overlapping_count - 1);//$this->_overlapping_event_moved_count[$ovmc_id]);
+                // }
                 $this->_overlapped_events[$event_guid] = true;
             }
         }
@@ -1613,19 +1612,18 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
             $position['left'] = 7;
             if ($overlapping_count > 0)
             {
-                $this->_overlapping_event_moved_count[$ovmc_id]++;                
-                debug_add("_overlapping_event_moved_count {$this->_overlapping_event_moved_count[$ovmc_id]}");
-                if ($this->_overlapping_event_moved_count[$ovmc_id] > 0)
-                {
-                    debug_add("multiplied");
-                    $position['left'] += $event_width * ($overlapping_count - $this->_overlapping_event_moved_count[$ovmc_id]);
-                }
+                // $this->_overlapping_event_moved_count[$ovmc_id]++;                
+                // debug_add("_overlapping_event_moved_count {$this->_overlapping_event_moved_count[$ovmc_id]}");
+                // if ($this->_overlapping_event_moved_count[$ovmc_id] > 0)
+                // {
+                    $position['left'] += $event_width * ($overlapping_count - 1);//$this->_overlapping_event_moved_count[$ovmc_id]);
+                // }
                 $this->_overlapped_events[$event_guid] = true;
             }
         }
 
-        $lc = ($oc - $this->_overlapping_event_moved_count[$ovmc_id]);
-        debug_add("overlapping count id: {$ovmc_id} count: {$overlapping_count} left_count: {$lc} left: {$position['left']} ew: {$event_width}");        
+        // $lc = ($oc - $this->_overlapping_event_moved_count[$ovmc_id]);
+        // debug_add("overlapping count id: {$ovmc_id} count: {$overlapping_count} left_count: {$lc} left: {$position['left']} ew: {$event_width}");        
         $position['left'] = round($position['left']);
         
         $multiplier = (3600 / $this->calendar_slot_length);
