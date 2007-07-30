@@ -219,7 +219,7 @@ class org_maemo_calendar_common
             {
                 $_l10n =& $_MIDCOM->i18n->get_l10n('org.maemo.calendar');
                 $tag_name = $_l10n->get($this->_config->get('default_tag_name'));
-                $tag_id = org_maemo_calendar_common::_create_tag_id(&$user,$data['name']);
+                $tag_id = org_maemo_calendar_common::_create_tag_id(&$user,$tag_name);
                 
                 $user->set_parameter('org.maemo.calendar:tag',$tag_id,'FFFF99');
                 $user->set_parameter('org.maemo.calendar:tag_name',$tag_id,$tag_name);
@@ -340,18 +340,20 @@ class org_maemo_calendar_common
         {
             debug_add("No timezone defined! Adding the default timezone to users parameters.");
             
-            if (   $logged_in
-                || (   !$logged_in
-                    && $_MIDCOM->auth->request_sudo()) )
+            // if (   $logged_in
+            //     || (   !$logged_in
+            //         && $_MIDCOM->auth->request_sudo()) )
+            // {
+            if ($_MIDCOM->auth->request_sudo())
             {
                 $default_timezone_name = date_default_timezone_get();
                 $user->set_parameter('org.maemo.calendar:preferences','timezone_identifier',$default_timezone_name);
                 $user_timezone_identifier = $user->get_parameter('org.maemo.calendar:preferences','timezone_identifier');
                 
-                if (!$logged_in)
-                {
+                // if (!$logged_in)
+                //                 {
                     $_MIDCOM->auth->drop_sudo();
-                }
+                // }
             }
             else
             {
