@@ -8,11 +8,8 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  * @link http://www.microformats.org/wiki/hcalendar hCalendar microformat
  */
-class org_maemo_calendarpanel_calendar_leaf extends midcom_baseclasses_components_purecode
-{
-    var $name;
-    var $title;
-    
+class org_maemo_calendarpanel_calendar_leaf extends org_maemo_calendarpanel_leaf
+{    
     var $_calendars = array();
     
     var $calendarwidget = null;
@@ -23,7 +20,7 @@ class org_maemo_calendarpanel_calendar_leaf extends midcom_baseclasses_component
      */
     function org_maemo_calendarpanel_calendar_leaf(&$calendarwidget)
     {
-        parent::midcom_baseclasses_components_purecode();
+        parent::org_maemo_calendarpanel_leaf();
         
         $this->name = 'calendar';
         $this->title = $this->_l10n->get($this->name);

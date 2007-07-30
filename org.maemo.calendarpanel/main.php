@@ -19,6 +19,7 @@ class org_maemo_calendarpanel extends midcom_baseclasses_components_purecode
      */
     function org_maemo_calendarpanel()
     {
+        $this->_component = 'org.maemo.calendarpanel';
         parent::midcom_baseclasses_components_purecode();
 
         // Make the calendar pretty
@@ -40,9 +41,15 @@ class org_maemo_calendarpanel extends midcom_baseclasses_components_purecode
         $_MIDCOM->add_jquery_state_script($script);
     }
     
-    function show()
+    function show($load_as_invicible=false)
     {
-        echo '<div id="main-panel" class="panel">'."\n";
+        $style = "";
+        if ($load_as_invicible)
+        {
+            $style = 'display: none;';
+        }
+        
+        echo '<div id="main-panel" class="panel" style="' . $style . '">'."\n";
         
         //$onclick_action = '$j(\'#main-panel-content\').BlindToggleVertically(300, null, \'bounceout\');return false;';
         //$onclick_action = '$j(\'#main-panel-content\').animate({ height: \'toggle\' }, \'fast\');';

@@ -29,6 +29,7 @@ class org_maemo_calendarpanel_interface extends midcom_baseclasses_components_in
         $this->_autoload_files = array
         (
             'main.php',
+            'calendarpanel_leaf.php',
             'calendar_leaf.php',
             'buddylist_leaf.php',
             'shelf_leaf.php',

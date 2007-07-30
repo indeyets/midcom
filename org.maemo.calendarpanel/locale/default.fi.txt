@@ -1,25 +1,25 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE fi
 
 ---STRING buddylist
-Buddylist
+Kaverit
 ---STRINGEND
 
 ---STRING calendar
-Calendar
+Kalenterit
 ---STRINGEND
 
 ---STRING profile
-Personal profile
+Omat tiedot
 ---STRINGEND
 
 ---STRING shelf
-Event Shelf
+Hylly
 ---STRINGEND
 
 ---STRING toggle panel
-Toggle panel
+Avaa/Sulje paneeli
 ---STRINGEND
 

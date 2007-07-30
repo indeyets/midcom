@@ -8,10 +8,8 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  * @link http://www.microformats.org/wiki/hcalendar hCalendar microformat
  */
-class org_maemo_calendarpanel_profile_leaf extends midcom_baseclasses_components_purecode
+class org_maemo_calendarpanel_profile_leaf extends org_maemo_calendarpanel_leaf
 {
-    var $name;
-    var $title;
     
     var $_schemadb = null;
     var $_schema = null;
@@ -25,7 +23,7 @@ class org_maemo_calendarpanel_profile_leaf extends midcom_baseclasses_components
      */
     function org_maemo_calendarpanel_profile_leaf()
     {
-        parent::midcom_baseclasses_components_purecode();
+        parent::org_maemo_calendarpanel_leaf();
         
         $this->name = 'profile';
         $this->title = $this->_l10n->get($this->name);

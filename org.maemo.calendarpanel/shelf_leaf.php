@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  * @link http://www.microformats.org/wiki/hcalendar hCalendar microformat
  */
-class org_maemo_calendarpanel_shelf_leaf extends midcom_baseclasses_components_purecode
+class org_maemo_calendarpanel_shelf_leaf extends org_maemo_calendarpanel_leaf
 {
     var $name;
     var $title;
@@ -21,7 +21,7 @@ class org_maemo_calendarpanel_shelf_leaf extends midcom_baseclasses_components_p
      */
     function org_maemo_calendarpanel_shelf_leaf()
     {
-        parent::midcom_baseclasses_components_purecode();
+        parent::org_maemo_calendarpanel_leaf();
         
         $this->name = 'shelf';
         $this->title = $this->_l10n->get($this->name);
