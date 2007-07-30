@@ -29,7 +29,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
 
     var $user_tags = array();
     var $default_tag = array();
-
+    
     var $_approved_buddies = array();
     var $_all_buddies = array();
     var $_pending_buddy_requests = array();
@@ -53,7 +53,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
     function _on_initialize()
     {
         $_MIDCOM->auth->require_valid_user();
-        $this->current_user = $_MIDCOM->auth->user->get_storage();
+        $this->current_user =& $_MIDCOM->auth->user->get_storage();
         $this->layer_data = array( 'calendars' => array(), 'busy' => array() );
     }
     
@@ -99,6 +99,14 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
                 $this->_request_data['maemo_calender']->calendar_slot_length = $this->_config->get('week_slot_length') * 60;
                 $script = '$j("div.calendar-timeline-holder")[0].scrollTop = calendar_config["start_hour_x"];' ."\n";
                 $script .= '$j("body").attr("class", "week");' ."\n";
+                $_MIDCOM->add_jquery_state_script($script);
+            break;
+            case ORG_MAEMO_CALENDARWIDGET_DAY:
+                $this->_request_data['maemo_calender']->cell_height = $this->_config->get('week_row_height');
+                $this->_request_data['maemo_calender']->cell_height_unit = $this->_config->get('week_row_unit');
+                $this->_request_data['maemo_calender']->calendar_slot_length = $this->_config->get('week_slot_length') * 60;
+                $script = '$j("div.calendar-timeline-holder")[0].scrollTop = calendar_config["start_hour_x"];' ."\n";
+                $script .= '$j("body").attr("class", "day");' ."\n";
                 $_MIDCOM->add_jquery_state_script($script);
             break;
             case ORG_MAEMO_CALENDARWIDGET_MONTH:
@@ -213,15 +221,15 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
             $calendar_id = $person->guid;
             $calendar_name = $person->name;
             
-            $public_tags = org_maemo_calendar_common::fetch_available_user_tags($person->guid, true);
-
+            $tags = org_maemo_calendar_common::fetch_available_user_tags($person->guid);
+            
             $calendar_color = org_maemo_calendar_common::fetch_user_calendar_color($person->guid);
             
             if (! isset($this->layer_data['calendars'][$calendar_id]))
             {
                 $this->layer_data['calendars'][$calendar_id] = array(
                     'events' => array(),
-                    'tags' => $public_tags,
+                    'tags' => $tags,
                     'owner' => $person->guid,
                     'name' => $calendar_name,
                     'color' => $calendar_color
@@ -241,31 +249,29 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
         
         if (class_exists('net_nemein_tag_handler'))
         {
-            $tags = net_nemein_tag_handler::get_object_tags($event);
-            debug_print_r('Tags before', $tags);
-            
             /*
              * Make sure we put the event to our Calendar if we own or are participant in it.
              */
-            if (   array_key_exists($this->current_user->id, $event->participants)
+            if (   is_array($event->participants)
+                && array_key_exists($this->current_user->id, $event->participants)
                 ) //|| $event->metadata->creator == $this->current_user->guid
             {
                 $default_calendar_id = $this->current_user->guid;
                 
-                if ( empty($tags))
-                {
-                    $tag_string = $this->user_tags[0]['id'] . ' ';
-                    $tag_array = net_nemein_tag_handler::string2tag_array($tag_string);
-                    $tag_added = net_nemein_tag_handler::tag_object($event,$tag_array);
-                    if (!$tag_added)
-                    {
-                        debug_add("Failed adding tag '{$this->user_tags[0]['id']}' to event #{$event->id} ({$event->title})");
-                    }
-                    else
-                    {
-                        debug_add("Successfully added tag '{$this->user_tags[0]['id']}' to event #{$event->id} ({$event->title})");
-                    }                   
-                }
+                // if ( empty($tags))
+                // {
+                //     $tag_string = $this->user_tags[0]['id'] . ' ';
+                //     $tag_array = net_nemein_tag_handler::string2tag_array($tag_string);
+                //     $tag_added = net_nemein_tag_handler::tag_object($event,$tag_array);
+                //     if (!$tag_added)
+                //     {
+                //         debug_add("Failed adding tag '{$this->user_tags[0]['id']}' to event #{$event->id} ({$event->title})");
+                //     }
+                //     else
+                //     {
+                //         debug_add("Successfully added tag '{$this->user_tags[0]['id']}' to event #{$event->id} ({$event->title})");
+                //     }
+                // }
 
                 $this->layer_data['calendars'][$default_calendar_id]['events'][] = $event;
 
@@ -277,16 +283,16 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
                 {
                     $calendar_id = $person->guid;
                     
-                    if (array_key_exists($person_id, $event->participants))
+                    if ($event->is_public())
                     {
-                        $this->layer_data['calendars'][$calendar_id]['events'][] = $event;
-                        $this->layer_data['busy'][$calendar_id][$event->guid] = array( 'start' => $event->start, 'end' => $event->end );                        
+                        if (array_key_exists($person_id, $event->participants))
+                        {
+                            $this->layer_data['calendars'][$calendar_id]['events'][] = $event;
+                            $this->layer_data['busy'][$calendar_id][$event->guid] = array( 'start' => $event->start, 'end' => $event->end );                        
+                        }                        
                     }
                 }               
             }
-            
-            $tags = net_nemein_tag_handler::get_object_tags($event);
-            debug_print_r('final tags', $tags);
         }
         else
         {

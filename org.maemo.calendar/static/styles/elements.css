@@ -123,6 +123,7 @@ div.calendar-object-event-header
     background-color: #d3d7cf;
     border-bottom: 1px solid #b5b7b3;
     -moz-border-radius: 8px 0 0 0;
+    overflow: hidden;
 }
 span.event-timelabel
 {

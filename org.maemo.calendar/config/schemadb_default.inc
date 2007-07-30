@@ -61,26 +61,21 @@
             ),
             'widget' => 'textarea',
         ),
-        /*'tags' => Array
-        (
-            'title' => 'tags',
-            'storage' => null,
-            'type' => 'tags',
-            'widget' => 'text',
-        ),*/
         'tags' => Array
         (
-            'title' => 'tags widget',
-            'storage' => 'null',
+            /* COMPONENT REQUIRED FIELD */
+            'title' => 'tags',
+            'storage' => null,
             'type' => 'tagselect',
             'type_config' => array
             (
                 'option_callback' => 'org_maemo_calendar_callbacks_personstags',
                 'enable_saving_to_callback' => false,
                 'force_saving_to_tag_library' => true,
+                'must_exist_also_in_callback' => true,
             ),
             'widget' => 'tags',
-        ),        
+        ),
         /*'participants' => array 
         (
             'title'   => 'participants',

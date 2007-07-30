@@ -121,6 +121,7 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
      */
     function _on_initialize()
     {
+        $_MIDCOM->auth->require_valid_user();
     }
 
     /**
@@ -216,7 +217,8 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
         $active_timezone = org_maemo_calendar_common::active_timezone();
         $utc_timezone = timezone_open("UTC");
         
-        if (empty($_POST) && is_object($this->_event))
+        if (   empty($_POST)
+            && is_object($this->_event))
         {
             debug_add("Alter the start/end times with timezone");
             $event_start = $this->_event->start;
@@ -458,7 +460,14 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
      */
     function _handler_delete($handler_id, $args, &$data)
     {
-        $this->_event = new org_openpsa_calendar_event($args[0]);
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        if ($handler_id == 'ajax-event-delete')
+        {
+            $_MIDCOM->skip_page_style = true;
+        }
+        
+        $this->_event = new org_maemo_calendar_event($args[0]);
         if (! $this->_event)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The event {$args[0]} was not found.");
@@ -467,40 +476,40 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
         
         $this->_event->require_do('midgard:delete');
         
-        $this->_load_datamanager();
+        $this->_load_controller();
 
-        if (array_key_exists('net_nemein_events_deleteok', $_REQUEST))
+        if (array_key_exists('org_maemo_calendar_event_deleteok', $_REQUEST))
         {
+            $data['deleted'] = $this->_event->guid;
+            
             // Deletion confirmed.
             if (! $this->_event->delete())
             {
+                debug_pop();
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to delete event {$args[0]}, last Midgard error was: " . mgd_errstr());
                 // This will exit.
             }
 
-            // Update the index
-            $indexer =& $_MIDCOM->get_service('indexer');
-            $indexer->delete($this->_event->guid);
-
-            // Delete ok, relocating to resource.
-            $_MIDCOM->relocate("view/{$this->_resource->name}/");
-            // This will exit.
+            if ($handler_id != 'ajax-event-delete')
+            {
+                // Delete ok, relocating to latest view.
+                debug_pop();
+                $_MIDCOM->relocate("");
+                // This will exit.
+            }
         }
-
-        /*
-        if (array_key_exists('net_nemein_events_deletecancel', $_REQUEST))
-        {
-            // Redirect to view page.
-            $_MIDCOM->relocate("event/{$this->_event->guid}/");
-            // This will exit()
-        }
-        */
 
         $this->_prepare_request_data($handler_id);
-        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_event->title}");
-        $_MIDCOM->bind_view_to_object($this->_event, $this->_datamanager->schema->name);
-        $this->_update_breadcrumb_line($handler_id);
+        $_MIDCOM->bind_view_to_object($this->_event, $this->_request_data['controller']->datamanager->schema->name);
 
+        if ($handler_id != 'ajax-event-delete')
+        {
+            $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_event->title}");
+            $this->_update_breadcrumb_line($handler_id);
+        }
+        
+        debug_pop();
+        
         return true;
     }
 
@@ -510,8 +519,10 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
      */
     function _show_delete ($handler_id, &$data)
     {
-        $data['view_event'] = $this->_datamanager->get_content_html();
-        midcom_show_style('view-event-delete');
+        if ($handler_id == 'ajax-event-delete')
+        {
+            midcom_show_style('event-delete-ajax');
+        }
     }
 }
 

@@ -78,6 +78,7 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
      */
     function _on_initialize()
     {
+        $_MIDCOM->auth->require_valid_user();
         $this->_root_event =& $this->_request_data['root_event'];
     }
 
@@ -172,16 +173,16 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
 
         // Populate the participants
         $participants = array();
-        if (   empty($_POST['participants'])
-            || !is_array($_POST['participants']) )
+        if (   !is_array($_POST['participants'])
+            || empty($_POST['participants']))
         {
-            $participants = array( $_MIDGARD['user'] => true );
+            $_POST['participants'] = array( $_MIDGARD['user'] );
         }
-        // debug_print_r('_POST[participants]: ',$_POST['participants']);
+        debug_print_r('_POST[participants]: ',$_POST['participants']);
         foreach ($_POST['participants'] as $participant_id)
         {
             //$participants[$participant_id] = true;
-            $participants[] = array( $participant_id => true );
+            $participants[] = $participant_id;
             
             // $this->_event->participants = array
             // (
@@ -194,53 +195,20 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
             // ) );
         }
         
-        $this->_event->participants = $participants;
+        $this->_event->participants = serialize($participants);
         //$this->_event->participants = $_POST['participants'];
         
-        //debug_print_r('this->_event->participants before create: ',$this->_event->participants);
-
-        debug_add("Make sure the start/end times are saved with UTC timezone");
+        debug_print_r('this->_event->participants before create: ',$this->_event->participants);
         
-        $utc_timezone = timezone_open("UTC");
-        
-        $event_start = strtotime($_POST['start']);
-        debug_add("event_start before timezone change: " . $event_start . " (" . date("H:i:s",$event_start) . ")");
-        $event_end = strtotime($_POST['end']);
-        $event_start_dt = date_create("@$event_start", $utc_timezone);
-        $event_end_dt = date_create("@$event_end", $utc_timezone);
-        $start_tz_name = $event_start_dt->getTimeZone()->getName();
-        debug_add("start_tz_name: ".$start_tz_name);
-        $event_start_dt->setTimezone($active_timezone);
-        $start_tz_name = $event_start_dt->getTimeZone()->getName();
-        debug_add("start_tz_name after set: ".$start_tz_name);
-        $event_end_dt->setTimezone($active_timezone);
-        $start_offset = $event_start_dt->format('Z');//$active_timezone->getOffset($event_start);
-        debug_add("offset {$start_offset} (in hours): " . ($start_offset/(60*60)));
-        $end_offset = $event_end_dt->format('Z');//$active_timezone->getOffset($event_end);
-        
-        if ($start_offset > 0)
-        {
-            $event_start = $event_start - $start_offset;
-            $event_end = $event_end - $end_offset;                
-        }
-        else
-        {
-            $event_start = $event_start + $start_offset;
-            $event_end = $event_end + $end_offset;                
-        }
-        
-        debug_add("event_start after timezone change: " . $event_start . " (" . date("H:i:s",$event_start) . ")");
-
-        $_POST['start'] = date("Y-m-d H:i:s", $event_start);
-        $_POST['end'] = date("Y-m-d H:i:s", $event_end);
-
         if (array_key_exists('start', $_POST))
         {
             $this->_event->start = strtotime($_POST['start']);
+            debug_add("new start time: ".date("Y-m-d H:i:s", $this->_event->start));
         }
         if (array_key_exists('end', $_POST))
         {
             $this->_event->end = strtotime($_POST['end']);
+            debug_add("new end time: ".date("Y-m-d H:i:s", $this->_event->end));
         }
         if (array_key_exists('title', $_POST))
         {
@@ -285,17 +253,64 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
             }
         }
 
-        //debug_print_r('this->_event->participants after create: ',$this->_event->participants);
+        debug_print_r('this->_event->participants after create: ',$this->_event->participants);
 
         return $this->_event;
     }
+    
+    function _timezone_hack()
+    {   
+        $active_timezone = org_maemo_calendar_common::active_timezone();
+        $utc_timezone = timezone_open("UTC");
 
+        if (   isset($_POST['start'])
+            && isset($_POST['end']))
+        {           
+            debug_add("Make sure the start/end times are saved with UTC timezone");
+
+            $event_start = strtotime($_POST['start']);
+            debug_add("event_start before timezone change: " . $event_start . " (" . date("H:i:s",$event_start) . ")");
+            $event_end = strtotime($_POST['end']);
+            $event_start_dt = date_create("@$event_start", $utc_timezone);
+            $event_end_dt = date_create("@$event_end", $utc_timezone);
+            $start_tz_name = $event_start_dt->getTimeZone()->getName();
+            debug_add("start_tz_name: ".$start_tz_name);
+            $event_start_dt->setTimezone($active_timezone);
+            $start_tz_name = $event_start_dt->getTimeZone()->getName();
+            debug_add("start_tz_name after set: ".$start_tz_name);
+            $event_end_dt->setTimezone($active_timezone);
+            $start_offset = $event_start_dt->format('Z');//$active_timezone->getOffset($event_start);
+            debug_add("offset {$start_offset} (in hours): " . ($start_offset/(60*60)));
+            $end_offset = $event_end_dt->format('Z');//$active_timezone->getOffset($event_end);
+
+            if ($start_offset > 0)
+            {
+                $event_start = $event_start - $start_offset;
+                $event_end = $event_end - $end_offset;                
+            }
+            else
+            {
+                $event_start = $event_start + $start_offset;
+                $event_end = $event_end + $end_offset;                
+            }
+
+            debug_add("event_start after timezone change: " . $event_start . " (" . date("H:i:s",$event_start) . ")");
+
+            $_POST['start'] = date("Y-m-d H:i:s", $event_start);
+            $_POST['end'] = date("Y-m-d H:i:s", $event_end);
+
+            $this->_event->start = $event_start;
+            $this->_event->end = $event_end;
+            debug_add("new start time: ".date("Y-m-d H:i:s", $this->_event->start));
+            debug_add("new end time: ".date("Y-m-d H:i:s", $this->_event->end));
+        }
+    }
+    
     function _handler_create($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-
-        $active_timezone = org_maemo_calendar_common::active_timezone();
-        date_default_timezone_set(timezone_name_get($active_timezone));
+        
+        $_MIDCOM->auth->require_do('midgard:create', $this->_request_data['root_event']);
         
         if ($handler_id == 'ajax-event-create')
         {
@@ -310,7 +325,9 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
         }
         
         debug_add("requested time: {$this->_request_data['selected_day']}");
-                
+        
+        $this->_timezone_hack();
+        
         $this->_load_controller($handler_id);
         $this->_prepare_request_data();
                 

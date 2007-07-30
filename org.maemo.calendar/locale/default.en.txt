@@ -2,10 +2,6 @@
 ---VERSION 2.1.0
 ---LANGUAGE en
 
----STRING my_calendar
-Personal
----STRINGEND
-
 ---STRING calendar_title
 Community Calendar
 ---STRINGEND
@@ -14,3 +10,6 @@ Community Calendar
 Current view
 ---STRINGEND
 
+---STRING Default
+Default
+---STRINGEND

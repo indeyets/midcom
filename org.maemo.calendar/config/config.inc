@@ -26,6 +26,7 @@
 
 "month_column_width" => 14,
 
+'default_tag_name' => 'Default', // This is translated through midcom on creation, depending on users lang
 
 'profile_schemadb' => 'file:/org/maemo/calendar/config/schemadb_default_profile.inc',
 'profile_schema' => 'default',

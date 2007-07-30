@@ -72,6 +72,23 @@ class org_maemo_calendar_handler_event_view  extends midcom_baseclasses_componen
     function _load_schemadb()
     {
         $this->_schemadb =& $this->_request_data['schemadb'];
+
+        /*
+         * Callback needs to know current event creator if it is not us.
+         * Populate widget config parameter person_guid
+         */
+        if (isset($this->_schemadb['default']->fields['tags']))
+        {
+            if ($this->_schemadb['default']->fields['tags']['widget'] == 'tags')
+            {
+                debug_add("tags widget is tags!");
+                if ($this->_event->metadata->creator != $_MIDCOM->auth->user->guid)
+                {
+                    debug_add("Creator is not us, add '{$this->_event->metadata->creator}' to tags widget config!");
+                    $this->_schemadb['default']->fields['tags']['type_config']['option_callback_args']['person_guid'] = $this->_event->metadata->creator;
+                }
+            }
+        }
     }
 
     /**

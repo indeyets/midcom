@@ -14,7 +14,7 @@ class org_maemo_calendar_handler_admin  extends midcom_baseclasses_components_ha
 {
      * The root event (taken from the request data area)
      *
-     * @var net_nemein_registrations_event
+     * @var org_openpsa_calendar_event
      * @access private
      */
     var $_root_event = null;
@@ -41,7 +41,6 @@ class org_maemo_calendar_handler_admin  extends midcom_baseclasses_components_ha
      */
     function _prepare_request_data()
     {
-        $this->_request_data['processing_msg'] =& $this->_processing_msg;
 
     }
 
@@ -58,6 +57,7 @@ class org_maemo_calendar_handler_admin  extends midcom_baseclasses_components_ha
      */
     function _on_initialize()
     {
+        $_MIDCOM->auth->require_valid_user();
         $this->_root_event =& $this->_request_data['root_event'];
         $this->_schemadb =& $this->_request_data['schemadb'];
     }

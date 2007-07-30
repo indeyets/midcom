@@ -30,6 +30,8 @@ class org_maemo_calendar_callbacks_personstags extends midcom_baseclasses_compon
      * @access private
      */
     var $_user = null;
+    
+    var $_additional_user = null;
 
     /**
      * Initializes the class to the category listing in the configuration. It does the neccessary
@@ -44,21 +46,30 @@ class org_maemo_calendar_callbacks_personstags extends midcom_baseclasses_compon
         $this->_component = 'org.maemo.calendar';
         parent::midcom_baseclasses_components_purecode();
         
-        $this->_process_options($options);
+        $_MIDCOM->auth->require_valid_user();
         
         $this->_data = array();
         $this->_user =& $_MIDCOM->auth->user;
+
+        $this->_process_options($options);
+        
+        debug_print_r("using user {$options['person_guid']}",$this->_user);
         
         $only_public = false;
 
-        if ($this->_user->guid != $_MIDCOM->auth->user->guid)
+        // if ($this->_user->guid != $_MIDCOM->auth->user->guid)
+        // {
+        //     $only_public = true;
+        // }
+        
+        $tags = org_maemo_calendar_common::fetch_available_user_tags($this->_user->guid);
+        
+        if ($this->_additional_user !== null)
         {
-            $only_public = true;
+            $tags = org_maemo_calendar_common::fetch_available_user_tags($this->_additional_user->guid);
         }
         
-        $person_tags = org_maemo_calendar_common::fetch_available_user_tags($this->_user->guid, $only_public);
-        
-        foreach ($person_tags as $i => $tag)
+        foreach ($tags as $i => $tag)
         {
             $this->_data[$tag['id']] = $tag;
         }
@@ -82,9 +93,9 @@ class org_maemo_calendar_callbacks_personstags extends midcom_baseclasses_compon
             return;
         }
         
-        if (array_key_exists('person', $options))
+        if (array_key_exists('person_guid', $options))
         {
-            $this->_user =& new midcom_db_person($options['person_guid']);
+            $this->_additional_user =& new midcom_db_person($options['person_guid']);
         }
     }    
 
@@ -93,6 +104,11 @@ class org_maemo_calendar_callbacks_personstags extends midcom_baseclasses_compon
 
     function get_name_for_key($key)
     {
+        if (! $this->key_exists($key))
+        {
+            return false;
+        }
+        
         $name = $this->_data[$key]['name'];
         return $name;
     }
@@ -103,8 +119,23 @@ class org_maemo_calendar_callbacks_personstags extends midcom_baseclasses_compon
         return $data;
     }    
 
-    function key_exists($key)
+    function key_exists($key,$match_names_also=false)
     {
+        if ($match_names_also)
+        {
+            if (array_key_exists($key, $this->_data))
+            {
+                return true;
+            }
+            
+            foreach ($this->_data as $tag_id => $data)
+            {
+                if ($key == $data['name'])
+                {
+                    return true;
+                }
+            }
+        }
         return array_key_exists($key, $this->_data);
     }
 

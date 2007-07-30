@@ -64,6 +64,7 @@ class org_maemo_calendar_handler_profile_admin extends midcom_baseclasses_compon
      */
     function _on_initialize()
     {
+        $_MIDCOM->auth->require_valid_user();
     }
 
     /**

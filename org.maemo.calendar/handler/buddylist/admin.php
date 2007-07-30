@@ -56,7 +56,7 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
         }
         
         $user =& $_MIDCOM->auth->user->get_storage();
-        $user->require_do('midgard:create');
+        //$user->require_do('midgard:create');
         
         $target = new midcom_db_person($args[0]);
         if (!$target)
@@ -79,7 +79,7 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
         }
         
         $user =& $_MIDCOM->auth->user->get_storage();
-        $user->require_do('midgard:create');
+        //$user->require_do('midgard:create');
 
         $target = new midcom_db_person($args[0]);
         if (!$target)
@@ -101,7 +101,7 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
         {
             if (! $buddy->delete())
             {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to add buddy, reason ".mgd_errstr());
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to remove buddy, reason ".mgd_errstr());
                 // This will exit
             }
         }

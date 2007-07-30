@@ -94,17 +94,24 @@ class org_maemo_calendar_common
     function save_user_tag($tag_id, $data, $user_guid=false)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-
+        $_MIDCOM->auth->require_valid_user();
+        
         debug_print_r('save with: ', $data);
         
         $logged_in = true;
         
-        $user = $_MIDCOM->auth->user->get_storage();
+        $user =& $_MIDCOM->auth->user->get_storage();
         
         if ($user_guid)
         {
             $logged_in = false;
             $user =& new midcom_db_person($user_guid);
+        }
+        
+        if (empty($tag_id))
+        {
+            $tag_id = org_maemo_calendar_common::_create_tag_id(&$user,$data['name']);
+            debug_add("no tag_id was specified. created id {$tag_id}.");
         }
         
         if (   $logged_in
@@ -119,10 +126,9 @@ class org_maemo_calendar_common
             }
             else
             {   
-                if (   empty($tag_id)
-                    || empty($data['color'])
-                    || empty($data['name'])
-                    || !isset($data['ispublic']) )
+                if (   empty($data['color'])
+                    || empty($data['name']) )
+                    // || !isset($data['ispublic']) )
                 {
                     debug_add("All required data wasn't available. quitting");
                     return false;
@@ -137,14 +143,14 @@ class org_maemo_calendar_common
             {
                 $user->set_parameter('org.maemo.calendar:tag_name',$tag_id,$data['name']);
             }
-            if ($data['ispublic'])
-            {
-                $user->set_parameter('org.maemo.calendar:public_tag',$tag_id,true);
-            }
-            else
-            {
-                $user->set_parameter('org.maemo.calendar:public_tag',$tag_id);
-            }
+            // if ($data['ispublic'])
+            // {
+            //     $user->set_parameter('org.maemo.calendar:public_tag',$tag_id,true);
+            // }
+            // else
+            // {
+            //     $user->set_parameter('org.maemo.calendar:public_tag',$tag_id,'');
+            // }
 
             if (!$logged_in)
             {
@@ -160,7 +166,30 @@ class org_maemo_calendar_common
         return true;
     }
     
-    function fetch_available_user_tags($user_guid=false, $only_public=false)
+    function remove_user_tag($tag_id)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);        
+        $_MIDCOM->auth->require_valid_user();
+        
+        $user->set_parameter('org.maemo.calendar:tag',$tag_id,$data['color']);
+        
+        $existing = $user->get_parameter('org.maemo.calendar:tag',$tag_id);
+    
+        if (empty($existing))
+        {
+            debug_add("Tag {$tag_id} doesn't exist.");
+            debug_pop();
+            return false;
+        }
+        
+        $user->set_parameter('org.maemo.calendar:tag',$tag_id,'');
+        $user->set_parameter('org.maemo.calendar:tag_name',$tag_id,'');
+                
+        debug_pop();
+        return true;
+    }
+    
+    function fetch_available_user_tags($user_guid=false) //, $only_public=false
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         
@@ -176,7 +205,7 @@ class org_maemo_calendar_common
         }
         
         //debug_print_r("User {$user_guid}: ",$user);
-        
+                
         /* Read users tags */
         $users_tags = $user->list_parameters('org.maemo.calendar:tag');
         
@@ -188,8 +217,12 @@ class org_maemo_calendar_common
                 || (   !$logged_in
                     && $_MIDCOM->auth->request_sudo()) )
             {
-                $user->set_parameter('org.maemo.calendar:tag','default','FFFF99');
-                $user->set_parameter('org.maemo.calendar:tag_name','default','default');
+                $_l10n =& $_MIDCOM->i18n->get_l10n('org.maemo.calendar');
+                $tag_name = $l10n->get($this->_config->get('default_tag_name'));
+                $tag_id = org_maemo_calendar_common::_create_tag_id(&$user,$data['name']);
+                
+                $user->set_parameter('org.maemo.calendar:tag',$tag_id,'FFFF99');
+                $user->set_parameter('org.maemo.calendar:tag_name',$tag_id,$tag_name);
                 $users_tags = $user->list_parameters('org.maemo.calendar:tag');
                 
                 if (!$logged_in)
@@ -205,24 +238,24 @@ class org_maemo_calendar_common
         
         foreach ($users_tags as $tag_id => $color)
         {
-            $is_public = org_maemo_calendar_common::is_tag_public(&$user, $tag_id);
-            if ($only_public)
-            {
-                if ($is_public)
-                {
-                    $tags[] = array( 'name' => org_maemo_calendar_common::tag_identifier_to_name(&$user, $tag_id),
-                                     'id' => $tag_id,
-                                     'is_public' => $is_public,
-                                     'color' => $color );                    
-                }
-            }
-            else
-            {
+            // $is_public = org_maemo_calendar_common::is_tag_public(&$user, $tag_id);
+            // if ($only_public)
+            // {
+            //     if ($is_public)
+            //     {
+            //         $tags[] = array( 'name' => org_maemo_calendar_common::tag_identifier_to_name(&$user, $tag_id),
+            //                          'id' => $tag_id,
+            //                          'is_public' => $is_public,
+            //                          'color' => $color );                    
+            //     }
+            // }
+            // else
+            // {
                 $tags[] = array( 'name' => org_maemo_calendar_common::tag_identifier_to_name(&$user, $tag_id),
                                  'id' => $tag_id,
-                                 'is_public' => $is_public,
+//                                 'is_public' => $is_public,
                                  'color' => $color );               
-            }
+            // }
         }
         
         debug_print_r("Found tags: ",$tags);
@@ -231,22 +264,22 @@ class org_maemo_calendar_common
         return $tags;
     }
     
-    function is_tag_public(&$user, $tag_id)
-    {
-        if (! is_object($user))
-        {
-            $user &= $_MIDCOM->auth->user->get_storage();
-        }
-        
-        $is_public = $user->get_parameter('org.maemo.calendar:public_tag',$tag_id);
-        
-        if ($is_public)
-        {
-            return true;
-        }
-        
-        return false;
-    }
+    // function is_tag_public(&$user, $tag_id)
+    // {
+    //     if (! is_object($user))
+    //     {
+    //         $user &= $_MIDCOM->auth->user->get_storage();
+    //     }
+    //     
+    //     $is_public = $user->get_parameter('org.maemo.calendar:public_tag',$tag_id);
+    //     
+    //     if ($is_public)
+    //     {
+    //         return true;
+    //     }
+    //     
+    //     return false;
+    // }
 
     function tag_identifier_to_name(&$user, $tag_id)
     {
@@ -282,6 +315,11 @@ class org_maemo_calendar_common
         }
         
         return $available_tags;
+    }
+    
+    function _create_tag_id(&$user,$tag_name)
+    {
+        return $user->id . '_' . midcom_generate_urlname_from_string($tag_name, "_");
     }
     
     function get_user_timezone($user_guid=false)

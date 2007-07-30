@@ -82,8 +82,8 @@ $current_timezone = org_maemo_calendar_common::active_timezone();
             </form>
         </div>
         <div class="zoom-block">
-            <img src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/icons/zoom-in.png" width="16" height="16" onclick="zoom_view(true,'/ajax/change/view/');" />
-            <img src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/icons/zoom-out.png" width="16" height="16" onclick="zoom_view(false,'/ajax/change/view/');" />
+            <img src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/icons/zoom-in.png" width="16" height="16" onclick="zoom_view(true,'ajax/change/view/');" />
+            <img src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/icons/zoom-out.png" width="16" height="16" onclick="zoom_view(false,'ajax/change/view/');" />
         </div>
         <div class="date-selection-block">
             <form id="date-selection-form" action="ajax/change/date/" method="get">

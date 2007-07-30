@@ -22,6 +22,14 @@ class org_maemo_calendar_handler_shelf_admin  extends midcom_baseclasses_compone
     {
         parent::midcom_baseclasses_components_handler();
     }
+
+    /**
+     * Maps the content topic from the request data to local member variables.
+     */
+    function _on_initialize()
+    {
+        $_MIDCOM->auth->require_valid_user();
+    }
     
     function _load_shelf_contents()
     {

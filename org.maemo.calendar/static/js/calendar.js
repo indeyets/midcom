@@ -11,6 +11,7 @@ if (console == undefined)
 function finishCalendarLoad(id) {
     //run_scripts(jQuery('#'+id)[0]);
     jQuery('#'+id).fadeIn("",function(){
+        on_view_update()
         var bodyClass = calendar_config["types_classes"][calendar_config["type"]];  
         if (   bodyClass == 'week'
             || bodyClass == 'day')
@@ -59,14 +60,15 @@ function zoom_view(zoom_in, url)
         calendar_config["type"] -= 1;       
     }
     
+    var form = jQuery('#date-selection-form');
     var ajax_url = APPLICATION_PREFIX + url + calendar_config["timestamp"] + '/' + calendar_config["type"];
-    
+    console.log("ajax_url: "+ajax_url);
     jQuery.ajaxSetup({global: true});
     jQuery.ajax({
         url: ajax_url,
         timeout: 12000,
-        error: function(obj, type, expobj) {
-            alert("Failed to zoom");
+        error: function(request, type, expobj) {
+            alert("Failed to zoom request.statusText: "+request.statusText);
             jQuery('#calendar-holder').show();
         },
         success: function(r) {
@@ -202,8 +204,13 @@ function load_modal_window(url)
         type: "GET",
         url: APPLICATION_PREFIX + url,
         timeout: 12000,
-        error: function(obj, type, expobj) {
-            alert("Failed to load modal window");
+        error: function(request, type, expobj) {
+            console.log("Failed to load modal window! type: "+type);
+            console.log("request.statusText: "+request.statusText);
+            if (request.statusText == "Forbidden")
+            {
+                window.location = APPLICATION_PREFIX + url;
+            }
         },
         success: function(r) {
             win.html(unescape(r));
@@ -216,6 +223,10 @@ function close_modal_window()
     jQuery("div.calendar-modal-window").hide();
     return;
 }
+function set_modal_window_contents(content)
+{
+    jQuery("div.calendar-modal-window").html(unescape(content));
+}
 
 function load_shelf_contents()
 {
@@ -226,13 +237,13 @@ function load_shelf_contents()
         url: APPLICATION_PREFIX + url,
         timeout: 12000,
         dataType: 'json',
-        error: function(obj, type, expobj) {
-            alert("Failed to load shelf content");
+        error: function(request, type, expobj) {
+            console.log("Failed to load shelf content");
         },
         success: function(r) {
             shelf_contents = r;
+            console.log('Loaded Shelf content from the server: '+shelf_contents);            
             hide_shelf_events_from_view();
-            console.log('Loaded Shelf content from the server: '+shelf_contents);
         }
     });    
 }
@@ -378,6 +389,43 @@ function empty_shelf()
             console.log('Emptied Shelf list with response from the server: '+r);
         }
     });
+}
+
+function show_event_delete_form(identifier)
+{
+    console.log('show_event_delete_form '+identifier);
+    var url = 'ajax/event/delete/' + identifier;
+    load_modal_window(url);
+}
+
+function enable_event_delete_form(identifier)
+{
+    console.log('enable_event_delete_form '+identifier);
+    var url = 'ajax/event/delete/' + identifier;
+        
+    jQuery.ajaxSetup({global: false});
+    var options = { 
+        //beforeSubmit:  show_processing,
+        success:       show_results,
+        url:       APPLICATION_PREFIX + url,
+        type:      'post',
+        timeout:   12000 
+    }; 
+     
+    jQuery('#event-delete-form').ajaxForm(options);
+}
+
+function on_event_deleted(identifier)
+{
+    close_modal_window();
+    jQuery('#event-'+identifier).remove();
+    jQuery('#event-'+identifier+"-toolbox").remove();
+}
+
+function show_results(response)
+{
+    run_scripts(response);
+    set_modal_window_contents(response);
 }
 
 function enable_buddylist_search()
@@ -662,19 +710,45 @@ function enable_layer_update_form(layer_id, tag_id)
     jQuery(form_id).ajaxForm(options);
 }
 
+function enable_tag_create_form(layer_id)
+{
+    url = 'midcom-exec-org.maemo.calendar/layers.php?action=create_tag&layer_id='+layer_id;
+    jQuery.ajaxSetup({global: false});
+    var options = { 
+        beforeSubmit:  show_processing,
+        success:       processing_successfull,
+        url:       APPLICATION_PREFIX + url,
+        type:      'post',
+        //dataType:  'json',
+        timeout:   12000
+    }; 
+    
+    var form_id = '#create-new_tag-form';    
+    jQuery(form_id).ajaxForm(options);
+}
+
 function show_processing(formData, jqForm, options)
 {
     console.log('show_processing');
 }
 function processing_successfull(responseText, statusText)
 {
-    console.log('processing_successfull');
+    console.log('processing_successfull responseText:'+responseText);
     close_modal_window();
     
-    if (responseText == 'updated')
-    {
-        window.location.reload(true);
+    // if (   responseText == 'updated'
+    //     || responseText == 'created')
+    // {
+    if (responseText > 0)
+    {        
+        window.location = window.location;
+        //window.location.reload(true);
     }
+}
+
+function on_view_update()
+{
+    hide_shelf_events_from_view();
 }
 
 jQuery(document).ready(function() {

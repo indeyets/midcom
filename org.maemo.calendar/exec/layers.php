@@ -2,22 +2,36 @@
 
 debug_add('---exec-midcom-org.maemo.calendar-layers START---');
 
-debug_print_r('_POST',$_POST);
-debug_print_r('_GET',$_GET);
+$_MIDCOM->auth->require_valid_user();
+
+// debug_print_r('_POST',$_POST);
+// debug_print_r('_GET',$_GET);
 
 switch ($_GET['action'])
 {
     case 'show_update_layer':
-        handler_show_update_layer($_GET['layer_id']);
+        show_update_layer($_GET['layer_id']);
         break;
     case 'update_layer':
         handler_update_layer($_GET['layer_id'], &$_POST);
         break;
     case 'show_update_tag':
-        handler_show_update_tag($_GET['layer_id'], $_GET['tag_id']);
+        show_update_tag($_GET['layer_id'], $_GET['tag_id']);
         break;
     case 'update_tag':
         handler_update_tag($_GET['layer_id'], $_GET['tag_id'], &$_POST);
+        break;
+    case 'show_create_tag':
+        show_create_tag($_GET['layer_id']);
+        break;
+    case 'create_tag':
+        handler_create_tag($_GET['layer_id'], &$_POST);
+        break;
+    case 'show_remove_tag':
+        show_remove_tag($_GET['layer_id']);
+        break;
+    case 'remove_tag':
+        handler_remove_tag($_GET['layer_id'], &$_POST);
         break;
 }
 
@@ -33,15 +47,17 @@ function handler_update_layer($layer_id, &$data)
     
     if ($success)
     {
-        echo 'updated';        
+        //echo 'updated';
+        echo 1;
     }
     else
     {
-        echo 'not_updated';        
+        echo 0;
+        //echo 'not_updated';        
     }
 }
 
-function handler_show_update_layer($layer_id)
+function show_update_layer($layer_id)
 {
     $html = '';
     
@@ -57,7 +73,7 @@ function handler_show_update_layer($layer_id)
     $html .= _render_color_picker($layer_id, $form_type, $current_color);
 
     $html .= "   <input type=\"submit\" name=\"submit\" value=\"Submit\" />";
-    $html .= "   <input type=\"submit\" name=\"cancel\" value=\"Cancel\" />\n";
+    $html .= "   <input type=\"button\" name=\"cancel\" value=\"Cancel\" onclick=\"close_modal_window();\" />\n";
     $html .= "</form>\n";
   
     $html .= "<script>";
@@ -81,15 +97,17 @@ function handler_update_tag($layer_id, $tag_id, &$data)
     
     if ($success)
     {
-        echo 'updated';        
+        //echo 'updated';
+        echo 1;
     }
     else
     {
-        echo 'not_updated';        
+        //echo 'not_updated';
+        echo 0;
     }
 }
 
-function handler_show_update_tag($layer_id, $tag_id)
+function show_update_tag($layer_id, $tag_id)
 {
     $users_tags = org_maemo_calendar_common::fetch_available_user_tags();
     
@@ -111,13 +129,13 @@ function handler_show_update_tag($layer_id, $tag_id)
     $current_color = '#' . $current_tag['color'];
     $current_name = $current_tag['name'];
     
-    $public_yes_status = '';
-    $public_no_status = 'checked="checked"';
-    if ($current_tag['is_public'])
-    {
-        $public_yes_status = 'checked="checked"';
-        $public_no_status = '';
-    }
+    // $public_yes_status = '';
+    // $public_no_status = 'checked="checked"';
+    // if ($current_tag['is_public'])
+    // {
+    //     $public_yes_status = 'checked="checked"';
+    //     $public_no_status = '';
+    // }
     
     $html .= _render_modal_win_header('Edit tag');
 
@@ -127,12 +145,12 @@ function handler_show_update_tag($layer_id, $tag_id)
     
     $html .= "   <label for=\"{$form_type}-name-{$type_id}\">Name</label>\n";
     $html .= "   <input type=\"text\" name=\"name\" id=\"{$form_type}-name-{$type_id}\" value=\"{$current_name}\" /><br />\n";
-    $html .= "   <label for=\"{$form_type}-ispublic-{$type_id}\">Is public?</label>\n";
-    $html .= "   <input type=\"radio\" name=\"ispublic\" value=\"1\" {$public_yes_status}/> Yes\n";
-    $html .= "   <input type=\"radio\" name=\"ispublic\" value=\"0\" {$public_no_status}/> No\n";
+    // $html .= "   <label for=\"{$form_type}-ispublic-{$type_id}\">Is public?</label>\n";
+    // $html .= "   <input type=\"radio\" name=\"ispublic\" value=\"1\" {$public_yes_status}/> Yes\n";
+    // $html .= "   <input type=\"radio\" name=\"ispublic\" value=\"0\" {$public_no_status}/> No\n";
     $html .= "   <br /><br />\n";
     $html .= "   <input type=\"submit\" name=\"submit\" value=\"Submit\" />";
-    $html .= "   <input type=\"submit\" name=\"cancel\" value=\"Cancel\" />\n";
+    $html .= "   <input type=\"button\" name=\"cancel\" value=\"Cancel\" onclick=\"close_modal_window();\" />\n";
     $html .= "</form>\n";
   
     $html .= "<script>";
@@ -142,6 +160,89 @@ function handler_show_update_tag($layer_id, $tag_id)
     $html .= _render_modal_win_footer();
         
     echo $html;
+}
+
+function handler_create_tag($layer_id, &$data)
+{
+    $success = false;
+    
+    if (! empty($data))
+    {
+        $data['color'] = str_replace("#", "", $data['color']);
+        $success = org_maemo_calendar_common::save_user_tag('', $data, $layer_id);        
+    }
+    
+    if ($success)
+    {
+        //echo 'created';
+        echo 2;
+    }
+    else
+    {
+        //echo 'not_created';
+        echo 0;
+    }
+}
+
+function show_create_tag($layer_id)
+{
+    $html = '';
+
+    $form_type = 'new_tag';
+    $form_name = "create-{$form_type}-form";
+    $type_id = "{$layer_id}";
+    
+    $current_color = '#8596b6';
+    
+    $html .= _render_modal_win_header('Create tag');
+    
+    $html .= "<form name=\"{$form_name}\" id=\"{$form_name}\">\n";
+    $html .= _render_color_picker($type_id, $form_type, $current_color);
+    // $html .= "   <label for=\"{$form_type}-id-{$type_id}\">Id</label>\n";
+    // $html .= "   <input type=\"text\" name=\"id\" id=\"{$form_type}-id-{$type_id}\" value=\"\" /><br />\n";
+    $html .= "   <label for=\"{$form_type}-name-{$type_id}\">Name</label>\n";
+    $html .= "   <input type=\"text\" name=\"name\" id=\"{$form_type}-name-{$type_id}\" value=\"\" /><br />\n";
+    // $html .= "   <label for=\"{$form_type}-ispublic-{$type_id}\">Is public?</label>\n";
+    // $html .= "   <input type=\"radio\" name=\"ispublic\" value=\"1\"/> Yes\n";
+    // $html .= "   <input type=\"radio\" name=\"ispublic\" value=\"0\" checked=\"checked\" /> No\n";
+    $html .= "   <br /><br />\n";
+    $html .= "   <input type=\"submit\" name=\"submit\" value=\"Submit\" />";
+    $html .= "   <input type=\"button\" name=\"cancel\" value=\"Cancel\" onclick=\"close_modal_window();\" />\n";
+    $html .= "</form>\n";
+  
+    $html .= "<script>";
+    $html .= "enable_tag_create_form('{$layer_id}');";
+    $html .= "</script>\n";
+        
+    $html .= _render_modal_win_footer();
+    
+    echo $html;
+}
+
+function handler_remove_tag($tag_id)
+{
+    $success = false;
+    
+    if (! empty($tag_id))
+    {
+        $success = org_maemo_calendar_common::remove_user_tag($tag_id);
+    }
+    
+    if ($success)
+    {
+        //echo 'removed';
+        echo 3;
+    }
+    else
+    {
+        //echo 'not_removed';
+        echo 0;
+    }    
+}
+
+function show_remove_tag($layer_id, $tag_id)
+{
+    
 }
 
 function _render_modal_win_header($title)

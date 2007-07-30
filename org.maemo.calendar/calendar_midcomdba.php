@@ -73,6 +73,11 @@ class midcom_org_maemo_event extends midcom_org_openpsa_event
         
         return $this;
     }
+    
+    function is_public()
+    {
+        return $this->orgOpenpsaAccesstype == ORG_OPENPSA_ACCESSTYPE_PUBLIC;
+    }
 
 }
 

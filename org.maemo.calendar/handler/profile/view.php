@@ -60,6 +60,14 @@ class org_maemo_calendar_handler_profile_view extends midcom_baseclasses_compone
     }
 
     /**
+     * Maps the content topic from the request data to local member variables.
+     */
+    function _on_initialize()
+    {
+        $_MIDCOM->auth->require_valid_user();
+    }
+
+    /**
      * Loads and prepares the schema database.
      */
     function _load_schemadb()

@@ -39,11 +39,12 @@ class org_maemo_calendar_handler_ajax extends org_maemo_calendar_handler_index
     /**
      * _on_initialize is called by midcom on creation of the handler. 
      */
-    function _on_initialize()
-    {
-        $this->current_user = $_MIDCOM->auth->user->get_storage();
-        $this->layer_data = array( 'calendars' => array(), 'busy' => array() );
-    }
+    // function _on_initialize()
+    // {
+    //     $_MIDCOM->auth->require_valid_user();
+    //     $this->current_user = $_MIDCOM->auth->user->get_storage();
+    //     $this->layer_data = array( 'calendars' => array(), 'busy' => array() );
+    // }
     
     /**
      * The handler for changing the current date
@@ -79,8 +80,12 @@ class org_maemo_calendar_handler_ajax extends org_maemo_calendar_handler_index
                 
         switch ($this->_calendar_type)
         {
+            case ORG_MAEMO_CALENDARWIDGET_DAY:
             case ORG_MAEMO_CALENDARWIDGET_WEEK:
+                $this->_request_data['maemo_calender']->cell_height = $this->_config->get('week_row_height');
+                $this->_request_data['maemo_calender']->cell_height_unit = $this->_config->get('week_row_unit');
                 $this->_request_data['maemo_calender']->calendar_slot_length = $this->_config->get('week_slot_length') * 60;
+                //print_r($this->_request_data['maemo_calender']);
             break;
             case ORG_MAEMO_CALENDARWIDGET_MONTH:
                 $this->_request_data['maemo_calender']->calendar_slot_length = $this->_config->get('month_slot_length') * 60;
@@ -126,6 +131,7 @@ class org_maemo_calendar_handler_ajax extends org_maemo_calendar_handler_index
                 
         switch ($this->_calendar_type)
         {
+            case ORG_MAEMO_CALENDARWIDGET_DAY:
             case ORG_MAEMO_CALENDARWIDGET_WEEK:
                 $this->_request_data['maemo_calender']->cell_height = $this->_config->get('week_row_height');
                 $this->_request_data['maemo_calender']->cell_height_unit = $this->_config->get('week_row_unit');
@@ -189,8 +195,12 @@ class org_maemo_calendar_handler_ajax extends org_maemo_calendar_handler_index
                 
         switch ($this->_calendar_type)
         {
+            case ORG_MAEMO_CALENDARWIDGET_DAY:
             case ORG_MAEMO_CALENDARWIDGET_WEEK:
+                $this->_request_data['maemo_calender']->cell_height = $this->_config->get('week_row_height');
+                $this->_request_data['maemo_calender']->cell_height_unit = $this->_config->get('week_row_unit');
                 $this->_request_data['maemo_calender']->calendar_slot_length = $this->_config->get('week_slot_length') * 60;
+                //print_r($this->_request_data['maemo_calender']);
             break;
             case ORG_MAEMO_CALENDARWIDGET_MONTH:
                 $this->_request_data['maemo_calender']->calendar_slot_length = $this->_config->get('month_slot_length') * 60;

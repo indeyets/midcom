@@ -92,7 +92,14 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
            'handler' => Array('org_maemo_calendar_handler_event_view', 'show'),
            'fixed_args' => array('ajax', 'event', 'show'),
            'variable_args' => 1,
-       );       
+       );
+
+       // Match /ajax/event/remove/<guid>
+       $this->_request_switch['ajax-event-delete'] = array(
+           'handler' => Array('org_maemo_calendar_handler_event_admin', 'delete'),
+           'fixed_args' => array('ajax', 'event', 'delete'),
+           'variable_args' => 1,
+       );              
        
        // Match /ajax/buddylist/search
        $this->_request_switch['ajax-buddylist-search'] = array(
@@ -216,6 +223,13 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
                 'href' => MIDCOM_STATIC_URL."/midcom.helper.datamanager2/universalchooser.css",
             )
         );
+        $_MIDCOM->add_link_head(
+            array(
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/tags/jquery.tags_widget.css'
+            )
+        );
         $_MIDCOM->add_link_head
         (
             array
@@ -242,7 +256,13 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
                         
         //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.openpsa.helpers/ajaxutils.js', false);
         //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.openpsa.relatedto/related_to.js', false);
-        //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/universalchooser.js', false);
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/universalchooser.js', false);
+        
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/tags/jquery.bgiframe.min.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.dimensions.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/tags/jquery.tags_widget.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/tags/widget.js');
+        
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/jscript-calendar/calendar-setup.js', true);
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/jscript-calendar/lang/calendar-en.js', true);
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/jscript-calendar/calendar.js', true);
@@ -287,33 +307,33 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
      */
     function index(&$dm, &$indexer, $topic)
     {
-        if (is_object($topic))
-        {
-            $tmp = new midcom_db_topic($topic);
-            if (! $tmp)
-            {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    "Failed to load the topic referenced by {$topic} for indexing, this is fatal.");
-                // This will exit.
-            }
-            $topic = $tmp;
-        }
+        // if (is_object($topic))
+        // {
+        //     $tmp = new midcom_db_topic($topic);
+        //     if (! $tmp)
+        //     {
+        //         $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
+        //             "Failed to load the topic referenced by {$topic} for indexing, this is fatal.");
+        //         // This will exit.
+        //     }
+        //     $topic = $tmp;
+        // }
     
         // Don't index directly, that would loose a reference due to limitations
         // of the index() method. Needs fixes there.
     
-        $nav = new midcom_helper_nav();
-        $node = $nav->get_node($topic->id);
-        $author = $_MIDCOM->auth->get_user($dm->storage->object->creator);
-    
-        $document = $indexer->new_document($dm);
-        $document->topic_guid = $topic->guid;
-        $document->component = $topic->component;
-        $document->topic_url = $node[MIDCOM_NAV_FULLURL];
-        $document->author = $author->name;
-        $document->created = $dm->storage->object->created;
-        $document->edited = $dm->storage->object->revised;
-        $indexer->index($document);
+        // $nav = new midcom_helper_nav();
+        // $node = $nav->get_node($topic->id);
+        // $author = $_MIDCOM->auth->get_user($dm->storage->object->creator);
+        //     
+        // $document = $indexer->new_document($dm);
+        // $document->topic_guid = $topic->guid;
+        // $document->component = $topic->component;
+        // $document->topic_url = $node[MIDCOM_NAV_FULLURL];
+        // $document->author = $author->name;
+        // $document->created = $dm->storage->object->created;
+        // $document->edited = $dm->storage->object->revised;
+        // $indexer->index($document);
     }
 
     /**
@@ -363,7 +383,8 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
     function _on_handle($handler, $args)
     {
         $this->_request_data['root_event_id'] = (int)$GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']->id;
-
+        $this->_request_data['root_event'] =& $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event'];
+        
         $src = $this->_config->get('schemadb');
         $schemadb = midcom_helper_datamanager2_schema::load_database($src);
 
