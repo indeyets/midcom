@@ -417,7 +417,7 @@ jQuery.midcom_helper_datamanager2_widget_tags.Select = function (options, input,
 		},
 		show: function() {
 			element.css({
-				width: options.width > 0 ? options.width : jQuery(input).width(),
+				width: options.width > 0 ? options.width : jQuery(input).width()
 			}).show();
 		},
 		selected: function() {
@@ -589,20 +589,25 @@ function midcom_helper_datamanager2_widget_tags_format_item(item)
 {
     var formatted = '';
     
-    if (   item.name
-        && (item.name.toLowerCase() != item.id.toLowerCase()))
+    if (item.name != '')
     {
-        formatted = item.name + " (" + item.id + ")";
-    }
-    else if (   item.name
-             && (item.name.toLowerCase() == item.id.toLowerCase()))
-    {
-        formatted = item.name;        
+        formatted = item.name
     }
     else
     {
         formatted = item.id;
     }
+    
+    // if (   item.name
+    //     && (item.name.toLowerCase() != item.id.toLowerCase()))
+    // {
+    //     formatted = item.name + " (" + item.id + ")";
+    // }
+    // else if (   item.name
+    //          && (item.name.toLowerCase() == item.id.toLowerCase()))
+    // {
+    //     formatted = item.name;        
+    // }
     
     return formatted;
 }

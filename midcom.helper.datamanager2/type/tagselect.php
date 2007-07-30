@@ -61,8 +61,17 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
      *
      * @var bool
      * @access public
-     */    
+     */
     var $force_rendering_from_tag_library = false;
+    
+    /**
+     * This flag controls wether we require tags found with net_nehmer_tag
+     * to exist in callback also (we check with key_exists with second argument set as true). This is only applied if we have callback defined.
+     *
+     * @var bool
+     * @access public
+     */
+    var $must_exist_also_in_callback = false;
     
     /**
      * The arguments to pass to the option callback constructor.
@@ -597,7 +606,17 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
             $source = array();
             foreach ($tags as $name => $url)
             {
-                $source[$name] = $name;
+                if ($this->must_exist_also_in_callback)
+                {
+                    if ($this->key_exists($name,true))
+                    {
+                        $source[$name] = $name;
+                    }
+                }
+                else
+                {
+                    $source[$name] = $name;
+                }
             }
             
             debug_print_r('source',$source);
@@ -719,7 +738,7 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
                 $tags[$name] = $name;
             }
             
-            debug_add("new tags: {$tags}");
+            debug_print_r("new tags:",$tags);
             
             debug_pop();
             return null;
