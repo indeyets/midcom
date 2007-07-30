@@ -1470,16 +1470,16 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 
             $html .= "</div>\n\n";
             
-            $menu_items[] = "{ className: 'first', name: '" . $this->_l10n->get("show") . "', action: function(){load_modal_window('ajax/event/show/{$event->guid}');} }";
+            $menu_items[] = "{ className: 'first', name: '" . $this->_l10n->get("show") . "', action: function(){load_modal_window('ajax/event/show/{$event->guid}');}}";
             if ($event->can_do('midgard:update'))
             {
-                $menu_items[] = "{ name: '" . $this->_l10n_midcom->get("edit") . "', action: function(){load_modal_window('ajax/event/edit/{$event->guid}');} }";
+                $menu_items[] = "{ name: '" . $this->_l10n_midcom->get("edit") . "', action: function(){load_modal_window('ajax/event/edit/{$event->guid}');}}";
                 $event_data = "{ title: '{$event->title}', color: '{$bg_color}' }";
-                $menu_items[] = "{ name: '" . $this->_l10n->get("to shelf") . "', action: function(){move_event_to_shelf('{$event->guid}', {$event_data});} }";
+                $menu_items[] = "{ name: '" . $this->_l10n->get("to shelf") . "', action: function(){move_event_to_shelf('{$event->guid}', {$event_data});}}";
             }
             if ($event->can_do('midgard:delete'))
             {
-                $menu_items[] = "{ name: '" . $this->_l10n_midcom->get("delete") . "', action: function(){show_event_delete_form('{$event->guid}');} }";        
+                $menu_items[] = "{ name: '" . $this->_l10n_midcom->get("delete") . "', action: function(){show_event_delete_form('{$event->guid}');}}";        
             }
                                     
             $menu_items_str = implode(",",$menu_items);
