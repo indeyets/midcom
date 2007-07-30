@@ -32,6 +32,14 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
      * @var string
      */
     var $column_width = 13;
+    
+    /**
+     * How wide the events should be
+     * Value must be a valid CSS size option (percentage)
+     * 
+     * @var string
+     */
+    var $event_width = 11;
 
     /**
      * How high the event cells should be
@@ -40,7 +48,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
      * @var int
      */
     var $cell_height = 20;
-
+    
     /**
      * What unit is used on event cell heights
      * Value must be string (px or %)
@@ -198,6 +206,9 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
     var $_slot_count = 0;
     
     var $scrollTop = 0;
+    
+    var $_overlapped_events = array();
+    var $_overlapping_event_moved_count = array();
     
     /**
      * Initializes the class and sets the selected date to be shown
@@ -883,13 +894,15 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
             
             $class_name = '';
             $current_day = $start;
+            $create_date = mktime($hour, $minutes, 0, date('m',$current_day), date('d',$current_day), date('Y',$current_day));
 
             if ($this->dates_match($current_day, $this->today))
             {
                 $class_name = 'today';
             }
-    
-            $html .= "                        <td width=\"100%\" class=\"{$class_name}\">&nbsp;</td>\n";
+            
+            $onclick = "create_event('{$create_date}');";
+            $html .= "                        <td id=\"addevent-{$create_date}\" width=\"93%\" class=\"{$class_name}\" onclick=\"{$onclick}\">&nbsp;</td>\n";
                     
             $html .= "                     </tr>\n";
         }
@@ -1100,35 +1113,26 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         
         $html .= "<div>\n";
         $html .= "  <div class=\"header\">\n";
-        $html .= "    <img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendar/images/icons/new-event.png\" alt=\"New event\" width=\"12\" height=\"12\" align=\"left\"/ onclick=\"window.location='/event/create/{$create_date}';\">\n";
+        $html .= "    <img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendar/images/icons/new-event.png\" alt=\"New event\" width=\"12\" height=\"12\" align=\"left\"/ onclick=\"create_event('{$create_date}');\">\n";
         $html .= "    <span class=\"day-number\">".date('d.m',$current_day)."</span>\n";                
         $html .= "  </div>\n";
-        $html .= "  <div class=\"content\">";
+        $html .= "  <div class=\"content\">\n";
         
         if (empty($events))
         {
-            $html .= '&nbsp;';
+            $html .= "    &nbsp;\n";
         }
         else
         {
+            $html .= "    <ul>\n"; 
             foreach($events as $layer_tag => $layer_data)
             {
                 $this->show_calendar($layer_tag);
-                if (count($layer_data['events']) > 0)
-                {
-                    $html .= "   <div class=\"calendar-layer\" id=\"{$layer_tag}\">\n";
-                    $html .= "      <ul>\n";
-                    
-                    $html .= $this->_render_month_events($current_day, $layer_tag, &$layer_data['events']);
-
-                    $html .= "      </ul>\n";
-                    $html .= "   </div>\n";                 
-                }
-                else
-                {
-                    $html .= '&nbsp;';                  
-                }
-            }           
+                $html .= "    <div class=\"calendar-layer calendar-layer-{$layer_tag}\">\n";                   
+                $html .= $this->_render_month_events($current_day, $layer_tag, &$layer_data['events']);
+                $html .= "    </div>\n";
+            }
+            $html .= "  </ul>\n";
         }
         
         $html .= "  </div>\n";
@@ -1275,10 +1279,8 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         
         switch ($this->type)
         {
-            case ORG_MAEMO_CALENDARWIDGET_WEEK:
-                $html .= $this->_render_week_events(&$events, $layer_tag);
-                break;
             case ORG_MAEMO_CALENDARWIDGET_DAY:
+            case ORG_MAEMO_CALENDARWIDGET_WEEK:
                 $html .= $this->_render_week_events(&$events, $layer_tag);
                 break;
         }
@@ -1401,6 +1403,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         $event_type_class = "";
 
         $event_tags = net_nemein_tag_handler::get_object_tags($event);
+        debug_print_r("event_tags:",$event_tags);
         
         $event_tag_classes = '';
         if (! empty($event_tags))
@@ -1415,18 +1418,31 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
                 $event_tag_classes .= "tag-{$tag} ";
             }
             
-            foreach ($this->_calendars[$layer_tag]['tags'] as $tag)
+            debug_add("event_tag_classes: {$event_tag_classes}");
+            
+            if ($_MIDCOM->auth->user->guid == $layer_tag)
             {
-                if ($tag['id'] == $first_tag)
+                foreach ($this->_calendars[$layer_tag]['tags'] as $tag)
                 {
-                    $bg_color = $tag['color'];                    
-                }
+                    if ($tag['id'] == $first_tag)
+                    {
+                        $bg_color = $tag['color'];                    
+                    }
+                }                
             }
         }
         
-        $position = $this->_calculate_position($event_start, $event_end);           
-        $height = $this->_calculate_height($event_start, $event_end);
+        $ovmc_id = 'day-' . date("d",$event_start);
+        if (!isset($this->_overlapping_event_move_count[$ovmc_id]))
+        {
+            debug_add("overlapping_event_moved_count not set");
+            $this->_overlapping_event_moved_count[$ovmc_id] = 0;
+        }
 
+        $height = $this->_calculate_height($event_start, $event_end);
+        $width = $this->_calculate_width($event_start, $event_end);
+        $position = $this->_calculate_position($event_start, $event_end, $event->guid, $width);
+        
         // debug_print_r("Event position",$position);
         // debug_add("Height {$height}");
         
@@ -1440,7 +1456,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         {
             $html .= "<div id=\"{$event_element_id}\" in_shelf=\"false\"";
             $html .= "title=\"{$event->title}\" class=\"calendar-object-event {$event_type_class} {$event_tag_classes}\" ";
-            $html .= "style=\"height: {$height}{$this->cell_height_unit}; top: {$position['top']}px; left: {$position['left']}%; background-color: #{$bg_color};\">\n";
+            $html .= "style=\"height: {$height}{$this->cell_height_unit}; width: {$width}%; top: {$position['top']}px; left: {$position['left']}%; background-color: #{$bg_color};\">\n";
 
             $html .= "   <div class=\"calendar-object-event-header\">\n";
             $html .= "      <span class=\"event-timelabel\">{$start_time}</span>\n";
@@ -1454,16 +1470,16 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 
             $html .= "</div>\n\n";
             
-            $menu_items[] = "{ className: 'first', name: '" . $this->_l10n->get("show") . "', action: function(){load_modal_window('ajax/event/show/".$event->guid."');} }";
+            $menu_items[] = "{ className: 'first', name: '" . $this->_l10n->get("show") . "', action: function(){load_modal_window('ajax/event/show/{$event->guid}');} }";
             if ($event->can_do('midgard:update'))
             {
-                $menu_items[] = "{ name: '" . $this->_l10n_midcom->get("edit") . "', action: function(){load_modal_window('ajax/event/edit/".$event->guid."');} }";
-                $event_data = "{ title: '{$event->title}' }";
-                $menu_items[] = "{ name: '" . $this->_l10n->get("to shelf") . "', action: \"move_event_to_shelf('{$event->guid}', {$event_data});\" }";
+                $menu_items[] = "{ name: '" . $this->_l10n_midcom->get("edit") . "', action: function(){load_modal_window('ajax/event/edit/{$event->guid}');} }";
+                $event_data = "{ title: '{$event->title}', color: '{$bg_color}' }";
+                $menu_items[] = "{ name: '" . $this->_l10n->get("to shelf") . "', action: function(){move_event_to_shelf('{$event->guid}', {$event_data});} }";
             }
             if ($event->can_do('midgard:delete'))
             {
-                $menu_items[] = "{ name: '" . $this->_l10n_midcom->get("delete") . "', action: function(){window.location = APPLICATION_PREFIX + \"event/remove/".$event->guid."\";} }";        
+                $menu_items[] = "{ name: '" . $this->_l10n_midcom->get("delete") . "', action: function(){show_event_delete_form('{$event->guid}');} }";        
             }
                                     
             $menu_items_str = implode(",",$menu_items);
@@ -1472,7 +1488,8 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         }
         else
         {
-            $html .= "<li id=\"{$event_element_id}\" class=\"{$event_type_class} {$event_tag_classes}\" style=\"background-color: #{$bg_color};\">";
+            $onclick_action = "load_modal_window('ajax/event/show/{$event->guid}');";
+            $html .= "<li id=\"{$event_element_id}\" onclick=\"{$onclick_action}\" in_shelf=\"false\" class=\"calendar-object-event {$event_type_class} {$event_tag_classes}\" style=\"background-color: #{$bg_color};\">";
             $html .= "<span class=\"event-start-time\">{$start_time}</span>";
             $html .= "<a class=\"event-title-link\" href=\"#\" title=\"{$event->title}\">{$event->title}</a>";
             $html .= "</li>\n";
@@ -1544,7 +1561,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         return $slots;
     }
     
-    function _calculate_position($start_time, $end_time, $cell_height = null)
+    function _calculate_position($start_time, $end_time, $event_guid = null, $event_width = null, $cell_height = null)
     {
         $position = array();
         
@@ -1552,14 +1569,64 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         {
             $cell_height = $this->cell_height;
         }
+        if (is_null($event_width))
+        {
+            $event_width = $this->event_width;
+            if ($this->type == ORG_MAEMO_CALENDARWIDGET_DAY)
+            {
+                $event_width = 80;
+            }
+        }
 
         //$top_multiplier = $this->_slot_count * $cell_height;
+        
+        $ovmc_id = 'day-' . date("d",$start_time);
         
         $start_hour = strftime("%H", $start_time);
         $start_mins = strftime("%M", $start_time);
         $start_weekday = strftime("%u", $start_time) - 1;
-
+        
+        $overlapping_count = $this->_overlapping_event_count($start_time, $end_time, "position");
+        $oc = $overlapping_count;
+        debug_add("overlapping_count: {$overlapping_count}");
+        
         $position['left'] = 8 + ($start_weekday * $this->column_width);
+        
+        if ($this->type == ORG_MAEMO_CALENDARWIDGET_WEEK)
+        {
+            if ($overlapping_count > 0)
+            {
+                debug_add("count > 0");
+                $this->_overlapping_event_moved_count[$ovmc_id]++;                
+                debug_add("_overlapping_event_moved_count {$this->_overlapping_event_moved_count[$ovmc_id]}");
+                if ($this->_overlapping_event_moved_count[$ovmc_id] > 0)
+                {
+                    debug_add("multiplied");
+                    $position['left'] += $event_width * ($overlapping_count - $this->_overlapping_event_moved_count[$ovmc_id]);
+                }
+                $this->_overlapped_events[$event_guid] = true;
+            }
+        }
+
+        if ($this->type == ORG_MAEMO_CALENDARWIDGET_DAY)
+        {
+            $position['left'] = 7;
+            if ($overlapping_count > 0)
+            {
+                $this->_overlapping_event_moved_count[$ovmc_id]++;                
+                debug_add("_overlapping_event_moved_count {$this->_overlapping_event_moved_count[$ovmc_id]}");
+                if ($this->_overlapping_event_moved_count[$ovmc_id] > 0)
+                {
+                    debug_add("multiplied");
+                    $position['left'] += $event_width * ($overlapping_count - $this->_overlapping_event_moved_count[$ovmc_id]);
+                }
+                $this->_overlapped_events[$event_guid] = true;
+            }
+        }
+
+        $lc = ($oc - $this->_overlapping_event_moved_count[$ovmc_id]);
+        debug_add("overlapping count id: {$ovmc_id} count: {$overlapping_count} left_count: {$lc} left: {$position['left']} ew: {$event_width}");        
+        $position['left'] = round($position['left']);
         
         $multiplier = (3600 / $this->calendar_slot_length);
         $position['top'] = ($start_hour * $cell_height) * $multiplier + intval((($start_mins / 60) * $cell_height) * $multiplier);
@@ -1589,23 +1656,79 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         return intval($height);
     }
 
-    function _calculate_width($start_time, $end_time, $cell_width = null)
+    function _calculate_width($start_time, $end_time, $event_width = null)
     {
-        if (!$cell_width)
+        if (!$event_width)
         {
-            $cell_width = $this->cell_width;
+            $event_width = $this->event_width;
         }
-
-        $length = ($end_time - $start_time);
-        return ($cell_width / $this->_overlapping_reservation_count($start_time, $end_time));
+        
+        if ($this->type == ORG_MAEMO_CALENDARWIDGET_DAY)
+        {
+            $event_width = 80;
+        }
+        $overlapping_count = $this->_overlapping_event_count($start_time, $end_time);
+        if ($overlapping_count > 0)
+        {
+            return round(($event_width / $overlapping_count));
+        }
+        
+        return $event_width;
     }
 
-    function _overlapping_reservation_count($start_time, $end_time)
+    function _overlapping_event_count($start_time, $end_time, $from="width")
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
         $count = 0;
         
+        foreach ($this->_busy_list as $layer_id => $events)
+        {
+            foreach ($events as $event_guid => $timestamps)
+            {
+                if (   $from == "position"
+                    && isset($this->_overlapped_events[$event_guid]))
+                {
+                    continue;
+                }
+                
+                $start_date = mktime(0, 0, 0, date('m',$start_time), date('d',$start_time), date('Y',$start_time));
+                $end_date = mktime(0, 0, 0, date('m',$end_time), date('d',$end_time), date('Y',$end_time));
+                $event_start_date = mktime(0, 0, 0, date('m',$timestamps['start']), date('d',$timestamps['start']), date('Y',$timestamps['start']));
+                $event_end_date = mktime(0, 0, 0, date('m',$timestamps['end']), date('d',$timestamps['end']), date('Y',$timestamps['end']));
+                
+                if (   $start_date == $event_start_date
+                    || $end_date == $event_end_date)
+                {
+                    if (   $start_time == $timestamps['start']
+                        || $end_time == $timestamps['end'])
+                    {
+                        $count++;
+                        continue;
+                    }
+                    if (   $start_time < $timestamps['start']
+                        && $start_time > $timestamps['end']
+                        || (   $start_time > $timestamps['start']
+                            && $start_time > $timestamps['end']))
+                    {
+                        $count++;
+                        continue;
+                    }
+                    if (   $start_time > $timestamps['start']
+                        || $start_time > $timestamps['end']
+                        && (   $end_time > $timestamps['end']
+                            || $end_time < $timestamps['end']))
+                    {
+                        $count++;
+                        continue;
+                    }
+                }
+            }
+        }        
         
+        debug_add("Total count of overlapping events: {$count}");
         
+        debug_pop();
         return $count;
     }
     
