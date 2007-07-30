@@ -69,9 +69,9 @@ class org_maemo_calendarpanel_profile_leaf extends midcom_baseclasses_components
         $html .= "<div class=\"accordion-leaf-menu\">\n";
         $html .= "   <ul class=\"leaf-menu\">\n";
 
-        $html .= "      <li><a href=\"#\" onclick=\"load_modal_window('/ajax/profile/view/{$this->_person->guid}');\" title=\"View full profile\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendar/images/icon-properties.png\" alt=\"View full profile\" /></a></li>\n";
+        $html .= "      <li><a href=\"#\" onclick=\"load_modal_window('ajax/profile/view/{$this->_person->guid}');\" title=\"View full profile\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendar/images/icon-properties.png\" alt=\"View full profile\" /></a></li>\n";
 
-        $html .= "      <li><a href=\"#\" onclick=\"load_modal_window('/ajax/profile/edit/{$this->_person->guid}');\" title=\"Edit profile\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/edit.png\" alt=\"Edit profile\" /></a></li>\n";
+        $html .= "      <li><a href=\"#\" onclick=\"load_modal_window('ajax/profile/edit/{$this->_person->guid}');\" title=\"Edit profile\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/edit.png\" alt=\"Edit profile\" /></a></li>\n";
 
         $html .= "   </ul>\n";
         $html .= "</div>\n";

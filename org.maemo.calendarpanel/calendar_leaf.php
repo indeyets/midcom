@@ -49,7 +49,23 @@ class org_maemo_calendarpanel_calendar_leaf extends midcom_baseclasses_component
     {
         $html = "";
 
+        $html .= $this->_render_menu();
         $html .= $this->_render_calendar_list();
+        
+        return $html;
+    }
+
+    function _render_menu()
+    {
+        $html = "";
+        
+        $html .= "<div class=\"accordion-leaf-menu\">\n";
+        $html .= "   <ul class=\"leaf-menu\">\n";
+
+        $html .= "      <li><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/new-tag.png\" alt=\"New tag\" onclick=\"load_modal_window('midcom-exec-org.maemo.calendar/layers.php?action=show_create_tag&layer_id={$_MIDCOM->auth->user->guid}');\" /></li>\n";
+        
+        $html .= "   </ul>\n";
+        $html .= "</div>\n";
         
         return $html;
     }
@@ -121,7 +137,8 @@ class org_maemo_calendarpanel_calendar_leaf extends midcom_baseclasses_component
                         
             $html .= "   </li>\n";
             
-            if (! empty($calendar_data['tags']))
+            if (   !empty($calendar_data['tags'])
+                && $_MIDCOM->auth->user->guid == $calendar_tag)
             {
                 $html .= "   <div class=\"calendar-tag-list\" id=\"calendar-list-item-{$calendar_tag}-tags\">\n";
                 $html .= "      <ul>\n";
@@ -164,8 +181,8 @@ class org_maemo_calendarpanel_calendar_leaf extends midcom_baseclasses_component
                     $html .= "            <div class=\"calendar-visibility\"><input type=\"checkbox\" name=\"\" value=\"\" {$visibility}/ onclick=\"toggle_tag_visibility('{$calendar_tag}', '{$tag_data['id']}');\"></div>\n";
                     $html .= "            <div class=\"calendar-name\" style=\"background-color: #{$bg_color};\">{$tag_data['name']}</div>\n";
                     $html .= "            <div class=\"calendar-order\">\n";
-                    $html .= "               <a class=\"graph-arrowUp\"></a>\n";
-                    $html .= "               <a class=\"graph-arrowDown\"></a>\n";
+                    // $html .= "               <a class=\"graph-arrowUp\"></a>\n";
+                    // $html .= "               <a class=\"graph-arrowDown\"></a>\n";
                     $html .= "            </div>\n";
 
                     $properties_action = '';

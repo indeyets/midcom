@@ -99,7 +99,7 @@ class org_maemo_calendarpanel_buddylist_leaf extends midcom_baseclasses_componen
         $html .= "<div class=\"accordion-leaf-menu\">\n";
         $html .= "   <ul class=\"leaf-menu\">\n";
 
-        $html .= "      <li><a href=\"#\" onclick=\"load_modal_window('/ajax/buddylist/search');\" title=\"Add buddy\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/contact-new.png\" alt=\"Add buddy\" /></a></li>\n";
+        $html .= "      <li><a href=\"#\" onclick=\"load_modal_window('ajax/buddylist/search');\" title=\"Add buddy\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/contact-new.png\" alt=\"Add buddy\" /></a></li>\n";
 
         $html .= "   </ul>\n";
         $html .= "</div>\n";
@@ -213,7 +213,14 @@ class org_maemo_calendarpanel_buddylist_leaf extends midcom_baseclasses_componen
         
         $html .= "   </div>\n";
         $html .= "   <div class=\"buddy-actions\">\n";
-        $html .= "<img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/icon-properties.png\" alt=\"Properties\" width=\"16\" height=\"16\" />";
+        
+        if ($buddy->isapproved)
+        {
+            
+        $properties_action = "load_modal_window('ajax/profile/view/{$person->guid}');";
+        $html .= "<img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/icon-properties.png\" alt=\"Properties\" width=\"16\" height=\"16\"  onclick=\"{$properties_action}\" />";
+        }
+        
         $delete_action = "remove_person_from_buddylist('{$person->guid}');";
         $html .= "<img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/trash.png\" alt=\"Delete\" width=\"16\" height=\"16\" onclick=\"{$delete_action}\"/>";        
         $html .= "   </div>\n";     
