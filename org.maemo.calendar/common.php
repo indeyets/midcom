@@ -218,7 +218,7 @@ class org_maemo_calendar_common
                     && $_MIDCOM->auth->request_sudo()) )
             {
                 $_l10n =& $_MIDCOM->i18n->get_l10n('org.maemo.calendar');
-                $tag_name = $l10n->get($this->_config->get('default_tag_name'));
+                $tag_name = $_l10n->get($this->_config->get('default_tag_name'));
                 $tag_id = org_maemo_calendar_common::_create_tag_id(&$user,$data['name']);
                 
                 $user->set_parameter('org.maemo.calendar:tag',$tag_id,'FFFF99');
