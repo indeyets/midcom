@@ -159,7 +159,6 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
     function _add_person_as_buddy(&$person, $auto_approve=false)
     {
         $user =& $_MIDCOM->auth->user->get_storage();
-        $user->require_do('midgard:create');    
         
         if (! net_nehmer_buddylist_entry::is_on_buddy_list($person))
         {
