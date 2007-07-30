@@ -163,6 +163,15 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
         
         if (! net_nehmer_buddylist_entry::is_on_buddy_list($person))
         {
+            if (! $_MIDCOM->auth->request_sudo($this->_component))
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add('Failed to auto-approve the buddy request, could not acquire sudo.',
+                    MIDCOM_LOG_ERROR);
+                debug_pop();                    
+                return;
+            }
+
             $buddy = new net_nehmer_buddylist_entry();
             $buddy->account = $user->guid;
             $buddy->buddy = $person->guid;
@@ -174,19 +183,21 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
 
             if ($auto_approve)
             {
-                if (! $_MIDCOM->auth->request_sudo($this->_component))
-                {
-                    debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add('Failed to auto-approve the buddy request, could not acquire sudo.',
-                        MIDCOM_LOG_ERROR);
-                    debug_pop();                    
-                    return;
-                }
+                // if (! $_MIDCOM->auth->request_sudo($this->_component))
+                // {
+                //     debug_push_class(__CLASS__, __FUNCTION__);
+                //     debug_add('Failed to auto-approve the buddy request, could not acquire sudo.',
+                //         MIDCOM_LOG_ERROR);
+                //     debug_pop();                    
+                //     return;
+                // }
 
                 $buddy->approve();
 
-                $_MIDCOM->auth->drop_sudo();
+                //$_MIDCOM->auth->drop_sudo();
             }
+            
+            $_MIDCOM->auth->drop_sudo();
             
             $this->_return_string = 'added_new';
         }
