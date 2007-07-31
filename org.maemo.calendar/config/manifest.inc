@@ -3,7 +3,7 @@
  * to create direct webpages.*/ 
 'purecode' => false,
 /* when using pear packaging, versions > 1 are stable */
-'version' => '0.0.1',
+'version' => '0.8.1',
 'state' => 'devel',
 /* use this to set default privileges */
 'privileges' => array(),
@@ -20,8 +20,8 @@
     (
         'username' => array
         (
-            'name' => 'Firstname Lastname',
-            'email' => 'user@example.net',
+            'name' => 'Jerry Jalava',
+            'email' => 'jerry@nemein.com',
             'role' => 'lead',
         ),
     ),
@@ -31,6 +31,9 @@
         'midcom.helper.datamanager2' => array(),
         'org.maemo.calendarwidget' => array(),
         'org.maemo.calendarpanel' => array(),
+        'org.openpsa.calendar' => array(),
+        'net.nehmer.buddylist' => array(),
+        'net.nemein.tag' => array(),
     ),
 ),
 
