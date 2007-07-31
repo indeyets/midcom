@@ -11,7 +11,7 @@ if (console == undefined)
 function finishCalendarLoad(id) {
     //run_scripts(jQuery('#'+id)[0]);
     jQuery('#'+id).fadeIn("",function(){
-        on_view_update()
+        on_view_update();
         var bodyClass = calendar_config["types_classes"][calendar_config["type"]];  
         if (   bodyClass == 'week'
             || bodyClass == 'day')
@@ -405,7 +405,6 @@ function change_timezone() {
         }
         inputs.push(this.name + '=' + escape(this.value));
     });
-    console.log("new timezone: "+timezone);
     
     var ajax_url = APPLICATION_PREFIX + 'ajax/change/timezone/' + calendar_config["timestamp"] + '/' + calendar_config["type"];
 
@@ -797,7 +796,7 @@ function add_person_as_buddy(identifier)
         success: function(msg) {
             console.log('person added as buddy, with message: '+msg);
             
-            remove_item_from_results(identifier)
+            remove_item_from_results(identifier);
             refresh_buddylist();
         }
     });    
