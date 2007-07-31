@@ -13,70 +13,8 @@ $current_timezone = org_maemo_calendar_common::active_timezone();
         <div class="timezone-block">
             <form id="timezone-selection-form" action="ajax/change/timezone/" method="get">
             <select name="timezone" size="1" onchange="change_timezone();">
-                <option value="0">Select Timezone</option>
             <?php
-            function render_timezone_list($selected_zone) {
-                $structure = '';
-                $timezone_identifiers = timezone_identifiers_list();
-                $i = 0;
-                foreach ($timezone_identifiers as $zone) {
-                    $zone = explode('/',$zone);
-                    if (isset($zone[1]))
-                    {
-                        $zones[$i]['continent'] = $zone[0];
-                        $zones[$i]['city'] = $zone[1];
-                        $i++;                        
-                    }
-                }
-                asort($zones);
-                foreach ($zones as $zone) {
-                    extract($zone);
-                    if (   $continent == 'Africa'
-                        || $continent == 'America'
-                        || $continent == 'Antarctica'
-                        || $continent == 'Arctic'
-                        || $continent == 'Asia'
-                        || $continent == 'Atlantic'
-                        || $continent == 'Australia'
-                        || $continent == 'Europe'
-                        || $continent == 'Indian'
-                        || $continent == 'Pacific')
-                    {
-                        if (! isset($current_continent))
-                        {
-                            $structure .= "<optgroup label=\"{$continent}\">\n"; // continent                            
-                        }
-                        elseif ($current_continent != $continent)
-                        {
-                            $structure .= "</optgroup>\n<optgroup label=\"{$continent}\">\n"; // continent
-                        }
-                        
-                        $selected = "";
-                        if ($city != '')
-                        {
-                            $value = "{$continent}/{$city}";
-                            if ($value == $selected_zone)
-                            {
-                                $selected = "selected=\"selected\" ";
-                            }
-                            $structure .= "<option {$selected} value=\"{$value}\">" . str_replace('_',' ',$city) . "</option>\n"; //Timezone
-                        }
-                        else
-                        {
-                            if ($continent == $selected_zone)
-                            {
-                                $selected = "selected=\"selected\" ";
-                            }
-                            $structure .= "<option {$selected} value=\"{$continent}\">{$continent}</option>\n"; //Timezone                            
-                        }
-                        
-                        $current_continent = $continent;
-                    }
-                }
-                $structure .= "</optgroup>\n";
-                return $structure;
-            }
-            echo render_timezone_list(timezone_name_get($current_timezone));
+            echo org_maemo_calendar_common::render_timezone_list(timezone_name_get($current_timezone));
             ?>
             </select>            
             </form>
@@ -90,7 +28,7 @@ $current_timezone = org_maemo_calendar_common::active_timezone();
             <img width="16" height="16" class="selection-previous" src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/icons/go-previous.png" alt="Previous" align="left" onclick="goto_prev();" />
             <img width="16" height="16" class="selection-home" src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/icons/go-home.png" alt="Today" align="left" onclick="goto_today();" />
             <img width="16" height="16" class="selection-next" src="<?php echo MIDCOM_STATIC_URL;?>/org.maemo.calendar/images/icons/go-next.png" alt="Next" align="left" onclick="goto_next();" />
-            <select name="month-select" size="1" onchange="change_date();">
+            <select id="month-select" name="month-select" size="1" onchange="change_date();">
                 <?php
                 $month = 1;
                 while($month < 13)
@@ -110,7 +48,7 @@ $current_timezone = org_maemo_calendar_common::active_timezone();
                 ?>
             </select>
             /
-            <select name="day-select" size="1" onchange="change_date();">
+            <select id="day-select" name="day-select" size="1" onchange="change_date();">
                 <?php
                 $day = 1;
                 $max_days = date("t", mktime(0, 0, 0, $current_date['month'], 1, $current_date['year']));
@@ -131,7 +69,7 @@ $current_timezone = org_maemo_calendar_common::active_timezone();
                 ?>
             </select>
             /       
-            <select name="year-select" size="1" onchange="change_date();">
+            <select id="year-select" name="year-select" size="1" onchange="change_date();">
                 <?php
                 $curyear = date('Y',time());
                 $year = $curyear - 2;

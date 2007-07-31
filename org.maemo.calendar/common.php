@@ -412,6 +412,80 @@ class org_maemo_calendar_common
         
         return $timezone;
     }
+    
+    function render_timezone_list($selected_zone,$use_groups=false) {
+        $structure = '';
+        $timezone_identifiers = timezone_identifiers_list();
+        $i = 0;
+        foreach ($timezone_identifiers as $zone) {
+            $zone = explode('/',$zone);
+            if (isset($zone[1]))
+            {
+                $zones[$i]['continent'] = $zone[0];
+                $zones[$i]['city'] = $zone[1];
+                $i++;                        
+            }
+        }
+        asort($zones);
+        foreach ($zones as $zone) {
+            extract($zone);
+            if (   $continent == 'Africa'
+                || $continent == 'America'
+                || $continent == 'Antarctica'
+                || $continent == 'Arctic'
+                || $continent == 'Asia'
+                || $continent == 'Atlantic'
+                || $continent == 'Australia'
+                || $continent == 'Europe'
+                || $continent == 'Indian'
+                || $continent == 'Pacific')
+            {
+                if (   !isset($current_continent)
+                    && $use_groups)
+                {
+                    $structure .= "<optgroup label=\"{$continent}\">\n"; // continent                            
+                }
+                elseif (   $current_continent != $continent
+                        && $use_groups)
+                {
+                    $structure .= "</optgroup>\n<optgroup label=\"{$continent}\">\n"; // continent
+                }
+                
+                $selected = "";
+                if ($city != '')
+                {
+                    $value = "{$continent}/{$city}";
+                    $text = str_replace('_',' ',$city);
+                    if (!$use_groups)
+                    {
+                        $text = str_replace('_',' ',$continent) . '/' . str_replace('_',' ',$city);
+                    }
+                    
+                    if ($value == $selected_zone)
+                    {
+                        $selected = "selected=\"selected\" ";
+                    }
+                    $structure .= "<option {$selected} value=\"{$value}\">{$text}</option>\n"; //Timezone
+                }
+                else
+                {
+                    if ($continent == $selected_zone)
+                    {
+                        $selected = "selected=\"selected\" ";
+                    }
+                    $structure .= "<option {$selected} value=\"{$continent}\">{$continent}</option>\n"; //Timezone                            
+                }
+                
+                $current_continent = $continent;
+            }
+        }
+        if ($use_groups)
+        {
+            $structure .= "</optgroup>\n";            
+        }
+        
+        return $structure;
+    }    
         
 }
 
