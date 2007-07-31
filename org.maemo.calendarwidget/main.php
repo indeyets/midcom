@@ -1474,7 +1474,8 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
             if ($event->can_do('midgard:update'))
             {
                 $menu_items[] = "{ name: '" . $this->_l10n_midcom->get("edit") . "', action: function() {load_modal_window('ajax/event/edit/{$event->guid}');} }";
-                $event_data = "{ title: '{$event->title}', color: '{$bg_color}' }";
+                $safe_title = urlencode($event->title);
+                $event_data = "{ title: '{$safe_title}', color: '{$bg_color}' }";
                 $menu_items[] = "{ name: '" . $this->_l10n->get("to shelf") . "', action: function() {move_event_to_shelf('{$event->guid}', {$event_data});} }";
             }
             if ($event->can_do('midgard:delete'))
