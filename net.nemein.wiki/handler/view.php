@@ -201,6 +201,10 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
             return false;
         }
         
+        // We need to get the node from NAP for safe redirect
+        $nap = new midcom_helper_nav();
+        $node = $nap->get_node($this->_topic->id);
+        
         $urlized_wikiword = midcom_generate_urlname_from_string($wikiword);
         if ($urlized_wikiword != $wikiword)
         {
@@ -212,11 +216,10 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
             if (count($result) > 0)
             {
                 // This wiki page actually exists, so go there as "Permanent Redirect"
-                $_MIDCOM->relocate("{$this->_topic->name}/{$result[0]->name}/", 301);
+                $_MIDCOM->relocate("{$node[MIDCOM_NAV_ABSOLUTEURL]}{$result[0]->name}/", 301);
             }
         }
-        // NOTE: The topic name is here because we're in can_handle phase and so current topic isn't set yet
-        $_MIDCOM->relocate("{$this->_topic->name}/notfound/" . rawurlencode($wikiword));
+        $_MIDCOM->relocate("{$node[MIDCOM_NAV_ABSOLUTEURL]}notfound/" . rawurlencode($wikiword));
         // This will exit
     }
 
