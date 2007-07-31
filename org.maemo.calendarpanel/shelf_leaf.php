@@ -9,10 +9,7 @@
  * @link http://www.microformats.org/wiki/hcalendar hCalendar microformat
  */
 class org_maemo_calendarpanel_shelf_leaf extends org_maemo_calendarpanel_leaf
-{
-    var $name;
-    var $title;
-    
+{   
     var $_shelf_items = array();
     
     /**
@@ -53,7 +50,7 @@ class org_maemo_calendarpanel_shelf_leaf extends org_maemo_calendarpanel_leaf
         {
             $return .= org_maemo_calendarpanel_shelf_leaf::render_item(&$item);
         }
-        $return .= "jQuery('#shelf-item-list').Highlight(800, '#4c4c4c');\n";
+        $return .= "jQuery('#shelf-item-list').Highlight(800, '#ff9');\n";
         
         return $return;
     }
@@ -82,7 +79,7 @@ class org_maemo_calendarpanel_shelf_leaf extends org_maemo_calendarpanel_leaf
         
         $html .= "var shelf_item_tpl = function() {
             return [
-                'li', { id: 'shelf-list-item-'+this.guid, onclick: this.action }, [
+                'li', { id: 'shelf-list-item-'+this.guid, onclick: this.action, style: 'background-color: #'+this.color+';' }, [
                     'span', { className: 'title' }, this.title
                 ]
             ];
@@ -110,6 +107,7 @@ class org_maemo_calendarpanel_shelf_leaf extends org_maemo_calendarpanel_leaf
         
         $item_data = "{ guid: '{$item->guid}',
                         title: '{$item->data->title}',
+                        color: '{$item->data->color}',                        
                         action: function(){activate_shelf_item('{$item->guid}');} }";
         $js .= "jQuery('#shelf-item-list').tplAppend({$item_data}, shelf_item_tpl);\n";
         
