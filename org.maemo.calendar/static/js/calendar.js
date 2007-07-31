@@ -448,9 +448,13 @@ function load_modal_window(url)
 {
     var win = jQuery("div.calendar-modal-window");
 
-    if (url.substr(8,url.length) != '/midcom-')
+    if (url.substr(7,url.length) != 'midcom-')
     {
         url = APPLICATION_PREFIX + url;
+    }
+    else
+    {
+        url = HOST_PREFIX + url;
     }
     
     jQuery.ajaxSetup({global: false});
@@ -463,7 +467,7 @@ function load_modal_window(url)
             console.log("request.statusText: "+request.statusText);
             if (request.statusText == "Forbidden")
             {
-                window.location = APPLICATION_PREFIX + url;
+                window.location = HOST_PREFIX + 'midcom-login-';
             }
         },
         success: function(r) {
@@ -484,11 +488,11 @@ function set_modal_window_contents(content)
 
 function load_shelf_contents()
 {
-    var url = '/midcom-exec-org.maemo.calendar/shelf.php?action=load';
+    var url = 'midcom-exec-org.maemo.calendar/shelf.php?action=load';
     jQuery.ajaxSetup({global: false});
     jQuery.ajax({
         type: "GET",
-        url: url,
+        url: HOST_PREFIX + url,
         timeout: 12000,
         dataType: 'json',
         error: function(request, type, expobj) {
@@ -506,11 +510,11 @@ function save_shelf_contents()
 {
     console.log('save_shelf_contents: '+shelf_contents);
     
-    var url = '/midcom-exec-org.maemo.calendar/shelf.php?action=save';
+    var url = 'midcom-exec-org.maemo.calendar/shelf.php?action=save';
     jQuery.ajaxSetup({global: false});
     jQuery.ajax({
         type: "POST",
-        url: url,
+        url: HOST_PREFIX + url,
         data: {data: protoToolkit.toJSON(shelf_contents)},
         timeout: 12000,
         error: function(obj, type, expobj) {
@@ -526,11 +530,11 @@ function save_shelf_contents()
 
 function update_shelf_panel_leaf()
 {
-    var url = '/midcom-exec-org.maemo.calendar/shelf.php?action=update_list';
+    var url = 'midcom-exec-org.maemo.calendar/shelf.php?action=update_list';
     jQuery.ajaxSetup({global: false});
     jQuery.ajax({
         type: "GET",
-        url: url,
+        url: HOST_PREFIX + url,
         timeout: 12000,
         dataType: 'script',
         error: function(obj, type, expobj) {
@@ -627,11 +631,11 @@ function attach_active_shelf_item(timestamp, identifier)
 
 function empty_shelf()
 {
-    var url = '/midcom-exec-org.maemo.calendar/shelf.php?action=empty';
+    var url = 'midcom-exec-org.maemo.calendar/shelf.php?action=empty';
     jQuery.ajaxSetup({global: false});
     jQuery.ajax({
         type: "GET",
-        url: url,
+        url: HOST_PREFIX + url,
         timeout: 12000,
         error: function(obj, type, expobj) {
             alert("Failed to empty shelf list");
@@ -686,13 +690,13 @@ function enable_buddylist_search()
 {
     console.log('enable_buddylist_search');
 
-    var url = '/midcom-exec-org.maemo.calendar/buddylist.php?action=search';
+    var url = 'midcom-exec-org.maemo.calendar/buddylist.php?action=search';
         
     jQuery.ajaxSetup({global: false});
     var options = { 
         beforeSubmit:  show_searching,
         success:       render_buddylist_search_results,
-        url:       url,
+        url:       HOST_PREFIX + url,
         type:      'post',
         dataType:  'json',
         timeout:   12000 
@@ -827,13 +831,13 @@ function refresh_buddylist(ask_for_reload)
 {
     console.log('refresh_buddylist');
     
-    var url = '/midcom-exec-org.maemo.calendar/buddylist.php?action=refresh_list';
+    var url = 'midcom-exec-org.maemo.calendar/buddylist.php?action=refresh_list';
     var list = jQuery("#buddylist-item-list");
 
     jQuery.ajaxSetup({global: false});
     jQuery.ajax({
         type: "GET",
-        url: url,
+        url: HOST_PREFIX + url,
         timeout: 12000,
         error: function(obj, type, expobj) {
             console.log("Failed to refresh buddylist. Exception type: "+type);
@@ -927,14 +931,14 @@ function edit_calendar_layer_properties(layer_id)
 {
     console.log('edit_calendar_layer_properties layer_id: '+layer_id);
 
-    var url = '/midcom-exec-org.maemo.calendar/layers.php?action=show_update_layer&layer_id='+layer_id;
+    var url = 'midcom-exec-org.maemo.calendar/layers.php?action=show_update_layer&layer_id='+layer_id;
     load_modal_window(url);
 }
 function edit_calendar_layer_tag_properties(layer_id, tag_id)
 {
     console.log('edit_calendar_layer_tag_properties layer_id: '+layer_id+' tag_id: '+tag_id);
 
-    var url = '/midcom-exec-org.maemo.calendar/layers.php?action=show_update_tag&layer_id='+layer_id+'&tag_id='+tag_id;
+    var url = 'midcom-exec-org.maemo.calendar/layers.php?action=show_update_tag&layer_id='+layer_id+'&tag_id='+tag_id;
     load_modal_window(url);
 }
 
@@ -943,18 +947,18 @@ function enable_layer_update_form(layer_id, tag_id)
     console.log('enable_color_change_form layer_id: '+layer_id+' tag_id: '+tag_id);
     
     var type = 'layer';
-    var url = '/midcom-exec-org.maemo.calendar/layers.php?action=update_layer&layer_id='+layer_id;
+    var url = 'midcom-exec-org.maemo.calendar/layers.php?action=update_layer&layer_id='+layer_id;
     if (tag_id != undefined)
     {
         type = 'layer_tag';
-        url = '/midcom-exec-org.maemo.calendar/layers.php?action=update_tag&layer_id='+layer_id+'&tag_id='+tag_id;
+        url = 'midcom-exec-org.maemo.calendar/layers.php?action=update_tag&layer_id='+layer_id+'&tag_id='+tag_id;
     }
         
     jQuery.ajaxSetup({global: false});
     var options = { 
         beforeSubmit:  show_processing,
         success:       processing_successfull,
-        url:       url,
+        url:       HOST_PREFIX + url,
         type:      'post',
         //dataType:  'json',
         timeout:   12000
@@ -966,12 +970,12 @@ function enable_layer_update_form(layer_id, tag_id)
 
 function enable_tag_create_form(layer_id)
 {
-    url = '/midcom-exec-org.maemo.calendar/layers.php?action=create_tag&layer_id='+layer_id;
+    url = 'midcom-exec-org.maemo.calendar/layers.php?action=create_tag&layer_id='+layer_id;
     jQuery.ajaxSetup({global: false});
     var options = { 
         beforeSubmit:  show_processing,
         success:       processing_successfull,
-        url:       url,
+        url:       HOST_PREFIX + url,
         type:      'post',
         //dataType:  'json',
         timeout:   12000
