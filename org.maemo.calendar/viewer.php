@@ -33,7 +33,7 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
         /**
          * Prepare the request switch, which contains URL handlers for the component
          */
-         
+ 
         // Handle /config
         $this->_request_switch['config'] = array
         (
@@ -47,6 +47,13 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
         $this->_request_switch['index'] = array
         (
             'handler' => Array('org_maemo_calendar_handler_index', 'index'),
+        );
+        
+        // Match /view/<timestamp>/<type>
+        $this->_request_switch['view'] = array(
+            'handler' => Array('org_maemo_calendar_handler_index', 'view'),
+            'fixed_args' => array('view'),
+            'variable_args' => 2,
         );
 
        // Match /event/create/<timestamp>
@@ -106,11 +113,6 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
           'handler' => Array('org_maemo_calendar_handler_buddylist_admin', 'search'),
           'fixed_args' => array('ajax', 'buddylist', 'search'),
        );
-       // // Match /ajax/buddylist/refresh
-       // $this->_request_switch['ajax-buddylist-refresh'] = array(
-       //    'handler' => Array('org_maemo_calendar_handler_buddylist_admin', 'refresh'),
-       //    'fixed_args' => array('ajax', 'buddylist', 'refresh'),
-       // );
         // Match /ajax/buddylist/add/<guid>
         $this->_request_switch['ajax-buddylist-add'] = array(
            'handler' => Array('org_maemo_calendar_handler_buddylist_admin', 'add'),
@@ -287,6 +289,7 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
             );
             jQuery("div.calendar-layerholder div.calendar-object-event-header").textSelection("disable");
             load_shelf_contents();
+            modify_foreground_color("div.calendar-object-event");
             show_layout();
         '."\n";
         
@@ -358,6 +361,20 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
             }
         }
         */
+        if (   $this->_request_data['root_event']->can_do('midgard:update')
+            && $this->_request_data['root_event']->can_do('midcom:component_config'))
+        {
+            $this->_node_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => '__ais/acl/edit/' . $this->_request_data['root_event']->guid . '.html',
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('root event permissions'),
+                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('root event permission helptext'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+                )
+            );
+        }        
         if (   $this->_topic->can_do('midgard:update')
             && $this->_topic->can_do('midcom:component_config'))
         {

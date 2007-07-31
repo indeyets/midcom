@@ -60,6 +60,13 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
     {
         $this->_request_data['event'] =& $this->_event;
         $this->_request_data['controller'] =& $this->_controller;
+        
+        $this->_request_data['full_schema_in_use'] = true;
+        if (! isset($_REQUEST['full_schema'])
+            || !$_REQUEST['full_schema'])
+        {
+            $this->_request_data['full_schema_in_use'] = false;
+        }
     }
 
     /**
@@ -80,6 +87,17 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
     {
         $_MIDCOM->auth->require_valid_user();
         $this->_root_event =& $this->_request_data['root_event'];
+
+        $session =& new midcom_service_session('org.maemo.calendar');
+        if ($session->exists('active_type'))
+        {
+            $this->_calendar_type = $session->get('active_type');
+        }
+        else
+        {
+            $this->_calendar_type = $this->_config->get('default_view');
+        }
+        unset($session);        
     }
 
     /**
@@ -149,7 +167,8 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
         $this->_controller->schemadb =& $this->_schemadb;        
 
         $this->_controller->schemaname = 'default';
-        if ($handler_id == 'ajax-event-create')
+        if (   $handler_id == 'ajax-event-create'
+            && !$this->use_full_schema)
         {
             $this->_controller->schemaname = 'ajax';         
         }
@@ -181,22 +200,10 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
         debug_print_r('_POST[participants]: ',$_POST['participants']);
         foreach ($_POST['participants'] as $participant_id)
         {
-            //$participants[$participant_id] = true;
             $participants[] = $participant_id;
-            
-            // $this->_event->participants = array
-            // (
-            //     $_MIDGARD['user'] => true,
-            // );
-        
-            // $this->_event->participants = serialize( array
-            // (
-            //     $_MIDGARD['user'],
-            // ) );
         }
         
         $this->_event->participants = serialize($participants);
-        //$this->_event->participants = $_POST['participants'];
         
         debug_print_r('this->_event->participants before create: ',$this->_event->participants);
         
@@ -216,7 +223,7 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
         }
 
         // TODO: Add support for tentatives?
-        $this->_event->busy = false;    
+        $this->_event->busy = false;
 
         if (! $this->_event->create())
         {            
@@ -243,7 +250,7 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
                 $session =& new midcom_service_session();
                 $session->set('failed_POST_data', $post_data);
                 // Return user to create view
-                $_MIDCOM->relocate("event/create/" . date('Y-m-d', $this->_event->start) . '/');
+                $_MIDCOM->relocate("event/create/{$this->_event->start}");
                 // This will exit
             }
             else
@@ -312,9 +319,16 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
         
         $_MIDCOM->auth->require_do('midgard:create', $this->_request_data['root_event']);
         
+        $this->use_full_schema = true;
         if ($handler_id == 'ajax-event-create')
         {
             $_MIDCOM->skip_page_style = true;
+            
+            if (! isset($_REQUEST['full_schema'])
+                || !$_REQUEST['full_schema'])
+            {
+                $this->use_full_schema = false;
+            }
         }
         
         $this->_request_data['selected_day'] = time();
@@ -334,17 +348,16 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
         switch ($this->_controller->process_form())
         {
             case 'save':
-                if ($handler_id == 'ajax-event-create')
+                if (   $handler_id == 'ajax-event-create'
+                    && !$this->use_full_schema)
                 {
                     // Change to default schema on the fly
-                    //$this->_event->set_parameter('midcom.helper.datamanager2', 'schema', 'default');
                     $this->_event->set_parameter('midcom.helper.datamanager2', 'schema_name', 'default');
                 }
-                $_MIDCOM->relocate('');
                 // this will exit.
 
             case 'cancel':
-                $_MIDCOM->relocate('');
+                $_MIDCOM->relocate("view/{$_POST['start_ts']}/{$this->_calendar_type}");
                 // This will exit.
         }       
         
@@ -356,12 +369,11 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
     {
         if ($handler_id == 'ajax-event-create')
         {
-            midcom_show_style('event_create_ajax');
-//          midcom_show_style('event_create_small');
+            midcom_show_style('event-create-ajax');
         }
         else
         {
-            midcom_show_style('event_create');
+            midcom_show_style('event-create');
         }
     }
     

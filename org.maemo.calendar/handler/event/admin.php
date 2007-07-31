@@ -14,6 +14,8 @@
  */
 class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_components_handler
 {
+    var $_calendar_type;
+    
     /**
      * The resource which we're reserving
      *
@@ -77,43 +79,7 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
     function _prepare_request_data($handler_id)
     {
         $this->_request_data['event'] =& $this->_event;
-        $this->_request_data['datamanager'] =& $this->_datamanager;
         $this->_request_data['controller'] =& $this->_controller;
-        
-        $this->_view_toolbar->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => "edit/{$this->_event->guid}.html",
-                MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
-                MIDCOM_TOOLBAR_HELPTEXT => null,
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
-                MIDCOM_TOOLBAR_ENABLED => $this->_event->can_do('midgard:update'),
-                MIDCOM_TOOLBAR_ACCESSKEY => 'e',
-            )
-        );
-
-        $this->_view_toolbar->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => "delete/{$this->_event->guid}.html",
-                MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
-                MIDCOM_TOOLBAR_ENABLED => $this->_event->can_do('midgard:delete'),
-                MIDCOM_TOOLBAR_ACCESSKEY => 'd',
-            )
-        );
-    
-        switch ($handler_id)
-        {
-            case 'edit-event':
-                $this->_view_toolbar->disable_item("edit/{$this->_event->guid}.html");
-                break;
-            case 'delete-event':
-                $this->_view_toolbar->disable_item("delete/{$this->_event->guid}.html");
-                break;
-        }
     }
 
     /**
@@ -122,6 +88,17 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
     function _on_initialize()
     {
         $_MIDCOM->auth->require_valid_user();
+        
+        $session =& new midcom_service_session('org.maemo.calendar');
+        if ($session->exists('active_type'))
+        {
+            $this->_calendar_type = $session->get('active_type');
+        }
+        else
+        {
+            $this->_calendar_type = $this->_config->get('default_view');
+        }
+        unset($session);
     }
 
     /**
@@ -132,23 +109,6 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
     function _load_schemadb()
     {
         $this->_schemadb =& $this->_request_data['schemadb'];
-    }
-
-    /**
-     * Internal helper, loads the datamanager for the current event. Any error triggers a 500.
-     *
-     * @access private
-     */
-    function _load_datamanager()
-    {
-        $this->_load_schemadb();
-        $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_schemadb);
-        //$this->_datamanager->schema = $this->_event->type;
-        if (!$this->_datamanager->autoset_storage($this->_event))
-        {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a DM2 instance for event {$this->_event->id}.");
-            // This will exit.
-        }
     }
 
     /**
@@ -170,55 +130,14 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
         }
     }
 
-    /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
-     * location.
-     *
-     * @param string $handler_id
-     */
-    function _update_breadcrumb_line($handler_id)
-    {
-        $tmp = Array();
-
-        // $tmp[] = Array
-        // (
-        //     MIDCOM_NAV_URL => "view/{$this->_resource->name}/",
-        //     MIDCOM_NAV_NAME => $this->_resource->title,
-        // );
-        $tmp[] = Array
-        (
-            MIDCOM_NAV_URL => "event/{$this->_event->guid}/",
-            MIDCOM_NAV_NAME => "{$this->_event->title} " . strftime('%x', $this->_event->start),
-        );
-        
-        switch ($handler_id)
-        {
-            case 'edit-event':
-                $tmp[] = Array
-                (
-                    MIDCOM_NAV_URL => "edit/{$this->_event->guid}.html",
-                    MIDCOM_NAV_NAME => $this->_l10n_midcom->get('edit'),
-                );
-                break;
-            case 'delete-event':
-                $tmp[] = Array
-                (
-                    MIDCOM_NAV_URL => "delete/{$this->_event->guid}.html",
-                    MIDCOM_NAV_NAME => $this->_l10n_midcom->get('delete'),
-                );
-                break;
-        }
-
-        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
-    }
-
-    function _timezone_hack()
+    function _timezone_hack($override_start=false,$override_end=false)
     {
         $active_timezone = org_maemo_calendar_common::active_timezone();
         $utc_timezone = timezone_open("UTC");
         
         if (   empty($_POST)
-            && is_object($this->_event))
+            && is_object($this->_event)
+            && !$override_start)
         {
             debug_add("Alter the start/end times with timezone");
             $event_start = $this->_event->start;
@@ -239,9 +158,26 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
         {            
             debug_add("Make sure the start/end times are saved with UTC timezone");
             
-            $event_start = strtotime($_POST['start']);
+            $start = null;
+            $end = null;
+            
+            if (   isset($_POST['start'])
+                && isset($_POST['end']))
+            {
+                $start = $_POST['start'];
+                $end = $_POST['end'];
+            }
+            
+            if (   $override_start
+                && $override_end)
+            {
+                $start = $override_start;
+                $end = $override_end;
+            }
+                        
+            $event_start = strtotime($start);
             debug_add("event_start before timezone change: " . $event_start . " (" . date("H:i:s",$event_start) . ")");
-            $event_end = strtotime($_POST['end']);
+            $event_end = strtotime($end);
             $event_start_dt = date_create("@$event_start", $utc_timezone);
             $event_end_dt = date_create("@$event_end", $utc_timezone);
             $start_tz_name = $event_start_dt->getTimeZone()->getName();
@@ -266,7 +202,9 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
             }
             
             debug_add("event_start after timezone change: " . $event_start . " (" . date("H:i:s",$event_start) . ")");
-
+            
+            $_POST['start_ts'] = $event_start;
+            
             $_POST['start'] = date("Y-m-d H:i:s", $event_start);
             $_POST['end'] = date("Y-m-d H:i:s", $event_end);
         }        
@@ -341,18 +279,12 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
 
             case 'cancel':
                 //$_MIDCOM->relocate("event/{$this->_event->guid}/");
-                $_MIDCOM->relocate("");
+                $_MIDCOM->relocate("view/{$_POST['start_ts']}/{$this->_calendar_type}");
                 // This will exit.
         }
 
         $this->_prepare_request_data($handler_id);
         $_MIDCOM->bind_view_to_object($this->_event, $this->_request_data['controller']->datamanager->schema->name);
-        
-        if ($handler_id != 'ajax-event-edit')
-        {
-            $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_event->title}");
-            $this->_update_breadcrumb_line($handler_id);
-        }
         
         debug_pop();
         
@@ -385,7 +317,7 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
         $this->_timezone_hack();
 
         $event_length = $this->_event->end - $this->_event->start;
-        $this->_event->start = $args[1] + 1;
+        $this->_event->start = $args[1] + 1;        
         $this->_event->end = $event_length + $this->_event->start;
         
         $this->_load_controller();
@@ -399,24 +331,27 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
                     $session =& new midcom_service_session('org.maemo.calendarpanel');
                     if ($session->exists('shelf_contents'))
                     {
-                        $session->remove('shelf_contents');
+                        $contents = json_decode($session->get('shelf_contents'));
+                        $new_contents = array();
+                        foreach ($contents as $item)
+                        {
+                            if ($item->guid != $this->_event->guid)
+                            {
+                                $new_contents[] = $item;
+                            }
+                        }
+                        $session->set('shelf_contents',json_encode($new_contents));
                     }
                 }
 
             case 'cancel':
                 //$_MIDCOM->relocate("event/{$this->_event->guid}/");
-                $_MIDCOM->relocate("");
+                $_MIDCOM->relocate("view/{$_POST['start_ts']}/{$this->_calendar_type}");
                 // This will exit.
         }
 
         $this->_prepare_request_data($handler_id);
         $_MIDCOM->bind_view_to_object($this->_event, $this->_request_data['controller']->datamanager->schema->name);
-
-        if ($handler_id != 'ajax-event-move')
-        {
-            $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_event->title}");
-            $this->_update_breadcrumb_line($handler_id);
-        }
         
         debug_pop();
         

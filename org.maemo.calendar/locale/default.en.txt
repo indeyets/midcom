@@ -13,3 +13,7 @@ Current view
 ---STRING Default
 Default
 ---STRINGEND
+
+---STRING root event permissions
+Root event permissions
+---STRINGEND

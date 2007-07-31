@@ -8,7 +8,7 @@
 <div class="application">
     
     <!-- Header start -->
-<?php midcom_show_style("application_header"); ?>
+<?php midcom_show_style("application-header"); ?>
     <!-- Header end -->
 
     <div class="container">

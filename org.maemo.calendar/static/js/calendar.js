@@ -176,7 +176,7 @@ function goto_prev()
     
     calendar_config["timestamp"] = timestamp;
 
-    var ajax_url = form[0].action + calendar_config["timestamp"] + '/' + calendar_config["type"];
+    var ajax_url = APPLICATION_PREFIX + 'ajax/change/date/' + calendar_config["timestamp"] + '/' + calendar_config["type"];
 
     jQuery.ajaxSetup({global: true});
     jQuery.ajax({
@@ -267,7 +267,7 @@ function goto_next()
         
     calendar_config["timestamp"] = timestamp;
 
-    var ajax_url = form[0].action + calendar_config["timestamp"] + '/' + calendar_config["type"];
+    var ajax_url = APPLICATION_PREFIX + 'ajax/change/date/' + calendar_config["timestamp"] + '/' + calendar_config["type"];
 
     jQuery.ajaxSetup({global: true});
     jQuery.ajax({
@@ -312,7 +312,7 @@ function goto_today()
             
     calendar_config["timestamp"] = timestamp;
 
-    var ajax_url = form[0].action + calendar_config["timestamp"] + '/' + calendar_config["type"];
+    var ajax_url = APPLICATION_PREFIX + 'ajax/change/date/' + calendar_config["timestamp"] + '/' + calendar_config["type"];
 
     jQuery.ajaxSetup({global: true});
     jQuery.ajax({
@@ -369,8 +369,7 @@ function change_date() {
             
     calendar_config["timestamp"] = timestamp;
     
-    //APPLICATION_PREFIX + 
-    var ajax_url = form[0].action + calendar_config["timestamp"] + '/' + calendar_config["type"];
+    var ajax_url = APPLICATION_PREFIX + 'ajax/change/date/' + calendar_config["timestamp"] + '/' + calendar_config["type"];
 
     jQuery.ajaxSetup({global: true});
     jQuery.ajax({
@@ -408,8 +407,7 @@ function change_timezone() {
     });
     console.log("new timezone: "+timezone);
     
-    //APPLICATION_PREFIX + 
-    var ajax_url = form[0].action + calendar_config["timestamp"] + '/' + calendar_config["type"];
+    var ajax_url = APPLICATION_PREFIX + 'ajax/change/timezone/' + calendar_config["timestamp"] + '/' + calendar_config["type"];
 
     jQuery.ajaxSetup({global: true});
     jQuery.ajax({
@@ -1008,6 +1006,126 @@ function show_layout()
     jQuery('#calendar-holder').show();
     jQuery('div.application div.header').show();
     jQuery('#main-panel').show();
+}
+
+function modify_foreground_color(search_string)
+{
+    // console.log("modify_foreground_color search_string: "+search_string);
+    // console.log("found "+jQuery(search_string).length+" matches.");
+    jQuery.each( jQuery(search_string), function(i,n){
+        execute_modify_foreground_color(n);
+    });
+}
+
+function execute_modify_foreground_color(element)
+{
+    function bg_to_bits(bgcolor)
+    {
+        bgcolor = String(bgcolor);
+        bgcolor = bgcolor.replace(/ /g,'');
+        bgcolor = bgcolor.toLowerCase();
+
+        var rgb_bits = [];
+        var color_defs = [
+            {
+                re: /^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/,
+                process: function (bits){
+                    return [
+                        parseInt(bits[1]),
+                        parseInt(bits[2]),
+                        parseInt(bits[3])
+                    ];
+                }
+            },
+            {
+                re: /^(\w{2})(\w{2})(\w{2})$/,
+                process: function (bits){
+                    return [
+                        parseInt(bits[1], 16),
+                        parseInt(bits[2], 16),
+                        parseInt(bits[3], 16)
+                    ];
+                }
+            }
+        ];
+        
+        for (var i = 0; i < color_defs.length; i++) {
+            var re = color_defs[i].re;
+            var processor = color_defs[i].process;
+            var bits = re.exec(bgcolor);
+            if (bits) {
+                rgb_bits = processor(bits);
+            }
+        }
+
+        rgb_bits[0] = (rgb_bits[0] < 0 || isNaN(rgb_bits[0])) ? 0 : ((rgb_bits[0] > 255) ? 255 : rgb_bits[0]);
+        rgb_bits[1] = (rgb_bits[1] < 0 || isNaN(rgb_bits[1])) ? 0 : ((rgb_bits[1] > 255) ? 255 : rgb_bits[1]);
+        rgb_bits[2] = (rgb_bits[2] < 0 || isNaN(rgb_bits[2])) ? 0 : ((rgb_bits[2] > 255) ? 255 : rgb_bits[2]);
+                
+        return rgb_bits;
+    }
+    
+    function RGBToHSL(rgb)
+    {
+        var min, max, delta, h, s, l;
+        var r = rgb[0], g = rgb[1], b = rgb[2];
+        min = Math.min(r, Math.min(g, b));
+        max = Math.max(r, Math.max(g, b));
+        delta = max - min;
+        l = (min + max) / 2;
+        s = 0;
+        if (l > 0 && l < 1)
+        {
+            s = delta / (l < 0.5 ? (2 * l) : (2 - 2 * l));
+        }
+        h = 0;
+        if (delta > 0)
+        {
+            if (max == r && max != g) h += (g - b) / delta;
+            if (max == g && max != b) h += (2 + (b - r) / delta);
+            if (max == b && max != r) h += (4 + (r - g) / delta);
+            h /= 6;
+        }
+        
+        return [h, s, l];
+    }
+    
+    bg = jQuery(element).css('background');
+    if (   bg == undefined
+        || bg == "")
+    {
+        bg = jQuery(element).css('background-color');
+    }
+
+    if (   bg == undefined
+        || bg == "")
+    {
+        bg = jQuery(element).attr('bgcolor');
+    }
+    
+    if (   bg == undefined
+        || bg == "")
+    {
+        jQuery(element).css({color: "#3c3c3c"});
+        return false;
+    }
+
+    if (bg.charAt(0) == '#')
+    {
+        bg = bg.substr(1,6);
+    }
+    
+    var hsl = RGBToHSL(bg_to_bits(bg));
+        
+    var fg_color = '#ffffff';
+    if (hsl[0] < 0.5)
+    {
+        fg_color = '#3c3c3c';
+    }
+    
+    jQuery(element).css({
+      color: fg_color
+    });    
 }
 
 jQuery(document).ready(function() {

@@ -18,7 +18,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
 {
 
     var $_selected_time = null;
-    var $_calendar_type = ORG_MAEMO_CALENDARWIDGET_WEEK;
+    var $_calendar_type = null;
     
     /**
      * Current users object
@@ -67,7 +67,10 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
     {
         $this->_request_data['name']  = "org.maemo.calendar";
         
-        $this->_calendar_type = $this->_config->get('default_view');
+        if (is_null($this->_calendar_type))
+        {
+            $this->_calendar_type = $this->_config->get('default_view');
+        }
         
         $this->_update_breadcrumb_line($handler_id);
         
@@ -81,8 +84,20 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
         return true;
     }
     
+    function _handler_view($handler_id, $args, &$data)
+    {
+        $this->_selected_time = $args[0];
+        $this->_calendar_type = $args[1];
+        
+        return $this->_handler_index($handler_id, $args, &$data);
+    }
+    
     function _init_calendar()
     {
+        $session =& new midcom_service_session('org.maemo.calendar');
+        $session->set('active_type',$this->_calendar_type);
+        unset($session);
+
         $this->_request_data['maemo_calender'] = new org_maemo_calendarwidget(date('Y', $this->_selected_time), date('m', $this->_selected_time), date('d', $this->_selected_time));
         
         //$this->_request_data['maemo_calender']->type = $this->_calendar_type;
@@ -303,14 +318,15 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
         debug_pop();
     }
 
-    /**
-     * This function does the output.
-     *  
-     */
     function _show_index($handler_id, &$data)
     {
         midcom_show_style('index');
     }
+    
+    function _show_view($handler_id, &$data)
+    {
+        $this->_show_index($handler_id, &$data);
+    }    
 
     function _get_persons()
     {
