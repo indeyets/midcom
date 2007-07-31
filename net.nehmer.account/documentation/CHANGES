@@ -8,6 +8,10 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-07-31 rambo
+  + forward-ported: allow to link to user by username (can be disabled in config)
+  ! forward-ported: disabled linking to users by ID, now one must use GUID or username
+
 2007-05-21 Joonas Bergius
   - Fixed a problem with username_is_email option.
 

@@ -160,13 +160,19 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                 break;
 
             case 'other':
-                $this->_account = new midcom_db_person($args[0]);
+                if (!$this->_get_account($args[0]))
+                {
+                    return false;
+                }
                 $this->_view_self = false;
                 $this->_view_quick = false;
                 break;
 
             case 'other_quick':
-                $this->_account = new midcom_db_person($args[0]);
+                if (!$this->_get_account($args[0]))
+                {
+                    return false;
+                }
                 $this->_view_self = false;
                 $this->_view_quick = true;
                 break;
@@ -179,9 +185,8 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
 
         if (! $this->_account)
         {
-            $this->errcode = MIDCOM_ERRNOTFOUND;
-            $this->errstring = 'The account was not found.';
-            return false;
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, $this->_l10n->get('the account was not found.'));
+            // this will exit
         }
         $this->_user =& $_MIDCOM->auth->get_user($this->_account);
         $this->_avatar = $this->_account->get_attachment('avatar');
@@ -199,6 +204,49 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
         $_MIDCOM->set_pagetitle("{$this->_account->name} ({$this->_datamanager->schema->description})");
 
+        return true;
+    }
+
+    /**
+     * Populates $this->_account by guid or by username
+     *
+     * @param string $id GUID or username
+     * @return bool false on critical failure, true otherwise.
+     */
+    function _get_account($id)
+    {
+        if (mgd_is_guid($id))
+        {
+            $this->_account = new midcom_db_person($id);
+            return true;
+        }
+        if (!$this->_config->get('allow_view_by_username'))
+        {
+            // Silently ignore
+            return true;
+        }
+
+        $qb = midcom_db_person::new_query_builder();
+        $qb->add_constraint('username', '=', $id);
+        $results = $qb->execute();
+        unset($qb);
+        if ($results === false)
+        {
+            // QB fatal error
+            return false;
+        }
+        if (empty($results))
+        {
+            // no accounts is not a fatal error
+            return true;
+        }
+        if (count($results) > 1)
+        {
+            // More than one result, what to do ??
+            return false;
+        }
+        $this->_account = $results[0];
+        unset($results);
         return true;
     }
 

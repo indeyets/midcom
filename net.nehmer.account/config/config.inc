@@ -6,6 +6,7 @@
 'allow_change_username' => true,
 'allow_cancel_membership' => true,
 'allow_publish' => true,
+'allow_view_by_username' => true, // the paranoid may want to disable this as it allows determining username validity
 
 // add group id to automatically assign the user to it
 'assign_to_group' => null,
@@ -67,3 +68,14 @@
     ),
 ),
 'admin_plugins' => null,
+
+/**
+ * How many invite email field should be shown
+ */
+ 'email_fields' => 5,
+
+/**
+ * Invite email subject
+ */
+ 'email_subject' => "invitation subject",
+

@@ -2,6 +2,7 @@
   'name' => 'net.nehmer.account',
   'version' => '1.0.4beta2',
   'state' => 'beta',
+  'class_definitions' => array('midcom_dba_classes.inc'),
   'package.xml' => 
   array (
     'summary' => 'Account management and registration',

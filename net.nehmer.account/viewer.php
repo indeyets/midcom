@@ -104,6 +104,18 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
 
     function _on_initialize()
     {
+	// INVITATION 	
+        $this->_request_switch['view_sent_invites'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_invitation', 'view_sent_invites'),
+            'fixed_args' => Array('view_sent_invites'),
+        );
+        $this->_request_switch['invite'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_invitation', 'invite'),
+            'fixed_args' => Array('invite'),
+        );
+
         // VIEW LINKS
         $this->_request_switch['self'] = Array
         (
