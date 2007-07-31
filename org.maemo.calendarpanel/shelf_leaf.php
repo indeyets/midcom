@@ -96,6 +96,7 @@ class org_maemo_calendarpanel_shelf_leaf extends org_maemo_calendarpanel_leaf
         {
             $html .= org_maemo_calendarpanel_shelf_leaf::render_item(&$item);
         }
+        $html .= "modify_foreground_color('#shelf-item-list li');\n";
         $html .= "</script>\n";        
         
         return $html;
@@ -105,8 +106,9 @@ class org_maemo_calendarpanel_shelf_leaf extends org_maemo_calendarpanel_leaf
     {
         $js = '';
         
+        $title = urldecode($item->data->title);
         $item_data = "{ guid: '{$item->guid}',
-                        title: '{$item->data->title}',
+                        title: \"{$title}\",
                         color: '{$item->data->color}',                        
                         action: function(){activate_shelf_item('{$item->guid}');} }";
         $js .= "jQuery('#shelf-item-list').tplAppend({$item_data}, shelf_item_tpl);\n";

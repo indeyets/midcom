@@ -187,7 +187,7 @@
 /* Shelf panel */
 
 .accordion-leaf-body #shelf-item-list li.active {
-    background-color: #4c4c4c;
+    border: 1px solid red;
 }
 
 /* Shelf panel ends*/
