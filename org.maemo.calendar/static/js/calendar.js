@@ -448,7 +448,7 @@ function load_modal_window(url)
 {
     var win = jQuery("div.calendar-modal-window");
 
-    if (url.substr(7,url.length) != 'midcom-')
+    if (url.substr(8,url.length) != '/midcom-')
     {
         url = APPLICATION_PREFIX + url;
     }
@@ -928,14 +928,14 @@ function edit_calendar_layer_properties(layer_id)
     console.log('edit_calendar_layer_properties layer_id: '+layer_id);
 
     var url = '/midcom-exec-org.maemo.calendar/layers.php?action=show_update_layer&layer_id='+layer_id;
-    load_modal_window(url, true);
+    load_modal_window(url);
 }
 function edit_calendar_layer_tag_properties(layer_id, tag_id)
 {
     console.log('edit_calendar_layer_tag_properties layer_id: '+layer_id+' tag_id: '+tag_id);
 
     var url = '/midcom-exec-org.maemo.calendar/layers.php?action=show_update_tag&layer_id='+layer_id+'&tag_id='+tag_id;
-    load_modal_window(url, true);
+    load_modal_window(url);
 }
 
 function enable_layer_update_form(layer_id, tag_id)
