@@ -55,6 +55,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
         $_MIDCOM->auth->require_valid_user();
         $this->current_user =& $_MIDCOM->auth->user->get_storage();
         $this->layer_data = array( 'calendars' => array(), 'busy' => array() );
+        $_MIDCOM->skip_page_style = true;
     }
     
     /**
