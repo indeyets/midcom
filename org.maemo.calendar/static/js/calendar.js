@@ -448,7 +448,7 @@ function load_modal_window(url)
 {
     var win = jQuery("div.calendar-modal-window");
 
-    if (url.substr(7,url.length) != 'midcom-')
+    if (url.substr(0,7) != 'midcom-')
     {
         url = APPLICATION_PREFIX + url;
     }
