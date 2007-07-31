@@ -7,5 +7,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
-2007-Jul-Wed tarjei
+2007-07-31 bergie
+  + Added support for calculating relevance from favourites markings
+
+2007-07-25 bergie
   + initial version
+  + Support for calculating relevance from comments, technorati cosmos, diggs and del.icio.us bookmarks

@@ -19,9 +19,11 @@ class net_nemein_favourites_handler_view extends midcom_baseclasses_components_h
 
     function _handler_view($handler_id, $args, &$data)
     {
+        $_MIDCOM->auth->require_valid_user();
+    
         // Getting favourite objects for the current user
     	$qb = net_nemein_favourites_favourite_dba::new_query_builder();
-    	$qb->add_constraint('metadata.creator', '=', $_MIDGARD['user']);
+    	$qb->add_constraint('metadata.creator', '=', $_MIDCOM->auth->user->guid);
     	$qb->add_order('metadata.created', 'DESC');
 
         $this->_favourite_objects = $qb->execute();

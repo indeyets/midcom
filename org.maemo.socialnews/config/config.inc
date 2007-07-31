@@ -1,5 +1,8 @@
 'comments_enable' => true,
-'comments_modifier' => 0.8,
+'comments_modifier' => 1.0,
+
+'favourites_enable' => true,
+'favourites_modifier' => 0.7,
 
 'delicious_enable' => true,
 'delicious_modifier' => 0.5,

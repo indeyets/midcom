@@ -34,6 +34,13 @@ class org_maemo_socialnews_calculator extends midcom_baseclasses_components_pure
         return net_nehmer_comments_comment::count_by_objectguid($guid);
     }
     
+    private function count_favourites($guid)
+    {
+        $_MIDCOM->componentloader->load_graceful('net.nemein.favourites');
+        
+        return net_nemein_favourites_favourite_dba::count_by_objectguid($guid);
+    }
+    
     private function count_delicious($url)
     {
         $json = $this->http_request->get('http://badges.del.icio.us/feeds/json/url/data?hash=' . md5($url));
@@ -124,6 +131,12 @@ class org_maemo_socialnews_calculator extends midcom_baseclasses_components_pure
         {
             $scores['comments'] = $this->count_comments($guid) * $this->_config->get('comments_modifier');
             $scores['total'] += $scores['comments'];
+        }
+        
+        if ($this->_config->get('favourites_enable'))
+        {
+            $scores['favourites'] = $this->count_favourites($guid) * $this->_config->get('favourites_modifier');
+            $scores['total'] += $scores['favourites'];
         }
         
         if ($this->_config->get('delicious_enable'))
