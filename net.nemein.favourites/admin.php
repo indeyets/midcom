@@ -52,13 +52,13 @@ class net_nemein_favourites_admin extends midcom_baseclasses_components_request_
         $qb->add_constraint('objectGuid', '=', $guid);
         if ($qb->count_unchecked() > 0)
         {
-            echo $l10n->get('favourite');
+            echo "<img src=\"" . MIDCOM_STATIC_URL . "/net.nemein.favourites/favorite.png\" alt=\"" . $l10n->get('favourite') . "\" />\n";
         }
         else
         {
             $url = $node[MIDCOM_NAV_FULLURL];
 
-            echo "<a href=\"{$url}create/{$objectType}/{$guid}.html\" class=\"net_nemein_favourites_create\">{$l10n->get('add to favourites')}</a>";
+            echo "<a href=\"{$url}create/{$objectType}/{$guid}.html\" class=\"net_nemein_favourites_create\"><img src=\"" . MIDCOM_STATIC_URL . "/net.nemein.favourites/not-favorite.png\" style=\"border: none;\" alt=\"{$l10n->get('add to favourites')}\" /></a>";
             
             return true;
         }
