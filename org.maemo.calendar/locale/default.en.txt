@@ -2,6 +2,10 @@
 ---VERSION 2.1.0
 ---LANGUAGE en
 
+---STRING org.maemo.calendar
+Maemo community calendar
+---STRINGEND
+
 ---STRING calendar_title
 Community Calendar
 ---STRINGEND
@@ -16,4 +20,12 @@ Default
 
 ---STRING root event permissions
 Root event permissions
+---STRINGEND
+
+---STRING profile saved successfully
+Profile was successfully saved!
+---STRINGEND
+
+---STRING profile publishing successfull
+Profile publishing was successfull!
 ---STRINGEND

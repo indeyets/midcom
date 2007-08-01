@@ -154,7 +154,6 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
         );
         
         $script = 'const APPLICATION_PREFIX = "' . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . '";'."\n";
-        $script .= 'const HOST_PREFIX = "' . $_MIDCOM->get_host_prefix() . '";'."\n";
         $script .= 'var calendar_config = {'."\n";
         $script .= ' type: ' . $this->_request_data['maemo_calender']->type . ',' ."\n";
         $script .= ' start_hour_x: ' . $scrollTop . ',' ."\n";
@@ -198,7 +197,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
 
         $this->user_tags = org_maemo_calendar_common::get_users_tags();
         
-        $_MIDCOM->componentloader->load_graceful('net.nemein.tag');
+        // $_MIDCOM->componentloader->load_graceful('net.nemein.tag');
         $persons = $this->_get_persons();
         $all_events = $this->_get_users_events($persons, $this->_request_data['maemo_calender']->from_date, $this->_request_data['maemo_calender']->to_date);
 
@@ -265,8 +264,8 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("Called for #{$event->id} ({$event->title})");
         
-        if (class_exists('net_nemein_tag_handler'))
-        {
+        // if (class_exists('net_nemein_tag_handler'))
+        // {
             /*
              * Make sure we put the event to our Calendar if we own or are participant in it.
              */
@@ -311,11 +310,11 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
                     }
                 }               
             }
-        }
-        else
-        {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to load required handler 'net_nemein_tag_handler'");           
-        }
+        // }
+        // else
+        // {
+        //     $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to load required handler 'net_nemein_tag_handler'");           
+        // }
         
         debug_pop();
     }

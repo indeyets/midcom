@@ -29,4 +29,10 @@
 'default_tag_name' => 'Default', // This is translated through midcom on creation, depending on users lang
 
 'profile_schemadb' => 'file:/org/maemo/calendar/config/schemadb_default_profile.inc',
-'profile_schema' => 'default',
+'profile_schema' => 'account',
+
+// Avatar Sizes
+'avatar_x' => 190,
+'avatar_y' => 190,
+'avatar_thumbnail_x' => 50,
+'avatar_thumbnail_y' => 50,

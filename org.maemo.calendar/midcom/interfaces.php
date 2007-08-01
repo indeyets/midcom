@@ -45,7 +45,8 @@ class org_maemo_calendar_interface extends midcom_baseclasses_components_interfa
     }
 
     function _on_initialize()
-    {   
+    {
+        $_MIDCOM->componentloader->load_graceful('net.nehmer.account');
         $_MIDCOM->componentloader->load_graceful('net.nehmer.buddylist');
         $_MIDCOM->componentloader->load('org.openpsa.calendar');
         return true;

@@ -157,17 +157,31 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
             'variable_args' => 2,
         );
         
-        // Match /ajax/profile/view/<guid>
+        // Match /ajax/profile/view
         $this->_request_switch['ajax-profile-view'] = array(
+            'handler' => Array('org_maemo_calendar_handler_profile_view', 'view'),
+            'fixed_args' => array('ajax', 'profile', 'view'),
+        );
+        // Match /ajax/profile/view/<guid>
+        $this->_request_switch['ajax-profile-view-other'] = array(
             'handler' => Array('org_maemo_calendar_handler_profile_view', 'view'),
             'fixed_args' => array('ajax', 'profile', 'view'),
             'variable_args' => 1,
         );
-        // Match /ajax/profile/edit/<guid>
+        // Match /ajax/profile/edit
         $this->_request_switch['ajax-profile-edit'] = array(
             'handler' => Array('org_maemo_calendar_handler_profile_admin', 'edit'),
             'fixed_args' => array('ajax', 'profile', 'edit'),
-            'variable_args' => 1,
+        );
+        // Match /ajax/profile/publish
+        $this->_request_switch['ajax-profile-publish'] = array(
+            'handler' => Array('org_maemo_calendar_handler_profile_publish', 'publish'),
+            'fixed_args' => array('ajax', 'profile', 'publish'),
+        );
+        // Match /ajax/profile/publish/ok
+        $this->_request_switch['ajax-profile-publish-ok'] = array(
+            'handler' => Array('org_maemo_calendar_handler_profile_publish', 'publish_ok'),
+            'fixed_args' => array('ajax', 'profile', 'publish', 'ok'),
         );
         
         $_MIDCOM->add_link_head
@@ -242,9 +256,6 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
             )
         );
 
-        // $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery-1.1.3.1.pack.js', true);
-        // $script = 'var $j = jQuery.noConflict();'."\n";
-        // $_MIDCOM->add_jscript($script, "", false);
         $_MIDCOM->enable_jquery();
 
         // // Load required Javascripts
@@ -253,7 +264,7 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
         // //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.maemo.calendar/js/jqModal.js',true);
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.maemo.calendar/js/jquery.blockUI.js',false);
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.flydom-3.0.6.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.form-1.0.1.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.form-1.0.3.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.maemo.calendar/js/jquery.farbtastic.js');
                         
         //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.openpsa.helpers/ajaxutils.js', false);
@@ -271,9 +282,11 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Prototype/prototype.js', true);        
 
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.maemo.calendar/js/calendar.pack.js');
-
+        // $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.maemo.calendar/js/calendar.js');
+        
         $script = 'const MIDCOM_STATIC_URL = "' . MIDCOM_STATIC_URL . '";'."\n";
-
+        $script .= 'const HOST_PREFIX = "' . $_MIDCOM->get_host_prefix() . '";'."\n";
+        
         $_MIDCOM->add_jscript($script,"",true);
         
         $script = '            
@@ -415,7 +428,7 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
         $this->_request_data['schemadb'] = $schemadb;
 
         return true;
-    }
+    }   
 
 }
 

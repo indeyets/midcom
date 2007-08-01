@@ -1,23 +1,46 @@
-'default' => array
+'account' => Array
 (
-    'description'   => 'person',
+    'description' => 'person',
     'l10n_db' => 'org.maemo.calendar',
-    'fields'  => array
+    'fields' => Array
     (
-        'firstname' => array
+        'firstname' => Array
         (
-            'title'    => 'firstname',
-            'storage'  => 'firstname',
-            'type'     => 'text',
-            'widget'   => 'text',
+            'title' => 'firstname',
+            'description' => '',
+            'helptext' => '',
+
+            'storage' => 'firstname',
             'required' => true,
+            'type' => 'text',
+            'type_config' => Array
+            (
+                'maxlength' => 50,
+            ),
+            'widget' => 'text',
+            'customdata' => Array
+            (
+                'visible_mode' => 'always',
+            ),
         ),
-        'lastname' => array
+        'lastname' => Array
         (
-            'title'    => 'lastname',
-            'storage'  => 'lastname',
-            'type'     => 'text',
-            'widget'   => 'text',
+            'title' => 'lastname',
+            'description' => '',
+            'helptext' => '',
+
+            'storage' => 'lastname',
+            'required' => true,
+            'type' => 'text',
+            'type_config' => Array
+            (
+                'maxlength' => 50,
+            ),
+            'widget' => 'text',
+            'customdata' => Array
+            (
+                'visible_mode' => 'always',
+            ),
         ),
         'person_homepage' => array
         (
@@ -25,6 +48,10 @@
             'storage'  => 'homepage',
             'type'     => 'text',
             'widget'   => 'text',
+            'customdata' => Array
+            (
+                'visible_mode' => 'user',
+            ),
         ),
         'email' => array
         (
@@ -33,6 +60,10 @@
             'type'     => 'text',
             'widget'   => 'text',
             'validation' => 'email',
+            'customdata' => Array
+            (
+                'visible_mode' => 'user',
+            ),
         ),
         'handphone' => array
         (
@@ -40,6 +71,10 @@
             'storage'  => 'handphone',
             'type'     => 'text',
             'widget'   => 'text',
+            'customdata' => Array
+            (
+                'visible_mode' => 'user',
+            ),
         ),
         'skype' => array
         (
@@ -52,6 +87,10 @@
             ),
             'type'     => 'text',
             'widget'   => 'text',
+            'customdata' => Array
+            (
+                'visible_mode' => 'user',
+            ),
         ),
         'jid' => array
         (
@@ -65,6 +104,10 @@
             'type'     => 'text',
             'widget'   => 'text',
             'validation' => 'email',
+            'customdata' => Array
+            (
+                'visible_mode' => 'user',
+            ),
         ),
         'timezone_identifier' => array
         (
@@ -81,6 +124,30 @@
                 'allow_multiple' => false,
             ),
             'widget'   => 'select',
-        ),   
-    )
+            'customdata' => Array
+            (
+                'visible_mode' => 'always',
+            ),
+        ),
+        'birthdate' => Array
+        (
+            'title' => 'birthdate',
+            'description' => '',
+            'helptext' => '',
+
+            'storage' => 'birthdate',
+            'type' => 'date',
+            'widget' => 'simpledate',
+            'widget_config' => Array
+            (
+                'format' => 'dmY',
+                'minyear' => 1900,
+                'maxyear' => 2010,
+            ),
+            'customdata' => Array
+            (
+                'visible_mode' => 'never',
+            ),
+        ),
+    ),
 ),

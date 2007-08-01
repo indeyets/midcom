@@ -7,20 +7,14 @@
  * @license http://www.gnu.net/licenses/lgpl.html GNU Lesser General Public License
  */
 
+require_once(MIDCOM_ROOT . '/net/nehmer/account/handler/view.php');
+
 /**
  *
  * @package org.maemo.calendar
  */
-class org_maemo_calendar_handler_profile_view extends midcom_baseclasses_components_handler
+class org_maemo_calendar_handler_profile_view extends net_nehmer_account_handler_view
 {
-    /**
-     * The person to register for
-     *
-     * @var array
-     * @access private
-     */
-    var $_person = null;
-
     /**
      * The schema database (taken from the config)
      *
@@ -43,20 +37,14 @@ class org_maemo_calendar_handler_profile_view extends midcom_baseclasses_compone
      * @var midcom_helper_datamanager2_datamanager
      * @access private
      */
-    var $_controller = null;
+    var $_datamanager = null;
 
     /**
      * Simple default constructor.
      */
     function org_maemo_calendar_handler_profile_view()
     {
-        parent::midcom_baseclasses_components_handler();
-    }
-    
-    function _prepare_request_data()
-    {
-        $this->_request_data['person'] =& $this->_person;
-        $this->_request_data['controller'] =& $this->_controller;
+        parent::net_nehmer_account_handler_view();
     }
 
     /**
@@ -64,57 +52,91 @@ class org_maemo_calendar_handler_profile_view extends midcom_baseclasses_compone
      */
     function _on_initialize()
     {
-        $_MIDCOM->auth->require_valid_user();
     }
-
+    
     /**
-     * Loads and prepares the schema database.
+     * Internal helper function, prepares a datamanager based on the current account.
      */
-    function _load_schemadb()
+    function _prepare_datamanager()
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        debug_add("inside _prepare_datamanager");
+        
         $this->_schemadb = midcom_helper_datamanager2_schema::load_database( $this->_config->get('profile_schemadb') );
         $this->_schema = $this->_config->get('profile_schema');
-    }
-
-    /**
-     * Internal helper
-     *
-     * @access private
-     */
-    function _load_controller()
-    {
-        $this->_load_schemadb();
-
-        $this->_controller =& new midcom_helper_datamanager2_datamanager($this->_schemadb);
-
-        if (   ! $this->_controller
-            || ! $this->_controller->set_schema($this->_schema) )
+        $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_schemadb);
+        //$this->_datamanager->autoset_storage($this->_account);
+        $this->_datamanager->set_schema($this->_schema);
+        $this->_datamanager->set_storage($this->_account);
+        
+        foreach ($this->_datamanager->schema->field_order as $name)
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a DM2 instance.');
-            // This will exit.
+            if (! array_key_exists('visible_mode', $this->_datamanager->schema->fields[$name]['customdata']))
+            {
+                $this->_datamanager->schema->fields[$name]['customdata']['visible_mode'] = 'user';
+            }
         }
-
-        $this->_controller->set_storage($this->_person);
+        
+        debug_pop();
     }
 
     function _handler_view($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         
-        if ($handler_id == 'ajax-profile-view')
+        if (   $handler_id == 'ajax-profile-view'
+            || $handler_id == 'ajax-profile-view-other')
         {
             $_MIDCOM->skip_page_style = true;
         }
         
-        $this->_person = new midcom_db_person($args[0]);
-        if (!$this->_person)
+        switch($handler_id)
         {
-            return false;
+            case 'ajax-profile-view-other':
+                $parent_handler_id = 'other';
+                break;
+            default:
+                $parent_handler_id = 'self';
+                break;
         }
-
-        $this->_load_controller();
+        parent::_handler_view($parent_handler_id, $args, &$data);
+                
+        // switch ($handler_id)
+        // {
+        //     case 'ajax-profile-view':
+        //         $_MIDCOM->auth->require_valid_user();
+        //         $this->_account = $_MIDCOM->auth->user->get_storage();
+        //         net_nehmer_account_viewer::verify_person_privileges($this->_account);
+        //         $this->_view_self = true;
+        //         $this->_view_quick = false;
+        //         break;
+        //     case 'ajax-profile-view-other':
+        //         $this->_account = new midcom_db_person($args[0]);
+        //         $this->_view_self = false;
+        //         $this->_view_quick = false;
+        //         break;
+        // }
         
-        $this->_prepare_request_data();
+        // if (! $this->_account)
+        // {
+        //     $this->errcode = MIDCOM_ERRNOTFOUND;
+        //     $this->errstring = 'The account was not found.';
+        //     return false;
+        // }
+        // $this->_user =& $_MIDCOM->auth->get_user($this->_account);
+        // $this->_avatar = $this->_account->get_attachment('avatar');
+        // $this->_avatar_thumbnail = $this->_account->get_attachment('avatar_thumbnail');
+        // 
+        // // This is temporary stuff until we get a preferences mechanism up and running.
+        // $data['communitymotto'] = $this->_account->get_parameter('midcom.helper.datamanager2', 'communitymotto');
+        // $data['communityactive'] = (bool) $this->_account->get_parameter('midcom.helper.datamanager2', 'communityactive');
+        // // End temporary Stuff
+        // 
+        // $this->_prepare_datamanager();
+        // $this->_compute_visible_fields();
+        // $this->_prepare_request_data();
+        // $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name);
         
         debug_pop();
         return true;
@@ -122,7 +144,8 @@ class org_maemo_calendar_handler_profile_view extends midcom_baseclasses_compone
     
     function _show_view($handler_id, &$data)
     {
-        if ($handler_id == 'ajax-profile-view')
+        if (   $handler_id == 'ajax-profile-view'
+            || $handler_id == 'ajax-profile-view-other')
         {
             midcom_show_style('profile-view-ajax');
         }

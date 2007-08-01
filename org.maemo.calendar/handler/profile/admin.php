@@ -7,6 +7,8 @@
  * @license http://www.gnu.net/licenses/lgpl.html GNU Lesser General Public License
  */
 
+//require_once(MIDCOM_ROOT . '/net/nehmer/account/viewer.php');
+
 /**
  *
  * @package org.maemo.calendar
@@ -19,7 +21,7 @@ class org_maemo_calendar_handler_profile_admin extends midcom_baseclasses_compon
      * @var array
      * @access private
      */
-    var $_person = null;
+    var $_account = null;
 
     /**
      * The schema database (taken from the config)
@@ -44,6 +46,8 @@ class org_maemo_calendar_handler_profile_admin extends midcom_baseclasses_compon
      * @access private
      */
     var $_controller = null;
+    
+    var $_save_status = false;
 
     /**
      * Simple default constructor.
@@ -53,10 +57,11 @@ class org_maemo_calendar_handler_profile_admin extends midcom_baseclasses_compon
         parent::midcom_baseclasses_components_handler();
     }
 
-    function _prepare_request_data()
+    function _prepare_request_data($handler_id)
     {
-        $this->_request_data['person'] =& $this->_person;
         $this->_request_data['controller'] =& $this->_controller;
+        $this->_request_data['account'] =& $this->_account;
+        $this->_request_data['saved'] =& $this->_save_status;
     }
     
     /**
@@ -84,14 +89,14 @@ class org_maemo_calendar_handler_profile_admin extends midcom_baseclasses_compon
     function _load_controller()
     {
         $this->_load_schemadb();
-        
+
         $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
         $this->_controller->schemadb =& $this->_schemadb;
         $this->_controller->schemaname = $this->_schema;
-        $this->_controller->set_storage($this->_person, $this->_schema);
+        $this->_controller->set_storage($this->_account, $this->_schema);
         if (! $this->_controller->initialize())
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 controller instance for person {$this->_person->id}.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 controller instance for person {$this->_account->id}.");
             // This will exit.
         }
     }
@@ -102,28 +107,29 @@ class org_maemo_calendar_handler_profile_admin extends midcom_baseclasses_compon
         {
             $_MIDCOM->skip_page_style = true;
         }
-
-        $this->_person = new midcom_db_person($args[0]);
-        if (!$this->_person)
-        {
-            return false;
-        }
         
-        $this->_person->require_do('midgard:update');
+        $this->_save_status = false;
+        
+        $this->_account = $_MIDCOM->auth->user->get_storage();
+        net_nehmer_account_viewer::verify_person_privileges($this->_account);
+        $_MIDCOM->auth->require_do('midgard:update', $this->_account);
+        $_MIDCOM->auth->require_do('midgard:parameters', $this->_account);
         
         $this->_load_controller();
-
+        
         switch ($this->_controller->process_form())
         {
             case 'save':
+                $this->_account->set_parameter('net.nehmer.account', 'revised', time());
+                $this->_save_status = true;
+                break;
             case 'cancel':
-                //$_MIDCOM->relocate("event/{$this->_event->guid}/");
-                $_MIDCOM->relocate("");
+                break;
                 // This will exit.
         }
         
         $this->_prepare_request_data($handler_id);
-        $_MIDCOM->bind_view_to_object($this->_person, $this->_request_data['controller']->datamanager->schema->name);        
+        $_MIDCOM->bind_view_to_object($this->_account, $this->_request_data['controller']->datamanager->schema->name);        
         
         return true;        
     }
@@ -138,7 +144,7 @@ class org_maemo_calendar_handler_profile_admin extends midcom_baseclasses_compon
         {
             midcom_show_style('profile-edit');            
         }        
-    }    
+    }
         
 }
 

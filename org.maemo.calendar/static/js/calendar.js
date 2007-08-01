@@ -23,13 +23,13 @@ function finishCalendarLoad(id) {
 }
 
 function run_scripts(e) {
-    console.log("run_scripts in "+e);
+    //console.log("run_scripts in "+e);
     
     if (e.nodeType != 1) return; //if it's not an element node, return
 
     if (e.tagName.toLowerCase() == 'script') {
-        console.log("execute scripts in "+e);
-        console.log("execute scripts: "+e.text);
+        //console.log("execute scripts in "+e);
+        //console.log("execute scripts: "+e.text);
         eval(e.text); //run the script
     }
     else {
@@ -679,10 +679,74 @@ function on_event_deleted(identifier)
     jQuery('#event-'+identifier+"-toolbox").remove();
 }
 
-function show_results(response)
+function show_results(response, status)
 {
-    run_scripts(response);
-    set_modal_window_contents(response);
+    console.log("show_results status: "+status);
+    
+    if (status == "success")
+    {
+        //run_scripts(response);
+        set_modal_window_contents(response);        
+    }
+    if (status == "Forbidden")
+    {
+        window.location = HOST_PREFIX + 'midcom-login-';
+    }  
+}
+
+function check_dm2_form_submit(formData, jqForm, options)
+{
+    console.log("check_form_submit");
+    
+    var return_value = true;
+    
+    jQuery.each( formData, function(i,n){
+        console.log(i+": found form item "+n.name+" with value: "+n.value);
+        
+        if (n.name == 'midcom_helper_datamanager2_cancel')
+        {
+            if (typeof(options.oncancel) == 'function')
+            {
+                return_value = options.oncancel();
+            }
+            close_modal_window();
+            return_value = false;
+        }
+    });
+    
+    return return_value;
+}
+
+function takeover_dm2_form(options)
+{
+    console.log("takeover_dm2_form");
+    
+    var form = jQuery("#org_maemo_calendar");
+    
+    var url = form[0].action;
+    if (url.substr(0,1) == '/')
+    {
+        url = APPLICATION_PREFIX + url.substr(1);
+    }
+    
+    console.log("url: "+url);
+    
+    jQuery.ajaxSetup({global: false});
+    options = jQuery.extend({
+		beforeSubmit: check_dm2_form_submit,
+		success: show_results,
+		url: url,
+		type: form[0].method,
+		timeout: 120000,
+		oncancel: null
+	}, options);
+	
+    jQuery('#org_maemo_calendar').ajaxForm(options);
+
+    // jQuery('#org_maemo_calendar').submit(function() { 
+    //     jQuery(this).ajaxSubmit(options); 
+    //     return false;
+    // });    
 }
 
 function enable_buddylist_search()

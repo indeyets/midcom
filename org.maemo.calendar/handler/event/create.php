@@ -303,6 +303,7 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
 
             debug_add("event_start after timezone change: " . $event_start . " (" . date("H:i:s",$event_start) . ")");
 
+            $_POST['start_ts'] = $event_start;
             $_POST['start'] = date("Y-m-d H:i:s", $event_start);
             $_POST['end'] = date("Y-m-d H:i:s", $event_end);
 

@@ -11,7 +11,7 @@
         {
             echo $data['l10n']->get('event deleted');
         ?>
-        <script>
+        <script type="text/javascript">
         on_event_deleted('<?php echo $data['deleted'];?>');
         </script>
         <?php
