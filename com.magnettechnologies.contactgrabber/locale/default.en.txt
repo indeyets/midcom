@@ -1,0 +1,19 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---LANGUAGE en
+
+---STRING enter login details to fetch your contacts
+Enter login details to fetch your contacts
+---STRINGEND
+
+---STRING fetch my contacts
+Fetch my contacts
+---STRINGEND
+
+---STRING no details are stored
+No details are stored
+---STRINGEND
+
+---STRING username
+Username
+---STRINGEND
