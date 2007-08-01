@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    <type name="net_nehmer_accounts_invites_invite" table="net_nehmer_accounts_invites_invite">
+        <property name="id" type="integer" primaryfield="id" />
+	<property name="hash" type="string"/>
+	<property name="email" type="string"/>
+	<property name="buddy" type="string" />
+    </type>
+</Schema>
