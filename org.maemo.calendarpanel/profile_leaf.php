@@ -67,9 +67,11 @@ class org_maemo_calendarpanel_profile_leaf extends org_maemo_calendarpanel_leaf
         $html .= "<div class=\"accordion-leaf-menu\">\n";
         $html .= "   <ul class=\"leaf-menu\">\n";
 
-        $html .= "      <li><a href=\"#\" onclick=\"load_modal_window('ajax/profile/view/{$this->_person->guid}');\" title=\"View full profile\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendar/images/icon-properties.png\" alt=\"View full profile\" /></a></li>\n";
+        $html .= "      <li><a href=\"#\" onclick=\"load_modal_window('ajax/profile/view');\" title=\"View full profile\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendar/images/icon-properties.png\" alt=\"View full profile\" /></a></li>\n";
 
-        $html .= "      <li><a href=\"#\" onclick=\"load_modal_window('ajax/profile/edit/{$this->_person->guid}');\" title=\"Edit profile\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/edit.png\" alt=\"Edit profile\" /></a></li>\n";
+        $html .= "      <li><a href=\"#\" onclick=\"load_modal_window('ajax/profile/edit');\" title=\"Edit profile\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/edit.png\" alt=\"Edit profile\" /></a></li>\n";
+
+        $html .= "      <li><img src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/new_task.png\" alt=\"Publish settings\" onclick=\"load_modal_window('ajax/profile/publish');\" /></li>\n";
 
         $html .= "   </ul>\n";
         $html .= "</div>\n";
@@ -114,17 +116,17 @@ class org_maemo_calendarpanel_profile_leaf extends org_maemo_calendarpanel_leaf
     
     function _set_person(&$person)
     {
-        $this->_person = $person;
+        $this->_person =& $person;
         
-        $this->_controller =& new midcom_helper_datamanager2_datamanager($this->_schemadb);
-        if (   ! $this->_controller
-            || ! $this->_controller->set_schema($this->_schema) )
-        {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a DM2 instance.');
-            // This will exit.
-        }
-
-        $this->_controller->set_storage($this->_person);
+        // $this->_controller =& new midcom_helper_datamanager2_datamanager($this->_schemadb);
+        // if (   ! $this->_controller
+        //     || ! $this->_controller->set_schema($this->_schema) )
+        // {
+        //     $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a DM2 instance.');
+        //     // This will exit.
+        // }
+        // 
+        // $this->_controller->set_storage($this->_person);
     }
 }
 
