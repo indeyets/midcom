@@ -105,10 +105,10 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
     function _on_initialize()
     {
 	// INVITATION 	
-        $this->_request_switch['view_sent_invites'] = Array
+        $this->_request_switch['sent_invites'] = Array
         (
-            'handler' => Array('net_nehmer_account_handler_invitation', 'view_sent_invites'),
-            'fixed_args' => Array('view_sent_invites'),
+            'handler' => Array('net_nehmer_account_handler_invitation', 'sent_invites'),
+            'fixed_args' => Array('sent_invites'),
         );
         $this->_request_switch['invite'] = Array
         (
@@ -197,8 +197,8 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
 
-        if ($this->_config->get('allow_register'))
-        {
+//        if ($this->_config->get('allow_register'))
+  //      {
             // REGISTRATION LINKS
             $this->_request_switch['register_select_type'] = Array
             (
@@ -217,7 +217,13 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
                 'fixed_args' => Array('register', 'activate'),
                 'variable_args' => 2,
             );
-        }        
+            $this->_request_switch['register_invitation'] = Array
+            (
+                'handler' => Array('net_nehmer_account_handler_register', 'register_invitation'),
+                'fixed_args' => Array('register_invitation'),
+		'variable_args' => 1,
+            );
+    //    }        
     }
 
     /**

@@ -182,6 +182,49 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         midcom_show_style('registration-account-type-list');
     }
 
+    function _handler_register_invitation($handler_id, $args, &$data)
+    {
+	$hash = $args[0];
+	$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+
+
+	if (isset($_POST['net_nehmer_account_register_invitation']))
+        {
+	    $session = new midcom_service_session();
+	    $session->set('invite_hash', $hash);
+
+            $schema_name = $this->_config->get('invreg_schema');
+            $dest = "{$prefix}register/{$schema_name}.html";
+
+	    $_MIDCOM->relocate($dest);
+	    
+	}
+
+	if (isset($_POST['net_nehmer_account_cancel_invitation']))
+	{
+	    $qb = net_nehmer_accounts_invites_invite_dba::new_query_builder();
+	    $qb->add_constraint('hash', '=', $hash);
+
+	    $invites = $qb->execute();
+
+	    foreach($invites as $invite)
+	    {
+                $invite->delete();
+	    }
+
+            $_MIDCOM->relocate($prefix);
+	}
+
+        return true;
+    }
+
+    function _show_register_invitation($handler_id, &$data)
+    {
+        // TODO: Maybe check if invitation is out of date
+
+        midcom_show_style('show-register-invitation');
+    }
+
     /**
      * This handler manages the actual input of the required information, using the DM2.
      */
@@ -347,6 +390,26 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
                 $this->_create_account();
                 $this->_stage = 'success';
                 $form_stage_element->setValue('success');
+
+                /**
+		 * Ok, if the user is registering an account from invitation
+		 * we need to delete the corresponding invitation from db
+		 */
+                 $session = new midcom_service_session();
+                 $hash = $session->get('invite_hash');
+                 
+                 if (isset($hash))
+                 {
+		     $qb = net_nehmer_account_invites_invite_dba::new_query_builder();
+                     $qb->add_constraint('hash', '=', $hash);
+		     $invites = $qb->execute();
+
+		     foreach ($invites as $invite)
+		     {
+                         $invite->delete();
+		     }                 
+                 }
+
                 break;
 
             case 'edit':

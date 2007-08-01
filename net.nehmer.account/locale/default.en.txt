@@ -3,6 +3,26 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING email
+Email
+---STRINGEND
+
+---STRING name
+Name
+---STRINGEND
+
+---STRING submit
+Submit
+---STRINGEND
+
+---STRING add contacts
+Add contacts
+---STRINGEND
+
+---STRING import contacts
+Import contacts
+---STRINGEND
+
 ---STRING account details not published.
 Account details have not yet been published.
 ---STRINGEND
@@ -240,3 +260,10 @@ You must enter a new username.
 Your account has already been activated.
 ---STRINGEND
 
+---STRING register
+Register
+---STRINGEND
+
+---STRING cancel
+Cancel
+---STRINGEND

@@ -70,7 +70,7 @@
 'admin_plugins' => null,
 
 /**
- * How many invite email field should be shown
+ * How many invite email fields should be shown
  */
  'email_fields' => 5,
 
@@ -79,3 +79,12 @@
  */
  'email_subject' => "invitation subject",
 
+/**
+ * Keep sent invites for x days
+ */
+ 'keep_sent_invites' => 30,
+
+/**
+ * The schema to use for invitation registration
+ */
+ 'invreg_schema' => 'account',
