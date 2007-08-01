@@ -1351,6 +1351,18 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         
         $html = '';
         
+        if (   !$event->can_do('org.openpsa.calendar:read')
+            || !$event->can_do('midgard:read'))
+        {
+            return $html;
+        }
+        
+        if ($event->guid == 'a3a10f78400111dc99ef27eedf3fb871b871')
+        {
+            debug_print_r('Event found',$event);
+            debug_add("is public? ".$event->is_public());        
+        }
+        
         $active_timezone = org_maemo_calendar_common::active_timezone();
         $utc_timezone = timezone_open("UTC");
         
