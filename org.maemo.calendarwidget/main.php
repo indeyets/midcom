@@ -1344,7 +1344,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         return $html;
     }
     
-    function _render_event(&$event, $layer_tag, $override_start=false, $override_end=false, $multiday_event_id=null)
+    function _render_event(&$event, $layer_tag, $override_start=false, $override_end=false, $multiday_event_id=null, $last_multiday_event=false)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         // debug_add("Called for {$event->title}");
@@ -1394,8 +1394,16 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         debug_add("event_start_dt after timezone change: " . $event_start_dt->format("H:i"));
         debug_add("event_end_dt after timezone change: " . $event_end_dt->format("H:i"));
         
-        $event_start = $event_start + $start_offset;
-        $event_end = $event_end + $end_offset;
+        if (   !$override_start
+            || $multiday_event_id < 1)
+        {
+            $event_start = $event_start + $start_offset;            
+        }
+        if (   !$override_end
+            || $last_multiday_event)
+        {
+            $event_end = $event_end + $end_offset;
+        }
 
         debug_add("event_start after timezone change calculation: " . date("H:i",$event_start));
                                 
@@ -1524,16 +1532,18 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         $current_day = mktime(0, 0, 0, date('m',$start), date('d',$start) + 1, date('Y',$start));
         
         $i = 1;
+        $last_event = false;
         while ($end != $event->end)
         {
             $next_start = mktime(0, 0, 0, date('m',$current_day), date('d',$current_day) + 1, date('Y',$current_day));
             $end = mktime(23, 59, 59, date('m',$current_day), date('d',$current_day), date('Y',$current_day));      
             if ($end > $event->end)
             {
+                $last_event = true;
                 $end = $event->end;
             }
             
-            $html .= $this->_render_event($event, $layer_tag, $current_day, $end, $i);
+            $html .= $this->_render_event($event, $layer_tag, $current_day, $end, $i, $last_event);
             
             $current_day = $next_start;
             $i++;
