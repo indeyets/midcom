@@ -17,6 +17,7 @@
 class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_handler 
 {
     private $articles = array();
+    private $nodes = array();
 
     /**
      * Simple default constructor.
@@ -24,6 +25,22 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
     function org_maemo_socialnews_handler_index()
     {
         parent::midcom_baseclasses_components_handler();
+    }
+    
+    private function get_node($node_id)
+    {
+        static $nap = null;
+        if (is_null($nap))
+        {
+            $nap = new midcom_helper_nav();
+        }
+        
+        if (!isset($this->nodes[$node_id]))
+        {
+            $this->nodes[$node_id] = $nap->get_node($node_id);
+        }
+        
+        return $this->nodes[$node_id];
     }
     
     private function query_articles($score, $limit)
@@ -173,6 +190,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         {
             // TODO: Datamanager
             $data['article'] = $article;
+            $data['node'] = $this->get_node($article->topic);
             midcom_show_style('index_main_item');
         }
         midcom_show_style('index_main_footer');
@@ -182,13 +200,13 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         {
             // TODO: Datamanager
             $data['article'] = $article;
+            $data['node'] = $this->get_node($article->topic);
             midcom_show_style('index_secondary_item');
         }
         midcom_show_style('index_secondary_footer');
         
         if ($this->_config->get('frontpage_show_area_latest'))
         {
-            $nap = new midcom_helper_nav();
             $qb = midcom_db_topic::new_query_builder();
             $qb->add_constraint('component', '=', 'net.nehmer.blog');
             $qb->add_order('extra');
@@ -197,7 +215,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             foreach ($topics as $topic)
             {
                 $data['topic'] = $topic;
-                $data['node'] = $nap->get_node($topic->id);
+                $data['node'] = $this->get_node($topic->id);
                 
                 $dl_url = "{$data['node'][MIDCOM_NAV_RELATIVEURL]}latest/" . $this->_config->get('frontpage_show_area_latest_items');
                 
