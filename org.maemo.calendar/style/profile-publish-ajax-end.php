@@ -53,7 +53,8 @@ if ($data['processing_msg'])
 // }
 ?>
 takeover_dm2_form({
-    dataType: 'html'
+    dataType: 'html',
+    url: 'ajax/profile/publish'
 });
 <?php
 // if ($form_submitted)
