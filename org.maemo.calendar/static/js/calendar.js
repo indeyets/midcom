@@ -72,7 +72,9 @@ function zoom_view(zoom_in, url)
             jQuery('#calendar-holder').show();
         },
         success: function(r) {
-            jQuery('#calendar-holder').html(unescape(r));
+            var content = unescape(r);
+            // run_scripts(content);
+            jQuery('#calendar-holder').html(content);
 
             var bodyClass = calendar_config["types_classes"][calendar_config["type"]];
             jQuery('body').attr('class', bodyClass);
@@ -324,6 +326,8 @@ function goto_today()
             jQuery('#calendar-holder').show();
         },
         success: function(r) {
+            // var content = unescape(r);
+            // run_scripts(r);
             jQuery('#calendar-holder').html(unescape(r));
 
             //var bodyClass = calendar_config["types_classes"][calendar_config["type"]];
