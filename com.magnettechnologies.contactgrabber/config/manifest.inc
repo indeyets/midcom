@@ -14,6 +14,7 @@
  */
 'package.xml' => array
 (
+    'license' => 'GPL',
     'summary' => 'Extensive package that can be used to grab user contact lists from the most important email and social networking sites: Rediff, Orkut, MySpace, Yahoo, Gmail and MSN Messenger.',
     'description' => 'Extensive package that can be used to grab user contact lists from the most important email and social networking sites: Rediff, Orkut, MySpace, Yahoo, Gmail and MSN Messenger.',
     'maintainers' => array

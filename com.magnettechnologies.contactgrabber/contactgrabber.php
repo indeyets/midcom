@@ -88,42 +88,42 @@ class com_magnettechnologies_contactgrabber extends midcom_baseclasses_component
         {
             if($_POST['domain']=="rediff.com")
             {
-                require("rediff/grabRediff.class.php");
+                require("lib/rediff/grabRediff.class.php");
 	        $this->_email = $_POST['username'];
 	        $this->resource_obj = new rediff();
             }
 
             if($_POST['domain']=="gmail.com")
             {
-                require("gmail/libgmailer.php");
+                require("lib/gmail/libgmailer.php");
 	        $this->_email = $_POST['username']."@".$_POST['domain'];
 	        $this->_resource_obj = new GMailer();
             }
 
             if($_POST['domain']=="orkut.com")
             {
-                require("orkut/grabOrkut.class.php");
+                require("lib/orkut/grabOrkut.class.php");
 	        $this->_email = $_POST['username'];
                 $this->_resource_obj = new orkut();
             }
 
             if($_POST['domain']=="myspace.com")
             {
-                require("myspace/grabMyspace.class.php");
+                require("lib/myspace/grabMyspace.class.php");
 		$this->_email = $_POST['username'];
 	        $this->_resource_obj = new myspace();
             }
 
 	    if($_POST['domain']=="yahoo.com")
             {
-                require("yahoo/class.GrabYahoo.php");
+                require("lib/yahoo/class.GrabYahoo.php");
 	        $this->_email = $_POST['username'];
 	        $this->_resource_obj = new yahoo();
             }
 
 	    if($_POST['domain']=="hotmail.com")
             {
-                require("hotmail/msn_contact_grab.class.php");
+                require("lib/hotmail/msn_contact_grab.class.php");
 	        $this->_email = $_POST['username']."@".$_POST['domain'];
 	        $this->_resource_obj = new hotmail();
             }
