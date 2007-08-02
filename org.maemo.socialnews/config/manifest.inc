@@ -8,7 +8,7 @@
 /* use this to set default privileges */
 'privileges' => array(),
 /* use this to initialize your own MgdSchema classes */
-'class_definitions' => array(),
+'class_definitions' => Array('midcom_dba_classes.inc'),
 /**
  * This is used by the PEAR packaging.
  */
@@ -18,17 +18,18 @@
     'description' => 'Social news aggregator',
     'maintainers' => array
     (
-        'username' => array
+        'bergie' => array
         (
-            'name' => 'Firstname Lastname',
-            'email' => 'user@example.net',
+            'name' => 'Henri Bergius',
+            'email' => 'henri.bergius@iki.fi',
             'role' => 'lead',
         ),
     ),
     /* Define what modules this module depends on.  */
     'dependencies' => Array
     (
-        'midcom.helper.datamanager2' => array(),
+        'net.nehmer.blog' => array(),
+        'org.openpsa.httplib' => array(),
     ),
 ),
 

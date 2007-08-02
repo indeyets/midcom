@@ -16,6 +16,7 @@
  */
 class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_handler 
 {
+    private $articles = array();
 
     /**
      * Simple default constructor.
@@ -25,11 +26,40 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         parent::midcom_baseclasses_components_handler();
     }
     
-    /**
-     * _on_initialize is called by midcom on creation of the handler. 
-     */
-    function _on_initialize()
+    private function query_articles($score, $limit)
     {
+        if ($score < 0)
+        {
+            // We shouldn't recurse deeper than this
+            return false;
+        }
+        
+        $article_count = count($this->articles);
+        if ($article_count >= $limit)
+        {
+            // Stop recursion when article count passes limit
+            return false;
+        }
+        
+        $qb = org_maemo_socialnews_score_article_dba::new_query_builder();
+        $qb->add_order('score', 'DESC');
+        $qb->add_constraint('score', '>=', $score);
+        $qb->set_limit($limit - $article_count);
+        
+        $ids = array_keys($this->articles);
+        foreach ($ids as $id)
+        {
+            $qb->add_constraint('article', '<>', $id);
+        }
+        
+        $article_scores = $qb->execute();
+        foreach ($article_scores as $article_score)
+        {
+            $article = new midcom_db_article($article_score->article);
+            $this->articles[$article_score->article] = $article;
+        }
+        
+        return true;
     }
     
     /**
@@ -38,23 +68,18 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
      * @param array $args the arguments given to the handler
      * 
      */
-    function _handler_index ($handler_id, $args, &$data)
+    function _handler_index($handler_id, $args, &$data)
     {
-        $this->_request_data['name']  = "org.maemo.socialnews";
-        // the handler must return true
-        /***
-         * Set the breadcrumb text
-         */
-        $this->_update_breadcrumb_line($handler_id);
-        /**
-         * change the pagetitle. (must be supported in the style)
-         */
-        $title = $this->_l10n_midcom->get('index');
-        $_MIDCOM->set_pagetitle(":: {$title}");
-        /**
-         * Example of getting a config var.
-         */
-        $this->_request_data['sort_order'] = $this->_config->get('sort_order'); 
+        // Find items matching our criteria
+        $recurse = true;
+        $score = (float) $this->_config->get('frontpage_score_start');
+        $limit = (int) $this->_config->get('frontpage_show_main_items') + $this->_config->get('frontpage_show_secondary_items');
+        while ($recurse)
+        {
+            $recurse = $this->query_articles($score, $limit);
+            $score -= 10;
+        }
+    
         return true;
     }
     
@@ -64,26 +89,54 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
      */
     function _show_index($handler_id, &$data)
     {
-        // hint: look in the style/index.php file to see what happens here.
-        midcom_show_style('index');
-    }
-    
-    /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
-     * location.
-     *
-     */
-    function _update_breadcrumb_line()
-    {
-        $tmp = Array();
-
-        $tmp[] = Array
-        (
-            MIDCOM_NAV_URL => "/",
-            MIDCOM_NAV_NAME => $this->_l10n->get('index'),
-        );
-
-        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        $data['node_title'] = $this->_topic->extra;
+        midcom_show_style('index_header');
+        
+        $main_items = array_slice($this->articles, 0, (int) $this->_config->get('frontpage_show_main_items'));
+        $secondary_items = array_slice($this->articles, (int) $this->_config->get('frontpage_show_main_items') - 1);
+        
+        midcom_show_style('index_main_header');
+        foreach ($main_items as $article)
+        {
+            // TODO: Datamanager
+            $data['article'] = $article;
+            midcom_show_style('index_main_item');
+        }
+        midcom_show_style('index_main_footer');
+        
+        midcom_show_style('index_secondary_header');
+        foreach ($main_items as $article)
+        {
+            // TODO: Datamanager
+            $data['article'] = $article;
+            midcom_show_style('index_secondary_item');
+        }
+        midcom_show_style('index_secondary_footer');
+        
+        if ($this->_config->get('frontpage_show_area_latest'))
+        {
+            $nap = new midcom_helper_nav();
+            $qb = midcom_db_topic::new_query_builder();
+            $qb->add_constraint('component', '=', 'net.nehmer.blog');
+            $qb->add_order('extra');
+            $topics = $qb->execute();
+            $substyle = $this->_config->get('frontpage_show_area_substyle');
+            foreach ($topics as $topic)
+            {
+                $data['topic'] = $topic;
+                $data['node'] = $nap->get_node($topic->id);
+                
+                $dl_url = "{$data['node'][MIDCOM_NAV_RELATIVEURL]}latest/" . $this->_config->get('frontpage_show_area_latest_items');
+                
+                if (!empty($substyle))
+                {
+                    $dl_url = "midcom-substyle-" . $this->_config->get('frontpage_show_area_substyle') . "/{$dl_url}";
+                }
+                $_MIDCOM->dynamic_load($dl_url);
+            }
+        }
+        
+        midcom_show_style('index_footer');
     }
 }
 ?>

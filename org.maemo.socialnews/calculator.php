@@ -169,7 +169,7 @@ class org_maemo_socialnews_calculator extends midcom_baseclasses_components_pure
         return $scores;
     }
     
-    public function calculate_article($article)
+    public function calculate_article($article, $cache = false)
     {
         /*
         if (empty($article->url))
@@ -183,6 +183,11 @@ class org_maemo_socialnews_calculator extends midcom_baseclasses_components_pure
         $article_scores = $this->calculate_object($article->guid, $article->url);
 
         // TODO: Count in article's (and feed's) local modifiers
+        
+        if ($cache)
+        {
+            org_maemo_socialnews_score_article_dba::store($article, $article_scores['total']);
+        }
         
         return $article_scores;
     }

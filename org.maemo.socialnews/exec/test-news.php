@@ -3,6 +3,13 @@ $_MIDCOM->auth->require_valid_user();
 
 $calculator = new org_maemo_socialnews_calculator();
 
+$cache = false;
+if (   isset($_GET['cache'])
+    && $_GET['cache'] == true)
+{
+    $cache = true;
+}
+
 $qb = midcom_db_article::new_query_builder();
 $qb->add_constraint('topic.component', '=', 'net.nehmer.blog');
 $qb->add_order('metadata.published', 'DESC');
@@ -13,7 +20,7 @@ $articles_array = array();
 
 foreach ($articles as $article)
 {
-    $scores = $calculator->calculate_article($article);
+    $scores = $calculator->calculate_article($article, $cache);
     $score_string = '';
     foreach ($scores as $source => $score)
     {
