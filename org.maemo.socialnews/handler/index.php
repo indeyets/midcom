@@ -62,6 +62,58 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         return true;
     }
     
+    private function generate_caption($data, $getCnt)
+    {
+        if (strlen($data) == 0)
+        { 
+            return false;
+        }
+
+        $data = preg_replace('/<\/?(p|br)([^>]*)>/', ' ', $data);
+        $data=strip_tags($data,'<a>');
+
+        if (strlen($data) <= $getCnt)
+        {
+            return $data;
+        }
+
+        $ret='';
+        $cnt=0;
+        $inTag=FALSE;
+        $chars=preg_split('//',$data);
+
+        foreach($chars as $k => $char)
+        {
+            if ($char == '<')
+            {
+                $inTag = false;
+            }
+            if (   $char == '>' 
+                && $inTag)
+            {
+                $inTag = false;
+            }
+            
+            if (!$inTag)
+            {
+                $cnt++;
+            }
+            
+            if (   !$inTag 
+                && ($cnt >= $getCnt)
+                && preg_match('/\s/', $char))
+            {
+                $ret .= '...';
+                break;
+            } 
+            else 
+            {
+                $ret .= $char;
+            }
+        }
+        return $ret;
+    }
+    
     /**
      * The handler for the index article. 
      * @param mixed $handler_id the array key from the requestarray
@@ -79,6 +131,27 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             $recurse = $this->query_articles($score, $limit);
             $score -= 10;
         }
+        
+        // Normalize articles
+        foreach ($this->articles as $id => $article)
+        {
+            if (empty($article->abstract))
+            {
+                $article->abstract = $this->generate_caption($article->content, $this->_config->get('frontpage_show_abstract_length'));
+            }
+            else
+            {
+                $article->abstract = $this->generate_caption($article->abstract, $this->_config->get('frontpage_show_abstract_length'));
+            }
+            
+            if (empty($article->url))
+            {
+                // Local item
+                $article->url = $_MIDCOM->permalinks->create_permalink($article->guid);
+            }
+            
+            $this->articles[$id] = $article;
+        }
     
         return true;
     }
@@ -93,7 +166,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         midcom_show_style('index_header');
         
         $main_items = array_slice($this->articles, 0, (int) $this->_config->get('frontpage_show_main_items'));
-        $secondary_items = array_slice($this->articles, (int) $this->_config->get('frontpage_show_main_items') - 1);
+        $secondary_items = array_slice($this->articles, (int) $this->_config->get('frontpage_show_main_items'));
         
         midcom_show_style('index_main_header');
         foreach ($main_items as $article)
@@ -105,7 +178,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         midcom_show_style('index_main_footer');
         
         midcom_show_style('index_secondary_header');
-        foreach ($main_items as $article)
+        foreach ($secondary_items as $article)
         {
             // TODO: Datamanager
             $data['article'] = $article;

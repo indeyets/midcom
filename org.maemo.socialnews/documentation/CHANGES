@@ -7,6 +7,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2007-08-02 bergie
+  + Initial news item display
+
 2007-07-31 bergie
   + Added support for calculating relevance from favourites markings
 

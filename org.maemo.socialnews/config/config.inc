@@ -1,9 +1,10 @@
 'frontpage_score_start' => 50,
 'frontpage_show_main_items' => 3,
 'frontpage_show_secondary_items' => 7,
-'frontpage_show_area_latest' => true,
+'frontpage_show_area_latest' => false,
 'frontpage_show_area_latest_items' => 2,
 'frontpage_show_area_substyle' => '',
+'frontpage_show_abstract_length' => 500,
 
 'comments_enable' => true,
 'comments_modifier' => 1.0,
