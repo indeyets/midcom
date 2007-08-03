@@ -90,7 +90,7 @@ class com_magnettechnologies_contactgrabber extends midcom_baseclasses_component
             {
                 require("lib/rediff/grabRediff.class.php");
 	        $this->_email = $_POST['username'];
-	        $this->resource_obj = new rediff();
+	        $this->_resource_obj = new rediff();		
             }
 
             if($_POST['domain']=="gmail.com")
@@ -123,8 +123,9 @@ class com_magnettechnologies_contactgrabber extends midcom_baseclasses_component
 
 	    if($_POST['domain']=="hotmail.com")
             {
-                require("lib/hotmail/msn_contact_grab.class.php");
-	        $this->_email = $_POST['username']."@".$_POST['domain'];
+                //require("lib/hotmail/msn_contact_grab.class.php");
+	        require('lib/hotmail/libhotmail.php');
+		$this->_email = $_POST['username']."@".$_POST['domain'];
 	        $this->_resource_obj = new hotmail();
             }
 

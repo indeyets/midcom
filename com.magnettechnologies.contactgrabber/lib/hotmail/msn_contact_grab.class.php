@@ -29,7 +29,7 @@ $msn->rx_data();
 $msn->process_emails();
 $returned_emails = $msn->email_output;
 
-Quick
+auick
 -----
 Handling everything in just one function
 
@@ -132,7 +132,8 @@ class hotmail
 
 						if ($this->fp = @fsockopen($ip, $port, $errno, $errstr, 2))
 						{
-							$this->trID = 1;
+	
+	$this->trID = 1;
 
 							$this->_put("VER $this->trID MSNP9 CVR0\r\n");
 						}
@@ -180,7 +181,9 @@ class hotmail
               function getAddressbook($username, $password)
                {
                     $returned_emails=$this->qGrab($username, $password);
-					
+echo "<pre>";
+print_r($returned_emails);
+echo "</pre>";
 				foreach($returned_emails as $row){
 				//$totalRecords=$totalRecords+1;
 				//print("<tr><td style='Font-Family:verdana;Font-Size:14'>$row[1]</td><td style='Font-Family:verdana;Font-Size:14'>$row[0]</td></tr>");
@@ -194,7 +197,7 @@ class hotmail
                }
 	
 
-    //Collects the raw data containing the email addresses
+        //Collects the raw data containing the email addresses
 	function rx_data()
 	{
 		$this->_put("SYN $this->trID 0\r\n");
@@ -204,14 +207,18 @@ class hotmail
 		//more content
 		$this->_put("CHG $this->trID NLN\r\n");
         
-        //the count check prevents the script hanging as it waits for more content
+
+                //the count check prevents the script hanging as it waits for more content
 		while ((! feof($this->fp)) && (! $stream_info['timed_out']) && ($this->count <= 1))
 		{
 			$data = $this->_get();
-			$stream_info = stream_get_meta_data($this->fp);
 			
+	                $stream_info = stream_get_meta_data($this->fp);
 			if ($data)
 			{
+			echo "<pre>";
+ print_r($data);
+			echo "</pre>";
 			    switch($code = substr($data, 0, 3))
 				{
 					default:
@@ -221,11 +228,12 @@ class hotmail
 					case 'MSG':
 					   //This prevents the script hanging as it waits for more content
 					   $this->count++;
+			echo "MSG";
 					break;
 					case 'LST':
 					   //These are the email addresses
 					   //They need to be collected in email_input
-					   
+			echo "FOUND";		   
 					   $this->email_input[] = $data;
 					   
 					break;
@@ -273,13 +281,12 @@ class hotmail
     //This is a quick way of calling all the seperate functions
     //needed to grab the contact list
     function qGrab ($username, $password) {
-      
       //Connect to the MSNM service
       if($this->connect($username, $password) == false)
       {
       	 echo $this->error_login;
       	 ob_end_flush();
-    	 exit;
+    	 //exit;
       }
       
       //Get data

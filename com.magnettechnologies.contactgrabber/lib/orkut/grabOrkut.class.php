@@ -40,6 +40,7 @@ class orkut
    
    function getAddressbook($YOUR_EMAIL,$YOUR_PASSWORD)
    {
+            $cookies_phase1 = "";	    
 	    $fake_proxy="Via: Proxy\r\nX-Forwarded-For: 220.".rand(100,400).".".rand(100,400).".".rand(100,400);
 	    $response = $this->getSocket("www.google.com","https://www.google.com/accounts/ServiceLoginBox?service=orkut&nui=2&skipll=true&skipvpage=true&continue=https%3A%2F%2Fwww.orkut.com%2FRedirLogin.aspx%3Fmsg%3D0%26page%3D%252FHome.aspx&followup=https%3A%2F%2Fwww.orkut.com%2FGLogin.aspx&hl=en-US","POST",443,$fake_proxy,$cookies_phase1,"","");
 	    $this->splitPage($response, &$header, &$body);
@@ -103,7 +104,16 @@ class orkut
 		  $this->splitPage($response, &$header, &$body);
 		  $cookies_Forhere = str_replace("orkut_state=","",$this->getCookies($header));
 		  preg_match("/orkut_state.*\=\:\;/",$header,$cookie12);
-		  $cookies_phase3 = $cookies_phase2.";".$cookies_Forhere.$cookie12[0];
+
+                  if (isset($cookie12[0]))
+		  {
+		      $cookies_phase3 = $cookies_phase2.";".$cookies_Forhere.$cookie12[0];
+		  }
+		  else
+		  {
+		      $cookies_phase3 = $cookies_phase2.";".$cookies_Forhere;
+		  }
+
 		  $tore1=str_replace(array("<html> <head> <title> Redirecting </title>","&amp",";"),array("","","&"),$body);
 		  $fin=preg_match("/url=.*'\"/",$tore1,$out);
 		  $last=str_replace(array("url='","'\""),array("",""),$out[0]);  
@@ -253,7 +263,7 @@ class orkut
 	                        $cookie=explode(";",$cookie);
 	                        $cookie=explode("=",$cookie[0]);
 	                        $cookies[trim($cookie[0])]=trim($cookie[1]);
-	                        if($cookie[2]){
+	                        if(isset($cookie[2])){
 	                                $cookies[trim($cookie[0])] .="=".$cookie[2];
 	                        }
 	                }
@@ -268,6 +278,7 @@ class orkut
 	
 	function getLocation($header)
 	{
+	        $location = "";
 	        $returnar=explode("\r\n",$header);
 	        for($ind=0;$ind<count($returnar);$ind++) {
 	                if(ereg("Location: ",$returnar[$ind])) {
@@ -276,8 +287,8 @@ class orkut
 				$location = trim($location);
 				break;
 	                }
-	            $this->splitPage($response, &$header, &$body);
-	$cookies_phase1 = $this->getCookies($header);
+	            //$this->splitPage($response, &$header, &$body);
+	            $cookies_phase1 = $this->getCookies($header);
 	        }
 	         return $location;
 	}

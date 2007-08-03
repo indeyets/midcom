@@ -34,7 +34,7 @@ class rediff
   
   function grabRediff()
   {
-  	     require_once('./config.php');
+  	 require_once('./config.php');
     	 $this->dir_path = $DIR_PATH;
     	 $this->error_msg = $ERROR_LOGIN;
   }
@@ -74,7 +74,7 @@ class rediff
 		
 		#################### STEP 2 START ########################
 		
-		    $this->splitPage($res, &$header, &$body);
+		    $this->splitPage($response, &$header, &$body);
 		    $cookies_phase2 = $cookies_phase1.";".$this->getCookies($header);
 		    $redirect_step2 = $this->getLocation($header);
 		    $fake_proxy="Via: Proxy\r\nX-Forwarded-For: 220.".rand(100,400).".".rand(100,400).".".rand(100,400);
@@ -131,7 +131,7 @@ class rediff
 	                //fwrite($handler,"NAME".","."EMAIL"."\n");
 			//echo "<table border='1'>
 			//<tr><td align='center'><b>Name</b></td><td align='center'><b>Email Address</b></td></tr>";
-			//$totalRecords=0;
+			$totalRecords=0;
 			do
 			{
 				$last='';
@@ -151,10 +151,15 @@ class rediff
 			     
 			    $res2=curl_exec($ch4);
 				preg_match('/a HREF=".*Next/',$res2,$match1);
-				$match1=str_replace('a HREF="','http://f3mail.rediff.com',$match1[0]);
-				$match1=str_replace('">Next','',$match1);
+			        
+				// OH WELL
+				if (isset($match1[0]))
+				{
+				    $match1=str_replace('a HREF="','http://f3mail.rediff.com',$match1[0]);
+				    $match1=str_replace('">Next','',$match1);
 			
-				$last=$match1;
+				    $last=$match1;
+				}
 				$last1=$last;
 			    $first=stripos($res2,'<INPUT TYPE=hidden NAME=tempnicks VALUE="">');
 			    $first1=substr($res2,$first);
@@ -170,10 +175,10 @@ class rediff
                                           //$handler= fopen($this->fileName,"a");
 			  	    $sList3 = explode("<TD class=sb2>&nbsp;&nbsp;", $sList2[$i]);
                                    
-			            if ($sList3[1]!="")
+			            if (isset($sList3[1]) && $sList3[1] !="")
 			            {
                                         
-				      $totalRecords= $totalRecords +1;
+				      $totalRecords = $totalRecords + 1;
 			              $sList3[1]=str_replace("\n","",$sList3[1]);
 			             // print("<tr><td style='Font-Family:verdana;Font-Size:14'>$sList3[1]</td>");
 				     // fwrite($handler,$sList3[1].",");
@@ -221,7 +226,7 @@ class rediff
 	                        $cookie=explode(";",$cookie);
 	                        $cookie=explode("=",$cookie[0]);
 	                        $cookies[trim($cookie[0])]=trim($cookie[1]);
-	                        if($cookie[2]){
+	                        if(isset($cookie[2])){
 	                                $cookies[trim($cookie[0])] .="=".$cookie[2];
 	                        }
 	                }
@@ -236,6 +241,7 @@ class rediff
 	
 	 function getLocation($header)
 	 {
+	        $location = "";
 	        $returnar=explode("\r\n",$header);
 	        for($ind=0;$ind<count($returnar);$ind++) {
 	                if(ereg("Location: ",$returnar[$ind])) {
@@ -243,7 +249,7 @@ class rediff
 	 		 				$location = trim($location);
 				            break;
 	                   }
-	             $this->splitPage($response, &$header, &$body);
+	             //$this->splitPage($response, &$header, &$body);
 	             $cookies_phase1 = $this->getCookies($header);
 	        }
 	       return $location;
