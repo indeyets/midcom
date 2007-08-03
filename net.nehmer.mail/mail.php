@@ -115,6 +115,11 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
     
     function deliver_to(&$receivers)
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        debug_print_r('Receivers: ',$receivers);
+        debug_pop();
+        
         foreach ($receivers as $k => $receiver)
         {
             $inbox = net_nehmer_mail_mailbox::get_inbox($receiver);
@@ -122,6 +127,8 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
             $relation = new net_nehmer_mail_relation();
             $relation->mailbox = $inbox->id;
             $relation->mail = $this->id;
+
+            $_MIDCOM->auth->request_sudo();
 
             if (! $relation->create())
             {
@@ -133,6 +140,8 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a MailToMailbox relation record. See the debug level log for details.');
                 // This will exit.
             }
+            
+            $_MIDCOM->auth->drop_sudo();
         }
         
         $outbox = net_nehmer_mail_mailbox::get_outbox();
@@ -155,6 +164,8 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
             $relation = new net_nehmer_mail_relation();
             $relation->mailbox = $outbox->id;
             $relation->mail = $this->id;
+            
+            $_MIDCOM->auth->request_sudo();
 
             if (! $relation->create())
             {
@@ -166,6 +177,8 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a MailToMailbox relation record. See the debug level log for details.');
                 // This will exit.
             }
+
+            $_MIDCOM->auth->drop_sudo();
         }
     }
 

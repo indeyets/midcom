@@ -225,3 +225,7 @@ Subject
 Date
 ---STRINGEND
 
+---STRING re:
+Re:
+---STRINGEND
+

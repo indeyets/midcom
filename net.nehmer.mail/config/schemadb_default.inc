@@ -123,7 +123,7 @@
             ( 
                 'output_mode' => 'markdown' 
             ),
-            'widget' => 'markdown',
+            'widget' => 'textarea',
             'widget_config' => Array
             (
                 'width' => 64,

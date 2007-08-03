@@ -55,7 +55,7 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
      * @var net_nehmer_mail_mail
      * @access private
      */
-    var $original_mail = null;
+    var $_original_mail = null;
     
     var $_return_to = null;
     var $_relocate_to = null;
@@ -99,6 +99,7 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
         $this->_request_data['in_compose_view'] = true;
 
         $this->_request_data['compose_type'] =& $this->_compose_type;
+        $this->_request_data['original_mail'] =& $this->_original_mail;
     }
     
     /**
@@ -106,10 +107,22 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
      *
      * The operations are done on all available schemas within the DB.
      */
-    function _load_schemadb()
+    function _load_schemadb($handler_id)
     {
         $this->_schemadb =& midcom_helper_datamanager2_schema::load_database( $this->_config->get('schemadb') );
         
+        if ($handler_id == 'mail-compose-new-quick')
+        {
+            $this->_schemadb['new_mail']->fields['receivers']['hidden'] = true;
+        }
+
+        if (   $handler_id == 'mail-compose-reply'
+            || $handler_id == 'mail-compose-reply-all')
+        {
+            $this->_schemadb['new_mail']->fields['receivers']['hidden'] = true;
+            $this->_defaults['subject'] = $this->_l10n->get('re:') . ' ' . $this->_original_mail->subject;
+        }
+
         $session =& new midcom_service_session();
         if ($session->exists('failed_POST_data'))
         {
@@ -126,7 +139,7 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
      */
     function _load_controller($handler_id)
     {
-        $this->_load_schemadb();
+        $this->_load_schemadb($handler_id);
         
         $this->_controller = midcom_helper_datamanager2_controller::create('create');
         $this->_controller->schemadb =& $this->_schemadb;
@@ -142,7 +155,7 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
         {
             $this->_controller->formmanager->form->addElement('hidden', 'net_nehmer_mail_relocate_to', $this->_relocate_to);
         }
-
+        
         if (! $this->_controller->initialize())
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 controller instance for mail.");
@@ -184,27 +197,27 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
         }
         else if ($handler_id == 'mail-compose-reply')
         {
-            $data['original_mail'] = new net_nehmer_mail_mail($args[0]);
-            if (! $data['original_mail'])
+            $this->_original_mail = new net_nehmer_mail_mail($args[0]);
+            if (! $this->_original_mail)
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Original mail {$args[0]} couldn't be found.");
             }
-            $receiver = $_MIDCOM->auth->get_user($data['original_mail']->sender);
+            $receiver = $_MIDCOM->auth->get_user($this->_original_mail->sender);
             $data['heading'] = sprintf($this->_l10n->get('write reply to %s:'), $receiver->name);
 
-            $url = "mail/compose/reply/{$data['original_mail']->guid}.html";
+            $url = "mail/compose/reply/{$this->_original_mail->guid}.html";
         }
         else if ($handler_id == 'mail-compose-reply-all')
         {
-            $data['original_mail'] = new net_nehmer_mail_mail($args[0]);
-            if (! $data['original_mail'])
+            $this->_original_mail = new net_nehmer_mail_mail($args[0]);
+            if (! $this->_original_mail)
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Original mail {$args[0]} couldn't be found.");
             }
             
             $data['heading'] = $this->_l10n->get('write reply to all');
             
-            $url = "mail/compose/replyall/{$data['original_mail']->guid}.html";
+            $url = "mail/compose/replyall/{$this->_original_mail->guid}.html";
         }
 
         $this->_load_controller($handler_id);
@@ -212,23 +225,26 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
 
         switch ($this->_controller->process_form())
         {
-            case 'send':
+            case 'save':
                 // Relocate to the selected target
-                if ($data['relocate_to'] === null)
+                if ($this->_relocate_to === null)
                 {
                     $dest = "mail/compose/sent/{$this->_mail->guid}";
                 }
                 else
                 {
-                    $dest = $data['relocate_to'];
+                    $dest = $this->_relocate_to;
                 }
 
-                if ($data['return_to'])
+                if ($this->_return_to)
                 {
-                    $dest .= (strpos($dest, '?') === FALSE) ? '?' : '&';
+                    $dest .= (strpos($dest, '?') === false) ? '?' : '&';
                     $dest .= 'net_nehmer_mail_return_to=';
-                    $dest .= urlencode($data['return_to']);
+                    $dest .= urlencode($this->_return_to);
                 }
+                
+                debug_add("relocate: {$dest}");
+                
                 $_MIDCOM->relocate($dest);
                 // This will exit.
             case 'cancel':
@@ -265,6 +281,7 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
         switch($this->_compose_type)
         {
             case 'mail-compose-new-quick':
+                $receivers[] = $this->_request_data['receiver'];
             case 'mail-compose-new':
                 if (   !is_array($_POST['receivers'])
                     || empty($_POST['receivers']))
@@ -281,10 +298,10 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
                 }
                 break;
             case 'mail-compose-reply':
-                $receivers =& $_MIDCOM->auth->get_user($_request_data['original_mail']->sender);
+                $receivers[] =& $_MIDCOM->auth->get_user($this->_original_mail->sender);
                 break;
             case 'mail-compose-replyall':
-                $receivers =& $_request_data['original_mail']->get_receivers();
+                $receivers =& $this->_original_mail->get_receivers();
                 break;
         }
         
@@ -310,7 +327,13 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
         }
 
         $this->_mail->deliver_to(&$receivers);
-                
+
+        if ($_MIDCOM->auth->user !== null)
+        {
+            $this->_mail->set_privilege('midgard:read');
+            $this->_mail->unset_privilege('midgard:owner');
+        }
+       
         debug_pop();
 
         return $this->_mail;
@@ -324,7 +347,7 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
         }
         else
         {
-            midcom_show_style('mail-compose-replay');            
+            midcom_show_style('mail-compose-reply');            
         }
     }
 
