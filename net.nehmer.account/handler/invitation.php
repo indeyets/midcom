@@ -6,6 +6,7 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
     var $_invite = null;
     var $_sent_invites = null;
     var $_processing_msg_raw = "";
+    var $_user_defined_message = "";
 
     function net_nehmer_account_handler_invitation()
     {
@@ -78,26 +79,27 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
 
     function _send_email_invitation()
     {
-                    /**
-                     * Sending invitations
-		     */
-	            $this->_mail = new org_openpsa_mail();
-	            $this->_mail->to = 'juhana@nemein.com'; //$_POST["net_nehmer_invitation_invitee_name{$i}"];
-	            $this->_mail->from = $_MIDCOM->auth->user->_storage->email;
-	            $this->_mail->subject = $this->_l10n->get($this->_config->get('email_subject'));
-	            // This may be a hack, but it allows us tons more control in rendering the email
-	            $_MIDCOM->style->enter_context(0);
-	            ob_start();
-	            midcom_show_style('invitation-email-body');
-	            $this->_mail->body = ob_get_contents();
-	            ob_end_clean();
-	            $_MIDCOM->style->leave_context();
-	            debug_pop();
+        /**
+	 * Sending invitations
+	 */
+	 $this->_mail = new org_openpsa_mail();
+	 $this->_mail->to = 'juhana@nemein.com'; //$_POST["net_nehmer_invitation_invitee_name{$i}"];
+	 $this->_mail->from = $_MIDCOM->auth->user->_storage->email;
+	 $this->_mail->subject = $this->_l10n->get($this->_config->get('email_subject'));
+	 // This may be a hack, but it allows us tons more control in rendering the email
+	 $_MIDCOM->style->enter_context(0);
+	 $this->_request_data['user_message'] = $this->_user_defined_message;
+	 ob_start();
+	 midcom_show_style('invitation-email-body');
+	 $this->_mail->body = ob_get_contents();
+	 ob_end_clean();
+	 $_MIDCOM->style->leave_context();
+	 debug_pop();
 	        
-                    if (!$this->_mail->send())
-		    {
-                        debug_add("Sending invitation email failed!");
-		    }
+	 if (!$this->_mail->send())
+	 {
+	     debug_add("Sending invitation email failed!");
+	 }
     }
 
     function _handler_remind_invite($handler_id, $args, &$data)
@@ -157,6 +159,12 @@ echo "</pre>";
 	            && !empty($_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"])
 	        )
 	        {
+                    if (isset($_POST['net_nehmer_accounts_invitation_email_message']) 
+		        && !empty($_POST['net_nehmer_accounts_invitation_email_message']))
+                    {
+                        $this->_user_defined_message = $_POST['net_nehmer_accounts_invitation_email_message'];
+		    }
+
 	            /**
 		     * Saving the invite object
 		     */

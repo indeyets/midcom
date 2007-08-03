@@ -40,6 +40,10 @@ $total_contacts = $email_fields + count($contacts);
 
 <form  method="post">
 <input type="hidden" name="net_nehmer_accounts_invitation_total_contacts" value="<?php echo $total_contacts; ?>"/>
+
+<label>Message</label>
+<textarea class="net_nehmer_accounts_invitation_email_message" name="net_nehmer_accounts_invitation_email_message"></textarea>
+
 <table class="net_nehmer_accounts_invitation_emails">
   <th><?php echo $data['l10n']->get("name"); ?> </th><th><?php echo $data['l10n']->get("email"); ?></th>
 <?php
