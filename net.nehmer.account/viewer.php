@@ -115,6 +115,18 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nehmer_account_handler_invitation', 'invite'),
             'fixed_args' => Array('invite'),
         );
+        $this->_request_switch['delete_invite'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_invitation', 'delete_invite'),
+            'fixed_args' => Array('delete_invite'),
+            'variable_args' => 1,
+        );
+        $this->_request_switch['remind_invite'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_invitation', 'remind_invite'),
+            'fixed_args' => Array('remind_invite'),
+            'variable_args' => 1,
+        );
 
         // VIEW LINKS
         $this->_request_switch['self'] = Array

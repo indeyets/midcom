@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING invitation expired
+Invitation expired
+---STRINGEND
+
 ---STRING email
 Email
 ---STRINGEND

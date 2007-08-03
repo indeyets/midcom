@@ -40,6 +40,8 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         parent::midcom_baseclasses_components_handler();
     }
 
+    var $_sent_invites = null;
+
     /**
      * The datamanager controller instance used to create the new record.
      *
@@ -186,6 +188,27 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
     {
 	$hash = $args[0];
 	$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        $keep_sent_invites = $this->_config->get('keep_sent_invites');
+	$current_time = time();
+
+        $qb = net_nehmer_accounts_invites_invite_dba::new_query_builder();
+	$qb->add_constraint('hash', '=', $hash);
+
+	$invites = $qb->execute();
+
+        /**
+	 * Removing expired invites
+	 */
+	foreach($invites as $invite)
+	{
+            if ($current_time > ($invite->metadata->created + $keep_sent_invites * 86400))
+	    {
+                $invite->delete();
+	    }
+	    
+	}
+
+	$this->_sent_invites = $qb->execute();
 
 
 	if (isset($_POST['net_nehmer_account_register_invitation']))
@@ -220,9 +243,14 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
 
     function _show_register_invitation($handler_id, &$data)
     {
-        // TODO: Maybe check if invitation is out of date
-
-        midcom_show_style('show-register-invitation');
+        if (count($this->_sent_invites) > 0)
+        {
+            midcom_show_style('show-register-invitation');
+	}
+	else
+	{
+            midcom_show_style('show-expired-invitation');
+	}
     }
 
     /**
@@ -365,6 +393,38 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         // edit result remains unhandled, so that we stay in the edit-loop.
     }
 
+    function _add_inviter_as_buddy($inviter_guid)
+    {
+        if (!$_MIDCOM->componentloader->is_loaded('net.nehmer.buddylist'))
+        {
+            if ($_MIDCOM->componentloader->load_graceful('net.nehmer.buddylist'))
+	    {
+                $_MIDCOM->auth->require_valid_user();
+
+	        // Setup.
+		$buddy_user = $_MIDCOM->auth->get_user($inviter_guid);
+		if (!$buddy_user)
+		{
+		    $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The user guid {$buddy_user} is unknown.");
+		}
+
+                if (net_nehmer_buddylist_entry::is_on_buddy_list($buddy_user))
+		{
+		    $this->_processing_msg_raw = 'user already on your buddylist.';
+		}
+		else
+		{
+		    $entry = new net_nehmer_buddylist_entry();
+		    $entry->account = $_MIDCOM->auth->user->guid;
+		    $entry->buddy = $buddy_user->guid;
+		    $entry->isapproved = true;
+		    $entry->create();
+		    $this->_processing_msg_raw = 'buddy request sent.';
+		}
+	    }
+        }
+    }
+
     /**
      * This function handles the confirm stage. Cancel relocates back to the account type
      * selection screen, next will save previous will go back to allow the user to edit the
@@ -400,13 +460,15 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
                  
                  if (isset($hash))
                  {
-		     $qb = net_nehmer_account_invites_invite_dba::new_query_builder();
+		     $qb = net_nehmer_accounts_invites_invite_dba::new_query_builder();
                      $qb->add_constraint('hash', '=', $hash);
 		     $invites = $qb->execute();
 
 		     foreach ($invites as $invite)
 		     {
                          $invite->delete();
+
+                         $this->_add_inviter_as_buddy($invite->buddy);
 		     }                 
                  }
 

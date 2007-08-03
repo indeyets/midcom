@@ -15,6 +15,12 @@
         'email' => 'torben@nehmer.net',
         'role' => 'lead',
       ),
+      'juhana' => 
+      array (
+        'name' => 'Juhana Hirvilahti',
+        'email' => 'juhana@nemein.com',
+        'role' => 'developer',
+      ),
     ),
     'dependencies' => 
     array (
