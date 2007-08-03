@@ -7,6 +7,12 @@
     <property name="name" type="text" />
     <property name="quota" type="integer" />
   </type>
+  
+  <type name="net_nehmer_mail_relation_db" table="net_nehmer_mail_relation_db">
+    <property name="id" type="integer" primaryfield="id" />
+    <property name="mailbox" link="net_nehmer_mail_mailbox_db:id" type="integer" />
+    <property name="mail" link="net_nehmer_mail_mail_db:id" type="integer" />
+  </type>
 
   <type name="net_nehmer_mail_mail_db" table="net_nehmer_mail_mail_db">
     <property name="id" type="integer" primaryfield="id" />

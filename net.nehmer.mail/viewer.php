@@ -22,20 +22,96 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
     }
 
     function _on_initialize()
-    {
-        $this->_request_switch[] = Array
+    {   
+        // Match: /
+        $this->_request_switch['mailbox-view-index'] = Array
         (
-            'handler' => 'index',
-            // No further arguments, we have neither fixed nor variable arguments.
+            'handler' => Array('net_nehmer_mail_handler_mailbox_view', 'view'),
         );
-
-        $this->_request_switch[] = Array
+        
+        // Match: mailbox/view/<guid>
+        $this->_request_switch['mailbox-view'] = Array
         (
-            'handler' => 'mailbox',
-            'fixed_args' => 'mailbox',
+            'handler' => Array('net_nehmer_mail_handler_mailbox_view', 'view'),
+            'fixed_args' => Array('mailbox','view'),
             'variable_args' => 1,
         );
-
+        
+        // Match: mail/view/<guid>
+        $this->_request_switch['mail-view'] = Array
+        (
+            'handler' => Array('net_nehmer_mail_handler_mail_view', 'view'),
+            'fixed_args' => Array('mail','view'),
+            'variable_args' => 1,
+        );
+        // Match: mail/manage/delete
+        $this->_request_switch['mail-manage-delete'] = Array
+        (
+            'handler' => Array('net_nehmer_mail_handler_mail_admin', 'delete'),
+            'fixed_args' => Array('mail','manage','delete'),
+        );
+        // Match: mail/compose/new
+        $this->_request_switch['mail-compose-new'] = Array
+        (
+            'handler' => Array('net_nehmer_mail_handler_mail_compose', 'create'),
+            'fixed_args' => Array('mail','compose','new'),
+        );
+        // Match: mail/compose/new/<guid>
+        $this->_request_switch['mail-compose-new-quick'] = Array
+        (
+            'handler' => Array('net_nehmer_mail_handler_mail_compose', 'create'),
+            'fixed_args' => Array('mail','compose','new'),
+            'variable_args' => 1,
+        );
+        // Match: mail/compose/reply/<guid>
+        $this->_request_switch['mail-compose-reply'] = Array
+        (
+            'handler' => Array('net_nehmer_mail_handler_mail_compose', 'create'),
+            'fixed_args' => Array('mail','compose','reply'),
+            'variable_args' => 1,
+        );
+        // Match: mail/compose/replyall/<guid>
+        $this->_request_switch['mail-compose-replyall'] = Array
+        (
+            'handler' => Array('net_nehmer_mail_handler_mail_compose', 'create'),
+            'fixed_args' => Array('mail','compose','replyall'),
+            'variable_args' => 1,
+        );
+        
+        // Match: admin
+        $this->_request_switch['admin-welcome'] = Array
+        (
+            'handler' => Array('net_nehmer_mail_handler_mailbox_admin', 'welcome'),
+            'fixed_args' => Array('admin'),
+        );
+        // Match: admin/create
+        $this->_request_switch['admin-create'] = Array
+        (
+            'handler' => Array('net_nehmer_mail_handler_mailbox_admin', 'create'),
+            'fixed_args' => Array('admin','create'),
+        );
+        // Match: admin/edit/<guid>
+        $this->_request_switch['admin-edit'] = Array
+        (
+            'handler' => Array('net_nehmer_mail_handler_mailbox_admin', 'edit'),
+            'fixed_args' => Array('admin','edit'),
+            'variable_args' => 1,
+        );
+        // Match: admin/delete/<guid>
+        $this->_request_switch['admin-delete'] = Array
+        (
+            'handler' => Array('net_nehmer_mail_handler_mailbox_admin', 'delete'),
+            'fixed_args' => Array('admin','delete'),
+            'variable_args' => 1,
+        );
+        // Match: admin/ajax/delete/<guid>
+        $this->_request_switch['admin-ajax-delete'] = Array
+        (
+            'handler' => Array('net_nehmer_mail_handler_mailbox_admin', 'delete'),
+            'fixed_args' => Array('admin','ajax','delete'),
+            'variable_args' => 1,
+        );
+    
         $this->_request_switch[] = Array
         (
             'handler' => 'mail_show',
@@ -73,7 +149,88 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
             'handler' => 'mail_manage',
             'fixed_args' => Array('mail', 'manage'),
         );
+        
+        // Match: config/
+        $this->_request_switch['config'] = Array
+        (
+            'handler' => Array('midcom_core_handler_configdm', 'configdm'),
+            'schemadb' => 'file:/net/nehmer/mail/config/schemadb_config.inc',
+            'schema' => 'config',
+            'fixed_args' => Array('config'),
+        );        
 
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL."/net.nehmer.mail/styles/main.css",
+            )
+        );
+
+    }
+    
+    function _on_can_handle()
+    {
+        return true;
+    }
+
+    /**
+     * Generic request startup work:
+     *
+     * - Load the Schema Database
+     * - Populate the Node Toolbar
+     */
+    function _on_handle($handler, $args)
+    {
+        // $this->_request_data['schemadb'] =
+        //     midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
+        // 
+        // $this->_add_categories();
+        
+        $this->_request_data['in_compose_view'] = false;
+        $this->_request_data['mailboxes'] =& net_nehmer_mail_mailbox::list_mailboxes();
+        
+        $this->_populate_node_toolbar();
+
+        return true;
+    }
+    
+    /**
+     * Populates the node toolbar depending on the users rights.
+     *
+     * @access protected
+     */
+    function _populate_node_toolbar()
+    {
+        // if ($this->_content_topic->can_do('midgard:create'))
+        // {
+        //     foreach (array_keys($this->_request_data['schemadb']) as $name)
+        //     {
+        //         $this->_node_toolbar->add_item(Array(
+        //             MIDCOM_TOOLBAR_URL => "create/{$name}.html",
+        //             MIDCOM_TOOLBAR_LABEL => sprintf
+        //             (
+        //                 $this->_l10n_midcom->get('create %s'),
+        //                 $this->_l10n->get($this->_request_data['schemadb'][$name]->description)
+        //             ),
+        //             MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
+        //             MIDCOM_TOOLBAR_ACCESSKEY => 'n',
+        //         ));
+        //     }
+        // }
+
+        if (   $this->_topic->can_do('midgard:update')
+            && $this->_topic->can_do('midcom:component_config'))
+        {
+            $this->_node_toolbar->add_item(Array(
+                MIDCOM_TOOLBAR_URL => 'config.html',
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
+                MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+            ));
+        }
     }
 
     /**

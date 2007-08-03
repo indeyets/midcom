@@ -1,5 +1,33 @@
 'name' => 'net.nehmer.mail',
 'version' => '1.0.0',
+'package.xml' => array
+(
+    'summary' => 'Community Mailing System',
+    'description' => 'System for displaying and managing community messages',
+    'maintainers' => array
+    (
+        'torben' => array
+        (
+            'name' => 'Torben Nehmer',
+            'email' => 'torben@nehmer.net',
+            'role' => 'lead',
+            'active' => 'no',
+        ),
+        'w_i' => array
+        (
+            'name' => 'Jerry Jalava',
+            'email' => 'jerry.jalava@gmail.com',
+            'role' => 'lead',
+            'active' => 'yes',
+        ),
+    ),
+    'dependencies' => array
+    (
+        'midcom.helper.datamanager2' => array(),
+        'net.nehmer.markdown'        => array(),
+        'net.nemein.tag'             => array(),
+    ),
+),
 'class_definitions' => Array('midcomdba.inc'),
 'privileges' => Array
 (

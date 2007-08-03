@@ -30,12 +30,24 @@ class net_nehmer_mail_interface extends midcom_baseclasses_components_interface
         
         // ERROR Codes 
         define ('NET_NEHMER_MAIL_ERROR_DENIED', 1000);
-        define ('NET_NEHMER_MAIL_ERROR_MAILBOXFULL', 1001);
-        
+        define ('NET_NEHMER_MAIL_ERROR_MAILBOXFULL', 1001);        
 
         $this->_component = 'net.nehmer.mail';
-        $this->_autoload_files = Array('viewer.php', 'admin.php', 'navigation.php', 'mail.php', 'mailbox.php', 'callbacks/mailboxowners.php');
-        $this->_autoload_libraries = Array('midcom.helper.datamanager2', 'net.nehmer.markdown');
+
+        $this->_autoload_files = Array(
+            'viewer.php',
+//            'admin.php',
+            'navigation.php',
+            'relation_db.php',
+            'mail.php',
+            'mailbox.php',
+            'callbacks/mailboxowners.php');
+
+        $this->_autoload_libraries = Array(
+            'midcom.helper.datamanager2',
+            'net.nehmer.markdown',
+            'net.nemein.tag'
+        );
     }
 
     /**

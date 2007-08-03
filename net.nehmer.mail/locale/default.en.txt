@@ -196,3 +196,32 @@ Failed to send the mail
 ---STRING cannot send mail, mailbox full.
 You cannot send a mail to that user at this time, the mailbox is full.
 ---STRINGEND
+
+---STRING INBOX
+Inbox
+---STRINGEND
+
+---STRING OUTBOX
+Sent
+---STRINGEND
+
+---STRING compose message
+Compose message
+---STRINGEND
+
+---STRING from
+From
+---STRINGEND
+
+---STRING to
+To
+---STRINGEND
+
+---STRING subject
+Subject
+---STRINGEND
+
+---STRING date
+Date
+---STRINGEND
+

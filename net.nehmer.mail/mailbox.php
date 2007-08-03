@@ -44,7 +44,24 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
     {
         return $this->owner;
     }
-
+    
+    /**
+     * Returns inboxes view url without any prefix ie. view/mailbox/INBOX.html
+     */
+    function get_view_url()
+    {
+        $url_prefix = "mailbox/view";
+        $url_suffix = $this->guid;
+        
+        if (   strtolower($this->name) == 'inbox'
+            || strtolower($this->name) == 'outbox')
+        {
+            $url_suffix = strtolower($this->name);
+        }
+        
+        return "{$url_prefix}/{$url_suffix}";
+    }
+    
     /**
      * This function lists all mailboxes for the current user. If no user is authenticated,
      * an ACCESS DENIED error is triggered.
@@ -212,8 +229,11 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
     {
         $_MIDCOM->auth->require_do('net.nehmer.mail:list_mails', $this);
 
-        $qb = net_nehmer_mail_mail::new_query_builder();
-        $qb->add_constraint('mailbox', '=', $this->guid);
+        // $qb = net_nehmer_mail_mail::new_query_builder();
+        // $qb->add_constraint('mailbox', '=', $this->guid);
+        $qb = net_nehmer_mail_relation::new_query_builder();
+        $qb->add_constraint('mailbox', '=', $this->id);
+                
         return $qb;
     }
 
@@ -224,11 +244,30 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
      *     and the optional prefix 'reverse'. The default is 'reverse received'.
      * @return Array A list of found mails, or false on failure.
      */
-    function list_mails($order = 'reverse received')
+    function list_mails($order = 'reverse mail.received')
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        $mails = array();
+        
         $qb = $this->get_qb_mails();
         $qb->add_order($order);
-        return $qb->execute();
+        $results = $qb->execute();
+        
+        debug_print_r('results',$results);
+        
+        if (count($results) > 0)
+        {
+            foreach ($results as $result)
+            {
+                $mails[] = $result->get_mail();
+            }
+        }
+
+        debug_print_r('mails',$results);
+        
+        debug_pop();
+        return $mails;
     }
 
     /**
@@ -240,10 +279,28 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
      */
     function list_unread_mails($order = 'reverse received')
     {
+        $mails = false;
+        
         $qb = $this->get_qb_mails();
         $qb->add_order($order);
-        $ab->add_constraint('isread', '=', false);
-        return $qb->execute();
+        // $ab->add_constraint('isread', '=', false);
+        $qb->add_constraint('mail.isread', '=', false);
+        
+        $results = $qb->execute();
+        
+        debug_print_r('results',$results);
+        
+        if (count($results) > 0)
+        {
+            foreach ($results as $result)
+            {
+                $mails[] = $result->get_mail();
+            }
+        }
+
+        debug_print_r('mails',$results);        
+        
+        return $mails;
     }
 
     /**
@@ -277,7 +334,8 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
         if ($this->_unseen_count == -1)
         {
             $qb = $this->get_qb_mails();
-            $qb->add_constraint('isread', '=', false);
+            // $qb->add_constraint('isread', '=', false);
+            $qb->add_constraint('mail.isread', '=', false);
             $this->_unseen_count = $qb->count_unchecked();
         }
         return $this->_unseen_count;
@@ -304,11 +362,13 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
             return false;
         }
 
-        $qb = net_nehmer_mail_mail::new_query_builder();
-        $qb->add_constraint('mailbox', '=', $this->guid);
-        $message_count = $qb->count_unchecked();
-
-        return ($message_count >= $this->quota);
+        // $qb = net_nehmer_mail_mail::new_query_builder();
+        // $qb->add_constraint('mailbox', '=', $this->guid);
+        // $message_count = $qb->count_unchecked();
+        
+        $this->get_message_count();
+        // return ($message_count >= $this->quota);
+        return ($this->_message_count >= $this->quota);
     }
 
     /**
@@ -330,6 +390,9 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
      */
     function deliver_mail($sender, $subject, $body)
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("delivering mail from {$sender->id}");
+        
         if (   ! $_MIDCOM->auth->can_do('net.nehmer.mail:ignore_quota', $this)
             && $this->is_over_quota())
         {
@@ -341,7 +404,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
         }
 
         $mail = new net_nehmer_mail_mail();
-        $mail->mailbox = $this->guid;
+        // $mail->mailbox = $this->guid;
         $mail->sender = $sender->guid;
         $mail->subject = $subject;
         $mail->body = $body;
@@ -357,6 +420,21 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
             // This will exit.
         }
 
+        $relation = new net_nehmer_mail_relation();
+        $relation->mailbox = $this->id;
+        $relation->mail = $mail->id;
+
+        if (! $relation->create())
+        {
+            // This should normally not fail, as the class default privilege is set accordingly.
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_print_r('Mailbox object was:', $this);
+            debug_print_r('Mail object was:', $mail);
+            debug_pop();
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a MailToMailbox relation record. See the debug level log for details.');
+            // This will exit.
+        }
+
         // We don't want an owner privilege here. Instead, we want to have only the read flag set.
         // We do this only if we have a valid user logged on. Otherwise, there won't be any privilege
         // to set.
@@ -365,6 +443,8 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
             $mail->set_privilege('midgard:read');
             $mail->unset_privilege('midgard:owner');
         }
+        
+        debug_pop();
         return $mail->guid;
     }
 

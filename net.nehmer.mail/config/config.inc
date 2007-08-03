@@ -1,3 +1,6 @@
+/* The schema database to use */
+'schemadb' => 'file:/net/nehmer/mail/config/schemadb_default.inc',
+
 'default_quota' => 100,
 
 'enable_email_notify' => false,
