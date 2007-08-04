@@ -147,6 +147,13 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
         
         $qb = net_nehmer_mail_mail::new_query_builder();
         $qb->add_constraint('parentmail', '=', $this->parentmail);
+        
+        if (!$include_sender)
+        {
+            $user =& $_MIDCOM->auth->user->get_storage();
+            $qb->add_constraint('parentmail.owner', '<>', $user->id);
+        }
+        
         $results = $qb->execute();
         
         if (count($results) < 1)
@@ -160,18 +167,7 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
         foreach ($results as $result)
         {
             $user =& $_MIDCOM->auth->get_user($result->owner);
-
-            if ($user->guid == $_MIDCOM->auth->user->guid)
-            {
-                if ($include_sender)
-                {
-                    $receivers[] =& $user->get_storage();
-                }
-            }
-            else
-            {
-                $receivers[] =& $user->get_storage();
-            }
+            $receivers[] =& $user->get_storage();
         }
         
         $_MIDCOM->auth->drop_sudo();
