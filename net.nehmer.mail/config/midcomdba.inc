@@ -10,9 +10,15 @@ array(
     'new_class_name' => 'net_nehmer_mail_mail_db',
     'midcom_class_name' => 'net_nehmer_mail_mail'
 ),
-array(
+/*array(
     'table' => 'net_nehmer_mail_relation_db',
     'old_class_name' => null,
     'new_class_name' => 'net_nehmer_mail_relation_db',
     'midcom_class_name' => 'net_nehmer_mail_relation'
 ),
+array(
+    'table' => 'net_nehmer_mail_status_db',
+    'old_class_name' => null,
+    'new_class_name' => 'net_nehmer_mail_status_db',
+    'midcom_class_name' => 'net_nehmer_mail_status'
+),*/

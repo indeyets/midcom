@@ -60,7 +60,10 @@
         'receivers' => array
         (
             'title'   => 'receivers',
-            'storage' => null,
+            'description' => 'These are the receivers of the mail.',
+            'helptext' => '',
+            
+            'storage' => 'receivers',
             'type' => 'select',
             'type_config' => array
             (

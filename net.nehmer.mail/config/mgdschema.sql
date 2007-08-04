@@ -15,12 +15,24 @@ CREATE TABLE net_nehmer_mail_mailbox_db
 CREATE TABLE net_nehmer_mail_relation_db
 (
     id INT(11) NOT NULL auto_increment,
-    mailbox int(11) NOT NULL DEFAULT '',
-    mail int(11) NOT NULL DEFAULT '',
+    mailbox int(11) NOT NULL DEFAULT 0,
+    mail int(11) NOT NULL DEFAULT 0,
 
     PRIMARY KEY (id),
     INDEX net_nehmer_mail_relation_db_mailbox_idx(mailbox),
     INDEX net_nehmer_mail_relation_db_mail_idx(mail)
+);
+
+CREATE TABLE net_nehmer_mail_status_db
+(
+    id INT(11) NOT NULL auto_increment,
+    mail int(11) NOT NULL DEFAULT 0,
+    uid int(11) NOT NULL DEFAULT 0,
+    value int(11) NOT NULL DEFAULT 0,
+        
+    PRIMARY KEY (id),
+    INDEX net_nehmer_mail_status_db_mail_idx(mail),
+    INDEX net_nehmer_mail_status_db_status_idx(value)
 );
 
 CREATE TABLE net_nehmer_mail_mail_db

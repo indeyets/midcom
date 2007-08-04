@@ -71,7 +71,7 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
         // Match: mail/compose/replyall/<guid>
-        $this->_request_switch['mail-compose-replyall'] = Array
+        $this->_request_switch['mail-compose-reply-all'] = Array
         (
             'handler' => Array('net_nehmer_mail_handler_mail_compose', 'create'),
             'fixed_args' => Array('mail','compose','replyall'),

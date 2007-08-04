@@ -227,12 +227,11 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
      */
     function get_qb_mails()
     {
-        $_MIDCOM->auth->require_do('net.nehmer.mail:list_mails', $this);
+        // debug_print_r('this on get qb mails',$this);
+        //$_MIDCOM->auth->require_do('net.nehmer.mail:list_mails', $this);
 
-        // $qb = net_nehmer_mail_mail::new_query_builder();
-        // $qb->add_constraint('mailbox', '=', $this->guid);
-        $qb = net_nehmer_mail_relation::new_query_builder();
-        $qb->add_constraint('mailbox', '=', $this->id);
+        $qb = net_nehmer_mail_mail::new_query_builder();
+        $qb->add_constraint('mailbox', '=', $this->guid);
                 
         return $qb;
     }
@@ -244,30 +243,16 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
      *     and the optional prefix 'reverse'. The default is 'reverse received'.
      * @return Array A list of found mails, or false on failure.
      */
-    function list_mails($order = 'reverse mail.received')
+    function list_mails($order = 'reverse received')
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
-        $mails = array();
         
         $qb = $this->get_qb_mails();
         $qb->add_order($order);
         $results = $qb->execute();
         
-        debug_print_r('results',$results);
-        
-        if (count($results) > 0)
-        {
-            foreach ($results as $result)
-            {
-                $mails[] = $result->get_mail();
-            }
-        }
-
-        debug_print_r('mails',$results);
-        
         debug_pop();
-        return $mails;
+        return $results;
     }
 
     /**
@@ -279,28 +264,32 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
      */
     function list_unread_mails($order = 'reverse received')
     {
-        $mails = false;
-        
         $qb = $this->get_qb_mails();
         $qb->add_order($order);
-        // $ab->add_constraint('isread', '=', false);
-        $qb->add_constraint('mail.isread', '=', false);
+        $qb->add_constraint('status', '=', NET_NEHMER_MAIL_STATUS_UNREAD);
         
         $results = $qb->execute();
-        
-        debug_print_r('results',$results);
-        
-        if (count($results) > 0)
-        {
-            foreach ($results as $result)
-            {
-                $mails[] = $result->get_mail();
-            }
-        }
 
-        debug_print_r('mails',$results);        
+        return $results;
+    }
+    
+    /**
+     * This is a helper which lists all mails with given status belonging to this mailbox.
+     *
+     * @param string $status A mail status code. See interface class to see all possible statuses.
+     * @param string $order A regular ordering constraint, consisting of a field name
+     *     and the optional prefix 'reverse'. The default is 'reverse received'.
+     * @return Array A list of found mails, or false on failure.
+     */
+    function list_mails_with_status($status = NET_NEHMER_MAIL_STATUS_READ, $order = 'reverse received')
+    {
+        $qb = $this->get_qb_mails();
+        $qb->add_order($order);
+        $qb->add_constraint('status', '=', NET_NEHMER_MAIL_STATUS_STARRED);
         
-        return $mails;
+        $results = $qb->execute();
+
+        return $results;
     }
 
     /**
@@ -334,8 +323,8 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
         if ($this->_unseen_count == -1)
         {
             $qb = $this->get_qb_mails();
-            // $qb->add_constraint('isread', '=', false);
-            $qb->add_constraint('mail.isread', '=', false);
+            $qb->add_constraint('status', '=', NET_NEHMER_MAIL_STATUS_UNREAD);
+            // $qb->add_constraint('mail.isread', '=', false);
             $this->_unseen_count = $qb->count_unchecked();
         }
         return $this->_unseen_count;
@@ -362,12 +351,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
             return false;
         }
 
-        // $qb = net_nehmer_mail_mail::new_query_builder();
-        // $qb->add_constraint('mailbox', '=', $this->guid);
-        // $message_count = $qb->count_unchecked();
-        
         $this->get_message_count();
-        // return ($message_count >= $this->quota);
         return ($this->_message_count >= $this->quota);
     }
 
@@ -388,65 +372,65 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
      * @param string $body The message body.
      * @return mixed Returns message guid on success, or PEAR_Error on failure.
      */
-    function deliver_mail($sender, $subject, $body)
-    {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("delivering mail from {$sender->id}");
-        
-        if (   ! $_MIDCOM->auth->can_do('net.nehmer.mail:ignore_quota', $this)
-            && $this->is_over_quota())
-        {
-            return $this->raiseError($_MIDCOM->i18n->get_string('mailbox full.'), NET_NEHMER_MAIL_ERROR_MAILBOXFULL);
-        }
-        if (! $_MIDCOM->auth->can_user_do('midgard:create', null, 'net_nehmer_mail_mail'))
-        {
-            return $this->raiseError($_MIDCOM->i18n->get_string('access denied', 'midcom'), NET_NEHMER_MAIL_ERROR_DENIED);
-        }
-
-        $mail = new net_nehmer_mail_mail();
-        // $mail->mailbox = $this->guid;
-        $mail->sender = $sender->guid;
-        $mail->subject = $subject;
-        $mail->body = $body;
-        $mail->received = time();
-        $mail->isread = false;
-
-        if (! $mail->create())
-        {
-            // This should normally not fail, as the class default privilege is set accordingly.
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_print_r('Mail object was:', $mail);
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a mail record. See the debug level log for details.');
-            // This will exit.
-        }
-
-        $relation = new net_nehmer_mail_relation();
-        $relation->mailbox = $this->id;
-        $relation->mail = $mail->id;
-
-        if (! $relation->create())
-        {
-            // This should normally not fail, as the class default privilege is set accordingly.
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_print_r('Mailbox object was:', $this);
-            debug_print_r('Mail object was:', $mail);
-            debug_pop();
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a MailToMailbox relation record. See the debug level log for details.');
-            // This will exit.
-        }
-
-        // We don't want an owner privilege here. Instead, we want to have only the read flag set.
-        // We do this only if we have a valid user logged on. Otherwise, there won't be any privilege
-        // to set.
-        if ($_MIDCOM->auth->user !== null)
-        {
-            $mail->set_privilege('midgard:read');
-            $mail->unset_privilege('midgard:owner');
-        }
-        
-        debug_pop();
-        return $mail->guid;
-    }
+    // function deliver_mail($sender, $subject, $body)
+    // {
+    //     debug_push_class(__CLASS__, __FUNCTION__);
+    //     debug_add("delivering mail from {$sender->id}");
+    //     
+    //     if (   ! $_MIDCOM->auth->can_do('net.nehmer.mail:ignore_quota', $this)
+    //         && $this->is_over_quota())
+    //     {
+    //         return $this->raiseError($_MIDCOM->i18n->get_string('mailbox full.'), NET_NEHMER_MAIL_ERROR_MAILBOXFULL);
+    //     }
+    //     if (! $_MIDCOM->auth->can_user_do('midgard:create', null, 'net_nehmer_mail_mail'))
+    //     {
+    //         return $this->raiseError($_MIDCOM->i18n->get_string('access denied', 'midcom'), NET_NEHMER_MAIL_ERROR_DENIED);
+    //     }
+    // 
+    //     $mail = new net_nehmer_mail_mail();
+    //     // $mail->mailbox = $this->guid;
+    //     $mail->sender = $sender->guid;
+    //     $mail->subject = $subject;
+    //     $mail->body = $body;
+    //     $mail->received = time();
+    //     $mail->isread = false;
+    // 
+    //     if (! $mail->create())
+    //     {
+    //         // This should normally not fail, as the class default privilege is set accordingly.
+    //         debug_push_class(__CLASS__, __FUNCTION__);
+    //         debug_print_r('Mail object was:', $mail);
+    //         $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a mail record. See the debug level log for details.');
+    //         // This will exit.
+    //     }
+    // 
+    //     $relation = new net_nehmer_mail_relation();
+    //     $relation->mailbox = $this->id;
+    //     $relation->mail = $mail->id;
+    // 
+    //     if (! $relation->create())
+    //     {
+    //         // This should normally not fail, as the class default privilege is set accordingly.
+    //         debug_push_class(__CLASS__, __FUNCTION__);
+    //         debug_print_r('Mailbox object was:', $this);
+    //         debug_print_r('Mail object was:', $mail);
+    //         debug_pop();
+    //         $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a MailToMailbox relation record. See the debug level log for details.');
+    //         // This will exit.
+    //     }
+    // 
+    //     // We don't want an owner privilege here. Instead, we want to have only the read flag set.
+    //     // We do this only if we have a valid user logged on. Otherwise, there won't be any privilege
+    //     // to set.
+    //     if ($_MIDCOM->auth->user !== null)
+    //     {
+    //         $mail->set_privilege('midgard:read');
+    //         $mail->unset_privilege('midgard:owner');
+    //     }
+    //     
+    //     debug_pop();
+    //     return $mail->guid;
+    // }
 
     /**
      * This function will automatically create the inbox for the currently active user.

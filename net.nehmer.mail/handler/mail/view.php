@@ -124,7 +124,7 @@ class net_nehmer_mail_handler_mail_view extends midcom_baseclasses_components_ha
             debug_print_r('other mailboxes',$mailboxes);
             debug_pop();
 
-            $this->_request_data['receivers'] = array();
+            $this->_request_data['receivers'] = $this->_mail->get_receivers();
         }
         else
         {
@@ -135,17 +135,9 @@ class net_nehmer_mail_handler_mail_view extends midcom_baseclasses_components_ha
             );
         }
         
-        if (! $this->_mail->isread)
+        if ($this->_mail->status == NET_NEHMER_MAIL_STATUS_UNREAD)
         {
-            $this->_mail->isread = true;
-            if (! $this->_mail->update())
-            {
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Warning, we could not change the read state of message {$this->_mail->guid}. Ignoring silently.",
-                    MIDCOM_LOG_WARN);
-                debug_print_r('Mail was:', $data['mail']);
-                debug_pop();
-            }
+            $this->_mail->set_status(NET_NEHMER_MAIL_STATUS_READ);
         }
         
         $this->_prepare_request_data($handler_id);

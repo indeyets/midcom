@@ -164,6 +164,9 @@ class net_nehmer_mail_handler_mailbox_view extends midcom_baseclasses_components
         $this->_prepare_request_data($handler_id);
         $this->_populate_node_toolbar($handler_id);
         $_MIDCOM->set_pagetitle($this->_l10n->get($this->_mailbox->name));
+
+        $ur = $this->_mailbox->list_unread_mails();
+        debug_print_r('unread: ',$ur);
         
         debug_pop();        
         return true;

@@ -31,14 +31,20 @@ class net_nehmer_mail_interface extends midcom_baseclasses_components_interface
         // ERROR Codes 
         define ('NET_NEHMER_MAIL_ERROR_DENIED', 1000);
         define ('NET_NEHMER_MAIL_ERROR_MAILBOXFULL', 1001);        
-
+        
+        // STATUS codes
+        define('NET_NEHMER_MAIL_STATUS_SENT', 2000);
+        define('NET_NEHMER_MAIL_STATUS_READ', 2001);
+        define('NET_NEHMER_MAIL_STATUS_UNREAD', 2002);
+        define('NET_NEHMER_MAIL_STATUS_STARRED', 2003);
+        define('NET_NEHMER_MAIL_STATUS_REPLIED', 2004);
+        define('NET_NEHMER_MAIL_STATUS_SPAM', 2005);
+                
         $this->_component = 'net.nehmer.mail';
 
         $this->_autoload_files = Array(
             'viewer.php',
-//            'admin.php',
             'navigation.php',
-            'relation_db.php',
             'mail.php',
             'mailbox.php',
             'callbacks/mailboxowners.php');

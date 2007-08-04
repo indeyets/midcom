@@ -115,12 +115,24 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
         {
             $this->_schemadb['new_mail']->fields['receivers']['hidden'] = true;
         }
+        
+        if ($handler_id == 'mail-compose-reply')
+        {
+            $this->_schemadb['new_mail']->fields['receivers']['hidden'] = true;            
+        }
 
         if (   $handler_id == 'mail-compose-reply'
             || $handler_id == 'mail-compose-reply-all')
         {
-            $this->_schemadb['new_mail']->fields['receivers']['hidden'] = true;
+            //$this->_schemadb['new_mail']->fields['receivers']['hidden'] = true;
             $this->_defaults['subject'] = $this->_l10n->get('re:') . ' ' . $this->_original_mail->subject;
+            $receivers = $this->_original_mail->get_receivers();
+            $receiver_list = array();
+            foreach ($receivers as $k => $receiver)
+            {
+                $receiver_list[] = $receiver->id;
+            }
+            $this->_defaults['receivers'] =& $receiver_list;
         }
 
         $session =& new midcom_service_session();
@@ -146,6 +158,17 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
         $this->_controller->schemaname = 'new_mail';
         $this->_controller->defaults = $this->_defaults;
         $this->_controller->callback_object =& $this;
+        
+        if (! $this->_controller->initialize())
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 controller instance for mail.");
+            // This will exit.
+        }
+
+        if ($handler_id == 'mail-compose-reply-all')
+        {
+            $this->_controller->formmanager->widgets['receivers']->freeze();
+        }
 
         if ($this->_return_to !== null)
         {
@@ -154,12 +177,6 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
         if ($this->_relocate_to !== null)
         {
             $this->_controller->formmanager->form->addElement('hidden', 'net_nehmer_mail_relocate_to', $this->_relocate_to);
-        }
-        
-        if (! $this->_controller->initialize())
-        {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 controller instance for mail.");
-            // This will exit.
         }
     }
     
@@ -229,7 +246,7 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
                 // Relocate to the selected target
                 if ($this->_relocate_to === null)
                 {
-                    $dest = "mail/compose/sent/{$this->_mail->guid}";
+                    $dest = "mail/view/{$this->_mail->guid}";
                 }
                 else
                 {
@@ -293,46 +310,55 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
                 {
                     if ($selected)
                     {
-                        $receivers[] =& $_MIDCOM->auth->get_user($receiver_id);
+                        $user =& $_MIDCOM->auth->get_user($receiver_id);
+                        $receivers[] =& $user->get_storage();
                     }
                 }
                 break;
             case 'mail-compose-reply':
-                $receivers[] =& $_MIDCOM->auth->get_user($this->_original_mail->sender);
+                $user =& $_MIDCOM->auth->get_user($this->_original_mail->sender);
+                $receivers[] =& $user->get_storage();
                 break;
-            case 'mail-compose-replyall':
-                $receivers =& $this->_original_mail->get_receivers();
+            case 'mail-compose-reply-all':
+                debug_print_r('$this->_original_mail',$this->_original_mail);
+                $receivers =& $this->_original_mail->get_receivers(false);
+                debug_print_r('$receivers',$receivers);
                 break;
         }
-        
+
         if (empty($receivers))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Couldn't find any receivers in data.");
         }
+        
+        $current_user = $_MIDCOM->auth->user->get_storage();
         
         $this->_mail = new net_nehmer_mail_mail();
         $this->_mail->sender = $_MIDCOM->auth->user->guid;
         $this->_mail->subject = $_POST['subject'];
         $this->_mail->body = $_POST['body'];
         $this->_mail->received = time();
-        $this->_mail->isread = false;        
-
+        $this->_mail->status = NET_NEHMER_MAIL_STATUS_SENT;
+        $this->_mail->owner = $current_user->id;
+                
         if (! $this->_mail->create())
         {
             // This should normally not fail, as the class default privilege is set accordingly.
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_print_r('Mail object was:', $this->_mail);
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a mail record. See the debug level log for details.');
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a mail record. See the debug level log for details. Last Midgard error was: '. mgd_errstr());
             // This will exit.
         }
 
         $this->_mail->deliver_to(&$receivers);
-
-        if ($_MIDCOM->auth->user !== null)
-        {
-            $this->_mail->set_privilege('midgard:read');
-            $this->_mail->unset_privilege('midgard:owner');
-        }
+       
+        // $this->_mail->set_privilege('midgard:read');
+        // if (   $this->_compose_type == 'mail-compose-new-quick'
+        //     || $this->_compose_type == 'mail-compose-new')
+        // {
+        //     $this->_mail->set_privilege('midgard:delete');
+        //     $this->_mail->unset_privilege('midgard:owner');
+        // }
        
         debug_pop();
 

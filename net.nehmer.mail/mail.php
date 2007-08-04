@@ -8,7 +8,7 @@
  */
 
 /**
- * On-Site Mail System Mailbox class
+ * On-Site Mail System Mail class
  *
  * @package net.nehmer.mail
  */
@@ -19,6 +19,11 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
         parent::__net_nehmer_mail_mail($id);
     }
 
+    function _on_loaded()
+    {
+        return true;
+    }
+
     /**
      * This is a small helper which prepares a query builder ready to query the mailboxes
      * this mail belongs to
@@ -27,8 +32,8 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
      */
     function get_qb_mailboxes()
     {
-        $qb = net_nehmer_mail_relation::new_query_builder();
-        $qb->add_constraint('mail', '=', $this->id);
+        $qb = net_nehmer_mail_mailbox::new_query_builder();
+        $qb->add_constraint('guid', '=', $this->mailbox);
         
         return $qb;
     }
@@ -39,19 +44,24 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
      */
     function get_parent_guid_uncached()
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("in get parent guid");
         $mailbox_guid = false;
         
         $mailbox = $this->get_mailbox();
         
         if (! $mailbox)
         {
-            $mailbox_guid = net_nehmer_mail_mailbox::get_outbox();
+            $ob = net_nehmer_mail_mailbox::get_outbox();
+            $mailbox_guid = $ob->guid;
+            debug_add("get parent guid {$mailbox_guid}");
         }
         else
         {
             $mailbox_guid = $mailbox->guid;            
         }
         
+        debug_pop();
         return $mailbox_guid;
     }
 
@@ -70,19 +80,31 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
             return false;
         }
         
-        $qb = $this->get_qb_mailboxes();
-        $qb->add_constraint('mailbox.owner', '=', $_MIDCOM->auth->user->guid);
-        $results = $qb->execute();
+        $mailbox = new net_nehmer_mail_mailbox($this->mailbox);
         
-        if (count($results) < 1)
+        return $mailbox;
+    }
+    
+    function set_status($new_status)//,$user_id=false)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        debug_add("set status on mail {$this->id} to {$new_status}");// for user {$user_id}");        
+        
+        $this->status = $new_status;
+
+        if (! $this->update())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("No mailbox founded for mail {$this->id} with owner {$_MIDCOM->auth->user->guid}.");
+            debug_add("Warning, we could not change the status of mail {$this->id}. Ignoring silently.",
+                MIDCOM_LOG_WARN);
+            debug_print_r('Mail was:', $this);
             debug_pop();
             return false;
         }
-
-        return $results[0]->get_mailbox();
+        
+        debug_pop();
+        return true;
     }
     
     /**
@@ -93,7 +115,7 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
     function get_other_mailboxes()
     {
         $qb = $this->get_qb_mailboxes();
-        $qb->add_constraint('mailbox.owner', '<>', $_MIDCOM->auth->user->guid);
+        $qb->add_constraint('owner', '<>', $_MIDCOM->auth->user->guid);
         $results = $qb->execute();
         
         if (count($results) < 1)
@@ -107,10 +129,55 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
         return $results;
     }
     
-    function get_receivers($mail_id)
+    function get_receivers($include_sender=false)
     {
-        //TODO: Implement
-        return array();
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        $receivers = array();
+        
+        if (! isset($_MIDCOM->auth->user->guid))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("No user logged in.");
+            debug_pop();
+            return $receivers;
+        }
+        
+        $_MIDCOM->auth->request_sudo();
+        
+        $qb = net_nehmer_mail_mail::new_query_builder();
+        $qb->add_constraint('parentmail', '=', $this->parentmail);
+        $results = $qb->execute();
+        
+        if (count($results) < 1)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("No parent mails founded for mail {$this->id}");
+            debug_pop();
+            return $receivers;
+        }
+        
+        foreach ($results as $result)
+        {
+            $user =& $_MIDCOM->auth->get_user($result->owner);
+
+            if ($user->guid == $_MIDCOM->auth->user->guid)
+            {
+                if ($include_sender)
+                {
+                    $receivers[] =& $user->get_storage();
+                }
+            }
+            else
+            {
+                $receivers[] =& $user->get_storage();
+            }
+        }
+        
+        $_MIDCOM->auth->drop_sudo();
+        
+        debug_pop();
+        return $receivers;
     }
     
     function deliver_to(&$receivers)
@@ -120,29 +187,45 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
         debug_print_r('Receivers: ',$receivers);
         debug_pop();
         
+        $_MIDCOM->auth->request_sudo();                
         foreach ($receivers as $k => $receiver)
         {
             $inbox = net_nehmer_mail_mailbox::get_inbox($receiver);
             
-            $relation = new net_nehmer_mail_relation();
-            $relation->mailbox = $inbox->id;
-            $relation->mail = $this->id;
+            $mail = new net_nehmer_mail_mail();
+            $mail->mailbox = $inbox->guid;
+            $mail->sender = $this->owner;
+            $mail->subject = $this->subject;
+            $mail->body = $this->body;
+            $mail->received = time();            
+            $mail->owner = $receiver->id;
+            $mail->status = NET_NEHMER_MAIL_STATUS_UNREAD;
+            $mail->parentmail = $this->id;
 
-            $_MIDCOM->auth->request_sudo();
-
-            if (! $relation->create())
+            if (! $mail->create())
             {
-                // This should normally not fail, as the class default privilege is set accordingly.
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_print_r('Mailbox object was:', $inbox);
                 debug_print_r('Mail object was:', $this);
                 debug_pop();
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a MailToMailbox relation record. See the debug level log for details.');
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a Mail record for user {$receiver->id}. See the debug level log for details.");
                 // This will exit.
             }
             
-            $_MIDCOM->auth->drop_sudo();
+            $user =& $_MIDCOM->auth->get_user($receiver->id);
+            
+            $this->set_privilege('midgard:read', $user);
+
+            $mail->set_privilege('midgard:read', $user);
+            $mail->set_privilege('midgard:delete', $user);
+            $mail->set_privilege('midgard:owner', $user);
+            $mail->set_privilege('midgard:read');
+            $mail->unset_privilege('midgard:owner');
+            
+            debug_add("delivered to user {$receiver->id} to mailbox {$inbox->id}");
+
         }
+        $_MIDCOM->auth->drop_sudo();
         
         $outbox = net_nehmer_mail_mailbox::get_outbox();
         if ($outbox)
@@ -161,25 +244,11 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
                 }
             }
             
-            $relation = new net_nehmer_mail_relation();
-            $relation->mailbox = $outbox->id;
-            $relation->mail = $this->id;
+            $this->parentmail = $this->id;
+            $this->mailbox = $outbox->guid;
             
-            $_MIDCOM->auth->request_sudo();
-
-            if (! $relation->create())
-            {
-                // This should normally not fail, as the class default privilege is set accordingly.
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_print_r('Mailbox object was:', $outbox);
-                debug_print_r('Mail object was:', $this);
-                debug_pop();
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a MailToMailbox relation record. See the debug level log for details.');
-                // This will exit.
-            }
-
-            $_MIDCOM->auth->drop_sudo();
-        }
+            debug_add("added to current user outbox");
+        }        
     }
 
     /**

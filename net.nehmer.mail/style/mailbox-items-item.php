@@ -5,20 +5,23 @@ $date = strftime('%x %X', $data['mail']->received);
 $mail_id = $data['mail']->id;
 $sender =& $data['sender'];
 
+$img_url = '';
 $img_classname = 'read';
-if ($data['mail']->isreplied)
+if (   $data['mail']->status == NET_NEHMER_MAIL_STATUS_READ
+    || $data['mail']->status == NET_NEHMER_MAIL_STATUS_SENT)
 {
-    $img_url = MIDCOM_STATIC_URL . '/stock-icons/16x16/stock_mail-replied.png';
-    $img_classname = 'replied';
+    $img_url = MIDCOM_STATIC_URL . '/net.nehmer.mail/icons/mail-read.png';
+    $img_classname = 'read';
 }
-else if (! $data['mail']->isread)
+else if ($data['mail']->status == NET_NEHMER_MAIL_STATUS_UNREAD)
 {
     $img_url = MIDCOM_STATIC_URL . '/net.nehmer.mail/icons/mail-unread.png';
     $img_classname = 'unread';
 }
-else
+else if ($data['mail']->status == NET_NEHMER_MAIL_STATUS_STARRED)
 {
-    $img_url = MIDCOM_STATIC_URL . '/net.nehmer.mail/icons/mail-read.png';
+    $img_url = MIDCOM_STATIC_URL . '/net.nehmer.mail/icons/mail-starred.png';
+    $img_classname = 'starred';
 }
 
 ?>
