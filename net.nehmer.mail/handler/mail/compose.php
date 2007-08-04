@@ -231,6 +231,12 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Original mail {$args[0]} couldn't be found.");
             }
+
+            $receivers =& $this->_original_mail->get_receivers(false);
+            if (count($receivers) < 2)
+            {
+                $_MIDCOM->relocate("mail/compose/reply/{$this->_original_mail->guid}.html");
+            }
             
             $data['heading'] = $this->_l10n->get('write reply to all');
             
@@ -320,9 +326,7 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
                 $receivers[] =& $user->get_storage();
                 break;
             case 'mail-compose-reply-all':
-                debug_print_r('$this->_original_mail',$this->_original_mail);
                 $receivers =& $this->_original_mail->get_receivers(false);
-                debug_print_r('$receivers',$receivers);
                 break;
         }
 
@@ -346,19 +350,13 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
             // This should normally not fail, as the class default privilege is set accordingly.
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_print_r('Mail object was:', $this->_mail);
+            debug_pop();
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a mail record. See the debug level log for details. Last Midgard error was: '. mgd_errstr());
             // This will exit.
         }
 
         $this->_mail->deliver_to(&$receivers);
-       
-        // $this->_mail->set_privilege('midgard:read');
-        // if (   $this->_compose_type == 'mail-compose-new-quick'
-        //     || $this->_compose_type == 'mail-compose-new')
-        // {
-        //     $this->_mail->set_privilege('midgard:delete');
-        //     $this->_mail->unset_privilege('midgard:owner');
-        // }
+        $this->_send_notifications(&$receivers);
        
         debug_pop();
 
@@ -369,12 +367,83 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
     {
         if ($handler_id == 'mail-compose-new')
         {
+            $data['compose_type'] = 'new';
             midcom_show_style('mail-compose-new');
         }
         else
         {
+            $data['compose_type'] = 'reply';
             midcom_show_style('mail-compose-reply');            
         }
+    }
+    
+    function _send_notifications(&$receivers)
+    {
+        if (! $this->_config->get('enable_notifications'))
+        {
+            return;
+        }
+        
+        foreach ($receivers as $receiver)
+        {
+            $this->_send_notification(&$receiver);
+        }
+    }
+    
+    /**
+     * Sends a notification to the user about a new mail in his inbox.
+     * This is called by _send_notifications().
+     *
+     * The mail content is configured using the configuration keys
+     * notification_mail_sender, notification_mail_subject and
+     * notification_mail_body. The values are passed through the L10n system before
+     * they are processed using midcom_helper_mailtemplate.
+     *
+     * Available template keys:
+     *
+     * - __SENDER_NAME__ name of user sending the mail.
+     * - __RECEIVER_NAME__ name of the receiver.
+     * - __SUBJECT__ contains the subject of the message.
+     * - __MAILURL__ contains the URL to display the mail.
+     *
+     * @param string $mail_guid The GUID of the mail which has been sent.
+     * @param Array $data The request data.
+     * @access private
+     */
+    function _send_notification(&$person)
+    {   
+        $recipient_guid = $person->guid;
+        
+        $mail_sender = $_MIDCOM->auth->get_user($this->_mail->sender);
+        $mail_sender =& $mail_sender->get_storage();
+
+        $from = $this->_config->get('notification_mail_sender');
+        if (! $from)
+        {
+            $from = $mail_sender->guid;
+        }
+        
+        $mail_url = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "mail/view/{$this->_mail->guid}.html";
+        
+        $title = $this->_l10n->get($this->_config->get('notification_mail_subject'));
+        $title = str_replace("__SENDER_NAME__", $mail_sender->name, $title);
+        
+        $abstract = $this->_l10n->get($this->_config->get('notification_mail_abstract_body'));
+        $abstract = str_replace("__SENDER_NAME__", $mail_sender->name, $abstract);
+        
+        $content = $this->_l10n->get($this->_config->get('notification_mail_body'));
+        $content = str_replace("__SENDER_NAME__", $mail_sender->name, $content);
+        $content = str_replace("__RECEIVER_NAME__", $person->name, $content);
+        $content = str_replace("__SUBJECT__", $this->_mail->subject, $content);
+        $content = str_replace("__MAILURL__", $mail_url, $content);
+                        
+        $message['title'] = $title;
+        $message['from'] = $from;
+        $message['abstract'] = $abstract;
+        $message['content'] = $content;
+        $message['growl_to'] = $person->name;
+                
+        org_openpsa_notifications::notify('net.nehmer.mail:new_mail', $recipient_guid, $message);
     }
 
 }

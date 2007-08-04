@@ -1,5 +1,6 @@
 'name' => 'net.nehmer.mail',
-'version' => '1.0.0',
+'version' => '1.8.0',
+'state' => 'beta',
 'package.xml' => array
 (
     'summary' => 'Community Mailing System',
@@ -26,20 +27,41 @@
         'midcom.helper.datamanager2' => array(),
         'net.nehmer.markdown'        => array(),
         'net.nemein.tag'             => array(),
+        'org.openpsa.notifications'  => array(),
     ),
 ),
-'class_definitions' => Array('midcomdba.inc'),
-'privileges' => Array
+'class_definitions' => array
+(
+    'midcomdba.inc'
+),
+'privileges' => array
 (
     'ignore_quota' => MIDCOM_PRIVILEGE_DENY,
     'browse_other_mailboxes' => MIDCOM_PRIVILEGE_DENY,
-    'list_mails' => Array(MIDCOM_PRIVILEGE_DENY, MIDCOM_PRIVILEGE_ALLOW),
-),
-'watches' => Array
-(
-    Array
+    'list_mails' => array
     (
-        'classes' => Array ('midgard_person'),
+        MIDCOM_PRIVILEGE_DENY,
+        MIDCOM_PRIVILEGE_ALLOW
+    ),
+),
+'watches' => array
+(
+    array
+    (
+        'classes' => array
+        (
+            'midgard_person'
+        ),
         'operations' => MIDCOM_OPERATION_DBA_DELETE,
+    ),
+),
+'customdata' => array
+(
+    'org.openpsa.notifications' => array
+    (
+        'new_mail' => array
+        (
+            'default' => 'email',
+        ),
     ),
 ),

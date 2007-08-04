@@ -43,19 +43,7 @@ $date = strftime('%x %X', $data['mail']->received);
                 {
                 ?>
                 <div class="receivers">
-                    <span class="to"><?php $data['l10n']->show('to'); ?>:</span>
-                    <ul>
-                    <?php
-                    foreach ($data['receivers'] as $i => $receiver)
-                    {
-                    ?>
-                    <li>
-                        <span class="receiver">&(receiver->name);</span>
-                    </li>
-                    <?php
-                    }
-                    ?>
-                    </ul>
+                    <span class="to"><?php $data['l10n']->show('to'); ?>: <?php $data['l10n']->show($data['mail']->list_receivers()); ?></span>
                 </div>
                 <?php
                 }
@@ -70,18 +58,21 @@ $date = strftime('%x %X', $data['mail']->received);
                     if (! $data['is_sent'])
                     {
                     ?>
-                    <input type="button" name="reply" value="<?php $data['l10n']->show('reply'); ?>" id="reply" onclick="window.location='&(data['reply_url']);'">
-                    <input type="button" name="replyall" value="<?php $data['l10n']->show('reply all'); ?>" id="replyall" onclick="window.location='&(data['replyall_url']);'">
+                    <input type="button" name="reply" value="<?php $data['l10n']->show('reply'); ?>" id="reply" onclick="window.location='&(data['reply_url']);'" />
+                    <?php
+                    if ($data['replyall_enabled'])
+                    {
+                    ?>
+                    <input type="button" name="replyall" value="<?php $data['l10n']->show('reply all'); ?>" id="replyall" onclick="window.location='&(data['replyall_url']);'" />
+                    <?php
+                    }
+                    ?>
                     <?php
                     }
                     if ($data['can_delete'])
                     {
                     ?>
-                    <form action="&(data['delete_url']);" method="post">
-                    <input type="hidden" name="return_url" value="&(data['return_url']);" />
-                    <input type="hidden" name="msg_ids[]" value="&(mail_guid);" />
-                    <input type="submit" name="&(data['delete_submit_button_name']);" value="<?php $data['l10n_midcom']->show('delete'); ?>" />
-                    </form>
+                    <input type="button" name="delete" value="<?php $data['l10n']->show('delete'); ?>" id="delete" onclick="window.location='&(data['delete_url']);'" />
                     <?php
                     }
                     ?>

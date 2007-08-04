@@ -48,7 +48,7 @@ class net_nehmer_mail_handler_mailbox_view extends midcom_baseclasses_components
      * @access private
      */
     var $_mailbox = null;
-    
+        
     /**
      * Simple default constructor.
      */
@@ -90,7 +90,6 @@ class net_nehmer_mail_handler_mailbox_view extends midcom_baseclasses_components
 
         $this->_request_data['mailboxes'] =& $this->_mailboxes;
         $this->_request_data['mailbox'] =& $this->_mailbox;
-        $this->_request_data['in_compose_view'] = false;
     }
     
     /**

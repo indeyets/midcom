@@ -3,7 +3,10 @@
 
 'default_quota' => 100,
 
-'enable_email_notify' => false,
-'notification_mail_sender' => null, // Means sender == receiver
+'enable_notifications' => true,
+'notification_mail_sender' => null, // null means sender == receiver
 'notification_mail_subject' => 'notification_mail_subject', // Will be localized
+'notification_mail_abstract_body' => 'notification_mail_abstract_body', // Will be localized
 'notification_mail_body' => 'notification_mail_body', // Will be localized
+
+'enable_live_preview' => true,

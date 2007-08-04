@@ -227,8 +227,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
      */
     function get_qb_mails()
     {
-        // debug_print_r('this on get qb mails',$this);
-        //$_MIDCOM->auth->require_do('net.nehmer.mail:list_mails', $this);
+        $_MIDCOM->auth->require_do('net.nehmer.mail:list_mails', $this);
 
         $qb = net_nehmer_mail_mail::new_query_builder();
         $qb->add_constraint('mailbox', '=', $this->guid);

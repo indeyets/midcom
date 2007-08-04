@@ -96,8 +96,7 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
         if (! $this->update())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Warning, we could not change the status of mail {$this->id}. Ignoring silently.",
-                MIDCOM_LOG_WARN);
+            debug_add("Warning, we could not change the status of mail {$this->id}. Ignoring silently.", MIDCOM_LOG_WARN);
             debug_print_r('Mail was:', $this);
             debug_pop();
             return false;
@@ -151,15 +150,15 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
         if (!$include_sender)
         {
             $user =& $_MIDCOM->auth->user->get_storage();
-            $qb->add_constraint('parentmail.owner', '<>', $user->id);
+            $qb->add_constraint('owner', '<>', $user->id);
         }
-        
+
         $results = $qb->execute();
         
         if (count($results) < 1)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("No parent mails founded for mail {$this->id}");
+            debug_add("No parent mails founded for mail {$this->id} with parentmail id {$this->parentmail}");
             debug_pop();
             return $receivers;
         }
@@ -176,6 +175,53 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
         return $receivers;
     }
     
+    function get_receiver_list($include_sender=false)
+    {   
+        $receivers = $this->get_receivers($include_sender);
+        $names = array();
+        foreach ($receivers as $k => $receiver)
+        {
+            $names[] = $receiver->name;
+        }
+
+        return $names;
+    }
+    
+    function save_receiver_list()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        $list = $this->get_receiver_list();
+        
+        if (empty($list))
+        {
+            $list = array("no receivers found");
+        }
+        
+        $this->receiverlist = serialize($list);
+
+        if (! $this->update())
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Warning, we could not save mails {$this->id} receiver list. Ignoring silently.", MIDCOM_LOG_WARN);
+            debug_print_r('Mail was:', $this);
+            debug_pop();
+            return false;
+        }
+        
+        debug_pop();
+    }
+    
+    function list_receivers()
+    {
+        if ($this->receiverlist == '')
+        {
+            $this->save_receiver_list();
+        }
+        
+        echo implode(", ",unserialize($this->receiverlist));
+    }
+    
     function deliver_to(&$receivers)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -186,7 +232,22 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
         $_MIDCOM->auth->request_sudo();                
         foreach ($receivers as $k => $receiver)
         {
-            $inbox = net_nehmer_mail_mailbox::get_inbox($receiver);
+            $inbox =& net_nehmer_mail_mailbox::get_inbox($receiver);
+            
+            if (   !$_MIDCOM->auth->can_do('net.nehmer.mail:ignore_quota', $inbox)
+                && $inbox->is_over_quota())
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Couldn't send message to user {$receiver->id}. Reason: Inbox full.");
+                debug_print_r('Mailbox object was:', $inbox);
+                debug_pop();
+                $_MIDCOM->uimessages->add(
+                    $this->_l10n->get('net.nehmer.mail'),
+                    sprintf($this->_l10n->get('mailbox full for user %s'), $receiver->name),
+                    'warning'
+                );
+                continue;
+            }
             
             $mail = new net_nehmer_mail_mail();
             $mail->mailbox = $inbox->guid;
@@ -204,7 +265,13 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
                 debug_print_r('Mailbox object was:', $inbox);
                 debug_print_r('Mail object was:', $this);
                 debug_pop();
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a Mail record for user {$receiver->id}. See the debug level log for details.");
+                $_MIDCOM->uimessages->add(
+                    $this->_l10n->get('net.nehmer.mail'),
+                    sprintf($this->_l10n->get('mail delivery failed to user %s'), $receiver->name),
+                    'warning'
+                );
+                continue;
+                //$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a Mail record for user {$receiver->id}. See the debug level log for details.");
                 // This will exit.
             }
             

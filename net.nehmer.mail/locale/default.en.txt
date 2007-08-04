@@ -175,6 +175,10 @@ Legend:
 __SENDER_NAME__ has sent you a new mail.
 ---STRINGEND
 
+---STRING notification_mail_abstract_body
+New mail from __SENDER_NAME__ in your inbox.
+---STRINGEND
+
 ---STRING notification_mail_body
 Dear __RECEIVER_NAME__,
 

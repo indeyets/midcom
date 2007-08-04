@@ -50,6 +50,14 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nehmer_mail_handler_mail_admin', 'delete'),
             'fixed_args' => Array('mail','manage','delete'),
         );
+        // Match: mail/manage/delete/<guid>
+        $this->_request_switch['mail-manage-delete-one'] = Array
+        (
+            'handler' => Array('net_nehmer_mail_handler_mail_admin', 'delete'),
+            'fixed_args' => Array('mail','manage','delete'),
+            'variable_args' => 1,
+        );
+    
         // Match: mail/compose/new
         $this->_request_switch['mail-compose-new'] = Array
         (
@@ -168,7 +176,9 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
                 'href' => MIDCOM_STATIC_URL."/net.nehmer.mail/styles/main.css",
             )
         );
-
+        
+        $_MIDCOM->enable_jquery();
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/net.nehmer.mail/js/main.js');
     }
     
     function _on_can_handle()

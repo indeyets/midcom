@@ -15,7 +15,7 @@ if ($sender_avatar_thumb)
 }
 
 ?>
-<div class="mailbox_content" id="message-compose-new">
+<div class="mailbox_content" id="message-compose-&(data['compose_type']);">
     <div class="mailbox_inner_content">
         <div class="sender_photo">
             <?php

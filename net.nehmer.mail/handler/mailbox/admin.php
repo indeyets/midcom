@@ -214,7 +214,7 @@ class net_nehmer_mail_handler_mailbox_admin extends midcom_baseclasses_component
                     // Revert old privileges.
                     $this->_mailbox->unset_privilege('midgard:owner', "user:{$oldowner}");
                 }
-                $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('mailbox saved successfully'), 'ok');                
+                $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('mailbox saved successfully'), 'ok');
                 // *** FALL THROUGH ***
             
             case 'cancel':

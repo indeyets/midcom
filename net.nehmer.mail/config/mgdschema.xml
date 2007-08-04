@@ -20,6 +20,7 @@
     <property name="status" type="integer" />
     <property name="parentmail" link="net_nehmer_mail_mail_db:id" reverse="no" type="integer" />
     <property name="owner" link="midgard_person:id" reverse="no" type="integer" />
+    <property name="receiverlist" type="text" />
   </type>
 
 </Schema>

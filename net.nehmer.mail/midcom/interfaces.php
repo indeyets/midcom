@@ -52,7 +52,8 @@ class net_nehmer_mail_interface extends midcom_baseclasses_components_interface
         $this->_autoload_libraries = Array(
             'midcom.helper.datamanager2',
             'net.nehmer.markdown',
-            'net.nemein.tag'
+            'net.nemein.tag',
+            'org.openpsa.notifications',
         );
     }
 
@@ -68,7 +69,7 @@ class net_nehmer_mail_interface extends midcom_baseclasses_components_interface
         }
         if (is_a($object, 'net_nehmer_mail_mail'))
         {
-            return "mail/show/{$object->guid}.html";
+            return "mail/view/{$object->guid}.html";
         }
     }
 

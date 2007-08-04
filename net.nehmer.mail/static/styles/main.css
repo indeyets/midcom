@@ -93,11 +93,11 @@ table.mail_list td.status
     width: 40px;
     text-align: left;
 }
-table.sent th.status,
-table.sent td.status
+table.outbox th.to,
+table.outbox td.to
 {
-    width: 45px;
-    text-align: left;
+    width: 245px;
+    padding-left: 15px;
 }
 table.mail_list th.from,
 table.mail_list td.from
@@ -109,8 +109,8 @@ table.mail_list td.subject
 {
     width: 250px;
 }
-table.sent th.subject,
-table.sent td.subject
+table.outbox th.subject,
+table.outbox td.subject
 {
     width: 280px;
 }	    
@@ -137,6 +137,10 @@ table.mail_list img
 table.sent img
 {
     margin-left: 10px;
+}
+table.mail_list img.read
+{
+    margin-top: 6px;
 }
 table.mail_list img.unread
 {
@@ -192,5 +196,11 @@ div.message-details div.content p
 }
 div.mailbox_content div.actions
 {
+    width: 100%;
     margin-top: 10px;
+}
+
+#message-compose-reply .midcom_helper_datamanager2_widget_universalchooser
+{
+    display: none;
 }

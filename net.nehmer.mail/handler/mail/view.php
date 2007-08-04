@@ -49,6 +49,8 @@ class net_nehmer_mail_handler_mail_view extends midcom_baseclasses_components_ha
      */
     var $_mail = null;
     
+    var $_replyall_enabled = false;
+    
     /**
      * Simple default constructor.
      */
@@ -87,7 +89,9 @@ class net_nehmer_mail_handler_mail_view extends midcom_baseclasses_components_ha
     function _prepare_request_data($handler_id)
     {
         $this->_request_data['controller'] =& $this->_controller;
-
+        
+        $this->_request_data['replyall_enabled'] = $this->_replyall_enabled;
+        
         $this->_request_data['mailbox'] =& $this->_mailbox;
         $this->_request_data['mail'] =& $this->_mail;
     }
@@ -110,29 +114,17 @@ class net_nehmer_mail_handler_mail_view extends midcom_baseclasses_components_ha
             // This will exit.
         }
         
+        $receivers =& $this->_mail->get_receivers();
+        
+        if (count($receivers) > 1)
+        {
+            $this->_replyall_enabled = true;
+        }
+        
         $this->_request_data['is_sent'] = false;
         if (strtolower($this->_mailbox->name) == 'outbox')
         {
             $this->_request_data['is_sent'] = true;
-        }
-
-        if ($this->_request_data['is_sent'])
-        {
-            $mailboxes = $this->_mail->get_other_mailboxes();
-
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_print_r('other mailboxes',$mailboxes);
-            debug_pop();
-
-            $this->_request_data['receivers'] = $this->_mail->get_receivers();
-        }
-        else
-        {
-            //should we use this to show all the receivers who else have received this email?
-            //Currently we don't show this at all for receivers themselfs.
-            $this->_request_data['receivers'] = array(
-                $_MIDCOM->auth->user->get_storage()
-            );
         }
         
         if ($this->_mail->status == NET_NEHMER_MAIL_STATUS_UNREAD)
@@ -173,15 +165,17 @@ class net_nehmer_mail_handler_mail_view extends midcom_baseclasses_components_ha
         $user = $_MIDCOM->auth->get_user($this->_mail->sender);
         $data['sender'] =& $user->get_storage();
         
-        $data['return_url'] = $prefix . $this->_mailbox->get_view_url();    
+        $data['return_url'] = $prefix . $this->_mailbox->get_view_url();
         $data['new_url'] = "{$prefix}mail/compose/new/{$this->_mail->sender}.html";
         $data['reply_url'] = "{$prefix}mail/compose/reply/{$this->_mail->guid}.html";
-        $data['replyall_url'] = "{$prefix}mail/compose/replyall/{$this->_mail->guid}.html";
+        if ($data['replyall_enabled'])
+        {
+            $data['replyall_url'] = "{$prefix}mail/compose/replyall/{$this->_mail->guid}.html";
+        }
         $data['body_formatted'] = $this->_mail->get_body_formatted();
 
         $data['can_delete'] = $_MIDCOM->auth->can_do('midgard:delete', $this->_mail);
-        $data['delete_url'] = "{$prefix}mail/manage/delete.html";
-        $data['delete_submit_button_name'] = 'net_nehmer_mail_mail_db';
+        $data['delete_url'] = "{$prefix}mail/manage/delete/{$this->_mail->guid}.html";
         
         midcom_show_style('mail-show');
     }
