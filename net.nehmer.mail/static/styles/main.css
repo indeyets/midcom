@@ -147,6 +147,11 @@ table.mail_list img.unread
     margin-top: 4px;
 }
 
+div.list-actions
+{
+    margin-top: 10px;
+}
+
 #message-view,
 #message-compose-new
 {

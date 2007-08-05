@@ -4,7 +4,7 @@ function toggle_checkboxes()
 {
     var checkboxes = jQuery('table.inbox td.selection input[@type=checkbox]');
     jQuery.each( checkboxes, function(i,n){
-        if (checkboxes_selected)//jQuery(n).attr('checked'))
+        if (checkboxes_selected)
         {
             jQuery(n).removeAttr('checked');
         }

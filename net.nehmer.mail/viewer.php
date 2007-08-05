@@ -50,17 +50,17 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('mail','view'),
             'variable_args' => 1,
         );
-        // Match: mail/manage/delete
-        $this->_request_switch['mail-manage-delete'] = Array
+        // Match: mail/admin/perform
+        $this->_request_switch['mail-admin-perform'] = Array
         (
-            'handler' => Array('net_nehmer_mail_handler_mail_admin', 'delete'),
-            'fixed_args' => Array('mail','manage','delete'),
+            'handler' => Array('net_nehmer_mail_handler_mail_admin', 'perform'),
+            'fixed_args' => Array('mail','admin','perform'),
         );
-        // Match: mail/manage/delete/<guid>
-        $this->_request_switch['mail-manage-delete-one'] = Array
+        // Match: mail/admin/delete/<guid>
+        $this->_request_switch['mail-admin-delete-one'] = Array
         (
             'handler' => Array('net_nehmer_mail_handler_mail_admin', 'delete'),
-            'fixed_args' => Array('mail','manage','delete'),
+            'fixed_args' => Array('mail','admin','delete'),
             'variable_args' => 1,
         );
     

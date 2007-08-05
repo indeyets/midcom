@@ -36,7 +36,7 @@ else if ($data['mail']->status == NET_NEHMER_MAIL_STATUS_STARRED)
     else
     {
     ?>
-    <td class="selection"><input type="checkbox" name="selection[]" value="&(mail_id);" id="selection_&(mail_id);" /></td>
+    <td class="selection"><input type="checkbox" name="selections[]" value="&(mail_id);" id="selection_&(mail_id);" /></td>
     <td class="status"><img src="&(img_url);" class="&(img_classname);"/></td>
     <td class="from"><a href="&(data['new_url']);">&(sender->name);</a></td>
     <?php

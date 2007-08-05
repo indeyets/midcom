@@ -195,7 +195,7 @@ class net_nehmer_mail_handler_mail_view extends midcom_baseclasses_components_ha
         $data['body_formatted'] = $this->_mail->get_body_formatted();
 
         $data['can_delete'] = $_MIDCOM->auth->can_do('midgard:delete', $this->_mail);
-        $data['delete_url'] = "{$prefix}mail/manage/delete/{$this->_mail->guid}.html";
+        $data['delete_url'] = "{$prefix}mail/admin/delete/{$this->_mail->guid}.html";
         
         midcom_show_style('mail-show');
     }

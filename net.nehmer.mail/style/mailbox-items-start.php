@@ -2,6 +2,7 @@
 ?>
 <div class="mailbox_content" id="<?php echo $data['mailbox_classname']; ?>-list">
     <div class="mailbox_inner_content">
+        <form action="&(data['action_handler_url']);" method="post">
         <table border="0" cellspacing="0" cellpadding="0" class="mail_list &(data['mailbox_classname']);">
             <thead>
                 <tr>

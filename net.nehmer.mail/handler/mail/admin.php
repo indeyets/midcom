@@ -64,10 +64,122 @@ class net_nehmer_mail_handler_mail_admin extends midcom_baseclasses_components_h
         $this->_request_data['mailbox'] =& $this->_mailbox;
         $this->_request_data['mail'] =& $this->_mail;
     }
+    
+    function _handler_perform($handler_id, $args, &$data)
+    {
+        $return_url = "";
+        if (isset($_REQUEST['return_url']))
+        {
+            $return_url = $_REQUEST['return_url'];
+        }
+        
+        debug_print_r('perform request',$_REQUEST);
+        
+        $messages = array();
+        if (   array_key_exists('selections', $_REQUEST)
+            && is_array($_REQUEST['selections']))
+        {
+            foreach ($_REQUEST['selections'] as $msg_id)
+            {
+                $mail = new net_nehmer_mail_mail($msg_id);
+                if (! $mail)
+                {
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("The message id {$msg_id} is invalid (or we have insufficient permissions), skipping.", MIDCOM_LOG_INFO);
+                    debug_pop();
+                    continue;
+                }
+                $messages[$msg_id] = $mail;
+            }
+        }
+        if (   !$messages
+            || !array_key_exists('net_nehmer_mail_actions', $_REQUEST))
+        {
+            // Nothing to do, no messages selected.
+            $_MIDCOM->relocate($return_url);
+            // This will exit.
+        }
+        
+        if ($_REQUEST['net_nehmer_mail_actions'] == 'net_nehmer_mail_action_delete')
+        {
+            foreach ($messages as $msg_id => $mail)
+            {
+                if (! $_MIDCOM->auth->can_do('midgard:delete', $mail))
+                {
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("Insufficient privileges on message id {$msg_id}, skipping.", MIDCOM_LOG_INFO);
+                    debug_pop();
+                    $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('failed to delete mail'), 'warning');
+                    continue;
+                }
+                if (! $mail->delete())
+                {
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("Failed to delete message id {$msg_id}, last Midgard error was: " . mgd_errstr(), MIDCOM_LOG_INFO);
+                    debug_pop();
+                    $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('failed to delete mail'), 'warning');
+                }
+            }
+
+            $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('successfully deleted selected mails'), 'ok');
+        }
+        
+        if ($_REQUEST['net_nehmer_mail_actions'] == 'net_nehmer_mail_action_mark_as_starred')
+        {
+            foreach ($messages as $msg_id => $mail)
+            {
+                if (! $_MIDCOM->auth->can_do('midgard:update', $mail))
+                {
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("Insufficient privileges on message id {$msg_id}, skipping.", MIDCOM_LOG_INFO);
+                    debug_pop();
+                    $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('failed to change status'), 'warning');
+                    continue;
+                }
+                if (! $mail->set_status(NET_NEHMER_MAIL_STATUS_STARRED))
+                {
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("Failed to change status for message id {$msg_id}, last Midgard error was: " . mgd_errstr(), MIDCOM_LOG_INFO);
+                    debug_pop();
+                    $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('failed to change status'), 'warning');
+                }
+            }
+
+            $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('successfully updated selected mails'), 'ok');
+        }
+
+        if ($_REQUEST['net_nehmer_mail_actions'] == 'net_nehmer_mail_action_mark_as_unread')
+        {
+            foreach ($messages as $msg_id => $mail)
+            {
+                if (! $_MIDCOM->auth->can_do('midgard:update', $mail))
+                {
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("Insufficient privileges on message id {$msg_id}, skipping.", MIDCOM_LOG_INFO);
+                    debug_pop();
+                    $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('failed to change status'), 'warning');
+                    continue;
+                }
+                if (! $mail->set_status(NET_NEHMER_MAIL_STATUS_UNREAD))
+                {
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("Failed to change status for message id {$msg_id}, last Midgard error was: " . mgd_errstr(), MIDCOM_LOG_INFO);
+                    debug_pop();
+                    $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('failed to change status'), 'warning');
+                }
+            }
+
+            $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('successfully updated selected mails'), 'ok');
+        }
+        
+        $_MIDCOM->relocate($return_url);
+        
+        return true;
+    }
 
     function _handler_delete($handler_id, $args, &$data)
     {
-        if (   $handler_id == 'mail-manage-delete-one'
+        if (   $handler_id == 'mail-admin-delete-one'
             && !isset($args[0]))
         {
             debug_push_class(__CLASS__, __FUNCTION__);        
@@ -77,7 +189,7 @@ class net_nehmer_mail_handler_mail_admin extends midcom_baseclasses_components_h
             // This will exit
         }
         
-        $return_url = "";        
+        $return_url = "";
         $relocate = false;
         
         if (isset($_REQUEST['return_url']))
@@ -85,95 +197,40 @@ class net_nehmer_mail_handler_mail_admin extends midcom_baseclasses_components_h
             $return_url = $_REQUEST['return_url'];
         }
         
-        switch($handler_id)
+        $this->_mail = new net_nehmer_mail_mail($args[0]);
+        $this->_mailbox =& $this->_mail->get_mailbox();
+        
+        if (! $this->_mail)
         {
-            case 'mail-manage-delete-one':
-                $this->_mail = new net_nehmer_mail_mail($args[0]);
-                $this->_mailbox =& $this->_mail->get_mailbox();
-                
-                if (! $this->_mail)
-                {
-                    $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Couldn't find mail: {$args[0]}.");
-                    // This will exit.
-                }
-                if (array_key_exists('net_nehmer_mail_action_delete', $_REQUEST))
-                {
-                    if (! $_MIDCOM->auth->can_do('midgard:delete', $this->_mail))
-                    {
-                        debug_push_class(__CLASS__, __FUNCTION__);
-                        debug_add("Insufficient privileges on mail id {$this->_mail->id}.", MIDCOM_LOG_INFO);
-                        debug_pop();
-                        $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('failed to delete mail'), 'warning');
-                        $_MIDCOM->relocate($return_url);
-                    }
-                
-                    if (! $this->_mail->delete())
-                    {
-                        debug_push_class(__CLASS__, __FUNCTION__);
-                        debug_add("Failed to delete mail id {$this->_mail->id}, last Midgard error was: " . mgd_errstr(), MIDCOM_LOG_INFO);
-                        debug_pop();
-                        $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('failed to delete mail'), 'warning');
-                    }
-                    else
-                    {
-                        $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('mail deleted successfully'), 'ok');
-                    }
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Couldn't find mail: {$args[0]}.");
+            // This will exit.
+        }
 
-                    $relocate = true;
-                }
-                break;
-            case 'mail-manage-delete':
-                $messages = array();
-                if (   array_key_exists('msg_ids', $_REQUEST)
-                    && is_array($_REQUEST['msg_ids']))
-                {
-                    foreach ($_REQUEST['msg_ids'] as $msg_id)
-                    {
-                        $mail = new net_nehmer_mail_mail($msg_id);
-                        if (! $mail)
-                        {
-                            debug_push_class(__CLASS__, __FUNCTION__);
-                            debug_add("The message id {$msg_id} is invalid (or we have insufficient permissions), skipping.", MIDCOM_LOG_INFO);
-                            debug_pop();
-                            continue;
-                        }
-                        $messages[$msg_id] = $mail;
-                    }
-                }
-                if (! $messages)
-                {
-                    // Nothing to do, no messages selected.
-                    $_MIDCOM->relocate($return_url);
-                    // This will exit.
-                }
-                
-                if (array_key_exists('net_nehmer_mail_action_delete', $_REQUEST))
-                {
-                    foreach ($messages as $msg_id => $mail)
-                    {
-                        if (! $_MIDCOM->auth->can_do('midgard:delete', $mail))
-                        {
-                            debug_push_class(__CLASS__, __FUNCTION__);
-                            debug_add("Insufficient privileges on message id {$msg_id}, skipping.", MIDCOM_LOG_INFO);
-                            debug_pop();
-                            $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('failed to delete mail'), 'warning');
-                            continue;
-                        }
-                        if (! $mail->delete())
-                        {
-                            debug_push_class(__CLASS__, __FUNCTION__);
-                            debug_add("Failed to delete message id {$msg_id}, last Midgard error was: " . mgd_errstr(), MIDCOM_LOG_INFO);
-                            debug_pop();
-                            $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('failed to delete mail'), 'warning');
-                        }
-                    }
-                }
-                
-                $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('successfully deleted selected mails'), 'ok');
-                
-                $relocate = true;
-                break;
-        }        
+        if (array_key_exists('net_nehmer_mail_action_delete', $_REQUEST))
+        {
+            if (! $_MIDCOM->auth->can_do('midgard:delete', $this->_mail))
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Insufficient privileges on mail id {$this->_mail->id}.", MIDCOM_LOG_INFO);
+                debug_pop();
+                $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('failed to delete mail'), 'warning');
+                $_MIDCOM->relocate($return_url);
+            }
+        
+            if (! $this->_mail->delete())
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Failed to delete mail id {$this->_mail->id}, last Midgard error was: " . mgd_errstr(), MIDCOM_LOG_INFO);
+                debug_pop();
+                $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('failed to delete mail'), 'warning');
+            }
+            else
+            {
+                $_MIDCOM->uimessages->add($data['l10n']->get('net.nehmer.mail'), $data['l10n']->get('mail deleted successfully'), 'ok');
+            }
+
+            $relocate = true;
+        }       
         
         if ($relocate)
         {
@@ -192,10 +249,10 @@ class net_nehmer_mail_handler_mail_admin extends midcom_baseclasses_components_h
 
         $data['return_url'] = $prefix . $this->_mailbox->get_view_url();
         
-        $data['delete_url'] = "{$prefix}mail/manage/delete/{$this->_mail->guid}.html";
+        $data['delete_url'] = "{$prefix}mail/admin/delete/{$this->_mail->guid}.html";
         $data['delete_button_name'] = 'net_nehmer_mail_action_delete';
         
-        midcom_show_style('mail-manage-delete');
+        midcom_show_style('mail-admin-delete');
     }
 }
 

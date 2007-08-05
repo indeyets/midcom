@@ -163,9 +163,6 @@ class net_nehmer_mail_handler_mailbox_view extends midcom_baseclasses_components
         $this->_prepare_request_data($handler_id);
         $this->_populate_node_toolbar($handler_id);
         $_MIDCOM->set_pagetitle($this->_l10n->get($this->_mailbox->name));
-
-        $ur = $this->_mailbox->list_unread_mails();
-        debug_print_r('unread: ',$ur);
         
         debug_pop();        
         return true;
@@ -178,6 +175,18 @@ class net_nehmer_mail_handler_mailbox_view extends midcom_baseclasses_components
      */
     function _show_view($handler_id, &$data)
     {
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+
+        $data['return_url'] = $prefix . $this->_mailbox->get_view_url();                
+        $data['action_handler_url'] = "{$prefix}mail/admin/perform.html";
+        $data['perform_button_name'] = 'net_nehmer_mail_action_perform';
+        
+        $data['actions'] = array(
+            'net_nehmer_mail_action_delete' => $this->_l10n_midcom->get('delete'),
+            'net_nehmer_mail_action_mark_as_starred' => $this->_l10n->get('mark as starred'),
+            'net_nehmer_mail_action_mark_as_unread' => $this->_l10n->get('mark as unread'),
+        );
+        
         midcom_show_style('mailbox-items-start');
         
         $mails = $this->_mailbox->list_mails();
