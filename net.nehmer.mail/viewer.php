@@ -37,6 +37,12 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
         
+        // Match: mail/live_preview
+        $this->_request_switch['mail-live-preview'] = Array
+        (
+            'handler' => Array('net_nehmer_mail_handler_mail_view', 'live_preview'),
+            'fixed_args' => Array('mail','live_preview'),
+        );
         // Match: mail/view/<guid>
         $this->_request_switch['mail-view'] = Array
         (
@@ -179,6 +185,8 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
         
         $_MIDCOM->enable_jquery();
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/net.nehmer.mail/js/main.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/net.nehmer.mail/js/jquery.livePreview.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/net.nehmer.mail/js/showdown.pack.js');
     }
     
     function _on_can_handle()

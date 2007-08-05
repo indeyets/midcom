@@ -36,6 +36,16 @@ if ($sender_avatar_thumb)
                 $data['controller']->display_form(); 
                 ?>
             </div>
+            <?php
+            if ($data['use_live_preview'])
+            {
+            ?>
+            <script type="text/javascript">
+                jQuery('#net_nehmer_mail_body').livePreview({ previewClass: 'holder', markdown_lib: '&(data["showdown_lib"]);'});
+            </script>
+            <?php
+            }
+            ?>
         </div>
         <div style="clear:both;"></div>     
     </div>

@@ -51,6 +51,8 @@ class net_nehmer_mail_handler_mail_view extends midcom_baseclasses_components_ha
     
     var $_replyall_enabled = false;
     
+    var $_output_mode = null;
+    
     /**
      * Simple default constructor.
      */
@@ -153,6 +155,24 @@ class net_nehmer_mail_handler_mail_view extends midcom_baseclasses_components_ha
         return true;
     }
     
+    function _handler_live_preview($handler_id, $args, &$data)
+    {
+        $schemadb =& midcom_helper_datamanager2_schema::load_database( $this->_config->get('schemadb') );
+        if (array_key_exists('type_config',$schemadb['new_mail']->fields['body']))
+        {
+            if (array_key_exists('output_mode',$schemadb['new_mail']->fields['body']['type_config']))
+            {
+                $this->_output_mode = $schemadb['new_mail']->fields['body']['type_config']['output_mode'];
+            }
+        }
+        
+        $this->_request_data['live_preview_content'] = '';
+        if (array_key_exists('live_preview_content',$_REQUEST))
+        {
+            $this->_request_data['live_preview_content'] = $_REQUEST['live_preview_content'];
+        }
+    }
+    
     /**
      * Mail content view.
      * 
@@ -178,6 +198,19 @@ class net_nehmer_mail_handler_mail_view extends midcom_baseclasses_components_ha
         $data['delete_url'] = "{$prefix}mail/manage/delete/{$this->_mail->guid}.html";
         
         midcom_show_style('mail-show');
+    }
+    
+    function _show_live_preview($handler_id, &$data)
+    {
+        if ($this->_output_mode == 'markdown')
+        {
+            $markdown = new net_nehmer_markdown_markdown();
+            echo $markdown->render($data['live_preview_content']);
+        }
+        else
+        {
+            echo $data['live_preview_content'];
+        }
     }
     
 }

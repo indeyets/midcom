@@ -60,6 +60,7 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
     var $_return_to = null;
     var $_relocate_to = null;
     var $_compose_type = null;
+    var $_use_live_preview = false;
     
     /**
      * Simple default constructor.
@@ -100,6 +101,8 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
 
         $this->_request_data['compose_type'] =& $this->_compose_type;
         $this->_request_data['original_mail'] =& $this->_original_mail;
+
+        $this->_request_data['use_live_preview'] = $this->_use_live_preview;
     }
     
     /**
@@ -196,6 +199,11 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
         if (array_key_exists('net_nehmer_mail_relocate_to', $_REQUEST))
         {
             $this->_relocate_to = $_REQUEST['net_nehmer_mail_relocate_to'];
+        }
+
+        if ($this->_config->get('enable_live_preview'))
+        {
+            $this->_use_live_preview = true;
         }
         
         $url = null;
@@ -364,7 +372,12 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
     }
     
     function _show_create($handler_id, &$data)
-    {
+    {   
+        if ($data['use_live_preview'])
+        {
+            $data['showdown_lib'] = MIDCOM_STATIC_URL . "/net.nehmer.mail/js/showdown.pack.js";
+        }
+        
         if ($handler_id == 'mail-compose-new')
         {
             $data['compose_type'] = 'new';

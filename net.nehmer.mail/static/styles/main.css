@@ -204,3 +204,17 @@ div.mailbox_content div.actions
 {
     display: none;
 }
+
+/* Live preview */
+
+div.livePreview_holder
+{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 80%;
+}
+div.livePreview_content
+{
+    font-size: 11pt;
+    padding: 10px;
+}
