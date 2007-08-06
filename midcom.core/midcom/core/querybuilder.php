@@ -601,6 +601,14 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     {
         $this->_qb->set_lang($language);
     }
+    
+    /**
+     * Include deleted objects (metadata.deleted is TRUE) in query results.
+     */
+    function include_deleted()
+    {
+        $this->_qb->include_deleted();
+    }
 
     /**
      * Returns the number of elements matching the current query.
