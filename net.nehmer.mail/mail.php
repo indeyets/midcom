@@ -45,7 +45,6 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
     function get_parent_guid_uncached()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("in get parent guid");
         $mailbox_guid = false;
         
         $mailbox = $this->get_mailbox();
@@ -54,7 +53,6 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
         {
             $ob = net_nehmer_mail_mailbox::get_outbox();
             $mailbox_guid = $ob->guid;
-            debug_add("get parent guid {$mailbox_guid}");
         }
         else
         {
@@ -312,6 +310,28 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
             
             debug_add("added to current user outbox");
         }        
+    }
+
+    /**
+     * This is a helper which lists all mails marked as deleted belonging to current user
+     * This can be called as static.
+     *
+     * @param string $order A regular ordering constraint, consisting of a field name
+     *     and the optional prefix 'reverse'. The default is 'reverse received'.
+     * @return Array A list of found mails, or false on failure.
+     */
+    function list_deleted_mails($order = 'reverse received')
+    {   
+        $user =& $_MIDCOM->auth->user->get_storage();
+        
+        $qb = new midgard_query_builder('net_nehmer_mail_mail');
+        $qb->add_constraint('owner', '=', $user->id);
+        $qb->include_deleted();
+        $qb->add_constraint('metadata.deleted', '<>', 0);
+        
+        $results = $qb->execute();
+        
+        return $results;
     }
 
     /**

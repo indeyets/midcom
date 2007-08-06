@@ -50,6 +50,12 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('mail','view'),
             'variable_args' => 1,
         );
+        // Match: mail/admin/trash
+        $this->_request_switch['mail-admin-trash'] = Array
+        (
+            'handler' => Array('net_nehmer_mail_handler_mail_admin', 'trash'),
+            'fixed_args' => Array('mail','admin','trash'),
+        );
         // Match: mail/admin/perform
         $this->_request_switch['mail-admin-perform'] = Array
         (
@@ -63,7 +69,14 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('mail','admin','delete'),
             'variable_args' => 1,
         );
-    
+        // Match: mail/admin/restore/<guid>
+        $this->_request_switch['mail-admin-restore'] = Array
+        (
+            'handler' => Array('net_nehmer_mail_handler_mail_admin', 'restore'),
+            'fixed_args' => Array('mail','admin','restore'),
+            'variable_args' => 1,
+        );
+        
         // Match: mail/compose/new
         $this->_request_switch['mail-compose-new'] = Array
         (
@@ -207,6 +220,7 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
         // 
         // $this->_add_categories();
         
+        $this->_request_data['in_trash_view'] = false;
         $this->_request_data['in_compose_view'] = false;
         $this->_request_data['mailboxes'] =& net_nehmer_mail_mailbox::list_mailboxes();
         

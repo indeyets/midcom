@@ -225,11 +225,11 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
      *
      * @return midcom_core_querybuilder The prepared Querybuilder.
      */
-    function get_qb_mails()
+    function &get_qb_mails()
     {
         $_MIDCOM->auth->require_do('net.nehmer.mail:list_mails', $this);
 
-        $qb = net_nehmer_mail_mail::new_query_builder();
+        $qb =& net_nehmer_mail_mail::new_query_builder();
         $qb->add_constraint('mailbox', '=', $this->guid);
                 
         return $qb;
@@ -271,6 +271,37 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
 
         return $results;
     }
+    
+    /**
+     * This is a helper which lists all mails marked as deleted belonging to this mailbox.
+     *
+     * @param string $order A regular ordering constraint, consisting of a field name
+     *     and the optional prefix 'reverse'. The default is 'reverse received'.
+     * @return Array A list of found mails, or false on failure.
+     */
+    // function list_deleted_mails($order = 'reverse received')
+    // {
+    //     $qb =& $this->get_qb_mails();
+    //     $qb->add_order($order);
+    //     
+    //     $qb->include_deleted();
+    //     $qb->add_constraint('metadata.deleted', '<>', 0);
+    //     
+    //     $results = $qb->execute();
+    //     
+    //     debug_print_r('midcom results',$results);
+    //     
+    //     $qb = new midgard_query_builder('net_nehmer_mail_mail_db');
+    //     $qb->add_constraint('mailbox', '=', $this->guid);
+    //     $qb->include_deleted();
+    //     $qb->add_constraint('metadata.deleted', '<>', 0);
+    //     
+    //     $results = $_MIDCOM->dbfactory->exec_query_builder($qb);
+    // 
+    //     debug_print_r('midgard results',$results);
+    //     
+    //     return $results;
+    // }
     
     /**
      * This is a helper which lists all mails with given status belonging to this mailbox.

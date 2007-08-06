@@ -2,10 +2,6 @@
 ?>
             </tbody>
         </table>
-        <?php
-        if ($data['show_actions'])
-        {
-        ?>
         <div class="list-actions">
             <select id="net_nehmer_mail_actions" name="net_nehmer_mail_actions" size="1" onchange="this.form.submit();">
                 <option value=""><?php $data['l10n']->show('with selected'); ?>:</option>
@@ -20,10 +16,11 @@
                    name="&(data['perform_button_name']);"
                    value="<?php $data['l10n']->show('perform action'); ?>"
             />
+            <input type="submit"
+                   name="&(data['empty_trash_button_name']);"
+                   value="<?php $data['l10n']->show('empty trash'); ?>"
+            />
         </div>
-        <?php
-        }
-        ?>
         </form>
     </div>
 </div>

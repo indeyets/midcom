@@ -209,6 +209,10 @@ Inbox
 Sent
 ---STRINGEND
 
+---STRING garbage bin
+Trash
+---STRINGEND
+
 ---STRING compose message
 Compose message
 ---STRINGEND

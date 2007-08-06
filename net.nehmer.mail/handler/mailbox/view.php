@@ -48,7 +48,9 @@ class net_nehmer_mail_handler_mailbox_view extends midcom_baseclasses_components
      * @access private
      */
     var $_mailbox = null;
-        
+    
+    var $_show_actions = true;
+    
     /**
      * Simple default constructor.
      */
@@ -90,6 +92,8 @@ class net_nehmer_mail_handler_mailbox_view extends midcom_baseclasses_components
 
         $this->_request_data['mailboxes'] =& $this->_mailboxes;
         $this->_request_data['mailbox'] =& $this->_mailbox;
+        
+        $this->_request_data['show_actions'] = $this->_show_actions;
     }
     
     /**
@@ -135,6 +139,7 @@ class net_nehmer_mail_handler_mailbox_view extends midcom_baseclasses_components
         else if (strtolower($args[0]) == 'outbox')
         {
             $this->_mailbox = net_nehmer_mail_mailbox::get_outbox();
+            $this->_show_actions = false;
         }
         else
         {
@@ -163,6 +168,9 @@ class net_nehmer_mail_handler_mailbox_view extends midcom_baseclasses_components
         $this->_prepare_request_data($handler_id);
         $this->_populate_node_toolbar($handler_id);
         $_MIDCOM->set_pagetitle($this->_l10n->get($this->_mailbox->name));
+        
+        // $deleted_mails = $this->_mailbox->list_deleted_mails();
+        // debug_print_r('$deleted_mails',$deleted_mails);
         
         debug_pop();        
         return true;
