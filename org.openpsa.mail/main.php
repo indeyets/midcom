@@ -377,10 +377,13 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             $dataArr['part'] =& $part;
             $dataArr['mimetype'] = $part->ctype_primary."/".$part->ctype_secondary;
             $dataArr['content'] =& $dataArr['part']->body;
-            if ($part->d_parameters['filename'])
+            if (   isset($part->d_parameters['filename'])
+                && !empty($part->d_parameters['filename']))
             {
                 $dataArr['name'] = $part->d_parameters['filename'];
-            } else if ($part->ctype_parameters['name'])
+            }
+            elseif (   isset($part->ctype_parameters['name'])
+                    && !empty($part->ctype_parameters['name']))
             {
                 $dataArr['name'] = $part->ctype_parameters['name'];
             }
