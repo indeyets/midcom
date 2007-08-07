@@ -42,7 +42,7 @@ function handler_search(&$form_data)
         $json .= "],";
         
         $json .= "result_items: [";
-        foreach ($results['items'] as $key => $item)
+        foreach ($results['items'] as $rk => $item)
         {
             $json .= "'tr', { id: 'result-item-{$item->guid}' }, [";
             foreach ($header_items as $key => $value)
@@ -54,6 +54,10 @@ function handler_search(&$form_data)
                 }
             }
             $json .= "'td', { width: 25, align: 'center' }, ['img', { src: MIDCOM_STATIC_URL + '/org.maemo.calendarpanel/images/icons/contact-new.png', alt: 'Add', onclick: function(){add_person_as_buddy('{$item->guid}')} }, '']]";
+            if (($rk-1) < $results['count'])
+            {
+                $json .= ", ";
+            }
         }
         $json .= "],";
     }
