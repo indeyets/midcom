@@ -1,0 +1,61 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING %s document
+%s-Dokument
+---STRINGEND
+
+---STRING application/vnd.ms-powerpoint
+Powerpoint
+---STRINGEND
+
+---STRING create document
+Dokument erstellen
+---STRINGEND
+
+---STRING document search
+Dokumenten-Suche
+---STRINGEND
+
+---STRING documents
+Dokumente
+---STRINGEND
+
+---STRING edit directory
+Verzeichnis bearbeiten
+---STRINGEND
+
+---STRING folder
+Ordner
+---STRINGEND
+
+---STRING folders
+Ordner
+---STRINGEND
+
+---STRING new directory
+Neues Verzeichnis
+---STRINGEND
+
+---STRING new document
+Neues Dokument
+---STRINGEND
+
+---STRING older versions
+Ältere Versionen
+---STRINGEND
+
+---STRING org.openpsa.documents
+Dokumenten-Verwaltung
+---STRINGEND
+
+---STRING search
+Suchen
+---STRINGEND
+
+---STRING text/plain
+Text
+---STRINGEND
+
