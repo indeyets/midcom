@@ -14,13 +14,11 @@ class org_openpsa_documents_directory_handler
 {
     var $_datamanagers;
     var $_request_data;
-    var $_toolbars = null;
 
     function org_openpsa_documents_directory_handler(&$datamanagers, &$request_data)
     {
         $this->_datamanagers =& $datamanagers;
         $this->_request_data =& $request_data;
-        $this->_toolbars =& midcom_helper_toolbars::get_instance();
     }
 
     function _creation_dm_callback(&$datamanager)
@@ -33,6 +31,7 @@ class org_openpsa_documents_directory_handler
 
         $topic = new org_openpsa_documents_directory();
         $topic->up = $this->_request_data['directory']->id;
+        $topic->component = 'org.openpsa.documents';
 
         // Set the name by default
         if (array_key_exists('midcom_helper_datamanager_field_extra', $_POST))
@@ -40,14 +39,11 @@ class org_openpsa_documents_directory_handler
             $topic->name = midcom_generate_urlname_from_string($_POST['midcom_helper_datamanager_field_extra']);
         }
 
+
         $stat = $topic->create();
         if ($stat)
         {
             $this->_request_data['directory'] = new org_openpsa_documents_directory($topic->id);
-
-            // Set the component
-            // FIXME: For some reason the regular parameter method doesn't work for non-admins here
-            $this->_request_data['directory']->set_parameter('midcom', 'component', 'org.openpsa.documents');
 
             $result["storage"] =& $this->_request_data['directory'];
             $result["success"] = true;
@@ -188,7 +184,7 @@ class org_openpsa_documents_directory_handler
         // Add toolbar items
         if ($_MIDCOM->auth->can_do('midgard:create', $this->_request_data['directory']))
         {
-            $this->_toolbars->top->add_item(
+            $this->_view_toolbar->add_item(
                 Array(
                     MIDCOM_TOOLBAR_URL => 'document_metadata/new/',
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('new document'),
@@ -197,7 +193,7 @@ class org_openpsa_documents_directory_handler
                     MIDCOM_TOOLBAR_ENABLED => true,
                 )
             );
-            $this->_toolbars->top->add_item(
+            $this->_view_toolbar->add_item(
                 Array(
                     MIDCOM_TOOLBAR_URL => 'new/',
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('new directory'),
@@ -209,7 +205,7 @@ class org_openpsa_documents_directory_handler
         }
         if ($_MIDCOM->auth->can_do('midgard:update', $this->_request_data['directory']))
         {
-            $this->_toolbars->bottom->add_item(
+            $this->_view_toolbar->add_item(
                 Array(
                     MIDCOM_TOOLBAR_URL => 'edit/',
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('edit directory'),

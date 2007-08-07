@@ -15,13 +15,11 @@ class org_openpsa_documents_metadata_handler
 {
     var $_datamanagers;
     var $_request_data;
-    var $_toolbars = null;
 
     function org_openpsa_documents_metadata_handler(&$datamanagers, &$request_data)
     {
         $this->_datamanagers =& $datamanagers;
         $this->_request_data =& $request_data;
-        $this->_toolbars =& midcom_helper_toolbars::get_instance();
     }
 
     function _load_metadata($guid)
@@ -121,7 +119,7 @@ class org_openpsa_documents_metadata_handler
                 }
                 else
                 {
-                    $this->_toolbars->bottom->add_item(
+                    $this->_view_toolbar->add_item(
                         Array(
                             MIDCOM_TOOLBAR_URL => 'javascript:document.getElementById("org_openpsa_contacts_document_deleteform").submit();',
                             MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get("delete"),
@@ -133,7 +131,7 @@ class org_openpsa_documents_metadata_handler
                             ),
                         )
                     );
-                    $this->_toolbars->bottom->add_item(
+                    $this->_view_toolbar->add_item(
                         Array(
                             MIDCOM_TOOLBAR_URL => 'document_metadata/'.$this->_request_data['metadata']->guid.'/',
                             MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get("cancel"),
@@ -160,7 +158,7 @@ class org_openpsa_documents_metadata_handler
                         $this->_view = "edit";
 
                         // Add toolbar items
-                        org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
+                        org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
 
                         return true;
 
@@ -242,7 +240,7 @@ class org_openpsa_documents_metadata_handler
         }
 
         // Add toolbar items
-        org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
+        org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
 
         switch ($this->_datamanagers['metadata']->process_form()) {
             case MIDCOM_DATAMGR_CREATING:
@@ -319,7 +317,7 @@ class org_openpsa_documents_metadata_handler
         if (   $add_toolbar
             && $_MIDCOM->auth->can_do('midgard:update', $this->_request_data['metadata']))
         {
-            $this->_toolbars->bottom->add_item(
+            $this->_view_toolbar->add_item(
                 Array(
                     MIDCOM_TOOLBAR_URL => "document_metadata/{$this->_request_data['metadata']->guid}/edit.html",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('edit'),
@@ -332,7 +330,7 @@ class org_openpsa_documents_metadata_handler
         if (   $add_toolbar
             && $_MIDCOM->auth->can_do('midgard:delete', $this->_request_data['metadata']))
         {
-            $this->_toolbars->bottom->add_item(
+            $this->_view_toolbar->add_item(
                 Array(
                     MIDCOM_TOOLBAR_URL => "document_metadata/{$this->_request_data['metadata']->guid}/delete.html",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('delete'),
