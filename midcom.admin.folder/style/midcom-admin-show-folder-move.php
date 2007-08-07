@@ -3,9 +3,15 @@
 <form method="post">
     <div class="midcom_admin_content_folderlist">
         <?php
-        function midcom_admin_folder_list_folders($up = 0)
+        function midcom_admin_folder_list_folders($up = 0, $tree_disabled = false)
         {
             $data =& $_MIDCOM->get_custom_context_data('request_data');
+            if (   is_a($data['object'], 'midcom_baseclasses_database_topic')
+                && $up == $data['object']->id)
+            {
+                $tree_disabled = true;
+            }
+        
             $qb = midcom_db_topic::new_query_builder();
             $qb->add_constraint('up', '=', $up);
             $qb->add_constraint('component', '<>', '');
@@ -32,8 +38,20 @@
                         $disabled = ' disabled="disabled"';
                     }
                     
+                    if ($tree_disabled)
+                    {
+                        $class = 'child';
+                        $disabled = ' disabled="disabled"';
+                    }
+                    
+                    if ($folder->guid == $data['object']->guid)
+                    {
+                        $class = 'self';
+                        $disabled = ' disabled="disabled"';
+                    }
+                    
                     echo "<li class=\"{$class}\"><label><input{$selected}{$disabled} type=\"radio\" name=\"move_to\" value=\"{$folder->id}\" /> {$folder->extra}</label>\n";
-                    midcom_admin_folder_list_folders($folder->id);
+                    midcom_admin_folder_list_folders($folder->id, $tree_disabled);
                     echo "</li>\n";
                 }
                 echo "</ul>\n";
