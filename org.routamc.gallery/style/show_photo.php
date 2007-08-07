@@ -5,7 +5,18 @@ $view = $data['photo_view'];
 ?>
 <div class="org_routamc_photostream_photo">
     <h1><?php echo $view['title']; ?></h1>
-
+<div class="photo_navigation">
+<?php 
+if (isset($data['previous']))
+{?>
+	&(data['previous']:h);
+<?php }
+if (isset($data['next']))
+{?>
+	&(data['next']:h);
+<?php }
+?>
+</div>
     <div class="photo">
         &(view['photo']:h);
     </div>
