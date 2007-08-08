@@ -542,7 +542,9 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
             }
 
             // Check that the schema is correct
-            if ($product->get_parameter('midcom.helper.datamanager2', 'schema_name') != $this->_request_data['search_schema'])
+            $schema = $product->get_parameter('midcom.helper.datamanager2', 'schema_name');
+            if (   $schema != $this->_request_data['search_schema']
+                && !empty($schema))
             {
                 $display = false;
             }
