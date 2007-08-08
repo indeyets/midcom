@@ -56,15 +56,13 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
         {
             return false;
         }
-        
-        //get the two neighboring photos
-        $qb = new org_openpsa_qbpager('org_routamc_gallery_photolink_dba', 'gallery_index');
-        $qb->results_per_page = $this->_config->get('photos_per_page');
-        $qb->add_constraint('node', '=', $this->_topic->id);
 
+        //get the two neighboring photos
+        $mc = new midgard_collector('org_routamc_gallery_photolink', 'node', $this->_topic->id);
+        $mc->set_key_property('photo');
         // FIXME: This property should be rethought
-        $qb->add_constraint('censored', '=', 0);
-        
+        $mc->add_constraint('censored', '=', 0);
+
         foreach ($this->_config->get('index_order') as $ordering)
         {
             if (preg_match('/\s*reversed?\s*/', $ordering))
@@ -76,7 +74,7 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
             {
                 $reversed = false;
             }
-            
+
             if ($ordering === 'metadata.score')
             {
                 if (version_compare(mgd_version(), '1.8.2', '<'))
@@ -85,26 +83,26 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
                     $reversed = false;
                 }
             }
-            
+
             if (   strpos($ordering, '.')
                 && !class_exists('midgard_query_builder'))
             {
                 debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
                 continue;
             }
-            
+
             if ($reversed)
             {
-                $qb->add_order($ordering, 'DESC');
+                $mc->add_order($ordering, 'DESC');
             }
             else
             {
-                $qb->add_order($ordering);
+                $mc->add_order($ordering);
             }
-        }        
-
-        $photolinks = $qb->execute();
-
+        }
+        $mc->execute();
+        $photolinks = $mc->list_keys();
+        $photolinks = array_keys($photolinks);
         debug_add('found ' . count($photolinks) . ' links');
         $i = 0;
         $data['next'] = null;
@@ -113,21 +111,21 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
         {
             if ($photolink->photo == $data['photo'] ->id)
             {
-				if (isset($photolinks[$i - 1]))
-				{
-					$previous = new org_routamc_photostream_photo_dba($photolinks[$i - 1]->photo);
-					$data['previous'] = '<a href="' . $previous->guid . '.html">&laquo;&nbsp;' . $this->_l10n->get('previous') . '</a>&nbsp;';
-				}
-				if (isset($photolinks[$i + 1]))
-				{
-					$next = new org_routamc_photostream_photo_dba($photolinks[$i + 1]->photo);
-					$data['next'] = '&nbsp;<a href="' . $next->guid . '.html">' . $this->_l10n->get('next') . '&nbsp;&raquo;</a>';
-				}
-				break;
+                if (isset($photolinks[$i - 1]))
+                {
+                    $previous = new org_routamc_photostream_photo_dba($photolinks[$i - 1]);
+                    $data['previous'] = '<a href="' . $previous->guid . '.html">&laquo;&nbsp;' . $this->_l10n->get('previous') . '</a>&nbsp;';
+                }
+                if (isset($photolinks[$i + 1]))
+                {
+                    $next = new org_routamc_photostream_photo_dba($photolinks[$i + 1]);
+                    $data['next'] = '&nbsp;<a href="' . $next->guid . '.html">' . $this->_l10n->get('next') . '&nbsp;&raquo;</a>';
+                }
+                break;
             }
             $i++;
         }
-        
+
         $nap = new midcom_helper_nav();
         $data['photostream_node'] = $nap->get_node($data['photo']->node);
         $data['gallery_node'] = $nap->get_node($this->_topic->id);
