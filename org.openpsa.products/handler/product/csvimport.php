@@ -135,6 +135,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
             }
             
             $product->productGroup = $parents[0]->id;
+            $groupdata['productGroup'] = $parents[0]->id;
             $product->update();
         }
         
