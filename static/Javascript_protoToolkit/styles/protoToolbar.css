@@ -44,6 +44,7 @@
 {
   font-family: 'Verdana', 'Arial', 'Helvetica', sans-serif !important;
   font-weight: bold;
+  background-image: none;
 }
 
 #protoToolbar-palette li,
@@ -342,6 +343,7 @@
 {
   color: #C0111D;
   text-decoration: underline;
+  background-color: #eae8e3 !important;
 }
 
 #protoToolbar-palette ul li a img
