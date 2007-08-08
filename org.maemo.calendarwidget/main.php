@@ -1357,12 +1357,6 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
             return $html;
         }
         
-        if ($event->guid == 'a3a10f78400111dc99ef27eedf3fb871b871')
-        {
-            debug_print_r('Event found',$event);
-            debug_add("is public? ".$event->is_public());        
-        }
-        
         $active_timezone = org_maemo_calendar_common::active_timezone();
         $utc_timezone = timezone_open("UTC");
         
@@ -1397,12 +1391,14 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         if (   !$override_start
             || $multiday_event_id < 1)
         {
-            $event_start = $event_start + $start_offset;            
+            $event_start = $event_start + $start_offset;
+            $this->_busy_list[$layer_tag][$event->guid]['start'] = $event_start;
         }
         if (   !$override_end
             || $last_multiday_event)
         {
             $event_end = $event_end + $end_offset;
+            $this->_busy_list[$layer_tag][$event->guid]['end'] = $event_end;
         }
 
         debug_add("event_start after timezone change calculation: " . date("H:i",$event_start));
@@ -1610,7 +1606,6 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
         $start_weekday = strftime("%u", $start_time) - 1;
         
         $overlapping_count = $this->_overlapping_event_count($start_time, $end_time, "position");
-        $oc = $overlapping_count;
         debug_add("overlapping_count: {$overlapping_count}");
         
         $position['left'] = 8 + ($start_weekday * $this->column_width);
