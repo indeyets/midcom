@@ -74,6 +74,21 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('create'),
             'variable_args' => 2,
         );
+        
+        // Handle /import/group/csv
+        $this->_request_switch['import_group_csv'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_group_csvimport', 'csv_select'),
+            'fixed_args' => Array('import', 'group', 'csv'),
+        );
+        
+        // Handle /import/group/csv2
+        $this->_request_switch['import_group'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_group_csvimport', 'csv'),
+            'fixed_args' => Array('import', 'group', 'csv2'),
+        );
+
 
         // Handle /product/create/<group id>/<schema name>
         $this->_request_switch['create_product'] = Array
@@ -81,6 +96,20 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'handler' => Array('org_openpsa_products_handler_product_create', 'create'),
             'fixed_args' => Array('product', 'create'),
             'variable_args' => 2,
+        );
+        
+        // Handle /import/product/csv
+        $this->_request_switch['import_product_csv'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_product_csvimport', 'csv_select'),
+            'fixed_args' => Array('import', 'product', 'csv'),
+        );
+        
+        // Handle /import/group/csv2
+        $this->_request_switch['import_product'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_product_csvimport', 'csv'),
+            'fixed_args' => Array('import', 'product', 'csv2'),
         );
 
         // Handle /product/edit/<product guid>

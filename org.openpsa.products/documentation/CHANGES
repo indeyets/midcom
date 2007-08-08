@@ -4,6 +4,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-08-08 bergie
+  + CSV import handlers for products and product groups
+
 2007-06-06 bergie
   + Initial REST API documentation
 
