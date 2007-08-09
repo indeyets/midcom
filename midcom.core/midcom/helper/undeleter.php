@@ -29,7 +29,7 @@ class midcom_helper_undeleter
     function midcom_helper_undeleter($class, $guid)
     {
         $this->class = $class;
-        $this->guid =Ê$guid;
+        $this->guid = $guid;
     }
     
     /**
@@ -37,19 +37,31 @@ class midcom_helper_undeleter
      */
     function undelete()
     {
-        $class = $this->class;
-        
         if (!class_exists($this->class))
         {
             // Exception
         }
         
-        // TODO: Check that we have the method
-        if (!$class::undelete($guid))
+        // TODO: We can get rid of this once Piotras moves the undelete method to 
+        switch ($this->class)
         {
-            return false;
+            case 'midgard_topic':
+                if (!midgard_topic::undelete($guid))
+                {
+                    return false;
+                }
+                break;
+            case 'midgard_article':
+                if (!midgard_article::undelete($guid))
+                {
+                    return false;
+                }
+                break;
+            default:
+                return false;
         }
         
+        $class = $this->class;
         $this->object = new $class($guid);
         
         // Undelete generic children
