@@ -32,5 +32,16 @@
         'org.openpsa.httplib' => array(),
     ),
 ),
+'customdata' => array
+(
+    'midcom.services.cron' => array
+    (
+        0 => array
+        (
+            'handler' => 'org_maemo_socialnews_cron_refreshscores',
+            'recurrence' => MIDCOM_CRON_HOUR,
+        ),
+    )
+),
 
 
