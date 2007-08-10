@@ -112,7 +112,7 @@ class midcom_helper_datamanager2_widget_jsdate extends midcom_helper_datamanager
         $executed = true;
 
         $prefix = MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/jscript-calendar';
-        $_MIDCOM->add_jsfile("{$prefix}/calendar.js");
+        $_MIDCOM->add_jsfile("{$prefix}/calendar_stripped.js");
         $lang = $_MIDCOM->i18n->get_current_language();
         $_MIDCOM->add_jsfile("{$prefix}/lang/calendar-{$lang}.js");
         $_MIDCOM->add_jsfile("{$prefix}/calendar-setup.js");
