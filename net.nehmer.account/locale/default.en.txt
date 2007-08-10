@@ -50,10 +50,92 @@ Before you can log into the system, you need to activate your account. To do
 this please visit the following web page:
 
 __ACTIVATIONLINK__
+
+This message was generated automatically, please do not reply to it.
+
+-- 
+This automatically generated message was sent from
+__CURRENTADDRESS__
+__CURRENTTIME__
+---STRINGEND
+
+---STRING pending_mail_body
+Your registration was successful. Site administrators still need to
+approve and activate the account before it becomes functional.
+
+You will be notified by email of the result.
+
+This message was generated automatically, please do not reply to it.
+
+
+-- 
+This automatically generated message was sent from
+__CURRENTADDRESS__
+__CURRENTTIME__
 ---STRINGEND
 
 ---STRING activation_mail_subject
-Your account registration
+Your user account is ready for activation
+---STRINGEND
+
+---STRING registration pending for approval
+Registration pending for approval
+---STRINGEND
+
+---STRING registration finished
+Registration finished
+---STRINGEND
+
+---STRING your registration is now pending for approval
+Your registration is now pending for approval
+---STRINGEND
+
+---STRING you will be notified of the decision to the provided email address
+You will be notified of the decision to the provided email address
+---STRINGEND
+
+---STRING approval_mail_subject
+Registration pending for approval
+---STRINGEND
+
+---STRING approval_mail_body
+Your registration is now pending for approval. You will be notified of
+the decision to the email address provided during the registration
+process.
+
+This message was generated automatically, please do not reply to it.
+
+-- 
+This automatically generated message was sent from
+__CURRENTADDRESS__
+__CURRENTTIME__
+---STRINGEND
+
+---STRING approval_mail_body
+There is a new account registration pending for approval, please follow
+this link in order to either reject or approve the account:
+
+__APPROVALURI__
+
+This message was generated automatically, please do not reply to it.
+
+-- 
+This automatically generated message was sent from
+__CURRENTADDRESS__
+__CURRENTTIME__
+---STRINGEND
+
+---STRING disapproval_mail_subject
+Your user account application as been rejected
+---STRINGEND
+
+---STRING disapproval_mail_body
+Unfortunately your application for user account has been rejected.
+
+-- 
+This message was sent from
+__CURRENTADDRESS__
+__CURRENTTIME__
 ---STRINGEND
 
 ---STRING avatar
@@ -101,7 +183,7 @@ First login
 ---STRINGEND
 
 ---STRING invalid username
-The username must be at least one character long and must not contain the characters +, * and !.
+The username must be at least one character long and may not contain the characters +, * and !.
 ---STRINGEND
 
 ---STRING invalid username email
@@ -203,7 +285,7 @@ Registration was successful
 ---STRINGEND
 
 ---STRING registration successful message
-Your registration was successful. An E-Mail with instructions to activate your account has been sent to you. Your account will not be usable until you follow these instructions.
+Your registration was successful. An email with instructions to activate your account has been sent to you. Your account will not be usable until you follow these instructions.
 ---STRINGEND
 
 ---STRING schemadb_account
@@ -316,6 +398,10 @@ Failed to send the rejection message to %s
 Message sent to %s
 ---STRINGEND
 
+---STRING %s, message sent to %s
+%s, message sent to %s
+---STRINGEND
+
 ---STRING email message
 Email message
 ---STRINGEND
@@ -334,4 +420,12 @@ Click on the title to edit the message
 
 ---STRING no pending accounts
 No pending accounts
+---STRINGEND
+
+---STRING multiple
+Multiple
+---STRINGEND
+
+---STRING Allows users to manage their accounts. New users can register for new accounts as well.
+Allows users to manage their accounts. New users can register for new accounts as well.
 ---STRINGEND

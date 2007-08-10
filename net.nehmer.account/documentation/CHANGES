@@ -8,6 +8,11 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-08-09 adrenalin
+  + It is now possible to require administrator approval
+  ! moved configuration to DM2 based configuration schema
+  ! Big code cleanup and uniforming
+
 2007-07-31 rambo
   + forward-ported: allow to link to user by username (can be disabled in config)
   ! forward-ported: disabled linking to users by ID, now one must use GUID or username

@@ -6,7 +6,7 @@
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
 ?>
 
-<h2><?php $data['l10n']->show('confirm account details'); ?></h2>
+<h1><?php $data['l10n']->show('confirm account details'); ?></h1>
 
 <p><?php $data['l10n']->show('confirm account details explaination'); ?></p>
 

@@ -157,7 +157,5 @@ class net_nehmer_account_handler_edit extends midcom_baseclasses_components_hand
     {
         midcom_show_style('show-edit-account');
     }
-
 }
-
 ?>

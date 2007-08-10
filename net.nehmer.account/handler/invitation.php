@@ -249,5 +249,4 @@ echo "</pre>";
         midcom_show_style('invites-list-footer');
     }
 }
-
 ?>

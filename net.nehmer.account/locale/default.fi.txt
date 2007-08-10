@@ -272,6 +272,10 @@ Hylkäysviestin lähettäminen osoitteeseen '%s' epäonnistui!
 Viesti lähetetty osoitteeseen '%s'
 ---STRINGEND
 
+---STRING %s, message sent to %s
+%s, viesti lähetetty osoitteeseen %s
+---STRINGEND
+
 ---STRING email message
 Viesti
 ---STRINGEND
@@ -290,4 +294,8 @@ Klikkaa otsikkoa muuttaaksesi viestiä
 
 ---STRING no pending accounts
 Ei hyväksyntää odottavia tilejä
+---STRINGEND
+
+---STRING Allows users to manage their accounts. New users can register for new accounts as well.
+Sallii käyttäjien muokata käyttäjätilejään. Tarjoaa uusille käyttäjille mahdollisuuden rekisteröityä.
 ---STRINGEND

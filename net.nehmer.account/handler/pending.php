@@ -57,6 +57,7 @@ class net_nehmer_account_handler_pending extends midcom_baseclasses_components_h
      */
     function _handler_list($handler_id, $args, &$data)
     {
+        // Require administrator privileges
         $_MIDCOM->auth->require_admin_user();
         
         $qb = midcom_db_person::new_query_builder();
@@ -122,6 +123,9 @@ class net_nehmer_account_handler_pending extends midcom_baseclasses_components_h
      */
     function _handler_approve($handler_id, $args, &$data)
     {
+        // Require administrator privileges
+        $_MIDCOM->auth->require_admin_user();
+        
         // Handle both several and single approval query at once
         if ($args[0] === 'multiple')
         {
@@ -240,8 +244,9 @@ class net_nehmer_account_handler_pending extends midcom_baseclasses_components_h
                 // Show the status dependant user message and proceed to next
                 if (net_nehmer_account_viewer::send_registration_mail($person, substr($password, 2), $activation_link, $this->_config))
                 {
-                    // Set a parameter to note that this user account is requiring approval
-                    $person->set_parameter('net.nehmer.account', 'require_approval', 'require_approval');
+                    // Remove the parameter that points to a pending approval if necessary
+                    $person->set_parameter('net.nehmer.account', 'require_approval', sprintf('approved by user id %s', $_MIDGARD['user']));
+                    
                     
                     $_MIDCOM->uimessages->add($this->_l10n->get('net.nehmer.account'), sprintf($this->_l10n->get('%s, message sent to %s'), $this->_l10n_midcom->get('approved'), $person->email));
                 }
@@ -317,6 +322,7 @@ class net_nehmer_account_handler_pending extends midcom_baseclasses_components_h
             $from = $person->email;
         }
         
+        // Template for the mail
         $template = array
         (
             'from' => $from,
@@ -337,7 +343,11 @@ class net_nehmer_account_handler_pending extends midcom_baseclasses_components_h
         // Initialize mailer
         $mail = new midcom_helper_mailtemplate($template);
         
+        // Get the commonly used parameters
+        $parameters = net_nehmer_account_viewer::get_mail_parameters($person);
+        
         // Set the parameters and parse the message
+        $mail->set_parameters($parameters);
         $mail->parse();
         
         // Delete the person in the end

@@ -60,6 +60,8 @@
  * These configuration keys are linked to sending email to clients. Localization can be
  * done either from locale/ or by changing the configuration values
  */
+'pending_mail_subject' => 'registration pending for approval',
+'pending_mail_body' => 'pending_mail_body',
 
 // Activaton / Password Emails
 'activation_mail_sender' => null, // Means sender == receiver

@@ -244,8 +244,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             );
             
             // Pending registrations
-            if (   $_MIDCOM->auth->admin
-                && $this->_config->get('require_activation'))
+            if ($this->_config->get('require_activation'))
             {
                 // Match register/pending/
                 $this->_request_switch['reqister_list_pending'] = array
@@ -553,7 +552,6 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
                 );
             }
         }
-        
     }
 
     function verify_person_privileges($person)
@@ -599,7 +597,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      * @access static public
      * @todo Make this configurable.
      */
-    function send_registration_mail($person, $password, $activation_link)
+    function send_registration_mail($person, $password, $activation_link, $config)
     {
         $from = $config->get('activation_mail_sender');
         if (! $from)
@@ -614,22 +612,49 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             'cc' => '',
             'bcc' => '',
             'x-mailer' => '',
-            'subject' => $this->_l10n->get($config->get('activation_mail_subject')),
-            'body' => $this->_l10n->get($config->get('activation_mail_body')),
+            'subject' => $_MIDCOM->i18n->get_string($config->get('activation_mail_subject'), 'net.nehmer.account'),
+            'body' => $_MIDCOM->i18n->get_string($config->get('activation_mail_body'), 'net.nehmer.account'),
             'body_mime_type' => 'text/plain',
             'charset' => 'UTF-8',
         );
 
         $mail = new midcom_helper_mailtemplate($template);
-        $parameters = Array
-        (
-            'PERSON' => $person,
-            'PASSWORD' => $password,
-            'ACTIVATIONLINK' => $activation_link,
-        );
+        
+        // Get the commonly used parameters
+        $parameters = net_nehmer_account_viewer::get_mail_parameters($person);
+        
+        // Extra parameters
+        $parameters['PASSWORD'] = $password;
+        $parameters['ACTIVATIONLINK'] = $activation_link;
+        
+        // Set the parameters and parse the message
         $mail->set_parameters($parameters);
         $mail->parse();
         return $mail->send($person->email);
+    }
+    
+    /**
+     * Generate the commonly used parameters used in messages sent to the user.
+     * 
+     * @access static public
+     * @param midcom_db_person $person      Person object
+     * @return Array                        Parameters for the message
+     */
+    function get_mail_parameters($person)
+    {
+        // Prefix
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        
+        // Set the variable parameters
+        $parameters = array
+        (
+            'PERSON' => $person,
+            'CURRENTTIME' => strftime('%c'),
+            'CURRENTADDRESS' => "{$prefix}register/account.html",
+            'APPROVALURI' => "{$prefix}pending/{$person->guid}/",
+        );
+        
+        return $parameters;
     }
 }
 ?>

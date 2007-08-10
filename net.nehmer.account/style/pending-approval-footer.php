@@ -1,3 +1,7 @@
+<?php
+if (!isset($_POST['f_submit']))
+{
+?>
     <script type="text/javascript">
         // <![CDATA[
             function toggle_visibility(id)
@@ -45,9 +49,25 @@
             </div>
         </div>
     </div>
+<?php
+}
+?>
     <div class="form_toolbar">
+<?php
+if (!isset($_POST['f_mass_reject']))
+{
+?>
         <input class="approve" type="submit" name="f_approve" value="<?php echo $data['l10n_midcom']->get('approve'); ?>" />
+<?php
+}
+
+if (!isset($_POST['f_submit']))
+{
+?>
         <input class="disapprove" type="submit" name="f_reject" value="<?php echo $data['l10n']->get('reject'); ?>" />
+<?php
+}
+?>
         <input class="cancel" type="submit" name="f_cancel" value="<?php echo $data['l10n_midcom']->get('cancel'); ?>" />
     </div>
 </form>

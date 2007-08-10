@@ -347,10 +347,28 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
                 break;
 
             case 'confirm':
-                $_MIDCOM->set_pagetitle($this->_l10n->get('account registration') . ': ' . $this->_l10n->get('confirm account details'));
+                // Set the breadcrumb path
+                $tmp = array();
+                $tmp[] = array
+                (
+                    MIDCOM_NAV_URL => "register/account.html",
+                    MIDCOM_NAV_NAME => $this->_l10n->get('confirm account details'),
+                );
+                
+                $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+                $_MIDCOM->set_pagetitle($this->_l10n->get('confirm account details') . ': ' . $this->_l10n->get('confirm account details'));
                 break;
 
             case 'success':
+                // Set the breadcrumb path
+                $tmp = array();
+                $tmp[] = array
+                (
+                    MIDCOM_NAV_URL => "register/account.html",
+                    MIDCOM_NAV_NAME => $this->_l10n->get('registration finished'),
+                );
+                
+                $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
                 $_MIDCOM->set_pagetitle($this->_l10n->get('account registration') . ': ' . $this->_l10n->get('registration successful'));
                 break;
 
@@ -523,7 +541,16 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
                 break;
 
             case 'success':
-                midcom_show_style('registration-success');
+                // If the approval is required to activate an account, show a notice of it,
+                // else show the page of successful registrations
+                if ($this->_config->get('require_activation'))
+                {
+                    midcom_show_style('registration-pending');
+                }
+                else
+                {
+                    midcom_show_style('registration-success');
+                }
                 break;
         }
     }
@@ -652,45 +679,58 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         
         $this->_register_username_validation_rule($controller);
         
-        // Process the sent form
-        $result = $controller->process_form();
-
-        if ($result === 'next')
+        // Process the form
+        switch ($controller->process_form())
         {
-            // Save data, next does not save implicitly to keep flexibility.
-            $controller->datamanager->save();
-
-            if ($this->_config->get('username_is_email'))
-            {
-                $person->username = $person->email;
-                $person->update();
-            }
-            
-            if ($this->_config->get('assign_to_group') != null)
-            {
-                $group_id = (int)$this->_config->get('assign_to_group');
-                $group = mgd_get_group($group_id);
-
-                if ($group)
+            case 'next':
+                // Save data, next does not save implicitly to keep flexibility.
+                $controller->datamanager->save();
+    
+                if ($this->_config->get('username_is_email'))
                 {
-                    $person->add_to_group($group->name);
+                    $person->username = $person->email;
+                    $person->update();
                 }
-            }
-        }
-        else if ($result !== 'save')
-        {
-            // Ups. Something went really wrong here. We shouldn't end up in the edit mode here,
-            // unless something was tampered with. We bail out therefore and throw a critical
-            // error.
-            $person->delete();
-            $_MIDCOM->auth->drop_sudo();
-
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_print_r('Original person record we tried to update:', $person);
-            debug_print_r('Request data passed to us:', $controller->formmanager->form->getSubmitValues());
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                "Failed to store the data into the newly created record, this indicates tampering with the request data");
-            // This will exit.
+                
+                if ($this->_config->get('assign_to_group') != null)
+                {
+                    $group_id = (int)$this->_config->get('assign_to_group');
+                    $group = mgd_get_group($group_id);
+    
+                    if ($group)
+                    {
+                        $person->add_to_group($group->name);
+                    }
+                }
+                break;
+            
+            case 'save':
+                // Set the breadcrumb path
+                $tmp = array();
+                $tmp[] = array
+                (
+                    MIDCOM_NAV_URL => "register/account.html",
+                    MIDCOM_NAV_NAME => $this->_l10n->get('registration finished'),
+                );
+                
+                $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+                break;
+            
+            default:
+                // Ups. Something went really wrong here. We shouldn't end up in the edit mode here,
+                // unless something was tampered with. We bail out therefore and throw a critical
+                // error.
+                $person->delete();
+                $_MIDCOM->auth->drop_sudo();
+    
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_print_r('Original person record we tried to update:', $person);
+                debug_print_r('Request data passed to us:', $controller->formmanager->form->getSubmitValues());
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
+                    "Failed to store the data into the newly created record, this indicates tampering with the request data");
+                // This will exit.
+                
+                
         }
 
         // Generate a random password and activation Hash
@@ -730,7 +770,15 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         
         if ($this->_config->get('require_activation'))
         {
-            $this->_send_activation_mail($person, $activation_link);
+            // Set a parameter to note that this user account is requiring approval
+            $person->set_parameter('net.nehmer.account', 'require_approval', 'require_approval');
+            
+            // Store the activation link so that it can be fetched straight from the person record
+            $person->set_parameter('net.nehmer.account', 'activation_link', $activation_link);
+            
+            // Send a message both to the applicant and to the configured administrator
+            $this->_send_activation_pending_mail($person);
+            $this->_send_activation_request_mail($person);
         }
         else
         {
@@ -743,23 +791,59 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
     }
     
     /**
-     * Send a reminder to the configured administrator email address of a pending user
-     * account that needs either to be approved or disapproved
+     * Send an email to the user waiting for approval
      * 
      * @access private
      * @param midcom_db_person $person  The newly created person account
      * @todo: Make this configurable (as well as method $this->_send_registration_mail)
      */
-    function _send_activation_mail($person, $activation_link)
+    function _send_activation_pending_mail($person)
     {
-        // Set a parameter to note that this user account is requiring approval
-        $person->set_parameter('net.nehmer.account', 'require_approval', 'require_approval');
-        
-        // Store the activation link so that it can be fetched straight from the person record
-        $person->set_parameter('net.nehmer.account', 'activation_link', $activation_link);
-        
         $from = $this->_config->get('activation_mail_sender');
-        if (! $from)
+        if (!$from)
+        {
+            $from = $person->email;
+        }
+        
+        $template = array
+        (
+            'from' => $from,
+            'reply-to' => '',
+            'cc' => '',
+            'bcc' => '',
+            'x-mailer' => '',
+            'subject' => $this->_l10n->get($this->_config->get('pending_mail_subject')),
+            'body' => $this->_l10n->get($this->_config->get('pending_mail_body')),
+            'body_mime_type' => 'text/plain',
+            'charset' => 'UTF-8',
+        );
+        
+        // Initialize mailer
+        $mail = new midcom_helper_mailtemplate($template);
+        
+        // Get the commonly used parameters
+        $parameters = net_nehmer_account_viewer::get_mail_parameters($person);
+        
+        // Set the parameters and parse the message
+        $mail->set_parameters($parameters);
+        $mail->parse();
+        
+        // Finally send the email
+        return $mail->send($person->email);
+    }
+    
+    /**
+     * Send a reminder to the configured administrator email address of a pending user
+     * account that needs either to be approved or disapproved
+     * 
+     * @access private
+     * @param midcom_db_person   Person record
+     * @return boolean           Indicating success
+     */
+    function _send_activation_request_mail($person)
+    {
+        $from = $this->_config->get('activation_mail_sender');
+        if (!$from)
         {
             $from = $person->email;
         }
@@ -780,11 +864,14 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         // Initialize mailer
         $mail = new midcom_helper_mailtemplate($template);
         
-        // Set the variable parameters
-        $parameters = Array
-        (
-            'PERSON' => $person,
-        );
+        // Prefix for the content topic
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        
+        // Get the common parameters for net.nehmer.account mails
+        $parameters = net_nehmer_account_viewer::get_mail_parameters($person);
+        $parameters['APPROVALURI'] = "{$prefix}pending/{$person->guid}/";
+        
+        // Set the parameters and parse the message
         $mail->set_parameters($parameters);
         $mail->parse();
         
