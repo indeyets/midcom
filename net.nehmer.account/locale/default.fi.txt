@@ -228,3 +228,66 @@ Jos et muista salasanaasi syötä käyttäjätunnuksesi allaolevaan lomakkeeseen
 Rekisteröityminen onnistui. Tunnuksen aktivointia käsittelevä sähköposti on lähetetty sähköpostiosoitteeseesi. Et voi käyttää tunnusta ennen sen aktivoimista.
 ---STRINGEND
 
+---STRING pending approvals
+Hyväksyntää odottavat
+---STRINGEND
+
+---STRING username
+Käyttäjätunnus
+---STRINGEND
+
+---STRING apply date
+Hakupäivä
+---STRINGEND
+
+---STRING reject
+Hylkää
+---STRINGEND
+
+---STRING rejected
+Hylätty
+---STRINGEND
+
+---STRING cancelled
+Peruutettu
+---STRINGEND
+
+---STRING invalid query
+Virheellinen pyyntö
+---STRINGEND
+
+---STRING approve or reject the following accounts
+Hyväksy tai hylkää seuraavat tilit
+---STRINGEND
+
+---STRING failed to send the activation message to %s
+Aktivointiviestin lähettäminen osoitteeseen '%s' epäonnistui!
+---STRINGEND
+
+---STRING failed to send the rejection message to %s
+Hylkäysviestin lähettäminen osoitteeseen '%s' epäonnistui!
+---STRINGEND
+
+---STRING message sent to %s
+Viesti lähetetty osoitteeseen '%s'
+---STRINGEND
+
+---STRING email message
+Viesti
+---STRINGEND
+
+---STRING email subject
+Otsikko
+---STRINGEND
+
+---STRING custom message for rejected applicants
+Kustomoitu viesti hylätyille hakijoille
+---STRINGEND
+
+---STRING click on the title to edit the message
+Klikkaa otsikkoa muuttaaksesi viestiä
+---STRINGEND
+
+---STRING no pending accounts
+Ei hyväksyntää odottavia tilejä
+---STRINGEND

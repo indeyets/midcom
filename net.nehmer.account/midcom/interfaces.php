@@ -49,6 +49,7 @@ class net_nehmer_account_interface extends midcom_baseclasses_components_interfa
         define ('NET_NEHMER_ACCOUNT_LEAFID_USERNAME', 4);
         define ('NET_NEHMER_ACCOUNT_LEAFID_LOSTPASSWORD', 5);
         define ('NET_NEHMER_ACCOUNT_LEAFID_CANCELMEMBERSHIP', 5);
+        define ('NET_NEHMER_ACCOUNT_LEAFID_PENDING', 10);
         define ('NET_NEHMER_ACCOUNT_LEAFID_OTHER', 999);
 
         $this->_component = 'net.nehmer.account';

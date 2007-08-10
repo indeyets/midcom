@@ -271,3 +271,67 @@ Register
 ---STRING cancel
 Cancel
 ---STRINGEND
+
+---STRING pending approvals
+Pending approvals
+---STRINGEND
+
+---STRING username
+Username
+---STRINGEND
+
+---STRING apply date
+Apply date
+---STRINGEND
+
+---STRING reject
+Reject
+---STRINGEND
+
+---STRING rejected
+Rejected
+---STRINGEND
+
+---STRING cancelled
+Peruutettu
+---STRINGEND
+
+---STRING invalid query
+Invalid query
+---STRINGEND
+
+---STRING approve or reject the following accounts
+Approve or reject the following accounts
+---STRINGEND
+
+---STRING failed to send the activation message to %s
+Failed to send the activation message to %s
+---STRINGEND
+
+---STRING failed to send the rejection message to %s
+Failed to send the rejection message to %s
+---STRINGEND
+
+---STRING message sent to %s
+Message sent to %s
+---STRINGEND
+
+---STRING email message
+Email message
+---STRINGEND
+
+---STRING email subject
+Email subject
+---STRINGEND
+
+---STRING custom message for rejected applicants
+Custom message for rejected applicants
+---STRINGEND
+
+---STRING click on the title to edit the message
+Click on the title to edit the message
+---STRINGEND
+
+---STRING no pending accounts
+No pending accounts
+---STRINGEND

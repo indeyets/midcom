@@ -1,5 +1,9 @@
+// Schema settings
 'schemadb_account' => 'file:/net/nehmer/account/config/schemadb_account.inc',
 'schemadb_account_creation' => 'file:/net/nehmer/account/config/schemadb_account_creation.inc',
+
+// Configuration schema
+'schemadb_config' => 'file:/net/nehmer/account/config/schemadb_config.inc',
 
 // Features
 'allow_register' => true,
@@ -8,11 +12,15 @@
 'allow_publish' => true,
 'allow_view_by_username' => true, // the paranoid may want to disable this as it allows determining username validity
 
-// add group id to automatically assign the user to it
+// Add group id to automatically assign the user to it
 'assign_to_group' => null,
 
 'username_is_email' => false,
 'register_allow_types' => null,
+
+// Require approval of a new account before activating
+'require_activation' => false,
+'administrator_email' => '',
 
 // This option is not yet completly implemented.
 'fallback_type' => null, 
@@ -47,15 +55,34 @@
 'welcome_mail_body' => 'welcome_mail_body', // Will be localized
 'welcome_mail_sender' => '', // Sender and receiver is identical, put in a guid otherwise.
 
-// Avtivaton / Password Emails
+
+/**
+ * These configuration keys are linked to sending email to clients. Localization can be
+ * done either from locale/ or by changing the configuration values
+ */
+
+// Activaton / Password Emails
 'activation_mail_sender' => null, // Means sender == receiver
 'activation_mail_subject' => 'activation_mail_subject', // Will be localized
 'activation_mail_body' => 'activation_mail_body', // Will be localized
 
+// Approval mail, sent to the administrators
+'approval_mail_subject' => 'approval_mail_subject',
+'approval_mail_body' => 'approval_mail_body',
+
+// Mail sent after disapproval
+'rejected_mail_subject' => 'disapproval_mail_subject',
+'rejected_mail_body' => 'disapproval_mail_body',
+
+// Resetting the password
 'password_reset_mail_sender' => null, // Means sender == receiver
 'password_reset_mail_subject' => 'password_reset_mail_subject', // Will be localized
 'password_reset_mail_body' => 'password_reset_mail_body', // Will be localized
 
+
+/**
+ * Plugins and other miscellaneous configuration keys
+ */
 // see the docs of the viewer/admin classes for details about the plugin handlers
 'plugins' => array
 (
@@ -83,3 +110,8 @@
  * Keep sent invites for x days
  */
  'keep_sent_invites' => 30,
+
+/**
+ * The schema to use for invitation registration
+ */
+ 'invreg_schema' => 'account',

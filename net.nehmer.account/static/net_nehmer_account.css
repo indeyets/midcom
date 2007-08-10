@@ -1,0 +1,43 @@
+#net_nehmer_account_pending table thead th a img
+{
+  border-style: none;
+}
+
+#net_nehmer_account_pending table thead th.marker a
+{
+  display: none !important;
+}
+
+#net_nehmer_account_rejected_message h2
+{
+  cursor: pointer;
+}
+
+#net_nehmer_account_rejected_message_contents label,
+#net_nehmer_account_rejected_message_contents span.label
+{
+  display: block;
+}
+
+#net_nehmer_account_rejected_message_contents span.label
+{
+  font-weight: bold;
+}
+
+#net_nehmer_account_rejected_message_contents label
+{
+  margin-bottom: 1em;
+}
+
+
+#net_nehmer_account_rejected_message_contents input,
+#net_nehmer_account_rejected_message_contents textarea
+{
+  width: 90%;
+}
+
+#net_nehmer_account_rejected_message_contents textarea
+{
+  height: 20em;
+}
+

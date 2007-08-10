@@ -1,48 +1,290 @@
-'config' => array (
- 'name'        => 'config',
- 'description' => 'Default Configuration Schema', /* This is a topic */
- 'locktimeout' => 0, /* Don't lock this, we display the edit view always */
- 'fields'      => array (
-
-  'schemadb_account' => array (
-   'description' => 'schemadb_account',
-   'datatype' => 'text',
-   'location' => 'config',
-   'config_domain' => 'net.nehmer.account',
-   'config_key' => 'schemadb_account',
-  ),
-
-  'schemadb_account_creation' => array (
-   'description' => 'schemadb_account_creation',
-   'datatype' => 'text',
-   'location' => 'config',
-   'config_domain' => 'net.nehmer.account',
-   'config_key' => 'schemadb_account_creation',
-  ),
-
-  'password_minlength' => array (
-   'description' => 'password_minlength',
-   'datatype' => 'text',
-   'location' => 'config',
-   'config_domain' => 'net.nehmer.account',
-   'config_key' => 'password_minlength',
-  ),
-
-  'publish_all_on_activation' => array
-  (
-   'description' => 'publish_all_on_activation',
-   'datatype' => 'text',
-   'location' => 'config',
-   'config_domain' => 'net.nehmer.account',
-   'config_key' => 'publish_all_on_activation',
-   'widget' => 'config_radiobox',
-   'widget_radiobox_choices' => Array
-   (
-    '' => 'default setting',
-    '1' => 'yes',
-    '0' => 'no',
-   ),
-  ),
-
- )
-),
+'config' => array
+(
+    'name'        => 'config',
+    'description' => 'component configuration',
+    'fields'      => array
+    (
+        'schemadb_account_creation' => array
+        (
+            'title' => 'schemadb_account_creation',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'net.nehmer.account',
+                'name'     => 'schemadb_account_creation',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
+            'start_fieldgroup' => array
+            (
+                'title' => 'schemadb settings',
+            ),
+        ),
+        'schemadb_account' => array
+        (
+            'title' => 'schemadb_account',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'net.nehmer.account',
+                'name'     => 'schemadb_account',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
+            'end_fieldgroup' => '',
+        ),
+        'password_minlength' => array
+        (
+            'title' => 'password_minlength',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'net.nehmer.account',
+                'name'     => 'password_minlength',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
+        ),
+        'publish_all_on_activation' => array
+        (
+            'title' => 'publish_all_on_activation',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'net.nehmer.account',
+                'name'     => 'publish_all_on_activation',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+        ),
+        
+        // Registrations
+        'allow_register' => array
+        (
+            'title' => 'allow users to register',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'net.nehmer.account',
+                'name'     => 'allow_register',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+            'begin_fieldgroup' => array
+            (
+                'title' => 'user registrations',
+            ),
+        ),
+        'allow_change_username' => array
+        (
+            'title' => 'allow users to change their usernames',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'net.nehmer.account',
+                'name'     => 'allow_change_username',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+        ),
+        'username_is_email' => array
+        (
+            'title' => 'username is email address',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'net.nehmer.account',
+                'name'     => 'username_is_email',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+        ),
+        'allow_cancel_membership' => array
+        (
+            'title' => 'allow users to cancel their memberships',
+            'datatype' => 'text',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'net.nehmer.account',
+                'name'     => 'allow_cancel_membership',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+        ),
+        'allow_publish' => array
+        (
+            'title' => 'allow publishing user accounts',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'net.nehmer.account',
+                'name'     => 'allow_publish',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+        ),
+        'allow_view_by_username' => array
+        (
+            'title' => 'allow publishing user accounts',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'net.nehmer.account',
+                'name'     => 'allow_publish',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+        ),
+        'require_activation' => array
+        (
+            'title' => 'require administrator approval for a new user account',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'net.nehmer.account',
+                'name'     => 'require_activation',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+        ),
+        'administrator_email' => array
+        (
+            'title' => 'administrator email address where a notice will be sent',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nehmer.account',
+                'name' => 'administrator_email',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
+            'end_fieldgroup' => '',
+        ),
+        'assign_to_group' => array
+        (
+            'title' => 'assign new users to group',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'net.nehmer.account',
+                'name'     => 'assign_to_group',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'require_corresponding_option' => false,
+                'options' => array (),
+                'allow_multiple' => true,
+                'multiple_storagemode' => 'serialized',
+                'allow_other' => true,
+            ),
+            'widget' => 'universalchooser',
+            'widget_config' => array
+            (
+                'class'       => 'midcom_db_group',
+                'component'   => 'net.nemein.personnel',
+                'titlefield'  => 'name',
+                'idfield'     => 'id',
+                'constraints' => array
+                (
+                    array
+                    (
+                        'field' => 'name',
+                        'op' => '<>',
+                        'value' => '',
+                    ),
+                    array
+                    (
+                        'field' => 'sitegroup',
+                        'op' => '<>',
+                        'value' => 0,
+                    ),
+                ),
+                'searchfields'  => array
+                (
+                    'name',
+                    'official',
+                ),
+                'orders' => array
+                (
+                    array
+                    (
+                        'name' => 'ASC',
+                    ),
+                ),
+            ),
+        ),
+    ),),

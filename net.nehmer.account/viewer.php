@@ -104,7 +104,14 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
 
     function _on_initialize()
     {
-	// INVITATION 	
+        // DM2 configuration screen
+        $this->_request_switch['config'] = array
+        (
+            'handler' => array('net_nehmer_account_handler_configuration', 'configuration'),
+            'fixed_args' => array('config'),
+        );
+        
+        // INVITATION
         $this->_request_switch['sent_invites'] = Array
         (
             'handler' => Array('net_nehmer_account_handler_invitation', 'sent_invites'),
@@ -233,8 +240,29 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             (
                 'handler' => Array('net_nehmer_account_handler_register', 'register_invitation'),
                 'fixed_args' => Array('register_invitation'),
-		'variable_args' => 1,
+                'variable_args' => 1,
             );
+            
+            // Pending registrations
+            if (   $_MIDCOM->auth->admin
+                && $this->_config->get('require_activation'))
+            {
+                // Match register/pending/
+                $this->_request_switch['reqister_list_pending'] = array
+                (
+                    'handler' => array('net_nehmer_account_handler_pending', 'list'),
+                    'fixed_args' => array('pending'),
+                );
+                
+                // Pending registrations
+                // Match register/pending/<user guid>/
+                $this->_request_switch['reqister_edit_pending'] = array
+                (
+                    'handler' => array('net_nehmer_account_handler_pending', 'approve'),
+                    'fixed_args' => array('pending'),
+                    'variable_args' => 1,
+                );
+            }
     //    }        
     }
 
@@ -270,6 +298,8 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      */
     function _on_handle($handler, $args)
     {
+        $this->_handler_id = $handler;
+        
         $this->_populate_toolbar();
         
         return true;
@@ -417,6 +447,24 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      */
     function _populate_toolbar()
     {
+        if ($this->_topic->can_do('midgard:config'))
+        {
+            $this->_node_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => 'config/',
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+                )
+            );
+        }
+        
+        if ($this->_handler_id === 'config')
+        {
+            return;
+        }
+        
         if ($_MIDCOM->auth->user !== null)
         {
             $this->_view_toolbar->add_item
@@ -480,19 +528,48 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
                 );
             }
         }
+        
+        if ($_MIDCOM->auth->admin)
+        {
+            $qb = midcom_db_person::new_query_builder();
+            
+            $qb->begin_group('AND');
+                $qb->add_constraint('parameter.domain', '=', 'net.nehmer.account');
+                $qb->add_constraint('parameter.name', '=', 'require_approval');
+                $qb->add_constraint('parameter.value', '=', 'require_approval');
+            $qb->end_group();
+            
+            // Let the admin user know, if there are pending approvals
+            if ($qb->count() > 0)
+            {
+                $this->_view_toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => 'pending/',
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('pending approvals'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/not_approved_time_visible.png',
+                    )
+                );
+            }
+        }
+        
     }
 
     function verify_person_privileges($person)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $person_user = $_MIDCOM->auth->get_user($person->id);
+        
         if (!is_a($person, 'midcom_db_person'))
         {
             $_MIDCOM->auth->request_sudo();
             $person = new midcom_db_person($person->id);
             $_MIDCOM->auth->drop_sudo();
         }
+        
         debug_add("Checking privilege midgard:owner for person #{$person->id}");
+        
         if (!$_MIDCOM->auth->can_do('midgard:owner', $person, $person_user))
         {
             debug_add("Person #{$person->id} lacks privilege midgard:owner, adding");
@@ -505,10 +582,54 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             {
                 debug_add("Added privilege 'midgard:owner' for person #{$person->id}", MIDCOM_LOG_INFO);
             }
+            
             $_MIDCOM->auth->drop_sudo();
         }
+        
         debug_pop();
     }
-}
 
+    /**
+     * This is a simple function which generates and sends an account registration confirmation
+     * including the randomly-generated password and the corresponding activation link.
+     *
+     * @param midcom_db_person $person  The newly created person account.
+     * @param string $password          Password to be included in the message
+     * @param activation_link
+     * @access static public
+     * @todo Make this configurable.
+     */
+    function send_registration_mail($person, $password, $activation_link)
+    {
+        $from = $config->get('activation_mail_sender');
+        if (! $from)
+        {
+            $from = $person->email;
+        }
+        
+        $template = array
+        (
+            'from' => $from,
+            'reply-to' => '',
+            'cc' => '',
+            'bcc' => '',
+            'x-mailer' => '',
+            'subject' => $this->_l10n->get($config->get('activation_mail_subject')),
+            'body' => $this->_l10n->get($config->get('activation_mail_body')),
+            'body_mime_type' => 'text/plain',
+            'charset' => 'UTF-8',
+        );
+
+        $mail = new midcom_helper_mailtemplate($template);
+        $parameters = Array
+        (
+            'PERSON' => $person,
+            'PASSWORD' => $password,
+            'ACTIVATIONLINK' => $activation_link,
+        );
+        $mail->set_parameters($parameters);
+        $mail->parse();
+        return $mail->send($person->email);
+    }
+}
 ?>
