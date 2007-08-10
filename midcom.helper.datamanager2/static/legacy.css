@@ -185,19 +185,35 @@ form.datamanager2 span.communityhtml_toolbar img
 }
 
 /* Save and cancel buttons */
+form.datamanager2 div.form_toolbar input
+{
+    background-image: url('');
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
 form.datamanager2 div.form_toolbar input.save
 {
     padding-left: 18px;
     background-image: url('../stock-icons/16x16/save.png');
-    background-repeat: no-repeat;
-    background-position: left;
 }
+
 form.datamanager2 div.form_toolbar input.cancel
 {
     padding-left: 18px;
     background-image: url('../stock-icons/16x16/cancel.png');
-    background-repeat: no-repeat;
-    background-position: left;
+}
+
+form.datamanager2 div.form_toolbar input.previous
+{
+    padding-left: 18px;
+    background-image: url('../stock-icons/16x16/previous.png');
+}
+
+form.datamanager2 div.form_toolbar input.next
+{
+    padding-left: 18px;
+    background-image: url('../stock-icons/16x16/next.png');
 }
 
 
