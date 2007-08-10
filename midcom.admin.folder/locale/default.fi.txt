@@ -3,12 +3,24 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING %s state
+%s-aste
+---STRINGEND
+
 ---STRING a folder with name %s already exists
 Kansio nimellä "%s" on jo olemassa!
 ---STRINGEND
 
 ---STRING all descendants will be deleted
 Kaikki tämän kansion alla oleva poistetaan:
+---STRINGEND
+
+---STRING all style elements
+Kaikki tyylielementit
+---STRINGEND
+
+---STRING alpha
+Alfa
 ---STRINGEND
 
 ---STRING are you sure you want to delete this folder
@@ -23,12 +35,24 @@ Tekijä
 Tekijät
 ---STRINGEND
 
+---STRING beta
+Beta
+---STRINGEND
+
 ---STRING by score
 Järjestellyn mukaan
 ---STRINGEND
 
 ---STRING change component
 Vaihda komponenttia
+---STRINGEND
+
+---STRING component default
+Komponentin vakiotyyli
+---STRINGEND
+
+---STRING copy to editor
+Kopioi editoriin
 ---STRINGEND
 
 ---STRING create folder
@@ -95,6 +119,10 @@ Muokkaa metatietoja
 Muokkaa kohteen '%s' metatietoja
 ---STRINGEND
 
+---STRING experimental, use with your own risk
+Kokeellinen, käytä omalla vastuulla
+---STRINGEND
+
 ---STRING exported
 Viety
 ---STRINGEND
@@ -131,12 +159,24 @@ Periytä ulkoasupohja alikansioille
 Lisää <a href="%s">MidCOM-komponentteja</a> voi asentaa <a href="%s">PEAR-paketeista</a>.
 ---STRINGEND
 
+---STRING list of %s folders using the same style template path
+Lista komponenttia "%s" käyttävistä kansioista, joissa käytetään samaa tyylipolkua
+---STRINGEND
+
+---STRING local element
+Paikallinen elementti
+---STRINGEND
+
 ---STRING midcom.admin.folder
 Kansioiden hallinta
 ---STRINGEND
 
 ---STRING move
 Siirrä
+---STRINGEND
+
+---STRING move %s
+Siirrä %s
 ---STRINGEND
 
 ---STRING nav order
@@ -235,20 +275,8 @@ Järjestele sivuja
 Ulkoasupohja
 ---STRINGEND
 
----STRING title is empty
-Otsikko on tyhjä!
----STRINGEND
-
----STRING warning, might result in data loss
-Varoitus! Saattaa johtaa tietojen katoamiseen!
----STRINGEND
-
----STRING move %s
-Siirrä %s
----STRINGEND
-
----STRING list of %s folders using the same style template path
-Lista komponenttia "%s" käyttävistä kansioista, joissa käytetään samaa tyylipolkua
+---STRING style editor
+Ulkoasueditori
 ---STRINGEND
 
 ---STRING style element list
@@ -259,50 +287,31 @@ Tyylielementtilista
 Tyylielementit tyylille %s
 ---STRINGEND
 
----STRING all style elements
-Kaikki tyylielementit
----STRINGEND
-
----STRING component default
-Komponentin vakiotyyli
----STRINGEND
-
----STRING edit %s
-Muokkaa kohdetta '%s'
----STRINGEND
-
----STRING local element
-Paikallinen elementti
----STRINGEND
-
----STRING copy to editor
-Kopioi editoriin
----STRINGEND
-
----STRING style editor
-Ulkoasueditori
----STRINGEND
-
 ---STRING submitting the form
 Tallennetaan muutos
----STRINGEND
-
----STRING alpha
-Alfa
----STRINGEND
-
----STRING beta
-Beta
----STRINGEND
-
----STRING %s state
-%s-aste
----STRINGEND
-
----STRING experimental, use with your own risk
-Kokeellinen, käytä omalla vastuulla
 ---STRINGEND
 
 ---STRING this component is still being developed and tested and might contain undocumented features
 Tätä komponenttia kehitetään ja testataan edelleen ja se saattaa sisältää kartoittamattomia toiminnallisuuksia
 ---STRINGEND
+
+---STRING title is empty
+Otsikko on tyhjä!
+---STRINGEND
+
+---STRING warning, might result in data loss
+Varoitus! Saattaa johtaa tietojen katoamiseen!
+---STRINGEND
+
+---STRING edit layout template
+Muokkaa ulkoasupohjaa
+---STRINGEND
+
+---STRING privilege template_management
+Ulkoasupohjien hallinta
+---STRINGEND
+
+---STRING saving changes
+Muutoksia tallennetaan
+---STRINGEND
+

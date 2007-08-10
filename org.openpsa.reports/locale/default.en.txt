@@ -7,6 +7,10 @@
 Define a custom report
 ---STRINGEND
 
+---STRING download as CSV
+Download as CSV
+---STRINGEND
+
 ---STRING invoiceable hours last month
 Invoiceable hours last month
 ---STRINGEND
@@ -25,9 +29,5 @@ No results matching the report criteria were found.
 
 ---STRING org.openpsa.reports
 Report generator
----STRINGEND
-
----STRING download as CSV
-Download as CSV
 ---STRINGEND
 

@@ -7,3 +7,27 @@
 Tallenna CSV:ksi
 ---STRINGEND
 
+---STRING define custom report
+Määrittele kustomoitu raportti
+---STRINGEND
+
+---STRING invoiceable hours last month
+Laskutettavat tunnit viime kuulta
+---STRINGEND
+
+---STRING invoiceable hours this month
+Laskutettavat tunnit tässä kuussa
+---STRINGEND
+
+---STRING no results
+Ei tuloksia
+---STRINGEND
+
+---STRING no results found matching the report criteria
+Raportin kriteerejä vastaavia tuloksia ei löytynyt.
+---STRINGEND
+
+---STRING org.openpsa.reports
+Raporttigeneraattori
+---STRINGEND
+
