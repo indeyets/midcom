@@ -1,9 +1,10 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
+---CVS $Id$
 ---LANGUAGE en
 
----STRING org.maemo.calendar
-Maemo community calendar
+---STRING Default
+Default
 ---STRINGEND
 
 ---STRING calendar_title
@@ -14,18 +15,19 @@ Community Calendar
 Current view
 ---STRINGEND
 
----STRING Default
-Default
+---STRING org.maemo.calendar
+Maemo community calendar
 ---STRINGEND
 
----STRING root event permissions
-Root event permissions
+---STRING profile publishing successfull
+Profile publishing was successfull!
 ---STRINGEND
 
 ---STRING profile saved successfully
 Profile was successfully saved!
 ---STRINGEND
 
----STRING profile publishing successfull
-Profile publishing was successfull!
+---STRING root event permissions
+Root event permissions
 ---STRINGEND
+

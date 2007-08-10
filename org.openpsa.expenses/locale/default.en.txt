@@ -1,5 +1,6 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
+---CVS $Id$
 ---LANGUAGE en
 
 ---STRING This is the index
