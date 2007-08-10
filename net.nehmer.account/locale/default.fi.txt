@@ -3,6 +3,14 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING %s, message sent to %s
+%s, viesti lähetetty osoitteeseen %s
+---STRINGEND
+
+---STRING Allows users to manage their accounts. New users can register for new accounts as well.
+Sallii käyttäjien muokata käyttäjätilejään. Tarjoaa uusille käyttäjille mahdollisuuden rekisteröityä.
+---STRINGEND
+
 ---STRING account details not published.
 Käyttäjätietoja ei ole vielä julkaistu
 ---STRINGEND
@@ -19,8 +27,25 @@ Rekisteröityminen
 Tunnus aktivoitu
 ---STRINGEND
 
+---STRING activation_mail_body
+Salasanasi on: __PASSWORD__
+
+Ennen kuin voit kirjautua järjestelmään sinun täytyy aktivoida tunnuksesi.
+
+Tehdäksesi sen mene seuraavalle web-sivulle:
+__ACTIVATIONLINK__
+---STRINGEND
+
 ---STRING activation_mail_subject
 Rekisteröitymisesi
+---STRINGEND
+
+---STRING apply date
+Hakupäivä
+---STRINGEND
+
+---STRING approve or reject the following accounts
+Hyväksy tai hylkää seuraavat tilit
 ---STRINGEND
 
 ---STRING avatar
@@ -35,6 +60,10 @@ peruuta jäsenyys
 Oletko varma että haluat peruuttaa jäsenyytesi?
 ---STRINGEND
 
+---STRING cancelled
+Peruutettu
+---STRINGEND
+
 ---STRING change email
 Vaihda sähköpostiosoite
 ---STRINGEND
@@ -47,20 +76,56 @@ Vaihda salasana
 Vaihda käyttäjätunnus
 ---STRINGEND
 
+---STRING click on the title to edit the message
+Klikkaa otsikkoa muuttaaksesi viestiä
+---STRINGEND
+
 ---STRING confirm account details
 Vahvista käyttäjätiedot
+---STRINGEND
+
+---STRING confirm account details explaination
+Vahvista että syöttämäsi tiedot ovat oikein. Mikäli haluat muuttaa tietoja mene takaisin edelliseen lomakkeeseen ennen rekisteröitymisen jatkamista.
+---STRINGEND
+
+---STRING custom message for rejected applicants
+Kustomoitu viesti hylätyille hakijoille
 ---STRINGEND
 
 ---STRING edit account
 Muokkaa käyttäjätietoja
 ---STRINGEND
 
+---STRING email message
+Viesti
+---STRINGEND
+
+---STRING email subject
+Otsikko
+---STRINGEND
+
 ---STRING enter account details
 Lisää käyttäjätiedot
 ---STRINGEND
 
+---STRING failed to send the activation message to %s
+Aktivointiviestin lähettäminen osoitteeseen '%s' epäonnistui!
+---STRINGEND
+
+---STRING failed to send the rejection message to %s
+Hylkäysviestin lähettäminen osoitteeseen '%s' epäonnistui!
+---STRINGEND
+
 ---STRING first login
 Ensimmäinen sisäänkirjautuminen
+---STRINGEND
+
+---STRING invalid query
+Virheellinen pyyntö
+---STRINGEND
+
+---STRING invalid username
+Käyttäjätunnuksen pitää olla vähintään yhden merkin pituinen eikä se saa sisältää merkkejä +, * ja !.
 ---STRINGEND
 
 ---STRING invalid username email
@@ -75,12 +140,20 @@ Viimeisin kirjautuminen
 Unohtunut salasana
 ---STRINGEND
 
+---STRING lost password helptext
+Jos et muista salasanaasi syötä käyttäjätunnuksesi allaolevaan lomakkeeseen. Uusi salasana lähetetään tunnukseen tallennettuun sähköpostiosoitteeseen.
+---STRINGEND
+
 ---STRING make online state visible to other users
 Näytä kirjautuminen muille käyttäjille
 ---STRINGEND
 
 ---STRING membership cancelled
 Jäsenyys peruutettu
+---STRINGEND
+
+---STRING message sent to %s
+Viesti lähetetty osoitteeseen '%s'
 ---STRINGEND
 
 ---STRING net.nehmer.account
@@ -97,6 +170,10 @@ Uusi salasana
 
 ---STRING new username
 Uusi käyttäjätunnus
+---STRINGEND
+
+---STRING no pending accounts
+Ei hyväksyntää odottavia tilejä
 ---STRINGEND
 
 ---STRING old password
@@ -135,6 +212,10 @@ Salasanasi on vaihdettu. Uusi  on: __PASSWORD__
 Salasana on vaihdettu.
 ---STRINGEND
 
+---STRING pending approvals
+Hyväksyntää odottavat
+---STRINGEND
+
 ---STRING publish
 Julkaise
 ---STRINGEND
@@ -153,6 +234,18 @@ Käyttäjätietosi on julkaistu.
 
 ---STRING registration successful
 Rekisteröityminen onnistui
+---STRINGEND
+
+---STRING registration successful message
+Rekisteröityminen onnistui. Tunnuksen aktivointia käsittelevä sähköposti on lähetetty sähköpostiosoitteeseesi. Et voi käyttää tunnusta ennen sen aktivoimista.
+---STRINGEND
+
+---STRING reject
+Hylkää
+---STRINGEND
+
+---STRING rejected
+Hylätty
 ---STRINGEND
 
 ---STRING select account type
@@ -179,6 +272,10 @@ Käyttäjätunnus on varattu. Ole hyvä ja valitse toinen tunnus.
 Tuntematon käyttäjätunnus
 ---STRINGEND
 
+---STRING username
+Käyttäjätunnus
+---STRINGEND
+
 ---STRING username changed.
 Käyttäjätunnus vaihdettu.
 ---STRINGEND
@@ -203,99 +300,106 @@ Sinun täytyy syöttää uusi käyttäjätunnus.
 Tunnuksesi on jo aktivoitu.
 ---STRINGEND
 
----STRING activation_mail_body
-Salasanasi on: __PASSWORD__
-
-Ennen kuin voit kirjautua järjestelmään sinun täytyy aktivoida tunnuksesi.
-
-Tehdäksesi sen mene seuraavalle web-sivulle:
-__ACTIVATIONLINK__
+---STRING add contacts
+Lisää kontakteja
 ---STRINGEND
 
----STRING confirm account details explaination
-Vahvista että syöttämäsi tiedot ovat oikein. Mikäli haluat muuttaa tietoja mene takaisin edelliseen lomakkeeseen ennen rekisteröitymisen jatkamista.
+---STRING approval_mail_body
+Uusi käyttäjätili odottaa hyväksyntää, ole hyvä ja seuraa allaolevaa linkkiä hyväksyäksesi tai hylätäksesi käyttäjätilin:
+
+__APPROVALURI__
+
+Tämä viesti on luotu automaattisesti, älä vastaa siihen.
+
+-- 
+Tämä automaattisesti luotu viesti lähetettiin osoitteesta
+__CURRENTADDRESS__
+__CURRENTTIME__
 ---STRINGEND
 
----STRING invalid username
-Käyttäjätunnuksen pitää olla vähintään yhden merkin pituinen eikä se saa sisältää merkkejä +, * ja !.
+---STRING approval_mail_subject
+Rekisteröinti odottaa hyväksyntää
 ---STRINGEND
 
----STRING lost password helptext
-Jos et muista salasanaasi syötä käyttäjätunnuksesi allaolevaan lomakkeeseen. Uusi salasana lähetetään tunnukseen tallennettuun sähköpostiosoitteeseen.
+---STRING cancel
+Peruuta
 ---STRINGEND
 
----STRING registration successful message
-Rekisteröityminen onnistui. Tunnuksen aktivointia käsittelevä sähköposti on lähetetty sähköpostiosoitteeseesi. Et voi käyttää tunnusta ennen sen aktivoimista.
+---STRING disapproval_mail_body
+Valitettavasti käyttäjätilihakemuksesi on hylätty.
+
+-- 
+Tämä automaattisesti luotu viesti lähetettiin osoitteesta
+__CURRENTADDRESS__
+__CURRENTTIME__
 ---STRINGEND
 
----STRING pending approvals
-Hyväksyntää odottavat
+---STRING disapproval_mail_subject
+Käyttäjätilihakemuksesi on hylätty
 ---STRINGEND
 
----STRING username
-Käyttäjätunnus
+---STRING email
+Sähköposti
 ---STRINGEND
 
----STRING apply date
-Hakupäivä
+---STRING import contacts
+Tuo kontakteja
 ---STRINGEND
 
----STRING reject
-Hylkää
+---STRING invitation expired
+Kutsu vanhentunut
 ---STRINGEND
 
----STRING rejected
-Hylätty
+---STRING multiple
+Useita
 ---STRINGEND
 
----STRING cancelled
-Peruutettu
+---STRING name
+Nimi
 ---STRINGEND
 
----STRING invalid query
-Virheellinen pyyntö
+---STRING pending_mail_body
+Rekisteröintisi onnistui. Sivuston ylläpitäjien on vielä hyväksyttävä ja aktivoitava käyttäjätunnuksesi ennen kuin se alkaa toimimaan.
+
+Sinulle ilmoitetaan sähköpostitse tuloksesta.
+
+Tämä vieseti on luotu automaattisesti, älä vastaa tähän.
+
+-- 
+Tämä automaattisesti luotu viesti lähetettiin osoitteesta
+__CURRENTADDRESS__
+__CURRENTTIME__
 ---STRINGEND
 
----STRING approve or reject the following accounts
-Hyväksy tai hylkää seuraavat tilit
+---STRING register
+Rekisteröidy
 ---STRINGEND
 
----STRING failed to send the activation message to %s
-Aktivointiviestin lähettäminen osoitteeseen '%s' epäonnistui!
+---STRING registration finished
+Rekisteröinti valmis
 ---STRINGEND
 
----STRING failed to send the rejection message to %s
-Hylkäysviestin lähettäminen osoitteeseen '%s' epäonnistui!
+---STRING registration pending for approval
+Rekisteröinti odottaa hyväksyntää
 ---STRINGEND
 
----STRING message sent to %s
-Viesti lähetetty osoitteeseen '%s'
+---STRING schemadb_account
+Tietokantakuvaus käyttäjätilin luonnin jälkeen
 ---STRINGEND
 
----STRING %s, message sent to %s
-%s, viesti lähetetty osoitteeseen %s
+---STRING schemadb_account_creation
+Tietokantakuvaus ennen käyttäjätilin luontia
 ---STRINGEND
 
----STRING email message
-Viesti
+---STRING submit
+Lähetä
 ---STRINGEND
 
----STRING email subject
-Otsikko
+---STRING you will be notified of the decision to the provided email address
+Sinua tiedotetaan päätöksestä toimittamaasi sähköpostiosoitteeseen.
 ---STRINGEND
 
----STRING custom message for rejected applicants
-Kustomoitu viesti hylätyille hakijoille
+---STRING your registration is now pending for approval
+Käyttäjätunnuksesi odottaa nyt hyväksyntää.
 ---STRINGEND
 
----STRING click on the title to edit the message
-Klikkaa otsikkoa muuttaaksesi viestiä
----STRINGEND
-
----STRING no pending accounts
-Ei hyväksyntää odottavia tilejä
----STRINGEND
-
----STRING Allows users to manage their accounts. New users can register for new accounts as well.
-Sallii käyttäjien muokata käyttäjätilejään. Tarjoaa uusille käyttäjille mahdollisuuden rekisteröityä.
----STRINGEND

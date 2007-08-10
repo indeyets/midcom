@@ -3,28 +3,12 @@
 ---CVS $Id$
 ---LANGUAGE en
 
----STRING invitation expired
-Invitation expired
+---STRING %s, message sent to %s
+%s, message sent to %s
 ---STRINGEND
 
----STRING email
-Email
----STRINGEND
-
----STRING name
-Name
----STRINGEND
-
----STRING submit
-Submit
----STRINGEND
-
----STRING add contacts
-Add contacts
----STRINGEND
-
----STRING import contacts
-Import contacts
+---STRING Allows users to manage their accounts. New users can register for new accounts as well.
+Allows users to manage their accounts. New users can register for new accounts as well.
 ---STRINGEND
 
 ---STRING account details not published.
@@ -53,22 +37,7 @@ __ACTIVATIONLINK__
 
 This message was generated automatically, please do not reply to it.
 
--- 
-This automatically generated message was sent from
-__CURRENTADDRESS__
-__CURRENTTIME__
----STRINGEND
-
----STRING pending_mail_body
-Your registration was successful. Site administrators still need to
-approve and activate the account before it becomes functional.
-
-You will be notified by email of the result.
-
-This message was generated automatically, please do not reply to it.
-
-
--- 
+--
 This automatically generated message was sent from
 __CURRENTADDRESS__
 __CURRENTTIME__
@@ -78,37 +47,12 @@ __CURRENTTIME__
 Your user account is ready for activation
 ---STRINGEND
 
----STRING registration pending for approval
-Registration pending for approval
+---STRING add contacts
+Add contacts
 ---STRINGEND
 
----STRING registration finished
-Registration finished
----STRINGEND
-
----STRING your registration is now pending for approval
-Your registration is now pending for approval
----STRINGEND
-
----STRING you will be notified of the decision to the provided email address
-You will be notified of the decision to the provided email address
----STRINGEND
-
----STRING approval_mail_subject
-Registration pending for approval
----STRINGEND
-
----STRING approval_mail_body
-Your registration is now pending for approval. You will be notified of
-the decision to the email address provided during the registration
-process.
-
-This message was generated automatically, please do not reply to it.
-
--- 
-This automatically generated message was sent from
-__CURRENTADDRESS__
-__CURRENTTIME__
+---STRING apply date
+Apply date
 ---STRINGEND
 
 ---STRING approval_mail_body
@@ -119,27 +63,26 @@ __APPROVALURI__
 
 This message was generated automatically, please do not reply to it.
 
--- 
+--
 This automatically generated message was sent from
 __CURRENTADDRESS__
 __CURRENTTIME__
 ---STRINGEND
 
----STRING disapproval_mail_subject
-Your user account application as been rejected
+---STRING approval_mail_subject
+Registration pending for approval
 ---STRINGEND
 
----STRING disapproval_mail_body
-Unfortunately your application for user account has been rejected.
-
--- 
-This message was sent from
-__CURRENTADDRESS__
-__CURRENTTIME__
+---STRING approve or reject the following accounts
+Approve or reject the following accounts
 ---STRINGEND
 
 ---STRING avatar
 Avatar
+---STRINGEND
+
+---STRING cancel
+Cancel
 ---STRINGEND
 
 ---STRING cancel membership
@@ -148,6 +91,10 @@ Cancel membership
 
 ---STRING cancel membership message
 Do you really want to cancel your membership?
+---STRINGEND
+
+---STRING cancelled
+Peruutettu
 ---STRINGEND
 
 ---STRING change email
@@ -162,6 +109,10 @@ Change password
 Change username
 ---STRINGEND
 
+---STRING click on the title to edit the message
+Click on the title to edit the message
+---STRINGEND
+
 ---STRING confirm account details
 Confirm account details
 ---STRINGEND
@@ -170,16 +121,61 @@ Confirm account details
 Please verify that all information entered into the form is correct. If you want to change anything, please go back before continuing with the registration.
 ---STRINGEND
 
+---STRING custom message for rejected applicants
+Custom message for rejected applicants
+---STRINGEND
+
+---STRING disapproval_mail_body
+Unfortunately your application for user account has been rejected.
+
+--
+This message was sent from
+__CURRENTADDRESS__
+__CURRENTTIME__
+---STRINGEND
+
+---STRING disapproval_mail_subject
+Your user account application as been rejected
+---STRINGEND
+
 ---STRING edit account
 Edit account
+---STRINGEND
+
+---STRING email
+Email
+---STRINGEND
+
+---STRING email message
+Email message
+---STRINGEND
+
+---STRING email subject
+Email subject
 ---STRINGEND
 
 ---STRING enter account details
 Enter account Details
 ---STRINGEND
 
+---STRING failed to send the activation message to %s
+Failed to send the activation message to %s
+---STRINGEND
+
+---STRING failed to send the rejection message to %s
+Failed to send the rejection message to %s
+---STRINGEND
+
 ---STRING first login
 First login
+---STRINGEND
+
+---STRING import contacts
+Import contacts
+---STRINGEND
+
+---STRING invalid query
+Invalid query
 ---STRINGEND
 
 ---STRING invalid username
@@ -188,6 +184,10 @@ The username must be at least one character long and may not contain the charact
 
 ---STRING invalid username email
 The username must be a valid email Address.
+---STRINGEND
+
+---STRING invitation expired
+Invitation expired
 ---STRINGEND
 
 ---STRING last login
@@ -210,6 +210,18 @@ Make your online state visible to other users
 Membership cancelled
 ---STRINGEND
 
+---STRING message sent to %s
+Message sent to %s
+---STRINGEND
+
+---STRING multiple
+Multiple
+---STRINGEND
+
+---STRING name
+Name
+---STRINGEND
+
 ---STRING net.nehmer.account
 User account management
 ---STRINGEND
@@ -224,6 +236,10 @@ New password
 
 ---STRING new username
 New username
+---STRINGEND
+
+---STRING no pending accounts
+No pending accounts
 ---STRINGEND
 
 ---STRING old password
@@ -264,6 +280,25 @@ __PASSWORD__
 Your password has been reset.
 ---STRINGEND
 
+---STRING pending approvals
+Pending approvals
+---STRINGEND
+
+---STRING pending_mail_body
+Your registration was successful. Site administrators still need to
+approve and activate the account before it becomes functional.
+
+You will be notified by email of the result.
+
+This message was generated automatically, please do not reply to it.
+
+
+--
+This automatically generated message was sent from
+__CURRENTADDRESS__
+__CURRENTTIME__
+---STRINGEND
+
 ---STRING publish
 Publish
 ---STRINGEND
@@ -280,12 +315,32 @@ Automatically publish all fields (including online state) on account activation
 Your account details have been published.
 ---STRINGEND
 
+---STRING register
+Register
+---STRINGEND
+
+---STRING registration finished
+Registration finished
+---STRINGEND
+
+---STRING registration pending for approval
+Registration pending for approval
+---STRINGEND
+
 ---STRING registration successful
 Registration was successful
 ---STRINGEND
 
 ---STRING registration successful message
 Your registration was successful. An email with instructions to activate your account has been sent to you. Your account will not be usable until you follow these instructions.
+---STRINGEND
+
+---STRING reject
+Reject
+---STRINGEND
+
+---STRING rejected
+Rejected
 ---STRINGEND
 
 ---STRING schemadb_account
@@ -304,6 +359,10 @@ Select account type
 Please select an account type
 ---STRINGEND
 
+---STRING submit
+Submit
+---STRINGEND
+
 ---STRING the user is offline.
 The user is offline.
 ---STRINGEND
@@ -318,6 +377,10 @@ The username is already in use. Please choose a different one.
 
 ---STRING the username is unknown.
 The username is unknown
+---STRINGEND
+
+---STRING username
+Username
 ---STRINGEND
 
 ---STRING username changed.
@@ -342,90 +405,15 @@ You may now log in to the system.
 You must enter a new username.
 ---STRINGEND
 
+---STRING you will be notified of the decision to the provided email address
+You will be notified of the decision to the provided email address
+---STRINGEND
+
 ---STRING your account has already been activated.
 Your account has already been activated.
 ---STRINGEND
 
----STRING register
-Register
+---STRING your registration is now pending for approval
+Your registration is now pending for approval
 ---STRINGEND
 
----STRING cancel
-Cancel
----STRINGEND
-
----STRING pending approvals
-Pending approvals
----STRINGEND
-
----STRING username
-Username
----STRINGEND
-
----STRING apply date
-Apply date
----STRINGEND
-
----STRING reject
-Reject
----STRINGEND
-
----STRING rejected
-Rejected
----STRINGEND
-
----STRING cancelled
-Peruutettu
----STRINGEND
-
----STRING invalid query
-Invalid query
----STRINGEND
-
----STRING approve or reject the following accounts
-Approve or reject the following accounts
----STRINGEND
-
----STRING failed to send the activation message to %s
-Failed to send the activation message to %s
----STRINGEND
-
----STRING failed to send the rejection message to %s
-Failed to send the rejection message to %s
----STRINGEND
-
----STRING message sent to %s
-Message sent to %s
----STRINGEND
-
----STRING %s, message sent to %s
-%s, message sent to %s
----STRINGEND
-
----STRING email message
-Email message
----STRINGEND
-
----STRING email subject
-Email subject
----STRINGEND
-
----STRING custom message for rejected applicants
-Custom message for rejected applicants
----STRINGEND
-
----STRING click on the title to edit the message
-Click on the title to edit the message
----STRINGEND
-
----STRING no pending accounts
-No pending accounts
----STRINGEND
-
----STRING multiple
-Multiple
----STRINGEND
-
----STRING Allows users to manage their accounts. New users can register for new accounts as well.
-Allows users to manage their accounts. New users can register for new accounts as well.
----STRINGEND
