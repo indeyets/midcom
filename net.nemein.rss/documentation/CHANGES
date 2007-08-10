@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-08-10 bergie
+  + Updated feed parser to latest MagpieRSS version for photocast support
+
 2007-03-21 bergie
   + Added support for manually updating all feeds
   + If feed doesn't provide valid item timestamps the items will be dated to time of their initial importing

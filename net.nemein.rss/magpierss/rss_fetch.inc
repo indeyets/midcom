@@ -16,7 +16,6 @@
  *
  */
 
-/* Not needed on MidCOM 
 // Setup MAGPIE_DIR for use on hosts that don't include
 // the current path in include_path.
 // with thanks to rajiv and smarty
@@ -27,7 +26,7 @@ if (!defined('DIR_SEP')) {
 if (!defined('MAGPIE_DIR')) {
     define('MAGPIE_DIR', dirname(__FILE__) . DIR_SEP);
 }
-
+/*
 require_once( MAGPIE_DIR . 'rss_parse.inc' );
 require_once( MAGPIE_DIR . 'rss_cache.inc' );
 

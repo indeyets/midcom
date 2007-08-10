@@ -235,7 +235,8 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         }
         
         // Try to figure out item publication date
-        $article_date = $this->parse_item_date($item);
+        //$article_date = $this->parse_item_date($item);
+        $article_date = $item['date_timestamp'];
         $article_data_tweaked = false;
         if (!$article_date)
         {
@@ -523,7 +524,6 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
      *
      * @param Array $item Feed item as provided by MagpieRSS
      * @return int Timestamp
-     */
     function parse_item_date($item)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -613,6 +613,7 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         debug_pop();
         return $date;
     }
+     */
 
     /**
      * Normalizes items provided by different feed formats.
@@ -635,7 +636,8 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         {
             $item['title'] = $_MIDCOM->i18n->get_string('untitled', 'net.nemein.rss');
 
-            $item_date = net_nemein_rss_fetch::parse_item_date($item);
+            //$item_date = net_nemein_rss_fetch::parse_item_date($item);
+            $item_date = $item['date_timestamp'];
             
             // Check if this item is newer than the others
             if (isset($this))
