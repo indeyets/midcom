@@ -8,6 +8,72 @@
  */
 
 /**
+ * Memcached decorator around the querybuilder object
+ * 
+ * Use this class to connect to Memcached for selects
+ * @todo: go through a defined api on the memcached module instead of the private object
+ */
+
+class midcom_core_querybuilder_cached {
+    /**
+     * The timeout to use for this cache
+     * @var int nr of seconds until object expiry
+     */
+    var $timeout = 3600;
+    protected $key = array();
+    protected $cache = null;
+
+    function __construct ($cache = FALSE) {
+        if ($cache === FALSE) {
+            $this->cache = $_MIDCOM->cache->memcache;
+        } else {
+            $this->cache = $cache;
+        }
+    }
+
+    /**
+     * Recursive walk to build a key nomatter the inputs.
+     * Note: With large lists of inputs, the key becomes very loong...
+     */
+    function rec_implode($key, $val) {
+        $this->new_key .= "{$key}_$val";
+    }
+
+    /*
+     * Makes sure that all calls are catched.
+     * */
+    function __call($name, $args) {
+        if ($this->qb == NULL) 
+        {
+            throw new Exception("Querybuilder not set!"); 
+        }
+        $this->new_key = "";
+        array_walk_recursive($args, array($this, 'rec_implode'));
+        $this->key[] = $name . $this->new_key;
+        if (method_exists($this->qb, $name)) {
+            return call_user_func_array(array($this->qb, $name), $args);
+        }
+        throw new Exception('Tried to call unknown method '.get_class($this->qb).'::'.$name);
+    }
+
+    /**
+     * Executes the query and saves it to memcached
+     */
+    function execute() {
+        $key = "midcom_querybuilder_cache_{$this->qb->classname}" . implode($this->key , "_");
+
+        $return = $this->cache->get($key);
+        if ($return) {
+            return $return; 
+        }
+        $return = $this->qb->execute();
+        $this->cache->put('MISC', $key, $return, $this->timeout);
+        return $return;
+    }
+}
+
+
+/**
  * MidCOM DBA level wrapper for the Midgard Query Builder.
  *
  * This class must be used instead anyplace within MidCOM instead of the real
@@ -107,6 +173,11 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      * While on-site, this is enabled by default, in AIS it is disabled by default.
      */
     var $hide_invisible = false;
+    /**
+     * The class this qb is working on.
+     * @var string classname
+     */
+    var $classname = null;
 
     /**
      * The constructor wraps the class resolution into the MidCOM DBA system.
@@ -118,6 +189,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      */
     function midcom_core_querybuilder($classname)
     {
+        $this->classname = $classname;
         static $_class_mapping_cache = Array();
 
         if (array_key_exists($classname, $_class_mapping_cache))
