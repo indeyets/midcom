@@ -3,44 +3,24 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
----STRING list of %s folders using the same style template path
-List komponenttia "%s" käyttävistä kansioista, joissa käytetään samaa tyylipolkua
----STRINGEND
-
----STRING style element list
-Tyylielementtilista
----STRINGEND
-
----STRING style elements for %s
-Tyylielementit tyylille %s
+---STRING add text file
+Lisää tekstitiedosto
 ---STRINGEND
 
 ---STRING all style elements
 Kaikki tyylielementit
 ---STRINGEND
 
+---STRING cascading style sheet
+CSS-tyylitiedosto
+---STRINGEND
+
 ---STRING component default
 Komponentin vakiotyyli
 ---STRINGEND
 
----STRING local element
-Paikallinen elementti
----STRINGEND
-
 ---STRING copy to editor
 Kopioi editoriin
----STRINGEND
-
----STRING style editor
-Ulkoasueditori
----STRINGEND
-
----STRING add text file
-Lisää tekstitiedosto
----STRINGEND
-
----STRING cascading style sheet
-CSS-tyylitiedosto
 ---STRINGEND
 
 ---STRING edit element %s
@@ -75,6 +55,14 @@ Tiedostonimi
 JavaScript
 ---STRINGEND
 
+---STRING list of %s folders using the same style template path
+List komponenttia "%s" käyttävistä kansioista, joissa käytetään samaa tyylipolkua
+---STRINGEND
+
+---STRING local element
+Paikallinen elementti
+---STRINGEND
+
 ---STRING midcom.admin.styleeditor
 Tyylieditori
 ---STRINGEND
@@ -83,8 +71,24 @@ Tyylieditori
 Tiedoston tyyppi
 ---STRINGEND
 
+---STRING plain text
+Normaali teksti
+---STRINGEND
+
 ---STRING style attachments
 Tyylin liitetiedostot
+---STRINGEND
+
+---STRING style editor
+Ulkoasueditori
+---STRINGEND
+
+---STRING style element list
+Tyylielementtilista
+---STRINGEND
+
+---STRING style elements for %s
+Tyylielementit tyylille %s
 ---STRINGEND
 
 ---STRING upload file
@@ -99,7 +103,47 @@ URL-osoite
 XML
 ---STRINGEND
 
----STRING plain text
-Normaali teksti
+---STRING confirm delete of file %s
+Vahvista tiedoston '%s' poisto
+---STRINGEND
+
+---STRING create a new element
+Luo uusi elementti
+---STRINGEND
+
+---STRING delete cancelled
+Poisto peruutettu
+---STRINGEND
+
+---STRING delete file %s
+Poista tiedosto '%s'
+---STRINGEND
+
+---STRING element %s exists
+Elementti '%s' on olemassa
+---STRINGEND
+
+---STRING element from file
+Tuo elementti tiedostosta
+---STRINGEND
+
+---STRING element name
+Elementin nimi
+---STRINGEND
+
+---STRING element name required
+Elementin nimi on pakollinen
+---STRINGEND
+
+---STRING file %s deleted
+Tiedosto '%s' poistettu
+---STRINGEND
+
+---STRING style element %s created
+Tyylielementti %s luotu
+---STRINGEND
+
+---STRING style element %s updated
+Tyylielementti %s päivitetty
 ---STRINGEND
 

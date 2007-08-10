@@ -19,12 +19,24 @@ Cascading Style Sheet
 Component default
 ---STRINGEND
 
+---STRING confirm delete of file %s
+Confirm delete of file '%s'
+---STRINGEND
+
 ---STRING copy to editor
 Copy to editor
 ---STRINGEND
 
 ---STRING create a new element
 Create a new element
+---STRINGEND
+
+---STRING delete cancelled
+Delete cancelled
+---STRINGEND
+
+---STRING delete file %s
+Delete file '%s'
 ---STRINGEND
 
 ---STRING edit element %s
@@ -59,6 +71,10 @@ Element name
 Element name is required
 ---STRINGEND
 
+---STRING file %s deleted
+File '%s' deleted
+---STRINGEND
+
 ---STRING file contents
 File contents
 ---STRINGEND
@@ -73,6 +89,10 @@ Filename
 
 ---STRING javascript
 JavaScript
+---STRINGEND
+
+---STRING local element
+Local element
 ---STRINGEND
 
 ---STRING midcom.admin.styleeditor
@@ -95,6 +115,14 @@ Style attachments
 Style editor
 ---STRINGEND
 
+---STRING style element %s created
+Style element %s created
+---STRINGEND
+
+---STRING style element %s updated
+Style element %s updated
+---STRINGEND
+
 ---STRING style element list
 List of style elements
 ---STRINGEND
@@ -115,30 +143,3 @@ URL
 XML
 ---STRINGEND
 
----STRING local element
-Local element
----STRINGEND
-
----STRING style element %s updated
-Style element %s updated
----STRINGEND
-
----STRING style element %s created
-Style element %s created
----STRINGEND
-
----STRING delete file %s
-Delete file '%s'
----STRINGEND
-
----STRING confirm delete of file %s
-Confirm delete of file '%s'
----STRINGEND
-
----STRING delete cancelled
-Delete cancelled
----STRINGEND
-
----STRING file %s deleted
-File '%s' deleted
----STRINGEND
