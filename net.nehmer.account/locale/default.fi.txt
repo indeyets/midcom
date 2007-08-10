@@ -23,6 +23,10 @@ Käyttäjätiedot julkaistu %s.
 Rekisteröityminen
 ---STRINGEND
 
+---STRING activation pending
+Aktivointi odottaa
+---STRINGEND
+
 ---STRING activation successful
 Tunnus aktivoitu
 ---STRINGEND
@@ -40,20 +44,73 @@ __ACTIVATIONLINK__
 Rekisteröitymisesi
 ---STRINGEND
 
+---STRING add contacts
+Lisää kontakteja
+---STRINGEND
+
+---STRING administrator email address where a notice will be sent
+Administraattorin sähköpostiosoite, johon ilmoitus lähetetään
+---STRINGEND
+
+---STRING allow publishing user accounts
+Salli käyttäjätilien julkaiseminen
+---STRINGEND
+
+---STRING allow users to cancel their memberships
+Salli käyttäjätilien peruuttaminen
+---STRINGEND
+
+---STRING allow users to change their usernames
+Salli käyttäjätunnuksen vaihtaminen
+---STRINGEND
+
+---STRING allow users to register
+Salli käyttäjien rekisteröinti
+---STRINGEND
+
 ---STRING apply date
 Hakupäivä
+---STRINGEND
+
+---STRING approval_mail_body
+Uusi käyttäjätili odottaa hyväksyntää, ole hyvä ja seuraa allaolevaa linkkiä hyväksyäksesi tai hylätäksesi käyttäjätilin:
+
+__APPROVALURI__
+
+Tämä viesti on luotu automaattisesti, älä vastaa siihen.
+
+--
+Tämä automaattisesti luotu viesti lähetettiin osoitteesta
+__CURRENTADDRESS__
+__CURRENTTIME__
+---STRINGEND
+
+---STRING approval_mail_subject
+Rekisteröinti odottaa hyväksyntää
 ---STRINGEND
 
 ---STRING approve or reject the following accounts
 Hyväksy tai hylkää seuraavat tilit
 ---STRINGEND
 
+---STRING assign new users to group
+Liitä uudet käyttäjät ryhmään
+---STRINGEND
+
 ---STRING avatar
 Avatar
 ---STRINGEND
 
+---STRING birthdate
+Syntymäpäivä
+---STRINGEND
+
+---STRING cancel
+Peruuta
+---STRINGEND
+
 ---STRING cancel membership
-peruuta jäsenyys
+Peruuta jäsenyys
 ---STRINGEND
 
 ---STRING cancel membership message
@@ -92,8 +149,25 @@ Vahvista että syöttämäsi tiedot ovat oikein. Mikäli haluat muuttaa tietoja 
 Kustomoitu viesti hylätyille hakijoille
 ---STRINGEND
 
+---STRING disapproval_mail_body
+Valitettavasti käyttäjätilihakemuksesi on hylätty.
+
+--
+Tämä automaattisesti luotu viesti lähetettiin osoitteesta
+__CURRENTADDRESS__
+__CURRENTTIME__
+---STRINGEND
+
+---STRING disapproval_mail_subject
+Käyttäjätilihakemuksesi on hylätty
+---STRINGEND
+
 ---STRING edit account
 Muokkaa käyttäjätietoja
+---STRINGEND
+
+---STRING email
+Sähköposti
 ---STRINGEND
 
 ---STRING email message
@@ -120,6 +194,14 @@ Hylkäysviestin lähettäminen osoitteeseen '%s' epäonnistui!
 Ensimmäinen sisäänkirjautuminen
 ---STRINGEND
 
+---STRING firstname
+Etunimi
+---STRINGEND
+
+---STRING import contacts
+Tuo kontakteja
+---STRINGEND
+
 ---STRING invalid query
 Virheellinen pyyntö
 ---STRINGEND
@@ -132,8 +214,16 @@ Käyttäjätunnuksen pitää olla vähintään yhden merkin pituinen eikä se sa
 Käyttäjätunnuksen täytyy olla oikea sähköpostiosoite
 ---STRINGEND
 
+---STRING invitation expired
+Kutsu vanhentunut
+---STRINGEND
+
 ---STRING last login
 Viimeisin kirjautuminen
+---STRINGEND
+
+---STRING lastname
+Sukunimi
 ---STRINGEND
 
 ---STRING lost password
@@ -154,6 +244,14 @@ Jäsenyys peruutettu
 
 ---STRING message sent to %s
 Viesti lähetetty osoitteeseen '%s'
+---STRINGEND
+
+---STRING multiple
+Useita
+---STRINGEND
+
+---STRING name
+Nimi
 ---STRINGEND
 
 ---STRING net.nehmer.account
@@ -216,6 +314,23 @@ Salasana on vaihdettu.
 Hyväksyntää odottavat
 ---STRINGEND
 
+---STRING pending_mail_body
+Rekisteröintisi onnistui. Sivuston ylläpitäjien on vielä hyväksyttävä ja aktivoitava käyttäjätunnuksesi ennen kuin se alkaa toimimaan.
+
+Sinulle ilmoitetaan sähköpostitse tuloksesta.
+
+Tämä vieseti on luotu automaattisesti, älä vastaa tähän.
+
+--
+Tämä automaattisesti luotu viesti lähetettiin osoitteesta
+__CURRENTADDRESS__
+__CURRENTTIME__
+---STRINGEND
+
+---STRING postcode
+Postinumero
+---STRINGEND
+
 ---STRING publish
 Julkaise
 ---STRINGEND
@@ -230,6 +345,18 @@ Julkaise kaikki tiedot automaattisesti kun käyttäjätunnus aktivoidaan
 
 ---STRING publishing successful.
 Käyttäjätietosi on julkaistu.
+---STRINGEND
+
+---STRING register
+Rekisteröidy
+---STRINGEND
+
+---STRING registration finished
+Rekisteröinti valmis
+---STRINGEND
+
+---STRING registration pending for approval
+Rekisteröinti odottaa hyväksyntää
 ---STRINGEND
 
 ---STRING registration successful
@@ -248,12 +375,32 @@ Hylkää
 Hylätty
 ---STRINGEND
 
+---STRING require administrator approval for a new user account
+Vaadi pääkäyttäjän hyväksyntä uusille käyttäjätunnuksille
+---STRINGEND
+
+---STRING schemadb_account
+Tietokantakuvaus käyttäjätilin luonnin jälkeen
+---STRINGEND
+
+---STRING schemadb_account_creation
+Tietokantakuvaus ennen käyttäjätilin luontia
+---STRINGEND
+
 ---STRING select account type
 Valitse tunnuksen tyyppi
 ---STRINGEND
 
 ---STRING select an account type
 Ole hyvä ja valitse tunnuksen tyyppi
+---STRINGEND
+
+---STRING street
+Katuosoite
+---STRINGEND
+
+---STRING submit
+Lähetä
 ---STRINGEND
 
 ---STRING the user is offline.
@@ -280,6 +427,10 @@ Käyttäjätunnus
 Käyttäjätunnus vaihdettu.
 ---STRINGEND
 
+---STRING username is email address
+Käyttäjätunnus on yhtä kuin sähköpostiosoite
+---STRINGEND
+
 ---STRING welcome_mail_body
 Tervetuloa palveluun. Käyttäjätunnus on aktivoitu ja toiminnassa.
 ---STRINGEND
@@ -296,110 +447,23 @@ Voit nyt kirjautua palveluun
 Sinun täytyy syöttää uusi käyttäjätunnus.
 ---STRINGEND
 
----STRING your account has already been activated.
-Tunnuksesi on jo aktivoitu.
----STRINGEND
-
----STRING add contacts
-Lisää kontakteja
----STRINGEND
-
----STRING approval_mail_body
-Uusi käyttäjätili odottaa hyväksyntää, ole hyvä ja seuraa allaolevaa linkkiä hyväksyäksesi tai hylätäksesi käyttäjätilin:
-
-__APPROVALURI__
-
-Tämä viesti on luotu automaattisesti, älä vastaa siihen.
-
--- 
-Tämä automaattisesti luotu viesti lähetettiin osoitteesta
-__CURRENTADDRESS__
-__CURRENTTIME__
----STRINGEND
-
----STRING approval_mail_subject
-Rekisteröinti odottaa hyväksyntää
----STRINGEND
-
----STRING cancel
-Peruuta
----STRINGEND
-
----STRING disapproval_mail_body
-Valitettavasti käyttäjätilihakemuksesi on hylätty.
-
--- 
-Tämä automaattisesti luotu viesti lähetettiin osoitteesta
-__CURRENTADDRESS__
-__CURRENTTIME__
----STRINGEND
-
----STRING disapproval_mail_subject
-Käyttäjätilihakemuksesi on hylätty
----STRINGEND
-
----STRING email
-Sähköposti
----STRINGEND
-
----STRING import contacts
-Tuo kontakteja
----STRINGEND
-
----STRING invitation expired
-Kutsu vanhentunut
----STRINGEND
-
----STRING multiple
-Useita
----STRINGEND
-
----STRING name
-Nimi
----STRINGEND
-
----STRING pending_mail_body
-Rekisteröintisi onnistui. Sivuston ylläpitäjien on vielä hyväksyttävä ja aktivoitava käyttäjätunnuksesi ennen kuin se alkaa toimimaan.
-
-Sinulle ilmoitetaan sähköpostitse tuloksesta.
-
-Tämä vieseti on luotu automaattisesti, älä vastaa tähän.
-
--- 
-Tämä automaattisesti luotu viesti lähetettiin osoitteesta
-__CURRENTADDRESS__
-__CURRENTTIME__
----STRINGEND
-
----STRING register
-Rekisteröidy
----STRINGEND
-
----STRING registration finished
-Rekisteröinti valmis
----STRINGEND
-
----STRING registration pending for approval
-Rekisteröinti odottaa hyväksyntää
----STRINGEND
-
----STRING schemadb_account
-Tietokantakuvaus käyttäjätilin luonnin jälkeen
----STRINGEND
-
----STRING schemadb_account_creation
-Tietokantakuvaus ennen käyttäjätilin luontia
----STRINGEND
-
----STRING submit
-Lähetä
----STRINGEND
-
 ---STRING you will be notified of the decision to the provided email address
 Sinua tiedotetaan päätöksestä toimittamaasi sähköpostiosoitteeseen.
 ---STRINGEND
 
+---STRING your account has already been activated.
+Tunnuksesi on jo aktivoitu.
+---STRINGEND
+
+---STRING your account has not yet been activated
+Tiliäsi ei ole vielä aktivoitu
+---STRINGEND
+
 ---STRING your registration is now pending for approval
 Käyttäjätunnuksesi odottaa nyt hyväksyntää.
+---STRINGEND
+
+---STRING city
+Postitoimipaikka
 ---STRINGEND
 

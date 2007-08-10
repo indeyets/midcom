@@ -563,10 +563,12 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
     {
         switch ($this->_stage)
         {
-            case 'input':
             case 'confirm':
-                $operations = Array();
+                // Add previous link only to the confirmation page
                 $operations['previous'] = '';
+                // Fall through
+            case 'input':
+                $operations = Array();
                 $operations['next'] = '';
                 $operations['cancel'] = '';
                 $this->_schemadb[$this->_account_type]->operations = $operations;
@@ -583,7 +585,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         $this->_controller = midcom_helper_datamanager2_controller::create('nullstorage');
         $this->_controller->schemadb = $this->_schemadb;
         $this->_controller->schemaname = $this->_account_type;
-        $this->_controller->defaults = Array();
+        $this->_controller->defaults = array();
         $this->_controller->initialize();
         $this->_register_username_validation_rule($this->_controller);
     }
@@ -893,7 +895,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         $hash = $args[1];
         
         $this->_person = new midcom_db_person($guid);
-        if (! $this->_person)
+        if (!$this->_person)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, 'Invalid activation link, the person record was not found.');
             // This will exit.
@@ -901,7 +903,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         
         // Check if the user account needs to be approved first
         if (   $this->_config->get('require_activation')
-            && $this->_person->get_parameter('net.nehmer.account', 'require_approval'))
+            && $this->_person->get_parameter('net.nehmer.account', 'require_approval') === 'require_approval')
         {
             $this->activated = false;
             return true;

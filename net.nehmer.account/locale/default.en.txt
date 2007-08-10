@@ -23,6 +23,10 @@ Account details have been published on %s.
 Account registration
 ---STRINGEND
 
+---STRING activation pending
+Activation pending
+---STRINGEND
+
 ---STRING activation successful
 Activation successful
 ---STRINGEND
@@ -51,6 +55,26 @@ Your user account is ready for activation
 Add contacts
 ---STRINGEND
 
+---STRING administrator email address where a notice will be sent
+Administrator email address where a notice will be sent
+---STRINGEND
+
+---STRING allow publishing user accounts
+Allow publishing user accounts
+---STRINGEND
+
+---STRING allow users to cancel their memberships
+Allow users to cancel their memberships
+---STRINGEND
+
+---STRING allow users to change their usernames
+Allow users to change their usernames
+---STRINGEND
+
+---STRING allow users to register
+Allow users to register
+---STRINGEND
+
 ---STRING apply date
 Apply date
 ---STRINGEND
@@ -77,8 +101,16 @@ Registration pending for approval
 Approve or reject the following accounts
 ---STRINGEND
 
+---STRING assign new users to group
+Assign new users to group
+---STRINGEND
+
 ---STRING avatar
 Avatar
+---STRINGEND
+
+---STRING birthdate
+Birthdate
 ---STRINGEND
 
 ---STRING cancel
@@ -170,6 +202,10 @@ Failed to send the rejection message to %s
 First login
 ---STRINGEND
 
+---STRING firstname
+Firstname
+---STRINGEND
+
 ---STRING import contacts
 Import contacts
 ---STRINGEND
@@ -192,6 +228,10 @@ Invitation expired
 
 ---STRING last login
 Last login
+---STRINGEND
+
+---STRING lastname
+Lastname
 ---STRINGEND
 
 ---STRING lost password
@@ -299,6 +339,10 @@ __CURRENTADDRESS__
 __CURRENTTIME__
 ---STRINGEND
 
+---STRING postcode
+Postcode
+---STRINGEND
+
 ---STRING publish
 Publish
 ---STRINGEND
@@ -343,6 +387,10 @@ Reject
 Rejected
 ---STRINGEND
 
+---STRING require administrator approval for a new user account
+Require administrator approval for a new user account
+---STRINGEND
+
 ---STRING schemadb_account
 Schema database to use for accounts after creation
 ---STRINGEND
@@ -357,6 +405,10 @@ Select account type
 
 ---STRING select an account type
 Please select an account type
+---STRINGEND
+
+---STRING street
+Street
 ---STRINGEND
 
 ---STRING submit
@@ -387,6 +439,10 @@ Username
 Your username has been changed.
 ---STRINGEND
 
+---STRING username is email address
+Username is email address
+---STRINGEND
+
 ---STRING welcome_mail_body
 Welcome to the community. Your account has been activated and is now fully operational.
 
@@ -413,7 +469,15 @@ You will be notified of the decision to the provided email address
 Your account has already been activated.
 ---STRINGEND
 
+---STRING your account has not yet been activated
+Your account has not yet been activated
+---STRINGEND
+
 ---STRING your registration is now pending for approval
 Your registration is now pending for approval
+---STRINGEND
+
+---STRING city
+City
 ---STRINGEND
 

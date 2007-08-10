@@ -41,3 +41,25 @@
   height: 20em;
 }
 
+#net_nehmer_account_pending div.form_toolbar input
+{
+  background-image: url('');
+  background-repeat: no-repeat;
+  background-position: 2px center;
+  padding-left: 18px;
+}
+
+#net_nehmer_account_pending div.form_toolbar input.approve
+{
+  background-image: url('../stock-icons/16x16/approved.png');
+}
+
+#net_nehmer_account_pending div.form_toolbar input.reject
+{
+  background-image: url('../stock-icons/16x16/trash.png');
+}
+
+#net_nehmer_account_pending div.form_toolbar input.cancel
+{
+  background-image: url('../stock-icons/16x16/cancel.png');
+}

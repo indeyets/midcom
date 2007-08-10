@@ -1,7 +1,7 @@
     </table>
     <div class="form_toolbar">
         <input class="approve" type="submit" name="f_submit" value="<?php echo $data['l10n_midcom']->get('approve'); ?>" />
-        <input class="disapprove" type="submit" name="f_mass_reject" value="<?php echo $data['l10n']->get('reject'); ?>" />
+        <input class="reject" type="submit" name="f_mass_reject" value="<?php echo $data['l10n']->get('reject'); ?>" />
         <input class="cancel" type="submit" name="f_cancel" value="<?php echo $data['l10n_midcom']->get('cancel'); ?>" />
     </div>
 </form>

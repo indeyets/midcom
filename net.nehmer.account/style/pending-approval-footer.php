@@ -64,7 +64,7 @@ if (!isset($_POST['f_mass_reject']))
 if (!isset($_POST['f_submit']))
 {
 ?>
-        <input class="disapprove" type="submit" name="f_reject" value="<?php echo $data['l10n']->get('reject'); ?>" />
+        <input class="reject" type="submit" name="f_reject" value="<?php echo $data['l10n']->get('reject'); ?>" />
 <?php
 }
 ?>

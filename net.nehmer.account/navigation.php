@@ -64,12 +64,20 @@ class net_nehmer_account_navigation extends midcom_baseclasses_components_naviga
         if (   $_MIDCOM->auth->admin
             && $this->_config->get('require_activation'))
         {
+            // Get the count of persons waiting for approval
+            $qb = midcom_db_person::new_query_builder();
+            $qb->add_constraint('parameter.domain', '=', 'net.nehmer.account');
+            $qb->add_constraint('parameter.name', '=', 'require_approval');
+            $qb->add_constraint('parameter.value', '=', 'require_approval');
+            
+            $count = $qb->count();
+            
             $leaves[NET_NEHMER_ACCOUNT_LEAFID_PENDING] = array
             (
                 MIDCOM_NAV_SITE => Array
                 (
                     MIDCOM_NAV_URL => "pending/",
-                    MIDCOM_NAV_NAME => $this->_l10n->get('pending approvals'),
+                    MIDCOM_NAV_NAME => $this->_l10n->get('pending approvals') . " ({$count})",
                 ),
                 MIDCOM_NAV_ADMIN => null,
                 MIDCOM_META_CREATOR => $this->_topic->creator,
