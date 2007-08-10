@@ -206,7 +206,7 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
         }
         if (isset($this->max_results))
         {
-            $this->_js_widget_options['max_results'] = $this->max_results;
+            $this->_js_widget_options['result_limit'] = $this->max_results;
         }
         if (isset($this->autofill_enabled))
         {
@@ -415,11 +415,16 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
         debug_pop();        
     }
 
+    /**
+     * TODO: Implement freezing and unfreezing
+     */
     function freeze()
     {
+        //We should freeze the inputs here
     }
     function unfreeze()
     {
+        //We should unfreeze the inputs here
     }
     function is_frozen()
     {
@@ -442,7 +447,7 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
             }
         }
         echo '</ul>';
-    }    
+    }
 }
 
 ?>
