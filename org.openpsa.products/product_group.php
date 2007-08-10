@@ -1,8 +1,15 @@
 <?php
 /**
- * MidCOM wrapped class for access to stored queries
+ * @package org.openpsa.products
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
-
+/**
+ * MidCOM wrapped class for access to stored queries
+ *
+ * @package org.openpsa.products
+ */
 class org_openpsa_products_product_group_dba extends __org_openpsa_products_product_group_dba
 {
     function org_openpsa_products_product_group_dba($id = null)
@@ -72,8 +79,16 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
         }
         return false;
     }
-
-    function list_groups($up = 0, $prefix = '', $keyproperty = 'id')
+    
+    /**
+     *
+     *
+     * @access static public
+     * @param mixed $up            Either the ID or GUID of the product group
+     * @param string $prefix       Prefix for the code
+     * @param string $keyproperty  
+     */
+    function list_groups($up = 0, $prefix = '', $keyproperty = 'id', $order_by_score = false)
     {
         static $group_list = array();
         
@@ -93,13 +108,36 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
                 $group_list[$keyproperty][''] = $_MIDCOM->i18n->get_string('toplevel', 'org.openpsa.products');
             }
         }
+        
+        // Check for the request and change GUID to int if required
+        if (mgd_is_guid($up))
+        {
+            $group = new org_openpsa_products_product_group_dba($up);
+            
+            // Error message on failure
+            if (empty($group))
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to get the configured product root group');
+                // This will exit
+            }
+            
+            $up = $group->id;
+        }
 
         $qb = org_openpsa_products_product_group_dba::new_query_builder();
         $qb->add_constraint('up', '=', $up);
+        
+        // Order by score if required
+        if ($order_by_score)
+        {
+            $qb->add_order('metadata.score', 'DESC');
+        }
+        
         $qb->add_order('code');
         $qb->add_order('title');
         $groups = $qb->execute();
-
+        
+        // Get the properties of each group
         foreach ($groups as $group)
         {
             $group_list[$keyproperty][$group->$keyproperty] = "{$prefix}{$group->code} {$group->title}";

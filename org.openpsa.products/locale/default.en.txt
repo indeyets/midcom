@@ -19,6 +19,10 @@
 %s is at most
 ---STRINGEND
 
+---STRING business area schema database
+Business area schema database
+---STRINGEND
+
 ---STRING code
 Code
 ---STRINGEND
@@ -47,6 +51,18 @@ day
 Delivery type
 ---STRINGEND
 
+---STRING fields available for matching are defined in schema
+Fields available for matching are defined in schema
+---STRINGEND
+
+---STRING file to import
+File to import
+---STRINGEND
+
+---STRING first row is headers
+First row is headers
+---STRINGEND
+
 ---STRING groups
 Product groups
 ---STRINGEND
@@ -55,12 +71,28 @@ Product groups
 hour
 ---STRINGEND
 
+---STRING import
+Import
+---STRINGEND
+
+---STRING iso-latin-1 encoding
+ISO-Latin-1 encoding
+---STRINGEND
+
+---STRING list group products
+List group products
+---STRINGEND
+
 ---STRING material goods
 Material goods
 ---STRINGEND
 
 ---STRING month
 month
+---STRINGEND
+
+---STRING number of items in feed
+Number of items in feed
 ---STRINGEND
 
 ---STRING org.openpsa.products
@@ -115,6 +147,10 @@ quarter
 Product search
 ---STRINGEND
 
+---STRING search all items on default
+Search all items on default
+---STRINGEND
+
 ---STRING service
 Service
 ---STRINGEND
@@ -147,15 +183,23 @@ Type
 Unit
 ---STRINGEND
 
+---STRING updated %s
+updated %s
+---STRINGEND
+
 ---STRING updated products
 Updated products
+---STRINGEND
+
+---STRING whether to enable adding subcomponents to products
+Whether to enable adding subcomponents to products
 ---STRINGEND
 
 ---STRING year
 year
 ---STRINGEND
 
----STRING updated %s
-updated %s
+---STRING you can import csv files here
+You can import csv files here
 ---STRINGEND
 

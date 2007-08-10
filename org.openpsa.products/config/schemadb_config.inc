@@ -29,6 +29,51 @@
                 'title' => 'display settings',
             ),
         ),
+        'search_default_to_all' => array
+        (
+            'description' => 'search all items on default',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'org.openpsa.products',
+            'config_key' => 'search_default_to_all',
+            'widget' => 'config_radiobox',
+            'widget_radiobox_choices' => array
+            (
+                '' => 'default setting',
+                '1' => 'yes',
+                '0' => 'no',
+            ),
+        ),
+        'enable_components' => array
+        (
+            'description' => 'whether to enable adding subcomponents to products',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'org.openpsa.products',
+            'config_key' => 'enable_components',
+            'widget' => 'config_radiobox',
+            'widget_radiobox_choices' => array
+            (
+                '' => 'default setting',
+                '1' => 'yes',
+                '0' => 'no',
+            ),
+        ),
+        'group_list_products' => array
+        (
+            'description' => 'list group products',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'org.openpsa.products',
+            'config_key' => 'group_list_products',
+            'widget' => 'config_radiobox',
+            'widget_radiobox_choices' => array
+            (
+                '' => 'default setting',
+                '1' => 'yes',
+                '0' => 'no',
+            ),
+        ),
         'products_per_page' => array
         (
             'description' => 'products per page',
@@ -36,6 +81,14 @@
             'location' => 'config',
             'config_domain' => 'org.openpsa.products',
             'config_key' => 'products_per_page',
+        ),        
+        'show_items_in_feed' => array
+        (
+            'description' => 'number of items in feed',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'org.openpsa.products',
+            'config_key' => 'show_items_in_feed',
         ),        
         'root_group' => array
         (
@@ -67,6 +120,14 @@
             'location' => 'config',
             'config_domain' => 'org.openpsa.products',
             'config_key' => 'schemadb_group',
+        ),
+        'schemadb_businessarea' => array
+        (
+            'description' => 'business area schema database',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'org.openpsa.products',
+            'config_key' => 'schemadb_businessarea',
             'end_fieldgroup' => '',
         ),
 	)

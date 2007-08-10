@@ -147,6 +147,10 @@ Tyyppi
 Yksikkö
 ---STRINGEND
 
+---STRING updated %s
+päivitetty %s
+---STRINGEND
+
 ---STRING updated products
 Päivitetyt tuotteet
 ---STRINGEND
@@ -155,7 +159,47 @@ Päivitetyt tuotteet
 vuosi
 ---STRINGEND
 
----STRING updated %s
-päivitetty %s
+---STRING business area schema database
+Bisnesalueen tietokantakuvaus
+---STRINGEND
+
+---STRING fields available for matching are defined in schema
+Käytettävissä olevat kentät on määritelty tietokantakuvauksessa
+---STRINGEND
+
+---STRING file to import
+Tuotava tiedosto
+---STRINGEND
+
+---STRING first row is headers
+Ensimmäinen rivi on otsikkotiedoille
+---STRINGEND
+
+---STRING import
+Tuo
+---STRINGEND
+
+---STRING iso-latin-1 encoding
+ISO-Latin1 -merkistö
+---STRINGEND
+
+---STRING list group products
+Listaa tuoteryhmät
+---STRINGEND
+
+---STRING number of items in feed
+Syötteen kohteiden lukumäärä
+---STRINGEND
+
+---STRING search all items on default
+Etsi kaikista kohteista oletuksena
+---STRINGEND
+
+---STRING whether to enable adding subcomponents to products
+Sallitaanko komponenttien lisääminen tuotteisiin
+---STRINGEND
+
+---STRING you can import csv files here
+Voit tuoda CSV-tiedostot täältä
 ---STRINGEND
 

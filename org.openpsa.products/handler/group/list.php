@@ -66,7 +66,7 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
             $data['view_title'] = "{$data['group']->code} {$data['group']->title}";
             $data['acl_object'] = $data['group'];
         }
-
+        
         return true;
     }
 
@@ -188,6 +188,32 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
          * Set the breadcrumb text
          */
         $this->_update_breadcrumb_line();
+        
+        // Set the active leaf
+        if (   $this->_config->get('display_navigation')
+            && $this->_request_data['group'])
+        {
+            $group =& $this->_request_data['group'];
+            
+            // Loop as long as it is possible to get the parent group
+            while ($group->guid)
+            {
+                // Break to the requested level (probably the root group of the products content topic)
+                if (   $group->id === $this->_config->get('root_group')
+                    || $group->guid === $this->_config->get('root_group'))
+                {
+                    break;
+                }
+                $temp = $group->id;
+                $group = new org_openpsa_products_product_group_dba($group->up);
+            }
+            
+            if (isset($temp))
+            {
+                // Active leaf of the topic
+                $this->_component_data['active_leaf'] = $temp;
+            }
+        }
 
         /**
          * change the pagetitle. (must be supported in the style)
@@ -296,10 +322,11 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
         }
 
         $parent = $group;
+        
         while ($parent)
         {
             $group = $parent;
-
+            
             if ($group->guid === $root_group)
             {
                 break;
@@ -313,6 +340,7 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
             {
                 $url = "{$group->guid}/";
             }
+            
 
             $tmp[] = Array
             (
@@ -321,6 +349,15 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
             );
             $parent = $group->get_parent();
         }
+        
+        // If navigation is configured to display product groups, remove the lowest level
+        // parent to prevent duplicate entries in breadcrumb display
+        if (   $this->_config->get('display_navigation')
+            && isset($tmp[count($tmp) - 1]))
+        {
+            unset($tmp[count($tmp) - 1]);
+        }
+        
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', array_reverse($tmp));
     }
 }

@@ -3,7 +3,7 @@
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
 <div class="main">
-    <h1>Import</h1>
+    <h1><?php echo $data['l10n']->get('import'); ?></h1>
 
     <p>
         <?php

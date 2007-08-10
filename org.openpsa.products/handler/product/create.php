@@ -138,7 +138,7 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
     function _handler_create($handler_id, $args, &$data)
     {
         $this->_request_data['up'] = (int) $args[0];
-
+        
         if ($this->_request_data['up'] == 0)
         {
             $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_products_product_dba');
