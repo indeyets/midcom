@@ -35,11 +35,11 @@ input.tags_widget_input
 
 .tags_widget_loading
 {
-	background : Window url('ajax-loading-small.gif') right center no-repeat;
+	background : Window url('../ajax-loading-small.gif') right center no-repeat;
 }
 .tags_widget_error
 {
-	background : Window url('../stock-icons/16x16/cancel.png') right center no-repeat;    
+	background : Window url('../../stock-icons/16x16/cancel.png') right center no-repeat;    
 }
 
 .tags_widget_result_item_active

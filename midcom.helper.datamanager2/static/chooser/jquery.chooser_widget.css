@@ -1,0 +1,115 @@
+input.chooser_widget_input
+{
+    
+}
+
+.chooser_widget_headers
+{
+	border: 1px solid WindowFrame;
+	background-color: Window;
+	overflow: hidden;
+	clear: left;
+	width: 100%;
+	list-style-position: outside;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+    margin-top: 5px;
+}
+.chooser_widget_headers .chooser_widget_header_item
+{
+    height: 22px;
+    line-height: 22px;
+    width: 20%;
+    float: left;
+}
+.chooser_widget_headers .chooser_widget_header_item div
+{
+    padding-left: 3px;
+}
+
+.chooser_widget_results
+{
+	border: 1px solid WindowFrame;
+	background-color: Window;
+	overflow: hidden;
+	clear: left;
+	width: 100%;
+	list-style-position: outside;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.chooser_widget_results .chooser_widget_result_item
+{
+	margin: 0px;
+	cursor: default;
+	display: block;
+	width: 100%;
+	font: menu;
+	font-size: 12px;
+	overflow: hidden;
+    height: 22px;
+    line-height: 22px;
+}
+.chooser_widget_results .chooser_widget_result_item div.chooser_widget_item_part
+{
+    width: 20%;
+    float: left;
+    padding-left: 3px;
+}
+
+.chooser_widget_loading
+{
+	background : Window url('../ajax-loading-small.gif') right center no-repeat;
+}
+.chooser_widget_error
+{
+	background : Window url('../../stock-icons/16x16/cancel.png') right center no-repeat;
+}
+
+/*#chooser_widget_item_part_status
+{
+    width: 20px;
+    text-align: center;
+}*/
+
+.chooser_widget_result_item_hover
+{
+/*  background-color: #c3c3c3;
+    color: #000;*/
+}
+.chooser_widget_result_item_hover #chooser_widget_item_part_status
+{
+    width: 20px;
+    text-align: center;
+    float: right;
+    margin-right: 3px;
+	background : url('../../stock-icons/16x16/approved_fade_50.png') center center no-repeat;
+}
+.chooser_widget_result_item_active
+{
+/*  background-color: green;
+    color: #fff;*/
+}
+.chooser_widget_result_item_active #chooser_widget_item_part_status
+{
+    width: 20px;
+    text-align: center;
+    float: right;
+    margin-right: 3px;
+	background : url('../../stock-icons/16x16/approved.png') center center no-repeat;
+}
+.chooser_widget_result_item_deleted
+{
+/*  color: black;
+    border: 1px solid red;*/
+}
+.chooser_widget_result_item_deleted #chooser_widget_item_part_status
+{
+    width: 20px;
+    text-align: center;
+    float: right;
+    margin-right: 3px;
+	background : url('../../stock-icons/16x16/cancel.png') center center no-repeat;
+}

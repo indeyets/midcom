@@ -29,8 +29,7 @@
 jQuery.fn.extend({
 	midcom_helper_datamanager2_widget_tags_widget: function(url, options) {
 		options = jQuery.extend({}, jQuery.midcom_helper_datamanager2_widget_tags.defaults, {
-			url: url || null,
-			delay: jQuery.midcom_helper_datamanager2_widget_tags.defaults.delay
+			url: url || null
 		}, options);
 		return this.each(function() {
 			new jQuery.midcom_helper_datamanager2_widget_tags(this, options);
@@ -382,7 +381,7 @@ jQuery.midcom_helper_datamanager2_widget_tags.Select = function (options, input,
 			function highlight(value) {
 				return value.replace(new RegExp("(" + term + ")", "gi"), "<strong>$1</strong>");
 			}
-			jQuery("<li>").html( highlight(midcom_helper_datamanager2_widget_tags_format_item(data[i].data, i+1, num)) ).appendTo(list);
+			jQuery("<li>").html( highlight(midcom_helper_datamanager2_widget_tags_format_item(data[i].data)) ).appendTo(list);
 		}
 		listItems = list.find("li");
 		if ( options.select_first ) {
@@ -479,10 +478,10 @@ jQuery.midcom_helper_datamanager2_widget_tags.SelectionHolder = function(options
 	
 	function add(data)
 	{
-	    console.log('SelectionHolder add');
-	    console.log('data.id: '+data.id);
-	    console.log('data.name: '+data.name);
-	    console.log('data.color: '+data.color);
+	    //console.log('SelectionHolder add');
+	    //console.log('data.id: '+data.id);
+	    //console.log('data.name: '+data.name);
+	    //console.log('data.color: '+data.color);
 	    	    	    
         if (! can_add(data.id))
         {
