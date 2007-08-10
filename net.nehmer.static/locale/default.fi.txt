@@ -11,6 +11,10 @@ Näytä vain hyväksytyt artikkelit
 Luo automaattinen sisällysluettelo kansiolle?
 ---STRINGEND
 
+---STRING ajax_enable
+Salli sisällön muokkaaminen AJAXilla suoraan sivulla
+---STRINGEND
+
 ---STRING approve
 Hyväksy
 ---STRINGEND
@@ -139,7 +143,7 @@ Näytä artikkeli
 Onko kansio näkyvissä
 ---STRINGEND
 
----STRING ajax_enable
-Salli sisällön muokkaaminen AJAXilla suoraan sivulla
+---STRING simple_name_handling
+Luodaanko artikkelin URL-nimi automaattisesti?
 ---STRINGEND
 
