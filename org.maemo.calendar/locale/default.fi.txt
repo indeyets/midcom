@@ -1,0 +1,33 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING Default
+Vakio
+---STRINGEND
+
+---STRING calendar_title
+Ryhmäkalenteri
+---STRINGEND
+
+---STRING current view
+Nykyinen näkymä
+---STRINGEND
+
+---STRING org.maemo.calendar
+Maemo ryhmäkalenteri
+---STRINGEND
+
+---STRING profile publishing successfull
+Profiili luotiin onnistuneesti!
+---STRINGEND
+
+---STRING profile saved successfully
+Profiili tallennettiin onnistuneesti!
+---STRINGEND
+
+---STRING root event permissions
+Juuritapahtuman oikeudet
+---STRINGEND
+
