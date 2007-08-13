@@ -32,7 +32,7 @@ Revisionskontrolle
 ---STRINGEND
 
 ---STRING restore this revision (%s)
-Diese Revision wieder herstellen
+Diese Revision wiederherstellen
 ---STRINGEND
 
 ---STRING restore to version %s failed, reason %s
@@ -76,6 +76,6 @@ Diese Revision (%s) anzeigen
 ---STRINGEND
 
 ---STRING viewing version %s of %s
-Version %s vom %s
+Version %s von %s
 ---STRINGEND
 
