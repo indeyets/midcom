@@ -6,7 +6,7 @@
 'frontpage_show_area_latest' => false,
 'frontpage_show_area_latest_items' => 2,
 'frontpage_show_area_substyle' => '',
-'frontpage_show_abstract_length' => 700,
+'frontpage_show_abstract_length' => 1000,
 
 'comments_enable' => true,
 'comments_modifier' => 1.5,

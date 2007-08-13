@@ -101,7 +101,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         }
 
         $data = preg_replace('/<\/?(p|br)([^>]*)>/', ' ', $data);
-        $data=strip_tags($data,'<a>');
+        $data = strip_tags($data,'<a>');
 
         if (strlen($data) <= $getCnt)
         {
@@ -178,6 +178,17 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             
             $this->articles[$guid] = $article;
         }
+        
+        $_MIDCOM->add_link_head(
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . "/org.maemo.socialnews/social.css",
+            )
+        );
+        
+        $_MIDCOM->componentloader->load_graceful('net.nemein.favourites');
     
         return true;
     }

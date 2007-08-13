@@ -3,9 +3,7 @@ org.maemo.socialnews TODO
 
 ## Blogpaper display
 
-* Implement default, newspaper-like display of top news items
 * Implement a quick "latest" view of latest top items
-* Store top items listing of a day into article via daily cron
 * Implement RSS feed of the daily cached "top items" view (i.e. issue)
 
 ## Item relations (longer-term TODO)
@@ -13,3 +11,7 @@ org.maemo.socialnews TODO
 * Determine items related to an item based on links in content
 * Look for Cross Site Content machine tags
 * Possibly perform keyword analysis on headline?
+
+## Score tuning
+
+* Enable burying of old stories

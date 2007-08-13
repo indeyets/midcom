@@ -13,7 +13,8 @@ if (   isset($_GET['cache'])
 $qb = midcom_db_article::new_query_builder();
 $qb->add_constraint('topic.component', '=', 'net.nehmer.blog');
 $qb->add_order('metadata.published', 'DESC');
-$qb->set_limit(8);
+$cutoff_date = gmdate('Y-m-d H:i:s', mktime(0, 0, 0, date('m'), date('d') - $GLOBALS['midcom_component_data']['org.maemo.socialnews']['config']->get('frontpage_limit_days'), date('Y')));
+$qb->add_constraint('metadata.published', '>', $cutoff_date);
 
 $articles = $qb->execute();
 $articles_array = array();
