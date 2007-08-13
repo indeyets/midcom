@@ -11,6 +11,7 @@
 'frontpage_show_area_latest_items' => 2,
 'frontpage_show_area_substyle' => '',
 
+'bestof_items' => 10,
 
 'comments_enable' => true,
 'comments_modifier' => 1.5,
