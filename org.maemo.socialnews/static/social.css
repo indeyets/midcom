@@ -8,6 +8,7 @@ div.org_maemo_socialnews div.main_items div.hentry
     border-bottom: 1px dotted #c0c0c0;
     padding-bottom: 6px;
     margin-bottom: 6px;
+    padding-right: 6px;
 }
 
 div.org_maemo_socialnews h2.entry-title
@@ -41,6 +42,7 @@ div.org_maemo_socialnews div.hentry div.post-info a
 {
     font-style: normal;
     font-family: sans-serif;
+    font-weight: bold;
 }
 div.org_maemo_socialnews div.hentry div.post-info abbr
 {
@@ -55,4 +57,6 @@ div.org_maemo_socialnews div.hentry div.post-info span.net_nemein_favourites
 div.org_maemo_socialnews div.main_items div.hentry div.post-info span.net_nemein_favourites
 {
     float: right;
+    margin-right: 6px;
+    margin-bottom: 6px;
 }
