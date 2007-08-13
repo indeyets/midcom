@@ -46,7 +46,15 @@ class org_maemo_socialnews_cron_archive extends midcom_baseclasses_components_cr
         
         // Get social news output
         ob_start();
-        $_MIDCOM->dynamic_load($node[MIDCOM_NAV_RELATIVEURL]);
+        $substyle = $this->_config->get('archive_generation_substyle');
+        if (!empty($substyle))
+        {
+            $_MIDCOM->dynamic_load("midcom-substyle-{$substyle}/{$node[MIDCOM_NAV_RELATIVEURL]}");
+        }
+        else
+        {
+            $_MIDCOM->dynamic_load($node[MIDCOM_NAV_RELATIVEURL]);
+        }
         $contents = ob_get_contents();
         ob_end_clean();
         

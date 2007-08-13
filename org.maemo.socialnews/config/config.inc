@@ -14,6 +14,7 @@
 'bestof_items' => 10,
 
 'archive_generation_topic' => null,
+'archive_generation_substyle' => '',
 
 'comments_enable' => true,
 'comments_modifier' => 1.5,
