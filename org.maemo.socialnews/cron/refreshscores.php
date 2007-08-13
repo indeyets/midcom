@@ -28,7 +28,7 @@ class org_maemo_socialnews_cron_refreshscores extends midcom_baseclasses_compone
 
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic.component', '=', 'net.nehmer.blog');
-        $qb->add_constraint('metadata.published', '>', date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') - 3, date('y')));
+        $qb->add_constraint('metadata.published', '>', date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') - 3, date('y'))));
         $articles = $qb->execute();
         foreach ($articles as $article)
         {

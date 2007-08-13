@@ -50,6 +50,25 @@ class org_maemo_socialnews_viewer extends midcom_baseclasses_components_request
             'handler' => Array('org_maemo_socialnews_handler_bestof', 'index'),
             'fixed_args' => Array('best'),
         );
+        
+        // The Archive
+        $this->_request_switch['archive-welcome'] = Array
+        (
+            'handler' => Array('org_maemo_socialnews_handler_archive', 'welcome'),
+            'fixed_args' => Array('archive'),
+        );
+        $this->_request_switch['archive-year'] = Array
+        (
+            'handler' => Array('org_maemo_socialnews_handler_archive', 'list'),
+            'fixed_args' => Array('archive', 'year'),
+            'variable_args' => 1,
+        );
+        $this->_request_switch['archive-month'] = Array
+        (
+            'handler' => Array('org_maemo_socialnews_handler_archive', 'list'),
+            'fixed_args' => Array('archive', 'month'),
+            'variable_args' => 2,
+        );
     }
 
     /**

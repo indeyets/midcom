@@ -41,6 +41,11 @@
             'handler' => 'org_maemo_socialnews_cron_refreshscores',
             'recurrence' => MIDCOM_CRON_HOUR,
         ),
+        1 => array
+        (
+            'handler' => 'org_maemo_socialnews_cron_archive',
+            'recurrence' => MIDCOM_CRON_DAY,
+        ),
     )
 ),
 
