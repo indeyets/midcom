@@ -12,6 +12,6 @@ if ($coordinates)
 }
 else
 {
-    echo "Failed to get position, last error is {$plazes->error}";
+    echo "Failed to get position, last error is {$plazes->error} {$plazes->error_string}";
 }
 ?>

@@ -191,6 +191,7 @@ class org_routamc_positioning_importer_plazes extends org_routamc_positioning_im
         else
         {
             $this->error = 'POSITIONING_PLAZES_FAULT_' . $resp->faultCode();
+            $this->error_string = $resp->faultString();
             return null;
         }
     }

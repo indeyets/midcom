@@ -27,6 +27,13 @@ class org_routamc_positioning_importer extends midcom_baseclasses_components_pur
      * @var string
      */
     var $error = 'MGD_ERR_OK';
+    
+    /**
+     * Error string from trying to import. Either an mgd_errstr() or an additional error code from component
+     *
+     * @var string
+     */
+    var $error_string = '';
 
     /**
      * Initializes the class. The real startup is done by the initialize() call.
