@@ -1,4 +1,6 @@
 'frontpage_score_start' => 50,
+'frontpage_score_hour_penalty' => 0.25,
+'frontpage_limit_days' => 20,
 'frontpage_show_main_items' => 3,
 'frontpage_show_secondary_items' => 7,
 'frontpage_show_area_latest' => false,

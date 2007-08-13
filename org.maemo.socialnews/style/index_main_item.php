@@ -3,11 +3,14 @@ $article = $data['article'];
 $node = $data['node'];
 
 $author_string = '';
-$authors = explode('|', $article->metadata->authors);
-foreach ($authors as $author_guid)
+if (isset($article->metadata->authors))
 {
-    $author = new midcom_db_person($author_guid);
-    $author_string = $author->name;
+    $authors = explode('|', $article->metadata->authors);
+    foreach ($authors as $author_guid)
+    {
+        $author = new midcom_db_person($author_guid);
+        $author_string = $author->name;
+    }
 }
 ?>
 <div class="hentry">

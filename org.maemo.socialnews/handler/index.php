@@ -17,6 +17,7 @@
 class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_handler 
 {
     private $articles = array();
+    private $articles_scores = array();
     private $nodes = array();
 
     /**
@@ -43,40 +44,53 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         return $this->nodes[$node_id];
     }
     
-    private function query_articles($score, $limit)
+    private function determine_score($id, $timestamp)
     {
-        if ($score < 0)
+        $score = 0;
+        $sc = org_maemo_socialnews_score_article_dba::new_collector('article', $id);
+        $sc->add_value_property('score');
+        $sc->execute();
+        $score_caches = $sc->list_keys();
+        foreach ($score_caches as $guid => $cache)
         {
-            // We shouldn't recurse deeper than this
-            return false;
+            $score = $sc->get_subkey($guid, 'score');
         }
         
-        $article_count = count($this->articles);
-        if ($article_count >= $limit)
+        $article_age = round((time() - $timestamp) / 3600);
+        return $score - ($article_age * $this->_config->get('frontpage_score_hour_penalty'));
+    }
+    
+    private function seek_articles($limit)
+    {
+        // Get list of all articles inside the hard time limit
+        // FIXME: Use Midgard_Collector here once it supports metadata properties as value properties
+        $articles_scores = array();
+        $articles_by_guid = array();
+        $qb = midcom_db_article::new_query_builder();
+        $cutoff_date = gmdate('Y-m-d H:i:s', mktime(0, 0, 0, date('m'), date('d') - $this->_config->get('frontpage_limit_days'), date('Y')));
+        $qb->add_constraint('metadata.published', '>', $cutoff_date);
+        $qb->add_constraint('topic.component', '=', 'net.nehmer.blog');
+        $articles = $qb->execute();
+        foreach ($articles as $article)
         {
-            // Stop recursion when article count passes limit
-            return false;
+            $articles_by_guid[$article->guid] = $article;
+            $this->articles_scores[$article->guid] = $this->determine_score($article->id, $article->metadata->published);
         }
         
-        $qb = org_maemo_socialnews_score_article_dba::new_query_builder();
-        $qb->add_order('score', 'DESC');
-        $qb->add_constraint('score', '>=', $score);
-        $qb->set_limit($limit - $article_count);
-        
-        $ids = array_keys($this->articles);
-        foreach ($ids as $id)
+        arsort($this->articles_scores);
+
+        $found = 0;
+        foreach ($this->articles_scores as $guid => $score)
         {
-            $qb->add_constraint('article', '<>', $id);
+            if ($found >= $limit)
+            {
+                break;
+            }
+            
+            $this->articles[$guid] = $articles_by_guid[$guid];
+            $found++;
         }
         
-        $article_scores = $qb->execute();
-        foreach ($article_scores as $article_score)
-        {
-            $article = new midcom_db_article($article_score->article);
-            $this->articles[$article_score->article] = $article;
-        }
-        
-        return true;
     }
     
     private function generate_caption($data, $getCnt)
@@ -140,17 +154,12 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
     function _handler_index($handler_id, $args, &$data)
     {
         // Find items matching our criteria
-        $recurse = true;
-        $score = (float) $this->_config->get('frontpage_score_start');
         $limit = (int) $this->_config->get('frontpage_show_main_items') + $this->_config->get('frontpage_show_secondary_items');
-        while ($recurse)
-        {
-            $recurse = $this->query_articles($score, $limit);
-            $score -= 10;
-        }
+        
+        $this->seek_articles($limit);
         
         // Normalize articles
-        foreach ($this->articles as $id => $article)
+        foreach ($this->articles as $guid => $article)
         {
             if (empty($article->abstract))
             {
@@ -167,7 +176,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
                 $article->url = $_MIDCOM->permalinks->create_permalink($article->guid);
             }
             
-            $this->articles[$id] = $article;
+            $this->articles[$guid] = $article;
         }
     
         return true;
