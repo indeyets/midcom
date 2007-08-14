@@ -62,8 +62,11 @@ function show_results(fc,gc){if(gc=="success"){set_modal_window_contents(fc);}
 if(gc=="Forbidden"){window.location=HOST_PREFIX+'midcom-login-';}}
 function check_dm2_form_submit(hc,ic,jc){var kc=true;jQuery.each(hc,function(i,n){if(n.name=='midcom_helper_datamanager2_cancel'){if(typeof(jc.oncancel)=='function'){kc=jc.oncancel();}
 close_modal_window();kc=false;}});return kc;}
-function takeover_dm2_form(lc){var mc=jQuery("#org_maemo_calendar");var nc=mc[0].action;if(nc.substr(0,1)=='/'){nc=APPLICATION_PREFIX+nc.substr(1);}
-jQuery.ajaxSetup({global:false});lc=jQuery.extend({beforeSubmit:check_dm2_form_submit,success:show_results,url:nc,type:mc[0].method,timeout:120000,oncancel:null},lc);jQuery('#org_maemo_calendar').ajaxForm(lc);}
+function takeover_dm2_form(lc){var mc=jQuery("#org_maemo_calendar");var nc=mc[0].action;if(lc.url){nc=lc.url;}
+if(nc.substr(0,1)=='/'){nc=nc.substr(1);}
+if(nc.substr(0,7)!='http://'||nc.substr(0,4)!='www.'){final_url=APPLICATION_PREFIX+nc;}
+else{final_url=nc;}
+jQuery.ajaxSetup({global:false});lc=jQuery.extend({beforeSubmit:check_dm2_form_submit,success:show_results,url:final_url,type:mc[0].method,timeout:120000,oncancel:null},lc);jQuery('#org_maemo_calendar').ajaxForm(lc);}
 function enable_buddylist_search(){var oc='midcom-exec-org.maemo.calendar/buddylist.php?action=search';jQuery.ajaxSetup({global:false});var pc={beforeSubmit:show_searching,success:render_buddylist_search_results,url:HOST_PREFIX+oc,type:'post',dataType:'json',timeout:12000};jQuery('#buddylist-search-form').ajaxForm(pc);}
 function show_searching(){jQuery('#search-indicator').show();jQuery('#buddylist-search-result-count span').html(0);jQuery('#buddylist-search-result-count').hide();jQuery('#buddylist-search-results').html('');}
 function render_buddylist_search_results(qc){var rc=jQuery('#buddylist-search-results');var sc=function(){return['table',{width:"100%",border:0,cellspacing:0,cellpadding:0},['thead',{},['tr',{},this.header_items],'tbody',{},this.result_items]];};var tc=function(){return['div',{class:"search-message"},this.message];};if(qc.count>0){var uc=jQuery.extend({header_items:[],result_items:[]},qc);jQuery('#buddylist-search-result-count span').html(qc.count);jQuery('#buddylist-search-result-count').show();jQuery(rc).tplAppend(uc,sc);}

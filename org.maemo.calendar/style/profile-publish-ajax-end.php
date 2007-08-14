@@ -1,5 +1,6 @@
 <?php
 $form_submitted = $data['submitted'];
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
     <!--<tr>
         <td style='border-top: 1px dashed black; padding-top: 1ex;'>
@@ -54,7 +55,7 @@ if ($data['processing_msg'])
 ?>
 takeover_dm2_form({
     dataType: 'html',
-    url: 'ajax/profile/publish'
+    url: '&(prefix);ajax/profile/publish'
 });
 <?php
 // if ($form_submitted)

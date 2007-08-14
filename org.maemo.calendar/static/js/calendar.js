@@ -728,18 +728,35 @@ function takeover_dm2_form(options)
     var form = jQuery("#org_maemo_calendar");
     
     var url = form[0].action;
-    if (url.substr(0,1) == '/')
+
+    if (options.url)
     {
-        url = APPLICATION_PREFIX + url.substr(1);
+        url = options.url;
     }
     
-    //console.log("url: "+url);
+    if (url.substr(0,1) == '/')
+    {
+        // url = APPLICATION_PREFIX + url.substr(1);
+        url = url.substr(1);
+    }
+    
+    if (   url.substr(0,7) != 'http://'
+        || url.substr(0,4) != 'www.')
+    {
+        final_url = APPLICATION_PREFIX + url;
+    }
+    else
+    {
+        final_url = url;
+    }
+    
+    // console.log("final url: "+final_url);
     
     jQuery.ajaxSetup({global: false});
     options = jQuery.extend({
 		beforeSubmit: check_dm2_form_submit,
 		success: show_results,
-		url: url,
+		url: final_url,
 		type: form[0].method,
 		timeout: 120000,
 		oncancel: null
