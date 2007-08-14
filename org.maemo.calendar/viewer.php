@@ -269,7 +269,7 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
                         
         //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.openpsa.helpers/ajaxutils.js', false);
         //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.openpsa.relatedto/related_to.js', false);
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/universalchooser.js', false);
+        //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/universalchooser.js', false);
         
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/tags/jquery.bgiframe.min.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.dimensions.js');
