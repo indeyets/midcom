@@ -128,6 +128,14 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
         
+        // Handle /product/raw/<product guid>
+        $this->_request_switch['view_product_raw'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_product_view', 'view'),
+            'fixed_args' => Array('product', 'raw'),
+            'variable_args' => 1,
+        );
+        
         // Handle /updated/<N>
         $this->_request_switch['updated_products'] = Array
         (

@@ -132,6 +132,11 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
      */
     function _handler_view($handler_id, $args, &$data)
     {
+        if ($handler_id == 'view_product_raw')
+        {
+            $_MIDCOM->skip_page_style = true;
+        }
+    
         $qb = org_openpsa_products_product_dba::new_query_builder();
         $qb->add_constraint('code', '=', $args[0]);
         $qb->add_constraint('start', '<=', time());
