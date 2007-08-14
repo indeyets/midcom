@@ -64,7 +64,7 @@ function check_dm2_form_submit(hc,ic,jc){var kc=true;jQuery.each(hc,function(i,n
 close_modal_window();kc=false;}});return kc;}
 function takeover_dm2_form(lc){var mc=jQuery("#org_maemo_calendar");var nc=mc[0].action;if(lc.url){nc=lc.url;}
 if(nc.substr(0,1)=='/'){nc=nc.substr(1);}
-if(nc.substr(0,7)!='http://'||nc.substr(0,8)!='https://'||nc.substr(0,4)!='www.'){final_url=APPLICATION_PREFIX+nc;}
+if(nc.substr(0,7)!='http://'&&nc.substr(0,8)!='https://'&&nc.substr(0,4)!='www.'){final_url=APPLICATION_PREFIX+nc;}
 else{final_url=nc;}
 jQuery.ajaxSetup({global:false});lc=jQuery.extend({beforeSubmit:check_dm2_form_submit,success:show_results,url:final_url,type:mc[0].method,timeout:120000,oncancel:null},lc);jQuery('#org_maemo_calendar').ajaxForm(lc);}
 function enable_buddylist_search(){var oc='midcom-exec-org.maemo.calendar/buddylist.php?action=search';jQuery.ajaxSetup({global:false});var pc={beforeSubmit:show_searching,success:render_buddylist_search_results,url:HOST_PREFIX+oc,type:'post',dataType:'json',timeout:12000};jQuery('#buddylist-search-form').ajaxForm(pc);}
