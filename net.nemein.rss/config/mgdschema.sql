@@ -21,3 +21,4 @@ CREATE TABLE net_nemein_rss_feed (
 );
 ALTER TABLE net_nemein_rss_feed ADD COLUMN autoapprove int(11) NOT NULL default '0';
 ALTER TABLE net_nemein_rss_feed ADD COLUMN defaultauthor int(11) NOT NULL default '0';
+ALTER TABLE net_nemein_rss_feed ADD COLUMN forceauthor int(11) NOT NULL default '0';

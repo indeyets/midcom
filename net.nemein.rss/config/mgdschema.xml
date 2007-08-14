@@ -6,6 +6,7 @@
         <property name="url" type="string"/>
         <property name="node" link="midgard_topic:id" reverse="no" type="integer" parentfield="node"/>
         <property name="defaultauthor" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="forceauthor" type="boolean"/>
         <!-- Whether to keep items removed from the feed -->
         <property name="keepremoved" type="boolean"/>
         <!-- Whether to auto-approve new items from feed -->
@@ -14,14 +15,6 @@
         <!-- cached data -->
         <property name="latestupdate" type="integer"/>
         <property name="latestfetch" type="integer"/>
-        <!-- /cached data -->
-        
-        <!-- required 1.7 metadata -->        
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->        
+        <!-- /cached data -->       
     </type>
 </Schema>

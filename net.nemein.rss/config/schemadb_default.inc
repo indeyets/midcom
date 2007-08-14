@@ -69,6 +69,13 @@
                 ),
             ),            
         ),
+        'forceauthor' => Array
+        (
+            'title'   => 'always use the default author',
+            'storage' => 'forceauthor',
+            'type'    => 'boolean',
+            'widget'  => 'checkbox',
+        ),
     )
 ),
 

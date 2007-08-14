@@ -6,6 +6,11 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-08-14 bergie
+  + Added support for forcing usage of the default author
+  + Store data from RSS enclosure and media namespaces to parameters
+  + Items that have been favourited locally are never removed
+
 2007-08-10 bergie
   + Updated feed parser to latest MagpieRSS version for photocast support
 

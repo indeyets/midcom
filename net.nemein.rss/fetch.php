@@ -209,21 +209,30 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         }
         
         // Try to figure out item author
-        $article_author = $this->match_item_author($item);
-        $fallback_person_id = 1;
-        if (   !$article_author
-            || $article_author->id == $fallback_person_id)
+        if (   $this->_feed->forceauthor
+            && $this->_feed->defaultauthor)
         {
-            if ($this->_feed->defaultauthor)
+            // Feed has a "default author" set, use it
+            $article_author = new midcom_db_person($this->_feed->defaultauthor);
+        }
+        else
+        {
+            $article_author = $this->match_item_author($item);
+            $fallback_person_id = 1;
+            if (   !$article_author
+                || $article_author->id == $fallback_person_id)
             {
-                // Feed has a "default author" set, use it
-                $article_author = new midcom_db_person($this->_feed->defaultauthor);
-            }
-            else
-            {
-                // Fall back to "Midgard Admin" just in case
-                $fallback_author = new midcom_db_person($fallback_person_id);
-                $article_author = $fallback_author;
+                if ($this->_feed->defaultauthor)
+                {
+                    // Feed has a "default author" set, use it
+                    $article_author = new midcom_db_person($this->_feed->defaultauthor);
+                }
+                else
+                {
+                    // Fall back to "Midgard Admin" just in case
+                    $fallback_author = new midcom_db_person($fallback_person_id);
+                    $article_author = $fallback_author;
+                }
             }
         }
         

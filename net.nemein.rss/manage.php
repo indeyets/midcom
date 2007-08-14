@@ -296,7 +296,7 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
                 // This will exit.
         }
         
-        $_MIDCOM->set_26_request_metadata($data['feed']->revised, $data['feed']->guid);
+        $_MIDCOM->set_26_request_metadata($data['feed']->metadata->revised, $data['feed']->guid);
         $_MIDCOM->bind_view_to_object($data['feed']);
         
         $this->_update_breadcrumb_line($handler_id);
@@ -350,7 +350,7 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
             // This will exit()
         }
 
-        $_MIDCOM->set_26_request_metadata($data['feed']->revised, $data['feed']->guid);
+        $_MIDCOM->set_26_request_metadata($data['feed']->metadata->revised, $data['feed']->guid);
         $this->_view_toolbar->bind_to($data['feed']);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['feed']->title}");
         
@@ -384,7 +384,7 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
             $fetcher = new net_nemein_rss_fetch($data['feed']);
             $data['items'] = $fetcher->import();
 
-            $_MIDCOM->set_26_request_metadata($data['feed']->revised, $data['feed']->guid);
+            $_MIDCOM->set_26_request_metadata($data['feed']->metadata->revised, $data['feed']->guid);
             $_MIDCOM->bind_view_to_object($data['feed']);            
         }
         else
