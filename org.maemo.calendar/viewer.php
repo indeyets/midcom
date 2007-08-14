@@ -293,8 +293,8 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.maemo.calendar/js/calendar.pack.js');
         //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.maemo.calendar/js/calendar.js');
         
-        $script = 'const MIDCOM_STATIC_URL = "' . MIDCOM_STATIC_URL . '";'."\n";
-        $script .= 'const HOST_PREFIX = "' . $_MIDCOM->get_host_prefix() . '";'."\n";
+        $script = 'var MIDCOM_STATIC_URL = "' . MIDCOM_STATIC_URL . '";'."\n";
+        $script .= 'var HOST_PREFIX = "' . $_MIDCOM->get_host_prefix() . '";'."\n";
         
         $_MIDCOM->add_jscript($script,"",true);
         
