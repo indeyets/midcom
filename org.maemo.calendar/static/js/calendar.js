@@ -1,7 +1,7 @@
 if (console == undefined)
 {
     var console = {};
-    console.log = function(string)
+    //console.log = function(string)
     {
         //alert(string);
         return;
@@ -16,20 +16,20 @@ function finishCalendarLoad(id) {
         if (   bodyClass == 'week'
             || bodyClass == 'day')
         {
-            //console.log("type == week/day start_hour_x: "+calendar_config["start_hour_x"]);
+            ////console.log("type == week/day start_hour_x: "+calendar_config["start_hour_x"]);
             jQuery('div.calendar-timeline-holder')[0].scrollTop = calendar_config["start_hour_x"];
         }       
     });
 }
 
 function run_scripts(e) {
-    //console.log("run_scripts in "+e);
+    ////console.log("run_scripts in "+e);
     
     if (e.nodeType != 1) return; //if it's not an element node, return
 
     if (e.tagName.toLowerCase() == 'script') {
-        //console.log("execute scripts in "+e);
-        //console.log("execute scripts: "+e.text);
+        ////console.log("execute scripts in "+e);
+        ////console.log("execute scripts: "+e.text);
         eval(e.text); //run the script
     }
     else {
@@ -62,7 +62,7 @@ function zoom_view(zoom_in, url)
     
     var form = jQuery('#date-selection-form');
     var ajax_url = APPLICATION_PREFIX + url + calendar_config["timestamp"] + '/' + calendar_config["type"];
-    console.log("ajax_url: "+ajax_url);
+    //console.log("ajax_url: "+ajax_url);
     jQuery.ajaxSetup({global: true});
     jQuery.ajax({
         url: ajax_url,
@@ -141,7 +141,7 @@ function goto_prev()
     newDate.setMonth(month);
     newDate.setYear(year);
     
-    console.log("newDate before: "+newDate);
+    //console.log("newDate before: "+newDate);
 
     if (calendar_config["type"] == 1)
     {
@@ -230,7 +230,7 @@ function goto_next()
     newDate.setMonth(month);
     newDate.setYear(year);
     
-    console.log("newDate before: "+newDate);
+    //console.log("newDate before: "+newDate);
 
     if (calendar_config["type"] == 1)
     {
@@ -265,7 +265,7 @@ function goto_next()
 
     timestamp = newDate.getTime() / 1000.0;
     
-    console.log("newDate: "+newDate);
+    //console.log("newDate: "+newDate);
         
     calendar_config["timestamp"] = timestamp;
 
@@ -367,9 +367,9 @@ function change_date() {
             year, month, day
         );
     timestamp = newDate.getTime() / 1000.0;
-    // console.log("newDate day: "+newDate.getDate());
-    // console.log("newDate month: "+newDate.getMonth());
-    // console.log("newDate year: "+newDate.getFullYear());
+    // //console.log("newDate day: "+newDate.getDate());
+    // //console.log("newDate month: "+newDate.getMonth());
+    // //console.log("newDate year: "+newDate.getFullYear());
             
     calendar_config["timestamp"] = timestamp;
     
@@ -466,8 +466,8 @@ function load_modal_window(url)
         url: url,
         timeout: 12000,
         error: function(request, type, expobj) {
-            console.log("Failed to load modal window! type: "+type);
-            console.log("request.statusText: "+request.statusText);
+            //console.log("Failed to load modal window! type: "+type);
+            //console.log("request.statusText: "+request.statusText);
             if (request.statusText == "Forbidden")
             {
                 window.location = HOST_PREFIX + 'midcom-login-';
@@ -499,11 +499,11 @@ function load_shelf_contents()
         timeout: 12000,
         dataType: 'json',
         error: function(request, type, expobj) {
-            console.log("Failed to load shelf content");
+            //console.log("Failed to load shelf content");
         },
         success: function(r) {
             shelf_contents = r;
-            console.log('Loaded Shelf content from the server: '+shelf_contents);            
+            //console.log('Loaded Shelf content from the server: '+shelf_contents);            
             hide_shelf_events_from_view();
         }
     });    
@@ -511,7 +511,7 @@ function load_shelf_contents()
 
 function save_shelf_contents()
 {
-    console.log('save_shelf_contents: '+shelf_contents);
+    //console.log('save_shelf_contents: '+shelf_contents);
     
     var url = 'midcom-exec-org.maemo.calendar/shelf.php?action=save';
     jQuery.ajaxSetup({global: false});
@@ -526,7 +526,7 @@ function save_shelf_contents()
         success: function(msg) {
             update_shelf_panel_leaf();
             hide_shelf_events_from_view();
-            console.log('Saved Shelf content to the server: '+msg);
+            //console.log('Saved Shelf content to the server: '+msg);
         }
     });    
 }
@@ -544,58 +544,58 @@ function update_shelf_panel_leaf()
             alert("Failed to update shelf list");
         },
         success: function(r) {
-            console.log('Updated Shelf list with content from the server: '+r);
+            //console.log('Updated Shelf list with content from the server: '+r);
         }
     });    
 }
 
 function hide_shelf_events_from_view()
 {
-    console.log('hide_shelf_events_from_view');
+    //console.log('hide_shelf_events_from_view');
     jQuery.each( shelf_contents, function(i,n){
-        console.log('hide event with id event-'+n.guid);
+        //console.log('hide event with id event-'+n.guid);
         jQuery('#event-'+n.guid).hide().attr({in_shelf: 'true'});
         jQuery('div.event-toolbar-holder div.event-toolbar:visible').hide();
     });
 }
 function unhide_shelf_events_from_view()
 {
-    console.log('unhide_shelf_events_from_view');
+    //console.log('unhide_shelf_events_from_view');
     jQuery.each( shelf_contents, function(i,n){
-        console.log('unhide event with id event-'+n.guid);
+        //console.log('unhide event with id event-'+n.guid);
         jQuery('#event-'+n.guid).show().attr({in_shelf: 'false'});
     });
 }
 
 function move_event_to_shelf(identifier, event_data)
 {
-    console.log('move_event_to_shelf: '+identifier);
+    //console.log('move_event_to_shelf: '+identifier);
     
     var existing = jQuery.grep( shelf_contents, function(n,i){
        return n.guid == identifier;
     });
     
-    console.log('existing: '+existing);
-    console.log('existing.length: '+existing.length);
+    //console.log('existing: '+existing);
+    //console.log('existing.length: '+existing.length);
     
     if (existing.length == 0)
     {
-        console.log('Event isnt in the shelf yet. Add it now.');
+        //console.log('Event isnt in the shelf yet. Add it now.');
         var next_idx = shelf_contents.push({guid: identifier, data: event_data});
-        console.log('shelf_contents['+(next_idx-1)+']: '+shelf_contents[next_idx-1]);
-        console.log('shelf_contents['+(next_idx-1)+'].data.title: '+shelf_contents[next_idx-1].data.title);
+        //console.log('shelf_contents['+(next_idx-1)+']: '+shelf_contents[next_idx-1]);
+        //console.log('shelf_contents['+(next_idx-1)+'].data.title: '+shelf_contents[next_idx-1].data.title);
         
         save_shelf_contents();
     }
     else
     {
-        console.log('Event is in the shelf already. Do nothing');
+        //console.log('Event is in the shelf already. Do nothing');
     }
 }
 
 function activate_shelf_item(identifier)
 {
-    console.log('activate_shelf_item: '+identifier);
+    //console.log('activate_shelf_item: '+identifier);
     
     var existing = jQuery.grep( shelf_contents, function(n,i){
        return n.guid == identifier;
@@ -603,18 +603,18 @@ function activate_shelf_item(identifier)
     
     if (existing.length > 0)
     {
-        console.log('Event is in the shelf');
+        //console.log('Event is in the shelf');
         
         if (   active_shelf_item
             && jQuery('#shelf-item-list li.active')[0].id == 'shelf-list-item-'+identifier)
         {
-            console.log('Already active, deactivating');
+            //console.log('Already active, deactivating');
             active_shelf_item = false;
             jQuery('#shelf-item-list li.active').attr('class', '');
         }
         else
         {
-            console.log('activating');
+            //console.log('activating');
             jQuery('#shelf-item-list li.active').attr('class', '');
 
             active_shelf_item = identifier;
@@ -623,13 +623,13 @@ function activate_shelf_item(identifier)
     }
     else
     {
-        console.log('Event isnt in the shelf!');
+        //console.log('Event isnt in the shelf!');
     }
 }
 
 function attach_active_shelf_item(timestamp, identifier)
 {
-    console.log("attach_active_shelf_item timestamp: "+timestamp+" identifier: "+identifier);
+    //console.log("attach_active_shelf_item timestamp: "+timestamp+" identifier: "+identifier);
 }
 
 function empty_shelf()
@@ -647,21 +647,21 @@ function empty_shelf()
             unhide_shelf_events_from_view();
             shelf_contents = Array();
             jQuery('#shelf-item-list').html('');
-            console.log('Emptied Shelf list with response from the server: '+r);
+            //console.log('Emptied Shelf list with response from the server: '+r);
         }
     });
 }
 
 function show_event_delete_form(identifier)
 {
-    console.log('show_event_delete_form '+identifier);
+    //console.log('show_event_delete_form '+identifier);
     var url = 'ajax/event/delete/' + identifier;
     load_modal_window(url);
 }
 
 function enable_event_delete_form(identifier)
 {
-    console.log('enable_event_delete_form '+identifier);
+    //console.log('enable_event_delete_form '+identifier);
     var url = 'ajax/event/delete/' + identifier;
         
     jQuery.ajaxSetup({global: false});
@@ -685,7 +685,7 @@ function on_event_deleted(identifier)
 
 function show_results(response, status)
 {
-    console.log("show_results status: "+status);
+    //console.log("show_results status: "+status);
     
     if (status == "success")
     {
@@ -700,12 +700,12 @@ function show_results(response, status)
 
 function check_dm2_form_submit(formData, jqForm, options)
 {
-    console.log("check_form_submit");
+    //console.log("check_form_submit");
     
     var return_value = true;
     
     jQuery.each( formData, function(i,n){
-        console.log(i+": found form item "+n.name+" with value: "+n.value);
+        //console.log(i+": found form item "+n.name+" with value: "+n.value);
         
         if (n.name == 'midcom_helper_datamanager2_cancel')
         {
@@ -723,7 +723,7 @@ function check_dm2_form_submit(formData, jqForm, options)
 
 function takeover_dm2_form(options)
 {
-    console.log("takeover_dm2_form");
+    //console.log("takeover_dm2_form");
     
     var form = jQuery("#org_maemo_calendar");
     
@@ -733,7 +733,7 @@ function takeover_dm2_form(options)
         url = APPLICATION_PREFIX + url.substr(1);
     }
     
-    console.log("url: "+url);
+    //console.log("url: "+url);
     
     jQuery.ajaxSetup({global: false});
     options = jQuery.extend({
@@ -755,7 +755,7 @@ function takeover_dm2_form(options)
 
 function enable_buddylist_search()
 {
-    console.log('enable_buddylist_search');
+    //console.log('enable_buddylist_search');
 
     var url = 'midcom-exec-org.maemo.calendar/buddylist.php?action=search';
         
@@ -782,7 +782,7 @@ function show_searching()
 
 function render_buddylist_search_results(results)
 {
-    console.log('render_buddylist_search_results count: '+results.count);
+    //console.log('render_buddylist_search_results count: '+results.count);
     
     var search_result_holder = jQuery('#buddylist-search-results');
 
@@ -810,7 +810,7 @@ function render_buddylist_search_results(results)
             result_items: []
         }, results);
         
-        console.log('found results!');
+        //console.log('found results!');
         
         jQuery('#buddylist-search-result-count span').html(results.count);
         jQuery('#buddylist-search-result-count').show();
@@ -819,7 +819,7 @@ function render_buddylist_search_results(results)
     }
     else
     {
-        console.log('No results found!');
+        //console.log('No results found!');
         
         var data = jQuery.extend({
             message: ''
@@ -833,13 +833,13 @@ function render_buddylist_search_results(results)
 
 function remove_item_from_results(identifier)
 {
-    console.log("remove_item_from_results: "+identifier);
+    //console.log("remove_item_from_results: "+identifier);
     
     var current_count = jQuery('#buddylist-search-result-count span')[0].innerHTML;
     var new_count = current_count - 1;    
     
-    console.log("current_count: "+current_count);
-    console.log("new_count: "+new_count);
+    //console.log("current_count: "+current_count);
+    //console.log("new_count: "+new_count);
         
     jQuery('#buddylist-search-result-count span').html(' '+new_count);
 
@@ -850,7 +850,7 @@ function remove_item_from_results(identifier)
 
 function add_person_as_buddy(identifier)
 {
-    console.log('add_person_as_buddy: '+identifier);
+    //console.log('add_person_as_buddy: '+identifier);
     
     var url = 'ajax/buddylist/add/' + identifier;
     jQuery.ajaxSetup({global: false});
@@ -862,7 +862,7 @@ function add_person_as_buddy(identifier)
             alert("Failed to add person as buddy! exception type: "+type);
         },
         success: function(msg) {
-            console.log('person added as buddy, with message: '+msg);
+            //console.log('person added as buddy, with message: '+msg);
             
             remove_item_from_results(identifier);
             refresh_buddylist();
@@ -872,7 +872,7 @@ function add_person_as_buddy(identifier)
 
 function remove_person_from_buddylist(identifier)
 {
-    console.log('remove_person_from_buddylist: '+identifier);
+    //console.log('remove_person_from_buddylist: '+identifier);
     
     var url = 'ajax/buddylist/remove/' + identifier;
     jQuery.ajaxSetup({global: false});
@@ -881,7 +881,7 @@ function remove_person_from_buddylist(identifier)
         url: APPLICATION_PREFIX + url,
         timeout: 12000,
         error: function(obj, type, expobj) {
-            console.log("Failed to remove person from buddylist! exception type: "+type);
+            //console.log("Failed to remove person from buddylist! exception type: "+type);
         },
         success: function(msg) {
             jQuery('#buddylist-item-'+identifier).fadeOut("slow",function(){
@@ -889,14 +889,14 @@ function remove_person_from_buddylist(identifier)
             });
             jQuery('#buddylist-item-list').Highlight(800, '#4c4c4c');
             clean_up_person(identifier);
-            console.log('person removed from buddylist, with message: '+msg);
+            //console.log('person removed from buddylist, with message: '+msg);
         }
     });    
 }
 
 function refresh_buddylist(ask_for_reload)
 {
-    console.log('refresh_buddylist');
+    //console.log('refresh_buddylist');
     
     var url = 'midcom-exec-org.maemo.calendar/buddylist.php?action=refresh_list';
     var list = jQuery("#buddylist-item-list");
@@ -907,12 +907,12 @@ function refresh_buddylist(ask_for_reload)
         url: HOST_PREFIX + url,
         timeout: 12000,
         error: function(obj, type, expobj) {
-            console.log("Failed to refresh buddylist. Exception type: "+type);
+            //console.log("Failed to refresh buddylist. Exception type: "+type);
         },
         success: function(r) {
             list.html(unescape(r));
             jQuery('#buddylist-item-list').Highlight(800, '#4c4c4c');
-            console.log("Buddylist refreshed!");
+            //console.log("Buddylist refreshed!");
             
             if (ask_for_reload)
             {
@@ -929,7 +929,7 @@ function refresh_buddylist(ask_for_reload)
 
 function approve_buddy_request(identifier)
 {
-    console.log('approve_buddy_request: '+identifier);
+    //console.log('approve_buddy_request: '+identifier);
     
     var url = 'ajax/buddylist/action/approve/' + identifier;
     jQuery.ajaxSetup({global: false});
@@ -938,7 +938,7 @@ function approve_buddy_request(identifier)
         url: APPLICATION_PREFIX + url,
         timeout: 12000,
         error: function(obj, type, expobj) {
-            console.log("Failed to approve buddy request! exception type: "+type);
+            //console.log("Failed to approve buddy request! exception type: "+type);
         },
         success: function(msg) {
             jQuery('#pending-list-item-'+identifier).fadeOut("slow",function(){
@@ -952,14 +952,14 @@ function approve_buddy_request(identifier)
             }
             
             refresh_buddylist(ask_for_reload);
-            console.log('buddy request approved, with message: '+msg);
+            //console.log('buddy request approved, with message: '+msg);
         }
     });    
 }
 
 function deny_buddy_request(identifier)
 {
-    console.log('deny_buddy_request: '+identifier);
+    //console.log('deny_buddy_request: '+identifier);
     
     var url = 'ajax/buddylist/action/deny/' + identifier;
     jQuery.ajaxSetup({global: false});
@@ -968,13 +968,13 @@ function deny_buddy_request(identifier)
         url: APPLICATION_PREFIX + url,
         timeout: 12000,
         error: function(obj, type, expobj) {
-            console.log("Failed to deny buddy request! exception type: "+type);
+            //console.log("Failed to deny buddy request! exception type: "+type);
         },
         success: function(msg) {
             jQuery('#pending-list-item-'+identifier).fadeOut("slow",function(){
                 jQuery('#pending-list-item-'+identifier).remove();
             });
-            console.log('buddy request denied, with message: '+msg);
+            //console.log('buddy request denied, with message: '+msg);
         }
     });    
 }
@@ -996,14 +996,14 @@ function clean_up_person(identifier)
 
 function edit_calendar_layer_properties(layer_id)
 {
-    console.log('edit_calendar_layer_properties layer_id: '+layer_id);
+    //console.log('edit_calendar_layer_properties layer_id: '+layer_id);
 
     var url = 'midcom-exec-org.maemo.calendar/layers.php?action=show_update_layer&layer_id='+layer_id;
     load_modal_window(url);
 }
 function edit_calendar_layer_tag_properties(layer_id, tag_id)
 {
-    console.log('edit_calendar_layer_tag_properties layer_id: '+layer_id+' tag_id: '+tag_id);
+    //console.log('edit_calendar_layer_tag_properties layer_id: '+layer_id+' tag_id: '+tag_id);
 
     var url = 'midcom-exec-org.maemo.calendar/layers.php?action=show_update_tag&layer_id='+layer_id+'&tag_id='+tag_id;
     load_modal_window(url);
@@ -1011,7 +1011,7 @@ function edit_calendar_layer_tag_properties(layer_id, tag_id)
 
 function enable_layer_update_form(layer_id, tag_id)
 {
-    console.log('enable_color_change_form layer_id: '+layer_id+' tag_id: '+tag_id);
+    //console.log('enable_color_change_form layer_id: '+layer_id+' tag_id: '+tag_id);
     
     var type = 'layer';
     var url = 'midcom-exec-org.maemo.calendar/layers.php?action=update_layer&layer_id='+layer_id;
@@ -1054,11 +1054,11 @@ function enable_tag_create_form(layer_id)
 
 function show_processing(formData, jqForm, options)
 {
-    console.log('show_processing');
+    //console.log('show_processing');
 }
 function processing_successfull(responseText, statusText)
 {
-    console.log('processing_successfull responseText:'+responseText);
+    //console.log('processing_successfull responseText:'+responseText);
     close_modal_window();
     
     // if (   responseText == 'updated'
@@ -1086,8 +1086,8 @@ function show_layout()
 
 function modify_foreground_color(search_string)
 {
-    // console.log("modify_foreground_color search_string: "+search_string);
-    // console.log("found "+jQuery(search_string).length+" matches.");
+    // //console.log("modify_foreground_color search_string: "+search_string);
+    // //console.log("found "+jQuery(search_string).length+" matches.");
     jQuery.each( jQuery(search_string), function(i,n){
         execute_modify_foreground_color(n);
     });

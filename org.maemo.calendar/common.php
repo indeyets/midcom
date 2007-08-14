@@ -417,6 +417,7 @@ class org_maemo_calendar_common
         $structure = '';
         $timezone_identifiers = timezone_identifiers_list();
         $i = 0;
+        $current_continent = false;
         foreach ($timezone_identifiers as $zone) {
             $zone = explode('/',$zone);
             if (isset($zone[1]))
@@ -440,7 +441,7 @@ class org_maemo_calendar_common
                 || $continent == 'Indian'
                 || $continent == 'Pacific')
             {
-                if (   !isset($current_continent)
+                if (   !$current_continent
                     && $use_groups)
                 {
                     $structure .= "<optgroup label=\"{$continent}\">\n"; // continent                            

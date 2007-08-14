@@ -216,17 +216,20 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
         {
             return false;
         }
-
+        
         debug_print_r('Event participants', $this->_event->participants);
         
-        $participants = array();
-        foreach ($this->_event->participants as $participant => $included)
-        {
-            $participants[] = $participant;
-        }
-        $this->_event->participants = serialize($participants);
-        
-        debug_print_r('Event participants after serialize', $this->_event->participants);        
+        // if (isset($_POST['participants']))
+        // {
+            $participants = array();
+            foreach ($this->_event->participants as $participant => $included)
+            {
+                $participants[] = $participant;
+            }
+            $this->_event->participants = serialize($participants);
+
+            debug_print_r('Event participants after serialize', $this->_event->participants);            
+        // }
     }
 
     /**

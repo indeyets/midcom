@@ -137,7 +137,26 @@
             'widget' => 'radiocheckselect',
         ),*/
         //TODO: Add DM2 support to org_openpsa_event so we can use "participants2" as storage.
-        'participants' => array (
+        'participants' => Array
+        (
+            'title' => 'participants',
+            'storage' => 'participants',
+            'type' => 'select',
+            'type_config' => array
+            (
+                 'require_corresponding_option' => false,
+                 'options' => array(),
+                 'allow_multiple' => true,
+                 'multiple_storagemode' => 'serialized',
+                 'allow_other' => true,
+            ),
+            'widget' => 'chooser',
+            'widget_config' => array
+            (
+                'clever_class' => 'buddy',
+            ),
+        ),
+        /*'participants' => array (
             'title' => 'participants',
             'description' => 'participants',
             'storage'    => 'participants',
@@ -147,7 +166,6 @@
                  'require_corresponding_option' => false,
                  'options' => array(),
                  'allow_multiple' => true,
-                 /*'multiple_storagemode' => 'serialized',*/
                  'allow_other' => true,
             ),
             'widget' => 'universalchooser',
@@ -164,13 +182,7 @@
                         'field' => 'username',
                         'op'    => '<>',
                         'value' => '',
-                    ),
-                    /*array
-                    (
-                        'field' => 'account',
-                        'op'    => '=',
-                        'value' => $_MIDCOM->auth->user->get_storage()->guid,
-                    ),*/                    
+                    ),                 
                 ),
                 'searchfields'  => array
                 (
@@ -181,11 +193,10 @@
                 'orders'        => array
                 (
                     array('lastname'    => 'ASC'), 
-                    array('firstname'    => 'ASC'), 
-
+                    array('firstname'    => 'ASC'),
                 ),
             ),
-        ),
+        ),*/
         'orgOpenpsaAccesstype' => array (
             'title' => 'access type',
             'description' => 'access type',
