@@ -25,6 +25,8 @@ class org_maemo_socialnews_cron_refreshscores extends midcom_baseclasses_compone
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add('_on_execute called');
+        
+        $calculator = new org_maemo_socialnews_calculator();
 
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic.component', '=', 'net.nehmer.blog');
@@ -32,7 +34,7 @@ class org_maemo_socialnews_cron_refreshscores extends midcom_baseclasses_compone
         $articles = $qb->execute();
         foreach ($articles as $article)
         {
-            $calculator->calculate_article($article, $cache);
+            $calculator->calculate_article($article, true);
         }
 
         debug_add('Done');
