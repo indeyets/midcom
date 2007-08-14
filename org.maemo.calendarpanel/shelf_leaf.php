@@ -63,7 +63,7 @@ class org_maemo_calendarpanel_shelf_leaf extends org_maemo_calendarpanel_leaf
         $html .= "   <ul class=\"leaf-menu\">\n";
 
         $html .= "      <li><a href=\"#\" onclick=\"empty_shelf(); return false;\" title=\"Empty shelf\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/edit-clear.png\" alt=\"Empty\" /></a></a></li>\n";
-        $html .= "      <li><a href=\"#\" onclick=\"delete_shelf_contents(); return false;\" title=\"Delete shelf contents\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/trash.png\" alt=\"Trash\" /></a></li>\n";
+        //$html .= "      <li><a href=\"#\" onclick=\"delete_shelf_contents(); return false;\" title=\"Delete shelf contents\"><img src=\"" . MIDCOM_STATIC_URL . "/org.maemo.calendarpanel/images/icons/trash.png\" alt=\"Trash\" /></a></li>\n";
         
         $html .= "   </ul>\n";
         $html .= "</div>\n";
