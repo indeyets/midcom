@@ -75,7 +75,7 @@ class org_maemo_calendarpanel_shelf_leaf extends org_maemo_calendarpanel_leaf
     {
         $html = "\n";
 
-        $html .= "<script>\n";
+        $html .= "<script type=\"text/javascript\">\n";
         
         $html .= "var shelf_item_tpl = function() {
             return [
@@ -90,7 +90,7 @@ class org_maemo_calendarpanel_shelf_leaf extends org_maemo_calendarpanel_leaf
         $html .= "<ul id=\"shelf-item-list\">\n";
         $html .= "</ul>\n";
         
-        $html .= "<script>\n";
+        $html .= "<script type=\"text/javascript\">\n";
         $html .= "jQuery('#shelf-item-list').html('');\n";
         foreach ($this->_shelf_items as $k => $item)
         {
