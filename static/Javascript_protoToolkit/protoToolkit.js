@@ -44,7 +44,7 @@ protoToolkit.prototype.toJSON = function (item,item_type) {
             '\\': '\\\\'
         },
         s = {
-            array: function (x) {
+            arr: function (x) {
                 var a = ['['], b, f, i, l = x.length, v;
                 for (i = 0; i < l; i += 1) {
                     v = x[i];
@@ -63,16 +63,16 @@ protoToolkit.prototype.toJSON = function (item,item_type) {
                 a[a.length] = ']';
                 return a.join('');
             },
-            'boolean': function (x) {
+            bool: function (x) {
                 return String(x);
             },
-            'null': function (x) {
+            nul: function (x) {
                 return "null";
             },
-            number: function (x) {
+            num: function (x) {
                 return isFinite(x) ? String(x) : 'null';
             },
-            object: function (x) {
+            obj: function (x) {
                 if (x) {
                     if (x instanceof Array) {
                         return s.array(x);
@@ -97,7 +97,7 @@ protoToolkit.prototype.toJSON = function (item,item_type) {
                 }
                 return 'null';
             },
-            string: function (x) {
+            str: function (x) {
                 if (/["\\\x00-\x1f]/.test(x)) {
                     x = x.replace(/([\x00-\x1f\\"])/g, function(a, b) {
                         var c = m[b];
@@ -114,29 +114,29 @@ protoToolkit.prototype.toJSON = function (item,item_type) {
             }
     };
 
-	Array.prototype.toJSON = function () {
-        return s.array(this);
-    };
+    // Array.prototype.toJSON = function () {
+    //         return s.arr(this);
+    //     };
 
 	var itemtype = item_type || typeof item;
 	switch(itemtype) {
 		case "array":
-		  return item.toJSON;
+		  return s.arr(item);
 		  break;
 		case "object":
-		  return s.object(item);
+		  return s.obj(item);
 		  break;
 		case "string":
-		  return s.string(item);
+		  return s.str(item);
 		  break;
 		case "number":
-		  return s.number(item);
+		  return s.num(item);
 		  break;
 		case "null":
-		  return s.null(item);
+		  return s.nul(item);
 		  break;
 		case "boolean":
-		  return s.boolean(item);
+		  return s.bool(item);
 		  break;				
 		default:
 		  throw("Unknown type for protoToolkit.toJSON");
