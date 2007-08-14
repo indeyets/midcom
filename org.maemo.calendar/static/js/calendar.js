@@ -418,11 +418,11 @@ function change_timezone() {
         url: ajax_url,
         timeout: 12000,
         error: function(obj, type, expobj) {
-            alert("Failed to change timezone");
             jQuery('#calendar-holder').show();
+            alert("Failed to change timezone! type: "+type+" obj.statusText:"+obj.statusText);
         },
         success: function(r) {
-            jQuery('#calendar-holder').html(unescape(r));            
+            jQuery('#calendar-holder').html(unescape(r));         
             setTimeout("finishCalendarLoad('calendar-holder')", 400);
         }
     });
