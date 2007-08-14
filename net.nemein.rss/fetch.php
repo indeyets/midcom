@@ -260,7 +260,7 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
             }
 
             if ($article->update())
-            {   
+            {
                 if ($this->_feed->autoapprove)
                 {
                     $metadata =& midcom_helper_metadata::retrieve($article);
@@ -268,6 +268,7 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
                 }
 
                 $this->parse_tags($article, $item);
+                $this->parse_parameters($article, $item);
                 
                 return $article->guid;
             }
@@ -288,7 +289,8 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
                 }
             
                 $this->parse_tags($article, $item);
-            
+                $this->parse_parameters($article, $item);
+                            
                 return $article->guid;
             }
             return false;
@@ -487,9 +489,27 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
     }
 
     /**
+     * Parses additional metadata in RSS item and sets parameters accordingly
+     *
+     * @param midgard_article $article Imported article
+     * @param Array $item Feed item as provided by MagpieRSS
+     * @return boolean
+     */    
+    function parse_parameters($article, $item)
+    {
+        if (isset($item['media']))
+        {
+            foreach ($item['media'] as $name => $value)
+            {
+                $article->parameter('net.nemein.rss:media', $name, $value);
+            }
+        }
+    }
+
+    /**
      * Parses rel-tag links in article content and tags the object based on them
      *
-     * @param MidgardArticle $article Imported article
+     * @param midgard_article $article Imported article
      * @param Array $item Feed item as provided by MagpieRSS
      * @return boolean
      */    

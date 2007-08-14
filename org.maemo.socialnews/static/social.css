@@ -60,3 +60,14 @@ div.org_maemo_socialnews div.main_items div.hentry div.post-info span.net_nemein
     margin-right: 6px;
     margin-bottom: 6px;
 }
+div.org_maemo_socialnews div.secondary_items div.hentry div.post-info span.net_nemein_favourites
+{
+    float: none !important;
+}
+
+div.org_maemo_socialnews div.hentry img.thumbnail
+{
+    border: 1px solid #c0c0c0;
+    float: left;
+    margin-right: 6px;
+}

@@ -18,6 +18,14 @@ $node_string = "<a href=\"{$node[MIDCOM_NAV_FULLURL]}\" rel=\"category\">${node[
 $date_string = "<abbr class=\"published\" title=\"" . strftime('%Y-%m-%dT%H:%M:%S%z', $data['article']->metadata->published) . "\">" . gmdate('Y-m-d H:i e', $article->metadata->published) . "</abbr>";
 ?>
 <div class="hentry">
+    <?php
+    $media_params = $data['article']->list_parameters('net.nemein.rss:media');
+    if (isset($media_params['thumbnail@url']))
+    {
+        echo "<a href=\"{$article->url}\"><img src=\"{$media_params['thumbnail@url']}\" class=\"thumbnail\" /></a>\n";
+    }
+    ?>
+
     <h2 class="entry-title"><a href="&(article.url);" class="url" rel="bookmark">&(article.title:h);</a></h2>
 
     <p class="entry-summary">&(article.abstract:h);</p>
