@@ -504,6 +504,23 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
                 $article->parameter('net.nemein.rss:media', $name, $value);
             }
         }
+        
+        if (isset($item['enclosure@url']))
+        {
+            $article->parameter('net.nemein.rss:enclosure', 'url', $item['enclosure@url']);
+        }
+
+        if (isset($item['enclosure@duration']))
+        {
+            $article->parameter('net.nemein.rss:enclosure', 'duration', $item['enclosure@duration']);
+        }
+
+        if (isset($item['enclosure@type']))
+        {
+            $article->parameter('net.nemein.rss:enclosure', 'mimetype', $item['enclosure@type']);
+        }
+        
+        return true;
     }
 
     /**
