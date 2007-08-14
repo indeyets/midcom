@@ -42,6 +42,7 @@ class midcom_helper_datamanager2_controller_simple extends midcom_helper_dataman
         }
 
         $this->formmanager = new midcom_helper_datamanager2_formmanager($this->datamanager->schema, $this->datamanager->types);
+        
         return $this->formmanager->initialize();
     }
 

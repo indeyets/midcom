@@ -70,7 +70,15 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
      * @see midcom_helper_datamanager2_type::validation_error
      */
     var $validation_errors = Array();
-
+    
+    /**
+     * Reference to the form manager instance which is currently in use. Usually, it is created and referenced here by the controller
+     * class during initialization.
+     *
+     * @var midcom_helper_datamanager2_formmanager
+     */    
+    var $formmanager = null;
+    
     /**
      * The constructor loads the schema database to use but does nothing else
      * so far.
@@ -399,7 +407,18 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
             echo "<div class=\"field\">\n";
             echo '<div class="title" style="font-weight: bold;">' . $this->schema->translate_schema_string($this->schema->fields[$name]['title']) . "</div>\n";
             echo '<div class="value" style="margin-left: 5em; min-height: 1em;">';
-            echo $this->types[$name]->convert_to_html();
+            
+            if ($config['widget'] == 'chooser')
+            {                
+                $this->formmanager =& new midcom_helper_datamanager2_formmanager($this->schema, $this->types);
+                $this->formmanager->initialize();
+                $this->formmanager->widgets[$name]->render_content();
+            }
+            else
+            {
+                echo $this->types[$name]->convert_to_html();                
+            }
+            
             echo "</div>\n";
             echo "</div>\n";
         }

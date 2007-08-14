@@ -895,7 +895,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 debug_add("Got data: {$data}");
                 $item = $this->_renderer_callback->render_data($data);
                 debug_add("Got item: {$item}");
-                $ee_script .= "jQuery('#{$this->_element_id}').midcom_helper_datamanager2_widget_chooser_add_result_item({$data},'{$item}');\n";
+                $ee_script .= "jQuery('#{$this->_element_id}_search_input').midcom_helper_datamanager2_widget_chooser_add_result_item({$data},'{$item}');\n";
             }
         }
         else
@@ -905,7 +905,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 debug_add("Processing key {$key}");
                 $data = $this->_get_key_data($key);
                 debug_add("Got data: {$data}");
-                $ee_script .= "jQuery('#{$this->_element_id}').midcom_helper_datamanager2_widget_chooser_add_result_item({$data});\n";
+                $ee_script .= "jQuery('#{$this->_element_id}_search_input').midcom_helper_datamanager2_widget_chooser_add_result_item({$data});\n";
             }
         }
         $this->_jscript .= $ee_script;
@@ -916,20 +916,165 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         $this->_form->addElement('static', "{$this->_element_id}_initscripts", '', $this->_jscript);        
     }
     
-    function _get_key_data($key)
+    function _resolve_object_name(&$object)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("resolving object name from id {$object->id}");
+        
+        $name = @$object->get_label();
+        
+        if (empty($name))
+        {
+            foreach ($this->result_headers as $header_item)
+            {
+                $item_name = $header_item['name'];
+                $value = @$object->$item_name;
+
+                $name .= "{$item_name}: '{$value}'";
+                
+                if ($i < $hi_count)
+                {
+                    $name .= ", ";
+                }
+                
+                $i++;
+            }
+        }
+        
+        return $name;
+    }
+    
+    function _object_to_jsdata(&$object)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
+        debug_add("converting object with id {$object->id} to jsdata");
+        
+        $id = @$object->id;
+        $guid = @$object->guid;
+        
+        $jsdata = "{";
+        
+        $jsdata .= "id: '{$id}',";
+        $jsdata .= "guid: '{$guid}',";
+                
+        if (   !empty($this->reflector_key)
+            && !$this->result_headers)
+        {
+            $value = @$object->get_label();
+            debug_add("adding header item: name=label value={$value}");
+            $jsdata .= "label: '{$value}'";
+        }
+        else
+        {
+            $hi_count = count($this->result_headers);
+            $i = 1;
+            foreach ($this->result_headers as $header_item)
+            {
+                $item_name = $header_item['name'];
+                $value = @$object->$item_name;
+
+                debug_add("adding header item: name={$item_name} value={$value}");
+                $jsdata .= "{$item_name}: '{$value}'";
+                
+                if ($i < $hi_count)
+                {
+                    $jsdata .= ", ";
+                }
+                
+                $i++;
+            }    
+        }        
+
+        $jsdata .= "}";
+        
+        return $jsdata;        
+        
+        debug_pop();
+    }
+    
+    function _get_key_data($key, $in_render_mode=false)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         
         debug_add("get_key_data for key: {$key}");
         
-        if ($this->_renderer_callback)
+        if ($this->_callback)
         {
+            debug_add("Using callback to fetch key data");
+
+            if ($in_render_mode)
+            {
+                debug_pop();
+                return $_callback->resolve_object_name($key);
+            }
+            
+            $results = $_callback->get_key_data($key);
+            
             debug_pop();
-            return array();
+            
+            if ($this->_renderer_callback)
+            {
+                return $results;
+            }            
+            
+            return $this->_object_to_jsdata(&$results);
         }
         
+        debug_add("Using clever class or predefined class");
+        
+        $_MIDCOM->auth->request_sudo();
+        
+        if (   isset($this->reflector_key)
+            && !empty($this->reflector_key))
+        {
+            if ($this->reflector_key == 'buddy')
+            {
+                $this->class = 'org_openpsa_contacts_person';
+                $this->component = 'org.openpsa.contacts';
+            }
+        }
+
+        if (!class_exists($this->class))
+        {
+            $_MIDCOM->componentloader->load_graceful($this->component);
+        }
+        
+        $qb = @call_user_func(array($this->class, 'new_query_builder'));
+        if (! $qb)
+        {
+            debug_add("use midgard_query_builder");
+            $qb = new midgard_query_builder($this->class);
+        }
+
+        $qb->add_constraint('id', '=', $key);
+        
+        $results = $qb->execute();        
+        
+        debug_print_r("Got results:",$results);
+        
+        if (count($results) == 0)
+        {
+            debug_add("Fetching data for key '{$key}' failed.");
+        }
+        
+        $object = $results[0];
+        
+        $_MIDCOM->auth->drop_sudo();
+        
         debug_pop();
-        return "";
+        
+        if ($in_render_mode)
+        {
+            return $this->_resolve_object_name(&$object);
+        }
+        
+        if ($this->_renderer_callback)
+        {
+            return $object;
+        }
+        
+        return $this->_object_to_jsdata(&$object);
     }
     
     /**
@@ -1000,6 +1145,8 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
 
     function render_content()
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
         echo '<ul>';
         if (count($this->_type->selection) == 0)
         {
@@ -1007,13 +1154,17 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         }
         else
         {
+            debug_add("We have selections!");
+            
             foreach ($this->_type->selection as $key)
             {
-                $data = $this->_get_key_data($key);
-                echo '<li>' . $data['name'] . '</li>';
+                $data = $this->_get_key_data($key, true);
+                echo '<li>' . $data . '</li>';
             }
         }
         echo '</ul>';
+        
+        debug_pop();
     }
 
     /**

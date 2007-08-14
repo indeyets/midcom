@@ -23,9 +23,9 @@ jQuery.fn.extend({
 		options = jQuery.extend({}, jQuery.midcom_helper_datamanager2_widget_chooser.defaults, {
 			url: url || null
 		}, options);
-		return this.each(function() {
-			new jQuery.midcom_helper_datamanager2_widget_chooser(this, options);
-		});
+        // return this.each(function() {
+		return new jQuery.midcom_helper_datamanager2_widget_chooser(this, options);
+        // });
 	},
 	midcom_helper_datamanager2_widget_chooser_add_result_item: function(item) {
 		return this.trigger("add_result_item",[item]);
@@ -37,7 +37,7 @@ jQuery.fn.extend({
 
 jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options) {
     
-    console.log("midcom_helper_datamanager2_widget_chooser input: "+input);
+    //console.log("midcom_helper_datamanager2_widget_chooser input: "+input);
     
 	var KEY = {
 		UP: 38,
@@ -80,8 +80,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options) {
 		
 		var currentValue = input_element.val();
 
-	    console.log("onChange previousValue: "+previousValue);
-	    console.log("onChange currentValue: "+currentValue);
+	    //console.log("onChange previousValue: "+previousValue);
+	    //console.log("onChange currentValue: "+currentValue);
 	    		
 		if (currentValue == previousValue)
 		{
@@ -124,7 +124,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options) {
 	};
 	
 	function request(term, success, failure) {
-	    console.log("request term: "+term);
+	    //console.log("request term: "+term);
 	    
 		var data = false;
 		
@@ -170,7 +170,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options) {
             };
             
             jQuery.each(options.result_headers,function(i,h){
-                console.log("rel_this.find("+h.name+").text(): "+rel_this.find(h.name).text());
+                //console.log("rel_this.find("+h.name+").text(): "+rel_this.find(h.name).text());
                 results[idx][h.name] = rel_this.find(h.name).text();
             });
         });
@@ -251,7 +251,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options) {
 		}
 	}).bind("activate", function(event, data){
 	    input_element.focus();
-	    console.log("input_elem 'activate' data.id: "+data.id);
+	    //console.log("input_elem 'activate' data.id: "+data.id);
 	    results_holder.activate_item(data);
 	}).bind("add_result_item", function(event, item){
 	    results_holder.add_item(item);
@@ -359,7 +359,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 	
 	function can_add(id)
 	{
-	    console.log("can_add id: "+id);
+	    //console.log("can_add id: "+id);
 	    
 	    var existing = false;
         existing = jQuery.grep( list_items, function(n,i){
@@ -378,22 +378,22 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 	
 	function add(data)
 	{
-	    console.log('ResultsHolder add');
-	    console.log('data.id: '+data.id);
-	    console.log('data.guid: '+data.guid);
+	    //console.log('ResultsHolder add');
+	    //console.log('data.id: '+data.id);
+	    //console.log('data.guid: '+data.guid);
 	    
 	    var n=null;
         jQuery.each( options.result_headers, function(i,n) {
-            console.log("data."+n.name+": "+data[n.name]);
+            //console.log("data."+n.name+": "+data[n.name]);
         });
 	    	    	    
         if (! can_add(data.id))
         {
-            console.log("Can't add!");
+            //console.log("Can't add!");
             return false;
         }
         
-        console.log("Can add!");
+        //console.log("Can add!");
         
         if (!has_content)
         {
@@ -410,7 +410,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
             var input_elem_name = options.widget_id + "_selections";
         }
         
-        console.log("input_elem_name: "+input_elem_name);
+        //console.log("input_elem_name: "+input_elem_name);
         
 	    var li_elem = jQuery("<li>")
 	    .attr({ id: options.widget_id + '_result_item_'+data.id })
@@ -451,7 +451,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
     	
     	if (options.renderer_callback)
     	{
-    	    console.log("use renderer");
+    	    //console.log("use renderer");
     	    //TODO: Implement
     	    // PONDER:  How should we handle the renderer_callback rendering?
     	    //          We could use custom javascript function, or require the data
@@ -465,14 +465,14 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
     	{
     	    var item_content = midcom_helper_datamanager2_widget_chooser_format_item(data,options)
     	    .appendTo(li_elem);
-    	    console.log("item_content: "+item_content);
+    	    //console.log("item_content: "+item_content);
             var input_elem = jQuery("<input>")
             .attr({ type: 'hidden', name: input_elem_name, value: 0, id: options.widget_id + '_result_item_'+data.id+'_input' })
             .hide()
             .appendTo(li_elem);
     	}
 	    
-	    console.log("li_elem[0]: "+li_elem[0]);
+	    //console.log("li_elem[0]: "+li_elem[0]);
 	    
 	    li_elem.appendTo(list);
 	    
@@ -526,33 +526,33 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         jQuery('#'+options.widget_id + '_result_item_'+id).addClass(CLASSES.ACTIVE);
 	    jQuery('#'+options.widget_id + '_result_item_'+id).attr("keep_on_list","true");
 	    jQuery('#'+options.widget_id + '_result_item_'+id).attr("deleted","false");
-	    selected_items.push(data.id);
+	    selected_items.push(id);
     }
     
     function delete_unseleted_from_list()
     {
-        console.log("delete_unseleted_from_list");
+        //console.log("delete_unseleted_from_list");
         list_jq_items = list.find("li");
         var removed_items = [];
         jQuery.each( list_items, function(i,n){
-            console.log("checking i: "+i+" n:"+n);
+            //console.log("checking i: "+i+" n:"+n);
             if (n != undefined)
             {
-                console.log("n not undefined");
+                //console.log("n not undefined");
                 if (jQuery('#'+options.widget_id + '_result_item_'+n).attr("keep_on_list") == "false")
                 {
-                    console.log("delete i: "+i+" n:"+n);                    
+                    //console.log("delete i: "+i+" n:"+n);                    
                     jQuery('#'+options.widget_id + '_result_item_'+n).remove();
             	    removed_items.push(n);
                 }      
             }
         });
-        console.log("removed_items.length: "+removed_items.length);
+        //console.log("removed_items.length: "+removed_items.length);
 	    jQuery.each( removed_items, function(i,n){
-	        console.log("each i: "+i+" n:"+n);
-	        console.log("list_items.length bef: "+list_items.length);
+	        //console.log("each i: "+i+" n:"+n);
+	        //console.log("list_items.length bef: "+list_items.length);
 	        list_items = unset(list_items, n, false, true);
-	        console.log("list_items.length after: "+list_items.length);
+	        //console.log("list_items.length after: "+list_items.length);
         });
     }
     
@@ -598,11 +598,11 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 
     function clear_unselected()
     {
-        console.log("clear_unselected");
-        console.log("list_items.length before: "+list_items.length);
+        //console.log("clear_unselected");
+        //console.log("list_items.length before: "+list_items.length);
         delete_unseleted_from_list();
         //list_items = selected_items;
-        console.log("list_items.length after: "+list_items.length);
+        //console.log("list_items.length after: "+list_items.length);
     }
 	
 	return {
@@ -614,7 +614,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 	    add_item: function(item)
 	    {
 	        add(item);
-	        activate_item(item.id);
+	        activate(item.id);
 	    },
 	    del_item: function(item)
 	    {
@@ -679,7 +679,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.MoveSelection = function(field,
 
 function midcom_helper_datamanager2_widget_chooser_format_item(item, options)
 {
-    console.log("format item: "+item.id);
+    //console.log("format item: "+item.id);
     var formatted = '';
 
     var item_parts = jQuery("<div>")
@@ -694,7 +694,7 @@ function midcom_helper_datamanager2_widget_chooser_format_item(item, options)
         .appendTo(item_parts);
 
     jQuery.each( options.result_headers, function(i,n) {
-        console.log("create item_part "+n.name+" with value "+item[n.name]);
+        //console.log("create item_part "+n.name+" with value "+item[n.name]);
         item_content = jQuery("<div>")
         .addClass('chooser_widget_item_part')
         .attr({ id: 'chooser_widget_item_part_'+n.name })
