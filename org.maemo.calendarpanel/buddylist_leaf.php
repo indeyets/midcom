@@ -58,7 +58,13 @@ class org_maemo_calendarpanel_buddylist_leaf extends org_maemo_calendarpanel_lea
         $html = "";
 
         $html .= $this->_render_menu();
+
+        $html .= "<div class=\"buddylist\">\n";
+        $html .= "   <ul id=\"buddylist-item-list\">\n";
         $html .= $this->_render_buddylist();
+        $html .= "   </ul>\n";      
+        $html .= "</div>\n";
+
         $html .= $this->_render_pending_list();
                 
         return $html;
@@ -122,16 +128,10 @@ class org_maemo_calendarpanel_buddylist_leaf extends org_maemo_calendarpanel_lea
             return $html;
         }
         
-        $html .= "<div class=\"buddylist\">\n";
-        $html .= "   <ul id=\"buddylist-item-list\">\n";
-        
         foreach ($this->_buddies as $k => $person)
         {
             $html .= org_maemo_calendarpanel_buddylist_leaf::render_buddylist_item($person);            
         }
-
-        $html .= "   </ul>\n";      
-        $html .= "</div>\n";
         
         debug_pop();
         
