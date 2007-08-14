@@ -1,7 +1,7 @@
 if (console == undefined)
 {
     var console = {};
-    //console.log = function(string)
+    console.log = function(string)
     {
         //alert(string);
         return;
@@ -16,20 +16,20 @@ function finishCalendarLoad(id) {
         if (   bodyClass == 'week'
             || bodyClass == 'day')
         {
-            ////console.log("type == week/day start_hour_x: "+calendar_config["start_hour_x"]);
+            //console.log("type == week/day start_hour_x: "+calendar_config["start_hour_x"]);
             jQuery('div.calendar-timeline-holder')[0].scrollTop = calendar_config["start_hour_x"];
         }       
     });
 }
 
 function run_scripts(e) {
-    ////console.log("run_scripts in "+e);
+    //console.log("run_scripts in "+e);
     
     if (e.nodeType != 1) return; //if it's not an element node, return
 
     if (e.tagName.toLowerCase() == 'script') {
-        ////console.log("execute scripts in "+e);
-        ////console.log("execute scripts: "+e.text);
+        //console.log("execute scripts in "+e);
+        //console.log("execute scripts: "+e.text);
         eval(e.text); //run the script
     }
     else {
@@ -367,9 +367,9 @@ function change_date() {
             year, month, day
         );
     timestamp = newDate.getTime() / 1000.0;
-    // //console.log("newDate day: "+newDate.getDate());
-    // //console.log("newDate month: "+newDate.getMonth());
-    // //console.log("newDate year: "+newDate.getFullYear());
+    //console.log("newDate day: "+newDate.getDate());
+    //console.log("newDate month: "+newDate.getMonth());
+    //console.log("newDate year: "+newDate.getFullYear());
             
     calendar_config["timestamp"] = timestamp;
     
@@ -1086,8 +1086,8 @@ function show_layout()
 
 function modify_foreground_color(search_string)
 {
-    // //console.log("modify_foreground_color search_string: "+search_string);
-    // //console.log("found "+jQuery(search_string).length+" matches.");
+    //console.log("modify_foreground_color search_string: "+search_string);
+    //console.log("found "+jQuery(search_string).length+" matches.");
     jQuery.each( jQuery(search_string), function(i,n){
         execute_modify_foreground_color(n);
     });
