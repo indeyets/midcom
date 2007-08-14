@@ -22,20 +22,30 @@ function finishCalendarLoad(id) {
     });
 }
 
-function run_scripts(e) {
+function run_scripts(e)
+{
     //console.log("run_scripts in "+e);
     
-    if (e.nodeType != 1) return; //if it's not an element node, return
+    if (e.nodeType != 1)
+    {
+        return; //if it's not an element node, return
+    }
 
-    if (e.tagName.toLowerCase() == 'script') {
+    if (e.tagName.toLowerCase() == 'script')
+    {
         //console.log("execute scripts in "+e);
         //console.log("execute scripts: "+e.text);
         eval(e.text); //run the script
     }
-    else {
+    else
+    {
         var n = e.firstChild;
-        while ( n ) {
-            if ( n.nodeType == 1 ) run_scripts( n ); //if it's an element node, recurse
+        while ( n )
+        {
+            if ( n.nodeType == 1 )
+            {
+                run_scripts( n ); //if it's an element node, recurse
+            }
             n = n.nextSibling;
         }
     }
@@ -606,7 +616,7 @@ function activate_shelf_item(identifier)
         //console.log('Event is in the shelf');
         
         if (   active_shelf_item
-            && jQuery('#shelf-item-list li.active')[0].id == 'shelf-list-item-'+identifier)
+            && jQuery('#shelf-item-list li.active')[0].id == ('shelf-list-item-'+identifier))
         {
             //console.log('Already active, deactivating');
             active_shelf_item = false;
@@ -793,7 +803,7 @@ function enable_buddylist_search()
 function show_searching()
 {
     jQuery('#search-indicator').show();
-    jQuery('#buddylist-search-result-count span').html(0);
+    jQuery('#buddylist-search-result-count span').html("0");
     jQuery('#buddylist-search-result-count').hide();
     jQuery('#buddylist-search-results').html('');
 }
@@ -1062,7 +1072,6 @@ function enable_tag_create_form(layer_id)
         success:       processing_successfull,
         url:       HOST_PREFIX + url,
         type:      'post',
-        //dataType:  'json',
         timeout:   12000
     }; 
     
@@ -1079,9 +1088,6 @@ function processing_successfull(responseText, statusText)
     //console.log('processing_successfull responseText:'+responseText);
     close_modal_window();
     
-    // if (   responseText == 'updated'
-    //     || responseText == 'created')
-    // {
     if (responseText > 0)
     {        
         window.location = window.location;
@@ -1151,10 +1157,40 @@ function execute_modify_foreground_color(element)
                 rgb_bits = processor(bits);
             }
         }
+        
+        if (   rgb_bits[0] < 0
+            || isNaN(rgb_bits[0]))
+        {
+            rgb_bits[0] = 0;
+        }
+        else if (rgb_bits[0] > 255)
+        {
+            rgb_bits[0] = 255;
+        }
+        
+        if (   rgb_bits[1] < 0
+            || isNaN(rgb_bits[1]))
+        {
+            rgb_bits[1] = 0;
+        }
+        else if (rgb_bits[1] > 255)
+        {
+            rgb_bits[1] = 255;
+        }
 
-        rgb_bits[0] = (rgb_bits[0] < 0 || isNaN(rgb_bits[0])) ? 0 : ((rgb_bits[0] > 255) ? 255 : rgb_bits[0]);
-        rgb_bits[1] = (rgb_bits[1] < 0 || isNaN(rgb_bits[1])) ? 0 : ((rgb_bits[1] > 255) ? 255 : rgb_bits[1]);
-        rgb_bits[2] = (rgb_bits[2] < 0 || isNaN(rgb_bits[2])) ? 0 : ((rgb_bits[2] > 255) ? 255 : rgb_bits[2]);
+        if (   rgb_bits[2] < 0
+            || isNaN(rgb_bits[2]))
+        {
+            rgb_bits[2] = 0;
+        }
+        else if (rgb_bits[2] > 255)
+        {
+            rgb_bits[2] = 255;
+        }
+
+        // rgb_bits[0] = (rgb_bits[0] < 0 || isNaN(rgb_bits[0])) ? 0 : ((rgb_bits[0] > 255) ? 255 : rgb_bits[0]);
+        // rgb_bits[1] = (rgb_bits[1] < 0 || isNaN(rgb_bits[1])) ? 0 : ((rgb_bits[1] > 255) ? 255 : rgb_bits[1]);
+        // rgb_bits[2] = (rgb_bits[2] < 0 || isNaN(rgb_bits[2])) ? 0 : ((rgb_bits[2] > 255) ? 255 : rgb_bits[2]);
                 
         return rgb_bits;
     }
@@ -1170,14 +1206,31 @@ function execute_modify_foreground_color(element)
         s = 0;
         if (l > 0 && l < 1)
         {
-            s = delta / (l < 0.5 ? (2 * l) : (2 - 2 * l));
+            x = (2 - 2 * l);
+            if (l < 0.5)
+            {
+                (2 * l)
+            }
+            
+            s = delta / x;
+            // s = delta / (l < 0.5 ? (2 * l) : (2 - 2 * l));
         }
         h = 0;
         if (delta > 0)
         {
-            if (max == r && max != g) h += (g - b) / delta;
-            if (max == g && max != b) h += (2 + (b - r) / delta);
-            if (max == b && max != r) h += (4 + (r - g) / delta);
+            if (max == r && max != g)
+            {
+                h += (g - b) / delta;
+            }
+            if (max == g && max != b)
+            {
+                h += (2 + (b - r) / delta);
+            }
+            if (max == b && max != r)
+            {
+                h += (4 + (r - g) / delta);
+            }
+            
             h /= 6;
         }
         
