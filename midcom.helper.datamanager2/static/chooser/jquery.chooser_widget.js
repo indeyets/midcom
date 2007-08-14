@@ -166,7 +166,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options) {
     	    
             results[idx] = {         	    
                 id:rel_this.find("id").text(), 
-                guid:rel_this.find("guid").text(),
+                guid:rel_this.find("guid").text()
             };
             
             jQuery.each(options.result_headers,function(i,h){
