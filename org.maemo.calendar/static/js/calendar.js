@@ -741,6 +741,7 @@ function takeover_dm2_form(options)
     }
     
     if (   url.substr(0,7) != 'http://'
+        || url.substr(0,8) != 'https://'
         || url.substr(0,4) != 'www.')
     {
         final_url = APPLICATION_PREFIX + url;

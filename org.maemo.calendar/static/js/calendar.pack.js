@@ -35,7 +35,7 @@ function change_date(){var bb=jQuery('#date-selection-form');var cb=new Date();v
 if(this.name=="day-select"){eb=this.value;}
 if(this.name=="year-select"){gb=this.value;}
 db.push(this.name+'='+escape(this.value));});var hb=new Date(gb,fb,eb);timestamp=hb.getTime()/1000.0;calendar_config["timestamp"]=timestamp;var ib=APPLICATION_PREFIX+'ajax/change/date/'+calendar_config["timestamp"]+'/'+calendar_config["type"];jQuery.ajaxSetup({global:true});jQuery.ajax({data:db.join('&'),url:ib,timeout:12000,error:function(jb,kb,lb){alert("Failed to change date");jQuery('#calendar-holder').show();},success:function(r){jQuery('#calendar-holder').html(unescape(r));setTimeout("finishCalendarLoad('calendar-holder')",400);}});return false;};function change_timezone(){var mb=jQuery('#timezone-selection-form');var nb=null;var ob=[];jQuery(':input',mb).each(function(){if(this.name=="timezone"){nb=this.value-1;}
-ob.push(this.name+'='+escape(this.value));});var pb=APPLICATION_PREFIX+'ajax/change/timezone/'+calendar_config["timestamp"]+'/'+calendar_config["type"];jQuery.ajaxSetup({global:true});jQuery.ajax({data:ob.join('&'),url:pb,timeout:12000,error:function(qb,rb,sb){alert("Failed to change timezone");jQuery('#calendar-holder').show();},success:function(r){jQuery('#calendar-holder').html(unescape(r));setTimeout("finishCalendarLoad('calendar-holder')",400);}});return false;};function create_event(tb){var ub="ajax/event/create/"+tb;if(active_shelf_item){ub="ajax/event/move/"+active_shelf_item+"/"+tb;}
+ob.push(this.name+'='+escape(this.value));});var pb=APPLICATION_PREFIX+'ajax/change/timezone/'+calendar_config["timestamp"]+'/'+calendar_config["type"];jQuery.ajaxSetup({global:true});jQuery.ajax({data:ob.join('&'),url:pb,timeout:12000,error:function(qb,rb,sb){jQuery('#calendar-holder').show();alert("Failed to change timezone! type: "+rb+" obj.statusText:"+qb.statusText);},success:function(r){jQuery('#calendar-holder').html(unescape(r));setTimeout("finishCalendarLoad('calendar-holder')",400);}});return false;};function create_event(tb){var ub="ajax/event/create/"+tb;if(active_shelf_item){ub="ajax/event/move/"+active_shelf_item+"/"+tb;}
 load_modal_window(ub);}
 function close_create_event(){close_modal_window();return;}
 function load_modal_window(vb){var wb=jQuery("div.calendar-modal-window");if(vb.substr(0,7)!='midcom-'){vb=APPLICATION_PREFIX+vb;}
@@ -64,7 +64,7 @@ function check_dm2_form_submit(hc,ic,jc){var kc=true;jQuery.each(hc,function(i,n
 close_modal_window();kc=false;}});return kc;}
 function takeover_dm2_form(lc){var mc=jQuery("#org_maemo_calendar");var nc=mc[0].action;if(lc.url){nc=lc.url;}
 if(nc.substr(0,1)=='/'){nc=nc.substr(1);}
-if(nc.substr(0,7)!='http://'||nc.substr(0,4)!='www.'){final_url=APPLICATION_PREFIX+nc;}
+if(nc.substr(0,7)!='http://'||nc.substr(0,8)!='https://'||nc.substr(0,4)!='www.'){final_url=APPLICATION_PREFIX+nc;}
 else{final_url=nc;}
 jQuery.ajaxSetup({global:false});lc=jQuery.extend({beforeSubmit:check_dm2_form_submit,success:show_results,url:final_url,type:mc[0].method,timeout:120000,oncancel:null},lc);jQuery('#org_maemo_calendar').ajaxForm(lc);}
 function enable_buddylist_search(){var oc='midcom-exec-org.maemo.calendar/buddylist.php?action=search';jQuery.ajaxSetup({global:false});var pc={beforeSubmit:show_searching,success:render_buddylist_search_results,url:HOST_PREFIX+oc,type:'post',dataType:'json',timeout:12000};jQuery('#buddylist-search-form').ajaxForm(pc);}
