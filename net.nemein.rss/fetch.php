@@ -331,6 +331,17 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
             if (!in_array($item->$guid_property, $item_guids))
             {
                 // This item has been removed from the feed.
+                
+                // If it has been favorited keep it
+                $_MIDCOM->componentloader->load_graceful('net.nemein.favourites');
+                $qb = net_nemein_favourites_favourite_dba::new_query_builder();
+                $qb->add_constraint('objectGuid', '=', $item->guid);
+                if ($qb->count_unchecked() > 0)
+                {
+                    continue;
+                    // Skip deleting this one
+                }
+                
                 $item->delete();
             }
         }
