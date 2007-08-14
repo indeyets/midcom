@@ -156,7 +156,13 @@ class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_
                 
         $_MIDCOM->componentloader->load_graceful('net.nemein.favourites');
         
-        $data['view_title'] = sprintf($this->_l10n->get('best of %s'), $this->_topic->extra);
+        $title = $this->_config->get('socialnews_title');
+        if (empty($title))
+        {
+            $title = $this->_topic->extra;
+        }
+        
+        $data['view_title'] = sprintf($this->_l10n->get('best of %s'), $title);
         $_MIDCOM->set_pagetitle($data['view_title']);
         
         $breadcrumb = Array();

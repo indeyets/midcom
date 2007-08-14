@@ -11,7 +11,14 @@ div.org_maemo_socialnews div.main_items div.hentry
     padding-right: 6px;
 }
 
-div.org_maemo_socialnews h2.entry-title
+div.org_maemo_socialnews div.latest_items div.hentry
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+div.org_maemo_socialnews h2.entry-title,
+div.org_maemo_socialnews h4.entry-title
 {
     margin-bottom: 0px;
     padding-bottom: 0px;
@@ -27,6 +34,13 @@ div.org_maemo_socialnews div.secondary_items h2.entry-title
     font-family: "Georgia", serif;
     font-size: 16px;
 }
+
+div.org_maemo_socialnews div.latest_items h4.entry-title
+{
+    font-family: "Georgia", serif;
+    font-size: 11px;
+}
+
 div.org_maemo_socialnews div.hentry div.post-info
 {
     width: 100%;
@@ -53,6 +67,7 @@ div.org_maemo_socialnews div.hentry div.post-info abbr
 div.org_maemo_socialnews div.hentry div.post-info span.net_nemein_favourites
 {
     margin-left: 1em;
+    white-space: nowrap;
 }
 div.org_maemo_socialnews div.main_items div.hentry div.post-info span.net_nemein_favourites
 {
@@ -60,9 +75,11 @@ div.org_maemo_socialnews div.main_items div.hentry div.post-info span.net_nemein
     margin-right: 6px;
     margin-bottom: 6px;
 }
-div.org_maemo_socialnews div.secondary_items div.hentry div.post-info span.net_nemein_favourites
+div.org_maemo_socialnews div.secondary_items div.hentry div.post-info span.net_nemein_favourites,
+div.org_maemo_socialnews div.latest_items div.hentry div.post-info span.net_nemein_favourites
 {
     float: none !important;
+    margin-bottom: 0px;
 }
 
 div.org_maemo_socialnews div.hentry img.thumbnail

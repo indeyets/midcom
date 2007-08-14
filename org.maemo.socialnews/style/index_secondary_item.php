@@ -8,7 +8,15 @@ if (isset($article->metadata->authors))
     $authors = explode('|', $article->metadata->authors);
     foreach ($authors as $author_guid)
     {
+        if (empty($author_guid))
+        {
+            continue;
+        }
         $author = new midcom_db_person($author_guid);
+        if ($author->id == 1)
+        {
+            continue;
+        }
         $author_string = $author->name;
     }
 }
@@ -17,15 +25,7 @@ $node_string = "<a href=\"{$node[MIDCOM_NAV_FULLURL]}\" rel=\"category\">${node[
 
 $date_string = "<abbr class=\"published\" title=\"" . strftime('%Y-%m-%dT%H:%M:%S%z', $data['article']->metadata->published) . "\">" . gmdate('Y-m-d H:i e', $article->metadata->published) . "</abbr>";
 ?>
-<div class="hentry">
-    <?php
-    $media_params = $data['article']->list_parameters('net.nemein.rss:media');
-    if (isset($media_params['thumbnail@url']))
-    {
-        echo "<a href=\"{$article->url}\"><img src=\"{$media_params['thumbnail@url']}\" class=\"thumbnail\" /></a>\n";
-    }
-    ?>
-    
+<div class="hentry">    
     <h2 class="entry-title"><a href="&(article.url);" class="url" rel="bookmark">&(article.title:h);</a></h2>
 
     <div class="post-info">

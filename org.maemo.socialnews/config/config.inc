@@ -1,3 +1,5 @@
+'socialnews_title' => '',
+
 'frontpage_score_start' => 50,
 'frontpage_score_hour_penalty' => 0.25,
 'frontpage_limit_days' => 20,
@@ -7,9 +9,7 @@
 
 'frontpage_show_secondary_items' => 7,
 
-'frontpage_show_area_latest' => false,
-'frontpage_show_area_latest_items' => 2,
-'frontpage_show_area_substyle' => '',
+'frontpage_show_area_latest_items' => 9,
 
 'bestof_items' => 10,
 

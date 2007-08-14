@@ -1,0 +1,1 @@
+<h3><?php echo date('Y-m-d', $data['date']); ?></h3>

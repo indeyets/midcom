@@ -8,7 +8,15 @@ if (isset($article->metadata->authors))
     $authors = explode('|', $article->metadata->authors);
     foreach ($authors as $author_guid)
     {
+        if (empty($author_guid))
+        {
+            continue;
+        }
         $author = new midcom_db_person($author_guid);
+        if ($author->id == 1)
+        {
+            continue;
+        }
         $author_string = $author->name;
     }
 }

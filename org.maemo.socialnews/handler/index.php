@@ -199,7 +199,12 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
      */
     function _show_index($handler_id, &$data)
     {
-        $data['node_title'] = $this->_topic->extra;
+        $data['node_title'] = $this->_config->get('socialnews_title');
+        if (empty($data['node_title']))
+        {
+            $data['node_title'] = $this->_topic->extra;
+        }    
+
         midcom_show_style('index_header');
         
         $main_items = array_slice($this->articles, 0, (int) $this->_config->get('frontpage_show_main_items'));
@@ -224,28 +229,6 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             midcom_show_style('index_secondary_item');
         }
         midcom_show_style('index_secondary_footer');
-        
-        if ($this->_config->get('frontpage_show_area_latest'))
-        {
-            $qb = midcom_db_topic::new_query_builder();
-            $qb->add_constraint('component', '=', 'net.nehmer.blog');
-            $qb->add_order('extra');
-            $topics = $qb->execute();
-            $substyle = $this->_config->get('frontpage_show_area_substyle');
-            foreach ($topics as $topic)
-            {
-                $data['topic'] = $topic;
-                $data['node'] = $this->get_node($topic->id);
-                
-                $dl_url = "{$data['node'][MIDCOM_NAV_RELATIVEURL]}latest/" . $this->_config->get('frontpage_show_area_latest_items');
-                
-                if (!empty($substyle))
-                {
-                    $dl_url = "midcom-substyle-" . $this->_config->get('frontpage_show_area_substyle') . "/{$dl_url}";
-                }
-                $_MIDCOM->dynamic_load($dl_url);
-            }
-        }
         
         midcom_show_style('index_footer');
     }

@@ -44,11 +44,18 @@ class org_maemo_socialnews_viewer extends midcom_baseclasses_components_request
             'handler' => Array('org_maemo_socialnews_handler_index', 'index'),
         );
         
-        // Handle /
+        // Handle /best
         $this->_request_switch['bestof'] = array
         (
             'handler' => Array('org_maemo_socialnews_handler_bestof', 'index'),
             'fixed_args' => Array('best'),
+        );
+        
+        // Handle /latest
+        $this->_request_switch['latest'] = array
+        (
+            'handler' => Array('org_maemo_socialnews_handler_latest', 'latest'),
+            'fixed_args' => Array('latest'),
         );
         
         // The Archive
