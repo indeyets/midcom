@@ -20,8 +20,12 @@ class org_maemo_socialnews_score_article_dba extends __org_maemo_socialnews_scor
         if (count($caches) > 0)
         {
             $cache = $caches[0];
-            $cache->score = $score;
-            $stat = $cache->update();
+            
+            if ($score > $cache->score)
+            {
+                $cache->score = $score;
+                $stat = $cache->update();
+            }
             return $stat;
         }
         
