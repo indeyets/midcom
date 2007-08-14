@@ -153,11 +153,19 @@ class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_
                 'href' => MIDCOM_STATIC_URL . "/org.maemo.socialnews/social.css",
             )
         );
-        
+                
         $_MIDCOM->componentloader->load_graceful('net.nemein.favourites');
         
         $data['view_title'] = sprintf($this->_l10n->get('best of %s'), $this->_topic->extra);
         $_MIDCOM->set_pagetitle($data['view_title']);
+        
+        $breadcrumb = Array();
+        $breadcrumb[] = Array
+        (
+            MIDCOM_NAV_URL => "best/",
+            MIDCOM_NAV_NAME => $data['view_title'],
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
     
         return true;
     }
