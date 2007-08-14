@@ -245,7 +245,11 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         
         // Try to figure out item publication date
         //$article_date = $this->parse_item_date($item);
-        $article_date = $item['date_timestamp'];
+        $article_date = null;
+        if (isset($item['date_timestamp']))
+        {
+            $article_date = $item['date_timestamp'];
+        }
         $article_data_tweaked = false;
         if (!$article_date)
         {
