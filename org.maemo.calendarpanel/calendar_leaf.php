@@ -200,7 +200,7 @@ class org_maemo_calendarpanel_calendar_leaf extends org_maemo_calendarpanel_leaf
 
         $html .= "</ul>\n";
         
-        $html .= "<script>modify_foreground_color('li div.calendar-name');</script>\n";
+        $html .= "<script type=\"text/javascript\">modify_foreground_color('li div.calendar-name');</script>\n";
         
         debug_pop();
         return $html;
