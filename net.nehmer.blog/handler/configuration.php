@@ -80,7 +80,7 @@ function net_nehmer_blog_symlink_topic_list_loop ($topicid, $level, &$param)
         // debug_add("Topic ID is 0, skipping this one, it is the lists root.");
         return;
     }
-    $topic = mgd_get_topic($topicid);
+    $topic = new midcom_db_topic($topicid);
     if ($param["sg"] != 0 && $topic->sitegroup != $param["sg"])
     {
         return;
