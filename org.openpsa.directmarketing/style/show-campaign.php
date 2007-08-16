@@ -42,7 +42,23 @@ function hideElement(element)
     <?php
     echo '<h2>' . $data['l10n']->get('testers') . '</h2>';
     ?>
-    &(view['testers']);
+
+    <?php
+    foreach($data['campaign']->testers2 as $counter => $tester)
+    {
+        $tester_link = '';
+        $person = new midcom_baseclasses_database_person($tester);
+        if ($contacts_node)
+        {
+            $tester_link = "{$contacts_node[MIDCOM_NAV_FULLURL]}person/{$person->guid}/";
+        }
+        echo "<a href=\"{$tester_link}\" target=\"_blank\" title=\"{$person->email}\" alt=\"{$person->email}\">{$person->name}</a>";
+        if(($counter+1) < count($data['campaign']->testers2))
+        {
+            echo ",&nbsp;";
+        }
+    }
+    ?>
 
     <?php
     if (   array_key_exists('campaign_members_count', $data)
