@@ -38,17 +38,18 @@ class net_nemein_favourites_admin extends midcom_baseclasses_components_request_
             return false;
         }
         
-        if (!$_MIDCOM->auth->user)
-        {
-            return false;
-        }
-        
         $midcom_i18n =& $_MIDCOM->get_service('i18n');
         $l10n =& $midcom_i18n->get_l10n('net.nemein.favourites');
         
         $qb = net_nemein_favourites_favourite_dba::new_query_builder();
         $qb->add_constraint('objectGuid', '=', $guid);
         $total_favs = $qb->count_unchecked();
+        
+        if (!$_MIDCOM->auth->user)
+        {
+            echo "<span class=\"net_nemein_favourites\">". sprintf($l10n->get('%d favs'), $total_favs) . "</span>\n";
+            return true;
+        }
         
         // Check if user has already favorited this
         $qb = net_nemein_favourites_favourite_dba::new_query_builder();
