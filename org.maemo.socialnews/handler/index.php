@@ -158,6 +158,8 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         
         $this->seek_articles($limit);
         
+        $revised = $this->_topic->metadata->revised;
+        
         // Normalize articles
         foreach ($this->articles as $guid => $article)
         {
@@ -177,7 +179,14 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             }
             
             $this->articles[$guid] = $article;
+            
+            if ($article->metadata->revised > $revised)
+            {
+                $revised = $article->metadata->revised;
+            }
         }
+        
+        $_MIDCOM->set_26_request_metadata($revised, $this->_topic->guid);
         
         $_MIDCOM->add_link_head(
             array
@@ -189,7 +198,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         );
         
         $_MIDCOM->componentloader->load_graceful('net.nemein.favourites');
-    
+
         return true;
     }
     
