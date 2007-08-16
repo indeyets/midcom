@@ -117,6 +117,21 @@
                 '0' => 'no',
             ),
         ),
+        'link_to_external_url' => array
+        (
+            'description' => 'link_to_external_url',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nehmer.blog',
+            'config_key' => 'link_to_external_url',
+            'widget' => 'config_radiobox',
+            'widget_radiobox_choices' => array
+            (
+                '' => 'default setting',
+                '1' => 'yes',
+                '0' => 'no',
+            ),
+        ),
         'symlink_topic' => array
         (
             'description' => 'symlink_topic',
