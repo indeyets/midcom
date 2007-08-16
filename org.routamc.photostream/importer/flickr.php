@@ -214,7 +214,26 @@ class org_routamc_photostream_importer_flickr extends org_routamc_photostream_im
                 $photos = $qb->execute();
                 $photo_obj = $photos[0];
                 
+                $updated = false;
+                if ($photo['title'] != $photo_obj->title)
+                {
+                    $photo_obj->title = $photo['title'];
+                    $updated = true;
+                }
+                if ($photo['description'] != $photo_obj->description)
+                {
+                    $photo_obj->description = $photo['description'];
+                    $updated = true;
+                }
+                
+                if ($updated)
+                {
+                    $photo_obj->update();
+                }
+                
                 net_nemein_tag_handler::tag_object($photo_obj, $photo['tags']);
+                
+                // TODO: Update location too
                 
                 return true;
             }
@@ -273,6 +292,34 @@ class org_routamc_photostream_importer_flickr extends org_routamc_photostream_im
         }
         
         net_nemein_tag_handler::tag_object($photo_obj, $photo['tags'], 'org.routamc.photostream');
+        
+        if (   isset($photo['location'])
+            && isset($photo['location']['latitude'])
+            && isset($photo['location']['longitude'])
+            && $GLOBALS['midcom_config']['positioning_enable'])
+        {
+            if (!class_exists('org_routamc_positioning_log_dba'))
+            {
+                // Load the positioning library
+                $_MIDCOM->load_library('org.routamc.positioning');
+            }
+            
+            $log = new org_routamc_positioning_log_dba();
+            $log->importer = 'flickr';
+            $log->person = $photo['photographer'];
+
+            $log->date = (int) $photo['taken'];
+            $log->latitude = (float) $photo['location']['latitude'];
+            $log->longitude = (float) $photo['location']['longitude'];
+            $log->altitude = 0;
+            $log->accuracy = $photo['location']['accuracy'];
+
+            // Try to create the entry
+            if ($log->create())
+            {
+                $log->parameter('org.routamc.positioning:flickr', 'photo', $photo['id']);
+            }
+        }
 
         if (file_exists($tmp_file))
         {
