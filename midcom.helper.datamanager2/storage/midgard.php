@@ -89,11 +89,15 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
                 break;
 
             case 'metadata':
+                if (!isset($this->object->metadata->$fieldname)) {
+                    throw new Exception("Missing $fieldname field in object: " . get_class($this->object->metadata));
+                }
                 $this->object->metadata->$name = $data;
                 break;
 
             default:
                 $fieldname = $this->_schema->fields[$name]['storage']['location'];
+                if (!isset($this->object->$fieldname)) throw new Exception("Missing $fieldname field in object: " . get_class($this->object));
                 $this->object->$fieldname = $data;
                 break;
         }
