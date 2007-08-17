@@ -660,6 +660,10 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         
         foreach ($new as $attribute => $value) 
         {
+            if (is_object($object->$attribute))
+            {
+                continue;
+            }
             if (trim($value) != "" && array_key_exists($attribute, $attributes) ) 
             {        
                 if ($object->{$attribute} != '' && $object->$attribute != $value) 
