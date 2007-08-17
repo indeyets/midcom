@@ -50,6 +50,17 @@ class org_routamc_photostream_importer_flickr extends org_routamc_photostream_im
             }
         }
     }
+    
+    function _clean_description($description)
+    {
+        $description = strip_tags($description);
+        if (substr($description, 0, 20) == 'ZoneTag: Photosphere')
+        {
+            // No need to import the ZoneTag-generated gibberish
+            return '';
+        }
+        return $description;
+    }
 
     function _fetch_flickr_photos($username, $photos)
     {
@@ -110,7 +121,7 @@ class org_routamc_photostream_importer_flickr extends org_routamc_photostream_im
                 'id'          => $photo_id,
                 'url'         => $photo_url,
                 'title'       => $photo['title'],
-                'description' => $photo_info['description'],
+                'description' => $this->_clean_description($photo_info['description']),
                 'taken'       => strtotime($photo_info['dates']['taken']),
                 
                 // "Nice to have" attributes we can use later
