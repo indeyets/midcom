@@ -33,9 +33,22 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
         if ($handler_id == 'index')
         {
             // We're in root-level product index
-            $data['group'] = null;
+            if ($this->_config->get('root_group'))
+            {
+                $data['group'] = new org_openpsa_products_product_group_dba($this->_config->get('root_group'));
+                if (   !$data['group']
+                    || !$data['group']->guid)
+                {
+                    return false;
+                }
+                $data['view_title'] = $data['group']->title;
+            }
+            else
+            {
+                $data['group'] = null;
+                $data['view_title'] = $this->_l10n->get('product database');
+            }
             $data['parent_group'] = $data['root_group'];
-            $data['view_title'] = $this->_l10n->get('product database');
         }
         else
         {
