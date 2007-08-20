@@ -127,7 +127,6 @@ class org_openpsa_products_navigation extends midcom_baseclasses_components_navi
         if (   !empty($product)
             && $product->guid)
         {
-            print_r($product);
             $id = $product->productGroup;
         }
         
