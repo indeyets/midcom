@@ -52,8 +52,10 @@
         <property name="id" type="integer" primaryfield="id"/>
         <property name="icao" type="string"/>
         <property name="iata" type="string"/>
+        <property name="wmo" type="string"/>        
         <property name="name" type="string"/>
         <property name="city" link="org_routamc_positioning_city:id" reverse="no" type="integer" parentfield="city"/>
+        <property name="country" link="org_routamc_positioning_country:code" reverse="no" type="string"/>
         <!-- Coordinates in decimal format -->
         <property name="latitude" type="float"/>
         <property name="longitude" type="float"/>

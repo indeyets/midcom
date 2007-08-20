@@ -266,7 +266,7 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
         {
             case 'org_routamc_positioning_log_dba':
             case 'org_routamc_positioning_city_dba':
-            case 'org_routamc_positioning_aerodrom_dba':
+            case 'org_routamc_positioning_aerodrome_dba':
                 // Real position entry, query it directly
                 $classname = $class;
                 break;

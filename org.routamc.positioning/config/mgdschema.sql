@@ -52,6 +52,8 @@ ALTER TABLE org_routamc_positioning_aerodrome ADD COLUMN creator int(11) NOT NUL
 ALTER TABLE org_routamc_positioning_aerodrome ADD COLUMN revisor int(11) NOT NULL default '0';
 ALTER TABLE org_routamc_positioning_aerodrome ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
 ALTER TABLE org_routamc_positioning_aerodrome ADD COLUMN revision int(11) NOT NULL default '0';
+ALTER TABLE org_routamc_positioning_aerodrome ADD COLUMN wmo varchar(255) NOT NULL default '';
+ALTER TABLE org_routamc_positioning_aerodrome ADD COLUMN country varchar(2) NOT NULL default '';
 ##
 #Log
 CREATE TABLE org_routamc_positioning_log (
