@@ -1,6 +1,10 @@
 <?php
 $_MIDCOM->auth->require_admin_user();
 
+//Disable limits
+@ini_set('memory_limit', -1);
+@ini_set('max_execution_time', 0);
+
 $_MIDCOM->load_library('org.openpsa.httplib');
 $http_request = new org_openpsa_httplib();
 
@@ -12,12 +16,19 @@ foreach ($lines as $line)
     $aerodromeinfo = explode(',', $line);
 
     // Skip the non-ICAO ones
-    if (empty($aerodromeinfo[0]))
+    if (   empty($aerodromeinfo[0])
+        || strlen($aerodromeinfo[0]) != 4)
     {
         continue;
     }
     
-    echo "<br />Importing {$aerodromeinfo[0]}...\n";
+    // Skip non-WMO ones
+    if (empty($aerodromeinfo[1]))
+    {
+        continue;
+    }
+    
+    echo "<br />Importing {$aerodromeinfo[0]} {$aerodromeinfo[2]}...\n";
     $aerodrome = new org_routamc_positioning_aerodrome_dba();
     $aerodrome->icao = $aerodromeinfo[0];
     $aerodrome->wmo = $aerodromeinfo[1];
@@ -27,8 +38,8 @@ foreach ($lines as $line)
     $aerodrome->latitude = (float) $aerodromeinfo[5];
     $aerodrome->longitude = (float) $aerodromeinfo[6];
     $aerodrome->altitude = (int) $aerodromeinfo[7];
-    
     $aerodrome->create();
     echo mgd_errstr();
+    flush();
 }
 ?>

@@ -52,5 +52,37 @@ class org_routamc_positioning_aerodrome_dba extends __org_routamc_positioning_ae
         }
         return $this->icao;
     }
+    
+    /**
+     * Don't save aerodrome if another aerodrome is in same place or exists with same ICAO
+     */
+    function _on_creating()
+    {
+        if (   $this->longitude
+            && $this->latitude)
+        {
+            $qb = org_routamc_positioning_aerodrome_dba::new_query_builder();
+            $qb->add_constraint('longitude', '=', $this->longitude);
+            $qb->add_constraint('latitude', '=', $this->latitude);
+            $qb->set_limit(1);
+            $matches = $qb->execute_unchecked();
+            if (count($matches) > 0)
+            {
+                // We don't need to save duplicate entries
+                return false;
+            }
+        }
+        
+        $qb = org_routamc_positioning_aerodrome_dba::new_query_builder();
+        $qb->add_constraint('icao', '=', $this->icao);
+        $qb->set_limit(1);
+        $matches = $qb->execute_unchecked();
+        if (count($matches) > 0)
+        {
+            // We don't need to save duplicate entries
+            return false;
+        }
+        return parent::_on_creating();
+    }
 }
 ?>
