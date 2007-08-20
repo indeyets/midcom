@@ -252,10 +252,16 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
 
         if (count($data['groups']) > 0)
         {
+            $groups_counter = 0;
+            $data['groups_count'] = count($data['groups']);
+
             midcom_show_style('group_subgroups_header');
 
             foreach ($data['groups'] as $group)
             {
+                $groups_counter++;
+                $data['groups_counter'] = $groups_counter;
+
                 $data['group'] = $group;
                 if (! $data['datamanager_group']->autoset_storage($group))
                 {
@@ -284,10 +290,16 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
 
         if (count($data['products']) > 0)
         {
+            $products_counter = 0;
+            $data['products_count'] = count($data['products']);
+
             midcom_show_style('group_products_header');
 
             foreach ($data['products'] as $product)
             {
+                $products_counter++;
+                $data['products_counter'] = $products_counter;
+
                 $data['product'] = $product;
                 if (! $data['datamanager_product']->autoset_storage($product))
                 {

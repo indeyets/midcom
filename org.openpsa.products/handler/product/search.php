@@ -725,9 +725,15 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
         }
         else
         {
+            $data['results_count'] = count($data['results']);
+            $results_counter = 0;
+            
             midcom_show_style('product_search_result_header');
             foreach ($data['results'] as $result)
             {
+                $results_counter++;
+                $data['results_counter'] = $results_counter;
+
                 if (! $data['datamanager']->autoset_storage($result))
                 {
                     debug_push_class(__CLASS__, __FUNCTION__);
