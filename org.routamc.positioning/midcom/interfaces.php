@@ -29,6 +29,7 @@ class org_routamc_positioning_interface extends midcom_baseclasses_components_in
             'person.php',
             'utils.php',
             'aerodrome.php',
+            'country.php',
             'city.php',
             'location.php',
             'log.php',

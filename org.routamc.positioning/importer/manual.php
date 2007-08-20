@@ -32,6 +32,7 @@ class org_routamc_positioning_importer_manual extends org_routamc_positioning_im
      * - city
      * - country
      * - aerodrome
+     * - timestamp
      *
      * @param Array $log Log entry in Array format specific to importer
      * @return bool Indicating success.
@@ -50,7 +51,15 @@ class org_routamc_positioning_importer_manual extends org_routamc_positioning_im
         {
             $this->log->person = $_MIDGARD['user'];
         }
-        $this->log->date = time();
+        
+        if (array_key_exists('timestamp', $log))
+        {
+            $this->log->date = (int) $log['timestamp'];
+        }
+        else
+        {
+            $this->log->date = time();
+        }
 
         // Figure out which option we will use, starting from best option
 
@@ -118,7 +127,7 @@ class org_routamc_positioning_importer_manual extends org_routamc_positioning_im
             $city_entry = null;
             $qb = org_routamc_positioning_city_dba::new_query_builder();
             $qb->add_constraint('city', '=', $log['city']);
-            $qb->add_constraint('country', '=', $log['country']);
+            $qb->add_constraint('country', '=', $country);
             $matches = $qb->execute();
             if (count($matches) > 0)
             {
@@ -130,7 +139,7 @@ class org_routamc_positioning_importer_manual extends org_routamc_positioning_im
                 // Seek the city entry by alternate names via a LIKE query
                 $qb = org_routamc_positioning_city_dba::new_query_builder();
                 $qb->add_constraint('alternatenames', 'LIKE', "%|{$log['city']}|%");
-                $qb->add_constraint('country', '=', $log['country']);
+                $qb->add_constraint('country', '=', $country);
                 $matches = $qb->execute();
                 if (count($matches) > 0)
                 {
@@ -164,9 +173,25 @@ class org_routamc_positioning_importer_manual extends org_routamc_positioning_im
         return $stat;
     }
 
+    /**
+     * Modify country to conform to ISO standards
+     */
     function normalize_country($country)
     {
-        // TODO: Modify country to conform to ISO standards
-        return $country;
+        if (strlen($country) == 2)
+        {
+            // Probably an ISO code
+            return $country;
+        }
+        
+        $qb = org_routamc_positioning_country_dba::new_query_builder();
+        $qb->add_constraint('name', '=', $country);
+        $countries = $qb->execute();
+        if (count($countries) > 0)
+        {
+            return $countries[0]->code;
+        }
+        
+        return '';
     }
 }

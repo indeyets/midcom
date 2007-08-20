@@ -1,12 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
 
+    <!-- Country -->
+    <type name="org_routamc_positioning_country" table="org_routamc_positioning_country">
+        <property name="id" type="integer" primaryfield="id"/>
+        <!-- Country in ISO 3166-1 alpha-2 two letter format -->
+        <property name="code" type="string"/>
+        <!-- Country in ISO 3166-1 alpha-3 three letter format -->
+        <property name="code3" type="string"/>        
+        <property name="codenumeric" type="string"/>          
+        <!-- Country in FIPS two letter format -->
+        <property name="fips" type="string"/>        
+        
+        <property name="name" type="string"/>
+        <!-- TODO: Alternate names should probably be a MultiLang table -->
+        <property name="alternatenames" type="string"/>
+
+        <!-- Metadata -->        
+        <property name="population" type="integer"/>
+        <!-- Area is in square km -->
+        <property name="area" type="float"/>
+        <property name="currency" type="string"/>
+        <property name="continent" type="string"/>
+        <property name="capital" type="integer" link="org_routamc_positioning_city:id" reverse="no"/>
+        
+        <!-- Coordinates in decimal format -->
+        <property name="bboxwest" type="float"/>
+        <property name="bboxnorth" type="float"/>
+        <property name="bboxeast" type="float"/>
+        <property name="bboxsouth" type="float"/>
+    </type>
+
     <!-- City is used for mapping log entries to "real-world places" -->
-    <type name="org_routamc_positioning_city" table="org_routamc_positioning_city">
+    <type name="org_routamc_positioning_city" table="org_routamc_positioning_city" parentfield="country">
         <property name="id" type="integer" primaryfield="id"/>
         <property name="city" type="string"/>
         <!-- Country in ISO 3166-1 alpha-2 two letter format -->
-        <property name="country" type="string"/>
+        <property name="country" type="string" link="org_routamc_positioning_country:code" parentfield="country" reverse="no" />
         <property name="region" type="string"/>
         <!-- TODO: Alternate names should probably be a MultiLang table -->
         <property name="alternatenames" type="string"/>
