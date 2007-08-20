@@ -323,6 +323,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
             {
                 // Some basic CSV format cleanup
                 $value = str_replace('\\n', "\n", $value);
+                $value = str_replace("\\\n", "\n", $value);
             
                 // Process the row accordingly
                 $field_matching = $_POST['org_openpsa_products_import_csv_field'][$field];
