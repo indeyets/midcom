@@ -10,34 +10,74 @@
 class org_routamc_gallery_handler_view extends midcom_baseclasses_components_handler
 {
     /**
+     * Datamanager2 instance for AJAX editing of a photo
+     * 
+     * @access private
+     * @var midcom_helper_datamanager2_controller $_controller
+     */
+    var $_controller;
+    
+    /**
+     * Datamanager2 instance for showing the photo
+     * 
+     * @access private
+     * @var midcom_helper_datamanager2_datamanager $_datamanager
+     */
+    var $_datamanager;
+    
+    /**
+     * Photo shown on the page
+     * 
+     * @var org_routamc_photostream_photo $_photo
+     */
+    var $_photo;
+    
+    /**
      * Simple default constructor.
      */
     function org_routamc_photostream_handler_view()
     {
         parent::midcom_baseclasses_components_handler();
     }
-
+    
+    /**
+     * Load photo by ID
+     * 
+     * 
+     */
     function _load_photo($id)
     {
-        $data =& $this->_request_data;
-        $photo = new org_routamc_photostream_photo_dba($id);
-        if (!is_object($photo))
+        $this->_photo = new org_routamc_photostream_photo_dba($id);
+        if (   !is_object($this->_photo)
+            || !$this->_photo->guid)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Could not load photo {$id}");
             // This will exit
         }
-        $data['photo'] = $photo;
-        $data['datamanager'] = new midcom_helper_datamanager2_datamanager($data['schemadb']);
-        if (!$data['datamanager']->set_schema('photo'))
+        
+        // Initialize the DM2 instance
+        $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
+        
+        if (!$this->_datamanager->set_schema('photo'))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "DM2 could not set schema");
             // This will exit
         }
-        if (!$data['datamanager']->set_storage($data['photo']))
+        if (!$this->_datamanager->set_storage($this->_photo))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "DM2 could not set storage");
             // This will exit
         }
+        
+        // Get the AJAX controller if required
+        if ($this->_config->get('enable_ajax_editing'))
+        {
+            $this->_controller = midcom_helper_datamanager2_controller::create('ajax');
+            $this->_controller->schemadb =& $this->_request_data['schemadb'];
+            $this->_controller->set_storage($this->_photo);
+            $this->_controller->process_ajax();
+        }
+        
         return true;
     }
 
@@ -49,14 +89,14 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
      */
     function _handler_view($handler_id, $args, &$data)
     {
-        $data =& $this->_request_data;
-
         // Prepare object and DM2
         if (!$this->_load_photo($args[0]))
         {
             return false;
         }
-
+        
+        $data['photo'] =& $this->_photo;
+        
         //get the two neighboring photos
         $mc = new midgard_collector('org_routamc_gallery_photolink', 'node', $this->_topic->id);
         $mc->set_key_property('photo');
@@ -100,16 +140,20 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
                 $mc->add_order($ordering);
             }
         }
+        
         $mc->execute();
         $photolinks = $mc->list_keys();
         $photolinks = array_keys($photolinks);
+        
         debug_add('found ' . count($photolinks) . ' links');
+        
         $i = 0;
         $data['next'] = null;
         $data['previous'] = null;
+        
         foreach ($photolinks as $photolink)
         {
-            if ($photolink->photo == $data['photo'] ->id)
+            if ($photolink == $this->_photo->id)
             {
                 if (isset($photolinks[$i - 1]))
                 {
@@ -125,7 +169,8 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
             }
             $i++;
         }
-
+        
+        // Add the toolbar items
         $nap = new midcom_helper_nav();
         $data['photostream_node'] = $nap->get_node($data['photo']->node);
         $data['gallery_node'] = $nap->get_node($this->_topic->id);
@@ -161,7 +206,7 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
             */
         }
 
-        $_MIDCOM->bind_view_to_object($data['photo'], $data['datamanager']->schema->name);
+        $_MIDCOM->bind_view_to_object($data['photo'], $this->_datamanager->schema->name);
 
         $data['view_title'] = $data['photo']->title;
 
@@ -188,7 +233,15 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
      */
     function _show_view($handler_id, &$data)
     {
-        $data['photo_view'] = $data['datamanager']->get_content_html();
+        // Get the view HTML depending on the configuration
+        if ($this->_config->get('enable_ajax_editing'))
+        {
+            $data['photo_view'] = $this->_controller->get_content_html();
+        }
+        else
+        {
+            $data['photo_view'] = $this->_datamanager->get_content_html();
+        }
 
         midcom_show_style('show_photo');
     }
@@ -197,6 +250,8 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
      * Helper, updates the context so that we get a complete breadcrum line towards the current
      * location.
      *
+     * @param string $handler_id
+     * @access private
      */
     function _update_breadcrumb_line($handler_id)
     {

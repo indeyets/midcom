@@ -39,6 +39,5 @@ class org_routamc_gallery_photolink_dba extends __org_routamc_gallery_photolink_
         }
         return true;
     }
-
 }
 ?>

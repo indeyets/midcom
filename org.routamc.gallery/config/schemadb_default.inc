@@ -11,10 +11,12 @@
  * change the description field though).
  */
 
-'default' => array (
+'default' => array
+(
     'name'        => 'default',
     'description' => 'example article',
-    'fields'      => array (
+    'fields'      => array
+    (
     
     	/* Start of component required fields */
     	
@@ -27,7 +29,8 @@
             'hidden' => true,
         ),
         
-        'title' => array (
+        'title' => array
+        (
             'description' => 'title',
             'datatype'    => 'text',
             'location'    => 'title', 
@@ -36,18 +39,19 @@
         
         /* End of component required fields */
         
-        'content' => array (
+        'content' => array
+        (
             'description' => 'text',
             'datatype'    => 'text',
             'location'    => 'content',
-            'widget'      => 'html'
+            'widget'      => 'html',
         ),
         
-        'image' => array (
+        'image' => array
+        (
             'description' => 'image',
             'datatype'    => 'image',
             'widget_image_simple' => true,
-        )
-    )
+        ),
+    ),
 ), // default
-

@@ -7,6 +7,13 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-08-20 adrenalin
+  + AJAX editing enabled in both sorting and viewing phases
+
+2007-07-02 adrenalin
+  - Fixed broken index order
+  - Added preserve keys to organizer
+
 2007-05-14 adrenalin
   - Porting changes from trunk, branch-26 version was badly out of date
 

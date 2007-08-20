@@ -119,5 +119,26 @@
             'widget' => 'text',
             'default' => 0,
         ),
+        'enable_ajax_editing' => array
+        (
+            'title' => 'enable ajax editing',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'org.routamc.gallery',
+                'name'     => 'enable_ajax_editing',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+        ),
     ),
 ),

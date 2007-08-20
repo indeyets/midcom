@@ -14,6 +14,7 @@
   margin: 0;
   font-weight: normal;
   color: black;
+  clear: both;
 }
 
 #org_routamc_gallery ul li h3:hover
@@ -55,4 +56,52 @@
 #org_routamc_gallery img.hidden
 {
   display: none;
+}
+
+#org_routamc_gallery_sort span.thumbnail
+{
+  display: block;
+  float: left;
+  width: 30%;
+  overflow: hidden;
+}
+
+#org_routamc_gallery_sort div.details
+{
+  float: left;
+  margin-left: 1em;
+  width: 65%;
+  overflow: hidden;
+}
+
+#org_routamc_gallery_sort div.details p
+{
+  margin: 0 0 0.5em;
+}
+
+#org_routamc_gallery_sort div.details p.title
+{
+  font-weight: bold;
+}
+
+#org_routamc_gallery_sort div.details p.description
+{
+  font-weight: normal;
+}
+
+#org_routamc_gallery_sort hr.break
+{
+  clear: both;
+  border-style: none;
+  height: 0;
+  width: 0;
+  margin: 0;
+  padding: 0;
+  visibility: hidden;
+}
+
+#org_routamc_gallery_sort input.shorttext,
+#org_routamc_gallery_sort textarea.longtext
+{
+  width: 95% !important;
 }

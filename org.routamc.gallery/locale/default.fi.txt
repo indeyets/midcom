@@ -86,3 +86,7 @@ Käänteinen muokkauspäivämäärä
 ---STRING photos per page
 Kuvien lukumäärä sivua kohti
 ---STRINGEND
+
+---STRING enable ajax editing
+Salli AJAX-editointi
+---STRINGEND

@@ -234,7 +234,7 @@ class org_routamc_gallery_organizer
             // Return reversed results
             if ($this->reverse)
             {
-                return array_reverse($results);
+                return array_reverse($results, true);
             }
             
             return $results;

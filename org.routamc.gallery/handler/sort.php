@@ -23,10 +23,28 @@ class org_routamc_gallery_handler_sort extends midcom_baseclasses_components_han
     var $_photos = array ();
     
     /**
+     * Datamanager2 instance for a photo
      * 
-     * 
-     * 
+     * @access private
+     * @var midcom_helper_datamanager2_datamanager $_datamanager
      */
+    var $_datamanager;
+    
+    /**
+     * Datamanager2 instance for AJAX editing of a photo
+     * 
+     * @access private
+     * @var midcom_helper_datamanager2_controller $_controller
+     */
+    var $_controller;
+    
+    /**
+     * AJAX controller HTML storages
+     * 
+     * @access private
+     * @var Array $_html_data
+     */
+    var $_html_data = array();
     
     /**
      * Constructor, connect to the parent class
@@ -39,13 +57,28 @@ class org_routamc_gallery_handler_sort extends midcom_baseclasses_components_han
     }
     
     /**
-     * Load midcom_helper_datamanager2_datamanager for content
+     * Load midcom_helper_datamanager2_datamanager for content and midcom_helper_datamanager2_controller
+     * if required by configuration
      * 
      * @access private
      * @return boolean Indicating success
      */
     function _load_datamanager()
     {
+        // Depending on the configuration give either AJAX output or the simple HTML output
+        if ($this->_config->get('enable_ajax_editing'))
+        {
+            $this->_controller = midcom_helper_datamanager2_controller::create('ajax');
+            $this->_controller->schemadb =& $this->_request_data['schemadb'];
+            
+            foreach ($this->_photos as $link_id => $photo)
+            {
+                $this->_controller->set_storage($photo);
+                $this->_controller->process_ajax();
+                $this->_view_html[$link_id] = $this->_controller->get_content_html();
+            }
+        }
+        
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
         
         if (!$this->_datamanager)
@@ -83,9 +116,15 @@ class org_routamc_gallery_handler_sort extends midcom_baseclasses_components_han
             )
         );
         
+        // Get the photos
+        $organizer = new org_routamc_gallery_organizer('metadata.score');
+        $organizer->node = $this->_topic->id;
+        $this->_photos = $organizer->get_sorted();
+        
         // Initialize DM2 instance
         $this->_load_datamanager();
         
+        // Return the results of form processing as results for the handler
         return $this->_process_form();
     }
     
@@ -282,14 +321,22 @@ class org_routamc_gallery_handler_sort extends midcom_baseclasses_components_han
         
         midcom_show_style('gallery-sort-subset-header');
         
-        $organizer = new org_routamc_gallery_organizer('metadata.score');
-        $organizer->node = $this->_topic->id;
-        
-        foreach ($organizer->get_sorted() as $link_id => $photo)
+        foreach ($this->_photos as $link_id => $photo)
         {
             $this->_datamanager->autoset_storage($photo);
+            
             $data['photo'] =& $photo;
             $data['link_id'] = $link_id;
+            
+            // Depending on the configuration give either AJAX output or the simple HTML output
+            if ($this->_config->get('enable_ajax_editing'))
+            {
+                $data['view_photo'] = $this->_view_html[$link_id];
+            }
+            else
+            {
+                $data['view_photo'] = $this->_datamanager->get_content_html();
+            }
             
             midcom_show_style('gallery-sort-subset-item');
         }

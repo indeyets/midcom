@@ -13,3 +13,6 @@
 'index_order' => array('photo.taken', 'photo.title'),
 */
 'index_order' => array('metadata.score reverse', 'photo.taken reverse'),
+
+// Use AJAX for editing
+'enable_ajax_editing' => true,

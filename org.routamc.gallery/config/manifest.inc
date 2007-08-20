@@ -1,24 +1,30 @@
 'name' => 'org.routamc.gallery',
 'purecode' => false,
-'version' => '1.1.0beta1',
+'version' => '1.1.0beta2',
 'state' => 'beta',
 'privileges' => array (),
 'class_definitions' => array
 (
-  0 => 'midcom_dba_classes.inc',
+    'midcom_dba_classes.inc',
 ),
 'package.xml' => array
 (
     'summary' => 'Photo gallery',
     'description' => 'Collection of photos in photostream, based on different configurable criteria',
-    'maintainers' => 
-    array
+    'maintainers' => array
     (
         'bergie' => array
         (
             'name' => 'Henri Bergius',
             'email' => 'henri.bergius@nemein.com',
             'role' => 'lead',
+        ),
+        'torben' => Array
+        (
+            'name' => 'Torben Nehmer',
+            'email' => 'torben@nehmer.net',
+            'role' => 'lead',
+            'active' => 'no',
         ),
         'rambo' => array
         (
@@ -46,7 +52,7 @@
 (
     'midcom.services.cron' => array
     (
-        0 => array
+        array
         (
             'handler' => 'org_routamc_gallery_cron_gallery_sync',
             'recurrence' => MIDCOM_CRON_DAY,

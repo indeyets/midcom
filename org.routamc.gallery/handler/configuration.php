@@ -108,7 +108,6 @@ class org_routamc_gallery_handler_configuration extends midcom_baseclasses_compo
         }
 
         $this->_prepare_request_data();
-        $_MIDCOM->set_26_request_metadata($this->_topic->revised, $this->_topic->guid);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: " . $this->_l10n->get('gallery settings'));
         $this->_update_breadcrumb_line($handler_id);
 

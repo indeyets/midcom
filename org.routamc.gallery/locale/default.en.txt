@@ -86,3 +86,7 @@ Reverse edited on
 ---STRING photos per page
 Photos shown per page
 ---STRINGEND
+
+---STRING enable ajax editing
+Enable AJAX onsite editing
+---STRINGEND

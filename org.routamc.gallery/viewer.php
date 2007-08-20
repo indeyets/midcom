@@ -63,7 +63,12 @@ class org_routamc_gallery_viewer extends midcom_baseclasses_components_request
             'handler' => Array('org_routamc_gallery_handler_index', 'index'),
         );
     }
-
+    
+    /**
+     * Try to find a photostream node for uploading pictures
+     * 
+     * @access private
+     */
     function _seek_photostream()
     {
         if ($this->_config->get('photostream'))
@@ -147,7 +152,7 @@ class org_routamc_gallery_viewer extends midcom_baseclasses_components_request
         $this->_request_data['photostream'] = $this->_seek_photostream();
         if (!is_array($this->_request_data['photostream']))
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'No photostream found for this gallery');
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'No photostream found for this gallery. Please create a new org.routamc.photostream folder for uploading photos.');
             // This will exit.
         }
 
@@ -168,5 +173,4 @@ class org_routamc_gallery_viewer extends midcom_baseclasses_components_request
         return true;
     }
 }
-
 ?>

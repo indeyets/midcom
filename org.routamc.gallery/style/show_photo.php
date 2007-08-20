@@ -8,13 +8,18 @@ $view = $data['photo_view'];
 <div class="photo_navigation">
 <?php 
 if (isset($data['previous']))
-{?>
-	&(data['previous']:h);
-<?php }
+{
+?>
+    &(data['previous']:h);
+<?php
+}
+
 if (isset($data['next']))
-{?>
-	&(data['next']:h);
-<?php }
+{
+?>
+    &(data['next']:h);
+<?php
+}
 ?>
 </div>
     <div class="photo">
