@@ -65,7 +65,19 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
         // FIXME: This property should be rethought
         $qb->add_constraint('censored', '=', 0);
         
-        foreach ($this->_config->get('index_order') as $ordering)
+        if (is_array($this->_config->get('index_order')))
+        {
+            $order = $this->_config->get('index_order');
+        }
+        else
+        {
+            $order = array
+            (
+                $this->_config->get('index_order'),
+            );
+        }
+        
+        foreach ($order as $ordering)
         {
             if (preg_match('/\s*reversed?\s*/', $ordering))
             {
