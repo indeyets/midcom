@@ -202,7 +202,7 @@
             (
                 'options' => array
                 (
-                    false    => 'indexer_backend_none',
+                    ''    => 'indexer_backend_none',
                     'xmltcp' => 'indexer_backend_xmltcp',
                     'solr' => 'Solr indexer',
                 ),

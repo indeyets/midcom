@@ -227,9 +227,7 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
         foreach ($this->_controller->formmanager->form->_submitValues as $key => $val)
         {
             if (   array_key_exists($key, $GLOBALS['midcom_config'])) {
-                if ($GLOBALS['midcom_config'][$key] != $val) {
                     $hostconfig->set($key, $val);
-                }
             
             } else {
             //$this->errors .=" Could not ser: $key, $val<br/>";
