@@ -90,3 +90,7 @@ Photos shown per page
 ---STRING enable ajax editing
 Enable AJAX onsite editing
 ---STRINGEND
+
+---STRING order saved
+Order saved
+---STRINGEND

@@ -65,6 +65,7 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
         // FIXME: This property should be rethought
         $qb->add_constraint('censored', '=', 0);
         
+        // Prevent errors
         if (is_array($this->_config->get('index_order')))
         {
             $order = $this->_config->get('index_order');
@@ -77,6 +78,7 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
             );
         }
         
+        // Set the orders
         foreach ($order as $ordering)
         {
             if (preg_match('/\s*reversed?\s*/', $ordering))
@@ -139,11 +141,12 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
         foreach ($nodes as $node_id)
         {
             $node = $nap->get_node($node_id);
-            if ($node[MIDCOM_NAV_COMPONENT] == 'org.routamc.gallery')
+            if ($node[MIDCOM_NAV_COMPONENT] === 'org.routamc.gallery')
             {
                 $data['galleries'][] = $node;
             }
         }
+        
         debug_pop();
         // Make photos AJAX-editable
         $this->_prepare_ajax_controllers();

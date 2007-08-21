@@ -77,6 +77,28 @@ class org_routamc_gallery_handler_sort extends midcom_baseclasses_components_han
                 $this->_controller->process_ajax();
                 $this->_view_html[$link_id] = $this->_controller->get_content_html();
             }
+            
+            // Get the other galleries
+            $qb = midcom_db_topic::new_query_builder();
+            $qb->add_constraint('up', '=', $this->_topic->id);
+            $qb->add_constraint('component', '=', 'org.routamc.gallery');
+            
+            $subgalleries = $qb->execute();
+            
+            // Get the subgallery photos
+            foreach ($subgalleries as $gallery)
+            {
+                // Get the photos
+                $this->organizer->node = $gallery->id;
+                $photos = $this->organizer->get_sorted();
+                
+                foreach ($photos as $link_id => $photo)
+                {
+                    $this->_controller->set_storage($photo);
+                    $this->_controller->process_ajax();
+                    $this->_view_html[$link_id] = $this->_controller->get_content_html();
+                }
+            }
         }
         
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
@@ -117,9 +139,9 @@ class org_routamc_gallery_handler_sort extends midcom_baseclasses_components_han
         );
         
         // Get the photos
-        $organizer = new org_routamc_gallery_organizer('metadata.score');
-        $organizer->node = $this->_topic->id;
-        $this->_photos = $organizer->get_sorted();
+        $this->organizer = new org_routamc_gallery_organizer('metadata.score');
+        $this->organizer->node = $this->_topic->id;
+        $this->_photos = $this->organizer->get_sorted();
         
         // Initialize DM2 instance
         $this->_load_datamanager();
@@ -300,9 +322,14 @@ class org_routamc_gallery_handler_sort extends midcom_baseclasses_components_han
                         $metadata =& midcom_helper_metadata::retrieve($link);
                         $metadata->approve();
                     }
+                    break;
             }
         }
         
+        // Show UI message of a successful save
+        $_MIDCOM->uimessages->add($this->_l10n->get('org.routamc.gallery'), $this->_l10n->get('order saved'));
+        
+        // Relocate to the gallery front page
         $_MIDCOM->relocate('');
     }
     
@@ -321,12 +348,13 @@ class org_routamc_gallery_handler_sort extends midcom_baseclasses_components_han
         
         midcom_show_style('gallery-sort-subset-header');
         
+        // Show each photo
         foreach ($this->_photos as $link_id => $photo)
         {
-            $this->_datamanager->autoset_storage($photo);
-            
             $data['photo'] =& $photo;
             $data['link_id'] = $link_id;
+            
+            $this->_datamanager->autoset_storage($photo);
             
             // Depending on the configuration give either AJAX output or the simple HTML output
             if ($this->_config->get('enable_ajax_editing'))
@@ -344,31 +372,39 @@ class org_routamc_gallery_handler_sort extends midcom_baseclasses_components_han
         midcom_show_style('gallery-sort-subset-footer');
         
         // Get the other galleries
-        $nap = new midcom_helper_nav();
+        $qb = midcom_db_topic::new_query_builder();
+        $qb->add_constraint('up', '=', $this->_topic->id);
+        $qb->add_constraint('component', '=', 'org.routamc.gallery');
+        
+        $subgalleries = $qb->execute();
+        
         $data['class'] = 'group';
         
         // Print subset for each gallery
-        foreach ($nap->list_nodes($this->_topic->id) as $node_id)
+        foreach ($subgalleries as $topic)
         {
-            $node = $nap->get_node($node_id);
-            
-            // Skip all the non-gallery components
-            if ($node[MIDCOM_NAV_COMPONENT] !== 'org.routamc.gallery')
-            {
-                continue;
-            }
-            
-            $data['gallery'] =& $node[MIDCOM_NAV_OBJECT];
+            $data['gallery'] =& $topic;
             
             midcom_show_style('gallery-sort-subset-header');
             
-            $organizer->node = $node_id;
+            $this->organizer->node = $topic->id;
             
-            foreach ($organizer->get_sorted() as $link_id => $photo)
+            foreach ($this->organizer->get_sorted() as $link_id => $photo)
             {
-                $this->_datamanager->autoset_storage($photo);
                 $data['link_id'] = $link_id;
                 $data['photo'] =& $photo;
+                
+                $this->_datamanager->autoset_storage($photo);
+                
+                // Depending on the configuration give either AJAX output or the simple HTML output
+                if ($this->_config->get('enable_ajax_editing'))
+                {
+                    $data['view_photo'] = $this->_view_html[$link_id];
+                }
+                else
+                {
+                    $data['view_photo'] = $this->_datamanager->get_content_html();
+                }
                 
                 midcom_show_style('gallery-sort-subset-item');
             }

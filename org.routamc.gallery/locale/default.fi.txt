@@ -90,3 +90,7 @@ Kuvien lukumäärä sivua kohti
 ---STRING enable ajax editing
 Salli AJAX-editointi
 ---STRINGEND
+
+---STRING order saved
+Järjestys tallennettu
+---STRINGEND
