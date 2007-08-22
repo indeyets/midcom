@@ -111,6 +111,10 @@ Muokkaa kansiota "%s"
 Muokkaa kansion metatietoja
 ---STRINGEND
 
+---STRING edit layout template
+Muokkaa ulkoasupohjaa
+---STRINGEND
+
 ---STRING edit metadata
 Muokkaa metatietoja
 ---STRINGEND
@@ -219,6 +223,10 @@ Sivut ensin
 Estä pääsy kohteeseen
 ---STRINGEND
 
+---STRING privilege template_management
+Ulkoasupohjien hallinta
+---STRINGEND
+
 ---STRING privilege topic_management
 Kansion hallinta
 ---STRINGEND
@@ -237,6 +245,10 @@ Revisio
 
 ---STRING revisor
 Muokannut
+---STRINGEND
+
+---STRING saving changes
+Muutoksia tallennetaan
 ---STRINGEND
 
 ---STRING schedule end
@@ -303,15 +315,15 @@ Otsikko on tyhjä!
 Varoitus! Saattaa johtaa tietojen katoamiseen!
 ---STRINGEND
 
----STRING edit layout template
-Muokkaa ulkoasupohjaa
+---STRING cancelled
+Peruutettu
 ---STRINGEND
 
----STRING privilege template_management
-Ulkoasupohjien hallinta
+---STRING folder created
+Kansio luotu
 ---STRINGEND
 
----STRING saving changes
-Muutoksia tallennetaan
+---STRING folder saved
+Kansio tallennettu
 ---STRINGEND
 

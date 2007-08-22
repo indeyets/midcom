@@ -43,6 +43,10 @@ Beta
 Manually ordered
 ---STRINGEND
 
+---STRING cancelled
+Cancelled
+---STRINGEND
+
 ---STRING change component
 Change component
 ---STRINGEND
@@ -133,6 +137,14 @@ Exported
 
 ---STRING failed to create a new style template
 Failed to create a new style template!
+---STRINGEND
+
+---STRING folder created
+Folder created
+---STRINGEND
+
+---STRING folder saved
+Folder saved
 ---STRINGEND
 
 ---STRING folder type
