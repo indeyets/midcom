@@ -43,7 +43,8 @@
  *
  * @package midcom
  */
-class midcom_helper_configuration {
+class midcom_helper_configuration
+{
 
     /**
      * Globally assigned configuration data.
@@ -74,28 +75,34 @@ class midcom_helper_configuration {
      *
      * Two sources can be specified:
      *
-     * First, if passed a single accociative array to the constructor,
+     * First, if passed a single associative array to the constructor,
      * it will use its contents as global configuration.
      *
      * Alternativly you can specify any Midgard object and a parameter
      * domain. It will then use the contents of this domain as global
      * configuration.
      *
-     * @param mixed $param1		Either an accociative array or a reference to a Midgard object.
-     * @param mixed $param2		Either null or the name of a Parameter domain.
+     * @param mixed $param1        Either an associative array or a reference to a Midgard object.
+     * @param mixed $param2        Either null or the name of a Parameter domain.
      */
-    function midcom_helper_configuration($param1 = NULL, $param2 = NULL) {
-        if (! is_null($param2)) {
+    function midcom_helper_configuration($param1 = null, $param2 = null)
+    {
+        if (! is_null($param2))
+        {
             $object = &$param1;
             $path = &$param2;
             $this->_local = array();
             $this->_store_from_object ($object, $path, true);
-        } else if (! is_null($param1)) {
+        }
+        else if (! is_null($param1))
+        {
             $global_params = &$param1;
             $this->_global = $global_params;
             $this->_local = array();
             $this->_merged = $global_params;
-        } else {
+        }
+        else
+        {
             $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, 'midcom_helper_configuration: Default constructor not allowed.');
         }
     }
@@ -112,9 +119,9 @@ class midcom_helper_configuration {
      *
      * Any error such as invalid configuration data will trigger an MidCOM error.
      *
-     * @param MidgardObject $object		The object from which to retrieve the configuration.
-     * @param string		$path		The Parameter domain to query.
-     * @param bool			$global		Set to true to replace the global configuration.
+     * @param MidgardObject $object        The object from which to retrieve the configuration.
+     * @param string        $path        The Parameter domain to query.
+     * @param bool            $global        Set to true to replace the global configuration.
      * @access private
      */
     function _store_from_object($object, $path, $global = false)
@@ -157,15 +164,16 @@ class midcom_helper_configuration {
      *
      * @access private
      */
-    function _update_cache() {
+    function _update_cache()
+    {
         $this->_merged = $this->_global;
-		if ( !empty($this->_local) )
-		{
-	        foreach ($this->_local as $key => $value)
-	        {
-	            $this->_merged[$key] = $value;
-	        }			
-		}
+        if ( !empty($this->_local) )
+        {
+            foreach ($this->_local as $key => $value)
+            {
+                $this->_merged[$key] = $value;
+            }            
+        }
     }
 
     /**
@@ -181,20 +189,21 @@ class midcom_helper_configuration {
      *
      * @access private
      */
-    function _check_local_array($array) {
-		if ( !empty($array) )
-		{
-	        foreach ($array as $key => $value)
-	        {
-	            if (! array_key_exists($key, $this->_global))
-	            {
-	                debug_push_class(__CLASS__, __FUNCTION__);
-	                debug_add("The key {$key} is not present in the global configuration array.", MIDCOM_LOG_INFO);
-	                debug_print_r("Current global configuration:", $this->_global);
-	                debug_pop();
-	            }
-	        }			
-		}
+    function _check_local_array($array)
+    {
+        if ( !empty($array) )
+        {
+            foreach ($array as $key => $value)
+            {
+                if (! array_key_exists($key, $this->_global))
+                {
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("The key {$key} is not present in the global configuration array.", MIDCOM_LOG_INFO);
+                    debug_print_r("Current global configuration:", $this->_global);
+                    debug_pop();
+                }
+            }            
+        }
     }
 
     /**
@@ -209,12 +218,13 @@ class midcom_helper_configuration {
      *
      * After import the cache array will be updated, reset is done by reset_local.
      *
-     * @param Array	$params		The new local parameters
-     * @param bool	$reset		If set to true, the current local configuration will be discarded first.
-     * @return bool				Indicating success.
+     * @param Array    $params        The new local parameters
+     * @param bool    $reset        If set to true, the current local configuration will be discarded first.
+     * @return bool                Indicating success.
      * @see midcom_helper_configuration::reset_local()
      */
-    function store($params, $reset = true) {
+    function store($params, $reset = true)
+    {
         $this->_check_local_array($params);
         if ($reset == true)
         {
@@ -236,11 +246,12 @@ class midcom_helper_configuration {
      * domain $path of $object. Unlike the constructor this function will store the
      * data in the local configuration.
      *
-     * @param MidgardObject	$object	The object from which to import data.
-     * @param string		$path	The parameter domain to query.
-     * @return bool			Indicating success
+     * @param MidgardObject    $object    The object from which to import data.
+     * @param string        $path    The parameter domain to query.
+     * @return bool            Indicating success
      */
-    function store_from_object($object, $path) {
+    function store_from_object($object, $path)
+    {
         return $this->_store_from_object ($object, $path, false);
     }
 
@@ -248,7 +259,8 @@ class midcom_helper_configuration {
      * Clear the local configuration data, effectively reverting to the global
      * default.
      */
-    function reset_local() {
+    function reset_local()
+    {
         $this->_local = array();
         $this->_merged = $this->_global;
     }
@@ -262,11 +274,12 @@ class midcom_helper_configuration {
      * value in the configuration data. Do errorchecking with the function exists (see
      * below).
      *
-     * @param mixed	$key	The configuration key to query.
-     * @return mixed		Its value of FALSE, if the key doesn't exist.
+     * @param mixed    $key    The configuration key to query.
+     * @return mixed        Its value of FALSE, if the key doesn't exist.
      * @see midcom_helper_configuration::exists()
      */
-    function get($key) {
+    function get($key)
+    {
         if ($this->exists($key))
         {
             return $this->_merged[$key];
@@ -280,9 +293,10 @@ class midcom_helper_configuration {
     /**
      * Retrieve a copy the complete configuration array.
      *
-     * @return Array	The complete current configuration.
+     * @return Array    The complete current configuration.
      */
-    function get_all() {
+    function get_all()
+    {
         // Copy-By-Value is PHPs default, so don't bother copying it by hand...
         return $this->_merged;
     }
@@ -290,10 +304,11 @@ class midcom_helper_configuration {
     /**
      * Checks for the existence of a configuration key.
      *
-     * @param string	$key	The configuration key to check for.
-     * @return bool				True, if the key is available, false otherwise.
+     * @param string    $key    The configuration key to check for.
+     * @return bool                True, if the key is available, false otherwise.
      */
-    function exists($key) {
+    function exists($key)
+    {
         return array_key_exists ($key, $this->_merged);
     }
 
