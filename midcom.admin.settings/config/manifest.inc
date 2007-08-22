@@ -33,6 +33,6 @@
     (
         'midcom.helper.datamanager2' => array (),
         'midcom' => array (),
-        'midcom.admin.folder => array (),
+        'midcom.admin.folder' => array (),
     ),
 ),
