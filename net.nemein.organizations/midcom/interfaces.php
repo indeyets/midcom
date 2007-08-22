@@ -109,13 +109,15 @@ class net_nemein_organizations_interface extends midcom_baseclasses_components_i
     function _on_resolve_permalink($topic, $config, $guid)
     {    
         $group = new midcom_db_group($guid);
-        if (!$group)
+        if (   !$group
+            || !$group->guid)
         {
             return false;
         }
         
         $parent_group = new midcom_db_group($config->get('group'));
-        if (!$parent_group)
+        if (   !$parent_group
+            || !$parent_group->guid)
         {
             return false;
         }
