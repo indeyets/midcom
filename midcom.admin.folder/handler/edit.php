@@ -15,6 +15,29 @@
 class midcom_admin_folder_handler_edit extends midcom_baseclasses_components_handler
 {
     /**
+     * DM2 schema
+     * 
+     * @access private
+     * @var midcom_helper_datamanager2_schema $_schema
+     */
+    var $_schemadb;
+    
+    /**
+     * DM2 controller instance
+     * 
+     * @access private
+     * @var midcom_helper_datamanager2_controller $_controller
+     */
+    var $_controller;
+    
+    /**
+     * ID of the handler
+     * 
+     * @access private
+     */
+    var $_handler_id;
+    
+    /**
      * Constructor method
      * 
      * @access public
@@ -23,7 +46,107 @@ class midcom_admin_folder_handler_edit extends midcom_baseclasses_components_han
     {
         parent::midcom_baseclasses_components_handler();
     }
+    
+    /**
+     * Load the schemadb and other midcom.admin.folder specific stuff
+     * 
+     * @access public
+     */
+    function _on_initialize()
+    {
+        // Load the configuration
+        $_MIDCOM->componentloader->load('midcom.admin.folder');
+        $this->_config =& $GLOBALS['midcom_component_data']['midcom.admin.folder']['config'];
+    }
+    
+    /**
+     * Load either a create controller or an edit (simple) controller or trigger an error message
+     * 
+     * @access private
+     */
+    function _load_controller()
+    {
+        // Get the configured schemas
+        $schemadbs = $this->_config->get('schemadbs_folder');
+        
+        // Check if a custom schema exists
+        if (array_key_exists($this->_topic->component, $schemadbs))
+        {
+            $schemadb = $schemadbs[$this->_topic->component];
+        }
+        else
+        {
+            if (!array_key_exists('default', $schemadbs))
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Configuration error. No default schema for topic has been defined!');
+                // This will exit
+            }
+            
+            $schemadb = $schemadbs['default'];
+        }
+        
+        $GLOBALS['midcom_admin_folder_mode'] = $this->_handler_id;
+        
+        // Create the schema instance
+        $this->_schemadb = midcom_helper_datamanager2_schema::load_database($schemadb);
+        
+        switch ($this->_handler_id)
+        {
+            case 'edit':
+                $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
+                $this->_controller->schemadb =& $this->_schemadb;
+                $this->_controller->set_storage($this->_topic);
+                break;
+            
+            case 'create':
+                $this->_schemadb->default->fields['name']['required'] = 0;
+                $this->_controller =& midcom_helper_datamanager2_controller::create('create');
+                $this->_controller->schemadb =& $this->_schemadb;
+                $this->_controller->schemaname = 'default';
+                $this->_controller->callback_object =& $this;
+                
+                // Suggest to create the same type of a folder as the parent is
+                $this->_controller->defaults = array
+                (
+                    'component' => $this->_topic->component,
+                );
+                break;
+            
+            default:
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Unable to process the request, unknown handler id');
+                // This will exit
+        }
+        
+        if (! $this->_controller->initialize())
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 controller instance for article {$this->_event->id}.");
+            // This will exit.
+        }
+        
+    }
+    
+    /**
+     * DM2 creation callback, binds to the current content topic.
+     */
+    function & dm2_create_callback (&$controller)
+    {
+        $this->_new_topic = new midcom_db_topic();
+        $this->_new_topic->up = $this->_topic->id;
+        
+        if (! $this->_new_topic->create())
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_print_r('We operated on this object:', $this->_new_topic);
+            debug_pop();
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
+                'Failed to create a new article, cannot continue. Last Midgard error was: '. mgd_errstr());
+            // This will exit.
+        }
 
+        return $this->_new_topic;
+    }
+
+    
     /**
      * Handler for folder editing. Checks for the permissions and folder integrity.
      * 
@@ -35,20 +158,49 @@ class midcom_admin_folder_handler_edit extends midcom_baseclasses_components_han
         $this->_topic->require_do('midgard:update');
         $this->_topic->require_do('midcom.admin.folder:topic_management');
         
-        if (array_key_exists('f_cancel', $_REQUEST))
+        $this->_handler_id = str_replace('____ais-folder-', '', $handler_id);
+        
+        // Load the DM2 controller
+        $this->_load_controller();
+        
+        // Get the content topic prefix
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        
+        // Store the old name before editing
+        $old_name = $this->_topic->name;
+        
+        switch ($this->_controller->process_form())
         {
-            $_MIDCOM->relocate('');
-            // This will exit.
-        }
-
-        if (array_key_exists('f_submit', $_REQUEST))
-        {
-            if ($this->_process_edit_form())
-            {
-                // Relocate to the renamed topic
-                $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($this->_topic->guid));
-                // This will exit.
-            }
+            case 'cancel':
+                $_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.folder'), $this->_l10n->get('cancelled'));
+                $_MIDCOM->relocate($prefix);
+                break;
+            
+            case 'save':
+                if ($this->_handler_id === 'edit')
+                {
+                    $_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.folder'), $this->_l10n->get('folder saved'));
+                    
+                    // Get the relocation url
+                    $url = preg_replace("/{$old_name}\/\$/", "{$this->_topic->name}/", $prefix);
+                }
+                else
+                {
+                    $_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.folder'), $this->_l10n->get('folder created'));
+                    
+                    // Generate name if it is missing
+                    if (!$this->_new_topic->name)
+                    {
+                        $this->_new_topic->name = midcom_generate_urlname_from_string($this->_new_topic->extra);
+                        $this->_new_topic->update();
+                    }
+                    
+                    // Get the relocation url
+                    $url = "{$prefix}/{$this->_new_topic->name}/";
+                }
+                
+                $_MIDCOM->relocate($url);
+                // This will exit
         }
         
         // Add the view to breadcrumb trail
@@ -64,8 +216,10 @@ class midcom_admin_folder_handler_edit extends midcom_baseclasses_components_han
         // Hide the button in toolbar
         $this->_node_toolbar->hide_item('__ais/folder/edit.html');
 
+        $data['topic'] =& $this->_topic;
+        $data['controller'] =& $this->_controller;
+        
         // Set page title
-        $data['topic'] = $this->_topic;
         $data['title'] = sprintf($_MIDCOM->i18n->get_string('edit folder %s', 'midcom.admin.folder'), $data['topic']->extra);
         $_MIDCOM->set_pagetitle($data['title']);
 
@@ -74,6 +228,9 @@ class midcom_admin_folder_handler_edit extends midcom_baseclasses_components_han
         
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('midcom.admin.folder');
+        
+        // Serve the correct localization
+        $data['l10n'] =& $this->_l10n;
         
         // Add style sheet
         $_MIDCOM->add_link_head
@@ -131,135 +288,25 @@ class midcom_admin_folder_handler_edit extends midcom_baseclasses_components_han
     }
     
     /**
-     * Processes the _Edit folder_ page form and updates the folder.
-     * 
-     * @access private
-     * @return boolean Indicating success
-     */
-    function _process_edit_form()
-    {
-        if (trim($_REQUEST['f_name']) == '')
-        {
-            $this->_processing_msg = $_MIDCOM->i18n->get_string('no url name specified', 'midcom.admin.folder');
-            $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('create folder', 'midcom.admin.folder'), $this->_processing_msg, 'error');
-            
-            return false;
-        }
-        if (trim($_REQUEST['f_title']) == '')
-        {
-            $this->_processing_msg = $_MIDCOM->i18n->get_string('title is empty', 'midcom.admin.folder');
-            $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('create folder', 'midcom.admin.folder'), $this->_processing_msg, 'error');
-            return false;
-        }
-        
-        if (mgd_get_topic_by_name($this->_topic->id, $_REQUEST['f_name']))
-        {
-            $this->_processing_msg = sprintf($_MIDCOM->i18n->get_string('folder with name %s already exists', 'midcom.admin.folder'), $_REQUEST['f_name']);
-            $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('create folder', 'midcom.admin.folder'), $this->_processing_msg, 'error');
-            return false;
-        }
-
-        // store form data in topic object
-        $this->_topic->name = midcom_generate_urlname_from_string($_REQUEST['f_name']);
-        $this->_topic->extra = $_REQUEST['f_title'];
-        //$this->_topic->score = $_REQUEST['f_score'];
-        //$this->_topic->owner = $_REQUEST['f_owner'];
-        
-        if ($_REQUEST['f_style'] === '__create')
-        {
-            $this->_topic->require_do('midcom.admin.folder:template_management');
-
-            $this->_topic->style = $this->_create_style($this->_topic->name);
-            
-            // Failed to create the new style template
-            if ($this->_topic->style === '')
-            {
-                return false;
-            }
-        }
-        else
-        {
-            $this->_topic->style = $_REQUEST['f_style'];
-        }
-        
-        // TODO: Move to metadata
-        $this->_topic->parameter('midcom.helper.nav', 'navorder', $_REQUEST['f_navorder']);
-        
-        if (   array_key_exists('f_style_inherit', $_REQUEST)
-            && $_REQUEST['f_style_inherit'] == 'on')
-        {
-            $this->_topic->styleInherit = true;
-        }
-        else
-        {
-            $this->_topic->styleInherit = false;
-        }
-
-        if (   trim($_REQUEST['f_type']) !== $this->_topic->component
-            && $_MIDCOM->auth->admin
-            && $_REQUEST['f_type'] !== '')
-        {
-             $this->_topic->component = $_REQUEST['f_type'];
-        }
-
-
-        if (! $this->_topic->update())
-        {
-            $this->_processing_msg = 'Could not save Folder: ' . mgd_errstr();
-            return false;
-        }
-
-        $_MIDCOM->cache->invalidate($this->_topic->guid());
-
-        return true;
-    }
-    
-    /**
      * Shows the _Edit folder_ page.
      * 
      * @access private
      */
     function _show_edit($handler_id, &$data)
     {
-        // Get parent component and navorder
-        $data['parent_topic'] = $this->_topic->component;
-               
-        $data['view'] =& $this->_topic;
-        $data['style_inherit'] = $this->_topic->styleInherit;
-        $data['style'] = $this->_topic->style;
-        $data['folder'] =& $this->_topic;
-        
-        // TODO: Move to metadata
-        $data['navorder'] = $this->_topic->parameter('midcom.helper.nav', 'navorder');
-        
-        $data['navorder_list'] = array
-        (
-            MIDCOM_NAVORDER_DEFAULT => $_MIDCOM->i18n->get_string('default sort order', 'midcom.admin.folder'),
-            MIDCOM_NAVORDER_TOPICSFIRST => $_MIDCOM->i18n->get_string('folders first', 'midcom.admin.folder'),
-            MIDCOM_NAVORDER_ARTICLESFIRST => $_MIDCOM->i18n->get_string('pages first', 'midcom.admin.folder'),
-            MIDCOM_NAVORDER_SCORE => $_MIDCOM->i18n->get_string('by score', 'midcom.admin.folder'),
-        );
-        
-        $style_default = array
-        (
-            '' => $_MIDCOM->i18n->get_string('default', 'midcom.admin.folder'),
-        );
-        
-        if ($this->_topic->can_do('midcom.admin.folder:template_management'))
-        {
-            $style_default['__create'] = $_MIDCOM->i18n->get_string('new layout template', 'midcom.admin.folder');
-        }
-        
         $styles_all = midcom_admin_folder_folder_management::list_styles();
         
-        $data['styles'] = array_merge($style_default, $styles_all);
-        
-        // Place $view as a super global for the style checker function
-        // midcom_admin_content_list_styles_selector2
-        $GLOBALS['view'] =& $this->_topic;
-        
         // Show the style element
-        midcom_show_style('midcom-admin-show-edit-folder');
+        if ($this->_handler_id === 'create')
+        {
+            $data['page_title'] = sprintf($this->_i18n->get_string("create folder", 'midcom.admin.folder'));
+        }
+        else
+        {
+            $data['page_title'] = sprintf($this->_i18n->get_string("{$this->_handler_id} folder %s", 'midcom.admin.folder'), $this->_topic->extra);
+        }
+        
+        midcom_show_style('midcom-admin-show-folder-actions');
     }
 }
 ?>

@@ -17,6 +17,7 @@ class midcom_admin_folder_interface extends midcom_baseclasses_components_interf
     function midcom_admin_folder_interface()
     {
         parent::midcom_baseclasses_components_interface();
+        
         $this->_component = 'midcom.admin.folder';
         $this->_purecode = true;
         
@@ -30,6 +31,5 @@ class midcom_admin_folder_interface extends midcom_baseclasses_components_interf
             'midcom.admin.help',
         );
     }
-
 }
 ?>

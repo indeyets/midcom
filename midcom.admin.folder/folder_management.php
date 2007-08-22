@@ -107,7 +107,7 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
              */
             'create' => array
             (
-                'handler' => array('midcom_admin_folder_handler_create', 'create'),
+                'handler' => array('midcom_admin_folder_handler_edit', 'edit'),
                 'fixed_args' => array ('create'),
             ),
             
@@ -265,6 +265,43 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
     }
     
     /**
+     * Static method for populating user interface for editing and creating topics
+     * 
+     * @access static public
+     * @return Array Containing a list of components
+     */
+    function list_components($parent_component = '', $all = false)
+    {
+        $list = array();
+        
+        foreach (midcom_admin_folder_folder_management::get_component_list() as $component => $details)
+        {
+            // TODO: configuration options for either excluding or including components to the list
+            if (   isset($GLOBALS['midcom_config']['component_listing_allowed'])
+                && is_array($GLOBALS['midcom_config']['component_listing_allowed'])
+                && !in_array($component, $GLOBALS['midcom_config']['component_listing_allowed'])
+                && $component !== $parent_component
+                && !$all)
+            {
+                continue;
+            }
+            
+            if (   isset($GLOBALS['midcom_config']['component_listing_excluded'])
+                && is_array($GLOBALS['midcom_config']['component_listing_excluded'])
+                && in_array($component, $GLOBALS['midcom_config']['component_listing_excluded'])
+                && $component !== $parent_component
+                && !$all)
+            {
+                continue;
+            }
+            
+            $list[$component] = "{$details['name']} ({$component} {$details['version']})";
+        }
+        
+        return $list;
+    }
+    
+    /**
      * Static method for listing available style templates
      * 
      * @access public
@@ -273,6 +310,11 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
     {
         static $style_array = array();
         
+        $style_array[''] = $_MIDCOM->i18n->get_string('default', 'midcom.admin.folder');
+        
+        // Give an option for creating a new layout template
+        $style_array['__create'] = $_MIDCOM->i18n->get_string('new layout template', 'midcom.admin.folder');
+        
         $qb = midcom_db_style::new_query_builder();
         $qb->add_constraint('up', '=', $up);
         $styles = $qb->execute();
@@ -280,6 +322,13 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
         foreach ($styles as $style)
         {
             $style_string = "{$prefix}{$style->name}";
+            
+            // Hide common unwanted material with heuristics
+            if (preg_match('/(asgard|aegir|empty|spider|admin site)/i', $style_string))
+            {
+                continue;
+            }
+            
             $style_array[$style_string] = "{$spacer}{$style->name}";
             midcom_admin_folder_folder_management::list_styles($style->id, $style_string . '/', $spacer . '&nbsp;&nbsp;');
         }
