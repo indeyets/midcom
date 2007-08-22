@@ -116,15 +116,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_content_topic->id);
 
-        // TODO: 1.7 support is only temporary, I'd rather drop it as soon as 1.8 goes somehting like RC.
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
-        {
-            $qb->add_order('metadata.published');
-        }
-        else
-        {
-            $qb->add_order('created');
-        }
+        $qb->add_order('metadata.published');
         $qb->set_limit(1);
 
         if ($_MIDCOM->auth->request_sudo())
@@ -139,15 +131,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
 
         if ($result)
         {
-            // TODO: 1.7 support is only temporary, I'd rather drop it as soon as 1.8 goes somehting like RC.
-            if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
-            {
-                return new Date($result[0]->metadata->published);
-            }
-            else
-            {
-                return new Date($result[0]->created);
-            }
+            return new Date($result[0]->metadata->published);
         }
         else
         {
@@ -167,17 +151,8 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_content_topic->id);
 
-        // TODO: 1.7 support is only temporary, I'd rather drop it as soon as 1.8 goes somehting like RC.
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
-        {
-            $qb->add_constraint('metadata.published', '>=', $start->getDate());
-            $qb->add_constraint('metadata.published', '<', $end->getDate());
-        }
-        else
-        {
-            $qb->add_constraint('created', '>=', $start->getDate());
-            $qb->add_constraint('created', '<', $end->getDate());
-        }
+        $qb->add_constraint('metadata.published', '>=', $start->getDate());
+        $qb->add_constraint('metadata.published', '<', $end->getDate());
         return $qb->count_unchecked();
     }
 
@@ -354,8 +329,8 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
                 // This will exit.
         }
 
-        $qb->add_constraint('created', '>=', $this->_start->getDate());
-        $qb->add_constraint('created', '<', $this->_end->getDate());
+        $qb->add_constraint('metadata.published', '>=', $this->_start->getDate());
+        $qb->add_constraint('metadata.published', '<', $this->_end->getDate());
         $qb->add_order('metadata.published', $this->_config->get('archive_item_order'));
         $this->_articles = $qb->execute();
 
