@@ -90,5 +90,18 @@
                 ),
             ),            
         ),
+        'image' => Array
+        (
+            'title' => 'image',
+            'storage' => null,
+            'type' => 'image',
+            'type_config' => Array
+            (
+                'filter_chain' => 'resize(800,600)',
+                'auto_thumbnail' => Array(200,200),
+            ),
+            'widget' => 'image',
+            'hidden' => true,
+        ),
     ),
 ),

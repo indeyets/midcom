@@ -492,6 +492,8 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
 
         if ($this->_articles)
         {
+            $data['index_fulltext'] = $this->_config->get('index_fulltext');
+        
             $total_count = count($this->_articles);
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 

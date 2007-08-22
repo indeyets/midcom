@@ -32,7 +32,7 @@ if (array_key_exists('comments_enable', $data))
     if (isset($view['abstract']))
     {
         ?>
-        <p class="entry-excerpt">&(view['abstract']:h);</p>
+        <p class="entry-summary">&(view['abstract']:h);</p>
         <?php
     }
     
