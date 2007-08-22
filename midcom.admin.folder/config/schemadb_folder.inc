@@ -1,0 +1,76 @@
+'default' => array
+(
+    'description' => 'topic',
+    'l10n_db' => 'midcom.admin.folder',
+    'fields' => array
+    (
+        'name' => array
+        (
+            'title' => 'name',
+            'storage' => 'name',
+            'type' => 'text',
+            'widget' => 'text',
+            'required' => ($GLOBALS['midcom_admin_folder_mode'] === 'edit') ? true : false,
+        ),
+        'title' => array
+        (
+            'title' => 'title',
+            'storage' => 'extra',
+            'type' => 'text',
+            'widget' => 'text',
+            'required' => true,
+        ),
+        'component' => array
+        (
+            'title' => 'component',
+            'storage' => 'component',
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => midcom_admin_folder_folder_management::list_components($_MIDCOM->get_context_data(MIDCOM_CONTEXT_COMPONENT)),
+//                'options' => array(),
+            ),
+            'widget' => 'select',
+        ),
+        'style' => array
+        (
+            'title' => 'style template',
+            'storage' => 'style',
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => midcom_admin_folder_folder_management::list_styles(),
+            ),
+            'widget' => 'select',
+        ),
+        'style_inherit' => array
+        (
+            'title' => 'inherit style',
+            'storage' => 'styleInherit',
+            'type' => 'boolean',
+            'widget' => 'checkbox',
+        ),
+        'nav_order' => array
+        (
+            'title' => 'nav order',
+            'storage' => array
+            (
+                'location' => 'parameter',
+                'domain' => 'midcom.helper.nav',
+                'name' => 'nav_order',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    MIDCOM_NAVORDER_DEFAULT => $_MIDCOM->i18n->get_string('default sort order', 'midcom.admin.folder'),
+                    MIDCOM_NAVORDER_TOPICSFIRST => $_MIDCOM->i18n->get_string('folders first', 'midcom.admin.folder'),
+                    MIDCOM_NAVORDER_ARTICLESFIRST => $_MIDCOM->i18n->get_string('pages first', 'midcom.admin.folder'),
+                    MIDCOM_NAVORDER_SCORE => $_MIDCOM->i18n->get_string('by score', 'midcom.admin.folder'),
+                ),
+            ),
+            'widget' => 'select',
+        ),
+    ),
+),
