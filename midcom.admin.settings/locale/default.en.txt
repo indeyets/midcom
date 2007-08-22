@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING allowed components (leave empty to allow all)
+Allowed components (leave empty to allow all)
+---STRINGEND
+
 ---STRING auth_allow_sudo
 Allow components to run in sudo mode
 ---STRINGEND
@@ -305,5 +309,9 @@ Path to unrtf application
 
 ---STRING utility_unzip
 Path to unzip application
+---STRINGEND
+
+---STRING excluded components (leave empty to allow all)
+Excluded components (leave empty to allow all)
 ---STRINGEND
 
