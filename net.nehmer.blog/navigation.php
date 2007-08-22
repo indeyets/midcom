@@ -53,7 +53,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
         if (   $this->_config->get('archive_enable')
             && $this->_config->get('show_navigation_pseudo_leaves'))
         {
-            $leaves[NET_NEHMER_BLOG_LEAFID_ARCHIVE] = array
+            $leaves["{$this->_topic->id}_ARCHIVE"] = array
             (
                 MIDCOM_NAV_SITE => Array
                 (

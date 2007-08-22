@@ -79,7 +79,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
      * for usage within the style listing.
      */
     function _prepare_request_data()
-    {
+    {    
         $this->_request_data['datamanager'] =& $this->_datamanager;
         $this->_request_data['start'] =& $this->_start;
         $this->_request_data['end'] =& $this->_end;
@@ -95,7 +95,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
     {
         $this->_compute_welcome_data();
         $this->_prepare_request_data();
-        $this->_component_data['active_leaf'] = NET_NEHMER_BLOG_LEAFID_ARCHIVE;
+        $this->_component_data['active_leaf'] = "{$this->_topic->id}_ARCHIVE";
         $_MIDCOM->set_26_request_metadata(net_nehmer_blog_viewer::get_last_modified($this->_topic, $this->_content_topic), $this->_topic->guid);
         return true;
     }
@@ -333,7 +333,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
      * the QB. See the add_*_constraint methods for details.
      */
     function _handler_list ($handler_id, $args, &$data)
-    {
+    {    
         // Get Articles, distinguish by handler.
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_topic->id);
@@ -354,19 +354,9 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
                 // This will exit.
         }
 
-        // TODO: 1.7 support is only temporary, I'd rather drop it as soon as 1.8 goes somehting like RC.
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
-        {
-            $qb->add_constraint('metadata.published', '>=', $this->_start->getDate());
-            $qb->add_constraint('metadata.published', '<', $this->_end->getDate());
-            $qb->add_order('created', $this->_config->get('archive_item_order'));
-        }
-        else
-        {
-            $qb->add_constraint('created', '>=', $this->_start->getDate());
-            $qb->add_constraint('created', '<', $this->_end->getDate());
-            $qb->add_order('metadata.published', $this->_config->get('archive_item_order'));
-        }
+        $qb->add_constraint('created', '>=', $this->_start->getDate());
+        $qb->add_constraint('created', '<', $this->_end->getDate());
+        $qb->add_order('metadata.published', $this->_config->get('archive_item_order'));
         $this->_articles = $qb->execute();
 
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
@@ -393,8 +383,10 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
 
         $this->_prepare_request_data();
-        $this->_component_data['active_leaf'] = NET_NEHMER_BLOG_LEAFID_ARCHIVE;
+        $this->_component_data['active_leaf'] = "{$this->_topic->id}_ARCHIVE";
+
         $_MIDCOM->set_26_request_metadata(net_nehmer_blog_viewer::get_last_modified($this->_topic, $this->_content_topic), $this->_topic->guid);
+
         return true;
     }
 
@@ -488,11 +480,18 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
      */
     function _show_list($handler_id, &$data)
     {
+        // FIXME: For some reason the config topic is lost between _handle and _show phases
+        $this->_config->store_from_object($this->_topic, $this->_component);    
+        
         midcom_show_style('archive-list-start');
-
         if ($this->_articles)
         {
             $data['index_fulltext'] = $this->_config->get('index_fulltext');
+            if ($this->_config->get('comments_enable'))
+            {
+                $_MIDCOM->componentloader->load_graceful('net.nehmer.comments');
+                $data['comments_enable'] = true;
+            }
         
             $total_count = count($this->_articles);
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);

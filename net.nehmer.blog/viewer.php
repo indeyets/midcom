@@ -339,8 +339,7 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
         $this->_add_categories();
 
         $this->_add_link_head();
-        $this->_populate_node_toolbar();
-
+        $this->_populate_node_toolbar();        
         return true;
     }
     
