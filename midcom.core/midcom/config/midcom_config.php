@@ -478,6 +478,11 @@ $GLOBALS['midcom_config_default']['staging2live_staging'] = false;
 // Set the DM1 schema used by the Metadata Service
 $GLOBALS['midcom_config_default']['metadata_schema'] = 'file:/midcom/config/metadata_default.inc';
 
+// Component system
+// Show only these components when creating or editing
+$GLOBALS['midcom_config_default']['component_listing_allowed'] = null;
+$GLOBALS['midcom_config_default']['component_listing_excluded'] = null;
+
 // Positioning system
 // If this argument is set to true, various components will start gathering
 // and displaying geolocation information.
