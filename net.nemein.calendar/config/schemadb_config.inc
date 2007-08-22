@@ -75,6 +75,22 @@
                 '1' => 'yes',
                 '0' => 'no',
             ),
+        ),
+
+        'archive_year_order' => array
+        (
+            'description' => 'archive year order',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nemein.calendar',
+            'config_key' => 'archive_year_order',
+            'widget' => 'config_radiobox',
+            'widget_radiobox_choices' => array
+            (
+                '' => 'default setting',
+                'DESC' => 'DESC',
+                'ASC' => 'ASC',
+            ),
             'end_fieldgroup' => '',
         ),
         

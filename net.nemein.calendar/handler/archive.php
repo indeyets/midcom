@@ -459,10 +459,16 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
     function _show_welcome($handler_id, &$data)
     {
         midcom_show_style('archive-start');
+        
+        //reversing array to get descenting order in view
+        if ($this->_config->get('archive_year_order') == 'DESC')
+        {
+            $data['year_data'] = array_reverse($data['year_data']);
+        }
 
         foreach ($data['year_data'] as $year => $year_data)
         {
-            $data['year'] = $year;
+            $data['year'] = $year_data['year'];
             $data['url'] = $year_data['url'];
             $data['count'] = $year_data['count'];
             $data['month_data'] = $year_data['month_data'];
