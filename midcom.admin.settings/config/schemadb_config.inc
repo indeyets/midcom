@@ -29,7 +29,7 @@
             'title' => 'auth_login_session_timeout',
         ),
 
-    	'auth_frontend' => array
+        'auth_frontend' => array
         (
             'title' => 'auth_frontend',
             'type' => 'select',
@@ -44,7 +44,7 @@
             'widget' => 'select',            
         ),
 
-    	'auth_sitegroup_mode' => array
+        'auth_sitegroup_mode' => array
         (
             'title' => 'auth_sitegroup_mode',
             'type' => 'select',
@@ -61,7 +61,7 @@
             'widget' => 'select',
         ),
         
-    	'auth_login_form_httpcode' => array
+        'auth_login_form_httpcode' => array
         (
             'title' => 'auth_login_form_httpcode',
             'type' => 'select',
@@ -77,7 +77,7 @@
             'widget' => 'select',
         ),
 
-    	'auth_check_client_ip' => array
+        'auth_check_client_ip' => array
         (
             'type' => 'select',
             'widget' => 'select',
@@ -86,14 +86,14 @@
             (
                 'options' => array
                 (
-                    ''	=> sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['auth_check_client_ip'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
-                    '1'	=> 'yes',
-                    '0'	=> 'no',
+                    ''    => sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['auth_check_client_ip'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
+                    '1'    => 'yes',
+                    '0'    => 'no',
                 ),
             ),
         ),
 
-    	'auth_allow_sudo' => array
+        'auth_allow_sudo' => array
         (
             'type' => 'select',
             'widget' => 'select',
@@ -102,14 +102,14 @@
             (
                 'options' => array
                 (
-                    ''	=> sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['auth_allow_sudo'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
+                    ''    => sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['auth_allow_sudo'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
                     '1' => 'yes',
                     '0' => 'no',
                 ),
             ),
         ),
-	
-    	'auth_backend_simple_cookie_id' => array
+    
+        'auth_backend_simple_cookie_id' => array
         (
             'type' => 'text',
             'widget' => 'text',
@@ -117,14 +117,14 @@
 
         ),
 
-    	'auth_backend_simple_cookie_path' => array
+        'auth_backend_simple_cookie_path' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'auth_backend_simple_cookie_path',
         ),
 
-    	'auth_backend_simple_cookie_domain' => array
+        'auth_backend_simple_cookie_domain' => array
         (
             'type' => 'text',
             'widget' => 'text',
@@ -132,7 +132,7 @@
         ),
 
         // Cache configuration
-    	'cache_base_directory' => array
+        'cache_base_directory' => array
         (
             'type' => 'text',
             'widget' => 'text',
@@ -140,7 +140,7 @@
         ),
 
         /*
-    	'cache_module_content_uncached' => array
+        'cache_module_content_uncached' => array
         (
             'type' => 'select',
             'widget' => 'select',
@@ -149,7 +149,7 @@
             (
                 'options' => array
                 (
-                    ''	=> sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['cache_module_content_uncached'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
+                    ''    => sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['cache_module_content_uncached'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
                     '1' => 'yes',
                     '0' => 'no',
                 ),
@@ -157,7 +157,7 @@
         ),
         */
 
-	'cache_module_content_headers_strategy' => array
+    'cache_module_content_headers_strategy' => array
         (
             'type' => 'select',
             'widget' => 'select',
@@ -168,9 +168,9 @@
                 (
                     ''  => sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['cache_module_content_headers_strategy']),
                     'no-cache' =>'cs-no-cache', 
-        	    'revalidate' =>'cs-revalidate',
-        	    'public' =>'cs-public',
-        	    'private'=>'cs-private',
+                'revalidate' =>'cs-revalidate',
+                'public' =>'cs-public',
+                'private'=>'cs-private',
                 ),
             ),
         ),
@@ -182,7 +182,7 @@
             'title' => 'cache_module_content_default_lifetime',
         ),
 
-    	'i18n_fallback_language' => array
+        'i18n_fallback_language' => array
         (
             'title' => 'i18n_fallback_language',
             'type' => 'select',
@@ -194,7 +194,7 @@
         ),
 
         // Indexer Configuration
-    	'indexer_backend' => array
+        'indexer_backend' => array
         (
             'title' => 'indexer_backend',
             'type' => 'select',
@@ -202,7 +202,7 @@
             (
                 'options' => array
                 (
-                    ''    => 'indexer_backend_none',
+                    false    => 'indexer_backend_none',
                     'xmltcp' => 'indexer_backend_xmltcp',
                     'solr' => 'Solr indexer',
                 ),
@@ -210,7 +210,7 @@
             'widget' => 'select',
         ),
 
-    	'indexer_index_name' => array
+        'indexer_index_name' => array
         (
             'type' => 'text',
             'widget' => 'text',
@@ -218,14 +218,14 @@
         ),
 
         // XMLTCP indexer backend (THE RECOMMENDED ONE)
-    	'indexer_xmltcp_host' => array
+        'indexer_xmltcp_host' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'indexer_xmltcp_host',
         ),
 
-    	'indexer_xmltcp_port' => array
+        'indexer_xmltcp_port' => array
         (
             'type' => 'text',
             'widget' => 'text',
@@ -234,14 +234,14 @@
 
         /*
         // XMLShell indexer backend configuration
-    	'indexer_xmlshell_executable' => array
+        'indexer_xmlshell_executable' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'indexer_xmlshell_executable',
         ),
 
-    	'indexer_xmlshell_working_directory' => array
+        'indexer_xmlshell_working_directory' => array
         (
             'type' => 'text',
             'widget' => 'text',
@@ -249,14 +249,14 @@
         ),*/
 
         // Logging Configuration
-    	'log_filename' => array
+        'log_filename' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'log_filename',
         ),
 
-    	'log_level' => array
+        'log_level' => array
         (
             'title' => 'log_level',
             'type' => 'select',
@@ -275,7 +275,7 @@
             'widget' => 'select',
         ),
 
-    	'log_tailurl_enable' => array
+        'log_tailurl_enable' => array
         (
             'type' => 'select',
             'widget' => 'select',
@@ -284,7 +284,7 @@
             (
                 'options' => array
                 (
-                    ''	=> sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['log_tailurl_enable'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
+                    ''    => sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['log_tailurl_enable'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
                     '1' => 'yes',
                     '0' => 'no',
                 ),
@@ -293,7 +293,7 @@
 
         // Core configuration
         /*
-    	'midcom_ais_url' => array
+        'midcom_ais_url' => array
         (
             'type' => 'text',
             'widget' => 'text',
@@ -301,14 +301,14 @@
         ),
         */
 
-    	'midcom_prefix' => array
+        'midcom_prefix' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'midcom_prefix',
         ),
 
-    	'midcom_root_topic_guid' => array
+        'midcom_root_topic_guid' => array
         (
             'title' => 'midcom_root_topic_guid',
             'required' => true,
@@ -348,28 +348,28 @@
             ),            
         ),
 
-    	'midcom_sgconfig_basedir' => array
+        'midcom_sgconfig_basedir' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'midcom_sgconfig_basedir',
         ),
 
-    	'midcom_site_url' => array
+        'midcom_site_url' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'midcom_site_url',
         ),
 
-    	'midcom_tempdir' => array
+        'midcom_tempdir' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'midcom_tempdir',
         ),
 
-    	'midcom_temporary_resource_timeout' => array
+        'midcom_temporary_resource_timeout' => array
         (
             'type' => 'text',
             'widget' => 'text',
@@ -377,7 +377,7 @@
         ),
 
         // Visibility settings (NAP)
-    	'show_hidden_objects' => array
+        'show_hidden_objects' => array
         (
             'type' => 'select',
             'widget' => 'select',
@@ -386,14 +386,14 @@
             (
                 'options' => array
                 (
-                    ''	=> sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['show_hidden_objects'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
+                    ''    => sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['show_hidden_objects'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
                     '1' => 'yes',
                     '0' => 'no',
                 ),
             ),
         ),
 
-    	'show_unapproved_objects' => array
+        'show_unapproved_objects' => array
         (
             'type' => 'select',
             'widget' => 'select',
@@ -402,14 +402,14 @@
             (
                 'options' => array
                 (
-                    ''	=> sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['show_unapproved_objects'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
+                    ''    => sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['show_unapproved_objects'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
                     '1' => 'yes',
                     '0' => 'no',
                 ),
             ),
         ),
         
-    	'i18n_multilang_strict' => array
+        'i18n_multilang_strict' => array
         (
             'type' => 'select',
             'widget' => 'select',
@@ -418,7 +418,7 @@
             (
                 'options' => array
                 (
-                    ''	=> sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['i18n_multilang_strict'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
+                    ''    => sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['i18n_multilang_strict'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
                     '1' => 'yes',
                     '0' => 'no',
                 ),
@@ -426,77 +426,77 @@
         ),
 
         // Utilities
-    	'utility_imagemagick_base' => array
+        'utility_imagemagick_base' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'utility_imagemagick_base',
         ),
 
-    	'utility_jpegtran' => array
+        'utility_jpegtran' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'utility_jpegtran',
         ),
 
-    	'utility_unzip' => array
+        'utility_unzip' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'utility_unzip',
         ),
 
-    	'utility_gzip' => array
+        'utility_gzip' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'utility_gzip',
         ),
 
-    	'utility_tar' => array
+        'utility_tar' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'utility_tar',
         ),
 
-    	'utility_jhead' => array
+        'utility_jhead' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'utility_jhead',
         ),
 
-    	'utility_find' => array
+        'utility_find' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'utility_find',
         ),
 
-    	'utility_file' => array
+        'utility_file' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'utility_file',
         ),
 
-    	'utility_catdoc' => array
+        'utility_catdoc' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'utility_catdoc',
         ),
 
-    	'utility_pdftotext' => array
+        'utility_pdftotext' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'utility_pdftotext',
         ),
 
-    	'utility_unrtf' => array
+        'utility_unrtf' => array
         (
             'type' => 'text',
             'widget' => 'text',
@@ -504,28 +504,28 @@
         ),
 
         // Revision control service
-    	'utility_diff' => array
+        'utility_diff' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'utility_diff',
         ),
 
-    	'utility_rcs' => array
+        'utility_rcs' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'utility_rcs',
         ),
 
-    	'midcom_services_rcs_bin_dir' => array
+        'midcom_services_rcs_bin_dir' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'midcom_services_rcs_bin_dir',
         ),
 
-    	'midcom_services_rcs_enable' => array
+        'midcom_services_rcs_enable' => array
         (
             'type' => 'select',
             'widget' => 'select',
@@ -534,7 +534,7 @@
             (
                 'options' => array
                 (
-                    ''	=> sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['midcom_services_rcs_enable'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
+                    ''    => sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['midcom_services_rcs_enable'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
                     '1' => 'yes',
                     '0' => 'no',
                 ),
@@ -542,7 +542,7 @@
         ),
 
         // Metadata system
-    	'metadata_approval' => array
+        'metadata_approval' => array
         (
             'type' => 'select',
             'widget' => 'select',
@@ -551,13 +551,13 @@
             (
                 'options' => array
                 (
-                    ''	=> sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['metadata_approval'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
+                    ''    => sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['metadata_approval'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
                     '1' => 'yes',
                     '0' => 'no',
                 ),
             ),
         ),
-    	'metadata_scheduling' => array
+        'metadata_scheduling' => array
         (
             'type' => 'select',
             'widget' => 'select',
@@ -566,19 +566,19 @@
             (
                 'options' => array
                 (
-                    ''	=> sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['metadata_scheduling'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
+                    ''    => sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['metadata_scheduling'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
                     '1' => 'yes',
                     '0' => 'no',
                 ),
             ),
         ),
-    	'metadata_schema' => array
+        'metadata_schema' => array
         (
             'type' => 'text',
             'widget' => 'text',
             'title' => 'metadata_schema',
         ),
-    	'staging2live_staging' => array
+        'staging2live_staging' => array
         (
             'type' => 'select',
             'widget' => 'select',
@@ -587,7 +587,7 @@
             (
                 'options' => array
                 (
-                    ''	=> sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['staging2live_staging'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
+                    ''    => sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['staging2live_staging'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
                     '1' => 'yes',
                     '0' => 'no',
                 ),
@@ -595,7 +595,7 @@
         ),
 
         // Positioning system
-    	'positioning_enable' => array
+        'positioning_enable' => array
         (
             'type' => 'select',
             'widget' => 'select',
@@ -604,13 +604,33 @@
             (
                 'options' => array
                 (
-                    ''	=> sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['positioning_enable'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
+                    ''    => sprintf($_MIDCOM->i18n->get_string('default (%s)', 'midcom.admin.settings'), $GLOBALS['midcom_config_default']['positioning_enable'] ? $_MIDCOM->i18n->get_string('yes', 'midcom') : $_MIDCOM->i18n->get_string('no', 'midcom')),
                     '1' => 'yes',
                     '0' => 'no',
                 ),
             ),
         ),
-
-
+        'component_listing_allowed' => array
+        (
+            'type' => 'select',
+            'widget' => 'select',
+            'title' => $_MIDCOM->i18n->get_string('allowed components (leave empty to allow all)', 'midcom.admin.settings'),
+            'type_config' => array
+            (
+                'allow_multiple' => true,
+                'options' => midcom_admin_folder_folder_management::list_components('', true),
+            ),
+        ),
+        'component_listing_excluded' => array
+        (
+            'type' => 'select',
+            'widget' => 'select',
+            'title' => $_MIDCOM->i18n->get_string('excluded components (leave empty to allow all)', 'midcom.admin.settings'),
+            'type_config' => array
+            (
+                'allow_multiple' => true,
+                'options' => midcom_admin_folder_folder_management::list_components('', true),
+            ),
+        ),
     ),
 ),

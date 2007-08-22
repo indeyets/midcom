@@ -67,7 +67,8 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
 
         require MIDCOM_ROOT . '/midcom/helper/hostconfig.php';
 
-	$_MIDCOM->load_library('midcom.helper.datamanager2');
+        $_MIDCOM->load_library('midcom.helper.datamanager2');
+        $_MIDCOM->load_library('midcom.admin.folder');
     }
 
     function get_plugin_handlers()
@@ -94,12 +95,12 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
      */
     function _load_schemadb()
     {
-    	foreach ($GLOBALS['midcom_config_local'] as $key => $value)
-    	{
-    	   $this->_defaults[$key] = $value;
-    	}
+        foreach ($GLOBALS['midcom_config_local'] as $key => $value)
+        {
+           $this->_defaults[$key] = $value;
+        }
     
-    	$this->_schemadb = midcom_helper_datamanager2_schema::load_database('file:/midcom/admin/settings/config/schemadb_config.inc');    	
+        $this->_schemadb = midcom_helper_datamanager2_schema::load_database('file:/midcom/admin/settings/config/schemadb_config.inc');        
     }
 
     /**
@@ -142,7 +143,7 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
         $this->_codeinit = $codeinits[0];
 
         $this->_load_controller();
-	
+    
         switch ($this->_controller->process_form())
         {
             case 'save':
@@ -227,7 +228,9 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
         foreach ($this->_controller->formmanager->form->_submitValues as $key => $val)
         {
             if (   array_key_exists($key, $GLOBALS['midcom_config'])) {
+                if ($GLOBALS['midcom_config'][$key] != $val) {
                     $hostconfig->set($key, $val);
+                }
             
             } else {
             //$this->errors .=" Could not ser: $key, $val<br/>";
