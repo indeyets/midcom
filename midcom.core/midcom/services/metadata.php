@@ -221,7 +221,7 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
         $_MIDCOM->add_meta_head(
             array(
                 'name' => 'lastupdated',
-                'content' => gmdate('Y-m-d H:i:s\Z', $request_metadata['lastmodified'])
+                'content' => @gmdate('Y-m-d H:i:s\Z', $request_metadata['lastmodified'])
             )
         );
         
