@@ -44,6 +44,14 @@
                 '0' => 'no',
             ),
         ),
+        'search_index_order' => array
+        (
+            'description' => 'search index order',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'org.openpsa.products',
+            'config_key' => 'search_index_order',
+        ),   
         'enable_components' => array
         (
             'description' => 'whether to enable adding subcomponents to products',

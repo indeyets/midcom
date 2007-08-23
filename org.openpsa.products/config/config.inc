@@ -15,6 +15,8 @@
 // Search related
 'search_first' => false,
 'search_default_to_all' => true,
+// How the search results should be indexed. You can use metadata and linked options, for example metadata.score
+'search_index_order' => array('productGroup', 'code'),
 
 'group_list_products' => true,
 'products_per_page' => 30,

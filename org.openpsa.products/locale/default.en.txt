@@ -203,3 +203,6 @@ year
 You can import csv files here
 ---STRINGEND
 
+---STRING search index order
+Search index order
+---STRINGEND

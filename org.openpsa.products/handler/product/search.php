@@ -192,6 +192,44 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
         $qb->add_constraint('parameter.value', '=', $this->_request_data['search_schema']);
         $qb->end_group();
 
+        foreach ($this->_config->get('search_index_order') as $ordering)
+        {
+            if (preg_match('/\s*reversed?\s*/', $ordering))
+            {
+                $reversed = true;
+                $ordering = preg_replace('/\s*reversed?\s*/', '', $ordering);
+            }
+            else
+            {
+                $reversed = false;
+            }
+            
+            if ($ordering === 'metadata.score')
+            {
+                if (version_compare(mgd_version(), '1.8.2', '<'))
+                {
+                    $ordering = 'score';
+                    $reversed = false;
+                }
+            }
+            
+            if (   strpos($ordering, '.')
+                && !class_exists('midgard_query_builder'))
+            {
+                debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
+                continue;
+            }
+            
+            if ($reversed)
+            {
+                $qb->add_order($ordering, 'DESC');
+            }
+            else
+            {
+                $qb->add_order($ordering);
+            }
+        }
+
         $products = $qb->execute();
 
         // FIXME: hack to prevent duplication of results
@@ -268,7 +306,45 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
         {
             $qb->end_group();
         }
-        
+
+        foreach ($this->_config->get('search_index_order') as $ordering)
+        {
+            if (preg_match('/\s*reversed?\s*/', $ordering))
+            {
+                $reversed = true;
+                $ordering = preg_replace('/\s*reversed?\s*/', '', $ordering);
+            }
+            else
+            {
+                $reversed = false;
+            }
+            
+            if ($ordering === 'metadata.score')
+            {
+                if (version_compare(mgd_version(), '1.8.2', '<'))
+                {
+                    $ordering = 'score';
+                    $reversed = false;
+                }
+            }
+            
+            if (   strpos($ordering, '.')
+                && !class_exists('midgard_query_builder'))
+            {
+                debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
+                continue;
+            }
+            
+            if ($reversed)
+            {
+                $qb->add_order($ordering, 'DESC');
+            }
+            else
+            {
+                $qb->add_order($ordering);
+            }
+        }    
+
         //mgd_debug_start();
         $ret = $qb->execute();
         //mgd_debug_stop();
@@ -401,6 +477,44 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
 
         $filtered_products = array();
 
+        foreach ($this->_config->get('search_index_order') as $ordering)
+        {
+            if (preg_match('/\s*reversed?\s*/', $ordering))
+            {
+                $reversed = true;
+                $ordering = preg_replace('/\s*reversed?\s*/', '', $ordering);
+            }
+            else
+            {
+                $reversed = false;
+            }
+            
+            if ($ordering === 'metadata.score')
+            {
+                if (version_compare(mgd_version(), '1.8.2', '<'))
+                {
+                    $ordering = 'score';
+                    $reversed = false;
+                }
+            }
+            
+            if (   strpos($ordering, '.')
+                && !class_exists('midgard_query_builder'))
+            {
+                debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
+                continue;
+            }
+            
+            if ($reversed)
+            {
+                $qb->add_order($ordering, 'DESC');
+            }
+            else
+            {
+                $qb->add_order($ordering);
+            }
+        }    
+
         $initial_products = $qb->execute();
 
         foreach ($initial_products as $product)
@@ -485,6 +599,44 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
         {
             $qb->end_group();
         }
+        
+        foreach ($this->_config->get('search_index_order') as $ordering)
+        {
+            if (preg_match('/\s*reversed?\s*/', $ordering))
+            {
+                $reversed = true;
+                $ordering = preg_replace('/\s*reversed?\s*/', '', $ordering);
+            }
+            else
+            {
+                $reversed = false;
+            }
+            
+            if ($ordering === 'metadata.score')
+            {
+                if (version_compare(mgd_version(), '1.8.2', '<'))
+                {
+                    $ordering = 'score';
+                    $reversed = false;
+                }
+            }
+            
+            if (   strpos($ordering, '.')
+                && !class_exists('midgard_query_builder'))
+            {
+                debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
+                continue;
+            }
+            
+            if ($reversed)
+            {
+                $qb->add_order($ordering, 'DESC');
+            }
+            else
+            {
+                $qb->add_order($ordering);
+            }
+        }    
 
         $initial_products = $qb->execute();
 

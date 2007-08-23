@@ -203,3 +203,6 @@ Sallitaanko komponenttien lisääminen tuotteisiin
 Voit tuoda CSV-tiedostot täältä
 ---STRINGEND
 
+---STRING search index order
+Haun tulosten järjestely
+---STRINGEND
