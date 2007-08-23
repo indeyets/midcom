@@ -1,0 +1,11 @@
+midcom.helper.dm2config ChangeLog
+=================================
+
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guaranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completly new features.
+
+2007-08-23 adrenalin
+  - Created DM2 component configuration helper
