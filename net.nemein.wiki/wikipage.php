@@ -549,8 +549,9 @@ EOF;
                 {
                     $folder = $wikipage_match['latest_parent'];
                 }
-                
-                if ($folder[MIDCOM_NAV_OBJECT]->can_do('midgard:create'))
+                                
+                if (   isset($folder[MIDCOM_NAV_OBJECT])
+                    && $folder[MIDCOM_NAV_OBJECT]->can_do('midgard:create'))
                 {
                     $wikilink = rawurlencode($wikilink);
                     return "<a href=\"{$folder[MIDCOM_NAV_FULLURL]}create/?wikiword={$wikipage_match['remaining_path']}\" class=\"wiki_missing\" title=\"" . $_MIDCOM->i18n->get_string('click to create', 'net.nemein.wiki') . "\">{$text}</a>{$after}";
@@ -712,6 +713,7 @@ EOF;
             
             // Traverse the NAP tree upwards until we get the root-most wiki folder
             $folder = $nap->get_node($this->topic);
+            
             $root_folder = $folder;
             $max = 100;
             while (   $folder[MIDCOM_NAV_COMPONENT] == 'net.nemein.wiki'
@@ -804,6 +806,11 @@ EOF;
             // The linked page is in same namespace
             $nap = new midcom_helper_nav();
             $folder = $nap->get_node($this->topic);
+        }
+        
+        if (empty($folder))
+        {
+            return null;
         }
         
         // Check if the wikipage exists

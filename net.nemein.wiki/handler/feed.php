@@ -41,11 +41,11 @@ class net_nemein_wiki_handler_feed extends midcom_baseclasses_components_handler
     function _show_rss($handler_id, &$data)
     {
         $qb = net_nemein_wiki_wikipage::new_query_builder();
-        //$qb->add_constraint('topic.component', '=', 'net.nemein.wiki');
-        $qb->add_constraint('topic', 'INTREE', $this->_topic->id);
+        $qb->add_constraint('topic.component', '=', $_MIDCOM->get_context_data(MIDCOM_CONTEXT_COMPONENT));
+        $qb->add_constraint('topic.id', 'INTREE', $this->_topic->id);
         $qb->add_order('metadata.revised', 'DESC');
         $qb->set_limit($this->_config->get('rss_count'));
-        $result = $qb->execute();        
+        $result = $qb->execute();
         
         foreach ($result as $wikipage)
         {
