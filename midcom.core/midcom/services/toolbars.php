@@ -807,7 +807,8 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             ));
         }
         
-        if ($object->can_do('midgard:update'))
+        if (   $GLOBALS['midcom_config']['midcom_services_rcs_enable']
+            && $object->can_do('midgard:update'))
         {
             $toolbar->add_item
             (
