@@ -196,12 +196,12 @@ class FeedItem extends HtmlDescribable {
 	 * Mandatory attributes of an item.
 	 */
 	var $title, $description, $link;
-	
+
 	/**
 	 * Optional attributes of an item.
 	 */
-	var $author, $authorEmail, $image, $thumb, $lat, $long, $category, $comments, $guid, $source, $creator;
-	
+	var $author, $authorEmail, $authorURL,$image, $category, $categoryScheme, $comments, $guid, $source, $creator, $contributor;
+
 	/**
 	 * Publishing date of an item. May be in one of the following formats:
 	 *
@@ -216,6 +216,17 @@ class FeedItem extends HtmlDescribable {
 	 *	1043082341
 	 */
 	var $date;
+	
+	/**
+	 * Add <enclosure> element tag RSS 2.0, supported by ATOM 1.0 too
+	 * modified by : Mohammad Hafiz bin Ismail (mypapit@gmail.com)
+	 *
+	 *
+	 * display :
+	 * <enclosure length="17691" url="http://something.com/picture.jpg" type="image/jpeg" />
+	 *
+	 */
+	var $enclosure;	
 	
 	/**
 	 * Any additional elements to include as an assiciated array. All $key => $value pairs
@@ -391,8 +402,12 @@ class UniversalFeedCreator extends FeedCreator {
 				
 			case "TOOLBAR":
 				$this->format = $format;
+
 			case "ATOM":
 				// fall through: always the latest ATOM version
+			case "ATOM1.0":
+				$this->_feed = new AtomCreator10();
+				break;
 				
 			case "ATOM0.3":
 				$this->_feed = new AtomCreator03();
@@ -514,7 +529,13 @@ class FeedCreator extends HtmlDescribable {
 	 * @access private
 	 */
 	var $items = Array();
- 	
+
+	/*
+	 * Generator string
+	 *
+	 */
+
+	 var $generator = "info@mypapit.net"; 	
 	
 	/**
 	 * This feed's MIME content type.
@@ -552,7 +573,16 @@ class FeedCreator extends HtmlDescribable {
 		$this->items[] = $item;
 	}
 	
-	
+	/**
+	 *
+	 *
+	 *
+	 **/
+	 function version() {
+
+	 	return FEEDCREATOR_VERSION." (".$this->generator.")";
+	 }
+	 	
 	/**
 	 * Truncates a string to a certain length at the most sensible point.
 	 * First, if there's a '.' character near the end of the string, the string is truncated after this character.
@@ -1316,6 +1346,161 @@ class PIECreator01 extends FeedCreator {
 	}
 }
 
+/**
+ * AtomCreator10 is a FeedCreator that implements the atom specification,
+ * as in http://www.atomenabled.org/developers/syndication/atom-format-spec.php
+ * Please note that just by using AtomCreator10 you won't automatically
+ * produce valid atom files. For example, you have to specify either an editor
+ * for the feed or an author for every single feed item.
+ *
+ * Some elements have not been implemented yet. These are (incomplete list):
+ * author URL, item author's email and URL, item contents, alternate links,
+ * other link content types than text/html. Some of them may be created with
+ * AtomCreator10::additionalElements.
+ *
+ * @see FeedCreator#additionalElements
+ * @since 1.7.2-mod (modified)
+ * @author Mohammad Hafiz Ismail (mypapit@gmail.com)
+ */
+ class AtomCreator10 extends FeedCreator {
+
+	function AtomCreator10() {
+		$this->contentType = "application/atom+xml";
+		$this->encoding = "utf-8";
+
+	}
+
+	function createFeed() {
+		$feed = "<?xml version=\"1.0\" encoding=\"".$this->encoding."\"?>\n";
+		$feed.= $this->_createGeneratorComment();
+		$feed.= $this->_createStylesheetReferences();
+		$feed.= "<feed xmlns=\"http://www.w3.org/2005/Atom\"";
+		if ($this->language!="") {
+			$feed.= " xml:lang=\"".$this->language."\"";
+		}
+		$feed.= ">\n";
+		$feed.= "    <title>".htmlspecialchars($this->title)."</title>\n";
+		$feed.= "    <subtitle>".htmlspecialchars($this->description)."</subtitle>\n";
+		$feed.= "    <link rel=\"alternate\" type=\"text/html\" href=\"".htmlspecialchars($this->link)."\"/>\n";
+		$feed.= "    <id>".htmlspecialchars($this->link)."</id>\n";
+		$now = new FeedDate();
+		$feed.= "    <updated>".htmlspecialchars($now->iso8601())."</updated>\n";
+		if ($this->editor!="") {
+			$feed.= "    <author>\n";
+			$feed.= "        <name>".$this->editor."</name>\n";
+			if ($this->editorEmail!="") {
+				$feed.= "        <email>".$this->editorEmail."</email>\n";
+			}
+			$feed.= "    </author>\n";
+		}
+		if ($this->category!="") {
+
+
+					$feed.= "    <category term=\"" . htmlspecialchars($this->category) . "\" />\n";
+		}
+		if ($this->copyright!="") {
+					$feed.= "    <rights>".FeedCreator::iTrunc(htmlspecialchars($this->copyright),100)."</rights>\n";
+		}
+		$feed.= "    <generator>".$this->version()."</generator>\n";
+
+
+		$feed.= "    <link rel=\"self\" type=\"application/atom+xml\" href=\"". htmlspecialchars($this->syndicationURL). "\" />\n";
+		$feed.= $this->_createAdditionalElements($this->additionalElements, "    ");
+		for ($i=0;$i<count($this->items);$i++) {
+			$feed.= "    <entry>\n";
+			$feed.= "        <title>".htmlspecialchars(strip_tags($this->items[$i]->title))."</title>\n";
+			$feed.= "        <link rel=\"alternate\" type=\"text/html\" href=\"".htmlspecialchars($this->items[$i]->link)."\"/>\n";
+			if ($this->items[$i]->date=="") {
+				$this->items[$i]->date = time();
+			}
+			$itemDate = new FeedDate($this->items[$i]->date);
+			$feed.= "        <published>".htmlspecialchars($itemDate->iso8601())."</published>\n";
+			$feed.= "        <updated>".htmlspecialchars($itemDate->iso8601())."</updated>\n";
+
+
+			$tempguid = $this->items[$i]->link;
+			if ($this->items[$i]->guid!="") {
+				$tempguid = $this->items[$i]->guid;
+			}
+
+			$feed.= "        <id>". htmlspecialchars($tempguid)."</id>\n";
+			$feed.= $this->_createAdditionalElements($this->items[$i]->additionalElements, "        ");
+			if ($this->items[$i]->author!="") {
+				$feed.= "        <author>\n";
+				$feed.= "            <name>".htmlspecialchars($this->items[$i]->author)."</name>\n";
+				if ($this->items[$i]->authorEmail!="") {
+				$feed.= "            <email>".htmlspecialchars($this->items[$i]->authorEmail)."</email>\n";
+				}
+
+				if ($this->items[$i]->authorURL!="") {
+								$feed.= "            <uri>".htmlspecialchars($this->items[$i]->authorURL)."</uri>\n";
+				}
+
+				$feed.= "        </author>\n";
+			}
+
+			if ($this->items[$i]->category!="") {
+				$feed.= "        <category ";
+
+				if ($this->items[$i]->categoryScheme!="") {
+				   $feed.=" scheme=\"".htmlspecialchars($this->items[$i]->categoryScheme)."\" ";
+				}
+
+				$feed.=" term=\"" . htmlspecialchars($this->items[$i]->category) . "\" />\n";
+			}
+
+			if ($this->items[$i]->description!="") {
+
+
+			/*
+			 * ATOM should have at least summary tag, however this implementation may be inaccurate
+			 */
+			 	$tempdesc = $this->items[$i]->getDescription();
+			 	$temptype="";
+
+
+				if ($this->items[$i]->descriptionHtmlSyndicated){
+					$temptype=" type=\"html\"";
+					$tempdesc = $this->items[$i]->getDescription();
+
+				}
+
+				if (empty($this->items[$i]->descriptionTruncSize)) {
+					$feed.= "        <content". $temptype . ">". $tempdesc ."</content>\n";
+				}
+
+
+				$feed.= "        <summary". $temptype . ">". $tempdesc ."</summary>\n";
+			} else {
+
+				$feed.= "	 <summary>no summary</summary>\n";
+
+			}
+
+			if ($this->items[$i]->enclosure != NULL) {
+				$feed.="        <link rel=\"enclosure\" href=\"". $this->items[$i]->enclosure->url ."\" type=\"". $this->items[$i]->enclosure->type."\"  length=\"". $this->items[$i]->enclosure->length ."\"";
+
+				if ($this->items[$i]->enclosure->language != ""){
+					 $feed .=" xml:lang=\"". $this->items[$i]->enclosure->language . "\" ";
+				}
+
+				if ($this->items[$i]->enclosure->title != ""){
+					 $feed .=" title=\"". $this->items[$i]->enclosure->title . "\" ";
+				}
+
+				$feed .=" /> \n";
+
+
+
+			}
+			$feed.= "    </entry>\n";
+		}
+		$feed.= "</feed>\n";
+		return $feed;
+	}
+
+
+}
 
 /**
  * AtomCreator03 is a FeedCreator that implements the atom specification,
