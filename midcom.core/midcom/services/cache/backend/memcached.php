@@ -78,7 +78,7 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
         }
         if (array_key_exists('port', $this->_config))
         {
-            $this->_host = $this->_config['port'];
+            $this->_port = $this->_config['port'];
         }
 
         // Force-disable the php serializer calls, let memcached worry about it.
