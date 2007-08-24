@@ -200,7 +200,7 @@ class FeedItem extends HtmlDescribable {
 	/**
 	 * Optional attributes of an item.
 	 */
-	var $author, $authorEmail, $authorURL,$image, $category, $categoryScheme, $comments, $guid, $source, $creator, $contributor, $lat, $long;
+	var $author, $authorEmail, $authorURL,$image, $category, $categoryScheme, $comments, $guid, $source, $creator, $contributor, $lat, $long, $thumb;
 
 	/**
 	 * Publishing date of an item. May be in one of the following formats:
