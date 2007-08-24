@@ -33,6 +33,22 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
     {
         return parent::__org_routamc_photostream_photo_dba($id);
     }
+    
+    function get_parent_guid_uncached()
+    {
+        if ($this->node != 0)
+        {
+            $parent = new midcom_db_topic($this->node);
+            return $parent->guid;
+        }
+        else
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("No parent defined for this product", MIDCOM_LOG_DEBUG);
+            debug_pop();
+            return null;
+        }
+    }
 
     function _on_creating()
     {
