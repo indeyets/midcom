@@ -119,6 +119,10 @@ revalidate
 Default (%s)
 ---STRINGEND
 
+---STRING excluded components (leave empty to allow all)
+Excluded components (leave empty to allow all)
+---STRINGEND
+
 ---STRING failed to save settings, reason %s
 Failed to save settings, reason %s
 ---STRINGEND
@@ -309,9 +313,5 @@ Path to unrtf application
 
 ---STRING utility_unzip
 Path to unzip application
----STRINGEND
-
----STRING excluded components (leave empty to allow all)
-Excluded components (leave empty to allow all)
 ---STRINGEND
 

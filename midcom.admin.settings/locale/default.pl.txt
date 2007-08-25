@@ -28,7 +28,7 @@ ID cookie autentykacji
 ---STRINGEND
 
 ---STRING auth_check_client_ip
-Zezwalaj na logowanie tylko z jednego adresy IP
+Zezwalaj na logowanie tylko z jednego adresu IP
 ---STRINGEND
 
 ---STRING auth_frontend
@@ -37,6 +37,18 @@ Interfejs autentykacji
 
 ---STRING auth_frontend_form
 Formularz
+---STRINGEND
+
+---STRING auth_login_form_httpcode
+Kod HTTP w formularzach autentykacji
+---STRINGEND
+
+---STRING auth_login_form_httpcode_200
+200 OK
+---STRINGEND
+
+---STRING auth_login_form_httpcode_403
+403 Forbidden
 ---STRINGEND
 
 ---STRING auth_login_session_timeout
@@ -113,6 +125,10 @@ Konfiguracja serwisu.
 
 ---STRING i18n_fallback_language
 Domyślny język
+---STRINGEND
+
+---STRING i18n_multilang_strict
+Ukryj zawartość nieprzetłumaczoną
 ---STRINGEND
 
 ---STRING indexer_backend
@@ -235,6 +251,10 @@ Pokaż ukrytą treść
 Pokaż niezatwierdzoną treść
 ---STRINGEND
 
+---STRING staging2live_staging
+Serwis testowy
+---STRINGEND
+
 ---STRING utility_catdoc
 Plik polecenia catdoc
 ---STRINGEND
@@ -287,23 +307,11 @@ Plik polecenia unrtf
 Plik polecenia unzip
 ---STRINGEND
 
----STRING auth_login_form_httpcode
-Kod HTTP w formularzach autoryzacji
+---STRING allowed components (leave empty to allow all)
+Dozwolone komponenty (pozostaw puste aby zezwolić na używanie wszystkich)
 ---STRINGEND
 
----STRING auth_login_form_httpcode_200
-200 OK
----STRINGEND
-
----STRING auth_login_form_httpcode_403
-403 Forbidden
----STRINGEND
-
----STRING i18n_multilang_strict
-Ukryj zawartość nieprzetłumaczoną
----STRINGEND
-
----STRING staging2live_staging
-Serwis testowy
+---STRING excluded components (leave empty to allow all)
+Zablokowane komponenty (pozostaw puste aby zezwolić na używanie wszystkich)
 ---STRINGEND
 
