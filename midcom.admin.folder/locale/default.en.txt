@@ -59,6 +59,10 @@ Component default
 Copy to editor
 ---STRINGEND
 
+---STRING could not save folder: %s
+Could not save folder. Reason: %s
+---STRINGEND
+
 ---STRING create folder
 Create folder
 ---STRINGEND
@@ -201,6 +205,10 @@ Order of navigation items
 
 ---STRING new layout template
 [New layout template]
+---STRINGEND
+
+---STRING new style created
+New style created
 ---STRINGEND
 
 ---STRING no sortable elements found

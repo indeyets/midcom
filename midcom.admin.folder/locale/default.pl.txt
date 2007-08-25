@@ -3,118 +3,6 @@
 ---CVS $Id$
 ---LANGUAGE pl
 
----STRING all descendants will be deleted
-Cała zawartosc folderu zostanie usunięta:
----STRINGEND
-
----STRING are you sure you want to delete this folder
-Na pewno usunąc ten folder?
----STRINGEND
-
----STRING by score
-Sortowanie ręczne
----STRINGEND
-
----STRING create folder under %s
-Utwórz folder w "%s"
----STRINGEND
-
----STRING create subfolder
-Utwórz folder
----STRINGEND
-
----STRING default
-Domyślnie
----STRINGEND
-
----STRING default sort order
-Domyślne sortowanie
----STRINGEND
-
----STRING delete folder
-Usuń folder
----STRINGEND
-
----STRING delete folder %s
-Usuń folder "%s"
----STRINGEND
-
----STRING edit folder
-Edytuj folder
----STRINGEND
-
----STRING edit folder %s
-Edytuj folder "%s"
----STRINGEND
-
----STRING edit folder metadata
-Edytuj metadane folderu "%s"
----STRINGEND
-
----STRING edit metadata
-Edytuj metadane
----STRINGEND
-
----STRING edit metadata of %s
-Edytuj metadane "%s"
----STRINGEND
-
----STRING folder type
-Typ folderu
----STRINGEND
-
----STRING folders first
-Najpierw foldery
----STRINGEND
-
----STRING inherit style
-Dziedzicz szablon do podfolderów
----STRINGEND
-
----STRING install more %s from %s
-Więcej <a href="%s">Komponentów MidCOM'a</a> znajdziesz w <a href="%s">repozytorium PEAR</a>.
----STRINGEND
-
----STRING midcom.admin.folder
-Zarządzanie folderami
----STRINGEND
-
----STRING nav order
-Kolejność nawigacji
----STRINGEND
-
----STRING order navigation
-Ustalanie kolejności elementów
----STRINGEND
-
----STRING order navigation in folder %s
-Ustalanie kolejności elementów w "%s"
----STRINGEND
-
----STRING pages first
-Najpierw strony
----STRINGEND
-
----STRING privilege topic_management
-Zarządzanie folderami
----STRINGEND
-
----STRING sort by score
-Wg wagi
----STRINGEND
-
----STRING sort folders
-Sortowanie folderów
----STRINGEND
-
----STRING sort pages
-Sortowanie stron
----STRINGEND
-
----STRING style
-Szablon stylu
----STRINGEND
-
 ---STRING %s state
 Stan: %s
 ---STRINGEND
@@ -123,12 +11,20 @@ Stan: %s
 Folder '%s' już istnieje
 ---STRINGEND
 
+---STRING all descendants will be deleted
+Cała zawartosc folderu zostanie usunięta:
+---STRINGEND
+
 ---STRING all style elements
 Wszystkie style
 ---STRINGEND
 
 ---STRING alpha
 Alfa
+---STRINGEND
+
+---STRING are you sure you want to delete this folder
+Na pewno usunąc ten folder?
 ---STRINGEND
 
 ---STRING author
@@ -141,6 +37,10 @@ Autorzy
 
 ---STRING beta
 Beta
+---STRINGEND
+
+---STRING by score
+Sortowanie ręczne
 ---STRINGEND
 
 ---STRING change component
@@ -159,6 +59,14 @@ Kopiuj do edytora
 Utwórz folder
 ---STRINGEND
 
+---STRING create folder under %s
+Utwórz folder w "%s"
+---STRINGEND
+
+---STRING create subfolder
+Utwórz folder
+---STRINGEND
+
 ---STRING created
 Utworzono
 ---STRINGEND
@@ -167,16 +75,52 @@ Utworzono
 Twórca
 ---STRINGEND
 
+---STRING default
+Domyślnie
+---STRINGEND
+
 ---STRING default order selected
 Kolejność domyślna
+---STRINGEND
+
+---STRING default sort order
+Domyślne sortowanie
+---STRINGEND
+
+---STRING delete folder
+Usuń folder
+---STRINGEND
+
+---STRING delete folder %s
+Usuń folder "%s"
 ---STRINGEND
 
 ---STRING edit %s
 Edytuj "%s"
 ---STRINGEND
 
+---STRING edit folder
+Edytuj folder
+---STRINGEND
+
+---STRING edit folder %s
+Edytuj folder "%s"
+---STRINGEND
+
+---STRING edit folder metadata
+Edytuj metadane folderu "%s"
+---STRINGEND
+
 ---STRING edit layout template
 Edytuj szablony
+---STRINGEND
+
+---STRING edit metadata
+Edytuj metadane
+---STRINGEND
+
+---STRING edit metadata of %s
+Edytuj metadane "%s"
 ---STRINGEND
 
 ---STRING experimental, use with your own risk
@@ -191,8 +135,16 @@ Eksportowano
 Błąd dodania stylu
 ---STRINGEND
 
+---STRING folder type
+Typ folderu
+---STRINGEND
+
 ---STRING folder with name %s already exists
 Folder '%s' już istnieje
+---STRINGEND
+
+---STRING folders first
+Najpierw foldery
 ---STRINGEND
 
 ---STRING hide from navigation
@@ -203,6 +155,14 @@ Ukryj w nawigacji
 Importowano
 ---STRINGEND
 
+---STRING inherit style
+Dziedzicz szablon do podfolderów
+---STRINGEND
+
+---STRING install more %s from %s
+Więcej <a href="%s">Komponentów MidCOM'a</a> znajdziesz w <a href="%s">repozytorium PEAR</a>.
+---STRINGEND
+
 ---STRING list of %s folders using the same style template path
 Foldery typu "%s" korzystające z tego samego stylu
 ---STRINGEND
@@ -211,12 +171,20 @@ Foldery typu "%s" korzystające z tego samego stylu
 Element lokalny
 ---STRINGEND
 
+---STRING midcom.admin.folder
+Zarządzanie folderami
+---STRINGEND
+
 ---STRING move
 Przenieś
 ---STRINGEND
 
 ---STRING move %s
 Przenieś %s
+---STRINGEND
+
+---STRING nav order
+Kolejność nawigacji
 ---STRINGEND
 
 ---STRING new layout template
@@ -235,8 +203,20 @@ Nie podano URLa
 Obiekty ukryte w nawigacji nadal można osiągną bezpośrednim URLem
 ---STRINGEND
 
+---STRING order navigation
+Ustalanie kolejności elementów
+---STRINGEND
+
+---STRING order navigation in folder %s
+Ustalanie kolejności elementów w "%s"
+---STRINGEND
+
 ---STRING owner
 Właściciel
+---STRINGEND
+
+---STRING pages first
+Najpierw strony
 ---STRINGEND
 
 ---STRING prevent entering
@@ -245,6 +225,10 @@ Zabroń dostępu
 
 ---STRING privilege template_management
 Zarządzanie szablonami
+---STRINGEND
+
+---STRING privilege topic_management
+Zarządzanie folderami
 ---STRINGEND
 
 ---STRING published
@@ -287,6 +271,22 @@ Metoda sortowania
 Rozmiar
 ---STRINGEND
 
+---STRING sort by score
+Wg wagi
+---STRINGEND
+
+---STRING sort folders
+Sortowanie folderów
+---STRINGEND
+
+---STRING sort pages
+Sortowanie stron
+---STRINGEND
+
+---STRING style
+Szablon stylu
+---STRINGEND
+
 ---STRING style editor
 Edytor szablonów
 ---STRINGEND
@@ -313,5 +313,25 @@ Tytuł jest pusty!
 
 ---STRING warning, might result in data loss
 Uwaga! Możliwa utrata danych!
+---STRINGEND
+
+---STRING cancelled
+Anulowano
+---STRINGEND
+
+---STRING could not save folder: %s
+Nie mogę zapisać folderu. Powód:
+---STRINGEND
+
+---STRING folder created
+Folder utworzono
+---STRINGEND
+
+---STRING folder saved
+Folder zapisano
+---STRINGEND
+
+---STRING new style created
+Utworzono nowy styl
 ---STRINGEND
 
