@@ -1,6 +1,7 @@
 // Schema settings
 'schemadb_account' => 'file:/net/nehmer/account/config/schemadb_account.inc',
 'schemadb_account_creation' => 'file:/net/nehmer/account/config/schemadb_account_creation.inc',
+'schemadb_socialweb' => 'file:/net/nehmer/account/config/schemadb_socialweb.inc',
 
 // Configuration schema
 'schemadb_config' => 'file:/net/nehmer/account/config/schemadb_config.inc',
@@ -11,6 +12,7 @@
 'allow_cancel_membership' => true,
 'allow_publish' => true,
 'allow_view_by_username' => true, // the paranoid may want to disable this as it allows determining username validity
+'allow_socialweb' => true,
 
 // Add group id to automatically assign the user to it
 'assign_to_group' => null,

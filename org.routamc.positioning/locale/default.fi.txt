@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING georss
+GeoRSS-syöte
+---STRINGEND
+
 ---STRING html
 Ulkoisen HTML-tiedoston metatiedot
 ---STRINGEND
@@ -23,11 +27,19 @@ Paikkatiedon käsittelykirjasto
 Plazes-verkko
 ---STRINGEND
 
+---STRING plazes_password
+Plazes salasana
+---STRINGEND
+
+---STRING plazes_username
+Plazes käyttäjätunnus
+---STRINGEND
+
 ---STRING source %s
 lähde: %s
 ---STRINGEND
 
----STRING georss
-GeoRSS-syöte
+---STRING georss_url
+GeoRSS-syötteen osoite
 ---STRINGEND
 

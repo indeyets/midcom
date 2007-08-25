@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING georss
+GeoRSS feed
+---STRINGEND
+
 ---STRING html
 Metadata in remote HTML document
 ---STRINGEND
@@ -19,11 +23,19 @@ Geospatial toolkit
 Plazes network position
 ---STRINGEND
 
+---STRING plazes_password
+Plazes password
+---STRINGEND
+
+---STRING plazes_username
+Plazes username
+---STRINGEND
+
 ---STRING source %s
 source: %s
 ---STRINGEND
 
----STRING georss
-GeoRSS feed
+---STRING georss_url
+GeoRSS feed URL
 ---STRINGEND
 

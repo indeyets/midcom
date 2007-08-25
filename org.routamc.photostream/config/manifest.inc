@@ -48,14 +48,26 @@
       ),
     ),
   ),
-  'customdata' => 
-  array (
-    'midcom.services.cron' => 
-    array (
-      0 => 
-      array (
-        'handler' => 'org_routamc_photostream_cron_fetchflickr',
-        'recurrence' => MIDCOM_CRON_HOUR,
-      ),
-    ),
+  'customdata' => array 
+  (
+        'net.nehmer.account.socialweb' => array
+        (
+            'flickr_username' => array
+            (
+                'storage' => array
+                (
+                    'location'   => 'configuration',
+                    'domain' => 'org.routamc.photostream:flickr',
+                    'name'   => 'username',
+                ),
+            ),
+        ),  
+        'midcom.services.cron' => array
+        (
+            0 => array
+            (
+                'handler' => 'org_routamc_photostream_cron_fetchflickr',
+                'recurrence' => MIDCOM_CRON_HOUR,
+            ),
+        ),
   ),

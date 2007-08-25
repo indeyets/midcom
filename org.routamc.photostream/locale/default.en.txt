@@ -131,3 +131,7 @@ Size limit for uploaded files
 Upload to gallery
 ---STRINGEND
 
+---STRING flickr_username
+Flickr username
+---STRINGEND
+

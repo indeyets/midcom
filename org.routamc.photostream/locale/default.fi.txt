@@ -131,3 +131,7 @@ Tuotavien tiedostojen maksimikoko
 Lataa galleriaan
 ---STRINGEND
 
+---STRING flickr_username
+Flickr-käyttäjätunnus
+---STRINGEND
+

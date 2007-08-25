@@ -133,6 +133,10 @@ Vaihda salasana
 Vaihda käyttäjätunnus
 ---STRINGEND
 
+---STRING city
+Postitoimipaikka
+---STRINGEND
+
 ---STRING click on the title to edit the message
 Klikkaa otsikkoa muuttaaksesi viestiä
 ---STRINGEND
@@ -395,6 +399,10 @@ Valitse tunnuksen tyyppi
 Ole hyvä ja valitse tunnuksen tyyppi
 ---STRINGEND
 
+---STRING social web settings
+Sosiaalisten verkkosovellusten asetukset
+---STRINGEND
+
 ---STRING street
 Katuosoite
 ---STRINGEND
@@ -463,7 +471,7 @@ Tiliäsi ei ole vielä aktivoitu
 Käyttäjätunnuksesi odottaa nyt hyväksyntää.
 ---STRINGEND
 
----STRING city
-Postitoimipaikka
+---STRING these settings control social web data import
+Nämä asetukset vaikuttavat tiedon tuontiin eri sosiaalistista verkkopalveluista.
 ---STRINGEND
 

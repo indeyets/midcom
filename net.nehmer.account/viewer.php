@@ -164,7 +164,16 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nehmer_account_handler_edit', 'edit'),
             'fixed_args' => Array('edit'),
         );
-
+        
+        if ($this->_config->get('allow_socialweb'))
+        {
+            $this->_request_switch['socialweb'] = Array
+            (
+                'handler' => Array('net_nehmer_account_handler_socialweb', 'edit'),
+                'fixed_args' => Array('socialweb'),
+            );
+        }
+        
         if ($this->_config->get('allow_publish'))
         {
             $this->_request_switch['publish'] = Array
@@ -486,6 +495,19 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
                         MIDCOM_TOOLBAR_URL => "publish/",
                         MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('publish account details'),
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new_task.png',
+                    )
+                );
+            }
+            
+            if ($this->_config->get('allow_socialweb'))
+            {
+                $this->_view_toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "socialweb/",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('social web settings'),
+                        MIDCOM_TOOLBAR_ICON => 'net.nehmer.account/data-import.png',
                     )
                 );
             }

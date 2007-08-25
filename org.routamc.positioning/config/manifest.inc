@@ -39,24 +39,54 @@
       ),
     ),
   ),
-  'customdata' => 
-  array (
-    'midcom.services.cron' => 
-    array (
-      0 => 
-      array (
-        'handler' => 'org_routamc_positioning_cron_fetchplazes',
-        'recurrence' => MIDCOM_CRON_HOUR,
-      ),
-      1 => 
-      array (
-        'handler' => 'org_routamc_positioning_cron_fetchicbm',
-        'recurrence' => MIDCOM_CRON_HOUR,
-      ),
-      2 => 
-      array (
-        'handler' => 'org_routamc_positioning_cron_fetchgeorss',
-        'recurrence' => MIDCOM_CRON_HOUR,
-      ),
-    ),
+  'customdata' => array 
+  (
+        'net.nehmer.account.socialweb' => array
+        (
+            'plazes_username' => array
+            (
+                'storage' => array
+                (
+                    'location'   => 'configuration',
+                    'domain' => 'org.routamc.positioning:plazes',
+                    'name'   => 'username',
+                ),
+            ),
+            'plazes_password' => array
+            (
+                'storage' => array
+                (
+                    'location'   => 'configuration',
+                    'domain' => 'org.routamc.positioning:plazes',
+                    'name'   => 'password',
+                ),
+            ),
+            'georss_url' => array
+            (
+                'storage' => array
+                (
+                    'location'   => 'configuration',
+                    'domain' => 'org.routamc.positioning:georss',
+                    'name'   => 'georss_url',
+                ),
+            ),
+        ),
+        'midcom.services.cron' => array
+        (
+            0 => array
+            (
+                'handler' => 'org_routamc_positioning_cron_fetchplazes',
+                'recurrence' => MIDCOM_CRON_HOUR,
+            ),
+            1 => array
+            (
+                'handler' => 'org_routamc_positioning_cron_fetchicbm',
+                'recurrence' => MIDCOM_CRON_HOUR,
+            ),
+            2 => array
+            (
+                'handler' => 'org_routamc_positioning_cron_fetchgeorss',
+                'recurrence' => MIDCOM_CRON_HOUR,
+            ),
+        ),
   ),

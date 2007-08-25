@@ -141,6 +141,10 @@ Change password
 Change username
 ---STRINGEND
 
+---STRING city
+City
+---STRINGEND
+
 ---STRING click on the title to edit the message
 Click on the title to edit the message
 ---STRINGEND
@@ -407,6 +411,10 @@ Select account type
 Please select an account type
 ---STRINGEND
 
+---STRING social web settings
+Social web settings
+---STRINGEND
+
 ---STRING street
 Street
 ---STRINGEND
@@ -477,7 +485,7 @@ Your account has not yet been activated
 Your registration is now pending for approval
 ---STRINGEND
 
----STRING city
-City
+---STRING these settings control social web data import
+These settings control data import from various social web services.
 ---STRINGEND
 
