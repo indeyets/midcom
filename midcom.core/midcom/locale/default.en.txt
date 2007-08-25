@@ -407,6 +407,10 @@ Page
 Page %d of %d
 ---STRINGEND
 
+---STRING parameters
+Parameters
+---STRINGEND
+
 ---STRING password
 Password
 ---STRINGEND

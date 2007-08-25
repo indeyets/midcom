@@ -95,6 +95,10 @@ Zatwierdź folder
 Zatwierdzono dnia
 ---STRINGEND
 
+---STRING approved changes will be replicated within next minute
+Replikacja zatwierdzonych zmian rozpocznie się za minutę.
+---STRINGEND
+
 ---STRING approver
 Zatwierdził
 ---STRINGEND
@@ -283,6 +287,10 @@ Dziedziczone
 Metadane systemowe
 ---STRINGEND
 
+---STRING invalidate cache
+Odśwież pamięć podręczną systemu
+---STRINGEND
+
 ---STRING keywords
 Słowa kluczowe
 ---STRINGEND
@@ -399,6 +407,10 @@ Strona
 Strona %d z %d
 ---STRINGEND
 
+---STRING parameters
+Parametry
+---STRINGEND
+
 ---STRING password
 Hasło
 ---STRINGEND
@@ -485,6 +497,10 @@ Zabroń indeksowania
 
 ---STRING robots-not-specified
 Nie ustawiona. Użyj pliku robots.txt
+---STRINGEND
+
+---STRING run replication
+Uruchom replikację
 ---STRINGEND
 
 ---STRING save
@@ -599,12 +615,20 @@ Metoda sortowania obiektów
 Pozycja sortowania
 ---STRINGEND
 
+---STRING stagin2live
+Serwis produkcyjno-rozwojowy
+---STRINGEND
+
 ---STRING start date
 Start
 ---STRINGEND
 
 ---STRING stats
 statystyka
+---STRINGEND
+
+---STRING tags
+Tagi
 ---STRINGEND
 
 ---STRING test settings
@@ -719,23 +743,7 @@ Napisz maila
 Tak
 ---STRINGEND
 
----STRING approved changes will be replicated within next minute
-Replikacja zatwierdzonych zmian rozpocznie się za minutę.
----STRINGEND
-
----STRING invalidate cache
-Odśwież pamięć podręczną systemu
----STRINGEND
-
----STRING run replication
-Uruchom replikację
----STRINGEND
-
----STRING stagin2live
-Serwis produkcyjno-rozwojowy
----STRINGEND
-
----STRING tags
-Tagi
+---STRING arrangement score
+Pozycja
 ---STRINGEND
 
