@@ -179,6 +179,28 @@ class midcom_admin_folder_handler_edit extends midcom_baseclasses_components_han
             case 'save':
                 if ($this->_handler_id === 'edit')
                 {
+        			if ($_REQUEST['style'] === '__create')
+        			{
+            			$this->_topic->require_do('midcom.admin.folder:template_management');
+
+            			$this->_topic->style = $this->_create_style($this->_topic->name);
+
+            			// Failed to create the new style template
+            			if ($this->_topic->style === '')
+            			{
+                			return false;
+            			}
+
+						$_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.folder'), $this->_l10n->get('new style created'));
+
+        				if (! $this->_topic->update())
+        				{
+            				$_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.folder'),'Could not save Folder: ' . mgd_errstr());
+            				return false;
+        				}
+
+        			}
+
                     $_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.folder'), $this->_l10n->get('folder saved'));
                     
                     // Get the relocation url
