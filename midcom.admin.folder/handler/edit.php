@@ -181,8 +181,6 @@ class midcom_admin_folder_handler_edit extends midcom_baseclasses_components_han
                 {
         			if ($_REQUEST['style'] === '__create')
         			{
-            			$this->_topic->require_do('midcom.admin.folder:template_management');
-
             			$this->_topic->style = $this->_create_style($this->_topic->name);
 
             			// Failed to create the new style template
@@ -195,7 +193,7 @@ class midcom_admin_folder_handler_edit extends midcom_baseclasses_components_han
 
         				if (! $this->_topic->update())
         				{
-            				$_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.folder'),'Could not save Folder: ' . mgd_errstr());
+            				$_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.folder'), sprintf($this->_l10n->get('could not save folder: %s'), mgd_errstr()));
             				return false;
         				}
 
