@@ -59,6 +59,10 @@ Booked times
 Closed
 ---STRINGEND
 
+---STRING %d closed projects
+%d closed projects
+---STRINGEND
+
 ---STRING closed by %s
 Closed by %s
 ---STRINGEND
@@ -93,6 +97,10 @@ Current tasks
 
 ---STRING customer
 Customer
+---STRINGEND
+
+---STRING no customer
+No Customer
 ---STRINGEND
 
 ---STRING date
@@ -255,6 +263,10 @@ Planned hours
 Project
 ---STRINGEND
 
+---STRING projects
+Projects
+---STRINGEND
+
 ---STRING project status
 Project status
 ---STRINGEND
@@ -357,6 +369,10 @@ Task %s
 
 ---STRING task in
 Task in
+---STRINGEND
+
+---STRING tasks
+Tasks
 ---STRINGEND
 
 ---STRING task status
