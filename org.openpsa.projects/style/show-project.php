@@ -5,13 +5,13 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
 <div class="main org_openpsa_projects_project">
     <h1><?php echo $data['l10n']->get('project'); ?>: &(view['title']:h);</h1>
-        
-    <div class="status <?php echo $project->status_type; ?>"><?php echo $data['l10n']->get('project status') . ': ' . $data['l10n']->get($data['project']->status_type); ?></div>
+
+    <div class="status <?php echo $data['project']->status_type; ?>"><?php echo $data['l10n']->get('project status') . ': ' . $data['l10n']->get($data['project']->status_type); ?></div>
 
     <div class="time">&(view['start']:h); - &(view['end']:h);</div>
-            
+
     &(view['description']:h);
-    
+
     <?php
     if (count($data['tasks']) > 0)
     {
@@ -38,7 +38,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         echo "<h2>" . $data['l10n']->get('customer') . "</h2>\n";
         echo $customer->official;
     }
-    
+
     $manager = new org_openpsa_contacts_person($data['project']->manager);
     if ($manager)
     {
