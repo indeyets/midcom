@@ -1,0 +1,425 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING %s of %s planned hours booked
+%s von %s geplanten Arbeitsstunden sind im Kalender gebucht
+---STRINGEND
+
+---STRING %s projects
+%s Projekte
+---STRINGEND
+
+---STRING accept
+Akzeptieren
+---STRINGEND
+
+---STRING accepted by %s
+Akzeptiert von %s
+---STRINGEND
+
+---STRING agreement
+Vereinbarung
+---STRINGEND
+
+---STRING agreement tasks
+Tasks zur Vereinbarung
+---STRINGEND
+
+---STRING approve
+Genehmigen
+---STRINGEND
+
+---STRING approved
+Genehmigt
+---STRINGEND
+
+---STRING approved by %s
+Genehmigt von %s
+---STRINGEND
+
+---STRING automatic resource search
+Automatische Ressourcen-Suche 
+---STRINGEND
+
+---STRING back to task
+Zurück zum Task
+---STRINGEND
+
+---STRING basic information
+Basis-Informationen
+---STRINGEND
+
+---STRING booked times
+Gebuchte Zeiten
+---STRINGEND
+
+---STRING closed
+Abgeschlossen
+---STRINGEND
+
+---STRING %d closed projects
+%d abgeschlosse Projekte
+---STRINGEND
+
+---STRING closed by %s
+Abgeschlossen von %s
+---STRINGEND
+
+---STRING closed tasks
+Abgeschlossene Tasks
+---STRINGEND
+
+---STRING completed
+Fertiggestellt
+---STRINGEND
+
+---STRING completed tasks
+Fertiggestellte Tasks
+---STRINGEND
+
+---STRING contacts
+Kontakte
+---STRINGEND
+
+---STRING create project
+Projekt anlegen
+---STRINGEND
+
+---STRING create task
+Task anlegen
+---STRINGEND
+
+---STRING current tasks
+Aktuelle Tasks
+---STRINGEND
+
+---STRING customer
+Kunde
+---STRINGEND
+
+---STRING no customer
+Kein Kunde
+---STRINGEND
+
+---STRING date
+Datum
+---STRINGEND
+
+---STRING deadline
+Deadline
+---STRINGEND
+
+---STRING decline
+Ablehnen
+---STRINGEND
+
+---STRING declined by %s
+Abgelehnt von %s
+---STRINGEND
+
+---STRING delete task
+Task löschen
+---STRINGEND
+
+---STRING description
+Beschreibung
+---STRINGEND
+
+---STRING dont approve
+Nicht genehmigen
+---STRINGEND
+
+---STRING duration
+Dauer
+---STRINGEND
+
+---STRING edit
+Bearbeiten
+---STRINGEND
+
+---STRING edit task %s
+Task %s bearbeiten
+---STRINGEND
+
+---STRING end
+Ende
+---STRINGEND
+
+---STRING from %s
+von %s
+---STRINGEND
+
+---STRING hour report
+Stundenbericht
+---STRINGEND
+
+---STRING hour reports
+Stundenberichte
+---STRINGEND
+
+---STRING hours
+Arbeitsstunden
+---STRINGEND
+
+---STRING hours are invoiceable by default
+Arbeitsstunden sind standardmäßig abrechenbar
+---STRINGEND
+
+---STRING invoiceable
+Abrechenbar
+---STRINGEND
+
+---STRING invoiceable tasks
+Abrechenbare Tasks
+---STRINGEND
+
+---STRING invoiced
+Abgerechnet
+---STRINGEND
+
+---STRING manager
+Manager
+---STRINGEND
+
+---STRING mark completed
+Als fertiggestellt kennzeichnen
+---STRINGEND
+
+---STRING marked as completed by %s
+Als fertiggestellt gekennzeichnet von %s
+---STRINGEND
+
+---STRING minimum time slot needed for task bookings
+Kleinste Zeiteinheit für Task-Buchungen
+---STRINGEND
+
+---STRING my organization
+Von meiner Organisation
+---STRINGEND
+
+---STRING my_tasks
+Meine Tasks
+---STRINGEND
+
+---STRING new project
+Neues Projekt
+---STRINGEND
+
+---STRING new task
+Neuer Task
+---STRINGEND
+
+---STRING new task to project %s
+Neuer Task zu Projekt %s
+---STRINGEND
+
+---STRING no search
+Keine Suche
+---STRINGEND
+
+---STRING not working on a task
+Sie arbeiten nicht an einem Task
+---STRINGEND
+
+---STRING not_started
+Nicht begonnen
+---STRINGEND
+
+---STRING notes for task %s on %s
+Notizen von Task %s zu %s
+---STRINGEND
+
+---STRING now working on
+Sie arbeiten an
+---STRINGEND
+
+---STRING ongoing
+In Bearbeitung
+---STRINGEND
+
+---STRING open tasks
+Offene Tasks
+---STRINGEND
+
+---STRING org.openpsa.projects
+Projekt-Management
+---STRINGEND
+
+---STRING overtime
+Überstunden
+---STRINGEND
+
+---STRING pending approval by %s
+benötigt Genehmingung von %s
+---STRINGEND
+
+---STRING planned hours
+Geplante Arbeitsstunden
+---STRINGEND
+
+---STRING project
+Projekt
+---STRINGEND
+
+---STRING projects
+Projekte
+---STRINGEND
+
+---STRING project status
+Projekt-Status
+---STRINGEND
+
+---STRING project_tasks
+Tasks für dieses Projekt
+---STRINGEND
+
+---STRING proposed tasks
+Vorgeschlagene Tasks
+---STRINGEND
+
+---STRING proposed to %s by %s
+Vorgeschlagen an %s von %s
+---STRINGEND
+
+---STRING put on hold by %s
+Unterbrochen von %s
+---STRINGEND
+
+---STRING re-opened by %s
+erneut eröffnet von %s
+---STRINGEND
+
+---STRING rejected by %s
+Abgelehnt von %s
+---STRINGEND
+
+---STRING reopen
+Erneut eröffnen
+---STRINGEND
+
+---STRING report hours
+Arbeitsstunden melden
+---STRINGEND
+
+---STRING reported
+Gemeldet
+---STRINGEND
+
+---STRING reporter
+Berichterstatter
+---STRINGEND
+
+---STRING resources
+Ressourcen
+---STRINGEND
+
+---STRING resourcing
+Resourcing
+---STRINGEND
+
+---STRING schedule resources
+Ressourcen planen
+---STRINGEND
+
+---STRING skills required
+Benötigte Fähigkeiten
+---STRINGEND
+
+---STRING start
+Beginn
+---STRINGEND
+
+---STRING start time
+Anfangszeit
+---STRINGEND
+
+---STRING status
+Status
+---STRINGEND
+
+---STRING status history
+Status-Verlauf
+---STRINGEND
+
+---STRING subscribe
+Abonnieren
+---STRINGEND
+
+---STRING synchronization
+Synchronisation
+---STRINGEND
+
+---STRING synchronized with %s by %s
+Synchronisiert mit %s von %s
+---STRINGEND
+
+---STRING system
+System
+---STRINGEND
+
+---STRING task
+Task
+---STRINGEND
+
+---STRING task %s
+Task %s
+---STRINGEND
+
+---STRING task in
+Task von
+---STRINGEND
+
+---STRING tasks
+Tasks
+---STRINGEND
+
+---STRING task status
+Task-Status
+---STRINGEND
+
+---STRING tasks pending acceptance
+Tasks, die auf Annahme warten
+---STRINGEND
+
+---STRING tasks pending approval
+Tasks, die auf Genehmigung warten
+---STRINGEND
+
+---STRING type
+Typ
+---STRINGEND
+
+---STRING unsubscribe
+Abonnement beenden
+---STRINGEND
+
+---STRING view related information
+Verknüpfte Informationen anzeigen
+---STRINGEND
+
+---STRING whole openpsa
+Aus dem gesamten OpenPSA-System
+---STRINGEND
+
+---STRING whole world (dbe)
+Aus dem gesamten DBE-Netzwerk
+---STRINGEND
+
+---STRING work started by %s
+Arbeit begonnen von %s
+---STRINGEND
+
+---STRING you are not subscribed to project
+Sie haben dieses Projekt nicht abonniert
+---STRINGEND
+
+---STRING you are project participant
+Sie sind Projektteilehmer
+---STRINGEND
+
+---STRING you are project subscriber
+Sie haben das Projekt abonniert
+---STRINGEND
+
