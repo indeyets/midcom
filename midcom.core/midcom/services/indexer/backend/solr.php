@@ -299,7 +299,7 @@ class midcom_services_indexer_solrRequest {
         $this->code = $this->request->getResponseCode();
 
         if ($this->code != 200 || PEAR :: isError($err)) {
-            debug_add("Failed to execute Request {$url}:{$this->code} {$err}", MIDCOM_LOG_WARN); 
+            debug_add("Failed to execute Request {$url}:{$this->code} {$err->getMessage()}", MIDCOM_LOG_WARN); 
             debug_add("Request content: \n$xml", MIDCOM_LOG_DEBUG); 
             return false;
         }
