@@ -86,6 +86,13 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
 		$qb->add_order('metadata.score');
 		$this->_list = $qb->execute();
 
+		$this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
+		$this->_request_data['datamanager'] =& $this->_datamanager;
+
+
+
+		$data['page_title'] = $this->_topic->extra;
+
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: ".$this->_l10n->get('winguru forecasts'));
         $this->_update_breadcrumb_line($handler_id);
 
@@ -96,6 +103,35 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
     {
 		if (count($this->_list))
 		{
+
+          	$qb = pl_olga_windguru_status_dba::new_query_builder();
+           	$qb->add_constraint('status','=',WG_STATUS_GFS);
+           	$result = $qb->execute();
+
+           	$data['modified'] = $result[0]->value;
+
+			$data['prefix'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+			midcom_show_style("spot-index-start");
+			foreach ($this->_list as $spot)
+			{
+            
+                if (! $this->_datamanager->autoset_storage($spot))
+                {
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("The datamanager for spot {$spot->id} could not be initialized, skipping it.");
+                    debug_print_r('Object was:', $spot);
+                    debug_pop();
+                    continue;
+                }
+
+                $data['spot'] =& $this->_datamanager->get_content_html();
+				$data['article'] = $spot;
+
+
+
+				midcom_show_style("spot-index-item");
+			}
+			midcom_show_style("spot-index-end");
 		}
 		else
 		{
@@ -149,13 +185,7 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
         $this->_prepare_request_data();
         $_MIDCOM->set_26_request_metadata($this->_article->metadata->revised, $this->_article->guid);
         $_MIDCOM->bind_view_to_object($this->_article, $this->_datamanager->schema->name);
-
-        if (   $this->_config->get('indexinnav')
-            || $this->_config->get('autoindex')
-            || $this->_article->name != 'index')
-        {
-            $this->_component_data['active_leaf'] = $this->_article->id;
-        }
+		$this->_update_breadcrumb_line($handler_id);
 
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_article->title}");
 
@@ -186,9 +216,17 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
                 $tmp[] = Array
                 (
                     MIDCOM_NAV_URL => "",
-                    MIDCOM_NAV_NAME => $this->_l10n->get('winguru forecasts'),
+                    MIDCOM_NAV_NAME => $this->_l10n->get('windguru forecasts'),
                 );
                 break;
+            case 'view':
+                $tmp[] = Array
+                (
+                    MIDCOM_NAV_URL => $this->_article->name,
+                    MIDCOM_NAV_NAME => sprintf($this->_l10n->get('windguru forecast for %s'), $this->_article->title),
+                );
+                break;
+
         }
 
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
