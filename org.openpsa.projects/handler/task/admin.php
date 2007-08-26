@@ -302,7 +302,7 @@ class org_openpsa_projects_handler_task_admin extends midcom_baseclasses_compone
 
         $this->_prepare_request_data($handler_id);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_task->title}");
-        $_MIDCOM->bind_view_to_object($this->_task, $this->_request_data['controller']->datamanager->schema->title);
+        $_MIDCOM->bind_view_to_object($this->_task, $this->_datamanager->schema->description);
         $this->_update_breadcrumb_line($handler_id);
 
         return true;
