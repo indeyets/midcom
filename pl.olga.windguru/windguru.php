@@ -46,7 +46,7 @@ class WindguruFcst {
 
 		if (!$this->config->get('id_user'))
 		{
-			debug_add("Missing Windgiri user ID",MIDCOM_LOG_ERROR);
+			debug_add("Missing Windguru user ID",MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
 		}
@@ -106,7 +106,7 @@ class WindguruFcst {
 		return false;
 
 	}
-	
+
 	function idMod($str) { // get model id
 		$str = strtolower($str);
 		if($str=='gfs') return WG_STATUS_GFS;

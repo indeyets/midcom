@@ -41,7 +41,7 @@ class pl_olga_windguru_interface extends midcom_baseclasses_components_interface
         $this->_autoload_libraries = array
         (
             'midcom.helper.datamanager2',
-            'org.openpsa.httplib',
+            'midcom.helper.dm2config',
         );
     }
 

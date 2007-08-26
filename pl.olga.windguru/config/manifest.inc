@@ -28,7 +28,7 @@
       'midcom.helper.datamanager2' => 
       array (
       ),
-      'org.openpsa.httplib' => 
+      'midcom.helper.dm2config' => 
       array (
       ),
       'midcom' => 
