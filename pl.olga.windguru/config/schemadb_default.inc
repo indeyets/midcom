@@ -33,10 +33,8 @@
         ),
         'comment' => Array
         (
-            // COMPONENT-REQUIRED
             'title' => 'comment',
             'storage' => 'content',
-            'required' => true,
             'type' => 'text',
 			'type_config' => array
 			(

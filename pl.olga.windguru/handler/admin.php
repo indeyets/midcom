@@ -21,7 +21,7 @@ class pl_olga_windguru_handler_admin extends midcom_baseclasses_components_handl
      * @var midcom_db_topic
      * @access private
      */
-    var $_content_topic = null;
+    var $_topic = null;
 
     /**
      * The article to operate on
@@ -93,14 +93,6 @@ class pl_olga_windguru_handler_admin extends midcom_baseclasses_components_handl
     function pl_olga_windguru_handler_admin()
     {
         parent::midcom_baseclasses_components_handler();
-    }
-
-    /**
-     * Maps the content topic from the request data to local member variables.
-     */
-    function _on_initialize()
-    {
-        $this->_content_topic =& $this->_request_data['content_topic'];
     }
 
     /**

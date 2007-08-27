@@ -108,7 +108,7 @@ class pl_olga_windguru_handler_create extends midcom_baseclasses_components_hand
     function & dm2_create_callback (&$controller)
     {
         $this->_article = new midcom_db_article();
-        $this->_article->topic = $this->_content_topic->id;
+        $this->_article->topic = $this->_topic->id;
         
         if (! $this->_article->create())
         {
