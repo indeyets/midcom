@@ -400,7 +400,7 @@ Abonnement beenden
 ---STRINGEND
 
 ---STRING view related information
-Verknüpfte Informationen anzeigen
+Verbundene Daten anzeigen
 ---STRINGEND
 
 ---STRING whole openpsa

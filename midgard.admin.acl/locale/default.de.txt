@@ -68,10 +68,10 @@ Reserve
 ---STRINGEND
 
 ---STRING privileges
-Berechtigungen
+Zugriffsrechte
 ---STRINGEND
 
 ---STRING topic privileges
-Ordner-Berechtigungen
+Ordner-Zugriffsrechte
 ---STRINGEND
 

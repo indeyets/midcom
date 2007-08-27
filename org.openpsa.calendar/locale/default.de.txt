@@ -64,7 +64,7 @@ Termin gelöscht
 ---STRINGEND
 
 ---STRING event information
-Termin-Informationen
+Termin-Daten
 ---STRINGEND
 
 ---STRING events on %s

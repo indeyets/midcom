@@ -1,106 +1,106 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE de
 
 ---STRING <title>
-<title>
+<Titel>
 ---STRINGEND
 
 ---STRING add buddy
-Add to my contacts
+Zu meinen Kontakten hinzufügen
 ---STRINGEND
 
 ---STRING back to person
-Back to person
+Zurück zur Person
 ---STRINGEND
 
 ---STRING basic information
-Basic information
+Basisdaten
 ---STRINGEND
 
 ---STRING categories
-Categories
+Kategorien
 ---STRINGEND
 
 ---STRING cell %s
-cell %s
+Zelle %s
 ---STRINGEND
 
 ---STRING choose the person to keep
-Choose which contact person to keep. You can also decide later or keep both.
+Wählen Sie, welche Person beibehalten werden soll. Sie können später auch beide behalten.
 ---STRINGEND
 
 ---STRING city
-City
+Stadt
 ---STRINGEND
 
 ---STRING client
-Client
+Kunde
 ---STRINGEND
 
 ---STRING company id
-Company ID
+Firmen-ID
 ---STRINGEND
 
 ---STRING competence areas
-Competence areas
+Kompetenzgebiete
 ---STRINGEND
 
 ---STRING contact information
-Contact information
+Kontaktdaten
 ---STRINGEND
 
 ---STRING contact search
-Contact search
+Kontakt-Suche
 ---STRINGEND
 
 ---STRING contacts
-Contacts
+Kontakte
 ---STRINGEND
 
 ---STRING country
-Country
+Land
 ---STRINGEND
 
 ---STRING create account
-Create user account
+Benutzerkonto erstellen
 ---STRINGEND
 
 ---STRING create event
-Create event
+Termin erstellen
 ---STRINGEND
 
 ---STRING create organization
-Create organization
+Organisation erstellen
 ---STRINGEND
 
 ---STRING create person
-Create person
+Person erstellen
 ---STRINGEND
 
 ---STRING create suborganization
-Create suborganization
+Unterorganisation erstellen
 ---STRINGEND
 
 ---STRING customers invoices
-Customer's invoices
+Rechnungen des Kunden
 ---STRINGEND
 
 ---STRING daughter organization
-Daughter organization
+Unterorganisation
 ---STRINGEND
 
 ---STRING dbe service id
-DBE ServiceID
+DBE Service-ID
 ---STRINGEND
 
 ---STRING decide later
-Decide later
+Später entscheiden
 ---STRINGEND
 
 ---STRING department
-Department
+Abteilung
 ---STRINGEND
 
 ---STRING digital business ecosystem
@@ -108,71 +108,71 @@ Digital Business Ecosystem
 ---STRINGEND
 
 ---STRING edit
-Edit
+Bearbeiten
 ---STRINGEND
 
 ---STRING edit account
-Edit user account
+Benutzerkonto bearbeiten
 ---STRINGEND
 
 ---STRING edit user account: %s %s
-Edit user account: %s %s
+Benutzerkonto bearbeiten: %s %s
 ---STRINGEND
 
 ---STRING email
-Email
+E-Mail
 ---STRINGEND
 
 ---STRING email %s
-e-mail %s
+E-Mail an %s
 ---STRINGEND
 
 ---STRING enable calendar
-Allow to create events in the Group Calendar
+Darf Termine im Gruppenkalender anlegen
 ---STRINGEND
 
 ---STRING enable campaign creation
-Enable campaign creation
+Darf Kampagnen anlegen
 ---STRINGEND
 
 ---STRING enable contact creation
-Enable contact creation
+Darf Kontakte anlegen
 ---STRINGEND
 
 ---STRING enable editing campaigns created by others
-Enable editing campaigns created by others
+Darf Kampagnen bearbeiten, die von anderen erstellt wurden
 ---STRINGEND
 
 ---STRING enable editing contacts created by others
-Enable editing contacts created by others
+Darf Kontakte bearbeiten, die von anderen erstellt wurden
 ---STRINGEND
 
 ---STRING enable editing invoices created by others
-Enable editing of invoices created by others
+Darf Rechnungen bearbeiten, die von anderen erstellt wurden
 ---STRINGEND
 
 ---STRING enable editing organizations created by others
-Enable editing of organizations created by others
+Darf Organisationen bearbeiten, die von anderen erstellt wurden
 ---STRINGEND
 
 ---STRING enable invoice creation
-Enable invoice creation
+Darf Rechnungen anlegen
 ---STRINGEND
 
 ---STRING enable organization creation
-Enable organization creation
+Darf Organisationen anlegen
 ---STRINGEND
 
 ---STRING enable project creation
-Allow to create root-level projects
+Darf Projekte anlegen
 ---STRINGEND
 
 ---STRING enable salesproject creation
-Enable sales project creation
+Darf Verkaufsprojekte anlegen
 ---STRINGEND
 
 ---STRING failed to create user account, reason
-Failed to create user account, reason
+Benutzerkonto konnte nicht erstellt werden. Grund: 
 ---STRINGEND
 
 ---STRING fax
@@ -180,43 +180,43 @@ Fax
 ---STRINGEND
 
 ---STRING firstname
-First name
+Vorname
 ---STRINGEND
 
 ---STRING homepage
-Homepage
+Web-Adresse
 ---STRINGEND
 
 ---STRING homephone
-Home phone
+Telefon
 ---STRINGEND
 
 ---STRING invoicing address
-Invoicing address
+Rechnungsanschrift
 ---STRINGEND
 
 ---STRING invoicing target percentage
-Invoicing target percentage
+Zielprozentsatz für Rechnungsstellung
 ---STRINGEND
 
 ---STRING jabber id
-Jabber ID
+Jabber-ID
 ---STRINGEND
 
 ---STRING job title
-Job title
+Position
 ---STRINGEND
 
 ---STRING keep both
-Keep both
+Beide beibehalten
 ---STRINGEND
 
 ---STRING keep this
-Keep this
+Diesen beibehalten
 ---STRINGEND
 
 ---STRING lastname
-Last name
+Nachname
 ---STRINGEND
 
 ---STRING logo
@@ -224,71 +224,71 @@ Logo
 ---STRINGEND
 
 ---STRING me
-Me
+Ich
 ---STRINGEND
 
 ---STRING member
-Organization member
+Mitglied der Organisation
 ---STRINGEND
 
 ---STRING merge persons
-Merge duplicate persons
+Doppelte Personen zusammenführen
 ---STRINGEND
 
 ---STRING mobile phone
-Mobile phone
+Mobiltelefon
 ---STRINGEND
 
 ---STRING my contacts
-My contacts
+Meine Kontakte
 ---STRINGEND
 
 ---STRING new organization
-New organization
+Neue Organisation
 ---STRINGEND
 
 ---STRING new person
-New person
+Neue Person
 ---STRINGEND
 
 ---STRING no account
-No account
+Kein Benutzerkonto
 ---STRINGEND
 
 ---STRING no duplicates found
-No duplicates found
+Keine Doppelungen gefunden
 ---STRINGEND
 
 ---STRING no more duplicates to merge found
-No more duplicates that you have permissions to merge found
+Keine Doppelugen gefunden, die mit Ihren Berechtigungen zusammengeführt werden könnten
 ---STRINGEND
 
 ---STRING notes
-Notes
+Anmerkungen
 ---STRINGEND
 
 ---STRING notification settings
-Notification settings
+Benachrichtigungseinstellungen
 ---STRINGEND
 
 ---STRING official name
-Official name
+Offizieller Name
 ---STRINGEND
 
 ---STRING org.openpsa.contacts
-Contact manager
+Kontakt-Verwaltung
 ---STRINGEND
 
 ---STRING organization
-Organization
+Organisation
 ---STRINGEND
 
 ---STRING organization type
-Organization type
+Organisations-Typ
 ---STRINGEND
 
 ---STRING organizations
-Organizations
+Organisationen
 ---STRINGEND
 
 ---STRING partner
@@ -296,15 +296,15 @@ Partner
 ---STRINGEND
 
 ---STRING password repeat
-Password (repeat)
+Kennwort (wiederholen)
 ---STRINGEND
 
 ---STRING passwords don't match
-Passwords don't match!
+Kennwörter stimmen nicht überein!
 ---STRINGEND
 
 ---STRING permissions
-Permissions
+Berechtigungen
 ---STRINGEND
 
 ---STRING person
@@ -312,90 +312,90 @@ Person
 ---STRINGEND
 
 ---STRING persons
-Persons
+Personen
 ---STRINGEND
 
 ---STRING phone
-Phone
+Telefon
 ---STRINGEND
 
 ---STRING photo
-Photo
+Foto
 ---STRINGEND
 
 ---STRING postal address
-Postal address
+Postanschrift
 ---STRINGEND
 
 ---STRING postcode
-ZIP
+PLZ
 ---STRINGEND
 
 ---STRING project management
-Project management
+Projekt-Verwaltung
 ---STRINGEND
 
 ---STRING related notes
-Related notes
+Verbundene Notizen
 ---STRINGEND
 
 ---STRING remove buddy
-Remove from my contacts
+Aus meinen Kontakten entfernen
 ---STRINGEND
 
 ---STRING search
-Search
+Suche
 ---STRINGEND
 
 ---STRING skype name
-Skype name
+Skype-Name
 ---STRINGEND
 
 ---STRING store as plain text
-Store as plain text
+Als einfachen Text speichern
 ---STRINGEND
 
 ---STRING street address
-Street address
+Straße
 ---STRINGEND
 
 ---STRING sub organizations
-Suborganizations
+Unterorganisationen
 ---STRINGEND
 
 ---STRING tel %s
-tel %s
+Tel. %s
 ---STRINGEND
 
 ---STRING treat as workgroup
-Treat as Workgroup
+Als Arbeitsgruppe behandeln
 ---STRINGEND
 
 ---STRING user account
-User account
+Benutzerkonto
 ---STRINGEND
 
 ---STRING user account for %s
-User account for %s
+Benutzerkonto von %s
 ---STRINGEND
 
 ---STRING vendor
-Vendor
+Verkäufer
 ---STRINGEND
 
 ---STRING view related information
-View related information
+Verbundene Daten anzeigen
 ---STRINGEND
 
 ---STRING visiting address
-Visiting address
+Besuchsadresse
 ---STRINGEND
 
 ---STRING weekly workhours
-Weekly work hours
+Wöchentliche Arbeitsstunden
 ---STRINGEND
 
 ---STRING work phone
-Work phone
+Telefon (geschäftlich)
 ---STRINGEND
 
