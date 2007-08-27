@@ -235,6 +235,10 @@ Notes for task %s on %s
 Now working on
 ---STRINGEND
 
+---STRING work for task %s
+Work for task %s
+---STRINGEND
+
 ---STRING ongoing
 Ongoing
 ---STRINGEND

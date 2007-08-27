@@ -68,7 +68,7 @@ Abgeschlossen von %s
 ---STRINGEND
 
 ---STRING closed tasks
-Abgeschlossene Tasks
+Erledigte Tasks
 ---STRINGEND
 
 ---STRING completed
@@ -233,6 +233,10 @@ Notizen von Task %s zu %s
 
 ---STRING now working on
 Sie arbeiten an
+---STRINGEND
+
+---STRING work for task %s
+Arbeit an Task %s
 ---STRINGEND
 
 ---STRING ongoing
