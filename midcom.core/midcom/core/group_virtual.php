@@ -128,6 +128,11 @@ class midcom_core_group_virtual extends midcom_core_group
 
         if (! array_key_exists($this->id, $members))
         {
+            if (!$_MIDCOM->componentloader->load_graceful($this->_component))
+            {
+                return false;
+            }
+            
             $interface =& $_MIDCOM->componentloader->get_interface_class($this->_component);
 
             // Set internal sudo mode during the retrieval of vgroup members,
