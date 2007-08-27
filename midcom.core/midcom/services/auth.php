@@ -2008,6 +2008,14 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         debug_pop();
         return true;
     }
+    
+    /**
+     * This call tells the backend to log in.
+     */
+    function login($username, $password)
+    {
+        return $this->_auth_backend->create_login_session($username, $password);
+    }
 
     /**
      * This call tells the backend to clear any authentication state, then relocates the
@@ -2349,6 +2357,9 @@ class midcom_services_auth extends midcom_baseclasses_core_object
                 </div>
             </div>
     </body>
+    <?php
+    $_MIDCOM->uimessages->show();
+    ?>
 </html>
             <?php
         }

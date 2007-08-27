@@ -262,7 +262,7 @@ class midcom_helper__componentloader
     function _load($path)
     {
         $GLOBALS['midcom_errstr'] = '';
-        
+                        
         if (empty($path))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -271,6 +271,8 @@ class midcom_helper__componentloader
             $GLOBALS['midcom_errstr'] = 'No component path given.';
             return false;
         }
+        
+
 
         // Check if this component is already loaded...
         if (array_key_exists($path, $this->_tried_to_load))
@@ -280,7 +282,7 @@ class midcom_helper__componentloader
             debug_add("We have already tried to load {$path}, returning original result.");
             debug_pop();
             */
-            $GLOBALS['midcom_errstr'] = 'Component already loaded.';
+            $GLOBALS['midcom_errstr'] = "Component {$path} already loaded.";
             return $this->_tried_to_load[$path];
         }
 
@@ -459,7 +461,7 @@ class midcom_helper__componentloader
         {
             if (!$this->_load($path))
             {
-                $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT, $GLOBALS["midcom_errstr"]);
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, $GLOBALS["midcom_errstr"]);
             }
         }
 

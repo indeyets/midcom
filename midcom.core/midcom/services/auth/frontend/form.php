@@ -90,6 +90,31 @@ class midcom_services_auth_frontend_form extends midcom_services_auth_frontend
             </form>
             <?php
         }
+
+        if ($GLOBALS['midcom_config']['auth_openid_enable'])
+        {
+            $_MIDCOM->load_library('net.nemein.openid');
+            $url = $_MIDCOM->get_host_prefix() . 'midcom-exec-net.nemein.openid/initiate.php';
+            ?>
+            <!--<h3><?php echo $_MIDCOM->i18n->get_string('login using openid', 'net.nemein.openid'); ?></h3>-->
+            
+            <div id="open_id_form">
+                <form action="<?php echo $url; ?>" method="post">
+                    <label for="openid_url">
+                        <p><?php echo $_MIDCOM->i18n->get_string('openid url', 'net.nemein.openid'); ?></p>
+                        <input name="openid_url" id="openid_url" type="text" class="input" value="http://" />
+                    </label>
+                    <!--
+                    <p class="helptext">
+                      OpenID lets you safely sign in to different websites with a single password. <a href="https://www.myopenid.com/affiliate_signup?affiliate_id=17">Get an OpenID</a>.
+                    </p>
+                    -->
+                    <input type="submit" name="midcom_services_auth_frontend_form_submit" id="openid_submit" value="<?php
+                        echo $_MIDCOM->i18n->get_string('login', 'midcom'); ?>" />
+                </form>
+            </div>	
+            <?php
+        }
     }
 
     /**

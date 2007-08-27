@@ -70,6 +70,8 @@
  *   is nonzero) or non-sitegrouped mode if we are in SG0.
  * - <b>int auth_login_form_httpcode</b>: HTTP return code used in MidCOM login screens,
  *   either 403 (403 Forbidden) or 200 (200 OK), defaulting to 403.
+ * - <b>bool auth_openid_enable:</b> Whether to enable OpenID authentication handled with 
+ *   the net.nemein.openid library
  *
  * <b>Authentication Backend configuration: "simple"</b>
  *
@@ -329,6 +331,7 @@ $GLOBALS['midcom_config_default']['auth_sitegroup_mode'] = 'auto';
 $GLOBALS['midcom_config_default']['auth_check_client_ip'] = true;
 $GLOBALS['midcom_config_default']['auth_allow_sudo'] = true;
 $GLOBALS['midcom_config_default']['auth_login_form_httpcode'] = 403;
+$GLOBALS['midcom_config_default']['auth_openid_enable'] = false;
 
 $GLOBALS['midcom_config_default']['auth_backend_simple_cookie_id'] = $host->guid;
 $GLOBALS['midcom_config_default']['auth_backend_simple_cookie_path'] = $_MIDGARD['self'];

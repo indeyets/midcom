@@ -147,6 +147,14 @@ class midcom_service_session {
         return $this->_sessioning->remove($this->_domain, $key);
     }
     
+    /**
+     * Compatibility wrapper with other PHP sessioning setups
+     */
+    function del($key)
+    {
+        return $this->remove($key);
+    }
+    
 }
 
 

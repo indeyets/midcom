@@ -115,7 +115,8 @@ body
 }
 
 #content #login #password,
-#content #login #username
+#content #login #username,
+#content #login #openid_url
 {
   background-position: top left;
   background-repeat: no-repeat;
@@ -131,7 +132,8 @@ body
 }
 
 html > body #content #login #password,
-html > body #content #login #username
+html > body #content #login #username,
+html > body #content #login #openid_url
 {
   width: 205px !important;
 }
@@ -141,7 +143,8 @@ html > body #content #login #username
   background-image: url('images/input-password.png');
 }
 
-#content #login #username
+#content #login #username,
+#content #login #openid_url
 {
   background-image: url('images/input-username.png');
 }
