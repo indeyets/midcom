@@ -20,11 +20,11 @@ class WindguruFcst {
 		$this->code = $code;
 		$this->id_model = 3;
 		$this->db = false;
-		$this->status = array(10 => "", 3 => "");
+		$this->status = array(WG_STATUS_NWW3 => "", WG_STATUS_GFS => "");
 		$this->last_status_check = 0;
 		$this->readStatus(); // read local data status
 		$this->html = "";
-		$this->data = array(10 => "", 3 => "");
+		$this->data = array(WG_STATUS_NWW3 => "", WG_STATUS_GFS => "");
 		$this->lang = 'en';
 		$this->setLang($lang);
 		$this->encoding = "";
@@ -54,24 +54,18 @@ class WindguruFcst {
 		$this->updateStatus(); // try to update data status from windguru.cz when it's time
 
 		$this->readCache(); 
-		
+
+	
 		if (!$this->html
-			|| ($this->data[$this->id_model] 
-			&& $this->data[$this->id_model] != $this->status[$this->id_model])
-			|| ($this->data[10] 
-			&& $this->data[10]!=$this->status[10])) 
+			|| ($this->data[$this->id_model] != $this->status[$this->id_model])) 
 		{
 			$this->updateCache(); 
 		}
 
 		if (!$this->html
-			|| ($this->data[$this->id_model] && $this->status[$this->id_model]) 
-			|| ($this->data[10] && $this->status[10])) 
+			|| ($this->data[$this->id_model] > $this->status[$this->id_model])) 
 		{
-			if (strtotime($this->data[10]) > strtotime($this->status[10]))
-			{
 				$this->updateStatus(1); 
-			}
 		}
 
 		if (!$this->html) 
@@ -128,8 +122,8 @@ class WindguruFcst {
         if (count($result))
         {
 			$result[0]->data = $this->html;
-			$result[0]->met = $this->data[$this->id_model] ? "'".$this->data[$this->id_model]."'" : 'NULL';
-			$result[0]->wave = $this->data[10] ? "'".$this->data[10]."'" : 'NULL';
+			$result[0]->met = $this->data[$this->id_model] ? $this->data[$this->id_model] : '';
+			$result[0]->wave = $this->data[10] ? $this->data[10] : '';
 
             if (!$result[0]->update())
             {
@@ -137,7 +131,6 @@ class WindguruFcst {
                 debug_pop();
                 return false;
             }
-
 			debug_add("Cache {$this->id_spot} updated. ");
             debug_pop();
 		}
@@ -148,8 +141,8 @@ class WindguruFcst {
 			$tmp->model = $this->id_model;
 			$tmp->lang = $this->lang;
             $tmp->data = $this->html;
-            $tmp->met = $this->data[$this->id_model] ? "'".$this->data[$this->id_model]."'" : 'NULL';
-            $tmp->wave = $this->data[10] ? "'".$this->data[10]."'" : 'NULL';
+            $tmp->met = $this->data[$this->id_model] ? $this->data[$this->id_model] : '';
+            $tmp->wave = $this->data[10] ? $this->data[10] : '';
 
             if (!$tmp->create())
             {
@@ -291,24 +284,44 @@ class WindguruFcst {
 
 	function getForecast($lang="") 
 	{
-		$url = "http://www.windguru.cz/int/distr2.php?u=".$this->config->get('id_user')."&s={$this->id_spot}&c={$this->code}&lng={$this->lang}&v=".urlencode($this->version)."&enc={$this->encoding}";
-		$fcst = @file($url);print $url;
 
-		if(!is_array($fcst)) return false;
+
+
+		$url = "http://www.windguru.cz/int/distr2.php?u=".$this->config->get('id_user')."&s={$this->id_spot}&c={$this->code}&lng={$this->lang}&v=".urlencode($this->version)."&enc={$this->encoding}";
+		$fcst = @file($url);
+        debug_add("Reading forecast from {$url}",MIDCOM_LOG_ERROR);
+
+		if (!is_array($fcst))
+        {
+            return false;
+        }
+
 		end($fcst);
 		$last = trim(prev($fcst));
-		if(substr($last,0,9)!='<!--MDATA') return false;
+
+		if (substr($last,0,9)!='<!--MDATA') 
+        {
+            return false;
+        }
+
 		$last = substr($last,10,-3);
-		if($last) {
+		if($last) 
+        {
 			$tmp = explode(",",$last);
-			foreach($tmp as $row) {
+			foreach($tmp as $row) 
+            {
 				$arr = explode(";",$row);
-				if(count($arr)==2) $this->data[$this->idMod($arr[0])] = substr($arr[1],0,4)."-".substr($arr[1],4,2)."-".substr($arr[1],6,2)." ".substr($arr[1],8,2).":00:00";
+				if(count($arr)==2) 
+                {
+                    $this->data[$this->idMod($arr[0])] = substr($arr[1],0,4)."-".substr($arr[1],4,2)."-".substr($arr[1],6,2)." ".substr($arr[1],8,2).":00:00";
+                }
 			}
 		}
-		else {
+		else 
+        {
 			return false;
 		}
+
 		$this->html = implode("",$fcst);
 		if($this->html) return true; // reading was succesful
 	}
