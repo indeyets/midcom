@@ -180,7 +180,8 @@ function show_image(object)
     
     var text = document.getElementById(placeholder_text);
     
-    if (text)
+    if (  text
+       && text.innerHTML != title)
     {
         text.innerHTML = title;
     }

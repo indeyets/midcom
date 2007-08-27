@@ -55,6 +55,14 @@ class cc_kaktus_exhibitions_handler_leaves extends midcom_baseclasses_components
     private $_attachments = array ();
     
     /**
+     * AJAX HTML mode storage
+     * 
+     * @access private
+     * @var Array $_view_html
+     */
+    private $_view_html = array ();
+    
+    /**
      * Show backlink to the main page
      * 
      * @access private
@@ -108,6 +116,20 @@ class cc_kaktus_exhibitions_handler_leaves extends midcom_baseclasses_components
     private function _load_datamanager()
     {
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
+        
+        // Load AJAX controller if required
+        if ($this->_config->get('enable_ajax_editing'))
+        {
+            $this->_controller = midcom_helper_datamanager2_controller::create('ajax');
+            $this->_controller->schemadb =& $this->_request_data['schemadb'];
+            
+            foreach ($this->_leaves as $leaf)
+            {
+                $this->_controller->set_storage($leaf);
+                $this->_controller->process_ajax();
+                $this->_view_html[$leaf->guid] = $this->_controller->get_content_html();
+            }
+        }
         
         if (! $this->_datamanager)
         {
@@ -287,6 +309,16 @@ class cc_kaktus_exhibitions_handler_leaves extends midcom_baseclasses_components
             {
                 $data['leaf'] =& $leaf;
                 $this->_datamanager->autoset_storage($leaf);
+                
+                if ($this->_config->get('enable_ajax_editing'))
+                {
+                    $data['view'] = $this->_view_html[$leaf->guid];
+                }
+                else
+                {
+                    $data['view'] = $this->_datamanager->get_content_html();
+                }
+                
                 $data['attachment'] =& $attachment;
                 
                 midcom_show_style('exhibition-leaves-list-item');

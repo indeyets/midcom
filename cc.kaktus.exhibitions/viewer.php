@@ -114,6 +114,13 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
             'fixed_args' => array ('past'),
         );
         
+        // Match /config/
+        $this->_request_switch['config'] = array
+        (
+            'handler' => array ('midcom_helper_dm2config_config', 'config'),
+            'fixed_args' => array ('config'),
+        );
+        
         // Show listing for requested year
         // Match /<year>/
         $this->_request_switch['list_year'] = array

@@ -1,6 +1,6 @@
 <?php
 $data =& $_MIDCOM->get_custom_context_data('request_data');
-$view = $data['datamanager']->get_content_html();
+$view = $data['view'];
 ?>
 <h1>&(view['title']:h);</h1>
 <?php
@@ -16,7 +16,7 @@ if (preg_match("/<a href=['\"](.+?)['\"]/i", @$data['first_thumbnail']['image'],
 ?>
     </div>
     <div id="cc_kaktus_exhibitions_image_placeholder_text">
-        <?php echo @$data['first_thumbnail']['title']; ?>
+        <?php echo $data['first_thumbnail']['title']; ?>
     </div>
 </div>
 &(view['description']:h);

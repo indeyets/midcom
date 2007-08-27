@@ -1,6 +1,6 @@
 <?php
 $data =& $_MIDCOM->get_custom_context_data('request_data');
-$view = $data['datamanager']->get_content_html();
+$view = $data['view'];
 ?>
 <h1>&(view['title']);</h1>
 <?php

@@ -23,6 +23,14 @@ class cc_kaktus_exhibitions_handler_view extends midcom_baseclasses_components_h
     private $_datamanager = null;
     
     /**
+     * Datamanager 2 controller instance
+     * 
+     * @access private
+     * @var midcom_helper_controller2_controller $_controller
+     */
+    private $_controller = null;
+    
+    /**
      * Exhibition event
      * 
      * @access private
@@ -93,9 +101,18 @@ class cc_kaktus_exhibitions_handler_view extends midcom_baseclasses_components_h
      * 
      * @access private
      */
-    public function _load_datamanager()
+    private function _load_datamanager()
     {
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
+        
+        // Load AJAX controller if required
+        if ($this->_config->get('enable_ajax_editing'))
+        {
+            $this->_controller = midcom_helper_datamanager2_controller::create('ajax');
+            $this->_controller->schemadb =& $this->_request_data['schemadb'];
+            $this->_controller->set_storage($this->_event);
+            $this->_controller->process_ajax();
+        }
         
         if (! $this->_datamanager)
         {
@@ -226,6 +243,7 @@ class cc_kaktus_exhibitions_handler_view extends midcom_baseclasses_components_h
         $qb = midcom_db_event::new_query_builder();
         $qb->add_constraint('up', '=', $this->_request_data['master_event']->id);
         $qb->add_constraint('extra', '=', $args[1]);
+        $qb->add_constraint('type', '<>', CC_KAKTUS_EXHIBITIONS_ATTACHMENT);
         $qb->set_limit(1);
         
         // Exhibition not found
@@ -241,6 +259,9 @@ class cc_kaktus_exhibitions_handler_view extends midcom_baseclasses_components_h
         
         $this->_event =& $results[0];
         
+        // Load the DM2 instance
+        $this->_load_datamanager();
+        
         // Get the event attachments
         $qb = midcom_db_event::new_query_builder();
         $qb->add_constraint('up', '=', $this->_event->id);
@@ -254,6 +275,7 @@ class cc_kaktus_exhibitions_handler_view extends midcom_baseclasses_components_h
             $qb = midcom_db_event::new_query_builder();
             $qb->add_constraint('up', '=', $this->_event->id);
             $qb->add_constraint('extra', '=', $args[2]);
+            $qb->add_constraint('type', '=', CC_KAKTUS_EXHIBITIONS_SUBPAGE);
             $qb->set_limit(1);
             
             if ($qb->count() === 0)
@@ -263,6 +285,13 @@ class cc_kaktus_exhibitions_handler_view extends midcom_baseclasses_components_h
             
             $results = $qb->execute();
             $this->_subpage =& $results[0];
+            
+            // Load AJAX controller if required
+            if ($this->_config->get('enable_ajax_editing'))
+            {
+                $this->_controller->set_storage($this->_subpage);
+                $this->_controller->process_ajax();
+            }
         }
         
         // Prevent showing exhibitions under the wrong year
@@ -273,9 +302,6 @@ class cc_kaktus_exhibitions_handler_view extends midcom_baseclasses_components_h
         
         // Set the URL of the event
         $data['event_url'] = "{$args[0]}/{$this->_event->extra}/";
-        
-        // Load the DM2 instance
-        $this->_load_datamanager();
         
         // Add the toolbar item for attachments and subpages
         $this->_populate_toolbar();
@@ -368,6 +394,16 @@ class cc_kaktus_exhibitions_handler_view extends midcom_baseclasses_components_h
         
         // Show the main page
         $this->_datamanager->autoset_storage($data['event']);
+        
+        if ($this->_config->get('enable_ajax_editing'))
+        {
+            $data['view'] = $this->_controller->get_content_html();
+        }
+        else
+        {
+            $data['view'] = $this->_datamanager->get_content_html();
+        }
+            
         midcom_show_style('exhibition-header');
         
         midcom_show_style('exhibition-details');
@@ -437,11 +473,11 @@ class cc_kaktus_exhibitions_handler_view extends midcom_baseclasses_components_h
         $qb->add_order('start');
         $qb->set_limit(1);
         
-        // Load the DM2 instance
-        $this->_load_datamanager();
-        
         if ($qb->count() > 0)
         {
+            // Load the DM2 instance
+            $this->_load_datamanager();
+            
             $results = $qb->execute();
             $this->_event =& $results[0];
             
@@ -514,6 +550,15 @@ class cc_kaktus_exhibitions_handler_view extends midcom_baseclasses_components_h
         {
             $data['handler'] =& $this;
             $this->_datamanager->autoset_storage($this->_event);
+            
+            if ($this->_config->get('enable_ajax_editing'))
+            {
+                $data['view'] = $this->_controller->get_content_html();
+            }
+            else
+            {
+                $data['view'] = $this->_datamanager->get_content_html();
+            }
             
             $data['event'] =& $this->_event;
             $data['datamanager'] =& $this->_datamanager;
