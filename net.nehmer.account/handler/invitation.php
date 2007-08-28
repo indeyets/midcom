@@ -7,6 +7,7 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
     var $_sent_invites = null;
     var $_processing_msg_raw = "";
     var $_user_defined_message = "";
+    var $_contactgrabber = null;
 
     function net_nehmer_account_handler_invitation()
     {
@@ -18,7 +19,10 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
      */
     function _on_initialize()
     {
-        $_MIDCOM->componentloader->load('org.openpsa.mail');
+        $_MIDCOM->load_library('org.openpsa.mail');
+        $_MIDCOM->load_library('com.magnettechnologies.contactgrabber');
+        $this->_contactgrabber = new com_magnettechnologies_contactgrabber();
+        $this->_request_data['contactgrabber'] =& $this->_contactgrabber;
     }
 
 
@@ -28,19 +32,19 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
     function _is_person_registered($email)
     {
         $qb = midcom_db_person::new_query_builder();
-	$qb->add_constraint('sitegroup', '=', $this->_topic->sitegroup);
-	$qb->add_constraint('email', '=', $email);
+    	$qb->add_constraint('sitegroup', '=', $this->_topic->sitegroup);
+    	$qb->add_constraint('email', '=', $email);
 
-	$persons = $qb->execute();
+    	$persons = $qb->execute();
 
-	if ($persons)
-	{
-	    return $persons;
-	}
-	else
-	{
-            return false;
-	}
+    	if ($persons)
+    	{
+    	    return $persons;
+    	}
+    	else
+    	{
+                return false;
+    	}
     }
 
     /**
@@ -139,33 +143,33 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
 
     function _handler_invite($handler_id, $args, &$data)
     {
-echo "<pre>";
+//echo "<pre>";
 //print_r($_POST);
-echo "</pre>";
+//echo "</pre>";
 
         if (isset($_POST['net_nehmer_accounts_invitation_submit']))
-	{
+        {
             for ($i = 0; $i < $_POST['net_nehmer_accounts_invitation_total_contacts']; $i++)
-	    {
+            {
                 if ($i >= $this->_config->get('email_fields') && !isset($_POST["net_nehmer_accounts_invitation_invitee_selected_{$i}"]))
-	        {
-	            echo "Continuing";
+                {
+                    echo "Continuing";
                     continue;
-	        }
+                }
 
-                if (isset($_POST["net_nehmer_accounts_invitation_invitee_name_{$i}"])
-	            && isset($_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"])
-	            && !empty($_POST["net_nehmer_accounts_invitation_invitee_name_{$i}"])
-	            && !empty($_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"])
-	        )
-	        {
-                    if (isset($_POST['net_nehmer_accounts_invitation_email_message']) 
-		        && !empty($_POST['net_nehmer_accounts_invitation_email_message']))
+                if (   isset($_POST["net_nehmer_accounts_invitation_invitee_name_{$i}"])
+	                && isset($_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"])
+	                && !empty($_POST["net_nehmer_accounts_invitation_invitee_name_{$i}"])
+	                && !empty($_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"])
+	                )
+	            {
+                    if (   isset($_POST['net_nehmer_accounts_invitation_email_message']) 
+		                && !empty($_POST['net_nehmer_accounts_invitation_email_message']))
                     {
                         $this->_user_defined_message = $_POST['net_nehmer_accounts_invitation_email_message'];
-		    }
+		            }
 
-	            /**
+	        /**
 		     * Saving the invite object
 		     */
                     $this->_invite = new net_nehmer_accounts_invites_invite_dba();
@@ -176,22 +180,22 @@ echo "</pre>";
 
                     $persons = $this->_is_person_registered($_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"]);
 
-                    if ($persons)
-		    {
-		        foreach ($persons as $person)
-			{
+                    if ( $persons)
+		            {
+		                foreach ($persons as $person)
+                        {
                             $this->_add_as_buddy($person->guid);
-			}
+                        }
 
-		        $_MIDCOM->relocate('sent_invites');
-		    }
-		    else
-		    {
-		        if (!$this->_invite->create())
+                        $_MIDCOM->relocate('sent_invites');
+                    }
+                    else
+                    {
+                        if (!$this->_invite->create())
                         {
                             debug_add("Could not create invite object ID " . $this->_invite->id);
-		        }
-		    }
+                        }
+                    }
 
                     $this->_request_data['hash'] = $this->_invite->hash;
 
@@ -200,7 +204,7 @@ echo "</pre>";
 	   
             }
             $_MIDCOM->relocate('sent_invites');
-	}
+	    }
         return true;
     }
 

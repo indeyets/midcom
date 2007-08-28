@@ -54,9 +54,16 @@ class net_nehmer_account_interface extends midcom_baseclasses_components_interfa
 
         $this->_component = 'net.nehmer.account';
         $this->_autoload_files = Array('viewer.php', 'admin.php', 'navigation.php', 'invite.php');
-        $this->_autoload_libraries = Array('midcom.helper.datamanager2');
+        $this->_autoload_libraries = Array(
+            'midcom.helper.datamanager2'
+        );
     }
-
+    
+    function _on_initialize()
+    {
+        return true;
+    }
+    
     /**
      * This is a factory method which creates a remote controller instance bound to a specific
      * topic.
