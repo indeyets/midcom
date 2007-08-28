@@ -301,10 +301,10 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
         $static_html .= $this->_l10n->get('type image: available sizes') . ":\n" .
                 "<ul class='midcom_helper_datamanager2_widget_image_sizelist'>";
 
-echo "<pre>";
+//echo "<pre>";
 //print_r($this->_type->attachments);
 //print_r($this->_type->attachments_info);
-echo "</pre>";
+//echo "</pre>";
 
         foreach ($this->_type->attachments_info as $name => $info)
         {
