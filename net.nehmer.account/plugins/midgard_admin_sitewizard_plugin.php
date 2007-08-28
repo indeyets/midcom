@@ -6,14 +6,18 @@
  */
 class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_handler
 {
+    var $_host_guid = '';
     var $_structure_config_path = '';
     var $_verbose = false;
     var $_home_name = '';
     var $_home_title = '';
     var $_creation_root_topic_guid = '';
     var $_creation_root_topic_parent_guid = '';
+    var $_creation_root_topic_component = '';
+    var $_creation_root_topic_parameters = '';
     var $_creation_root_group_guid = '';
     var $_creation_root_group_parent_guid ='';
+    var $_creation_root_group_name = '';
 
    /**
     * Simple constructor, which only initializes the parent constructor.
@@ -29,6 +33,11 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
         require_once($this->_request_data['plugin_config']['sitewizard_path']);
 
         parent::_on_initialize();
+
+	$this->_host_guid = $this->_request_data['plugin_config']['host_guid'];
+	$this->_creation_root_topic_component = $this->_request_data['plugin_config']['creation_root_topic_component'];
+	$this->_creation_root_topic_parameters = $this->_request_data['plugin_config']['creation_root_topic_parameters'];
+        $this->_creation_root_group_name = $this->_request_data['plugin_config']['creation_root_group_name'];
 
         $this->_structure_config_path = $this->_request_data['plugin_config']['structure_config_path'];
 
@@ -89,13 +98,28 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
             $sitewizard = new midgard_admin_sitewizard();
             $sitewizard->set_verbose($this->_verbose);
 
-	    $structure_creator = $sitewizard->initialize_structure_creation('983e66725acd11db845a197adaa843af43af');
+	    $structure_creator = $sitewizard->initialize_structure_creation($this->_host_guid);
 	    $structure_creator->read_config($this->_structure_config_path);
 
-            $structure_creator->set_creation_root_topic('6d3af3384be911dcb7b0b3bf4b275d0d5d0d');
-            //$structure_creator->create_creation_root_topic('6d3af3384be911dcb7b0b3bf4b275d0d5d0d', "test", "Test", "net.nehmer.static", array("koe", "koe", "koe"));
-	    $structure_creator->set_creation_root_group('94f058364f0f11dc93f803ebc4b67c0c7c0c'); 
-            //$structure_creator->create_creation_root_group('94f058364f0f11dc93f803ebc4b67c0c7c0c', "testgroup8");
+            if ($this->_creation_root_topic_guid != '')
+	    {
+                $structure_creator->set_creation_root_topic($this->_creation_root_topic_guid);
+            }
+	    elseif ($this->_creation_root_topic_parent_guid != '')
+	    {
+	        $structure_creator->create_creation_root_topic($this->_creation_root_topic_parent_guid, 
+		    $this->_home_name, $this->_home_title, "net.nehmer.static", array("koe", "koe", "koe"));
+	    }
+
+            if ($this->_creation_root_group_guid != '')
+	    {
+	        $structure_creator->set_creation_root_group('94f058364f0f11dc93f803ebc4b67c0c7c0c'); 
+            }
+	    elseif ($this->_cretion_root_group_parent_guid != '')
+	    {
+	        $structure_creator->create_creation_root_group('94f058364f0f11dc93f803ebc4b67c0c7c0c', $this->_creation_root_group_name);
+	    }
+	    
 	    $structure_creator->execute();
 
 	    $_MIDCOM->relocate("account");
