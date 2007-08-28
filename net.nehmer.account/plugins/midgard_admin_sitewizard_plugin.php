@@ -14,7 +14,7 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
     var $_creation_root_topic_guid = '';
     var $_creation_root_topic_parent_guid = '';
     var $_creation_root_topic_component = '';
-    var $_creation_root_topic_parameters = '';
+    var $_creation_root_topic_parameters = array();
     var $_creation_root_group_guid = '';
     var $_creation_root_group_parent_guid ='';
     var $_creation_root_group_name = '';
@@ -108,16 +108,16 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
 	    elseif ($this->_creation_root_topic_parent_guid != '')
 	    {
 	        $structure_creator->create_creation_root_topic($this->_creation_root_topic_parent_guid, 
-		    $this->_home_name, $this->_home_title, "net.nehmer.static", array("koe", "koe", "koe"));
+		    $this->_home_name, $this->_home_title, $this->_creation_root_topic_component, $this->_creation_root_topic_parameters);
 	    }
 
             if ($this->_creation_root_group_guid != '')
 	    {
-	        $structure_creator->set_creation_root_group('94f058364f0f11dc93f803ebc4b67c0c7c0c'); 
+	        $structure_creator->set_creation_root_group($this->_creation_root_group_guid); 
             }
 	    elseif ($this->_cretion_root_group_parent_guid != '')
 	    {
-	        $structure_creator->create_creation_root_group('94f058364f0f11dc93f803ebc4b67c0c7c0c', $this->_creation_root_group_name);
+	        $structure_creator->create_creation_root_group($this->_creation_root_group_guid, $this->_creation_root_group_name);
 	    }
 	    
 	    $structure_creator->execute();
