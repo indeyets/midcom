@@ -74,6 +74,12 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _handler_photostream_list($handler_id, $args, &$data)
     {
+        if (array_key_exists('net_nemein_flashplayer_playlist',$_REQUEST))
+        {
+            $_MIDCOM->skip_page_style = true;
+            $data['output_for_nnf_playlist'] = true;
+        }
+        
         if ($handler_id == 'photostream_list')
         {
             $data['user'] = $this->_resolve_user($args[0]);
@@ -446,19 +452,75 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _show_photostream($handler_id, &$data)
     {
-        midcom_show_style('show_photostream_header');
-
-        foreach ($data['photos'] as $photo)
+        if (   isset($data['output_for_nnf_playlist'])
+            && $data['output_for_nnf_playlist'])
         {
-            $data['photo'] = $photo;
-
-            $data['photo_view'] = $data['controllers'][$photo->id]->get_content_html();
-            $data['datamanager'] =& $data['controllers'][$photo->id]->datamanager;
-
-            midcom_show_style('show_photostream_item');
+            $encoding = 'UTF-8';
+            
+            $_MIDCOM->cache->content->content_type('text/xml');
+            $_MIDCOM->header('Content-type: text/xml; charset=' . $encoding);
+            echo '<?xml version="1.0" encoding="' . $encoding . '" standalone="yes"?>' . "\n";
+            echo "<playlist>\n";
+            
+            $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+            
+            foreach ($data['photos'] as $photo)
+            {
+                $view = $data['controllers'][$photo->id]->get_content_html();
+                $data['datamanager'] =& $data['controllers'][$photo->id]->datamanager;
+                
+                $videothumbnail = $data['datamanager']->types['photo']->attachments_info['view'];
+                $video = $data['datamanager']->types['photo']->attachments_info['main_video'];
+                
+                $duration = 0;
+                if (isset($view['duration']))
+                {
+                    $duration = $view['duration'];
+                }
+                
+                $user = $_MIDCOM->auth->get_user($photo->photographer);
+                $user =& $user->get_storage();
+                $author = $user->name;
+                
+                $video_url = "{$video['url']}";
+                $videothumbnail_url = "{$videothumbnail['url']}";
+                $data_url = "{$prefix}photo/{$photo->guid}/";
+                
+                $published = strftime('%x %X', $photo->taken);
+                
+                echo "
+                <item>\n
+                    <id>{$photo->id}</id>
+                    <guid>{$photo->guid}</guid>
+                    <title><![CDATA[{$photo->title}]]></title>
+                    <duration><![CDATA[{$duration}]]></duration>
+                    <video_url><![CDATA[{$video_url}]]></video_url>
+                    <thumbnail_url><![CDATA[{$videothumbnail_url}]]></thumbnail_url>
+                    <data_url><![CDATA[{$data_url}]]></data_url>
+                    <author><![CDATA[{$author}]]></author>
+                    <added><![CDATA[{$published}]]></added>
+                </item>\n                
+                ";
+            }
+            
+            echo "</playlist>\n";         
         }
+        else
+        {
+            midcom_show_style('show_photostream_header');
 
-        midcom_show_style('show_photostream_footer');
+            foreach ($data['photos'] as $photo)
+            {
+                $data['photo'] = $photo;
+
+                $data['photo_view'] = $data['controllers'][$photo->id]->get_content_html();
+                $data['datamanager'] =& $data['controllers'][$photo->id]->datamanager;
+
+                midcom_show_style('show_photostream_item');
+            }
+
+            midcom_show_style('show_photostream_footer');            
+        }
     }
 
     /**
