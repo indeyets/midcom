@@ -100,7 +100,7 @@ class MagpieRSS {
      */
     function MagpieRSS ($source, $output_encoding='ISO-8859-1', 
                         $input_encoding=null, $detect_encoding=true) 
-    {   
+    {
         # if PHP xml isn't compiled in, die
         #
         if (!function_exists('xml_parser_create')) {
@@ -151,6 +151,7 @@ class MagpieRSS {
     }
     
     function feed_start_element($p, $element, &$attrs) {
+    
         $el = $element = strtolower($element);
         $attrs = array_change_key_case($attrs, CASE_LOWER);
         
@@ -315,7 +316,7 @@ class MagpieRSS {
 
     
     function feed_cdata ($p, $text) {
-        
+    
         if ($this->incontent) {
             $this->append_content( $text );
         }

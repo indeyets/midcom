@@ -79,8 +79,6 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
 
     function _handler_list($handler_id, $args, &$data)
     {        
-        $this->_topic->require_do('midgard:update');
-        
         $qb = net_nemein_rss_feed_dba::new_query_builder();
         $qb->add_order('title');
         $qb->add_constraint('node', '=', $this->_topic->id);
@@ -100,36 +98,44 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
         {
             $data['feed'] = $feed;
             $data['feed_toolbar'] = new midcom_helper_toolbar();
-            $data['feed_toolbar']->add_item
-            (
-                array
+            if ($feed->can_do('midgard:update'))
+            {
+                $data['feed_toolbar']->add_item
                 (
-                    MIDCOM_TOOLBAR_URL => "feeds/edit/{$feed->guid}",
-                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
-                    MIDCOM_TOOLBAR_ENABLED => $feed->can_do('midgard:edit'),
-                )
-            );
-            $data['feed_toolbar']->add_item
-            (
-                array
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "feeds/edit/{$feed->guid}",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                    )
+                );
+            }
+            
+            if ($this->_topic->can_do('midgard:create'))
+            {
+                $data['feed_toolbar']->add_item
                 (
-                    MIDCOM_TOOLBAR_URL => "feeds/fetch/{$feed->guid}",
-                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('refresh feed', 'net.nemein.rss'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_refresh.png',
-                    MIDCOM_TOOLBAR_ENABLED => $this->_topic->can_do('midgard:create'),
-                )
-            );
-            $data['feed_toolbar']->add_item
-            (
-                array
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "feeds/fetch/{$feed->guid}",
+                        MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('refresh feed', 'net.nemein.rss'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_refresh.png',
+                    )
+                );
+            }
+            
+            if ($feed->can_do('midgard:delete'))
+            {
+                $data['feed_toolbar']->add_item
                 (
-                    MIDCOM_TOOLBAR_URL => "feeds/delete/{$feed->guid}",
-                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('delete feed', 'net.nemein.rss'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
-                    MIDCOM_TOOLBAR_ENABLED => $feed->can_do('midgard:delete'),
-                )
-            );
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "feeds/delete/{$feed->guid}",
+                        MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('delete feed', 'net.nemein.rss'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                    )
+                );
+            }
 
             $qb = midcom_db_article::new_query_builder();
             $qb->add_constraint('topic', '=', $this->_topic->id);
@@ -374,6 +380,10 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
         
         if ($handler_id == 'feeds_fetch')
         {
+            //Disable limits
+            @ini_set('memory_limit', -1);
+            @ini_set('max_execution_time', 0);  
+                    
             $data['feed'] = new net_nemein_rss_feed_dba($args[0]);
             if (   !$data['feed']
                 || !$data['feed']->guid)

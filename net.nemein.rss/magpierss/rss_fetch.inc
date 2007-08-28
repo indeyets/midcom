@@ -269,6 +269,7 @@ function _fetch_remote_file ($url, $headers = "" ) {
     $client->agent = MAGPIE_USER_AGENT;
     $client->read_timeout = MAGPIE_FETCH_TIME_OUT;
     $client->use_gzip = MAGPIE_USE_GZIP;
+    $client->maxlength = 10*1024*1024; // 10Mb
     if (is_array($headers) ) {
         $client->rawheaders = $headers;
     }
