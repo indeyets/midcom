@@ -34,7 +34,14 @@ else
     {
         echo "<tr>\n";
         //$date = net_nemein_rss_fetch::parse_item_date($item);
-        $date = $item['date_timestamp'];
+        if (!isset($item['date_timestamp']))
+        {
+            $date = 0;
+        }
+        else
+        {
+            $date = $item['date_timestamp'];
+        }
         if ($date == 0)
         {
             echo "    <td>" . $_MIDCOM->i18n->get_string('n/a', 'net.nemein.rss') . "</td>\n";
