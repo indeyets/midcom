@@ -39,47 +39,21 @@ class com_magnettechnologies_contactgrabber extends midcom_baseclasses_component
     {
         $this->_component = 'com.magnettechnologies.contactgrabber';
         parent::midcom_baseclasses_components_purecode();
-    }
+        
+        $_MIDCOM->style->append_component_styledir('com.magnettechnologies.contactgrabber');
+        
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL."/com.magnettechnologies.contactgraper/styles/elements.css",
+            )
+        );
 
-    function _show_search_form()
-    {
-    ?>
-        <script language="javascript">
-            function checkEmpty(frm)
-            {
-	        if (frm.username.value == "" || frm.password.value == "")
-	        {
-		    alert("Please enter username & password.");
-		    frm.username.focus();
-		    return false;
-	        }
-	        return true;
-            }
-           </script>
-
-           <form  method="POST" onSubmit="return checkEmpty(this);" name="loginForm">
-             <table border="0" cellpadding="2" cellspacing="0">
-               <tr><td colspan="3" align="center"><?php echo $this->_l10n->get('enter login details to fetch your contacts'); ?></td></tr>
-               <tr><td><?php echo $this->_l10n->get('username'); ?></td><td><input type="text" name="username" value="<?php /*echo $username;*/ ?>" /></td>
-                 <td>	
-                 <select name="domain" size="1">
-		   <option value="gmail.com" <?php if (isset($_POST['domain']) && $_POST['domain']=="gmail.com") echo 'selected'; ?>>gmail</option>
-		   <option value="hotmail.com" <?php if (isset($_POST['domain']) && $_POST['domain']=="hotmail.com") echo 'selected'; ?>>hotmail</option>
-		   <option value="rediff.com" <?php if (isset($_POST['domain']) && $_POST['domain']=="rediff.com") echo 'selected'; ?>>rediff</option>		
-		   <option value="yahoo.com" <?php if (isset($_POST['domain']) && $_POST['domain']=="yahoo.com") echo 'selected'; ?>>yahoo</option>
-		   <option value="orkut.com" <?php if (isset($_POST['domain']) && $_POST['domain']=="orkut.com") echo 'selected'; ?>>orkut</option>
-		   <option value="myspace.com" <?php if (isset($_POST['domain']) && $_POST['domain']=="myspace.com") echo 'selected'; ?>>myspace</option>
-	         </select>
-                 </td>
-               </tr>
-               <tr><td><?php echo $this->_l10n->get('password'); ?></td>
-                 <td colspan="2"><input type="password" name="password" /></td>
-              </tr>
-              <tr><td colspan="3" align="center"><input type="submit" value="<?php echo $this->_l10n->get('fetch my contacts'); ?>" /></td></tr>    
-              <tr><td colspan="3" align="center"><small><?php echo $this->_l10n->get('no details are stored'); ?></small></td></tr>    
-            </table>
-          </form>
-      <?php
+        $_MIDCOM->enable_jquery();
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/com.magnettechnologies.contactgraper/js/common.js');
     }
 
     function _create_resource_object()
@@ -135,29 +109,34 @@ class com_magnettechnologies_contactgrabber extends midcom_baseclasses_component
 
     function _crab_contacts()
     {
-        $this->_show_search_form();
-	$this->_create_resource_object();
+        // $this->_show_search_form();
+	    $this->_create_resource_object();
 
-	if (isset($this->_resource_obj))
-        {
-	    $contacts = $this->_resource_obj->getAddressbook($this->_email, $this->_password);
-	    if(is_array($contacts))
-	    {
-                $clean_contacts = array();
+    	if (isset($this->_resource_obj))
+            {
+    	    $contacts = $this->_resource_obj->getAddressbook($this->_email, $this->_password);
+    	    if(is_array($contacts))
+    	    {
+                    $clean_contacts = array();
 
-                // Removing if email value is empty
-		foreach($contacts['email'] as $key => $email)
-		{
-                    if (!empty($email))
-		    {
-                        $clean_contacts['email'][$key] = $email;
-			$clean_contacts['name'][$key] = $contacts['name'][$key];
-		    }
-		}
+                    // Removing if email value is empty
+    		foreach($contacts['email'] as $key => $email)
+    		{
+                        if (!empty($email))
+    		    {
+                            $clean_contacts['email'][$key] = $email;
+    			$clean_contacts['name'][$key] = $contacts['name'][$key];
+    		    }
+    		}
 
-                return $clean_contacts;
-	    }
-	}
+                    return $clean_contacts;
+    	    }
+    	}
+    }
+
+    function show_search_form()
+    {
+        midcom_show_style('search-form');
     }
 }
 ?>
