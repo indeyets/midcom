@@ -391,7 +391,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         });
 	    
 	    var item_id = data[options.id_field];
-
+	    //console.log('options.id_field: '+options.id_field);
+        //console.log('item_id: '+item_id);
         if (! can_add(item_id))
         {
             //console.log("Can't add!");

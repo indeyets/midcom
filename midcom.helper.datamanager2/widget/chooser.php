@@ -1109,10 +1109,10 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             $qb = new midgard_query_builder($this->class);
         }
 
-        $qb->begin_group('OR');
-        $qb->add_constraint('id', '=', $key);
-        $qb->add_constraint('guid', '=', $key);
-        $qb->end_group();
+        //$qb->begin_group('OR');
+        $qb->add_constraint($this->id_field, '=', $key);
+        //$qb->add_constraint('guid', '=', $key);
+        //$qb->end_group();
         
         $results = $qb->execute();        
         
