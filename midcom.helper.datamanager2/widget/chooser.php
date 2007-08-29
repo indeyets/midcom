@@ -986,7 +986,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             {
                 $item_name = $header_item['name'];
                 $value = @$object->$item_name;
-
+                $value = rawurlencode($value);
                 $name .= "{$item_name}: '{$value}'";
                 
                 if ($i < $hi_count)
@@ -1019,6 +1019,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             && !$this->result_headers)
         {
             $value = @$object->get_label();
+            $value = rawurlencode($value);
             debug_add("adding header item: name=label value={$value}");
             $jsdata .= "label: '{$value}'";
         }
@@ -1030,7 +1031,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             {
                 $item_name = $header_item['name'];
                 $value = @$object->$item_name;
-
+                $value = rawurlencode($value);
                 debug_add("adding header item: name={$item_name} value={$value}");
                 $jsdata .= "{$item_name}: '{$value}'";
                 

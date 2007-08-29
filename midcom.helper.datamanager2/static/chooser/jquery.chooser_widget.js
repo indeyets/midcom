@@ -353,7 +353,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 			list_jq_items.eq(0).addClass(CLASSES.ACTIVE);
 			active = 0;
 			var active_id = list_items[0];
-			console.log("active_id: "+active_id);
+
     	    jQuery('#'+options.widget_id + '_result_item_'+active_id+'_input', list).attr({ value: active_id });
     	    jQuery('#'+options.widget_id + '_result_item_'+active_id).attr("keep_on_list","true");
     	    selected_items.push(active_id);
@@ -703,11 +703,11 @@ function midcom_helper_datamanager2_widget_chooser_format_item(item, options)
         .appendTo(item_parts);
 
     jQuery.each( options.result_headers, function(i,n) {
-        //console.log("create item_part "+n.name+" with value "+item[n.name]);
+        // console.log("create item_part "+n.name+" with value "+item[n.name]);
         item_content = jQuery("<div>")
         .addClass('chooser_widget_item_part')
         .attr({ id: 'chooser_widget_item_part_'+n.name })
-        .html( item[n.name] )
+        .html( unescape(item[n.name]) )
         .appendTo(item_parts);
     });
 
