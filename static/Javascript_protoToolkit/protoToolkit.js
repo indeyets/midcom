@@ -105,31 +105,31 @@ protoToolkit.prototype.toJSON = function (item,item_type) {
                     });
                 }
                 return '"' + x + '"';
-            },
-            conv = function (x) {
-                var itemtype = typeof x;
-            	switch(itemtype) {
-            		case "array":
-            		  return s.arr(x);
-            		  break;
-            		case "object":
-            		  return s.obj(x);
-            		  break;
-            		case "string":
-            		  return s.str(x);
-            		  break;
-            		case "number":
-            		  return s.num(x);
-            		  break;
-            		case "null":
-            		  return s.nul(x);
-            		  break;
-            		case "boolean":
-            		  return s.bool(x);
-            		  break;
-            	}
             }
-    };
+        };
+        conv = function (x) {
+            var itemtype = typeof x;
+        	switch(itemtype) {
+        		case "array":
+        		  return s.arr(x);
+        		  break;
+        		case "object":
+        		  return s.obj(x);
+        		  break;
+        		case "string":
+        		  return s.str(x);
+        		  break;
+        		case "number":
+        		  return s.num(x);
+        		  break;
+        		case "null":
+        		  return s.nul(x);
+        		  break;
+        		case "boolean":
+        		  return s.bool(x);
+        		  break;
+        	}
+        }
 
     // Array.prototype.toJSON = function () {
     //         return s.arr(this);
