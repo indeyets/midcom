@@ -48,7 +48,7 @@ protoToolkit.prototype.toJSON = function (item,item_type) {
                 var a = ['['], b, f, i, l = x.length, v;
                 for (i = 0; i < l; i += 1) {
                     v = x[i];
-                    v = protoToolkit.prototype.toJSON(v);
+                    v = conv(v);
                     if (typeof v == 'string') {
                         if (b) {
                             a[a.length] = ',';
@@ -77,7 +77,7 @@ protoToolkit.prototype.toJSON = function (item,item_type) {
                     var a = ['{'], b, f, i, v;
                     for (i in x) {
                         v = x[i];
-                        v = protoToolkit.prototype.toJSON(v);
+                        v = conv(v);
                         if (typeof v == 'string') {
                             if (b) {
                                 a[a.length] = ',';
@@ -105,6 +105,29 @@ protoToolkit.prototype.toJSON = function (item,item_type) {
                     });
                 }
                 return '"' + x + '"';
+            },
+            conv = function (x) {
+                var itemtype = typeof x;
+            	switch(itemtype) {
+            		case "array":
+            		  return s.arr(x);
+            		  break;
+            		case "object":
+            		  return s.obj(x);
+            		  break;
+            		case "string":
+            		  return s.str(x);
+            		  break;
+            		case "number":
+            		  return s.num(x);
+            		  break;
+            		case "null":
+            		  return s.nul(x);
+            		  break;
+            		case "boolean":
+            		  return s.bool(x);
+            		  break;
+            	}
             }
     };
 
