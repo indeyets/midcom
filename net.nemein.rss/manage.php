@@ -46,6 +46,11 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
                 'handler' => Array('net_nemein_rss_manage', 'list'),
                 'fixed_args' => array('feeds', 'list'),
             ),
+            'feeds_opml' => Array
+            (
+                'handler' => Array('net_nemein_rss_manage', 'opml'),
+                'fixed_args' => array('feeds.opml'),
+            ),
             'feeds_subscribe' => Array
             (
                 'handler' => Array('net_nemein_rss_manage', 'subscribe'),
@@ -75,6 +80,39 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
                 'variable_args' => 1,
             ),
         );
+    }
+    
+    function _handler_opml($handler_id, $args, &$data)
+    {
+        $_MIDCOM->cache->content->content_type("text/xml");
+        $_MIDCOM->header("Content-type: text/xml; charset=UTF-8");
+        
+        $_MIDCOM->skip_page_style = true;
+        
+        $qb = net_nemein_rss_feed_dba::new_query_builder();
+        $qb->add_order('title');
+        $qb->add_constraint('node', '=', $this->_topic->id);
+        $data['feeds'] = $qb->execute();
+        
+        $_MIDCOM->load_library('de.bitfolge.feedcreator');
+
+        return true;
+    }
+    
+    function _show_opml($handler_id, &$data)
+    {
+        $opml = new OPMLCreator();
+        $opml->title = $this->_topic->extra;
+        
+        foreach ($data['feeds'] as $feed)
+        {
+            $item = new FeedItem();
+            $item->title = $feed->title;
+            $item->xmlUrl = $feed->url;
+            $opml->addItem($item);
+        }
+        
+        echo $opml->createFeed();
     }
 
     function _handler_list($handler_id, $args, &$data)

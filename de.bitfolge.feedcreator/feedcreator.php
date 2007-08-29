@@ -1715,8 +1715,17 @@ class OPMLCreator extends FeedCreator {
 			$title = htmlspecialchars(strip_tags(strtr($this->items[$i]->title,"\n\r","  ")));
 			$feed.= " title=\"".$title."\"";
 			$feed.= " text=\"".$title."\"";
-			//$feed.= " description=\"".htmlspecialchars($this->items[$i]->description)."\"";
-			$feed.= " url=\"".htmlspecialchars($this->items[$i]->link)."\"";
+
+            if (isset($this->items[$i]->xmlUrl))
+            {
+    			$feed.= " xmlUrl=\"".htmlspecialchars($this->items[$i]->xmlUrl)."\"";
+            }
+
+            if (isset($this->items[$i]->link))
+            {
+                $feed.= " url=\"".htmlspecialchars($this->items[$i]->link)."\"";
+            }
+            
 			$feed.= "/>\n";
 		}
 		$feed.= "    </body>\n";

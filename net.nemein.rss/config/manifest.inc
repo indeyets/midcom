@@ -31,6 +31,9 @@
       'net.nemein.tag' => 
       array (
       ),
+      'de.bitfolge.feedcreator' => 
+      array (
+      ),
       'midcom' => 
       array (
       ),
