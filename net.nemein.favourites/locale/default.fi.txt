@@ -1,0 +1,21 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING add
+Lisää
+---STRINGEND
+
+---STRING net.nemein.favourites
+Suosikit
+---STRINGEND
+
+---STRING you are adding the following item to favourites
+Olet lisäämässä oheista dokumenttia suosikkeihisi. Klikkaa nappia "lisää" tallentaaksesi sen.
+---STRINGEND
+
+---STRING return and dont add
+Palaa takaisin ja jätä lisäämättä
+---STRINGEND
+

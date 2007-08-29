@@ -1,0 +1,21 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING add
+Add
+---STRINGEND
+
+---STRING net.nemein.favourites
+Favourites
+---STRINGEND
+
+---STRING you are adding the following item to favourites
+You are adding the following item to your favourites on this site. Click "add" to save it.
+---STRINGEND
+
+---STRING return and dont add
+Return back and don't add
+---STRINGEND
+
