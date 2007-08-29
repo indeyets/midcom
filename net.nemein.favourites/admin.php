@@ -20,7 +20,7 @@ class net_nemein_favourites_admin extends midcom_baseclasses_components_request_
         return true;
     }
 
-    function render_add_link($objectType, $guid, $node = null)
+    function render_add_link($objectType, $guid, $url = '')
     {
         if (   empty($objectType) 
             || empty($guid))
@@ -28,12 +28,16 @@ class net_nemein_favourites_admin extends midcom_baseclasses_components_request_
             return false;
         }
         
-        if (is_null($node))
+        if (empty($url))
         {
             $node = midcom_helper_find_node_by_component('net.nemein.favourites');
+            if (!empty($node))
+            {
+                $url = $node[MIDCOM_NAV_FULLURL];
+            }
         }
         
-        if (empty($node))
+        if (empty($url))
         {
             return false;
         }
@@ -61,7 +65,6 @@ class net_nemein_favourites_admin extends midcom_baseclasses_components_request_
         }
         else
         {
-            $url = $node[MIDCOM_NAV_FULLURL];
 
             echo "<span class=\"net_nemein_favourites\">". sprintf($l10n->get('%d favs'), $total_favs) . "<a href=\"{$url}create/{$objectType}/{$guid}.html\" class=\"net_nemein_favourites_create\"> <img src=\"" . MIDCOM_STATIC_URL . "/net.nemein.favourites/not-favorite.png\" style=\"border: none;\" alt=\"{$l10n->get('add to favourites')}\" /></a></span>";
             
