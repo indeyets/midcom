@@ -159,8 +159,9 @@ class midcom_services_cache_module_memcache extends midcom_services_cache_module
      * @param string $data_group The Data Group to look in.
      * @param string $key The key to look up.
      * @param mixed $data The data to store.
+     * @param int $timeout how long the data should live in the cache.
      */
-    function put($data_group, $key, $data)
+    function put($data_group, $key, $data, $timeout = FALSE)
     {
         if ($this->_cache === null)
         {
@@ -177,9 +178,10 @@ class midcom_services_cache_module_memcache extends midcom_services_cache_module
             return;
         }
         
-        $this->_cache->put("{$data_group}-{$key}", $data);
+        $this->_cache->put("{$data_group}-{$key}", $data, $timeout);
     }
-    
+
+   
     /**
      * This is a little helper that tries to look up a parent GUID in the memory
      * cache's PARENT data group. If it is not found, false is returned.
