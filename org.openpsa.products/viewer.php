@@ -271,6 +271,11 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
         {
             foreach ($schema->fields as $fieldname => $field_setup)
             {
+                if ($fieldname == 'productGroup')
+                {
+                    $fieldname = 'productgroup';
+                    $field_setup['required'] = true;
+                }
                 $schema_string .= "\n_{$field_setup['type']}_ `{$fieldname}`";
                 if ($field_setup['required'])
                 {
