@@ -58,7 +58,12 @@ class net_nemein_favourites_admin extends midcom_baseclasses_components_request_
         
         // Check if user has already favorited this
         $qb = net_nemein_favourites_favourite_dba::new_query_builder();
-        $qb->add_constraint('metadata.creator', '=', $_MIDCOM->auth->user->guid);
+        
+        if ($_MIDCOM->auth->user)
+        {
+            $qb->add_constraint('metadata.creator', '=', $_MIDCOM->auth->user->guid);
+        }
+        
         $qb->add_constraint('objectGuid', '=', $guid);
         if ($qb->count_unchecked() > 0)
         {
