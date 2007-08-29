@@ -624,11 +624,17 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 {
                     $matching_type = 'org_openpsa_event';
                 }
-                if ($this->clever_class == 'person')
+                else if ($this->clever_class == 'person')
                 {
                     $matching_type = 'midgard_person';
                 }
+                else
+                {
+                    $matching_type = $matched_types[0];
+                }
             }
+            
+            debug_print_r('Decided to go with',$matching_type);
             
             if (! $matching_type)
             {
