@@ -575,7 +575,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                     array('title' => 'ASC'), 
                     array('metadata.published' => 'ASC'),
                 ),
-                'id_field' => 'guid'
+                'id_field' => 'guid',
             ),
         );
         
@@ -1198,14 +1198,18 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         
         foreach ($real_results as $key => $value)
         {
-            if ($value > 0)
+            debug_add("checking key {$key} with value ".var_dump($value));
+            if (   $value != "0"
+                || $value != 0)
             {
+                debug_add("adding key {$key} to selection");
                 $this->_type->selection[] = $key;                
             }
         }
         
         debug_print_r('real_results', $real_results);
-        
+        debug_print_r('_type->selection', $this->_type->selection);
+                
         debug_pop();        
     }
 
