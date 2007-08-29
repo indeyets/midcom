@@ -6,6 +6,5 @@ if ($label == 'default')
 {
     $label = 'product';
 }
-$xml = $mapper->array2data($data['view_product'], $label);
-echo $xml;
+echo $mapper->dm2data($data['datamanager'], $label);
 ?>
