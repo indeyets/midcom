@@ -92,9 +92,11 @@
  *   file) is not changed.
  * - <b>string cache_base_directory:</b> The directory where to place cache files for MidCOM.
  * 	 This defaults to /tmp/ (note the trailing slash) as this is writable everywhere.
+ *   
  * - <b>Array cache_module_acl:</b> If this is non-null and an array, MidCOM will create a memcached
  *   caching instance to buffer ACL reads from the DB. You set this parameter to the configuration
  *   array to use (use an empty array for the defaults). See the memcached backend for details.
+ *   <b>THIS PARAMETER (cache_module_acl) IS NOT IN USE</b>
  * - <b>Array cache_module_content_backend:</b> The configuration of the content cache backend.
  *   Check the documentation of midcom_services_cache_backend of what options are available here.
  *   In general, you should use this only to change the backend driver.
