@@ -146,6 +146,7 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
         $this->_datamanager->autoset_storage($article);
 
         $item = new FeedItem();
+        $item->descriptionHtmlSyndicated = true;
         $author_user = $_MIDCOM->auth->get_user($article->author);
         if ($author_user)
         {
