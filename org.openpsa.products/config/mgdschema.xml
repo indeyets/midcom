@@ -44,10 +44,10 @@
 
     </type>
 
-    <type name="org_openpsa_products_product_group" table="org_openpsa_products_product_group" parent="org_openpsa_products_product_group" parentfield="up">
+    <type name="org_openpsa_products_product_group" table="org_openpsa_products_product_group" upfield="up">
         <property name="id" type="integer" primaryfield="id"/>
 
-        <property name="up" parentfield="up" link="org_openpsa_products_product_group:id" reverse="no" type="integer"/>
+        <property name="up" upfield="up" link="org_openpsa_products_product_group:id" reverse="no" type="integer"/>
 
         <property name="code" type="string"/>
 
