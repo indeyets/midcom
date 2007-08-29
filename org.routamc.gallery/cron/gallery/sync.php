@@ -29,7 +29,15 @@ class org_routamc_gallery_cron_gallery_sync extends midcom_baseclasses_component
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add('_on_execute called');
 
-        // TODO: Implement
+        $qb = midcom_db_topic::new_query_builder();
+        $qb->add_constraint('component', '=', 'org.routamc.gallery');
+        $galleries = $qb->execute();
+        
+        foreach ($galleries as $gallery)
+        {
+            $helper = new org_routamc_gallery_helper($gallery);
+            $helper->sync();
+        }
 
         debug_add('done');
         debug_pop();
