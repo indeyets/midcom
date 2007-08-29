@@ -557,7 +557,6 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 'headers' => array
                 (
                     'title',
-                    'topic.extra',
                 ),
                 'constraints' => array(),
                 'searchfields' => array
@@ -899,9 +898,19 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         $this->_jscript .= 'jQuery().ready(function(){';
         
         $script = "jQuery('#{$this->_element_id}_search_input').midcom_helper_datamanager2_widget_chooser_widget('{$this->_handler_url}', {\n";
-        foreach ($this->_js_widget_options as $key => $value)
+        if (!empty($this->_js_widget_options))
         {
-            $script .= "{$key}: {$value},\n";
+            $opt_cnt = count($this->_js_widget_options);
+            $i = 0;
+            foreach ($this->_js_widget_options as $key => $value)
+            {
+                $i++;
+                $script .= "{$key}: {$value}";
+                if ($i < $opt_cnt)
+                {
+                    $script .= ",\n";
+                }
+            }        
         }
         $script .= "});";
         $this->_jscript .= $script;
