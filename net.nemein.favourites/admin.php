@@ -20,7 +20,7 @@ class net_nemein_favourites_admin extends midcom_baseclasses_components_request_
         return true;
     }
 
-    function render_add_link($objectType, $guid, $url = '')
+    function render_add_link($objectType, $guid, $url = '', $link_for_anonymous = true)
     {
         if (   empty($objectType) 
             || empty($guid))
@@ -49,7 +49,8 @@ class net_nemein_favourites_admin extends midcom_baseclasses_components_request_
         $qb->add_constraint('objectGuid', '=', $guid);
         $total_favs = $qb->count_unchecked();
         
-        if (!$_MIDCOM->auth->user)
+        if (   !$_MIDCOM->auth->user
+            && !$link_for_anonymous)
         {
             echo "<span class=\"net_nemein_favourites\">". sprintf($l10n->get('%d favs'), $total_favs) . "</span>\n";
             return true;
