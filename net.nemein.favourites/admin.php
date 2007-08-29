@@ -20,7 +20,7 @@ class net_nemein_favourites_admin extends midcom_baseclasses_components_request_
         return true;
     }
 
-    function render_add_link($objectType, $guid, $url = '', $link_for_anonymous = true)
+    function get_add_link($objectType, $guid, $url = '', $link_for_anonymous = true)
     {
         if (   empty($objectType) 
             || empty($guid))
@@ -52,8 +52,7 @@ class net_nemein_favourites_admin extends midcom_baseclasses_components_request_
         if (   !$_MIDCOM->auth->user
             && !$link_for_anonymous)
         {
-            echo "<span class=\"net_nemein_favourites\">". sprintf($l10n->get('%d favs'), $total_favs) . "</span>\n";
-            return true;
+            return "<span class=\"net_nemein_favourites\">". sprintf($l10n->get('%d favs'), $total_favs) . "</span>\n";
         }
         
         // Check if user has already favorited this
@@ -68,15 +67,15 @@ class net_nemein_favourites_admin extends midcom_baseclasses_components_request_
         if (   $_MIDCOM->auth->user
             && $qb->count_unchecked() > 0)
         {
-            echo "<span class=\"net_nemein_favourites\">". sprintf($l10n->get('%d favs'), $total_favs) . " <img src=\"" . MIDCOM_STATIC_URL . "/net.nemein.favourites/favorite.png\" alt=\"" . $l10n->get('favourite') . "\" /></span>\n";
+            return "<span class=\"net_nemein_favourites\">". sprintf($l10n->get('%d favs'), $total_favs) . " <img src=\"" . MIDCOM_STATIC_URL . "/net.nemein.favourites/favorite.png\" alt=\"" . $l10n->get('favourite') . "\" /></span>\n";
         }
-        else
-        {
 
-            echo "<span class=\"net_nemein_favourites\">". sprintf($l10n->get('%d favs'), $total_favs) . "<a href=\"{$url}create/{$objectType}/{$guid}.html\" class=\"net_nemein_favourites_create\"> <img src=\"" . MIDCOM_STATIC_URL . "/net.nemein.favourites/not-favorite.png\" style=\"border: none;\" alt=\"{$l10n->get('add to favourites')}\" /></a></span>";
-            
-            return true;
-        }
+        return "<span class=\"net_nemein_favourites\">". sprintf($l10n->get('%d favs'), $total_favs) . "<a href=\"{$url}create/{$objectType}/{$guid}.html\" class=\"net_nemein_favourites_create\"> <img src=\"" . MIDCOM_STATIC_URL . "/net.nemein.favourites/not-favorite.png\" style=\"border: none;\" alt=\"{$l10n->get('add to favourites')}\" /></a></span>";
+    }
+
+    function render_add_link($objectType, $guid, $url = '', $link_for_anonymous = true)
+    {
+        echo net_nemein_favourites_admin::get_add_link($objectType, $guid, $url, $link_for_anonymous);
     }
 }
 
