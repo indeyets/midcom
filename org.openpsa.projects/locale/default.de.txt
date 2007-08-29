@@ -427,3 +427,22 @@ Sie sind Projektteilehmer
 Sie haben das Projekt abonniert
 ---STRINGEND
 
+---STRING marked %s hours as invoiced in task "%s"
+%s Arbeitsstunden in Task "%s" als abgerechnet markiert
+---STRINGEND
+
+---STRING reporting %d hours to task %s failed, reason %s
+Melden von %d Arbeitsstunden für Task %s ist fehlgeschlagen, Grund: %s
+---STRINGEND
+
+---STRING successfully reported %d hours to task %s
+%d Arbeitsstunden für Task %s erfolgreich gemeldet
+---STRINGEND
+
+---STRING task deletion now allowed because of hour reports
+Der Task kann aufgrund von Stundenberichten nicht gelöscht werden
+---STRINGEND
+
+---STRING marked task "%s" closed
+Task "%s" als abgeschlossen markiert
+---STRINGEND

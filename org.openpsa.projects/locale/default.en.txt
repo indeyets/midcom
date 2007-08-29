@@ -427,3 +427,22 @@ You are project participant
 You are project subscriber
 ---STRINGEND
 
+---STRING marked %s hours as invoiced in task "%s"
+Marked %s hours as invoiced in task "%s"
+---STRINGEND
+
+---STRING reporting %d hours to task %s failed, reason %s
+Reporting %d hours to task %s failed, reason %s
+---STRINGEND
+
+---STRING successfully reported %d hours to task %s
+Successfully reported %d hours to task %s
+---STRINGEND
+
+---STRING task deletion now allowed because of hour reports
+Task deletion now allowed because of hour reports
+---STRINGEND
+
+---STRING marked task "%s" closed
+Marked task "%s" closed
+---STRINGEND
