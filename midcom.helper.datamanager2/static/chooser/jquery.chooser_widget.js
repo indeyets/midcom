@@ -14,6 +14,7 @@
  * @option String widget_id The id of the widget instance. Default: chooser_widget
  * @option Number result_limit Limit the number of items in the results box. Is also send as a "limit" parameter to backend on request. Default: 10
  * @option Boolean renderer_callback If this is set to true, then when user presses tab it creates a tag from current input value if we don't have any results. Default: false
+ * @option String id_field Name of the objects field to be used as identifier. Default: guid
  */
  
 
@@ -265,7 +266,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser.defaults = {
 	delay: 400,
 	result_limit: 10,
 	renderer_callback: false,
-	allow_multiple: true
+	allow_multiple: true,
+	id_field: 'guid'
 }
 
 jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(options, input, select_function)
@@ -351,6 +353,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 			list_jq_items.eq(0).addClass(CLASSES.ACTIVE);
 			active = 0;
 			var active_id = list_items[0];
+			console.log("active_id: "+active_id);
     	    jQuery('#'+options.widget_id + '_result_item_'+active_id+'_input', list).attr({ value: active_id });
     	    jQuery('#'+options.widget_id + '_result_item_'+active_id).attr("keep_on_list","true");
     	    selected_items.push(active_id);
@@ -386,8 +389,10 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         jQuery.each( options.result_headers, function(i,n) {
             //console.log("data."+n.name+": "+data[n.name]);
         });
-	    	    	    
-        if (! can_add(data.id))
+	    
+	    var item_id = data[options.id_field];
+
+        if (! can_add(item_id))
         {
             //console.log("Can't add!");
             return false;
@@ -403,7 +408,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 	    
 	    if (options.allow_multiple)
 	    {
-    	    var input_elem_name = options.widget_id + "_selections[" + data.id + "]";
+    	    var input_elem_name = options.widget_id + "_selections[" + item_id + "]";
 	    }
         else
         {
@@ -413,7 +418,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         //console.log("input_elem_name: "+input_elem_name);
         
 	    var li_elem = jQuery("<li>")
-	    .attr({ id: options.widget_id + '_result_item_'+data.id })
+	    .attr({ id: options.widget_id + '_result_item_'+item_id })
 	    .attr("deleted","false")
 	    .attr("keep_on_list","false")
 	    .addClass("chooser_widget_result_item")
@@ -434,16 +439,16 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
     	        {
             		jQuery(li_element).removeClass(CLASSES.ACTIVE);    	            
             		jQuery(li_element).addClass(CLASSES.DELETED);
-            		remove(data.id);
+            		remove(item_id);
     	        }
     	        else
     	        {
-            		restore(data.id);    	            
+            		restore(item_id);    	            
     	        }
     	    }
     	    else
     	    {
-        		activate(data.id);
+        		activate(item_id);
     	    }
 
     		return false;
@@ -467,7 +472,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
     	    .appendTo(li_elem);
     	    //console.log("item_content: "+item_content);
             var input_elem = jQuery("<input>")
-            .attr({ type: 'hidden', name: input_elem_name, value: 0, id: options.widget_id + '_result_item_'+data.id+'_input' })
+            .attr({ type: 'hidden', name: input_elem_name, value: 0, id: options.widget_id + '_result_item_'+item_id+'_input' })
             .hide()
             .appendTo(li_elem);
     	}
@@ -476,7 +481,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 	    
 	    li_elem.appendTo(list);
 	    
-	    list_items.push(data.id);
+	    list_items.push(item_id);
 	}
 
 	function moveSelect(step) {
@@ -614,15 +619,18 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 	    add_item: function(item)
 	    {
 	        add(item);
-	        activate(item.id);
+	        var item_id = item[options.id_field];
+	        activate(item_id);
 	    },
 	    del_item: function(item)
 	    {
-	        remove(item.id);
+	        var item_id = item[options.id_field];
+	        remove(item_id);
 	    },
 	    activate_item: function(item)
 	    {
-	        activate(item.id);
+	        var item_id = item[options.id_field];
+	        activate(item_id);
 	    },
 		visible : function() {
 			return element.is(":visible");
