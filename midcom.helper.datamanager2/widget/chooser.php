@@ -164,6 +164,13 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
     var $orders = array();
 
     /**
+     * Field/property to use as the key/id
+     *
+     * @var string
+     */
+    var $id_field = 'guid';
+
+    /**
      * These options are always visible
      */
     var $static_options = array();
@@ -568,6 +575,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                     array('title' => 'ASC'), 
                     array('metadata.published' => 'ASC'),
                 ),
+                'id_field' => 'guid'
             ),
         );
         
@@ -610,7 +618,11 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             {
                 $this->reflector_key = $clever_classes[$this->clever_class]['reflector_key'];
             }
-                                    
+            if (isset($clever_classes[$this->clever_class]['id_field']))
+            {
+                $this->id_field = $clever_classes[$this->clever_class]['id_field'];
+            }
+                                                
             debug_pop();
             return true;
         }
@@ -773,7 +785,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         $this->_js_widget_options['renderer_callback'] = 'false';
         $this->_js_widget_options['result_headers'] = '[]';
         $this->_js_widget_options['allow_multiple'] = 'true';
-        
+        $this->_js_widget_options['id_field'] = "'$this->id_field'";
                                 
         if (isset($this->max_results))
         {
