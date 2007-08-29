@@ -597,10 +597,10 @@ EOF;
         $ret_groups = $this->check_all_groups();
         foreach ($ret_groups['p_map'] as $g1guid => $duplicates)
         {
-            $group1 =& $ret_persons['objects'][$g1guid];
+            $group1 =& $ret_groups['objects'][$g1guid];
             foreach($duplicates as $g2guid => $details)
             {
-                $group2 = $ret_persons['objects'][$g2guid];
+                $group2 = $ret_groups['objects'][$g2guid];
                 $msg = "Marking groups {$g1guid} (#{$group1->id}) and {$g2guid} (#{$group2->id}) as duplicates with P {$details['p']}";
                 debug_add($msg);
                 $group1->parameter('org.openpsa.contacts.duplicates:possible_duplicate', $p2guid, $details['p']);
