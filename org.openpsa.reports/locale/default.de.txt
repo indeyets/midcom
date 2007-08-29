@@ -1,0 +1,120 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING define custom report
+Einen benutzerdefinierten Bericht erstellen
+---STRINGEND
+
+---STRING download as CSV
+Als CSV herunterladen
+---STRINGEND
+
+---STRING invoiceable hours last month
+Abrechenbare Stunden im letzten Monat
+---STRINGEND
+
+---STRING invoiceable hours this month
+Abrechenbare Stunden in diesem Monat
+---STRINGEND
+
+---STRING no results
+Keine Ergebnisse
+---STRINGEND
+
+---STRING no results found matching the report criteria
+Es wurden keine Ergbnisse zu diesen Suchkriterien gefunden
+---STRINGEND
+
+---STRING org.openpsa.reports
+Bericht-Erstellung
+---STRINGEND
+
+---STRING timeframe
+Zeitraum
+---STRINGEND
+
+---STRING start time
+Startdatum
+---STRINGEND
+
+---STRING end time
+Enddatum
+---STRINGEND
+
+---STRING report style
+Art des Berichts
+---STRINGEND
+
+---STRING basic report
+Basis-Bericht
+---STRINGEND
+
+---STRING weekly report
+Wöchentlicher Bericht
+---STRINGEND
+
+---STRING report grouping
+Gruppierung
+---STRINGEND
+
+---STRING person
+Person
+---STRINGEND
+
+---STRING scope
+Eingrenzung
+---STRINGEND
+
+---STRING workgroup/person
+Arbeitsgruppe/Person
+---STRINGEND
+
+---STRING root project/process
+Basis-Projekt/-Prozess
+---STRINGEND
+
+---STRING show invoiceable
+Abrechenbare anzeigen
+---STRINGEND
+
+---STRING show approved
+Genehmigte anzeigen
+---STRINGEND
+
+---STRING show invoiced
+Abgerechnete anzeigen
+---STRINGEND
+
+---STRING both
+beides
+---STRINGEND
+
+---STRING only invoiceable
+nur abrechenbare
+---STRINGEND
+
+---STRING only uninvoiceable
+nur nicht abrechenbare
+---STRINGEND
+
+---STRING only approved
+nur genehmigte
+---STRINGEND
+
+---STRING only not approved
+nur nicht genehmigte
+---STRINGEND
+
+---STRING only invoiced
+nur abgerechnete
+---STRINGEND
+
+---STRING only not invoiced
+nur nicht abgerechnete
+---STRINGEND
+
+---STRING generate report
+Bericht erstellen
+---STRINGEND
