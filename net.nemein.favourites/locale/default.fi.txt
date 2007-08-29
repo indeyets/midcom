@@ -7,15 +7,27 @@
 Lisää
 ---STRINGEND
 
+---STRING favouriting %s failed: %s
+Dokumentin "%s" tallennus suosikkeihin epäonnistui: %s
+---STRINGEND
+
 ---STRING net.nemein.favourites
 Suosikit
+---STRINGEND
+
+---STRING return and dont add
+Palaa takaisin ja jätä lisäämättä
 ---STRINGEND
 
 ---STRING you are adding the following item to favourites
 Olet lisäämässä oheista dokumenttia suosikkeihisi. Klikkaa nappia "lisää" tallentaaksesi sen.
 ---STRINGEND
 
----STRING return and dont add
-Palaa takaisin ja jätä lisäämättä
+---STRING you have already favourited the item
+Olet jo tallentanut tämän dokumentin suosikkeihisi
+---STRINGEND
+
+---STRING deleting favourite %s failed: %s
+Suosikin "%s" poisto epäonnistui: %s
 ---STRINGEND
 

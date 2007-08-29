@@ -27,58 +27,75 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
     function _handler_create($handler_id, $args, &$data)
     {
         $guid = $args[1];
-	$objectType_eval = $args[0] . "()";
-	$objectType = $args[0];
+    	$objectType_eval = $args[0] . "()";
+    	$objectType = $args[0];
 
         // Trying to get the object
         $obj = null;	
-	eval("\$obj = new $objectType_eval;");
-	$obj->get_by_guid($guid);
+    	eval("\$obj = new $objectType_eval;");
+    	$obj->get_by_guid($guid);
+    	
+        // Check if user has already favorited this
+        $qb = net_nemein_favourites_favourite_dba::new_query_builder();
+        $qb->add_constraint('metadata.creator', '=', $_MIDCOM->auth->user->guid);
+        $qb->add_constraint('objectGuid', '=', $guid);
+        if ($qb->count_unchecked() > 0)
+        {
+            $_MIDCOM->uimessages->add($this->_l10n->get('net.nemein.favourites'), $this->_l10n->get('you have already favourited the item'), 'warning');
+            $_MIDCOM->relocate($_SERVER['HTTP_REFERER']);
+            // This will exit
+        }
 
         if (isset($_POST['net_nemein_favourite_title']))
         {
             // Create favorite object here
             $favourite = new net_nemein_favourites_favourite_dba();        
             $favourite->objectType = $objectType;
-	    $favourite->objectGuid = $guid;
-	    $favourite->objectTitle = $_POST['net_nemein_favourite_title'];
+    	    $favourite->objectGuid = $guid;
+    	    $favourite->objectTitle = $_POST['net_nemein_favourite_title'];
 
-	    if (!$favourite->create())
-	    {
-                return false;
-	    }
+            if (!$favourite->create())
+            {
+                $_MIDCOM->uimessages->add($this->_l10n->get('net.nemein.favourites'), sprintf($this->_l10n->get('favouriting %s failed: %s'), $_POST['net_nemein_favourite_title'], mgd_errstr()), 'error');
+                $_MIDCOM->relocate($_POST['net_nemein_favourites_referer']);
+                // This will exit
+            }
             
             // Redirecting back to the previous page
-	    $_MIDCOM->relocate($_POST['net_nemein_favourites_referer']);
+    	    $_MIDCOM->relocate($_POST['net_nemein_favourites_referer']);
             //This will exit
-	}
-	elseif (is_object($obj))
-	{
+    	}
+    	elseif (is_object($obj))
+    	{
             $title = null;
        
             // Trying to figure out a reasonable title for favourite object
-	    if (isset($obj->extra) && !empty($obj->extra))
-	    {
-                $title = $obj->extra;
-	    }
-	    elseif (isset($obj->title) && !empty($obj->title))
-	    {
-                $title = $obj->title;
-	    }
-	    elseif (isset($obj->name) && !empty($obj->name))
-	    {
-                $title = $obj->name;
-	    }
+            if (   isset($obj->extra) 
+                && !empty($obj->extra))
+            {
+                    $title = $obj->extra;
+            }
+            elseif (   isset($obj->title) 
+                    && !empty($obj->title))
+            {
+                    $title = $obj->title;
+            }
+            elseif (   isset($obj->name) 
+                    && !empty($obj->name))
+            {
+                    $title = $obj->name;
+            }
 
             // Special cases
-	    if (isset($obj->__table__) && $obj->__table__ == 'person')
-	    {
+    	    if (   isset($obj->__table__) 
+    	        && $obj->__table__ == 'person')
+    	    {
                 $title = $obj->firstname . " " .$obj->lastname;
-	    }
+    	    }
 
             $this->_favourite_title = $title;
-	    $this->_my_way_back = $_SERVER['HTTP_REFERER'];
-	}
+    	    $this->_my_way_back = $_SERVER['HTTP_REFERER'];
+    	}
 
         return true;
     }
@@ -87,22 +104,22 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
     {
 
         $this->_request_data['favourite_title'] = $this->_favourite_title;
-	$this->_request_data['my_way_back'] = $this->_my_way_back;
+    	$this->_request_data['my_way_back'] = $this->_my_way_back;
         midcom_show_style('show_add_favourite');
     }
 
     
     function _handler_delete($handler_id, $args, &$data)
     {
-        $favourite = new net_nemein_favourites_favourite_dba();
-	$favourite->get_by_guid($args[0]);
+        $favourite = new net_nemein_favourites_favourite_dba($args[0]);
 
         $favourite->require_do('midgard:delete');
         
-	if (!$favourite->delete())
+    	if (!$favourite->delete())
         {
             // handle error
-	}
+            $_MIDCOM->uimessages->add($this->_l10n->get('net.nemein.favourites'), sprintf($this->_l10n->get('deleting favourite %s failed: %s'), $favourite->objectTitle, mgd_errstr()), 'error');            
+    	}
 
         return true;
     }

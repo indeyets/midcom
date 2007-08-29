@@ -7,15 +7,27 @@
 Add
 ---STRINGEND
 
+---STRING favouriting %s failed: %s
+Saving "%s" to favourites failed: %s
+---STRINGEND
+
 ---STRING net.nemein.favourites
 Favourites
+---STRINGEND
+
+---STRING return and dont add
+Return back and don't add
 ---STRINGEND
 
 ---STRING you are adding the following item to favourites
 You are adding the following item to your favourites on this site. Click "add" to save it.
 ---STRINGEND
 
----STRING return and dont add
-Return back and don't add
+---STRING you have already favourited the item
+You have already favourited the item
+---STRINGEND
+
+---STRING deleting favourite %s failed: %s
+Deleting favourite "%s" failed: %s
 ---STRINGEND
 
