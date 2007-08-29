@@ -489,7 +489,6 @@ class midcom_application {
         $this->_populate_client();
 
         // Check the midcom_config ais/site prefixes for absolute local urls
-        /* TODO: remove properly
         if ($GLOBALS['midcom_config']['midcom_ais_url'][0] == '/')
         {
             $GLOBALS['midcom_config']['midcom_ais_url'] =
@@ -502,7 +501,7 @@ class midcom_application {
                 $this->get_host_prefix()
                 . substr($GLOBALS['midcom_config']['midcom_site_url'], 1);
         }
-        */
+
         debug_pop();
     }
 
@@ -862,7 +861,6 @@ class midcom_application {
         {
             switch ($tmp[MIDCOM_HELPER_URLPARSER_KEY])
             {
-
                 case "substyle":
                     $substyle = $tmp[MIDCOM_HELPER_URLPARSER_VALUE];
                     debug_add("Substyle '$substyle' selected", MIDCOM_LOG_INFO);
@@ -886,6 +884,40 @@ class midcom_application {
                         $this->generate_error(MIDCOM_ERRNOTFOUND, 'Failed to access attachment: Autoserving denied.');
                     }
                     $this->serve_attachment($attachment);
+                    $this->finish();
+                    exit();
+
+                case "servesnippet":
+                    if ($this->_parser->argc > 1) {
+                        debug_add("Too many arguments remaining for serve_snippet.", MIDCOM_LOG_ERROR);
+                        debug_print_r("Parser object:", $this->_parser);
+                        $this->generate_error(MIDCOM_ERRNOTFOUND, "Failed to access snippet: Too many arguments for serve_snippet");
+                    }
+                    debug_add("Trying to serve snippet with ID " . $tmp[MIDCOM_HELPER_URLPARSER_VALUE], MIDCOM_LOG_INFO);
+                    $snippet = new midcom_baseclasses_database_snippet($tmp[MIDCOM_HELPER_URLPARSER_VALUE]);
+                    if (!$snippet) 
+                    {
+                        debug_add("Failed to access snippet: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+                        $this->generate_error(MIDCOM_ERRNOTFOUND, "Failed to access snippet: " . mgd_errstr());
+                    }
+                    $this->serve_snippet($snippet);
+                    $this->finish();
+                    exit();
+
+                case "servesnippetguid":
+                    if ($this->_parser->argc > 1) {
+                        debug_add("Too many arguments remaining for serve_snippet.", MIDCOM_LOG_ERROR);
+                        debug_print_r("Parser object:", $this->_parser);
+                        $this->generate_error(MIDCOM_ERRNOTFOUND, "Failed to access snippet: Too many arguments for serve_snippet");
+                    }
+                    debug_add("Trying to serve snippet with GUID " . $tmp[MIDCOM_HELPER_URLPARSER_VALUE], MIDCOM_LOG_INFO);
+                    $snippet = new midcom_baseclasses_database_snippet($tmp[MIDCOM_HELPER_URLPARSER_VALUE]);
+                    if (!$snippet) 
+                    {
+                        debug_add("Failed to access snippet: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+                        $this->generate_error(MIDCOM_ERRNOTFOUND, "Failed to access snippet: " . mgd_errstr());
+                    }
+                    $this->serve_snippet($snippet);
                     $this->finish();
                     exit();
 
@@ -1179,7 +1211,6 @@ class midcom_application {
                     $path = 'midcom.core.nullcomponent';
                     $this->_set_context_data($path,MIDCOM_CONTEXT_COMPONENT);
                     $concept_component =& $this->componentloader->get_component_class( $path );
-        var_dump($concept_component);
                 }
                 break;
 
