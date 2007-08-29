@@ -654,6 +654,20 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
             {
                 continue;
             }
+
+            // If you don't want to add the image as an attachment to the field, add show_attachment customdata-definition to
+            // schema and set it to false
+            if(    isset($typedata->storage->_schema->fields[$field])
+                && is_array($typedata->storage->_schema->fields[$field])
+                && isset($typedata->storage->_schema->fields[$field]['customdata'])
+                && is_array($typedata->storage->_schema->fields[$field]['customdata'])
+                && isset($typedata->storage->_schema->fields[$field]['customdata']['show_attachment'])
+                && $typedata->storage->_schema->fields[$field]['customdata']['show_attachment'] === false
+              )
+            {
+                continue;
+            }
+
             foreach ($typedata->attachments_info as $key => $attachment_data)
             {
                 $att = array();
