@@ -58,6 +58,13 @@ class org_maemo_socialnews_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('latest'),
         );
         
+        // Handle /rss.xml
+        $this->_request_switch['rss20'] = array
+        (
+            'handler' => Array('org_maemo_socialnews_handler_feed', 'feed'),
+            'fixed_args' => Array('rss.xml'),
+        );
+        
         // The Archive
         $this->_request_switch['archive-welcome'] = Array
         (
@@ -125,6 +132,16 @@ class org_maemo_socialnews_viewer extends midcom_baseclasses_components_request
     function _on_handle($handler, $args)
     {
         $this->_populate_node_toolbar();
+
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel'   => 'alternate',
+                'type'  => 'application/rss+xml',
+                'href'  => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'rss.xml',
+            )
+        );
 
         return true;
     }

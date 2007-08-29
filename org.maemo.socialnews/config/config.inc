@@ -12,6 +12,7 @@
 'frontpage_show_area_latest_items' => 9,
 
 'bestof_items' => 10,
+'rss_count' => 5,
 
 'archive_generation_topic' => null,
 'archive_generation_substyle' => '',
