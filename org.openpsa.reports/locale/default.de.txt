@@ -24,7 +24,7 @@ Keine Ergebnisse
 ---STRINGEND
 
 ---STRING no results found matching the report criteria
-Es wurden keine Ergbnisse zu diesen Suchkriterien gefunden
+Es wurden keine Ergebnisse zu diesen Suchkriterien gefunden
 ---STRINGEND
 
 ---STRING org.openpsa.reports
@@ -88,7 +88,7 @@ Abgerechnete anzeigen
 ---STRINGEND
 
 ---STRING both
-beides
+Beides
 ---STRINGEND
 
 ---STRING only invoiceable
