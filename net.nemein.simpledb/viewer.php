@@ -147,7 +147,7 @@ class net_nemein_simpledb_viewer extends midcom_baseclasses_components_request
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('export database to excel'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/printer.png',
-                MIDCOM_TOOLBAR_ENABLED => $this->_topic->can_do('midgard:view'),
+                MIDCOM_TOOLBAR_ENABLED => $this->_topic->can_do('midgard:read'),
             )
         );
         
