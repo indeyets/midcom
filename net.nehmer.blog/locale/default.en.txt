@@ -315,3 +315,7 @@ Use 'view' prefix in url
 Should the topic be visible
 ---STRINGEND
 
+---STRING related stories
+Related stories
+---STRINGEND
+

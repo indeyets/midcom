@@ -44,7 +44,7 @@
         ),
         'categories' => Array
         (
-            'title' => 'categories',
+            'title' => $_MIDCOM->i18n->get_string('categories', 'net.nehmer.blog'), // No idea why this didn't translate
             'storage' => 'extra1',
             'type' => 'select',
             'widget' => 'select',
@@ -62,33 +62,21 @@
         ),  
     	'related' => array
         (
-            'title' => 'Related stories',
+            'title' => 'related stories',
             'storage' => 'extra3',
             'type' => 'select',
             'type_config' => array
             (
                  'require_corresponding_option' => false,
+                 'allow_multiple' => true,
                  'options' => array(),
+                 'multiple_storagemode' => 'imploded_wrapped',
             ),
-            'widget' => 'universalchooser',
+            'widget' => 'chooser',
             'widget_config' => array
             (
-                'class'       => 'midcom_db_article',
-                'component'   => 'net.nehmer.static',
-                'titlefield'  => 'title',
-                'idfield'     => 'guid',
-                'constraints' => array
-                (
-                ),
-                'searchfields'  => array
-                (
-                    'title',
-                ),
-                'orders'        => array
-                (
-                    array('title'  => 'ASC'), 
-                ),
-            ),            
+                'clever_class' => 'article',
+            ),        
         ),
         'image' => Array
         (

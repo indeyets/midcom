@@ -23,24 +23,20 @@ Salli sisällön muokkaaminen AJAXilla suoraan sivulla
 Arkisto
 ---STRINGEND
 
----STRING archive_enable
-Salli arkistojen käyttö
----STRINGEND
-
 ---STRING archive item order
 Arkiston järjestys
 ---STRINGEND
 
----STRING ascending
-Nouseva
----STRINGEND
-
----STRING descending
-Laskeva
+---STRING archive_enable
+Salli arkistojen käyttö
 ---STRINGEND
 
 ---STRING article
 Artikkeli
+---STRINGEND
+
+---STRING ascending
+Nouseva
 ---STRINGEND
 
 ---STRING atom feed
@@ -89,6 +85,10 @@ Luo uutisartikkeli
 
 ---STRING delete article
 Poista artikkeli
+---STRINGEND
+
+---STRING descending
+Laskeva
 ---STRINGEND
 
 ---STRING display settings
@@ -147,8 +147,16 @@ Listan asetukset
 Näytä näin monta artikkelia etusivulla
 ---STRINGEND
 
+---STRING link_to_external_url
+Linkitä artikkelit ulkoiseen osoitteeseen jos saatavilla
+---STRINGEND
+
 ---STRING list old items in index
 Näytä vanhat artikkelit listassa
+---STRINGEND
+
+---STRING navigation options
+Navigaatioasetukset
 ---STRINGEND
 
 ---STRING net.nehmer.blog
@@ -193,6 +201,10 @@ Avoimessa lisäyksessä käytettävä tietokantakuvaus
 
 ---STRING public posting user
 Midgard-käyttäjätunnus avoimeen artikkelien lisäykseen (jätä tyhjäksi käyttääksesi kirjautunutta tunnusta)
+---STRINGEND
+
+---STRING related stories
+Lisää aiheesta
 ---STRINGEND
 
 ---STRING rss 0.91 feed
@@ -263,8 +275,24 @@ Artikkeleille käytettävä tietokantakuvaus
 Valitse artikkelin tyyppi
 ---STRINGEND
 
+---STRING set this to no if you want to hide feeds and archive links in navigation
+Aseta tämä kohtaan 'ei' jos haluat piilottaa linkit 'Syötteet' ja 'Arkisto' navigaatiosta
+---STRINGEND
+
+---STRING set to no for de.linkm.newsticker compatibility
+Aseta kohtaan ei, jos haluat de.linkm.newsticker -yhteensopivuuden
+---STRINGEND
+
 ---STRING settings
 Asetukset
+---STRINGEND
+
+---STRING show latest items in navigation
+Näytä viimeisimmät kohteet navigaatiossa
+---STRINGEND
+
+---STRING show pseudo leaves in navigation
+Näytä valesivut navigaatiossa
 ---STRINGEND
 
 ---STRING sort order
@@ -283,34 +311,11 @@ Kansiota ei valittu
 Yhteensä %s uutista.
 ---STRINGEND
 
----STRING visible
-Näytetäänkö kansio
----STRINGEND
-
----STRING link_to_external_url
-Linkitä artikkelit ulkoiseen osoitteeseen jos saatavilla
----STRINGEND
-
----STRING navigation options
-Navigaatioasetukset
----STRINGEND
-
----STRING show latest items in navigation
-Näytä viimeisimmät kohteet navigaatiossa
----STRINGEND
-
----STRING show pseudo leaves in navigation
-Näytä valesivut navigaatiossa
----STRINGEND
-
----STRING set this to no if you want to hide feeds and archive links in navigation
-Aseta tämä kohtaan 'ei' jos haluat piilottaa linkit 'Syötteet' ja 'Arkisto' navigaatiosta
----STRINGEND
-
 ---STRING use view prefix in url
 Käytä 'view'-etuliitettä osoitteissa
 ---STRINGEND
 
----STRING set to no for de.linkm.newsticker compatibility
-Aseta kohtaan ei, jos haluat de.linkm.newsticker -yhteensopivuuden
+---STRING visible
+Näytetäänkö kansio
 ---STRINGEND
+

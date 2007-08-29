@@ -24,9 +24,31 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         &(view["content"]:h);
     </div>
 
-    <p class="permalink"><a href="&(permalink);" rel="bookmark"><?php $data['l10n_midcom']->show('permalink'); ?></a></p>
+    <p class="permalink" style="display: none;"><a href="&(permalink);" rel="bookmark"><?php $data['l10n_midcom']->show('permalink'); ?></a></p>
     
     <?php
+    if (!empty($data['article']->extra3))
+    {
+        echo "<h2>{$data['l10n']->get('related stories')}</h2>\n";
+        echo "<ul class=\"related\">\n";
+        $relateds = explode('|', $data['article']->extra3);
+        foreach ($relateds as $related)
+        {
+            if (empty($related))
+            {
+                continue;
+            }
+
+            $article = new midcom_db_article($related);
+            if (   $article
+                && $article->guid)
+            {
+                echo "<li><a href=\"{$_MIDCOM->get_host_prefix()}midcom-permalink-{$article->guid}\">{$article->title}</a></li>\n";
+            }
+        }
+        echo "</ul>\n";
+    }
+    
     if (array_key_exists('comments_url', $data))
     {
         $_MIDCOM->dynamic_load($data['comments_url']);
