@@ -123,107 +123,8 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
         // Prepare the feed (this will also validate the handler_id)
         $this->_create_feed($handler_id);
 
-        // Add each article now.
-        if ($this->_articles)
-        {
-            foreach ($this->_articles as $article)
-            {
-                $this->_add_article_to_feed($article);
-            }
-        }
-
         $_MIDCOM->set_26_request_metadata(net_nehmer_blog_viewer::get_last_modified($this->_topic, $this->_content_topic), $this->_topic->guid);
         return true;
-    }
-
-    /**
-     * Adds the given article to the feed.
-     *
-     * @param midcom_db_article $article The article to add.
-     */
-    function _add_article_to_feed($article)
-    {
-        $this->_datamanager->autoset_storage($article);
-
-        $item = new FeedItem();
-        $item->descriptionHtmlSyndicated = true;
-        $author_user = $_MIDCOM->auth->get_user($article->author);
-        if ($author_user)
-        {
-            $author = $author_user->get_storage();
-            
-            if (empty($author->email))
-            {
-                $author->email = "webmaster@{$_SERVER['SERVER_NAME']}";
-            }
-            
-            $item->author = trim("{$author->name} <{$author->email}>");
-        }
-
-        $item->title = $article->title;
-        $arg = $article->name ? $article->name : $article->guid;
-        
-        if (   $this->_config->get('link_to_external_url')
-            && !empty($article->url))
-        {
-            $item->link = $article->url;
-        }
-        else
-        {
-            if ($this->_config->get('view_in_url'))
-            {
-                $item->link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "view/{$arg}.html";
-            }
-            else
-            {
-                $item->link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$arg}.html";
-            }
-        }
-        
-        $item->guid = $_MIDCOM->permalinks->create_permalink($article->guid);
-        $item->date = $article->metadata->published;
-        $item->description = '';
-
-        if ($article->abstract != '')
-        {
-            $item->description .= '<div class="abstract">' .  $this->_datamanager->types['abstract']->convert_to_html() . '</div>';
-        }
-
-        if (   array_key_exists('image', $this->_datamanager->types)
-            && $this->_config->get('rss_use_image'))
-        {
-            $item->description .= "\n<div class=\"image\">" . $this->_datamanager->types['image']->convert_to_html() .'</div>';
-        }
-
-        if ($this->_config->get('rss_use_content'))
-        {
-            $item->description .= "\n" . $this->_datamanager->types['content']->convert_to_html();
-        }
-        
-        // Replace links
-        $item->description = preg_replace(',<(a|link|img|script|form|input)([^>]+)(href|src|action)="/([^>"\s]+)",ie', '"<\1\2\3=\"' . $_MIDCOM->get_host_name() . '/\4\""', $item->description);
-
-        // TODO: Figure out the RSS multi-category support for real
-        $categories = explode('|', $article->extra1);
-        if (count($categories) > 1)
-        {
-            $item->category = $categories[1];
-        }
-
-        if ($GLOBALS['midcom_config']['positioning_enable'])
-        {
-            // Attach coordinates to the item if available
-            $object_position = new org_routamc_positioning_object($article);
-            $coordinates = $object_position->get_coordinates();
-            if (!is_null($coordinates))
-            {
-                $item->lat = $coordinates['latitude'];
-                $item->long = $coordinates['longitude'];
-            }
-        }
-
-        $this->_feed->addItem($item);
-
     }
 
     /**
@@ -281,6 +182,20 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
      */
     function _show_feed($handler_id, &$data)
     {
+        $data['feedcreator'] =& $this->_feed;
+        
+        // Add each article now.
+        if ($this->_articles)
+        {
+            foreach ($this->_articles as $article)
+            {
+                $this->_datamanager->autoset_storage($article);
+                $data['article'] =& $article;
+                $data['datamanager'] =& $this->_datamanager;
+                midcom_show_style('feeds-item');
+            }
+        }
+        
         switch($handler_id)
         {
             case 'feed-rss2':
