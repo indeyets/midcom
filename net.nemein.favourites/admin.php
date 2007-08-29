@@ -65,7 +65,8 @@ class net_nemein_favourites_admin extends midcom_baseclasses_components_request_
         }
         
         $qb->add_constraint('objectGuid', '=', $guid);
-        if ($qb->count_unchecked() > 0)
+        if (   $_MIDCOM->auth->user
+            && $qb->count_unchecked() > 0)
         {
             echo "<span class=\"net_nemein_favourites\">". sprintf($l10n->get('%d favs'), $total_favs) . " <img src=\"" . MIDCOM_STATIC_URL . "/net.nemein.favourites/favorite.png\" alt=\"" . $l10n->get('favourite') . "\" /></span>\n";
         }
