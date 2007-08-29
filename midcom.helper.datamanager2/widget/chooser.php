@@ -545,9 +545,30 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 ),
                 'orders' => array
                 (
-                    array('metadata.created' => 'ASC'), 
+                    array('title' => 'ASC'), 
+                    array('metadata.published' => 'ASC'),
                 ),
                 'reflector_key' => 'buddy',
+            ),
+            'article' => array
+            (
+                'class' => 'midcom_db_article',
+                'component' => 'net.nehmer.static',
+                'headers' => array
+                (
+                    'title',
+                    'topic.extra',
+                ),
+                'constraints' => array(),
+                'searchfields' => array
+                (
+                    'title'
+                ),
+                'orders' => array
+                (
+                    array('title' => 'ASC'), 
+                    array('metadata.published' => 'ASC'),
+                ),
             ),
         );
         
