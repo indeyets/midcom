@@ -901,10 +901,13 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             {
                 debug_add("Passing key to renderer {$key}");
                 $data = $this->_get_key_data($key);
-                debug_add("Got data: {$data}");
-                $item = $this->_renderer_callback->render_data($data);
-                debug_add("Got item: {$item}");
-                $ee_script .= "jQuery('#{$this->_element_id}_search_input').midcom_helper_datamanager2_widget_chooser_add_result_item({$data},'{$item}');\n";
+                if ($data)
+                {
+                    debug_add("Got data: {$data}");
+                    $item = $this->_renderer_callback->render_data($data);
+                    debug_add("Got item: {$item}");
+                    $ee_script .= "jQuery('#{$this->_element_id}_search_input').midcom_helper_datamanager2_widget_chooser_add_result_item({$data},'{$item}');\n";                    
+                }
             }
         }
         else
@@ -913,8 +916,11 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             {
                 debug_add("Processing key {$key}");
                 $data = $this->_get_key_data($key);
-                debug_add("Got data: {$data}");
-                $ee_script .= "jQuery('#{$this->_element_id}_search_input').midcom_helper_datamanager2_widget_chooser_add_result_item({$data});\n";
+                if ($data)
+                {
+                    debug_add("Got data: {$data}");
+                    $ee_script .= "jQuery('#{$this->_element_id}_search_input').midcom_helper_datamanager2_widget_chooser_add_result_item({$data});\n";                    
+                }
             }
         }
         $this->_jscript .= $ee_script;
@@ -1020,6 +1026,11 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             
             $results = $_callback->get_key_data($key);
             
+            if (! $results)
+            {
+                return false;
+            }
+            
             debug_pop();
             
             if ($this->_renderer_callback)
@@ -1068,6 +1079,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         if (count($results) == 0)
         {
             debug_add("Fetching data for key '{$key}' failed.");
+            return false;
         }
         
         $object = $results[0];
