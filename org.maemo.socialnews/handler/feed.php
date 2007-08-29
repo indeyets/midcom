@@ -82,7 +82,7 @@ class org_maemo_socialnews_handler_feed extends midcom_baseclasses_components_ha
     
     
         $this->_feed = new UniversalFeedCreator();
-        $this->_feed->title = $data['node_title'];
+        $this->_feed->title = $this->_request_data['node_title'];
         $this->_feed->link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         $this->_feed->cssStyleSheet = false;
         $this->_feed->syndicationURL = "{$this->_feed->link}rss.xml";
