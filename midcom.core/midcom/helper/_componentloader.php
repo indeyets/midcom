@@ -345,7 +345,9 @@ class midcom_helper__componentloader
         $prefix = $this->snippetpath_to_prefix($snippetpath);
 
         $compat = false;
-        if (class_exists("{$prefix}_midcom"))
+        $autoloader = SmartLoader::instance();
+        
+        if ($autoloader->classExists("{$prefix}_midcom"))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Instantiating {$prefix}_midcom(). Compatibility mode activated.");
@@ -354,7 +356,7 @@ class midcom_helper__componentloader
             $this->_interface_classes[$path] = null;
             $compat = true;
         }
-        else if (class_exists("{$prefix}_interface"))
+        else if ($autoloader->classExists("{$prefix}_interface"))
         {
             $classname = "{$prefix}_interface";
             $this->_interface_classes[$path] = new $classname();
@@ -367,6 +369,9 @@ class midcom_helper__componentloader
             debug_add($GLOBALS['midcom_errstr'], MIDCOM_LOG_CRIT);
             debug_pop();
             $GLOBALS['midcom_errstr'] = 'No interface class defined.';
+            var_dump("EDING!");
+            var_dump($prefix);
+            // problemet her er at jeg ikke får autoloaderen til å kjøre i gang!!!
             return false;
         }
 
@@ -378,6 +383,7 @@ class midcom_helper__componentloader
             debug_add($GLOBALS['midcom_errstr'], MIDCOM_LOG_CRIT);
             debug_pop();
             $GLOBALS['midcom_errstr'] = 'Initialization failed.';
+            throw new Exception("DEPRECIATED!");
             return false;
         }
 
@@ -549,6 +555,7 @@ class midcom_helper__componentloader
             debug_pop();
         }
 
+        var_dump($this->_component_classes);
         return $this->_component_classes[$path];
     }
 
@@ -968,6 +975,7 @@ class midcom_helper__componentloader
 
         $this->manifests[$manifest->name] = $manifest;
 
+        //var_dump($manifest);
         // Register Privileges
         $_MIDCOM->auth->register_default_privileges($manifest->privileges);
 

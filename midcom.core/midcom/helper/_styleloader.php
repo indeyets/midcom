@@ -241,7 +241,6 @@ class midcom_helper__styleloader {
             }
             //$mc->destroy();
         }
-
         if ($current_style != 0)
         {
             return $current_style;

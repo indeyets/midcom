@@ -93,20 +93,13 @@ if (! defined('MIDCOM_XDEBUG'))
 require('midcom/debug.php');
 
 debug_add("Start of MidCOM run: {$_SERVER['REQUEST_URI']}", MIDCOM_LOG_INFO);
-
-/*
-if (! is_null($components))
-{
-    debug_print_r ('PHP_Compat loaded these components:', $components);
-}
- */
-
 ///////////////////////////////////
 // Load first-level supporting code
 // Note that the cache check hit depends on the i18n code.
 require('midcom/helper/misc.php');
 require('midcom/services/i18n.php');
 
+require('autoload.php');
 //////////////////////////////////////
 // Load and start up the cache system,
 // this might already end the request
