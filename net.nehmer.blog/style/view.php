@@ -4,14 +4,7 @@
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
 $view = $data['view_article'];
 
-if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
-{
-    $publish_time = $data['article']->metadata->published;
-}
-else
-{
-    $publish_time = $data['article']->created;
-}
+$publish_time = $data['article']->metadata->published;
 $published = sprintf($data['l10n']->get('posted on %s.'), strftime('%Y-%m-%d %T %Z', $publish_time));
 $permalink = $_MIDCOM->permalinks->create_permalink($data['article']->guid);
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
