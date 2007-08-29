@@ -48,16 +48,13 @@ protoToolkit.prototype.toJSON = function (item,item_type) {
                 var a = ['['], b, f, i, l = x.length, v;
                 for (i = 0; i < l; i += 1) {
                     v = x[i];
-                    f = s[typeof v];
-                    if (f) {
-                        v = f(v);
-                        if (typeof v == 'string') {
-                            if (b) {
-                                a[a.length] = ',';
-                            }
-                            a[a.length] = v;
-                            b = true;
+                    v = protoToolkit.prototype.toJSON(v);
+                    if (typeof v == 'string') {
+                        if (b) {
+                            a[a.length] = ',';
                         }
+                        a[a.length] = v;
+                        b = true;
                     }
                 }
                 a[a.length] = ']';
@@ -75,7 +72,7 @@ protoToolkit.prototype.toJSON = function (item,item_type) {
             obj: function (x) {
                 if (x) {
                     if (x instanceof Array) {
-                        return s.array(x);
+                        return s.arr(x);
                     }
                     var a = ['{'], b, f, i, v;
                     for (i in x) {
@@ -87,7 +84,7 @@ protoToolkit.prototype.toJSON = function (item,item_type) {
                                 if (b) {
                                     a[a.length] = ',';
                                 }
-                                a.push(s.string(i), ':', v);
+                                a.push(s.str(i), ':', v);
                                 b = true;
                             }
                         }
