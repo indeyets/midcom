@@ -31,3 +31,90 @@ No results matching the report criteria were found.
 Report generator
 ---STRINGEND
 
+---STRING timeframe
+Timeframe
+---STRINGEND
+
+---STRING start time
+Start time
+---STRINGEND
+
+---STRING end time
+End time
+---STRINGEND
+
+---STRING report style
+Report style
+---STRINGEND
+
+---STRING basic report
+Basic report
+---STRINGEND
+
+---STRING weekly report
+Weekly report
+---STRINGEND
+
+---STRING report grouping
+Report grouping
+---STRINGEND
+
+---STRING person
+Person
+---STRINGEND
+
+---STRING scope
+Scope
+---STRINGEND
+
+---STRING workgroup/person
+Workgroup/Person
+---STRINGEND
+
+---STRING root project/process
+Root project/process
+---STRINGEND
+
+---STRING show invoiceable
+Show invoiceable
+---STRINGEND
+
+---STRING show approved
+Show approved
+---STRINGEND
+
+---STRING show invoiced
+Show invoiced
+---STRINGEND
+
+---STRING both
+Both
+---STRINGEND
+
+---STRING only invoiceable
+Only invoiceable
+---STRINGEND
+
+---STRING only uninvoiceable
+Only uninvoiceable
+---STRINGEND
+
+---STRING only approved
+Only approved
+---STRINGEND
+
+---STRING only not approved
+Only not approved
+---STRINGEND
+
+---STRING only invoiced
+Only invoiced
+---STRINGEND
+
+---STRING only not invoiced
+Only not invoiced
+---STRINGEND
+
+---STRING generate report
+Generate report
+---STRINGEND
