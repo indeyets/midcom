@@ -630,7 +630,10 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 }
                 else
                 {
-                    $matching_type = $matched_types[0];
+                    if (count($matched_types) > 0)
+                    {
+                        $matching_type = $matched_types[0];                        
+                    }
                 }
             }
             
@@ -1053,7 +1056,10 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             $qb = new midgard_query_builder($this->class);
         }
 
+        $qb->begin_group('OR');
         $qb->add_constraint('id', '=', $key);
+        $qb->add_constraint('guid', '=', $key);
+        $qb->end_group();
         
         $results = $qb->execute();        
         
