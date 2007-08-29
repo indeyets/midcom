@@ -195,7 +195,7 @@ class midcom_helper_datamanager2_controller_create extends midcom_helper_dataman
         
         // Add the required JavaScript
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Prototype/prototype.js");
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Scriptaculous/scriptaculous.js?effects");
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Scriptaculous/scriptaculous.js");
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/midcom.helper.datamanager2/ajax.js");
         
         if (   array_key_exists('wide_mode', $this->ajax_options)
