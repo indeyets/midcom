@@ -99,7 +99,7 @@ debug_add("Start of MidCOM run: {$_SERVER['REQUEST_URI']}", MIDCOM_LOG_INFO);
 require('midcom/helper/misc.php');
 require('midcom/services/i18n.php');
 
-require('autoload.php');
+//require('autoload.php');
 //////////////////////////////////////
 // Load and start up the cache system,
 // this might already end the request
