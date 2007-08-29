@@ -200,6 +200,7 @@ class midcom_helper_xml_objectmapper
     function dm2data($datamanager, $fallback_label = 'default')
     {
         $content = $datamanager->get_content_xml();
+        $content['guid'] = $datamanager->storage->object->guid;
         $label = $datamanager->schema->name;
         if ($label == 'default')
         {
