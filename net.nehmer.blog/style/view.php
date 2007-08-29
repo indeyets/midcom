@@ -27,7 +27,8 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
     <p class="permalink" style="display: none;"><a href="&(permalink);" rel="bookmark"><?php $data['l10n_midcom']->show('permalink'); ?></a></p>
     
     <?php
-    if (!empty($data['article']->extra3))
+    $without_pipes = str_replace('|', '', $data['article']->extra3);
+    if (!empty($without_pipes))
     {
         echo "<h2>{$data['l10n']->get('related stories')}</h2>\n";
         echo "<ul class=\"related\">\n";
