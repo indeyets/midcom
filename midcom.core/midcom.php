@@ -157,12 +157,12 @@ require('midcom/services/uimessages.php');
 require('midcom/services/metadata.php');
 require('midcom/services/rcs.php');
 
-
+mgd_debug_start();
 /////////////////////////////////////
 // Instantinate the MidCOM main class
 require('midcom/application.php');
 
 $_MIDCOM = new midcom_application();
-$GLOBALS['midcom'] =& $_MIDCOM;
+//$GLOBALS['midcom'] =& $_MIDCOM;
 $_MIDCOM->initialize();
 ?>

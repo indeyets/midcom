@@ -1321,8 +1321,7 @@ class midcom_application
         if (! $this->_cached_host_prefix)
         {
             $host_name = $this->get_host_name();
-            $host = new midcom_db_host($_MIDGARD['host']);
-            $host_prefix = $host->prefix;
+            $host_prefix = $_MIDGARD['prefix'];
             if ($host_prefix == '')
             {
                 $host_prefix = '/';

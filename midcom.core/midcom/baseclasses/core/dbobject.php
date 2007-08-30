@@ -1197,34 +1197,22 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function _list_parameters_domain(&$object, $domain)
     {
-        debug_push_class($object, __FUNCTION__);
+        $mc = new midgard_collector('midgard_parameter', 'parentguid', $object->guid);
+        $mc->add_constraint('domain', '=', $domain);
+        $mc->set_key_property('name');
+        $mc->add_value_property('value');
         
-        // TODO: Switch to collector
-        $query = new midgard_query_builder('midgard_parameter');
-        $query->add_constraint('parentguid', '=', $object->guid);
-        $query->add_constraint('domain', '=', $domain);
-
-        // Temporary workaround for missing delete support
-        $query->add_constraint('value', '<>', '');
-
-        $result = @$query->execute();
-
-        if (count($result) == 0)
+        $mc->execute();
+        
+        $results = array();
+        
+        $params = $mc->list_keys();
+        foreach ($params as $name => $param)
         {
-            debug_add("Cannot retrieve the parameter {$domain} for {$object->__table__} ID {$object->id}; query execution failed, this is most probably an empty resultset.",
-                MIDCOM_LOG_DEBUG);
-            debug_pop();
-            return Array();
+            $results[$name] = $mc->get_subkey($name, 'value');
         }
-        $return = Array();
-
-        foreach ($result as $parameter)
-        {
-            $return[$parameter->name] = $parameter->value;
-        }
-
-        debug_pop();
-        return $return;
+        
+        return $results;
     }
 
     /**

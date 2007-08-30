@@ -113,8 +113,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
         if (! $session->create())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('Failed to create a new login session:' . mgd_errstr(), MIDCOM_LOG_ERROR);
-            debug_print_r('Object was:', $session);
+            debug_add('Failed to create a new login session: ' . mgd_errstr(), MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
@@ -151,8 +150,6 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
      */
     function load_login_session($sessionid, $user, $clientip = null)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
         if ($clientip === null)
         {
             $clientip = $_SERVER['REMOTE_ADDR'];
@@ -164,8 +161,8 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
 
         if (! $result)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);        
             debug_add('No login sessions have been found in the database or the query to the database failed.', MIDCOM_LOG_INFO);
-            debug_add('Last Midgard Error:', mgd_errstr());
             debug_pop();
             return false;
         }
@@ -179,7 +176,9 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
 
             if ($session->timestamp < $timed_out)
             {
+                debug_push_class(__CLASS__, __FUNCTION__);            
                 debug_add("The session {$session->guid} (#{$session->id}) has timed out.", MIDCOM_LOG_INFO);
+                debug_pop();
                 $valid = false;
             }
 
@@ -188,18 +187,20 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
                 && $session->guid == $sessionid
                 && $session->clientip != $clientip)
             {
+                debug_push_class(__CLASS__, __FUNCTION__);            
                 debug_add("The session {$session->guid} (#{$session->id}) had mismatching client IP.", MIDCOM_LOG_INFO);
                 debug_add("Expected {$session->clientip}, got {$clientip}.");
+                debug_pop();
                 $valid = false;
             }
 
             if (! $valid)
             {
-                debug_print_r("Dropping this session:", $session);
                 if (! $session->delete())
                 {
+                    debug_push_class(__CLASS__, __FUNCTION__);                
                     debug_add("Failed to delete the invalid session {$session->guid} (#{$session->id}): " . mgd_errstr(), MIDCOM_LOG_INFO);
-                    debug_print_r('Object was:', $session);
+                    debug_pop();
                 }
                 continue;
             }
@@ -210,8 +211,9 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
                 $session->timestamp = time();
                 if (! $session->update())
                 {
+                    debug_push_class(__CLASS__, __FUNCTION__);
                     debug_add("Failed to update the session {$session->guid} (#{$session->id}) to the current timestamp: " . mgd_errstr(), MIDCOM_LOG_INFO);
-                    debug_print_r('Object was:', $session);
+                    debug_pop();
                 }
 
                 $this->_loaded_sessions[$sessionid] = $session;
@@ -225,10 +227,9 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
 
         if (! $return)
         {
-            debug_add("We could not find any valid session having the identifier {$sessionid}.", MIDCOM_LOG_INFO);
+            //debug_add("We could not find any valid session having the identifier {$sessionid}.", MIDCOM_LOG_INFO);
         }
 
-        debug_pop();
         return $return;
     }
 
@@ -276,7 +277,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
         if (! mgd_auth_midgard($username, $password))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Failed to authenticate to the given userername / password: " . mgd_errstr(),
+            debug_add("Failed to authenticate to the given username / password: " . mgd_errstr(),
                 MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -319,7 +320,6 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Failed to delete the invalid session {$session->guid} (#{$session->id}): " . mgd_errstr(), MIDCOM_LOG_INFO);
-                debug_print_r('Object was:', $session);
                 debug_pop();
             }
             return false;
@@ -353,7 +353,6 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Failed to delete the delete session {$session->guid} (#{$session->id}): " . mgd_errstr(), MIDCOM_LOG_INFO);
-            debug_print_r('Object was:', $session);
             debug_pop();
             return false;
         }
