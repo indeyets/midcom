@@ -22,7 +22,7 @@
  * 
  * @package midcom.baseclasses
  */
-class midcom_baseclasses_core_object extends PEAR
+class midcom_baseclasses_core_object
 {
     function midcom_baseclasses_core_object() {}
     

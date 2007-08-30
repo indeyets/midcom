@@ -25,18 +25,8 @@ if (   array_key_exists('HTTP_X_MOZ', $_SERVER)
 // Ease debugging and make sure the code actually works(tm)
 error_reporting(E_ALL);
 
-///////////////////////////
-// Load the main PEAR class
-require_once 'PEAR.php';
-
-//////////////////////////////////////////////////////////////////
-// Load the PEAR Compatibility package if we are not using PHP 4.3
-/* TODO: Remove completely
-require_once 'PHP/Compat.php';
-$components = PHP_Compat::loadVersion();
- */
 ///////////////////////////////////
-// Try to be smart about the pahts:
+// Try to be smart about the paths:
 // Define default constants
 if (! defined('MIDCOM_ROOT'))
 {
