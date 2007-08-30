@@ -224,7 +224,6 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
             $this->_request_data['view_article'] = $data['datamanager']->get_content_html();
         }
         midcom_show_style('show-article');
-        midcom_show_style('admin-toolbar');
     }
 
 
