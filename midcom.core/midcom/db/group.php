@@ -91,8 +91,12 @@ class midcom_db_group extends midcom_baseclasses_database_group
         $qb = midcom_db_member::new_query_builder();
         $qb->add_constraint('gid', '=', $this->id);
         $qb->add_constraint('uid', '=', $person->id);
-        $result = $qb->execute();
-        return (bool) $result;
+        $result = $qb->count();
+        if($result == 0)
+        {
+            return false;
+        }
+        return true;
     }
 
 }
