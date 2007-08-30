@@ -28,7 +28,6 @@ class de_linkm_sitemap_interface extends midcom_baseclasses_components_interface
         $this->_autoload_files = array
         (
             'viewer.php',
-            'admin.php',
             'navigation.php'
         );
     }

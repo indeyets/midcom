@@ -26,7 +26,6 @@ class cc_kaktus_pearserver_interface extends midcom_baseclasses_components_inter
         $this->_autoload_files = Array
         (
             'viewer.php',
-//            'admin.php',
             'navigation.php'
         );
         

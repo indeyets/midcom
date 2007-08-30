@@ -28,7 +28,6 @@ class fi_mik_lentopaikkakisa_interface extends midcom_baseclasses_components_int
         $this->_autoload_files = Array
         (
             'viewer.php', 
-            'admin.php', 
             'navigation.php',
             'flight.php',
         );

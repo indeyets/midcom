@@ -28,7 +28,6 @@ class cc_kaktus_exhibitions_interface extends midcom_baseclasses_components_inte
         (
             'viewer.php',
             'navigation.php',
-            'admin.php',
         );
         
         // Autoload libraries

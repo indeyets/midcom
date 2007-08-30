@@ -50,7 +50,7 @@ class net_nehmer_branchenbuch_interface extends midcom_baseclasses_components_in
         define ('NET_NEHMER_BRANCHENBUCH_LEAFID_LISTSELF', 'leaf_listself');
 
         $this->_component = 'net.nehmer.branchenbuch';
-        $this->_autoload_files = Array('viewer.php', 'admin.php', 'navigation.php', 'branche.php',
+        $this->_autoload_files = Array('viewer.php', 'navigation.php', 'branche.php',
             'entry.php', 'schemamgr.php', 'callbacks/categorylister.php');
         $this->_autoload_libraries = Array('midcom.helper.datamanager2');
     }

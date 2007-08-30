@@ -39,7 +39,7 @@ class net_nehmer_buddylist_interface extends midcom_baseclasses_components_inter
         define ('NET_NEHMER_BUDDYLIST_LEAFID_PENDING', 1);
 
         $this->_component = 'net.nehmer.buddylist';
-        $this->_autoload_files = Array('viewer.php', 'admin.php', 'navigation.php', 'entry.php');
+        $this->_autoload_files = Array('viewer.php', 'navigation.php', 'entry.php');
         // $this->_autoload_libraries = Array('midcom.helper.datamanager2');
     }
 
