@@ -21,7 +21,7 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
      * 
      * @access public
      */
-    function midcom_admin_folder_handler_order ()
+    public function midcom_admin_folder_handler_order ()
     {
         parent::midcom_baseclasses_components_handler();
     }
@@ -31,10 +31,8 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
      * 
      * @access private
      */
-    function _process_order_form()
+    private function _process_order_form()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        
         // If the navigation order is changed, it will be saved first. After this it is possible
         // again to organize the folder
         if ($_POST['f_navorder'] != $this->_topic->parameter('midcom.helper.nav', 'navorder'))
@@ -65,10 +63,9 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
                     $approval_status = true;
                 }
                 
-                debug_add("Setting the score for article id '{$id}: {$key}", MIDCOM_LOG_DEBUG);
-                
                 if (!$article->update())
                 {
+                    debug_push_class(__CLASS__, __FUNCTION__);
                     debug_add("Updating the article with id '{$id}' failed. Reason: ". mgd_errstr(), MIDCOM_LOG_ERROR);
                     debug_pop();
                     
@@ -80,7 +77,6 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
                 // it should still be kept as approved
                 if ($approval_status)
                 {
-                    debug_add('Maintaining the approval status: setting the object back to be approved.');
                     $metadata =& midcom_helper_metadata::retrieve($article);
                     $metadata->approve();
                 }
@@ -108,10 +104,9 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
                     $approval_status = true;
                 }
                 
-                debug_add("Setting the score for topic id '{$id}: {$key}", MIDCOM_LOG_DEBUG);
-                
                 if (!$topic->update())
                 {
+                    debug_push_class(__CLASS__, __FUNCTION__);
                     debug_add("Updating the topic with id '{$id}' failed. Reason: ". mgd_errstr(), MIDCOM_LOG_ERROR);
                     debug_pop();
                     
@@ -123,7 +118,6 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
                 // it should still be kept as approved
                 if ($approval_status)
                 {
-                    debug_add('Maintaining the approval status: setting the object back to be approved.');
                     $metadata =& midcom_helper_metadata::retrieve($topic);
                     $metadata->approve();
                 }
@@ -134,7 +128,6 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
         {
             $count = count($_POST['midcom_admin_content_mixed_score']);
             
-            debug_add('Entering the mixed type mode', MIDCOM_LOG_DEBUG);
             foreach ($_POST['midcom_admin_content_mixed_score'] as $key => $id)
             {
                 $type = explode('_', $id);
@@ -149,6 +142,7 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
                 
                 if (!is_object($object))
                 {
+                    debug_push_class(__CLASS__, __FUNCTION__);
                     debug_add("Could not get the {$type[1]} with id '{$id}'. Reason: ". mgd_errstr(), MIDCOM_LOG_ERROR);
                     debug_pop();
                     
@@ -170,10 +164,9 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
                 
                 $object->score = (int) $key;
                 
-                debug_add("Setting the score for {$type[1]} id '{$id}: {$key}", MIDCOM_LOG_DEBUG);
-                
                 if (!$object->update())
                 {
+                    debug_push_class(__CLASS__, __FUNCTION__);
                     debug_add("Updating the {$type[1]} with id '{$id}' failed. Reason: ". mgd_errstr(), MIDCOM_LOG_ERROR);
                     debug_pop();
                     
@@ -185,27 +178,23 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
                 // it should still be kept as approved
                 if ($approval_status)
                 {
-                    debug_add('Maintaining the approval status: setting the object back to be approved.');
                     $metadata =& midcom_helper_metadata::retrieve($object);
                     $metadata->approve();
                 }
             }
         }
         
-        debug_pop();
-        
         return true;
     }
     
     /**
      * Handler for setting the sort order
-     *
-     * @access protected
      */
     function _handler_order($handler_id, $args, &$data)
     {
         // Include Scriptaculous JavaScript library to headers
         // Scriptaculous/scriptaculous.js
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/Pearified/JavaScript/Prototype/prototype.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/Pearified/JavaScript/Scriptaculous/scriptaculous.js');
         $_MIDCOM->add_link_head
         (
@@ -229,9 +218,10 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
         {
             if ($this->_process_order_form())
             {
+                $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midcom.admin.folder'), $_MIDCOM->i18n->get_string('order saved'));
                 $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($this->_topic->guid));
+                // This will exit
             }
-            // This will exit
         }
         
         // Add the view to breadcrumb trail
@@ -282,7 +272,8 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
 
         $qb = midcom_db_topic::new_query_builder();
         $qb->add_constraint('up', '=', $this->_topic->id);
-        $qb->add_order('score');
+        $qb->add_constraint('metadata.navnoentry', '=', 0);
+        $qb->add_order('metadata.score', 'DESC');
         //$qb->add_order('name');
         //$qb->add_order('extra');
         
@@ -292,7 +283,7 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
         $qb->add_constraint('topic', '=', $this->_topic->id);
         $qb->add_constraint('name', '<>', 'index');
         $qb->add_constraint('up', '=', 0);
-        $qb->add_order('score');
+        $qb->add_order('metadata.score', 'DESC');
         //$qb->add_order('name');
         //$qb->add_order('title');
         
@@ -384,7 +375,7 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
      * @param int $int    Integer
      * @return string     String filled with leading zeros
      */
-    function _get_score($int)
+    private function _get_score($int)
     {
         $string = (string) $int;
         
