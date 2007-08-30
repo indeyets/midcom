@@ -229,7 +229,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         }
         if (! array_key_exists('driver', $backend_config))
         {
-            $backend_config['driver'] = 'dba';
+            $backend_config['driver'] = 'null';
         }
 
         $name = $GLOBALS['midcom_config']['cache_module_content_name'];

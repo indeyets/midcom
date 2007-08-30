@@ -341,7 +341,7 @@ $GLOBALS['midcom_config_default']['auth_backend_simple_cookie_domain'] = null;
 
 // Cache configuration
 $GLOBALS['midcom_config_default']['cache_base_directory'] = '/tmp/';
-$GLOBALS['midcom_config_default']['cache_autoload_queue'] = Array('content', /* 'nap', */ 'phpscripts', 'memcache');
+$GLOBALS['midcom_config_default']['cache_autoload_queue'] = Array('content', /*'nap', */ 'phpscripts', 'memcache');
 
 // Content Cache
 $GLOBALS['midcom_config_default']['cache_module_content_name'] = $unique_host_name;

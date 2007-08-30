@@ -646,6 +646,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
                     debug_push_class($this, 'can_handle');
                     debug_add("Handler method {$method} returned FALSE, we cannot handle this therefore.");
                     debug_pop();
+                    return false;
                 }
             }
             else

@@ -629,19 +629,13 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      */
     function _prepare_authentication_drivers()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
-        debug_add('Loading Authentication Backend');
         require_once (MIDCOM_ROOT . "/midcom/services/auth/backend/{$GLOBALS['midcom_config']['auth_backend']}.php");
         $classname = "midcom_services_auth_backend_{$GLOBALS['midcom_config']['auth_backend']}";
         $this->_auth_backend = new $classname();
 
-        debug_add('Loading Authentication Frontend');
         require_once (MIDCOM_ROOT . "/midcom/services/auth/frontend/{$GLOBALS['midcom_config']['auth_frontend']}.php");
         $classname = "midcom_services_auth_frontend_{$GLOBALS['midcom_config']['auth_frontend']}";
         $this->_auth_frontend = new $classname();
-
-        debug_pop();
     }
 
     /**
@@ -724,67 +718,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             return false;
         }    
         return $this->can_do_byguid($privilege, $content_object->guid, get_class($content_object), $user);
-        /*
-        debug_push_class(__CLASS__, __FUNCTION__);
-        if (   is_null($user)
-            && ! is_null($this->user)
-            && $this->admin)
-        {
-            // Administrators always have access.
-            debug_pop();
-            return true;
-        }
-        
-        debug_add("Querying privilege {$privilege} to " . get_class($content_object) . " {$content_object->guid}", MIDCOM_LOG_DEBUG);
-        
-        if ($this->_internal_sudo)
-        {
-            debug_add('INTERNAL SUDO mode is enabled. Generic Read-Only mode set.', MIDCOM_LOG_DEBUG);
-            debug_pop();
-            return $this->_can_do_internal_sudo($privilege);
-        }
-
-        if ($this->_component_sudo)
-        {
-            debug_pop();
-            return true;
-        }
-
-        // Cache results of ACL checks per session
-        static $cached_privileges = array();
-
-        if (is_null($this->user))
-        {
-            $privilege_key = "{$content_object->guid}-{$privilege}";
-        }
-        else
-        {
-            $privilege_key = "{$this->user->id}-{$content_object->guid}-{$privilege}";
-        }
-        
-        if (!array_key_exists($privilege_key, $cached_privileges))
-        {
-            $full_privileges = $this->get_privileges($content_object, $user);
-    
-            if (! array_key_exists($privilege, $full_privileges))
-            {
-                debug_add("The privilege {$privilege} is unknown at this point. Assuming not granted privilege.", MIDCOM_LOG_WARN);
-                debug_pop();
-                return false;
-            }
-    
-            if ($full_privileges[$privilege] == MIDCOM_PRIVILEGE_ALLOW)
-            {
-                $cached_privileges[$privilege_key] = true;
-            }
-            else
-            {
-                $cached_privileges[$privilege_key] = false;
-            }
-        }
-        debug_pop();
-        return $cached_privileges[$privilege_key];
-        */
     }
 
     /**
@@ -1027,85 +960,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     function get_privileges(&$content_object, $user = null)
     {
         return $this->get_privileges_byguid($privilege, $content_object->guid, get_class($content_object), $user);
-        /*
-        if (is_null($user))
-        {
-            $user =& $this->user;
-        }
-
-        if (is_string($user))
-        {
-            if ($user == 'EVERYONE')
-            {
-                $user = null;
-            }
-            else
-            {
-                $user =& $_MIDCOM->auth->get_user($user);
-            }
-        }
-
-
-        if (! $_MIDCOM->dbclassloader->is_midcom_db_object($content_object))
-        {
-            $object = $_MIDCOM->dbfactory->convert_midgard_to_midcom($content_object);
-            if (is_null($object))
-            {
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add('Failed to convert an object, falling back to an empty privilege set for the object in question. See debug level log for details.');
-                debug_print_r('Content object was:', $content_object);
-                debug_pop();
-                return Array();
-            }
-        }
-        else
-        {
-            $object =& $content_object;
-        }
-
-        // Check for a cache Hit.
-        $cache_user_id = is_null($user) ? 'EVERYONE' : $user->id;
-        $cache_id = "{$cache_user_id}:{$object->guid}";
-        if (array_key_exists($cache_id, $this->_privileges_cache))
-        {
-            $full_privileges = $this->_privileges_cache[$cache_id];
-        }
-        else
-        {
-            if (   is_null($user)
-                || (    !is_object($user)
-                    && $user == 'EVERYONE'))
-            {
-                $user_privileges = Array();
-                $user_per_class_privileges = Array();
-            }
-            else
-            {
-                $user_privileges = $user->get_privileges();
-                $user_per_class_privileges = $user->get_per_class_privileges($object);
-            }
-            $this->_load_class_magic_privileges($object);
-
-            // Remember to sync this merging chain with can_user_do.
-            $full_privileges = array_merge
-            (
-                $this->_default_privileges,
-                $this->_default_magic_class_privileges[$object->__new_class_name__]['EVERYONE'],
-                (
-                    (is_null($this->user))
-                        ? $this->_default_magic_class_privileges[$object->__new_class_name__]['ANONYMOUS']
-                        : $this->_default_magic_class_privileges[$object->__new_class_name__]['USERS']
-                ),
-                $user_privileges,
-                $user_per_class_privileges,
-                midcom_core_privilege::collect_content_privileges($object)
-            );
-
-            $this->_privileges_cache[$cache_id] = $full_privileges;
-        }
-
-        return $full_privileges;
-        */
     }
 
     /**
