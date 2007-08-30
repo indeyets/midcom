@@ -107,38 +107,59 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             return;
         }
 
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Prototype/prototype.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Scriptaculous/scriptaculous.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Javascript_protoToolkit/protoToolkit.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Javascript_protoToolkit/protoMemory.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Javascript_protoToolkit/protoToolbar.js');        
+        if ($_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_toolbars'))
+        {
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Prototype/prototype.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Scriptaculous/scriptaculous.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Javascript_protoToolkit/protoToolkit.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Javascript_protoToolkit/protoMemory.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Javascript_protoToolkit/protoToolbar.js');        
 
-        $_MIDCOM->add_link_head(
-            array
-            (
-                'rel'   => 'stylesheet',
-                'type'  => 'text/css',
-                'media' => 'screen',
-                'href'  => $GLOBALS['midcom_config']['toolbars_css_path'],
-            )
-        );
+            $_MIDCOM->add_link_head(
+                array
+                (
+                    'rel'   => 'stylesheet',
+                    'type'  => 'text/css',
+                    'media' => 'screen',
+                    'href'  => $GLOBALS['midcom_config']['toolbars_css_path'],
+                )
+            );
 
-        $this->type = 'palette';
+            $this->type = 'palette';
 
-        // Compute the final script:
-        $script = "
-            function protoToolbarOnload() {
-            	protoToolbar = new protoToolbar({
-            	   type: '{$this->type}'
-                });
-            }
-        ";
+            // Compute the final script:
+            $script = "
+                function protoToolbarOnload() {
+                	protoToolbar = new protoToolbar({
+                	   type: '{$this->type}'
+                    });
+                }
+            ";
 
-        $_MIDCOM->add_jscript($script);
-        $_MIDCOM->add_jsonload('protoToolbarOnload()');
-
+            $_MIDCOM->add_jscript($script);
+            $_MIDCOM->add_jsonload('protoToolbarOnload()');
+        }
+        else
+        {
+            $_MIDCOM->add_link_head(
+                array
+                (
+                    'rel'   => 'stylesheet',
+                    'type'  => 'text/css',
+                    'media' => 'screen',
+                    'href'  => $GLOBALS['midcom_config']['toolbars_simple_css_path'],
+                )
+            );
+        }
+        
         // We've included CSS and JS, path is clear for centralized mode
         $this->_enable_centralized = true;
+    }
+
+    function get_class_magic_default_privileges()
+    {
+        $privileges = parent::get_class_magic_default_privileges();
+        return $privileges;
     }
 
     /**
@@ -1006,14 +1027,29 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         }
 
         $this->_centralized_mode = true;
-
-        echo "<div id=\"protoToolbar-{$this->type}\" style=\"display: none;\">\n";
-        echo "    <div id=\"protoToolbar-{$this->type}-logos\">\n";
+        
+        $use_protoToolbar = false;
+        $toolbar_style = "";
+        
+        if ($_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_toolbars'))
+        {
+            $use_protoToolbar = true;
+            $toolbar_id = "protoToolbar-{$this->type}";
+            $toolbar_style = "display: none;";
+            
+        }
+        else
+        {
+            $toolbar_id = "midcom_services_toolbars_simple";
+        }
+        
+        echo "<div id=\"{$toolbar_id}\" style=\"{$toolbar_style}\">\n";
+        echo "    <div id=\"{$toolbar_id}-logos\">\n";
         echo "        <a href=\"" . $_MIDCOM->get_page_prefix() . "midcom-exec-midcom/about.php\">\n";
-        echo "            <img src=\"" . MIDCOM_STATIC_URL . "/Javascript_protoToolkit/images/midgard-logo.png\" width=\"16\" height=\"16\" alt=\"Midgard\" />\n";
+        echo "            <img src=\"" . MIDCOM_STATIC_URL . "/midcom.services.toolbars/images/midgard-logo.png\" width=\"16\" height=\"16\" alt=\"Midgard\" />\n";
         echo "        </a>\n";
         echo "    </div>\n";
-        echo "    <div id=\"protoToolbar-{$this->type}-content\">\n";
+        echo "    <div id=\"{$toolbar_id}-content\">\n";
         echo "        <div id=\"item-page\" class=\"item\">\n";
         echo "            <span class=\"toolbar_list_class page\">". $_MIDCOM->i18n->get_string('page', 'midcom') . "</span>\n";
         echo $this->render_view_toolbar();
@@ -1031,8 +1067,13 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         echo $this->render_help_toolbar();
         echo "        </div>\n";
         echo "    </div>\n";
-        echo "     <div class=\"dragbar\"></div>\n";
-        echo "</div>\n";
+
+        if ($use_protoToolbar)
+        {
+            echo "     <div class=\"dragbar\"></div>\n";            
+        }
+
+        echo "</div>\n";        
     }
 }
 

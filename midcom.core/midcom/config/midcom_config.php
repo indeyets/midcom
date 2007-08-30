@@ -430,6 +430,7 @@ $GLOBALS['midcom_config_default']['toolbars_help_style_class'] = 'midcom_toolbar
 $GLOBALS['midcom_config_default']['toolbars_help_style_id'] = null;
 $GLOBALS['midcom_config_default']['toolbars_object_style_class'] = 'midcom_toolbar object_toolbar';
 $GLOBALS['midcom_config_default']['toolbars_css_path'] = MIDCOM_STATIC_URL . "/Javascript_protoToolkit/styles/protoToolbar.css";
+$GLOBALS['midcom_config_default']['toolbars_simple_css_path'] = MIDCOM_STATIC_URL . "/midcom.services.toolbars/simple.css";
 $GLOBALS['midcom_config_default']['toolbars_enable_centralized'] = true;
 
 // Service implementation defaults
