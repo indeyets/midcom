@@ -75,15 +75,10 @@ class midcom_services_cache
      */
     function initialize()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
         foreach ($GLOBALS['midcom_config']['cache_autoload_queue'] as $name)
         {
-            debug_add("Auto-Loading module {$name}", MIDCOM_LOG_DEBUG);
             $this->load_module($name);
         }
-
-        debug_pop();
     }
 
     /**
@@ -92,15 +87,10 @@ class midcom_services_cache
      */
     function shutdown()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
         foreach ($this->_unload_queue as $name)
         {
-            debug_add("Stopping module {$name}", MIDCOM_LOG_INFO);
             $this->_modules[$name]->shutdown();
         }
-
-        debug_pop();
     }
 
     /**

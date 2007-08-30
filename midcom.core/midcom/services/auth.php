@@ -518,8 +518,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
         if (! $credencials)
         {
-            debug_add('No new authentication credencials found.');
-            debug_pop();
             return false;
         }
 
@@ -1130,7 +1128,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         $this->_component_sudo++;
 
         debug_add("Entered SUDO mode for domain {$domain}.", MIDCOM_LOG_INFO);
-        debug_print_function_stack("SUDO mode at depth {$this->_component_sudo} granted for this caller:");
 
         debug_pop();
         return true;

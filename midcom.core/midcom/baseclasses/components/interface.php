@@ -538,7 +538,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      * @param bool $adminmode Flag, indicating wether we are on-site (false) or in AIS (true).
      * @return bool Indication success.
      */
-    function configure($configuration, $contextid, $adminmode = false)
+    function configure($configuration, $contextid)
     {
         // Initialize the context data
         $this->_context_data[$contextid] = Array
@@ -564,7 +564,6 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
         }
 
         $data['handler'] = null;
-        $data['adminmode'] = $adminmode;
 
         return true;
     }

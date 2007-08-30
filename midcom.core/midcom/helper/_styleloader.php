@@ -311,7 +311,9 @@ class midcom_helper__styleloader {
         
         if (!is_dir($path))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Directory {$path} not found.");
+            debug_pop();
             return $elements;
         }
         
@@ -319,7 +321,9 @@ class midcom_helper__styleloader {
         
         if (!$directory)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);        
             debug_add("Failed to read directory {$path}");
+            debug_pop();
             return $elements;
         }
         
@@ -456,14 +460,9 @@ class midcom_helper__styleloader {
         if ($this->_context === array ())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("trying to show '$path' but there is no context set!", MIDCOM_LOG_INFO);
+            debug_add("Trying to show '$path' but there is no context set", MIDCOM_LOG_INFO);
             debug_pop();
             return false;
-        }
-
-        if (count($this->_scope) > 0)
-        {
-            debug_add("style scope is " . $this->_scope[0]);
         }
 
         $_element = $path;
@@ -565,26 +564,20 @@ class midcom_helper__styleloader {
      */
     function _getComponentStyle($topic)
     {
-        /* this global is set by the urlparser.
-         */
-        global $midcom_style_inherited;
-        debug_push_class(__CLASS__, __FUNCTION__);
 
         // get user defined style for component
-
         // style inheritance
         // should this be cached somehow?
         if ($topic->style)
         {
             $_st = $this->get_style_id_from_path($topic->style);
-            debug_add( "topic->style:" . $topic->style . "( $_st )" );
         }
-        else if (   isset($midcom_style_inherited)
-                 && ($midcom_style_inherited))
+        else if (   isset($GLOBALS['midcom_style_inherited'])
+                 && ($GLOBALS['midcom_style_inherited']))
         {
+            // FIXME: This GLOBALS is set by urlparser. Should be removed
             // get user defined style inherited from topic tree
-            $_st = $this->get_style_id_from_path($midcom_style_inherited);
-            debug_add( 'Inherited styleid:' . $midcom_style_inherited );
+            $_st = $this->get_style_id_from_path($GLOBALS['midcom_style_inherited']);
         }
         else
         {
@@ -593,15 +586,12 @@ class midcom_helper__styleloader {
             if (array_key_exists($component, $GLOBALS['midcom_config']['styleengine_default_styles']))
             {
                 $_st = $this->get_style_id_from_path($GLOBALS['midcom_config']['styleengine_default_styles'][$component]);
-                debug_add( 'Component_default styles: ' . $GLOBALS['midcom_config']['styleengine_default_styles'][$component]);
             }
         }
 
         if (isset($_st))
         {
-            debug_add("Current component has user defined style: $_st", MIDCOM_LOG_INFO);
             $substyle = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_SUBSTYLE);
-            debug_add( 'Component substyle:' . $substyle );
 
             if (isset($substyle)) 
             {
@@ -613,22 +603,17 @@ class midcom_helper__styleloader {
                     if ($_subst_id)
                     {
                         $_st = $_subst_id;
-                        debug_add("Found substyle '$substyle', overriding component's user defined style.", MIDCOM_LOG_INFO);
-                    }
-                    else
-                    {
-                        debug_add("Substyle '$substyle' not found under {$_st}.", MIDCOM_LOG_INFO);
                     }
                 }
             }
         }
 
-        debug_pop();
-        if (isset($_st)) {
+        if (isset($_st))
+        {
             return $_st;
-        } else {
-            return false;
-        }
+        } 
+        
+        return false;
     }
 
 
@@ -716,7 +701,6 @@ class midcom_helper__styleloader {
      */
     function _merge_styledirs ($component_style)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         /* first the prepend styles */
         $this->_styledirs = $this->_styledirs_prepend;
         /* then the contextstyle */
@@ -724,7 +708,6 @@ class midcom_helper__styleloader {
 
         $this->_styledirs =  array_merge($this->_styledirs, $this->_styledirs_append);
         $this->_styledirs_count = count($this->_styledirs);
-        debug_pop();
     }
 
     /**
@@ -737,11 +720,10 @@ class midcom_helper__styleloader {
      */
     function enter_context($context)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
+
 
         // set new context and topic
         array_unshift($this->_context, $context); // push into context stack
-        debug_add("entering context $context", MIDCOM_LOG_DEBUG);
 
         $this->_topic = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC);
 
@@ -753,8 +735,6 @@ class midcom_helper__styleloader {
         $this->_snippetdir = $this->_getComponentSnippetdir($this->_topic);
 
         $this->_merge_styledirs($this->_snippetdir);
-
-        debug_pop();
         return true;
     }
 
@@ -767,9 +747,6 @@ class midcom_helper__styleloader {
      */
     function leave_context()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
-        debug_add("leaving context " . $this->_context[0], MIDCOM_LOG_DEBUG);
         /* does this cause an extra, not needed call to ->parameter ? */
         $_st = $this->_getComponentStyle($this->_topic);
         if (isset($_st)) {
@@ -783,8 +760,6 @@ class midcom_helper__styleloader {
         $this->_topic = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC);
 
         $this->_snippetdir = $this->_getComponentSnippetdir($this->_topic);
-
-        debug_pop();
         return true;
     }
 

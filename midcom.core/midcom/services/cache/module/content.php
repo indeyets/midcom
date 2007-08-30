@@ -371,9 +371,6 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         // Check for uncached operation
         if ($this->_uncached)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('We are in uncached operation, skipping check_hit detection.');
-            debug_pop();
             return;
         }
 

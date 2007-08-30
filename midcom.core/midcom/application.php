@@ -766,7 +766,7 @@ class midcom_application
      * Component Invocation Helper Functions:
      *
      * _process               - CANHANDLE->HANDLE || ATTACHMENT_OUTPUT
-     * _checkobject           - CANHANDLE
+     * _can_handle           - CANHANDLE
      * _loadconfig            - CANHANDLE
      * _handle                - HANDLE
      * _output                - OUTPUT
@@ -782,7 +782,7 @@ class midcom_application
      *
      * Details: The logic will traverse the node tree and for each node it will load
      * the component that is responsible for it. This component gets the chance to
-     * acceppt the request (this is encaspulated in the _checkobject call), which is
+     * acceppt the request (this is encaspulated in the _can_handle call), which is
      * basically a call to can_handle. If the component declares to be able to handle
      * the call, its handle function is executed. Depending if the handle was successful
      * or not, it will either display an HTTP error page or prepares the content handler
@@ -923,7 +923,7 @@ class midcom_application
             // Check whether the component can handle the request.
             // If so, execute it, if not, continue.
 
-            if ($this->_checkobject($object)) 
+            if ($this->_can_handle($object)) 
             {
                 $this->_status = MIDCOM_STATUS_HANDLE;
 
@@ -1001,7 +1001,7 @@ class midcom_application
     /**
      * Handle the request.
      *
-     * _handle is called after _checkobject determined, that
+     * _handle is called after _can_handle determined, that
      * a component can handle a request. The URL of the component that is used
      * to handle the request is obtained automatically. The parameter $path is
      * optional and reserved for future usage. It will fetch the required COMPONENT class
@@ -1096,48 +1096,50 @@ class midcom_application
      * @return bool                    Indication, wether a component can handle a request.
      * @access private
      */
-    private function _checkobject($object)
+    private function _can_handle($object)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
         $path = $this->get_context_data(MIDCOM_CONTEXT_COMPONENT);
 
-        $adminmode = false;
+        // Request type safety check
         if ($this->_context[$this->_currentcontext][MIDCOM_CONTEXT_REQUESTTYPE] != MIDCOM_REQUEST_CONTENT)
         {
             debug_add("Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE], MIDCOM_LOG_ERROR);
+            debug_pop();
             $this->generate_error(MIDCOM_ERRCRIT, "Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE]);
         }
         
-        $concept_component =& $this->componentloader->get_component_class($path);
-        if ($concept_component === null) 
+        // Get component interface class
+        $component_interface =& $this->componentloader->get_interface_class($path);
+        if ($component_interface === null) 
         {
             $path = 'midcom.core.nullcomponent';
             $this->_set_context_data($path, MIDCOM_CONTEXT_COMPONENT);
-            $concept_component =& $this->componentloader->get_component_class($path);
+            $component_interface =& $this->componentloader->get_interface_class($path);
         }
 
+        // Load configuration
         $config_obj =& $this->_loadconfig($object);
         $config = ($config_obj == false) ? array() : $config_obj->get_all();
-
-        if (! $concept_component->configure($config, $this->_currentcontext, $adminmode))
+        if (! $component_interface->configure($config, $this->_currentcontext))
         {
-            debug_add ("Component Configuration failed: " . $concept_component->errstr($this->_currentcontext), MIDCOM_LOG_ERROR);
-            $this->generate_error(MIDCOM_ERRCRIT, "Component Configuration failed: " . $concept_component->errstr($this->_currentcontext));
-        }
-
-        if ($concept_component->can_handle($object, $this->_parser->argc, $this->_parser->argv, $this->_currentcontext))
-        {
-            debug_add("Component $path will handle request.", MIDCOM_LOG_INFO);
+            debug_add ("Component Configuration failed: " . $component_interface->errstr($this->_currentcontext), MIDCOM_LOG_ERROR);
             debug_pop();
-            return true;
+            $this->generate_error(MIDCOM_ERRCRIT, "Component Configuration failed: " . $component_interface->errstr($this->_currentcontext));
         }
-        else
+
+        // Make can_handle check
+        if (!$component_interface->can_handle($object, $this->_parser->argc, $this->_parser->argv, $this->_currentcontext))
         {
-            debug_add("Component $path declared unable to handle request.", MIDCOM_LOG_INFO);
+            debug_add("Component {$path} in {$object->name} declared unable to handle request.", MIDCOM_LOG_INFO);
             debug_pop();
             return false;
         }
+        
+        debug_add("Component {$path} in {$object->name} will handle request.", MIDCOM_LOG_INFO);
+        debug_pop();
+        return true;
     }
 
     /**
@@ -1153,10 +1155,7 @@ class midcom_application
      */
     private function & _loadconfig($object) 
     {
-        debug_push("midcom_application::_loadconfig");
-
         $path = $this->get_context_data(MIDCOM_CONTEXT_COMPONENT);
-        debug_add("Trying to load configuration for $path", MIDCOM_LOG_DEBUG);
         $result = new midcom_helper_configuration($object, $path);
         return $result;
     }
@@ -1197,7 +1196,7 @@ class midcom_application
             $this->generate_error(MIDCOM_ERRCRIT, "Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE]);
         }
         
-        $component =& $this->componentloader->get_component_class($this->get_context_data(MIDCOM_CONTEXT_COMPONENT));
+        $component =& $this->componentloader->get_interface_class($this->get_context_data(MIDCOM_CONTEXT_COMPONENT));
         $component->show_content($this->_currentcontext);
 
         if (!$this->skip_page_style)
