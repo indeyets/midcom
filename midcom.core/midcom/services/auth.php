@@ -809,33 +809,17 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             // Administrators always have access.
             return true;
         }
-        debug_push_class(__CLASS__, __FUNCTION__);
-        if (is_null($user))
-        {
-            debug_add("Querying privilege {$privilege} to {$object_class} {$object_guid}", MIDCOM_LOG_DEBUG);
-        }
-        else
-        {
-            if (is_string($user))
-            {
-                debug_add("Querying privilege {$privilege} to {$object_class} {$object_guid} (for user {$user})", MIDCOM_LOG_DEBUG);
-            }
-            else
-            {
-                debug_add("Querying privilege {$privilege} to {$object_class} {$object_guid} (for user {$user->id})", MIDCOM_LOG_DEBUG);
-            }
-        }
         
         if ($this->_internal_sudo)
         {
-            debug_add('INTERNAL SUDO mode is enabled. Generic Read-Only mode set.', MIDCOM_LOG_DEBUG);
-            debug_pop();
+            //debug_push_class(__CLASS__, __FUNCTION__);
+            //debug_add('INTERNAL SUDO mode is enabled. Generic Read-Only mode set.', MIDCOM_LOG_DEBUG);
+            //debug_pop();
             return $this->_can_do_internal_sudo($privilege);
         }
 
         if ($this->_component_sudo)
         {
-            debug_pop();
             return true;
         }
 
@@ -864,15 +848,17 @@ class midcom_services_auth extends midcom_baseclasses_core_object
                 $privilege_key = "{$for_user->id}-{$object_guid}-{$privilege}";
             }
         }
-        debug_add("privilege_key={$privilege_key}");
+
         if (!array_key_exists($privilege_key, $cached_privileges))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);        
             debug_add("Cache miss, fetching privileges for {$object_guid}");
             debug_pop();
             $full_privileges = $this->get_privileges_byguid($object_guid, $object_class, $user);
     
             if (! array_key_exists($privilege, $full_privileges))
             {
+                debug_push_class(__CLASS__, __FUNCTION__);            
                 debug_add("The privilege {$privilege} is unknown at this point. Assuming not granted privilege.", MIDCOM_LOG_WARN);
                 debug_pop();
                 return false;

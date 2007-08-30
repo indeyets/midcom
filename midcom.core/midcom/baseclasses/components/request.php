@@ -578,12 +578,11 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      */
     function can_handle($argc, $argv)
     {
-        debug_push_class($this, 'can_handle');
-
         // Call the general can_handle event handler
         $result = $this->_on_can_handle($argc, $argv);
         if (! $result)
         {
+            debug_push_class($this, 'can_handle');
             debug_add('The _on_can_handle event handler returned false, aborting.');
             debug_pop();
             return false;
@@ -596,24 +595,21 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
         {
             $namespace = $argv[0];
             $plugin = $argv[1];
+            debug_push_class($this, 'can_handle');
             debug_add("Loading the plugin {$namespace}/{$plugin}");
+            debug_pop();
             $this->_load_plugin($namespace, $plugin);
         }
 
-        debug_add('Finally preparing the request switch for usage.');
         $this->_prepare_request_switch();
 
-        debug_print_r('Checking against this argument list: ', $argv);
         foreach ($this->_request_switch as $key => $request)
-        {
-            debug_add("Checking handler ID {$key}");
-            
+        {   
             $fixed_args_count = count($request['fixed_args']);
             $total_args_count = $fixed_args_count + $request['variable_args'];
 
             if (( $argc != $total_args_count && (  $request['variable_args'] >= 0 )) || $fixed_args_count > $argc)
             {
-                debug_add('Argument count does not match, skipping.');
                 continue;
             }
 
@@ -622,7 +618,6 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
             {
                 if ($argv[$i] != $request['fixed_args'][$i])
                 {
-                    debug_add("The argument {$i} did not match, got {$argv[$i]} should be {$request['fixed_args'][$i]}, skipping.");
                     continue 2;
                 }
             }
@@ -641,25 +636,27 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
 
             if (method_exists($handler, $method))
             {
-                debug_add("Executing {$method} on the handler object.");
                 $result = $handler->$method($this->_handler['id'], $this->_handler['args'], $this->_request_data);
                 if ($result)
                 {
-                    debug_add('The handler matches, the _can_handle callback returned true, reporting success.');
-                    debug_pop();
                     return true;
+                }
+                else
+                {
+                    debug_push_class($this, 'can_handle');
+                    debug_add("Handler method {$method} returned FALSE, we cannot handle this therefore.");
+                    debug_pop();
                 }
             }
             else
             {
-                debug_add('The handler matches, no _can_handle callback is defined, reporting success.');
-                debug_pop();
                 return true;
             }
         }
 
         // No match
-        debug_add('No match could be found, we cannot handle this therefore.');
+        debug_push_class($this, 'can_handle');
+        debug_add('No matching handler could be found, we cannot handle this therefore.');
         debug_pop();
         return false;
     }
@@ -679,8 +676,6 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      */
     function handle($argc, $argv)
     {
-        debug_push_class($this, 'handle');
-
         // Init
         $handler =& $this->_handler['handler'][0];
 
@@ -707,6 +702,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
         $result = $this->_on_handle($this->_handler['id'], $this->_handler['args']);
         if (! $result)
         {
+            debug_push_class($this, 'handle');
             debug_add('The _on_handle event handler returned false, aborting.');
             debug_pop();
             return false;
@@ -729,7 +725,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
         {
             $_MIDCOM->cache->content->expires($this->_handler['expires']);
         }
-        debug_pop();
+
         return $result;
     }
 
@@ -800,36 +796,6 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
         return true;
 
     }
-
-    /**
-     * Returns the metadata of the currently selected object. It uses a callback to determine
-     * a metadata object which contains the neccessary information.
-     *
-     * This interface function is no longer in use in MidCOM 2.4 upwards. Instead, the framework
-     * accesses the metadata information directly.
-     *
-     * @return Array Metadata information
-     * @see _on_get_metadata()
-     * @deprecated in MidCOM 2.4
-     */
-    function get_metadata()
-    {
-        $metadata =& $this->_on_get_metadata();
-        if (is_null($metadata))
-        {
-            return false;
-        }
-        $creator = $metadata->get('creator');
-        $editor = $metadata->get('editor');
-        return array
-        (
-            MIDCOM_META_CREATOR => $creator->id,
-            MIDCOM_META_EDITOR  => $editor->id,
-            MIDCOM_META_CREATED => $metadata->get('created'),
-            MIDCOM_META_EDITED  => $metadata->get('editor')
-        );
-    }
-
 
     /**
      * Display the content, it uses the handler as determined by can_handle.
