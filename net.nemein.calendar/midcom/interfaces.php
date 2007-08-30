@@ -30,7 +30,6 @@ class net_nemein_calendar_interface extends midcom_baseclasses_components_interf
         $this->_component = 'net.nemein.calendar';
         $this->_autoload_files = Array(
             'viewer.php',
-            'admin.php',
             'navigation.php',
             'event.php',
             'functions.php',

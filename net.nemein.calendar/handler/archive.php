@@ -91,21 +91,17 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
                 // This will exit.
             }
             
-            $qb = net_nemein_calendar_event::new_query_builder();
-            $qb->add_constraint('up', '=', $this->_master_event->id);
-            $result = $qb->execute();
-            if ($result === false)
-            {
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add('Failed to query the root events: ' . mgd_errstr(), MIDCOM_LOG_INFO);
-                debug_pop();
-                return null;
-            }
-
+            $mc = net_nemein_calendar_event::new_collector('up', $this->_master_event->id);
+            $mc->set_key_property('up');
+            $mc->add_value_property('id');
+            $mc->execute();
+            $events = $mc->list_keys();
+            
             $this->_root_events = Array();
-            foreach ($result as $event)
+            foreach ($events as $guid => $array)
             {
-                $this->_root_events[$event->id] = $event;
+                $id = $mc->get_subkey($guid, 'id');
+                $this->_root_events[$id] = $id;
             }
         }
         else

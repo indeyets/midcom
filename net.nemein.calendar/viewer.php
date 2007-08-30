@@ -296,12 +296,15 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
         if (   $this->_topic->can_do('midgard:update')
             && $this->_topic->can_do('midcom:component_config'))
         {
-            $this->_node_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => 'config.html',
-                MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
-                MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
-            ));
+            $this->_node_toolbar->add_item(
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => 'config.html',
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
+                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+                )
+            );
         }
     }
     
@@ -379,8 +382,6 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
           }
         }
       }
-
     }*/
-
 }
 ?>

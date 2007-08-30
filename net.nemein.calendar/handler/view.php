@@ -73,12 +73,13 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
         $qb = net_nemein_calendar_event::new_query_builder();
         $qb->add_constraint('up', '=', $this->_request_data['root_event']->id);
         $qb->add_constraint('extra', '=', $args[0]);
-        $events = $qb->execute();
-        if (count($events) == 0)
+        
+        if ($qb->count() === 0)
         {
             return false;
         }
         
+        $events = $qb->execute();
         $this->_request_data['event'] = $events[0];
 
         return true;        

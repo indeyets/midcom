@@ -86,14 +86,18 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         // Add root event constraints
         if ($this->_config->get('list_from_master'))
         {
-            $qb->begin_group('OR');        
-            $rootevents_qb = net_nemein_calendar_event::new_query_builder();
-            $rootevents_qb->add_constraint('up', '=', $this->_request_data['master_event']);
-            $rootevents = $rootevents_qb->execute();
-            foreach ($rootevents as $rootevent)
-            {
-                $qb->add_constraint('up', '=', $rootevent->id);
-            }
+            $qb->begin_group('OR');
+                $mc = net_nemein_calendar_event::new_collector('up', $rootevent->id);
+                $mc->set_key_property('up');
+                $mc->add_value_property('id');
+                $mc->execute();
+                $events = $mc->list_keys();
+                
+                foreach ($events as $guid => $array)
+                {
+                    $id = $mc->get_subkey($guid, 'id');
+                    $qb->add_constraint('up', '=', $id);
+                }
             $qb->end_group();
         }
         else
@@ -327,13 +331,18 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         if ($this->_config->get('list_from_master'))
         {
             $qb->begin_group('OR');        
-            $rootevents_qb = net_nemein_calendar_event::new_query_builder();
-            $rootevents_qb->add_constraint('up', '=', $this->_request_data['master_event']);
-            $rootevents = $rootevents_qb->execute();
-            foreach ($rootevents as $rootevent)
-            {
-                $qb->add_constraint('up', '=', $rootevent->id);
-            }
+                $mc = net_nemein_calendar_event::new_collector('up', $this->_request_data['root_event']->id);
+                $mc->set_key_property('up');
+                $mc->add_value_property('id');
+                $mc->execute();
+                $events = $mc->list_keys();
+                
+                foreach ($events as $guid => $array)
+                {
+                    $id = $mc->get_subkey($guid, 'id');
+                    $ids[] = $id;
+                    $qb->add_constraint('up', '=', $id);
+                }
             $qb->end_group();
         }
         else
