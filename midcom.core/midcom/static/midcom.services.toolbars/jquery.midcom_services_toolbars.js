@@ -38,9 +38,9 @@ jQuery.midcom_services_toolbars = function(root, settings, with_items) {
 
     var default_logo = {
             title: 'Midgard',
-            href: MIDCOM_PAGE_PREFIX + 'midcom-exec-midcom/about.php',
+            href: '/midcom-exec-midcom/about.php',
             target: '_blank',
-            src: MIDCOM_STATIC_URL + '/midcom.services.toolbars/images/midgard-logo.png',
+            src: 'images/midgard-logo.png',
             width: '16',
             height: '16'
     };
