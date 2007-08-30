@@ -95,20 +95,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
         $this->_allowed_types[] = 'ok';
         $this->_allowed_types[] = 'warning';
         $this->_allowed_types[] = 'error';
-        
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Prototype/prototype.js");
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Scriptaculous/scriptaculous.js");
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/protoGrowl.js');
-        
-        $_MIDCOM->add_link_head(
-            array
-            (
-                'rel'   => 'stylesheet',
-                'type'  => 'text/css',
-                'media' => 'screen',
-                'href'  => MIDCOM_STATIC_URL . '/midcom.services.uimessages/protoGrowl.css',
-            )
-        );
+        $this->_allowed_types[] = 'debug';
     }
 
     /**
@@ -117,6 +104,35 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
      */
     function initialize()
     {
+        if ($_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_uimessages'))
+        {        
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Prototype/prototype.js");
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Scriptaculous/scriptaculous.js");
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/protoGrowl.js');
+        
+            $_MIDCOM->add_link_head(
+                array
+                (
+                    'rel'   => 'stylesheet',
+                    'type'  => 'text/css',
+                    'media' => 'screen',
+                    'href'  => MIDCOM_STATIC_URL . '/midcom.services.uimessages/protoGrowl.css',
+                )
+            );
+        }
+        else
+        {
+            $_MIDCOM->add_link_head(
+                array
+                (
+                    'rel'   => 'stylesheet',
+                    'type'  => 'text/css',
+                    'media' => 'screen',
+                    'href'  => MIDCOM_STATIC_URL . '/midcom.services.uimessages/simple.css',
+                )
+            );            
+        }
+
         if (!$_MIDGARD['user'])
         {
             // Don't use sessioning for non-users as that kills cache usage
@@ -142,6 +158,13 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
                 $this->_messages_from_session[] = $id;
             }
         }
+    }
+    
+    function get_class_magic_default_privileges()
+    {
+        $privileges = parent::get_class_magic_default_privileges();
+        //$privileges['EVERYONE']['midgard:read'] = MIDCOM_PRIVILEGE_DENY;
+        return $privileges;
     }
     
     /**
@@ -218,26 +241,57 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
     }
     
     /**
-     * Show the message stack via javascript calls
+     * Show the message stack via javascript calls or simple html
      */
     function show()
     {
         if (count($this->_message_stack) > 0)
         {
-            echo "<script language=\"javascript\">\n";
-
-            foreach ($this->_message_stack as $id => $message)
+            if ($_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_uimessages'))
             {
-                // TODO: Use our own JS call for this
-                echo "    new protoGrowl({type: '{$message['type']}', title: '{$message['title']}', message: '{$message['message']}'});\n";
-                //echo "ooDisplayMessage('{$message['title']}: {$message['message']}', '{$message['type']}');\n";
+                echo "<script type=\"text/javascript\">\n";
+
+                foreach ($this->_message_stack as $id => $message)
+                {
+                    // TODO: Use our own JS call for this
+                    echo "    new protoGrowl({type: '{$message['type']}', title: '{$message['title']}', message: '{$message['message']}'});\n";
+                    //echo "ooDisplayMessage('{$message['title']}: {$message['message']}', '{$message['type']}');\n";
                 
-                // Remove the message from stack
-                unset($this->_message_stack[$id]);
+                    // Remove the message from stack
+                    unset($this->_message_stack[$id]);
+                }
+                echo "</script>\n";
             }
-            echo "</script>\n";        
+            else
+            {
+                echo "<div class=\"midcom_services_uimessages_holder\">\n";
+
+                foreach ($this->_message_stack as $id => $message)
+                {
+                    $this->_render_simple_message($message);
+
+                    // Remove the message from stack
+                    unset($this->_message_stack[$id]);
+                }
+
+                echo "</div>\n";
+            }
         }
     }
+
+    /**
+     * Render the message via simple html
+     */    
+    function _render_simple_message($message)
+    {
+        echo "<div class=\"midcom_services_uimessages_message {$message['type']}\">";
+        
+        echo "<div class=\"midcom_services_uimessages_message_title\">{$message['title']}</div>";
+        echo "<div class=\"midcom_services_uimessages_message_msg\">{$message['message']}</div>";
+        
+        echo "</div>\n";
+    }
+    
 }
 
 ?>

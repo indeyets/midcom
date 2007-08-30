@@ -25,6 +25,16 @@
 class midcom_baseclasses_core_object extends PEAR
 {
     function midcom_baseclasses_core_object() {}
+    
+    function get_class_magic_default_privileges()
+    {
+        return array
+        (
+            'EVERYONE' => array(),
+            'ANONYMOUS' => array(),
+            'USERS' => array()
+        );
+    }
 }
 
 ?>

@@ -947,10 +947,19 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             $user_per_class_privileges = Array();
             if ($tmp_object !== null)
             {
+                if (!isset($tmp_object->__new_class_name__))
+                {
+                    $tmp_class_name = get_class($tmp_object);
+                }
+                else
+                {
+                    $tmp_class_name = $tmp_object->__new_class_name__;
+                }
+                
                 $default_magic_class_privileges = array_merge
                 (
-                    $this->_default_magic_class_privileges[$tmp_object->__new_class_name__]['EVERYONE'],
-                    $this->_default_magic_class_privileges[$tmp_object->__new_class_name__]['ANONYMOUS']
+                    $this->_default_magic_class_privileges[$tmp_class_name]['EVERYONE'],
+                    $this->_default_magic_class_privileges[$tmp_class_name]['ANONYMOUS']
                 );
             }
         }
@@ -2385,13 +2394,22 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     function _load_class_magic_privileges(&$class)
     {
         // Check if we have loaded these privileges already...
-        if (array_key_exists($class->__new_class_name__, $this->_default_magic_class_privileges))
+        if (!isset($class->__new_class_name__))
+        {
+            $loadable_class = get_class($class);
+        }
+        else
+        {
+            $loadable_class = $class->__new_class_name__;
+        }
+        
+        if (array_key_exists($loadable_class, $this->_default_magic_class_privileges))
         {
             return;
         }
 
         $privs = $class->get_class_magic_default_privileges();
-        $this->_default_magic_class_privileges[$class->__new_class_name__] = $privs;
+        $this->_default_magic_class_privileges[$loadable_class] = $privs;
 
         return;
     }
