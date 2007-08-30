@@ -295,7 +295,6 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         if (   empty($result)
             && $false_on_empty_mgd_resultset)
         {
-            debug_pop();
             return false;
         }
 
