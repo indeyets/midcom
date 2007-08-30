@@ -1,0 +1,188 @@
+<?php
+/**
+ * @package midcom
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @version $Id:application.php 3765 2006-07-31 08:51:39 +0000 (Mon, 31 Jul 2006) tarjei $
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+ 
+/**
+ * URL name parser that uses the MidCOM 2.8+ topic structure
+ */
+class midcom_core_service_implementation_urlparsertopic implements midcom_core_service_urlparser
+{
+    public $argc = 0;
+    public $argv = array();
+    private $argv_original = array();
+
+    private $root_topic = null;
+    private $current_object = null;
+
+    public function __construct()
+    {
+        $this->root_topic = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
+        $this->current_object = $this->root_topic;
+        
+        // TODO: Remove
+        $this->check_style_inheritance($this->root_topic);
+    }
+    
+    public function tokenize($url)
+    {
+        if (   $url == ''
+            || $url == '/')
+        {
+            $argv = array();
+        }
+        else
+        {
+            if (strpos($url,"/") === 0)
+            {
+                $url = substr($url,1);
+            }
+            if (substr($url,-1) == "/")
+            {
+                $url = substr($url,0,-1);
+            }
+
+            $argv = explode ("/", $url);
+        }
+        return $argv;
+    }
+    
+    /**
+     * Check topic style inheritance rules for style loader
+     *
+     * @todo: refactor style loader so this isn't needed
+     */
+    private function check_style_inheritance($topic)
+    {
+        // style inheritance
+        if (!$topic->styleInherit) 
+        {
+            return;
+        }
+        
+        if (!$topic->style)
+        {
+            return;
+        }
+        
+        $GLOBALS['midcom_style_inherited'] = $topic->style;
+    }
+    
+    /**
+     * Set the URL path to be parsed
+     */
+    public function parse($argv)
+    {
+        // Use straight Midgard data instead of tokenizing the URL
+        $this->argc = count($argv);
+        $this->argv = $argv;
+        $this->argv_original = $argv;
+        
+        $this->current_object = $this->root_topic;
+    }
+
+    /**
+     * Return current object pointed to by the parse URL
+     */
+    public function get_current_object()
+    {
+        return $this->current_object;
+    }
+
+    /**
+     * Return next object in URL path
+     */
+    public function get_object()
+    {
+        if ($this->argc == 0)
+        {
+            // No arguments left
+            
+            return false;
+        }
+
+        $qb = midcom_db_topic::new_query_builder();
+        $qb->add_constraint('name', '=', $this->argv[0]);
+        $qb->add_constraint('up', '=', $this->current_object->id);
+        $qb->add_constraint('component', '<>', '');
+
+        if ($qb->count() == 0)
+        {
+
+            // No topics matching path, allow for handler switches to work
+            return false;
+        }
+        
+        $topics = $qb->execute();
+        
+        // Set to current topic
+        $this->current_object = $topics[0];
+        
+        // TODO: Remove
+        $this->check_style_inheritance($this->current_object);
+        
+        // Remove this component from path
+        $this->argc -= 1;
+        array_shift ($this->argv);
+        
+        return $this->current_object;
+    }
+
+    /**
+     * Try to fetch an URL variable.
+     *
+     * Try to decode an <namespace>-<key>-<value> pair at the current URL
+     * position. Namespace must be a valid MidCOM Path, Key must mach the RegEx
+     * [a-zA-Z0-9]* and value must not contain a "/".
+     *
+     * On success it returns an acciocative array containing two rows,
+     * indexed with MIDGARD_HELPER_URLPARSER_KEY and _VALUE which hold
+     * the elements that have been parsed. $this->argv[0] will be dropped
+     * and $this->argc will be reduced by one.
+     *
+     * On failure it returns FALSE with an error message in $midcom_errstr.
+     *
+     * @param string $namespace The namespace for which to search a variable
+     * @return Array            The key and value pair of the URL parameter, or false on failure.
+     */
+    public function get_variable($namespace)
+    {
+        if ($this->argc == 0)
+        {
+            return false;
+        }
+
+        if (strpos($this->argv[0], $namespace . '-') !== 0) 
+        {
+            return false;
+        }
+
+        $tmp = substr($this->argv[0], strlen($namespace) + 1);
+
+        $value = substr(strstr($tmp,"-"),1);
+        $key = substr($tmp,0,strpos($tmp,"-"));
+
+        // Remove this component from path
+        array_shift($this->argv);
+        array_shift($this->argv_original);
+        $this->argc -= 1;
+
+        return array
+        (
+            $key => $value,
+        );
+    }
+    
+    /**
+     * Return full URL that was given to the parser
+     */
+    public function get_url()
+    {
+        return implode('/', $this->argv_original) . '/';
+    }
+}
+?>

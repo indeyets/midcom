@@ -172,7 +172,7 @@ class midcom_application
     /**
      * The URL parser.
      *
-     * @var midcom_helper_urlparser
+     * @var midcom_core_service_urlparser
      * @access private
      */
     private $_parser = null;
@@ -413,12 +413,17 @@ class midcom_application
         // set prefix for "new" midgard->self
         $this->_prefix = $GLOBALS['midcom_config']['midcom_prefix'];
 
-        $this->midgard = $this->get_midgard();
+        //$this->midgard = $this->get_midgard();
 
         $this->_status = MIDCOM_STATUS_PREPARE;
         
         // Load the services that are always needed, including the serviceloader
         $this->_load_core_services();
+        
+        // Start-up some of the services
+        $this->auth->initialize();
+        $this->dbclassloader->load_classes('midcom', 'legacy_classes.inc');
+        $this->dbclassloader->load_classes('midcom', 'core_classes.inc');
 
         $this->componentloader->load_all_manifests();
 
@@ -443,12 +448,9 @@ class midcom_application
             }
             // This will exit.
         }
-
+        
         // Initialize Context Storage
-        $this->_context = Array();
-        $this->_create_context(0);
-        $this->_currentcontext = 0;
-        $this->_context[0][MIDCOM_CONTEXT_ROOTTOPIC] = $root_topic;
+        $this->_currentcontext = $this->_create_context(0, $root_topic);
 
         // Populate browser information
         $this->_populate_client();
@@ -475,12 +477,9 @@ class midcom_application
         $this->i18n = new midcom_services_i18n();
         $this->componentloader = new midcom_helper__componentloader();
         $this->dbclassloader = new midcom_services_dbclassloader();
-        $this->dbclassloader->load_classes('midcom', 'legacy_classes.inc');
-        $this->dbclassloader->load_classes('midcom', 'core_classes.inc');
         $this->dbfactory = new midcom_helper__dbfactory();
         $this->style = new midcom_helper__styleloader();
         $this->auth = new midcom_services_auth();
-        $this->auth->initialize();
         
         // These can be refactored behind serviceloader
         $this->permalinks = new midcom_services_permalinks();    
@@ -544,15 +543,16 @@ class midcom_application
      */
     public function codeinit() 
     {
-        $oldcontext = $this->_currentcontext;
-        $this->_currentcontext = 0;
+        if ($this->get_current_context() == 0)
+        {    
+            // Initialize the UI message stack from session
+            $this->uimessages->initialize();
+        }
 
-        // Initialize the UI message stack from session
-        $this->uimessages->initialize();
-
-        $topic = $this->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
-        $this->_parser = new midcom_helper_urlparser($topic->id);
-
+        // Parse the URL
+        $this->_parser = $this->serviceloader->load('midcom_core_service_urlparser');
+        $this->_parser->parse($_MIDGARD['argv']);
+        
         if (!$this->_parser) 
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -562,13 +562,12 @@ class midcom_application
         }
 
         $this->_process();
-
-        $this->_codeinit = false;
-
-        $this->_currentcontext = $oldcontext;
         
-        // Let metadata service add its meta tags
-        $this->metadata->populate_meta_head();
+        if ($this->get_current_context() == 0)
+        {
+            // Let metadata service add its meta tags
+            $this->metadata->populate_meta_head();
+        }
     }
 
     /**
@@ -701,41 +700,15 @@ class midcom_application
 
         // Determine new Context ID and set $this->_currentcontext,
         // enter that context and prepare its data structure.
-        $context = $this->_create_context();
+        $context = $this->_create_context(null, $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC));
         $oldcontext = $this->_currentcontext;
         $this->_currentcontext = $context;
 
-        $this->_context[$context][MIDCOM_CONTEXT_REQUESTTYPE] = $type;
-        $this->_context[$context][MIDCOM_CONTEXT_CONTENTTOPIC] = null;
-        $this->_context[$context][MIDCOM_CONTEXT_COMPONENT] = null;
-        $this->_context[$context][MIDCOM_CONTEXT_ROOTTOPIC] = $this->_context[0][MIDCOM_CONTEXT_ROOTTOPIC];
-        $this->_context[$context][MIDCOM_CONTEXT_OUTPUT] = null;
-        $this->_context[$context][MIDCOM_CONTEXT_NAP] = null;
-        $this->_context[$context][MIDCOM_CONTEXT_PAGETITLE] = "";
-        $this->_context[$context][MIDCOM_CONTEXT_CUSTOMDATA] = Array();
-
         // Parser Init: Generate arguments and instantinate it.
-
-        if (   $url == ""
-            || $url == "/")
-        {
-            $argv = array();
-        }
-        else
-        {
-            if (strpos($url,"/") === 0)
-            {
-                $url = substr($url,1);
-            }
-            if (substr($url,-1) == "/")
-            {
-                $url = substr($url,0,-1);
-            }
-            $argv = explode ("/", $url);
-        }
-
         $topic = $this->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
-        $this->_parser = new midcom_helper_urlparser($topic->id, $argv);
+        $this->_parser = $this->serviceloader->load('midcom_core_service_urlparser');
+        $argv = $this->_parser->tokenize($url);
+        $this->_parser->parse($argv);
 
         if (!$this->_parser)
         {
@@ -850,141 +823,111 @@ class midcom_application
         $success = false;
         $substyle = "";
 
-        while (($tmp = $this->_parser->fetch_variable("midcom")) !== false)
+        while (($tmp = $this->_parser->get_variable('midcom')) !== false)
         {
-            switch ($tmp[MIDCOM_HELPER_URLPARSER_KEY])
+            foreach ($tmp as $key => $value)
             {
-                case "substyle":
-                    $substyle = $tmp[MIDCOM_HELPER_URLPARSER_VALUE];
-                    debug_add("Substyle '$substyle' selected", MIDCOM_LOG_INFO);
-                    break;
+                switch ($key)
+                {
+                    case 'substyle':
+                        $substyle = $value;
+                        debug_add("Substyle '$substyle' selected", MIDCOM_LOG_INFO);
+                        break;
+    
+                    case 'serveattachmentguid':
+                    case 'serveattachment':
+                        if ($this->_parser->argc > 1)
+                        {
+                            debug_add('Too many arguments remaining for serve_attachment.', MIDCOM_LOG_ERROR);
+                        }
+                        
+                        debug_add("Trying to serve Attachment with GUID {$value}", MIDCOM_LOG_INFO);
+                        
+                        $attachment = new midcom_baseclasses_database_attachment($value);
+                        if (   !$attachment
+                            && !$attachment->guid)
+                        {
+                            $this->generate_error(MIDCOM_ERRNOTFOUND, 'Failed to access attachment: ' . mgd_errstr());
+                        }
+                        
+                        if (!$attachment->can_do('midgard:autoserve_attachment'))
+                        {
+                            $this->generate_error(MIDCOM_ERRNOTFOUND, 'Failed to access attachment: Autoserving denied.');
+                        }
+                        
+                        $this->serve_attachment($attachment);
+                        $this->finish();
+                        exit();
+                        
+                    case 'permalink':
+                        $guid = $tmp[MIDCOM_HELPER_URLPARSER_VALUE];
+                        $destination = $this->permalinks->resolve_permalink($guid);
+                        if ($destination === null)
+                        {
+                            $this->generate_error(MIDCOM_ERRNOTFOUND, "This Permalink is unknown.");
+                            // This will exit;
+                        }
+    
+                        // We use "302 Found" here so that search engines and others will keep using the PermaLink instead of the temporary
+                        $this->header("Location: {$destination}", 302);
+                        $this->finish();
+                        exit();
+    
+                    case 'cache':
+                        if ($value == 'invalidate')
+                        {
+                            $this->cache->content->enable_live_mode();
+                            $this->cache->invalidate_all();
+                            $this->uimessages->add($_MIDCOM->i18n->get_string('MidCOM', 'midcom'), "Cache invalidation successful.", 'info');
+                            $_MIDCOM->relocate('');
+                        }
+                        else if ($value == 'nocache')
+                        {
+                            $this->cache->content->no_cache();
+                        }
+                        break;
 
-                case "serveattachmentguid":
-                case "serveattachment":
-                    if ($this->_parser->argc > 1)
-                    {
-                        debug_add("Too many arguments remaining for serve_attachment.", MIDCOM_LOG_ERROR);
-                        debug_print_r("Parser object:", $this->_parser);
-                    }
-                    debug_add("Trying to serve Attachment with (GU)ID {$tmp[MIDCOM_HELPER_URLPARSER_VALUE]}", MIDCOM_LOG_INFO);
-                    $attachment = new midcom_baseclasses_database_attachment($tmp[MIDCOM_HELPER_URLPARSER_VALUE]);
-                    if (! $attachment)
-                    {
-                        $this->generate_error(MIDCOM_ERRNOTFOUND, 'Failed to access attachment: ' . mgd_errstr());
-                    }
-                    if (! $attachment->can_do('midgard:autoserve_attachment'))
-                    {
-                        $this->generate_error(MIDCOM_ERRNOTFOUND, 'Failed to access attachment: Autoserving denied.');
-                    }
-                    $this->serve_attachment($attachment);
-                    $this->finish();
-                    exit();
-
-                case "servesnippet":
-                    if ($this->_parser->argc > 1) {
-                        debug_add("Too many arguments remaining for serve_snippet.", MIDCOM_LOG_ERROR);
-                        debug_print_r("Parser object:", $this->_parser);
-                        $this->generate_error(MIDCOM_ERRNOTFOUND, "Failed to access snippet: Too many arguments for serve_snippet");
-                    }
-                    debug_add("Trying to serve snippet with ID " . $tmp[MIDCOM_HELPER_URLPARSER_VALUE], MIDCOM_LOG_INFO);
-                    $snippet = new midcom_baseclasses_database_snippet($tmp[MIDCOM_HELPER_URLPARSER_VALUE]);
-                    if (!$snippet) 
-                    {
-                        debug_add("Failed to access snippet: " . mgd_errstr(), MIDCOM_LOG_ERROR);
-                        $this->generate_error(MIDCOM_ERRNOTFOUND, "Failed to access snippet: " . mgd_errstr());
-                    }
-                    $this->serve_snippet($snippet);
-                    $this->finish();
-                    exit();
-
-                case "servesnippetguid":
-                    if ($this->_parser->argc > 1) {
-                        debug_add("Too many arguments remaining for serve_snippet.", MIDCOM_LOG_ERROR);
-                        debug_print_r("Parser object:", $this->_parser);
-                        $this->generate_error(MIDCOM_ERRNOTFOUND, "Failed to access snippet: Too many arguments for serve_snippet");
-                    }
-                    debug_add("Trying to serve snippet with GUID " . $tmp[MIDCOM_HELPER_URLPARSER_VALUE], MIDCOM_LOG_INFO);
-                    $snippet = new midcom_baseclasses_database_snippet($tmp[MIDCOM_HELPER_URLPARSER_VALUE]);
-                    if (!$snippet) 
-                    {
-                        debug_add("Failed to access snippet: " . mgd_errstr(), MIDCOM_LOG_ERROR);
-                        $this->generate_error(MIDCOM_ERRNOTFOUND, "Failed to access snippet: " . mgd_errstr());
-                    }
-                    $this->serve_snippet($snippet);
-                    $this->finish();
-                    exit();
-
-                case "cache":
-                    if ($tmp[MIDCOM_HELPER_URLPARSER_VALUE] == "invalidate")
-                    {
-                        $this->cache->content->enable_live_mode();
-                        $this->cache->invalidate_all();
-                        $this->uimessages->add($_MIDCOM->i18n->get_string('MidCOM', 'midcom'), "Cache invalidation successful.", 'info');
-                    }
-                    else if ($tmp[MIDCOM_HELPER_URLPARSER_VALUE] == "nocache")
-                    {
+                    case 'logout':
+                        // Value is ignored
                         $this->cache->content->no_cache();
-                    }
-                    break;
-
-                case "log":
-                    if ($this->_parser->argc > 1) {
-                        debug_add("Too many arguments remaining for debuglog.", MIDCOM_LOG_ERROR);
-                        debug_print_r("Parser object:", $this->_parser);
-                        $this->generate_error(MIDCOM_ERRNOTFOUND, "Failed to access debug log: Too many arguments for debuglog");
-                    }
-                    $this->_showdebuglog($tmp[MIDCOM_HELPER_URLPARSER_VALUE]);
-                    break;
-
-                case "permalink":
-                    $guid = $tmp[MIDCOM_HELPER_URLPARSER_VALUE];
-                    $destination = $this->permalinks->resolve_permalink($guid);
-                    if ($destination === null)
-                    {
-                        $this->generate_error(MIDCOM_ERRNOTFOUND, "This Permalink is unknown.");
+                        $this->auth->logout();
                         // This will exit;
-                    }
+    
+                    case 'login':
+                        // Value is ignored
+                        if ($this->auth->is_valid_user())
+                        {
+                            $this->relocate('');
+                            // This will exit;
+                        }
+                        $this->auth->show_login_page();
+                        // This will exit too;
 
-                    // We use "302 Found" here so that search engines and others will keep using the PermaLink instead of the temporary
-                    $this->header("Location: {$destination}", 302);
-                    $this->finish();
-                    exit();
-
-                case "exec":
-                    $this->_exec_file($tmp[MIDCOM_HELPER_URLPARSER_VALUE]);
-                    // This will exit;
-
-
-                // TODO: Replace login/logout with real-life versions.
-                case "logout":
-                    // Value is ignored
-                    $this->cache->content->no_cache();
-                    $this->auth->logout();
-                    // This will exit;
-
-                case "login":
-                    // Value is ignored
-                    if ($this->auth->is_valid_user())
-                    {
-                        $this->relocate('');
+                    case 'exec':
+                        $this->_exec_file($value);
                         // This will exit;
-                    }
-                    $this->auth->show_login_page();
-                    // This will exit too;
 
-                default:
-                    debug_add("Unknown MidCOM URL Property ignored: " .
-                      $tmp[MIDCOM_HELPER_URLPARSER_KEY] . " => " .
-                      $tmp[MIDCOM_HELPER_URLPARSER_VALUE], MIDCOM_LOG_WARN);
-                    $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "This midcom URL method is unknown.");
-                    // This will exit.
+                    case 'log':
+                        if ($this->_parser->argc > 1) {
+                            debug_add("Too many arguments remaining for debuglog.", MIDCOM_LOG_ERROR);
+                            $this->generate_error(MIDCOM_ERRNOTFOUND, "Failed to access debug log: Too many arguments for debuglog");
+                        }
+                        $this->_showdebuglog($value);
+                        break;
+    
+                    default:
+                        debug_add("Unknown MidCOM URL Property ignored: {$key} => {$value}", MIDCOM_LOG_WARN);
+                        $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "This MidCOM URL method is unknown.");
+                        // This will exit.
+                }
             }
         }
 
         $this->_status = MIDCOM_STATUS_CANHANDLE;
 
-        do {
-            $object = $this->_parser->fetch_object();
+        do 
+        {
+            $object = $this->_parser->get_current_object();
 
             if (!is_a($object,'midcom_db_topic'))
             {
@@ -1010,7 +953,7 @@ class midcom_application
 
                 // Strip all midcom-*-* URL Parameters out of the prefix.
 
-                $prefix = $this->_parser->fetch_URL();
+                $prefix = $this->_parser->get_url();
                 $prefix = preg_replace ("|midcom-[^-]*-[^/]*/|i","",$prefix);
 
                 // Initialize context
@@ -1027,7 +970,7 @@ class midcom_application
                 break;
             }
 
-        } while ($this->_parser->fetch_topic() !== false);
+        } while ($this->_parser->get_object() !== false);
 
         if (! $success)
         {
@@ -1038,14 +981,15 @@ class midcom_application
                 // This will exit.
             }
 
+            /*
             // Check if there is an Attachment, if yes, serve it and exit
-
             if ($this->_parser->fetch_attachment())
             {
-                $this->serve_attachment($this->_parser->fetch_object());
+                $this->serve_attachment($this->_parser->get_object());
                 $this->finish();
                 exit();
             }
+            */
 
             $this->generate_error(MIDCOM_ERRNOTFOUND, "This page is not available on this server");
             // This will exit.
@@ -1111,9 +1055,9 @@ class midcom_application
         
         $handler =& $this->componentloader->get_interface_class($path);
 
-        $this->_set_context_data($this->_parser->fetch_object(), MIDCOM_CONTEXT_CONTENTTOPIC);
+        $this->_set_context_data($this->_parser->get_current_object(), MIDCOM_CONTEXT_CONTENTTOPIC);
 
-        if (!$handler->handle($this->_parser->fetch_object(), $this->_parser->argc, $this->_parser->argv, $this->_currentcontext))
+        if (!$handler->handle($this->_parser->get_current_object(), $this->_parser->argc, $this->_parser->argv, $this->_currentcontext))
         {
             debug_add("Component $path failed to handle the request:", MIDCOM_LOG_ERROR);
             debug_add("# Error Code: " . $handler->errcode($this->_currentcontext), MIDCOM_LOG_ERROR);
@@ -1932,10 +1876,11 @@ class midcom_application
      * Create and prepare a new component context.
      *
      * @param int id Explicitly specify the ID for context creation (used during construction), this parameter is usually omitted.
+     * @param midcom_db_topic Root topic of the context
      * @return int The ID of the newly created component.
      * @access private
      */
-    function _create_context($id = null)
+    private function _create_context($id = null, $topic = null)
     {
         if (is_null($id))
         {
@@ -1944,7 +1889,7 @@ class midcom_application
         $this->_context[$id] = Array();
         $this->_context[$id][MIDCOM_CONTEXT_ANCHORPREFIX] = '';
         $this->_context[$id][MIDCOM_CONTEXT_REQUESTTYPE] = MIDCOM_REQUEST_CONTENT;
-        $this->_context[$id][MIDCOM_CONTEXT_ROOTTOPIC] = null;
+        $this->_context[$id][MIDCOM_CONTEXT_ROOTTOPIC] = $topic;
         $this->_context[$id][MIDCOM_CONTEXT_CONTENTTOPIC] = null;
         $this->_context[$id][MIDCOM_CONTEXT_COMPONENT] = null;
         $this->_context[$id][MIDCOM_CONTEXT_OUTPUT] = null;

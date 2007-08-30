@@ -434,6 +434,7 @@ $GLOBALS['midcom_config_default']['toolbars_simple_css_path'] = MIDCOM_STATIC_UR
 $GLOBALS['midcom_config_default']['toolbars_enable_centralized'] = true;
 
 // Service implementation defaults
+$GLOBALS['midcom_config_default']['service_midcom_core_service_urlparser'] = 'midcom_core_service_implementation_urlparsertopic';
 $GLOBALS['midcom_config_default']['service_midcom_core_service_urlgenerator'] = 'midcom_core_service_implementation_urlgeneratori18n';
 
 // Utilities
