@@ -128,7 +128,6 @@ require('midcom/core/querybuilder.php');
 require('midcom/core/collector.php');
 
 // Helpers and First-Generation services
-require('midcom/helper/urlparser.php');
 require('midcom/helper/_componentloader.php');
 require('midcom/helper/_styleloader.php');
 require('midcom/helper/_basicnav.php');

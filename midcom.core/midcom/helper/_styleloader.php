@@ -743,7 +743,7 @@ class midcom_helper__styleloader {
         array_unshift($this->_context, $context); // push into context stack
         debug_add("entering context $context", MIDCOM_LOG_DEBUG);
 
-        $this->_topic = $_MIDCOM->get_content_topic();
+        $this->_topic = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC);
 
         $_st = $this->_getComponentStyle($this->_topic);
         if (isset($_st)) {
@@ -780,7 +780,7 @@ class midcom_helper__styleloader {
 
         // get our topic again
         // FIXME: does this have to be above _getComponentStyle($this->_topic) ??
-        $this->_topic = $_MIDCOM->get_content_topic();
+        $this->_topic = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC);
 
         $this->_snippetdir = $this->_getComponentSnippetdir($this->_topic);
 

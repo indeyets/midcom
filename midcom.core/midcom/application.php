@@ -404,7 +404,7 @@ class midcom_application
      * Note, that there is no constructor so that initialize can already populate global references.
      *
      * Initialize the Application class. Sets all private variables to a predefined
-     * state. $topic should be set to the midcom root-topic GUID.
+     * state. $node should be set to the midcom root-node GUID.
      * $prefix can be a prefix, which is appended to get_midgard()->self (i.e. the
      * Midgard Page URL). This may be needed when MidCOM is run by wrapper.
      */
@@ -430,9 +430,9 @@ class midcom_application
         $this->_load_core_dba_classes();
 
         // Initialize Root Topic
-        $root_topic = new midcom_db_topic($GLOBALS['midcom_config']['midcom_root_topic_guid']);
-        if (   ! $root_topic
-            || !$root_topic->guid)
+        $root_node = new midcom_db_topic($GLOBALS['midcom_config']['midcom_root_topic_guid']);
+        if (   ! $root_node
+            || !$root_node->guid)
         {
             if (mgd_errno() == MGD_ERR_ACCESS_DENIED)
             {
@@ -442,7 +442,7 @@ class midcom_application
             else
             {
                 $this->generate_error(MIDCOM_ERRCRIT,
-                    "Unable to load root topic with GUID='{$GLOBALS['midcom_config']['midcom_root_topic_guid']}'.<br />" .
+                    "Unable to load root node with GUID='{$GLOBALS['midcom_config']['midcom_root_topic_guid']}'.<br />" .
                     "This is fatal, aborting. See the MidCOM log file for details.<br />" .
                     'Last Midgard Error was: ' . mgd_errstr());
             }
@@ -450,7 +450,7 @@ class midcom_application
         }
         
         // Initialize Context Storage
-        $this->_currentcontext = $this->_create_context(0, $root_topic);
+        $this->_currentcontext = $this->_create_context(0, $root_node);
 
         // Populate browser information
         $this->_populate_client();
@@ -606,10 +606,7 @@ class midcom_application
      * Under MIDCOM_REQUEST_CONTENT it tries to load the component referenced with
      * the URL $url and executes it as if it was used as primary component.
      * Additional configuration parameters can be appended through the parameter
-     * $config. Specifying a topic id will let the parser work on a different topic
-     * tree than usual. The default "null" stays within the current topic tree. It
-     * will return the Context ID on success, false on failure, generate-error will
-     * be used to generate an appropriate error message.
+     * $config.
      *
      * This is only possible if the system is in the Page-Style output phase. It
      * cannot be used within code-init or during the output phase of another
@@ -619,21 +616,13 @@ class midcom_application
      * of the component. The semantics is the same as for any other MidCOM run with
      * the following exceptions:
      *
-     * - The Topic with the ID $topicid is used as a root topic instead of the
-     *   normal root topic. This is required to be able to administrate another
-     *   Topic Tree as the AIS does.
      * - This function can (and usually will be) called during the content output phase
      *   of the system.
      * - A call to generate_error will result in an regular error page output if
      *   we still are in the code-init phase.
-     * - The parameter urlparser_prefix is there to let the parser know that we are
-     *   operating under a different environment. $midgard->self is not a good start
-     *   anymore. This is needed to provide an accurate anchor prefix in the
-     *   component context. If this parameter is omitted, it is set to the
-     *   anchor_prefix of the calling component.
      *
      * Example code, executed on a sites Homepage, it will load the newsticker from
-     * the given URL and display it using a substyle of the topic style that is assinged
+     * the given URL and display it using a substyle of the node style that is assinged
      * to the loaded one:
      *
      * <code>
@@ -705,7 +694,6 @@ class midcom_application
         $this->_currentcontext = $context;
 
         // Parser Init: Generate arguments and instantinate it.
-        $topic = $this->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
         $this->_parser = $this->serviceloader->load('midcom_core_service_urlparser');
         $argv = $this->_parser->tokenize($url);
         $this->_parser->parse($argv);
@@ -792,7 +780,7 @@ class midcom_application
      * handle the request. If one is found, it will process the request, if not, it
      * will report an error, depending on the situation.
      *
-     * Details: The logic will traverse the topic tree and for each topic it will load
+     * Details: The logic will traverse the node tree and for each node it will load
      * the component that is responsible for it. This component gets the chance to
      * acceppt the request (this is encaspulated in the _checkobject call), which is
      * basically a call to can_handle. If the component declares to be able to handle
@@ -802,18 +790,6 @@ class midcom_application
      *
      * If the parsing process doesn't find any component that declares to be able to
      * handle the request, an HTTP 404 - Not Found error is triggered.
-     *
-     * If no topic is found, it tries to serve a topic attachment as a last resort,
-     * it uses the last valid topic as container object.
-     *
-     * This method has legacy ViewerGroups parameter support since version 1.3. If
-     * a ViewerGroup parameter domain is detected at a given topic, and the user does
-     * not have the appropriate permissions, it will fire an HTTP 401 Unauthorized
-     * error. If no ViewerGroups parameter domain is there, no error will be fired.
-     *
-     * Two types of attachments will be processed and delivered automatically:
-     * Topic-Attachments and explicit attachments requested through the
-     * midcom-serveattachment... URL methods.
      *
      * @access private
      */
@@ -929,18 +905,18 @@ class midcom_application
         {
             $object = $this->_parser->get_current_object();
 
-            if (!is_a($object,'midcom_db_topic'))
+            if (!is_object($object))
             {
-                debug_add("Root topic missing.", MIDCOM_LOG_ERROR);
-                $this->generate_error(MIDCOM_ERRCRIT, "Root topic missing.");
+                debug_add("Root node missing.", MIDCOM_LOG_ERROR);
+                $this->generate_error(MIDCOM_ERRCRIT, "Root node missing.");
             }
 
             $path = $object->component;
 
             if (!$path) 
             {
-                debug_add("No component defined for this Topic.", MIDCOM_LOG_ERROR);
-                $this->generate_error(MIDCOM_ERRCRIT, "No component defined for this Topic.");
+                debug_add("No component defined for this node.", MIDCOM_LOG_ERROR);
+                $this->generate_error(MIDCOM_ERRCRIT, "No component defined for this node.");
             }
 
             $this->_set_context_data($path,MIDCOM_CONTEXT_COMPONENT);
@@ -948,14 +924,12 @@ class midcom_application
             // Check whether the component can handle the request.
             // If so, execute it, if not, continue.
 
-            if ($this->_checkobject($object)) {
+            if ($this->_checkobject($object)) 
+            {
                 $this->_status = MIDCOM_STATUS_HANDLE;
 
-                // Strip all midcom-*-* URL Parameters out of the prefix.
-
                 $prefix = $this->_parser->get_url();
-                $prefix = preg_replace ("|midcom-[^-]*-[^/]*/|i","",$prefix);
-
+                
                 // Initialize context
                 $this->_context[$this->_currentcontext][MIDCOM_CONTEXT_ANCHORPREFIX] = $prefix;
                 $this->_context[$this->_currentcontext][MIDCOM_CONTEXT_SUBSTYLE] = $substyle;
@@ -974,7 +948,7 @@ class midcom_application
 
         if (! $success)
         {
-            // We couldn't fetch a topic due to access restrictions.
+            // We couldn't fetch a node due to access restrictions.
             if (mgd_errno() == MGD_ERR_ACCESS_DENIED)
             {
                 $this->generate_error(MIDCOM_ERRFORBIDDEN, $this->i18n->get_string('access denied', 'midcom'));
@@ -1037,15 +1011,13 @@ class midcom_application
      * hook returnes false (i.e. handling failed), it will produce an Errorpage
      * according to the error code and -string of the component in question.
      *
-     * @param string $path    Override the component set in the topic (used mainly for AIS).
      * @access private
      */
-    private function _handle($path = NULL)
+    private function _handle()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
-        $opath = $this->get_context_data(MIDCOM_CONTEXT_COMPONENT);
-        if (!isset($path)) $path = $opath;
+        $path = $this->get_context_data(MIDCOM_CONTEXT_COMPONENT);
 
         if ($this->get_context_data(MIDCOM_CONTEXT_REQUESTTYPE) != MIDCOM_REQUEST_CONTENT)
         {
@@ -1121,7 +1093,7 @@ class midcom_application
      * be asked, if it can handle the request. TRUE or FALSE will be returned
      * accordingly, both on the configure and on the can_handle run.
      *
-     * @param MidgardTopic $object    The topic that is currently being tested.
+     * @param MidgardTopic $object    The node that is currently being tested.
      * @return bool                    Indication, wether a component can handle a request.
      * @access private
      */
@@ -1176,7 +1148,7 @@ class midcom_application
      * attachted to $object. The assigned component is used to determine which
      * parameter domain has to be used.
      *
-     * @param MidgardTopic $object    The topic from which to load the configuration.
+     * @param MidgardObject $object    The node from which to load the configuration.
      * @return midcom_helper_configuration    Reference to the newly constructed configuration object.
      * @access private
      */
@@ -1391,7 +1363,7 @@ class midcom_application
      * since you mostly will access it in context 0, the default. Only the AIS
      * currently uses different context IDs. The problem is, that this is not 100%
      * efficient: If you instantinate two different NAP Classes in different contexts
-     * both referring to the same root topic, you will get two different instances.
+     * both referring to the same root node, you will get two different instances.
      *
      * If the system has not completed the can_handle phase, this method fails and
      * returns false.
@@ -1419,27 +1391,6 @@ class midcom_application
         }
 
         return $this->_context[$contextid][MIDCOM_CONTEXT_NAP];
-    }
-
-    /**
-     * @deprecated This function is discouraged in favor of the component context since 2.0.0
-     *
-     * Return a copy of the topic that is handling the request.
-     *
-     * If the system is in the output phase (midcom_application::codeinit is false),
-     * this function returns a copy of the topic, that is being output, for example
-     * for the usage of the NAP System.
-     *
-     * If the system is not in the output phase, this method simply returns false.
-     *
-     * <b>Note:</b> This is equivalent to requesting the context key
-     * MIDCOM_CONTEXT_CONTENTTOPIC
-     *
-     * @return MidgardTopic    The topic being output.
-     * @see midcom_application::get_context_data()
-     */
-    function get_content_topic()  {
-        return $this->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC);
     }
 
     /**
@@ -1876,11 +1827,11 @@ class midcom_application
      * Create and prepare a new component context.
      *
      * @param int id Explicitly specify the ID for context creation (used during construction), this parameter is usually omitted.
-     * @param midcom_db_topic Root topic of the context
+     * @param MidgardObject Root node of the context
      * @return int The ID of the newly created component.
      * @access private
      */
-    private function _create_context($id = null, $topic = null)
+    private function _create_context($id = null, $node = null)
     {
         if (is_null($id))
         {
@@ -1889,7 +1840,7 @@ class midcom_application
         $this->_context[$id] = Array();
         $this->_context[$id][MIDCOM_CONTEXT_ANCHORPREFIX] = '';
         $this->_context[$id][MIDCOM_CONTEXT_REQUESTTYPE] = MIDCOM_REQUEST_CONTENT;
-        $this->_context[$id][MIDCOM_CONTEXT_ROOTTOPIC] = $topic;
+        $this->_context[$id][MIDCOM_CONTEXT_ROOTTOPIC] = $node;
         $this->_context[$id][MIDCOM_CONTEXT_CONTENTTOPIC] = null;
         $this->_context[$id][MIDCOM_CONTEXT_COMPONENT] = null;
         $this->_context[$id][MIDCOM_CONTEXT_OUTPUT] = null;

@@ -19,6 +19,8 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
     private $root_topic = null;
     private $current_object = null;
 
+    private $url = '';
+
     public function __construct()
     {
         $this->root_topic = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
@@ -83,6 +85,7 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
         $this->argv_original = $argv;
         
         $this->current_object = $this->root_topic;
+        $this->url = '';
     }
 
     /**
@@ -128,6 +131,8 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
         // Remove this component from path
         $this->argc -= 1;
         array_shift ($this->argv);
+
+        $this->url .= $this->current_object->name . '/';
         
         return $this->current_object;
     }
@@ -182,7 +187,7 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
      */
     public function get_url()
     {
-        return implode('/', $this->argv_original) . '/';
+        return '/' . $this->url;
     }
 }
 ?>
