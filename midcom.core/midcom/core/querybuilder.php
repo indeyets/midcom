@@ -275,12 +275,12 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      */
     function _execute_and_check_privileges($false_on_empty_mgd_resultset = false)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         // TODO: Remove this silence after all MgdSchemas are fixed
         $result = @$this->_qb->execute();
         if (!is_array($result))
         {
             $this->_qb_error_result = $result;
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_print_r('Result was:', $result);
             debug_add('The querybuilder failed to execute, aborting.', MIDCOM_LOG_ERROR);
             debug_add('Last Midgard error was: ' . mgd_errstr(), MIDCOM_LOG_ERROR);
@@ -292,7 +292,6 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
             debug_pop();
             return $result;
         }
-        debug_add('Got ' . count($result) . ' initial results');
         if (   empty($result)
             && $false_on_empty_mgd_resultset)
         {
@@ -303,15 +302,14 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         // Workaround until the QB returns the correct type, refetch everything
         $newresult = Array();
         $classname = $this->_real_class;
-        $skipped_objects = 0;
         $this->denied = 0;
+        debug_push_class(__CLASS__, __FUNCTION__);
         foreach ($result as $key => $value)
         {
             // Workaround to ML bug where we get multiple results in non-strict mode
             if (isset($this->_seen_guids[$value->guid]))
             {
-                debug_add("The {$classname} object {$value->guid} has already been seen, probably MultiLang bug", MIDCOM_LOG_WARN);
-                //debug_add('var_export($seen_guids): ' . var_export($this->_seen_guids, true));
+                //debug_add("The {$classname} object {$value->guid} has already been seen, probably MultiLang bug", MIDCOM_LOG_WARN);
                 continue;
             }
             $this->_seen_guids[$value->guid] = true;
@@ -323,7 +321,6 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
             {
                 // This is logged by the callers
                 $this->denied++;
-                $skipped_objects++;
                 continue;
             }
 
@@ -332,7 +329,6 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
             {
                 debug_add("Could not create a MidCOM DBA instance of the {$classname} ID {$value->id}. See debug level log for details.",
                     MIDCOM_LOG_INFO);
-                $skipped_objects++;
                 continue;
             }
 
@@ -344,21 +340,19 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
                 {
                     debug_add("Could not create a MidCOM metadata instance for {$classname} ID {$value->id}, assuming an invisible object.",
                         MIDCOM_LOG_INFO);
-                    $skipped_objects++;
                     continue;
                 }
 
                 if (! $metadata->is_object_visible_onsite())
                 {
                     debug_add("The {$classname} ID {$value->id} is hidden by metadata.", MIDCOM_LOG_INFO);
-                    $skipped_objects++;
                     continue;
                 }
             }
 
             $newresult[] = $object;
         }
-        debug_add('Returning ' . count($newresult) . ' items');
+        //debug_add('Returning ' . count($newresult) . ' items');
         debug_pop();
         return $newresult;
     }
