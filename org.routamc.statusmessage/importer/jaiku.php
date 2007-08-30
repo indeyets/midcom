@@ -104,7 +104,7 @@ class org_routamc_statusmessage_importer_jaiku extends org_routamc_statusmessage
         $jaiku = $client->get("http://{$username}.jaiku.com/feed/json?user={$username}&personal_key={$personal_key}");
         if ($jaiku)
         {
-            $jaiku_messages = midcom_helper_json_decode($jaiku);
+            $jaiku_messages = json_decode($jaiku);
             $messages = array();
             if (   $jaiku_messages
                 && !empty($jaiku_messages->stream))

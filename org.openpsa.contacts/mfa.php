@@ -62,7 +62,7 @@ class fi_incognito_protustree_item {
     }
     
     function as_json() {        
-        return midcom_helper_json_encode($this);
+        return json_encode($this);
     }
 
 }

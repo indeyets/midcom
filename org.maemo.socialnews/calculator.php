@@ -49,7 +49,7 @@ class org_maemo_socialnews_calculator extends midcom_baseclasses_components_pure
             return 0;
         }
         
-        $item_data = midcom_helper_json_decode($json);
+        $item_data = json_decode($json);
         
         if (!isset($item_data[0]->total_posts))
         {
@@ -68,7 +68,7 @@ class org_maemo_socialnews_calculator extends midcom_baseclasses_components_pure
             return 0;
         }
         
-        $item_data = midcom_helper_json_decode($json);
+        $item_data = json_decode($json);
         
         if (   !isset($item_data->stories)
             || !is_array($item_data->stories))

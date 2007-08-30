@@ -54,7 +54,7 @@ class org_routamc_statusmessage_importer_twitter extends org_routamc_statusmessa
         $twitter = $client->get('http://twitter.com/statuses/friends_timeline.json', null, $username, $password);
         if ($twitter)
         {
-            $twitter_messages = midcom_helper_json_decode($twitter);
+            $twitter_messages = json_decode($twitter);
             $messages = array();
             if ($twitter_messages)
             {
