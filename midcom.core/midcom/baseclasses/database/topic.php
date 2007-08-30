@@ -74,6 +74,11 @@ class midcom_baseclasses_database_topic extends __midcom_baseclasses_database_to
         $mc_topic_keys = $mc_topic->list_keys();
         list ($key, $copy) = each ($mc_topic_keys);
         $parent_id = $mc_topic->get_subkey($key, 'up');
+        if ($parent_id == 0)
+        {
+            return null;
+        }
+        
         $mc_parent = midcom_baseclasses_database_topic::new_collector('id', $parent_id);
         $mc_parent->add_value_property('guid');
         if (!$mc_parent->execute())
