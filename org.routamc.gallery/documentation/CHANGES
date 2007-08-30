@@ -7,6 +7,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-08-30 adrenalin
+  - Changed to resolve photos with midgard_collector instead of midgard_query_builder
+
 2007-08-21 adrenalin
   - Fixed some minor bugs in AJAX editing mode support when sorting photos already found from subgalleries
 
