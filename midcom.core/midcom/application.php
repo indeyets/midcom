@@ -106,15 +106,6 @@
  */
 class midcom_application 
 {
-
-    /**
-     * The URL parser.
-     *
-     * @var midcom_helper_urlparser
-     * @access private
-     */
-    private $_parser;
-
     /**
      * Holds the component context information. This is an array of arrays, the outer
      * one indexed by context IDs, thie inner one indexed by context keys. Only valid
@@ -131,7 +122,7 @@ class midcom_application
      * @var int
      * @access private
      */
-    private $_currentcontext;
+    private $_currentcontext = null;
 
     /**
      * The active component.
@@ -139,7 +130,7 @@ class midcom_application
      * @var string
      * @access private
      */
-    private $_currentcomponent;
+    private $_currentcomponent = '';
 
     /**
      * The client status array.
@@ -147,7 +138,7 @@ class midcom_application
      * @var Array
      * @access private
      */
-    private $_client;
+    private $_client = array();
 
     /**
      * The prefix, which is appended to get_midgard()->self (i.e. the
@@ -157,7 +148,7 @@ class midcom_application
      * @var string
      * @access private
      */
-    private $_prefix;
+    private $_prefix = '';
 
     /**
      * Integer constant resembling the current MidCOM state.
@@ -167,7 +158,7 @@ class midcom_application
      * @var int
      * @access private
      */
-    private $_status;
+    private $_status = null;
 
     /**
      * This is the interface to MidCOMs Object Services. Each service is indexed
@@ -176,7 +167,15 @@ class midcom_application
      * @var Array
      * @access private
      */
-    private $_services;
+    private $_services = array();
+
+    /**
+     * The URL parser.
+     *
+     * @var midcom_helper_urlparser
+     * @access private
+     */
+    private $_parser = null;
 
     /**
      * The service loader.
@@ -271,12 +270,12 @@ class midcom_application
     public $metadata = null;
 
     /**
-     * String with all JavaScript declarations for the page's head.
+     * Array with all JavaScript declarations for the page's head.
      *
-     * @var string
+     * @var Array
      * @access private
      */
-    private $_jshead;
+    private $_jshead = array();
 
     /**
      * String with all prepend JavaScript declarations for the page's head.
@@ -284,7 +283,7 @@ class midcom_application
      * @var string
      * @access private
      */
-    private $_prepend_jshead;
+    private $_prepend_jshead = '';
 
     /**
      * Boolean showing if jQuery is enabled
@@ -303,26 +302,34 @@ class midcom_application
     private $_jquery_states = array();
 
     /**
+     * Array with all linked URLs for HEAD.
+     *
+     * @var Array
+     * @access private
+     */
+    private $_linkhrefs = array();
+
+    /**
      * Array with all methods for the BODY's onload event.
      *
      * @var Array
      * @access private
      */
-    private $_jsonload;
+    private $_jsonload = array();
 
     /**
      * string with all metatags to go into the page head.
      * @var string
      * @access private
      */
-    private $_meta_head = "";
+    private $_meta_head = '';
 
     /**
      * string with all object tags to go into a page's head.
      * @var string
      * @access private
      */
-    private $_object_head = "";
+    private $_object_head = '';
 
     /**
      * String with all css styles to go into a page's head.
@@ -330,7 +337,7 @@ class midcom_application
      * @var string
      * @access private
      */
-    private $_style_head = "";
+    private $_style_head = '';
 
     /**
      * String with all link elements to be included in a page's head.
@@ -338,7 +345,7 @@ class midcom_application
      * @var string
      * @access private
      */
-    private $_link_head = "";
+    private $_link_head = '';
 
     /**
      * Host prefix cache to avoid computing it each time.
@@ -347,7 +354,7 @@ class midcom_application
      * @access private
      * @see midcom_application::get_host_prefix();
      */
-    private $_cached_host_prefix;
+    private $_cached_host_prefix = '';
 
     /**
      * Page prefix cache to avoid computing it each time.
@@ -356,7 +363,7 @@ class midcom_application
      * @access private
      * @see midcom_application::get_page_prefix();
      */
-    private $_cached_page_prefix;
+    private $_cached_page_prefix = '';
 
     /**
      * Host name cache to avoid computing it each time.
@@ -395,72 +402,19 @@ class midcom_application
      */
     public function initialize()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
-        // MidCOM System Data
-        $this->_parser = false;
-        $this->_services = Array();
-        $this->_jsfiles = Array();
-        $this->_jshead = Array();
-        $this->_jsonload = Array();
-        $this->_linkhrefs = Array();
-
         // set prefix for "new" midgard->self
         $this->_prefix = $GLOBALS['midcom_config']['midcom_prefix'];
 
         $this->midgard = $this->get_midgard();
 
         $this->_status = MIDCOM_STATUS_PREPARE;
+        
+        // Load the services that are always needed, including the serviceloader
+        $this->_load_core_services();
 
-        // Service startup
-        $this->cache =& $GLOBALS['midcom_cache'];
-        $this->i18n = new midcom_services_i18n();
-        $this->componentloader = new midcom_helper__componentloader();
-        $this->dbclassloader = new midcom_services_dbclassloader();
-        $this->dbclassloader->load_classes('midcom', 'legacy_classes.inc');
-        // 2007-03-27 rambo
-        $this->dbclassloader->load_classes('midcom', 'core_classes.inc');
-        $this->dbfactory = new midcom_helper__dbfactory();
-        $this->style = new midcom_helper__styleloader();
-        $this->auth = new midcom_services_auth();
-        $this->auth->initialize();
-        $this->permalinks = new midcom_services_permalinks();
-        $this->serviceloader = new midcom_helper_serviceloader();        
-        $this->tmp = new midcom_services_tmp();
-        $this->toolbars = new midcom_services_toolbars();
-        $this->uimessages = new midcom_services_uimessages();
-        $this->metadata = new midcom_services_metadata();
-        
-        $this->_services['rcs'] = new midcom_services_rcs($GLOBALS['midcom_config']);
-        
         $this->componentloader->load_all_manifests();
 
-        // Load DBA legacy classes required for core operation
-        require('db/article.php');
-        require('baseclasses/database/attachment.php');
-        require('db/element.php');
-        require('db/event.php');
-        require('db/eventmember.php');
-        require('db/group.php');
-        require('db/host.php');
-        require('baseclasses/database/language.php');
-        require('db/member.php');
-        require('db/page.php');
-        require('db/pageelement.php');
-        require('baseclasses/database/parameter.php');
-        require('db/person.php');
-        require('baseclasses/database/snippet.php');
-        require('baseclasses/database/snippetdir.php');
-        require('db/style.php');
-        require('db/topic.php');
-        // 2007-03-27 rambo
-        require('db/privilege_dba.php');
-        require('db/group_virtual_dba.php');
-        /*
-         * sitegroup not defined in MgdSchema.xml
-         *
-        require('db/sitegroup.php');
-         */
+        $this->_load_core_dba_classes();
 
         // Initialize Root Topic
         $root_topic = new midcom_db_topic($GLOBALS['midcom_config']['midcom_root_topic_guid']);
@@ -488,23 +442,80 @@ class midcom_application
         $this->_currentcontext = 0;
         $this->_context[0][MIDCOM_CONTEXT_ROOTTOPIC] = $root_topic;
 
+        // Populate browser information
         $this->_populate_client();
 
-        // Check the midcom_config ais/site prefixes for absolute local urls
-        if ($GLOBALS['midcom_config']['midcom_ais_url'][0] == '/')
-        {
-            $GLOBALS['midcom_config']['midcom_ais_url'] =
-                $this->get_host_prefix()
-                . substr($GLOBALS['midcom_config']['midcom_ais_url'], 1);
-        }
+        // Check the midcom_config site prefix for absolute local urls
         if ($GLOBALS['midcom_config']['midcom_site_url'][0] == '/')
         {
             $GLOBALS['midcom_config']['midcom_site_url'] =
                 $this->get_host_prefix()
                 . substr($GLOBALS['midcom_config']['midcom_site_url'], 1);
         }
+    }
 
-        debug_pop();
+    /**
+     * Load all services MidCOM needs to keep always available
+     *
+     * @todo: move those that aren't always needed behind serviceloader
+     */
+    private function _load_core_services()
+    {
+        // These are core functionality
+        $this->serviceloader = new midcom_helper_serviceloader();
+        $this->cache =& $GLOBALS['midcom_cache'];
+        $this->i18n = new midcom_services_i18n();
+        $this->componentloader = new midcom_helper__componentloader();
+        $this->dbclassloader = new midcom_services_dbclassloader();
+        $this->dbclassloader->load_classes('midcom', 'legacy_classes.inc');
+        $this->dbclassloader->load_classes('midcom', 'core_classes.inc');
+        $this->dbfactory = new midcom_helper__dbfactory();
+        $this->style = new midcom_helper__styleloader();
+        $this->auth = new midcom_services_auth();
+        $this->auth->initialize();
+        
+        // These can be refactored behind serviceloader
+        $this->permalinks = new midcom_services_permalinks();    
+        $this->tmp = new midcom_services_tmp();
+        $this->toolbars = new midcom_services_toolbars();
+        $this->uimessages = new midcom_services_uimessages();
+        $this->metadata = new midcom_services_metadata();
+        $this->_services['rcs'] = new midcom_services_rcs($GLOBALS['midcom_config']);
+    }
+    
+    /**
+     * Load core DBA classes
+     *
+     * @todo: move behind autoload
+     */
+    private function _load_core_dba_classes()
+    {
+        // Load DBA legacy classes required for core operation
+        require('db/article.php');
+        require('baseclasses/database/attachment.php');
+        require('db/element.php');
+        require('db/event.php');
+        require('db/eventmember.php');
+        require('db/group.php');
+        require('db/host.php');
+        require('baseclasses/database/language.php');
+        require('db/member.php');
+        require('db/page.php');
+        require('db/pageelement.php');
+        require('baseclasses/database/parameter.php');
+        require('db/person.php');
+        require('baseclasses/database/snippet.php');
+        require('baseclasses/database/snippetdir.php');
+        require('db/style.php');
+        require('db/topic.php');
+        // 2007-03-27 rambo
+        require('db/privilege_dba.php');
+        require('db/group_virtual_dba.php');
+        /*
+         * sitegroup not defined in MgdSchema.xml
+         *
+        require('db/sitegroup.php');
+         */
     }
 
     /* *************************************************************************
@@ -622,7 +633,7 @@ class midcom_application
      * <?php
      * $newsticker = '/newsticker/latest/3.html';
      * $substyle = 'homepage';
-     * $GLOBALS['midcom']->dynamic_load("/midcom-substyle-{$substyle}/{$newsticker}");
+     * $_MIDCOM->dynamic_load("/midcom-substyle-{$substyle}/{$newsticker}");
      * ?>
      * </code>
      *
@@ -634,9 +645,9 @@ class midcom_application
      * <code>
      * <?php
      * global $view;
-     * $GLOBALS['midcom']->dynamic_load($view['url1']);
+     * $_MIDCOM->dynamic_load($view['url1']);
      * // You will most probably fail, could even loop infinitly!
-     * $GLOBALS['midcom']->dynamic_load($view['url2']);
+     * $_MIDCOM->dynamic_load($view['url2']);
      * ?>
      * </code>
      *
@@ -651,8 +662,8 @@ class midcom_application
      * <code>
      * <?php
      * $view = $GLOBALS['view'];
-     * $GLOBALS['midcom']->dynamic_load($view['url1']);
-     * $GLOBALS['midcom']->dynamic_load($view['url2']);
+     * $_MIDCOM->dynamic_load($view['url1']);
+     * $_MIDCOM->dynamic_load($view['url2']);
      * ?>
      * </code>
      *
@@ -1777,7 +1788,7 @@ class midcom_application
      *
      * <code>
      * <?php
-     * $GLOBALS['midcom']->load_library('midcom.helper.datamanager');
+     * $_MIDCOM->load_library('midcom.helper.datamanager');
      * ?>
      * </code>
      *
@@ -2695,7 +2706,7 @@ class midcom_application
      * <HTML>
      *     <HEAD>
      *         <!-- Further HEAD Tags -->
-     *         <?php echo $GLOBALS['midcom']->print_jscripts(); ?>
+     *         <?php echo $_MIDCOM->print_jscripts(); ?>
      *     </HEAD>
      * </HTML>
      * </code>
@@ -2737,7 +2748,7 @@ class midcom_application
      *
      * <code>
      * <HTML>
-     *     <BODY <?php echo $GLOBALS['midcom']->print_jsonload();?>>
+     *     <BODY <?php echo $_MIDCOM->print_jsonload();?>>
      *            <!-- your actual body -->
      *     </BODY>
      * </HTML>
