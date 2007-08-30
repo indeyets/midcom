@@ -551,7 +551,7 @@ class midcom_application
 
         // Parse the URL
         $this->_parser = $this->serviceloader->load('midcom_core_service_urlparser');
-        $this->_parser->parse($_MIDGARD['argv']);
+        $this->_parser->parse($GLOBALS['midgard']->argv);
         
         if (!$this->_parser) 
         {
@@ -2591,42 +2591,6 @@ class midcom_application
     function add_jsonload($method) {
         // Adds an method name for <body onload=".."> The string must not end with a ;, it is added automagically
         $this->_jsonload[] = $method;
-    }
-
-    /**
-     * Echo the registred javascript code.
-     *
-
-     * <b>Note:</b> These functions originate from the class midcom_admin_content and were
-     * moved to here to allow datamanager edit forms with DHTML widget support outside
-     * of AIS. The function stubs in midcom_admin_content remain in place for
-     * backwards-compatibility.
-     *
-     * The sequence of the add_jsfile and add_jscript commands is kept stable.
-     *
-     * This is usually called during the HEAD region of your style:
-     *
-     * <code>
-     * <HTML>
-     *     <HEAD>
-     *         <!-- Further HEAD Tags -->
-     *         <?php echo $_MIDCOM->print_jscripts(); ?>
-     *     </HEAD>
-     * </HTML>
-     * </code>
-     *
-     * @see midcom_application::add_jsfile();
-     * @see midcom_application::add_jscript();
-     * @see midcom_application::add_jsonload();
-     * @see midcom_application::print_jsonload();
-     *
-     * @deprecated This function is deprecated as of MidCOM 2.2, being replaced by print_head_elements,
-     *     the call is releated to that function by default.
-     * @see midcom_application::print_head_elements();
-     */
-    function print_jscripts() {
-        debug_add('DEPRECATED FUNCTION USED: midcom_application::print_jscripts().', MIDCOM_LOG_WARN);
-        $this->print_head_elements();
     }
 
     /**

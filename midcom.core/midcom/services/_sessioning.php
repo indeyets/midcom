@@ -60,12 +60,10 @@ class midcom_service__sessioning
      */
     function midcom_service__sessioning()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         static $started = false;
 
         if ($started)
         {
-            debug_pop();
             $_MIDCOM->generate_error("MidCOM Sessioning has already been started, it must not be started twice. Aborting",
                                                MIDCOM_ERRCRIT);
         }
@@ -74,10 +72,8 @@ class midcom_service__sessioning
 
         @session_start();
 
-        debug_print_r("SESSION: Dump of the current complete session", $_SESSION);
-
         // Disable caching for sessioned requests
-        $GLOBALS["midcom"]->cache->content->no_cache();
+        $_MIDCOM->cache->content->no_cache();
 
         // Check for session data and load or initialize it, if neccessary
         if (! array_key_exists("midcom_session_data", $_SESSION))
@@ -85,9 +81,6 @@ class midcom_service__sessioning
             $_SESSION["midcom_session_data"] = Array();
             $_SESSION["midcom_session_data"]["midcom.service.sessioning"]["startup"] = serialize(time());
         }
-
-        debug_print_r("SESSION: Dump after construction (serialized)", $_SESSION["midcom_session_data"]);
-        debug_pop();
     }
 
     /**
