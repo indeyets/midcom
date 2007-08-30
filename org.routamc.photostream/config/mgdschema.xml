@@ -2,13 +2,13 @@
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
     <type name="org_routamc_photostream_photo" table="org_routamc_photostream_photo" parent="midgard_topic" parentfield="node">
         <property name="id" type="integer" primaryfield="id"/>
-        <property name="node" link="midgard_topic:id" reverse="no" type="integer"/>
+        <property name="node" link="midgard_topic:id" reverse="no" type="integer" parentfield="node"/>
         
         <!-- External IDs can be used to store identifier of the image in some external service, like Flickr -->
         <property name="externalid" type="string"/>
 
         <!-- Photographer is always a person in DB. If you want to store extra attribution data use parameters -->
-        <property name="photographer" link="midgard_person:id" reverse="no" type="integer" parentfield="photographer" />
+        <property name="photographer" link="midgard_person:id" reverse="no" type="integer" />
 
         <!-- Direct links to archival, "fullscale" and thumbnail attachments -->
         <property name="archival" link="midgard_attachment:id" reverse="yes" type="integer"/>
