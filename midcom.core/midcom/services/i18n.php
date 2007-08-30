@@ -504,17 +504,16 @@ class midcom_services_i18n
      * suitable default language. Cookies have priority here.
      */
     function _set_startup_langs()
-    {
-        debug_push("midcom_services_i18n::_set_startup_langs");
-        
+    {        
         $this->_current_content_language_midgard = $_MIDGARD['lang'];
 
         $this->_read_cookie();
         if (!is_null ($this->_cookie_data))
         {
-            $this->_current_language = $this->_cookie_data["language"];
-            $this->_current_charset = $this->_cookie_data["charset"];
-            debug_add("Set current language to " . $this->_current_language . " with charset " . $this->_current_charset . " (cookie)", MIDCOM_LOG_INFO);
+            $this->_current_language = $this->_cookie_data['language'];
+            $this->_current_charset = $this->_cookie_data['charset'];
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Set current language to {$this->_current_language} with charset {$this->_current_charset} (source: cookie)", MIDCOM_LOG_INFO);
             debug_pop();
             return;
         }
@@ -524,7 +523,8 @@ class midcom_services_i18n
         if ($content_language)
         {
             $this->_current_language = $content_language;
-            debug_add("Set current language to " . $this->_current_language . " with charset (Midgard host language)", MIDCOM_LOG_INFO);
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Set current language to {$this->_current_language} (source: Midgard host language)", MIDCOM_LOG_INFO);
             debug_pop();
             return;  
         }
@@ -541,7 +541,8 @@ class midcom_services_i18n
                 }
             }
         }
-        debug_add("Set current language to " . $this->_current_language . " with charset " . $this->_current_charset. " (HTTP)", MIDCOM_LOG_INFO);
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Set current language to {$this->_current_language} with charset {$this->_current_charset} (Source: HTTP)", MIDCOM_LOG_INFO);
         debug_pop();
     }
 
@@ -551,27 +552,23 @@ class midcom_services_i18n
      */
     function _read_cookie ()
     {
-        debug_push("midcom_services_i18n::_read_cookie");
-
         if (!isset ($_COOKIE))
         {
-            debug_add("No Cookies found at all.", MIDCOM_LOG_DEBUG);
-            debug_pop();
             return;
         }
 
         if (!array_key_exists("midcom_services_i18n",$_COOKIE))
         {
-            debug_add("No midcom_services_i18n Cookie on this site", MIDCOM_LOG_DEBUG);
-            debug_pop();
             return;
         }
 
-        $rawdata = base64_decode($_COOKIE["midcom_services_i18n"]);
+        $rawdata = base64_decode($_COOKIE['midcom_services_i18n']);
         $array = unserialize($rawdata);
 
-        if (! array_key_exists("language",$array) || ! array_key_exists("charset",$array))
+        if (   ! array_key_exists('language', $array) 
+            || ! array_key_exists('charset', $array))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);        
             debug_add("Rejecting cookie, it seems invalid.", MIDCOM_LOG_DEBUG);
             debug_pop();
             return;
@@ -589,8 +586,6 @@ class midcom_services_i18n
      */
     function _read_http_negotiation ()
     {
-        debug_push("midcom_services_i18n::_read_http_negotiation");
-
         $headers = getallheaders();
 
         if (array_key_exists("Accept-Language", $headers))
@@ -631,7 +626,6 @@ class midcom_services_i18n
                 $this->_http_lang[$lang] = $q;
             }
             arsort($this->_http_lang, SORT_NUMERIC);
-            debug_print_r("Language preference array:", $this->_http_lang, MIDCOM_LOG_DEBUG);
         }
 
         if (array_key_exists("Accept-Charset", $headers))
@@ -672,10 +666,7 @@ class midcom_services_i18n
                 $this->_http_charset[$lang] = $q;
             }
             arsort ($this->_http_charset, SORT_NUMERIC);
-            debug_print_r("Charset preference array:", $this->_http_charset);
         }
-
-        debug_pop();
     }
 
     /**

@@ -79,7 +79,7 @@ class midcom_services_cache
 
         foreach ($GLOBALS['midcom_config']['cache_autoload_queue'] as $name)
         {
-            debug_add("Auto-Loading module {$name}", MIDCOM_LOG_INFO);
+            debug_add("Auto-Loading module {$name}", MIDCOM_LOG_DEBUG);
             $this->load_module($name);
         }
 

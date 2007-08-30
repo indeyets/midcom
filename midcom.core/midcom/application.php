@@ -463,7 +463,8 @@ class midcom_application {
 
         // Initialize Root Topic
         $root_topic = new midcom_db_topic($GLOBALS['midcom_config']['midcom_root_topic_guid']);
-        if (! $root_topic)
+        if (   ! $root_topic
+            || !$root_topic->guid)
         {
             if (mgd_errno() == MGD_ERR_ACCESS_DENIED)
             {
@@ -521,26 +522,24 @@ class midcom_application {
      *
      * @see midcom_application::_process()
      */
-    function codeinit() {
-        debug_push("midcom_application::codeinit");
-
+    function codeinit() 
+    {
         $oldcontext = $this->_currentcontext;
         $this->_currentcontext = 0;
 
         // Initialize the UI message stack from session
         $this->uimessages->initialize();
 
-        debug_add("Creating URL Parser with argc/v from global Environment", MIDCOM_LOG_DEBUG);
         $topic = $this->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
         $this->_parser = new midcom_helper_urlparser($topic->id);
 
-        if (!$this->_parser) {
-            debug_add("URL Parser is not instantinated, Bailing out.", MIDCOM_LOG_ERROR);
+        if (!$this->_parser) 
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('URL Parser is not instantinated, bailing out.', MIDCOM_LOG_ERROR);
             debug_pop();
-            $this->generate_error(MIDCOM_ERRCRIT,$GLOBALS["midcom_errstr"]);
+            $this->generate_error(MIDCOM_ERRCRIT, $GLOBALS['midcom_errstr']);
         }
-
-        debug_print_r ("ARGC = {$GLOBALS['argc']}; ARGV =", $GLOBALS["argv"]);
 
         $this->_process();
 
@@ -550,9 +549,6 @@ class midcom_application {
         
         // Let metadata service add its meta tags
         $this->metadata->populate_meta_head();
-
-        debug_add("code-init finished", MIDCOM_LOG_INFO);
-        debug_pop();
     }
 
     /**
@@ -561,11 +557,12 @@ class midcom_application {
      * This function must be called in the content area of the
      * Style template, usually <(content)>.
      */
-    function content() {
-        debug_push("midcom_application::content");
+    function content() 
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);    
 
         // Enter Context
-        debug_add("Entering Context 0 (old Context: $this->_currentcontext)", MIDCOM_LOG_DEBUG);
+        debug_add("Entering Context 0 (old Context: {$this->_currentcontext})", MIDCOM_LOG_DEBUG);
         $oldcontext = $this->_currentcontext;
         $this->_currentcontext = 0;
         $this->style->enter_context(0);
@@ -573,7 +570,7 @@ class midcom_application {
         $this->_output();
 
         // Leave Context
-        debug_add("Leaving Context 0 (new Context: $oldcontext)", MIDCOM_LOG_DEBUG);
+        debug_add("Leaving Context 0 (new Context: {$oldcontext})", MIDCOM_LOG_DEBUG);
         $this->style->leave_context();
         $this->_currentcontext = $oldcontext;
 
@@ -660,18 +657,13 @@ class midcom_application {
      *
      * @param string $url                The URL, relative to the Midgard Page, that is to be requested.
      * @param Array $config                A key=>value array with any configuration overrides.
-     * @param int $type                    Any one of the MIDCOM_REQUEST_* constants (used for AIS only).
-     * @param int $topicid                The ID of the content root topic (used for AIS only).
-     * @param string $urlparser_prefix    The Prefix for the URL parser to use (used for AIS only).
      * @return int                        The ID of the newly created context.
      */
-    function dynamic_load($url, $config = array(), $type = MIDCOM_REQUEST_CONTENT, $topicid = null, $urlparser_prefix = null) {
-        global $midcom_errstr;
-
+    function dynamic_load($url, $config = array(), $type = MIDCOM_REQUEST_CONTENT) 
+    {
         debug_push_class(__CLASS__, __FUNCTION__);
 
         debug_add("Dynamic load of URL {$url}", MIDCOM_LOG_INFO);
-        debug_add("Request Type is {$type}, optional Root Topic ID is {$topicid}");
 
         if (substr($url, -5) == '.html')
         {
@@ -682,17 +674,13 @@ class midcom_application {
             && $this->_status < MIDCOM_STATUS_CONTENT)
         {
             debug_add("dynamic_load content request called before content output phase. Aborting.", MIDCOM_LOG_ERROR);
+            debug_pop();
             $this->generate_error(MIDCOM_ERRCRIT, "dynamic_load content request called before content output phase.");
-        }
-
-        if (!is_null($topicid) && is_null($urlparser_prefix))
-        {
-            $urlparser_prefix = $this->get_component_context(MIDCOM_CONTEXT_ANCHORPREFIX);
+            // This will exit
         }
 
         // Determine new Context ID and set $this->_currentcontext,
         // enter that context and prepare its data structure.
-
         $context = $this->_create_context();
         $oldcontext = $this->_currentcontext;
         $this->_currentcontext = $context;
@@ -700,14 +688,7 @@ class midcom_application {
         $this->_context[$context][MIDCOM_CONTEXT_REQUESTTYPE] = $type;
         $this->_context[$context][MIDCOM_CONTEXT_CONTENTTOPIC] = null;
         $this->_context[$context][MIDCOM_CONTEXT_COMPONENT] = null;
-        if (is_null($topicid))
-        {
-            $this->_context[$context][MIDCOM_CONTEXT_ROOTTOPIC] = $this->_context[0][MIDCOM_CONTEXT_ROOTTOPIC];
-        }
-        else
-        {
-            $this->_context[$context][MIDCOM_CONTEXT_ROOTTOPIC] = new midcom_db_topic($topicid);
-        }
+        $this->_context[$context][MIDCOM_CONTEXT_ROOTTOPIC] = $this->_context[0][MIDCOM_CONTEXT_ROOTTOPIC];
         $this->_context[$context][MIDCOM_CONTEXT_OUTPUT] = null;
         $this->_context[$context][MIDCOM_CONTEXT_NAP] = null;
         $this->_context[$context][MIDCOM_CONTEXT_PAGETITLE] = "";
@@ -733,22 +714,14 @@ class midcom_application {
             $argv = explode ("/", $url);
         }
 
-        if (is_null($topicid))
-        {
-            $topic = $this->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
-            $this->_parser = new midcom_helper_urlparser($topic->id, $argv);
-        }
-        else
-        {
-            $this->_parser = new midcom_helper_urlparser($topicid, $argv, $urlparser_prefix);
-        }
-
+        $topic = $this->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
+        $this->_parser = new midcom_helper_urlparser($topic->id, $argv);
 
         if (!$this->_parser)
         {
             debug_add("URL Parser could not be instantinated: $midcom_errstr", MIDCOM_LOG_ERROR);
             debug_pop();
-            $this->generate_error(MIDCOM_ERRCRIT, "URL Parser could not be instantinated: $midcom_errstr");
+            $this->generate_error(MIDCOM_ERRCRIT, "URL Parser could not be instantinated: {$GLOBALS['midcom_errstr']}");
         }
 
         // Processing, upon error the generate_error function will die here...

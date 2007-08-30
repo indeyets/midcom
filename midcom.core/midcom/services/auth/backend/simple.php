@@ -39,23 +39,16 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
      */
     function midcom_services_auth_backend_simple ()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
         $this->_cookie_id .= $GLOBALS['midcom_config']['auth_backend_simple_cookie_id'];
-        debug_add("We have to use this cookie id: {$this->_cookie_id}");
 
-        debug_pop();
         return parent::midcom_services_auth_backend();
     }
 
     function read_login_session()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
-        debug_print_r('Checking this Cookie Array:', $_COOKIE);
-
         if (! array_key_exists($this->_cookie_id, $_COOKIE))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('There is no cookie, we cannot read the login session.');
             debug_pop();
             return false;
@@ -64,9 +57,10 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
         $data = explode('-', $_COOKIE[$this->_cookie_id]);
         if (count($data) != 2)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);        
             debug_add("The cookie data could not be parsed, assuming tampered session.",
                 MIDCOM_LOG_ERROR);
-            debug_add('Killing the cookie...');
+            debug_add('Killing the cookie...', MIDCOM_LOG_INFO);
             $this->_delete_cookie();
             debug_pop();
             return false;
@@ -75,11 +69,11 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
         $session_id = $data[0];
         $user_id = $data[1];
 
-        debug_add("Extracted the user ID {$user_id} and the session ID {$session_id}.");
         $this->user =& $_MIDCOM->auth->get_user($user_id);
 
         if (! $this->user)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);        
             debug_add("The user ID {$user_id} is invalid, could not load the user from the database, assuming tampered session.",
                 MIDCOM_LOG_ERROR);
             debug_add('Killing the cookie...');
@@ -92,6 +86,7 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
 
         if (! $this->session_id)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);        
             debug_add("The session {$this->session_id} is invalid (usually this means an expired session).",
                 MIDCOM_LOG_ERROR);
             debug_add('Killing the cookie...');
@@ -100,7 +95,6 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
             return false;
         }
 
-        debug_pop();
         return true;
     }
 
