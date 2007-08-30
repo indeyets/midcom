@@ -836,7 +836,7 @@ class midcom_application
                         exit();
                         
                     case 'permalink':
-                        $guid = $tmp[MIDCOM_HELPER_URLPARSER_VALUE];
+                        $guid = $value;
                         $destination = $this->permalinks->resolve_permalink($guid);
                         if ($destination === null)
                         {
@@ -2228,11 +2228,7 @@ class midcom_application
      */
     function serve_attachment(& $attachment, $expires = -1)
     {
-        debug_push("midcom_application::serve_attachment");
-
         $stats = $attachment->stat();
-
-        debug_add("Serving Attachment $attachment->name (id=".$attachment->pid.", table=".$attachment->ptable.")", MIDCOM_LOG_INFO);
 
         $this->header("Last-Modified: " . gmdate("D, d M Y H:i:s", $stats[9]) . ' GMT');
         $this->header("Content-Length: " . $stats[7]);
@@ -2268,8 +2264,9 @@ class midcom_application
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to open attachment for reading: ' . mgd_errstr());
         }
         fpassthru($f);
-
-        debug_pop();
+        $attachment->close();
+        
+        $this->exit();
     }
 
     /**
