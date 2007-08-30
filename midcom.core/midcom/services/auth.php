@@ -673,6 +673,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
                 'midcom:isonline' => Array (MIDCOM_PRIVILEGE_DENY, MIDCOM_PRIVILEGE_ALLOW),
                 'midcom:vgroup_register' => MIDCOM_PRIVILEGE_ALLOW,
                 'midcom:vgroup_delete' => MIDCOM_PRIVILEGE_ALLOW,
+                'midcom:ajax' => MIDCOM_PRIVILEGE_DENY,
             )
         );
     }
