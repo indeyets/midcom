@@ -890,7 +890,4 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         return $this->_qb->count();
     }
 }
-
-
 ?>
- 

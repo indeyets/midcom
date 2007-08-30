@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package midcom.services
  * @author The Midgard Project, http://www.midgard-project.org 
@@ -156,6 +155,4 @@ class midcom_service_session {
     }
     
 }
-
-
 ?>

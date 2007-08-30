@@ -96,13 +96,17 @@ class midcom_service__sessioning
     {
         if (! array_key_exists($domain, $_SESSION["midcom_session_data"]))
         {
-            debug_add("SESSION: Request for the domain [$domain] failed, because the domain doesn't exist.");
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Request for the domain [{$domain}] failed, because the domain doesn't exist.");
+            debug_pop();
             return false;
         }
 
         if (! array_key_exists($key, $_SESSION["midcom_session_data"][$domain]))
         {
-            debug_add("SESSION: Request for the key [$key] in the domain [$domain] failed, because the key doesn't exist.");
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Request for the key [{$key}] in the domain [{$domain}] failed, because the key doesn't exist.");
+            debug_pop();
             return false;
         }
 
@@ -164,7 +168,6 @@ class midcom_service__sessioning
         {
             $data = $this->_get_helper($domain, $key);
             unset($_SESSION["midcom_session_data"][$domain][$key]);
-            debug_print_r("SESSION: Dump after removing $domain/$key (serialized) ", $_SESSION["midcom_session_data"]);
             return $data;
         }
         else
@@ -187,7 +190,6 @@ class midcom_service__sessioning
     function set ($domain, $key, $value)
     {
         $_SESSION["midcom_session_data"][$domain][$key] = serialize($value);
-        debug_print_r("SESSION: Dump after setting $domain/$key (serialized) ", $_SESSION["midcom_session_data"]);
     }
 }
 

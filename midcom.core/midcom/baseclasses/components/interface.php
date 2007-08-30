@@ -1083,3 +1083,4 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
     // END OF THE EVENT HANDLERS
     /**#@-*/
 }
+?>
