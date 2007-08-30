@@ -310,50 +310,50 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * Request state variable, set during startup. There should be no need to change it
      * in most cases.
      *
-     * @access protected
+     * @access public
      */
 
     /**
      * The topic for which we are handling a requiest.
      *
-     * @var MidgardTopic
+     * @var midcom_db_topic
      */
-    var $_topic = null;
+    public $_topic = null;
 
     /**
      * The current configuration.
      *
      * @var midcom_helper_configuration
      */
-    var $_config = null;
+    public $_config = null;
 
     /**
      * A handle to the i18n service.
      *
      * @var midcom_helper_services_i18n
      */
-    var $_i18n = null;
+    public $_i18n = null;
 
     /**
      * The components' L10n string database
      *
      * @var midcom_services__i18n_l10n
      */
-    var $_l10n = null;
+    public $_l10n = null;
 
     /**
      * The global MidCOM string database
      *
      * @var midcom_services__i18n_l10n
      */
-    var $_l10n_midcom = null;
+    public $_l10n_midcom = null;
 
     /**
      * Component data storage area.
      *
      * @var Array
      */
-    var $_component_data = null;
+    public $_component_data = null;
 
     /**
      * Request specific data storage area. Registered in the component context
@@ -361,7 +361,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      *
      * @var Array
      */
-    var $_request_data = Array();
+    public $_request_data = Array();
 
     /**
      * Internal helper, holds the name of the component. Should be used whenever the
@@ -369,7 +369,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      *
      * @var string
      */
-    var $_component = '';
+    public $_component = '';
 
     /**
      * The node toolbar for the current request context. Not available during the can_handle
@@ -378,7 +378,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * @var midcom_helper_toolbar
      * @see midcom_services_toolbars
      */
-    var $_node_toolbar = null;
+    public $_node_toolbar = null;
 
     /**
      * The view toolbar for the current request context. Not available during the can_handle
@@ -387,7 +387,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * @var midcom_helper_toolbar
      * @see midcom_services_toolbars
      */
-    var $_view_toolbar = null;
+    public $_view_toolbar = null;
 
     /**
      * This variable keeps track of the registered plugin namespaces. It maps namespace
@@ -399,34 +399,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      *
      * @var array
      */
-    var $_plugin_namespace_config = Array();
-
-    /**#@-*/
-
-
-    /**#@+
-     * Error state variable.
-     */
-
-    /**
-     * The last error code of the component. Set this when the request handling
-     * fails.
-     *
-     * @var int
-     * @see $errstr
-     * @see midcom_baseclasses_components_interface::errcode()
-     */
-    var $errcode = MIDCOM_ERROK;
-
-    /**
-    * The last error message of the component. Set this when the request handling
-    * fails.
-    *
-    * @var string
-    * @see $errcode
-    * @see midcom_baseclasses_components_interface::errstring()
-    */
-    var $errstr = '';
+    public $_plugin_namespace_config = Array();
 
     /**#@-*/
 
@@ -437,16 +410,16 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * it will be post-processed afterwards during initialize to provide a unified
      * set of data. Therefore you must not modify this switch after construction.
      *
-     * @access protected
+     * @access public
      * @var Array
      */
-    var $_request_switch = Array();
+    public $_request_switch = Array();
 
     /**#@+
      * Internal request handling state variable, these are considered read-only for
      * all purposes (except this base class).
      *
-     * @access protected
+     * @access public
      */
 
     /**
@@ -457,14 +430,14 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      *
      * @var Array
      */
-    var $_handler = null;
+    public $_handler = null;
 
     /**
      * The url to the css file to be added when onsite toolbars are shown.
      * @var string
-     * @access protected
+     * @access public
      */
-    var $_onsite_toolbar_css = null;
+    public $_onsite_toolbar_css = null;
 
     /**#@-*/
 
@@ -478,7 +451,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * @param MidgardTopic $topic The topic we are working on
      * @param midcom_helper_configuration $config The currently active configuration.
      */
-    function midcom_baseclasses_components_request ($topic, $config)
+    public function midcom_baseclasses_components_request($topic, $config)
     {
         if (! $_MIDCOM->dbclassloader->is_midcom_db_object($topic))
         {
@@ -498,7 +471,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      *
      * @param string $component The name of the component.
      */
-    function initialize($component)
+    public function initialize($component)
     {
         $this->_component = $component;
         $this->_component_data =& $GLOBALS['midcom_component_data'][$this->_component];
@@ -522,11 +495,11 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
 
 
     /**
-     * This private helper post-processes the initial information as set by the constructor.
+     * This public helper post-processes the initial information as set by the constructor.
      * It fills all missing fields with sensible defaults, see the class introdction for
      * deatils.
      */
-    function _prepare_request_switch()
+    public function _prepare_request_switch()
     {
         foreach ($this->_request_switch as $key => $value)
         {
@@ -576,7 +549,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * @param Array $argv The argument list
      * @return bool Indicating wether the request can be handled by the class, or not.
      */
-    function can_handle($argc, $argv)
+    public function can_handle($argc, $argv)
     {
         // Call the general can_handle event handler
         $result = $this->_on_can_handle($argc, $argv);
@@ -675,7 +648,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * @return bool Indicating wether the request was handled successfully.
      * @see _on_handle();
      */
-    function handle($argc, $argv)
+    public function handle($argc, $argv)
     {
         // Init
         $handler =& $this->_handler['handler'][0];
@@ -734,9 +707,9 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * Helper function, which prepares the handler callback for execution.
      * This will create the handler class instance if required.
      *
-     * @access private
+     * @access public
      */
-    function _prepare_handler()
+    public function _prepare_handler()
     {
         if (is_string($this->_handler['handler'][0]))
         {
@@ -768,7 +741,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * @param string $classname The name of the handler to validate.
      * @return bool Indicating success.
      */
-    function _verify_handler_class($classname)
+    public function _verify_handler_class($classname)
     {
         if (class_exists($classname))
         {
@@ -807,7 +780,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      *
      * @see _on_show();
      */
-    function show()
+    public function show()
     {
          debug_push_class($this, 'show');
 
@@ -848,7 +821,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * to your request (like HTML HEAD tag adds) must not be done here. Use _on_handle
      * instead.
      */
-    function _on_initialize()
+    public function _on_initialize()
     {
         return;
     }
@@ -874,7 +847,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * @param Array $args The argument list.
      * @return bool Return false to abort the handle phase, true to continue normally.
      */
-    function _on_handle($handler, $args)
+    public function _on_handle($handler, $args)
     {
         return true;
     }
@@ -896,24 +869,9 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * @param Array $argv The argument list.
      * @return bool Return false to abort the handle phase, true to continue normally.
      */
-    function _on_can_handle($argc, $argv)
+    public function _on_can_handle($argc, $argv)
     {
         return true;
-    }
-
-    /**
-     * Returns a metadata object for the currently selected object, or null if no Metadata
-     * is available. The default implementation defaults to the topics' metadata object.
-     *
-     * This event handler is no longer in use in MidCOM 2.4 upwards. Instead, the framework
-     * accesses the metadata information directly.
-     *
-     * @return midcom_helper_metadata The metadata object of the currently displayed object.
-     * @deprecated in MidCOM 2.4
-     */
-    function & _on_get_metadata()
-    {
-        return midcom_helper_metadata::retrieve($this->_topic);
     }
 
     /**
@@ -925,7 +883,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      *   the request.
      * @return bool Return false to override the regular component output.
      */
-    function _on_show($handler)
+    public function _on_show($handler)
     {
         return true;
     }
@@ -946,7 +904,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * @param Array $config The configuration of the plugin namespace as outlined in
      *     the class introduction
      */
-    function register_plugin_namespace($namespace, $config)
+    public function register_plugin_namespace($namespace, $config)
     {
         if (array_key_exists($namespace, $this->_plugin_namespace_config))
         {
@@ -971,7 +929,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * @param string $plugin The plugin to load from the namespace.
      * @return bool Indicating success
      */
-    function _load_plugin($namespace, $plugin)
+    public function _load_plugin($namespace, $plugin)
     {
         if (! $this->_load_plugin_class($namespace, $plugin))
         {
@@ -1011,10 +969,10 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      *
      * @param string $namespace The plugin namespace to use.
      * @param string $plugin The plugin to load from the namespace.
-     * @access private
+     * @access public
      * @return bool Indicating Success
      */
-    function _load_plugin_class($namespace, $plugin)
+    public function _load_plugin_class($namespace, $plugin)
     {
         $plugin_config = $this->_plugin_namespace_config[$namespace][$plugin];
 
@@ -1074,10 +1032,10 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * @param string $namespace The plugin namespace to use.
      * @param string $plugin The plugin to load from the namespace.
      * @param Array $handlers The plugin specific handlers without the appropriate prefixes.
-     * @access private
+     * @access public
      * @return bool Indicating Success
      */
-    function _prepare_plugin ($namespace, $plugin, $handlers)
+    public function _prepare_plugin ($namespace, $plugin, $handlers)
     {
         $plugin_config = $this->_plugin_namespace_config[$namespace][$plugin];
 
@@ -1114,7 +1072,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * and is to be considered proof-of-concept. Full integration into the Aegir 2 framework
      * is pending.
      */
-    function _register_core_plugin_namespaces()
+    public function _register_core_plugin_namespaces()
     {
         $this->register_plugin_namespace
         (

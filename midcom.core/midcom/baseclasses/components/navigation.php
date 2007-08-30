@@ -20,7 +20,7 @@
  * @package midcom.baseclasses
  */
 
-class midcom_baseclasses_components_navigation extends midcom_baseclasses_core_object
+class midcom_baseclasses_components_navigation
 {
     /**#@+
      * Component state variable, set during startup. There should be no need to change it
@@ -85,7 +85,7 @@ class midcom_baseclasses_components_navigation extends midcom_baseclasses_core_o
      * Create the navigation instance, the constructor doesn't do anything
      * yet, startup is handled by initialize().
      */
-    function midcom_baseclasses_components_navigation()
+    public function midcom_baseclasses_components_navigation()
     {
         // Nothing to do
     }
@@ -95,7 +95,7 @@ class midcom_baseclasses_components_navigation extends midcom_baseclasses_core_o
      *
      * @param string $component The name of the component.
      */
-    function initialize($component)
+    public function initialize($component)
     {
         $this->_component = $component;
         $this->_component_data =& $GLOBALS['midcom_component_data'][$this->_component];
@@ -166,7 +166,7 @@ class midcom_baseclasses_components_navigation extends midcom_baseclasses_core_o
      *
      * @return Array NAP compilant list of leaves.
      */
-    function get_leaves()
+    public function get_leaves()
     {
         return Array();
     }
@@ -200,7 +200,7 @@ class midcom_baseclasses_components_navigation extends midcom_baseclasses_core_o
      *   This parameter is not set by the framework and can safely be omitted in the average base class.
      * @return Array NAP compilant node declaration
      */
-    function get_node($toolbar = null)
+    public function get_node($toolbar = null)
     {
         return array (
             MIDCOM_NAV_URL => '',
@@ -223,7 +223,7 @@ class midcom_baseclasses_components_navigation extends midcom_baseclasses_core_o
      * @param MidgardTopic $topic The topic to pocess.
      * @param bool Indicating success.
      */
-    function set_object($topic)
+    public function set_object($topic)
     {
         $this->_topic = $topic;
         $this->_config->store_from_object($topic, $this->_component);
@@ -240,7 +240,7 @@ class midcom_baseclasses_components_navigation extends midcom_baseclasses_core_o
      *   to the topic. NAP will abort loading this node and log the error accordingly.
      *   Return true if everything is fine.
      */
-    function _on_set_object()
+    private function _on_set_object()
     {
         return true;
     }

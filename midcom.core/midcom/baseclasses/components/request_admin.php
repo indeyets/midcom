@@ -297,3 +297,4 @@ class midcom_baseclasses_components_request_admin extends midcom_baseclasses_com
         $data['datamanager']->display_form();
     }
 }
+?>

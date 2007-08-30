@@ -21,7 +21,7 @@
  *
  */
 
-class midcom_baseclasses_components_purecode extends midcom_baseclasses_core_object
+class midcom_baseclasses_components_purecode
 {
     /**#@+
      * Request state variable.
@@ -84,7 +84,7 @@ class midcom_baseclasses_components_purecode extends midcom_baseclasses_core_obj
      * Initialize all member variables, remember to set $_component before calling
      * this constructor from your derived classes.
      */
-    function midcom_baseclasses_components_purecode ()
+    public function midcom_baseclasses_components_purecode()
     {
         $this->_component_data =& $GLOBALS['midcom_component_data'][$this->_component];
         $this->_i18n =& $_MIDCOM->get_service('i18n');
@@ -102,7 +102,7 @@ class midcom_baseclasses_components_purecode extends midcom_baseclasses_core_obj
      *     (or call it with null) to load the global default configuration.
      * @access protected
      */
-    function _load_topic_configuration($topic = null)
+    private function _load_topic_configuration($topic = null)
     {
         $this->_config = $GLOBALS['midcom_component_data'][$this->_component]['config'];
         if ($topic !== null)
@@ -117,7 +117,7 @@ class midcom_baseclasses_components_purecode extends midcom_baseclasses_core_obj
      *
      * @access protected
      */
-    function _bind_to_request_data()
+    private function _bind_to_request_data()
     {
         $this->_request_data =& $_MIDCOM->get_custom_context_data('request_data');
         $this->_config =& $this->_request_data['config'];

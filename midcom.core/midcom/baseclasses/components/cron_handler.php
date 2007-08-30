@@ -20,7 +20,7 @@
  * @see midcom_services_cron
  * @package midcom.baseclasses
  */
-class midcom_baseclasses_components_cron_handler extends midcom_baseclasses_core_object
+class midcom_baseclasses_components_cron_handler
 {
     /**
      * The local handler configuration as written in the Component Manifest.
@@ -73,7 +73,7 @@ class midcom_baseclasses_components_cron_handler extends midcom_baseclasses_core
     /**
      * Empty constuctor yet, just calls the base class.
      */
-    function midcom_baseclasses_components_cron_handler()
+    public function midcom_baseclasses_components_cron_handler()
     {
         parent::midcom_baseclasses_core_object();
     }
@@ -84,7 +84,7 @@ class midcom_baseclasses_components_cron_handler extends midcom_baseclasses_core
      *
      * @param Array $config The full cron job configuration data.
      */
-    function initialize($config)
+    public function initialize($config)
     {
         if ($config['component'] == 'midcom')
         {
@@ -115,7 +115,7 @@ class midcom_baseclasses_components_cron_handler extends midcom_baseclasses_core
      *
      * @return bool Returns true, if initialization was successful, false if anything went wrong.
      */
-    function _on_initialize()
+    private function _on_initialize()
     {
         return true;
     }
@@ -123,7 +123,7 @@ class midcom_baseclasses_components_cron_handler extends midcom_baseclasses_core
     /**
      * Execute the handler, this calls the corresponding event handler.
      */
-    function execute()
+    public function execute()
     {
         $this->_on_execute();
     }
@@ -134,7 +134,7 @@ class midcom_baseclasses_components_cron_handler extends midcom_baseclasses_core
      * the user of any errors. As long as everything goes fine, you should not print anything
      * to avoid needles cron mailings.
      */
-    function _on_execute() {}
+    private function _on_execute() {}
 
 
     /**
@@ -144,7 +144,7 @@ class midcom_baseclasses_components_cron_handler extends midcom_baseclasses_core
      *
      * @param string $message The error message to print.
      */
-    function print_error($message)
+    public function print_error($message)
     {
         $class = get_class($this);
         echo "ERROR ({$class}): {$message}\n";

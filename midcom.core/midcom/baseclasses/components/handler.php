@@ -36,7 +36,7 @@
  *
  * @package midcom.baseclasses
  */
-class midcom_baseclasses_components_handler extends midcom_baseclasses_core_object
+class midcom_baseclasses_components_handler
 {
     /**#@+
      * Request state variable, set during startup. There should be no need to change it
@@ -131,39 +131,12 @@ class midcom_baseclasses_components_handler extends midcom_baseclasses_core_obje
     /**#@-*/
 
 
-    /**#@+
-     * Error state variable.
-     */
-
-    /**
-     * The last error code of the component. Set this when the request handling
-     * fails.
-     *
-     * @var int
-     * @see $errstr
-     * @see midcom_baseclasses_components_interface::errcode()
-     */
-    var $errcode = MIDCOM_ERROK;
-
-    /**
-    * The last error message of the component. Set this when the request handling
-    * fails.
-    *
-    * @var string
-    * @see $errcode
-    * @see midcom_baseclasses_components_interface::errstring()
-    */
-    var $errstr = '';
-
-    /**#@-*/
-
     /**
      * Main constructor does not do much yet, it shouldn't be overridden though,
      * use the _on_initilize event handler instead.
      */
-    function midcom_baseclasses_components_handler ()
+    function midcom_baseclasses_components_handler()
     {
-        parent::midcom_baseclasses_core_object();
     }
 
 
@@ -188,8 +161,6 @@ class midcom_baseclasses_components_handler extends midcom_baseclasses_core_obje
 
         $this->_request_data =& $master->_request_data;
         $this->_topic =& $master->_topic;
-        $this->errcode =& $master->errcode;
-        $this->errstr =& $master->errstr;
 
         // Load component specific stuff, special treatment if the handler has
         // a component different then the master handler set.

@@ -193,7 +193,7 @@
  * @see midcom_core_manifest
  */
 
-class midcom_baseclasses_components_interface extends midcom_baseclasses_core_object
+class midcom_baseclasses_components_interface
 {
     // START OF CONFIGURATION VARIABLES
     /**#@+
@@ -339,7 +339,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
     /**
      * Initialize the class, nothing to do yet.
      */
-    function midcom_baseclasses_components_interface()
+    public function midcom_baseclasses_components_interface()
     {
         // Nothing to do yet.
     }
@@ -358,7 +358,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      * @return bool Indicating successful initialization.
      * @see _on_initialize()
      */
-    function initialize()
+    public function initialize()
     {
         // Preparation
         $loader =& $_MIDCOM->get_component_loader();
@@ -422,7 +422,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      * @see midcom_helper_configuration
      * @see $_config_snippet_name
      */
-    function _load_configuration()
+    private function _load_configuration()
     {
         if (is_null($this->_config_snippet_name))
         {
@@ -469,7 +469,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      * @return Array The read data or false on failure.
      * @see read_array_from_snippet()
      */
-    function read_array_from_file ($filename)
+    private function read_array_from_file ($filename)
     {
         $data = @file_get_contents($filename);
         if ($data === false)
@@ -498,9 +498,10 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      * @return Array The read data or false on failure.
      * @see read_array_from_file()
      */
-    function read_array_from_snippet ($snippetpath)
+    private function read_array_from_snippet ($snippetpath)
     {
-        $snippet = mgd_get_snippet_by_path($snippetpath);
+        $snippet = new midcom_baseclasses_database_snippet();
+        $snippet->get_by_path($snippetpath);
         if ($snippet == false )
         {
             return false;
@@ -526,7 +527,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      * - <i>admin</i> A flag indicating wether we are in Admin mode or not (set during configure)
      * - <i>handler</i> The class handling the request.
      */
-    var $_context_data = Array();
+    private $_context_data = Array();
 
     /**
      * Configures the component for usage. The configuration is merged, and,
@@ -538,7 +539,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      * @param bool $adminmode Flag, indicating wether we are on-site (false) or in AIS (true).
      * @return bool Indication success.
      */
-    function configure($configuration, $contextid)
+    public function configure($configuration, $contextid)
     {
         // Initialize the context data
         $this->_context_data[$contextid] = Array
@@ -579,7 +580,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      * @param int $contextid The id of the context we are operating in.
      * @return bool True, if the component can handle the request, false otherwise.
      */
-    function can_handle($current_object, $argc, $argv, $contextid)
+    public function can_handle($current_object, $argc, $argv, $contextid)
     {
         $data =& $this->_context_data[$contextid];
         $loader =& $_MIDCOM->get_component_loader();
@@ -602,31 +603,9 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      * @param int $contextid The id of the context we are operating in.
      * @return bool True, if the component successfully handle the request, false otherwise.
      */
-    function handle($current_object, $argc, $argv, $contextid)
+    public function handle($current_object, $argc, $argv, $contextid)
     {
         return $this->_context_data[$contextid]['handler']->handle($argc, $argv);
-    }
-
-    /**
-     * Returns the last error code of the component.
-     *
-     * @param int $contextid The id of the context we are operating in.
-     * @return int One of the MGD_ERR* constants
-     */
-    function errcode($contextid)
-    {
-        return $this->_context_data[$contextid]['handler']->errcode;
-    }
-
-    /**
-     * Returns the last error message of the component.
-     *
-     * @param int $contextid The id of the context we are operating in.
-     * @return string The error message of the last error.
-     */
-    function errstr($contextid)
-    {
-        return $this->_context_data[$contextid]['handler']->errstr;
     }
 
     /**
@@ -634,7 +613,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      *
      * @param int $contextid The id of the context we are operating in.
      */
-    function show_content($contextid)
+    public function show_content($contextid)
     {
         $this->_context_data[$contextid]['handler']->show();
     }
@@ -648,7 +627,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      * @var object
      * @access private
      */
-    var $_nap_instance = null;
+    private $_nap_instance = null;
 
     /**
      * Checks, wether an instance of the NAP interface class has already been created
@@ -659,7 +638,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      *
      * @access private
      */
-    function _check_nap_instance()
+    private function _check_nap_instance()
     {
         if (is_null($this->_nap_instance))
         {
@@ -679,7 +658,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      * @return bool True, if internal.
      * @deprecated This function has been deprecated with the MidCOM 2.4 NAP rewrite and will be removed in 2.6.
      */
-    function is_internal()
+    public function is_internal()
     {
         return $this->_nap_instance->is_internal();
     }
@@ -691,7 +670,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      * @param MidgardTopic $object The MidgardTopic that should be processed.
      * @return bool Indicating success.
      */
-    function set_object($object)
+    public function set_object($object)
     {
         $this->_check_nap_instance();
         return $this->_nap_instance->set_object($object);
@@ -702,7 +681,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      *
      * @return Array A NAP compilant NODE structure.
      */
-    function get_node()
+    public function get_node()
     {
         $this->_check_nap_instance();
         return $this->_nap_instance->get_node();
@@ -713,7 +692,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      *
      * @return Array An Array of NAP compilant leaf structures.
      */
-    function get_leaves()
+    public function get_leaves()
     {
         $this->_check_nap_instance();
         return $this->_nap_instance->get_leaves();
@@ -728,7 +707,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      *
      * @return int The active leaf ID out of the component data storage.
      */
-    function get_current_leaf()
+    public function get_current_leaf()
     {
         return $this->_data['active_leaf'];
     }
@@ -744,7 +723,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      * @return bool Indicating success.
      * @see _on_reindex()
      */
-    function reindex ($topic)
+    public function reindex ($topic)
     {
         return $this->_on_reindex($topic, $this->get_config_for_topic($topic), $_MIDCOM->get_service('indexer'));
     }
@@ -759,7 +738,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      * @param MidgardTopic $topic The topic this document is assigned to.
      * @return bool True if the object may be shown, false otherwise.
      */
-    function check_document_permissions (&$document, $topic)
+    public function check_document_permissions (&$document, $topic)
     {
         return $this->_on_check_document_permissions($document, $this->get_config_for_topic($topic), $topic);
     }
@@ -772,7 +751,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      * @param string $groupname The local groupname (that is, without the component prefix) of the virtual group to query.
      * @return Array Accociative user->id => user_object listing of all member users or null on failure.
      */
-    function retrieve_vgroup_members ($groupname)
+    public function retrieve_vgroup_members ($groupname)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
@@ -830,7 +809,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      * @return string The local URL (without leading slashes) or null on failure.
      * @see _on_resolve_permalink()
      */
-    function resolve_permalink ($topic, $guid)
+    public function resolve_permalink ($topic, $guid)
     {
         return $this->_on_resolve_permalink($topic, $this->get_config_for_topic($topic), $guid);
     }
@@ -847,7 +826,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      *     get the systemwide defaults.
      * @return midcom_helper_configuration MidCOM configuration object
      */
-    function get_config_for_topic($topic = null)
+    public function get_config_for_topic($topic = null)
     {
          $config = $this->_data['config'];
         if ($topic !== null)
@@ -867,7 +846,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      * @param mixed $object The object on which the operation occured. The system will
      *     do is_a checks against any registered class restriction on the watch.
      */
-    function trigger_watch($operation, $object)
+    public function trigger_watch($operation, $object)
     {
         debug_push_class($this, __FUNCTION__);
         debug_add("We were notified about a watch for the operation {$operation} on {$object->__table__} #{$object->id}");
