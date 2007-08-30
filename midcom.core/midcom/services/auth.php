@@ -904,11 +904,20 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             }
             else
             {
+                if (!isset($tmp_object->__new_class_name__))
+                {
+                    $tmp_class_name = get_class($tmp_object);
+                }
+                else
+                {
+                    $tmp_class_name = $tmp_object->__new_class_name__;
+                }
+                
                 $user_per_class_privileges = $user->get_per_class_privileges($tmp_object);
                 $default_magic_class_privileges = array_merge
                 (
-                    $this->_default_magic_class_privileges[$tmp_object->__new_class_name__]['EVERYONE'],
-                    $this->_default_magic_class_privileges[$tmp_object->__new_class_name__]['USERS']
+                    $this->_default_magic_class_privileges[$tmp_class_name]['EVERYONE'],
+                    $this->_default_magic_class_privileges[$tmp_class_name]['USERS']
                 );
             }
         }
