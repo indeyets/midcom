@@ -105,8 +105,6 @@ class midcom_core_querybuilder_cached
  * QueryBuilder but proxy to it.
  *
  * @package midcom
- * @todo Optimize the limit/offset implementation.
- * @todo Refactor the class to promote code reuse in the execution handlers.
  */
 class midcom_core_querybuilder extends midcom_baseclasses_core_object
 {
@@ -179,7 +177,6 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      * since there is no way yet to filter against parameters. This will mean some performance
      * impact.
      *
-     * While on-site, this is enabled by default, in AIS it is disabled by default.
      */
     var $hide_invisible = true;
 
@@ -270,9 +267,16 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         call_user_func_array(array($this->_real_class, '_on_prepare_new_query_builder'), array(&$this));
     }
 
+    /**
+     * Executes the internal QB and filters objects based on ACLs and metadata
+     *
+     * @param bool $false_on_empty_mgd_resultset used in the moving window loop to get false in stead of empty array back from this method in case the **core** QB returns empty resultset
+     * @return array of objects filtered by ACL and metadata visibility (or false in case of failure)
+     */
     function _execute_and_check_privileges($false_on_empty_mgd_resultset = false)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
+        // TODO: Remove this silence after all MgdSchemas are fixed
         $result = @$this->_qb->execute();
         if (!is_array($result))
         {
@@ -360,6 +364,17 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     }
 
     /**
+     * Resets some internal variables for re-execute
+     */
+    function _reset()
+    {
+        $this->_seen_guids = array(); 
+        $this->_qb_error_result = 'UNDEFINED';
+        $this->count = -1;
+        $this->denied = 0;
+    }
+
+    /**
      * This function will execute the Querybuilder and call the appropriate callbacks from the
      * class it is associated to. This way, class authors have full control over what is actually
      * returned to the application.
@@ -372,20 +387,12 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      * 3. void _on_process_query_result(&$result) is called after the successful execution of the query. You
      *    may remove any unwanted entries from the resultset at this point.
      *
-     * If the execution of the query fails for some reason all available error information is logged
-     * and a MIDCOM_ERRCRIT level error is triggered, halting execution.
-     *
-     * @param midgard_query_builder $qb An instance of the Query builder obtained by the new_query_builder
-     *     function of this class.
      * @return Array The result of the query builder or null on any error. Note, that empty resultsets
      *     will return an empty array.
-     * @todo Implement proper count / Limit support.
      */
     function execute_windowed()
     {
-        // Reset these two in case someone tries to re-execute this
-        $this->_seen_guids = array(); 
-        $this->_qb_error_result = 'UNDEFINED';
+        $this->_reset();
         
         if (! call_user_func_array(array($this->_real_class, '_on_prepare_exec_query_builder'), array(&$this)))
         {
@@ -425,7 +432,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
             
             while (($resultset = $this->_execute_and_check_privileges(true)) !== false)
             {
-                //debug_add("Iteration loop #{$i}");
+                debug_add("Iteration loop #{$i}");
                 if ($this->_qb_error_result !== 'UNDEFINED')
                 {
                     // QB failed in above method TODO: better catch
@@ -467,10 +474,6 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
 
         call_user_func_array(array($this->_real_class, '_on_process_query_result'), array(&$newresult));
 
-        /*
-        // correct record count by the number of limit-skipped objects.
-        $this->count = count($newresult) + $skipped_objects;
-        */
         $this->count = count($newresult);
 
         //debug_pop();
@@ -538,6 +541,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     function execute()
     {
         return $this->execute_windowed();
+        //return $this->execute_notwindowed();
     }
 
     /**
@@ -553,21 +557,15 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      * 3. void _on_process_query_result(&$result) is called after the successful execution of the query. You
      *    may remove any unwanted entries from the resultset at this point.
      *
-     * If the execution of the query fails for some reason all available error information is logged
-     * and a MIDCOM_ERRCRIT level error is triggered, halting execution.
-     *
-     * @param midgard_query_builder $qb An instance of the Query builder obtained by the new_query_builder
-     *     function of this class.
      * @return Array The result of the query builder or null on any error. Note, that empty resultsets
      *     will return an empty array.
-     * @todo Implement proper count / Limit support.
      */
     function execute_notwindowed()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
+        $this->_reset();
         if (! call_user_func_array(array($this->_real_class, '_on_prepare_exec_query_builder'), array(&$this)))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('The _on_prepare_exec_query_builder callback returned false, so we abort now.');
             debug_pop();
             return null;
@@ -575,27 +573,16 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
 
         if ($this->_constraint_count == 0)
         {
-            debug_add('This Query Builder instance has no constraints.', MIDCOM_LOG_WARN);
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('This Query Builder instance has no constraints, see debug log for stacktrace', MIDCOM_LOG_WARN);
             debug_print_function_stack('We were called from here:');
+            debug_pop();
         }
 
-        $result = $this->_qb->execute();
+        $result = $this->_execute_and_check_privileges();
         if (!is_array($result))
         {
-            debug_print_r('Result was:', $result);
-            debug_add('The querybuilder failed to execute, aborting.', MIDCOM_LOG_ERROR);
-            debug_add('Last Midgard error was: ' . mgd_errstr(), MIDCOM_LOG_ERROR);
-            if (isset($php_errormsg))
-            {
-                debug_add("Error message was: {$php_errormsg}", MIDCOM_LOG_ERROR);
-            }
-
-            /*
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                'The query builder failed to execute, see the log file for more information.');
-            // This will exit.
-            */
-            return false;
+            return $result;
         }
 
         // Workaround until the QB returns the correct type, refetch everything
@@ -605,33 +592,12 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         $offset = $this->_offset;
         $skipped_objects = 0;
         $this->denied = 0;
-        // Workaround to ML bug where we get multiple results in non-strict mode
-        $seen_guids = array();
-        foreach ($result as $key => $value)
+
+        foreach ($result as $key => $object)
         {
             if (   $this->_limit > 0
                 && $limit == 0)
             {
-                $skipped_objects++;
-                continue;
-            }
-
-            // Create a new object instance (checks read privilege implicitly) using the copy-constuctor.
-            $object = new $classname($value);
-
-            if (mgd_errno() == MGD_ERR_ACCESS_DENIED)
-            {
-                // This is logged by the callers
-                $this->denied++;
-                $skipped_objects++;
-                continue;
-            }
-
-            if (   ! $object
-                || ! is_object($object))
-            {
-                debug_add("Could not create a MidCOM DBA instance of the {$classname} ID {$value->id}. See debug level log for details.",
-                    MIDCOM_LOG_INFO);
                 $skipped_objects++;
                 continue;
             }
@@ -644,37 +610,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
                 continue;
             }
 
-            // Check visibility
-            if ($this->hide_invisible)
-            {
-                $metadata =& midcom_helper_metadata::retrieve($object);
-                if (! $metadata)
-                {
-                    debug_add("Could not create a MidCOM metadata instance for {$classname} ID {$value->id}, assuming an invisible object.",
-                        MIDCOM_LOG_INFO);
-                    $skipped_objects++;
-                    continue;
-                }
-
-                if (! $metadata->is_object_visible_onsite())
-                {
-                    debug_add("The {$classname} ID {$value->id} is hidden by metadata.", MIDCOM_LOG_INFO);
-                    $skipped_objects++;
-                    continue;
-                }
-            }
-            
-            if (isset($seen_guids[$object->guid]))
-            {
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("The {$classname} object {$object->guid} has already been seen, probably MultiLang bug", MIDCOM_LOG_WARN);
-                debug_pop();
-                continue;
-            }
-
             $newresult[] = $object;
-            
-            $seen_guids[$object->guid] = true;
 
             if ($this->_limit > 0)
             {
@@ -684,10 +620,8 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
 
         call_user_func_array(array($this->_real_class, '_on_process_query_result'), array(&$newresult));
 
-        // correct record count by the number of limit-skipped objects.
-        $this->count = count($newresult) + $skipped_objects;
+        $this->count = count($newresult);
 
-        debug_pop();
         return $newresult;
     }
 
@@ -706,10 +640,11 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      */
     function execute_unchecked()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
+        $this->_reset();
 
         if (! call_user_func_array(array($this->_real_class, '_on_prepare_exec_query_builder'), array(&$this)))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('The _on_prepare_exec_query_builder callback returned false, so we abort now.');
             debug_pop();
             return null;
@@ -717,8 +652,10 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
 
         if ($this->_constraint_count == 0)
         {
-            debug_add('This Query Builder instance has no constraints.', MIDCOM_LOG_WARN);
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('This Query Builder instance has no constraints, see debug level log for stacktrace', MIDCOM_LOG_WARN);
             debug_print_function_stack('We were called from here:');
+            debug_pop();
         }
 
         // Add the limit / offsets
@@ -731,75 +668,16 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
             $this->_qb->set_offset($this->_offset);
         }
 
-        $result = $this->_qb->execute();
-        if (!is_array($result))
+        $newresult = $this->_execute_and_check_privileges();
+        if (!is_array($newresult))
         {
-            debug_print_r('Result was:', $result);
-            debug_add('The querybuilder failed to execute, aborting.', MIDCOM_LOG_ERROR);
-            debug_add('Last Midgard error was: ' . mgd_errstr(), MIDCOM_LOG_ERROR);
-            if (isset($php_errormsg))
-            {
-                debug_add("Error message was: {$php_errormsg}", MIDCOM_LOG_ERROR);
-            }
-
-            /*
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                'The query builder failed to execute, see the log file for more information.');
-            // This will exit.
-            */
-            return false;
-        }
-
-        // Workaround until the QB returns the correct type, refetch everything
-        $newresult = Array();
-        $classname = $this->_real_class;
-        $this->denied = 0;
-        foreach ($result as $key => $value)
-        {
-            // Create a new object instance (checks read privilege implicitly) using the copy-constuctor.
-            $object = new $classname($value);
-
-            if (mgd_errno() == MGD_ERR_ACCESS_DENIED)
-            {
-                // This is logged by the callers
-                $this->denied++;
-                continue;
-            }
-
-            if (   ! $object
-                || ! is_object($object))
-            {
-                debug_add("Could not create a MidCOM DBA instance of the {$classname} ID {$value->id}. See debug level log for details.",
-                    MIDCOM_LOG_INFO);
-                continue;
-            }
-
-            // Check visibility
-            if ($this->hide_invisible)
-            {
-                $metadata =& midcom_helper_metadata::retrieve($object);
-                if (! $metadata)
-                {
-                    debug_add("Could not create a MidCOM metadata instance for {$classname} ID {$value->id}, assuming an invisible object.",
-                        MIDCOM_LOG_INFO);
-                    continue;
-                }
-
-                if (! $metadata->is_object_visible_onsite())
-                {
-                    debug_add("The {$classname} ID {$value->id} is hidden by metadata.", MIDCOM_LOG_INFO);
-                    continue;
-                }
-            }
-
-            $newresult[$key] = $object;
+            return $newresult;
         }
 
         call_user_func_array(array($this->_real_class, '_on_process_query_result'), array(&$newresult));
 
         $this->count = count($newresult);
 
-        debug_pop();
         return $newresult;
     }
 
@@ -816,6 +694,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      */
     function add_constraint($field, $operator, $value)
     {
+        $this->_reset();
         // Add check against null values, Core QB is too stupid to get this right.
         if ($value === null)
         {
@@ -927,6 +806,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      */
     function set_limit($limit)
     {
+        $this->_reset();
         $this->_limit = $limit;
     }
 
@@ -942,6 +822,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      */
     function set_offset($offset)
     {
+        $this->_reset();
         $this->_offset = $offset;
     }
 
@@ -954,31 +835,25 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      */
     function set_lang($language)
     {
+        $this->_reset();
         $this->_qb->set_lang($language);
     }
     
     /**
      * Include deleted objects (metadata.deleted is TRUE) in query results.
+     *
+     * Note: this may cause all kinds of weird behaviour with the DBA helpers
      */
     function include_deleted()
     {
+        $this->_reset();
         $this->_qb->include_deleted();
     }
 
     /**
      * Returns the number of elements matching the current query.
      *
-     * <i>Developer's note:</i> According to the Midgard core documentation, the count method
-     * does <b>not</b> execute the query using some COUNT() SQL statement. It merely returns
-     * the number of records found and is, thus, mostly useless as you can just count($result)
-     * on the PHP level anyway.
-     *
-     * To match the original inteded behavoir, the class will automatically execute the given
-     * query if it has not yet been executed, thus breaking full API compatibility to the Midgard
-     * core deliberatly on this point.
-     *
-     * Therefore, it is currently <i>strongly discouraged</i> to assume midgard_query_builder::count
-     * to be useful as-is. See http://midgard.tigris.org/issues/show_bug.cgi?id=56 for details.
+     * Due to ACL checking we must first execute the full query to get
      *
      * @return int The number of records found by the last query.
      */
@@ -1000,14 +875,22 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      * Use this function with care. The information you obtain in general is neglible, but a creative
      * mind might nevertheless be able to take advantage of it.
      *
-     * @return int The number of records matching the last query without taking access control into account.
+     * @return int The number of records matching the constraints without taking access control or visibility into account.
      */
     function count_unchecked()
     {
-        // TODO: Handle limit and offset
+        if ($this->_limit)
+        {
+            $this->_qb->set_limit($this->_limit);
+        }
+        if ($this->_offset)
+        {
+            $this->_qb->set_offset($this->_offset);
+        }
         return $this->_qb->count();
     }
 }
 
 
 ?>
+ 
