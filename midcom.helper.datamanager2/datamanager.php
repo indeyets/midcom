@@ -112,7 +112,6 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("The active schema database is invalid.", MIDCOM_LOG_ERROR);
-            debug_print_r('Schema database in use:', $this->_schemadb);
             debug_pop();
             return false;
         }
@@ -121,7 +120,6 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("The schema {$name} was not found in the active schema database.", MIDCOM_LOG_INFO);
-            debug_print_r('Schema database in use:', $this->_schemadb);
             debug_pop();
             return false;
         }

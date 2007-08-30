@@ -304,7 +304,6 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     */
     function _prepareTemplate($name, $label, $required, $error, $type = false)
     {
-        debug_add("_prepareTemplate called with options: {$name}, {$label}, {$required}, {$error}, $type");
         if (is_array($label)) {
             $nameLabel = array_shift($label);
         } else {
@@ -312,14 +311,11 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
         }
         
         if (isset($this->_templates[$name])) {
-            debug_add("_prepareTemplate _templates[{$name}] check caught, using template\n===\n{$this->_templates[$name]}\n===\n");
             $html = str_replace('{label}', $nameLabel, $this->_templates[$name]);
         } else if ($this->_inGroup) {
             /* rambo: I'm pretty sure this is never reached... */
-            debug_add("_prepareTemplate ingroup check caught, using template\n===\n{$this->_defaultGroupTemplate}\n===\n");
             $html = str_replace('{label}', $nameLabel, $this->_defaultGroupTemplate);
         } else {
-            debug_add("_prepareTemplate else caught, switching by type: {$type}");
             switch ($type)
             {
                 case 'dummy:group':
@@ -329,7 +325,6 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
                     $template = $this->_elementTemplate;
                     break;
             }
-            debug_add("_prepareTemplate using template\n===\n{$template}\n===\n");
             $html = str_replace('{label}', $nameLabel, $template);
         }
         
@@ -379,7 +374,6 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     */
     function renderElement(&$element, $required, $error)
     {
-        debug_print_r('renderElement got element: ', $element);
         if (!$this->_inGroup) {
             $html = $this->_prepareTemplate($element->getName(), $element->getLabel(), $required, $error, $element->getType());
             $this->_html .= str_replace('{element}', $element->toHtml(), $html);
