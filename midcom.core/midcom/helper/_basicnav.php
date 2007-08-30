@@ -1139,6 +1139,7 @@ class midcom_helper__basicnav
         $collector->add_constraint('up', '=', $parent_node);
         $collector->add_constraint('component', '<>', '');
         $collector->add_constraint('name', '<>', '');
+        $collector->add_constraint('metadata.navnoentry', '=', 0);
         
         $collector->add_order('metadata.score', 'DESC');
         $collector->add_order('metadata.created');
