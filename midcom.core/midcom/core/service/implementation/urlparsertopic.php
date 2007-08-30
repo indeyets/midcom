@@ -187,7 +187,7 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
      */
     public function get_url()
     {
-        return '/' . $this->url;
+        return "{$_MIDGARD['self']}{$this->url}";
     }
 }
 ?>
