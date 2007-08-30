@@ -59,7 +59,7 @@ class org_openpsa_contacts_navigation extends midcom_baseclasses_components_navi
     function get_node($toolbar = null)
     {
         $toolbar = Array();
-        $prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         return parent::get_node($toolbar);
     }
 }
