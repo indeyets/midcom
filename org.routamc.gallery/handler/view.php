@@ -151,6 +151,7 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
         $data['next'] = null;
         $data['previous'] = null;
         
+        // Set the active leaf
         foreach ($photolinks as $photolink)
         {
             if ($photolink == $this->_photo->id)
@@ -205,7 +206,7 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
             );
             */
         }
-
+        
         $_MIDCOM->bind_view_to_object($data['photo'], $this->_datamanager->schema->name);
 
         $data['view_title'] = $data['photo']->title;
@@ -222,7 +223,9 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
         }
 
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");
-
+        
+        // Set the active leaf and update the breadcrumb line
+        $this->_component_data['active_leaf'] = $data['photo']->guid;
         $this->_update_breadcrumb_line($handler_id);
 
         return true;

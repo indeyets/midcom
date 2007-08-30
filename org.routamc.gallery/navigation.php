@@ -60,7 +60,7 @@ class org_routamc_gallery_navigation extends midcom_baseclasses_components_navig
         
         foreach ($organizer->get_sorted() as $link_id => $photo)
         {
-            $leaves[$link_id] = array
+            $leaves[$photo->guid] = array
             (
                 MIDCOM_NAV_URL => "photo/{$photo->guid}.html",
                 MIDCOM_NAV_NAME => $photo->title,
@@ -70,6 +70,7 @@ class org_routamc_gallery_navigation extends midcom_baseclasses_components_navig
             );
 
         }
+        
         return $leaves;
     }
 }
