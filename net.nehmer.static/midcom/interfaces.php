@@ -37,7 +37,6 @@ class net_nehmer_static_interface extends midcom_baseclasses_components_interfac
         $this->_autoload_files = Array
         (
             'viewer.php',
-            'admin.php',
             'navigation.php'
         );
         $this->_autoload_libraries = Array
