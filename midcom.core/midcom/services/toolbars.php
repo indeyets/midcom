@@ -108,35 +108,30 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
 
         if ($_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_toolbars'))
         {
-            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Prototype/prototype.js');
-            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Scriptaculous/scriptaculous.js');
-            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Javascript_protoToolkit/protoToolkit.js');
-            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Javascript_protoToolkit/protoMemory.js');
-            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Javascript_protoToolkit/protoToolbar.js');        
-
+            $_MIDCOM->enable_jquery();
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.toolbars/jquery.midcom_services_toolbars.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.flydom-3.0.6.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.dimensions-1.1.2.pack.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.easydrag-1.3.js');
+            //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/tags/jquery.bgiframe.min.js');
+            
+            
             $_MIDCOM->add_link_head(
                 array
                 (
                     'rel'   => 'stylesheet',
                     'type'  => 'text/css',
                     'media' => 'screen',
-                    'href'  => $GLOBALS['midcom_config']['toolbars_css_path'],
+                    'href'  => MIDCOM_STATIC_URL . '/midcom.services.toolbars/fancy.css',
                 )
             );
-
-            $this->type = 'palette';
-
-            // Compute the final script:
-            $script = "
-                function protoToolbarOnload() {
-                	protoToolbar = new protoToolbar({
-                	   type: '{$this->type}'
-                    });
-                }
-            ";
-
-            $_MIDCOM->add_jscript($script);
-            $_MIDCOM->add_jsonload('protoToolbarOnload()');
+            
+            $this->type = 'palette';            
+            
+            $config = "{}";
+            
+            $script = "jQuery('body div.midcom_services_toolbars_fancy').midcom_services_toolbar({$config});";
+            $_MIDCOM->add_jquery_state_script($script);
         }
         else
         {
@@ -149,6 +144,8 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                     'href'  => $GLOBALS['midcom_config']['toolbars_simple_css_path'],
                 )
             );
+            
+            $this->type = 'normal';
         }
         
         // We've included CSS and JS, path is clear for centralized mode
@@ -1027,52 +1024,48 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
 
         $this->_centralized_mode = true;
         
-        $use_protoToolbar = false;
+        $enable_drag = false;
         $toolbar_style = "";
-        
+        $toolbar_class = "midcom_services_toolbars_simple";
+                    
         if ($_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_toolbars'))
         {
-            $use_protoToolbar = true;
-            $toolbar_id = "protoToolbar-{$this->type}";
+            $enable_drag = true;
+            $toolbar_class = "midcom_services_toolbars_fancy";
             $toolbar_style = "display: none;";
             
         }
-        else
-        {
-            $toolbar_id = "midcom_services_toolbars_simple";
-        }
         
-        echo "<div id=\"{$toolbar_id}\" style=\"{$toolbar_style}\">\n";
-        echo "    <div id=\"{$toolbar_id}-logos\">\n";
+        echo "<div class=\"{$toolbar_class} type_{$this->type}\" style=\"{$toolbar_style}\">\n";
+        echo "    <div class=\"logos\">\n";
         echo "        <a href=\"" . $_MIDCOM->get_page_prefix() . "midcom-exec-midcom/about.php\">\n";
         echo "            <img src=\"" . MIDCOM_STATIC_URL . "/midcom.services.toolbars/images/midgard-logo.png\" width=\"16\" height=\"16\" alt=\"Midgard\" />\n";
         echo "        </a>\n";
         echo "    </div>\n";
-        echo "    <div id=\"{$toolbar_id}-content\">\n";
-        echo "        <div id=\"item-page\" class=\"item\">\n";
-        echo "            <span class=\"toolbar_list_class page\">". $_MIDCOM->i18n->get_string('page', 'midcom') . "</span>\n";
+        echo "    <div class=\"items\">\n";
+        echo "        <div id=\"midcom_services_toolbars_topic-page\" class=\"item\">\n";
+        echo "            <span class=\"midcom_services_toolbars_topic_title page\">". $_MIDCOM->i18n->get_string('page', 'midcom') . "</span>\n";
         echo $this->render_view_toolbar();
         echo "        </div>\n";
-        echo "        <div id=\"item-folder\" class=\"item\">\n";
-        echo "            <span class=\"toolbar_list_class folder\">". $_MIDCOM->i18n->get_string('folder', 'midcom') . "</span>\n";
+        echo "        <div id=\"midcom_services_toolbars_topic-folder\" class=\"item\">\n";
+        echo "            <span class=\"midcom_services_toolbars_topic_title folder\">". $_MIDCOM->i18n->get_string('folder', 'midcom') . "</span>\n";
         echo $this->render_node_toolbar();
         echo "        </div>\n";
-        echo "        <div id=\"item-host\" class=\"item\">\n";
-        echo "            <span class=\"toolbar_list_class host\">". $_MIDCOM->i18n->get_string('host', 'midcom') . "</span>\n";
+        echo "        <div id=\"midcom_services_toolbars_topic-host\" class=\"item\">\n";
+        echo "            <span class=\"midcom_services_toolbars_topic_title host\">". $_MIDCOM->i18n->get_string('host', 'midcom') . "</span>\n";
         echo $this->render_host_toolbar();
         echo "        </div>\n";
-        echo "        <div id=\"item-help\" class=\"item\">\n";
-        echo "            <span class=\"toolbar_list_class help\">". $_MIDCOM->i18n->get_string('Help', 'midcom') . "</span>\n";
+        echo "        <div id=\"midcom_services_toolbars_topic-help\" class=\"item\">\n";
+        echo "            <span class=\"midcom_services_toolbars_topic_title help\">". $_MIDCOM->i18n->get_string('Help', 'midcom') . "</span>\n";
         echo $this->render_help_toolbar();
         echo "        </div>\n";
         echo "    </div>\n";
-
-        if ($use_protoToolbar)
+        if ($enable_drag)
         {
-            echo "     <div class=\"dragbar\"></div>\n";            
+            echo "     <div class=\"dragbar\"></div>\n";
         }
-
-        echo "</div>\n";        
+        echo "</div>\n";
+        
     }
 }
 
