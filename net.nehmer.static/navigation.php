@@ -27,12 +27,12 @@ class net_nehmer_static_navigation extends midcom_baseclasses_components_navigat
      * @var midcom_db_topic
      * @access private
      */
-    var $_content_topic = null;
+    private $_content_topic = null;
 
     /**
      * Simple constructor, calls base class.
      */
-    function net_nehmer_static_navigation()
+    public function __construct()
     {
         parent::midcom_baseclasses_components_navigation();
     }
@@ -44,108 +44,65 @@ class net_nehmer_static_navigation extends midcom_baseclasses_components_navigat
      * mode. The leaves' title are used as a description within NAP, and the toolbar will
      * contain edit and delete links.
      */
-    function get_leaves()
+    public function get_leaves()
     {
-        $qb = midcom_baseclasses_database_article::new_query_builder();
-        $qb->add_constraint('topic', '=', $this->_content_topic->id);
-        $qb->add_constraint('up', '=', 0);
-
+        // Get the required information with midgard_collector
+        $mc = midcom_db_article::new_collector('topic', $this->_content_topic->id);
+        $mc->set_key_property('topic');
+        $mc->add_value_property('id');
+        $mc->add_value_property('guid');
+        $mc->add_value_property('name');
+        $mc->add_value_property('title');
+        
+        $mc->add_constraint('topic', '=', $this->_content_topic->id);
+        $mc->add_constraint('up', '=', 0);
+        $mc->add_constraint('metadata.navnoentry', '=', 0);
+        
         // Unless in Auto-Index mode or the index article is hidden, we skip the index article.
-        if ($this->_config->get('autoindex'))
+        if (!$this->_config->get('autoindex'))
         {
-            $qb->add_constraint('name', '<>', 'index');
+            $mc->add_constraint('name', '<>', 'index');
         }
         else
         {
             if (! $this->_config->get('indexinnav'))
             {
-                $qb->add_constraint('name', '<>', 'index');
+                $mc->add_constraint('name', '<>', 'index');
             }
         }
-
-        $qb->add_order($this->_config->get('sort_order'));
+        
+        $mc->add_order($this->_config->get('sort_order'));
 
         // Sort items with the same primary sort key by title.
-        $qb->add_order('title');
-
-        $result = $qb->execute();
-
-        // Prepare everything
-        $leaves = array();
-
-        foreach ($result as $article)
+        $mc->add_order('title');
+        $mc->execute();
+        
+        $articles = $mc->list_keys();
+        
+        $leaves = array ();
+        
+        foreach ($articles as $guid => $array)
         {
-            $metadata =& midcom_helper_metadata::retrieve($article);
-            
-            $leaves[$article->id] = array
+            $article = array
             (
-                MIDCOM_NAV_SITE => Array
-                (
-                    MIDCOM_NAV_URL => "{$article->name}.html",
-                    MIDCOM_NAV_NAME => ($article->title != '') ? $article->title : $article->name
-                ),
-                MIDCOM_NAV_ADMIN => null,
-                MIDCOM_NAV_GUID => $article->guid,
-                MIDCOM_NAV_OBJECT => $article,
-                MIDCOM_NAV_NOENTRY => (bool) $metadata->get('navnoentry'),
-                MIDCOM_META_CREATOR => $metadata->get('creator'),
-                MIDCOM_META_EDITOR => $metadata->get('revisor'),
-                MIDCOM_META_CREATED => $metadata->get('created'),
-                MIDCOM_META_EDITED => $metadata->get('edited')
+                'id' => $mc->get_subkey($guid, 'id'),
+                'name' => $mc->get_subkey($guid, 'name'),
+                'title' => $mc->get_subkey($guid, 'title'),
             );
-
+            
+            $leaves[$article['id']] = array
+            (
+                MIDCOM_NAV_URL => "{$article['name']}.html",
+                MIDCOM_NAV_NAME => ($article['title']) ? $article['title'] : $article['name'],
+                MIDCOM_NAV_GUID => $guid,
+                MIDCOM_META_CREATED => 0,
+                MIDCOM_META_CREATOR => 0,
+                MIDCOM_META_EDITED => 0,
+                MIDCOM_META_EDITOR => 0,
+            );
         }
+        
         return $leaves;
-    }
-
-    /**
-     * The node listing will add a list of create links of all schemas to the toolbar.
-     *
-     * @todo Convert mgd_get_article_by_name to MgdSchema.
-     */
-    function get_node()
-    {
-        // Check visibility
-        /*
-        if (   $this->_config->get('autoindex') != 1
-            && mgd_get_article_by_name($this->_topic->id, 'index') === false)
-        {
-            $hidden = true;
-        }
-        else
-        {
-            $hidden = false;
-        }
-        */
-        $hidden = false;
-
-        // Get latest article but skip using ACL checks
-        $qb = midcom_db_article::new_query_builder();
-        $qb->add_constraint('topic', '=', $this->_topic->id);
-        $qb->add_order('metadata.revised', 'DESC');
-        $qb->set_limit(1);
-        $result = $qb->execute_unchecked();
-        if (   $result
-            && $result[0]->metadata->revised > $this->_topic->metadata->revised)
-        {
-            $revised = $result[0];
-        }
-        else
-        {
-            $revised = $this->_topic;
-        }
-
-        return array
-        (
-            MIDCOM_NAV_URL => '',
-            MIDCOM_NAV_NAME => $this->_topic->extra,
-            MIDCOM_NAV_NOENTRY => $hidden,
-            MIDCOM_NAV_CONFIGURATION => $this->_config,
-            MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
-            MIDCOM_META_EDITOR => $revised->metadata->revisor,
-            MIDCOM_META_CREATED => $this->_topic->metadata->created,
-            MIDCOM_META_EDITED => $revised->metadata->revised
-        );
     }
 
     /**
@@ -189,10 +146,6 @@ class net_nehmer_static_navigation extends midcom_baseclasses_components_navigat
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Failed to open symlink content topic {$guid}.");
             // This will exit.
         }
-
     }
-
-
 }
-
 ?>
