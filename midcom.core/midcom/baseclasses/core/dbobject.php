@@ -1017,21 +1017,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         }
         $value = $object->_parent_parameter($domain, $name);
         return $value;
-        /*
-        $parameter = midcom_baseclasses_core_dbobject::_get_parameter_object($object, $domain, $name);
-        if (! $parameter)
-        {
-            return null;
-        }
-
-        // Temporary workaround for missing delete support
-        if ($parameter->value == '')
-        {
-            return null;
-        }
-
-        return $parameter->value;
-        */
     }
 
     /**
@@ -1226,34 +1211,28 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function _list_parameters_all(&$object)
     {
-        debug_push_class($object, __FUNCTION__);
+        $mc = new midgard_collector('midgard_parameter', 'parentguid', $object->guid);
+        $mc->set_key_property('guid');
+        $mc->add_value_property('domain');
+        $mc->add_value_property('name');
+        $mc->add_value_property('value');        
         
-        // TODO: Switch to collector
-        $query = new midgard_query_builder('midgard_parameter');
-        $query->add_constraint('parentguid', '=', $object->guid);
-
-        // Temporary workaround for missing delete support
-        $query->add_constraint('value', '<>', '');
-
-        $result = @$query->execute();
-
-        if (count($result) == 0)
+        $mc->execute();
+        
+        $results = array();
+        
+        $params = $mc->list_keys();
+        foreach ($params as $guid => $param)
         {
-            debug_add("Cannot retrieve all parameters for {$object->__table__} ID {$object->id}; query execution failed, this is most probably an empty resultset.",
-                MIDCOM_LOG_DEBUG);
-            debug_pop();
-            return Array();
+            $domain = $mc->get_subkey($guid, 'domain');
+            if (!isset($results[$domain]))
+            {
+                $results[$domain] = array();
+            }
+            $results[$domain][$mc->get_subkey($guid, 'name')] = $mc->get_subkey($guid, 'value');
         }
-
-        $return = Array();
-
-        foreach ($result as $parameter)
-        {
-            $return[$parameter->domain][$parameter->name] = $parameter->value;
-        }
-
-        debug_pop();
-        return $return;
+        
+        return $results;
     }
 
     /**
@@ -1292,25 +1271,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         }
 
         $result = $object->_parent_parameter($domain, $name, $value);
-        /*
-        $parameter = midcom_baseclasses_core_dbobject::_get_parameter_object($object, $domain, $name);
-        if (! $parameter)
-        {
-            $result = midcom_baseclasses_core_dbobject::_create_parameter_object($object, $domain, $name, $value);   
-        }
-        else
-        {
-            // we need to update
-            $parameter->value = $value;
-            $result = @$parameter->update();
-        }
-
-        if (! $result)
-        {
-            debug_pop();
-            return false;
-        }
-        */
 
         $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);
         debug_pop();
@@ -1379,17 +1339,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         }
 
         $result = $object->_parent_parameter($domain, $name, '');
-        /*
-        $parameter = midcom_baseclasses_core_dbobject::_get_parameter_object($object, $domain, $name);
-        if (! $parameter)
-        {
-            // We don't have an object, so we're fine.   
-            debug_add("Cannot delete the parameter {$domain}/{$name} for {$object->__table__} ID {$object->id}; the parameter does not exist. Ignoring silently.");      
-            debug_pop();
-            return true;
-        }
-        $result = @$parameter->delete();
-        */
         $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);
         debug_pop();
         return $result;
@@ -2018,7 +1967,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         $metadata =& $object->get_metadata();
         if (! $metadata)
         {
-            debug_add("Failed to load the metadata for the {$object->__table__} ID {$object->id}, assuming invisible object.",
+            debug_add("Failed to load the metadata for {$object->guid}, assuming invisible object.",
                 MIDCOM_LOG_ERROR);
             return false;
         }
