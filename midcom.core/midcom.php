@@ -138,7 +138,6 @@ require('midcom/helper/configuration.php');
 require('midcom/helper/serviceloader.php');
 require('midcom/helper/toolbar.php');
 require('midcom/helper/toolbars.php');
-require('midcom/helper/list_helpers.php');
 
 // Services
 require('midcom/services/_i18n_l10n.php');
