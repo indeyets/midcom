@@ -157,7 +157,7 @@ require('midcom/services/uimessages.php');
 require('midcom/services/metadata.php');
 require('midcom/services/rcs.php');
 
-mgd_debug_start();
+//mgd_debug_start();
 /////////////////////////////////////
 // Instantinate the MidCOM main class
 require('midcom/application.php');
