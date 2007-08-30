@@ -31,7 +31,7 @@
  *
  * @package midcom.baseclasses
  */
-class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
+class midcom_baseclasses_core_dbobject
 {
     /**
      * "Pre-flight" checks for update method

@@ -240,7 +240,7 @@ class midcom_baseclasses_components_navigation
      *   to the topic. NAP will abort loading this node and log the error accordingly.
      *   Return true if everything is fine.
      */
-    private function _on_set_object()
+    function _on_set_object()
     {
         return true;
     }

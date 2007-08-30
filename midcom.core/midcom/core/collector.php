@@ -33,7 +33,7 @@
  * @todo Optimize the limit/offset implementation.
  * @todo Refactor the class to promote code reuse in the execution handlers.
  */
-class midcom_core_collector extends midcom_baseclasses_core_object
+class midcom_core_collector
 {
     /**
      * This private helper holds the type that the application expects to retrieve
