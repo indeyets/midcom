@@ -707,7 +707,6 @@ class midcom_application
         }
 
         // Processing, upon error the generate_error function will die here...
-
         $this->_process();
 
         // If MIDCOM_REQUEST_CONTENT: Tell Style to enter Context
@@ -905,7 +904,6 @@ class midcom_application
         do 
         {
             $object = $this->_parser->get_current_object();
-
             if (!is_object($object))
             {
                 debug_add("Root node missing.", MIDCOM_LOG_ERROR);
