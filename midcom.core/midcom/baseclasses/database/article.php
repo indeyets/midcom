@@ -47,29 +47,28 @@ class midcom_baseclasses_database_article extends __midcom_baseclasses_database_
         {
             return true;
         }
-        
-        $qb = midcom_baseclasses_database_article::new_query_builder();
-        $qb->add_constraint('name', '=', $this->name);
-        
+
+        $mc = midcom_baseclasses_database_article::new_collector('name', $this->name);
+        $mc->add_constraint('name', '=', $this->name);
+
         if ($this->id)
         {
-            $qb->add_constraint('id', '<>', $this->id);
+            $mc->add_constraint('id', '<>', $this->id);
         }
-        
+
         if ($this->up != 0)
         {
             // "Reply article", we care only about the up field
-            $qb->add_constraint('up', '=', $this->up);
+            $mc->add_constraint('up', '=', $this->up);
         }
         else
         {
             // Toplevel article, check topic
-            $qb->add_constraint('topic', '=', $this->topic);
+            $mc->add_constraint('topic', '=', $this->topic);
         }
-        
+
         // Run the uniqueness check
-        $matches = $qb->execute_unchecked();
-        if (count($matches) > 0)
+        if ($mc->count > 0)
         {
             // This name is already taken
             mgd_set_errno(MGD_ERR_OBJECT_NAME_EXISTS);
