@@ -87,7 +87,7 @@ class midcom_baseclasses_components_purecode extends midcom_baseclasses_core_obj
     function midcom_baseclasses_components_purecode ()
     {
         $this->_component_data =& $GLOBALS['midcom_component_data'][$this->_component];
-        $this->_i18n =& $GLOBALS['midcom']->get_service('i18n');
+        $this->_i18n =& $_MIDCOM->get_service('i18n');
         $this->_l10n =& $this->_i18n->get_l10n($this->_component);
         $this->_l10n_midcom =& $this->_i18n->get_l10n('midcom');
         $this->_load_topic_configuration(null);

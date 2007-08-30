@@ -360,19 +360,17 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
      */
     function initialize()
     {
-        global $midcom;
-
         // Preparation
-        $loader =& $midcom->get_component_loader();
+        $loader =& $_MIDCOM->get_component_loader();
         $this->_component_path = MIDCOM_ROOT . $loader->path_to_snippetpath($this->_component);
         $this->_manifest = $_MIDCOM->componentloader->manifests[$this->_component];
 
         // Load libraries
         foreach ($this->_autoload_libraries as $library)
         {
-            if (! $midcom->load_library($library))
+            if (! $_MIDCOM->load_library($library))
             {
-                $midcom->generate_error(MIDCOM_ERRCRIT, "Failed to load library {$library} while initializing {$this->_component}");
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to load library {$library} while initializing {$this->_component}");
                 // This will exit.
             }
         }
@@ -585,7 +583,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
     function can_handle($current_object, $argc, $argv, $contextid)
     {
         $data =& $this->_context_data[$contextid];
-        $loader =& $GLOBALS['midcom']->get_component_loader();
+        $loader =& $_MIDCOM->get_component_loader();
         $class = $loader->path_to_prefix($this->_component) . '_';
         $class .= ($data['adminmode'] ? $this->_ais_class_suffix : $this->_site_class_suffix);
         $data['handler'] = new $class($current_object, $data['config']);
@@ -666,7 +664,7 @@ class midcom_baseclasses_components_interface extends midcom_baseclasses_core_ob
     {
         if (is_null($this->_nap_instance))
         {
-            $loader =& $GLOBALS['midcom']->get_component_loader();
+            $loader =& $_MIDCOM->get_component_loader();
             $class = $loader->path_to_prefix($this->_component) . "_{$this->_nap_class_suffix}";
             $this->_nap_instance = new $class();
             if (is_a($this->_nap_instance, 'midcom_baseclasses_components_navigation'))
