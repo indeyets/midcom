@@ -425,7 +425,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
             
             while (($resultset = $this->_execute_and_check_privileges(true)) !== false)
             {
-                debug_add("Iteration loop #{$i}");
+                //debug_add("Iteration loop #{$i}");
                 if ($this->_qb_error_result !== 'UNDEFINED')
                 {
                     // QB failed in above method TODO: better catch
