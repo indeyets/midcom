@@ -92,50 +92,17 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
      */
     function _can_handle_view ($handler_id, $args, &$data)
     {
-        debug_add('mgd_version: ' . mgd_version());
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
-        {
-            debug_add('1.8.x detected, doing with single QB');
-            // 1.8 allows us to do this the easy way
-            $qb = midcom_db_article::new_query_builder();
-            $qb->add_constraint('topic', '=', $this->_content_topic->id);
-            $qb->add_constraint('up', '=', 0);
-            $qb->begin_group('OR');
-                $qb->add_constraint('name', '=', $args[0]);
-                $qb->add_constraint('guid', '=', $args[0]);
-            $qb->end_group();
-            $articles = $qb->execute();
-            if (count($articles) > 0)
-            {
-                $this->_article = $articles[0];
-            }
-        }
-        else
-        {
-            debug_add('1.7.x detected, doing separate checks');
-            // 1.7 requires that we check for guid and name separately
-            debug_add('Trying to fetch with name');
-            $qb = midcom_db_article::new_query_builder();
-            $qb->add_constraint('topic', '=', $this->_content_topic->id);
-            $qb->add_constraint('up', '=', 0);
+        $qb = midcom_db_article::new_query_builder();
+        $qb->add_constraint('topic', '=', $this->_content_topic->id);
+        $qb->add_constraint('up', '=', 0);
+        $qb->begin_group('OR');
             $qb->add_constraint('name', '=', $args[0]);
-            $articles = $qb->execute();
-            if (count($articles) > 0)
-            {
-                $this->_article = $articles[0];
-            }
-            elseif (mgd_is_guid($args[0]))
-            {
-                debug_add('mgd_is_guid returned true, trying to fetch with guid');
-                $article = new midcom_db_article($args[0]);
-                if (   is_object($article)
-                    && is_a($article, 'midcom_db_article')
-                    && $article->up == 0
-                    && $article->topic == $this->_content_topic->id)
-                {
-                    $this->_article = $article;
-                }
-            }
+            $qb->add_constraint('guid', '=', $args[0]);
+        $qb->end_group();
+        $articles = $qb->execute();
+        if (count($articles) > 0)
+        {
+            $this->_article = $articles[0];
         }
         
         if (!$this->_article)

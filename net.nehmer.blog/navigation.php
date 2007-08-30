@@ -72,12 +72,8 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
         {
             $leaves[NET_NEHMER_BLOG_LEAFID_FEEDS] = array
             (
-                MIDCOM_NAV_SITE => Array
-                (
-                    MIDCOM_NAV_URL => "feeds.html",
-                    MIDCOM_NAV_NAME => $this->_l10n->get('available feeds'),
-                ),
-                MIDCOM_NAV_ADMIN => null,
+                MIDCOM_NAV_URL => "feeds.html",
+                MIDCOM_NAV_NAME => $this->_l10n->get('available feeds'),
                 MIDCOM_META_CREATOR => $this->_content_topic->metadata->creator,
                 MIDCOM_META_EDITOR => $this->_content_topic->metadata->revisor,
                 MIDCOM_META_CREATED => $this->_content_topic->metadata->created,
@@ -113,12 +109,8 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
         {
             $leaves[$article->id] = array
             (
-                MIDCOM_NAV_SITE => array
-                (
-                    MIDCOM_NAV_URL => "{$prefix}{$article->name}.html",
-                    MIDCOM_NAV_NAME => ($article->title != '') ? $article->title : $article->name,
-                ),
-                MIDCOM_NAV_ADMIN => null,
+                MIDCOM_NAV_URL => "{$prefix}{$article->name}.html",
+                MIDCOM_NAV_NAME => ($article->title != '') ? $article->title : $article->name,
                 MIDCOM_NAV_GUID => $article->guid,
                 MIDCOM_NAV_OBJECT => $article,
                 MIDCOM_META_CREATOR => $article->metadata->creator,

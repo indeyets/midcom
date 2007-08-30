@@ -36,7 +36,12 @@ class net_nehmer_blog_interface extends midcom_baseclasses_components_interface
         define('NET_NEHMER_BLOG_LEAFID_FEEDS', 2);
 
         $this->_component = 'net.nehmer.blog';
-        $this->_autoload_files = Array('viewer.php', 'admin.php', 'navigation.php');
+        $this->_autoload_files = array
+        (
+            'viewer.php',
+            'navigation.php'
+        );
+        
         $this->_autoload_libraries = array
         (
             'midcom.helper.datamanager2'

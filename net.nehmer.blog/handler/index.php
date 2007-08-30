@@ -123,6 +123,11 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
         
         switch ($handler_id)
         {
+            case 'index':
+            case 'index-category':
+                $qb->set_limit($this->_config->get('index_entries'));
+                break;
+            
             case 'latest':
                 $qb->set_limit((int) $args[0]);
                 break;
@@ -131,8 +136,6 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
                 $qb->set_limit((int) $args[1]);
                 break;
                 
-            case 'index':
-            case 'index-category':
             default:
                 $qb->set_limit($this->_config->get('index_entries'));
                 break;
