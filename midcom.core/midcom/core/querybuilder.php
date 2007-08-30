@@ -273,7 +273,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     function _execute_and_check_privileges($false_on_empty_mgd_resultset = false)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $result = $this->_qb->execute();
+        $result = @$this->_qb->execute();
         if (!is_array($result))
         {
             $this->_qb_error_result = $result;
