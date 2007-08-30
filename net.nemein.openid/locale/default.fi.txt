@@ -1,0 +1,37 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING could not discover openid provider for identity %s
+Osoitteelle %s ei löytynyt OpenID-tarjoajaa
+---STRINGEND
+
+---STRING login using openid
+Kirjaudu sisään käyttäen OpenID:täsi
+---STRINGEND
+
+---STRING net.nemein.openid
+OpenID-käyttäjäntunnistus
+---STRINGEND
+
+---STRING openid authentication failed: %s
+OpenID-tunnistus epäonnistui: %s
+---STRINGEND
+
+---STRING openid url
+OpenID-osoite
+---STRINGEND
+
+---STRING please provide an openid url
+Syötä OpenID-osoite
+---STRINGEND
+
+---STRING successfully authenticated as %s via openid
+OpenID-tunnistautuminen osoitteella %s onnistui
+---STRINGEND
+
+---STRING failed to authenticate to midgard as %s via openid
+OpenID-tunnistautuminen Midgard-käyttäjäksi %s epäonnistui
+---STRINGEND
+
