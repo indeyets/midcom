@@ -735,7 +735,77 @@ EOF;
             'USERS' => Array()
         );
     }
-    function get_parent_guid_uncached() { return null; }
+    function get_parent_guid_uncached()
+    {
+EOF;
+        $reflector = new midgard_reflection_property($this->_class_definition['new_class_name']);
+        $up_property = midgard_object_class::get_property_up($this->_class_definition['new_class_name']);
+        if (!empty($up_property))
+        {
+            $target_property = $reflector->get_link_target($up_property);
+            /**
+             * Taken out from the generated code as this will cause infite loop in ACL resolving, using direct QB in stead
+             * (when instantiating the parent ACLs will be checked in any case)
+             *
+            \$mc = {$this->_class_definition['midcom_class_name']}::new_collector('{$target_property}', \$this->{$up_property});
+            */
+            $this->_class_string .= "\n";
+            $this->_class_string .= <<<EOF
+        // Up takes precedence over parent
+        if (!empty(\$this->{$up_property}))
+        {
+            \$mc = new midgard_collector('{$this->_class_definition['new_class_name']}', '{$target_property}', \$this->{$up_property});
+            \$mc->set_key_property('guid');
+            \$mc->execute();
+            \$guids = \$mc->list_keys();
+            if (!is_array(\$guids))
+            {
+                return null;
+            }
+            list (\$parent_guid, \$dummy) = each(\$guids);
+            return \$parent_guid;
+        }
+EOF;
+        }
+        $parent_property = midgard_object_class::get_property_parent($this->_class_definition['new_class_name']);
+        if (!empty($parent_property))
+        {
+            $target_property = $reflector->get_link_target($parent_property);
+            $target_class = $reflector->get_link_name($parent_property);
+            /**
+             * Taken out from the generated code as this will cause infite loop in ACL resolving, using direct QB in stead
+             * (when instantiating the parent ACLs will be checked in any case)
+             *
+            \$dummy_object = new {$target_class}();
+            \$midcom_dba_classname = \$_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object(\$dummy_object);
+            if (empty(\$midcom_dba_classname))
+            {
+                return null;
+            }
+            \$mc = call_user_func(array(\$midcom_dba_classname, 'new_collector'), array(\$target_property, \$this->\$parent_property));
+            */
+            $this->_class_string .= "\n";
+            $this->_class_string .= <<<EOF
+        if (!empty(\$this->{$parent_property}))
+        {
+            \$mc = new midgard_collector('{$target_class}', '{$target_property}', \$this->{$parent_property});
+            \$mc->set_key_property('guid');
+            \$mc->execute();
+            \$guids = \$mc->list_keys();
+            if (!is_array(\$guids))
+            {
+                return null;
+            }
+            list (\$parent_guid, \$dummy) = each(\$guids);
+            return \$parent_guid;
+        }
+EOF;
+        }
+
+        $this->_class_string .= "\n";
+        $this->_class_string .= <<<EOF
+        return null;
+    }
     function get_parent_guid_uncached_static(\$object_guid)
     {
         // TODO: Try to figure a way to use collector based on reflection data for this (and why not for get_parent_guid_uncached as well)
