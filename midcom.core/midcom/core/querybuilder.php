@@ -14,7 +14,8 @@
  * @todo: go through a defined api on the memcached module instead of the private object
  */
 
-class midcom_core_querybuilder_cached {
+class midcom_core_querybuilder_cached
+{
     /**
      * The timeout to use for this cache
      * @var int nr of seconds until object expiry
@@ -23,10 +24,14 @@ class midcom_core_querybuilder_cached {
     protected $key = array();
     protected $cache = null;
 
-    function __construct ($cache = FALSE) {
-        if ($cache === FALSE) {
+    function __construct ($cache = FALSE)
+    {
+        if ($cache === FALSE)
+        {
             $this->cache = $_MIDCOM->cache->memcache;
-        } else {
+        }
+        else
+        {
             $this->cache = $cache;
         }
     }
@@ -35,14 +40,16 @@ class midcom_core_querybuilder_cached {
      * Recursive walk to build a key nomatter the inputs.
      * Note: With large lists of inputs, the key becomes very loong...
      */
-    function rec_implode($key, $val) {
+    function rec_implode($key, $val)
+    {
         $this->new_key .= "{$key}_$val";
     }
 
     /*
      * Makes sure that all calls are catched.
      * */
-    function __call($name, $args) {
+    function __call($name, $args)
+    {
         if ($this->qb == NULL) 
         {
             throw new Exception("Querybuilder not set!"); 
@@ -59,11 +66,13 @@ class midcom_core_querybuilder_cached {
     /**
      * Executes the query and saves it to memcached
      */
-    function execute() {
+    function execute()
+    {
         $key = "midcom_querybuilder_cache_{$this->qb->classname}" . implode($this->key , "_");
 
         $return = $this->cache->get($key);
-        if ($return) {
+        if ($return)
+        {
             return $return; 
         }
         $return = $this->qb->execute();
