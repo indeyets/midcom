@@ -5,13 +5,12 @@
  * 
  * @package net.nemein.favourites
  */
-class net_nemein_favourites_admin extends midcom_baseclasses_components_request_admin
+class net_nemein_favourites_admin
 {
     var $_content_topic = null;
 
-    function net_nemein_favourites_admin($topic, $config) 
+    function __construct($topic, $config) 
     {
-         parent::midcom_baseclasses_components_request_admin($topic, $config);
     }
 
     function _on_initialize()
