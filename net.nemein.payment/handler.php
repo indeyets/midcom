@@ -201,12 +201,12 @@ class net_nemein_payment_handler extends midcom_baseclasses_components_purecode
         
         if (! is_double($amount))
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERR_CRIT, "n.n.payments: The amount '{$amount}' is not a valid floating point type.");
+            $_MIDCOM->generate_error(MIDCOM_ERR_CRIT, "n.n.payments: The amount '{$amount}' is not a valid floating point type.");
             // This will exit            
         }
         if ($return_url == '' || $reference == '')
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERR_CRIT, "n.n.payments: Reference and Return URL must not be empty.");
+            $_MIDCOM->generate_error(MIDCOM_ERR_CRIT, "n.n.payments: Reference and Return URL must not be empty.");
             // This will exit            
         }
         

@@ -42,7 +42,7 @@ class org_openpsa_documents_navigation extends midcom_baseclasses_components_nav
                     'rel' => 'directlink',
                 ),
             );*/
-            $prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+            $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
             foreach ($ret as $document)
             {

@@ -168,7 +168,7 @@ class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
 
             case MIDCOM_DATAMGR_CANCELLED_NONECREATED:
                 debug_add('Cancel without anything being created, redirecting to the welcome screen.');
-                $GLOBALS['midcom']->relocate('');
+                $_MIDCOM->relocate('');
                 // This will exit
 
             case MIDCOM_DATAMGR_CANCELLED:
@@ -513,17 +513,17 @@ class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
 
                     case MIDCOM_DATAMGR_SAVED:
                         // Index the organization
-                        $indexer =& $GLOBALS['midcom']->get_service('indexer');
+                        $indexer =& $_MIDCOM->get_service('indexer');
                         $indexer->index($this->_datamanagers['group']);
 
                         $this->_view = "default";
-                        $GLOBALS['midcom']->relocate($GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
+                        $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                             . "group/" . $this->_request_data["group"]->guid());
                         // This will exit()
 
                     case MIDCOM_DATAMGR_CANCELLED:
                         $this->_view = "default";
-                        $GLOBALS['midcom']->relocate($GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
+                        $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                             . "group/" . $this->_request_data["group"]->guid());
                         // This will exit()
 

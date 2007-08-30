@@ -160,7 +160,7 @@ class midcom_helper_datamanager_widget {
         $this->_fieldname = htmlspecialchars($this->_datamanager->form_prefix . "field_" . $field["name"]);
         $this->_value = $defaultvalue;
 
-        $i18n =& $GLOBALS["midcom"]->get_service("i18n");
+        $i18n =& $_MIDCOM->get_service("i18n");
         $this->_l10n = $i18n->get_l10n("midcom.helper.datamanager");
         $this->_l10n_midcom = $i18n->get_l10n("midcom");
 

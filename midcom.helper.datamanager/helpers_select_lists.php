@@ -83,8 +83,8 @@ function midcom_helper_datamanager__selectlist_allgroups_recursor($up, $spacer, 
  */
 function midcom_helper_datamanager_selectlist_allgroups() 
 {
-    $midgard = $GLOBALS["midcom"]->get_midgard();
-    $i18n =& $GLOBALS["midcom"]->get_service("i18n");
+    $midgard = $_MIDCOM->get_midgard();
+    $i18n =& $_MIDCOM->get_service("i18n");
     $l10n =& $i18n->get_l10n("midcom.helper.datamanager");
     $data = Array();
     $data[""] = $l10n->get("no selection");
@@ -159,7 +159,7 @@ function midcom_helper_datamanager_get_next_score ()
     {
         return $topics->score +1;
     }
-    print_r($GLOBALS['midcom']); 
+    print_r($_MIDCOM); 
     return 0;
 }
  */

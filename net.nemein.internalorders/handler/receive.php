@@ -33,13 +33,13 @@ class net_nemein_internalorders_handler_receive extends midcom_baseclasses_compo
 	{
 		if (is_null($this->_config->get('root_event')))
 		{
-			$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Component is not properly initialized, root event missing");
+			$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Component is not properly initialized, root event missing");
 		}
 	
 		$this->_root_event = mgd_get_object_by_guid($this->_config->get('root_event'));
 		if (!$this->_root_event)
 		{
-			$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Root event not found: ".mgd_errstr());
+			$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Root event not found: ".mgd_errstr());
 		}
 	}
 	
@@ -60,7 +60,7 @@ class net_nemein_internalorders_handler_receive extends midcom_baseclasses_compo
 
 		$body = $receivenotes."\n\n";
 		$body .= "Lähettäjänä: ".$email_from_person->firstname." ".$email_from_person->lastname."\n\n";
-		$body .= $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX).'view/'.$guid_for_order;
+		$body .= $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX).'view/'.$guid_for_order;
 
 //		mgd_include_snippet('/NemeinNet_Core/Mail');
 
@@ -124,7 +124,7 @@ class net_nemein_internalorders_handler_receive extends midcom_baseclasses_compo
 			$stat = $this->_request_data['event']->update();
 			if (!$stat)
 			{
-				$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to update order: ".mgd_errstr());
+				$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to update order: ".mgd_errstr());
 			}
 			 
 			 // Handle the multiple products inside the order
@@ -135,13 +135,13 @@ class net_nemein_internalorders_handler_receive extends midcom_baseclasses_compo
 				if (   !$event2
 					|| $event2->up != $this->_request_data['event']->id)
 				{
-					$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, 'Tried to update wrong object!');
+					$_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Tried to update wrong object!');
 				}
 				
 				$stat = $event2->update();
 				if (!$stat)
 				{
-					$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to update product {$event2->title}: ".mgd_errstr());
+					$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to update product {$event2->title}: ".mgd_errstr());
 				}
 				$event2->parameter('net.nemein.internalorders', 'quantity_received', $product['quantity_received']);
 				$event2->parameter('net.nemein.internalorders', 'additional', $product['additional']);
@@ -160,7 +160,7 @@ class net_nemein_internalorders_handler_receive extends midcom_baseclasses_compo
 				$this->_send_mail_about_unclear_order($this->_request_data['event']->guid, $to_user, $from_user, $receivenotes);
 			}
 			
-		 	$GLOBALS['midcom']->relocate($GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
+		 	$_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
 		}
 	
 		
@@ -183,7 +183,7 @@ class net_nemein_internalorders_handler_receive extends midcom_baseclasses_compo
 			}
 		}
 		
-		$GLOBALS['midcom']->set_pagetitle(sprintf($this->_request_data['l10n']->get('edit %s'), $this->_request_data['event']->title));
+		$_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('edit %s'), $this->_request_data['event']->title));
 		return true;
 	}
 

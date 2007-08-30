@@ -54,7 +54,7 @@ class midcom_services_indexer_filter_date extends midcom_services_indexer_filter
         
         if ($start == 0 && $end == 0)
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, 'Both start and end of a datefilter must not be 0.');
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Both start and end of a datefilter must not be 0.');
             // This will exit.
         }
         

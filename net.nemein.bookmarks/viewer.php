@@ -52,16 +52,16 @@ class net_nemein_bookmarks_viewer
             debug_add("Failed to open symlink content topic, (might also be an invalid object) last Midgard Error: " 
                 . mgd_errstr(), MIDCOM_LOG_ERROR);
             debug_print_r("Retrieved object was:", $object, MIDCOM_LOG_INFO);
-            $GLOBALS["midcom"]->generate_error(1, "Failed to open symlink content topic.");
+            $_MIDCOM->generate_error(1, "Failed to open symlink content topic.");
         }
         
         // Check topic validity
-        $root = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
+        $root = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
         if ($object->parameter("midcom", "component") != "net.nemein.bookmarks") 
         {
             debug_add("Content Topic is invalid, see LOG_INFO object dump", MIDCOM_LOG_ERROR);
             debug_print_r("Retrieved object was:", $object, MIDCOM_LOG_INFO);
-            $GLOBALS["midcom"]->generate_error("Failed to open symlink content topic.");
+            $_MIDCOM->generate_error("Failed to open symlink content topic.");
         }
         
         $this->_topic = $object;
@@ -84,7 +84,7 @@ class net_nemein_bookmarks_viewer
             return false;
         }
         
-        $GLOBALS["midcom"]->add_link_head(array(
+        $_MIDCOM->add_link_head(array(
             'rel' => 'stylesheet',
             'type' => 'text/css',
             'href' => MIDCOM_STATIC_URL."/net.nemein.bookmarks/bookmarks.css",
@@ -234,7 +234,7 @@ class net_nemein_bookmarks_viewer
                         if ($stat)
                         {
                             // Invalidate the cache
-                            $GLOBALS['midcom']->cache->invalidate_all();
+                            $_MIDCOM->cache->invalidate_all();
                      
                             // Update the Index
                             $datamanager = new midcom_helper_datamanager($this->_config->get('schemadb'));
@@ -252,13 +252,13 @@ class net_nemein_bookmarks_viewer
                                 }
                                 else
                                 {
-                                    $indexer =& $GLOBALS['midcom']->get_service('indexer');
+                                    $indexer =& $_MIDCOM->get_service('indexer');
                                     $indexer->index($datamanager);
                                 }
                             }
                      
                             // Redirect browser and exit
-                            $GLOBALS["midcom"]->relocate($this->_bookmark->url);
+                            $_MIDCOM->relocate($this->_bookmark->url);
                         }
                         $GLOBALS["net_nemein_bookmarks_processing_message"] = "Trying to save bookmark... ".mgd_errstr();
                     
@@ -266,7 +266,7 @@ class net_nemein_bookmarks_viewer
                 
             }
         }
-        $GLOBALS['midcom']->set_pagetitle($this->_config_topic->extra);               
+        $_MIDCOM->set_pagetitle($this->_config_topic->extra);               
         debug_pop();
         return true;
     }
@@ -278,7 +278,7 @@ class net_nemein_bookmarks_viewer
         debug_push ($this->_debug_prefix . "show");
         
         // get l10n libraries
-        $i18n =& $GLOBALS["midcom"]->get_service("i18n");
+        $i18n =& $_MIDCOM->get_service("i18n");
         $GLOBALS["view_l10n"] = $i18n->get_l10n("net.nemein.bookmarks");
         $GLOBALS["view_l10n_midcom"] = $i18n->get_l10n("midcom");
 
@@ -319,7 +319,7 @@ class net_nemein_bookmarks_viewer
             $layout = new midcom_helper_datamanager($GLOBALS["net_nemein_bookmarks_layouts"]);
             if (! $layout)
             {
-                $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT, "Layout class could not be instantinated.");
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Layout class could not be instantinated.");
             }
              
             foreach($this->_bookmarks as $bookmark_article)
@@ -327,7 +327,7 @@ class net_nemein_bookmarks_viewer
                 // Load the bookmarks via datamanager
                 if (! $layout->init($bookmark_article))
                 {
-                    $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT, "Layout class could not be initialized.");
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Layout class could not be initialized.");
                 }
                 $view = $layout->get_array();
                  
@@ -360,7 +360,7 @@ class net_nemein_bookmarks_viewer
             $layout = new midcom_helper_datamanager($GLOBALS["net_nemein_bookmarks_layouts"]);
             if (! $layout)
             {
-                $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT, "Layout class could not be instantinated.");
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Layout class could not be instantinated.");
             }
             
             $count = $this->_config->get("count");
@@ -378,7 +378,7 @@ class net_nemein_bookmarks_viewer
                 $article = mgd_get_article($id);
                 if (! $layout->init($article))
                 {
-                    $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT, "Layout class could not be initialized.");
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Layout class could not be initialized.");
                 }
                 $view = $layout->get_array();
                 

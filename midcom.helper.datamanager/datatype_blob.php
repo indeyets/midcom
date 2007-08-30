@@ -22,7 +22,7 @@ class midcom_helper_datamanager_datatype_blob extends midcom_helper_datamanager_
         }
         if (!array_key_exists("datatype_blob_anchorprefix", $field)) 
         {
-            $midgard = $GLOBALS["midcom"]->get_midgard();
+            $midgard = $_MIDCOM->get_midgard();
             $field["datatype_blob_anchorprefix"] = $midgard->self;
         }
         if (!array_key_exists("datatype_blob_autoindex", $field))
@@ -291,7 +291,7 @@ class midcom_helper_datamanager_datatype_blob extends midcom_helper_datamanager_
         
         if ($this->_field['datatype_blob_autoindex'])
         {
-            $indexer =& $GLOBALS['midcom']->get_service('indexer');
+            $indexer =& $_MIDCOM->get_service('indexer');
             $indexer->delete($guid);
         }
         
@@ -452,7 +452,7 @@ class midcom_helper_datamanager_datatype_blob extends midcom_helper_datamanager_
         if ($this->_field['datatype_blob_autoindex'])
         {
             $document = new midcom_services_indexer_document_attachment($this->_value["object"], $this->_storage);
-            $indexer =& $GLOBALS['midcom']->get_service('indexer');
+            $indexer =& $_MIDCOM->get_service('indexer');
             $indexer->index($document);
         }
         debug_pop();

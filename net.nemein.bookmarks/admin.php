@@ -30,7 +30,7 @@ class net_nemein_bookmarks_admin
         $this->_article = false;
         $this->_attachment = false;
         $this->_layout = false;
-        $i18n =& $GLOBALS["midcom"]->get_service("i18n");
+        $i18n =& $_MIDCOM->get_service("i18n");
         $this->_l10n = $i18n->get_l10n("net.nemein.bookmarks");
         $this->_l10n_midcom = $i18n->get_l10n("midcom");
         $this->errcode = MIDCOM_ERROK;
@@ -57,17 +57,17 @@ class net_nemein_bookmarks_admin
             debug_add("Failed to open symlink content topic, (might also be an invalid object) last Midgard Error: " 
                 . mgd_errstr(), MIDCOM_LOG_ERROR);
             debug_print_r("Retrieved object was:", $object, MIDCOM_LOG_INFO);
-            $GLOBALS["midcom"]->generate_error("Failed to open symlink content topic.");
+            $_MIDCOM->generate_error("Failed to open symlink content topic.");
         }
         
         /* Check topic validity */
-        $root = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
+        $root = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
         if ($object->parameter("midcom", "component") != "net.nemein.bookmarks") 
         {
             debug_add("Content Topic is invalid, see LOG_INFO object dump", MIDCOM_LOG_ERROR);
             debug_print_r("Retrieved object was:", $object, MIDCOM_LOG_INFO);
             debug_print_r("ROOT topic object was:", $root, MIDCOM_LOG_INFO);
-            $GLOBALS["midcom"]->generate_error("Failed to open symlink content topic.");
+            $_MIDCOM->generate_error("Failed to open symlink content topic.");
         }
         
         $this->_topic = $object;
@@ -229,7 +229,7 @@ class net_nemein_bookmarks_admin
         if (! $updated) 
         {
             debug_print_r("Failed to update the Article with a new URL, last article state:", $article);
-            $GLOBALS['midcom']->generate_error("Could not update the article's URL Name: " . mgd_errstr());
+            $_MIDCOM->generate_error("Could not update the article's URL Name: " . mgd_errstr());
             // This will exit()
         }
         return $article;      
@@ -342,26 +342,26 @@ class net_nemein_bookmarks_admin
                     $this->_article = $this->_generate_urlname($this->_article);
                 }
                 // Update the Index 
-                //$indexer =& $GLOBALS['midcom']->get_service('indexer');
+                //$indexer =& $_MIDCOM->get_service('indexer');
                 //$indexer->index($this->_datamanager);
 
 	            // Redirect to view page.
-	            $GLOBALS['midcom']->relocate("view/$id.html");
+	            $_MIDCOM->relocate("view/$id.html");
 	            // This will exit()
                 
                 
 	            // Redirect to view page.
-	            //$GLOBALS['midcom']->relocate($GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
+	            //$_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
 	            //     . "view/$id.html");
 	            // This will exit()
                 
             case MIDCOM_DATAMGR_CANCELLED:
             	// Redirect to view page.
-	            $GLOBALS['midcom']->relocate("view/$id.html");
+	            $_MIDCOM->relocate("view/$id.html");
 	            // This will exit()
        			/*
 	            // Redirect to view page.
-	            $GLOBALS['midcom']->relocate($GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
+	            $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
 	                 . "view/$id.html");
 	            // This will exit()
                 */
@@ -385,7 +385,7 @@ class net_nemein_bookmarks_admin
         $this->_datamanager = new midcom_helper_datamanager($GLOBALS['net_nemein_bookmarks_layouts']);
         if (! $this->_datamanager)
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 'Failed to create a datamanager instance, see debug log for details.');
             // This will exit.
         }
@@ -401,7 +401,7 @@ class net_nemein_bookmarks_admin
             $this->_article = null;
             if (! $this->_datamanager->init_creation_mode($schema, $this))
             {
-                $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     "Failied to initialize the datamanger in creation mode for schema '{$schema}'.");
                 // This will exit
             }
@@ -414,13 +414,13 @@ class net_nemein_bookmarks_admin
             $this->_article = mgd_get_article($id);
             if (! $this->_article)
             {
-                $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     'Could not load created article, error was: ' . mgd_errstr());
                 // This will exit
             }
             if (! $this->_datamanager->init($this->_article))
             {
-                $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     "Failied to initialize the datamanger to article ID '{$id}'.");
                 // This will exit
             }
@@ -471,11 +471,11 @@ class net_nemein_bookmarks_admin
 	            }
                 
                 // index the article 
-                $indexer =& $GLOBALS['midcom']->get_service('indexer');
+                $indexer =& $_MIDCOM->get_service('indexer');
                 $indexer->index($this->_datamanager);
                 
 	            // Redirect to view page.
-                $GLOBALS['midcom']->relocate("view/{$this->_article->id}.html");
+                $_MIDCOM->relocate("view/{$this->_article->id}.html");
             // This will exit
            
             case MIDCOM_DATAMGR_CANCELLED_NONECREATED:
@@ -486,7 +486,7 @@ class net_nemein_bookmarks_admin
                     return false;
                 } else {
                     debug_add('Cancel without anything being created, redirecting to the welcome screen.');
-                    $GLOBALS['midcom']->relocate('');
+                    $_MIDCOM->relocate('');
                     // This will exit
 
                 }
@@ -501,12 +501,12 @@ class net_nemein_bookmarks_admin
                     debug_add('Cancel with a temporary object, deleting it and redirecting to the welcome screen.');
                     if (! mgd_delete_extensions($this->_article) || ! $this->_article->delete())
                     {
-                        $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+                        $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                             'Failed to remove temporary article or its dependants.');
                         // This will exit
                     }
                     $session->remove('admin_create_id');
-                    $GLOBALS['midcom']->relocate('');
+                    $_MIDCOM->relocate('');
                     // This will exit
                 }
             
@@ -536,7 +536,7 @@ class net_nemein_bookmarks_admin
 	        "storage" => null,
 	    );
 	        
-	    $midgard = $GLOBALS["midcom"]->get_midgard();
+	    $midgard = $_MIDCOM->get_midgard();
 	    $this->_article = mgd_get_article();
 	    $this->_article->topic = $this->_topic->id;
 	    $this->_article->author = $midgard->user;
@@ -567,7 +567,7 @@ class net_nemein_bookmarks_admin
             if (array_key_exists("net_nemein_bookmarks_deletecancel", $_REQUEST)) 
             {
                 // Redirect to view page.
-                $GLOBALS['midcom']->relocate($GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
+                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                      . "view/$id.html");
                 // This will exit()
             } 
@@ -765,7 +765,7 @@ class net_nemein_bookmarks_admin
                                 else 
                                 {
                                 	// Invalidating the cache
-                                	$GLOBALS["midcom"]->cache->invalidate_all();
+                                	$_MIDCOM->cache->invalidate_all();
 
                                     debug_add ("Created $id updated");
                                 }
@@ -824,7 +824,9 @@ class net_nemein_bookmarks_admin
         midcom_show_style("admin_welcome");
         $view = mgd_list_topic_articles($this->_topic->id);
         if ($view->N == 0) 
-        {            echo "No bookmarks";        } 
+        {
+            echo "No bookmarks";
+        } 
     }
 
     function _show_view() 
@@ -931,14 +933,14 @@ class net_nemein_bookmarks_admin
         
         
         // Update the index
-        $indexer =& $GLOBALS['midcom']->get_service('indexer');
+        $indexer =& $_MIDCOM->get_service('indexer');
         $indexer->delete($guid);
         
         // Invalidate the cache modules
-        $GLOBALS['midcom']->cache->invalidate($guid);
+        $_MIDCOM->cache->invalidate($guid);
         
         // Redirect to welcome page.
-        $GLOBALS['midcom']->relocate($GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
+        $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
         // This will exit()
     }
 
@@ -984,7 +986,7 @@ class net_nemein_bookmarks_admin
         if ($this->_config_dm == false) 
         {
             debug_add("Failed to instantinate configuration datamanager.", MIDCOM_LOG_CRIT);
-            $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT, 
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 
                 "Failed to instantinate configuration datamanager.");
         }
         
@@ -1000,7 +1002,7 @@ class net_nemein_bookmarks_admin
         {
             debug_add("Failed to initialize the datamanager.", MIDCOM_LOG_CRIT);
             debug_print_r("Topic object we tried was:", $this->_config_topic);
-            $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT, 
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 
                 "Failed to initialize configuration datamanager.");
         }
     }

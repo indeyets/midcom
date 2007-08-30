@@ -126,7 +126,7 @@ class midcom_helper_itemlist
       $sortclass = &new $class();
       $sortclass->_init($_basicnav, $parent_topic);
      } else {
-      $GLOBALS['midcom']->generate_error("Tried to load sorting helper class for order {$sorting}, but the class was undefined.", MIDCOM_LOG_WARN);      
+      $_MIDCOM->generate_error("Tried to load sorting helper class for order {$sorting}, but the class was undefined.", MIDCOM_LOG_WARN);      
      } 
   
      return $sortclass;

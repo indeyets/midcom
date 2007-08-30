@@ -33,13 +33,13 @@ class net_nemein_internalorders_viewer extends midcom_baseclasses_components_req
 	{
 		if (is_null($this->_config->get('root_event')))
 		{
-			$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Component is not properly initialized, root event missing");
+			$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Component is not properly initialized, root event missing");
 		}
 	
 		$this->_root_event = mgd_get_object_by_guid($this->_config->get('root_event'));
 		if (!$this->_root_event)
 		{
-			$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Root event not found: ".mgd_errstr());
+			$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Root event not found: ".mgd_errstr());
 		}
 			$_MIDCOM->componentloader->load_graceful('org.openpsa.products');
 		
@@ -363,7 +363,7 @@ class net_nemein_internalorders_viewer extends midcom_baseclasses_components_req
 		
 		if (!$stat)
 		{
-			$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to create order: ".mgd_errstr());
+			$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create order: ".mgd_errstr());
 		}
 		
 
@@ -372,7 +372,7 @@ class net_nemein_internalorders_viewer extends midcom_baseclasses_components_req
 //			$event->parameter('net.nemein.internalorders', 'date', time());
 //			$event->parameter('net.nemein.internalorders', 'handler', $_MIDGARD['user']);
 //			$event->update();
-		$GLOBALS['midcom']->relocate($GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX).'edit/'.$event->guid().'.html');
+		$_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX).'edit/'.$event->guid().'.html');
 	}
 	
 	function _send_mail_about_deleted_order($number_for_order, $to_id, $from_id)
@@ -420,7 +420,7 @@ class net_nemein_internalorders_viewer extends midcom_baseclasses_components_req
 
 		}
 		
-		$GLOBALS['midcom']->relocate($GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
+		$_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
 	}
 
 	
@@ -468,7 +468,7 @@ class net_nemein_internalorders_viewer extends midcom_baseclasses_components_req
 			}
 		}
 		
-		$GLOBALS['midcom']->set_pagetitle(sprintf($this->_request_data['l10n']->get('edit %s'), $this->_request_data['event']->title));
+		$_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('edit %s'), $this->_request_data['event']->title));
 
 		return true;
 	}
@@ -514,7 +514,7 @@ class net_nemein_internalorders_viewer extends midcom_baseclasses_components_req
 			}
 		}
 		
-		$GLOBALS['midcom']->set_pagetitle(sprintf($this->_request_data['l10n']->get('edit %s'), $this->_request_data['event']->title));
+		$_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('edit %s'), $this->_request_data['event']->title));
 
 		return true;
 	}

@@ -22,7 +22,7 @@
 $midgard = mgd_get_midgard();
 if (! $midgard->admin)
 {
-    $GLOBALS['midcom']->generate_error(MIDCOM_ERRAUTH, "This script requires admin privileges to run.");
+    $_MIDCOM->generate_error(MIDCOM_ERRAUTH, "This script requires admin privileges to run.");
     // This will exit.
 }
 
@@ -341,7 +341,7 @@ while (! is_null($nodeid))
     if ($childs === false)
     {
         echo "</pre>\n";
-        $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to list the child nodes of {$nodeid}. Aborting.");
+        $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to list the child nodes of {$nodeid}. Aborting.");
     } 
     $nodes = array_merge($nodes, $childs);
     $nodeid = array_shift($nodes);
@@ -351,7 +351,7 @@ while (! is_null($nodeid))
 
 echo "\n\nData Conversion complete.\n\n";
 echo "\n\nInvalidating the Content Cache...\n\n";
-$GLOBALS['midcom']->cache->invalidate_all();
+$_MIDCOM->cache->invalidate_all();
 echo '</pre>';
 
 ?>

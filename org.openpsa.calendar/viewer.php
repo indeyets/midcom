@@ -941,7 +941,7 @@ function openPsaShowMonthSelector()
                 // Change schema setting
                 //$this->_request_data['event']->parameter("midcom.helper.datamanager","layout","default");
 
-                $indexer =& $GLOBALS['midcom']->get_service('indexer');
+                $indexer =& $_MIDCOM->get_service('indexer');
                 $indexer->index($this->_datamanager);
 
                 // Relocate to event view
@@ -956,7 +956,7 @@ function openPsaShowMonthSelector()
                 // Change schema setting
                 //$this->_request_data['metadata']->parameter("midcom.helper.datamanager","layout","default");
 
-                $indexer =& $GLOBALS['midcom']->get_service('indexer');
+                $indexer =& $_MIDCOM->get_service('indexer');
                 $indexer->index($this->_datamanager);
 
                 // Relocate to event view

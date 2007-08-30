@@ -155,7 +155,7 @@ class midcom_services_indexer_backend_xmlshell extends midcom_services_indexer_b
             debug_print_r('Tried to open these pipes:', $descriptors);
             debug_print_r('Global config was:', $GLOBALS['midcom_config']);
             debug_pop();
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, 'Failed to execute the indexer process.');
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to execute the indexer process.');
             // This will exit.
         }
         
@@ -256,7 +256,7 @@ class midcom_services_indexer_backend_xmlshell extends midcom_services_indexer_b
         if ($return != 0)
         {
             debug_pop();
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, 
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 
                 "The xmlshell indexer executable returned {$return}, this is critical. Check the Debug Log."); 
             // This will exit.
         }

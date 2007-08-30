@@ -62,7 +62,7 @@ class net_nemein_personnel_admin extends midcom_baseclasses_components_request_a
 
         $GLOBALS['midcom_component_data']['net.nemein.personnel']['active_leaf'] = false;
 
-        $i18n =& $GLOBALS["midcom"]->get_service("i18n");
+        $i18n =& $_MIDCOM->get_service("i18n");
         $this->_l10n = $i18n->get_l10n("net.nemein.personnel");
         $this->_l10n_midcom = $i18n->get_l10n("midcom");
 
@@ -162,7 +162,7 @@ class net_nemein_personnel_admin extends midcom_baseclasses_components_request_a
         $this->_group = mgd_get_object_by_guid($this->_config->get("group"));
         $this->_preferred_person = $this->_config->get("preferred_person");
 
-        $GLOBALS['midcom']->cache->invalidate($this->_topic->guid());
+        $_MIDCOM->cache->invalidate($this->_topic->guid());
       }
     }
 
@@ -245,7 +245,7 @@ class net_nemein_personnel_admin extends midcom_baseclasses_components_request_a
                 // Fall-Through
 
             case MIDCOM_DATAMGR_CANCELLED:
-                $GLOBALS['midcom']->relocate($GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
+                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                     . "view/{$id}.html");
                 // This will exit()
 
@@ -260,7 +260,7 @@ class net_nemein_personnel_admin extends midcom_baseclasses_components_request_a
     function show() {
 
         // get l10n libraries
-        $i18n =& $GLOBALS["midcom"]->get_service("i18n");
+        $i18n =& $_MIDCOM->get_service("i18n");
         $GLOBALS["view_l10n"] = $i18n->get_l10n("net.nemein.personnel");
         $GLOBALS["view_l10n_midcom"] = $i18n->get_l10n("midcom");
         global $view_topic;

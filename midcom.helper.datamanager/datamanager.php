@@ -560,7 +560,7 @@ class midcom_helper_datamanager {
         $this->_lock = null;
         $this->_ourlock = null;
 
-        $i18n =& $GLOBALS["midcom"]->get_service("i18n");
+        $i18n =& $_MIDCOM->get_service("i18n");
         $this->_l10n = $i18n->get_l10n("midcom.helper.datamanager");
         $this->_l10n_midcom = $i18n->get_l10n("midcom");
         if(array_key_exists("view_contentmgr", $GLOBALS)) {
@@ -720,10 +720,10 @@ class midcom_helper_datamanager {
         }
         else
         {
-            $comp = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_COMPONENT);
+            $comp = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_COMPONENT);
         }
 
-        $i18n =& $GLOBALS['midcom']->get_service('i18n');
+        $i18n =& $_MIDCOM->get_service('i18n');
         $this->_l10n_schema = $i18n->get_l10n($comp);
 
         $this->_translate_schema_field($this->_layout['description']);
@@ -1030,7 +1030,7 @@ class midcom_helper_datamanager {
                 // Invalidate the current content topic so that the NAP cache is correct again.
                 $nav = new midcom_helper_nav();
                 $node = $nav->get_node($nav->get_current_node());
-                $GLOBALS['midcom']->cache->invalidate($node[MIDCOM_NAV_GUID]);
+                $_MIDCOM->cache->invalidate($node[MIDCOM_NAV_GUID]);
 
                 /* Ok, we do now have a storage object to work with. Note, that
                  * if the DM returns MIDCOM_DATAMGR_EDITING, you must honor this
@@ -1131,7 +1131,7 @@ class midcom_helper_datamanager {
             if ($success)
             {
                 $this->_update_nemein_rcs();
-                $GLOBALS["midcom"]->cache->invalidate($this->_storage->guid());
+                $_MIDCOM->cache->invalidate($this->_storage->guid());
                 debug_add("Invalidated Midcom Cache.");
             }
 
@@ -1276,7 +1276,7 @@ class midcom_helper_datamanager {
 
         debug_push ("midcom_helper_datamanager::display_form");
 
-        $i18n =& $GLOBALS["midcom"]->get_service("i18n");
+        $i18n =& $_MIDCOM->get_service("i18n");
         $l10n_midcom = $i18n->get_l10n("midcom");
 
         if (   (   is_null($this->_storage)
@@ -1316,7 +1316,7 @@ class midcom_helper_datamanager {
         if (is_array($this->_lock) && ! $this->_ourlock) {
             $can_break = false;
 
-            $midgard = $GLOBALS["midcom"]->get_midgard();
+            $midgard = $_MIDCOM->get_midgard();
             $user = mgd_get_person($midgard->user);
 
             if ($user != false)
@@ -1764,7 +1764,7 @@ class midcom_helper_datamanager {
         if (! is_array($this->_layoutdb))
         {
             debug_print_type("Got this type as layout database:", $source);
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, 'Layout database was not found, aborting.');
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Layout database was not found, aborting.');
             // this will exit()
         }
 
@@ -1972,7 +1972,7 @@ class midcom_helper_datamanager {
             return false;
         }
 
-        $midgard = $GLOBALS["midcom"]->get_midgard();
+        $midgard = $_MIDCOM->get_midgard();
         $user = mgd_get_person($midgard->user);
 
         if (($lock["time"] + $this->_layout["locktimeout"] * 60) < time()) {
@@ -1987,7 +1987,7 @@ class midcom_helper_datamanager {
             $this->_lock["user_record"] = $user;
             $locker = mgd_get_person($lock["user"]);
             if (! $locker)
-                $GLOBALS["MIDCOM"]->generate_error("CRITICAL FAILURE: Locker person record does not exist: "
+                $_MIDCOM->generate_error("CRITICAL FAILURE: Locker person record does not exist: "
                                                    . mgd_errstr(), MIDCOM_ERRCRIT);
             $this->_lock["user_name"] = $locker->name;
             $this->_lock["user_record"] = $locker;
@@ -2120,7 +2120,7 @@ class midcom_helper_datamanager {
             return $this->_storage->parameter("midcom.helper.datamanager", "lock", "");
         }
 
-        $midgard = $GLOBALS["midcom"]->get_midgard();
+        $midgard = $_MIDCOM->get_midgard();
         $user = mgd_get_person($midgard->user);
         if ($midgard->admin) {
             debug_add("DATAMANAGER: Cleared lock due to admin privileges");

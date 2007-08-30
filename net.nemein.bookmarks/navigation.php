@@ -17,7 +17,7 @@ class net_nemein_bookmarks_navigation
         $this->_topic = null;
         $this->_config_topic = null;
         $this->_config = $GLOBALS["midcom_component_data"]['net.nemein.bookmarks']['config'];
-        $i18n =& $GLOBALS["midcom"]->get_service("i18n");
+        $i18n =& $_MIDCOM->get_service("i18n");
         $this->_l10n = $i18n->get_l10n("net.nemein.bookmarks");
         $this->_l10n_midcom = $i18n->get_l10n("midcom"); 
         $this->_oldest_time = null;
@@ -186,17 +186,17 @@ class net_nemein_bookmarks_navigation
             debug_add("Failed to open symlink content topic, (might also be an invalid object) last Midgard Error: " 
                 . mgd_errstr(), MIDCOM_LOG_ERROR);
             debug_print_r("Retrieved object was:", $object, MIDCOM_LOG_INFO);
-            $GLOBALS["midcom"]->generate_error("Failed to open symlink content topic.");
+            $_MIDCOM->generate_error("Failed to open symlink content topic.");
         }
         
         /* Check topic validity */
-        $root = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
+        $root = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
         if ($object->parameter("midcom", "component") != "net.nemein.bookmarks") 
         {
             debug_add("Content Topic is invalid, see LOG_INFO object dump", MIDCOM_LOG_ERROR);
             debug_print_r("Retrieved object was:", $object, MIDCOM_LOG_INFO);
             debug_print_r("ROOT topic object was:", $root, MIDCOM_LOG_INFO);
-            $GLOBALS["midcom"]->generate_error("Failed to open symlink content topic.");
+            $_MIDCOM->generate_error("Failed to open symlink content topic.");
         }
         
         $this->_topic = $object;

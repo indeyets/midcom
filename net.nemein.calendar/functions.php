@@ -16,7 +16,7 @@
  */
 function net_nemein_calendar_functions_daylabel($label='start', $start, $end , $add_time = true) 
 {
-    $i18n = & $GLOBALS['midcom']->get_service('i18n');
+    $i18n = & $_MIDCOM->get_service('i18n');
     $language = $i18n->get_current_language();
     $language_db = $i18n->get_language_db();
     // fix that at least works very well on debian. 

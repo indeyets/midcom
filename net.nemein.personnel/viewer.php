@@ -462,7 +462,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
 
         $this->_layout = new midcom_helper_datamanager($GLOBALS["net_nemein_personnel_layouts"]);
         if (!$this->_layout) {
-            $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
             // This will exit.
         }
 
@@ -510,7 +510,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
               {
                   $this->_displayVCard($person);
               }
-              $GLOBALS["midcom"]->finish();
+              $_MIDCOM->finish();
               exit();
               return true;
             }
@@ -539,7 +539,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             if ($this->_getPerson($person_uri)) {
               $this->_displayVCardHeaders();
               $this->_displayVCard($this->_person);
-              $GLOBALS["midcom"]->finish();
+              $_MIDCOM->finish();
               exit();
             }
           }
@@ -602,8 +602,8 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
     }
 
     function _displayFOAFHeaders() {
-      $GLOBALS["midcom"]->cache->content->content_type("text/xml");
-      $GLOBALS["midcom"]->header("Content-type: text/xml; charset=UTF-8");
+      $_MIDCOM->cache->content->content_type("text/xml");
+      $_MIDCOM->header("Content-type: text/xml; charset=UTF-8");
       echo "<rdf:RDF\n";
       echo "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n";
       echo "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\">\n";
@@ -630,18 +630,18 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
 
     function _displayFOAFFooters() {
       echo "</rdf:RDF>\n";
-      $GLOBALS["midcom"]->finish();
+      $_MIDCOM->finish();
       exit();
     }
 
     function _displayVCardHeaders() {
-      $GLOBALS["midcom"]->cache->content->content_type("text/x-vcard");
-      $GLOBALS["midcom"]->header("Content-type: text/x-vcard");
+      $_MIDCOM->cache->content->content_type("text/x-vcard");
+      $_MIDCOM->header("Content-type: text/x-vcard");
     }
 
     function _displayVCard($person) {
       if (is_object($person)) {
-        $i18n =& $GLOBALS["midcom"]->get_service("i18n");
+        $i18n =& $_MIDCOM->get_service("i18n");
         $charset = $i18n->get_current_charset();
         echo "BEGIN:VCARD\n";
         echo "VERSION:2.1\n";
@@ -676,10 +676,10 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
         }
 
         // FOAF autodetection
-        $url_prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        $url_prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         if ($this->_config->get("enable_foaf"))
         {
-            $GLOBALS["midcom"]->add_link_head(
+            $_MIDCOM->add_link_head(
                 array(
                     'rel' => 'meta',
                     'type' => 'application/rdf+xml',
@@ -692,16 +692,16 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
         if ($this->_person) {
           $this->_layout = new midcom_helper_datamanager($net_nemein_personnel_layouts);
           if (! $this->_layout)
-            $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "Datamanager class could not be instantinated.");
 
           if (! $this->_layout->init($this->_person))
-            $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "Datamanager class could not be initialized.");
 
           // set nap element
           $GLOBALS['midcom_component_data']['net.nemein.personnel']['active_leaf'] = $this->_person->id;
-          $GLOBALS['midcom']->set_pagetitle($this->_person->name);
+          $_MIDCOM->set_pagetitle($this->_person->name);
 
           // initialize layout
           $substyle = $this->_layout->get_layout_name();
@@ -710,7 +710,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             $midcom->substyle_append($substyle);
           }
         } else {
-          $GLOBALS['midcom']->set_pagetitle($this->_topic->extra);
+          $_MIDCOM->set_pagetitle($this->_topic->extra);
         }
         debug_pop();
         return true;
@@ -779,7 +779,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
 
           // Initialize datamanager schema for the person
           if (!$this->_layout->init($person)) {
-            $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT,"Layout class could not be initialized.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,"Layout class could not be initialized.");
           }
 
           global $view_link;

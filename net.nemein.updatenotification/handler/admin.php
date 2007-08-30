@@ -76,7 +76,7 @@ class net_nemein_updatenotification_handler_admin  extends midcom_baseclasses_co
             }
         }
         
-        $_MIDCOM->relocate($GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
+        $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
         return true;
     }
     

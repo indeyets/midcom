@@ -41,7 +41,7 @@ class net_nemein_supportview_admin {
         
         $this->form_prefix = "net_nemein_supportview_";
         
-        $i18n =& $GLOBALS["midcom"]->get_service("i18n");
+        $i18n =& $_MIDCOM->get_service("i18n");
         $this->_l10n = $i18n->get_l10n("net.nemein.supportview");
         $this->_l10n_midcom = $i18n->get_l10n("midcom");
         $toolbars =& midcom_helper_toolbars::get_instance();
@@ -118,7 +118,7 @@ class net_nemein_supportview_admin {
         debug_push($this->_debug_prefix . "show");
         
         // get l10n libraries
-        $i18n =& $GLOBALS["midcom"]->get_service("i18n");
+        $i18n =& $_MIDCOM->get_service("i18n");
         $GLOBALS["view_l10n"] = $i18n->get_l10n("net.nemein.supportview");
         $GLOBALS["view_l10n_midcom"] = $i18n->get_l10n("midcom");
 
@@ -197,7 +197,7 @@ class net_nemein_supportview_admin {
         
         if ($this->_config_dm == false) {
             debug_add("Failed to instantinate configuration datamanager.", MIDCOM_LOG_CRIT);
-            $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT, 
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 
                                                "Failed to instantinate configuration datamanager.");
         }
         
@@ -207,7 +207,7 @@ class net_nemein_supportview_admin {
         if (! $this->_config_dm->init($this->_topic)) {
             debug_add("Failed to initialize the datamanager.", MIDCOM_LOG_CRIT);
             debug_print_r("Topic object we tried was:", $this->_config_topic);
-            $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT, 
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 
                                                "Failed to initialize configuration datamanager.");
         }
     }

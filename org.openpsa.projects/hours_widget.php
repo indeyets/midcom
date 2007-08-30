@@ -199,7 +199,7 @@ class org_openpsa_projects_hours_widget
         $this->_datamanager->process_form();
 
         // Make the hour reports pretty
-        $GLOBALS["midcom"]->add_link_head(array(
+        $_MIDCOM->add_link_head(array(
             'rel' => 'stylesheet',
             'type' => 'text/css',
             'href' => MIDCOM_STATIC_URL."/org.openpsa.projects/hours_widget.css",

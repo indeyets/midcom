@@ -163,12 +163,12 @@ class midcom_baseclasses_components_request_admin extends midcom_baseclasses_com
     function _handler_config_dm_prepare($handler_id, &$data)
     {
         // Load the datamanager, then create an instance.
-        $GLOBALS['midcom']->load_library('midcom.helper.datamanager');
+        $_MIDCOM->load_library('midcom.helper.datamanager');
         $data['datamanager'] = new midcom_helper_datamanager($this->_handler['schemadb']);
 
         if ($data['datamanager'] == false)
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, 'Failed to instantinate configuration datamanager.');
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to instantinate configuration datamanager.');
             // This will exit.
         }
 
@@ -179,7 +179,7 @@ class midcom_baseclasses_components_request_admin extends midcom_baseclasses_com
         {
             debug_add('Failed to initialize the datamanager.', MIDCOM_LOG_CRIT);
             debug_print_r('Topic object we tried was:', $this->_config_topic);
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, 'Failed to initialize configuration datamanager.');
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to initialize configuration datamanager.');
             // This will exit.
         }
 

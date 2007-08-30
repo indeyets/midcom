@@ -33,13 +33,13 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 	{
 		if (is_null($this->_config->get('root_event')))
 		{
-			$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Component is not properly initialized, root event missing");
+			$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Component is not properly initialized, root event missing");
 		}
 	
 		$this->_root_event = mgd_get_object_by_guid($this->_config->get('root_event'));
 		if (!$this->_root_event)
 		{
-			$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Root event not found: ".mgd_errstr());
+			$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Root event not found: ".mgd_errstr());
 		}
 	}
 	
@@ -59,7 +59,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 
 		$body = "Teille on tullut käsiteltäväksi uusi sisäisen siirron lomake..\n\n";
 		$body .= "Lähettäjänä: ".$email_from_person->firstname." ".$email_from_person->lastname."\n\n";
-		$body .= $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX).'receive/'.$guid_for_order;
+		$body .= $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX).'receive/'.$guid_for_order;
 
 //		mgd_include_snippet('/NemeinNet_Core/Mail');
 
@@ -109,11 +109,11 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 		{
 			if ($event->extra == $_MIDGARD['user'])
 			{
-		 		$GLOBALS['midcom']->relocate($GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX).'receive/'.$event->guid().'.html');
+		 		$_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX).'receive/'.$event->guid().'.html');
 		 	}
 		 	else
 		 	{
-		 		$GLOBALS['midcom']->relocate($GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX).'view/'.$event->guid().'.html');
+		 		$_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX).'view/'.$event->guid().'.html');
 		 	}
 		}
 		
@@ -189,7 +189,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 			$stat = $this->_request_data['event']->update();
 			if (!$stat)
 			{
-				$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to update order: ".mgd_errstr());
+				$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to update order: ".mgd_errstr());
 			}
 			 
 			 // Handle the multiple products inside the order
@@ -202,7 +202,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 					if (	!$event
 						|| $event->up != $this->_request_data['event']->id)
 					{
-						$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, 'Tried to update wrong object!');
+						$_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Tried to update wrong object!');
 					}
 					if (strlen($product['value']) == 7)
 					{
@@ -231,7 +231,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 //								echo $stat."::".mgd_errstr()."\n\n";
 								if (!$stat)
 								{
-									$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to delete product {$event->title}: ".mgd_errstr());
+									$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to delete product {$event->title}: ".mgd_errstr());
 								}
 								else
 								{
@@ -243,7 +243,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 							$stat = $event->update();
 							if (!$stat)
 							{
-								$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to update product {$event->title}: ".mgd_errstr());
+								$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to update product {$event->title}: ".mgd_errstr());
 							}
 							$event->parameter('net.nemein.internalorders', 'salesprice', $products[0]->price);
 							$event->parameter('net.nemein.internalorders', 'quantity', $product['quantity']);
@@ -264,7 +264,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 						{
 							$statuserrors .= "Virheellinen tuotekoodi --> ".$product['value']."<br />\n";
 							$statuserrors2 .= 'Virheellinen tuotekoodi --> '.$product['value'].'\n';
-//							$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to update product ".$product['value'].": ".mgd_errstr());
+//							$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to update product ".$product['value'].": ".mgd_errstr());
 						}
 					}
 					elseif (strlen($product['value']) == 5 || strlen($product['value']) == 4 || strlen($product['value']) == 6 || $product['value'] =='näyte' )
@@ -287,7 +287,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 //							echo $stat."::".mgd_errstr()."\n\n";
 							if (!$stat)
 							{
-								$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to delete product {$event->title}: ".mgd_errstr());
+								$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to delete product {$event->title}: ".mgd_errstr());
 							}
 							else
 							{
@@ -303,7 +303,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 						$stat = $event->update();
 						if (!$stat)
 						{
-							$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to update product {$event->title}: ".mgd_errstr());
+							$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to update product {$event->title}: ".mgd_errstr());
 						}
 						$event->parameter('net.nemein.internalorders', 'salesprice', $product['salesprice']);
 						$event->parameter('net.nemein.internalorders', 'quantity', $product['quantity']);
@@ -350,7 +350,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 							$stat = $event->create();
 							if (!$stat)
 							{
-								$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to create product ".$product['value'].": ".mgd_errstr());
+								$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create product ".$product['value'].": ".mgd_errstr());
 							}
 							$event = mgd_get_event($event->id);
 							$event->parameter('net.nemein.internalorders', 'salesprice', $products[0]->price);
@@ -401,7 +401,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 						$stat = $event->create();
 						if (!$stat)
 						{
-							$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to create product ".$product['value'].": ".mgd_errstr());
+							$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create product ".$product['value'].": ".mgd_errstr());
 						}
 							$event = mgd_get_event($event->id);
 						$event->parameter('net.nemein.internalorders', 'quantity', $product['quantity']);
@@ -429,7 +429,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 						$stat = $event->create();
 						if (!$stat)
 						{
-							$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to create product ".$product['value'].": ".mgd_errstr());
+							$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create product ".$product['value'].": ".mgd_errstr());
 						}
 							$event = mgd_get_event($event->id);
 						$event->parameter('net.nemein.internalorders', 'quantity', $product['quantity']);
@@ -504,18 +504,18 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 			$stat = $this->_request_data['event']->update();
 			if (!$stat)
 			{
-				$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to update order: ".mgd_errstr());
+				$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to update order: ".mgd_errstr());
 			}
 			
 			if ($statuserrors == "" && $known_products && (array_key_exists('net_nemein_internalorders_pricelist_refresh', $_POST) && $_POST['net_nemein_internalorders_pricelist_refresh'] != '1'))
 			{
 				if (array_key_exists('net_nemein_internalorders_pricelist_approve', $_POST) && $_POST['net_nemein_internalorders_pricelist_approve'] == 1 && $known_products)
 				{
-				 	$GLOBALS['midcom']->relocate($GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."print/".$args[0].".html");
+				 	$_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."print/".$args[0].".html");
 				}
 				else
 				{
-				 	$GLOBALS['midcom']->relocate($GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
+				 	$_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
 				}
 		 	}
 		}
@@ -538,7 +538,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 			}
 		}
 		
-		$GLOBALS['midcom']->set_pagetitle(sprintf($this->_request_data['l10n']->get('edit %s'), $this->_request_data['event']->title));
+		$_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('edit %s'), $this->_request_data['event']->title));
 		return true;
 	}
 

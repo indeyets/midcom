@@ -55,7 +55,7 @@ class midcom_helper_datamanager_datatype_communityhtml extends midcom_helper_dat
     {
         $result = strip_tags(trim($this->_value));
 
-        $midgard = $GLOBALS["midcom"]->get_midgard();
+        $midgard = $_MIDCOM->get_midgard();
 
         foreach ($this->_smileys as $tag => $url)
         {

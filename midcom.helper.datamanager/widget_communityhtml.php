@@ -118,7 +118,7 @@ function addTag(tag) {
      * This renders the complete toolbar based on the main type configuration.
      */
     function draw_widget () {
-        $midgard = $GLOBALS["midcom"]->get_midgard();
+        $midgard = $_MIDCOM->get_midgard();
 
         // Generate toolbar
         echo "<br />\n<span class='communityhtml_toolbar'>\n";

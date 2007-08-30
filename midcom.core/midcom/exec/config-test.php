@@ -146,7 +146,7 @@ function check_rcs()
 }
 
 // Some helpers
-$i18n =& $GLOBALS['midcom']->get_service('i18n');
+$i18n =& $_MIDCOM->get_service('i18n');
 
 $version = phpversion();
 if (version_compare($version, '5.1.0', '<'))

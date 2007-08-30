@@ -60,7 +60,7 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
     {
         if (! $this->exists($key))
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "flatfile cache handler: Failed to read key {$key} from the database {$this->_dirname}: File does not exist.");
             // This will exit.
         }
@@ -77,7 +77,7 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
         $handle = @fopen($filename, 'x');
         if ($handle === false)
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "flatfile cache handler: Failed to create key {$key} in the database {$this->_dirname}: File does already exist.");
             // This will exit.
         }

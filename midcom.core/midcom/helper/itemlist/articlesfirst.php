@@ -22,7 +22,7 @@ class  midcom_helper_itemlist_articlesfirst extends midcom_helper_itemlist
         $nodes_list = $this->_basicnav->list_nodes($this->parent_node_id);
         if ($nodes_list === false)
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_LOG_ERROR,
+            $_MIDCOM->generate_error(MIDCOM_LOG_ERROR,
                 "Could not retrieve the subnode listing, this is fatal.");
             // This will exit.
         }
@@ -30,7 +30,7 @@ class  midcom_helper_itemlist_articlesfirst extends midcom_helper_itemlist
         $leaves_list = $this->_basicnav->list_leaves($this->parent_node_id);
         if ($leaves_list === false)
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_LOG_ERROR,
+            $_MIDCOM->generate_error(MIDCOM_LOG_ERROR,
                 "Could not retrieve the leaf listing, this is fatal.");
             // This will exit.
         }

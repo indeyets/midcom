@@ -99,7 +99,7 @@ class midcom_helper_datamanager_widget_date extends midcom_helper_datamanager_wi
             || (   array_key_exists('view_contentmgr', $GLOBALS)
                 && $GLOBALS['view_contentmgr']))
         {
-            $midgard = $GLOBALS["midcom"]->get_midgard();
+            $midgard = $_MIDCOM->get_midgard();
 
 
             static $js_included = false;
@@ -161,7 +161,7 @@ EOT;
             if ($_MIDCOM->get_current_context() == 0)
             {
                 // We're loaded in main request handler
-                $GLOBALS['midcom']->add_jscript($tmp);
+                $_MIDCOM->add_jscript($tmp);
             }
             else
             {

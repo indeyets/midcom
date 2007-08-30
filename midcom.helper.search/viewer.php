@@ -93,7 +93,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
      */
     function _handler_result($handler_id, $args, &$data)
     {
-        $indexer =& $GLOBALS['midcom']->get_service('indexer');
+        $indexer =& $_MIDCOM->get_service('indexer');
         
         $data['type'] = $_REQUEST['type'];
         

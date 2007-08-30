@@ -103,7 +103,7 @@ class midcom_helper_configuration
         }
         else
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, 'midcom_helper_configuration: Default constructor not allowed.');
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'midcom_helper_configuration: Default constructor not allowed.');
         }
     }
 

@@ -43,7 +43,7 @@ class  midcom_helper_itemlist_score extends midcom_helper_itemlist
         }
         if (! usort($result, array ("midcom_helper_itemlist_score", "sort_cmp") ) )
         {
-            $GLOBALS['midcom']->generate_error("ARG"); 
+            $_MIDCOM->generate_error("ARG"); 
         }
         return $result;
     }

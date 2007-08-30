@@ -2,7 +2,7 @@
 /*
  * Simple example for calendar widget usage
  */
-$GLOBALS['midcom']->load_library('org.openpsa.calendarwidget');
+$_MIDCOM->load_library('org.openpsa.calendarwidget');
 $calendar = new org_openpsa_calendarwidget();
 //$calendar->day = 30;
 //$calendar->month = 12;

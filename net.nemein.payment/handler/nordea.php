@@ -249,7 +249,7 @@ class net_nemein_payment_handler_nordea extends net_nemein_payment_handler
     {
         if (! array_key_exists('net_nemein_payment_state', $_REQUEST))
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 'n.n.payments (nordea handler): The request variable net_nemein_payment_state was missing, this is critical.');
             // This will exit.
         }
@@ -269,7 +269,7 @@ class net_nemein_payment_handler_nordea extends net_nemein_payment_handler
                 break;
                 
             default:
-                $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     "n.n.payments (nordea handler): The state return code {$_REQUEST['net_nemein_payment_state']} is unknown, this is critical.");
                 // This will exit.                
         }
@@ -310,14 +310,14 @@ class net_nemein_payment_handler_nordea extends net_nemein_payment_handler
             || ! array_key_exists('SOLOPMT_RETURN_PAID', $_REQUEST)
             || ! array_key_exists('SOLOPMT_RETURN_MAC', $_REQUEST))
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "n.n.payments (nordea handler): The response received was incomplete, this is critical.");
             // This will exit.
         }
         
         if ($this->_version != $_REQUEST['SOLOPMT_RETURN_VERSION'])
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "n.n.payments (nordea handler): The response version number is not supported, this is critical.");
             // This will exit.
         }
@@ -499,7 +499,7 @@ class net_nemein_payment_handler_nordea extends net_nemein_payment_handler
         $mac = md5($mac_string);
         if (strtoupper($mac) != strtoupper($this->_mac))
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "n.n.payment (nordea handler): The returned Message Authentication Code was invalid, assuming tampreing with the request, aborting.");
             // This will exit.
         }

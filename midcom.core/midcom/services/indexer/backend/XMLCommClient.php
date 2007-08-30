@@ -488,7 +488,7 @@ class midcom_services_indexer_XMLComm_ResponseReader extends XML_Parser
 	function xmltag_error_($parser, $name)
 	{
             $msg = "The MidCOM Indexer failed critically:\n{$this->_current_data}";
-            // $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, $msg);
+            // $_MIDCOM->generate_error(MIDCOM_ERRCRIT, $msg);
             // This will exit.
             debug_add($msg, MIDCOM_LOG_ERROR);
 	}
@@ -510,7 +510,7 @@ class midcom_services_indexer_XMLComm_ResponseReader extends XML_Parser
         if ($result !== true)
         {
             $msg = "The XML Parser failed crticially:\n" . $result->toString();
-            // $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, $msg);
+            // $_MIDCOM->generate_error(MIDCOM_ERRCRIT, $msg);
             // This will exit.
             debug_add($msg, MIDCOM_LOG_ERROR);
         }

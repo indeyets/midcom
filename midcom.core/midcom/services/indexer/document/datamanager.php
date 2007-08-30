@@ -224,7 +224,7 @@ class midcom_services_indexer_document_datamanager extends midcom_services_index
                 
                 default:
                     debug_pop();
-                    $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, 
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 
                         "Datamanager Indexer Document: Unknown indexing method {$field['index_method']} for field {$name} discovered, aborting.");
                     // This will exit.
             }

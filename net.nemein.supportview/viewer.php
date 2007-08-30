@@ -50,9 +50,9 @@ class net_nemein_supportview_viewer {
         $this->view = false;
         
         // Always run in uncached mode
-        $GLOBALS["midcom"]->cache->content->no_cache();
+        $_MIDCOM->cache->content->no_cache();
         
-        $GLOBALS["midcom"]->add_link_head(array(
+        $_MIDCOM->add_link_head(array(
             'rel' => 'stylesheet',
             'type' => 'text/css',
             'href' => MIDCOM_STATIC_URL."/net.nemein.supportview/supportview.css",
@@ -180,7 +180,7 @@ class net_nemein_supportview_viewer {
         debug_push($this->_debug_prefix . "show");
         
         // get l10n libraries
-        $i18n =& $GLOBALS["midcom"]->get_service("i18n");
+        $i18n =& $_MIDCOM->get_service("i18n");
         $GLOBALS["view_l10n"] = $i18n->get_l10n("net.nemein.supportview");
         $GLOBALS["view_l10n_midcom"] = $i18n->get_l10n("midcom");
         

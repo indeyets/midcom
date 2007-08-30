@@ -76,7 +76,7 @@ class net_nemein_lastupdates_handler_index  extends midcom_baseclasses_component
     function _do_query()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $indexer =& $GLOBALS['midcom']->get_service('indexer');
+        $indexer =& $_MIDCOM->get_service('indexer');
         $data =& $this->_request_data;
         $data['documents'] = array();
         $data['query_failure'] = false;

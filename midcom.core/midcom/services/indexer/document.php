@@ -266,7 +266,7 @@ class midcom_services_indexer_document
      */
     function midcom_services_indexer_document()
     {
-        $this->_i18n =& $GLOBALS['midcom']->get_service('i18n');
+        $this->_i18n =& $_MIDCOM->get_service('i18n');
     }
 
 

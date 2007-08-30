@@ -451,7 +451,7 @@ class midcom_helper_toolbar {
     {
         if ($index == 0)
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 'Cannot move the top element upwards.');
             // This will exit()
         }
@@ -472,7 +472,7 @@ class midcom_helper_toolbar {
     {
         if ($index == (count($this->items) - 1))
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 'Cannot move the bottom element downwards.');
             // This will exit()
         }
@@ -563,7 +563,7 @@ class midcom_helper_toolbar {
         {
             debug_add("toolbar:update_item_url: We have an relative URL, transformig it...");
             $this->items[$index][MIDCOM_TOOLBAR_URL] =
-                  $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
+                  $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                 . $url;
         }
         else

@@ -30,7 +30,7 @@ class midcom_rcs_test extends UnitTestCase {
     function basicSetUp() 
     {
         $_MIDCOM = new MockMidCOM();        
-        $GLOBALS['midcom'] = &$_MIDCOM;
+        $_MIDCOM = &$_MIDCOM;
         $this->midcom = &$_MIDCOM;
         
         $this->config = array(
@@ -71,7 +71,7 @@ class rcs_config_test extends midcom_rcs_test {
     {
         $this->basicSetUp();
         $_MIDCOM = new MockMidCOM();        
-        $GLOBALS['midcom'] = &$_MIDCOM;
+        $_MIDCOM = &$_MIDCOM;
         
     }
 

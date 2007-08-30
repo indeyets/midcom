@@ -219,7 +219,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
 
         if (!$this->_datamanagers['salesproject']->init_creation_mode('newsalesproject',$this,'_creation_dm_callback'))
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "Failed to initialize datamanger in creation mode for schema 'newsalesproject'.");
             // This will exit
         }
@@ -240,8 +240,8 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
                 // TODO: index
 
                 // Relocate to main view
-                $prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-                $GLOBALS['midcom']->relocate($prefix."salesproject/edit/".$this->_request_data['salesproject']->guid.".html");
+                $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+                $_MIDCOM->relocate($prefix."salesproject/edit/".$this->_request_data['salesproject']->guid.".html");
                 break;
 
             case MIDCOM_DATAMGR_SAVED:
@@ -251,13 +251,13 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
                 // TODO: index
 
                 // Relocate to main view
-                $prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-                $GLOBALS['midcom']->relocate($prefix."salesproject/edit/".$this->_request_data['salesproject']->guid.".html");
+                $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+                $_MIDCOM->relocate($prefix."salesproject/edit/".$this->_request_data['salesproject']->guid.".html");
                 break;
 
             case MIDCOM_DATAMGR_CANCELLED_NONECREATED:
                 debug_add('Cancel without anything being created, redirecting to the welcome screen.');
-                $GLOBALS['midcom']->relocate('');
+                $_MIDCOM->relocate('');
                 // This will exit
 
             case MIDCOM_DATAMGR_CANCELLED:

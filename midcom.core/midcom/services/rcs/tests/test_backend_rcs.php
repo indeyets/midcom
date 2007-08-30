@@ -36,7 +36,7 @@ class midcom_backend_rcs_test extends UnitTestCase {
     function basicSetUp() 
     {
         $_MIDCOM = new MockMidCOM();        
-        $GLOBALS['midcom'] = &$_MIDCOM;
+        $_MIDCOM = &$_MIDCOM;
         $this->midcom = &$_MIDCOM;
         
         $this->config = array(

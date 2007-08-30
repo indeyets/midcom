@@ -114,7 +114,7 @@ class org_openpsa_documents_metadata_handler
                         $messagebox->addMessage($this->_request_data['l10n']->get("failed to delete document, reason ").mgd_errstr(), 'error');
                     }
                     // Update the index
-                    $indexer =& $GLOBALS['midcom']->get_service('indexer');
+                    $indexer =& $_MIDCOM->get_service('indexer');
                     $indexer->delete($this->_request_data['metadata']->guid);
                 }
                 else
@@ -164,7 +164,7 @@ class org_openpsa_documents_metadata_handler
 
                     case MIDCOM_DATAMGR_SAVED:
                         // Update the Index
-                        $indexer =& $GLOBALS['midcom']->get_service('indexer');
+                        $indexer =& $_MIDCOM->get_service('indexer');
                         $indexer->index($this->_datamanagers['metadata']);
 
                         $this->_view = "default";
@@ -254,7 +254,7 @@ class org_openpsa_documents_metadata_handler
                 $this->_request_data['metadata']->parameter("midcom.helper.datamanager","layout","default");
 
                 // Index the document
-                $indexer =& $GLOBALS['midcom']->get_service('indexer');
+                $indexer =& $_MIDCOM->get_service('indexer');
                 $indexer->index($this->_datamanagers['metadata']);
 
                 // Relocate to document view

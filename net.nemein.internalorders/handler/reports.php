@@ -32,13 +32,13 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	{
 		if (is_null($this->_config->get('root_event')))
 		{
-			$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Component is not properly initialized, root event missing");
+			$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Component is not properly initialized, root event missing");
 		}
 	
 		$this->_root_event = mgd_get_object_by_guid($this->_config->get('root_event'));
 		if (!$this->_root_event)
 		{
-			$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Root event not found: ".mgd_errstr());
+			$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Root event not found: ".mgd_errstr());
 		}
 		
 		$this->_is_admin = false;
@@ -235,7 +235,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		$this->_request_data['detail'] = array();
 		$this->_request_data['person'] = $args[0];
 		$this->_request_data['sent_receive'] = 0;
-		$this->_request_data['link'] = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/sent_export/".$args[0].".html";
+		$this->_request_data['link'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/sent_export/".$args[0].".html";
 		$person = mgd_get_person($args[0]);
 
 		$QB = midcom_db_event::new_query_builder();
@@ -303,7 +303,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		$this->_request_data['detail'] = array();
 		$this->_request_data['person'] = $args[0];
 		$this->_request_data['sent_receive'] = 0;
-		$this->_request_data['link'] = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/sent_export/".$args[0].".html";
+		$this->_request_data['link'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/sent_export/".$args[0].".html";
 		$person = mgd_get_person($args[0]);
 
 		$QB = midcom_db_event::new_query_builder();
@@ -339,7 +339,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		$this->_request_data['detail'] = array();
 		$this->_request_data['person'] = $args[0];
 		$this->_request_data['sent_receive'] = 1;
-		$this->_request_data['link'] = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/receive_export/".$args[0].".html";
+		$this->_request_data['link'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/receive_export/".$args[0].".html";
 		$person = mgd_get_person($args[0]);
 
 		$QB = midcom_db_event::new_query_builder();
@@ -407,7 +407,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		$this->_request_data['detail'] = array();
 		$this->_request_data['person'] = $args[0];
 		$this->_request_data['sent_receive'] = 1;
-		$this->_request_data['link'] = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/receive_export/".$args[0].".html";
+		$this->_request_data['link'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/receive_export/".$args[0].".html";
 		$person = mgd_get_person($args[0]);
 
 		$QB = midcom_db_event::new_query_builder();
@@ -444,7 +444,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		$this->_request_data['detail'] = array();
 		$this->_request_data['person'] = $args[0];
 		$this->_request_data['sent_receive'] = 0;
-		$this->_request_data['link'] = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/sent_2_export/".$args[0].".html";
+		$this->_request_data['link'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/sent_2_export/".$args[0].".html";
 		$person = mgd_get_person($args[0]);
 		
 		$QB = midcom_db_event::new_query_builder();
@@ -548,7 +548,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	{
 		$this->_request_data['detail'] = array();
 		$this->_request_data['person'] = $args[0];
-		$this->_request_data['link'] = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/receive_2_export/".$args[0].".html";
+		$this->_request_data['link'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/receive_2_export/".$args[0].".html";
 		$this->_request_data['sent_receive'] = 1;
 		$person = mgd_get_person($args[0]);
 
@@ -605,7 +605,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	{
 		$this->_request_data['detail'] = array();
 		$this->_request_data['person'] = $args[0];
-		$this->_request_data['link'] = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/receive_2_export/".$args[0].".html";
+		$this->_request_data['link'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/receive_2_export/".$args[0].".html";
 		$this->_request_data['sent_receive'] = 1;
 		$person = mgd_get_person($args[0]);
 
@@ -722,7 +722,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		}
 		else
 		{
-			$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "ERROR, wrong type of product group ");
+			$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "ERROR, wrong type of product group ");
 		}
 
 		$QB_groups = org_openpsa_products_product_group_dba::new_query_builder();
@@ -849,7 +849,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	function _handler_report_by_products_detail($handler_id, $args, &$data)
 	{
 
-		$this->_request_data['link'] = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_products/detail_export/".$args[0].".html";
+		$this->_request_data['link'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_products/detail_export/".$args[0].".html";
 		
 		$this->_request_data['product'] = array();
 
@@ -997,7 +997,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		$this->_request_data['detail'] = array();
 		$this->_request_data['person'] = $args[0];
 		$this->_request_data['sent_receive'] = 0;
-		$this->_request_data['link'] = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/sent_2_export/".$args[0].".html";
+		$this->_request_data['link'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/sent_2_export/".$args[0].".html";
 		$person = mgd_get_person($args[0]);
 		
 		$QB = midcom_db_event::new_query_builder();
@@ -1093,7 +1093,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	{
 		$this->_request_data['detail'] = array();
 		$this->_request_data['person'] = $args[0];
-		$this->_request_data['link'] = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/receive_2_export/".$args[0].".html";
+		$this->_request_data['link'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/receive_2_export/".$args[0].".html";
 		$this->_request_data['sent_receive'] = 1;
 		$person = mgd_get_person($args[0]);
 
@@ -1147,7 +1147,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	{
 		$this->_request_data['detail'] = array();
 		$this->_request_data['person'] = $args[0];
-		$this->_request_data['link'] = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/receive_2_export/".$args[0].".html";
+		$this->_request_data['link'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/by_places/receive_2_export/".$args[0].".html";
 		$this->_request_data['sent_receive'] = 1;
 		$person = mgd_get_person($args[0]);
 
@@ -1196,7 +1196,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	{
 		$this->_request_data['unclear'] = array();
 		$this->_request_data['unclear2'] = array();
-		$this->_request_data['link'] = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/unclear_export/";
+		$this->_request_data['link'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/unclear_export/";
 
 
 		$QB = midcom_db_event::new_query_builder();
@@ -1250,7 +1250,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		$this->_request_data['unclear'] = array();
 		$this->_request_data['person'] = $args[0];
 		$person = mgd_get_person($args[0]);
-		$this->_request_data['link'] = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/unclear/detail_export/".$args[0].".html";
+		$this->_request_data['link'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/unclear/detail_export/".$args[0].".html";
 
 
 		$QB = midcom_db_event::new_query_builder();
@@ -1305,7 +1305,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		$this->_request_data['unclear'] = array();
 		$this->_request_data['person'] = $args[0];
 		$person = mgd_get_person($args[0]);
-		$this->_request_data['link'] = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/unclear/detail_export/".$args[0].".html";
+		$this->_request_data['link'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/unclear/detail_export/".$args[0].".html";
 
 
 		$headers = array
@@ -1374,7 +1374,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		$this->_request_data['unclear'] = array();
 		$this->_request_data['person'] = $args[0];
 		$person = mgd_get_person($args[0]);
-		$this->_request_data['link'] = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/unclear/detail_2_export/".$args[0].".html";
+		$this->_request_data['link'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/unclear/detail_2_export/".$args[0].".html";
 
 
 		$QB = midcom_db_event::new_query_builder();
@@ -1429,7 +1429,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		$this->_request_data['unclear'] = array();
 		$this->_request_data['person'] = $args[0];
 		$person = mgd_get_person($args[0]);
-		$this->_request_data['link'] = $GLOBALS['midcom']->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/unclear/detail_2_export/".$args[0].".html";
+		$this->_request_data['link'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."report/unclear/detail_2_export/".$args[0].".html";
 
 
 		$headers = array

@@ -18,7 +18,7 @@ class midcom_helper_datamanager_datatype_mailtemplate extends midcom_helper_data
         $field["location"] = "attachment";
         $field["widget"] = "mailtemplate";
         $this->_data = $this->get_empty_value();
-        $this->_i18n =& $GLOBALS['midcom']->get_service('i18n');
+        $this->_i18n =& $_MIDCOM->get_service('i18n');
                 
         parent::_constructor ($datamanager, $storage, $field);        
     }
@@ -70,7 +70,7 @@ class midcom_helper_datamanager_datatype_mailtemplate extends midcom_helper_data
     
     function get_empty_value() 
     {
-        $i18n =& $GLOBALS['midcom']->get_service('i18n');
+        $i18n =& $_MIDCOM->get_service('i18n');
         return Array(
             "from" => "",
             "reply-to" => "",
@@ -121,7 +121,7 @@ class midcom_helper_datamanager_datatype_mailtemplate extends midcom_helper_data
     
     function _convert_to_site_charset($data) 
     {
-        $i18n =& $GLOBALS["midcom"]->get_service("i18n");
+        $i18n =& $_MIDCOM->get_service("i18n");
         $dest = $i18n->get_current_charset();
         $source = $this->_data["charset"];
         
@@ -130,7 +130,7 @@ class midcom_helper_datamanager_datatype_mailtemplate extends midcom_helper_data
     
     function _convert_to_data_charset($data) 
     {
-        $i18n =& $GLOBALS["midcom"]->get_service("i18n");
+        $i18n =& $_MIDCOM->get_service("i18n");
         $source = $i18n->get_current_charset();
         $dest = $this->_data["charset"];
         

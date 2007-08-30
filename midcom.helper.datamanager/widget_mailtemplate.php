@@ -49,7 +49,7 @@ class midcom_helper_datamanager_widget_mailtemplate extends midcom_helper_datama
     {
         parent::_constructor ($datamanager, $field, $defaultvalue);
 
-        $midgard = $GLOBALS["midcom"]->get_midgard();
+        $midgard = $_MIDCOM->get_midgard();
         if ($midgard->admin)
         {
             $this->_poweruser = true;

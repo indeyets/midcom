@@ -177,7 +177,7 @@ class midcom_helper_datamanager_widget_html extends midcom_helper_datamanager_wi
         {
 
             // Language negotiation ($i18n->_current_language and $i18n->_fallback_language)
-            $i18n =& $GLOBALS["midcom"]->get_service("i18n");
+            $i18n =& $_MIDCOM->get_service("i18n");
             $langprefix = MIDCOM_STATIC_ROOT . '/midcom.helper.datamanager/htmlarea/lang/';
 
             if (file_exists($langprefix . $i18n->get_current_language() . '.js'))
@@ -203,7 +203,7 @@ _editor_url = '{$urlprefix}';
 _editor_lang = '{$htmlarea_lang}';\n" .
         "var xinha_editors = Array();\n");
             debug_add('adding main JS file');
-            $GLOBALS["midcom"]->add_jsfile($urlprefix. 'htmlarea.js');
+            $_MIDCOM->add_jsfile($urlprefix. 'htmlarea.js');
 
             // Add here all Plugins you wish to use with your HTMLArea.
             // The Context Menu Plugin is disabled, as it makes trouble with
@@ -472,7 +472,7 @@ EOF;
                 'ed_undo.gif',
                     );
         foreach ($images as $image) {
-          $GLOBALS['midcom']->add_object_head('',array('data' =>  MIDCOM_STATIC_ROOT . '/midcom.helper.datamanager/htmlarea/images/' . $image));
+          $_MIDCOM->add_object_head('',array('data' =>  MIDCOM_STATIC_ROOT . '/midcom.helper.datamanager/htmlarea/images/' . $image));
           }
     }
 

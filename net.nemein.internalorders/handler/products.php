@@ -33,13 +33,13 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 	{
 		if (is_null($this->_config->get('root_event')))
 		{
-			$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Component is not properly initialized, root event missing");
+			$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Component is not properly initialized, root event missing");
 		}
 	
 		$this->_root_event = mgd_get_object_by_guid($this->_config->get('root_event'));
 		if (!$this->_root_event)
 		{
-			$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Root event not found: ".mgd_errstr());
+			$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Root event not found: ".mgd_errstr());
 		}
 	}	
 	
@@ -119,7 +119,7 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 			
 				if (!$stat)
 				{
-					$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to update order: ".mgd_errstr());
+					$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to update order: ".mgd_errstr());
 				}
 			}
 			//it's a new product
@@ -177,7 +177,7 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 			
 				if (!$stat)
 				{
-					$GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to create order: ".mgd_errstr());
+					$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create order: ".mgd_errstr());
 				}
 			}
 			

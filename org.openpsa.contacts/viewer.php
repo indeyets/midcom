@@ -299,7 +299,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
         $this->_datamanagers[$type] = new midcom_helper_datamanager($schemadb);
 
         if (!$this->_datamanagers[$type]) {
-            $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
             // This will exit.
         }
     }

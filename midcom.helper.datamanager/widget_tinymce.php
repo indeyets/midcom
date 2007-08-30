@@ -106,10 +106,10 @@ class midcom_helper_datamanager_widget_tinymce extends midcom_helper_datamanager
         if (   $this->_enable_outside_ais
             || array_key_exists("view_contentmgr", $GLOBALS)) 
         {
-            $midgard = $GLOBALS["midcom"]->get_midgard();
+            $midgard = $_MIDCOM->get_midgard();
             
             // Language negotiation ($i18n->_current_language and $i18n->_fallback_language)
-            $i18n =& $GLOBALS["midcom"]->get_service("i18n");
+            $i18n =& $_MIDCOM->get_service("i18n");
             
             /* TODO: do somethign with $i18n->get_current_language() */
             

@@ -246,7 +246,7 @@ class midcom_helper_mailtemplate {
         $this->_subject = "";
         $this->_body = "";
         $this->_parsed = false;
-        $this->_i18n =& $GLOBALS['midcom']->get_service('i18n');
+        $this->_i18n =& $_MIDCOM->get_service('i18n');
 
         $this->_mail_mime = new Mail_mime("\n");
         $this->_mail =& Mail::factory('mail');

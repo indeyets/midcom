@@ -69,7 +69,7 @@ class net_nemein_payment_factory extends midcom_baseclasses_components_purecode
 
             if (! file_exists($filename))
             {
-                $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     "n.n.payments: The payment handler {$classname} was not found, we searched for {$filename}. This is critical.");
                 // This will exit.
             }
@@ -129,7 +129,7 @@ class net_nemein_payment_factory extends midcom_baseclasses_components_purecode
 
         if (! array_key_exists('net_nemein_payment_id', $_REQUEST))
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 'n.n.payment: The request does not contain the key net_nemein_payment_id, this is critical, aborting.');
             // This will exit
         }
@@ -137,7 +137,7 @@ class net_nemein_payment_factory extends midcom_baseclasses_components_purecode
         $id = (int) $_REQUEST['net_nemein_payment_id'];
         if (! array_key_exists($id, $this->handlers))
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 'n.n.payment: Handler #{$id} does not exist, this is critical, aborting.');
             // This will exit
         }

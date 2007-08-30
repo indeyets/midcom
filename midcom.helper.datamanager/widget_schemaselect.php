@@ -108,7 +108,7 @@ class midcom_helper_datamanager_widget_schemaselect extends midcom_helper_datama
     {
         if (! array_key_exists($this->_linkto, $this->_datamanager->data))
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "The field {$this->_linkto} does not seem to be a valid datafield of the current schema.");
             // This will exit()
         }

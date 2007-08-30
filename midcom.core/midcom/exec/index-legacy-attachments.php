@@ -32,13 +32,13 @@
 $midgard = mgd_get_midgard();
 if (! $midgard->admin)
 {
-    $GLOBALS['midcom']->generate_error(MIDCOM_ERRAUTH, 'This script requires admin privileges to run.');
+    $_MIDCOM->generate_error(MIDCOM_ERRAUTH, 'This script requires admin privileges to run.');
     // This will exit.
 }
 
 if ($GLOBALS['midcom_config']['indexer_backend'] === false)
 {
-    $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, 'No indexer backend has been defined. Aborting.');
+    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'No indexer backend has been defined. Aborting.');
 }
 
 /**
@@ -88,7 +88,7 @@ ignore_user_abort(true);
 $nap = new midcom_helper_nav();
 $nodes = Array();
 $nodeid = $nap->get_root_node();
-$indexer =& $GLOBALS['midcom']->get_service('indexer');
+$indexer =& $_MIDCOM->get_service('indexer');
 
 while (! is_null($nodeid))
 {
@@ -111,7 +111,7 @@ while (! is_null($nodeid))
 	    if ($leaves === false)
 	    {
 	        debug_pop();
-	        $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to list the leaves of {$nodeid}. Aborting.");
+	        $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to list the leaves of {$nodeid}. Aborting.");
 	    }
 	    foreach($leaves as $leafid)
 	    {
@@ -135,7 +135,7 @@ while (! is_null($nodeid))
     if ($childs === false)
     {
         debug_pop();
-        $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT, "Failed to list the child nodes of {$nodeid}. Aborting.");
+        $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to list the child nodes of {$nodeid}. Aborting.");
     }
     $nodes = array_merge($nodes, $childs);
     $nodeid = array_shift($nodes);

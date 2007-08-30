@@ -116,7 +116,7 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
         $this->_datamanagers[$type] = new midcom_helper_datamanager($schemadb);
 
         if (!$this->_datamanagers[$type]) {
-            $GLOBALS["midcom"]->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
             // This will exit.
         }
     }
@@ -137,7 +137,7 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
             $node = $nap->get_node($nap->get_current_node());
 
             // Instantiate indexer
-            $indexer =& $GLOBALS['midcom']->get_service('indexer');
+            $indexer =& $_MIDCOM->get_service('indexer');
 
             // Add the search parameters
             $query = $_GET['search'];

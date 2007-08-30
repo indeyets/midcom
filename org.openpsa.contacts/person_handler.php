@@ -94,7 +94,7 @@ class org_openpsa_contacts_person_handler
 
         if (!$this->_datamanagers['person']->init_creation_mode("newperson",$this,"_creation_dm_callback_person"))
         {
-            $GLOBALS['midcom']->generate_error(MIDCOM_ERRCRIT,
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "Failed to initialize datamanger in creation mode for schema 'newperson'.");
             // This will exit
         }
@@ -129,7 +129,7 @@ class org_openpsa_contacts_person_handler
                 $this->_request_data['person']->parameter("midcom.helper.datamanager","layout","default");
 
                 // Index the person
-                $indexer =& $GLOBALS['midcom']->get_service('indexer');
+                $indexer =& $_MIDCOM->get_service('indexer');
                 $indexer->index($this->_datamanagers['person']);
 
                 // Add person to group if requested
@@ -553,8 +553,8 @@ class org_openpsa_contacts_person_handler
                 if (!$this->_request_data['person']->username)
                 {
                     // Account needs to be created first, relocate
-                    $prefix = $GLOBALS["midcom"]->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-                    $GLOBALS['midcom']->relocate($prefix."person/".$this->_request_data['person']->guid."/account_create.html");
+                    $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+                    $_MIDCOM->relocate($prefix."person/".$this->_request_data['person']->guid."/account_create.html");
                 }
 
                 $this->_view = "area_person_account_edit";
