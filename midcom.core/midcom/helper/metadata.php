@@ -110,7 +110,7 @@ class midcom_helper_metadata
      * @var midcom_helper_datamanager2
      */
     var $_datamanager = null;
-    
+
     /**
      * Translation array for the object
      *
@@ -193,9 +193,9 @@ class midcom_helper_metadata
     function load_datamanager()
     {
         $_MIDCOM->load_library('midcom.helper.datamanager2');
-        
+
         $this->_schemadb = new midcom_helper_datamanager2_schema($this->_schemadb_path);
-        
+
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_schemadb);
         if (! $this->_datamanager)
         {
@@ -203,9 +203,9 @@ class midcom_helper_metadata
                 'Failed to create the metadata datamanager instance, see the Debug Log for details.');
             // This will exit()
         }
-        
+
         $this->_datamanager->set_schema('metadata');
-        
+
         if (! $this->_datamanager->set_storage($this->object))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
@@ -244,8 +244,8 @@ class midcom_helper_metadata
 
         switch ($key)
         {
-            // Read-only properties  
-            case 'creator':        
+            // Read-only properties
+            case 'creator':
             case 'created':
             case 'revisor':
             case 'revised':
@@ -256,7 +256,7 @@ class midcom_helper_metadata
             case 'imported':
                 mgd_set_errno(MGD_ERR_ACCESS_DENIED);
                 return false;
-                
+
             // Writable properties
             case 'locker':
             case 'locked':
@@ -276,14 +276,14 @@ class midcom_helper_metadata
 
             // Fall-back for non-core properties
             default:
-                $value = $this->object->get_parameter('midcom.helper.metadata', $key, $value);
+                $value = $this->object->set_parameter('midcom.helper.metadata', $key, $value);
                 break;
         }
-        
+
         // Update the corresponding cache variable
         $this->on_update($key);
         debug_pop();
-        
+
         return $value;
     }
 
@@ -297,7 +297,7 @@ class midcom_helper_metadata
      */
     function on_update($key = false)
     {
-        if (   $key 
+        if (   $key
             && array_key_exists($key, $this->_cache))
         {
             unset ($this->_cache[$key]);
@@ -341,8 +341,8 @@ class midcom_helper_metadata
     function _retrieve_value($key)
     {
         switch ($key)
-        {            
-            // Time-based properties          
+        {
+            // Time-based properties
             case 'created':
             case 'revised':
             case 'published':
@@ -355,11 +355,11 @@ class midcom_helper_metadata
             case 'revised':
                 $value = $this->object->metadata->$key;
                 break;
-                
+
             case 'nav_noentry':
                 $value = $this->get('navnoentry');
                 break;
-                            
+
             case 'edited':
                 $value = $this->get('revised');
                 break;
@@ -385,7 +385,7 @@ class midcom_helper_metadata
                 break;
             case 'editor':
                 $value = $this->get('revisor');
-                break; 
+                break;
             case 'publisher':
                 if (   $this->object->__table__ == 'article'
                     || $this->object->__table__ == 'page')
@@ -405,8 +405,8 @@ class midcom_helper_metadata
                 break;
             case 'schedule_end':
                 $value = $this->get('scheduleend');
-                break; 
-                
+                break;
+
             // Other midgard_metadata properties
             case 'revision':
             case 'hidden':
@@ -429,7 +429,7 @@ class midcom_helper_metadata
                 {
                     $value = $this->object->$varname;
                 }
-                
+
                 break;
         }
 
@@ -514,7 +514,7 @@ class midcom_helper_metadata
         $_MIDCOM->auth->require_do('midcom:approve', $this->object);
         $_MIDCOM->auth->require_do('midgard:update', $this->object);
         $_MIDCOM->auth->require_do('midgard:parameters', $this->object);
-        
+
         if (!$_MIDCOM->auth->user)
         {
             $approver = 'f6b665f1984503790ed91f39b11b5392';
@@ -524,7 +524,7 @@ class midcom_helper_metadata
             $person = $_MIDCOM->auth->user->get_storage();
             $approver = $person->guid;
         }
-        
+
         $this->set('approved', time());
         $this->set('approver', $approver);
     }
@@ -542,7 +542,7 @@ class midcom_helper_metadata
         $_MIDCOM->auth->require_do('midcom:approve', $this->object);
         $_MIDCOM->auth->require_do('midgard:update', $this->object);
         $_MIDCOM->auth->require_do('midgard:parameters', $this->object);
-        
+
         if (!$_MIDCOM->auth->user)
         {
             $approver = 'f6b665f1984503790ed91f39b11b5392';
@@ -552,7 +552,7 @@ class midcom_helper_metadata
             $person = $_MIDCOM->auth->user->get_storage();
             $approver = $person->guid;
         }
-        
+
         $this->set('approved', 0);
         $this->set('approver', $approver);
     }
@@ -668,22 +668,22 @@ class midcom_helper_metadata
 
         return $meta;
     }
-    
+
     function get_languages()
     {
         if (is_null($this->_translations))
         {
             $this->_translations = array();
-                                    
+
             $languages = @$this->object->get_languages();
             if (   !$languages
                 || count($languages) == 0)
             {
                 return $this->_translations;
             }
-            
+
             $language_hosts = $_MIDCOM->i18n->get_language_hosts();
-            
+
             foreach ($languages as $language)
             {
                 if (!array_key_exists($language->id, $language_hosts))
@@ -691,7 +691,7 @@ class midcom_helper_metadata
                     // No host for this language, skip
                     continue;
                 }
-                
+
                 $this->_translations[$language->id] = array
                 (
                     'code' => $language->code,
@@ -702,7 +702,7 @@ class midcom_helper_metadata
                 );
             }
         }
-        
+
         return $this->_translations;
     }
 }
