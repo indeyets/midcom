@@ -590,7 +590,6 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         $classname = $this->_real_class;
         $limit = $this->_limit;
         $offset = $this->_offset;
-        $skipped_objects = 0;
         $this->denied = 0;
 
         foreach ($result as $key => $object)
@@ -598,8 +597,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
             if (   $this->_limit > 0
                 && $limit == 0)
             {
-                $skipped_objects++;
-                continue;
+                break;
             }
 
             // We need to skip this one, because we are outside the offset.
@@ -626,8 +624,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     }
 
     /**
-     * Temporary helper until execute can be optimized with rerunnable QBs,
-     * runs a query where <i>limit and offset is taken into account prior to
+     * Runs a query where <i>limit and offset is taken into account prior to
      * execution in the core.</i>
      *
      * This is useful in cases where you can safely assume read privileges on all
@@ -732,6 +729,9 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      */
     function add_order($field, $ordering = null)
     {
+        /**
+         * NOTE: So see also collector.php when making changes here
+         */
         if (! $field)
         {
             // This is a workaround for a situation the 1.7 Midgard core cannot intercept for
@@ -853,7 +853,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     /**
      * Returns the number of elements matching the current query.
      *
-     * Due to ACL checking we must first execute the full query to get
+     * Due to ACL checking we must first execute the full query
      *
      * @return int The number of records found by the last query.
      */
@@ -890,4 +890,5 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         return $this->_qb->count();
     }
 }
+
 ?>

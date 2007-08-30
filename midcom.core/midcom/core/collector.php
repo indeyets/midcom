@@ -100,13 +100,19 @@ class midcom_core_collector
      * to the approval/scheduling settings made using Metadata. This must be set before executing
      * the query.
      *
+     * NOTE: Checks not implemented yet
+     *
      * Be aware, that this setting will currently not use the QB to filter the objects accordingly,
      * since there is no way yet to filter against parameters. This will mean some performance
      * impact.
      *
-     * While on-site, this is enabled by default, in AIS it is disabled by default.
      */
-    var $hide_invisible = false;
+    var $hide_invisible = true;
+
+    /**
+     * Keep track if $this->execute has been called
+     */
+    var $_executed = false;
 
     /**
      * The constructor wraps the class resolution into the MidCOM DBA system.
@@ -157,20 +163,15 @@ class midcom_core_collector
         
         // MidCOM's collector always uses the GUID as the key for ACL purposes
         $this->_mc->set_key_property('guid');
-
-        if (! array_key_exists("view_contentmgr", $GLOBALS))
+        if (   $GLOBALS['midcom_config']['i18n_multilang_strict']
+            /* Why is this check here (check querybuilder.php for same functionality without this check) ?
+            && $_MIDCOM->i18n->get_midgard_language() != 0
+            */)
         {
-            $this->hide_invisible = true;
-            
-            if ($GLOBALS['midcom_config']['i18n_multilang_strict']
-                && $_MIDCOM->i18n->get_midgard_language() != 0)
-            {
-                // FIXME: Re-enable this when it actually works
-                // $this->_mc->set_lang($_MIDCOM->i18n->get_midgard_language());
-            }
+            // FIXME: Re-enable this when it actually works
+            $this->_mc->set_lang($_MIDCOM->i18n->get_midgard_language());
         }
     }
-
 
     /**
      * The initialization routin executes the _on_prepare_new_collector callback on the class.
@@ -181,7 +182,6 @@ class midcom_core_collector
         call_user_func_array(array($this->_real_class, '_on_prepare_new_collector'), array(&$this));
     }
 
-
     /**
      * This function will execute the Querybuilder and call the appropriate callbacks from the
      * class it is associated to. This way, class authors have full control over what is actually
@@ -191,18 +191,9 @@ class midcom_core_collector
      *
      * 1. bool _on_prepare_exec_collector(&$this) is called before the actual query execution. Return false to
      *    abort the operation.
-     * 2. The query is executed.
-     * 3. void _on_process_query_result(&$result) is called after the successful execution of the query. You
-     *    may remove any unwanted entries from the resultset at this point.
      *
-     * If the execution of the query fails for some reason all available error information is logged
-     * and a MIDCOM_ERRCRIT level error is triggered, halting execution.
-     *
-     * @param midgard_collector $mc An instance of the Query builder obtained by the new_collector
-     *     function of this class.
-     * @return Array The result of the collector or null on any error. Note, that empty resultsets
-     *     will return an empty array.
-     * @todo Implement proper count / Limit support.
+     * @return boolean indicating success/failure
+     * @see _real_execute()
      */
     function execute()
     {
@@ -211,69 +202,140 @@ class midcom_core_collector
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('The _on_prepare_exec_collector callback returned false, so we abort now.');
             debug_pop();
-            return null;
+            return false;
         }
+        $this->_executed = true;
+        return true;
+    }
 
-        // Workaround until the QB does return empty arrays: All errors are empty resultsets and errors are ignored.
-        $result = $this->_mc->execute();
-        if (!$result)
-        {
-            // Workaround mode for now
-            if (mgd_errno() != MGD_ERR_OK)
-            {
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_print_r('Result was:', $result);
-                debug_add('The collector failed to execute, aborting.', MIDCOM_LOG_ERROR);
-                debug_add('Last Midgard error was: ' . mgd_errstr(), MIDCOM_LOG_ERROR);
-                if (isset($php_errormsg))
-                {
-                    debug_add("Error message was: {$php_errormsg}", MIDCOM_LOG_ERROR);
-                }
-                debug_pop();
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    'The collector failed to execute, see the log file for more information.');
-                // This will exit.
-            }
-        }
-        
-        return $result;
+    /**
+     * Executes the MC
+     *
+     * @return void
+     * @see midgard_collector::execute()
+     */
+    function _real_execute()
+    {
+        return $this->_mc->execute();
     }
     
+    /**
+     * Resets some internal variables for re-execute
+     */
+    function _reset()
+    {
+        $this->_executed = false;
+        $this->count = -1;
+        $this->denied = 0;
+    }
+
+    /**
+     * Runs a query where <i>limit and offset is taken into account prior to
+     * execution in the core.</i>
+     *
+     * This is useful in cases where you can safely assume read privileges on all
+     * objects, and where you would otherwise have to deal with huge resultsets.
+     *
+     * Be aware that this might lead to empty resultsets "in the middle" of the
+     * actual full resultset when read privileges are missing.
+     *
+     * @see list_keys()
+     */
     function list_keys_unchecked()
     {
-        return $this->_mc->list_keys();
-    }
-    
-    function list_keys()
-    {
-        $result = $this->_mc->list_keys();
-        $newresult = array();
-                
-        if (!$result)
+        $this->_reset();
+        // Add the limit / offsets
+        if ($this->_limit)
+        {
+            $this->_mc->set_limit($this->_limit);
+        }
+        if ($this->_offset)
+        {
+            $this->_mc->set_offset($this->_offset);
+        }
+
+        $newresult = $this->_list_keys_and_check_privileges();
+
+        if (!is_array($newresult))
         {
             return $newresult;
         }
 
-        // Workaround until the QB returns the correct type, refetch everything
+        call_user_func_array(array($this->_real_class, '_on_process_collector_result'), array(&$newresult));
+
+        $this->count = count($newresult);
+
+        debug_pop();
+        return $newresult;
+    }
+
+    function _list_keys_and_check_privileges()
+    {
+        $this->_real_execute();
+        $result = $this->_mc->list_keys();
+        if (!is_array($result))
+        {
+            return $result;
+        }
+        $newresult = array();
         $classname = $this->_real_class;
-        $limit = $this->_limit;
-        $offset = $this->_offset;
-        $skipped_objects = 0;
-        $this->denied = 0;
         foreach ($result as $object_guid => $empty_copy)
         {
+            if (!$_MIDCOM->auth->can_do_byguid('midgard:read', $object_guid, $classname))
+            {
+                debug_add("Failed to load result, read privilege on {$object_guid} not granted for the current user.", MIDCOM_LOG_INFO);
+                $this->denied++;
+                continue;
+            }
+
+            // Check visibility
+            if ($this->hide_invisible)
+            {
+                // TODO: Implement
+            }
+
+            $newresult[$object_guid] = array();
+        }
+        return $newresult;
+    }
+
+    /**
+     * implements midgard_collector::list_keys with ACL and visibility checking
+     *
+     * @todo implement visibility checking
+     */
+    function list_keys()
+    {
+        /**
+         * PONDER: Should we implement the moving window limit/offset handling here as well ?
+         * probably it's not worth the effort since we're not actually instantiating objects 
+         * so many of the inefficencies related to that are avoided.
+         * @see midcom_core_querybuilder::execute_windowed
+         */
+        $this->_reset();
+        $result = $this->_list_keys_and_check_privileges();
+        if (!is_array($result))
+        {
+            return $result;
+        }
+        $newresult = array();
+
+        $limit = $this->_limit;
+        $offset = $this->_offset;
+        $classname = $this->_real_class;
+        foreach ($result as $object_guid => $empty_copy)
+        {
+            // We have hit our limit
             if (   $this->_limit > 0
                 && $limit == 0)
             {
-                $skipped_objects++;
-                continue;
+                break;
             }
 
             if (!$_MIDCOM->auth->can_do_byguid('midgard:read', $object_guid, $classname))
             {
                 debug_add("Failed to load result, read privilege on {$object_guid} not granted for the current user.", MIDCOM_LOG_INFO);
                 $this->denied++;
-                $skipped_objects++;
                 continue;
             }
 
@@ -291,7 +353,7 @@ class midcom_core_collector
                 // TODO: Implement
             }
 
-            $newresult[$object_guid] = array();
+            $newresult[$object_guid] = $empty_copy;
 
             if ($this->_limit > 0)
             {
@@ -301,13 +363,8 @@ class midcom_core_collector
 
         call_user_func_array(array($this->_real_class, '_on_process_collector_result'), array(&$newresult));
 
-        /* This must some QB copy-paste leftover
-        // correct record count by the number of limit-skipped objects.
-        $this->count = count($newresult) + $skipped_objects;
-        */
         $this->count = count($newresult);
 
-        debug_pop();
         return $newresult;
     }
     
@@ -349,6 +406,7 @@ class midcom_core_collector
      */
     function add_constraint($field, $operator, $value)
     {
+        $this->_reset();
         // Add check against null values, Core QB is too stupid to get this right.
         if ($value === null)
         {
@@ -380,6 +438,9 @@ class midcom_core_collector
      */
     function add_order($field, $ordering = null)
     {
+        /**
+         * NOTE: So see also querybuilder.php when making changes here
+         */
         if (empty($field))
         {
             // This is a workaround for a situation the 1.7 Midgard core cannot intercept for
@@ -395,7 +456,14 @@ class midcom_core_collector
 
         if ($ordering === null)
         {
-            $result = $this->_mc->add_order($field);
+            if (substr($field, 0, 8) == 'reverse ')
+            {
+                $result = $this->_mc->add_order(substr($field, 8), 'DESC');
+            }
+            else
+            {
+                $result = $this->_mc->add_order($field);
+            }
         }
         else
         {
@@ -445,9 +513,10 @@ class midcom_core_collector
      *
      * @param int $count The maximum number of records in the resultset.
      */
-    function set_limit($count)
+    function set_limit($limit)
     {
-        $this->_limit = $count;
+        $this->_reset();
+        $this->_limit = $limit;
     }
 
     /**
@@ -462,6 +531,7 @@ class midcom_core_collector
      */
     function set_offset($offset)
     {
+        $this->_reset();
         $this->_offset = $offset;
     }
 
@@ -474,6 +544,7 @@ class midcom_core_collector
      */
     function set_lang($language)
     {
+        $this->_reset();
         $this->_mc->set_lang($language);
     }
     
@@ -494,17 +565,7 @@ class midcom_core_collector
     /**
      * Returns the number of elements matching the current query.
      *
-     * <i>Developer's note:</i> According to the Midgard core documentation, the count method
-     * does <b>not</b> execute the query using some COUNT() SQL statement. It merely returns
-     * the number of records found and is, thus, mostly useless as you can just count($result)
-     * on the PHP level anyway.
-     *
-     * To match the original inteded behavoir, the class will automatically execute the given
-     * query if it has not yet been executed, thus breaking full API compatibility to the Midgard
-     * core deliberatly on this point.
-     *
-     * Therefore, it is currently <i>strongly discouraged</i> to assume midgard_collector::count
-     * to be useful as-is. See http://midgard.tigris.org/issues/show_bug.cgi?id=56 for details.
+     * Due to ACL checking we must first execute the full query
      *
      * @return int The number of records found by the last query.
      */
@@ -512,8 +573,11 @@ class midcom_core_collector
     {
         if ($this->count == -1)
         {
-            $this->execute();
-            // TODO: ACL check
+            if (!$this->_executed)
+            {
+                $this->execute();
+            }
+            $this->list_keys();
         }
         return $this->count;
     }
@@ -527,13 +591,21 @@ class midcom_core_collector
      * Use this function with care. The information you obtain in general is neglible, but a creative
      * mind might nevertheless be able to take advantage of it.
      *
-     * @return int The number of records matching the last query without taking access control into account.
+     * @return int The number of records matching the constraints without taking access control or visibility into account.
      */
     function count_unchecked()
     {
+        $this->_reset();
+        if ($this->_limit)
+        {
+            $this->_mc->set_limit($this->_limit);
+        }
+        if ($this->_offset)
+        {
+            $this->_mc->set_offset($this->_offset);
+        }
         return $this->_mc->count();
     }
 }
-
 
 ?>
