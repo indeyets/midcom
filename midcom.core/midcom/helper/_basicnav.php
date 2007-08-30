@@ -351,7 +351,7 @@ class midcom_helper__basicnav
 
         // Rewrite all host dependant URLs based on the relative URL within our topic tree.
         $nodedata[MIDCOM_NAV_FULLURL] = "{$GLOBALS['midcom_config']['midcom_site_url']}{$nodedata[MIDCOM_NAV_RELATIVEURL]}";
-        $nodedata[MIDCOM_NAV_ABSOLUTEURL] = substr($GLOBALS['midcom_config']['midcom_site_url'], strlen($GLOBALS['midcom']->get_host_name()))
+        $nodedata[MIDCOM_NAV_ABSOLUTEURL] = substr($GLOBALS['midcom_config']['midcom_site_url'], strlen($_MIDCOM->get_host_name()))
             . "{$nodedata[MIDCOM_NAV_RELATIVEURL]}";
         $nodedata[MIDCOM_NAV_PERMALINK] = $_MIDCOM->permalinks->create_permalink($nodedata[MIDCOM_NAV_GUID]);
 
@@ -574,7 +574,7 @@ class midcom_helper__basicnav
     function _update_leaflist_urls(&$leaves)
     {
         $fullprefix = "{$GLOBALS['midcom_config']['midcom_site_url']}";
-        $absoluteprefix = substr($GLOBALS['midcom_config']['midcom_site_url'], strlen($GLOBALS['midcom']->get_host_name()));
+        $absoluteprefix = substr($GLOBALS['midcom_config']['midcom_site_url'], strlen($_MIDCOM->get_host_name()));
 
         if (! is_array($leaves))
         {
