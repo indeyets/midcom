@@ -760,9 +760,11 @@ EOF;
             \$guids = \$mc->list_keys();
             if (!is_array(\$guids))
             {
+                unset(\$mc, \$guids);
                 return null;
             }
             list (\$parent_guid, \$dummy) = each(\$guids);
+            unset(\$mc, \$guids, \$dummy);
             return \$parent_guid;
         }
 EOF;
@@ -794,9 +796,11 @@ EOF;
             \$guids = \$mc->list_keys();
             if (!is_array(\$guids))
             {
+                unset(\$mc, \$guids);
                 return null;
             }
             list (\$parent_guid, \$dummy) = each(\$guids);
+            unset(\$mc, \$guids, \$dummy);
             return \$parent_guid;
         }
 EOF;
@@ -808,14 +812,81 @@ EOF;
     }
     function get_parent_guid_uncached_static(\$object_guid)
     {
-        // TODO: Try to figure a way to use collector based on reflection data for this (and why not for get_parent_guid_uncached as well)
-        \$object = new {$this->_class_definition['midcom_class_name']}(\$object_guid);
-        if (   !is_object(\$object)
-            || !method_exists(\$object, 'get_parent_guid_uncached'))
+EOF;
+        $reflector = new midgard_reflection_property($this->_class_definition['new_class_name']);
+        $up_property = midgard_object_class::get_property_up($this->_class_definition['new_class_name']);
+        if (!empty($up_property))
         {
-            return null;
+            $target_property = $reflector->get_link_target($up_property);
+            $this->_class_string .= "\n";
+            $this->_class_string .= <<<EOF
+        // Up takes precedence over parent
+        \$mc = new midgard_collector('{$this->_class_definition['new_class_name']}', 'guid', \$object_guid);
+        \$mc->set_key_property('{$up_property}');
+        \$mc->execute();
+        \$link_values = \$mc->list_keys();
+        if (!empty(\$link_values))
+        {
+            list (\$link_value, \$dummy) = each(\$link_values);
+            unset(\$mc, \$link_values, \$dummy);
+            \$mc2 = new midgard_collector('{$this->_class_definition['new_class_name']}', '{$target_property}', \$link_value);
+            \$mc2->set_key_property('guid');
+            \$mc2->execute();
+            \$guids = \$mc2->list_keys();
+            if (!is_array(\$guids))
+            {
+                unset(\$mc2, \$guids, \$link_value);
+                return null;
+            }
+            list (\$parent_guid, \$dummy) = each(\$guids);
+            unset(\$mc2, \$guids, \$link_value, \$dummy);
+            return \$parent_guid;
         }
-        return \$object->get_parent_guid_uncached();
+        else
+        {
+            unset(\$mc, \$link_values);
+        }
+EOF;
+        }
+
+        $parent_property = midgard_object_class::get_property_parent($this->_class_definition['new_class_name']);
+        if (!empty($parent_property))
+        {
+            $target_property = $reflector->get_link_target($parent_property);
+            $target_class = $reflector->get_link_name($parent_property);
+            $this->_class_string .= "\n";
+            $this->_class_string .= <<<EOF
+        \$mc = new midgard_collector('{$this->_class_definition['new_class_name']}', 'guid', \$object_guid);
+        \$mc->set_key_property('{$parent_property}');
+        \$mc->execute();
+        \$link_values = \$mc->list_keys();
+        if (!empty(\$link_values))
+        {
+            list (\$link_value, \$dummy) = each(\$link_values);
+            unset(\$mc, \$link_values, \$dummy);
+            \$mc2 = new midgard_collector('{$target_class}', '{$target_property}', \$link_value);
+            \$mc2->set_key_property('guid');
+            \$mc2->execute();
+            \$guids = \$mc2->list_keys();
+            if (!is_array(\$guids))
+            {
+                unset(\$mc2, \$guids, \$link_value);
+                return null;
+            }
+            list (\$parent_guid, \$dummy) = each(\$guids);
+            unset(\$mc2, \$guids, \$link_value, \$dummy);
+            return \$parent_guid;
+        }
+        else
+        {
+            unset(\$mc, \$link_values);
+        }
+EOF;
+        }
+
+        $this->_class_string .= "\n";
+        $this->_class_string .= <<<EOF
+        return null;
     }
     function get_dba_parent_class()
     {
