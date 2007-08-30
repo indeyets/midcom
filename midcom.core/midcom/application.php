@@ -422,6 +422,7 @@ class midcom_application
         
         // Start-up some of the services
         $this->auth->initialize();
+        $this->toolbars->initialize();
         $this->dbclassloader->load_classes('midcom', 'legacy_classes.inc');
         $this->dbclassloader->load_classes('midcom', 'core_classes.inc');
 

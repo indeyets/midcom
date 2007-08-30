@@ -87,14 +87,12 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
     function midcom_services_toolbars()
     {
         parent::midcom_baseclasses_core_object();
-
-        $this->_initialize_centralized_toolbar();
     }
 
     /**
      * Initialize centralized toolbar if required
      */
-    function _initialize_centralized_toolbar()
+    function initialize()
     {
         if (!$_MIDCOM->auth->user)
         {
