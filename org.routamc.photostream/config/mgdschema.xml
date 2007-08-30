@@ -26,13 +26,5 @@
 
         <!-- Integer for rating, typically of the "1-5 stars" variety -->
         <property name="rating" type="integer"/>
-
-        <!-- 1.7 required metadata -->        
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->
     </type>
 </Schema>
