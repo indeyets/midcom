@@ -114,7 +114,7 @@ class midcom_application
      * @var Array
      * @access private
      */
-    private $_context = array();
+    public $_context = array();
 
     /**
      * Contains the ID of the currently active context or FALSE is none is active.
@@ -276,6 +276,14 @@ class midcom_application
      * @access private
      */
     private $_jshead = array();
+
+    /**
+     * Array with all JavaScript file inclusions.
+     *
+     * @var Array
+     * @access private
+     */
+    private $_jsfiles = array();
 
     /**
      * String with all prepend JavaScript declarations for the page's head.
