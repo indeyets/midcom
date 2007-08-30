@@ -690,8 +690,6 @@ class midcom_helper__componentloader
      */
     function load_all_manifests()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
         $cache_identifier = $_MIDCOM->cache->phpscripts->create_identifier('midcom.componentloader', 'manifests');
 
         if (! $cache_identifier)
@@ -705,15 +703,11 @@ class midcom_helper__componentloader
 
         if (! $cache_hit)
         {
-            debug_add('We generate the class manifest cache now.');
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Cache miss, generating component manifest cache now.');
             $this->_generate_class_manifest_cache($cache_identifier);
+            debug_pop();
         }
-        else
-        {
-            debug_add('We could load the manifests from the cache, so we are fine now.');
-        }
-
-        debug_pop();
     }
 
     /**

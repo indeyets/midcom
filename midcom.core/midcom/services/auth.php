@@ -584,9 +584,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     {
         if (! $this->_auth_backend->read_login_session())
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('The backend did not detect a running session, continuing in the previous authentication state.');
-            debug_pop();
             return;
         }
 
@@ -767,27 +764,41 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         }
         if (is_null($for_user))
         {
-            $privilege_key = "{$object_guid}-{$privilege}";
+                $cache_key = "{$object_guid}";
+                $privilege_key = "{$cache_key}-{$privilege}";
         }
         else
         {
             if (is_string($for_user))
             {
-                $privilege_key = "{$for_user}-{$object_guid}-{$privilege}";
+                $cache_key = "{$for_user}-{$object_guid}";
+                $privilege_key = "{$cache_key}-{$privilege}";
             }
             else
             {
-                $privilege_key = "{$for_user->id}-{$object_guid}-{$privilege}";
+                $cache_key = "{$for_user->id}-{$object_guid}";
+                $privilege_key = "{$cache_key}-{$privilege}";
             }
         }
 
-        if (!array_key_exists($privilege_key, $cached_privileges))
+        if (!isset($cached_privileges[$privilege_key]))
         {
             debug_push_class(__CLASS__, __FUNCTION__);        
-            debug_add("Cache miss, fetching privileges for {$object_guid}");
+            debug_add("Cache {$privilege_key} miss, fetching privileges for {$object_guid}");
             debug_pop();
             $full_privileges = $this->get_privileges_byguid($object_guid, $object_class, $user);
-    
+            foreach ($full_privileges as $priv => $value)
+            {
+                if ($value == MIDCOM_PRIVILEGE_ALLOW)
+                {
+                    $cached_privileges["{$cache_key}-{$priv}"] = true;
+                }
+                else
+                {
+                    $cached_privileges["{$cache_key}-{$priv}"] = false;
+                }
+            }
+            
             if (! array_key_exists($privilege, $full_privileges))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);            
@@ -795,17 +806,8 @@ class midcom_services_auth extends midcom_baseclasses_core_object
                 debug_pop();
                 return false;
             }
-    
-            if ($full_privileges[$privilege] == MIDCOM_PRIVILEGE_ALLOW)
-            {
-                $cached_privileges[$privilege_key] = true;
-            }
-            else
-            {
-                $cached_privileges[$privilege_key] = false;
-            }
         }
-        debug_pop();
+
         return $cached_privileges[$privilege_key];
     }
 
@@ -992,7 +994,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             $user =& $this->user;
             if (empty($user))
             {
-                $cache_user_id = null;
+                $cache_user_id = 'anonymous';
             }
             else
             {
@@ -1040,7 +1042,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add('Failed to convert an object, falling back to an empty privilege set for the object in question. See debug level log for details.');
-                debug_print_r('Content object was:', $dummy_object_init);
                 debug_pop();
                 return Array();
             }
@@ -1059,8 +1060,8 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         else
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("cache miss for {$cache_id}");
-            debug_pop();
+            debug_add("Cache miss for {$cache_id}");
+            debug_pop();        
             if (   is_object($user)
                 && method_exists($user, 'get_privileges')
                 && method_exists($user, 'get_per_class_privileges'))

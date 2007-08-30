@@ -111,7 +111,6 @@ require('midcom/baseclasses/components/interface.php');
 require('midcom/baseclasses/components/navigation.php');
 require('midcom/baseclasses/components/purecode.php');
 require('midcom/baseclasses/components/request.php');
-//require('midcom/baseclasses/components/request_admin.php');
 
 // Note, that the legacy MidCOM base classes are loaded at the end of this file,
 // you can't do this here as the referenced baseclases would still be undefined
