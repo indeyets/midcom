@@ -266,9 +266,9 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
                 // Add this one if and only if we are persistent already.
                 $qb->add_constraint('guid', '<>', $this->guid);
             }
-            $result = $qb->execute();
+            $result = $qb->count();
 
-            if (count($result) == 0)
+            if ($result == 0)
             {
                 $location_in_use = false;
             }
