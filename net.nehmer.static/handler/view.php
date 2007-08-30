@@ -106,12 +106,6 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
         $qb->add_constraint('up', '=', 0);
         $qb->set_limit(1);
         
-        if ($qb->count() == 0)
-        {
-            // No matching article
-            return false;
-        }
-        
         $result = $qb->execute();
 
         if ($result)
