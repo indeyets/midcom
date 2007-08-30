@@ -14,7 +14,6 @@ class org_openpsa_jabber_interface extends midcom_baseclasses_components_interfa
         $this->_component = 'org.openpsa.jabber';
         $this->_autoload_files = array(
             'viewer.php',
-            'admin.php',
             'navigation.php'
         );
         $this->_autoload_libraries = array(

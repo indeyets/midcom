@@ -58,7 +58,7 @@ class net_nehmer_jobmarket_interface extends midcom_baseclasses_components_inter
         define ('NET_NEHMER_JOBMARKET_LEAFID_OTHER', 999);
 
         $this->_component = 'net.nehmer.jobmarket';
-        $this->_autoload_files = Array('viewer.php', 'admin.php', 'navigation.php', 'entry.php');
+        $this->_autoload_files = Array('viewer.php', 'navigation.php', 'entry.php');
         $this->_autoload_libraries = Array('midcom.helper.datamanager2');
     }
 

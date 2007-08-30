@@ -36,7 +36,6 @@ class net_nemein_netmon_interface extends midcom_baseclasses_components_interfac
             'contact.php',
             'contactgroup.php',
             'viewer.php', 
-            'admin.php', 
             'navigation.php'
         );
 

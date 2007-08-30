@@ -29,7 +29,6 @@ class net_nemein_wiki_interface extends midcom_baseclasses_components_interface
             'wikipage.php',
             'link.php',
             'viewer.php',
-            'admin.php',
             'navigation.php',
             'notes.php',
         );

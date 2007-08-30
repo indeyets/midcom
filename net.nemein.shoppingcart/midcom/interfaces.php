@@ -28,7 +28,6 @@ class net_nemein_shoppingcart_interface extends midcom_baseclasses_components_in
         (
             'helpers.php',
             'viewer.php', 
-            'admin.php', 
             'navigation.php'
         );
         

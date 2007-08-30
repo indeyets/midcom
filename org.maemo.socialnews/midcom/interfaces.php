@@ -27,7 +27,6 @@ class org_maemo_socialnews_interface extends midcom_baseclasses_components_inter
         $this->_autoload_files = array
         (
             'viewer.php', 
-            'admin.php', 
             'navigation.php',
             'score_article.php',
             'calculator.php',

@@ -28,7 +28,6 @@ class org_maemo_calendar_interface extends midcom_baseclasses_components_interfa
         (
             'calendar_midcomdba.php',
             'viewer.php', 
-            'admin.php', 
             'navigation.php',
             'common.php',
             'event_participant.php'

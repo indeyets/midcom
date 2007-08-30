@@ -12,9 +12,35 @@
  * 
  * @package net.nemein.Bookmarks
  */
-class net_nemein_bookmarks_interface extends midcom_baseclasses_components_interface{    /**     * Constructor.     *     * Nothing fancy, loads all script files and the datamanager library.     */    function net_nemein_bookmarks_interface()    {        parent::midcom_baseclasses_components_interface();                $this->_component = 'net.nemein.bookmarks';        $this->_autoload_files = Array('viewer.php', 'admin.php', 'navigation.php', 'helpers.php');
-        $this->_autoload_libraries = Array('midcom.helper.datamanager');    }          /**     * Iterate over all events and create index record using the custom indexer     * method.     */    function _on_reindex($topic, $config, &$indexer)    {
-        if ($articles = mgd_list_topic_articles($topic->id))        {            while ($articles->fetch ())            {                $article = mgd_get_article($articles->id);                if ($article)                {
+class net_nemein_bookmarks_interface extends midcom_baseclasses_components_interface
+{
+    /**
+     * Constructor.
+     *
+     * Nothing fancy, loads all script files and the datamanager library.
+     */
+    function net_nemein_bookmarks_interface()
+    {
+        parent::midcom_baseclasses_components_interface();
+        
+        $this->_component = 'net.nemein.bookmarks';
+        $this->_autoload_files = Array('viewer.php', 'navigation.php', 'helpers.php');
+        $this->_autoload_libraries = Array('midcom.helper.datamanager');
+    }
+      
+    /**
+     * Iterate over all events and create index record using the custom indexer
+     * method.
+     */
+    function _on_reindex($topic, $config, &$indexer)
+    {
+        if ($articles = mgd_list_topic_articles($topic->id))
+        {
+            while ($articles->fetch ())
+            {
+                $article = mgd_get_article($articles->id);
+                if ($article)
+                {
                     $datamanager = new midcom_helper_datamanager($config->get('schemadb'));
                     if (! $datamanager)
                     {
@@ -31,5 +57,11 @@ class net_nemein_bookmarks_interface extends midcom_baseclasses_components_inter
                     }
                     
                     $indexer->index($datamanager);
-                    $datamanager->destroy();                }            }        }        return true;    }}
+                    $datamanager->destroy();
+                }
+            }
+        }
+        return true;
+    }
+}
 ?>

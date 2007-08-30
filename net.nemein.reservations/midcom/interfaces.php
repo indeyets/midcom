@@ -28,7 +28,6 @@ class net_nemein_reservations_interface extends midcom_baseclasses_components_in
         (
             'calendar.php',
             'viewer.php', 
-            'admin.php', 
             'navigation.php',
         );
         

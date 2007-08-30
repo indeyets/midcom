@@ -25,7 +25,6 @@ class no_odindata_quickform_interface extends midcom_baseclasses_components_inte
         (
             'viewer.php', 
             'navigation.php', 
-            'admin.php', 
             'formvar.php'
         );
         $this->_autoload_libraries = array

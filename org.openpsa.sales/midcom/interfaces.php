@@ -23,7 +23,6 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
         $this->_autoload_files = array(
             'sort_helper.php',
             'viewer.php',
-            'admin.php',
             'navigation.php',
             'salesproject.php',
             'salesproject_member.php',

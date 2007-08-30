@@ -46,7 +46,7 @@ class net_nehmer_marketplace_interface extends midcom_baseclasses_components_int
         define ('NET_NEHMER_MARKETPLACE_LEAFID_OTHER', 999);
 
         $this->_component = 'net.nehmer.marketplace';
-        $this->_autoload_files = Array('viewer.php', 'admin.php', 'navigation.php', 'entry.php');
+        $this->_autoload_files = Array('viewer.php', 'navigation.php', 'entry.php');
         $this->_autoload_libraries = Array('midcom.helper.datamanager2');
     }
 

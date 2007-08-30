@@ -30,8 +30,7 @@ class net_nemein_hourview2_interface extends midcom_baseclasses_components_inter
         $this->_autoload_files = Array
         (
             'viewer.php', 
-            'navigation.php', 
-            'admin.php'
+            'navigation.php'
         );
         
         $this->_autoload_libraries = Array

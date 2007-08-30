@@ -27,7 +27,6 @@ class org_routamc_statusmessage_interface extends midcom_baseclasses_components_
         $this->_autoload_files = array
         (
             'viewer.php', 
-            'admin.php', 
             'navigation.php',
             'message.php',
             'importer.php',

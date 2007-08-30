@@ -27,7 +27,6 @@ class no_odindata_quickform2_interface extends midcom_baseclasses_components_int
         $this->_autoload_files = array
         (
             'viewer.php', 
-            'admin.php', 
             'navigation.php',
             'factory.php',
             'email.php',

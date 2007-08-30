@@ -27,7 +27,6 @@ class net_nemein_updatenotification_interface extends midcom_baseclasses_compone
         $this->_autoload_files = array
         (
             'viewer.php', 
-            'admin.php', 
             'navigation.php'
         );
         

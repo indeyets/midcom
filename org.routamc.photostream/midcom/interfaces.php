@@ -21,7 +21,6 @@ class org_routamc_photostream_interface extends midcom_baseclasses_components_in
         $this->_autoload_files = array
         (
             'viewer.php',
-            'admin.php',
             'navigation.php',
             'photo.php',
             'importer.php',

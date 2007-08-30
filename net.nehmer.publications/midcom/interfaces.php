@@ -30,9 +30,12 @@ class net_nehmer_publications_interface extends midcom_baseclasses_components_in
         $this->_component = 'net.nehmer.publications';
         $this->_autoload_files = Array
         (
-            'viewer.php', 'admin.php', 'navigation.php',
-            'entry.php', 'categorymap.php',
-            'query.php', 'callbacks/categorylister.php'
+            'viewer.php',
+            'navigation.php',
+            'entry.php',
+            'categorymap.php',
+            'query.php',
+            'callbacks/categorylister.php'
         );
         $this->_autoload_libraries = Array('midcom.helper.datamanager', 'midcom.helper.datamanager2');
     }

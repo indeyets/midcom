@@ -26,7 +26,6 @@ class net_nemein_redirector_interface extends midcom_baseclasses_components_inte
         $this->_component = 'net.nemein.redirector';
         $this->_autoload_files = Array(
             'viewer.php',
-            'admin.php',
             'navigation.php',
         );
     }

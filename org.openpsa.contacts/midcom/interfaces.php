@@ -25,7 +25,6 @@ class org_openpsa_contacts_interface extends midcom_baseclasses_components_inter
             'person_midcomdba.php',
             'person_handler.php',
             'group_handler.php',
-            'admin.php',
             'navigation.php',
             'duplicates.php',
             'duplicates_merge.php',

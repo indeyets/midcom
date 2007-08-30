@@ -31,7 +31,6 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
         $this->_autoload_files = Array
         (
             'viewer.php',
-            'admin.php',
             'navigation.php',
             'thread.php',
             'post.php',

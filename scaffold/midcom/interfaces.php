@@ -27,7 +27,6 @@ class ${module_class}_interface extends midcom_baseclasses_components_interface
         $this->_autoload_files = array
         (
             'viewer.php', 
-            'admin.php', 
             'navigation.php'
         );
         

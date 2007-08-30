@@ -22,7 +22,6 @@ class org_openpsa_directmarketing_interface extends midcom_baseclasses_component
             'link_log.php',
             'campaign_message_receipt.php',
             'viewer.php',
-            'admin.php',
             'navigation.php'
         );
         $this->_autoload_libraries = array

@@ -27,7 +27,6 @@ class net_nemein_lastupdates_interface extends midcom_baseclasses_components_int
         $this->_autoload_files = array
         (
             'viewer.php', 
-            'admin.php', 
             'navigation.php'
         );
         

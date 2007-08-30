@@ -73,7 +73,6 @@ class net_nemein_registrations_interface extends midcom_baseclasses_components_i
         $this->_autoload_files = Array
         (
             'viewer.php',
-            'admin.php',
             'navigation.php',
             'event.php',
             'registrar.php',

@@ -18,7 +18,6 @@ class org_openpsa_documents_interface extends midcom_baseclasses_components_inte
             'document_midcomdba.php',
             'directory_midcomdba.php',
             'viewer.php',
-            'admin.php',
             'navigation.php',
             'directory_handler.php',
             'metadata_handler.php',

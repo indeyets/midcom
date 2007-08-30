@@ -27,7 +27,6 @@ class net_nemein_personnel_interface extends midcom_baseclasses_components_inter
         $this->_autoload_files = array
         (
             'viewer.php',
-            'admin.php',
             'navigation.php',
             'sorted_groups.php',
         );

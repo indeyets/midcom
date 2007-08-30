@@ -27,7 +27,6 @@ class org_openpsa_expenses_interface extends midcom_baseclasses_components_inter
         $this->_autoload_files = array
         (
             'viewer.php', 
-            'admin.php', 
             'navigation.php'
         );
         
