@@ -56,6 +56,15 @@ class net_nehmer_mail_interface extends midcom_baseclasses_components_interface
             'org.openpsa.notifications',
         );
     }
+    
+    function _on_initialize()
+    {
+        if (!class_exists('midcom_helper_itemlist'))
+        {
+            require(MIDCOM_ROOT . '/midcom/helper/itemlist.php');
+        }
+        return true;
+    }    
 
     /**
      * Simple lookup method which tries to map the guid to an mailbox or mail.

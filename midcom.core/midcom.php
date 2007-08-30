@@ -111,7 +111,7 @@ require('midcom/baseclasses/components/interface.php');
 require('midcom/baseclasses/components/navigation.php');
 require('midcom/baseclasses/components/purecode.php');
 require('midcom/baseclasses/components/request.php');
-require('midcom/baseclasses/components/request_admin.php');
+//require('midcom/baseclasses/components/request_admin.php');
 
 // Note, that the legacy MidCOM base classes are loaded at the end of this file,
 // you can't do this here as the referenced baseclases would still be undefined
@@ -133,10 +133,8 @@ require('midcom/helper/_styleloader.php');
 require('midcom/helper/_basicnav.php');
 require('midcom/helper/_dbfactory.php');
 require('midcom/helper/nav.php');
-require('midcom/helper/itemlist.php');
 require('midcom/helper/metadata.php');
 require('midcom/helper/configuration.php');
-require('midcom/helper/mailtemplate.php');
 require('midcom/helper/serviceloader.php');
 require('midcom/helper/toolbar.php');
 require('midcom/helper/toolbars.php');

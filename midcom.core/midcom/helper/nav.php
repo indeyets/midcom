@@ -288,6 +288,11 @@ class midcom_helper_nav
                 $navorder = 'topicsfirst';
                 break;
         }
+        
+        if (!class_exists('midcom_helper_itemlist'))
+        {
+            require(MIDCOM_ROOT . '/midcom/helper/itemlist.php');
+        }
 
         $nav_object = midcom_helper_itemlist::factory($navorder, $this, $parent_topic);
         $result = $nav_object->get_sorted_list();
