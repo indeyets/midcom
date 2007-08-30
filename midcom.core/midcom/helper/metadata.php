@@ -276,7 +276,7 @@ class midcom_helper_metadata
 
             // Fall-back for non-core properties
             default:
-                $value = $this->object->parameter('midcom.helper.metadata', $key, $value);
+                $value = $this->object->get_parameter('midcom.helper.metadata', $key, $value);
                 break;
         }
         
@@ -356,6 +356,10 @@ class midcom_helper_metadata
                 $value = $this->object->metadata->$key;
                 break;
                 
+            case 'nav_noentry':
+                $value = $this->get('navnoentry');
+                break;
+                            
             case 'edited':
                 $value = $this->get('revised');
                 break;
@@ -419,7 +423,7 @@ class midcom_helper_metadata
                 if (! array_key_exists($varname, get_object_vars($this->object)))
                 {
                     // Fall back to the parameter reader, this might be an MgdSchema object.
-                    $value = $this->object->parameter('midcom.helper.metadata', $key);
+                    $value = $this->object->get_parameter('midcom.helper.metadata', $key);
                 }
                 else
                 {
