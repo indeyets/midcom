@@ -829,18 +829,25 @@ EOF;
         {
             list (\$link_value, \$dummy) = each(\$link_values);
             unset(\$mc, \$link_values, \$dummy);
-            \$mc2 = new midgard_collector('{$this->_class_definition['new_class_name']}', '{$target_property}', \$link_value);
-            \$mc2->set_key_property('guid');
-            \$mc2->execute();
-            \$guids = \$mc2->list_keys();
-            if (!is_array(\$guids))
+            if (!empty(\$link_value))
             {
-                unset(\$mc2, \$guids, \$link_value);
-                return null;
+                \$mc2 = new midgard_collector('{$this->_class_definition['new_class_name']}', '{$target_property}', \$link_value);
+                \$mc2->set_key_property('guid');
+                \$mc2->execute();
+                \$guids = \$mc2->list_keys();
+                if (!is_array(\$guids))
+                {
+                    unset(\$mc2, \$guids, \$link_value);
+                    return null;
+                }
+                list (\$parent_guid, \$dummy) = each(\$guids);
+                unset(\$mc2, \$guids, \$link_value, \$dummy);
+                return \$parent_guid;
             }
-            list (\$parent_guid, \$dummy) = each(\$guids);
-            unset(\$mc2, \$guids, \$link_value, \$dummy);
-            return \$parent_guid;
+            else
+            {
+                unset(\$mc2, \$guids, \$link_value, \$dummy);
+            }
         }
         else
         {
@@ -864,18 +871,25 @@ EOF;
         {
             list (\$link_value, \$dummy) = each(\$link_values);
             unset(\$mc, \$link_values, \$dummy);
-            \$mc2 = new midgard_collector('{$target_class}', '{$target_property}', \$link_value);
-            \$mc2->set_key_property('guid');
-            \$mc2->execute();
-            \$guids = \$mc2->list_keys();
-            if (!is_array(\$guids))
+            if (!empty(\$link_value))
             {
-                unset(\$mc2, \$guids, \$link_value);
-                return null;
+                \$mc2 = new midgard_collector('{$target_class}', '{$target_property}', \$link_value);
+                \$mc2->set_key_property('guid');
+                \$mc2->execute();
+                \$guids = \$mc2->list_keys();
+                if (!is_array(\$guids))
+                {
+                    unset(\$mc2, \$guids, \$link_value);
+                    return null;
+                }
+                list (\$parent_guid, \$dummy) = each(\$guids);
+                unset(\$mc2, \$guids, \$link_value, \$dummy);
+                return \$parent_guid;
             }
-            list (\$parent_guid, \$dummy) = each(\$guids);
-            unset(\$mc2, \$guids, \$link_value, \$dummy);
-            return \$parent_guid;
+            else
+            {
+                unset(\$mc2, \$guids, \$link_value, \$dummy);
+            }
         }
         else
         {
