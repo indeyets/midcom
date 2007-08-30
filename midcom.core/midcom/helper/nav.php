@@ -24,7 +24,8 @@
  * @package midcom
  * @see midcom_helper__basicnav
  */
-class midcom_helper_nav {
+class midcom_helper_nav
+{
 
     /**
      * A reference to the basicnav instance in use.
@@ -69,7 +70,8 @@ class midcom_helper_nav {
      * @return int	The ID of the node in question.
      * @see midcom_helper__basicnav::get_current_node()
      */
-    function get_current_node () {
+    function get_current_node ()
+    {
         return $this->_basicnav->get_current_node();
     }
 
@@ -77,12 +79,13 @@ class midcom_helper_nav {
      * Retrieve the ID of the currently displayed leaf. This is a leaf that is
      * displayed by the handling topic. If no leaf is active, this function
      * returns FALSE. (Remeber to make a type sensitve check, e.g.
-     * nav::get_current_leaf() !== false to distinguish "0" and "false".)
+     * nav::get_current_leaf() !== false to distinguish '0' and 'false'.)
      *
      * @return int	The ID of the leaf in question or false on failure.
      * @see midcom_helper__basicnav::get_current_leaf()
      */
-    function get_current_leaf () {
+    function get_current_leaf ()
+    {
         return $this->_basicnav->get_current_leaf();
     }
 
@@ -95,7 +98,8 @@ class midcom_helper_nav {
      * @return int	The ID of the root node.
      * @see midcom_helper__basicnav::get_root_node()
      */
-    function get_root_node () {
+    function get_root_node ()
+    {
         return $this->_basicnav->get_root_node();
     }
 
@@ -140,7 +144,8 @@ class midcom_helper_nav {
      * @return Array		The node-data as outlined in the class introduction, false on failure
      * @see midcom_helper__basicnav::get_node()
      */
-    function get_node ($node_id) {
+    function get_node ($node_id)
+    {
         return $this->_basicnav->get_node($node_id);
     }
 
@@ -153,7 +158,8 @@ class midcom_helper_nav {
      * @return Array		The leaf-data as outlined in the class introduction, false on failure
      * @see midcom_helper__basicnav::get_leaf()
      */
-    function get_leaf ($leaf_id) {
+    function get_leaf ($leaf_id)
+    {
         return $this->_basicnav->get_leaf($leaf_id);
     }
 
@@ -165,7 +171,8 @@ class midcom_helper_nav {
      * @return int 			The ID of the Node for which we have a match, or false on failure.
      * @see midcom_helper__basicnav::get_leaf_uplink()
      */
-    function get_leaf_uplink ($leaf_id) {
+    function get_leaf_uplink ($leaf_id)
+    {
         return $this->_basicnav->get_leaf_uplink($leaf_id);
     }
 
@@ -177,7 +184,8 @@ class midcom_helper_nav {
      * @return int 			The ID of the Node for which we have a match, -1 for the root node, or false on failure.
      * @see midcom_helper__basicnav::get_node_uplink()
      */
-    function get_node_uplink ($node_id) {
+    function get_node_uplink ($node_id)
+    {
         return $this->_basicnav->get_node_uplink($node_id);
     }
 
@@ -195,10 +203,12 @@ class midcom_helper_nav {
         $qb = midcom_db_topic::new_query_builder();
         $qb->add_constraint('id', '=', $node_id);
         $qb->add_constraint('up', 'INTREE', $root_id);
+        
         if ($qb->count() > 0)
         {
             return true;
         }
+        
         return false;
     }
 
@@ -227,7 +237,7 @@ class midcom_helper_nav {
      * is given as
      *
      * - MIDCOM_NAV_ID => 0,
-     * - MIDCOM_NAV_TYPE => "node"
+     * - MIDCOM_NAV_TYPE => 'node'
      *
      * If there are no child elements at all the method will return an empty array,
      * in case of an error FALSE.  NOTE: This method should be quite slow, there's
@@ -238,11 +248,10 @@ class midcom_helper_nav {
      */
     function list_child_elements($parent_node_id)
     {
-        debug_push("nav::list_child_elements");
-
         // Fetch nodes and leaves
         if (! is_numeric($parent_node_id))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Parameter passed is no integer: [$parent_node_id]", MIDCOM_LOG_ERROR);
             debug_print_type('Type was:', $parent_node_id);
             debug_pop();
@@ -255,7 +264,7 @@ class midcom_helper_nav {
             return FALSE;
         }
 
-        $navorder = $parent_topic->parameter("midcom.helper.nav", "navorder");
+        $navorder = $parent_topic->parameter('midcom.helper.nav', 'navorder');
 
         switch ($navorder)
         {
@@ -283,7 +292,6 @@ class midcom_helper_nav {
         $nav_object = midcom_helper_itemlist::factory($navorder, $this, $parent_topic);
         $result = $nav_object->get_sorted_list();
 
-        debug_pop();
         return $result;
     }
 
@@ -306,15 +314,12 @@ class midcom_helper_nav {
      */
     function resolve_guid ($guid)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Checking GUID {$guid}...");
-
         // First, check if the GUID is already known by basicnav:
-
         $cached_result = $this->_basicnav->get_loaded_object_by_guid($guid);
         if (! is_null($cached_result))
         {
-            debug_add('The GUID was already known by the basicnav instance, returning the cached copy directly.');
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('The GUID was already known by the basicnav instance, returning the cached copy directly.', MIDCOM_LOG_INFO);
             debug_pop();
             return $cached_result;
         }
@@ -325,20 +330,21 @@ class midcom_helper_nav {
         $object = $_MIDCOM->dbfactory->get_object_by_guid($guid);
         if (! $object)
         {
-            debug_add("Could not load GUID {$guid}, trying to continue anyway. Last error was: " . mgd_errstr(), MIDCOM_LOG_INFO);
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Could not load GUID {$guid}, trying to continue anyway. Last error was: " . mgd_errstr(), MIDCOM_LOG_WARN);
+            debug_pop();
         }
 
         if (   $object
             && $object->__table__ == 'topic')
         {
-            debug_add("This is a topic.");
-
             // Ok. This topic should be within the content tree,
             // we check this and return the node if everything is ok.
             if (! $this->is_node_in_tree($object->id, $this->get_root_node()))
             {
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("NAP::resolve_guid: The Guid {$guid} leads to an unknown topic not in our tree.", MIDCOM_LOG_WARN);
-                debug_print_r("Retrieved topic was:", $object);
+                debug_print_r('Retrieved topic was:', $object);
                 debug_pop();
                 return false;
             }
@@ -349,13 +355,12 @@ class midcom_helper_nav {
         if (   $object
             && $object->__table__ == 'article')
         {
-            debug_add("This is an article.");
-
+            debug_push_class(__CLASS__, __FUNCTION__);
             // Ok, let's try to find the article using the topic in the tree.
             if (! $this->is_node_in_tree($object->topic, $this->get_root_node()))
             {
                 debug_add("NAP::resolve_guid: The Guid {$guid} leads to an unknown topic not in our tree.", MIDCOM_LOG_WARN);
-                debug_print_r("Retrieved article was:", $object);
+                debug_print_r('Retrieved article was:', $object);
                 debug_pop();
                 return false;
             }
@@ -363,10 +368,12 @@ class midcom_helper_nav {
             $topic = new midcom_db_topic($object->topic);
             if (! $topic)
             {
-                $_MIDCOM->generate_error(
+                $_MIDCOM->generate_error
+                (
                     MIDCOM_ERRCRIT,
                     "Data inconsistency, the topic ID ({$object->topic}) of the article {$object->id} is invalid. "
-                        . 'Last error was: ' . mgd_errstr());
+                        . 'Last error was: ' . mgd_errstr()
+                );
                 // This will exit.
             }
 
@@ -382,7 +389,7 @@ class midcom_helper_nav {
             }
 
             debug_add("The Article GUID {$guid} is somehow hidden from the NAP data in its topic, no results shown.", MIDCOM_LOG_INFO);
-            debug_print_r("Retrieved article was:", $object);
+            debug_print_r('Retrieved article was:', $object);
             debug_pop();
             return false;
         }
@@ -390,8 +397,6 @@ class midcom_helper_nav {
         // this is the rest of the lot, we need to traverse everything, unfortunalety.
         // First, we traverse a list of nodes to be checked on by one, avoiding a recursive
         // function call.
-
-        debug_add("This is something else, we'll do a full scan.");
 
         $unprocessed_node_ids = Array ($this->get_root_node());
         while ( count ($unprocessed_node_ids) > 0)
@@ -414,6 +419,7 @@ class midcom_helper_nav {
             $unprocessed_node_ids = array_merge($unprocessed_node_ids, $this->list_nodes($node_id));
         }
 
+        debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("We were unable to find the GUID {$guid} in the MidCOM tree even with a full scan.");
         debug_pop();
         return false;
@@ -423,7 +429,7 @@ class midcom_helper_nav {
     /* The more complex interface methods starts here */
 
     /**
-     * This function provides an interface to construct links like "View this page".
+     * This function provides an interface to construct links like 'View this page'.
      *
      * It takes the currently displayed content
      * element (either a leaf or node) and constructs the respective URL relative to
@@ -436,43 +442,52 @@ class midcom_helper_nav {
     {
         // Go upwards step by step and build together the page view URL
         // up to the root topic.
-        $url = "";
+        $url = '';
         if ($this->get_current_leaf() !== false)
         {
             $leaf = $this->get_leaf($this->get_current_leaf());
-            if (is_null($leaf[MIDCOM_NAV_SITE]))
+            
+            if (isset($leaf[MIDCOM_NAV_URL]))
+            {
+                $url = $leaf[MIDCOM_NAV_URL];
+            }
+            elseif (isset($leaf[MIDCOM_NAV_SITE])
+                && !is_null($leaf[MIDCOM_NAV_SITE]))
+            {
+                $url = $leaf[MIDCOM_NAV_SITE][MIDCOM_NAV_URL];
+            }
+            else
             {
                 return null;
             }
-            $url = $leaf[MIDCOM_NAV_SITE][MIDCOM_NAV_URL];
         }
-        $nid = $this->get_current_node();
+        $node_id = $this->get_current_node();
 
         do
         {
-            $node = $this->get_node($nid);
+            $node = $this->get_node($node_id);
             $url = $node[MIDCOM_NAV_URL] . $url;
-            $nid = $this->get_node_uplink($nid);
-            if ($nid === false)
+            $node_id = $this->get_node_uplink($node_id);
+            if ($node_id === false)
             {
-                debug_add("get_node_uplink failed; view_this_page_url aborting.");
+                debug_add('get_node_uplink failed; view_this_page_url aborting.');
                 return false;
             }
         }
-        while($nid != -1);
+        while($node_id != -1);
 
-        if (substr($baseurl, -1) == "/")
+        if (substr($baseurl, -1) === '/')
         {
             return $baseurl . $url;
         }
 
-        return $baseurl . "/" . $url;
+        return "{$baseurl}/{$url}";
     }
 
     /**
      * Construct a breadcrumb line.
      *
-     * Gives you a line like "Start > Topic1 > Topic2 > Article" using NAP to
+     * Gives you a line like 'Start > Topic1 > Topic2 > Article' using NAP to
      * traverse upwards till the root node. $separator is inserted between the
      * pairs, $class, if non-null, will be used as CSS-class for the A-Tags.
      *
@@ -484,11 +499,11 @@ class midcom_helper_nav {
      *
      * @param string	$separator		The separator to use between the elements.
      * @param string	$class			If not-null, it will be assigned to all A tags.
-     * @param int		$skip_levels	The number of topic levels to skip before starting to work (use this to skip "Home" links etc.).
+     * @param int		$skip_levels	The number of topic levels to skip before starting to work (use this to skip 'Home' links etc.).
      * @param string	$current_class	The class that should be assigned to the currently active element.
      * @return string	The computed breadrumb line.
      */
-    function get_breadcrumb_line ($separator = " &gt; ", $class = null, $skip_levels = 0, $current_class = null)
+    function get_breadcrumb_line ($separator = ' &gt; ', $class = null, $skip_levels = 0, $current_class = null)
     {
         $breadcrumb_data = $this->get_breadcrumb_data();
         $result = '';
@@ -545,7 +560,7 @@ class midcom_helper_nav {
      * Construct source data for a breadcrumb line.
      *
      * Gives you the data needed to construct a line like
-     * "Start > Topic1 > Topic2 > Article" using NAP to
+     * 'Start > Topic1 > Topic2 > Article' using NAP to
      * traverse upwards till the root node. The components custom breadcrumb
      * data is inserted at the end of the computed breadcrumb line after any
      * set NAP leaf.
@@ -567,7 +582,7 @@ class midcom_helper_nav {
      *   Just in case you need more infromation then is available directly.
      *
      * The entry of every level is indexed by its MIDCOM_NAV_ID, where custom keys preserve
-     * their original key (as passed by the component) and prefixing it with "custom-". This
+     * their original key (as passed by the component) and prefixing it with 'custom-'. This
      * allows you to easily check if a given node/leave is within the current breadcrumb-line
      * by checking with array_key_exists. (mgd_is_in_topic_tree was originally used for this
      * purpose, but this check is not only much faster but more flexible as it isn't limited
@@ -706,7 +721,5 @@ class midcom_helper_nav {
 
         return $result;
     }
-
 }
-
 ?>

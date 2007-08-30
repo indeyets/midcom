@@ -55,6 +55,8 @@
  *
  * Basically for each leaf the usual meta information is returned:
  *
+ * - MIDCOM_NAV_URL      => URL of the leaf element
+ * - MIDCOM_NAV_NAME     => Name of the leaf element
  * - MIDCOM_META_CREATOR => Creator of the element (MidgardPerson)
  * - MIDCOM_META_CREATED => Creation date (UNIX Timestamp)
  * - MIDCOM_META_EDITOR  => Last modifier of the element (MidgardPerson)
@@ -62,56 +64,21 @@
  * - MIDCOM_NAV_GUID     => Optional argument denoting the GUID of the referred element
  * - MIDCOM_NAV_TOOLBAR  => Toolbar data (see below)
  *
- * MidCOM NAP has reduced the separation of Admin Mode and Site Mode NAP
- * Data. Both Site- and Administrative Mode data is now delivered to NAP
- * (and from there to the NAP user) in a single call. This is done by
- * creating two sub-arrays retrievable under the keys MIDCOM_NAV_SITE and
- * MIDCOM_NAV_ADMIN. Both of those arrays contain MIDCOM_NAV_URL and
- * MIDCOM_NAV_NAME values. For compatibility and ease of use the top-level
- * entries of MIDCOM_NAV_NAME and MIDCOM_NAV_URL are still existent and
- * in use. Therefore, three possible constellation exist:
+ * Both MIDCOM_NAV_SITE and MIDCOM_NAV_ADMIN are both deprecated. MIDCOM_NAV_ADMIN
+ * for good, but MIDCOM_NAV_SITE will still support backwards compatibility.
  *
- * 1) Both Values present
- *
+ * Backwards support for MIDCOM_NAV_SITE is an array that contains both
+ * MIDCOM_NAV_URL and MIDCOM_NAV_NAME
+ * 
  * <pre>
- * MIDCOM_NAV_SITE => Array (MIDCOM_NAV_URL, MIDCOM_NAV_NAME),
- * MIDCOM_NAV_ADMIN => Array (MIDCOM_NAV_URL, MIDCOM_NAV_NAME),
- * [... all other tags ...]
+ * MIDCOM_NAV_SITE => array
+ * (
+ *     MIDCOM_NAV_URL  => URL of the leaf element
+ *     MIDCOM_NAV_NAME => Name of the leaf element
+ * ),
  * </pre>
- *
- * The top-level entries MIDCOM_NAV_NAME and _URL will be automatically
- * popluated according to Admin- or non-Admin mode, so that the displaying
- * code for all standard-situations won't have to consider this difference.
- *
- * 2) One element omitted
- *
- * If any Element does have only one of those pairs (like a "Create New
- * Category"-Link for example), set the unavailable Array Entry to null:
- *
- * <pre>
- * MIDCOM_NAV_SITE => null,
- * MIDCOM_NAV_ADMIN => Array (MIDCOM_NAV_URL, MIDCOM_NAV_NAME),
- * [... all other tags ...]
- * </pre>
- *
- * Note, that if one of the elements is missing like outlined above, the
- * list-methods of NAP will not show them in the corresponding mode. The
- * element of the above example would only be included in the listings if
- * the system was running in Admin-Mode. Copying of the primary values will
- * still happen like in (1).
- *
- * 3) Compatibility syntax
- *
- * For ease-of-use and for backwards compatibility, you can deliver an old
- * style data like this:
- *
- * <pre>
- * MIDCOM_NAV_URL => "blah",
- * MIDCOM_NAV_NAME => "blubb",
- * [... all other tags ...]
- * </pre>
- *
- * The Datamanger will automatically transform (3) to the syntax described in
+ * 
+ * The Datamanager will automatically transform (3) to the syntax described in
  * (1) by copying the values.
  *
  * <b>Important note:</b> The difference outlined above is only valid for leaves (read
@@ -148,11 +115,14 @@
  *
  * <b>DEPRECATED INFORMATION</b>
  *
- * The key MIDCOM_NAV_VISIBLE is deprecated from MidCOM 2.4.0 on, visibility is taken into account
+ * Key MIDCOM_NAV_VISIBLE is deprecated from MidCOM 2.4.0 on, visibility is taken into account
  * automatically. The key is set to true for all values now for backwards compatibility and will
  * be removed entirely in MidCOM 2.6.0
- *
- * @todo Bring the information from http://www.nathan-syntronics.de/midgard/midcom_fs-transition/nap-update.html somehow into this.
+ * 
+ * Keys MIDCOM_NAV_ADMIN and MIDCOM_NAV_SITE are both deprecated as of MidCOM 2.8. MIDCOM_NAV_ADMIN
+ * will not work at all and MIDCOM_NAV_SITE will still be supported during the transition phase, but
+ * only if either MIDCOM_NAV_URL or MIDCOM_NAV_NAME are empty.
+ * 
  * @package midcom
  */
 class midcom_helper__basicnav
@@ -252,14 +222,6 @@ class midcom_helper__basicnav
     var $_loader;
 
     /**
-     * This one is true, if the system is in content administration mode and therefore
-     * working with a different topic. See Constructor Documentation for details.
-     *
-     * @var bool
-     */
-    var $_adminmode;
-
-    /**
      * This is a temporary storage where _loadNode can return the last known good
      * node in case the current node not visible. It is evaluated by the
      * constructor.
@@ -300,8 +262,6 @@ class midcom_helper__basicnav
      */
     function midcom_helper__basicnav($context = 0)
     {
-        debug_push("_basicnav::constructor");
-
         $tmp = $_MIDCOM->get_context_data($context, MIDCOM_CONTEXT_ROOTTOPIC);
         $this->_root = $tmp->id;
 
@@ -311,14 +271,6 @@ class midcom_helper__basicnav
         
         $this->_nodes = array();
         $this->_loader =& $_MIDCOM->get_component_loader();
-        if ($_MIDCOM->get_context_data($context, MIDCOM_CONTEXT_REQUESTTYPE) == MIDCOM_REQUEST_CONTENTADM)
-        {
-            $this->_adminmode = true;
-        }
-        else
-        {
-            $this->_adminmode = false;
-        }
 
         $current = $_MIDCOM->get_context_data($context, MIDCOM_CONTEXT_CONTENTTOPIC);
         if (is_null($current))
@@ -339,12 +291,12 @@ class midcom_helper__basicnav
                 break;
 
             case MIDCOM_ERRFORBIDDEN:
-                debug_add("The current node is hidden behind a undescendable one.", MIDCOM_LOG_INFO);
-                debug_add("Activating last good node ({$this->_lastgoodnode}) as current node");
+                // Node is hidden behind an undescendable one, activate the last known good node as current
                 $this->_current = $this->_lastgoodnode;
                 break;
 
             default:
+                debug_push("_basicnav::constructor");
                 debug_add("_loadNode failed, see above error for details.", MIDCOM_LOG_ERROR);
                 debug_pop();
                 return false;
@@ -352,8 +304,6 @@ class midcom_helper__basicnav
 
         // Reset the Root node's URL Parameter to an empty string.
         $this->_nodes[$this->_root][MIDCOM_NAV_URL] = '';
-
-        debug_pop();
     }
 
     /**
@@ -370,8 +320,6 @@ class midcom_helper__basicnav
      */
     function _get_node($id)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
         /*
         $this->_nap_cache->open();
         if ($this->_nap_cache->exists($id))
@@ -395,6 +343,7 @@ class midcom_helper__basicnav
 
         if (is_null($nodedata))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('We got NULL for this node, so we do not have any NAP information, returning null directly.');
             debug_pop();
             return null;
@@ -409,7 +358,6 @@ class midcom_helper__basicnav
         // In addition, kill the toolbar as this is cached information and thus not relevant for the current user.
         $nodedata[MIDCOM_NAV_TOOLBAR] = null;
 
-        debug_pop();
         return $nodedata;
     }
 
@@ -425,8 +373,6 @@ class midcom_helper__basicnav
      */
     function _get_node_from_database($node)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
         if (is_object($node))
         {
             $topic = $node;
@@ -435,26 +381,28 @@ class midcom_helper__basicnav
         {
             // Load the topic first.
             $topic = new midcom_db_topic($node);
-            if (   ! $topic
+            if (   !$topic
                 || !$topic->guid)
             {
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Could not load the topic {$node} through DBA; assuming missing privileges.", MIDCOM_LOG_INFO);
                 debug_pop();
                 return null;
             }
         }
 
-        debug_add("Trying to load NAP data for topic {$topic->name} (#{$topic->id})");
-
         // Retrieve a NAP instance
         // if we are missing the component, use the nullcomponent.
         if (!array_key_exists( $topic->component, $_MIDCOM->componentloader->manifests)) 
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("The topic {$topic->id} has no component assigned to it, using nullcomponent.",
                 MIDCOM_LOG_ERROR);
+            debug_pop();
             $topic->component = 'midcom.core.nullcomponent';
         }
         $path = $topic->component;
+        
         /*
         if (!$path)
         {
@@ -469,9 +417,11 @@ class midcom_helper__basicnav
             return null;
         }
         */
+        
         $interface =& $this->_loader->get_interface_class($path);
         if (!$interface)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Could not get interface class of '{$path}' to the topic {$topic->id}, cannot add it to the NAP list.",
                 MIDCOM_LOG_ERROR);
             return null;
@@ -479,8 +429,10 @@ class midcom_helper__basicnav
         
         if (! $interface->set_object($topic))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Could not set the NAP instance of '{$path}' to the topic {$topic->id}, cannot add it to the NAP list.",
                 MIDCOM_LOG_ERROR);
+            debug_pop();
             return null;
         }
 
@@ -490,6 +442,7 @@ class midcom_helper__basicnav
         $nodedata = $interface->get_node();
         if (is_null($nodedata))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("The component '{$path}' did return null for the topic {$topic->id}, indicating no NAP information is available.");
             debug_pop();
             return null;
@@ -548,7 +501,6 @@ class midcom_helper__basicnav
         // Temporary compatiblity value
         $nodedata[MIDCOM_NAV_VISIBLE] = true;
 
-        debug_pop();
         return $nodedata;
     }
 
@@ -601,7 +553,7 @@ class midcom_helper__basicnav
             // $this->_write_leaves_to_cache($node, $leaves);
         }
 
-        // Post process the leaves for URLs and the like. Don't forget NAV_ADMIN/NAV_SITE
+        // Post process the leaves for URLs and the like.
         // Rewrite all host dependant URLs based on the relative URL within our topic tree.
         $this->_update_leaflist_urls($leaves);
 
@@ -613,24 +565,25 @@ class midcom_helper__basicnav
 
     /**
      * This helper updates the URLs in the reference-passed leaf list.
-     * FULLURL, ABSOLUTEURL and PERMALINK are built upon RELATIVEURL,
-     * NAV_NAME and NAV_URL are populated based on the administration mode with either
-     * NAV_ADMIN or NAV_SITE values.
+     * FULLURL, ABSOLUTEURL and PERMALINK are built upon RELATIVEURL, NAV_NAME
+     * and NAV_URL are populated based on the administration mode with NAV_SITE values
      *
      * @param Array $leaves A reference to the list of leaves which has to be processed.
      * @access private
      */
     function _update_leaflist_urls(&$leaves)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
         $fullprefix = "{$GLOBALS['midcom_config']['midcom_site_url']}";
         $absoluteprefix = substr($GLOBALS['midcom_config']['midcom_site_url'], strlen($GLOBALS['midcom']->get_host_name()));
 
         if (! is_array($leaves))
         {
-            echo "<pre>"; print_r($leaves); echo "</pre>";
-            die ("wrong type");
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_print_r("Wrong type", $leaves, MIDCOM_LOG_ERROR);
+            debug_pop();
+            
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Wrong type passed for navigation, see error level log for details');
+            // This will exit
         }
 
         foreach ($leaves as $id => $copy)
@@ -645,22 +598,19 @@ class midcom_helper__basicnav
             {
                 $leaves[$id][MIDCOM_NAV_PERMALINK] = $_MIDCOM->permalinks->create_permalink($leaves[$id][MIDCOM_NAV_GUID]);
             }
-            if ($this->_adminmode)
-            {
-                $leaves[$id][MIDCOM_NAV_URL] = $leaves[$id][MIDCOM_NAV_ADMIN][MIDCOM_NAV_URL];
-                $leaves[$id][MIDCOM_NAV_NAME] = $leaves[$id][MIDCOM_NAV_ADMIN][MIDCOM_NAV_NAME];
-            }
-            else
+            
+            if (!isset($leaves[$id][MIDCOM_NAV_URL]))
             {
                 $leaves[$id][MIDCOM_NAV_URL] = $leaves[$id][MIDCOM_NAV_SITE][MIDCOM_NAV_URL];
+            }
+            if (!isset($leaves[$id][MIDCOM_NAV_NAME]))
+            {
                 $leaves[$id][MIDCOM_NAV_NAME] = $leaves[$id][MIDCOM_NAV_SITE][MIDCOM_NAV_NAME];
             }
-
+            
             // In addition, kill the toolbar as this is cached information and thus not relevant for the current user.
             $leaves[$id][MIDCOM_NAV_TOOLBAR] = null;
         }
-
-        debug_pop();
     }
 
     /**
@@ -735,11 +685,13 @@ class midcom_helper__basicnav
         {
             debug_add("Could not get interface class of '{$node[MIDCOM_NAV_COMPONENT]}' to the topic {$topic->id}, cannot add it to the NAP list.",
                 MIDCOM_LOG_ERROR);
+            debug_pop();
             return null;
         }
         if (! $interface->set_object($topic))
         {
             debug_print_r('Topic object dump:', $topic);
+            debug_pop();
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "Cannot load NAP information, aborting: Could not set the nap instance of {$node[MIDCOM_NAV_COMPONENT]} to the topic {$topic->id}.");
             // This will exit().
@@ -797,28 +749,20 @@ class midcom_helper__basicnav
                 }
             }
 
-            // Complete the NAV_SITE and NAV_ADMIN fields if the old-style
-            // root level URL/NAME parameters are set. This automatically overrides
-            // any NAV_SITE/ADMIN settings.
+            // Complete the NAV_SITE if the old-style root level URL/NAME parameters are set.
+            // This automatically overrides any NAV_SITE/ADMIN settings.
             if (   array_key_exists(MIDCOM_NAV_NAME, $leaf)
                 && array_key_exists(MIDCOM_NAV_URL, $leaf))
             {
                 $leaf[MIDCOM_NAV_SITE][MIDCOM_NAV_URL] = $leaf[MIDCOM_NAV_URL];
                 $leaf[MIDCOM_NAV_SITE][MIDCOM_NAV_NAME] = $leaf[MIDCOM_NAV_NAME];
-                $leaf[MIDCOM_NAV_ADMIN][MIDCOM_NAV_URL] = $leaf[MIDCOM_NAV_URL];
-                $leaf[MIDCOM_NAV_ADMIN][MIDCOM_NAV_NAME] = $leaf[MIDCOM_NAV_NAME];
             }
 
             // complete NAV_NAMES where neccessary
             if (   ! is_null($leaf[MIDCOM_NAV_SITE])
                 && trim($leaf[MIDCOM_NAV_SITE][MIDCOM_NAV_NAME]) == '')
             {
-                $leaf[MIDCOM_NAV_SITE][MIDCOM_NAV_NAME] = $leaf[MIDCOM_NAV_ADMIN][MIDCOM_NAV_URL];
-            }
-            if (   ! is_null($leaf[MIDCOM_NAV_ADMIN])
-                && trim($leaf[MIDCOM_NAV_ADMIN][MIDCOM_NAV_NAME]) == '')
-            {
-                $leaf[MIDCOM_NAV_ADMIN][MIDCOM_NAV_NAME] = $leaf[MIDCOM_NAV_ADMIN][MIDCOM_NAV_URL];
+                $leaf[MIDCOM_NAV_SITE][MIDCOM_NAV_NAME] = $_MIDCOM->i18n->get_string('unknown', 'midcom');
             }
 
             // Toolbar
@@ -874,23 +818,6 @@ class midcom_helper__basicnav
             debug_add('Got a null value as napdata, so this object does not have any NAP info, so we cannot display it.');
             debug_pop();
             return false;
-        }
-
-        // If in admin mode, we are always visible now.
-        if ($this->_adminmode)
-        {
-            return true;
-        }
-
-        // If this is a leaf, we have to do some additional AIS/Non-AIS visibility checks
-        if ($napdata[MIDCOM_NAV_TYPE] == 'leaf')
-        {
-            // Check wether the leaf may be shown in the current mode
-            if (   (  $this->_adminmode && is_null($napdata[MIDCOM_NAV_ADMIN]))
-                || (! $this->_adminmode && is_null($napdata[MIDCOM_NAV_SITE])))
-            {
-                return false;
-            }
         }
 
         // Check the Metadata if and only if we are configured to do so.
@@ -1186,7 +1113,8 @@ class midcom_helper__basicnav
     {
         global $midcom_errstr;
 
-        debug_push("_basicnav::list_nodes");
+        debug_push(__CLASS__, __FUNCTION__);
+        
         if (! is_numeric($parent_node))
         {
             debug_add("Parameter passed is no integer: [$parent_node]", MIDCOM_LOG_ERROR);
@@ -1205,83 +1133,39 @@ class midcom_helper__basicnav
             }
         }
         
-        $qb = midcom_db_topic::new_query_builder();
-        $qb->add_constraint('up', '=', $parent_node);
-        $qb->add_constraint('component', '<>', '');
-        $qb->add_constraint('name', '<>', '');
-        if (!$show_noentry)
+        // Use the midgard_collector to get the subnodes
+        $collector = midcom_db_topic::new_collector('up', $parent_node);
+        $collector->add_value_property('id');
+        $collector->add_constraint('up', '=', $parent_node);
+        $collector->add_constraint('component', '<>', '');
+        $collector->add_constraint('name', '<>', '');
+        
+        $collector->add_order('metadata.score', 'DESC');
+        $collector->add_order('metadata.created');
+        $collector->execute();
+        
+        // Get the GUIDs of the subnodes
+        $subnodes = $collector->list_keys();
+        
+        // No results, return an empty array
+        if (count($subnodes) === 0)
         {
-            // Hide "noentry" items
-            $qb->add_constraint('metadata.navnoentry', '=', 0);
-        }
-        $qb->add_order('score');
-        $qb->add_order('extra');
-        
-        $topics = $qb->execute();
-        
-        $result = array();
-        
-        if (!$topics)
-        {
-            debug_add("Could not list topics under #{$parent_node}: " . mgd_errstr(), MIDCOM_LOG_INFO);
-            debug_pop();
-            return $result;
+            return array();
         }
         
-        foreach ($topics as $topic)
+        foreach ($subnodes as $guid => $subnode)
         {
-            if ($this->_loadNode($topic->id) != MIDCOM_ERROK)
+            $id = $collector->get_subkey($guid, 'id');
+            
+            if ($this->_loadNode($id) !== MIDCOM_ERROK)
             {
-                debug_add("Node {$topic->id} could not be loaded, ignoring it", MIDCOM_LOG_INFO);
+                debug_add("Node {$id} could not be loaded, ignoring it", MIDCOM_LOG_INFO);
                 continue;
             }
 
-            $result[] = $topic->id;
-        }                
-        /*
-        TODO: Revert to collector when the bugs in it are fixed
-        $mc = midcom_db_topic::new_collector('up', $parent_node);
-        $mc->add_value_property('id');      
-        $mc->add_value_property('extra');  
-        $mc->add_constraint('component', '<>', '');
-        $mc->add_constraint('name', '<>', '');
-        
-        if (!$show_noentry)
-        {
-            // Hide "noentry" items
-            $mc->add_constraint('metadata.navnoentry', '=', 0);
+            $result[] = $id;
         }
         
-        $mc->add_order('score');
-        $mc->add_order('extra');
-        //mgd_debug_start();
-        $mc->execute();
-        //mgd_debug_stop();
-        
-        $topics = $mc->list_keys_unchecked();
-        
-        $result = array();
-        
-        if (!$topics)
-        {
-            debug_add("Could not list topics under #{$parent_node}: " . mgd_errstr(), MIDCOM_LOG_INFO);
-            debug_pop();
-            return $result;
-        }
-
-
-        foreach ($topics as $topic_guid => $value)
-        {
-            $topic_id = $mc->get_subkey($topic_guid, 'id');
-            if ($this->_loadNode($topic_id) != MIDCOM_ERROK)
-            {
-                debug_add("Node {$topic_id} could not be loaded, ignoring it", MIDCOM_LOG_INFO);
-                continue;
-            }
-
-            $result[] = $topic_id;
-        }
-        */
         debug_pop();
         return $result;
     }
@@ -1513,6 +1397,4 @@ class midcom_helper__basicnav
         debug_print_r("Leaf Cache Dump:", $this->_leaves, MIDCOM_LOG_DEBUG);
     }
 }
-
-
 ?>
