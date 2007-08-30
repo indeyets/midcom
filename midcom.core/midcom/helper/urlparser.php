@@ -334,7 +334,7 @@ class midcom_helper_urlparser {
 
         debug_add("Trying to fetch article " . $this->argv[0]);
 
-        $qb = midcom_db_topic::new_query_builder();
+        $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('name', '=', $this->argv[0]);
         $qb->add_constraint('topic', '=', $this->_curobject->id);
         $result = $qb->execute();
