@@ -104,7 +104,8 @@
  *
  * @package midcom
  */
-class midcom_application {
+class midcom_application 
+{
 
     /**
      * The URL parser.
@@ -112,14 +113,7 @@ class midcom_application {
      * @var midcom_helper_urlparser
      * @access private
      */
-    var $_parser;
-
-    /**
-     * The component loader.
-     *
-     * @var midcom_helper__componentloader
-     */
-    var $componentloader;
+    private $_parser;
 
     /**
      * Holds the component context information. This is an array of arrays, the outer
@@ -129,7 +123,7 @@ class midcom_application {
      * @var Array
      * @access private
      */
-    var $_context = array();
+    private $_context = array();
 
     /**
      * Contains the ID of the currently active context or FALSE is none is active.
@@ -137,7 +131,7 @@ class midcom_application {
      * @var int
      * @access private
      */
-    var $_currentcontext;
+    private $_currentcontext;
 
     /**
      * The active component.
@@ -145,7 +139,7 @@ class midcom_application {
      * @var string
      * @access private
      */
-    var $_currentcomponent;
+    private $_currentcomponent;
 
     /**
      * The client status array.
@@ -153,7 +147,7 @@ class midcom_application {
      * @var Array
      * @access private
      */
-    var $_client;
+    private $_client;
 
     /**
      * The prefix, which is appended to get_midgard()->self (i.e. the
@@ -163,7 +157,7 @@ class midcom_application {
      * @var string
      * @access private
      */
-    var $_prefix;
+    private $_prefix;
 
     /**
      * Integer constant resembling the current MidCOM state.
@@ -173,7 +167,7 @@ class midcom_application {
      * @var int
      * @access private
      */
-    var $_status;
+    private $_status;
 
     /**
      * This is the interface to MidCOMs Object Services. Each service is indexed
@@ -182,7 +176,7 @@ class midcom_application {
      * @var Array
      * @access private
      */
-    var $_services;
+    private $_services;
 
     /**
      * The service loader.
@@ -196,14 +190,21 @@ class midcom_application {
      *
      * @var MidgardObject
      */
-    var $midgard = null;
+    protected $midgard = null;
+
+    /**
+     * The component loader.
+     *
+     * @var midcom_helper__componentloader
+     */
+    public $componentloader;
 
     /**
      * I18n service class
      *
      * @var midcom_helper_i18n
      */
-    var $i18n = null;
+    public $i18n = null;
 
     /**
      * Helperclass to handle all style management. See class description for further
@@ -211,63 +212,63 @@ class midcom_application {
        *
        * @var midcom_helper__styleloader
      */
-    var $style = null;
+    public $style = null;
 
     /**
      * The main caching Engine which is responsible for the current page output.
      *
      * @var midcom_helper__cache
      */
-    var $cache = null;
+    public $cache = null;
 
     /**
      * Helper class which provides access to the MgdSchema driven Midgard Database.
      *
      * @var midcom_helper__dbfactory
      */
-    var $dbfactory = null;
+    public $dbfactory = null;
 
     /**
      * Authentication / Authorization service.
      *
      * @var midcom_services_auth
      */
-    var $auth = null;
+    public $auth = null;
 
     /**
      * Database class loader service.
      *
      * @var midcom_services_dbclassloader
      */
-    var $dbclassloader = null;
+    public $dbclassloader = null;
 
     /**
      * The temporary object service.
      *
      * @var midcom_services_tmp
      */
-    var $tmp = null;
+    public $tmp = null;
 
     /**
      * The toolbars service.
      *
      * @var midcom_services_toolbars
      */
-    var $toolbars = null;
+    public $toolbars = null;
 
     /**
      * The UI messages service.
      *
      * @var midcom_services_uimessages
      */
-    var $uimessages = null;
+    public $uimessages = null;
 
     /**
      * The metadata service.
      *
      * @var midcom_services_metadata
      */
-    var $metadata = null;
+    public $metadata = null;
 
     /**
      * String with all JavaScript declarations for the page's head.
@@ -275,7 +276,7 @@ class midcom_application {
      * @var string
      * @access private
      */
-    var $_jshead;
+    private $_jshead;
 
     /**
      * String with all prepend JavaScript declarations for the page's head.
@@ -283,7 +284,7 @@ class midcom_application {
      * @var string
      * @access private
      */
-    var $_prepend_jshead;
+    private $_prepend_jshead;
 
     /**
      * Boolean showing if jQuery is enabled
@@ -291,7 +292,7 @@ class midcom_application {
      * @var Boolean
      * @access private
      */
-    var $_jquery_enabled = false;
+    private $_jquery_enabled = false;
 
     /**
      * Array with all JQuery state scripts for the page's head.
@@ -299,7 +300,7 @@ class midcom_application {
      * @var array
      * @access private
      */
-    var $_jquery_states = array();
+    private $_jquery_states = array();
 
     /**
      * Array with all methods for the BODY's onload event.
@@ -307,21 +308,21 @@ class midcom_application {
      * @var Array
      * @access private
      */
-    var $_jsonload;
+    private $_jsonload;
 
     /**
      * string with all metatags to go into the page head.
      * @var string
      * @access private
      */
-    var $_meta_head = "";
+    private $_meta_head = "";
 
     /**
      * string with all object tags to go into a page's head.
      * @var string
      * @access private
      */
-    var $_object_head = "";
+    private $_object_head = "";
 
     /**
      * String with all css styles to go into a page's head.
@@ -329,7 +330,7 @@ class midcom_application {
      * @var string
      * @access private
      */
-    var $_style_head = "";
+    private $_style_head = "";
 
     /**
      * String with all link elements to be included in a page's head.
@@ -337,7 +338,7 @@ class midcom_application {
      * @var string
      * @access private
      */
-    var $_link_head = "";
+    private $_link_head = "";
 
     /**
      * Host prefix cache to avoid computing it each time.
@@ -346,7 +347,7 @@ class midcom_application {
      * @access private
      * @see midcom_application::get_host_prefix();
      */
-    var $_cached_host_prefix;
+    private $_cached_host_prefix;
 
     /**
      * Page prefix cache to avoid computing it each time.
@@ -355,7 +356,7 @@ class midcom_application {
      * @access private
      * @see midcom_application::get_page_prefix();
      */
-    var $_cached_page_prefix;
+    private $_cached_page_prefix;
 
     /**
      * Host name cache to avoid computing it each time.
@@ -364,7 +365,7 @@ class midcom_application {
      * @access private
      * @see midcom_application::get_host_name();
      */
-    var $_cached_host_name = '';
+    private $_cached_host_name = '';
 
     /**
      * Set this variable to true during the handle phase of your component to
@@ -392,7 +393,7 @@ class midcom_application {
      * $prefix can be a prefix, which is appended to get_midgard()->self (i.e. the
      * Midgard Page URL). This may be needed when MidCOM is run by wrapper.
      */
-    function initialize()
+    public function initialize()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
@@ -522,7 +523,7 @@ class midcom_application {
      *
      * @see midcom_application::_process()
      */
-    function codeinit() 
+    public function codeinit() 
     {
         $oldcontext = $this->_currentcontext;
         $this->_currentcontext = 0;
@@ -557,7 +558,7 @@ class midcom_application {
      * This function must be called in the content area of the
      * Style template, usually <(content)>.
      */
-    function content() 
+    public function content() 
     {
         debug_push_class(__CLASS__, __FUNCTION__);    
 
@@ -659,7 +660,7 @@ class midcom_application {
      * @param Array $config                A key=>value array with any configuration overrides.
      * @return int                        The ID of the newly created context.
      */
-    function dynamic_load($url, $config = array(), $type = MIDCOM_REQUEST_CONTENT) 
+    public function dynamic_load($url, $config = array(), $type = MIDCOM_REQUEST_CONTENT) 
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
@@ -760,7 +761,7 @@ class midcom_application {
      *
      * <b>WARNING:</b> Anything done after calling this method will be lost.
      */
-    function finish()
+    public function finish()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $this->_status = MIDCOM_STATUS_CLEANUP;
@@ -824,7 +825,7 @@ class midcom_application {
      *
      * @access private
      */
-    function _process() {
+    private function _process() {
         debug_push_class(__CLASS__, __FUNCTION__);
 
         $success = false;
@@ -1076,28 +1077,20 @@ class midcom_application {
      * @param string $path    Override the component set in the topic (used mainly for AIS).
      * @access private
      */
-    function _handle($path = NULL)
+    private function _handle($path = NULL)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
         $opath = $this->get_context_data(MIDCOM_CONTEXT_COMPONENT);
         if (!isset($path)) $path = $opath;
 
-        switch ($this->get_context_data(MIDCOM_CONTEXT_REQUESTTYPE))
+        if ($this->get_context_data(MIDCOM_CONTEXT_REQUESTTYPE) != MIDCOM_REQUEST_CONTENT)
         {
-            case MIDCOM_REQUEST_CONTENT:
-                $handler =& $this->componentloader->get_interface_class($path);
-                break;
-
-            case MIDCOM_REQUEST_CONTENTADM:
-                $handler =& $this->componentloader->get_contentadmin_class($path);
-                break;
-
-            default:
-                debug_add("Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE], MIDCOM_LOG_ERROR);
-                $this->generate_error(MIDCOM_ERRCRIT, "Unkown Request Type encountered:"  . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE]);
-                break;
+            debug_add("Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE], MIDCOM_LOG_ERROR);
+            $this->generate_error(MIDCOM_ERRCRIT, "Unkown Request Type encountered:"  . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE]);
         }
+        
+        $handler =& $this->componentloader->get_interface_class($path);
 
         $this->_set_context_data($this->_parser->fetch_object(), MIDCOM_CONTEXT_CONTENTTOPIC);
 
@@ -1169,33 +1162,25 @@ class midcom_application {
      * @return bool                    Indication, wether a component can handle a request.
      * @access private
      */
-    function _checkobject($object)
+    private function _checkobject($object)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
         $path = $this->get_context_data(MIDCOM_CONTEXT_COMPONENT);
 
         $adminmode = false;
-        switch ($this->_context[$this->_currentcontext][MIDCOM_CONTEXT_REQUESTTYPE])
+        if ($this->_context[$this->_currentcontext][MIDCOM_CONTEXT_REQUESTTYPE] != MIDCOM_REQUEST_CONTENT)
         {
-            case MIDCOM_REQUEST_CONTENT:
-                $concept_component =& $this->componentloader->get_component_class($path);
-                if ( $concept_component === Null ) {
-                    $path = 'midcom.core.nullcomponent';
-                    $this->_set_context_data($path,MIDCOM_CONTEXT_COMPONENT);
-                    $concept_component =& $this->componentloader->get_component_class( $path );
-                }
-                break;
-
-            case MIDCOM_REQUEST_CONTENTADM:
-                $concept_component =& $this->componentloader->get_contentadmin_class($path);
-                $adminmode = true;
-                break;
-
-            default:
-                debug_add("Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE], MIDCOM_LOG_ERROR);
-                $this->generate_error(MIDCOM_ERRCRIT, "Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE]);
-                break;
+            debug_add("Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE], MIDCOM_LOG_ERROR);
+            $this->generate_error(MIDCOM_ERRCRIT, "Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE]);
+        }
+        
+        $concept_component =& $this->componentloader->get_component_class($path);
+        if ($concept_component === null) 
+        {
+            $path = 'midcom.core.nullcomponent';
+            $this->_set_context_data($path, MIDCOM_CONTEXT_COMPONENT);
+            $concept_component =& $this->componentloader->get_component_class($path);
         }
 
         $config_obj =& $this->_loadconfig($object);
@@ -1232,7 +1217,8 @@ class midcom_application {
      * @return midcom_helper_configuration    Reference to the newly constructed configuration object.
      * @access private
      */
-    function & _loadconfig($object) {
+    private function & _loadconfig($object) 
+    {
         debug_push("midcom_application::_loadconfig");
 
         $path = $this->get_context_data(MIDCOM_CONTEXT_COMPONENT);
@@ -1259,7 +1245,7 @@ class midcom_application {
      * @param bool $showcontent    If set and false, the output will not be automatically flushed.
      * @access private
      */
-    function _output()
+    private function _output()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         ob_start();
@@ -1271,21 +1257,13 @@ class midcom_application {
             midcom_show_style('style-init');
         }
 
-        switch ($this->get_context_data(MIDCOM_CONTEXT_REQUESTTYPE))
+        if ($this->get_context_data(MIDCOM_CONTEXT_REQUESTTYPE) != MIDCOM_REQUEST_CONTENT)
         {
-            case MIDCOM_REQUEST_CONTENT:
-                $component =& $this->componentloader->get_component_class($this->get_context_data(MIDCOM_CONTEXT_COMPONENT));
-                break;
-
-            case MIDCOM_REQUEST_CONTENTADM:
-                $component =& $this->componentloader->get_contentadmin_class($this->get_context_data(MIDCOM_CONTEXT_COMPONENT));
-                break;
-
-            default:
-                debug_add("Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE], MIDCOM_LOG_ERROR);
-                $this->generate_error(MIDCOM_ERRCRIT, "Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE]);
-                break;
+            debug_add("Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE], MIDCOM_LOG_ERROR);
+            $this->generate_error(MIDCOM_ERRCRIT, "Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE]);
         }
+        
+        $component =& $this->componentloader->get_component_class($this->get_context_data(MIDCOM_CONTEXT_COMPONENT));
         $component->show_content($this->_currentcontext);
 
         if (!$this->skip_page_style)
@@ -1437,7 +1415,8 @@ class midcom_application {
      *
      * @return midcom_helper__componentloader The reference of the component loader in use.
      */
-    function & get_component_loader () {
+    public function & get_component_loader () 
+    {
         return $this->componentloader;
     }
 
