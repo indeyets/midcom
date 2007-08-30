@@ -27,6 +27,10 @@
                 ),
             ),
             'widget' => 'select',
+            'start_fieldgroup' => array
+            (
+                'title' => 'groovy',
+            ),
         ),
         'handpicked_photos' => array
         (
@@ -62,6 +66,7 @@
                     array('taken' => 'DESC'),
                 ),
             ),
+            'end_fieldgroup' => '',
         ),
         'photos_per_page' => array
         (

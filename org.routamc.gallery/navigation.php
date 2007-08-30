@@ -60,35 +60,13 @@ class org_routamc_gallery_navigation extends midcom_baseclasses_components_navig
         
         foreach ($organizer->get_sorted() as $link_id => $photo)
         {
-            if (version_compare(mgd_version(), '1.8.0', '>='))
-            {
-                $creator = $photo->metadata->creator;
-                $revisor = $photo->metadata->revisor;
-                $created = $photo->metadata->created;
-                $revised = $photo->metadata->revised;
-            }
-            else
-            {
-                $creator = $photo->creator;
-                $revisor = $photo->revisor;
-                $created = $photo->created;
-                $revised = $photo->revised;
-            }
-            
             $leaves[$link_id] = array
             (
-                MIDCOM_NAV_SITE => Array
-                (
-                    MIDCOM_NAV_URL => "photo/{$photo->guid}.html",
-                    MIDCOM_NAV_NAME => $photo->title
-                ),
+                MIDCOM_NAV_URL => "photo/{$photo->guid}.html",
+                MIDCOM_NAV_NAME => $photo->title,
                 MIDCOM_NAV_ADMIN => null,
                 MIDCOM_NAV_GUID => $photo->guid,
                 MIDCOM_NAV_OBJECT => $photo,
-                MIDCOM_META_CREATOR => $creator,
-                MIDCOM_META_EDITOR => $revisor,
-                MIDCOM_META_CREATED => $created,
-                MIDCOM_META_EDITED => $revised,
             );
 
         }

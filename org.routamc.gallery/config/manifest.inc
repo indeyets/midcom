@@ -1,6 +1,6 @@
 'name' => 'org.routamc.gallery',
 'purecode' => false,
-'version' => '1.1.0beta3',
+'version' => '1.1.0beta2',
 'state' => 'beta',
 'privileges' => array (),
 'class_definitions' => array

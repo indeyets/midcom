@@ -31,21 +31,6 @@ class org_routamc_gallery_organizer
     var $reverse = true;
     
     /**
-     * Should post processing be done to photo links (pre Midgard 1.8.2)
-     * 
-     * @access private
-     */
-    var $_post_processing = true;
-    
-    /**
-     * Should legacy support be enabled (i.e. pre Midgard 1.8.2)
-     * 
-     * @access private
-     * @var boolean $_legacy
-     */
-    var $_legacy = true;
-    
-    /**
      * Limit the request to a certain number
      * 
      * @access public
@@ -76,12 +61,6 @@ class org_routamc_gallery_organizer
      */
     function org_routamc_gallery_organizer($sort_string = null)
     {
-        if (version_compare(mgd_version(), '1.8.2', '>='))
-        {
-            $this->_legacy = false;
-            $this->_post_processing = false;
-        }
-        
         if ($sort_string)
         {
             if (is_array($sort_string))
@@ -105,13 +84,8 @@ class org_routamc_gallery_organizer
      */
     function sort_by($string)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        
         if (trim($string) === '')
         {
-            debug_add('No sorting string set, using default');
-            debug_pop();
-            
             return true;
         }
         
@@ -135,46 +109,21 @@ class org_routamc_gallery_organizer
             
             $domain = $regs[0];
             $string = $regs[1];
-            $post_processing = true;
         }
         
         switch ($string)
         {
             case 'score':
-                if ($this->_legacy)
-                {
-                    $sort = 'score';
-                    $post_processing = false;
-                }
-                else
-                {
-                    $sort = 'metadata.score';
-                }
+                $sort = 'metadata.score';
                 
                 break;
             
             default:
-                if ($this->_legacy)
-                {
-                    $sort = $string;
-                }
-                else
-                {
-                    $sort = strtolower("{$domain}{$string}");
-                }
+                $sort = strtolower("{$domain}{$string}");
         }
         
         $this->sort = $sort;
         
-        debug_add("Sorting will be done according to property '{$this->sort}'");
-        
-        if (isset($post_processing))
-        {
-            debug_add('Pre Midgard 1.8.2 post processing is required');
-            $this->_post_processing = $post_processing;
-        }
-        
-        debug_pop();
         return true;
     }
     
@@ -187,123 +136,46 @@ class org_routamc_gallery_organizer
     function get_sorted()
     {
         // Initialize the query builder
-        $qb = org_routamc_gallery_photolink_dba::new_query_builder();
-        $qb->add_constraint('node', '=', $this->node);
+        $mc = org_routamc_gallery_photolink_dba::new_collector('node', $this->node);
+        $mc->add_value_property('id');
+        $mc->add_value_property('node');
+        $mc->add_value_property('photo');
+        
+        $mc->add_constraint('censored', '=', 0);
+        $mc->add_order($this->sort);
         
         // Set the offset
         $offset = $this->limit * $this->page;
         
-        // Shorten the variable name
-        $sort = $this->sort;
+        // Set limit
+        if ($this->limit)
+        {
+            $mc->set_limit($this->limit);
+        }
+        
+        // Add offset
+        if ($this->page)
+        {
+            $mc->add_offset($offset);
+        }
+        
+        // Execute the collector
+        $mc->execute();
+        
+        $links = $mc->list_keys();
         
         // Initialize results set
         $results = array ();
         
-        // No post processing required, get the results straight
-        if (!$this->_post_processing)
+        foreach ($links as $guid => $array)
         {
-            $qb->add_order($this->sort);
-            
-            // Set limit
-            if ($this->limit)
-            {
-                $qb->set_limit($this->limit);
-            }
-            
-            // Add offset
-            if ($this->page)
-            {
-                $qb->add_offset($offset);
-            }
-            
-            // Get the results
-            $results = array();
-            
-            foreach ($qb->execute() as $link)
-            {
-                $photo[$link->id] = new org_routamc_photostream_photo_dba($link->photo);
-                
-                if (@$photo->censored)
-                {
-                    continue;
-                }
-                
-                $results[$link->id] =& $photo[$link->id];
-            }
-            
-            // Return reversed results
-            if ($this->reverse)
-            {
-                return array_reverse($results, true);
-            }
-            
-            return $results;
+            $results[$mc->get_subkey($guid, 'id')] = new org_routamc_photostream_photo_dba($mc->get_subkey($guid, 'photo'));
         }
-        else
+        
+        // Return reversed results
+        if ($this->reverse)
         {
-            $links = array ();
-            $photos = array ();
-            
-            foreach ($qb->execute() as $link)
-            {
-                $photo = new org_routamc_photostream_photo_dba($link->photo);
-                
-                if (@$photo->censored)
-                {
-                    continue;
-                }
-                
-                // QUICKFIX: the sort is specified in QB format, but of course it's not a valid property name
-                if (strpos($sort, '.') !== false)
-                {
-                    list ($prop1, $prop2) = explode('.', $sort, 2);
-                    $links[$link->id] = $photo->$prop1->$prop2;
-                }
-                else
-                {                
-                    $links[$link->id] = $photo->$sort;
-                }
-                $photos[$link->id] = $photo;
-            }
-            
-            // Sort the links
-            if ($this->reverse)
-            {
-                arsort($links);
-            }
-            else
-            {
-                asort($links);
-            }
-            
-            // Set limit
-            if ($this->limit)
-            {
-                $limit = $this->limit;
-            }
-            else
-            {
-                $limit = count($links);
-            }
-            
-            $i = 0;
-            
-            foreach ($links as $link_id => $value)
-            {
-                // Skip due to paging
-                if ($i < $offset)
-                {
-                    continue;
-                }
-                
-                // Break due to paging
-                if ($i > $offset + $limit)
-                {
-                    break;
-                }
-                
-                $results[$link_id] =& $photos[$link_id];
-            }
+            return array_reverse($results, true);
         }
         
         return $results;
