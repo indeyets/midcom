@@ -102,7 +102,8 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             return;
         }
 
-        if (!$GLOBALS['midcom_config']['toolbars_enable_centralized'])
+        if (   !$GLOBALS['midcom_config']['toolbars_enable_centralized']
+            || !$_MIDCOM->auth->can_user_do('midcom:centralized_toolbar', null, 'midcom_services_toolbars'))
         {
             return;
         }
