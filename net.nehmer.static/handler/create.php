@@ -149,7 +149,7 @@ class net_nehmer_static_handler_create extends midcom_baseclasses_components_han
     {
         $this->_article = new midcom_db_article();
         $this->_article->topic = $this->_content_topic->id;
-        
+
         if (   array_key_exists('name', $this->_defaults)
             && $this->_defaults['name'] == 'index')
         {
@@ -194,21 +194,43 @@ class net_nehmer_static_handler_create extends midcom_baseclasses_components_han
         switch ($this->_controller->process_form())
         {
             case 'save':
+
+                $tries = 0;
+                $maxtries = 999;
+
                 if (   $this->_config->get('simple_name_handling')
                     && $this->_article->name == '')
                 {
                     if ($_MIDCOM->serviceloader->can_load('midcom_core_service_urlgenerator'))
                     {
                         $urlgenerator = $_MIDCOM->serviceloader->load('midcom_core_service_urlgenerator');
-                        $this->_article->name = $urlgenerator->from_string($this->_article->title);
-                        $this->_article->update();
+                        $article_tmp_name = $urlgenerator->from_string($this->_article->title);
                     }
                     else
                     {
-                        $this->_article->name = $this->_article->title;
+                        $article_tmp_name = $this->_article->title;
                     }
+                    
                 }
-            
+                else
+                {
+                    $article_tmp_name = $this->_article->title;
+                }
+
+                $this->_article->name = $article_tmp_name;
+
+                while(   !$this->_article->update()
+                      && $tries < $maxtries)
+                {
+                    $this->_article->name = $article_tmp_name;
+                    if ($tries > 0)
+                    {
+                        // Append an integer if articles with same name exist
+                        $this->_article->name .= sprintf("-%03d", $tries);
+                    }
+                    $tries++;
+                }
+
                 // Index the article
                 $indexer =& $_MIDCOM->get_service('indexer');
                 net_nehmer_static_viewer::index($this->_controller->datamanager, $indexer, $this->_content_topic);
