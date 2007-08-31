@@ -11,7 +11,7 @@
              'type' => 'select',
 	     'type_config' => array
 	     (
-	         'options' => net_nemein_featured_admin::get_groups(),
+	         'options' => net_nemein_featured_viewer::get_groups(),
              ),
 	     'widget' => 'select',
         ),
