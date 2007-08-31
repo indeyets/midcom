@@ -2,6 +2,8 @@ CREATE TABLE net_nemein_featured_item (
   objectLocation varchar(255) NOT NULL default '',
   groupName varchar(255) NOT NULL default '',
   topicGuid varchar(255) NOT NULL default '',
+  defaultStyle varchar(255) NOT NULL default '',
+  itemOrder int(11) NOT NULL default '',
   #
   id int(11) NOT NULL auto_increment,
   sitegroup int(11) NOT NULL default '0',
@@ -11,4 +13,6 @@ CREATE TABLE net_nemein_featured_item (
   KEY net_nemein_featured_item_objectLocation_idx(`objectLocation` (30)),
   KEY net_nemein_featured_item_groupName_idx(`groupName` (30)),
   KEY net_nemein_featured_item_topicGuid_idx(`topicGuid` (30)),
+  KEY net_nemein_featured_item_defaultStyle_idx(`defaultDtyle` (30)),
+  KEY net_nemein_featured_item_itemOrder_idx(`itemOrder`)
 );
