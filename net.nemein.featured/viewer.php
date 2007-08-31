@@ -65,31 +65,117 @@ class net_nemein_featured_viewer extends midcom_baseclasses_components_request
     function _populate_node_toolbar()
     {
         if ($this->_content_topic->can_do('midgard:create'))
-	{
-	    if (array_key_exists('schemadb', $this->_request_data))
 	    {
-	        $this->_node_toolbar->add_item(
-		    Array(
+	        if (array_key_exists('schemadb', $this->_request_data))
+	        {
+	            $this->_node_toolbar->add_item(
+		        Array(
 		        MIDCOM_TOOLBAR_URL => "manage", 
-			MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n->get('manage'), 
+			    MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n->get('manage'), 
 			    $this->_l10n->get($this->_request_data['schemadb']['default']->description)),		
 		        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
 		        MIDCOM_TOOLBAR_ACCESSKEY => 'n',
-		    )
-		);
+		        )
+		        );
+	        }
 	    }
-	}
     }
 
     function _on_handle($handler_id, $args)
     {
-	$this->_content_topic = new midcom_db_topic($this->_topic->id);
+	    $this->_content_topic = new midcom_db_topic($this->_topic->id);
 
         $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
 	    
         $this->_populate_node_toolbar();
 
-	return true;
+	    return true;
+    }
+    
+   function get_groups()
+    {
+        $data =& $_MIDCOM->get_custom_context_data('request_data');
+        $config_groups = $data['config']->get('groups');
+
+	    $groups = array();
+
+	    foreach($config_groups as $name => $group)
+	    {
+            $groups[$name] = $group['title'];
+	    }
+
+        return  $groups;  //array('info' => 'Info', 'video' => 'Video');
+    }
+
+    function render_add_link($objectType, $path, $node = null)
+    {
+    	if (empty($path) || empty($objectType))
+	    {
+            return false;
+	    }
+
+        $midcom_i18n =& $_MIDCOM->get_service('i18n');
+	    $l10n =& $midcom_i18n->get_l10n('net.nemein.featured');
+        
+	    if (!$_MIDCOM->auth->user)
+        {
+	        return true;
+	    }
+
+        if (is_null($node))
+	    {
+	        $node = midcom_helper_find_node_by_component('net.nemein.featured');
+        }
+
+	    if (empty($node))
+	    {
+            return false;
+	    }
+
+	    $url = $node[MIDCOM_NAV_FULLURL];
+
+	    echo "<span class=\"net_nemein_featured\">" . "<a href=\"{$url}manage/?featured_path={$path}&type={$objectType}\" 
+	        class=\"net_nemein_featured_manage\">ADD</a></span>";
+    
+        return true;
+    }
+
+    function get_featured_items($topic_guid, $group_name = '')
+    {
+        $qb = net_nemein_featured_item_dba::new_query_builder();
+	    $qb->add_constraint('topicGuid', '=', $topic_guid);
+	    if ($group_name != '')
+	    {
+	        $qb->add_constraint('groupName', '=', $group_name);
+	    }
+	    $qb->add_order('metadata.score', 'ASC');
+
+        $featured_objects = $qb->execute();
+
+	    return $featured_objects; 
+    }
+
+    function show_featured_items($topic_guid, $group_name = '', $substyle = array())
+    {
+        $featured_items = net_nemein_featured_viewer::get_featured_items($topic_guid, $group_name);
+
+        foreach ($featured_items as $featured)
+	    {
+	        $target_object = new midcom_baseclasses_core_dbobject($featured->guid);
+
+	        //print_r($target_object);
+            /*
+            // TODO: 
+	        if (array_key_exists($target_object->type, $substyle)
+	        {
+                
+	        }
+	        else
+	        {
+                $featured->load_featured_item();
+	        }
+	        */
+        }
     }
 }
 
