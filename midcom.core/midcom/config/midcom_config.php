@@ -534,3 +534,4 @@ $GLOBALS['midcom_config'] = array_merge
     $GLOBALS['midcom_config_local']
 );
 
+?>
