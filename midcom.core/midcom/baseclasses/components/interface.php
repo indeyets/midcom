@@ -434,8 +434,8 @@ class midcom_baseclasses_components_interface
         $data = $this->read_array_from_file("{$this->_component_path}/config/{$this->_config_snippet_name}.inc");
         if (! $data)
         {
-            debug_add("Could not load the file {$this->_component_path}/config/{$this->_config_snippet_name}.inc, assuming empty default configuration",
-                MIDCOM_LOG_WARN);
+            //debug_add("Could not load the file {$this->_component_path}/config/{$this->_config_snippet_name}.inc, assuming empty default configuration",
+            //    MIDCOM_LOG_WARN);
             $data = Array();
         }
         $config = new midcom_helper_configuration($data);
