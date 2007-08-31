@@ -205,6 +205,14 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
             }
             $_MIDCOM->relocate('sent_invites');
 	    }
+	    
+	    $step_overrides = $this->_config->get('override_registration_steps');
+	    if (array_key_exists('invite', $step_overrides))
+	    {
+	        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+	        $this->_request_data['skip_url'] = "{$prefix}{$step_overrides['invite']}";
+	    }
+	    
         return true;
     }
 

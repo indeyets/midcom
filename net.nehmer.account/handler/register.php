@@ -114,6 +114,8 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
      * @access private
      */
     var $_processing_msg_raw = '';
+    
+    var $logged_in = false;
 
     /**
      * This is the request data preparation code used during the actual registration sequence.
@@ -126,6 +128,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         $this->_request_data['person'] =& $this->_person;
         $this->_request_data['processing_msg'] =& $this->_processing_msg;
         $this->_request_data['processing_msg_raw'] =& $this->_processing_msg_raw;
+        $this->_request_data['logged_in'] =& $this->logged_in;
     }
 
     /**
@@ -956,6 +959,16 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
             midcom_show_style('registration-account-activation-pending');
         }
     }
+    
+    function _handler_finish($handler_id, $args, &$data)
+    {
+        return true;
+    }
+    
+    function _show_finish($handler_id, &$data)
+    {
+        midcom_show_style('registration-finished');
+    }
 
     /**
      * This call will actually activate the account, gaining privileges using the
@@ -1015,8 +1028,13 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         }
 
         $_MIDCOM->auth->drop_sudo();
+        
+        if ($this->_config->get('auto_login_on_activation'))
+        {
+            $this->logged_in = $_MIDCOM->auth->_auth_backend->create_login_session($username, $password);
+        }
     }
-
+    
     /**
      * This call automatically publishes the account details if the component is configured
      * to do so. This encompasses all user-publishable schema fields regardless of their

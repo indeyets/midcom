@@ -103,19 +103,27 @@
 /**
  * How many invite email fields should be shown
  */
- 'email_fields' => 5,
+'email_fields' => 5,
 
 /**
  * Invite email subject
  */
- 'email_subject' => "invitation subject",
+'email_subject' => "invitation subject",
 
 /**
  * Keep sent invites for x days
  */
- 'keep_sent_invites' => 30,
+'keep_sent_invites' => 30,
 
 /**
  * The schema to use for invitation registration
  */
- 'invreg_schema' => 'account',
+'invreg_schema' => 'account',
+
+'auto_login_on_activation' => false,
+
+'override_registration_steps' => array
+(
+    'register/activate' => 'invite',
+    'invite' => 'register/finish',
+),

@@ -225,13 +225,16 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
 
-//        if ($this->_config->get('allow_register'))
-  //      {
             // REGISTRATION LINKS
             $this->_request_switch['register_select_type'] = Array
             (
                 'handler' => Array('net_nehmer_account_handler_register', 'select_type'),
                 'fixed_args' => Array('register'),
+            );
+            $this->_request_switch['register_finish'] = Array
+            (
+                'handler' => Array('net_nehmer_account_handler_register', 'finish'),
+                'fixed_args' => Array('register','finish'),
             );
             $this->_request_switch['register'] = Array
             (
@@ -251,7 +254,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
                 'fixed_args' => Array('register_invitation'),
                 'variable_args' => 1,
             );
-            
+
             // Pending registrations
             if ($this->_config->get('require_activation'))
             {
