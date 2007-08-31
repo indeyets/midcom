@@ -32,7 +32,10 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
     
     public function tokenize($url)
     {
-        $url = str_replace($_MIDGARD['self'], '', $url);
+        if (strlen($_MIDGARD['prefix']) > 1)
+        {
+            $url = str_replace($_MIDGARD['prefix'], '', $url);
+        }
         if (   $url == ''
             || $url == '/')
         {
@@ -51,7 +54,6 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
 
             $argv = explode ("/", $url);
         }
-
         return $argv;
     }
     
