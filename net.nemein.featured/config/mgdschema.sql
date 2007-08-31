@@ -8,7 +8,7 @@ CREATE TABLE net_nemein_featured_item (
   guid varchar(80) NOT NULL default '',
   PRIMARY KEY (id),
   #
-  KEY net_nemein_featured_item_objectLocation_idx('objectLocation' (30)),
-  KEY net_nemein_featured_item_groupName_idx('groupName' (30)),
-  KEY net_nemein_featured_item_topicGuid_idx('topicGuid' (30)),
+  KEY net_nemein_featured_item_objectLocation_idx(`objectLocation` (30)),
+  KEY net_nemein_featured_item_groupName_idx(`groupName` (30)),
+  KEY net_nemein_featured_item_topicGuid_idx(`topicGuid` (30)),
 );
