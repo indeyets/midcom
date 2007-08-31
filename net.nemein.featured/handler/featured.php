@@ -141,6 +141,8 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
 	    midcom_show_style('admin_group_end');
 	}
 
+        //$this->request_data['featured_groups'] = $this->config->get('groups');
+
         midcom_show_style('admin_create');
     }
 

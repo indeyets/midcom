@@ -5,5 +5,7 @@
          <property name="objectLocation" type="text"/>
          <property name="topicGuid" type="text"/>
          <property name="groupName" type="text"/>
+	 <property name="defaultStyle" type="text"/>
+	 <property name="itemOrder" type="integer"/>
     </type>
 </Schema>

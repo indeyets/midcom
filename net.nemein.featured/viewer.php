@@ -16,6 +16,13 @@ class net_nemein_featured_viewer extends midcom_baseclasses_components_request
 
     function _on_initialize()
     {
+        $this->_request_switch['create'] = Array
+	(
+	    'handler' => Array('net_nemein_featured_handler_featured', 'manage'),
+            'fixed_args' => Array('create'),
+	    'variable_args' => 2,
+	);
+
 	$this->_request_data['content_topic'] =& $this->_content_topic;
 
         // Request switches
@@ -64,7 +71,7 @@ class net_nemein_featured_viewer extends midcom_baseclasses_components_request
 	        $this->_node_toolbar->add_item(
 		    Array(
 		        MIDCOM_TOOLBAR_URL => "manage", 
-			MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_midcom->get('manage %s'), 
+			MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n->get('manage'), 
 			    $this->_l10n->get($this->_request_data['schemadb']['default']->description)),		
 		        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
 		        MIDCOM_TOOLBAR_ACCESSKEY => 'n',

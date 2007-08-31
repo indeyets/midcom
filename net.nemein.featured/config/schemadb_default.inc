@@ -15,21 +15,19 @@
              ),
 	     'widget' => 'select',
         ),
-	/*
-        'topic_guid' => Array
-        (
-	      // COMPONENT-REQUIRED
-	     'title' => 'topic guid',
-             'storage' => 'topicGuid',
-             'type' => 'text',
-	     'hidden' => true
-        ),
-	*/
         'object_location' => Array
         (
 	      // COMPONENT-REQUIRED
 	     'title' => 'object location',
              'storage' => 'objectLocation',
+             'type' => 'text',
+	     'widget' => 'text',
+        ),
+        'defaultStyle' => Array
+        (
+	      // COMPONENT-REQUIRED
+	     'title' => 'default style',
+             'storage' => 'defaultStyle',
              'type' => 'text',
 	     'widget' => 'text',
         ),
