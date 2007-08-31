@@ -10,5 +10,5 @@ CREATE TABLE net_nemein_bannedwords_word (
   #
   KEY net_nemein_bannedwords_word_idx (`bannedWord`(30)),
   KEY net_nemein_description_word_idx (`description`(30)),
-  KEY net_nemein_language_word_idx (`language`(30)),
+  KEY net_nemein_language_word_idx (`language`(30))
 );
