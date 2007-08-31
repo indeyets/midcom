@@ -699,15 +699,11 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
             || $exitcode == 'next')
         {
             // Validate the from.
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_print_r('this->form', $this->form);
-            debug_print_r("\$GLOBALS['_HTML_QuickForm_registered_rules']", $GLOBALS['_HTML_QuickForm_registered_rules']);
-            debug_pop();
             if (! $this->form->validate())
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add('Failed to validate the form, reverting to edit mode.');
-                debug_print_r('Results were:', $results);
+                //debug_print_r('Results were:', $results);
                 debug_pop();
                 $exitcode = 'edit';
             }
