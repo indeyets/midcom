@@ -102,7 +102,7 @@ class net_nemein_favourites_viewer extends midcom_baseclasses_components_request
 
     function render_add_link($objectType, $guid, $url = '', $link_for_anonymous = true)
     {
-        echo net_nemein_favourites_admin::get_add_link($objectType, $guid, $url, $link_for_anonymous);
+        echo net_nemein_favourites_viewer::get_add_link($objectType, $guid, $url, $link_for_anonymous);
     }
 }
 
