@@ -198,7 +198,8 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
     function _load_attachment($identifier, $guid)
     {
         $attachment = new midcom_baseclasses_database_attachment($guid);
-        if (! $attachment)
+        if (   ! $attachment
+            || !$attachment->guid)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Failed to load the attachment {$guid} from disk, aborting.", MIDCOM_LOG_INFO);
