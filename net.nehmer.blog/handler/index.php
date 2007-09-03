@@ -85,14 +85,14 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
             || $handler_id == 'latest-category')
         {
             $data['category'] = $args[0];
-            if (!in_array($data['category'], $this->_request_data['categories']))
+            if (!in_array($data['category'], $data['categories']))
             {
                 // This is not a predefined category from configuration, check if site maintainer allows us to show it
                 if (!$this->_config->get('categories_custom_enable'))
                 {
                     return false;
                 }
-                // TODO: Check here if there are actually items in this cat
+                // TODO: Check here if there are actually items in this cat?
             }
 
             // TODO: check schema storage to get fieldname
@@ -117,6 +117,13 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
 
             // Add category to title
             $this->_request_data['page_title'] = sprintf($this->_request_data['l10n']->get('%s category %s'), $this->_topic->extra, $data['category']);
+            
+            // Activate correct leaf
+            if (   $this->_config->get('show_navigation_pseudo_leaves')
+                && in_array($data['category'], $data['categories']))
+            {
+                $this->_component_data['active_leaf'] = "{$this->_topic->id}_CAT_{$data['category']}";
+            }
         }
 
         $qb->add_order('metadata.published', 'DESC');

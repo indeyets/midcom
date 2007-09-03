@@ -80,6 +80,28 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
                 MIDCOM_META_EDITED => $this->_content_topic->metadata->revised,
             );
         }
+
+        if (   $this->_config->get('show_navigation_pseudo_leaves')
+            && $this->_config->get('categories') != '')
+        {
+            $categories = explode(',', $this->_config->get('categories'));
+            foreach ($categories as $category)
+            {
+                $leaves["{$this->_topic->id}_CAT_{$category}"] = array
+                (
+                    MIDCOM_NAV_SITE => Array
+                    (
+                        MIDCOM_NAV_URL => "category/{$category}",
+                        MIDCOM_NAV_NAME => $category,
+                    ),
+                    MIDCOM_NAV_ADMIN => null,
+                    MIDCOM_META_CREATOR => $this->_content_topic->metadata->creator,
+                    MIDCOM_META_EDITOR => $this->_content_topic->metadata->revisor,
+                    MIDCOM_META_CREATED => $this->_content_topic->metadata->created,
+                    MIDCOM_META_EDITED => $this->_content_topic->metadata->revised,
+                );
+            }
+        }
         
         // Return the request here if latest items aren't requested to be shown in navigation
         if (!$this->_config->get('show_latest_in_navigation'))
