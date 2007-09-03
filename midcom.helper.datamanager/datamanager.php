@@ -520,7 +520,6 @@ class midcom_helper_datamanager {
      */
     function midcom_helper_datamanager ($layoutdb = null)
     {
-        global $midcom;
         global $midcom_errstr;
 
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -535,10 +534,10 @@ class midcom_helper_datamanager {
             return false;
         }
 
-        $midgard = $midcom->get_midgard();
+        //$midgard = $GLOBALS['midgard'];
 
         $this->form_prefix = "midcom_helper_datamanager_";
-        $this->url_prefix = $midcom->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        $this->url_prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         $this->url_me = $_SERVER['REQUEST_URI'];
 
         $this->_storage = null;
