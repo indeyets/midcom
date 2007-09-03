@@ -139,7 +139,7 @@ class midcom_admin_folder_handler_edit extends midcom_baseclasses_components_han
             debug_print_r('We operated on this object:', $this->_new_topic);
             debug_pop();
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                'Failed to create a new article, cannot continue. Last Midgard error was: '. mgd_errstr());
+                'Failed to create a new topic, cannot continue. Last Midgard error was: '. mgd_errstr());
             // This will exit.
         }
 
