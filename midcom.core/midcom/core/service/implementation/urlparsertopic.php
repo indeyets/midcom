@@ -39,7 +39,7 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
         if (   $url == ''
             || $url == '/')
         {
-            $argv = array();
+            return array();
         }
         else
         {
@@ -52,8 +52,20 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
                 $url = substr($url,0,-1);
             }
 
-            $argv = explode ("/", $url);
+            $argv_tmp = explode ("/", $url);
         }
+        
+        $argv = array();
+        foreach ($argv_tmp as $arg)
+        {
+            if (empty($arg))
+            {
+                continue;
+            }
+            
+            $argv[] = $arg;
+        }
+        
         return $argv;
     }
     
