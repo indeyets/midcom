@@ -223,24 +223,36 @@ class midcom_admin_folder_handler_edit extends midcom_baseclasses_components_han
                 // This will exit
         }
         
+        if ($handler_id == '____ais-folder-create')
+        {
+            $data['title'] = sprintf($_MIDCOM->i18n->get_string('create folder', 'midcom.admin.folder'));
+            
+            // Hide the button in toolbar
+            $this->_node_toolbar->hide_item('__ais/folder/create.html');
+        }
+        else
+        {
+            $data['title'] = sprintf($_MIDCOM->i18n->get_string('edit folder %s', 'midcom.admin.folder'), $data['topic']->extra);
+
+            // Hide the button in toolbar
+            $this->_node_toolbar->hide_item('__ais/folder/edit.html');
+        }
+        
         // Add the view to breadcrumb trail
         $tmp = array();
         $tmp[] = array
         (
             MIDCOM_NAV_URL => '__ais/folder/edit.html',
-            MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('edit folder', 'midcom.admin.folder'),
+            MIDCOM_NAV_NAME => $data['title']
         );
         
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         
-        // Hide the button in toolbar
-        $this->_node_toolbar->hide_item('__ais/folder/edit.html');
 
         $data['topic'] =& $this->_topic;
         $data['controller'] =& $this->_controller;
         
         // Set page title
-        $data['title'] = sprintf($_MIDCOM->i18n->get_string('edit folder %s', 'midcom.admin.folder'), $data['topic']->extra);
         $_MIDCOM->set_pagetitle($data['title']);
 
         // Set the help object in the toolbar
