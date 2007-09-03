@@ -155,10 +155,18 @@ class midcom_admin_folder_handler_edit extends midcom_baseclasses_components_han
      */
     function _handler_edit($handler_id, $args, &$data)
     {
-        $this->_topic->require_do('midgard:update');
         $this->_topic->require_do('midcom.admin.folder:topic_management');
         
         $this->_handler_id = str_replace('____ais-folder-', '', $handler_id);
+        
+        if ($this->_handler_id == 'create')
+        {
+            $this->_topic->require_do('midgard:create');
+        }
+        else
+        {
+            $this->_topic->require_do('midgard:update');
+        }
         
         // Load the DM2 controller
         $this->_load_controller();
@@ -212,7 +220,6 @@ class midcom_admin_folder_handler_edit extends midcom_baseclasses_components_han
                     if (!$this->_new_topic->name)
                     {
                         $this->_new_topic->name = midcom_generate_urlname_from_string($this->_new_topic->extra);
-                        $this->_new_topic->update();
                     }
                     
                     // Get the relocation url
@@ -223,12 +230,14 @@ class midcom_admin_folder_handler_edit extends midcom_baseclasses_components_han
                 // This will exit
         }
         
-        if ($handler_id == '____ais-folder-create')
+        if ($this->_handler_id == 'create')
         {
             $data['title'] = sprintf($_MIDCOM->i18n->get_string('create folder', 'midcom.admin.folder'));
             
             // Hide the button in toolbar
             $this->_node_toolbar->hide_item('__ais/folder/create.html');
+            
+            $this->_topic->require_do('midgard:create');
         }
         else
         {
