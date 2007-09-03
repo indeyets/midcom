@@ -5,8 +5,11 @@
  */
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
 ?>
-<h1>Registered</h1>
+<h1><?php echo $data['l10n']->get('registered'); ?></h1>
 
-Create a team / join a team
+<a class="net_nemein_teams_create" href="create">
+  <?php echo $data['l10n']->get('create a team'); ?>
+</a> 
+
 
 

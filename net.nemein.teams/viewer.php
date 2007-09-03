@@ -54,52 +54,182 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         $this->_request_switch['application'] = array
         (
             'handler' => Array('net_nemein_teams_handler_team', 'application'),
-	    'fixed_args' => Array('application'),
+	        'fixed_args' => Array('application'),
+	        'variable_args' => 1,
         );
 
         // Shares /
         $this->_request_switch['shares'] = array
         (
             'handler' => Array('net_nemein_teams_handler_team', 'shares'),
-	    'fixed_args' => Array('shares'),
+	        'fixed_args' => Array('shares'),
         );
 
         // Log /
         $this->_request_switch['log'] = array
         (
             'handler' => Array('net_nemein_teams_handler_admin', 'log'),
-	    'fixed_args' => Array('log'),
+	        'fixed_args' => Array('log'),
         );
 
         // Handle / Team list
         $this->_request_switch['teams_list'] = array
         (
             'handler' => Array('net_nemein_teams_handler_team', 'teams_list'),
-	    'fixed_args' => Array('list'),
+	        'fixed_args' => Array('list'),
         );
-/*
-        // Log /
-        $this->_request_switch['log'] = array
+
+        // Approve /
+        $this->_request_switch['approve'] = array
         (
-            'handler' => Array('net_nemein_teams_handler_admin', 'log'),
-	    'fixed_args' => Array('log'),
+            'handler' => Array('net_nemein_teams_handler_team', 'approve'),
+	        'fixed_args' => Array('approve'),
         );
-*/
+
         // Create /
         $this->_request_switch['create'] = array
         (
             'handler' => Array('net_nemein_teams_handler_team', 'create'),
-	    'fixed_args' => Array('create'),
+	        'fixed_args' => Array('create'),
         );
-
+/*
         // Create / home
         $this->_request_switch['create_team_home'] = array
         (
             'handler' => Array('net_nemein_teams_handler_team', 'create_team_home'),
-	    'fixed_args' => Array('create', 'home'),
-	    'variable_args' => 1,
+	        'fixed_args' => Array('create', 'home'),
+	        'variable_args' => 1,
         );
+*/
+    }
 
+    /**
+     * Loads the plugin identified by $name. Only the on-site listing is loaded.
+     * If the plugin has no on-site interface, no changes are made to the request switch.
+     *
+     * Each request handler of the plugin is automatically adjusted as follows:
+     *
+     * - 1st, the registered names of the registered handlers (array keys) are prefixed by
+     *   "plugin-{$name}-".
+     * - 2nd, all registered handlers are automatically prefixed by the fixed arguments
+     *   ("plugin", $name).
+     *
+     * @param string $name The plugin name as registered in the plugins configuration
+     *     option.
+     * @access private
+     */
+    function _load_nna_plugin($name)
+    {
+        // Validate the plugin name and load the associated configuration
+        $plugins = $this->_config->get('plugins');
+        if (   ! $plugins
+            || ! array_key_exists($name, $plugins))
+        {
+            return false;
+        }
+        $plugin_config = $plugins[$name];
+
+        // Load the plugin class, errors are logged by the callee
+        if (! $this->_load_nna_plugin_class($name, $plugin_config))
+        {
+            return false;
+        }
+
+        // Load the configuration into the request data, add the configured plugin name as
+        // well so that URLs can be built.
+        if (array_key_exists('config', $plugin_config))
+        {
+            $this->_request_data['plugin_config'] = $plugin_config['config'];
+        }
+        else
+        {
+            $this->_request_data['plugin_config'] = null;
+        }
+        $this->_request_data['plugin_name'] = $name;
+
+        // Load remaining configuration, and prepare the plugin, errors are logged by the callee.
+        $handlers = call_user_func(array($plugin_config['class'], 'get_plugin_handlers'));
+        if (! $this->_prepare_nna_plugin($name, $plugin_config, $handlers))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Prepares the actual plugin by adding all neccessary information to the request
+     * switch.
+     *
+     * @param string $name The plugin name as registered in the plugins configuration
+     *     option.
+     * @param Array $plugin_config The configuration associated with the plugin.
+     * @param Array $handlers The plugin specific handlers without the appropriate prefixes.
+     * @access private
+     * @return bool Indicating Success
+     */
+    function _prepare_nna_plugin ($name, $plugin_config, $handlers)
+    {
+        foreach ($handlers as $identifier => $handler_config)
+        {
+            // First, update the fixed args list (be tolarent here)
+            if (! array_key_exists('fixed_args', $handler_config))
+            {
+                $handler_config['fixed_args'] = Array('plugin', $name);
+            }
+            else if (! is_array($handler_config['fixed_args']))
+            {
+                $handler_config['fixed_args'] = Array('plugin', $name, $handler_config['fixed_args']);
+            }
+            else
+            {
+                $handler_config['fixed_args'] = array_merge
+                (
+                    Array('plugin', $name),
+                    $handler_config['fixed_args']
+                );
+            }
+
+            $this->_request_switch["plugin-{$name}-{$identifier}"] = $handler_config;
+        }
+
+        return true;
+    }
+
+    /**
+     * Loads the file/snippet neccessary for a given plugin, according to its configuration.
+     *
+     * @param string $name The plugin name as registered in the plugins configuration
+     *     option.
+     * @param Array $plugin_config The configuration associated with the plugin.
+     * @access private
+     * @return bool Indicating Success
+     */
+    function _load_nna_plugin_class($name, $plugin_config)
+    {
+        // Sanity check, we return directly if the configured class name is already
+        // available (dynamic_load could trigger this).
+        if (class_exists($plugin_config['class']))
+        {
+            return true;
+        }
+
+        if (substr($plugin_config['src'], 0, 5) == 'file:')
+        {
+            // Load from file
+            require(MIDCOM_ROOT . substr($plugin_config['src'], 5));
+        }
+        else
+        {
+            // Load from snippet
+            mgd_include_snippet_php($plugin_config['src']);
+        }
+
+        if (! class_exists($plugin_config['class']))
+        {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -191,6 +321,28 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
 
         $this->_populate_node_toolbar();
 	
+
+        return true;
+    }
+    
+    /**
+     * This event hook will load any on-site plugin that has been recognized in the configuration.
+     * Regardless of success, we always return true; the plugin simply won't start up if, for example,
+     * the name is unknown.
+     *
+     * @access protected
+     */
+    function _on_can_handle($argc, $argv)
+    {
+        if (   $argc >= 2
+            && $argv[0] == 'plugin')
+        {
+            /**
+             * We do not need to check result of this operation, it populates request switch
+             * if successfull and does nothing if not, this means normal request handling is enough
+             */
+            $this->_load_nna_plugin($argv[1]);
+        }
 
         return true;
     }

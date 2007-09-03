@@ -48,12 +48,12 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         $_MIDCOM->set_pagetitle(":: {$title}");
 
         $qb = net_nemein_teams_log_dba::new_query_builder();
-	$qb->add_constraint('teamguid', '=', 'koe');
-        $qb->add_order('metadata.created', 'ASC');
+	    //$qb->add_constraint('teamguid', '=', 'koe');
+        $qb->add_order('metadata.created', 'DESC');
 
-	$logs = $qb->execute();
+	    $logs = $qb->execute();
 
-	$this->_request_data['logs'] = $logs;
+	    $this->_request_data['logs'] = $logs;
  
 
 	return true;

@@ -29,15 +29,17 @@ class net_nemein_teams_interface extends midcom_baseclasses_components_interface
             'viewer.php', 
             //'admin.php', 
             'navigation.php',
-	    'log.php',
-	    'logger.php',
-	    'team.php'
+	        'log.php',
+	        'logger.php',
+	        'team.php',
         );
         
         // Load all libraries used by component here
         $this->_autoload_libraries = array
         (
-            'midcom.helper.datamanager2'
+            'midcom.helper.datamanager2',
+            'org.openpsa.qbpager',
+            //'net.nehmer.mail',
         );
     }
 }

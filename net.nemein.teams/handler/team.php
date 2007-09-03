@@ -23,10 +23,16 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     var $_schemadb = null;
 
     var $_controller = null;
+    
+    var $_datamanager = null;
 
     var $_content_topic = null;
 
     var $_team_group = null;
+    
+    var $_team_member = null;
+    
+    var $_teams_list = Array();
 
     /**
      * Simple default constructor.
@@ -45,43 +51,46 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	
 	if ($this->_config->get('teams_root_guid') != '')
         {
-	    $root_group_guid = $this->_config->get('teams_root_guid');
-	    $this->_root_group = new midcom_db_group($root_group_guid);
-	}
+	        $root_group_guid = $this->_config->get('teams_root_guid');
+	        $this->_root_group = new midcom_db_group($root_group_guid);
+	    }
 
-	$this->_content_topic =& $this->_request_data['content_topic'];
+	   $this->_content_topic =& $this->_request_data['content_topic'];
     }
    
     function _is_player()
     {
+        $members = 0;
+    
         $qb = midcom_db_group::new_query_builder();
-	$qb->add_constraint('owner', '=', $this->_root_group->id);
+	    $qb->add_constraint('owner', '=', $this->_root_group->id);
 
-	$teams = $qb->execute();
+	    $teams = $qb->execute();
 
-	if (count($teams) > 0)
-	{
-	    // Checing if user is a member of a team
-	    foreach($teams as $team)
+	    if (count($teams) > 0)
 	    {
-	        $qb = midcom_db_member::new_query_builder();
-		$qb->add_constraint('gid.id', '=', $team->id);
-		$qb->add_constraint('uid.id', '=', $_MIDCOM->auth->user->_storage->id);
+	        // Checing if user is a member of a team
+	        foreach($teams as $team)
+	        {
+	            $qb = midcom_db_member::new_query_builder();
+		        $qb->add_constraint('gid.id', '=', $team->id);
+		        $qb->add_constraint('uid.id', '=', $_MIDCOM->auth->user->_storage->id);
 	        
-		$members = $qb->execute();
+		        $members = $qb->execute();
 
-		if (count($members) > 0)
-		{
-                    return true;
-		}
-		else
-		{
-		    return false;
-		}
+		        if (count($members) > 0)
+		        {
+                    $members++;
+		        }
+	        }
 	    }
-	}
-
-	return false;
+	    
+	    if ($members > 0)
+	    {
+	        return false;
+	    }
+	    
+	    return false;
     }
 
     /**
@@ -96,76 +105,126 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     function _load_controller()
     {
         $this->_load_schemadb();
-	$this->_controller =& midcom_helper_datamanager2_controller::create('create');
-	$this->_controller->schemadb =& $this->_schemadb;
-	$this->_controller->schemaname = 'team';
-	//$this->_controller->defaults = $this->_defaults;
-	$this->_controller->callback_object =& $this;
-	if (! $this->_controller->initialize())
-	{
-	    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");
-	    // This will exit.
-	}
+	    $this->_controller =& midcom_helper_datamanager2_controller::create('create');
+	    $this->_controller->schemadb =& $this->_schemadb;
+	    $this->_controller->schemaname = 'team';
+	    //$this->_controller->defaults = $this->_defaults;
+	    $this->_controller->callback_object =& $this;
+	    if (! $this->_controller->initialize())
+	    {   
+	        $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");
+	        // This will exit.
+	    }
+    }
+    
+    /**
+     * Internal helper, loads the datamanager for a team group. Any error triggers a 500.
+     *
+     * @access private
+     */
+    function _load_datamanager($team_group)
+    {
+        $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
+
+        if (   ! $this->_datamanager
+            || ! $this->_datamanager->autoset_storage($team_group))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 
+            "Failed to create a DM2 instance for team {$team_group->id}.");
+            // This will exit.
+        }
     }
 
     function & dm2_create_callback (&$controller)
     {
         $this->_team_group = new midcom_db_group();
+        $this->_team_group->owner = $this->_root_group->id;
 
         if (!$this->_team_group->create())
         {
             // TODO: handle error
 
-	}
+	    }
+	    else
+	    {
+	        $this->_team_member = new midcom_db_member();
+	        $this->_team_member->gid = $this->_team_group->id;
+	        $this->_team_member->uid = $_MIDCOM->auth->user->_storage->id;
+	        
+	        if (!$this->_team_member->create())
+	        {
+	            // TODO: handle error
+	        }
+	        else
+	        {
+	            $this->_logger->log("Team group created by " . $_MIDCOM->auth->user->_storage->username, 
+	                $this->_team_group->guid);
+	        }
+        }
 
-	return $this->_team_group;
+	    return $this->_team_group;
     }
 
     function _prepare_request_data()
     {
         $this->_request_data['controller'] =& $this->_controller;
+        $this->_request_data['datamanager'] =& $this->_datamanager;
     }
 
     function _handler_create ($handler_id, $args, &$data)
     {
-        $title = $this->_l10n_midcom->get('application');
+        $title = $this->_l10n_midcom->get('create team');
         $_MIDCOM->set_pagetitle(":: {$title}");
+        
+        $this->_load_controller();
 
         if ($this->_is_player())
-	{
-            // TODO: redirect somewhere
-	}
-	else
-	{
-            $this->_content_topic->require_do('midgard:create');
-
-	    $this->_load_controller();
-
-            switch ($this->_controller->process_form())
 	    {
+            // TODO: redirect somewhere
+            $_MIDCOM->relocate('');
+            
+	    }
+	    else
+	    {
+            $this->_content_topic->require_do('midgard:create');
+  
+            switch ($this->_controller->process_form())
+	        {
 	        case 'save':
                     
-		    $team = new net_nemein_teams_team_dba();
-                    $team->group_guid = $this->_team_group->guid;
-		    $team->manager_guid = $_MIDCOM->auth->user->guid;
-
-		    if (!$team->crate())
-		    {
+		        $team = new net_nemein_teams_team_dba();
+                $team->groupguid = $this->_team_group->guid;
+		        $team->managerguid = $_MIDCOM->auth->user->guid;
+		        
+		        if (!$team->create())
+		        {
                         // TODO: Handle error
-		    }
-		    else
-		    {
-                        if ($this->_config->get('create_team_home'))
-			{
-                            $_MIDCOM->relocate("/create/home/{$this->_team_group->guid}");
-			}
-			else
-			{
+		        }
+		        else
+		        {
+		            $this->_logger->log("Team object created by " . $_MIDCOM->auth->user->_storage->username, 
+	                    $this->_team_group->guid);
+		        
+                    if ($this->_config->get('create_team_home'))
+			        {
+			            $plugin_name = $this->_config->get('create_team_home_plugin');
+			        
+			            if (!empty($plugin_name))
+			            {
+                            $_MIDCOM->relocate("plugin/{$plugin_name}");
+                        }
+                        else
+                        {
                             $_MIDCOM->relocate('');
-			}
-                    }
+                        }
+			        }
+			        else
+			        {
+                        $_MIDCOM->relocate('');
+			        }
+                }
 
-                case 'cancel':
+            case 'cancel':
 
 	             $_MIDCOM->relocate('');
 	             // This will exit.
@@ -181,16 +240,41 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     {
         $title = $this->_l10n_midcom->get('application');
         $_MIDCOM->set_pagetitle(":: {$title}");
-
+                
+        $qb = net_nemein_teams_team_dba::new_query_builder();
+        $qb->add_constraint('managerguid', '=', $args[0]);
+        
+        if (!$teams = $qb->execute())
+        {
+        
+        }
+        
+        if (count($teams) > 1)
+        {
+            // TODO: this shouldn't happen...handle error
+        }
+        
+        $team_group = new midcom_db_group($teams[0]->groupguid);
+        
+        if (!is_object($team_group))
+        {
+            // TODO: cant find group...handle this 
+        }
+        else
+        {
+            $this->_request_data['team_name'] = $team_group->name;
+            $this->_request_data['team_manager'] = $teams[0]->managerguid;
+        }
+        
         // TODO: Private message to team manager
-
-        if ($_POST['submit_application'])
-	{
+        if (isset($_POST['submit_application']))
+	    {
+	        
 
             $_MIDCOM->relocate('');
-	}
+	    }
 
-	return true;
+	    return true;
     }
 
     function _handler_index ($handler_id, $args, &$data)
@@ -199,7 +283,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         $_MIDCOM->set_pagetitle(":: {$title}");
 
 
-	return true;
+	   return true;
     }
     
     function _handler_create_team_home ($handler_id, $args, &$data)
@@ -207,30 +291,59 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         $title = $this->_l10n_midcom->get('create team home');
         $_MIDCOM->set_pagetitle(":: {$title}");
 
-	// TODO: sitewizard magic
+	    // TODO: sitewizard magic
     
         return true;
     }
 
+    /**
+     * Populates a lis of all registered teams
+     */
     function _handler_teams_list($handler_id, $args, &$data)
-    {
+    {        
+        $qb = new org_openpsa_qbpager('net_nemein_teams_team_dba', 'net_nemein_teams_team');
+        $qb->results_per_page = $this->_config->get('display_teams_per_page');
+        $qb->display_pages = $this->_config->get('display_pages');
 
-        $this->_request_data['teams_list'] = Array();
+        $data['team_qb'] =& $qb;
+        $this->_teams_list = $qb->execute();
+        
+        $this->_prepare_request_data();
 
         return true;
     }
+    
+    function _handler_approve($handler_id, $args, &$data)
+    {
+        
+    
+        return true;
+    }
+
+    function _show_approve($handler_id, &$data)
+    {
+    
+    }
 
     function _show_teams_list($handler_id, &$data)
-    {
+    {       
+        $member_count = 0;
+        
         midcom_show_style('teams_list_start');
-
-	foreach ($this->_request_data['teams_list'] as $team)
-	{
-	    $this->_request_data['team'] = $team;
+        
+        foreach($this->_teams_list as $team)
+        {
+            $member_count = $team->count_members();
+            $team_group = new midcom_db_group($team->groupguid);
+ 
+	        $this->_load_datamanager($team_group);
+	        $this->_request_data['view_team'] = $this->_request_data['datamanager']->get_content_html();
+	        $this->_request_data['view_team']['team_member_count'] = $member_count;
+	        
             midcom_show_style('teams_list_item');
-	}
+	    }
 
-	midcom_show_style('teams_list_end');
+	    midcom_show_style('teams_list_end');
     }
     
     function _show_create_team_home($handler_id, &$data)
@@ -240,6 +353,8 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     
     function _show_create($handler_id, &$data)
     {
+        $this->_request_data['controller'] = $this->_controller;
+        
         midcom_show_style('team_creation_form');
     }
 
@@ -251,20 +366,20 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     function _show_index($handler_id, &$data)
     {
         if ($_MIDCOM->auth->user)
-	{
-            if ($this->_is_player())
 	    {
+            if ($this->_is_player())
+	        {
                 midcom_show_style('player_index');
-	    }
+	        }
+	        else
+	        {
+                midcom_show_style('registered_index');
+	        }
+        }
 	    else
 	    {
-                midcom_show_style('registered_index');
-	    }
-        }
-	else
-	{
              midcom_show_style('index');
-	}
+	    }
     }
     
     
