@@ -1,0 +1,16 @@
+<?php
+/**
+ * This is the styleelement I use to show the index
+ * Use this to get variables etc from the handler:
+ */
+//$data =& $_MIDCOM->get_custom_context_data('request_data');
+?>
+<h1><?php echo $data['l10n']->get('Application'); ?></h1>
+<p>
+<form method="post" name="team_application" lass="net_nmein_team_application">
+    Message:<br/> 
+    <textarea name="private_application"></textarea>
+    <br/>
+    <input type="submit" name="submit_application" value="Submit application"/>
+</form>    
+</p>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    
+    <type name="net_nemein_teams_log" table="net_nemein_teams_log">
+        <property name="id" type="integer" primaryfield="id" />
+        <property name="teamguid" type="string" />
+        <property name="message" type="string" />
+    </type>
+
+    <type name="net_nemein_teams_team" table="net_nemein_teams_team">
+        <property name="id" type="integer" primaryfield="id" />
+        <property name="groupguid" type="string" />
+        <property name="topicguid" type="string" />
+        <property name="managerguid" type="string" />
+    </type>
+
+</Schema>
