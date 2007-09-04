@@ -1,7 +1,7 @@
 
   'name' => 'net.nemein.rss',
   'purecode' => true,
-  'version' => '2.0.4beta1',
+  'version' => '2.1.0beta1',
   'state' => 'beta',
   'privileges' => 
   array (

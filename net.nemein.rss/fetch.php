@@ -31,14 +31,22 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
     var $_guid_property = 'extra2';
     
     /**
+     * Current node we're importing to
+     * @var midcom_db_topic
+     */
+    var $_node = null;
+    
+    /**
      * Initializes the class with a given feed
      */
     function net_nemein_rss_fetch($feed)
     {
         $this->_feed = $feed;
     
-         $this->_component = 'net.nemein.rss';
-         parent::midcom_baseclasses_components_purecode();
+        $this->_node = new midcom_db_topic($this->_feed->node);
+
+        $this->_component = 'net.nemein.rss';
+        parent::midcom_baseclasses_components_purecode();
     }
     
     /**
@@ -148,6 +156,19 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
      * @param Array $item Feed item as provided by MagpieRSS
      */
     function import_item($item)
+    {
+        switch ($this->_node->component)
+        {
+            case 'net.nehmer.blog':
+                return $this->import_article($item);
+                break;
+        }
+    }
+    
+    /**
+     * Imports an item as a news article
+     */
+    private function import_article($item)
     {
         $guid_property = $this->_guid_property;
         $qb = midcom_db_article::new_query_builder();
@@ -578,103 +599,6 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         
         return true;
     }
-
-    /**
-     * Parses date formats used by different feed standards and
-     * returns a timestamp.
-     *
-     * @param Array $item Feed item as provided by MagpieRSS
-     * @return int Timestamp
-    function parse_item_date($item)
-    {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        
-        $date = null;
-        
-        if (is_array($item))
-        {
-            // RSS 0.9 and 2.0 pubDate attribute
-            if (array_key_exists('pubdate', $item))
-            {
-                $date = strtotime($item['pubdate']);
-                
-                if ($date == -1)
-                {
-                    // Try handling some broken feeds that provide "Tue, 08 May 2007 13:00:00 EEST" (fix for YLE feeds with PHP4)
-                    // TODO: We can remove this after 2.8 as PHP5 parses this correctly anyway
-                    $regex = '/^.*?\s([0-9]{1,2})\s+(.+?)\s([0-9]{2,4})\s+?([0-9:]+)\s.+$/';
-                    if (preg_match_all($regex, $item['pubdate'], $matches_to))
-                    {
-                        foreach ($matches_to[1] as $day_item)
-                        {
-                            $day = $day_item;
-                        }
-                        foreach ($matches_to[2] as $month_item)
-                        {
-                            $month = $month_item;
-                        }
-                        foreach ($matches_to[3] as $year_item)
-                        {
-                            $year = $year_item;
-                        }
-                        foreach ($matches_to[4] as $time_item)
-                        {
-                            $time = $time_item;
-                        }
-                        $date = strtotime("{$day} {$month} {$year} {$time}");
-                    }
-                }
-                 
-                debug_add('Read RSS 0.9 or 2.0 pubDate as '.date('r',$date)); 
-            }
-            // RSS 1.0 Dublin Core date attribute            
-            elseif (   array_key_exists('dc', $item)
-                    && array_key_exists('date', $item['dc']))
-            {
-                error_reporting(E_WARNING);
-                $date = parse_w3cdtf($item['dc']['date']);
-                error_reporting(E_ALL);
-
-                if ($date == -1)
-                {
-                    // Fallback for broken RSS timestamps from #24
-                    $date = strtotime($item['dc']['date']);
-                }
-                debug_add('Read RSS 1.0 dc:date as '.date('r',$date));
-            }
-            // Atom created attribute
-            elseif (array_key_exists('created', $item))
-            {
-                error_reporting(E_WARNING);
-                $date = parse_w3cdtf($item['created']);
-                error_reporting(E_ALL);
-
-                debug_add('Read Atom created as '.date('r',$date)); 
-            }
-            // Atom published attribute
-            elseif (array_key_exists('published', $item))
-            {
-                error_reporting(E_WARNING);
-                $date = parse_w3cdtf($item['published']);
-                error_reporting(E_ALL);
-
-                debug_add('Read Atom published as '.date('r',$date)); 
-            }
-            // Atom issued attribute
-            elseif (array_key_exists('issued', $item))
-            {
-                error_reporting(E_WARNING);
-                $date = parse_w3cdtf($item['issued']);
-                error_reporting(E_ALL);
-
-                debug_add('Read Atom issued as '.date('r',$date)); 
-            }
-        }
-        
-        debug_pop();
-        return $date;
-    }
-     */
 
     /**
      * Normalizes items provided by different feed formats.
