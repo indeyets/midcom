@@ -82,6 +82,14 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
         debug_pop();
         return;
     }
+    
+    /**
+     * Get the current page number
+     */
+    function get_current_page()
+    {
+        return $this->_current_page;
+    }
 
     /**
      * Displays previous/next selector

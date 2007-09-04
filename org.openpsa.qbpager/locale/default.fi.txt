@@ -1,10 +1,14 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.fi.txt,v 1.1 2006/04/05 08:02:36 rambo Exp $
+---CVS $Id$
 ---LANGUAGE fi
 
 ---STRING first
 &laquo;
+---STRINGEND
+
+---STRING last
+&raquo;
 ---STRINGEND
 
 ---STRING next
@@ -19,7 +23,7 @@ Tietokantahakujen sivuttaja
 edellinen
 ---STRINGEND
 
----STRING last
-&raquo;
+---STRING page %s
+Sivu %s
 ---STRINGEND
 
