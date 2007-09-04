@@ -495,6 +495,10 @@ $GLOBALS['midcom_config_default']['component_listing_excluded'] = null;
 // and displaying geolocation information.
 $GLOBALS['midcom_config_default']['positioning_enable'] = false;
 
+// Page class (body class)
+// If this argument is set to true, sanitized name of the component is added to the page class string.
+$GLOBALS['midcom_config_default']['page_class_include_component'] = true;
+
 /* ----- Include the site config ----- */
 /* This should be replaced by $_MIDGARD constructs */
 if (file_exists(MIDCOM_CONFIG_FILE))
