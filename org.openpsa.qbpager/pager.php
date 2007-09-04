@@ -84,6 +84,50 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
     }
 
     /**
+     * Displays previous/next selector
+     */
+    function show_previousnext($acl_checks=false)
+    {
+        $this->_request_data['prefix'] = $this->_prefix;
+        $this->_request_data['current_page'] = $this->_current_page;
+        $this->_request_data['page_count'] = $this->count_pages($acl_checks);
+        $this->_request_data['results_per_page'] = $this->_limit;
+        $this->_request_data['offset'] = $this->_offset;
+        $this->_request_data['display_pages'] = $this->display_pages;
+        //Won't work (wrong scope), so the code is copied below.
+        //midcom_show_style('show-pages');
+        $data =& $this->_request_data;
+
+        //Skip the header in case we only have one page
+        if ($data['page_count'] <= 1)
+        {
+            return;
+        }
+
+        //TODO: "showing results (offset)-(offset+limit)
+        //TODO: Localizations
+        $page_var = $data['prefix'] . 'page';
+        $results_var =  $data['prefix'] . 'results';
+        echo '<div class="org_openpsa_qbpager_previousnext">';
+
+        if ($data['current_page'] > 1)
+        {
+            $previous = $data['current_page'] - 1;
+            echo "\n<a class=\"previous_page\" href=\"?{$page_var}={$previous}\">" . $this->_l10n->get('previous') . "</a>";
+        }
+
+        if ($data['current_page'] < $data['page_count'])
+        {
+            $next = $data['current_page'] + 1;
+            echo "\n<a class=\"next_page\" href=\"?{$page_var}={$next}\">" . $this->_l10n->get('next') . "</a>";
+        }
+
+        echo "\n</div>\n";
+
+        return;
+    }
+
+    /**
      * Displays page selector
      */
     function show_pages($acl_checks=false)

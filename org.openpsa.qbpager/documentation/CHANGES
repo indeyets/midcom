@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-09-04 bergie
+  + Added new "show_previousnext" method for displaying simpler page navigation
+
 2006-11-24 rambo
   - better workaround for references trouble
   - version bump
