@@ -13,6 +13,9 @@
 // Allow anonymous posting.
 'allow_anonymous' => true,
 
+// Notify authors on new comments
+'enable_notify' => true,
+
 // Rating mode
 'ratings_enable' => false,
 'ratings_cache_to_object' => false,

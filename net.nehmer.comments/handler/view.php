@@ -157,6 +157,11 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             return false;
         }
         
+        if (! $this->config->get('enable_notify'))
+        {
+            return false;
+        }
+        
         $authors_string = $parent_metadata->get('authors');
         $authors = explode('|', substr($authors_string, 1, -1));
         if (empty($authors))
