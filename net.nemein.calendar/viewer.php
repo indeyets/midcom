@@ -44,6 +44,13 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
 
+        // / shows next N (configured number) events in RSS format
+        $this->_request_switch['feed-rss2'] = Array
+        (
+            'handler' => Array('net_nemein_calendar_handler_feed', 'rss'),
+            'fixed_args' => Array('rss.xml'),
+        );
+
         // / shows next N (configured number) events
         $this->_request_switch['upcoming'] = Array
         (
@@ -225,6 +232,17 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             // Populate toolbars
             $this->_populate_node_toolbar();
         }
+        
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel'   => 'alternate',
+                'type'  => 'application/rss+xml',
+                'title' => $this->_l10n->get('rss 2.0 feed'),
+                'href'  => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'rss.xml',
+            )
+        );
         
         return true;
     }

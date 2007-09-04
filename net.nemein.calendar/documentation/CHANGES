@@ -6,6 +6,10 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-09-04 bergie
+  + Schema fixes for better ACL resolution
+  + Added xCal-compatible RSS feed of upcoming events
+
 2007-03-08 bergie
   + Added support for viewing only events that are open for registration
   + Created own MgdSchema for net.nemein.calendar
