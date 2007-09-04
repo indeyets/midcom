@@ -319,6 +319,10 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                     case MGD_TYPE_INT:
                     case MGD_TYPE_STRING:
                     	$class = $_MIDCOM->dbclassloader->get_midcom_class_name_for_legacy_midgard_class($linked_type);
+                    	if (! $class)
+                    	{
+                    	    break;
+                    	}
                     	$component = $_MIDCOM->dbclassloader->_mgdschema_class_handler[$class];
                         $this->_schemadb['object']->append_field
                         (
