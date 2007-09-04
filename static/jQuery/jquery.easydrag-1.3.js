@@ -6,7 +6,7 @@
 * Copyright (c) 2007 fromvega
 */
 
-(function(jQuery){
+(function($){
 
 	// to track if the mouse button is pressed
 	var isMouseDown    = false;
@@ -25,7 +25,7 @@
 	var lastElemLeft;
 
 	// returns the mouse (cursor) current position
-	jQuery.getMousePosition = function(e){
+	$.getMousePosition = function(e){
 		var posx = 0;
 		var posy = 0;
 
@@ -44,21 +44,21 @@
 	}
 
 	// updates the position of the current element being dragged
-	jQuery.updatePosition = function(e) {
-		var pos = jQuery.getMousePosition(e);
+	$.updatePosition = function(e) {
+		var pos = $.getMousePosition(e);
 
 		var spanX = (pos.x - lastMouseX);
 		var spanY = (pos.y - lastMouseY);
 
-		jQuery(currentElement).css("top",  (lastElemTop + spanY));
-		jQuery(currentElement).css("left", (lastElemLeft + spanX));
+		$(currentElement).css("top",  (lastElemTop + spanY));
+		$(currentElement).css("left", (lastElemLeft + spanX));
 	}
 
 	// when the mouse is moved while the mouse button is pressed
-	jQuery(document).mousemove(function(e){
+	$(document).mousemove(function(e){
 		if(isMouseDown){
 			// update the position and call the registered function
-			jQuery.updatePosition(e);
+			$.updatePosition(e);
 			if(dragCallbacks[currentElement.id] != undefined){
 				dragCallbacks[currentElement.id](e);
 			}
@@ -68,7 +68,7 @@
 	});
 
 	// when the mouse button is released
-	jQuery(document).mouseup(function(e){
+	$(document).mouseup(function(e){
 		if(isMouseDown){
 			isMouseDown = false;
 			if(dropCallbacks[currentElement.id] != undefined){
@@ -80,21 +80,21 @@
 	});
 
 	// register the function to be called while an element is being dragged
-	jQuery.fn.ondrag = function(callback){
+	$.fn.ondrag = function(callback){
 		return this.each(function(){
 			dragCallbacks[this.id] = callback;
 		});
 	}
 
 	// register the function to be called when an element is dropped
-	jQuery.fn.ondrop = function(callback){
+	$.fn.ondrop = function(callback){
 		return this.each(function(){
 			dropCallbacks[this.id] = callback;
 		});
 	}
 
 	// set an element as draggable - allowBubbling enables/disables event bubbling
-	jQuery.fn.easydrag = function(allowBubbling){
+	$.fn.easydrag = function(allowBubbling){
 
 		return this.each(function(){
 
@@ -102,30 +102,30 @@
 			if(undefined == this.id) this.id = 'easydrag'+time();
 
 			// change the mouse pointer
-			jQuery(this).css("cursor", "move");
+			$(this).css("cursor", "move");
 
 			// when an element receives a mouse press
-			jQuery(this).mousedown(function(e){			
+			$(this).mousedown(function(e){			
 
 				// set it as absolute positioned
-				jQuery(this).css("position", "absolute");
+				$(this).css("position", "absolute");
 
 				// set z-index
-				jQuery(this).css("z-index", "10000");
+				$(this).css("z-index", "10000");
 
 				// update track variables
 				isMouseDown    = true;
 				currentElement = this;
 
 				// retrieve positioning properties
-				var pos    = jQuery.getMousePosition(e);
+				var pos    = $.getMousePosition(e);
 				lastMouseX = pos.x;
 				lastMouseY = pos.y;
 
 				lastElemTop  = this.offsetTop;
 				lastElemLeft = this.offsetLeft;
 
-				jQuery.updatePosition(e);
+				$.updatePosition(e);
 
 				return allowBubbling ? true : false;
 			});
