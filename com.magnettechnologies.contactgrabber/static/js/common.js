@@ -1,36 +1,54 @@
-function validate_fields(form)
+function com_magnettechnologies_contactgrabber_validate(form)
 {
+    console.log("com_magnettechnologies_contactgrabber_validate");
     var inputs = jQuery(":input",form);
     var uname_passed = false;
     var pwd_passed = false;
     
     function validate_username(input)
     {
+        if (   input.val() == '')
+        {
+            input.addClass('error');
+        }
+        else
+        {
+            uname_passed = true;
+            input.removeClass('error');
+        }
         console.log("validate_username");
     }
     
     function validate_password(input)
     {
+        if (input.val() == '')
+        {
+            input.addClass('error');
+        }
+        else
+        {
+            pwd_passed = true;
+            input.removeClass('error');
+        }
         console.log("validate_password");
     }
 
     console.log("inputs: "+inputs);
     jQuery(inputs).each(function(i,n){
         console.log("i: "+i+" n: "+n);
-        if (n.attr('name') == 'username')
+        if (n.name == 'username')
         {
-            validate_username(n);
+            validate_username(jQuery(n));
         }
-        if (n.attr('name') == 'password')
+        if (n.name == 'password')
         {
-            validate_password(n);
+            validate_password(jQuery(n));
         }
     });
     
-    if (   !uname_passed
-        || !pwd_passed)
+    if (   uname_passed == false
+        || pwd_passed == false)
     {
-        alert("Please enter username & password.");
         return false;
     }
     

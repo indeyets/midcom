@@ -44,6 +44,10 @@
     line-height: 18px;
     margin-right: 3px;
 }
+#invite_login_holder .tabs_content .invite_login_form input.text.error
+{
+    border: 1px solid red;
+}
 #invite_login_holder .tabs_content .description
 {
     margin: 0;
