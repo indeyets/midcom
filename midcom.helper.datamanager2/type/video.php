@@ -632,7 +632,7 @@ class midcom_helper_datamanager2_type_video extends midcom_helper_datamanager2_t
 
             // Clean up
             $this->delete_all_attachments();
-echo "SAVING ORIGINAL RETURNED FALSE";
+// echo "SAVING ORIGINAL RETURNED FALSE";
             return false;
         }
 
@@ -649,7 +649,7 @@ echo "SAVING ORIGINAL RETURNED FALSE";
 
             // Clean up
             $this->delete_all_attachments();
-echo "SAVING IMAGE RETURNED FALSE";
+// echo "SAVING IMAGE RETURNED FALSE";
             return false;
         }
 
@@ -979,11 +979,11 @@ echo "SAVING IMAGE RETURNED FALSE";
                 {
                     $this->_attachment_map[$blob_identifier] = Array($this->_identifier, 'main_video');
                 }
-		echo $blob_identifier . " ";
-		echo $this->_filename_video . " ";
-		echo $title . " ";
-		echo $this->_target_mimetype_video . " ";
-                echo $this->_current_tmpname_video . " ";
+        // echo $blob_identifier . " ";
+        // echo $this->_filename_video . " ";
+        // echo $title . " ";
+        // echo $this->_target_mimetype_video . " ";
+                //echo $this->_current_tmpname_video . " ";
 
                 $result = $this->add_attachment($blob_identifier,
                                                 $this->_filename_video,
