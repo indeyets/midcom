@@ -106,6 +106,23 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
     {
         if ($_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_uimessages'))
         {        
+            // $_MIDCOM->enable_jquery();
+            // $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/jquery.midcom_services_uimessages.js');
+            // 
+            // $_MIDCOM->add_link_head(
+            //     array
+            //     (
+            //         'rel'   => 'stylesheet',
+            //         'type'  => 'text/css',
+            //         'media' => 'screen',
+            //         'href'  => MIDCOM_STATIC_URL . '/midcom.services.uimessages/growl.css',
+            //     )
+            // );
+            // 
+            // $config = "{}";
+            // $script = "jQuery.midcom_services_uimessages({$config}, false);";
+            // $_MIDCOM->add_jquery_state_script($script);
+
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Prototype/prototype.js");
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Scriptaculous/scriptaculous.js");
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/protoGrowl.js');
@@ -247,6 +264,8 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
     {
         if (count($this->_message_stack) > 0)
         {
+            
+            
             if ($_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_uimessages'))
             {
                 echo "<script type=\"text/javascript\">\n";
@@ -254,9 +273,19 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
                 foreach ($this->_message_stack as $id => $message)
                 {
                     // TODO: Use our own JS call for this
+                    // $options = "{
+                    //     type: '{$message['type']}'
+                    // }";
+                    // $data = "{
+                    //     title: '{$message['title']}',
+                    //     message: '{$message['message']}'
+                    // }";
+                    // echo "    jQuery('<div>').midcom_services_uimessage({$options}, {$data});";
                     echo "    new protoGrowl({type: '{$message['type']}', title: '{$message['title']}', message: '{$message['message']}'});\n";
-                    //echo "ooDisplayMessage('{$message['title']}: {$message['message']}', '{$message['type']}');\n";
-                
+                    // echo "ooDisplayMessage('{$message['title']}: {$message['message']}', '{$message['type']}');\n";
+                    
+                    //$this->_render_message($message);
+                    
                     // Remove the message from stack
                     unset($this->_message_stack[$id]);
                 }
@@ -265,10 +294,10 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
             else
             {
                 echo "<div class=\"midcom_services_uimessages_holder\">\n";
-
+                
                 foreach ($this->_message_stack as $id => $message)
                 {
-                    $this->_render_simple_message($message);
+                    $this->_render_message($message);
 
                     // Remove the message from stack
                     unset($this->_message_stack[$id]);
@@ -280,12 +309,13 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
     }
 
     /**
-     * Render the message via simple html
+     * Render the message
      */    
-    function _render_simple_message($message)
+    function _render_message($message)
     {
         echo "<div class=\"midcom_services_uimessages_message {$message['type']}\">";
-        
+
+        echo "<div class=\"midcom_services_uimessages_message_type\">{$message['type']}</div>";                
         echo "<div class=\"midcom_services_uimessages_message_title\">{$message['title']}</div>";
         echo "<div class=\"midcom_services_uimessages_message_msg\">{$message['message']}</div>";
         
