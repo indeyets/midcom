@@ -540,7 +540,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
 
         // Unset owner privileges automatically created by DBA, this is inherited from the
         // person.
-        $mailbox->unset_privilege('midgard:owner');
+        //$mailbox->unset_privilege('midgard:owner');
 
         if ($require_sudo)
         {
@@ -600,7 +600,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
 
         // Unset owner privileges automatically created by DBA, this is inherited from the
         // person.
-        $mailbox->unset_privilege('midgard:owner');
+        //$mailbox->unset_privilege('midgard:owner');
 
         if ($require_sudo)
         {
