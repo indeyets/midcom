@@ -131,8 +131,11 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
             $context_id = $_MIDCOM->get_current_context();
         }
         
-        // Append current topic to page class
-        $page_class .= ' ' . str_replace('.', '_', $_MIDCOM->get_context_data(MIDCOM_CONTEXT_COMPONENT));
+        // Append current topic to page class if enabled
+        if ($GLOBALS['midcom_config']['page_class_include_component'])
+        {
+            $page_class .= ' ' . str_replace('.', '_', $_MIDCOM->get_context_data(MIDCOM_CONTEXT_COMPONENT));
+        }
         
         // Append a custom class from topic to page class
         $topic_class = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC)->get_parameter('midcom.services.metadata', 'page_class');
@@ -141,7 +144,7 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
             $page_class .= " {$topic_class}";
         }
 
-        $this->_page_classes[$context_id] = $page_class;
+        $this->_page_classes[$context_id] = trim($page_class);
     }
 
     /**
