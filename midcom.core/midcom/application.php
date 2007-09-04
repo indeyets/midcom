@@ -2684,6 +2684,9 @@ class midcom_application
         
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/jQuery/jquery-{$version}.pack.js", true);
         $script = 'var $j = jQuery.noConflict();'."\n";
+        $script .= "var MIDCOM_STATIC_URL = '" . MIDCOM_STATIC_URL . "';\n";
+        $script .= "var MIDCOM_PAGE_PREFIX = '" . $_MIDCOM->get_page_prefix() . "';\n";
+
         $_MIDCOM->add_jscript($script, "", false);
         
         $this->_jquery_enabled = true;
