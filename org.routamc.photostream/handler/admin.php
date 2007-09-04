@@ -208,7 +208,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
 
         $this->_prepare_request_data();
         $this->_view_toolbar->bind_to($this->_photo);
-        $_MIDCOM->set_26_request_metadata($this->_photo->revised, $this->_photo->guid);
+        $_MIDCOM->set_26_request_metadata($this->_photo->metadata->revised, $this->_photo->guid);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_photo->title}");
         $this->_update_breadcrumb_line($handler_id);
 
@@ -270,7 +270,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         }
 
         $this->_prepare_request_data();
-        $_MIDCOM->set_26_request_metadata($this->_photo->revised, $this->_photo->guid);
+        $_MIDCOM->set_26_request_metadata($this->_photo->metadata->revised, $this->_photo->guid);
         $this->_view_toolbar->bind_to($this->_photo);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_photo->title}");
         $this->_update_breadcrumb_line($handler_id);
