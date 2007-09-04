@@ -312,10 +312,13 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
         $data['post_qb'] =& $qb;
         $posts = $qb->execute();
         
+        $data['first_post'] =& $posts[0];
+        
         midcom_show_style('view-thread-header');
         
-        foreach ($posts as $post)
+        foreach ($posts as $i => $post)
         {
+            $data['index_count'] = $i;
             $data['post'] =& $post;
             
             if (! $data['datamanager']->autoset_storage($post))

@@ -47,9 +47,10 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
         
         if ($threads)
         {
-            foreach ($threads as $thread)
+            foreach ($threads as $i => $thread)
             {
-                $this->_request_data['thread'] =& $thread;  
+                $this->_request_data['index_count'] =& $i;
+                $this->_request_data['thread'] =& $thread;
                 $this->_request_data['latest_post'] = new net_nemein_discussion_post_dba($thread->latestpost);               
                 midcom_show_style('view-index-item');
             }
