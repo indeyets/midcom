@@ -162,6 +162,10 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
             case 'net.nehmer.blog':
                 return $this->import_article($item);
                 break;
+                
+            default:
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "RSS fetching for component {$this->_node->component} is unsupported");
+                // This will exit.
         }
     }
     
@@ -305,7 +309,6 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         }
         
         // Try to figure out item publication date
-        //$article_date = $this->parse_item_date($item);
         $article_date = null;
         if (isset($item['date_timestamp']))
         {
@@ -336,6 +339,7 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
 
             if (!$updated)
             {
+                // No data changed, avoid unnecessary I/O
                 return $article->guid;
             }
             
