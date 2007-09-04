@@ -984,8 +984,16 @@ class RSSCreator091 extends FeedCreator {
 		$feed.= $this->_createGeneratorComment();
 		$feed.= $this->_createStylesheetReferences();
 		$feed.= "<rss version=\"".$this->RSSVersion."\"";
-		if ($this->items[0]->lat!="") {
+		
+		if (   count($this->items) > 0
+		    && !empty($this->items[0]->lat)) 
+        {
 			$feed.= "    xmlns:georss=\"http://www.georss.org/georss/\"\n";
+        }
+		if (   count($this->items) > 0
+		    && isset($this->items[0]->additionalElements['xCal:start'])) 
+        {
+			$feed.= "    xmlns:xCal=\"urn:ietf:params:xml:ns:xcal\"\n";
         }
         $feed.= ">\n";
 		if ($this->format == 'BASE') {
@@ -1053,7 +1061,8 @@ class RSSCreator091 extends FeedCreator {
 		}
 		$feed.= $this->_createAdditionalElements($this->additionalElements, "    ");
 
-		for ($i=0;$i<count($this->items);$i++) {
+		for ($i=0;$i<count($this->items);$i++) 
+		{
 			$feed.= "        <item>\n";
 			$feed.= "            <title>".FeedCreator::iTrunc(htmlspecialchars(strip_tags($this->items[$i]->title)),100)."</title>\n";
 			$feed.= "            <link>".htmlspecialchars($this->items[$i]->link)."</link>\n";
@@ -1087,7 +1096,7 @@ class RSSCreator091 extends FeedCreator {
 			if ($this->items[$i]->thumb!="") {
 				$feed.= "            <g:image_link>".htmlspecialchars($this->items[$i]->thumb)."</g:image_link>\n";
 			}
-			$feed.= $this->_createAdditionalElements($this->items[$i]->additionalElements, "        ");
+			$feed.= $this->_createAdditionalElements($this->items[$i]->additionalElements, "            ");
 			$feed.= "        </item>\n";
 		}
 		$feed.= "    </channel>\n";
