@@ -112,6 +112,7 @@
 
         <!-- Log entry this position information is based on if type is set to "10" -->
         <property name="log" link="org_routamc_positioning_log:id" parentfield="log" reverse="no" type="integer"/>
+        <!-- Date maps to XEP-0080 timestamp -->
         <property name="date" type="integer"/>
 
         <!--
@@ -122,11 +123,25 @@
         -->
         <property name="relation" type="integer"/>
 
-        <!-- Coordinates in decimal format -->
+        <!-- Coordinates in decimal format, mapping to XEP-0080 lat and lon -->
         <property name="latitude" type="float"/>
         <property name="longitude" type="float"/>
 
-        <!-- Altitude in meters -->
+        <!-- Altitude in meters, mapping to XEP-0080 alt -->
         <property name="altitude" type="float"/>
+        
+        <!-- XEP-0080 compatible civic location elements from http://www.xmpp.org/extensions/xep-0080.html#format -->
+        <property name="area" type="string"/>
+        <property name="building" type="string"/>
+        <property name="country" link="org_routamc_positioning_country:code" reverse="no" type="string"/>
+        <property name="description" type="string"/>
+        <property name="floor" type="string"/>
+        <property name="city" link="org_routamc_positioning_city:id" reverse="no" type="integer"/>
+        <property name="postalcode" type="string"/>
+        <property name="region" type="string"/>
+        <property name="room" type="string"/>
+        <property name="street" type="string"/>
+        <property name="text" type="string"/>
+        <property name="uri" type="string"/>
     </type>
 </Schema>
