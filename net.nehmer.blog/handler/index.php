@@ -54,6 +54,8 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
     function _on_initialize()
     {
         $this->_content_topic =& $this->_request_data['content_topic'];
+        
+        $_MIDCOM->load_library('org.openpsa.qbpager');
     }
 
     /**
@@ -72,13 +74,14 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
      */
     function _handler_index ($handler_id, $args, &$data)
     {
-        $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
-        $qb = midcom_db_article::new_query_builder();
+        $this->_datamanager = new midcom_helper_datamanager2_datamanager($data['schemadb']);
+        $qb = new org_openpsa_qbpager('midcom_db_article', 'net_nehmer_blog_index');
+        $data['qb'] =& $qb;
         $qb->add_constraint('topic', '=', $this->_content_topic->id);
         $qb->add_constraint('up', '=', 0);
 
         // Set default page title
-        $this->_request_data['page_title'] = $this->_topic->extra;
+        $data['page_title'] = $this->_topic->extra;
 
         // Filter by categories
         if (   $handler_id == 'index-category'
@@ -97,9 +100,9 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
 
             // TODO: check schema storage to get fieldname
             $multiple_categories = true;
-            if (   isset($this->_request_data['schemadb']['default']->fields['categories'])
-                && array_key_exists('allow_multiple', $this->_request_data['schemadb']['default']->fields['categories']['type_config'])
-                && !$this->_request_data['schemadb']['default']->fields['categories']['type_config']['allow_multiple'])
+            if (   isset($data['schemadb']['default']->fields['categories'])
+                && array_key_exists('allow_multiple', $data['schemadb']['default']->fields['categories']['type_config'])
+                && !$data['schemadb']['default']->fields['categories']['type_config']['allow_multiple'])
             {
                 $multiple_categories = false;
             }
@@ -112,11 +115,11 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
             }
             else
             {
-                $qb->add_constraint('extra1', '=', (string)$this->_request_data['category']);
+                $qb->add_constraint('extra1', '=', (string) $data['category']);
             }
 
             // Add category to title
-            $this->_request_data['page_title'] = sprintf($this->_request_data['l10n']->get('%s category %s'), $this->_topic->extra, $data['category']);
+            $data['page_title'] = sprintf($this->_l10n->get('%s category %s'), $this->_topic->extra, $data['category']);
             
             // Activate correct leaf
             if (   $this->_config->get('show_navigation_pseudo_leaves')
@@ -132,19 +135,19 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
         {
             case 'index':
             case 'index-category':
-                $qb->set_limit($this->_config->get('index_entries'));
+                $qb->results_per_page = $this->_config->get('index_entries');
                 break;
             
             case 'latest':
-                $qb->set_limit((int) $args[0]);
+                $qb->results_per_page = $args[0];
                 break;
             
             case 'latest-category':
-                $qb->set_limit((int) $args[1]);
+                $qb->results_per_page = $args[1];
                 break;
                 
             default:
-                $qb->set_limit($this->_config->get('index_entries'));
+                $qb->results_per_page = $this->_config->get('index_entries');
                 break;
         }
         
