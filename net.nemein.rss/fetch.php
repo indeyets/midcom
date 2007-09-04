@@ -187,18 +187,44 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
             $article = new midcom_db_article();
         }
         
+        $updated = false;
+        
         // Copy properties
-        $article->title = $item['title'];
-        $article->name = md5($item['guid']);
+        if ($article->title != $item['title'])
+        {
+            $article->title = $item['title'];
+            $updated = true;
+        }
+        
+        if ($article->name != md5($item['guid']))
+        {
+            $article->name = md5($item['guid']);
+            $updated = true;
+        }
         
         // FIXME: This breaks with URLs longer than 255 chars
-        $article->$guid_property = $item['guid'];
+        if ($article->$guid_property != $item['guid'])
+        {
+            $article->$guid_property = $item['guid'];
+            $updated = true;
+        }
         
-        $article->content = $item['description'];
+        if ($article->content != $item['description'])
+        {
+            $article->content = $item['description'];
+            $updated = true;
+        }
 
         $article->topic = $this->_feed->node;
-        $article->url = $item['link'];
+        
+        if ($article->url != $item['link'])
+        {
+            $article->url = $item['link'];
+            $updated = true;
+        }
+        
         $feed_category = 'feed:' . md5($this->_feed->url);
+        $orig_extra1 = $article->extra1;
         $article->extra1 = "|{$feed_category}|";
 
         // Handle categories provided in the feed
@@ -227,6 +253,11 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
                 $category = str_replace('|', '_', trim($category));
                 $article->extra1 .= "{$category}|";
             }
+        }
+        
+        if ($orig_extra1 != $article->extra1)
+        {
+            $updated = true;
         }
         
         // Try to figure out item author
@@ -260,8 +291,17 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         if (   is_object($article_author)
             && $article_author->guid)
         {
-            $article->author = $article_author->id;
-            $article->metadata->authors = "|{$article_author->guid}|";
+            if ($article->author != $article_author->id)
+            {
+                $article->author = $article_author->id;
+                $updated = true;
+            }
+            
+            if ($article->metadata->authors != "|{$article_author->guid}|")
+            {
+                $article->metadata->authors = "|{$article_author->guid}|";
+                $updated = true;
+            }
         }
         
         // Try to figure out item publication date
@@ -291,8 +331,14 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
                 && !$article_data_tweaked) 
             {
                 $article->metadata->published = $article_date;
+                $updated = true;
             }
 
+            if (!$updated)
+            {
+                return $article->guid;
+            }
+            
             if ($article->update())
             {
                 if ($this->_feed->autoapprove)
