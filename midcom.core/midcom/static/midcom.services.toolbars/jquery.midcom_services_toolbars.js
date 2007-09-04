@@ -217,7 +217,10 @@ jQuery.midcom_services_toolbars = function(root, settings, with_items) {
         var pos = { x: new_pos.left,
                     y: new_pos.top };
 
-        //client_memory.write("position",protoToolkit.toJSON(pos));
+        if (settings.memory)
+        {
+            client_memory.write("position",protoToolkit.toJSON(pos));
+        }
 
         debug('save_position finished', 'info');
     }
