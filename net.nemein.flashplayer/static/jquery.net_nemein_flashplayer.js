@@ -300,7 +300,7 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
             _playlist_content.push(item);
 
             var args = {
-                item: item,
+                item: item
             };
             proxy_send('add_item',args);
         }
@@ -315,7 +315,7 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
             });
 
             var args = {
-                id: item_id,
+                id: item_id
             };
             proxy_send('remove_item',args);
         }
@@ -340,7 +340,7 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
                 title:rel_this.find("title").text(),
                 video_url:rel_this.find("video_url").text(),
                 thumbnail_url:rel_this.find("thumbnail_url").text(),
-                data_url:rel_this.find("data_url").text(),
+                data_url:rel_this.find("data_url").text()
             };
             
             jQuery.each(options.item_extra_keys,function(i,key){
@@ -371,7 +371,7 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
 	    var status = type;
 	    
         var args = {
-            status: status,
+            status: status
         };
         proxy_send('playlist_loading_failure',args);
 	}    
