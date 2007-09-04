@@ -1,5 +1,5 @@
 /**
- * Add simple styles for ui messages without javascript
+ * Styles for ui messages without javascript
 **/
 
 div.midcom_services_uimessages_holder
@@ -34,6 +34,10 @@ div.midcom_services_uimessages_message.debug
     border: 1px solid yellow;
 }
 
+div.midcom_services_uimessages_message_type
+{
+    display: none;
+}
 div.midcom_services_uimessages_message_title
 {
     font-weight: bold;
