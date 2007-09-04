@@ -36,7 +36,7 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
     /**
      * The datamanager for the currently displayed article.
      *
-     * @var midcom_helper_datamanger2_datamanager
+     * @var midcom_helper_datamanager2_datamanager
      */
     var $_datamanager = null;
 

@@ -205,7 +205,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         
         $this->_request_data['form_description'] = $this->_config->get('form_description');
         
-        // Now launch the datamanger processing loop
+        // Now launch the datamanager processing loop
         switch ($this->_datamanager->process_form_to_array())
         {
             case MIDCOM_DATAMGR_EDITING:
@@ -330,7 +330,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         
         if (! $this->_datamanager->init_creation_mode($schema, $this))
         {
-            $this->errstr = "Failed to initialize the datamanger in creation mode for schema '{$schema}'.";
+            $this->errstr = "Failed to initialize the datamanager in creation mode for schema '{$schema}'.";
             $this->errcode = MIDCOM_ERRCRIT;
             return false;
         }

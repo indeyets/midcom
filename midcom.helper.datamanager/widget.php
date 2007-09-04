@@ -140,7 +140,7 @@ class midcom_helper_datamanager_widget {
 
     /**
      * The constructor populates the internal members with a reference to the
-     * datamanger we belong to, the definition of the field we use and the
+     * datamanager we belong to, the definition of the field we use and the
      * default value we should use to initialize the widget's data.
      *
      * After doing this, it will call _read_formdata to catch any changes

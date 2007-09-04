@@ -321,7 +321,7 @@ HTMLArea.loadPlugin('ContextMenu');\n");
      * Prepares the HTMLArea configuration scriptlet. It will search the templates in this order:
      *
      * - /$GLOBALS['midcom_config']['midcom_sgconfig_basedir']/midcom.helper.datamanager.widget_html/config
-     * - file:/midcom/helper/datamanager/config/midcom.helper.datamanger.widget_html
+     * - file:/midcom/helper/datamanager/config/midcom.helper.datamanager.widget_html
      * - local fallback default configuration
      *
      * Look at the source of this function how your template should look like.
@@ -340,9 +340,9 @@ HTMLArea.loadPlugin('ContextMenu');\n");
             }
             eval ('?>' . mgd_preparse($snippet->code));
         }
-        else if ( file_exists(MIDCOM_ROOT . '/midcom/helper/datamanager/config/midcom.helper.datamanger.widget_html') )
+        else if ( file_exists(MIDCOM_ROOT . '/midcom/helper/datamanager/config/midcom.helper.datamanager.widget_html') )
         {
-            $code = file_get_contents(MIDCOM_ROOT . '/midcom/helper/datamanager/config/midcom.helper.datamanger.widget_html');
+            $code = file_get_contents(MIDCOM_ROOT . '/midcom/helper/datamanager/config/midcom.helper.datamanager.widget_html');
             if ($code)
             {
                 eval ('?>' . $code );
@@ -350,7 +350,7 @@ HTMLArea.loadPlugin('ContextMenu');\n");
         }
         else
         {
-            $file = MIDCOM_ROOT . 'lib/midcom/helper/datamanager/config/midcom.helper.datamanger.widget_html';
+            $file = MIDCOM_ROOT . 'lib/midcom/helper/datamanager/config/midcom.helper.datamanager.widget_html';
             $result = <<<EOF
 // FIELD {$this->_fieldname} HTMLAREA init script START
 

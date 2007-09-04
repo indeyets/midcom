@@ -54,7 +54,7 @@ class org_openpsa_projects_handler_project_new extends midcom_baseclasses_compon
         if (!$this->_datamanagers['project']->init_creation_mode("newproject",$this,"_creation_dm_callback"))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                "Failed to initialize datamanger in creation mode for schema 'newproject'.");
+                "Failed to initialize datamanager in creation mode for schema 'newproject'.");
             // This will exit
         }
 
@@ -104,7 +104,7 @@ class org_openpsa_projects_handler_project_new extends midcom_baseclasses_compon
             case MIDCOM_DATAMGR_FAILED:
             case MIDCOM_DATAMGR_CREATEFAILED:
                 debug_add('The DM failed critically, see above.');
-                $this->errstr = 'The Datamanger failed to process the request, see the Debug Log for details';
+                $this->errstr = 'The Datamanager failed to process the request, see the Debug Log for details';
                 $this->errcode = MIDCOM_ERRCRIT;
                 debug_pop();
                 return false;

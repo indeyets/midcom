@@ -224,7 +224,7 @@ class net_nemein_simpledb_handler_admin extends midcom_baseclasses_components_ha
                 break;
             
             case MIDCOM_DATAMGR_SAVED:
-                debug_add('Datamanger has saved, relocating to view.');
+                debug_add('Datamanager has saved, relocating to view.');
                 if ($data['entry']->name == '') 
                 {
                     // Empty URL name or missing index article, generate it
@@ -325,7 +325,7 @@ class net_nemein_simpledb_handler_admin extends midcom_baseclasses_components_ha
         
         $data['datamanager']->init($data['entry']);
         
-        // Now launch the datamanger processing loop
+        // Now launch the datamanager processing loop
         switch ($data['datamanager']->process_form()) 
         {
             case MIDCOM_DATAMGR_EDITING:

@@ -173,7 +173,7 @@ class org_openpsa_projects_handler_task_new extends midcom_baseclasses_component
             case MIDCOM_DATAMGR_FAILED:
             case MIDCOM_DATAMGR_CREATEFAILED:
                 debug_add('The DM failed critically, see above.');
-                $this->errstr = 'The Datamanger failed to process the request, see the Debug Log for details';
+                $this->errstr = 'The Datamanager failed to process the request, see the Debug Log for details';
                 $this->errcode = MIDCOM_ERRCRIT;
                 debug_pop();
                 return false;

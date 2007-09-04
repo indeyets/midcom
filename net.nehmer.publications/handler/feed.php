@@ -28,7 +28,7 @@ class net_nehmer_publications_handler_feed extends midcom_baseclasses_components
     /**
      * The datamanager for the currently displayed publication.
      *
-     * @var midcom_helper_datamanger2_datamanager
+     * @var midcom_helper_datamanager2_datamanager
      */
     var $_datamanager = null;
 

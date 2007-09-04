@@ -235,7 +235,7 @@ class org_openpsa_documents_metadata_handler
         if (!$this->_datamanagers['metadata']->init_creation_mode("newdocument",$this,"_creation_dm_callback"))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                "Failed to initialize datamanger in creation mode for schema 'newdocument'.");
+                "Failed to initialize datamanager in creation mode for schema 'newdocument'.");
             // This will exit
         }
 
@@ -276,7 +276,7 @@ class org_openpsa_documents_metadata_handler
             case MIDCOM_DATAMGR_FAILED:
             case MIDCOM_DATAMGR_CREATEFAILED:
                 debug_add('The DM failed critically, see above.');
-                $this->errstr = 'The Datamanger failed to process the request, see the Debug Log for details';
+                $this->errstr = 'The Datamanager failed to process the request, see the Debug Log for details';
                 $this->errcode = MIDCOM_ERRCRIT;
                 debug_pop();
                 return false;

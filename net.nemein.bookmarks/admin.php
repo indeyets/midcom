@@ -402,7 +402,7 @@ class net_nemein_bookmarks_admin
             if (! $this->_datamanager->init_creation_mode($schema, $this))
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    "Failied to initialize the datamanger in creation mode for schema '{$schema}'.");
+                    "Failied to initialize the datamanager in creation mode for schema '{$schema}'.");
                 // This will exit
             }
             $create = true;
@@ -421,7 +421,7 @@ class net_nemein_bookmarks_admin
             if (! $this->_datamanager->init($this->_article))
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    "Failied to initialize the datamanger to article ID '{$id}'.");
+                    "Failied to initialize the datamanager to article ID '{$id}'.");
                 // This will exit
             }
             $GLOBALS['midcom_component_data']['net.nemein.bookmarks']['active_leaf'] = $this->_article->id;
@@ -460,7 +460,7 @@ class net_nemein_bookmarks_admin
                 break;
             
             case MIDCOM_DATAMGR_SAVED:
-                debug_add('Datamanger has saved, relocating to view.');
+                debug_add('Datamanager has saved, relocating to view.');
                 $session->remove('admin_create_id');
 	            if ($this->_article->name == '' && $this->_config->get("create_name_from_title")) 
 	            {
@@ -513,7 +513,7 @@ class net_nemein_bookmarks_admin
             case MIDCOM_DATAMGR_FAILED:
             case MIDCOM_DATAMGR_CREATEFAILED:
                 debug_add('The DM failed critically, see above.');
-                $this->errstr = 'The Datamanger failed to process the request, see the Debug Log for details';
+                $this->errstr = 'The Datamanager failed to process the request, see the Debug Log for details';
                 $this->errcode = MIDCOM_ERRCRIT;
                 debug_pop();
                 return false;

@@ -136,7 +136,7 @@
 class midcom_helper_mailtemplate {
     
     /**
-     * The Mail template, a mailtemplate datamanger type.
+     * The Mail template, a mailtemplate datamanager type.
      * 
      * @var Array
      * @access private
@@ -316,7 +316,7 @@ class midcom_helper_mailtemplate {
              *
              * Datamanager notes: Currently the get_csv interface to get a string
              * representation of a given datatype. Should be ok for now, at least
-             * until the Datamanger v3 arrives.
+             * until the Datamanager v3 arrives.
              *
              * Note, that all key's will be compared case-insensitive.
              */

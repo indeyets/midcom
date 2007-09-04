@@ -30,7 +30,7 @@ class net_nehmer_publications_handler_archive extends midcom_baseclasses_compone
     /**
      * The datamanager for the currently displayed publication.
      *
-     * @var midcom_helper_datamanger2_datamanager
+     * @var midcom_helper_datamanager2_datamanager
      */
     var $_datamanager = null;
 

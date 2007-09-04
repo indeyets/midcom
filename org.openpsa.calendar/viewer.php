@@ -926,7 +926,7 @@ function openPsaShowMonthSelector()
         {
             debug_pop();
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                "Failed to initialize datamanger in creation mode for schema 'default'.");
+                "Failed to initialize datamanager in creation mode for schema 'default'.");
             // This will exit
         }
 
@@ -994,7 +994,7 @@ function openPsaShowMonthSelector()
                 else
                 {
                     debug_add('The DM failed critically, see above.');
-                    $this->errstr = 'The Datamanger failed to process the request, see the Debug Log for details';
+                    $this->errstr = 'The Datamanager failed to process the request, see the Debug Log for details';
                     $this->errcode = MIDCOM_ERRCRIT;
                     debug_pop();
                     return false;

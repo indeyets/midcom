@@ -11,7 +11,7 @@
 require_once('select.php');
 
 /**
- * Datamanger 2 tag datatype. The values encapsulated by this type are
+ * Datamanager 2 tag datatype. The values encapsulated by this type are
  * passed to the net.nemein.tag library and corresponding tag objects and
  * relations will be handled there or to callback functions if set.
  *

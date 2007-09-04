@@ -369,7 +369,7 @@ println_check_for_include_file('Mail/mime.php', 'PEAR Package: Mail_Mime',
 
 // HTML_Quickform for Datamanager validation support
 println_check_for_include_file('HTML/QuickForm/RuleRegistry.php', 'PEAR Package: HTML_QuickForm',
-    WARNING, 'The HTML_QuickForm pacakge is required for the Datamanger Form Validation code. If you use more then is_empty checks you should install it.');
+    WARNING, 'The HTML_QuickForm pacakge is required for the Datamanager Form Validation code. If you use more then is_empty checks you should install it.');
 
 // HTML_Treemenu
 println_check_for_include_file('HTML/TreeMenu.php', 'PEAR Package: HTML_TreeMenu',

@@ -36,7 +36,7 @@ class net_nemein_calendar_handler_feed extends midcom_baseclasses_components_han
     /**
      * The datamanager for the currently displayed event.
      *
-     * @var midcom_helper_datamanger2_datamanager
+     * @var midcom_helper_datamanager2_datamanager
      */
     var $_datamanager = null;
 

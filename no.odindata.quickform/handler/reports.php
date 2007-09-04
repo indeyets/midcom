@@ -81,7 +81,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
         
         if (! $this->_datamanager->init_creation_mode($schema, $this))
         {
-            $this->errstr = "Failed to initialize the datamanger in creation mode for schema '{$schema}'.";
+            $this->errstr = "Failed to initialize the datamanager in creation mode for schema '{$schema}'.";
             $this->errcode = MIDCOM_ERRCRIT;
             return false;
         }

@@ -85,7 +85,7 @@ class net_nehmer_jobmarket_interface extends midcom_baseclasses_components_inter
     }
 
     /**
-     * Iterate over all entries and create an index record using the datamanger2 indexer
+     * Iterate over all entries and create an index record using the datamanager2 indexer
      * method. We reuse the same DM2 instance. We use the set branchen to limit the number
      * of objects we look at simultaneously.
      */

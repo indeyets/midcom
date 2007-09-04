@@ -165,7 +165,7 @@ class org_openpsa_reports_handler_reports_base extends midcom_baseclasses_compon
                 //Fall-trough intentional
             case MIDCOM_DATAMGR_CREATEFAILED:
                 debug_add('The DM failed critically, see above.');
-                $this->errstr = 'The Datamanger failed to process the request, see the Debug Log for details';
+                $this->errstr = 'The Datamanager failed to process the request, see the Debug Log for details';
                 $this->errcode = MIDCOM_ERRCRIT;
                 debug_pop();
                 return false;

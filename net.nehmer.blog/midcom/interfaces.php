@@ -54,7 +54,7 @@ class net_nehmer_blog_interface extends midcom_baseclasses_components_interface
     }
 
     /**
-     * Iterate over all articles and create index record using the datamanger indexer
+     * Iterate over all articles and create index record using the datamanager indexer
      * method.
      */
     function _on_reindex($topic, $config, &$indexer)

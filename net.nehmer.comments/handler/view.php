@@ -222,7 +222,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
 
         if (! $this->_display_datamanager)
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a DM2 instance (display_datamanger).');
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a DM2 instance (display_datamanager).');
             // This will exit.
         }
     }

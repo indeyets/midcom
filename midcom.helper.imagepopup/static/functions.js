@@ -9,7 +9,7 @@
 function imagePopupConvertImagesForAddition()
 {
     // We convert the image "size lists" into the addition clickers
-    imageRows = document.getElementsByClassName('midcom_helper_datamanger2_widget_images_image');
+    imageRows = document.getElementsByClassName('midcom_helper_datamanager2_widget_images_image');
     if (imageRows)
     {
         for (i = 0; i < imageRows.length; i++) 
@@ -64,7 +64,7 @@ function imagePopupConvertImagesForAddition()
 function imagePopupConvertFilesForAddition()
 {
     // We convert the image "size lists" into the addition clickers
-    imageRows = document.getElementsByClassName('midcom_helper_datamanger2_widget_downloads_download');
+    imageRows = document.getElementsByClassName('midcom_helper_datamanager2_widget_downloads_download');
     if (imageRows)
     {
         for (i = 0; i < imageRows.length; i++) 

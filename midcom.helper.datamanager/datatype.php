@@ -11,7 +11,7 @@
 /**
  * The DATATYPE concept is the main interface between the data stored
  * at a Midgard Object, the Widget that displays the Data and the 
- * Datamanger core class.
+ * Datamanager core class.
  * 
  * It does:
  * 
@@ -21,8 +21,8 @@
  * - Provide a mechanism to synchronize the data with the widget class
  * - Provide good configuration defaults.
  *  
- * This is the cornerstone of the Datamanger Design. Though the 
- * Datamanger knows how to use Widgets, the DATATYPE is the instance 
+ * This is the cornerstone of the Datamanager Design. Though the 
+ * Datamanager knows how to use Widgets, the DATATYPE is the instance 
  * actually responsible for createion, configuration of and 
  * data synchronization with the widget.
  * 
@@ -144,7 +144,7 @@ class midcom_helper_datamanager_datatype {
     
     /**
      * The constructor populates the internal members with a reference to the
-     * datamanger we belong to, a reference of the Midgard Object we must use
+     * datamanager we belong to, a reference of the Midgard Object we must use
      * for storage and the definition of the field we use.
      * 
      * Override this method if you need a custom class construction.
@@ -274,14 +274,14 @@ class midcom_helper_datamanager_datatype {
      * 
      * It will not synchronize the datatype's data with the widget. This has
      * to be done manually using sync_data_with_widget, which is what the
-     * Datamanger core does when neccessary.
+     * Datamanager core does when neccessary.
      * 
      * This member should make no changes to the storage object in memory that cannot
      * be synchronized to the database; therfore it is imperative to call the update
      * method after changing the storage object itself to see wether the changes are
      * valid. if not, the in-memory object must be reverted.
      * 
-     * @return int Any valid returncode from midcom_helper_datamanger::process_form().
+     * @return int Any valid returncode from midcom_helper_datamanager::process_form().
      */
     function save_to_storage () 
     {
@@ -570,7 +570,7 @@ class midcom_helper_datamanager_datatype {
 
     /**
      * This function destroys the Widget so that the type can be destroyed
-     * as well. This is usually only called by the Datamanger main class.
+     * as well. This is usually only called by the Datamanager main class.
      */
     function destroy()
     {

@@ -196,7 +196,7 @@ class org_openpsa_projects_handler_hours_action extends midcom_baseclasses_compo
                 {
                     debug_pop();
                     $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                        "Failed to initialize datamanger in creation mode for schema 'default'.");
+                        "Failed to initialize datamanager in creation mode for schema 'default'.");
                     // This will exit
                 }
                 //Workaround to weird MidCOM issue
@@ -236,7 +236,7 @@ class org_openpsa_projects_handler_hours_action extends midcom_baseclasses_compo
 
                     default:
                         debug_pop();
-                        $ajax->simpleReply(false, 'Datamanger method unknown');
+                        $ajax->simpleReply(false, 'Datamanager method unknown');
                         // This will exit
                 }
             default:

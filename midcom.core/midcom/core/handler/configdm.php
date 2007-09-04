@@ -8,7 +8,7 @@
  */
 
 /**
- * Handler for Datamanger driven component configuration
+ * Handler for Datamanager driven component configuration
  *
  * It defines a handler that can be used for Datamanager driven configuration. It requires
  * a few configuration directives: 'schemadb' must hold a valid path to a
@@ -91,7 +91,7 @@ class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
 
     /**
      * Helper function that prepares a datamanager instance for the configdm handler.
-     * You can override this function to influence the way the datamanger is initialized,
+     * You can override this function to influence the way the datamanager is initialized,
      * for example to modify the schema after it has been loaded.
      *
      * Normally, you should always call the base class implementation, and modify the
@@ -235,7 +235,7 @@ class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
     }
 
     /**
-     * Event handler, called before the configuration datamanger is created. Use this to
+     * Event handler, called before the configuration datamanager is created. Use this to
      * prepare anything that is required to start up the Datamanager.
      *
      * @access protected

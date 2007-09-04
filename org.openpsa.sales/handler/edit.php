@@ -220,7 +220,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
         if (!$this->_datamanagers['salesproject']->init_creation_mode('newsalesproject',$this,'_creation_dm_callback'))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                "Failed to initialize datamanger in creation mode for schema 'newsalesproject'.");
+                "Failed to initialize datamanager in creation mode for schema 'newsalesproject'.");
             // This will exit
         }
 
@@ -269,7 +269,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
             case MIDCOM_DATAMGR_FAILED:
             case MIDCOM_DATAMGR_CREATEFAILED:
                 debug_add('The DM failed critically, see above.');
-                $this->errstr = 'The Datamanger failed to process the request, see the Debug Log for details';
+                $this->errstr = 'The Datamanager failed to process the request, see the Debug Log for details';
                 $this->errcode = MIDCOM_ERRCRIT;
                 debug_pop();
                 return false;

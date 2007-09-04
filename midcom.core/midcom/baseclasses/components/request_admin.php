@@ -18,7 +18,7 @@
  * Three additional member variables are defined during startup, making the topic, leaf and metadata AIS
  * toolbars available to the user.
  *
- * <b>Custom Handler: Datamanger driven component configuration</b>
+ * <b>Custom Handler: Datamanager driven component configuration</b>
  *
  * It defines a handler that can be used for Datamanager driven configuration. It requires
  * a few configuration directives: 'schemadb' must hold a valid path to a
@@ -150,7 +150,7 @@ class midcom_baseclasses_components_request_admin extends midcom_baseclasses_com
 
     /**
      * Helper function that prepares a datamanager instance for the config_dm handler.
-     * You can override this function to influence the way the datamanger is initialized,
+     * You can override this function to influence the way the datamanager is initialized,
      * for example to modify the schema after it has been loaded.
      *
      * Normally, you should always call the base class implementation, and modify the
@@ -265,7 +265,7 @@ class midcom_baseclasses_components_request_admin extends midcom_baseclasses_com
     }
 
     /**
-     * Event handler, called before the configuration datamanger is created. Use this to
+     * Event handler, called before the configuration datamanager is created. Use this to
      * prepare anything that is required to start up the Datamanager.
      *
      * @access protected

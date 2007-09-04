@@ -31,7 +31,7 @@ class net_nehmer_publications_handler_welcome extends midcom_baseclasses_compone
     /**
      * The datamanager for the currently displayed publication.
      *
-     * @var midcom_helper_datamanger2_datamanager
+     * @var midcom_helper_datamanager2_datamanager
      * @access private
      */
     var $_datamanager = null;

@@ -196,7 +196,7 @@ Midgard Password to use for public posting (only neccessary if an username has b
 ---STRINGEND
 
 ---STRING public posting schema
-Datamanger schema to use for public posting
+Datamanager schema to use for public posting
 ---STRINGEND
 
 ---STRING public posting user

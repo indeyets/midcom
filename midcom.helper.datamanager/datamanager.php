@@ -88,7 +88,7 @@
  * not supported at this time.
  *
  * The save_text and cancel_text values will be used as labels for the save and cancel
- * buttons in the datamanger. They are translated using the rules outlined above.
+ * buttons in the datamanager. They are translated using the rules outlined above.
  *
  * <pre>
  * &lt;field definition&gt; :== Array (
@@ -111,7 +111,7 @@
  * )
  *
  * &lt;object identifier&gt; ::= Any valid PHP class name in the namespace of the
- *   Datamanger. (See above-)
+ *   Datamanager. (See above-)
  * &lt;storage name&gt; ::=   'parameter' | 'config' | 'attachment'
  *                    | &lt;storage object member name&gt;
  * &lt;storage object field name&gt; ::= Any valid member of the storage object.
@@ -130,7 +130,7 @@
  * datatype you use. Also note, that some datatypes (for example the blob
  * datatypes) do not allow you a choice of where to store your data.
  *
- * Note also, that the Datamanger adds another entry into this array internally:
+ * Note also, that the Datamanager adds another entry into this array internally:
  *
  * <pre>
  *     "name" =&gt; &lt;string&gt;
@@ -143,7 +143,7 @@
  * The special fields hidden and readonly affect the bevahoir of the form and view
  * generators. Hidden fields are ignored completly, nothing will be displayed
  * either in view- or in form-mode. Readonly fields are displayed in both views,
- * but instead of drawing the widget in form-mode, the datamanger draws the
+ * but instead of drawing the widget in form-mode, the datamanager draws the
  * regular view there. Both fields default to FALSE.
  *
  * The field aisonly is a special version of hidden, hiding the respective field
@@ -246,10 +246,10 @@
  *
  * <b>Object destruction:</b>
  *
- * Due to the complex nature of the Datamanger's object hierarchy, PHP cannot
+ * Due to the complex nature of the Datamanager's object hierarchy, PHP cannot
  * reliably garbage collect Datamanager instances (it fails to resolve the cyclic
  * references between the datamanager class, its datatypes and the widgets). Therefore
- * you have to call the destroy method every time you do no longer need a datamanger
+ * you have to call the destroy method every time you do no longer need a datamanager
  * instance. Only then you can safely let a datamanager reference out of scope.
  * It will destroy all datatypes and widgets and clears all internal references.
  *
@@ -1505,7 +1505,7 @@ class midcom_helper_datamanager {
     /**
      * This is a small version of the display_view method above for use outside of
      * the datamanager. It calls the draw_view method of the corresponding widget
-     * which essentially renders the data in the datamangers default view
+     * which essentially renders the data in the datamanagers default view
      * representation. It does not display an headings or the like, so it can be
      * easily used to created custom database applications without having to
      * reimplement the view logic for each datatype again and again.
@@ -2129,7 +2129,7 @@ class midcom_helper_datamanager {
         } else if ($user != false && $this->_layout["lockoverride"] == "poweruser") {
             if ($user->parameter("Interface","Power_User") == "YES") {
 
-                debug_add("DATAMANGER: Cleared lock due to poweruser privileges");
+                debug_add("DATAMANAGER: Cleared lock due to poweruser privileges");
                 $this->_lock = false;
                 return $this->_storage->parameter("midcom.helper.datamanager", "lock", "");
             }

@@ -85,7 +85,7 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
     }
 
     /**
-     * Iterate over all events and create index record using the datamanger indexer
+     * Iterate over all events and create index record using the datamanager indexer
      * method.
      */
     function _on_reindex($topic, $config, &$indexer)
