@@ -1,18 +1,31 @@
 <?php
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
 
-$featured_objects = $data['featured_objects'];
+$featured_objects =& $data['featured_objects'];
+$featured_groups =& $data['featured_groups'];
 
-foreach($featured_objects['info'] as $featured)
+foreach ($featured_groups as $key => $group)
 {
-    $featured->load_featured_item();
-}
+    $title = $group['title'];
+    $groups_objects =& $featured_objects[$key];
+?>
+    <h1>&(title);</h1>
 
-foreach($featured_objects['video'] as $featured)
-{
-    $featured->load_featured_item();
+<?php
+    if (!empty($groups_objects))
+    {
+        foreach ($groups_objects as $key => $data)
+        {
+            $data->load_featured_item();
+        }
+    }
+    else
+    {
+?>
+        <p><?php $data['l10n']->show('no items found.');?></p>
+<?php
+    }
 }
-
 ?>
 
 

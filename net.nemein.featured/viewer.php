@@ -4,7 +4,7 @@
  * Featured
  *
  * @package net.nemein.featured
- */
+**/
 class net_nemein_featured_viewer extends midcom_baseclasses_components_request
 {
     var $_content_topic = null;
@@ -17,142 +17,157 @@ class net_nemein_featured_viewer extends midcom_baseclasses_components_request
     function _on_initialize()
     {
         $this->_request_switch['create'] = Array
-	(
-	    'handler' => Array('net_nemein_featured_handler_featured', 'manage'),
+        (
+            'handler' => Array('net_nemein_featured_handler_featured', 'manage'),
             'fixed_args' => Array('create'),
-	    'variable_args' => 2,
-	);
+            'variable_args' => 2,
+        );
 
-	$this->_request_data['content_topic'] =& $this->_content_topic;
+        $this->_request_data['content_topic'] =& $this->_content_topic;
 
-        // Request switches
         $this->_request_switch['manage'] = Array
-	(
-	    'handler' => Array('net_nemein_featured_handler_featured', 'manage'),
+        (
+            'handler' => Array('net_nemein_featured_handler_featured', 'manage'),
             'fixed_args' => Array('manage'),
-	    //'variable_args' => 2,
-	);
+        );
         $this->_request_switch['edit'] = Array
-	(
-	    'handler' => Array('net_nemein_featured_handler_featured', 'edit'),
+        (
+            'handler' => Array('net_nemein_featured_handler_featured', 'edit'),
             'fixed_args' => Array('edit'),
-	    'variable_args' => 1,
-	);
+            'variable_args' => 1,
+            );
         $this->_request_switch['delete'] = Array
-	(
-	    'handler' => Array('net_nemein_featured_handler_featured', 'delete'),
+        (
+            'handler' => Array('net_nemein_featured_handler_featured', 'delete'),
             'fixed_args' => Array('delete'),
-	    'variable_args' => 1,
-	);
+            'variable_args' => 1,
+            );
         $this->_request_switch['move_down'] = Array
-	(
-	    'handler' => Array('net_nemein_featured_handler_featured', 'move_down'),
+        (
+            'handler' => Array('net_nemein_featured_handler_featured', 'move_down'),
             'fixed_args' => Array('move_down'),
-	    'variable_args' => 1,
-	);
+            'variable_args' => 1,
+            );
         $this->_request_switch['move_up'] = Array
-	(
-	    'handler' => Array('net_nemein_featured_handler_featured', 'move_up'),
+        (
+            'handler' => Array('net_nemein_featured_handler_featured', 'move_up'),
             'fixed_args' => Array('move_up'),
-	    'variable_args' => 1,
-	);
+            'variable_args' => 1,
+            );
         $this->_request_switch['index'] = Array
-	(
-	    'handler' => Array('net_nemein_featured_handler_view', 'view'),
-	);
+        (
+            'handler' => Array('net_nemein_featured_handler_view', 'view'),
+            );
     }
 
     function _populate_node_toolbar()
     {
         if ($this->_content_topic->can_do('midgard:create'))
-	    {
-	        if (array_key_exists('schemadb', $this->_request_data))
-	        {
-	            $this->_node_toolbar->add_item(
-		        Array(
-		        MIDCOM_TOOLBAR_URL => "manage", 
-			    MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n->get('manage'), 
-			    $this->_l10n->get($this->_request_data['schemadb']['default']->description)),		
-		        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
-		        MIDCOM_TOOLBAR_ACCESSKEY => 'n',
-		        )
-		        );
-	        }
-	    }
+        {
+            if (array_key_exists('schemadb', $this->_request_data))
+            {
+                $this->_node_toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "manage", 
+                        MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n->get('manage'), 
+                        $this->_l10n->get($this->_request_data['schemadb']['default']->description)),       
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
+                        MIDCOM_TOOLBAR_ACCESSKEY => 'n',
+                    )
+                );
+            }
+        }
     }
 
     function _on_handle($handler_id, $args)
     {
-	    $this->_content_topic = new midcom_db_topic($this->_topic->id);
+        $this->_content_topic = new midcom_db_topic($this->_topic->id);
 
         $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
-	    
+
         $this->_populate_node_toolbar();
 
-	    return true;
+        return true;
     }
-    
-   function get_groups()
+
+    function get_groups_callback()
     {
         $data =& $_MIDCOM->get_custom_context_data('request_data');
         $config_groups = $data['config']->get('groups');
 
-	    $groups = array();
+        $groups = array();
 
-	    foreach($config_groups as $name => $group)
-	    {
+        foreach($config_groups as $name => $group)
+        {
             $groups[$name] = $group['title'];
-	    }
+        }
 
         return  $groups;  //array('info' => 'Info', 'video' => 'Video');
     }
 
-    function render_add_link($objectType, $path, $node = null)
+    function get_groups()
     {
-    	if (empty($path) || empty($objectType))
-	    {
-            return false;
-	    }
+        $data =& $_MIDCOM->get_custom_context_data('request_data');
+        $config_groups = $data['config']->get('groups');
 
-        $midcom_i18n =& $_MIDCOM->get_service('i18n');
-	    $l10n =& $midcom_i18n->get_l10n('net.nemein.featured');
-        
-	    if (!$_MIDCOM->auth->user)
+        $groups = array();
+
+        foreach($config_groups as $name => $group)
         {
-	        return true;
-	    }
-
-        if (is_null($node))
-	    {
-	        $node = midcom_helper_find_node_by_component('net.nemein.featured');
+            $groups[$name] = $group;
         }
 
-	    if (empty($node))
-	    {
+        return  $groups;
+    }
+
+    function render_add_link($objectType, $path, $node = null)
+    {
+        if (empty($path) || empty($objectType))
+        {
             return false;
-	    }
+        }
 
-	    $url = $node[MIDCOM_NAV_FULLURL];
+        $midcom_i18n =& $_MIDCOM->get_service('i18n');
+        $l10n =& $midcom_i18n->get_l10n('net.nemein.featured');
 
-	    echo "<span class=\"net_nemein_featured\">" . "<a href=\"{$url}manage/?featured_path={$path}&type={$objectType}\" 
-	        class=\"net_nemein_featured_manage\">ADD</a></span>";
-    
+        if (!$_MIDCOM->auth->user)
+        {
+            return true;
+        }
+
+        if (is_null($node))
+        {
+            $node = midcom_helper_find_node_by_component('net.nemein.featured');
+        }
+
+        if (empty($node))
+        {
+            return false;
+        }
+
+        $url = $node[MIDCOM_NAV_FULLURL];
+
+        echo "<span class=\"net_nemein_featured\">" . "<a href=\"{$url}manage/?featured_path={$path}&type={$objectType}\" 
+            class=\"net_nemein_featured_manage\">ADD</a></span>";
+
         return true;
     }
 
-    function get_featured_items($topic_guid, $group_name = '')
+    function get_items_by_group($topic_guid, $group_name = '')
     {
         $qb = net_nemein_featured_item_dba::new_query_builder();
-	    $qb->add_constraint('topicGuid', '=', $topic_guid);
-	    if ($group_name != '')
-	    {
-	        $qb->add_constraint('groupName', '=', $group_name);
-	    }
-	    $qb->add_order('metadata.score', 'ASC');
+        $qb->add_constraint('topicGuid', '=', $topic_guid);
+        if ($group_name != '')
+        {
+            $qb->add_constraint('groupName', '=', $group_name);
+        }
+        $qb->add_order('metadata.score', 'ASC');
 
         $featured_objects = $qb->execute();
 
-	    return $featured_objects; 
+        return $featured_objects; 
     }
 
     function show_featured_items($topic_guid, $group_name = '', $substyle = array())
@@ -160,21 +175,21 @@ class net_nemein_featured_viewer extends midcom_baseclasses_components_request
         $featured_items = net_nemein_featured_viewer::get_featured_items($topic_guid, $group_name);
 
         foreach ($featured_items as $featured)
-	    {
-	        $target_object = new midcom_baseclasses_core_dbobject($featured->guid);
+        {
+            $target_object = new midcom_baseclasses_core_dbobject($featured->guid);
 
-	        //print_r($target_object);
+            //print_r($target_object);
             /*
-            // TODO: 
-	        if (array_key_exists($target_object->type, $substyle)
-	        {
-                
-	        }
-	        else
-	        {
+                // TODO: 
+            if (array_key_exists($target_object->type, $substyle)
+            {
+
+            }
+            else
+            {
                 $featured->load_featured_item();
-	        }
-	        */
+            }
+            */
         }
     }
 }

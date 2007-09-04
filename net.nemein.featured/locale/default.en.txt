@@ -47,4 +47,6 @@ Object location
 Manage
 ---STRINGEND
 
-
+---STRING no items found.
+No featured items found in this group.
+---STRINGEND
