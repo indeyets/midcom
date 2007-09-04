@@ -62,6 +62,8 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
     var $_compose_type = null;
     var $_use_live_preview = false;
     
+    var $_using_chooser = false;
+    
     /**
      * Simple default constructor.
      */
@@ -145,6 +147,11 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
             $session->remove('failed_POST_data');
         }
         unset($session);
+        
+        if ($this->_schemadb['new_mail']->fields['receivers']['widget'] == 'chooser')
+        {
+            $this->_using_chooser = true;
+        }
     }
 
     /**
@@ -314,13 +321,19 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
             case 'mail-compose-new-quick':
                 $receivers[] = $this->_request_data['receiver'];
             case 'mail-compose-new':
-                if (   !is_array($_POST['receivers'])
-                    || empty($_POST['receivers']))
+                $receivers_key = 'receivers';
+                if ($this->_using_chooser)
+                {
+                    $receivers_key = 'net_nehmer_mail_receivers_chooser_widget_selections';
+                }
+                
+                if (   !isset($_POST[$receivers_key])
+                    || empty($_POST[$receivers_key]))
                 {
                     $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Couldn't find any receivers in data.");
                 }
-                debug_print_r('_POST[receivers]: ',$_POST['receivers']);
-                foreach ($_POST['receivers'] as $receiver_id => $selected)
+                debug_print_r("_POST[{$receivers_key}]: ",$_POST[$receivers_key]);
+                foreach ($_POST[$receivers_key] as $receiver_id => $selected)
                 {
                     if ($selected)
                     {

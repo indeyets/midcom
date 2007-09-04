@@ -384,7 +384,35 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
         $this->get_message_count();
         return ($this->_message_count >= $this->quota);
     }
+    
+    function deliver_mail($sender, $subject, $body)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("delivering mail from {$sender->id}");
+        
+        $mail = new net_nehmer_mail_mail();
+        $mail->sender = $sender->guid;
+        $mail->subject = $subject;
+        $mail->body = $body;
+        $mail->received = time();
+        $mail->status = NET_NEHMER_MAIL_STATUS_SENT;
+        $mail->owner = $this->owner;
+                
+        if (! $mail->create())
+        {
+            // This should normally not fail, as the class default privilege is set accordingly.
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_print_r('Mail object was:', $this->_mail);
+            debug_pop();
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a mail record. See the debug level log for details. Last Midgard error was: '. mgd_errstr());
+            // This will exit.
+        }
 
+        $mail->deliver_to(&$this->owner);
+        
+        debug_pop();
+    }
+    
     /**
      * This function delivers a mail to this mailbox. If the Quota of the mailbox
      * is set (nonzero) and would be exceeded by this mail delivery, the component

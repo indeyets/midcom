@@ -57,7 +57,7 @@
     'operations' => Array('save' => 'send mail'),
     'fields' => Array
     (
-        'receivers' => array
+        /*'receivers' => array
         (
             'title'   => 'receivers',
             'description' => 'These are the receivers of the mail.',
@@ -93,7 +93,27 @@
                 ),
             ),
             'required' => true,
-        ),
+        ),*/
+        'receivers' => Array
+        (
+            'title' => 'receivers',
+            'description' => 'These are the receivers of the mail.',
+            'helptext' => '',
+            
+            'storage' => 'receivers',
+            'type' => 'select',
+            'type_config' => array
+            (
+                 'options' => array(),
+                 'allow_multiple' => true,
+                 'multiple_storagemode' => 'array',
+            ),
+            'widget' => 'chooser',
+            'widget_config' => array
+            (
+                'clever_class' => 'buddy',
+            ),
+        ),        
         'subject' => Array
         (
             'title' => 'subject',
