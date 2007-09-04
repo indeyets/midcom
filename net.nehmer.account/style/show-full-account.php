@@ -23,7 +23,7 @@ $last_login = strftime('%x %X', $data['user']->get_last_login());
 </p>
 
 <?php if ($data['avatar']) { ?>
-    <p><a href="&(data['avatar_url']);"><img src="&(data['avatar_thumbnail_url']);" /></a></p>
+    <p><a href="&(data['avatar_url']);"><img src="&(data['avatar_thumbnail_url']);" alt="" /></a></p>
 <?php } ?>
 
 <table cellspacing='0' cellpadding='' border='0'>
