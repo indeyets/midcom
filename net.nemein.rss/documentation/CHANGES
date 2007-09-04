@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-09-04 bergie
+  + Added support for Hugin Online's funky RSS feeds
+
 2007-08-14 bergie
   + Added support for forcing usage of the default author
   + Store data from RSS enclosure and media namespaces to parameters
