@@ -53,29 +53,29 @@ class pl_olga_tellafriend  extends midcom_baseclasses_components_purecode
 
         $this->controller =& midcom_helper_datamanager2_controller::create('nullstorage');
         $this->controller->schemadb =& $this->_schemadb;
-	$this->controller->initialize();
-	$this->controller->formmanager->initialize("pl_olga_tellafriend");
+    	$this->controller->initialize();
+    	$this->controller->formmanager->initialize("pl_olga_tellafriend");
 
         $this->result = $this->controller->process_form();
 
-	if ($this->result == 'save')
-	{
-	    // Most dirty hack ever. If we got 'save' we got form POST'ed. So the referer is
-	    // the page (URL) we want to notify about :)
-	    $url = $_SERVER['HTTP_REFERER'];
-
-	    // Load form values. Hmm.. Shall I call DM or FM?
-	    $dm = $this->controller->datamanager->types;
-
-	    $mail = new org_openpsa_mail();
-	    $mail->subject = $this->_config->get('mail_subject');
-    	    $mail->body = sprintf($this->_config->get('sysmsg'),$url);
-	    $mail->body .= $dm['comment']->value; 
-	    $mail->from = "\"{$dm['sender_name']->value}\" <{$dm['sender']->value}>";
-    	    $mail->to = $dm['recipient']->value;
-
-	    $mail->send();
-	}
+        if ($this->result == 'save')
+        {
+            // Most dirty hack ever. If we got 'save' we got form POST'ed. So the referer is
+            // the page (URL) we want to notify about :)
+            $url = $_SERVER['HTTP_REFERER'];
+    
+            // Load form values. Hmm.. Shall I call DM or FM?
+            $dm = $this->controller->datamanager->types;
+    
+            $mail = new org_openpsa_mail();
+            $mail->subject = $this->_config->get('mail_subject');
+            $mail->body = sprintf($this->_config->get('sysmsg'), $url);
+            $mail->body .= $dm['comment']->value; 
+            $mail->from = "\"{$dm['sender_name']->value}\" <{$dm['sender']->value}>";
+            $mail->to = $dm['recipient']->value;
+    
+            $mail->send();
+        }
 
     }
 
