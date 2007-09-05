@@ -60,6 +60,17 @@ if (!function_exists('midcom_helper_formatters_maillinks'))
 {
     function midcom_helper_formatters_maillinks($content)
     {
+        $content = eregi_replace('([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})', '<a href="mailto:\\1">\\1</a>', $content);        
+        
+        echo $content;
+    }
+    _midcom_helper_formatters_register_filter('maillinks');
+}
+
+if (!function_exists('midcom_helper_formatters_obfmaillinks'))
+{
+    function midcom_helper_formatters_obfmaillinks($content)
+    {
         $regexp = '(?:(?:\r\n)?[ \t])*(?:(?:(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t]
         )+|\Z|(?=[\["()<>@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[ \t]))*"(?:(?:
         \r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(
@@ -144,11 +155,50 @@ if (!function_exists('midcom_helper_formatters_maillinks'))
         ?:\r\n)?[ \t])*))*)?;\s*)';
         
         //$content = preg_replace($regexp, '', $content);
-        $content = eregi_replace('([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})', '<a href="mailto:\\1">\\1</a>', $content);
+        $content = eregi_replace('([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})', '<a href="mailto:\\1">\\1</a>', $content);        
+        $content = preg_replace('/<a [^>]*href="mailto:([^"]+)"[^>]*>(.*?)<\/a>/ie', '_midcom_helper_formatters_obfuscate_email_link("\\1",false)', $content);
         
         echo $content;
     }
-    _midcom_helper_formatters_register_filter('maillinks');
+    _midcom_helper_formatters_register_filter('obfmaillinks');
+    
+    function _midcom_helper_formatters_obfuscate_email($email,$echo_results=true)
+    {
+        $obfuscated = '';
+        
+        $len = strlen($email);
+        for ($i=0;$i<$len;$i++)
+        {
+            $obfuscated .= "&#" . ord($email[$i]);
+        }
+        
+        if ($echo_results)
+        {
+            echo $obfuscated;
+        }
+        else
+        {
+            return $obfuscated;
+        }
+    }
+    _midcom_helper_formatters_register_filter('obfmail','_midcom_helper_formatters_obfuscate_email');
+    
+    function _midcom_helper_formatters_obfuscate_email_link($email,$echo_results=true)
+    {
+        $obfuscated = _midcom_helper_formatters_obfuscate_email($email,false);
+        
+        $link = "<a href=\"mailto:{$obfuscated}\">{$obfuscated}</a>";
+        
+        if ($echo_results)
+        {
+            echo $link;
+        }
+        else
+        {
+            return $link;
+        }
+    }
+    _midcom_helper_formatters_register_filter('obfmaillink','_midcom_helper_formatters_obfuscate_email_link');
 }
 
 if (!function_exists('midcom_helper_formatters_plaintext'))
@@ -220,7 +270,7 @@ if (!function_exists('midcom_helper_formatters_plaintext'))
             "\n\n",                                 // <ol> and </ol>
             "\t* \\1\n",                            // <li> and </li>
             "\n\t* ",                               // <li>
-            '"\\1"',                                  // <a href="">
+            '"\\1"',                                // <a href="">
             "\n-------------------------\n",        // <hr>
             "\n\n",                                 // <table> and </table>
             "\n",                                   // <tr> and </tr>
