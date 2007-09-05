@@ -87,6 +87,7 @@ debug_add("Start of MidCOM run: {$_SERVER['REQUEST_URI']}", MIDCOM_LOG_INFO);
 // Load first-level supporting code
 // Note that the cache check hit depends on the i18n code.
 require('midcom/helper/misc.php');
+require('midcom/helper/formatters.php');
 require('midcom/services/i18n.php');
 
 //require('autoload.php');
