@@ -1,15 +1,5 @@
 <?php
 
-function _midcom_helper_formatters_register_filter($name, $method=null)
-{
-    if ($method === null)
-    {
-        $method = "midcom_helper_formatters_{$name}";
-    }
-    
-    mgd_register_filter($name, $method);
-}
-
 if (!function_exists('midcom_helper_formatters_links'))
 {    
     function midcom_helper_formatters_links($content)
@@ -48,7 +38,7 @@ if (!function_exists('midcom_helper_formatters_links'))
                         $new_block = eregi_replace('(www.[-a-zA-Z0-9@:%_\+.~#?&//=]+)', '<a href="http://\\1">\\1</a>', $new_block);
                     }
                     
-                    replace_content($content, $new_block, $start, $end);
+                    _midcom_helper_formatters_replace_content($content, $new_block, $start, $end);
                     
                     $start += strlen($new_block);
                 }
@@ -270,7 +260,17 @@ if (!function_exists('midcom_helper_formatters_plaintext'))
  * Helpers
 **/
 
-function replace_content(&$in, $replace, $start, $end)
+function _midcom_helper_formatters_register_filter($name, $method=null)
+{
+    if ($method === null)
+    {
+        $method = "midcom_helper_formatters_{$name}";
+    }
+    
+    mgd_register_filter($name, $method);
+}
+
+function _midcom_helper_formatters_replace_content(&$in, $replace, $start, $end)
 {
     $begin = substr($in, 0, $start);
     $end   = substr($in, $end, strlen($in)-$end);
