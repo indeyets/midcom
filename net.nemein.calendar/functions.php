@@ -14,17 +14,18 @@
  * @var $end unix timestamp 
  * @var $add_time boolean true if you want to add hour:minute to the date
  */
-function net_nemein_calendar_functions_daylabel($label='start', $start, $end , $add_time = true) 
+function net_nemein_calendar_functions_daylabel($label='start', $start, $end , $add_time = true, $add_year = false)
 {
-    $i18n = & $_MIDCOM->get_service('i18n');
-    $language = $i18n->get_current_language();
-    $language_db = $i18n->get_language_db();
+    $language = $_MIDCOM->i18n->get_current_language();
+    $language_db = $_MIDCOM->i18n->get_language_db();
     // fix that at least works very well on debian. 
     if ( $language_db[$language]['encoding']  =='UTF-8' )
     {
         setlocale(LC_TIME, $language_db[$language]['locale']. ".UTF-8");
-    } else {
-         setlocale(LC_TIME, $language_db[$language]['locale']);
+    } 
+    else
+    {
+        setlocale(LC_TIME, $language_db[$language]['locale']);
     }
 
     $daylabel = '';
@@ -38,13 +39,16 @@ function net_nemein_calendar_functions_daylabel($label='start', $start, $end , $
         {
             $daylabel .= date('Y ', $start);
         }
-        if ($add_time) {
+        
+        if ($add_time) 
+        {
             $daylabel .= date('H:i', $start);
         }
     }
     else
     {
-        if (date('Y', $start) != date('Y', $end))
+        if (   $add_year
+            || date('Y', $start) != date('Y', $end))
         {
             $daylabel .= strftime('%A %d. %B %Y ', $end);
         }
@@ -54,9 +58,11 @@ function net_nemein_calendar_functions_daylabel($label='start', $start, $end , $
         }
         elseif (date('d', $start) != date('d', $end))
         {
-            $daylabel .= strftime('%A %d. ', $end);        
+            $daylabel .= strftime('%A %d. %B ', $end);        
         }
-        if ( $add_time ) {
+        
+        if ($add_time) 
+        {
             $daylabel .= date('H:i', $end);        
         }
     }

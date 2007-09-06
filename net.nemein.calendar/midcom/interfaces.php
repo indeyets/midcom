@@ -135,9 +135,9 @@ class net_nemein_calendar_interface extends midcom_baseclasses_components_interf
 // Backup implementation.
 if (! function_exists('midcom_helper_generate_daylabel'))
 {
-    function midcom_helper_generate_daylabel ($arg1, $arg2, $arg3)
+    function midcom_helper_generate_daylabel ($arg1, $arg2, $arg3, $arg4=true, $arg5=false)
     {
-        return net_nemein_calendar_functions_daylabel($arg1, $arg2, $arg3); 
+        return net_nemein_calendar_functions_daylabel($arg1, $arg2, $arg3, $arg4, $arg5);
     }
 }
 ?>

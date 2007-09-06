@@ -252,6 +252,16 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             )
         );
         
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . '/net.nemein.calendar/calendar.css',
+            )
+        );
+        
         return true;
     }
     
