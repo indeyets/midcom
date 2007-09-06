@@ -41,8 +41,8 @@
             'storage' => null,
             'required' => false,
             'type' => 'text',
-            'type_config' => Array ( 'output_mode' => 'html' ),
-            'widget' => 'tinymce',
+            'type_config' => Array ( 'output_mode' => 'markdown' ),
+            'widget' => 'textarea',
             
         ),
 
