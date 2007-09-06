@@ -991,9 +991,9 @@ class RSSCreator091 extends FeedCreator {
 			$feed.= "    xmlns:georss=\"http://www.georss.org/georss/\"\n";
         }
 		if (   count($this->items) > 0
-		    && isset($this->items[0]->additionalElements['xCal:start'])) 
+		    && isset($this->items[0]->additionalElements['xcal:dtstart'])) 
         {
-			$feed.= "    xmlns:xCal=\"urn:ietf:params:xml:ns:xcal\"\n";
+			$feed.= "    xmlns:xcal=\"urn:ietf:params:xml:ns:xcal\"\n";
         }
         $feed.= ">\n";
 		if ($this->format == 'BASE') {

@@ -20,8 +20,8 @@ $arg = $data['event']->extra ? $data['event']->extra : $data['event']->guid;
 $item->link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$arg}.html";
 
 // Add xCal data to item
-$item->additionalElements['xCal:start'] = gmdate('Ymd\THis\Z', $data['event']->start);
-$item->additionalElements['xCal:end'] = gmdate('Ymd\THis\Z', $data['event']->end);
+$item->additionalElements['xcal:dtstart'] = gmdate('Ymd\THis\Z', $data['event']->start);
+$item->additionalElements['xcal:dtend'] = gmdate('Ymd\THis\Z', $data['event']->end);
 
 $item->guid = $_MIDCOM->permalinks->create_permalink($data['event']->guid);
 $item->date = $data['event']->metadata->published;
