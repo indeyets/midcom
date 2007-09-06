@@ -56,7 +56,25 @@
             'config_key'  => 'mail_reciept',
             'config_domain' => 'no.odindata.quickform',
         ),
-
+        'mail_reply_to_from_submitter' => array
+        (
+            'description' => 'set reply-to address from submitted form (schema must contain a field name email)',
+            'datatype' => 'boolean',
+            'location' => 'config',
+            'config_key'    => 'mail_reply_to_from_submitter',
+            'config_domain' => 'no.odindata.quickform',
+            'helptext' => 'get reply-to address from submitted form',
+            'hidden'   => false,
+            'default'  => false,
+        ),
+        'mail_reply_to' => array
+        (
+            'description' => 'mail reply-to address',
+            'datatype' => 'text',
+            'location'    => 'config',
+            'config_key'  => 'mail_reply_to',
+            'config_domain' => 'no.odindata.quickform',
+        ),
         'mail_reciept_message' => array 
         (
             'description' => 'message of the mail sent to user',
@@ -68,6 +86,14 @@
             'widget_text_height' => '4em',
             'widget_text_inputstyle' => 'longtext',
             'helptext' => 'this message is appended on top of the email sent to user',
+        ),
+        'mail_reply_to_recipient' => array
+        (
+            'description' => 'mail reply-to address for message to the user',
+            'datatype' => 'text',
+            'location'    => 'config',
+            'config_key'  => 'mail_reply_to',
+            'config_domain' => 'no.odindata.quickform',
         ),
         'mail_reciept_data' => array
         (

@@ -18,7 +18,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
     var $msg;
 
     /**
-     * The schema database associated with articles.
+     * The schema database accociated with articles.
      *
      * @var Array
      * @access private
@@ -26,7 +26,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
     var $_schemadb = Array();
 
     /**
-     * An index over the schema database associated with the topic mapping
+     * An index over the schema database accociated with the topic mapping
      * schema keys to their names. For ease of use.
      *
      * @var Array
@@ -205,7 +205,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         
         $this->_request_data['form_description'] = $this->_config->get('form_description');
         
-        // Now launch the datamanager processing loop
+        // Now launch the datamanger processing loop
         switch ($this->_datamanager->process_form_to_array())
         {
             case MIDCOM_DATAMGR_EDITING:
@@ -292,7 +292,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
             if (count($this->_schemadb) == 0)
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    "Could not load the schema database associated with this topic: The schema DB in {$path} was empty.");
+                    "Could not load the schema database accociated with this topic: The schema DB in {$path} was empty.");
                 // This will exit.
             }
             foreach ($this->_schemadb as $schema)
@@ -303,7 +303,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         else
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                'Could not load the schema database associated with this topic. The schema DB was no array.');
+                'Could not load the schema database accociated with this topic. The schema DB was no array.');
             // This will exit.
         }
     }
@@ -330,7 +330,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         
         if (! $this->_datamanager->init_creation_mode($schema, $this))
         {
-            $this->errstr = "Failed to initialize the datamanager in creation mode for schema '{$schema}'.";
+            $this->errstr = "Failed to initialize the datamanger in creation mode for schema '{$schema}'.";
             $this->errcode = MIDCOM_ERRCRIT;
             return false;
         }
@@ -404,7 +404,11 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
             $mail->from = $this->_config->get('mail_address_from');
         }
         
-        if ($this->_config->get('mail_reply_to'))
+        if ($this->_config->get('mail_reply_to_from_submitter') && array_key_exists('email', $fields) && $fields['email'] && array_key_exists('email', $data) && $data['email'])
+        {
+            $reply_to = $data['email'];
+        }
+        elseif ($this->_config->get('mail_reply_to'))
         {
             $reply_to = $this->_config->get('mail_reply_to');
         }
@@ -433,6 +437,19 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
             {
                 $smessage .= $mail->body;
             }
+            if ($this->_config->get('mail_reply_to_recipient'))
+            {
+                $reply_to = $this->_config->get('mail_reply_to_recipient');
+            }
+            elseif ($this->_config->get('mail_reply_to'))
+            {
+                $reply_to = $this->_config->get('mail_reply_to');
+            }
+            else
+            {
+                $reply_to = '';
+            }
+            $mail->headers['Reply-To'] = $reply_to;
             $mail->body = $smessage;
 
             if (!$mail->send()) 
