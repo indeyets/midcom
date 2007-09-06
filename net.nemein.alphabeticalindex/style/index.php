@@ -1,9 +1,11 @@
 <?php
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
 <h1><?php echo $data['l10n']->get('index'); ?></h1>
 
 <?php
+echo "<a name=\"top\"></a>\n";
 echo $data['alphabets_nav'];
 ?>
 
@@ -27,6 +29,7 @@ echo $data['alphabets_nav'];
                 echo "    <li class=\"{$class}\"><a href=\"{$item->url}\">{$item->title}</a></li>\n";
             }
             echo "</ul>\n";
+            echo "<a href=\"{$prefix}#top\" class=\"top_link\">" . $data['l10n']->get('to top') . "</a>\n";
         }
     }
     ?>

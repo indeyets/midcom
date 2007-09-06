@@ -71,3 +71,42 @@
     font-weight: normal;
     text-decoration: none;
 }
+
+#net_nemein_alphabeticalindex_items
+{
+}
+#net_nemein_alphabeticalindex_items h2
+{
+    margin-bottom: 5px;
+}
+#net_nemein_alphabeticalindex_items ul
+{
+    padding: 0px;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-bottom: 3px;
+    list-style-type: none;
+    
+}
+#net_nemein_alphabeticalindex_items ul li
+{
+    margin-top: 0px;
+    margin-left: 10px;
+    padding: 0;
+}
+#net_nemein_alphabeticalindex_items ul li a,
+#net_nemein_alphabeticalindex_items ul li a:link,
+#net_nemein_alphabeticalindex_items ul li a:visited
+{
+    margin-left: 0px;
+}
+#net_nemein_alphabeticalindex_items a.top_link,
+#net_nemein_alphabeticalindex_items a.top_link:link,
+#net_nemein_alphabeticalindex_items a.top_link:visited,
+#net_nemein_alphabeticalindex_items a.top_link:hover,
+#net_nemein_alphabeticalindex_items a.top_link:visited:hover
+{
+    color: #8f8f8f;
+    font-size: 9pt;
+    text-decoration: none;
+}
