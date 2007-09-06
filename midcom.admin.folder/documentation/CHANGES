@@ -9,6 +9,7 @@ Legend:
 2007-09-06 bergie
   + Localization changes
   + Added folder classification feature to folder editing
+  + Added support for object schema or component -specific metadata schema usage
 
 2007-06-07 adrenalin
   - Masked PHP notices on component listings for possible missing 'state' keys in manifests
