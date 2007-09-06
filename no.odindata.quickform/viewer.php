@@ -18,7 +18,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
     var $msg;
 
     /**
-     * The schema database accociated with articles.
+     * The schema database associated with articles.
      *
      * @var Array
      * @access private
@@ -26,7 +26,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
     var $_schemadb = Array();
 
     /**
-     * An index over the schema database accociated with the topic mapping
+     * An index over the schema database associated with the topic mapping
      * schema keys to their names. For ease of use.
      *
      * @var Array
@@ -54,10 +54,10 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
     {
         // no caching as different input requires different emails .)
         $_MIDCOM->cache->content->no_cache();
-        
+
         $nap = new midcom_helper_nav();
         $this->_request_data['topic'] = new midcom_db_topic($nap->get_current_node());
-        
+
         // argv has the following format: topic_id/mode
         $this->_request_switch[] = Array
         (
@@ -71,7 +71,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
             'handler' => Array('no_odindata_quickform_handler_aftersubmits', 'submitok'),
             'variable_args' => 0,
         );
-        
+
         // Match /submitnotok/
         $this->_request_switch[] = Array
         (
@@ -79,7 +79,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
             'fixed_args' => 'submitnotok',
             'variable_args' => 0,
         );
-        
+
         // Match /reports/
         $this->_request_switch[] = Array
         (
@@ -94,7 +94,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('reports', 'list_all'),
             'variable_args' => 0,
         );
-        
+
         // Match /reports/list_by_key/
         $this->_request_switch[] = Array
         (
@@ -102,7 +102,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('reports', 'list_by_key'),
             'variable_args' => 0,
         );
-        
+
         // Match /reports/list_by_key_distinct/
         $this->_request_switch[] = Array
         (
@@ -120,10 +120,10 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('config'),
         );
     }
-    
+
     /**
      * Add the generally used toolbar items
-     * 
+     *
      * @access private
      * @return void
      */
@@ -152,7 +152,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
             )
         );
     }
-    
+
     /**
      * Do the preparation for the later handler phases. Returns always true
      *
@@ -167,12 +167,12 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
 			MIDCOM_NAV_NAME => $this->_request_data['topic']->extra,
 		);
 		$_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
-		
+
         $this->_populate_toolbar();
         $this->_load_schema_database();
-        
+
         $this->_request_data['datamanager'] = & $this->_datamanager;
-        
+
         if (   $this->_config->get('schema_name') == ''
             && array_key_exists('default', $this->_schemadb))
         {
@@ -182,10 +182,10 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         {
             $this->_schema_name = $this->_config->get('schema_name');
         }
-        
+
         return true;
     }
-    
+
     /**
      * Prepares a dm form from the config schema and displays it
      */
@@ -193,19 +193,19 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
     {
         $to_mail = $this->_config->get('mail_new_item');
         $to_article = $this->_config->get('save_form_as_article');
-        
+
         $save_ok = false;
-        
-        
+
+
         if (! $this->_prepare_creation_datamanager($this->_schema_name))
         {
             debug_pop();
             return false;
         }
-        
+
         $this->_request_data['form_description'] = $this->_config->get('form_description');
-        
-        // Now launch the datamanger processing loop
+
+        // Now launch the datamanager processing loop
         switch ($this->_datamanager->process_form_to_array())
         {
             case MIDCOM_DATAMGR_EDITING:
@@ -280,7 +280,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         $path = $this->_config->get('schemadb');
 
         $data = midcom_get_snippet_content($path);
-        
+
         eval("\$this->_schemadb = Array ({$data}\n);");
 
         // This is a compatibility value for the configuration system
@@ -292,7 +292,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
             if (count($this->_schemadb) == 0)
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    "Could not load the schema database accociated with this topic: The schema DB in {$path} was empty.");
+                    "Could not load the schema database associated with this topic: The schema DB in {$path} was empty.");
                 // This will exit.
             }
             foreach ($this->_schemadb as $schema)
@@ -303,7 +303,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         else
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                'Could not load the schema database accociated with this topic. The schema DB was no array.');
+                'Could not load the schema database associated with this topic. The schema DB was no array.');
             // This will exit.
         }
     }
@@ -327,10 +327,10 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         }
         // show js if the editor needs it.
         $this->_datamanager->set_show_javascript(true);
-        
+
         if (! $this->_datamanager->init_creation_mode($schema, $this))
         {
-            $this->errstr = "Failed to initialize the datamanger in creation mode for schema '{$schema}'.";
+            $this->errstr = "Failed to initialize the datamanager in creation mode for schema '{$schema}'.";
             $this->errcode = MIDCOM_ERRCRIT;
             return false;
         }
@@ -349,17 +349,17 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         $data    = $this->_datamanager->get_array();
         $fields  = $this->_datamanager->get_fieldnames();
         $schema  = $this->_datamanager->get_layout_database();
-        
+
         $mail =  new org_openpsa_mail();
         $mail->to = $to;
-        
+
         //$data['_schema'] = '';
         $headers = '';
         $email_to = '';
         $message = '';
         $mail->body = '';
-        
-        
+
+
         if (array_key_exists('email', $fields))
         {
             if (   !array_key_exists('midcom_helper_datamanager_field_email', $_POST)
@@ -367,23 +367,23 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
             {
                 return false;
             }
-            
+
             $mail->from = $_POST['midcom_helper_datamanager_field_email'];
         }
         else
         {
             $mail->from = $this->_config->get('mail_address_from');
         }
-        
+
         foreach ($fields as $field => $description)
         {
             if ($field == 'email' )
             {
                 $email_to = $data[$field];
             }
-            
+
             $description = $this->_l10n->get($description);
-            
+
             if (   array_key_exists ('widget' , $schema[$this->_datamanager->get_layout_name()]['fields'][$field])
                 && $schema[$this->_datamanager->get_layout_name()]['fields'][$field]['widget'] == 'radiobox')
             {
@@ -403,7 +403,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         {
             $mail->from = $this->_config->get('mail_address_from');
         }
-        
+
         if ($this->_config->get('mail_reply_to_from_submitter') && array_key_exists('email', $fields) && $fields['email'] && array_key_exists('email', $data) && $data['email'])
         {
             $reply_to = $data['email'];
@@ -416,17 +416,17 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         {
             $reply_to = $mail->from;
         }
-        
+
         $mail->subject = $this->_config->get('mail_subject');
         $mail->headers['Reply-To'] = $reply_to;
         $mail->to = $this->_config->get('mail_address_to');
-        
+
         // Handle possible attachments
         foreach ($this->_datamanager->attachments as $attachment)
         {
             $mail->attachments[] = $attachment;
         }
-                    
+
         /* too bad I didn't get validation of this stuff! TODO! */
         if (   $this->_config->get('mail_reciept')
             && $email_to !== '')
@@ -452,7 +452,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
             $mail->headers['Reply-To'] = $reply_to;
             $mail->body = $smessage;
 
-            if (!$mail->send()) 
+            if (!$mail->send())
             {
                 debug_add("Mail to recipient {$mail->to} failed, error message: " . $mail->get_error_message(), MIDCOM_LOG_ERROR);
                 ob_start();
@@ -463,7 +463,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
                 debug_pop();
                 return false;
             }
-            else 
+            else
             {
                 debug_add("Mail to recipient sent with command: mail({$data['email']} {$subject} {$smessage} {$mail->headers})", MIDCOM_LOG_INFO);
                 debug_add("Mail sent to '{$mail->to}' with subject '{$mail->subject}'", MIDCOM_LOG_INFO);
@@ -507,8 +507,8 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         debug_pop();
         return true;
     }
-    
-    
+
+
     /**
      * Save to article
      */
@@ -520,16 +520,16 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
             $sudo_mode = true;
             $_MIDCOM->auth->request_sudo('no.odindata.quickform');
         }
-        
+
         $data    = $this->_datamanager->get_array();
         $fields  = $this->_datamanager->get_fieldnames();
         $schema  = $this->_datamanager->get_layout_database();
-        
+
         $article = new midcom_db_article();
         $article->name = time();
         $article->topic = $this->_request_data['topic']->id;
 
-        
+
         $stat = $article->create();
         if (!$stat)
         {
@@ -546,12 +546,12 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         $qb->add_constraint('name', '=', $article->name);
         $qb->add_constraint('topic', '=', $this->_request_data['topic']->id);
         $tmp_article = $qb->execute();
-        
+
         if(count($tmp_article) == 0)
         {
             return false;
         }
-        
+
         $article = new midcom_db_article($tmp_article[0]->id);
 
         $tmp_data = '';
@@ -607,7 +607,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         {
             $this->_article->name = 'index';
         }
-        
+
         $this->_article->topic = $this->_topic->id;
         $this->_article->author = $midgard->user;
         if (! $this->_article->create())
