@@ -84,7 +84,7 @@ class net_nemein_alphabeticalindex_handler_index extends midcom_baseclasses_comp
             $this->_alphabets[$letter] = $this->_get_items_that_start_with($letter);
         }
         
-        $this->_render_nav();
+        $this->_render_nav();        
         
         $this->_prepare_request_data($handler_id);
         

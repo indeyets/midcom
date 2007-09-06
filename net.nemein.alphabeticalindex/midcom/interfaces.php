@@ -122,8 +122,11 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
                 foreach ($results as $item)
                 {
                     $title = $item->title;
-                    $item->delete();
-                    $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.alphabeticalindex', 'net.nemein.alphabeticalindex'), sprintf($_MIDCOM->i18n->get_string('item %s has been deleted from alphabetical index', 'net.nemein.alphabeticalindex'), $title), 'ok');
+                    if ($item->delete())
+                    {
+                        $object->set_parameter('net.nemein.alphabeticalindex:show_in_list','status', false);
+                        $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.alphabeticalindex', 'net.nemein.alphabeticalindex'), sprintf($_MIDCOM->i18n->get_string('item %s has been deleted from alphabetical index', 'net.nemein.alphabeticalindex'), $title), 'ok');
+                    }
                 }
             }
         }
