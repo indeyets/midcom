@@ -174,14 +174,20 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
                     )
                 );
             }
-
-            $qb = midcom_db_article::new_query_builder();
-            $qb->add_constraint('topic', '=', $this->_topic->id);
-            
             $data['feed_category'] = 'feed:' . md5($feed->url);
-            $qb->add_constraint('extra1', 'LIKE', "%|{$data['feed_category']}|%");
-            $data['feed_items'] = $qb->count_unchecked();
-
+            
+            $data['feed_items'] = 0;
+            
+            switch ($this->_topic->component)
+            {
+                case 'net.nehmer.blog':
+                    $qb = midcom_db_article::new_query_builder();
+                    $qb->add_constraint('topic', '=', $this->_topic->id);
+                    $qb->add_constraint('extra1', 'LIKE', "%|{$data['feed_category']}|%");
+                    $data['feed_items'] = $qb->count_unchecked();
+                    break;
+            }
+            
             midcom_show_style('net-nemein-rss-feeds-list-item');
         }
 

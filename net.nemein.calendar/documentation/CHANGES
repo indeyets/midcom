@@ -10,6 +10,7 @@ Legend:
   + Added archive to navigation
   + Added categories to navigation
   + Made categories configurable
+  + Added support for event importing via RSS
 
 2007-09-04 bergie
   + Schema fixes for better ACL resolution

@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-09-06 bergie
+  + Added support for importing events via xCal RSS feeds to net.nemein.calendar
+
 2007-09-04 bergie
   + Added support for Hugin Online's funky RSS feeds
 

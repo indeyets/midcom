@@ -58,9 +58,20 @@ else
         }
         else
         {
-            $local_article = new midcom_db_article($item['local_guid']);
-            $local_link = $_MIDCOM->permalinks->create_permalink($item['local_guid']);
-            echo "    <td><a href=\"{$local_link}\">{$local_article->title}</a></td>\n";
+            switch ($_MIDCOM->get_context_data(MIDCOM_CONTEXT_COMPONENT))
+            {
+                case 'net.nehmer.blog':
+                    $local_article = new midcom_db_article($item['local_guid']);
+                    $local_link = $_MIDCOM->permalinks->create_permalink($item['local_guid']);
+                    echo "    <td><a href=\"{$local_link}\">{$local_article->title}</a></td>\n";
+                    break;
+                
+                case 'net.nemein.calendar':
+                    $local_event = new net_nemein_calendar_event($item['local_guid']);
+                    $local_link = $_MIDCOM->permalinks->create_permalink($item['local_guid']);
+                    echo "    <td><a href=\"{$local_link}\">{$local_event->title}</a></td>\n";
+                    break;
+            }
         }
         
         echo "</tr>\n";

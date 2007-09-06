@@ -174,6 +174,13 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
 
+        if ($this->_config->get('rss_subscription_enable'))
+        {
+            $_MIDCOM->load_library('net.nemein.rss');
+            $rss_switches = net_nemein_rss_manage::get_plugin_handlers();
+            $this->_request_switch = array_merge($this->_request_switch, $rss_switches);
+        }
+
         // Make the hCalendar output GRDDL compatible
         // FIXME: We need method for adding:
         // <head profile="http://www.w3.org/2003/g/data-view">
@@ -310,6 +317,30 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
                     MIDCOM_TOOLBAR_ACCESSKEY => 'n',
                 ));
             }
+        }
+        
+        if ($this->_config->get('rss_subscription_enable'))
+        {        
+            $this->_node_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => 'feeds/subscribe/',
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('subscribe feeds', 'net.nemein.rss'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_news.png',
+                    MIDCOM_TOOLBAR_ENABLED => $this->_topic->can_do('midgard:create'),
+                )
+            );
+            $this->_node_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => 'feeds/list/',
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('manage feeds', 'net.nemein.rss'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+                    MIDCOM_TOOLBAR_ENABLED => $this->_topic->can_do('midgard:create'),
+                )
+            );
         }
 
         if (   $this->_topic->can_do('midgard:update')

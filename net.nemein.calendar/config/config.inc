@@ -19,3 +19,5 @@
 'show_navigation_pseudo_leaves' => true,   // Set this to false if you want to hide archive navigation items
 
 'categories' => '',
+
+'rss_subscription_enable' => false,

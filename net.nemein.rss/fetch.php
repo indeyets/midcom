@@ -9,7 +9,7 @@
 
 /**
  * RSS and Atom feed fetching class. Caches the fetched items as articles
- * in net.nehmer.blog
+ * in net.nehmer.blog or events in net.nemein.calendar
  *
  * @package net.nemein.rss
  */
@@ -35,6 +35,18 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
      * @var midcom_db_topic
      */
     var $_node = null;
+
+    /**
+     * Configuration of node we're importing to
+     * @var midcom_helper_configuration
+     */
+    var $_node_config = null;
+
+    /**
+     * Datamanager for handling saves
+     * @var midcom_helper_datamanager2
+     */
+    var $_datamanager = null;
     
     /**
      * Initializes the class with a given feed
@@ -46,6 +58,9 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         $this->_node = new midcom_db_topic($this->_feed->node);
 
         $this->_component = 'net.nemein.rss';
+        
+        $this->_node_config = $GLOBALS['midcom_component_data'][$this->_node->component]['config'];
+        
         parent::midcom_baseclasses_components_purecode();
     }
     
@@ -161,6 +176,10 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         {
             case 'net.nehmer.blog':
                 return $this->import_article($item);
+                break;
+                
+            case 'net.nemein.calendar':
+                return $this->import_event($item);
                 break;
                 
             default:
@@ -379,6 +398,110 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
             }
             return false;
         }
+    }
+    
+    /**
+     * Imports an item as an event
+     */
+    private function import_event($item)
+    {
+        // Check that we're trying to import item suitable to be an event
+        if (!isset($item['xcal']))
+        {
+            // Not an event
+            return false;
+        }
+            
+        // Load root event
+        if (!$this->_node_config->get('root_event'))
+        {
+            // This calendar is not really functional
+            return false;
+        }   
+        static $root_event = null;
+        if (is_null($root_event))
+        {
+            $root_event = new net_nemein_calendar_event($this->_node_config->get('root_event'));
+        }
+        if (!$root_event->guid)
+        {
+            return false;
+        }
+
+        // Get start and end times
+        $start = null;
+        $end = null;
+        if (isset($item['xcal']['dtstart']))
+        {
+            $start = strtotime($item['xcal']['dtstart']);
+        }
+        elseif (isset($item['xCal']['start']))
+        {
+            // The format used by Upcoming
+            $start = strtotime($item['xCal']['start']);
+        }
+        if (isset($item['xcal']['dtend']))
+        {
+            $end = strtotime($item['xcal']['dtend']);
+        }
+        elseif (isset($item['xCal']['end']))
+        {
+            // The format used by Upcoming
+            $end = strtotime($item['xCal']['end']);
+        }
+        
+        if (   !$start
+            || !$end)
+        {
+            return false;
+        }
+        
+        if (!$this->_datamanager)
+        {
+            $schemadb = midcom_helper_datamanager2_schema::load_database($this->_node_config->get('schemadb'));
+            $this->_datamanager = new midcom_helper_datamanager2_datamanager($schemadb);
+        }
+
+        $qb = net_nemein_calendar_event::new_query_builder();
+        $qb->add_constraint('up', '=', $root_event->id);
+        $qb->add_constraint('extra', '=', md5($item['guid']));
+        $events = $qb->execute();  
+        if (count($events) > 0)
+        {
+            // This item has been imported already earlier. Update
+            $event = $events[0];
+        }
+        else
+        {
+            // This is a new item
+            $event = new net_nemein_calendar_event();
+            $event->start = $start;
+            $event->end = $end;
+            $event->extra = md5($item['guid']);
+            $event->up = $root_event->id;
+            if (!$event->create())
+            {
+                return false;
+            }
+        }
+        
+        $this->_datamanager->autoset_storage($event);
+        $this->_datamanager->types['start']->value = new Date($start);
+        $this->_datamanager->types['end']->value = new Date($end);
+        foreach ($item as $key => $value)
+        {
+            if (isset($this->_datamanager->types[$key]))
+            {
+                $this->_datamanager->types[$key]->value = $value;
+            }
+        }
+        
+        if (!$this->_datamanager->save())
+        {
+            return false;
+        }
+        
+        return $event->guid;
     }
     
     /**

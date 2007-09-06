@@ -126,6 +126,22 @@
             'end_fieldgroup' => '',
         ),
         
+        'rss_subscription_enable' => array
+        (
+            'description' => 'rss_subscription_enable',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nemein.calendar',
+            'config_key' => 'rss_subscription_enable',
+            'widget' => 'config_radiobox',
+            'widget_radiobox_choices' => array
+            (
+                '' => 'default setting',
+                '1' => 'yes',
+                '0' => 'no',
+            ),
+        ),
+        
          /**** Schema settings ****/
         'schemadb' => array
         (
