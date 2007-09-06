@@ -386,7 +386,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__mfa/replication/object/{$topic->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.helper.replicator/object/{$topic->guid}.html",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('replication information', 'midcom.helper.replicator'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
                 )
@@ -507,27 +507,6 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-master-document.png',
                     MIDCOM_TOOLBAR_ACCESSKEY => 'a',
                 )
-            );        
-        
-            // Safety
-            if (!isset($GLOBALS['midcom_config']['staging2live_staging']))
-            {
-                $GLOBALS['midcom_config']['staging2live_staging'] = false;
-            }
-            $toolbar->add_item
-            (
-                array
-                (
-                    MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}midcom-exec-midcom/runreplication.php",
-                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('run replication', 'midcom'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_jump-to.png',
-                    MIDCOM_TOOLBAR_ENABLED => $GLOBALS['midcom_config']['staging2live_staging'],
-                    MIDCOM_TOOLBAR_POST => true,
-                    MIDCOM_TOOLBAR_POST_HIDDENARGS => Array
-                    (
-                        'return_to' => $_SERVER['REQUEST_URI'],
-                    ),
-                )
             );
             
             $toolbar->add_item
@@ -556,7 +535,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}__mfa/replication/",
+                        MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}__mfa/asgard_midcom.helper.replicator/",
                         MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('manage replication', 'midcom.helper.replicator'),
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
                     )
@@ -657,7 +636,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "http://www.midgard-project.org/discussion",
+                MIDCOM_TOOLBAR_URL => "http://www.midgard-project.org/discussion/user-forum/",
                 MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('User forum', 'midcom'),
                 MIDCOM_TOOLBAR_OPTIONS => array('target' => '_blank'),
             )
@@ -666,7 +645,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "http://www.midgard-project.org/documentation",
+                MIDCOM_TOOLBAR_URL => "http://www.midgard-project.org/documentation/",
                 MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('Online docs', 'midcom'),
                 MIDCOM_TOOLBAR_OPTIONS => array('target' => '_blank'),
             )
@@ -780,7 +759,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/replication/object/{$object->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard_midcom.helper.replicator/object/{$object->guid}.html",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('replication information', 'midcom.helper.replicator'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
                 )
