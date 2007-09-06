@@ -205,8 +205,8 @@ if (!function_exists('midcom_helper_formatters_plaintext'))
 {    
     function midcom_helper_formatters_plaintext($content)
     {
-        echo $content;
-        echo "\n<br />---------<br />\n";
+        // echo $content;
+        // echo "\n<br />---------<br />\n";
         
         $search = array
         (
