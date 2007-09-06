@@ -90,7 +90,12 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
     {
         if ($handler_id == 'archive-view')
         {
+            if (!$this->_config->get('archive_enable'))
+            {
+                return false;
+            }        
             $this->_request_data['archive_mode'] = true;
+            $this->_component_data['active_leaf'] = "{$this->_topic->id}_ARCHIVE";
         }
         else
         {
@@ -102,7 +107,7 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "edit/{$this->_request_data['event']->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "edit/{$this->_request_data['event']->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('edit'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                     MIDCOM_TOOLBAR_ENABLED => $this->_request_data['event']->can_do('midgard:update'),
@@ -113,7 +118,7 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "delete/{$this->_request_data['event']->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "delete/{$this->_request_data['event']->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('delete'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                     MIDCOM_TOOLBAR_ENABLED => $this->_request_data['event']->can_do('midgard:delete'),

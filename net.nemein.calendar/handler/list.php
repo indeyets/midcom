@@ -215,7 +215,20 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
     function _handler_between($handler_id, $args, &$data)
     {
         $this->_load_datamanager();
-        $this->_request_data['archive_mode'] = ($handler_id == 'archive-between');
+        
+        if ($handler_id == 'archive-between')
+        {
+            if (!$this->_config->get('archive_enable'))
+            {
+                return false;
+            }        
+            $this->_request_data['archive_mode'] = true;
+            $this->_component_data['active_leaf'] = "{$this->_topic->id}_ARCHIVE";
+        }
+        else
+        {
+            $this->_request_data['archive_mode'] = false;            
+        }
         
         // Get the requested date range
         // TODO: Check format as YYYY-MM-DD via regexp
@@ -240,14 +253,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         $this->_get_event_listing($start, $end, true);
 
         if ($this->_request_data['archive_mode'])
-        {
-            // Set the breadcrumb
-            $breadcrumb[] = array
-            (
-                MIDCOM_NAV_URL => "archive/",
-                MIDCOM_NAV_NAME => sprintf($this->_l10n->get('archive')),
-            );
-            
+        {            
             if ($start)
             {
                 $breadcrumb[] = array

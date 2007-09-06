@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-09-06 bergie
+  + Added archive to navigation
+
 2007-09-04 bergie
   + Schema fixes for better ACL resolution
   + Added xCal-compatible RSS feed of upcoming events

@@ -10,7 +10,10 @@
             'storage' => 'extra',
             'type'    => 'text',
             'widget'  => 'text',
-            'hidden'  => (!$_MIDCOM->auth->admin),
+            'write_privilege' => array
+            (
+                'privilege' => 'midcom:urlname',
+            ),
         ),
         'title' => Array
         (

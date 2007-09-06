@@ -149,19 +149,17 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
      */
     function _handler_welcome ($handler_id, $args, &$data)
     {
+        if (!$this->_config->get('archive_enable'))
+        {
+            return false;
+        }
+    
         $this->_load_base_events();
         $this->_compute_welcome_data();
         $_MIDCOM->set_26_request_metadata($this->get_last_modified(), $this->_topic->guid);
         
-        // Set the breadcrumb
-        $breadcrumb[] = array
-        (
-            MIDCOM_NAV_URL => "archive/",
-            MIDCOM_NAV_NAME => sprintf($this->_l10n->get('archive')),
-        );
-        
-        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
-        
+        $this->_component_data['active_leaf'] = "{$this->_topic->id}_ARCHIVE";
+                
         return true;
     }
 

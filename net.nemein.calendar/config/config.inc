@@ -13,4 +13,7 @@
 'enable_ajax_editing'  => true,
 'javascript_hover'     => true,
 
+'archive_enable' => true,
 'archive_year_order'   => 'ASC',  // Order for years in archive welcome page
+
+'show_navigation_pseudo_leaves' => true,   // Set this to false if you want to hide archive navigation items
