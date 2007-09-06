@@ -14,13 +14,11 @@
  */
 class no_odindata_quickform_interface extends midcom_baseclasses_components_interface
 {
-    
     function no_odindata_quickform_interface()
     {
         parent::midcom_baseclasses_components_interface();
         
         $this->_component = 'no.odindata.quickform';
-        $this->_purecode = false;
         $this->_autoload_files = array
         (
             'viewer.php', 
@@ -32,6 +30,6 @@ class no_odindata_quickform_interface extends midcom_baseclasses_components_inte
             'midcom.helper.datamanager',
             'org.openpsa.mail'
         );
-    }
+    }    
 }
 ?>

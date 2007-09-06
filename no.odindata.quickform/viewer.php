@@ -46,8 +46,8 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
 
     function no_odindata_quickform_viewer($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
         $this->msg = '';
+        parent::midcom_baseclasses_components_request($topic, $config);
     }
 
     function _on_initialize()
@@ -55,8 +55,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         // no caching as different input requires different emails .)
         $_MIDCOM->cache->content->no_cache();
 
-        $nap = new midcom_helper_nav();
-        $this->_request_data['topic'] = new midcom_db_topic($nap->get_current_node());
+        $this->_request_data['topic'] =& $this->_topic;
 
         // argv has the following format: topic_id/mode
         $this->_request_switch[] = Array
@@ -161,13 +160,6 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
      */
     function _on_handle($handler, $args)
     {
-         $tmp[] = Array
-		(
-			MIDCOM_NAV_URL => '',
-			MIDCOM_NAV_NAME => $this->_request_data['topic']->extra,
-		);
-		$_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
-
         $this->_populate_toolbar();
         $this->_load_schema_database();
 
@@ -189,7 +181,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
     /**
      * Prepares a dm form from the config schema and displays it
      */
-    function _handler_index()
+    function _handler_index($handler_id, $args, &$data)
     {
         $to_mail = $this->_config->get('mail_new_item');
         $to_article = $this->_config->get('save_form_as_article');
@@ -262,7 +254,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
 
        }
 
-    function _show_index()
+    function _show_index($handler_id, &$data)
     {
        midcom_show_style('show-form');
     }
