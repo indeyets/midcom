@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+
+  <type name="net_nemein_alphabeticalindex_item_db" table="net_nemein_alphabeticalindex_item_db">
+    <property name="id" type="integer" primaryfield="id" />
+    <property name="title" type="text" />
+    <property name="url" type="text" />
+    <property name="objectGuid" type="text" />
+  </type>
+
+</Schema>

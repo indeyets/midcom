@@ -1,0 +1,16 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---LANGUAGE en
+
+---STRING net.nemein.alphabeticalindex
+Alphabetical index
+---STRINGEND
+
+---STRING internal item
+Internal items
+---STRINGEND
+
+---STRING external item
+External item
+---STRINGEND
+
