@@ -60,7 +60,6 @@
             'type' => 'text',
             'widget' => 'text',
         ),
-        /*
         'categories' => Array
         (
             'title' => 'categories',
@@ -74,12 +73,7 @@
             'widget' => 'select',
             'type_config' => Array 
             ( 
-                'options'        => array
-                (
-                    'cat1' => 'Category number 1',
-                    'cat2' => 'Something completely different',
-                    'cat3' => 'foo',
-                ),
+                'options'        => array(),
                 'allow_other'    => false,
                 'allow_multiple' => true,
                 'multiple_storagemode' => 'imploded_wrapped',
@@ -88,8 +82,7 @@
             ( 
                 'height' => 3,
             ),        
-        ),
-        */         
+        ),        
     )
 ),
 

@@ -344,11 +344,17 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         if (   isset($_REQUEST['net_nemein_calendar_category'])
             && class_exists('midgard_query_builder'))
         {
+            $this->_request_data['category'] = $_REQUEST['net_nemein_calendar_category'];
             $qb->begin_group('AND');
                 $qb->add_constraint('parameter.domain', '=', 'net.nemein.calendar');
                 $qb->add_constraint('parameter.name', '=', 'categories');
-                $qb->add_constraint('parameter.value', 'LIKE', "%|{$_REQUEST['net_nemein_calendar_category']}|%");
+                $qb->add_constraint('parameter.value', 'LIKE', "%|{$this->_request_data['category']}|%");
             $qb->end_group();
+            
+            if (!$this->_request_data['archive_mode'])
+            {
+                $this->_component_data['active_leaf'] = "{$this->_topic->id}_CAT_{$this->_request_data['category']}";
+            }
         }
 
         // Find all events that occur during [$from, $end]

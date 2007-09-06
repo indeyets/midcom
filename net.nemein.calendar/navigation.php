@@ -48,6 +48,28 @@ class net_nemein_calendar_navigation extends midcom_baseclasses_components_navig
             );
         }
         
+        if (   $this->_config->get('show_navigation_pseudo_leaves')
+            && $this->_config->get('categories') != '')
+        {
+            $categories = explode(',', $this->_config->get('categories'));
+            foreach ($categories as $category)
+            {
+                $leaves["{$this->_topic->id}_CAT_{$category}"] = array
+                (
+                    MIDCOM_NAV_SITE => Array
+                    (
+                        MIDCOM_NAV_URL => "?net_nemein_calendar_category={$category}",
+                        MIDCOM_NAV_NAME => $category,
+                    ),
+                    MIDCOM_NAV_ADMIN => null,
+                    MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
+                    MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
+                    MIDCOM_META_CREATED => $this->_topic->metadata->created,
+                    MIDCOM_META_EDITED => $this->_topic->metadata->revised,
+                );
+            }
+        }
+        
         return $leaves;
     }
 } // navigation

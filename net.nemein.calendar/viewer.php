@@ -228,6 +228,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
         {
             // Load schema database
             $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
+            $this->_add_categories();
         
             // Populate toolbars
             $this->_populate_node_toolbar();
@@ -327,6 +328,35 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
     }
     
     /**
+     * Populate the categories configured for the topic into the schemas
+     */
+    function _add_categories()
+    {
+        if ($this->_config->get('categories') == '')
+        {
+            // No categories defined, skip this.
+            $this->_request_data['categories'] = Array();
+            return false;
+        }
+        
+        $this->_request_data['categories'] = explode(',', $this->_config->get('categories'));
+        
+        foreach ($this->_request_data['schemadb'] as $name => $schema)
+        {
+            if (   array_key_exists('categories', $schema->fields)
+                && $this->_request_data['schemadb'][$name]->fields['categories']['type'] == 'select')
+            {
+                // TODO: Merge schema local and component config categories?
+                $this->_request_data['schemadb'][$name]->fields['categories']['type_config']['options'] = Array();
+                foreach ($this->_request_data['categories'] as $category)
+                {
+                    $this->_request_data['schemadb'][$name]->fields['categories']['type_config']['options'][$category] = $category;
+                }
+            }
+        }
+    }
+    
+    /**
      * Indexes an event.
      *
      * This function is usually called statically from various handlers.
@@ -363,43 +393,5 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
         $document->read_metadata_from_object($dm->storage->object);
         $indexer->index($document);
     }
-
-    /*
-    function _handleSubscriptions() {
-
-      global $net_nemein_calendar_subscribeEvent;
-      global $net_nemein_calendar_unsubscribeEvent;
-      global $net_nemein_calendar_subscribeCalendar;
-      global $net_nemein_calendar_unsubscribeCalendar;
-      global $midgard;
-
-      if ($midgard->user) {
-
-        // Subscribe to event
-        if (isset($net_nemein_calendar_subscribeEvent)) {
-          $member = New NemeinCalendar_eventparticipant();
-          $member->event = $net_nemein_calendar_subscribeEvent;
-          $member->person = $midgard->user;
-          error_reporting(E_WARNING);
-          return $member->save(0);
-          error_reporting(E_ALL);
-
-        // Unsubscribe from event
-        } elseif (isset($net_nemein_calendar_unsubscribeEvent)) {
-
-          $mems = mgd_list_event_members($net_nemein_calendar_unsubscribeEvent);
-          if ($mems) {
-            while ($mems->fetch()) {
-              if ($mems->uid == $midgard->user) {
-                $member = New NemeinCalendar_eventparticipant($mems->id);
-                error_reporting(E_WARNING);
-                return $member->delete(0);
-                error_reporting(E_ALL);
-              }
-            }
-          }
-        }
-      }
-    }*/
 }
 ?>

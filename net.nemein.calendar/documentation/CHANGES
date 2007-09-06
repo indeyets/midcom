@@ -8,6 +8,8 @@ Legend:
 
 2007-09-06 bergie
   + Added archive to navigation
+  + Added categories to navigation
+  + Made categories configurable
 
 2007-09-04 bergie
   + Schema fixes for better ACL resolution

@@ -20,6 +20,17 @@
             ),
         ),
         
+        'categories' => array
+        (
+            'description' => 'categories',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nemein.calendar',
+            'config_key' => 'categories',
+            'widget' => 'text',
+        ),
+
+        
         'type_filter_upcoming' => array
         (
             'description' => 'type filter for upcoming',
