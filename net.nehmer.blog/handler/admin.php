@@ -115,14 +115,6 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
     function _load_schemadb()
     {
         $this->_schemadb =& $this->_request_data['schemadb'];
-        if (   $this->_config->get('simple_name_handling')
-            && ! $_MIDCOM->auth->admin)
-        {
-            foreach (array_keys($this->_schemadb) as $name)
-            {
-                $this->_schemadb[$name]->fields['name']['readonly'] = true;
-            }
-        }
     }
 
     /**
