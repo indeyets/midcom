@@ -427,7 +427,7 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         {
             return false;
         }
-
+        
         // Get start and end times
         $start = null;
         $end = null;
@@ -435,19 +435,9 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         {
             $start = strtotime($item['xcal']['dtstart']);
         }
-        elseif (isset($item['xCal']['start']))
-        {
-            // The format used by Upcoming
-            $start = strtotime($item['xCal']['start']);
-        }
         if (isset($item['xcal']['dtend']))
         {
             $end = strtotime($item['xcal']['dtend']);
-        }
-        elseif (isset($item['xCal']['end']))
-        {
-            // The format used by Upcoming
-            $end = strtotime($item['xCal']['end']);
         }
         
         if (   !$start
@@ -461,6 +451,22 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
             $schemadb = midcom_helper_datamanager2_schema::load_database($this->_node_config->get('schemadb'));
             $this->_datamanager = new midcom_helper_datamanager2_datamanager($schemadb);
         }
+        
+        // TODO: Move to real geocoded stuff
+        $location_parts = array();
+        if (isset($item['xcal']['x-calconnect-venue_adr_x-calconnect-venue-name']))
+        {
+            $location_parts[] = $item['xcal']['x-calconnect-venue_adr_x-calconnect-venue-name'];
+        }
+        if (isset($item['xcal']['x-calconnect-venue_adr_x-calconnect-street']))
+        {
+            $location_parts[] = $item['xcal']['x-calconnect-venue_adr_x-calconnect-street'];
+        }
+        if (isset($item['xcal']['x-calconnect-venue_adr_x-calconnect-city']))
+        {
+            $location_parts[] = $item['xcal']['x-calconnect-venue_adr_x-calconnect-city'];
+        }
+        $location = implode(', ', $location_parts);
 
         $qb = net_nemein_calendar_event::new_query_builder();
         $qb->add_constraint('up', '=', $root_event->id);
@@ -488,6 +494,7 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         $this->_datamanager->autoset_storage($event);
         $this->_datamanager->types['start']->value = new Date($start);
         $this->_datamanager->types['end']->value = new Date($end);
+        $this->_datamanager->types['location']->value = $location;
         foreach ($item as $key => $value)
         {
             if (isset($this->_datamanager->types[$key]))
@@ -500,6 +507,9 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         {
             return false;
         }
+        
+        $this->parse_tags($event, $item, 'description');
+        $this->parse_parameters($event, $item);
         
         return $event->guid;
     }
@@ -748,9 +758,9 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
      * @param Array $item Feed item as provided by MagpieRSS
      * @return boolean
      */    
-    function parse_tags($article, $item)
+    function parse_tags($article, $item, $field = 'content')
     {
-        $html_tags = org_openpsa_httplib_helpers::get_anchor_values($article->content, 'tag');
+        $html_tags = org_openpsa_httplib_helpers::get_anchor_values($article->$field, 'tag');
         $tags = array();
         
         if (count($html_tags) > 0)
