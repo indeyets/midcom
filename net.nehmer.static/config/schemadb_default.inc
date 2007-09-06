@@ -10,6 +10,10 @@
             'storage' => 'name',
             'type' => 'text',
             'widget' => 'text',
+            'write_privilege' => array
+            (
+                'privilege' => 'midcom:urlname',
+            ),
         ),
         'title' => Array
         (

@@ -20,12 +20,7 @@ class midcom_admin_folder_interface extends midcom_baseclasses_components_interf
         
         $this->_component = 'midcom.admin.folder';
         $this->_purecode = true;
-        
-        $this->_autoload_files = array
-        (
-            'folder_management.php',
-        );
-        
+                
         $this->_autoload_libraries = array
         (
             'midcom.admin.help',

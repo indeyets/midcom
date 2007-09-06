@@ -43,6 +43,10 @@ Beta
 Järjestellyn mukaan
 ---STRINGEND
 
+---STRING cancelled
+Peruutettu
+---STRINGEND
+
 ---STRING change component
 Vaihda komponenttia
 ---STRINGEND
@@ -133,6 +137,18 @@ Viety
 
 ---STRING failed to create a new style template
 Uuden tyylipohjan luominen epäonnistui!
+---STRINGEND
+
+---STRING folder created
+Kansio luotu
+---STRINGEND
+
+---STRING folder page class
+Kansion luokka
+---STRINGEND
+
+---STRING folder saved
+Kansio tallennettu
 ---STRINGEND
 
 ---STRING folder type
@@ -299,6 +315,10 @@ Tyylielementtilista
 Tyylielementit tyylille %s
 ---STRINGEND
 
+---STRING style template
+Ulkoasupohja
+---STRINGEND
+
 ---STRING submitting the form
 Tallennetaan muutos
 ---STRINGEND
@@ -313,17 +333,5 @@ Otsikko on tyhjä!
 
 ---STRING warning, might result in data loss
 Varoitus! Saattaa johtaa tietojen katoamiseen!
----STRINGEND
-
----STRING cancelled
-Peruutettu
----STRINGEND
-
----STRING folder created
-Kansio luotu
----STRINGEND
-
----STRING folder saved
-Kansio tallennettu
 ---STRINGEND
 

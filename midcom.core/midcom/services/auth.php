@@ -659,6 +659,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
                 // MidCOM core level privileges
                 'midcom:approve' => MIDCOM_PRIVILEGE_DENY,
                 'midcom:component_config' => Array (MIDCOM_PRIVILEGE_DENY, MIDCOM_PRIVILEGE_ALLOW),
+                'midcom:urlname' => MIDCOM_PRIVILEGE_DENY,
                 'midcom:isonline' => Array (MIDCOM_PRIVILEGE_DENY, MIDCOM_PRIVILEGE_ALLOW),
                 'midcom:vgroup_register' => MIDCOM_PRIVILEGE_ALLOW,
                 'midcom:vgroup_delete' => MIDCOM_PRIVILEGE_ALLOW,

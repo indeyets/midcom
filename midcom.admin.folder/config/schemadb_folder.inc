@@ -11,6 +11,10 @@
             'type' => 'text',
             'widget' => 'text',
             'required' => ($GLOBALS['midcom_admin_folder_mode'] === 'edit') ? true : false,
+            'write_privilege' => array
+            (
+                'privilege' => 'midcom:urlname',
+            ),
         ),
         'title' => array
         (
@@ -70,6 +74,22 @@
                 ),
             ),
             'widget' => 'select',
+        ),
+        'page_class' => array
+        (
+            'title' => 'folder page class',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'midcom.services.metadata',
+                'name'     => 'page_class',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
+            'write_privilege' => array
+            (
+                'privilege' => 'midcom.admin.folder:template_management',
+            ),
         ),
     ),
 ),

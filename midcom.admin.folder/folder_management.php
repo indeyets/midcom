@@ -94,6 +94,7 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
      */
     function get_plugin_handlers()
     {
+        $_MIDCOM->load_library('midcom.admin.folder');
         return array
         (
             /**

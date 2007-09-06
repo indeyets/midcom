@@ -147,6 +147,10 @@ Failed to create a new style template!
 Folder created
 ---STRINGEND
 
+---STRING folder page class
+Folder's class
+---STRINGEND
+
 ---STRING folder saved
 Folder saved
 ---STRINGEND
@@ -313,6 +317,10 @@ List of style elements
 
 ---STRING style elements for %s
 Style elements for style %s
+---STRINGEND
+
+---STRING style template
+Style template
 ---STRINGEND
 
 ---STRING this component is still being developed and tested and might contain undocumented features
