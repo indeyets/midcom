@@ -156,7 +156,8 @@ jQuery.midcom_services_toolbars = function(root, settings, with_items) {
 
         jQuery(root).append(item_holder);
         
-        if (type_configs[settings.type].draggable)
+        if (   type_configs[settings.type].draggable
+            && !jQuery.browser.safari)
         {
             jQuery(root).append(
                 jQuery('<div>').addClass('dragbar')
@@ -178,6 +179,11 @@ jQuery.midcom_services_toolbars = function(root, settings, with_items) {
         }        
         root_element.css({ left: posX, top: posY });
         
+        if (jQuery.browser.safari)
+        {
+            root_element.css({ position: 'fixed' });
+        }
+        
         jQuery('div.item', item_holder).each(function(i,n){
             debug("i: "+i+" n: "+n);
             var item = jQuery(n);
@@ -195,12 +201,17 @@ jQuery.midcom_services_toolbars = function(root, settings, with_items) {
             });
         });
         
-        if (type_configs[settings.type].draggable)
+        if (   type_configs[settings.type].draggable
+            && !jQuery.browser.safari)
         {
             //var dragbar = jQuery('div.dragbar',root_element);
             root_element.easydrag(true);
             root_element.ondrop(function(e){save_position(e);});
             root_element.css({ cursor: 'default' });
+        }
+        else
+        {
+            jQuery('.dragbar',root_element).hide();
         }
         
         root_element.show();
@@ -257,10 +268,15 @@ jQuery.midcom_services_toolbars = function(root, settings, with_items) {
     
     function debug(msg, type)
     {
-        var console_type = type || 'debug';
+        // var console_type = 'debug';
+        // 
+        // if (type != "undefined")
+        // {
+        //     console_type = type;
+        // }
 
         if(settings.debug) {
-            console[console_type]('midcom_services_toolbars: '+msg);
+            console.log('midcom_services_toolbars: '+msg);
         }
     }
     
