@@ -284,8 +284,8 @@ if (!function_exists('midcom_helper_formatters_noimages'))
 {
     function midcom_helper_formatters_noimages($content, $echo_results=true)
     {
-        echo "{$content}";
-        echo "<br/>------<br/>";
+        // echo "{$content}";
+        // echo "<br/>------<br/>";
         
         $search = array
         (
