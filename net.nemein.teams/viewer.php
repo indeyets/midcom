@@ -71,6 +71,21 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nemein_teams_handler_admin', 'log'),
 	        'fixed_args' => Array('log'),
         );
+        
+        // Manage /
+        $this->_request_switch['manage'] = array
+        (
+            'handler' => Array('net_nemein_teams_handler_admin', 'manage'),
+	        'fixed_args' => Array('manage'),
+        );
+        
+        // Manage / Delete
+        $this->_request_switch['manage_delete'] = array
+        (
+            'handler' => Array('net_nemein_teams_handler_admin', 'manage'),
+	        'fixed_args' => Array('manage', 'delete'),
+	        'variable_args' => 1,
+        );
 
         // Handle / Team list
         $this->_request_switch['teams_list'] = array
@@ -80,10 +95,10 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         );
 
         // Approve /
-        $this->_request_switch['approve'] = array
+        $this->_request_switch['pending'] = array
         (
-            'handler' => Array('net_nemein_teams_handler_team', 'approve'),
-	        'fixed_args' => Array('approve'),
+            'handler' => Array('net_nemein_teams_handler_team', 'pending'),
+	        'fixed_args' => Array('pending'),
         );
 
         // Create /

@@ -16,6 +16,8 @@
  */
 class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_handler 
 {
+    var $_teams_list = null;
+
 
     /**
      * Simple default constructor.
@@ -58,6 +60,66 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
 
 	return true;
     }
+    
+    function _handler_manage ($handler_id, $args, &$data)
+    {
+        $_MIDCOM->auth->require_admin_user();
+        
+        if (isset($args[0]))
+        {
+            $qb = net_nemein_teams_team_dba::new_query_builder();
+            $qb->add_constraint('groupguid', '=', $args[0]);
+            
+            $teams = $qb->execute();
+            
+            if (count($teams) > 0)
+            {
+                foreach ($teams as $team)
+                {
+                    $team_group = new midcom_db_group($team->groupguid);
+                    $team_topic = new midcom_db_topic($team->topicguid);
+                    
+                    $qb = midcom_db_member::new_query_builder();
+                    $qb->add_constraint('gid', '=', $team_group->id);
+                    
+                    $members = $qb->execute();
+                    
+                    foreach ($members as $member)
+                    {
+                        $member->delete();
+                    }
+                    
+                    $team_group->delete();
+                    $team_topic->delete();
+                    $team->delete();
+                    
+                    $_MIDCOM->relocate('manage');
+                }
+            
+            }
+        
+        }
+        
+        $qb = net_nemein_teams_team_dba::new_query_builder();
+        $this->_teams_list = $qb->execute();
+    
+        return true;
+    }
+    
+    function _show_manage($handler_id, &$data)
+    {
+        midcom_show_style('manage_teams_start');
+        
+        foreach($this->_teams_list as $team)
+        {
+            $this->_request_data['group_guid'] = $team->groupguid;
+            $team_group = new midcom_db_group($team->groupguid);
+            $this->_request_data['team_name'] = $team_group->name;
+            midcom_show_style('manage_teams_item');
+        }
+        
+        midcom_show_style('manage_teams_end');
+    } 
     
     function _show_admin($handler_id, &$data)
     {

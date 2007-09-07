@@ -9,7 +9,7 @@
 <h1><?php echo $data['l10n']->get('Application'); ?></h1>
 <h2><?php echo $data['l10n']->get('Apply to team') . " - " . $data['team_name']; ?></h2>
 <p>
-<form method="post" name="team_application" lass="net_nmein_team_application">
+<form method="post" name="team_application" class="net_nmein_team_application">
     <input type="hidden" name="applyee" value="<?php echo $_MIDCOM->auth->user->guid; ?>"/>
     <input type="hidden" name="manager" value="<?php echo $data['team_manager']; ?>"/>
     Message:<br/> 

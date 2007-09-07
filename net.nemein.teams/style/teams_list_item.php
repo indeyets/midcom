@@ -4,9 +4,10 @@
 
 <li>
 <?php
-echo "<pre>";
-print_r($data['view_team']);
-echo "</pre>";
 
+  echo $data['view_team']['team_name'];
+  echo $data['view_team']['team_logo'];
+  echo "<a href=\"application/{$data['view_team']['team_group_guid']}.html\">
+      {$data['view_team']['team_name']}</a>";
 ?>
 </li>

@@ -32,6 +32,7 @@ class net_nemein_teams_interface extends midcom_baseclasses_components_interface
 	        'log.php',
 	        'logger.php',
 	        'team.php',
+	        'pending.php',
         );
         
         // Load all libraries used by component here
