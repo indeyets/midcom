@@ -27,11 +27,13 @@ echo $data['alphabets_nav'];
             foreach ($content as $item)
             {
                 $class = 'external';
+                $target = "_blank";
                 if ($item->internal)
                 {
                     $class = 'internal';
+                    $target = "_self";
                 }
-                echo "    <li class=\"{$class}\"><a href=\"{$item->url}\">{$item->title}</a>";
+                echo "    <li class=\"{$class}\"><a href=\"{$item->url}\" target=\"{$target}\" rel=\"Bookmark\" title=\"{$item->title}\">{$item->title}</a>";
                 
                 if ($enable_delete)
                 {
