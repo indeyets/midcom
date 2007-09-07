@@ -20,6 +20,9 @@
 'display_teams_per_page' => 1,
 'display_pages' => 10, 
 
+'private_pendings_url' => '/leet_teams/pending',
+'private_pendings_link' => 'approve/decline',
+
 /**
  * Plugins and other miscellaneous configuration keys
  */

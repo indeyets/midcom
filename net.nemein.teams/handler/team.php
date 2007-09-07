@@ -311,7 +311,6 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
             $this->_request_data['team_manager'] = $teams[0]->managerguid;
         }
         
-        // TODO: Private message to team manager
         if (isset($_POST['submit_application']))
 	    {	        
 	        // Creating a pending application
@@ -326,9 +325,20 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	        }
 	        else
 	        {
-	        
-	        }
-	        
+	            if (! $_MIDCOM->componentloader->load_graceful('net.nehmer.mail'))
+                {
+                    return false;
+                }
+
+	            $subject = $this->_l10n->get('New application from');
+                $subject .= " " . $_MIDCOM->auth->user->_storage->username; 
+                $body = $this->_l10n->get('User has applied for your team') . "<br/>";
+                $body .= "<a href=\"" . $this->_config->get('private_pendings_url') . "\">"
+                    . $this->_config->get('private_pendings_link') . "</a>";
+
+                $inbox = net_nehmer_mail_mailbox::get_inbox($_MIDCOM->auth->get_user($pending->managerguid));
+                $result = $inbox->deliver_mail($_MIDCOM->auth->user, $subject, $body);	        
+	        }     
 
             //$_MIDCOM->relocate('');
 	    }
