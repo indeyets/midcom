@@ -1,10 +1,10 @@
 function run_client_action(client_id, action_name, action_data)
 {
-    console.log("run_client_action client_id: "+client_id+" action_name: "+action_name);
+    //console.log("run_client_action client_id: "+client_id+" action_name: "+action_name);
     
     var receiver = jQuery('[@nnf_id=' + client_id + ']');
-    console.log("receiver nnf_id: "+receiver.attr('nnf_id'));
-    console.log("receiver nnf_type: "+receiver.attr('nnf_type'));
+    //console.log("receiver nnf_id: "+receiver.attr('nnf_id'));
+    //console.log("receiver nnf_type: "+receiver.attr('nnf_type'));
     
     if (receiver.attr('nnf_type') == 'player')
     {
@@ -41,7 +41,7 @@ jQuery.fn.extend({
 
 jQuery.net_nemein_flashplayer_player = function(object, options)
 {    
-    console.log("net_nemein_flashplayer_player object: "+object);
+    //console.log("net_nemein_flashplayer_player object: "+object);
     
     var _object = object;
     var _player_id = generate_id();
@@ -57,18 +57,18 @@ jQuery.net_nemein_flashplayer_player = function(object, options)
     .attr("nnf_type","player")
     .html(flashplayer_tag.toString())
     .bind("run_client_action", function(event, action, args){
-	    console.log("player run_client_action action: "+action);
-	    console.log("player run_client_action args: "+args);
+	    //console.log("player run_client_action action: "+action);
+	    //console.log("player run_client_action args: "+args);
         var functionToCall = eval(action);
         functionToCall.apply(functionToCall, [args]);
 	}).bind("run_player_action", function(event, action, args){
-	    console.log("run_player_action action: "+action);
-	    console.log("run_player_action args.length: "+args.length);
+	    //console.log("run_player_action action: "+action);
+	    //console.log("run_player_action args.length: "+args.length);
 	    proxy_send(action, args);
 	}).bind("set_video", function(event, item, options){
-	    console.log("set_video item.id: "+item.id);
-	    console.log("set_video item.video_url: "+item.video_url);
-	    console.log("set_video options: "+options);
+	    //console.log("set_video item.id: "+item.id);
+	    //console.log("set_video item.video_url: "+item.video_url);
+	    //console.log("set_video options: "+options);
 	    set_video(item, options);
 	});
 	
@@ -76,13 +76,13 @@ jQuery.net_nemein_flashplayer_player = function(object, options)
 	
 	function set_video(item, video_options)
 	{
-	    console.log("set_video item:"+item+" video_options:"+video_options);
+	    //console.log("set_video item:"+item+" video_options:"+video_options);
 	    
 	    var args_options = jQuery.extend({
 	        auto_play: options.auto_play
 	    }, video_options || {});
         
-        console.log("item.video_url: "+item.video_url);
+        //console.log("item.video_url: "+item.video_url);
         
 	    var send_args = [
 	        item,
@@ -121,7 +121,7 @@ jQuery.net_nemein_flashplayer_player = function(object, options)
     
     function player_initialized(args)
     {
-        console.log("player_initialized");
+        //console.log("player_initialized");
     }
 }
 
@@ -144,8 +144,8 @@ jQuery.fn.extend({
 		return new jQuery.net_nemein_flashplayer_playlist(this, options);
 	},
 	run_playlistclient_action: function(action, args) {
-	    console.log("run_playlistclient_action action: "+action);
-	    console.log("run_playlistclient_action args: "+args);
+	    //console.log("run_playlistclient_action action: "+action);
+	    //console.log("run_playlistclient_action args: "+args);
 	    return this.trigger("run_client_action",[action, args]);
 	},
 	run_playlist_action: function(action, args) {
@@ -174,7 +174,7 @@ jQuery.fn.extend({
 
 jQuery.net_nemein_flashplayer_playlist = function(object, options)
 {
-    console.log("net_nemein_flashplayer_playlist object: "+object);
+    //console.log("net_nemein_flashplayer_playlist object: "+object);
 
     var _object = object;
     var _playlist_id = generate_id();
@@ -197,33 +197,33 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
     .attr("nnf_type","playlist")
     .html(flashplaylist_tag.toString())    
     .bind("run_client_action", function(event, action, args){
-	    console.log("playlist run_client_action action: "+action);
-	    console.log("playlist run_client_action args: "+args);
+	    //console.log("playlist run_client_action action: "+action);
+	    //console.log("playlist run_client_action args: "+args);
         var functionToCall = eval(action);
         functionToCall.apply(functionToCall, [args]);
 	})
     .bind("run_playlist_action", function(event, action, args){
-	    console.log("run_playlist_action action: "+action);
-	    console.log("run_playlist_action args.length: "+args.length);
+	    //console.log("run_playlist_action action: "+action);
+	    //console.log("run_playlist_action args.length: "+args.length);
 	    proxy_send(action, args);
 	})
     .bind("load_playlist", function(event, url){
-	    console.log("set_video url: "+url);
+	    //console.log("set_video url: "+url);
 	    load_playlist(url);
 	}).bind("add_item", function(event, item){
-	    console.log("add_item item: "+item);
+	    //console.log("add_item item: "+item);
 	    add_item(item);
 	}).bind("remove_item", function(event, item_id){
-	    console.log("remove_item item_id: "+item_id);
+	    //console.log("remove_item item_id: "+item_id);
 	    remove_item(item_id);
     }).bind("connect_player", function(event, player_id){
-	    console.log("connect_player player_id: "+player_id);
+	    //console.log("connect_player player_id: "+player_id);
 	    connect_player(player_id);
 	}).bind("disconnect_player", function(event, player_id){
-	    console.log("disconnect_player player_id: "+player_id);
+	    //console.log("disconnect_player player_id: "+player_id);
 	    disconnect_player(player_id);
 	}).bind("change_movie", function(event, item){
-	    console.log("change_movie item.id: "+item.id);
+	    //console.log("change_movie item.id: "+item.id);
 	    change_movie(item);
 	});
 
@@ -236,7 +236,7 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
             options: {},
             playlist_id: _playlist_id
         };
-        console.log("change_movie item.video_url: "+item.video_url);
+        //console.log("change_movie item.video_url: "+item.video_url);
         jQuery(_players).each(function(i,player){
             player.set_video(item);
         });
@@ -259,7 +259,7 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
 	
     function connect_player(player_id)
     {
-        console.log("connect_player player_id: "+player_id);
+        //console.log("connect_player player_id: "+player_id);
         if (!_player_exists(player_id))
         {
             var player = jQuery('[@nnf_id=' + player_id + ']');
@@ -269,7 +269,7 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
     
     function disconnect_player(player_id)
     {
-        console.log("disconnect_player player_id: "+player_id);
+        //console.log("disconnect_player player_id: "+player_id);
         if (_player_exists(player_id))
         {
             _players = jQuery.grep( _players, function(n,i){
@@ -323,7 +323,7 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
     
     function load_playlist(url)
     {
-        console.log("load_playlist url: "+url);
+        //console.log("load_playlist url: "+url);
     
         _request(url, loading_success, loading_failure)
     }
@@ -344,14 +344,14 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
             };
             
             jQuery.each(options.item_extra_keys,function(i,key){
-                console.log("rel_this.find("+key+").text(): "+rel_this.find(key).text());
+                //console.log("rel_this.find("+key+").text(): "+rel_this.find(key).text());
                 results[idx][key] = rel_this.find(key).text();
             });
         });
     	
         _playlist_content = results;
         
-        console.log("_playlist_content.length: "+_playlist_content.length);
+        //console.log("_playlist_content.length: "+_playlist_content.length);
         _playlist_loaded = true;
         
         if (   _playlist_content.length > 0
@@ -366,7 +366,7 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
     }
     
 	function loading_failure(type, expobj) {
-	    console.log("loading_failure type: "+type);
+	    //console.log("loading_failure type: "+type);
 	    
 	    var status = type;
 	    
@@ -377,7 +377,7 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
 	}    
 
 	function _request(url, success, failure) {
-	    console.log("_request url: "+url);
+	    //console.log("_request url: "+url);
         
 		jQuery.ajax({
 		    type: "GET",
@@ -397,7 +397,7 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
     
     function proxy_send(action, args)
     {
-        console.log("Call Flash Playlist with action: "+action);
+        //console.log("Call Flash Playlist with action: "+action);
         _proxy.call(action, args);
     }	
     
@@ -418,7 +418,7 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
     
     function playlist_initialized(args)
     {
-        console.log("playlist_initialized");
+        //console.log("playlist_initialized");
         _playlist_initialized = true;
         
         if (   _playlist_content.length > 0
@@ -449,7 +449,7 @@ jQuery.net_nemein_flashplayer_playlist.defaults = {
 
 jQuery.net_nemein_flashplayer_playlist_item = function(data)
 {
-    console.log("net_nemein_flashplayer_playlist_item data: "+data);
+    //console.log("net_nemein_flashplayer_playlist_item data: "+data);
 
     data = jQuery.extend({}, jQuery.net_nemein_flashplayer_playlist_item.defaults, {
 	}, data);    
