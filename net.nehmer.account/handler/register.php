@@ -940,7 +940,6 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         $this->_component_data['active_leaf'] = NET_NEHMER_ACCOUNT_LEAFID_REGISTER;
         $_MIDCOM->set_pagetitle($this->_l10n->get('account registration') . ': ' . $this->_l10n->get('activation successful'));
         
-        
         $this->activated = true;
         return true;
     }
@@ -984,7 +983,18 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         }
 
         // Update the password
-        $this->_person->password = $this->_person->get_parameter('net.nehmer.account', 'password');
+        $password = $this->_person->get_parameter('net.nehmer.account', 'password');
+        $this->_person->password = $password;
+        // if (! empty($password))
+        // {
+            // $this->_person->password = $this->_person->get_parameter('net.nehmer.account', 'password');
+        // }
+        // else
+        // {
+        //     $password = $this->_person->password;
+        //     $password = str_replace("*","",$password);
+        // }
+        
         if (! $this->_person->update())
         {
             $_MIDCOM->auth->drop_sudo();
@@ -1017,6 +1027,27 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         // Trigger post-activation hooks
         $this->_auto_publish_account_details();
         $this->_invoke_account_activation_callback();
+
+        $_MIDCOM->auth->drop_sudo();
+        
+        $auto_login_sitegroup = $this->_config->get('auto_login_on_activation');
+        if ($auto_login_sitegroup)
+        {
+            if (mgd_auth_midgard("{$this->_person->username}+{$auto_login_sitegroup}", $this->_person->password, 0))
+            {
+                $this->logged_in = true;
+            }
+            
+            if (! $this->logged_in)
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Failed to login automatically with username '{$this->_person->username}' and password '{$this->_person->password}'.", MIDCOM_LOG_ERROR);
+                debug_pop();                
+            }
+        }
+        
+        $_MIDCOM->auth->request_sudo('net.nehmer.account');
+        
         $this->_send_welcome_mail();
 
         // Check for a custom return_url
@@ -1028,11 +1059,6 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         }
 
         $_MIDCOM->auth->drop_sudo();
-        
-        if ($this->_config->get('auto_login_on_activation'))
-        {
-            $this->logged_in = $_MIDCOM->auth->_auth_backend->create_login_session($username, $password);
-        }
     }
     
     /**
@@ -1154,16 +1180,36 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         $subject = str_replace('__USERNAME__', $this->_account->username, $subject);
         $body = $this->_l10n->get($this->_config->get('welcome_mail_body'));
         $body = str_replace('__USERNAME__', $this->_account->username, $body);
-
-        $inbox = net_nehmer_mail_mailbox::get_inbox($this->_account);
-        $result = $inbox->deliver_mail($sender, $subject, $body);
-
-        if ($this->isError($result))
+        
+        $mail = new net_nehmer_mail_mail();
+        $mail->sender = $sender->guid;
+        $mail->subject = $subject;
+        $mail->body = $body;
+        $mail->received = time();
+        $mail->status = NET_NEHMER_MAIL_STATUS_SENT;
+        $mail->owner = $this->_account->id;
+                
+        if (! $mail->create())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('Failed to send welcome mail: ' . $result->getMessage(), MIDCOM_ERRCRIT);
-            debug_pop();
+            debug_add('Failed to send welcome mail', MIDCOM_ERRCRIT);
+            debug_pop();            
         }
+        else
+        {
+            $receivers = array( $this->_account );
+            $mail->deliver_to(&$receivers);            
+        }
+        
+        // 
+        // 
+        // $inbox = net_nehmer_mail_mailbox::get_inbox($this->_account);
+        // $result = $inbox->deliver_mail($sender, $subject, $body);
+
+        // if ($this->isError($result))
+        // {
+        // 
+        // }
     }
 }
 ?>

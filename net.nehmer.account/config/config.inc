@@ -120,7 +120,7 @@
  */
 'invreg_schema' => 'account',
 
-'auto_login_on_activation' => false,
+'auto_login_on_activation' => false, //false or sitegroup name
 
 'override_registration_steps' => array
 (

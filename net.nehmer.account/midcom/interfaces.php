@@ -64,7 +64,11 @@ class net_nehmer_account_interface extends midcom_baseclasses_components_interfa
         if (!class_exists('midcom_helper_itemlist'))
         {
             require(MIDCOM_ROOT . '/midcom/helper/itemlist.php');
-        }    
+        }
+        if (!class_exists('midcom_helper_mailtemplate'))
+        {
+            require(MIDCOM_ROOT . '/midcom/helper/mailtemplate.php');
+        }
         return true;
     }
     
