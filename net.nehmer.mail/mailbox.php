@@ -534,7 +534,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
         {
             $owner = $user;
         }
-
+        
         $config = $GLOBALS['midcom_component_data']['net.nehmer.mail']['config'];
 
         $mailbox = new net_nehmer_mail_mailbox();
@@ -594,7 +594,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
         {
             $owner = $user;
         }
-
+        
         $config = $GLOBALS['midcom_component_data']['net.nehmer.mail']['config'];
 
         $mailbox = new net_nehmer_mail_mailbox();

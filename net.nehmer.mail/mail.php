@@ -78,7 +78,8 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
             
             if ($this->sender != '')
             {
-                $mailbox = net_nehmer_mail_mailbox::get_outbox($_MIDCOM->auth->get_user($this->sender));
+                $user = $_MIDCOM->auth->get_user($this->sender);
+                $mailbox = net_nehmer_mail_mailbox::get_outbox($user);
                 if ($mailbox)
                 {
                     return $mailbox;
