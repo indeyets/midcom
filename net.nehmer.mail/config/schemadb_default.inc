@@ -100,7 +100,7 @@
             'description' => 'These are the receivers of the mail.',
             'helptext' => '',
             
-            'storage' => 'receivers',
+            'storage' => null,
             'type' => 'select',
             'type_config' => array
             (

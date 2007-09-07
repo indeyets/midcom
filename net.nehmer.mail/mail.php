@@ -75,6 +75,16 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("No user logged in.");
             debug_pop();
+            
+            if ($this->sender != '')
+            {
+                $mailbox = net_nehmer_mail_mailbox::get_outbox($_MIDCOM->auth->get_user($this->sender));
+                if ($mailbox)
+                {
+                    return $mailbox;
+                }
+            }
+            
             return false;
         }
         
@@ -273,14 +283,14 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
                 // This will exit.
             }
             
-            $user =& $_MIDCOM->auth->get_user($receiver->id);
+            $user =& $_MIDCOM->auth->get_user($receiver->guid);
             
             $this->set_privilege('midgard:read', $user);
 
             $mail->set_privilege('midgard:read', $user);
             $mail->set_privilege('midgard:delete', $user);
             $mail->set_privilege('midgard:owner', $user);
-            $mail->set_privilege('midgard:read');
+            //$mail->set_privilege('midgard:read');
             $mail->unset_privilege('midgard:owner');
             
             debug_add("delivered to user {$receiver->id} to mailbox {$inbox->id}");
@@ -320,7 +330,7 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
      *     and the optional prefix 'reverse'. The default is 'reverse received'.
      * @return Array A list of found mails, or false on failure.
      */
-    function list_deleted_mails($order = 'reverse received')
+    function list_deleted_mails()
     {   
         $user =& $_MIDCOM->auth->user->get_storage();
         
@@ -330,6 +340,26 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
         $qb->add_constraint('metadata.deleted', '<>', 0);
         
         $results = $qb->execute();
+        
+        return $results;
+    }
+    
+    function list_unread_mails($order = 'reverse received')
+    {
+        $qb = net_nehmer_mail_mail::new_query_builder();
+        $qb->add_order($order);
+        $qb->add_constraint('status', '=', NET_NEHMER_MAIL_STATUS_UNREAD);
+        
+        $results = $qb->execute();
+        
+        return $results;
+    }
+    function list_unread_mails_count()
+    {   
+        $qb = net_nehmer_mail_mail::new_query_builder();
+        $qb->add_constraint('status', '=', NET_NEHMER_MAIL_STATUS_UNREAD);
+        
+        $results = $qb->count();
         
         return $results;
     }

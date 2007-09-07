@@ -264,11 +264,20 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
             ));
         }
     }
-
+    
+    function get_unread_count()
+    {
+        $user = $_MIDCOM->auth->user->get_storage();
+        $inbox = net_nehmer_mail_mailbox::get_inbox($user);
+        $unread = $inbox->get_unseen_count();
+        
+        return $unread;
+    }
+    
     /**
      * Prepares the mail for showing.
      */
-    function _handler_mail_show($handler_id, $args, &$data)
+    /*function _handler_mail_show($handler_id, $args, &$data)
     {
         $data['mail'] = new net_nehmer_mail_mail($args[0]);
         if (! $data['mail'])
@@ -329,13 +338,13 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
 
         return true;
-    }
+    }*/
 
     /**
      * Deletes a mail and relocates accordingly. This call doesn't have a show hook, as it will
      * relocate or generate_error in all branches.
      */
-    function _handler_mail_manage($handler_id, $args, &$data)
+    /*function _handler_mail_manage($handler_id, $args, &$data)
     {
         if ($_REQUEST['return_url'])
         {
@@ -393,12 +402,12 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
 
         $_MIDCOM->relocate($return_url);
         // This will exit.
-    }
+    }*/
 
     /**
      * Displays an e-Mail
      */
-    function _show_mail_show($handler_id, &$data)
+    /*function _show_mail_show($handler_id, &$data)
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
@@ -424,14 +433,14 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
         $data['can_delete'] = $_MIDCOM->auth->can_do('midgard:delete', $data['mail']);
 
         midcom_show_style('mail-show');
-    }
+    }*/
 
     /**
      * The index handler will list all mailboxes of the current user, along with their message
      * counts. The handler only prepares the mailbox listing, the viewer code takes the bulk of
      * the logic here.
      */
-    function _handler_index ($handler_id, $args, &$data)
+    /*function _handler_index ($handler_id, $args, &$data)
     {
         if ($_MIDCOM->auth->user === null)
         {
@@ -444,12 +453,12 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
 
         return true;
-    }
+    }*/
 
     /**
      * The rendering code consists of a standard init/loop/end construct.
      */
-    function _show_index($handler_id, &$data)
+    /*function _show_index($handler_id, &$data)
     {
         midcom_show_style('mailbox-list-heading');
 
@@ -499,12 +508,12 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
 
             midcom_show_style('mailbox-list-end');
         }
-    }
+    }*/
 
     /**
      * Helper function used in _show_index to prepare all meta-information around the mailbox.
      */
-    function _show_index_prepare_requestdata(&$data)
+    /*function _show_index_prepare_requestdata(&$data)
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         if ($data['mailbox']->name == 'INBOX')
@@ -551,13 +560,13 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
         {
             $data['count_string'] = $data['msgcount'];
         }
-    }
+    }'/
 
     /**
      * Loads the mailbox referenced by $args, validats the privileges, and retrieves
      * all mails from that mailbox.
      */
-    function _handler_mailbox($handler_id, $args, &$data)
+    /*function _handler_mailbox($handler_id, $args, &$data)
     {
         if ($args[0] == 'INBOX')
         {
@@ -605,12 +614,12 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
         $data['mails'] = $data['mailbox']->list_mails();
 
         return true;
-    }
+    }*/
 
     /**
      * Renders a mailbox' contents.
      */
-    function _show_mailbox($handler_id, &$data)
+    /*function _show_mailbox($handler_id, &$data)
     {
         midcom_show_style('mail-list-heading');
 
@@ -642,12 +651,12 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
             $data['delete_submit_button_name'] = 'net_nehmer_mail_mail_db';
             midcom_show_style('mail-list-end');
         }
-    }
+    }*/
 
     /**
      * Simple search form to allow lookup of users to write mails to.
      */
-    function _handler_mail_searchto($handler_id, $args, &$data)
+    /*function _handler_mail_searchto($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_user_do('midgard:create', null, 'net_nehmer_mail_mail');
 
@@ -697,12 +706,12 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
         $_MIDCOM->set_pagetitle($this->_l10n->get('lookup username'));
 
         return true;
-    }
+    }*/
 
     /**
      * Shows the search form and, if applicable, the search results.
      */
-    function _show_mail_searchto($handler_id, &$data)
+    /*function _show_mail_searchto($handler_id, &$data)
     {
         midcom_show_style('mail-searchto-form');
         if ($data['results'] !== null)
@@ -720,7 +729,7 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
             }
             midcom_show_style('mail-searchto-result-end');
         }
-    }
+    }*/
 
     /**
      * Prepares a datamanager for entering the contents of a new mail.
@@ -744,7 +753,7 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
      *
      * If return to is set, the default style will show an back link on top of the page.
      */
-    function _handler_mail_new($handler_id, $args, &$data)
+    /*function _handler_mail_new($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_user_do('midgard:create', null, 'net_nehmer_mail_mail');
 
@@ -847,12 +856,12 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
 
         // Editing...
         return true;
-    }
+    }*/
 
     /**
      * Sends a mail, according to the information from the component context.
      */
-    function _send_mail(&$data)
+    /*function _send_mail(&$data)
     {
         $result = $data['receiver_mailbox']->deliver_mail
         (
@@ -926,15 +935,15 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
 
         $_MIDCOM->relocate($dest);
         // This will exit.
-    }
+    }*/
 
     /**
      * Shows the send form. Nothing special.
      */
-    function _show_mail_new($handler_id, &$data)
+    /*function _show_mail_new($handler_id, &$data)
     {
         midcom_show_style('mail-show-new');
-    }
+    }*/
 
     /**
      * Prepares the mail for showing. This is used only if no outbox is available.
@@ -942,7 +951,7 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
      * If set, the $_REQUEST key net_nehmer_mail_return_to is added into the
      * request context as return_to (if not, the key is set to null).
      */
-    function _handler_mail_sent($handler_id, $args, &$data)
+    /*function _handler_mail_sent($handler_id, $args, &$data)
     {
         $data['mail'] = new net_nehmer_mail_mail($args[0]);
         if (! $data['mail'])
@@ -987,12 +996,12 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
         $this->_component_data['active_leaf'] = NET_NEHMER_MAIL_LEAFID_NEW;
 
         return true;
-    }
+    }*/
 
     /**
      * Shows a sent mail. This is used only if no outbox is available.
      */
-    function _show_mail_sent($handler_id, &$data)
+    /*function _show_mail_sent($handler_id, &$data)
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         $data['newmail_url'] = "{$prefix}mail/new/{$data['receiver']->guid}.html";
@@ -1001,7 +1010,7 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
         $data['return_url'] = "{$prefix}mailbox/OUTBOX.html";
 
         midcom_show_style('mail-show-sent');
-    }
+    }*/
 
     /**
      * Sends a mail to the user notifying him about a new mail in his inbox. This
@@ -1026,7 +1035,7 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
      * @param Array $data The request data.
      * @access private
      */
-    function _send_notification_mail($mail_guid, &$data)
+    /*function _send_notification_mail($mail_guid, &$data)
     {
         if (! $this->_config->get('enable_email_notify'))
         {
@@ -1085,7 +1094,7 @@ class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
         $mail->set_parameters($parameters);
         $mail->parse();
         $mail->send($person->email);
-    }
+    }*/
 
 
 

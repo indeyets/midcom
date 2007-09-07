@@ -13,6 +13,8 @@
  * @package net.nehmer.mail
  */
 
+//require(MIDCOM_ROOT . '/net/nehmer/mail/mail.php');
+
 class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
 {
     /**
@@ -43,6 +45,18 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
     function get_parent_guid_uncached()
     {
         return $this->owner;
+    }
+
+    /**
+     * DBA magic defaults which assign write privileges for all USERS
+     */
+    function get_class_magic_default_privileges()
+    {
+        return Array (
+            'EVERYONE' => Array('midgard:read' => MIDCOM_PRIVILEGE_DENY),
+            'ANONYMOUS' => Array(),
+            'USERS' => Array('net.nehmer.mail:list_mails' => MIDCOM_PRIVILEGE_ALLOW),
+        );
     }
     
     /**
@@ -225,11 +239,11 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
      *
      * @return midcom_core_querybuilder The prepared Querybuilder.
      */
-    function &get_qb_mails()
+    function get_qb_mails()
     {
         $_MIDCOM->auth->require_do('net.nehmer.mail:list_mails', $this);
 
-        $qb =& net_nehmer_mail_mail::new_query_builder();
+        $qb = net_nehmer_mail_mail::new_query_builder();
         $qb->add_constraint('mailbox', '=', $this->guid);
                 
         return $qb;

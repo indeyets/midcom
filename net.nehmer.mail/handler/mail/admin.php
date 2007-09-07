@@ -46,8 +46,6 @@ class net_nehmer_mail_handler_mail_admin extends midcom_baseclasses_components_h
      */
     function net_nehmer_mail_handler_mail_admin()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);        
-        debug_pop();
         parent::midcom_baseclasses_components_handler();
     }
     
