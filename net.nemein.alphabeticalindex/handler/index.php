@@ -39,7 +39,7 @@ class net_nemein_alphabeticalindex_handler_index extends midcom_baseclasses_comp
      */
     function _on_initialize()
     {
-        $tmp_letters = 'a b c d e f g h i j k l m o p q r s t u v w x y z å ä ö';
+        $tmp_letters = 'A B C D E F G H I J K L M O P Q R S T U V W X Y Z Å Ä Ö';
         $tmp_letters = explode(' ', $tmp_letters);
         foreach ($tmp_letters as $letter)
         {
@@ -108,7 +108,7 @@ class net_nemein_alphabeticalindex_handler_index extends midcom_baseclasses_comp
         
         foreach ($this->_items as $k => $item)
         {
-            if (strpos(strtolower($item->title), $letter) === 0)
+            if (strpos(strtolower($item->title), strtolower($letter)) === 0)
             {
                 $items[] = $item;
                 unset($this->_items[$k]);

@@ -21,9 +21,8 @@ echo $data['alphabets_nav'];
     {
         if ($content)
         {
-            $cap_letter = strtoupper($letter);
             echo "<a name=\"{$letter}\" id=\"{$letter}\"></a>\n";
-            echo "<h2>{$cap_letter}</h2>\n";
+            echo "<h2>{$letter}</h2>\n";
             echo "<ul>\n";
             foreach ($content as $item)
             {

@@ -19,11 +19,13 @@
     background: url('../images/navigation_bg.gif') left top repeat-x;
     float: left;
     text-align: center;
+    cursor: pointer;
 }
 #net_nemein_alphabeticalindex_navigation ul li.separator
 {
     width: 1px;
     background: url('../images/navigation_separator_bg.gif') left top no-repeat;
+    cursor: default;
 }
 #net_nemein_alphabeticalindex_navigation ul li.selected
 {
@@ -38,6 +40,7 @@
     color: #8f8f8f;
     padding-left: 8px;
     padding-right: 8px;
+    cursor: default;
 }
 #net_nemein_alphabeticalindex_navigation ul li a,
 #net_nemein_alphabeticalindex_navigation ul li a:link,
