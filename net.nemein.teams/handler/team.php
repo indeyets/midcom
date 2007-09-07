@@ -131,10 +131,9 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	    
 	    if ($members > 0)
 	    {
-	        return false;
+	        return true;
 	    }
 	    
-	    // should be false
 	    return false;
     }
 
