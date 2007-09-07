@@ -759,7 +759,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         );
         
         // Generate the actication link
-        $activation_link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "register/activate/{$person->guid}/{$activation_hash}.html";
+        $activation_link = $_MIDCOM->get_page_prefix() . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "register/activate/{$person->guid}/{$activation_hash}.html";
         
         // Store the information in parameters for activation
         $person->set_parameter('net.nehmer.account', 'password', $password);
@@ -982,18 +982,15 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
             // This will exit.
         }
 
-        // Update the password
         $password = $this->_person->get_parameter('net.nehmer.account', 'password');
-        $this->_person->password = $password;
-        // if (! empty($password))
-        // {
-            // $this->_person->password = $this->_person->get_parameter('net.nehmer.account', 'password');
-        // }
-        // else
-        // {
-        //     $password = $this->_person->password;
-        //     $password = str_replace("*","",$password);
-        // }
+        if (! empty($password))
+        {
+            $this->_person->password = $this->_person->get_parameter('net.nehmer.account', 'password');
+        }
+        else
+        {
+            $password = $this->_person->password;
+        }
         
         if (! $this->_person->update())
         {
@@ -1029,26 +1026,28 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         $this->_invoke_account_activation_callback();
 
         $_MIDCOM->auth->drop_sudo();
-        
+
         $auto_login_sitegroup = $this->_config->get('auto_login_on_activation');
         if ($auto_login_sitegroup)
         {
-            if (mgd_auth_midgard("{$this->_person->username}+{$auto_login_sitegroup}", $this->_person->password, 0))
+            $password = str_replace("*","",$password);
+            if ($_MIDCOM->auth->login("{$this->_person->username}", $password))
             {
                 $this->logged_in = true;
+                $_MIDCOM->auth->_sync_user_with_backend();
             }
             
             if (! $this->logged_in)
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to login automatically with username '{$this->_person->username}' and password '{$this->_person->password}'.", MIDCOM_LOG_ERROR);
-                debug_pop();                
+                debug_add("Failed to login automatically with username '{$this->_person->username}''.", MIDCOM_LOG_ERROR);
+                debug_pop();
             }
         }
         
-        $_MIDCOM->auth->request_sudo('net.nehmer.account');
-        
         $this->_send_welcome_mail();
+
+        $_MIDCOM->auth->request_sudo('net.nehmer.account');
 
         // Check for a custom return_url
         $return_to = $this->_person->get_parameter('net.nehmer.account', 'activation_returnto');
@@ -1059,6 +1058,8 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         }
 
         $_MIDCOM->auth->drop_sudo();
+        
+        
     }
     
     /**
@@ -1173,7 +1174,8 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         }
         else
         {
-            $sender =& $this->_account;
+            //$sender =& $this->_account;
+            $sender =& $this->_person;
         }
 
         $subject = $this->_l10n->get($this->_config->get('welcome_mail_subject'));
@@ -1182,12 +1184,12 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         $body = str_replace('__USERNAME__', $this->_account->username, $body);
         
         $mail = new net_nehmer_mail_mail();
-        $mail->sender = $sender->guid;
+        $mail->sender = $sender->id;
         $mail->subject = $subject;
         $mail->body = $body;
         $mail->received = time();
         $mail->status = NET_NEHMER_MAIL_STATUS_SENT;
-        $mail->owner = $this->_account->id;
+        $mail->owner = $this->_person->id;
                 
         if (! $mail->create())
         {
@@ -1197,7 +1199,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         }
         else
         {
-            $receivers = array( $this->_account );
+            $receivers = array( $this->_person );
             $mail->deliver_to(&$receivers);            
         }
         

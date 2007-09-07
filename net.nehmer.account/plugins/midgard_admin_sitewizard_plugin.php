@@ -35,6 +35,7 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
         parent::_on_initialize();
 
 	    $this->_host_guid = $this->_request_data['plugin_config']['host_guid'];
+	    $this->_creation_root_topic_style = $this->_request_data['plugin_config']['creation_root_topic_style'];
 	    $this->_creation_root_topic_component = $this->_request_data['plugin_config']['creation_root_topic_component'];
 	    $this->_creation_root_topic_parameters = $this->_request_data['plugin_config']['creation_root_topic_parameters'];
         $this->_creation_root_group_name = $this->_request_data['plugin_config']['creation_root_group_name'];
@@ -84,7 +85,7 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
     {
         $user = $_MIDCOM->auth->user;   
  
-        $this->_home_name = "home_" . $user->username;
+        $this->_home_name = $user->username;
         $this->_home_title = $user->name;
 
         return true;
@@ -110,7 +111,7 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
 	    
 	        $structure_creator->create_creation_root_topic($this->_creation_root_topic_parent_guid, 
 		        $this->_home_name, $this->_home_title, $this->_creation_root_topic_component, 
-		        $this->_creation_root_topic_parameters, $this->_home_title, true);
+		        $this->_creation_root_topic_parameters, $this->_creation_root_topic_style, true);
 	        }
 
             if ($this->_creation_root_group_guid != '')
