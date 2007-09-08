@@ -120,6 +120,9 @@ target_dir  = ${target_dir} // this is where pear packages are saved.
             command="ln -s ${static_path}/Javascript_protoToolkit ${static_dir}/Javascript_protoToolkit"
             dir="${static_path}" />
         <exec
+            command="ln -s ${static_path}/jQuery ${static_dir}/jQuery"
+            dir="${static_path}" />
+        <exec
             command="ln -s ${template_path}/* ${static_dir}/"
                 dir="${template_path}" />
     </target>
