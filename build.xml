@@ -18,6 +18,10 @@
                      name="installMidcomCore"
                      classpath="/${project.basedir}"
             />
+    <taskdef classname="build.packJavascripts"
+                         name="packJavascripts"
+                         classpath="/${project.basedir}"
+                />
     <taskdef classname="build.packageMidCOM"
                          name="packageMidCOM"
                          classpath="/${project.basedir}"
@@ -48,6 +52,16 @@
     file to the Midgard schema directory, usually /usr/share/midgard/schema.
         </echo>
     </target>
+    <target name="packjs">
+        <mkdir dir="${target_dir}"/>
+        <packJavascripts
+            path="${path}"
+            target_dir="${target_dir}"
+            returnProperty="statistics"
+        >
+        </packJavascripts>
+        <echo>${statistics}</echo>
+    </target>
     <target name="package">
         <mkdir dir="${target_dir}"/>
         <packageMidCOM
@@ -70,7 +84,9 @@
 Usage:
 To install a symlinked version of midcom:
     phing install [ -Dinstall_dir="somedir" ]
-To create a pear pacakge of a module:
+To pack javascripts inside given folder and its subfolders:
+	phing packjs -Dpath=pathtofolder
+To create a pear package of a module:
     phing package -Dmodule=com.example.module
 To create a new module:
     phing scaffold -Dmodule=com.example.mymodule
