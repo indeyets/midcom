@@ -52,6 +52,14 @@
             'config_domain' => 'org.openpsa.products',
             'config_key' => 'search_index_order',
         ),   
+        'products_listing_order' => array
+        (
+            'description' => 'index order for products when browsing groups',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'org.openpsa.products',
+            'config_key' => 'products_listing_order',
+        ),   
         'enable_components' => array
         (
             'description' => 'whether to enable adding subcomponents to products',

@@ -104,8 +104,46 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
             $product_qb = new org_openpsa_qbpager('org_openpsa_products_product_dba', 'org_openpsa_products_product_dba');
             $product_qb->results_per_page = $this->_config->get('products_per_page');
             $product_qb->add_constraint('productGroup', '=', $data['parent_group']);
-            $product_qb->add_order('code');
-            $product_qb->add_order('title');
+
+            // This should be a helper function, same functionality, but with different config-parameter is used in /handler/product/search.php
+            foreach ($this->_config->get('products_listing_order') as $ordering)
+            {
+                if (preg_match('/\s*reversed?\s*/', $ordering))
+                {
+                    $reversed = true;
+                    $ordering = preg_replace('/\s*reversed?\s*/', '', $ordering);
+                }
+                else
+                {
+                    $reversed = false;
+                }
+                
+                if ($ordering === 'metadata.score')
+                {
+                    if (version_compare(mgd_version(), '1.8.2', '<'))
+                    {
+                        $ordering = 'score';
+                        $reversed = false;
+                    }
+                }
+                
+                if (   strpos($ordering, '.')
+                    && !class_exists('midgard_query_builder'))
+                {
+                    debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
+                    continue;
+                }
+                
+                if ($reversed)
+                {
+                    $$product_qb->add_order($ordering, 'DESC');
+                }
+                else
+                {
+                    $$product_qb->add_order($ordering);
+                }
+            }
+
             $product_qb->add_constraint('start', '<=', time());
             $product_qb->begin_group('OR');
                 /*

@@ -18,6 +18,9 @@
 // How the search results should be indexed. You can use metadata and linked options, for example metadata.score
 'search_index_order' => array('productGroup', 'code'),
 
+// How to list products when browsing groups
+'products_listing_order' => array('code', 'title'),
+
 'group_list_products' => true,
 'products_per_page' => 30,
 'show_items_in_feed' => 10,
