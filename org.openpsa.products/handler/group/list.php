@@ -136,11 +136,11 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
                 
                 if ($reversed)
                 {
-                    $$product_qb->add_order($ordering, 'DESC');
+                    $product_qb->add_order($ordering, 'DESC');
                 }
                 else
                 {
-                    $$product_qb->add_order($ordering);
+                    $product_qb->add_order($ordering);
                 }
             }
 
