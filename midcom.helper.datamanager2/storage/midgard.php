@@ -139,7 +139,7 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
                 );
 
             case 'metadata':
-                return $this->object->metadata->$name;
+                return $this->object->get_metadata()->get($name);
                 break;
 
             default:
