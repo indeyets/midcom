@@ -156,6 +156,11 @@ class net_nehmer_static_handler_create extends midcom_baseclasses_components_han
             // Store this to article directly in case name field is not editable in schema
             $this->_article->name = 'index';
         }
+        else
+        {
+            // Generate something to avoid empty ".html" links in case of failures
+            $this->_article->name = time();
+        }
 
         if (! $this->_article->create())
         {
