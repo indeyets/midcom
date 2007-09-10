@@ -29,6 +29,30 @@ class midcom_baseclasses_database_group extends __midcom_baseclasses_database_gr
     }
 
     /**
+     * Updates all computed members.
+     *
+     * @access protected
+     */
+    function _on_loaded()
+    {
+        if (! parent::_on_loaded())
+        {
+            return false;
+        }
+
+        if (empty($this->official))
+        {
+            $this->official = $this->name;
+        }
+        
+        if (empty($this->official))
+        {
+            $this->official = "Group #{$this->id}";
+        }
+        return true;
+    }
+
+    /**
      * Gets the parent object of the current one. 
      * 
      * Groups that have an owner group return the owner group as a parent.

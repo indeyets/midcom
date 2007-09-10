@@ -1461,10 +1461,8 @@ class midcom_application
      * @see midcom_application::get_context_data()
      * @access private
      */
-    function _set_context_data($value, $param1, $param2 = null) {
-
-        global $midcom_errstr;
-
+    function _set_context_data($value, $param1, $param2 = null) 
+    {
         if (is_null($param2))
         {
             $contextid = $this->_currentcontext;

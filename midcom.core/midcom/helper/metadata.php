@@ -370,12 +370,26 @@ class midcom_helper_metadata
             case 'locker':
             case 'approver':
             case 'authors':
-            case 'owner':
                 $value = $this->object->metadata->$key;
                 if (!$value)
                 {
                     // Fall back to "Midgard admin" if person is not found
                     $value = 1;
+                }
+                break;
+                
+            // Group property
+            case 'owner':
+                $value = $this->object->metadata->$key;
+                if (!$value)
+                {
+                    // Fall back to SG admin group if owner is not found
+                    static $sg = null;
+                    if (is_null($sg))
+                    {
+                        $sg = mgd_get_sitegroup($_MIDGARD['sitegroup']);
+                    }
+                    $value = $sg->admingroup;
                 }
                 break;
 

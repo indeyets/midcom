@@ -150,19 +150,19 @@
             'widget' => 'universalchooser',
             'widget_config' => array
             (
-                'class' => 'midcom_db_person',
+                'class' => 'midcom_db_group',
                 'component' => 'net.nemein.personnel',
-                'titlefield' => 'name',
+                'titlefield' => 'official',
                 'idfield' => 'guid',
                 'constraints' => array
                 (
                 ),
                 'searchfields' => array
                 (
-                    'firstname',
-                    'lastname',
+                    'official',
+                    'name',
                 ),
-                'orders' => array(array('lastname', 'ASC')),
+                'orders' => array(array('official', 'ASC')),
             ),
         ),
         'created' => array

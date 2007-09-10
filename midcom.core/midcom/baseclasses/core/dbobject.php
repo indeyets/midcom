@@ -189,10 +189,15 @@ class midcom_baseclasses_core_dbobject
                 $object->metadata->authors = "|{$_MIDCOM->auth->user->_storage->guid}|";
             }
         
-            // Default the owner to current user
+            // Default the owner to first group of current user
             if (!$object->metadata->owner)
             {
-                $object->metadata->owner = $_MIDCOM->auth->user->_storage->guid;
+                $groups = $_MIDCOM->auth->user->list_all_memberships();
+                if (count($groups) > 0)
+                {
+                    $first_group = array_shift($groups);
+                    $object->metadata->owner = str_replace('group:', '', $first_group->id);
+                }
             }         
         }
              
