@@ -151,6 +151,7 @@ class org_openpsa_projects_handler_project_action extends midcom_baseclasses_com
                 $news_topic = new midcom_baseclasses_database_topic();
                 $news_topic->up = $this->_request_data['project_topic']->id;
                 $news_topic->extra = sprintf($this->_request_data['l10n']->get("%s news area"), $this->_request_data['project']->title);
+                $news_topic->component = 'net.nehmer.blog';
                 $news_topic->name = midcom_generate_urlname_from_string($news_topic->extra);
                 $news_topic->create();
 
@@ -158,7 +159,6 @@ class org_openpsa_projects_handler_project_action extends midcom_baseclasses_com
                 {
                     // Set the topic to use correct component
                     $news_topic = new midcom_baseclasses_database_topic($news_topic->id);
-                    $news_topic->parameter('midcom', 'component', 'de.linkm.newsticker');
 
                     // Fix the ACLs for the topic
                     $sync = new org_openpsa_core_acl_synchronizer();
@@ -201,6 +201,7 @@ class org_openpsa_projects_handler_project_action extends midcom_baseclasses_com
                 $forum_topic = new midcom_baseclasses_database_topic();
                 $forum_topic->up = $this->_request_data['project_topic']->id;
                 $forum_topic->extra = sprintf($this->_request_data['l10n']->get("%s discussion"), $this->_request_data['project']->title);
+                $forum_topic->component = 'net.nemein.discussion';
                 $forum_topic->name = midcom_generate_urlname_from_string($forum_topic->extra);
                 $forum_topic->create();
 
@@ -208,7 +209,6 @@ class org_openpsa_projects_handler_project_action extends midcom_baseclasses_com
                 {
                     // Set the topic to use correct component
                     $forum_topic = new midcom_baseclasses_database_topic($forum_topic->id);
-                    $forum_topic->parameter('midcom', 'component', 'net.nemein.discussion');
 
                     // Fix the ACLs for the topic
                     $sync = new org_openpsa_core_acl_synchronizer();
