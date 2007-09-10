@@ -260,12 +260,10 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
     /**
      * Show the message stack via javascript calls or simple html
      */
-    function show()
+    function show($show_simple_also=true)
     {
         if (count($this->_message_stack) > 0)
         {
-            
-            
             if ($_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_uimessages'))
             {
                 echo "<script type=\"text/javascript\">\n";
@@ -293,18 +291,38 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
             }
             else
             {
-                echo "<div class=\"midcom_services_uimessages_holder\">\n";
-                
-                foreach ($this->_message_stack as $id => $message)
+                if ($show_simple_also)
                 {
-                    $this->_render_message($message);
-
-                    // Remove the message from stack
-                    unset($this->_message_stack[$id]);
+                    $this->show_simple();
                 }
-
-                echo "</div>\n";
             }
+        }
+    }
+    
+    /**
+     * Show the message stack via simple html only
+     */
+    function show_simple($prefer_fancy=false)
+    {
+        if (   $prefer_fancy
+            && $_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_uimessages'))
+        {
+            return $this->show();
+        }
+        
+        if (count($this->_message_stack) > 0)
+        {
+            echo "<div class=\"midcom_services_uimessages_holder\">\n";
+
+            foreach ($this->_message_stack as $id => $message)
+            {
+                $this->_render_message($message);
+
+                // Remove the message from stack
+                unset($this->_message_stack[$id]);
+            }
+
+            echo "</div>\n";
         }
     }
 
@@ -315,9 +333,9 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
     {
         echo "<div class=\"midcom_services_uimessages_message {$message['type']}\">";
 
-        echo "<div class=\"midcom_services_uimessages_message_type\">{$message['type']}</div>";                
-        echo "<div class=\"midcom_services_uimessages_message_title\">{$message['title']}</div>";
-        echo "<div class=\"midcom_services_uimessages_message_msg\">{$message['message']}</div>";
+        echo "    <div class=\"midcom_services_uimessages_message_type\">{$message['type']}</div>";                
+        echo "    <div class=\"midcom_services_uimessages_message_title\">{$message['title']}</div>";
+        echo "    <div class=\"midcom_services_uimessages_message_msg\">{$message['message']}</div>";
         
         echo "</div>\n";
     }
