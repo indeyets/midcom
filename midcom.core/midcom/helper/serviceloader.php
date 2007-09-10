@@ -44,7 +44,7 @@ class midcom_helper_serviceloader
             
             include($filename);
         }
-        
+
         return $GLOBALS['midcom_config']["service_{$service}"];
     }
     
@@ -116,11 +116,11 @@ class midcom_helper_serviceloader
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Service implementation for {$service} could not be loaded");
         }
         
-        if (!isset($this->instances['service']))
+        if (!isset($this->instances[$service]))
         {
-            $this->instances['service'] = new $implementation_class();
+            $this->instances[$service] = new $implementation_class();
         }
-        return $this->instances['service'];
+        return $this->instances[$service];
     }
 }
 ?>
