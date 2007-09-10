@@ -734,6 +734,70 @@ class midcom_baseclasses_core_dbobject
             }
         }
     }
+    
+    /**
+     * This function parses the loaded object and detects all meta timestamps of the original
+     * and converts them to DateTimes
+     *
+     * It processes all metadata timestamps.
+     *
+     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
+     */
+    public static function rewrite_timestamps_to_datetime(&$object)
+    {
+        $metadata_timestamps = array
+        (
+            'created', 
+            'revised', 
+            'exported', 
+            'imported', 
+            'approved', 
+            'published',
+            'locked',
+            'schedulestart',
+            'scheduleend',
+        );
+
+        foreach ($metadata_timestamps as $timestamp)
+        {
+            if (array_key_exists($timestamp, $object->metadata))
+            {
+                $object->metadata->$timestamp = new DateTime($object->metadata->$timestamp);
+            }
+        }
+    }
+    
+    /**
+     * This function parses the loaded object and detects all meta timestamps of the original
+     * and converts them to DateTimes
+     *
+     * It processes all metadata timestamps.
+     *
+     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
+     */
+    public static function rewrite_datetimes_to_timestamp(&$object)
+    {
+        $metadata_timestamps = array
+        (
+            'created', 
+            'revised', 
+            'exported', 
+            'imported', 
+            'approved', 
+            'published',
+            'locked',
+            'schedulestart',
+            'scheduleend',
+        );
+
+        foreach ($metadata_timestamps as $timestamp)
+        {
+            if (array_key_exists($timestamp, $object->metadata))
+            {
+                $object->metadata->$timestamp = $object->metadata->$timestamp->format('U');
+            }
+        }
+    }
 
     /**
      * This function prepares the previously converted UNIX timestamps again for saving by
