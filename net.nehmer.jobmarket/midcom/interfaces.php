@@ -16,7 +16,7 @@
  * several types/classes of jobs, as well as categorization. Basic searching is available.
  *
  * This component is not designed to serve as your companies personal job ticker. Usually
- * you will fare better with a simple newsticker or taviewer there. Use this component only
+ * you will fare better with a simple blog or static there. Use this component only
  * if you want to have a large number of jobs to manage.
  *
  * The component is built to work on the data delivered by the account component, as their

@@ -16,7 +16,7 @@
  * the component-specific virtual group name, combined by a dash (-).
  *
  * So, for example, the virtual group <i>approvers</i> of the component
- * <i>de.linkm.taviewer</i> would be named <i>de.linkm.taviewer-approvers</i>.
+ * <i>net.nehmer.static</i> would be named <i>net.nehmer.static-approvers</i>.
  *
  * This handle is used in all places to refer to a virtual group.
  *

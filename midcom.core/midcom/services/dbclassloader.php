@@ -240,8 +240,8 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
      * this is the main class loader function. It takes a component/filename pair as
      * arguments, the first specifying the place to look for the latter.
      *
-     * For example, if you call load_classes('de.linkm.taviewer', 'my_classes.inc'), it will
-     * look in the directory MIDCOM_ROOT/de/linkm/taviewer/config/my_classes.inc. The magic
+     * For example, if you call load_classes('net.nehmer.static', 'my_classes.inc'), it will
+     * look in the directory MIDCOM_ROOT/net/nehmer/static/config/my_classes.inc. The magic
      * component 'midcom' goes for the MIDCOM_ROOT/midcom/config directory and is reserved
      * for MidCOM core classes and compatibility classes.
      *

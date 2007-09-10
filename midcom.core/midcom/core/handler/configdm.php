@@ -41,7 +41,7 @@
  * (
  *     'handler' => Array ('midcom_core_handler_configdm', 'configdm'),
  *     'fixed_args' => Array('config'),
- *     'schemadb' => 'file:/de/linkm/taviewer/config/schemadb_config.inc',
+ *     'schemadb' => 'file:/net/nehmer/static/config/schemadb_config.inc',
  *     'schema' => 'config',
  * );
  *

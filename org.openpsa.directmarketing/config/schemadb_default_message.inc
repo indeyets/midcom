@@ -120,7 +120,7 @@
         'org_openpsa_directmarketing_messagetype' => ORG_OPENPSA_MESSAGETYPE_EMAIL_HTML,
     ),
 ),
-/* TODO: hide newsletter if midcom_helper_find_node_by_component(de.linkm.newsticker) returns no results */
+/* TODO: hide newsletter if midcom_helper_find_node_by_component(net.nehmer.blog) returns no results */
 'htmlnewsletter' => array (
     'description' => 'HTML newsletter email',
     'fields'      => array

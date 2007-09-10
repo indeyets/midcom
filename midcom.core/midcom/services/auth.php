@@ -31,7 +31,7 @@
  * The privilege name is an unique identifier for the privilege. The mRFC 15 defines the
  * syntax to be $component:$name, where $component is either the name of the component
  * or one of 'midgard' or 'midcom' for core privileges. Valid privilege names are for
- * example 'de.linkm.taviewer:do_something' or 'midgard:update'.
+ * example 'net.nehmer.static:do_something' or 'midgard:update'.
  *
  * The assignee is the entity to which the privilege applies, this can be one of several
  * things, depending on where the privilege is taken into effect, I'll explain this below

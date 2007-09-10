@@ -622,15 +622,15 @@ class midcom_application
      * - A call to generate_error will result in an regular error page output if
      *   we still are in the code-init phase.
      *
-     * Example code, executed on a sites Homepage, it will load the newsticker from
+     * Example code, executed on a sites Homepage, it will load the news listing from
      * the given URL and display it using a substyle of the node style that is assinged
      * to the loaded one:
      *
      * <code>
      * <?php
-     * $newsticker = '/newsticker/latest/3.html';
+     * $blog = '/blog/latest/3.html';
      * $substyle = 'homepage';
-     * $_MIDCOM->dynamic_load("/midcom-substyle-{$substyle}/{$newsticker}");
+     * $_MIDCOM->dynamic_load("/midcom-substyle-{$substyle}/{$blog}");
      * ?>
      * </code>
      *

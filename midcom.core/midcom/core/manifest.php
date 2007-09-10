@@ -24,7 +24,7 @@
  * using all available options and should serve us as an example:
  *
  * <code>
- * 'name' => 'de.linkm.taviewer',
+ * 'name' => 'net.nehmer.static',
  * 'purecode' => false,
  * 'version' => 15,
  * 'privileges' => Array

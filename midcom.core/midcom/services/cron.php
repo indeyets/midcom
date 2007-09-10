@@ -36,7 +36,7 @@
  *     (
  *         Array
  *         (
- *             'handler' => 'de_linkm_taviewer_crontest',
+ *             'handler' => 'net_nehmer_static_cron_test',
  *             'handler_config' => Array ('test', 'configuration', 'entries'),
  *             'recurrence' => MIDCOM_CRON_MINUTE,
  *         )
@@ -48,7 +48,7 @@
  *
  * <code>
  * <?php
- * class de_linkm_taviewer_crontest extends midcom_baseclasses_components_cron_handler
+ * class net_nehmer_static_cron_test extends midcom_baseclasses_components_cron_handler
  * {
  *     function _on_initialize()
  *     {
@@ -67,8 +67,8 @@
  *
  * The component does not need to load the class automatically, instead, it can resort on the
  * auto-loading feature of the service. It will look for the handler in a file named after it,
- * by replacing the underscores with slashes: The above handler de_linkm_taviewer_crontest
- * would be searched in de/linkm/taviewer/crontest.php, relative to MIDCOM_ROOT.
+ * by replacing the underscores with slashes: The above handler net_nehmer_static_cron_test
+ * would be searched in net/nehmer/static/cron/test.php, relative to MIDCOM_ROOT.
  *
  * <b>Cron Job implementation suggestions</b>
  *

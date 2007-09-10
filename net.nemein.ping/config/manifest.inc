@@ -25,7 +25,7 @@
   'package.xml' => 
   array (
     'summary' => 'Weblog pinger service',
-    'description' => 'Tool that pings weblogs.com and other services when de.linkm.newsticker postings have been updated',
+    'description' => 'Tool that pings weblogs.com and other services when net.nehmer.blog postings have been updated',
     'maintainers' => 
     array (
       'bergie' => 

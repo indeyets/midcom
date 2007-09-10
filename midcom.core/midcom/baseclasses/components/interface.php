@@ -27,7 +27,7 @@
  * you have to know (but don't complain if I have missed anything), and do these
  * things after calling the base class constructor:
  *
- * - Inherit the class as {$component}_interface (e.g. de_linkm_taviewer_interface).
+ * - Inherit the class as {$component}_interface (e.g. net_nehmer_static_interface).
  * - Prepare a component manifest for your component, see the class
  *   midcom_core_manifest for details.
  * - You need to set the values of all <i>Component configuration variables</i>
@@ -50,7 +50,6 @@
  * The following options can be used to parametrize the components startup and operation.
  * See the individual member documentation for now.
  *
- * - $_ais_class_suffix
  * - $_autoload_files
  * - $_autoload_libraries
  * - $_component
@@ -110,7 +109,7 @@
  * Manifest:
  *
  * <pre>
- * 'name' => 'de.linkm.taviewer',
+ * 'name' => 'net.nehmer.static',
  * 'purecode' => false,
  * 'version' => 1,
  * 'privileges' =>  Array
@@ -126,15 +125,15 @@
  * Built on this, we add the following interface class:
  *
  * <code>
- * class de_linkm_taviewer_interface extends midcom_baseclasses_components_interface
+ * class net_nehmer_static_interface extends midcom_baseclasses_components_interface
  * {
- *     function de_linkm_taviewer_interface()
+ *     function net_nehmer_static_interface()
  *     {
  *         parent::midcom_baseclasses_components_interface();
  *
- *         $this->_component = 'de.linkm.taviewer';
+ *         $this->_component = 'net.nehmer.static';
  *         $this->_autoload_files = Array('viewer.php', 'admin.php', 'navigation.php', 'my_special_mgd_schema_class.php');
- *         $this->_autoload_libraries = Array('midcom.helper.datamanager');
+ *         $this->_autoload_libraries = Array('midcom.helper.datamanager2');
  *     }
  *
  *     function _on_reindex($topic, $config, &$indexer)
@@ -204,7 +203,7 @@ class midcom_baseclasses_components_interface
      */
 
     /**
-     * The name of the component, e.g. de.linkm.taviewer
+     * The name of the component, e.g. net.nehmer.static
      *
      * @var string
      */
@@ -242,18 +241,9 @@ class midcom_baseclasses_components_interface
     var $_config_snippet_name = 'config';
 
     /**
-     * This is the class suffix used when constructing the AIS handler class.
-     * It is appended to the component class prefix, f.x. resulting in
-     * de_linkm_taviewer_admin (as a default).
-     *
-     * @var string
-     */
-    var $_ais_class_suffix = 'admin';
-
-    /**
      * This is the class suffix used when constructing the NAP handler class.
      * It is appended to the component class prefix, f.x. resulting in
-     * de_linkm_taviewer_navigation (as a default).
+     * net_nehmer_static_navigation (as a default).
      *
      * @var string
      */
@@ -262,7 +252,7 @@ class midcom_baseclasses_components_interface
     /**
      * This is the class suffix used when constructing the on-site handler class.
      * It is appended to the component class prefix, f.x. resulting in
-     * de_linkm_taviewer_viewer (as a default).
+     * net_nehmer_static_viewer (as a default).
      *
      * @var string
      */
@@ -584,8 +574,7 @@ class midcom_baseclasses_components_interface
     {
         $data =& $this->_context_data[$contextid];
         $loader =& $_MIDCOM->get_component_loader();
-        $class = $loader->path_to_prefix($this->_component) . '_';
-        $class .= ($data['adminmode'] ? $this->_ais_class_suffix : $this->_site_class_suffix);
+        $class = $loader->path_to_prefix($this->_component) . '_' . $this->_site_class_suffix;
         $data['handler'] = new $class($current_object, $data['config']);
         if (is_a($data['handler'], 'midcom_baseclasses_components_request'))
         {

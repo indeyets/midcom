@@ -1,9 +1,8 @@
 'enable_weblog_pings' => true,
 'components_to_ping' => array
 (
-    'de.linkm.newsticker',
     'net.nemein.wiki',
-    'net.siriux.photos',
+    'org.routamc.photostream',
     'net.nehmer.blog',
 ),
 'weblog_ping_servers' => array

@@ -537,8 +537,8 @@ class midcom_helper__componentloader
     }
 
     /**
-     * Helper, converting a component path (de.linkm.newsticker)
-     * to a snippetpath (/de/linkm/newsticker).
+     * Helper, converting a component path (net.nehmer.blog)
+     * to a snippetpath (/net/nehmer/blog).
      *
      * @param string $path	Input string.
      * @return string		Converted string.
@@ -549,8 +549,8 @@ class midcom_helper__componentloader
     }
 
     /**
-     * Helper, converting a snippetpath (/de/linkm/newsticker)
-     * to a class prefix (de_linkm_newsticker).
+     * Helper, converting a snippetpath (/net/nehmer/blog)
+     * to a class prefix (net_nehmer_blog).
      *
      * @param string $snippetpath	Input string.
      * @return string				Converted string.
@@ -561,8 +561,8 @@ class midcom_helper__componentloader
     }
 
     /**
-     * Helper, converting a component path (de.linkm.newsticker)
-     * to a class prefix (de_linkm_newsticker).
+     * Helper, converting a component path (net.nehmer.blog)
+     * to a class prefix (net_nehmer_blog).
      *
      * @param string $path	Input string.
      * @return string		Converted string.
