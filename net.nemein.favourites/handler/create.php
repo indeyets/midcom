@@ -42,7 +42,9 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
         if ($qb->count_unchecked() > 0)
         {
             $_MIDCOM->uimessages->add($this->_l10n->get('net.nemein.favourites'), $this->_l10n->get('you have already favourited the item'), 'warning');
-            $_MIDCOM->relocate($_SERVER['HTTP_REFERER']);
+            // Quick fix to form-based authentication. TODO: Move relocation URL to GET params
+            $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($guid));
+            //$_MIDCOM->relocate($_SERVER['HTTP_REFERER']);
             // This will exit
         }
 
@@ -57,12 +59,16 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
             if (!$favourite->create())
             {
                 $_MIDCOM->uimessages->add($this->_l10n->get('net.nemein.favourites'), sprintf($this->_l10n->get('favouriting %s failed: %s'), $_POST['net_nemein_favourite_title'], mgd_errstr()), 'error');
-                $_MIDCOM->relocate($_POST['net_nemein_favourites_referer']);
+                // Quick fix to form-based authentication. TODO: Move relocation URL to GET params
+                $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($guid));
+                //$_MIDCOM->relocate($_POST['net_nemein_favourites_referer']);
                 // This will exit
             }
             
             // Redirecting back to the previous page
-    	    $_MIDCOM->relocate($_POST['net_nemein_favourites_referer']);
+            // Quick fix to form-based authentication. TODO: Move relocation URL to GET params
+            $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($guid));
+    	    //$_MIDCOM->relocate($_POST['net_nemein_favourites_referer']);
             //This will exit
     	}
     	elseif (is_object($obj))
@@ -94,7 +100,7 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
     	    }
 
             $this->_favourite_title = $title;
-    	    $this->_my_way_back = $_SERVER['HTTP_REFERER'];
+    	    //$this->_my_way_back = $_SERVER['HTTP_REFERER'];
     	}
 
         return true;
