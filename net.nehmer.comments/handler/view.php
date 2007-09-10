@@ -157,7 +157,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             return false;
         }
         
-        if (! $this->config->get('enable_notify'))
+        if (! $this->_config->get('enable_notify'))
         {
             return false;
         }
