@@ -2266,11 +2266,12 @@ class midcom_application
         fpassthru($f);
         $attachment->close();
         
-        $this->exit();
+        //$this->exit();
+        exit();
     }
 
     /**
-     * This is a heleper to execute any given Script in the current MidCOM
+     * This is a helper to execute any given Script in the current MidCOM
      * context. All files have to be in $component_dir/exec directly, otherwise
      * the script will not execute.
      *
@@ -2675,7 +2676,7 @@ class midcom_application
      * This method adds jQuery support to the page
      *
      */
-    function enable_jquery($version="1.1.3.1")
+    function enable_jquery($version="1.1.4")
     {
         if ($this->_jquery_enabled)
         {
