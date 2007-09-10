@@ -40,6 +40,8 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
 	    $this->_creation_root_topic_parameters = $this->_request_data['plugin_config']['creation_root_topic_parameters'];
         $this->_creation_root_group_name = $this->_request_data['plugin_config']['creation_root_group_name'];
 
+        $this->_redirect_after_done = $this->_request_data['plugin_config']['redirect_after_done'];
+
         $this->_structure_config_path = $this->_request_data['plugin_config']['structure_config_path'];
 
         if (isset($this->_request_data['plugin_config']['verbose']) && !empty($this->_request_data['plugin_config']['verbose']))
@@ -108,8 +110,7 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
             }
 	        elseif ($this->_creation_root_topic_parent_guid != '')
 	        {
-	    
-	        $structure_creator->create_creation_root_topic($this->_creation_root_topic_parent_guid, 
+	            $structure_creator->create_creation_root_topic($this->_creation_root_topic_parent_guid, 
 		        $this->_home_name, $this->_home_title, $this->_creation_root_topic_component, 
 		        $this->_creation_root_topic_parameters, $this->_creation_root_topic_style, true);
 	        }
@@ -121,12 +122,15 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
 	        elseif ($this->_cretion_root_group_parent_guid != '')
 	        {
 	            $structure_creator->create_creation_root_group($this->_creation_root_group_guid, 
-	                $this->_creation_root_group_name);
+	            $this->_creation_root_group_name);
 	        }
 	    
 	        $guid = $structure_creator->execute();
-
-	        //$_MIDCOM->relocate($my_way_home);
+            
+            if (! empty($this->_redirect_after_done))
+            {
+                $_MIDCOM->relocate($this->_redirect_after_done);
+            }
 	    }
 	    catch (midgard_admin_sitewizard_exception $e)
 	    {
