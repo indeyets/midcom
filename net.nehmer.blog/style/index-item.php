@@ -39,7 +39,7 @@ if (array_key_exists('comments_enable', $data))
     if ($data['index_fulltext'])
     {
         ?>
-        <div class="entry-content"">&(view['content']:h);</div>
+        <div class="entry-content">&(view['content']:h);</div>
         <?php
     }
     ?>
