@@ -100,7 +100,7 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
     	    }
 
             $this->_favourite_title = $title;
-    	    //$this->_my_way_back = $_SERVER['HTTP_REFERER'];
+    	    $this->_my_way_back = $_MIDCOM->permalinks->create_permalink($guid);
     	}
 
         return true;
