@@ -75,7 +75,9 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
      * @access private
      */
     var $_display_datamanager = null;
-
+    
+    var $custom_view = null;
+    
     /**
      * Prepares the request data
      */
@@ -85,6 +87,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
         $this->_request_data['objectguid'] =& $this->_objectguid;
         $this->_request_data['post_controller'] =& $this->_post_controller;
         $this->_request_data['display_datamanager'] =& $this->_display_datamanager;
+        $this->_request_data['custom_view'] =& $this->custom_view;
     }
     
     /**
@@ -325,7 +328,11 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             // This will exit.
         }
         $this->_objectguid = $args[0];
-        $this->_comments = net_nehmer_comments_comment::list_by_objectguid($this->_objectguid);
+        $this->_comments = net_nehmer_comments_comment::list_by_objectguid(
+            $this->_objectguid,
+            $this->_config->get('items_to_show'),
+            $this->_config->get('item_ordering')
+        );
 
         if (   $_MIDCOM->auth->user
             || $this->_config->get('allow_anonymous'))
@@ -341,6 +348,13 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
 
         $this->_process_admintoolbar();
         // This might exit.
+
+        if (   $handler_id = 'view-comments-custom'
+            && count($args) > 1)
+        {
+            $_MIDCOM->skip_page_style = true;
+            $this->custom_view = $args[1];
+        }
 
         $this->_prepare_request_data();
         $_MIDCOM->set_26_request_metadata($this->_get_last_modified(), $this->_objectguid);

@@ -22,3 +22,6 @@
 'ratings_cache_to_object_property' => 'score',
 'ratings_cache_to_object_property_metadata' => false,
 'ratings_cache_total' => false,
+
+'items_to_show' => 6, //false == no limit
+'item_ordering' => 'ASC', //DESC OR ASC

@@ -51,18 +51,23 @@ class net_nehmer_comments_comment extends __net_nehmer_comments_comment
      * @param guid $guid The GUID of the object to bind to.
      * @return Array List of applicable comments.
      */
-    function list_by_objectguid($guid)
+    function list_by_objectguid($guid, $limit=false, $order='ASC')
     {
         $qb = net_nehmer_comments_comment::new_query_builder();
         $qb->add_constraint('objectguid', '=', $guid);
-
+        
+        if ($limit)
+        {
+            $qb->set_limit($limit);
+        }
+        
         if (version_compare(mgd_version(), '1.8', '>='))
         {        
-            $qb->add_order('metadata.created');
+            $qb->add_order('metadata.created', $order);
         }
         else
         {
-            $qb->add_order('created', 'ASC');
+            $qb->add_order('created', $order);
         }
 
         return $qb->execute();
