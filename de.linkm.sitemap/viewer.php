@@ -71,13 +71,13 @@ class de_linkm_sitemap_viewer extends midcom_baseclasses_components_request
      */
     function list_root_nodes()
     {
-        $nap = new midcom_helper_nav();
+        $root_topic = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
         
         $root_nodes = array();
         $root_nodes[''] = '';
         
         $qb = midcom_db_topic::new_query_builder();
-        $qb->add_constraint('up', '=', $nap->get_root_node());
+        $qb->add_constraint('up', '=', $root_topic->id);
         $qb->add_order('score');
         $qb->add_order('name');
         $nodes = $qb->execute();
