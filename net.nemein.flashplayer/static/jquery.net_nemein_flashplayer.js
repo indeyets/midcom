@@ -123,7 +123,7 @@ jQuery.net_nemein_flashplayer_player = function(object, options)
     {
         //console.log("player_initialized");
     }
-}
+};
 
 jQuery.net_nemein_flashplayer_player.defaults = {
     site_root: '/',
@@ -135,7 +135,7 @@ jQuery.net_nemein_flashplayer_player.defaults = {
 	auto_play: false,
 	player_width: 450,
 	player_height: 358
-}
+};
 
 jQuery.fn.extend({
 	net_nemein_flashplaylist: function(options) {
@@ -433,7 +433,7 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
             }
         }
     }
-}
+};
 
 jQuery.net_nemein_flashplayer_playlist.defaults = {
     site_root: jQuery.net_nemein_flashplayer_player.defaults.site_root,
@@ -445,7 +445,7 @@ jQuery.net_nemein_flashplayer_playlist.defaults = {
 	max_items: 20,
 	width: 450,
 	height: 118
-}
+};
 
 jQuery.net_nemein_flashplayer_playlist_item = function(data)
 {
@@ -455,7 +455,7 @@ jQuery.net_nemein_flashplayer_playlist_item = function(data)
 	}, data);    
     
     return this;
-}
+};
 
 jQuery.net_nemein_flashplayer_playlist_item.defaults = {
     id: '',
@@ -463,4 +463,4 @@ jQuery.net_nemein_flashplayer_playlist_item.defaults = {
     video_url: '',
     thumbnail_url: '',
     data_url: ''
-}
+};
