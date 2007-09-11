@@ -122,10 +122,13 @@ class midcom_helper_datamanager2_formmanager_ajax extends midcom_helper_datamana
                 case 'midcom_helper_datamanager2_type_number':
                 case 'midcom_helper_datamanager2_type_boolean':
                 case 'midcom_helper_datamanager2_type_tags':
-                    echo "<field name=\"{$name}\"><![CDATA[\n";
                     $element =& $this->form->getElement($name);
-                    echo $element->toHtml();
-                    echo "]]></field>\n";
+                    if (method_exists($element, 'toHtml'))
+                    {
+                        echo "<field name=\"{$name}\"><![CDATA[\n";
+                        echo $element->toHtml();                        
+                        echo "]]></field>\n";
+                    }
                     break;
             }
         }
