@@ -202,7 +202,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
         $this->_prepare_request_data();
         $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name);
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
-        $_MIDCOM->set_pagetitle("{$this->_account->name} ({$this->_datamanager->schema->description})");
+        $_MIDCOM->set_pagetitle($this->_user->name);
 
         return true;
     }
@@ -269,17 +269,8 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
             $visible_data[$name] = $this->_render_field($name);
         }
 
-        $revised = $this->_account->get_parameter('net.nehmer.account', 'revised');
-        if (! $revised)
-        {
-            $revised = $this->_account->created;
-        }
-        $revised = new Date($revised);
-        $published = $this->_account->get_parameter('net.nehmer.account', 'published');
-        if ($published)
-        {
-            $published = new Date($published);
-        }
+        $revised = new Date($this->_account->metadata->revised);
+        $published = new Date($this->_account->metadata->published);
 
         $this->_request_data['datamanager'] =& $this->_datamanager;
         $this->_request_data['visible_fields'] =& $this->_visible_fields;

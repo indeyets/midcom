@@ -8,23 +8,34 @@ $account =& $data['account'];
 $visible_data =& $data['visible_data'];
 $schema =& $data['datamanager']->schema;
 ?>
+<div class="vcard">
+    <?php
+    if ($data['avatar']) 
+    {
+        echo "<a href=\"{$data['profile_url']}\"><img src=\"{$data['avatar_thumbnail_url']}\" class=\"photo\" style=\"float: left;\" alt=\"{$user->name}\" /></a>\n";
+    } 
+    ?>
+    <h2 class="fn"><?php echo "<a href=\"{$data['profile_url']}\">{$data['user']->name}</a>"; ?></h2>
 
-<p style="font-weight: bold;"><a href="&(data['profile_url']);">&(account.name);</a></p>
-
-<table cellspacing='0' cellpadding='' border='0'>
-<?php
-foreach ($data['visible_fields'] as $name)
-{
-    $title = $schema->translate_schema_string($schema->fields[$name]['title']);
-    $content = $visible_data[$name];
-?>
-    <tr>
-        <td style="font-weight: bold; padding-right: 5px;">&(title);:</td>
-        <td>&(content:h);</td>
-    </tr>
-
-<?php } ?>
-</table>
-
-<p style="font-size: 75%"><?php echo $data['l10n_midcom']->get('last modified') . ': ' . $data['revised']->format($data['l10n_midcom']->get('short date') . " %T"); ?></p>
-
+    <?php 
+    $online_state = $data['user']->is_online();
+    switch ($online_state)
+    {
+        case 'offline':
+            $last_login = $data['user']->get_last_login();
+            if (!$last_login)
+            {
+                echo "<p class=\"status\"><img src=\"" . MIDCOM_STATIC_URL . "/net.nehmer.account/offline.png\" alt=\"\" /> {$data['l10n']->get('the user is offline')}</p>\n";
+            }
+            else
+            {
+                echo "<p class=\"status\"><img src=\"" . MIDCOM_STATIC_URL . "/net.nehmer.account/offline.png\" alt=\"\" /> {$data['l10n']->get('last login')}: {strftime('%x %X', $last_login)}</p>\n";
+            }
+            break;
+            
+        case 'online':
+            echo "<p class=\"status\"><img src=\"" . MIDCOM_STATIC_URL . "/net.nehmer.account/online.png\" alt=\"\" /> {$data['l10n']->get('the user is online')}</p>\n";
+            break;
+    }
+    ?>
+</div>
