@@ -489,9 +489,17 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
                 return $source;
 
             case 'imploded':
+                if (!is_string($source))
+                {   
+                    return array();
+                }
                 return explode($glue, $source);
 
             case 'imploded_wrapped':
+                if (!is_string($source))
+                {   
+                    return array();
+                }
                 return explode($glue, substr($source, 1, -1));
 
             default:
