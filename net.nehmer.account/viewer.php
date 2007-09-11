@@ -444,7 +444,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
         }
 
         return true;
-    }   
+    }
     
     /**
      * Populates the toolbars depending on the users rights.
@@ -469,83 +469,6 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
         if ($this->_handler_id === 'config')
         {
             return;
-        }
-        
-        if ($_MIDCOM->auth->user !== null)
-        {
-            $this->_view_toolbar->add_item
-            (
-                array
-                (
-                    MIDCOM_TOOLBAR_URL => "edit/",
-                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('edit account'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
-                    MIDCOM_TOOLBAR_ACCESSKEY => 'e',
-                )
-            );
-            
-            if ($this->_config->get('allow_publish'))
-            {
-                $this->_view_toolbar->add_item
-                (
-                    array
-                    (
-                        MIDCOM_TOOLBAR_URL => "publish/",
-                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('publish account details'),
-                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new_task.png',
-                    )
-                );
-            }
-            
-            if ($this->_config->get('allow_socialweb'))
-            {
-                $this->_view_toolbar->add_item
-                (
-                    array
-                    (
-                        MIDCOM_TOOLBAR_URL => "socialweb/",
-                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('social web settings'),
-                        MIDCOM_TOOLBAR_ICON => 'net.nehmer.account/data-import.png',
-                    )
-                );
-            }
-
-            $this->_view_toolbar->add_item
-            (
-                array
-                (
-                    MIDCOM_TOOLBAR_URL => "password/",
-                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('change password'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
-                )
-            );
-            
-            if ($this->_config->get('allow_change_username'))
-            {
-                $this->_view_toolbar->add_item
-                (
-                    array
-                    (
-                        MIDCOM_TOOLBAR_URL => "username/",
-                        MIDCOM_TOOLBAR_LABEL => $this->_config->get('username_is_email') ? 
-                            $this->_l10n->get('change email') : $this->_l10n->get('change username'),
-                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
-                    )
-                );
-            }
-            
-            if ($this->_config->get('allow_cancel_membership'))
-            {
-                $this->_view_toolbar->add_item
-                (
-                    array
-                    (
-                        MIDCOM_TOOLBAR_URL => "cancel_membership/",
-                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('cancel membership'),
-                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/cancel.png',
-                    )
-                );
-            }
         }
         
         if ($_MIDCOM->auth->admin)
@@ -573,7 +496,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             }
         }
     }
-
+        
     function verify_person_privileges($person)
     {
         debug_push_class(__CLASS__, __FUNCTION__);

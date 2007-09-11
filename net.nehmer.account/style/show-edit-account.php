@@ -8,7 +8,7 @@ $account =& $data['account'];
 $schema =& $data['datamanager']->datamanager->schema;
 ?>
 
-<h2>&(account.name); (&(schema.description);)</h2>
+<h2>&(account.name);</h2>
 
 <?php $data['datamanager']->display_form(); ?>
 

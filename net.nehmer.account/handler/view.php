@@ -195,6 +195,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
         $this->_prepare_datamanager();
         $this->_compute_visible_fields();
         $this->_prepare_request_data();
+        $this->_populate_toolbar();
         $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name);
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
         $_MIDCOM->set_pagetitle($this->_user->name);
@@ -456,6 +457,106 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
         else
         {
             midcom_show_style('show-full-account');
+        }
+    }
+    
+    function _populate_toolbar()
+    {
+        if ($_MIDCOM->auth->user == null)
+        {
+            return;
+        }
+        
+        if ($this->_account->guid == $_MIDCOM->auth->user->guid)
+        {
+            // Own profile page
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "edit/",
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('edit account'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'e',
+                )
+            );
+            
+            if ($this->_config->get('allow_publish'))
+            {
+                $this->_view_toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "publish/",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('publish account details'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new_task.png',
+                    )
+                );
+            }
+            
+            if ($this->_config->get('allow_socialweb'))
+            {
+                $this->_view_toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "socialweb/",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('social web settings'),
+                        MIDCOM_TOOLBAR_ICON => 'net.nehmer.account/data-import.png',
+                    )
+                );
+            }
+
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "password/",
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('change password'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
+                )
+            );
+            
+            if ($this->_config->get('allow_change_username'))
+            {
+                $this->_view_toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "username/",
+                        MIDCOM_TOOLBAR_LABEL => $this->_config->get('username_is_email') ? 
+                            $this->_l10n->get('change email') : $this->_l10n->get('change username'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
+                    )
+                );
+            }
+            
+            if ($this->_config->get('allow_cancel_membership'))
+            {
+                $this->_view_toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "cancel_membership/",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('cancel membership'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/cancel.png',
+                    )
+                );
+            }
+        }
+        elseif ($_MIDCOM->auth->admin)
+        {
+            // Admin viewing another profile
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "admin/edit/{$this->_account->guid}/",
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('edit account'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'e',
+                )
+            );
         }
     }
 
