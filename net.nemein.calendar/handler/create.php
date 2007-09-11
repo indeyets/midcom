@@ -38,30 +38,30 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
     {
         $_MIDCOM->auth->require_valid_user();
         
-        if (array_key_exists('root_event', $this->_request_data))
+        if (array_key_exists('root_event', $data))
         {
             // We have this already
             $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
         }
         
-        $this->_request_data['root_event'] = new net_nemein_calendar_event();
+        $data['root_event'] = new net_nemein_calendar_event();
         
-        if (array_key_exists('master_event', $this->_request_data))
+        if (array_key_exists('master_event', $data))
         {
-            $this->_request_data['root_event']->up = $this->_request_data['master_event'];
+            $data['root_event']->up = $data['master_event'];
         }
         else
         {
-            $this->_request_data['root_event']->up = 0;
+            $data['root_event']->up = 0;
         }
         
-        $this->_request_data['root_event']->title = sprintf('__%s root event', $this->_topic->guid);
+        $data['root_event']->title = sprintf('__%s root event', $this->_topic->guid);
         
-        if ($this->_request_data['root_event']->create())
+        if ($data['root_event']->create())
         {
-            $this->_topic->parameter('net.nemein.calendar', 'root_event', $this->_request_data['root_event']->guid);
+            $this->_topic->parameter('net.nemein.calendar', 'root_event', $data['root_event']->guid);
             
-            $_MIDCOM->uimessages->add('net.nemein.calendar', "Root event {$this->_request_data['root_event']->guid} created", 'ok');
+            $_MIDCOM->uimessages->add('net.nemein.calendar', "Root event {$data['root_event']->guid} created", 'ok');
             
             $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)); 
             // This will exit;           
@@ -115,18 +115,38 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
 
     /**
      * Displays an event creation view.
+     *
+     * The form can be manipulated using query strings like the following:
+     *
+     * ?defaults[title]=Kaljakellunta&defaults[start]=20070911T123001&defaults[categories]=|foo|
      */
     function _handler_create($handler_id, $args, &$data)
     {
-        $this->_request_data['root_event']->require_do('midgard:create');
+        $data['root_event']->require_do('midgard:create');
 
-        $this->_request_data['schemadb_schema'] = $args[0];
-        if (!array_key_exists($this->_request_data['schemadb_schema'], $this->_request_data['schemadb']))
+        $data['schemadb_schema'] = $args[0];
+        if (!array_key_exists($data['schemadb_schema'], $data['schemadb']))
         {
             return false;
         }
+
+        $data['schemadb_defaults'] = Array();
         
-        $this->_request_data['schemadb_defaults'] = Array();
+        // Allow setting defaults from query string, useful for things like "create event for today" and chooser        
+        if (isset($_GET['defaults'])
+            && is_array($_GET['defaults']))
+        {
+            foreach ($_GET['defaults'] as $key => $value)
+            {
+                if (!isset($data['schemadb'][$data['schemadb_schema']]->fields[$key]))
+                {
+                    // No such field in schema
+                    continue;
+                }
+                
+                $data['schemadb_defaults'][$key] = $value;
+            }
+        }
         
         $this->_load_controller();
 
@@ -138,25 +158,25 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
                 net_nemein_calendar_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
                 
                 // Generate URL name
-                if ($this->_request_data['event']->extra == '')
+                if ($data['event']->extra == '')
                 {
-                    $this->_request_data['event']->extra = midcom_generate_urlname_from_string($this->_request_data['event']->title);
+                    $data['event']->extra = midcom_generate_urlname_from_string($data['event']->title);
                     $tries = 0;
                     $maxtries = 999;
-                    while(   !$this->_request_data['event']->update()
+                    while(   !$data['event']->update()
                           && $tries < $maxtries)
                     {
-                        $this->_request_data['event']->extra = midcom_generate_urlname_from_string($this->_request_data['event']->title);
+                        $data['event']->extra = midcom_generate_urlname_from_string($data['event']->title);
                         if ($tries > 0)
                         {
                             // Append an integer if articles with same name exist
-                            $this->_request_data['event']->extra .= sprintf("-%03d", $tries);
+                            $data['event']->extra .= sprintf("-%03d", $tries);
                         }
                         $tries++;
                     }
                 }
 
-                $_MIDCOM->relocate("{$this->_request_data['event']->extra}.html");
+                $_MIDCOM->relocate("{$data['event']->extra}.html");
                 // This will exit.
 
             case 'cancel':
@@ -171,7 +191,7 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
         $breadcrumb[] = array
         (
             MIDCOM_NAV_URL => "create/event.html",
-            MIDCOM_NAV_NAME => sprintf($this->_l10n_midcom->get('create %s'), $this->_l10n->get($this->_request_data['schemadb'][$this->_request_data['schemadb_schema']]->description)),
+            MIDCOM_NAV_NAME => sprintf($this->_l10n_midcom->get('create %s'), $this->_l10n->get($data['schemadb'][$data['schemadb_schema']]->description)),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
         
@@ -184,7 +204,7 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
      */
     function _show_create ($handler_id, &$data)
     {
-        $this->_request_data['controller'] =& $this->_controller;
+        $data['controller'] =& $this->_controller;
         midcom_show_style('admin_create');
     }
 }

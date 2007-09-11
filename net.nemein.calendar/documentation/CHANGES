@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-09-11 bergie
+  + Enabled setting form defaults for creation mode in query string
+
 2007-09-06 bergie
   + Added archive to navigation
   + Added categories to navigation

@@ -128,7 +128,15 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nemein_calendar_handler_create', 'create'),
             'fixed_args' => Array('create'),
             'variable_args' => 1,
-        );        
+        );
+
+        // /create/chooser/<schema> Event creation view to be used in chooser widget's creation mode
+        $this->_request_switch['create_chooser'] = Array
+        (
+            'handler' => Array('net_nemein_calendar_handler_create', 'create'),
+            'fixed_args' => Array('create', 'chooser'),
+            'variable_args' => 1,
+        );
 
         // /edit/<event guid>.html Event editing view
         $this->_request_switch['edit'] = Array
