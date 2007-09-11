@@ -128,7 +128,7 @@ class net_nemein_calendar_interface extends midcom_baseclasses_components_interf
             return null;
         }
         
-        return "{$event->extra}.html";
+        return "{$event->extra}/";
     }
 }
 

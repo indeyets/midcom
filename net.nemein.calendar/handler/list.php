@@ -430,11 +430,11 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         {
             if ($this->_request_data['archive_mode'])
             {
-                $event_url = "{$prefix}archive/view/" . $event->extra. '.html';
+                $event_url = "{$prefix}archive/view/{$event->extra}/";
             }
             else
             {
-                $event_url = $prefix . $event->extra. '.html';
+                $event_url = "{$prefix}{$event->extra}";
             }
         }
         else
@@ -620,7 +620,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         foreach ($this->_request_data['events'] as $event)
         {
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-            $event->link = $prefix.$event->extra.'.html';
+            $event->link = "{$prefix}{$event->extra}/";
             $this->_calendar->add_event($event);
         }
     }

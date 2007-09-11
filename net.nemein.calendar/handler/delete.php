@@ -83,7 +83,7 @@ class net_nemein_calendar_handler_delete extends midcom_baseclasses_components_h
         }
         elseif (array_key_exists('net_nemein_calendar_deletecancel', $_POST))
         {
-            $_MIDCOM->relocate("{$this->_event->extra}.html");
+            $_MIDCOM->relocate("{$this->_event->extra}/");
         }
 
         $this->_load_datamanager();
@@ -93,12 +93,12 @@ class net_nemein_calendar_handler_delete extends midcom_baseclasses_components_h
         $tmp = Array();
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "{$this->_event->extra}.html",
+            MIDCOM_NAV_URL => "{$this->_event->extra}/",
             MIDCOM_NAV_NAME => $this->_event->title,
         );
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "delete/{$this->_event->guid}.html",
+            MIDCOM_NAV_URL => "delete/{$this->_event->guid}/",
             MIDCOM_NAV_NAME => $this->_request_data['l10n_midcom']->get('delete'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
@@ -108,12 +108,12 @@ class net_nemein_calendar_handler_delete extends midcom_baseclasses_components_h
         // Set the breadcrumb
         $breadcrumb[] = array
         (
-            MIDCOM_NAV_URL => "{$this->_event->extra}.html",
+            MIDCOM_NAV_URL => "{$this->_event->extra}/",
             MIDCOM_NAV_NAME => $this->_event->title,
         );
         $breadcrumb[] = array
         (
-            MIDCOM_NAV_URL => "delete/{$this->_event->guid}.html",
+            MIDCOM_NAV_URL => "delete/{$this->_event->guid}/",
             MIDCOM_NAV_NAME => sprintf($this->_l10n_midcom->get('delete')),
         );
         

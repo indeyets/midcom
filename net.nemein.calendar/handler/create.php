@@ -103,8 +103,8 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
     {
         $this->_controller =& midcom_helper_datamanager2_controller::create('create');
         $this->_controller->schemadb =& $this->_request_data['schemadb'];
-        $this->_controller->schemaname = $this->_request_data['schemadb_schema'];
-        $this->_controller->defaults = $this->_request_data['schemadb_defaults'];
+        $this->_controller->schemaname = $this->_request_data['schema'];
+        $this->_controller->defaults = $this->_request_data['defaults'];
         $this->_controller->callback_object =& $this;
         if (! $this->_controller->initialize())
         {
@@ -124,13 +124,13 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
     {
         $data['root_event']->require_do('midgard:create');
 
-        $data['schemadb_schema'] = $args[0];
-        if (!array_key_exists($data['schemadb_schema'], $data['schemadb']))
+        $data['schema'] = $args[0];
+        if (!array_key_exists($data['schema'], $data['schemadb']))
         {
             return false;
         }
 
-        $data['schemadb_defaults'] = Array();
+        $data['defaults'] = Array();
         
         // Allow setting defaults from query string, useful for things like "create event for today" and chooser        
         if (isset($_GET['defaults'])
@@ -138,13 +138,13 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
         {
             foreach ($_GET['defaults'] as $key => $value)
             {
-                if (!isset($data['schemadb'][$data['schemadb_schema']]->fields[$key]))
+                if (!isset($data['schemadb'][$data['schema']]->fields[$key]))
                 {
                     // No such field in schema
                     continue;
                 }
                 
-                $data['schemadb_defaults'][$key] = $value;
+                $data['defaults'][$key] = $value;
             }
         }
         
@@ -176,7 +176,7 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
                     }
                 }
 
-                $_MIDCOM->relocate("{$data['event']->extra}.html");
+                $_MIDCOM->relocate("{$data['event']->extra}/");
                 // This will exit.
 
             case 'cancel':
@@ -184,14 +184,14 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
                 // This will exit.
         }
 
-        $title = sprintf($this->_l10n_midcom->get('create %s'), $this->_l10n->get($this->_request_data['schemadb'][$this->_request_data['schemadb_schema']]->description));
+        $title = sprintf($this->_l10n_midcom->get('create %s'), $this->_l10n->get($this->_request_data['schemadb'][$this->_request_data['schema']]->description));
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
 
         // Set the breadcrumb
         $breadcrumb[] = array
         (
-            MIDCOM_NAV_URL => "create/event.html",
-            MIDCOM_NAV_NAME => sprintf($this->_l10n_midcom->get('create %s'), $this->_l10n->get($data['schemadb'][$data['schemadb_schema']]->description)),
+            MIDCOM_NAV_URL => "create/{$data['schema']}/",
+            MIDCOM_NAV_NAME => sprintf($this->_l10n_midcom->get('create %s'), $this->_l10n->get($data['schemadb'][$data['schema']]->description)),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
         

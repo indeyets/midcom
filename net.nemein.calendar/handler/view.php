@@ -144,7 +144,7 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
         // Set the breadcrumb
         $breadcrumb[] = array
         (
-            MIDCOM_NAV_URL => "{$this->_request_data['event']->extra}.html/",
+            MIDCOM_NAV_URL => "{$this->_request_data['event']->extra}/",
             MIDCOM_NAV_NAME => $this->_request_data['event']->title,
         );
         

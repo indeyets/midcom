@@ -97,7 +97,7 @@ class net_nemein_calendar_handler_edit extends midcom_baseclasses_components_han
                 // *** FALL-THROUGH ***
 
             case 'cancel':
-                $_MIDCOM->relocate("{$this->_request_data['event']->extra}.html");
+                $_MIDCOM->relocate("{$this->_request_data['event']->extra}/");
                 // This will exit.
         }
 
@@ -108,12 +108,12 @@ class net_nemein_calendar_handler_edit extends midcom_baseclasses_components_han
         // Set the breadcrumb
         $breadcrumb[] = array
         (
-            MIDCOM_NAV_URL => "{$this->_request_data['event']->extra}.html",
+            MIDCOM_NAV_URL => "{$this->_request_data['event']->extra}/",
             MIDCOM_NAV_NAME => $this->_request_data['event']->title,
         );
         $breadcrumb[] = array
         (
-            MIDCOM_NAV_URL => "edit/{$this->_request_data['event']->guid}.html",
+            MIDCOM_NAV_URL => "edit/{$this->_request_data['event']->guid}/",
             MIDCOM_NAV_NAME => sprintf($this->_l10n_midcom->get('edit')),
         );
         

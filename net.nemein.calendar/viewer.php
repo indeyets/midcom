@@ -115,14 +115,14 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             'variable_args' => 2,
         );
         
-        // /archive.html Main archive page
+        // /archive Main archive page
         $this->_request_switch['archive-welcome'] = Array
         (
             'handler' => Array('net_nemein_calendar_handler_archive', 'welcome'),
             'fixed_args' => Array('archive'),
         );
         
-        // /create/<schema>.html Event creation view
+        // /create/<schema> Event creation view
         $this->_request_switch['create'] = Array
         (
             'handler' => Array('net_nemein_calendar_handler_create', 'create'),
@@ -138,7 +138,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
 
-        // /edit/<event guid>.html Event editing view
+        // /edit/<event guid> Event editing view
         $this->_request_switch['edit'] = Array
         (
             'handler' => Array('net_nemein_calendar_handler_edit', 'edit'),
@@ -146,7 +146,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         ); 
 
-        // /delete/<event guid>.html Event deletion view
+        // /delete/<event guid> Event deletion view
         $this->_request_switch['delete'] = Array
         (
             'handler' => Array('net_nemein_calendar_handler_delete', 'delete'),
@@ -154,7 +154,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         ); 
 
-        // /archive/view/<event GUID>.html duplicate of the view handler for archive
+        // /archive/view/<event GUID> duplicate of the view handler for archive
         // operation, only relevant for style code, it sets a flag
         // which allows better URL handling: The request context key 'archive_mode'
         // will be true in this case.
@@ -174,7 +174,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('config'),
         );
 
-        // /<event GUID>.html shows individual event (comes last since it could hide other
+        // /<event GUID> shows individual event (comes last since it could hide other
         // handlers
         $this->_request_switch['view'] = Array
         (
@@ -299,7 +299,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
                 $nap = new midcom_helper_nav();
                 $node = $nap->get_node($this->_topic->id);
                 
-                $_MIDCOM->relocate("{$node[MIDCOM_NAV_FULLURL]}rootevent.html");
+                $_MIDCOM->relocate("{$node[MIDCOM_NAV_FULLURL]}rootevent/");
                 // This will exit
             }
         }
@@ -325,7 +325,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             foreach (array_keys($this->_request_data['schemadb']) as $name)
             {
                 $this->_node_toolbar->add_item(Array(
-                    MIDCOM_TOOLBAR_URL => "create/{$name}.html",
+                    MIDCOM_TOOLBAR_URL => "create/{$name}/",
                     MIDCOM_TOOLBAR_LABEL => sprintf
                     (
                         $this->_l10n_midcom->get('create %s'),
@@ -367,7 +367,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             $this->_node_toolbar->add_item(
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => 'config.html',
+                    MIDCOM_TOOLBAR_URL => 'config/',
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
                     MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
