@@ -266,10 +266,9 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
      */
     function _on_initialize()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        
         if (is_a('midcom_helper_datamanager2_type_select', $this->_type))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Warning, the field {$this->name} is not a select type or subclass thereoff, you cannot use the chooser widget with it.",
                 MIDCOM_LOG_WARN);
             debug_pop();
@@ -288,6 +287,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             if (   !isset($this->_callback_class)
                 || empty($this->_callback_class))
             {
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Warning, the field {$this->name} does not have proper class definitions set.",
                     MIDCOM_LOG_WARN);
                 debug_pop();
@@ -298,6 +298,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         if (   !empty($this->renderer)
             && !$this->_check_renderer())
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Warning, the field {$this->name} renderer wasn't found or not set properly, thus widget can never show results.",
                 MIDCOM_LOG_WARN);
             debug_pop();
@@ -306,6 +307,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         
         if (!$this->_check_class())
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Warning, cannot load class {$this->class}.",
                 MIDCOM_LOG_WARN);
             debug_pop();
@@ -314,6 +316,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
 
         if (empty($this->class))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Warning, the field {$this->name} does not have class defined.",
                 MIDCOM_LOG_WARN);
             debug_pop();
@@ -322,6 +325,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
 
         if (empty($this->component))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Warning, the field {$this->name} does not have component the class {$this->class} belongs to defined.",
                 MIDCOM_LOG_WARN);
             debug_pop();
@@ -330,6 +334,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
 
         if (empty($this->searchfields))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Warning, the field {$this->name} does not have searchfields defined, it can never return results.",
                 MIDCOM_LOG_WARN);
             debug_pop();
@@ -357,8 +362,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         }
 
         $this->_init_widget_options();
-
-        debug_pop();
+        
         return true;
     }
     
@@ -453,9 +457,8 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
     
     function _check_callback()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        
-        debug_add("Checking callback class {$this->_callback_class}");
+        // debug_push_class(__CLASS__, __FUNCTION__);        
+        // debug_add("Checking callback class {$this->_callback_class}");
         
         if (! class_exists($this->_callback_class))
         {
@@ -480,13 +483,13 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         }
         $this->_callback = new $this->_callback_class($this->_callback_args);
         
-        debug_pop();
+        // debug_pop();
         return $this->_callback->initialize();
     }
     
     function _check_clever_class()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
+        // debug_push_class(__CLASS__, __FUNCTION__);
         
         $current_user = $_MIDCOM->auth->user->get_storage();
         
@@ -605,7 +608,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         
         if (array_key_exists($this->clever_class,$clever_classes))
         {
-            debug_add("clever class {$this->clever_class} found!");
+            // debug_add("clever class {$this->clever_class} found!");
             
             $this->class = $clever_classes[$this->clever_class]['class'];
             $this->component = $clever_classes[$this->clever_class]['component'];
@@ -647,12 +650,12 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 $this->id_field = $clever_classes[$this->clever_class]['id_field'];
             }
                                                 
-            debug_pop();
+            // debug_pop();
             return true;
         }
         else
         {
-            debug_add("clever class {$this->clever_class} not found in predefined list. Trying to use reflector");
+            // debug_add("clever class {$this->clever_class} not found in predefined list. Trying to use reflector");
             $_MIDCOM->componentloader->load_graceful('midgard.admin.asgard');
             
             $matching_type = false;
@@ -663,12 +666,12 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 $pos = strpos($schema_type, $this->clever_class);        
                 if ($pos !== false)
                 {
-                    debug_add("found possible match: {$schema_type}");
+                    // debug_add("found possible match: {$schema_type}");
                     $matched_types[] = $schema_type;
                 }
             }
             
-            debug_print_r('$matched_types',$matched_types);
+            // debug_print_r('$matched_types',$matched_types);
             
             if (count($matched_types) == 1)
             {
@@ -694,10 +697,11 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 }
             }
             
-            debug_print_r('Decided to go with',$matching_type);
+            // debug_print_r('Decided to go with',$matching_type);
             
             if (! $matching_type)
             {
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("no matches found for {$this->clever_class}!");
                 debug_pop();
                 return false;
@@ -710,15 +714,15 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             
             $dummy_object = new $matching_type();
             $type_fields = array_keys(get_object_vars($dummy_object));     
-            debug_print_r('type_fields',$type_fields);
+            // debug_print_r('type_fields',$type_fields);
             
             unset($type_fields['metadata']);
             foreach ($type_fields as $key)
             {
-                debug_add("processing type field {$key}");
+                // debug_add("processing type field {$key}");
                 if ($mgd_reflector->is_link($key))
                 {
-                    debug_add("type field {$key} is link");
+                    // debug_add("type field {$key} is link");
                 }
                 
                 if (in_array($key, array('title','firstname','lastname','name','email','start','end','location')))
@@ -733,7 +737,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             if (empty($labels))
             {
                 $label_properties = $maa_reflector->get_label_property();
-                debug_print_r('$label_properties',$label_properties);
+                // debug_print_r('$label_properties',$label_properties);
                 if (is_array($label_properties))
                 {
                     foreach ($label_properties as $key)
@@ -795,16 +799,16 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 $this->creation_default_key = $this->result_headers[0]['name'];
             }
             
-            debug_add("using class: {$this->class}");
+            /*debug_add("using class: {$this->class}");
             debug_add("using component: {$this->component}");
             debug_print_r('$this->searchfields',$this->searchfields);
             debug_print_r('$this->result_headers',$this->result_headers);
             
-            debug_pop();
+            debug_pop();*/
             return true;
         }
         
-        debug_pop();
+        //debug_pop();
         return false;
     }
     
@@ -864,9 +868,9 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         $headers .= " ]";
         $this->_js_widget_options['result_headers'] = $headers;
         
-        debug_push_class(__CLASS__, __FUNCTION__);
+        /*debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("js result_headers: {$headers}");
-        debug_pop();
+        debug_pop();*/
         
         $this->_generate_extra_params();        
     }
@@ -900,7 +904,8 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
      */
     function add_elements_to_form()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
+        // debug_push_class(__CLASS__, __FUNCTION__);
+        
         // Get url to search handler
         $nav = new midcom_helper_nav();
         $root_node = $nav->get_node($nav->get_root_node());
@@ -955,9 +960,6 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             
             $dialog_html = '<div class="chooser_widget_creation_dialog" id="' . $dialog_id . '">';
             $dialog_html .= '<div class="chooser_widget_creation_dialog_content_holder">';
-            //$dialog_html .= '<img class="chooser_widget_creation_dialog_loading" src="' . MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/ajax-loading.gif" alt="" />';
-            //$dialog_html .= '<iframe width="450" height="500" class="chooser_widget_creation_dialog_content" src="">';
-            //$dialog_html .= '</iframe>';
             $dialog_html .= $dialog_js;
             $dialog_html .= '</div>';
             $dialog_html .= '</div>';
@@ -973,13 +975,8 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 "{$this->_element_id}_creation_dialog_holder",
                 '',
                 $html
-            );            
+            );
         }
-        
-        $group =& $this->_form->addGroup($this->widget_elements, $this->_element_id, $this->_translate($this->_field['title']), '', array('class' => 'chooser_widget_group'));
-        $group->setAttributes(
-            array('class' => 'midcom_helper_datamanager2_widget_chooser')
-        );
         
         $this->_jscript .= '<script type="text/javascript">';
         $this->_jscript .= 'jQuery().ready(function(){';
@@ -1004,25 +1001,25 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         
         // Add existing and static selections
         $existing_elements = $this->_type->selection;
-        debug_print_r('existing_elements',$existing_elements);
+        // debug_print_r('existing_elements',$existing_elements);
 
-        debug_print_r('static_options',$this->static_options);
+        // debug_print_r('static_options',$this->static_options);
         
         $elements = array_merge($this->static_options,$existing_elements);
-        debug_print_r('all elements to be added',$elements);
+        // debug_print_r('all elements to be added',$elements);
                 
         $ee_script = '';
         if ($this->_renderer_callback)
         {
             foreach ($elements as $key)
             {
-                debug_add("Passing key to renderer {$key}");
+                // debug_add("Passing key to renderer {$key}");
                 $data = $this->_get_key_data($key);
                 if ($data)
                 {
-                    debug_add("Got data: {$data}");
+                    // debug_add("Got data: {$data}");
                     $item = $this->_renderer_callback->render_data($data);
-                    debug_add("Got item: {$item}");
+                    // debug_add("Got item: {$item}");
                     $ee_script .= "jQuery('#{$this->_element_id}_search_input').midcom_helper_datamanager2_widget_chooser_add_result_item({$data},'{$item}');\n";                    
                 }
             }
@@ -1031,11 +1028,11 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         {
             foreach ($elements as $key)
             {
-                debug_add("Processing key {$key}");
+                // debug_add("Processing key {$key}");
                 $data = $this->_get_key_data($key);
                 if ($data)
                 {
-                    debug_add("Got data: {$data}");
+                    // debug_add("Got data: {$data}");
                     $ee_script .= "jQuery('#{$this->_element_id}_search_input').midcom_helper_datamanager2_widget_chooser_add_result_item({$data});\n";                    
                 }
             }
@@ -1045,13 +1042,23 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         $this->_jscript .= '});';
         $this->_jscript .= '</script>';
         
-        $this->_form->addElement('static', "{$this->_element_id}_initscripts", '', $this->_jscript);        
+        //$this->_form->addElement('static', "{$this->_element_id}_initscripts", '', $this->_jscript);        
+
+        $this->widget_elements[] =& HTML_QuickForm::createElement
+        (
+            'static',
+            "{$this->_element_id}_initscripts",
+            '',
+            $this->_jscript
+        );
+        
+        $group =& $this->_form->addGroup($this->widget_elements, $this->name, $this->_translate($this->_field['title']), '', array('class' => 'midcom_helper_datamanager2_widget_chooser'));
     }
     
     function _resolve_object_name(&$object)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("resolving object name from id {$object->id}");
+        // debug_push_class(__CLASS__, __FUNCTION__);
+        // debug_add("resolving object name from id {$object->id}");
         
         $name = @$object->get_label();
         
@@ -1078,9 +1085,8 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
     
     function _object_to_jsdata(&$object)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        
-        debug_add("converting object with id {$object->id} to jsdata");
+        // debug_push_class(__CLASS__, __FUNCTION__);        
+        // debug_add("converting object with id {$object->id} to jsdata");
         
         $id = @$object->id;
         $guid = @$object->guid;
@@ -1096,7 +1102,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         {
             $value = @$object->get_label();
             $value = rawurlencode($value);
-            debug_add("adding header item: name=label value={$value}");
+            // debug_add("adding header item: name=label value={$value}");
             $jsdata .= "label: '{$value}'";
         }
         else
@@ -1108,7 +1114,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 $item_name = $header_item['name'];
                 $value = @$object->$item_name;
                 $value = rawurlencode($value);
-                debug_add("adding header item: name={$item_name} value={$value}");
+                // debug_add("adding header item: name={$item_name} value={$value}");
                 $jsdata .= "{$item_name}: '{$value}'";
                 
                 if ($i < $hi_count)
@@ -1124,22 +1130,21 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         
         return $jsdata;        
         
-        debug_pop();
+        // debug_pop();
     }
     
     function _get_key_data($key, $in_render_mode=false)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        
-        debug_add("get_key_data for key: {$key}");
+        // debug_push_class(__CLASS__, __FUNCTION__);        
+        // debug_add("get_key_data for key: {$key}");
         
         if ($this->_callback)
         {
-            debug_add("Using callback to fetch key data");
+            // debug_add("Using callback to fetch key data");
 
             if ($in_render_mode)
             {
-                debug_pop();
+                // debug_pop();
                 return $_callback->resolve_object_name($key);
             }
             
@@ -1150,7 +1155,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 return false;
             }
             
-            debug_pop();
+            // debug_pop();
             
             if ($this->_renderer_callback)
             {
@@ -1160,7 +1165,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             return $this->_object_to_jsdata(&$results);
         }
         
-        debug_add("Using clever class or predefined class");
+        // debug_add("Using clever class or predefined class");
         
         $_MIDCOM->auth->request_sudo();
         
@@ -1182,7 +1187,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         $qb = @call_user_func(array($this->class, 'new_query_builder'));
         if (! $qb)
         {
-            debug_add("use midgard_query_builder");
+            // debug_add("use midgard_query_builder");
             $qb = new midgard_query_builder($this->class);
         }
 
@@ -1193,11 +1198,11 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         
         $results = $qb->execute();        
         
-        debug_print_r("Got results:",$results);
+        // debug_print_r("Got results:",$results);
         
         if (count($results) == 0)
         {
-            debug_add("Fetching data for key '{$key}' failed.");
+            // debug_add("Fetching data for key '{$key}' failed.");
             return false;
         }
         
@@ -1205,7 +1210,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         
         $_MIDCOM->auth->drop_sudo();
         
-        debug_pop();
+        // debug_pop();
         
         if ($in_render_mode)
         {
@@ -1241,8 +1246,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
       */
      function get_default()
      {
-         debug_push_class(__CLASS__, __FUNCTION__);
-         
+         // debug_push_class(__CLASS__, __FUNCTION__);         
          //debug_print_r('this->_type',$this->_type);
          
          $defaults = array();
@@ -1251,9 +1255,9 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
              $defaults[$key] = true;
          }
          
-         debug_print_r('defaults',$defaults);
+         // debug_print_r('defaults',$defaults);         
+         // debug_pop();
          
-         debug_pop();
          return Array($this->name => $defaults);
      }
 
@@ -1262,9 +1266,8 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
      */
     function sync_type_with_widget($results)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        
-        debug_print_r('results:',$results);
+        // debug_push_class(__CLASS__, __FUNCTION__);        
+        // debug_print_r('results:',$results);
         
         $this->_type->selection = array();
         if (!isset($results["{$this->_element_id}_selections"]))
@@ -1275,24 +1278,23 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         
         foreach ($real_results as $key => $value)
         {
-            debug_add("checking key {$key} with value ".var_dump($value));
+            // debug_add("checking key {$key} with value ".var_dump($value));
             if (   $value != "0"
                 || $value != 0)
             {
-                debug_add("adding key {$key} to selection");
+                // debug_add("adding key {$key} to selection");
                 $this->_type->selection[] = $key;                
             }
         }
         
-        debug_print_r('real_results', $real_results);
-        debug_print_r('_type->selection', $this->_type->selection);
-                
-        debug_pop();        
+        // debug_print_r('real_results', $real_results);
+        // debug_print_r('_type->selection', $this->_type->selection);                
+        // debug_pop();
     }
 
     function render_content()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
+        // debug_push_class(__CLASS__, __FUNCTION__);
         
         echo '<ul>';
         if (count($this->_type->selection) == 0)
@@ -1301,7 +1303,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         }
         else
         {
-            debug_add("We have selections!");
+            // debug_add("We have selections!");
             
             foreach ($this->_type->selection as $key)
             {
@@ -1311,7 +1313,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         }
         echo '</ul>';
         
-        debug_pop();
+        // debug_pop();
     }
 
     /**
