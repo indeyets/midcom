@@ -36,9 +36,9 @@ require_once('Date.php');
  * It expects the following URL structures, relative to ANCHOR_PREFIX:
  *
  * - 'self': /
- * - 'self_quick': /quick.html
- * - 'other': /view/$guid.html
- * - 'other_quick': /view/quick/$guid.html
+ * - 'self_quick': /quick/
+ * - 'other': /view/$guid/
+ * - 'other_quick': /view/quick/$guid/
  *
  * @package net.nehmer.account
  */
@@ -142,7 +142,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                 if (   !$_MIDCOM->auth->user
                     && $this->_config->get('allow_register'))
                 {
-                    $_MIDCOM->relocate('register.html');
+                    $_MIDCOM->relocate('register/');
                 }
                 $_MIDCOM->auth->require_valid_user();
                 $this->_account = $_MIDCOM->auth->user->get_storage();
@@ -192,17 +192,23 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
         $this->_avatar = $this->_account->get_attachment('avatar');
         $this->_avatar_thumbnail = $this->_account->get_attachment('avatar_thumbnail');
 
-        // This is temporary stuff until we get a preferences mechanism up and running.
-        $data['communitymotto'] = $this->_account->get_parameter('midcom.helper.datamanager2', 'communitymotto');
-        $data['communityactive'] = (bool) $this->_account->get_parameter('midcom.helper.datamanager2', 'communityactive');
-        // End temporary Stuff
-
         $this->_prepare_datamanager();
         $this->_compute_visible_fields();
         $this->_prepare_request_data();
         $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name);
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
         $_MIDCOM->set_pagetitle($this->_user->name);
+        
+        if (   $handler_id == 'other'
+            || $handler_id == 'other_quick')
+        {
+            $tmp[] = Array
+            (
+                MIDCOM_NAV_URL => '',
+                MIDCOM_NAV_NAME => $this->_user->name,
+            );
+            $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        }
 
         return true;
     }
@@ -292,7 +298,13 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
             }
             else
             {
-                $this->_request_data['profile_url'] = "{$prefix}view/{$this->_account->guid}.html";
+                $arg = $this->_account->guid;
+                if (   $this->_account->username
+                    && strpos($this->_account->username, '/') === false)
+                {
+                    $arg = rawurlencode($this->_account->username);
+                }
+                $this->_request_data['profile_url'] = "{$prefix}view/{$arg}/";
             }
         }
         else
@@ -302,11 +314,11 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
 
         if ($this->_view_self)
         {
-            $this->_request_data['edit_url'] = "{$prefix}edit.html";
+            $this->_request_data['edit_url'] = "{$prefix}edit/";
         }
         else if ($_MIDCOM->auth->admin)
         {
-            $this->_request_data['edit_url'] = "{$prefix}admin/edit/{$this->_account->guid}.html";
+            $this->_request_data['edit_url'] = "{$prefix}admin/edit/{$this->_account->guid}/";
         }
         else
         {

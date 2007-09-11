@@ -188,7 +188,6 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to update the password');
             // This will exit.
         }
-        $this->_account->set_parameter('net.nehmer.account', 'revised', time());
     }
 
     /**

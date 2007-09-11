@@ -104,8 +104,6 @@ class net_nehmer_account_handler_socialweb extends midcom_baseclasses_components
 
         if ($this->_controller->process_form() == 'save')
         {
-            $this->_account->set_parameter('net.nehmer.account', 'revised', time());
-
             // Relocate back to view
             $_MIDCOM->relocate($return_url);
             // This will exit.

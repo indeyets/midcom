@@ -1091,7 +1091,6 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
 
         $this->_person->set_privilege('midcom:isonline', 'USERS', MIDCOM_PRIVILEGE_ALLOW);
         $this->_person->set_parameter('net.nehmer.account', 'visible_field_list', implode(',', $published_fields));
-        $this->_person->set_parameter('net.nehmer.account', 'published', time());
         $this->_person->set_parameter('net.nehmer.account', 'auto_published', '1');
     }
 

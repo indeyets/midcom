@@ -181,11 +181,6 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
                 'handler' => Array('net_nehmer_account_handler_publish', 'publish'),
                 'fixed_args' => Array('publish'),
             );
-            $this->_request_switch['publish_ok'] = Array
-            (
-                'handler' => Array('net_nehmer_account_handler_publish', 'publish_ok'),
-                'fixed_args' => Array('publish', 'ok'),
-            );
         }
 
         $this->_request_switch['password'] = Array

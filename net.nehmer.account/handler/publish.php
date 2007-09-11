@@ -195,10 +195,10 @@ class net_nehmer_account_handler_publish extends midcom_baseclasses_components_h
 
 
         $this->_account->set_parameter('net.nehmer.account', 'visible_field_list', implode(',', $published_fields));
-        $this->_account->set_parameter('net.nehmer.account', 'revised', time());
-        $this->_account->set_parameter('net.nehmer.account', 'published', time());
         $this->_account->delete_parameter('net.nehmer.account', 'auto_published');
-        $_MIDCOM->relocate('publish/ok.html');
+
+        $_MIDCOM->uimessages->add($this->_l10n->get('publish account details'), $this->_l10n->get('publishing successful.'));
+        $_MIDCOM->relocate('');
     }
 
     /**
@@ -345,8 +345,8 @@ class net_nehmer_account_handler_publish extends midcom_baseclasses_components_h
         $this->_request_data['profile_url'] = $prefix;
         $this->_request_data['edit_url'] = "{$prefix}edit.html";
 
-        $this->_request_data['account_revised'] = $this->_account->get_parameter('net.nehmer.account', 'revised');
-        $this->_request_data['account_published'] = $this->_account->get_parameter('net.nehmer.account', 'published');
+        $this->_request_data['account_revised'] = $this->_account->metadata->revised;
+        $this->_request_data['account_published'] = $this->_account->metadata->published;
 
         if ($this->_avatar)
         {

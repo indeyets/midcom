@@ -10,10 +10,10 @@ $schema =& $data['datamanager']->schema;
     <?php
     if ($data['avatar']) 
     {
-        echo "<img src=\"{$data['avatar_thumbnail_url']}\" class=\"photo\" style=\"float: left;\" alt=\"{$user->name}\" />\n";
+        echo "<img src=\"{$data['avatar_thumbnail_url']}\" class=\"photo\" style=\"float: left; margin-right: 6px;\" alt=\"{$data['user']->name}\" />\n";
     } 
     ?>
-    <h1 class="fn"><?php echo $data['user']->name; ?></h1>
+    <h2 class="fn"><?php echo $data['user']->name; ?></h2>
 
     <?php 
     $online_state = $data['user']->is_online();

@@ -12,7 +12,7 @@ $schema =& $data['datamanager']->schema;
     <?php
     if ($data['avatar']) 
     {
-        echo "<a href=\"{$data['profile_url']}\"><img src=\"{$data['avatar_thumbnail_url']}\" class=\"photo\" style=\"float: left;\" alt=\"{$user->name}\" /></a>\n";
+        echo "<a href=\"{$data['profile_url']}\"><img src=\"{$data['avatar_thumbnail_url']}\" class=\"photo\" style=\"float: left; margin-right: 6px;\" alt=\"{$data['user']->name}\" /></a>\n";
     } 
     ?>
     <h2 class="fn"><?php echo "<a href=\"{$data['profile_url']}\">{$data['user']->name}</a>"; ?></h2>
