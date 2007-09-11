@@ -186,6 +186,11 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
 
         $title = sprintf($this->_l10n_midcom->get('create %s'), $this->_l10n->get($this->_request_data['schemadb'][$this->_request_data['schema']]->description));
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
+        
+        if ($handler_id == 'create_chooser')
+        {
+            $_MIDCOM->skip_page_style = true;
+        }
 
         // Set the breadcrumb
         $breadcrumb[] = array
@@ -204,8 +209,19 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
      */
     function _show_create ($handler_id, &$data)
     {
+        if ($handler_id == 'create_chooser')
+        {
+            midcom_show_style('popup_header');
+        }    
+        
         $data['controller'] =& $this->_controller;
         midcom_show_style('admin_create');
+        
+        if ($handler_id == 'create_chooser')
+        {
+            midcom_show_style('popup_footer');
+        }    
+
     }
 }
 
