@@ -27,7 +27,7 @@
     'type' => 'select',
     'type_config' => array
     (
-         'options' => array(),
+          'require_corresponding_option' => false,
          'allow_multiple' => true,
          'multiple_storagemode' => 'array',
     ),
@@ -45,7 +45,7 @@
      'type' => 'select',
      'type_config' => array
      (
-          'options' => array(),
+          'require_corresponding_option' => false,
           'allow_multiple' => true,
           'multiple_storagemode' => 'array',
      ),
@@ -63,7 +63,7 @@
      'type' => 'select',
      'type_config' => array
      (
-          'options' => array(),
+          'require_corresponding_option' => false,
           'allow_multiple' => true,
           'multiple_storagemode' => 'array',
      ),
@@ -254,7 +254,11 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
     var $allow_multiple = true;
     
     var $reflector_key = null;
-    
+
+    var $creation_mode_enabled = null;
+    var $creation_handler = null;
+    var $creation_default_key = null;
+            
     /**
      * The initialization event handler post-processes the maxlength setting.
      *
@@ -332,14 +336,6 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             return false;
         }
         
-        // if (empty($this->result_headers))
-        // {
-        //     debug_add("No result headers defined {$this->class}, thus widget can't show results.",
-        //         MIDCOM_LOG_WARN);
-        //     debug_pop();
-        //     return false;
-        // }
-        
         $_MIDCOM->enable_jquery();
 
         $_MIDCOM->add_link_head(
@@ -351,14 +347,42 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         );
         
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/chooser/jquery.chooser_widget.js');
-                
+        
         $this->idsuffix = $this->_create_random_suffix();
         $this->_element_id = "{$this->_namespace}{$this->name}_chooser_widget{$this->idsuffix}";
+
+        if (! is_null($this->creation_handler))
+        {
+            $this->_enable_creation_mode();
+        }
 
         $this->_init_widget_options();
 
         debug_pop();
         return true;
+    }
+    
+    function _enable_creation_mode()
+    {
+        if (! empty($this->creation_handler))
+        {
+            $this->creation_mode_enabled = true;
+        }
+        
+        if ($this->creation_mode_enabled)
+        {
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/chooser/jquery.jqModal.js');
+            
+            $script = "
+                jQuery('#{$this->_element_id}_creation_dialog').jqm({
+                    modal: false,
+                    overlay: 40,
+                    overlayClass: 'chooser_widget_creation_overlay'
+                });
+            ";
+            
+            $_MIDCOM->add_jquery_state_script($script);
+        }
     }
     
     function _check_renderer()
@@ -555,7 +579,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                     array('title' => 'ASC'), 
                     array('metadata.published' => 'ASC'),
                 ),
-                'reflector_key' => 'buddy',
+                'creation_default_key' => 'title',
             ),
             'article' => array
             (
@@ -654,7 +678,8 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             {
                 if ($this->clever_class == 'event')
                 {
-                    $matching_type = 'org_openpsa_event';
+                    $matching_type = 'net_nemein_calendar_event_db';//'org_openpsa_event';
+                    $this->creation_default_key = 'title';
                 }
                 else if ($this->clever_class == 'person')
                 {
@@ -696,7 +721,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                     debug_add("type field {$key} is link");
                 }
                 
-                if (in_array($key, array('title','firstname','lastname','name','email')))
+                if (in_array($key, array('title','firstname','lastname','name','email','start','end','location')))
                 {
                     if (! in_array($key, $labels))
                     {
@@ -763,7 +788,13 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                     //Special rules for objects that need them
                 }
             }
-
+            
+            if (   $this->creation_mode_enabled
+                && empty($this->creation_default_key))
+            {
+                $this->creation_default_key = $this->result_headers[0]['name'];
+            }
+            
             debug_add("using class: {$this->class}");
             debug_add("using component: {$this->component}");
             debug_print_r('$this->searchfields',$this->searchfields);
@@ -786,7 +817,15 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         $this->_js_widget_options['result_headers'] = '[]';
         $this->_js_widget_options['allow_multiple'] = 'true';
         $this->_js_widget_options['id_field'] = "'$this->id_field'";
-                                
+        
+        if ($this->creation_mode_enabled)
+        {
+            $this->_js_widget_options['creation_mode'] = 'true';
+            // Ponder: Should we add prefix here? How should we handle multilang sites.
+            $this->_js_widget_options['creation_handler'] = "'{$this->creation_handler}'";
+            $this->_js_widget_options['creation_default_key'] = "'{$this->creation_default_key}'";
+        }
+
         if (isset($this->max_results))
         {
             $this->_js_widget_options['result_limit'] = $this->result_limit;
@@ -824,7 +863,11 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         }
         $headers .= " ]";
         $this->_js_widget_options['result_headers'] = $headers;
-                
+        
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("js result_headers: {$headers}");
+        debug_pop();
+        
         $this->_generate_extra_params();        
     }
     
@@ -896,10 +939,42 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             $this->_translate($this->_field['title']),
             array
             (
-                'class'         => 'shorttext chooser_search_input',
+                'class'         => 'shorttext chooser_widget_search_input',
                 'id'            => "{$this->_element_id}_search_input",
             )
         );
+        
+        if ($this->creation_mode_enabled)
+        {
+            $dialog_id = $this->_element_id . '_creation_dialog';
+            
+            $dialog_js = '<script type="text/javascript">';
+            $dialog_js .= "function close_dialog(){jQuery('#{$dialog_id}').jqmHide();};";
+            $dialog_js .= "function add_item(data){jQuery('#{$this->_element_id}_search_input').midcom_helper_datamanager2_widget_chooser_add_result_item(data);};";
+            $dialog_js .= '</script>';
+            
+            $dialog_html = '<div class="chooser_widget_creation_dialog" id="' . $dialog_id . '">';
+            $dialog_html .= '<div class="chooser_widget_creation_dialog_content_holder">';
+            //$dialog_html .= '<img class="chooser_widget_creation_dialog_loading" src="' . MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/ajax-loading.gif" alt="" />';
+            //$dialog_html .= '<iframe width="450" height="500" class="chooser_widget_creation_dialog_content" src="">';
+            //$dialog_html .= '</iframe>';
+            $dialog_html .= $dialog_js;
+            $dialog_html .= '</div>';
+            $dialog_html .= '</div>';
+            
+            $button_html = '<div class="chooser_widget_create_button" id="' . $this->_element_id . '_create_button">';
+            $button_html .= '</div>';
+
+            $html = $button_html . $dialog_html;
+
+            $this->widget_elements[] =& HTML_QuickForm::createElement
+            (
+                'static',
+                "{$this->_element_id}_creation_dialog_holder",
+                '',
+                $html
+            );            
+        }
         
         $group =& $this->_form->addGroup($this->widget_elements, $this->_element_id, $this->_translate($this->_field['title']), '', array('class' => 'chooser_widget_group'));
         $group->setAttributes(
@@ -1014,7 +1089,8 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         
         $jsdata .= "id: '{$id}',";
         $jsdata .= "guid: '{$guid}',";
-                
+        $jsdata .= "pre_selected: true,";
+                        
         if (   !empty($this->reflector_key)
             && !$this->result_headers)
         {
