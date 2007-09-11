@@ -1,12 +1,9 @@
 <script type="text/javascript">
     <?php
-    if (isset($data['cancelled']))
+    if (! isset($data['cancelled']))
     {
-        echo "alert(\"You clicked cancel\");\n";
-    }
-    else
-    {
-        echo "alert(\"You created event {$data['event']->title}\");\n";
+        echo "window.parent.add_item({$data['jsdata']});";
     }
     ?>
+    window.parent.close_dialog();
 </script>

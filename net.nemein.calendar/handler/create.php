@@ -228,6 +228,7 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
             if (   $data['event']
                 || isset($data['cancelled']))
             {
+                $data['jsdata'] = $this->_object_to_jsdata($data['event']);
                 midcom_show_style('admin_create_after');
             }
             else
@@ -240,6 +241,38 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
         }    
         
         midcom_show_style('admin_create');
+    }
+    
+    function _object_to_jsdata(&$object)
+    {        
+        $id = @$object->id;
+        $guid = @$object->guid;
+        
+        $jsdata = "{";
+        
+        $jsdata .= "id: '{$id}',";
+        $jsdata .= "guid: '{$guid}',";
+        $jsdata .= "pre_selected: true,";
+                        
+        $hi_count = count($this->_request_data['schemadb'][$this->_request_data['schema']]->fields);
+        $i = 1;
+        foreach ($this->_request_data['schemadb'][$this->_request_data['schema']]->fields as $field => $field_data)
+        {
+            $value = @$object->$field;
+            $value = rawurlencode($value);
+            $jsdata .= "{$field}: '{$value}'";
+            
+            if ($i < $hi_count)
+            {
+                $jsdata .= ", ";
+            }
+            
+            $i++;
+        }   
+
+        $jsdata .= "}";
+        
+        return $jsdata;
     }
 }
 
