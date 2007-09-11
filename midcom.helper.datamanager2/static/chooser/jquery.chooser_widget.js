@@ -15,6 +15,9 @@
  * @option Number result_limit Limit the number of items in the results box. Is also send as a "limit" parameter to backend on request. Default: 10
  * @option Boolean renderer_callback If this is set to true, then when user presses tab it creates a tag from current input value if we don't have any results. Default: false
  * @option String id_field Name of the objects field to be used as identifier. Default: guid
+ * @option String creation_handler Url which to load when creating new object. Default: null
+ * @option String creation_default_key key which will be used when sending the query value to the creation handler. Default: 'title'
+ * @option Boolean creation_mode If this is set to true, a create new -button is showed. Default: false
  */
  
 
@@ -33,13 +36,10 @@ jQuery.fn.extend({
 	},
 	midcom_helper_datamanager2_widget_chooser_remove_result_item: function(item_id) {
 		return this.trigger("remove_result_item",[item_id]);
-	}	
+	}
 });
 
 jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options) {
-    
-    //console.log("midcom_helper_datamanager2_widget_chooser input: "+input);
-    
 	var KEY = {
 		UP: 38,
 		DOWN: 40,
@@ -50,17 +50,35 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options) {
 		COMMA: 188
 	};
 
+	var CLASSES = {
+		LOADING: "chooser_widget_search_loading",
+		IDLE: "chooser_widget_search_idle",
+		FAILED: "chooser_widget_search_failed"
+	};
+
 	var timeout;
 	var previousValue = "";
 	var hasFocus = 0;
 	var lastKeyPressCode;
+	var last_term;
 		
-	var input_element = jQuery(input).attr("autocomplete", "off");
-    var results_holder = jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder(options, input, selectCurrent);
-
+	var create_button = null;
+	var creation_dialog = null;
+	var input_element = jQuery(input).attr("autocomplete", "off").addClass(CLASSES.IDLE);
+	var insert_after = input_element;
+	    
+    if (options.creation_mode)
+    {
+        enable_creation_mode();
+        insert_after = creation_dialog;
+    }
+    
+    var results_holder = jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder(options, input, insert_after, selectCurrent);    
+    
 	hideResultsNow();
 	
-	function selectCurrent() {
+	function selectCurrent()
+	{
 		var selected = results_holder.selected();
 		if (! selected)
 		{
@@ -73,17 +91,14 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options) {
 		return true;
 	}
 
-	function onChange(crap, skipPrevCheck) {
+	function onChange(crap, skipPrevCheck)
+	{
 		if (lastKeyPressCode == KEY.DEL)
 		{
 			return;
 		}
 		
-		var currentValue = input_element.val();
-
-	    //console.log("onChange previousValue: "+previousValue);
-	    //console.log("onChange currentValue: "+currentValue);
-	    		
+		var currentValue = input_element.val();			    		
 		if (currentValue == previousValue)
 		{
 			return;
@@ -93,39 +108,47 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options) {
 		
 		if (currentValue.length >= options.min_chars)
 		{
-			input_element.addClass('chooser_widget_loading');
 			currentValue = currentValue.toLowerCase();
 			request(currentValue, receiveData, stopLoading);
 		}
 		else
 		{
 			stopLoading();
-			//results_holder.hide();
 		}
 	};
 	
-	function hideResults() {
+	function hideResults()
+	{
 		clearTimeout(timeout);
 		timeout = setTimeout(hideResultsNow, 200);
 	};
 
-	function hideResultsNow() {
+	function hideResultsNow()
+	{
 		results_holder.hide();
 		clearTimeout(timeout);
 	};
 
 	function receiveData(q, data) {
-		if ( data && data.length && hasFocus ) {
+		if ( data && data.length && hasFocus )
+		{
 			stopLoading();
 			results_holder.display(data, q);
 			results_holder.show();
-		} else {
-			//hideResultsNow();
 		}
+		
+		input_element.removeClass(CLASSES.LOADING);
+		input_element.removeClass(CLASSES.FAILED);
+		input_element.addClass(CLASSES.IDLE);
 	};
 	
-	function request(term, success, failure) {
-	    //console.log("request term: "+term);
+	function request(term, success, failure)
+	{
+        last_term = term;
+        
+		input_element.removeClass(CLASSES.IDLE);
+		input_element.removeClass(CLASSES.FAILED);	    
+	    input_element.addClass(CLASSES.LOADING);
 	    
 		var data = false;
 		
@@ -147,16 +170,21 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options) {
 				success(term, parsed);
 			}
 		});
-		
-		if (!data)
-		{
-		    failure(term);
-		}
 	}
 	
-	function stopLoading() {
-		input_element.removeClass('chooser_widget_loading');
-		input_element.addClass('chooser_widget_error');
+	function stopLoading(type, expobj)
+	{	    
+		input_element.removeClass(CLASSES.IDLE);
+		input_element.removeClass(CLASSES.FAILED);
+		input_element.removeClass(CLASSES.LOADING);
+		if (type == "undefined")
+		{
+		    input_element.addClass(CLASSES.IDLE);
+		}
+		else
+		{
+		    input_element.addClass(CLASSES.FAILED);
+		}
 	}
 	
 	function parse(data)
@@ -171,7 +199,6 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options) {
             };
             
             jQuery.each(options.result_headers,function(i,h){
-                //console.log("rel_this.find("+h.name+").text(): "+rel_this.find(h.name).text());
                 results[idx][h.name] = rel_this.find(h.name).text();
             });
         });
@@ -222,7 +249,6 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options) {
 				break;
 				
 			case KEY.ESC:
-				//results_holder.hide();
 				break;
 				
 			default:
@@ -244,7 +270,9 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options) {
 		hasFocus++;
 	}).blur(function() {
 		hasFocus = 0;
-		//hideResults();
+		input_element.removeClass(CLASSES.LOADING);
+		input_element.removeClass(CLASSES.FAILED);
+		input_element.addClass(CLASSES.IDLE);
 	}).click(function() {
 		// show results when clicking in a focused field
 		if ( hasFocus++ > 1 && !results_holder.visible() ) {
@@ -252,14 +280,45 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options) {
 		}
 	}).bind("activate", function(event, data){
 	    input_element.focus();
-	    //console.log("input_elem 'activate' data.id: "+data.id);
 	    results_holder.activate_item(data);
 	}).bind("add_result_item", function(event, item){
 	    results_holder.add_item(item);
 	}).bind("remove_result_item", function(event, item_id){
-	    results_holder.del_item(item);
+	    results_holder.del_item();
 	});
-}
+	
+	function enable_creation_mode()
+	{
+        input.css({float: 'left'});
+        
+	    creation_dialog = jQuery('#' + options.widget_id + '_creation_dialog');
+	    create_button = jQuery('#' + options.widget_id + '_create_button');
+	    create_button.bind('click', function(){
+	        var creation_url = options.creation_handler;
+	        
+	        if (last_term != "undefined")
+	        {
+	            creation_url += '?defaults[' + options.creation_default_key + ']=' + last_term;
+	        }
+            
+            var iframe = ['<iframe src="' + creation_url + '"'];
+            iframe.push('id="' + options.widget_id + 'chooser_widget_creation_dialog_content"');
+            iframe.push('class="chooser_widget_creation_dialog_content"');
+            iframe.push('frameborder="0"');
+            iframe.push('marginwidth="0"');
+            iframe.push('marginheight="0"');
+            iframe.push('width="600"');
+            iframe.push('height="450"');
+            iframe.push('scrolling="auto"');
+            iframe.push('/>');
+
+            var iframe_html = iframe.join(' ');
+	        jQuery('.chooser_widget_creation_dialog_content_holder', creation_dialog).html(iframe_html);
+	        
+            jQuery('#' + options.widget_id + '_creation_dialog').jqmShow();
+	    });
+	}
+};
 
 jQuery.midcom_helper_datamanager2_widget_chooser.defaults = {
     widget_id: 'chooser_widget',
@@ -267,14 +326,18 @@ jQuery.midcom_helper_datamanager2_widget_chooser.defaults = {
 	result_limit: 10,
 	renderer_callback: false,
 	allow_multiple: true,
-	id_field: 'guid'
-}
+	id_field: 'guid',
+	creation_mode: false,
+	creation_handler: null,
+	creation_default_key: null
+};
 
-jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(options, input, select_function)
+jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(options, input, insert_after, select_function)
 {
 	var CLASSES = {
 		HOVER: "chooser_widget_result_item_hover",
 		ACTIVE: "chooser_widget_result_item_active",
+		INACTIVE: "chooser_widget_result_item_inactive",
 		DELETED: "chooser_widget_result_item_deleted"
 	};
 
@@ -282,7 +345,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 	var element = jQuery('<div id="' + options.widget_id + '_results"></div>')
 		.hide()
 		.addClass('chooser_widget_results_holder');
-	jQuery(input).after( element );
+	jQuery(insert_after).after( element );
 
 	var headers = jQuery('<ul class="chooser_widget_headers"></ul>').appendTo(element);
 	var list = jQuery('<ul class="chooser_widget_results"></ul>').appendTo(element);
@@ -295,12 +358,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 		data;
 
 	list.mouseover( function(event) {
-        // active = jQuery("li", list).removeClass(CLASSES.HOVER).index(target(event));
-        var jq_elem = jQuery(target(event));
-        // if (jq_elem.attr('class') != CLASSES.ACTIVE)
-        // {
-    		jq_elem.addClass(CLASSES.HOVER);		    
-        // }
+        var jq_elem = jQuery(target(event)).addClass(CLASSES.HOVER);
 	}).mouseout( function(event) {
 		jQuery(target(event)).removeClass(CLASSES.HOVER);
 	}).click(function(event) {
@@ -308,7 +366,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 		return false;
 	});
 
-	function target(event) {
+	function target(event)
+	{
 		var element = event.target;
 		if (element)
 		{
@@ -341,7 +400,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         });
     }
     
-	function dataToDom() {
+	function dataToDom()
+	{
 		for (var i=0; i < data.length; i++) {
 			if (!data[i])
 				continue;
@@ -416,31 +476,31 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
             var input_elem_name = options.widget_id + "_selections";
         }
         
-        //console.log("input_elem_name: "+input_elem_name);
-        
 	    var li_elem = jQuery("<li>")
 	    .attr({ id: options.widget_id + '_result_item_'+item_id })
 	    .attr("deleted","false")
 	    .attr("keep_on_list","false")
+	    .attr("pre_selected","false")
 	    .addClass("chooser_widget_result_item")
-        // .mouseover( function(event) {
-        //     active = jQuery("li", list).removeClass(CLASSES.HOVER).index(target(event));
-        //     jQuery(target(event)).addClass(CLASSES.HOVER);
-        // }).mouseout( function(event) {
-        //  jQuery(target(event)).removeClass(CLASSES.HOVER);
-        // })
     	.click(function(event) {
     	    var li_element = target(event);
 
     	    var current_keep_status = jQuery(li_element).attr("keep_on_list");
             var current_delete_status = jQuery(li_element).attr("deleted");
+            var current_presel_status = jQuery(li_element).attr("pre_selected");
     	    if (current_keep_status == "true")
     	    {
     	        if (current_delete_status == "false")
     	        {
-            		jQuery(li_element).removeClass(CLASSES.ACTIVE);    	            
-            		jQuery(li_element).addClass(CLASSES.DELETED);
-            		remove(item_id);
+            		jQuery(li_element).removeClass(CLASSES.ACTIVE);
+            		if (current_presel_status == "true")
+            		{
+                		remove(item_id);
+            		}
+            		else
+            		{
+            		    inactivate(item_id);
+            		}
     	        }
     	        else
     	        {
@@ -455,13 +515,18 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
     		return false;
     	});
     	
+	    if (data['pre_selected'])
+	    {
+    	    li_elem.attr("pre_selected","true");
+	    }    	
+    	
     	if (options.renderer_callback)
     	{
     	    //console.log("use renderer");
     	    //TODO: Implement
     	    // PONDER:  How should we handle the renderer_callback rendering?
     	    //          We could use custom javascript function, or require the data
-    	    //          object to contain a content field which is a ready formatted html...
+    	    //          object to contain a content field which is allready formatted html...
             var item_content = jQuery("<div>")
             // .attr({ id: options.widget_id + '_result_item_'+data.id })
             // .html( midcom_helper_datamanager2_widget_chooser_format_item(data, options) )
@@ -471,14 +536,11 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
     	{
     	    var item_content = midcom_helper_datamanager2_widget_chooser_format_item(data,options)
     	    .appendTo(li_elem);
-    	    //console.log("item_content: "+item_content);
             var input_elem = jQuery("<input>")
             .attr({ type: 'hidden', name: input_elem_name, value: 0, id: options.widget_id + '_result_item_'+item_id+'_input' })
             .hide()
             .appendTo(li_elem);
     	}
-	    
-	    //console.log("li_elem[0]: "+li_elem[0]);
 	    
 	    li_elem.appendTo(list);
 	    
@@ -509,6 +571,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 	{
 	    jQuery('#'+options.widget_id + '_result_item_'+id+'_input', list).attr({ value: 0 });
 	    jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.ACTIVE);
+	    jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.INACTIVE);
         jQuery('#'+options.widget_id + '_result_item_'+id).addClass(CLASSES.DELETED);
 	    jQuery('#'+options.widget_id + '_result_item_'+id).attr("deleted","true");
 	    selected_items = jQuery.grep( selected_items, function(n,i){
@@ -520,6 +583,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
     {
 	    jQuery('#'+options.widget_id + '_result_item_'+id+'_input', list).attr({ value: id });
 	    jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.DELETED);
+	    jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.INACTIVE);
 	    jQuery('#'+options.widget_id + '_result_item_'+id).addClass(CLASSES.ACTIVE);
 	    jQuery('#'+options.widget_id + '_result_item_'+id).attr("deleted","false");
 	    selected_items.push(id);
@@ -529,36 +593,40 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
     {
 	    jQuery('#'+options.widget_id + '_result_item_'+id+'_input', list).attr({ value: id });
 	    jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.DELETED);
+	    jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.INACTIVE);
         jQuery('#'+options.widget_id + '_result_item_'+id).addClass(CLASSES.ACTIVE);
 	    jQuery('#'+options.widget_id + '_result_item_'+id).attr("keep_on_list","true");
 	    jQuery('#'+options.widget_id + '_result_item_'+id).attr("deleted","false");
 	    selected_items.push(id);
     }
     
+	function inactivate(id)
+    {
+	    jQuery('#'+options.widget_id + '_result_item_'+id+'_input', list).attr({ value: id });
+	    jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.DELETED);
+	    jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.ACTIVE);
+        jQuery('#'+options.widget_id + '_result_item_'+id).addClass(CLASSES.INACTIVE);
+	    jQuery('#'+options.widget_id + '_result_item_'+id).attr("keep_on_list","false");
+	    jQuery('#'+options.widget_id + '_result_item_'+id).attr("deleted","false");
+	    selected_items.push(id);
+    }
+    
     function delete_unseleted_from_list()
     {
-        //console.log("delete_unseleted_from_list");
         list_jq_items = list.find("li");
         var removed_items = [];
         jQuery.each( list_items, function(i,n){
-            //console.log("checking i: "+i+" n:"+n);
             if (n != undefined)
             {
-                //console.log("n not undefined");
                 if (jQuery('#'+options.widget_id + '_result_item_'+n).attr("keep_on_list") == "false")
                 {
-                    //console.log("delete i: "+i+" n:"+n);                    
                     jQuery('#'+options.widget_id + '_result_item_'+n).remove();
             	    removed_items.push(n);
                 }      
             }
         });
-        //console.log("removed_items.length: "+removed_items.length);
 	    jQuery.each( removed_items, function(i,n){
-	        //console.log("each i: "+i+" n:"+n);
-	        //console.log("list_items.length bef: "+list_items.length);
 	        list_items = unset(list_items, n, false, true);
-	        //console.log("list_items.length after: "+list_items.length);
         });
     }
     
@@ -604,11 +672,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 
     function clear_unselected()
     {
-        //console.log("clear_unselected");
-        //console.log("list_items.length before: "+list_items.length);
         delete_unseleted_from_list();
-        //list_items = selected_items;
-        //console.log("list_items.length after: "+list_items.length);
     }
 	
 	return {
@@ -650,16 +714,13 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 			return this.visible() && (list_jq_items.filter("." + CLASSES.ACTIVE)[0] || options.select_first && list_jq_items[0]);
 		},
 		show: function() {
-            // element.css({
-            //  width: options.width > 0 ? options.width : jQuery(input).width()
-            // }).show();
 			element.show();
 		},
 		selected: function() {
 			return data && data[active];
 		}
 	};
-}
+};
 
 jQuery.midcom_helper_datamanager2_widget_chooser.MoveSelection = function(field, start, end)
 {
@@ -688,7 +749,6 @@ jQuery.midcom_helper_datamanager2_widget_chooser.MoveSelection = function(field,
 
 function midcom_helper_datamanager2_widget_chooser_format_item(item, options)
 {
-    //console.log("format item: "+item.id);
     var formatted = '';
 
     var item_parts = jQuery("<div>")
@@ -703,11 +763,22 @@ function midcom_helper_datamanager2_widget_chooser_format_item(item, options)
         .appendTo(item_parts);
 
     jQuery.each( options.result_headers, function(i,n) {
-        // console.log("create item_part "+n.name+" with value "+item[n.name]);
+        var value = null;
+        
+        if (   n.name == 'start'
+            || n.name == 'end')
+        {
+            value = midcom_helper_datamanager2_widget_chooser_format_value('datetime', item[n.name]);
+        }
+        else
+        {
+            value = midcom_helper_datamanager2_widget_chooser_format_value('unescape', item[n.name]);
+        }
+        
         item_content = jQuery("<div>")
         .addClass('chooser_widget_item_part')
         .attr({ id: 'chooser_widget_item_part_'+n.name })
-        .html( unescape(item[n.name]) )
+        .html( value )
         .appendTo(item_parts);
     });
 
@@ -718,4 +789,34 @@ function midcom_helper_datamanager2_widget_chooser_format_item(item, options)
     .appendTo(item_parts);    
     
     return item_parts;
+}
+
+function midcom_helper_datamanager2_widget_chooser_format_value(format, value)
+{
+    var format = format || 'unescape';
+    var formated = null;
+    
+    switch(format)
+    {
+        case 'unescape':
+            formatted = unescape(value);
+            break;
+        case 'datetime':
+            var date = new Date();
+            date.setTime((value*1000));
+            var date_str = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes();
+            
+            formatted = date_str;
+            break;
+        default:
+            formatted = value;
+            break;
+    }
+    
+    if (formatted == null)
+    {
+        formatted = value;
+    }
+    
+    return formatted;
 }

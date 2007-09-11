@@ -1,4 +1,4 @@
-input.chooser_widget_input
+input.chooser_widget_search_input
 {
     
 }
@@ -59,14 +59,71 @@ input.chooser_widget_input
     padding-left: 3px;
 }
 
-.chooser_widget_loading
+.chooser_widget_search_idle
 {
-	background : Window url('../ajax-loading-small.gif') right center no-repeat;
+    padding-right: 20px;
+	background: url('searching.png') right center no-repeat;
 }
-.chooser_widget_error
+.chooser_widget_search_loading
 {
-	background : Window url('../../stock-icons/16x16/cancel.png') right center no-repeat;
+    padding-right: 20px;
+	background: url('../ajax-loading-small.gif') right center no-repeat;
 }
+.chooser_widget_search_failed
+{
+    padding-right: 20px;
+	background: url('failed.png') right center no-repeat;
+}
+
+.chooser_widget_create_button
+{
+    height: 18px;
+    margin-left: 10px;
+    background: url('create-new.png') left center no-repeat;
+    padding-left: 20px;
+    font-weight: bold;
+    font-size: 8pt;
+    float: left;
+}
+
+/* Creation dialog related */
+
+.chooser_widget_creation_overlay
+{
+    /*background: url('creation_overlay.gif') white;*/
+    background-color: #000;
+}
+* iframe.jqm
+{
+    position:absolute;top:0;left:0;z-index:-1;
+	width: expression(this.parentNode.offsetWidth+'px');
+	height: expression(this.parentNode.offsetHeight+'px');
+}
+
+.chooser_widget_creation_dialog
+{
+    display: none;
+    
+    position: fixed;
+    top: 5%;
+    left: 50%;
+    
+    margin-left: -300px;
+    width: 600px;
+    
+    background-color: #EEE;
+    color: #333;
+    border: 1px solid black;
+    padding: 12px;    
+}
+.chooser_widget_creation_dialog_content_holder
+{
+}
+.chooser_widget_creation_dialog_content
+{
+}
+
+/* Creation dialog related ends */
 
 /*#chooser_widget_item_part_status
 {
@@ -99,6 +156,17 @@ input.chooser_widget_input
     float: right;
     margin-right: 3px;
 	background : url('../../stock-icons/16x16/approved.png') center center no-repeat;
+}
+.chooser_widget_result_item_inactive
+{
+}
+.chooser_widget_result_item_inactive #chooser_widget_item_part_status
+{
+    width: 20px;
+    text-align: center;
+    float: right;
+    margin-right: 3px;
+	background : none;
 }
 .chooser_widget_result_item_deleted
 {
