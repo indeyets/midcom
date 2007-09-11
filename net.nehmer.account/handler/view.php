@@ -539,7 +539,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                     (
                         MIDCOM_TOOLBAR_URL => "cancel_membership/",
                         MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('cancel membership'),
-                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/cancel.png',
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                     )
                 );
             }
