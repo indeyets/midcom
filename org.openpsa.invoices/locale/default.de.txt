@@ -43,6 +43,10 @@ Rechnung löschen
 Fällig
 ---STRINGEND
 
+---STRING next action
+Nächste Aktion
+---STRINGEND
+
 ---STRING invoice
 Rechnung
 ---STRINGEND

@@ -43,6 +43,10 @@ Delete invoice
 Due date
 ---STRINGEND
 
+---STRING next action
+Next Action
+---STRINGEND
+
 ---STRING invoice
 Invoice
 ---STRINGEND

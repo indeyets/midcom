@@ -93,6 +93,7 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
 
         $this->_request_data['list_label'] = $this->_request_data['l10n']->get('unsent invoices');
         $this->_request_data['list_type'] = 'unsent';
+        $this->_request_data['next_marker'] = 'sent';
 
         $this->_show_invoice_list();
     }
@@ -110,6 +111,7 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
 
         $this->_request_data['list_label'] = $this->_request_data['l10n']->get('overdue invoices');
         $this->_request_data['list_type'] = 'overdue';
+        $this->_request_data['next_marker'] = 'paid';
 
         $this->_show_invoice_list();
     }
@@ -127,6 +129,7 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
 
         $this->_request_data['list_label'] = $this->_request_data['l10n']->get('open invoices');
         $this->_request_data['list_type'] = 'open';
+        $this->_request_data['next_marker'] = 'paid';
 
         $this->_show_invoice_list();
     }

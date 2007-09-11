@@ -19,14 +19,16 @@ if (!array_key_exists('header-size', $data))
                 <th class="contact"><?php echo $data['l10n']->get('customer contact'); ?></th>
                 <th class="sum"><?php echo $data['l10n']->get('sum'); ?></th>
                 <th><?php echo $data['l10n']->get('due'); ?></th>
-                <?php
-                if ($data['list_type'] != 'open')
+                <th><?php
+                if ($data['list_type'] != 'paid')
+				{
+					echo $data['l10n']->get('next action');
+				}
+				else
                 {
-                    ?>
-                    <th><?php echo $data['l10n']->get('paid'); ?></th>
-                    <?php
+                    echo $data['l10n']->get('paid');
                 }
-                ?>
+                ?></th>
             </tr>
         </thead>
         <tbody>

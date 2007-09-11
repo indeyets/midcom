@@ -33,21 +33,25 @@ if ($data['even'])
     <td class="contact"><?php echo $customer_card->show_inline(); ?></td>
     <td class="sum"><?php echo sprintf("%01.2f", $data['invoice']->sum); ?></td>
     <td><?php echo strftime('%x', $data['invoice']->due); ?></td>
+    <td>
     <?php
-    if ($data['list_type'] != 'open')
+    if ($data['list_type'] != 'paid')
     {
-        ?>
-        <td><?php
-        if ($data['invoice']->paid)
-        {
-            echo strftime('%x', $data['invoice']->paid);
-        }
-        else
-        {
-            echo $data['l10n']->get('not paid');
-        }
-        ?></td>
-        <?php
+		if ($_MIDCOM->auth->can_do('midgard:update', $data['invoice']))
+		{
+	        $next_marker_url = $prefix . "invoice/mark_" . $data['next_marker'] . "/" . $data['invoice']->guid . ".html";
+	        ?>
+			<form method="post" action="&(next_marker_url);">
+	    		<button type="submit" name="midcom_helper_toolbar_submit"><?php 
+	    		echo $data['l10n']->get('mark ' . $data['next_marker']); 
+	    		?></button>
+	  		</form><?
+		}
     }
-    ?>
+    else
+    {
+        echo strftime('%x', $view_data['invoice']->paid);
+    }
+	?>
+    </td>
 </tr>
