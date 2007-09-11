@@ -346,7 +346,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             )
         );
         
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/chooser/jquery.chooser_widget.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/chooser/jquery.chooser_widget.pack.js');
         
         $this->idsuffix = $this->_create_random_suffix();
         $this->_element_id = "{$this->_namespace}{$this->name}_chooser_widget{$this->idsuffix}";
@@ -371,7 +371,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         
         if ($this->creation_mode_enabled)
         {
-            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/chooser/jquery.jqModal.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/chooser/jquery.jqModal.pack.js');
             
             $script = "
                 jQuery('#{$this->_element_id}_creation_dialog').jqm({
