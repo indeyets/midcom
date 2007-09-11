@@ -123,6 +123,7 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
     function _handler_create($handler_id, $args, &$data)
     {
         $data['root_event']->require_do('midgard:create');
+        $data['event'] = null;
 
         $data['schema'] = $args[0];
         if (!array_key_exists($data['schema'], $data['schemadb']))
@@ -176,12 +177,21 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
                     }
                 }
 
-                $_MIDCOM->relocate("{$data['event']->extra}/");
-                // This will exit.
+                if ($handler_id != 'create_chooser')
+                {
+                    $_MIDCOM->relocate("{$data['event']->extra}/");
+                    // This will exit.
+                }
+                break;
 
             case 'cancel':
-                $_MIDCOM->relocate('');
-                // This will exit.
+                $data['cancelled'] = true;
+                if ($handler_id != 'create_chooser')
+                {
+                    $_MIDCOM->relocate('');
+                    // This will exit.
+                }
+                break;
         }
 
         $title = sprintf($this->_l10n_midcom->get('create %s'), $this->_l10n->get($this->_request_data['schemadb'][$this->_request_data['schema']]->description));
@@ -209,19 +219,27 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
      */
     function _show_create ($handler_id, &$data)
     {
+        $data['controller'] =& $this->_controller;  
+          
         if ($handler_id == 'create_chooser')
         {
             midcom_show_style('popup_header');
-        }    
-        
-        $data['controller'] =& $this->_controller;
-        midcom_show_style('admin_create');
-        
-        if ($handler_id == 'create_chooser')
-        {
+            
+            if (   $data['event']
+                || isset($data['cancelled']))
+            {
+                midcom_show_style('admin_create_after');
+            }
+            else
+            {
+                midcom_show_style('admin_create');
+            }
             midcom_show_style('popup_footer');
+            
+            return;
         }    
-
+        
+        midcom_show_style('admin_create');
     }
 }
 
