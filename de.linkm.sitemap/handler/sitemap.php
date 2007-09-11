@@ -42,7 +42,7 @@ class de_linkm_sitemap_handler_sitemap extends midcom_baseclasses_components_han
      * @access private
      * @var integer
      */
-    var $_root_node_id;
+    var $_root_node_id = null;
     
     /**
      * Simple constructor, calls for the parent class
@@ -61,69 +61,39 @@ class de_linkm_sitemap_handler_sitemap extends midcom_baseclasses_components_han
      */
     function _on_initialize()
     {
-        $this->_nap = new midcom_helper_nav();
-        
-        $root = $this->_config->get('root_topic');
         $this->_request_data['skip_topics'] = $this->_config->get('skip_topics');
-        $user_root = '';
-        if(isset($_REQUEST['de_linkm_sitemap_set_root']))
+        
+        $site_root = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
+        // By default use the site root node
+        $this->_root_node_id = $site_root->id;
+                    
+        $root = $this->_config->get('root_topic');
+        if (isset($_REQUEST['de_linkm_sitemap_set_root']))
         {
-            $user_root = $_REQUEST['de_linkm_sitemap_set_root'];
+            $root = $_REQUEST['de_linkm_sitemap_set_root'];
         }
-        if(isset($_REQUEST['de_linkm_sitemap_set_levels']))
+
+        if (!empty($root))
+        {
+            // User has specified a root topic to use in component config or request parameter
+            $qb = midcom_db_topic::new_query_builder();
+            $qb->add_constraint('guid', '=', $root);
+            $qb->add_constraint('up', 'INTREE', $site_root->id);
+            $topics = $qb->execute();
+            if (empty($topics))
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Could not open root topic with GUID {$root}, please check your setup: " . mgd_errstr());
+                // This will exit
+            }
+                            
+            $this->_root_node_id = $topics[0]->id;
+        }
+
+        $this->_show_levels = 99;
+        if (isset($_REQUEST['de_linkm_sitemap_set_levels']))
         {
             $this->_show_levels = $_REQUEST['de_linkm_sitemap_set_levels'];
-        }
-        else
-        {
-            $this->_show_levels = 99;
-        }
-        if (   ($root != null
-                && $root != '')
-            || ($user_root != null
-                && $user_root != '')
-            )
-        {
-            if (   $user_root != null
-                && $user_root != '')
-            {
-                // User has specified a root topic to use by request parameter
-                $this->_root_folder = new midcom_db_topic($user_root);
-                if (!$this->_root_folder)
-                {
-                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Could not open root topic with GUID {$user_root} please check your component configuration: " . mgd_errstr());
-                }
-                // FIXME: Use in_tree constraint with Midgard 1.8 here
-                if (! mgd_is_in_topic_tree($this->_nap->get_root_node(), $this->_root_folder->id))
-                {
-                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "The topic with GUID {$user_root} is not within the content tree as indicated by NAP. Check your configuration.");
-                }
-                
-                $this->_root_node_id = $this->_root_folder->id;
-            }
-            else
-            {
-                // User has specified a root topic to use in component config
-                $this->_root_folder = new midcom_db_topic($root);
-                if (!$this->_root_folder)
-                {
-                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Could not open root topic with GUID {$root} please check your component configuration: " . mgd_errstr());
-                }
-                // FIXME: Use in_tree constraint with Midgard 1.8 here
-                if (! mgd_is_in_topic_tree($this->_nap->get_root_node(), $this->_root_folder->id))
-                {
-                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "The topic with GUID {$root} is not within the content tree as indicated by NAP. Check your configuration.");
-                }
-                
-                $this->_root_node_id = $this->_root_folder->id;
-            }
-        } 
-        else 
-        {
-            // Use the site root node
-            $this->_root_node_id = $this->_nap->get_root_node();
-        }
-        
+        }        
     }
     
     /**
@@ -148,6 +118,7 @@ class de_linkm_sitemap_handler_sitemap extends midcom_baseclasses_components_han
      */
     function _show_xml($handler_id, &$data)
     {
+        $this->_nap = new midcom_helper_nav();
         midcom_show_style('xml-header');
         $this->_get_sitemap($this->_root_node_id);
         midcom_show_style('xml-footer');
@@ -270,6 +241,7 @@ class de_linkm_sitemap_handler_sitemap extends midcom_baseclasses_components_han
      */
     function _show_sitemap($handler_id, &$data)
     {
+        $this->_nap = new midcom_helper_nav();    
         $data['depth'] = 0;
 
         midcom_show_style('begin-sitemap');
