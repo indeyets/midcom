@@ -130,6 +130,9 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
      */
     var $_visible_fields_user_selection = Array();
 
+    var $person_toolbar = false;
+    var $person_toolbar_html = '';
+
     /**
      * The view handler will load the account and set the appropriate flags for startup preparation
      * according to the handler name.
@@ -196,6 +199,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
         $this->_compute_visible_fields();
         $this->_prepare_request_data();
         $this->_populate_toolbar();
+        $this->_populate_person_toolbar();
         $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name);
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
         $_MIDCOM->set_pagetitle($this->_user->name);
@@ -212,6 +216,145 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
         }
 
         return true;
+    }
+    
+    function _populate_person_toolbar()
+    {        
+        $this->person_toolbar = new midcom_helper_toolbar();
+    
+        if ($this->_account->guid == $_MIDCOM->auth->user->guid)
+        {
+            // Own profile page
+            $this->person_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "edit/",
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('edit account'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'e',
+                )
+            );
+        
+            if ($this->_config->get('allow_publish'))
+            {
+                $this->person_toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "publish/",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('publish account details'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new_task.png',
+                    )
+                );
+            }
+        
+            if ($this->_config->get('allow_socialweb'))
+            {
+                $this->person_toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "socialweb/",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('social web settings'),
+                        MIDCOM_TOOLBAR_ICON => 'net.nehmer.account/data-import.png',
+                    )
+                );
+            }
+
+            $this->person_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "password/",
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('change password'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
+                )
+            );
+        
+            if ($this->_config->get('allow_change_username'))
+            {
+                $this->person_toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "username/",
+                        MIDCOM_TOOLBAR_LABEL => $this->_config->get('username_is_email') ? 
+                            $this->_l10n->get('change email') : $this->_l10n->get('change username'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
+                    )
+                );
+            }
+        
+            if ($this->_config->get('allow_cancel_membership'))
+            {
+                $this->person_toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "cancel_membership/",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('cancel membership'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                    )
+                );
+            }
+        }
+
+        $this->_render_person_toolbar();
+    }
+    
+    function _render_person_toolbar()
+    {
+        $output = '<ul';
+        if (! is_null($this->person_toolbar->class_style))
+        {
+            $output .= " class='{$this->person_toolbar->class_style}'";
+        }
+        if (! is_null($this->person_toolbar->id_style))
+        {
+            $output .= " id='{$this->person_toolbar->id_style}'";
+        }
+        $output .= ">\n";
+        
+        foreach ($this->person_toolbar->items as $item)
+        {
+            $label = $item[MIDCOM_TOOLBAR_LABEL];
+            
+            if (   $item[MIDCOM_TOOLBAR_HIDDEN]
+                || !$item[MIDCOM_TOOLBAR_ENABLED])
+            {
+                continue;
+            }
+
+            $output .= "  <li>\n";
+
+            $output .= "    <a href='{$item[MIDCOM_TOOLBAR_URL]}'";
+            $output .= " title='{$label}'";
+            
+            if ( count($item[MIDCOM_TOOLBAR_OPTIONS]) > 0 )
+            {
+                foreach ($item[MIDCOM_TOOLBAR_OPTIONS] as $key => $val)
+                {
+                    $output .= " $key=\"$val\" ";
+                }
+            }
+            if (! is_null($item[MIDCOM_TOOLBAR_ACCESSKEY]))
+            {
+                $output .= " class=\"accesskey \" accesskey='{$item[MIDCOM_TOOLBAR_ACCESSKEY]}' ";
+            }
+            $output .= ">\n";
+            
+            $url = MIDCOM_STATIC_URL . "/{$item[MIDCOM_TOOLBAR_ICON]}";
+            $output .= "      <img src='{$url}' alt='{$label}' />";
+            
+            $output .= "    </a>\n";
+
+            $output .= "  </li>\n";
+        }
+
+        $output .= '</ul>';
+        
+        $this->person_toolbar_html = $output;        
     }
 
     /**
@@ -290,7 +433,9 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
         $this->_request_data['revised'] = $revised;
         $this->_request_data['published'] = $published;
         $this->_request_data['view_self'] = $this->_view_self;
-
+        $this->_request_data['person_toolbar'] =& $this->person_toolbar;
+        $this->_request_data['person_toolbar_html'] =& $this->person_toolbar_html;
+                
         if ($this->_view_quick)
         {
             if ($this->_view_self)

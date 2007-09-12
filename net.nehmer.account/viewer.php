@@ -220,56 +220,65 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
 
-            // REGISTRATION LINKS
-            $this->_request_switch['register_select_type'] = Array
+        // REGISTRATION LINKS
+        $this->_request_switch['register_select_type'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_register', 'select_type'),
+            'fixed_args' => Array('register'),
+        );
+        $this->_request_switch['register'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_register', 'register'),
+            'fixed_args' => Array('register'),
+            'variable_args' => 1,
+        );
+        $this->_request_switch['register_activate'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_register', 'activate'),
+            'fixed_args' => Array('register', 'activate'),
+            'variable_args' => 2,
+        );
+        $this->_request_switch['register_invitation'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_register', 'register_invitation'),
+            'fixed_args' => Array('register_invitation'),
+            'variable_args' => 1,
+        );
+        $this->_request_switch['register_finish'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_register', 'finish'),
+            'fixed_args' => Array('register','finish'),
+        );
+    
+        // Pending registrations
+        if ($this->_config->get('require_activation'))
+        {
+            // Match register/pending/
+            $this->_request_switch['reqister_list_pending'] = array
             (
-                'handler' => Array('net_nehmer_account_handler_register', 'select_type'),
-                'fixed_args' => Array('register'),
+                'handler' => array('net_nehmer_account_handler_pending', 'list'),
+                'fixed_args' => array('pending'),
             );
-            $this->_request_switch['register'] = Array
-            (
-                'handler' => Array('net_nehmer_account_handler_register', 'register'),
-                'fixed_args' => Array('register'),
-                'variable_args' => 1,
-            );
-            $this->_request_switch['register_activate'] = Array
-            (
-                'handler' => Array('net_nehmer_account_handler_register', 'activate'),
-                'fixed_args' => Array('register', 'activate'),
-                'variable_args' => 2,
-            );
-            $this->_request_switch['register_invitation'] = Array
-            (
-                'handler' => Array('net_nehmer_account_handler_register', 'register_invitation'),
-                'fixed_args' => Array('register_invitation'),
-                'variable_args' => 1,
-            );
-            $this->_request_switch['register_finish'] = Array
-            (
-                'handler' => Array('net_nehmer_account_handler_register', 'finish'),
-                'fixed_args' => Array('register','finish'),
-            );
-        
+            
             // Pending registrations
-            if ($this->_config->get('require_activation'))
-            {
-                // Match register/pending/
-                $this->_request_switch['reqister_list_pending'] = array
-                (
-                    'handler' => array('net_nehmer_account_handler_pending', 'list'),
-                    'fixed_args' => array('pending'),
-                );
-                
-                // Pending registrations
-                // Match register/pending/<user guid>/
-                $this->_request_switch['reqister_edit_pending'] = array
-                (
-                    'handler' => array('net_nehmer_account_handler_pending', 'approve'),
-                    'fixed_args' => array('pending'),
-                    'variable_args' => 1,
-                );
-            }
-    //    }        
+            // Match register/pending/<user guid>/
+            $this->_request_switch['reqister_edit_pending'] = array
+            (
+                'handler' => array('net_nehmer_account_handler_pending', 'approve'),
+                'fixed_args' => array('pending'),
+                'variable_args' => 1,
+            );
+        }
+
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL."/net.nehmer.account/net_nehmer_account.css",
+            )
+        );
     }
 
     /**

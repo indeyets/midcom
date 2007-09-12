@@ -63,3 +63,48 @@
 {
   background-image: url('../stock-icons/16x16/cancel.png');
 }
+
+div.person_toolbar
+{
+    width: 170px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    background-color: #eae8e3;
+    -moz-border-radius: 0.6em 0.6em 0.6em 0.6em;
+    border-style: solid;
+    border-width: 1px 2px 2px 1px;
+    text-align: center;
+}
+div.person_toolbar ul
+{
+    margin: 2px 0 0 0;
+    padding: 0;
+    list-style-type: none;
+}
+div.person_toolbar ul li
+{
+    margin: 0 5px 0 0;
+    padding: 0;    
+    display: inline;
+}
+div.person_toolbar ul li img
+{
+    border: 0;
+}
+
+div.vcard h2.fn
+{
+    margin-top: 0px;
+    margin-bottom: 3px;
+}
+div.vcard p.status
+{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+div.vcard dt
+{
+    float: left;
+    margin-right: 10px;
+    font-weight: bold;
+}

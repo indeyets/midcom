@@ -6,6 +6,18 @@ $account =& $data['account'];
 $visible_data =& $data['visible_data'];
 $schema =& $data['datamanager']->schema;
 ?>
+<?php
+if ($data['person_toolbar'])
+{
+?>
+<div class="person_toolbar">
+<?php
+echo $data['person_toolbar_html'];    
+?>
+</div>
+<?php
+}
+?>
 <div class="vcard">
     <?php
     if ($data['avatar']) 
@@ -55,7 +67,7 @@ $schema =& $data['datamanager']->schema;
         
         $title = $schema->translate_schema_string($schema->fields[$name]['title']);        
         echo "    <dt>{$title}</dt>\n";
-        echo "        <dd class=\"{$name}\">{$content}</dd>\n";
+        echo "    <dd class=\"{$name}\">{$content}</dd>\n";
     }
     echo "</dl>\n";
     ?>
