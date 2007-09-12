@@ -50,7 +50,7 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     * @var      string
     * @access   private
     */
-    var $_elementTemplate = "<label for='{element_name}' id='{element_name}_label'<!-- BEGIN required --> class='required'<!-- END required -->>\n\t\t
+    var $_elementTemplate = "<label id='{element_name}_label'<!-- BEGIN required --> class='required'<!-- END required -->>\n\t\t
         <span class=\"field_text\">
                 {label}<!-- BEGIN required --> <span class=\"field_required_start\">*</span><!-- END required --></span>\n\t\t
 
@@ -131,7 +131,7 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     * @access   private
     */
     var $_groupTemplates = array(
-        'datamanager_table' => "<label for='{element_name}' id='{element_name}_label'<!-- BEGIN required --> class='required'<!-- END required -->> </label>\n\t\t
+        'datamanager_table' => "<label id='{element_name}_label'<!-- BEGIN required --> class='required'<!-- END required -->> </label>\n\t\t
         <span class=\"field_text\">
                 {label}<!-- BEGIN required --> <span class=\"field_required_start\">*</span><!-- END required --></span>\n
                         </label>\n\t\t
