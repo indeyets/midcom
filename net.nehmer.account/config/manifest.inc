@@ -1,5 +1,5 @@
 'name' => 'net.nehmer.account',
-'version' => '1.1.0beta1',
+'version' => '1.1.0beta2',
 'state' => 'beta',
 'class_definitions' => array
 (
@@ -28,6 +28,12 @@
             'name' => 'Arttu Manninen',
             'email' => 'arttu@kaktus.cc',
             'role' => 'lead',
+        ),
+        'w_i' => array
+        (
+            'name' => 'Jerry Jalava',
+            'email' => 'jerry.jalava@gmail.com',
+            'role' => 'developer',
         ),
     ),
     'dependencies' => array
