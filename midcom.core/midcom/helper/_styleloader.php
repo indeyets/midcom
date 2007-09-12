@@ -528,7 +528,15 @@ class midcom_helper__styleloader {
         {
             // This is a bit of a hack to allow &(); tags
             $data =& $_MIDCOM->get_custom_context_data('request_data');
+            
+            if ($GLOBALS['midcom_config']['wrap_style_show_with_name'])
+            {
+                $_style = "\n<!-- Start of style '{$path}' -->\n" . $_style;
+                $_style .= "\n<!-- End of style '{$path}' -->\n";                
+            }
+            
             $result = eval('?>' . mgd_preparse($_style));
+                        
             if ($result === false)
             {
                 // Note that src detection will be semi-reliable, as it depends on all errors beeing
