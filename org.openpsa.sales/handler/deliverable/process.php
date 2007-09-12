@@ -61,7 +61,7 @@ class org_openpsa_sales_handler_deliverable_process extends midcom_baseclasses_c
      */
     function _handler_process($handler_id, $args, &$data)
     {
-        if ($_SERVER['REQUEST_METHOD'] != 'post')
+        if ($_SERVER['REQUEST_METHOD'] != 'POST')
         {
             $_MIDCOM->generate_error(MIDCOM_ERRFORBIDDEN, 'Only POST requests are allowed here.');
         }

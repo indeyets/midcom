@@ -23,7 +23,7 @@ class org_openpsa_projects_handler_workingon extends midcom_baseclasses_componen
     {
         $_MIDCOM->auth->require_valid_user();
 
-        if ($_SERVER['REQUEST_METHOD'] != 'post')
+        if ($_SERVER['REQUEST_METHOD'] != 'POST')
         {
             $_MIDCOM->generate_error(MIDCOM_ERRFORBIDDEN, 'Only POST requests are allowed here.');
         }
