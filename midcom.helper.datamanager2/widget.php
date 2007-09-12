@@ -323,7 +323,7 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
      * works on the default field name, usually you don't need to override this function
      * unless you have some strange form element logic.
      *
-     * This maps to the HTML_QuickForm_element::isFrozen()unction.
+     * This maps to the HTML_QuickForm_element::isFrozen() function.
      *
      * @return bool True if the element is frozen, false otherwise.
      */
