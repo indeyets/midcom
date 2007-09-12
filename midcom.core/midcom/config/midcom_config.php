@@ -499,6 +499,9 @@ $GLOBALS['midcom_config_default']['positioning_enable'] = false;
 // If this argument is set to true, sanitized name of the component is added to the page class string.
 $GLOBALS['midcom_config_default']['page_class_include_component'] = true;
 
+// If this argument is set to true, All midcom_show_style calls wrap the style with HTML comments defining the style path
+$GLOBALS['midcom_config_default']['wrap_style_show_with_name'] = false;
+
 /* ----- Include the site config ----- */
 /* This should be replaced by $_MIDGARD constructs */
 if (file_exists(MIDCOM_CONFIG_FILE))
