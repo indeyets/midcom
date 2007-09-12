@@ -1,258 +1,258 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE de
 
 ---STRING %s cycles in %s months
-%s cycles in %s months
+%s Zyklen in %s Monaten
 ---STRINGEND
 
 ---STRING %s cycles, %s - %s
-%s cycles, %s - %s
+%s Zyklen, %s - %s
 ---STRINGEND
 
 ---STRING %s planned
-%s planned
+%s geplant
 ---STRINGEND
 
 ---STRING %s%% of %s
-%s%% of %s
+%s%% von %s
 ---STRINGEND
 
 ---STRING action new_subscription_cycle
-Start of new subscription cycle
+Einen neuen Abonnement-Zyklus beginnen 
 ---STRINGEND
 
 ---STRING active
-Active
+Aktiv
 ---STRINGEND
 
 ---STRING active salesprojects
-Active sales projects
+Aktive Verkaufsprojekte
 ---STRINGEND
 
 ---STRING add deliverable
-Add deliverable
+Bestellung hinzufügen
 ---STRINGEND
 
 ---STRING calculation basis
-calculation basis
+Berechnungsgrundlage
 ---STRINGEND
 
 ---STRING canceled
-Canceled
+Abgebrochen
 ---STRINGEND
 
 ---STRING code
-Project code
+Projekt-Code
 ---STRINGEND
 
 ---STRING contacts
-Contacts
+Kontakte
 ---STRINGEND
 
 ---STRING continuous subscription
-Continuous subscription
+Fortlaufendes Abonnement
 ---STRINGEND
 
 ---STRING cost
-Cost
+Kosten
 ---STRINGEND
 
 ---STRING cost per unit
-Cost per unit
+Stückkosten
 ---STRINGEND
 
 ---STRING cost structure
-Cost structure
+Kostenstruktur
 ---STRINGEND
 
 ---STRING create document
-Create document
+Dokument anlegen
 ---STRINGEND
 
 ---STRING create event
-Create event
+Termin anlegen 
 ---STRINGEND
 
 ---STRING create note
-Create note
+Notiz anlegen
 ---STRINGEND
 
 ---STRING create salesproject
-Create sales project
+Verkaufsprojekt anlegen
 ---STRINGEND
 
 ---STRING create task
-Create task
+Task anlegen
 ---STRINGEND
 
 ---STRING customer
-Customer
+Kunde
 ---STRINGEND
 
 ---STRING deliverables
-Deliverables
+Bestellungen
 ---STRINGEND
 
 ---STRING download as CSV
-Download as CSV
+Als CSV herunterladen
 ---STRINGEND
 
 ---STRING estimated closing date
-Estimated closing date
+Geschätztes Abschlussdatum
 ---STRINGEND
 
 ---STRING estimated delivery
-Estimated delivery
+Geschätztes Lieferdatum
 ---STRINGEND
 
 ---STRING invoice
-Invoice
+Rechnung
 ---STRINGEND
 
 ---STRING invoice approved only
-Invoice only approved units
+Nur bestätigte Arbeitsstunden abrechnen
 ---STRINGEND
 
 ---STRING invoice by actual units
-Invoice by actual units
+Tatsächliche Stückzahl abrechnen
 ---STRINGEND
 
 ---STRING invoiced
-Invoiced
+Abgerechnet
 ---STRINGEND
 
 ---STRING invoices
-Invoices
+Rechnungen
 ---STRINGEND
 
 ---STRING invoicing information
-Invoicing information
+Rechnungsdaten
 ---STRINGEND
 
 ---STRING invoicing period
-Invoicing period
+Rechnungszeitraum
 ---STRINGEND
 
 ---STRING lost
-Lost
+Abgelehnt
 ---STRINGEND
 
 ---STRING mark declined
-Mark declined
+abgelehnt
 ---STRINGEND
 
 ---STRING mark delivered
-Mark delivered
+geliefert
 ---STRINGEND
 
 ---STRING mark ordered
-Mark ordered
+bestellt
 ---STRINGEND
 
 ---STRING next action
-Next action
+Nächste Aktion
 ---STRINGEND
 
 ---STRING no action
-No action
+Keine Aktion
 ---STRINGEND
 
 ---STRING no customer
-No customer
+Kein Kunde
 ---STRINGEND
 
 ---STRING ordered
-Ordered
+Bestellt
 ---STRINGEND
 
 ---STRING org.openpsa.sales
-Sales projects
+Verkaufsprojekte
 ---STRINGEND
 
 ---STRING owner
-Owner
+Besitzer
 ---STRINGEND
 
 ---STRING cost type
-Cost type
+Kostenart
 ---STRINGEND
 
 ---STRING per unit
-per unit
+pro Stück
 ---STRINGEND
 
 ---STRING previous action
-Previous action
+Letzte Aktion
 ---STRINGEND
 
 ---STRING price
-Price
+Preis
 ---STRINGEND
 
 ---STRING price per unit
-Price per unit
+Stückpreis
 ---STRINGEND
 
 ---STRING pricing
-Pricing
+Preisgestaltung
 ---STRINGEND
 
 ---STRING pricing information
-Pricing information
+Preis-Informationen
 ---STRINGEND
 
 ---STRING probability
-Probability
+Wahrscheinlichkeit
 ---STRINGEND
 
 ---STRING product
-Product
+Produkt
 ---STRINGEND
 
 ---STRING profit
-Profit
+Gewinn
 ---STRINGEND
 
 ---STRING proposed
-Proposed
+Vorgeschlagen
 ---STRINGEND
 
 ---STRING purchase invoice
-Purchase invoice OK
+Verkaufsrechnung OK
 ---STRINGEND
 
 ---STRING sales report
-Sales report
+Verkaufsbericht
 ---STRINGEND
 
 ---STRING sales report %s - %s
-Sales report for %s - %s
+Verkaufsbericht für %s - %s
 ---STRINGEND
 
 ---STRING salesproject
-Sales project
+Verkaufsprojekt
 ---STRINGEND
 
 ---STRING salesprojects won
-Sales projects won
+Abgeschlossene Verkaufsprojekte
 ---STRINGEND
 
 ---STRING salesprojects: %s
-Sales projects: %s
+Verkaufsprojekte: %s
 ---STRINGEND
 
 ---STRING select product
-Select product
+Produkt wählen
 ---STRINGEND
 
 ---STRING single delivery
-Single delivery
+Einmalige Bestellung
 ---STRINGEND
 
 ---STRING started
-Work started
+Arbeit begonnen
 ---STRINGEND
 
 ---STRING status
@@ -260,65 +260,65 @@ Status
 ---STRINGEND
 
 ---STRING subscription
-Subscription
+Abonnement
 ---STRINGEND
 
 ---STRING subscription begins
-Subscription begins
+Abonnement beginnt
 ---STRINGEND
 
 ---STRING subscription ends
-Subscription ends
+Abonnement endet
 ---STRINGEND
 
 ---STRING subscription starts
-Subscription starts
+Abonnement beginnt
 ---STRINGEND
 
 ---STRING supplier
-Supplier
+Zulieferer
 ---STRINGEND
 
 ---STRING title
-Title
+Titel
 ---STRINGEND
 
 ---STRING total
-Total
+Gesamtsumme
 ---STRINGEND
 
 ---STRING total cost
-Total cost
+Gesamtkosten
 ---STRINGEND
 
 ---STRING unit
-unit
+Stück
 ---STRINGEND
 
 ---STRING units
-Units
+Stück
 ---STRINGEND
 
 ---STRING value
-Value
+Wert
 ---STRINGEND
 
 ---STRING weighted value
-Weighted value
+Gewichteter Wert
 ---STRINGEND
 
 ---STRING won
-Won
+Abgeschlossen
 ---STRINGEND
 
 ---STRING created project "%s"
-Created project "%s"
+Projekt "%s" wurde angelegt
 ---STRINGEND
 
 ---STRING created task "%s"
-Created task "%s"
+Task "%s" wurde angelegt
 ---STRINGEND
 
 ---STRING marked deliverable "%s" delivered
-Marked deliverable "%s" delivered
+Bestellung "%s" als geliefert markiert
 ---STRINGEND
