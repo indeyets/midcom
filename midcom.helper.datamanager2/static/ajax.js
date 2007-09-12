@@ -825,10 +825,10 @@ dm2AjaxEditor.prototype = {
     {
         Effect.Fade(this.blinder);
         response =  ajaxRequest.responseText;
-        if (response == 'MGD_ERR_OK')
+        if (response == 'Object deleted')
         {
-            Effect.Fade(this.formArea);
             new protoGrowl({type: 'ok', title: 'Datamanager', message: 'Object deleted successfully'});
+            Effect.Fade(this.formArea);
         }
         else
         {
