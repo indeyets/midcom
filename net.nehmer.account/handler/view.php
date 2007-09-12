@@ -219,7 +219,18 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
     }
     
     function _populate_person_toolbar()
-    {        
+    {
+        if ($_MIDCOM->auth->admin)
+        {
+            return;
+        }
+        
+        if (   $GLOBALS['midcom_config']['toolbars_enable_centralized']
+            && $_MIDCOM->auth->can_user_do('midcom:centralized_toolbar', null, 'midcom_services_toolbars'))
+        {
+            return;
+        }
+        
         $this->person_toolbar = new midcom_helper_toolbar();
     
         if ($this->_account->guid == $_MIDCOM->auth->user->guid)
