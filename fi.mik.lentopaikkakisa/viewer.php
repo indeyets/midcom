@@ -47,6 +47,20 @@ class fi_mik_lentopaikkakisa_viewer extends midcom_baseclasses_components_reques
             'handler' => Array('fi_mik_lentopaikkakisa_handler_score', 'score'),
             'fixed_args' => Array('score', 'pilot'),
         );
+
+        // Match /flights.xml
+        $this->_request_switch['xml'] = Array
+        (
+            'handler' => Array('fi_mik_lentopaikkakisa_handler_download', 'xml'),
+            'fixed_args' => Array('flights.xml'),
+        );
+       
+        // Match /flights.csv
+        $this->_request_switch['csv'] = Array
+        (
+            'handler' => Array('fi_mik_lentopaikkakisa_handler_download', 'csv'),
+            'fixed_args' => Array('flights.csv'),
+        );
     }
 
     function _on_handle($handler, $args)

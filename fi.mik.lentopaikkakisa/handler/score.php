@@ -54,9 +54,11 @@ class fi_mik_lentopaikkakisa_handler_score extends midcom_baseclasses_components
         foreach ($scores as $score)
         {
             $owner = new $report_class($score->parentguid);
-            $data['scores'][$owner->$report_label] = $score->value;
-            $data['total'] += $score->value;
+            $data['scores']["{$owner->$report_label} ({$score->parentguid}"] = (int) $score->value;
+            $data['total'] += (int) $score->value;
         }
+        
+        arsort($data['scores']);
         return true;
     }
     

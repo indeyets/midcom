@@ -27,7 +27,7 @@ class fi_mik_lentopaikkakisa_handler_download extends midcom_baseclasses_compone
         $_MIDCOM->cache->content->content_type("text/xml");
         $_MIDCOM->header("Content-type: text/xml; charset=UTF-8");
         
-        $qb = fi_mik_lentopaikkakisa_report_dba::new_query_builder();
+        $qb = fi_mik_flight_dba::new_query_builder();
         $qb->add_order('created', 'DESC');
         $this->_request_data['all'] = $qb->execute();
         
@@ -36,6 +36,7 @@ class fi_mik_lentopaikkakisa_handler_download extends midcom_baseclasses_compone
     
     function _show_xml($handler_id, &$data)
     {
+        $_MIDCOM->load_library('midcom.helper.xml');
         echo "<reports>\n";
         $mapper = new midcom_helper_xml_objectmapper();
         foreach ($this->_request_data['all'] as $report)
@@ -49,9 +50,10 @@ class fi_mik_lentopaikkakisa_handler_download extends midcom_baseclasses_compone
     {
         $_MIDCOM->auth->require_valid_user();
         $_MIDCOM->skip_page_style = true;
-        $_MIDCOM->header('Content-Type: text/plain;charset=UTF-8');
+        $_MIDCOM->cache->content->content_type('application/csv');
+        $_MIDCOM->header('Content-Type: application/csv;charset=UTF-8');
         
-        $qb = fi_mik_lentopaikkakisa_report_dba::new_query_builder();
+        $qb = fi_mik_flight_dba::new_query_builder();
         $qb->add_order('created', 'DESC');
         $this->_request_data['all'] = $qb->execute();
         
@@ -60,10 +62,26 @@ class fi_mik_lentopaikkakisa_handler_download extends midcom_baseclasses_compone
     
     function _show_csv($handler_id, &$data)
     {
+        $pilots = array();
+        $organizations = array();
+        $aircraft = array();
+        echo "date,firstname,lastname,username,operator,aircraft,origin,destination,score_origin,score_destination\n";
         foreach ($this->_request_data['all'] as $report)
         {
             // FIXME: Use DM2 CSV output system
-            echo date('Y-m-d', $report->date).",{$report->organization},{$report->aerodrome},{$report->plane},".str_replace(',','.',$report->score).",{$report->sendername}\n";
+            if (!isset($pilots[$report->pilot]))
+            {
+                $pilots[$report->pilot] = new midcom_db_person($report->pilot);
+            }
+            if (!isset($organizations[$report->operator]))
+            {
+                $organizations[$report->operator] = new midcom_db_group($report->operator);
+            }
+            if (!isset($aircraft[$report->aircraft]))
+            {
+                $aircraft[$report->aircraft] = new org_openpsa_calendar_resource_dba($report->aircraft);
+            }
+            echo date('Y-m-d', $report->end).",{$pilots[$report->pilot]->firstname},{$pilots[$report->pilot]->lastname},{$pilots[$report->pilot]->username},{$organizations[$report->operator]->official},{$aircraft[$report->aircraft]->title},{$report->origin},{$report->destination},".str_replace(',','.',$report->scoreorigin).",".str_replace(',','.',$report->scoredestination)."\n";
         }
     }  
 }
