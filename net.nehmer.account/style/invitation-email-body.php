@@ -14,6 +14,3 @@ Test email...
 
 &(register_link);
 
-
-
-

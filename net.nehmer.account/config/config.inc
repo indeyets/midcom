@@ -45,6 +45,8 @@
 'account_activation_timeout' => 7, // days
 'publish_all_on_activation' => false,
 
+'relocate_after_activation' => false,
+
 // Avatar Sizes
 'avatar_x' => 190,
 'avatar_y' => 190,

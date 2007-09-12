@@ -1021,11 +1021,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         $this->_person->delete_parameter('net.nehmer.account', 'activation_hash');
         $this->_person->delete_parameter('net.nehmer.account', 'activation_hash_created');
 
-        // Trigger post-activation hooks
-        $this->_auto_publish_account_details();
-        $this->_invoke_account_activation_callback();
-
-        $_MIDCOM->auth->drop_sudo();
+        // $_MIDCOM->auth->drop_sudo();
 
         $auto_login_sitegroup = $this->_config->get('auto_login_on_activation');
         if ($auto_login_sitegroup)
@@ -1040,14 +1036,24 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
             if (! $this->logged_in)
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to login automatically with username '{$this->_person->username}''.", MIDCOM_LOG_ERROR);
+                debug_add("Failed to login automatically with username '{$this->_person->username}'.", MIDCOM_LOG_ERROR);
                 debug_pop();
             }
         }
+
+        // $this->_send_welcome_mail();
+        
+        // $_MIDCOM->auth->request_sudo('net.nehmer.account');
+        
+        // Trigger post-activation hooks
+        $this->_auto_publish_account_details();
+        $this->_invoke_account_activation_callback();
+        
+        // $_MIDCOM->auth->drop_sudo();
         
         $this->_send_welcome_mail();
 
-        $_MIDCOM->auth->request_sudo('net.nehmer.account');
+        // $_MIDCOM->auth->request_sudo('net.nehmer.account');
 
         // Check for a custom return_url
         $return_to = $this->_person->get_parameter('net.nehmer.account', 'activation_returnto');
@@ -1059,7 +1065,11 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
 
         $_MIDCOM->auth->drop_sudo();
         
-        
+        $relocate_to = $this->_config->get('relocate_after_activation');
+        if ($relocate_to)
+        {
+            $_MIDCOM->relocate($relocate_to);
+        }
     }
     
     /**
@@ -1097,7 +1107,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
     /**
      * This function invokes the callback set in the component configuration upon
      * activation of an account. It will be executed at the end of the activation
-     * with sudo privilgeges.
+     * with sudo privileges.
      *
      * Configuration syntax:
      * <pre>

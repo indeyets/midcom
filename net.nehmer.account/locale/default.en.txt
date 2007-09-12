@@ -383,6 +383,14 @@ Registration was successful
 Your registration was successful. An email with instructions to activate your account has been sent to you. Your account will not be usable until you follow these instructions.
 ---STRINGEND
 
+---STRING registration completed
+Registration completed
+---STRINGEND
+
+---STRING registration completed successfully
+Registration was completed successfully
+---STRINGEND
+
 ---STRING reject
 Reject
 ---STRINGEND
