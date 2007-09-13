@@ -107,7 +107,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
     {
         if ($frozen)
         {
-            $html = "<table class='midcom_helper_datamanager2_widget_downloads' id='{$this->_namespace}{$this->name}' />\n" .
+            $html = "<table class='midcom_helper_datamanager2_widget_downloads' id='{$this->_namespace}{$this->name}' >\n" .
                     "<tr>\n" .
                     "<th class='filename'>" . $this->_l10n_midcom->get('name') . "</th>\n" .
                     "<th class='title'>" . $this->_l10n_midcom->get('title') . "</th>\n" .
@@ -115,7 +115,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
         }
         else
         {
-            $html = "<table class='midcom_helper_datamanager2_widget_downloads' id='{$this->_namespace}{$this->name}' />\n" .
+            $html = "<table class='midcom_helper_datamanager2_widget_downloads' id='{$this->_namespace}{$this->name}' >\n" .
                     "<tr>\n" .
                     "<th class='filename'>" . $this->_l10n_midcom->get('name') . "</th>\n" .
                     "<th class='title'>" . $this->_l10n_midcom->get('title') . "</th>\n" .
