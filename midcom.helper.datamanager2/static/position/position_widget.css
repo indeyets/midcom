@@ -1,0 +1,23 @@
+.midcom_helper_datamanager2_widget_position
+{
+    width: 450px;
+}
+
+.position_widget_tab_content_place .geoclue_button
+{
+    margin-right: 5px;
+    float: right;
+    width: 16px;
+    height: 16px;
+    background: url('refresh_geoclue.png');
+    cursor: pointer;
+}
+
+.position_widget_tab_content_place .indicator
+{
+    margin-right: 5px;
+    float: right;
+    width: 16px;
+    height: 16px;
+    background: url('../ajax-loading-small.gif');
+}

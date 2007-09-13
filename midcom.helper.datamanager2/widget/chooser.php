@@ -353,8 +353,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/chooser/jquery.chooser_widget.pack.js');
         
-        $this->idsuffix = $this->_create_random_suffix();
-        $this->_element_id = "{$this->_namespace}{$this->name}_chooser_widget{$this->idsuffix}";
+        $this->_element_id = "{$this->_namespace}{$this->name}_chooser_widget";
 
         if (! is_null($this->creation_handler))
         {
@@ -1314,33 +1313,6 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         echo '</ul>';
         
         // debug_pop();
-    }
-
-    /**
-     * Creates random string of 8 characters
-     *
-     * Used to generate the random suffix to distinguish between instances
-     * @return string random string
-     */
-    function _create_random_suffix()
-    {
-        // //Use mt_rand if possible (faster, more random)
-        // if (function_exists('mt_rand'))
-        // {
-        //     $rand = 'mt_rand';
-        // }
-        // else
-        // {
-        //     $rand = 'rand';
-        // }
-        // $tokenchars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-        // $token = $tokenchars[$rand(0, strlen($tokenchars) - 11)];
-        // for ($i = 1; $i < 8; $i++)
-        // {
-        //     $token .= $tokenchars[$rand(0, strlen($tokenchars) - 1)];
-        // }
-        // return "_".$token;
-        return '';
     }
 
 }
