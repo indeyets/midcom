@@ -39,11 +39,17 @@ class midcom_helper_datamanager2_type_position extends midcom_helper_datamanager
         }
         
         $this->object = new org_routamc_positioning_object($this->storage->object);
+        
         $this->location = $this->object->seek_location_object();
+        if (is_null($this->location))
+        {
+            $this->location = new org_routamc_positioning_location_dba();
+        }
     }
 
     function convert_to_storage()
     {
+        $this->location->relation = $this->relation;
         if ($this->location->guid)
         {
             $this->location->update();
@@ -69,8 +75,18 @@ class midcom_helper_datamanager2_type_position extends midcom_helper_datamanager
 
     function convert_to_html()
     {
-        $result = '';
-        // TODO: Geo microformat
+        $latitude_string = org_routamc_positioning_utils::pretty_print_coordinate($this->location->latitude);
+        $latitude_string .= ($this->location->latitude > 0) ? " N" : " S";
+        $longitude_string = org_routamc_positioning_utils::pretty_print_coordinate($this->location->longitude);
+        $longitude_string .= ($this->location->longitude > 0) ? " E" : " W";
+        
+        $result  = "<div class=\"geo\">\n";
+        $result .= "    <abbr class=\"latitude\" title=\"{$this->location->latitude}\">{$latitude_string}</abbr>\n";
+        $result .= "    <abbr class=\"longitude\" title=\"{$this->location->longitude}\">{$longitude_string}</abbr>\n";
+        $result .= "</div>\n";
+        
+        // TODO: Adr Microformat for civic location
+        
         return $result;
     }
 }
