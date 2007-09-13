@@ -7,6 +7,10 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2007-09-13 bergie
+  + Added XEP-0080 compatible civic location attributes for the location object
+  + Added new geocoding service
+
 2007-08-20 bergie
   + Added country information to the database
 

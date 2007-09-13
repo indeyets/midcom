@@ -1,0 +1,52 @@
+<?php
+if (!isset($_GET['service']))
+{
+    $service = 'city';
+}
+else
+{
+    $service = $_GET['service'];
+}
+
+$geocoder = org_routamc_positioning_geocoder::create($service);
+
+$location = array();
+foreach ($_GET as $key => $value)
+{
+    switch ($key)
+    {
+        // Accept only XEP-0080 values
+        case 'area':
+        case 'building':
+        case 'country':
+        case 'description':
+        case 'floor':
+        case 'city':
+        case 'postalcode':
+        case 'region':
+        case 'room':
+        case 'street':
+        case 'text':
+        case 'uri':
+            $location[$key] = $value;
+            break;
+    }
+}
+
+$position = $geocoder->geocode($location);
+if (is_null($position))
+{
+    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Geocoding failed: {$geocoder->error}");
+    // This will exit
+}
+
+$_MIDCOM->cache->content->content_type("text/xml");
+$_MIDCOM->header("Content-type: text/xml; charset=UTF-8");
+
+echo "<position>\n";
+foreach ($position as $key => $value)
+{
+    echo "    <{$key}>{$value}</{$key}>\n";
+}
+echo "</position>\n";
+?>
