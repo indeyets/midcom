@@ -7,8 +7,16 @@
 GeoRSS feed
 ---STRINGEND
 
+---STRING georss_url
+GeoRSS feed URL
+---STRINGEND
+
 ---STRING html
 Metadata in remote HTML document
+---STRINGEND
+
+---STRING latitude
+Latitude
 ---STRINGEND
 
 ---STRING manual
@@ -35,7 +43,7 @@ Plazes username
 source: %s
 ---STRINGEND
 
----STRING georss_url
-GeoRSS feed URL
+---STRING longitude
+Longitude
 ---STRINGEND
 

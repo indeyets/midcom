@@ -7,8 +7,16 @@
 GeoRSS-syöte
 ---STRINGEND
 
+---STRING georss_url
+GeoRSS-syötteen osoite
+---STRINGEND
+
 ---STRING html
 Ulkoisen HTML-tiedoston metatiedot
+---STRINGEND
+
+---STRING latitude
+Leveyspiiri
 ---STRINGEND
 
 ---STRING manual
@@ -39,7 +47,7 @@ Plazes käyttäjätunnus
 lähde: %s
 ---STRINGEND
 
----STRING georss_url
-GeoRSS-syötteen osoite
+---STRING longitude
+Pituuspiiri
 ---STRINGEND
 
