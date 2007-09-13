@@ -18,6 +18,19 @@ require_once MIDCOM_ROOT . '/midcom/helper/datamanager2/widget/simpleposition.ph
  * It can only be bound to a position type (or subclass thereoff), and inherits the configuration
  * from there as far as possible.
  *
+ * Example:
+ 'location' => Array
+ (
+     'title' => 'location',
+     'storage' => null,
+     'type' => 'position',
+     'widget' => 'position',
+     'widget_config' => Array 
+     ( 
+         'service' => 'geonames', //Possible values are city, geonames, yahoo
+     ),
+ ),
+ *
  * @package midcom.helper.datamanager2
  */
 
