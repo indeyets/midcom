@@ -247,6 +247,12 @@ class org_openpsa_directmarketing_campaign_ruleresolver
                 case is_a($obj, 'midcom_org_openpsa_link_log'):
                     $array[$k] = new org_openpsa_contacts_person($obj->person);
                     break;
+                case is_a($obj, 'org_maemo_devcodes_application'):
+                    $array[$k] = new org_openpsa_contacts_person($obj->applicant);
+                    break;
+                case is_a($obj, 'org_maemo_devcodes_code'):
+                    $array[$k] = new org_openpsa_contacts_person($obj->recipient);
+                    break;
                 default:
                     debug_add("class " . get_class($obj) . " not supported", MIDCOM_LOG_WARN);
                     unset ($array[$k]);
