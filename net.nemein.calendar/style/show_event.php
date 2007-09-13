@@ -25,7 +25,7 @@ $view = $data['view_event'];
     <div class="description">
         &(view['description']:h);
     </div>
-    <abbr class="dtstamp" style="display: none;" title="<?php echo gmdate('Y-m-d\TH:i:s\Z', $data['event']->created); ?>"><?php echo gmdate('Y-m-d\TH:i:s\Z', $data['event']->created); ?></abbr>
+    <abbr class="dtstamp" style="display: none;" title="<?php echo gmdate('Y-m-d\TH:i:s\Z', $data['event']->metadata->published); ?>"><?php echo gmdate('Y-m-d\TH:i:s\Z', $data['event']->metadata->published); ?></abbr>
     <span class="uid" style="display: none;"><?php echo $data['event']->guid; ?></span>    
 </div>
 <?php

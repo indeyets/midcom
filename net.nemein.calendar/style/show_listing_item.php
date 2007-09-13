@@ -15,6 +15,6 @@ $view = $data['datamanager']->get_content_raw();
         <?php 
     } 
     ?>
-    <abbr class="dtstamp" style="display: none;" title="<?php echo gmdate('Y-m-d\TH:i:s\Z', $data['event']->created); ?>"><?php echo gmdate('Y-m-d\TH:i:s\Z', $data['event']->created); ?></abbr>
-    <span class="uid" style="display: none;"><?php echo $data['event']->guid(); ?></span>  
+    <abbr class="dtstamp" style="display: none;" title="<?php echo gmdate('Y-m-d\TH:i:s\Z', $data['event']->metadata->published); ?>"><?php echo gmdate('Y-m-d\TH:i:s\Z', $data['event']->metadata->published); ?></abbr>
+    <span class="uid" style="display: none;"><?php echo $data['event']->guid; ?></span>  
 </li>
