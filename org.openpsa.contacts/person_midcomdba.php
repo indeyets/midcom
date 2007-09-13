@@ -13,6 +13,36 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
         return parent::__midcom_org_openpsa_person($id);
     }
 
+    /**
+     * Retvieve a reference to a person object, uses in-request caching
+     *
+     * @param $src string GUID of device (ids work but are discouraged)
+     * @return org_maemo_devcodes_device_dba refence to device object or false
+     */
+    function &get_cached($src)
+    {
+        $cache_name = '__org_openpsa_contacts_person_get_cached_objects';
+        if (!isset($GLOBALS[$cache_name]))
+        {
+            $GLOBALS[$cache_name] = array();
+        }
+        $cache =& $GLOBALS[$cache_name];
+        if (isset($cache[$src]))
+        {
+            return $cache[$src];
+        }
+        $object = new org_openpsa_contacts_person($src);
+        if (   !$object
+            && empty($object->guid))
+        {
+            $x = false;
+            return $x;
+        }
+        $cache[$object->guid] = $object;
+        $cache[$object->id] =& $cache[$object->guid];
+        return $cache[$object->guid];
+    }
+
     function _on_loaded()
     {
         //Fill name and rname
