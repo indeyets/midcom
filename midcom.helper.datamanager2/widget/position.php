@@ -76,11 +76,6 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
             );
         }
         
-        if ($this->_type->location != '')
-        {
-            $this->_set_initial_location();
-        }
-        
         if (is_null($this->service))
         {
             $this->service = 'geonames';
@@ -202,22 +197,29 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         
         $html .= "<label for='{$this->_element_id}_input_place_country' id='{$this->_element_id}_input_place_country_label'>";
         $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('country', 'org.routamc.positioning') . "</span>";        
-        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_country\" id=\"{$this->_element_id}_input_place_country\" name=\"{$this->_element_id}_input_place_country\" type=\"text\" value=\"\" />";
+        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_country\" id=\"{$this->_element_id}_input_place_country\" name=\"{$this->_element_id}_input_place_country\" type=\"text\" value=\"{$this->_type->location->country}\" />";
         $html .= "</label>";
+
+        $city_name = '';
+        $city = new org_routamc_positioning_city_dba($this->_type->location->city);
+        if ($city)
+        {
+            $city_name = $city->city;
+        }
 
         $html .= "<label for='{$this->_element_id}_input_place_city' id='{$this->_element_id}_input_place_city_label'>";
         $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('city', 'org.routamc.positioning') . "</span>";        
-        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_city\" id=\"{$this->_element_id}_input_place_city\" name=\"{$this->_element_id}_input_place_city\" type=\"text\" value=\"\" />";
+        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_city\" id=\"{$this->_element_id}_input_place_city\" name=\"{$this->_element_id}_input_place_city\" type=\"text\" value=\"{$city_name}\" />";
         $html .= "</label>";
         
         $html .= "<label for='{$this->_element_id}_input_place_street' id='{$this->_element_id}_input_place_street_label'>";
         $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('street', 'org.routamc.positioning') . "</span>";        
-        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_street\" id=\"{$this->_element_id}_input_place_street\" name=\"{$this->_element_id}_input_place_street\" type=\"text\" value=\"\" />";
+        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_street\" id=\"{$this->_element_id}_input_place_street\" name=\"{$this->_element_id}_input_place_street\" type=\"text\" value=\"{$this->_type->location->street}\" />";
         $html .= "</label>";
         
         $html .= "<label for='{$this->_element_id}_input_place_postalcode' id='{$this->_element_id}_input_place_postalcode_label'>";
         $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('postalcode', 'org.routamc.positioning') . "</span>";        
-        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_postalcode\" id=\"{$this->_element_id}_input_place_postalcode\" name=\"{$this->_element_id}_input_place_postalcode\" type=\"text\" value=\"\" />";
+        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_postalcode\" id=\"{$this->_element_id}_input_place_postalcode\" name=\"{$this->_element_id}_input_place_postalcode\" type=\"text\" value=\"{$this->_type->location->postalcode}\" />";
         $html .= "</label>";
 
         $html .= "<div id=\"{$this->_element_id}_status_box\" class=\"status_box\"></div>";
@@ -327,12 +329,12 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
 
         $html .= "<label for='{$this->_element_id}_input_coordinates_latitude' id='{$this->_element_id}_input_coordinates_latitude_label'>";
         $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('latitude', 'org.routamc.positioning') . "</span>";        
-        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_coordinates_latitude\" id=\"{$this->_element_id}_input_coordinates_latitude\" name=\"{$this->_element_id}_input_coordinates_latitude\" type=\"text\" value=\"\" />";
+        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_coordinates_latitude\" id=\"{$this->_element_id}_input_coordinates_latitude\" name=\"{$this->_element_id}_input_coordinates_latitude\" type=\"text\" value=\"{$this->_type->location->latitude}\" />";
         $html .= "</label>";
         
         $html .= "<label for='{$this->_element_id}_input_coordinates_longitude' id='{$this->_element_id}_input_coordinates_longitude_label'>";
         $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('longitude', 'org.routamc.positioning') . "</span>";        
-        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_coordinates_longitude\" id=\"{$this->_element_id}_input_coordinates_longitude\" name=\"{$this->_element_id}_input_coordinates_longitude\" type=\"text\" value=\"\" />";
+        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_coordinates_longitude\" id=\"{$this->_element_id}_input_coordinates_longitude\" name=\"{$this->_element_id}_input_coordinates_longitude\" type=\"text\" value=\"{$this->_type->location->longitude}\" />";
         $html .= "</label>";
         
         $html .= "\n</div><!-- tab_content_coordinates ends -->\n";
@@ -379,10 +381,65 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         // );
     }
     
-    function _set_initial_location()
-    {
+    function get_default()
+    {        
+        $city_name = '';
+        $city = new org_routamc_positioning_city_dba($this->_type->location->city);
+        if ($city)
+        {
+            $city_name = $city->city;
+        }
         
+        $script = "init_current_pos({$this->_type->location->latitude},{$this->_type->location->longitude});\n";
+        $_MIDCOM->add_jquery_state_script($script);
+        
+        return Array
+        (
+            "{$this->_element_id}_input_place_country" => $this->_type->location->country,
+            "{$this->_element_id}_input_place_city" => $city_name,
+            "{$this->_element_id}_input_place_street" => $this->_type->location->street,
+            "{$this->_element_id}_input_place_postalcode" => $this->_type->location->postalcode,
+            "{$this->_element_id}_input_coordinates_latitude" => $this->_type->location->latitude,
+            "{$this->_element_id}_input_coordinates_longitude" => $this->_type->location->longitude,
+        );
     }
+
+    function sync_type_with_widget($results)
+    {
+        if (isset($results["{$this->_element_id}_input_place_country"]))
+        {
+            $this->_type->location->country = $results["{$this->_element_id}_input_place_country"];
+        }
+        if (isset($results["{$this->_element_id}_input_place_city"]))
+        {
+            $city_id = 0;
+            $city = org_routamc_positioning_city_dba::get_by_name($results["{$this->_element_id}_input_place_city"]);
+            if ($city)
+            {
+                $city_id = $city->id;
+            }
+            $this->_type->location->city = $city_id;
+        }
+        if (isset($results["{$this->_element_id}_input_place_street"]))
+        {
+            $this->_type->location->street = $results["{$this->_element_id}_input_place_street"];
+        }
+        if (isset($results["{$this->_element_id}_input_place_postalcode"]))
+        {
+            $this->_type->location->postalcode = $results["{$this->_element_id}_input_place_postalcode"];
+        }
+        
+        if (   isset($results["{$this->_element_id}_input_coordinates_latitude"])
+            && $results["{$this->_element_id}_input_coordinates_latitude"] != '')
+        {
+            $this->_type->location->latitude = $results["{$this->_element_id}_input_coordinates_latitude"];
+        }
+        if (   isset($results["{$this->_element_id}_input_coordinates_longitude"])
+            && $results["{$this->_element_id}_input_coordinates_longitude"] != '')
+        {
+            $this->_type->location->longitude = $results["{$this->_element_id}_input_coordinates_longitude"];
+        }
+    }    
     
     function is_frozen()
     {

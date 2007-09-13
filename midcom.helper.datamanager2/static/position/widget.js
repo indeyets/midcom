@@ -206,6 +206,11 @@ function init_position_widget(widget_id, mapstration)
     });
 }
 
+function init_current_pos(lat,lon)
+{
+    current_pos = new LatLonPoint(lat,lon);
+}
+
 function position_map_to_current(widget_id)
 {
     //console.log("position_map_to_current widget_id: "+widget_id);

@@ -38,6 +38,11 @@ class midcom_helper_datamanager2_type_position extends midcom_helper_datamanager
             return;
         }
         
+        debug_push_class(__CLASS__,__FUNCTION__);
+        debug_print_r("this->storage->object",$this->storage->object);
+        debug_print_r("this->location",$this->location);
+        debug_pop();
+        
         $this->object = new org_routamc_positioning_object($this->storage->object);
         
         $this->location = $this->object->seek_location_object();
@@ -48,7 +53,7 @@ class midcom_helper_datamanager2_type_position extends midcom_helper_datamanager
     }
 
     function convert_to_storage()
-    {
+    {                
         $this->location->relation = $this->relation;
         if ($this->location->guid)
         {
@@ -56,6 +61,9 @@ class midcom_helper_datamanager2_type_position extends midcom_helper_datamanager
         }
         else
         {
+            $this->location->parent = $this->storage->object->guid;
+            $this->location->parentclass = $this->storage->object->__midcom_class_name__;
+            
             $this->location->create();
         }
 
@@ -85,7 +93,7 @@ class midcom_helper_datamanager2_type_position extends midcom_helper_datamanager
         $result .= "    <abbr class=\"longitude\" title=\"{$this->location->longitude}\">{$longitude_string}</abbr>\n";
         $result .= "</div>\n";
         
-        // TODO: Adr Microformat for civic location
+        // TODO: Add Microformat for civic location
         
         return $result;
     }
