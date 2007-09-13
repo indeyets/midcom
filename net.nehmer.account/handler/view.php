@@ -220,7 +220,8 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
     
     function _populate_person_toolbar()
     {
-        if ($_MIDCOM->auth->admin)
+        if (   $_MIDCOM->auth->admin
+            || !$_MIDCOM->auth->user)
         {
             return;
         }
@@ -230,12 +231,14 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
         {
             return;
         }
-        
-        $this->person_toolbar = new midcom_helper_toolbar();
-    
-        if ($this->_account->guid == $_MIDCOM->auth->user->guid)
+
+        if (   $_MIDCOM->auth->user
+            && $this->_account->guid == $_MIDCOM->auth->user->guid)
         {
+            $this->person_toolbar = new midcom_helper_toolbar();
+            
             // Own profile page
+            
             $this->person_toolbar->add_item
             (
                 array
@@ -310,12 +313,77 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                 );
             }
         }
+        else
+        {
+            // Someones profile page
+            
+            if ($this->_config->get('net_nehmer_buddylist_integration'))
+            {
+                $this->person_toolbar = new midcom_helper_toolbar();
+                
+                $buddylist_path = $this->_config->get('net_nehmer_buddylist_integration');
+                $current_prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+                $view_url = $this->_get_view_url();
+                
+                $_MIDCOM->componentloader->load_graceful('net.nehmer.buddylist');
+                
+                $qb = net_nehmer_buddylist_entry::new_query_builder();
+                $user = $_MIDCOM->auth->user->get_storage();
+                $qb->add_constraint('account', '=', $user->guid);
+                $qb->add_constraint('buddy', '=', $this->_account->guid);
+                $qb->add_constraint('blacklisted', '=', false);
+                $buddies = $qb->execute();
+                
+                if (count($buddies) > 0)
+                {
+                    // We're buddies, show remove button
+                    $this->person_toolbar->add_item
+                    (
+                        array
+                        (
+                            MIDCOM_TOOLBAR_URL => "{$buddylist_path}delete",
+                            MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('remove buddy'),
+                            MIDCOM_TOOLBAR_HELPTEXT => null,
+                            MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                            MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_do('midgard:delete', $buddies[0]),
+                            MIDCOM_TOOLBAR_POST => true,
+                            MIDCOM_TOOLBAR_POST_HIDDENARGS => array
+                            (
+                                'net_nehmer_buddylist_delete' => '1',
+                                "account_{$this->_account->guid}" => '1',
+                                'relocate_to' => $view_url,
+                            )
+                        )
+                    );
+                }
+                else
+                {
+                    // We're not buddies, show add button
+                    $this->person_toolbar->add_item
+                    (
+                        array
+                        (
+                            MIDCOM_TOOLBAR_URL => "{$buddylist_path}request/{$this->_account->guid}?relocate_to={$view_url}",
+                            MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('add buddy'),
+                            MIDCOM_TOOLBAR_HELPTEXT => null,
+                            MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_person.png',
+                            MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_do('midgard:create', $user),
+                        )
+                    );
+                }                
+            }
+        }
 
         $this->_render_person_toolbar();
     }
     
     function _render_person_toolbar()
     {
+        if (! $this->person_toolbar)
+        {
+            return false;
+        }
+        
         $output = '<ul';
         if (! is_null($this->person_toolbar->class_style))
         {
@@ -337,35 +405,84 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                 continue;
             }
 
-            $output .= "  <li>\n";
-
-            $output .= "    <a href='{$item[MIDCOM_TOOLBAR_URL]}'";
-            $output .= " title='{$label}'";
+            $output .= "  <li>";
             
-            if ( count($item[MIDCOM_TOOLBAR_OPTIONS]) > 0 )
+            if ($item[MIDCOM_TOOLBAR_POST])
             {
-                foreach ($item[MIDCOM_TOOLBAR_OPTIONS] as $key => $val)
+                $output .= "<form method=\"post\" action=\"{$item[MIDCOM_TOOLBAR_URL]}\">";
+                $output .= "<button type=\"submit\" name=\"midcom_helper_toolbar_submit\"";
+
+                if ( count($item[MIDCOM_TOOLBAR_OPTIONS]) > 0 )
                 {
-                    $output .= " $key=\"$val\" ";
+                    foreach ($item[MIDCOM_TOOLBAR_OPTIONS] as $key => $val)
+                    {
+                        $output .= " $key=\"$val\" ";
+                    }
                 }
+                if ($item[MIDCOM_TOOLBAR_ACCESSKEY])
+                {
+                    $output .= " class=\"accesskey\" accesskey=\"{$item[MIDCOM_TOOLBAR_ACCESSKEY]}\" ";
+                }
+                $output .= " title=\"${label}\">";
+                
+                $url = MIDCOM_STATIC_URL . "/{$item[MIDCOM_TOOLBAR_ICON]}";
+                $output .= "<img src='{$url}' alt='{$label}' />";
+                
+                $output .= "</button>";
+                
+                if ($item[MIDCOM_TOOLBAR_POST_HIDDENARGS])
+                {
+                    foreach ($item[MIDCOM_TOOLBAR_POST_HIDDENARGS] as $key => $value)
+                    {
+                        $key = htmlspecialchars($key);
+                        $value = htmlspecialchars($value);
+                        $output .= "<input type=\"hidden\" name=\"{$key}\" value=\"{$value}\"/>";
+                    }
+                }
+                $output .= "</form>\n";
             }
-            if (! is_null($item[MIDCOM_TOOLBAR_ACCESSKEY]))
+            else
             {
-                $output .= " class=\"accesskey \" accesskey='{$item[MIDCOM_TOOLBAR_ACCESSKEY]}' ";
-            }
-            $output .= ">\n";
-            
-            $url = MIDCOM_STATIC_URL . "/{$item[MIDCOM_TOOLBAR_ICON]}";
-            $output .= "      <img src='{$url}' alt='{$label}' />";
-            
-            $output .= "    </a>\n";
+                $output .= "<a href='{$item[MIDCOM_TOOLBAR_URL]}'";
+                $output .= " title='{$label}'";
 
-            $output .= "  </li>\n";
+                if ( count($item[MIDCOM_TOOLBAR_OPTIONS]) > 0 )
+                {
+                    foreach ($item[MIDCOM_TOOLBAR_OPTIONS] as $key => $val)
+                    {
+                        $output .= " $key=\"$val\" ";
+                    }
+                }
+                if (! is_null($item[MIDCOM_TOOLBAR_ACCESSKEY]))
+                {
+                    $output .= " class=\"accesskey \" accesskey='{$item[MIDCOM_TOOLBAR_ACCESSKEY]}' ";
+                }
+                $output .= ">";
+
+                $url = MIDCOM_STATIC_URL . "/{$item[MIDCOM_TOOLBAR_ICON]}";
+                $output .= "<img src='{$url}' alt='{$label}' />";
+
+                $output .= "</a>";                
+            }
+
+            $output .= "</li>\n";
         }
 
         $output .= '</ul>';
         
         $this->person_toolbar_html = $output;        
+    }
+    
+    function _get_view_url()
+    {
+        $url = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'view/';
+        
+        if (!$this->_config->get('allow_view_by_username'))
+        {
+            return "{$url}{$this->_account->guid}";
+        }
+
+        return "{$url}{$this->_account->username}";
     }
 
     /**
@@ -388,9 +505,11 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
         }
 
         $qb = midcom_db_person::new_query_builder();
+        $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
         $qb->add_constraint('username', '=', $id);
         $results = $qb->execute();
         unset($qb);
+
         if ($results === false)
         {
             // QB fatal error

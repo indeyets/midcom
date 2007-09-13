@@ -39,7 +39,7 @@ echo $data['person_toolbar_html'];
             }
             else
             {
-                echo "<p class=\"status\"><img src=\"" . MIDCOM_STATIC_URL . "/net.nehmer.account/offline.png\" alt=\"\" /> {$data['l10n']->get('last login')}: {strftime('%x %X', $last_login)}</p>\n";
+                echo "<p class=\"status\"><img src=\"" . MIDCOM_STATIC_URL . "/net.nehmer.account/offline.png\" alt=\"\" /> {$data['l10n']->get('last login')}: " . strftime('%x %X', $last_login) . "</p>\n";
             }
             break;
             

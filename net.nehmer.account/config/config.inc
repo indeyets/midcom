@@ -129,3 +129,5 @@
     'register/activate' => 'invite',
     'invite' => 'register/finish',
 ),
+
+'net_nehmer_buddylist_integration' => false,
