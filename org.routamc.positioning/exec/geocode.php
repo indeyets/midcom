@@ -36,7 +36,17 @@ foreach ($_GET as $key => $value)
 $position = $geocoder->geocode($location);
 if (is_null($position))
 {
-    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Geocoding failed: {$geocoder->error}");
+    $error_str = 'unknown';
+    if (isset($geocoder->error))
+    {
+        $error_str = $geocoder->error;        
+    }
+    //$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Geocoding failed: {$error_str}");
+
+    $_MIDCOM->header('HTTP/1.0 500 Server Error');
+    echo "Geocoding failed: {$error_str}";
+    $_MIDCOM->finish();
+    exit();
     // This will exit
 }
 

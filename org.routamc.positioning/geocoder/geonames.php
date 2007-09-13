@@ -64,7 +64,8 @@ class org_routamc_positioning_geocoder_geonames extends org_routamc_positioning_
         $response = $http_request->get('http://ws.geonames.org/postalCodeSearch?' . implode('&', $params));
         $simplexml = simplexml_load_string($response);
 
-        if (count($simplexml->code) == 0)
+        if (   !isset($simplexml->code)
+            || count($simplexml->code) == 0)
         {
             $this->error = 'POSITIONING_CITY_NOT_FOUND';
             return null;

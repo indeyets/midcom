@@ -113,7 +113,7 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
      * - icon string URL to image file
      *
      * @param array $marker Marker array
-     *Ê@return boolean Whether the operation was successfull
+     *ÃŠ@return boolean Whether the operation was successfull
      */
     function add_marker($marker)
     {
@@ -139,7 +139,7 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
     /**
      * Include the javascript files and code needed for map display
      */
-    function add_jsfiles()
+    function add_jsfiles($echo_output=true)
     {
         static $added = false;
         if ($added)
@@ -147,22 +147,50 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
             return false;
         }
         
-        echo "<script type=\"text/javascript\" src=\"" . MIDCOM_STATIC_URL . "/org.routamc.positioning/mapstraction.js\"></script>\n";
+        if ($echo_output)
+        {
+            echo "<script type=\"text/javascript\" src=\"" . MIDCOM_STATIC_URL . "/org.routamc.positioning/mapstraction.js\"></script>\n";            
+        }
+        else
+        {
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.routamc.positioning/mapstraction.js');
+        }
         
         // TODO: We can remove this once mapstraction does the includes by itself
         switch ($this->type)
         {
             case 'microsoft':
-                echo "<script type=\"text/javascript\" src=\"http://dev.virtualearth.net/mapcontrol/v3/mapcontrol.js\"></script>\n";
+                if ($echo_output)
+                {
+                    echo "<script type=\"text/javascript\" src=\"http://dev.virtualearth.net/mapcontrol/v3/mapcontrol.js\"></script>\n";                    
+                }
+                else
+                {
+                    $_MIDCOM->add_jsfile('http://dev.virtualearth.net/mapcontrol/v3/mapcontrol.js');
+                }
                 break;
             case 'yahoo':
-                echo "<script type=\"text/javascript\" src=\"http://api.maps.yahoo.com/ajaxymap?v=3.4&amp;appid=YellowMasp4R\"></script>\n";
+                if ($echo_output)
+                {
+                    echo "<script type=\"text/javascript\" src=\"http://api.maps.yahoo.com/ajaxymap?v=3.4&amp;appid=YellowMasp4R\"></script>\n";
+                }
+                else
+                {
+                    $_MIDCOM->add_jsfile('http://api.maps.yahoo.com/ajaxymap?v=3.4&amp;appid=YellowMasp4R');
+                }
                 break;
             case 'google':
             // TODO: As soon as mapstraction supports openlayers OSM will be the default
             case 'openstreetmap':
             default:
-                echo "<script type=\"text/javascript\" src=\"http://maps.google.com/maps?file=api&amp;v=2&amp;key={$this->api_key}\"></script>\n";
+                if ($echo_output)
+                {
+                    echo "<script type=\"text/javascript\" src=\"http://maps.google.com/maps?file=api&amp;v=2&amp;key={$this->api_key}\"></script>\n";
+                }
+                else
+                {
+                    $_MIDCOM->add_jsfile("http://maps.google.com/maps?file=api&amp;v=2&amp;key={$this->api_key}");
+                }
                 break;
         }
         
@@ -173,38 +201,58 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
     /**
      * Display the map
      */
-    function show($width = 300, $height = 200)
+    function show($width = 300, $height = 200, $echo_output=true)
     {
-        $this->add_jsfiles();
+        $html = '';
+        $script = '';
+                
+        $this->add_jsfiles($echo_output);
         
         // Show the map div
-        echo "<div class=\"org_routamc_positioning_map\" id=\"{$this->id}\"";
+        $html .= "<div class=\"org_routamc_positioning_map\" id=\"{$this->id}\"";
         if (   !is_null($width)
             && !is_null($height))
         {
-            echo " style=\"width: {$width}px; height: {$height}px\"";
+            $html .= " style=\"width: {$width}px; height: {$height}px\"";
         }
-        echo "></div>\n";
+        $html .= "></div>\n";
         
         // Start mapstraction
-        echo "<script type=\"text/javascript\">\n";
-        echo "var mapstraction_{$this->id} = new Mapstraction('{$this->id}','{$this->type}');\n";
+        if ($echo_output)
+        {
+            $script .= "<script type=\"text/javascript\">\n";            
+        }
+        $script .= "var mapstraction_{$this->id} = new Mapstraction('{$this->id}','{$this->type}');\n";
         
         if ($this->type == 'google')
         {
             // Workaround, Google requires you to start with a center
-            echo "mapstraction_{$this->id}.setCenter(new LatLonPoint(0, 0));\n";
+            $script .= "mapstraction_{$this->id}.setCenter(new LatLonPoint(0, 0));\n";
         }
         
         foreach ($this->markers as $marker)
         {
             $marker_instance = $this->create_js_marker($marker);
-            echo "mapstraction_{$this->id}.addMarker({$marker_instance});\n";
+            $script .= "mapstraction_{$this->id}.addMarker({$marker_instance});\n";
         }
-        echo "mapstraction_{$this->id}.addSmallControls();\n";
-        echo "mapstraction_{$this->id}.autoCenterAndZoom();\n";
+        $script .= "mapstraction_{$this->id}.addSmallControls();\n";
+        $script .= "mapstraction_{$this->id}.autoCenterAndZoom();\n";
         
-        echo "</script>\n";
+        if ($echo_output)
+        {
+            $script .= "</script>\n";
+        }
+        
+        if ($echo_output == true)
+        {
+            $output = $html.$script;
+            echo $output;
+        }
+        else
+        {
+            $_MIDCOM->add_jquery_state_script($script);
+            return $html;
+        }
     }
     
     /**

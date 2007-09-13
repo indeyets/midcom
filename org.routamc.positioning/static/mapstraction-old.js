@@ -24,7 +24,7 @@
  * $, the dollar function, elegantising getElementById()
  * @returns an element
  */
-function $m() {
+function $() {
   var elements = new Array();
   for (var i = 0; i < arguments.length; i++) {
     var element = arguments[i];
@@ -92,41 +92,6 @@ function getStyle(el, prop) {
   return y;
 }
 
-// longitude to metres
-// http://www.uwgb.edu/dutchs/UsefulData/UTMFormulas.HTM
-// "A degree of longitude at the equator is 111.2km... For other latitudes,
-// multiply by cos(lat)"
-// assumes the earth is a sphere but good enough for our purposes
-
-function lonToMetres (lon,lat) {
-  return lon * 111200 * Math.cos(lat * (Math.PI/180));
-}
-
-function metresToLon(m,lat) {
-  return m / (111200*Math.cos(lat * (Math.PI/180)));
-}
-
-// stuff to convert google zoom levels to/from degrees
-// assumes zoom 0 = 256 pixels = 360 degrees
-//         zoom 1 = 256 pixels = 180 degrees
-// etc.
-
-function getDegreesFromGoogleZoomLevel (pixels,zoom)
-{
-  return (360*pixels) / (Math.pow(2,zoom+8));
-}
-
-function getGoogleZoomLevelFromDegrees (pixels,degrees)
-{
-  return logN ((360*pixels)/degrees, 2) - 8;
-}
-
-function logN (number,base)
-{
-  return Math.log(number) / Math.log(base);
-}
-
-
 ///////////////////////////// 
 //
 // Mapstraction proper begins here
@@ -143,25 +108,25 @@ function logN (number,base)
 function Mapstraction(element,api,debug) {
   this.api = api; // could detect this from imported scripts?
   this.maps = new Object();
-  this.currentElement = $m(element);
+  this.currentElement = $(element);
   this.eventListeners = new Array();
   this.markers = new Array();
   this.polylines = new Array();
-  this.images = new Array();
+	this.images = new Array();
   this.loaded = new Object();
   this.onload = new Object();
 
-  // optional debug support
-  if(debug == true)
-    this.debug = true
-  else
-    this.debug = false
+	// optional debug support
+	if(debug == true)
+		this.debug = true
+	else
+		this.debug = false
 
-      // This is so that it is easy to tell which revision of this file 
-      // has been copied into other projects.
-      this.svn_revision_string = '$Revision$';
+  // This is so that it is easy to tell which revision of this file 
+  // has been copied into other projects.
+  this.svn_revision_string = '$Revision$';
   this.addControlsArgs = new Object();
-  this.addAPI($m(element),api);
+  this.addAPI($(element),api);
 }
 
 
@@ -179,22 +144,22 @@ Mapstraction.prototype.swap = function(element,api) {
   this.currentElement.style.display = 'none';
 
 
-  this.currentElement = $m(element);
+  this.currentElement = $(element);
   this.currentElement.style.visibility = 'visible';
   this.currentElement.style.display = 'block';
 
   this.api = api;
 
   if (this.maps[this.api] == undefined) {
-    this.addAPI($m(element),api);
+    this.addAPI($(element),api);
 
     this.setCenterAndZoom(center,zoom);
 
-    for (var i=0; i<this.markers.length; i++) {
+    for (i=0; i<this.markers.length; i++) {
       this.addMarker( this.markers[i], true); 
     }
 
-    for (var i=0; i<this.polylines.length; i++) {
+    for (i=0; i<this.polylines.length; i++) {
       this.addPolyline( this.polylines[i], true); 
     }
   }else{
@@ -203,7 +168,7 @@ Mapstraction.prototype.swap = function(element,api) {
     this.setCenterAndZoom(center,zoom);
 
     //TODO synchronize the markers and polylines too
-    // (any overlays created after api instantiation are not sync'd)
+		// (any overlays created after api instantiation are not sync'd)
   }
 
   this.addControls(this.addControlsArgs);
@@ -213,8 +178,8 @@ Mapstraction.prototype.swap = function(element,api) {
 
 Mapstraction.prototype.addAPI = function(element,api) { 
   me = this;
-  this.loaded[api] = false;
-  this.onload[api] = new Array();	
+	this.loaded[api] = false;
+	this.onload[api] = new Array();	
 
   switch (api) {
     case 'yahoo':
@@ -224,7 +189,7 @@ Mapstraction.prototype.addAPI = function(element,api) {
         YEvent.Capture(this.maps[api],EventsList.MouseClick,function(event,location) { me.clickHandler(location.Lat,location.Lon,location,me) });
         YEvent.Capture(this.maps[api],EventsList.changeZoom,function() { me.moveendHandler(me) });
         YEvent.Capture(this.maps[api],EventsList.endPan,function() { me.moveendHandler(me) });
-        this.loaded[api] = true;
+				this.loaded[api] = true;
       }
       else {
         alert('Yahoo map script not imported');
@@ -244,7 +209,7 @@ Mapstraction.prototype.addAPI = function(element,api) {
               });
 
           GEvent.addListener(this.maps[api], 'moveend', function() {me.moveendHandler(me)});
-          this.loaded[api] = true;
+					this.loaded[api] = true;
         }
         else {
           alert('browser not compatible with Google Maps');
@@ -259,8 +224,8 @@ Mapstraction.prototype.addAPI = function(element,api) {
 
         element.style.position='relative';
 
-        var msft_width = parseFloat(getStyle($m(element),'width'));
-        var msft_height = parseFloat(getStyle($m(element),'height'));
+        var msft_width = parseFloat(getStyle($(element),'width'));
+        var msft_height = parseFloat(getStyle($(element),'height'));
         /* Hack so the VE works with FF2 */
         var ffv = 0;
         var ffn = "Firefox/";
@@ -276,9 +241,9 @@ Mapstraction.prototype.addAPI = function(element,api) {
         this.maps[api].AttachEvent("onclick", function(e) { me.clickHandler(e.view.LatLong.Latitude, e.view.LatLong.Longitude, me); });
         this.maps[api].AttachEvent("onchangeview", function(e) {me.moveendHandler(me)});
 
-        //Source of our trouble with Mapufacture?
+				//Source of our trouble with Mapufacture?
         this.resizeTo(msft_width, msft_height);
-        this.loaded[api] = true;
+				this.loaded[api] = true;
       }
       else {
         alert('Virtual Earth script not imported');
@@ -286,7 +251,7 @@ Mapstraction.prototype.addAPI = function(element,api) {
       break;
     case 'openlayers':
       this.maps[api] = new OpenLayers.Map(element.id);
-      this.loaded[api] = true;
+			this.loaded[api] = true;
       break;
     case 'openstreetmap':
       // for now, osm is a hack on top of google
@@ -324,7 +289,7 @@ Mapstraction.prototype.addAPI = function(element,api) {
           this.setCenterAndZoom(myPoint, 11);
 
           this.maps[api].setMapType(custommap);
-          this.loaded[api] = true;
+					this.loaded[api] = true;
         }
         else {
           alert('browser not compatible with Google Maps');
@@ -338,118 +303,55 @@ Mapstraction.prototype.addAPI = function(element,api) {
     case 'multimap':
       this.maps[api] = new MultimapViewer( element );
 
-      this.maps[api].addEventHandler( 'click', function(eventType, eventTarget, arg1, arg2, arg3) {
-          if (arg1) {
-          me.clickHandler(arg1.lat, arg1.lon, me);
-          }
-          });
-      this.maps[api].addEventHandler( 'changeZoom', function(eventType, eventTarget, arg1, arg2, arg3) {
-          me.moveendHandler(me);
-          });
-      this.maps[api].addEventHandler( 'endPan', function(eventType, eventTarget, arg1, arg2, arg3) {
-          me.moveendHandler(me);
-          });
-      this.loaded[api] = true;
+			this.maps[api].addEventHandler( 'click', function(eventType, eventTarget, arg1, arg2, arg3) {
+				if (arg1) {
+					me.clickHandler(arg1.lat, arg1.lon, me);
+				}
+			});
+			this.maps[api].addEventHandler( 'changeZoom', function(eventType, eventTarget, arg1, arg2, arg3) {
+				me.moveendHandler(me);
+			});
+			this.maps[api].addEventHandler( 'endPan', function(eventType, eventTarget, arg1, arg2, arg3) {
+				me.moveendHandler(me);
+			});
+			this.loaded[api] = true;
       break;
     case 'map24':
-      // Copied from Google and modified
-      if (Map24) {
-
-        Map24.loadApi(["core_api","wrapper_api"] , function() {
-
-            Map24.MapApplication.init
-            ( { NodeName: element.id, MapType: "Static" } );
-            me.maps[api] = Map24.MapApplication.Map; 
-
-            Map24.MapApplication.Map.addListener('Map24.Event.MapClick', 
-              function(e) {
-              me.clickHandler(e.Coordinate.Latitude/60,    
-                e.Coordinate.Longitude/60,
-                me);
-
-              e.stop();
-              }
-              );
-
-            Map24.MapApplication.Map.addListener("MapPanStop", 
-              function(e) {
-              me.moveendHandler(me);
-              }
-              );
-
-            /**/
-
-            var client=Map24.MapApplication.Map.MapClient['Static']; 
-
-
-            /*
-
-               These *will* cause the specified listener to run when we stop
-               panning the map, but the default pan stop handler will be 
-               cancelled. The result of this will be that when we have stopped
-               panning, we will permanently be in 'pan' mode and unable to do
-               anything else (e.g. click on the map to create a new marker).
-
-
-               var defaultOnPanStop = client.onPanStop;
-               var defaultOnZoomInStop = client.onZoomInStop;
-               var defaultOnZoomOutStop = client.onZoomOutStop;
-
-               client.onPanStop = function(e) 
-               { me.moveendHandler(me); defaultOnPanStop(e);  
-               status('DEFAULTONPANSTOP DONE');}
-
-            // Handle zoom events - these also fire moveendHandler for the
-            // other APIs in Mapstraction
-            client.onZoomInStop = function(e) 
-            { me.moveendHandler(me); defaultOnZoomInStop(e); }
-            client.onZoomOutStop = function(e) 
-            { me.moveendHandler(me); defaultOnZoomOutStop(e);  }
-
-             */
-
-            me.loaded[api] = true;
-            for (var i = 0; i < me.onload[api].length; i++) {
-              me.onload[api][i]();
-            }
-        }, "2.0.1247" );
-
-      } else {
-        alert('map24 api not loaded');
-      }
+      this.maps[api] = Map24.Webservices.getMap24Application({AppKey: this.apikey, MapArea: element, MapWidth: 400, MapHeight: 400});
+			this.loaded[api] = true;
       break;
-    case 'mapquest':
-      MQInitOverlays( function() {
-          self.loaded[api] = true;
-          self.maps[api] = new MQTileMap(element);
-          for (var i = 0; i < self.onload[api].length; i++) {
-          self.onload[api][i]();
-          }
-          });
+		case 'mapquest':
+		  MQInitOverlays( function() {
+				self.loaded[api] = true;
+				self.maps[api] = new MQTileMap(element);
+				for (i = 0; i < self.onload[api].length; i++) {
+					self.onload[api][i]();
+				}
+			});
 
-      // MQEventManager.addListener(this.maps[api],"click",function(event,location) { me.clickHandler(location.Lat,location.Lon,location,me) });
-      // MQEventManager.addListener(this.maps[api],"zoomend",function() { me.moveendHandler(me) });
-      // MQEventManager.addListener(this.maps[api],"moveend",function() { me.moveendHandler(me) });
-      break;
-    case 'freeearth':
-      this.maps[api] = new FE.Map($m(element));
-      self = this;
-      this.maps[api].onLoad = function() {
-        self.freeEarthLoaded = true;
-        self.loaded[api] = true;
-        for (var i = 0; i < self.onload[api].length; i++) {
-          self.onload[api][i]();
-        }
-      }
-      this.maps[api].load();
-      break;	
+			// MQEventManager.addListener(this.maps[api],"click",function(event,location) { me.clickHandler(location.Lat,location.Lon,location,me) });
+			// MQEventManager.addListener(this.maps[api],"zoomend",function() { me.moveendHandler(me) });
+			// MQEventManager.addListener(this.maps[api],"moveend",function() { me.moveendHandler(me) });
+			break;
+		case 'freeearth':
+			this.maps[api] = new FE.Map($(element));
+			self = this;
+			self.freeEarthOnLoad = new Array();
+			this.maps[api].onLoad = function() {
+				self.freeEarthLoaded = true;
+				for (i = 0; i < self.freeEarthOnLoad.length; i++) {
+					self.freeEarthOnLoad[i]();
+				}
+			}
+			this.maps[api].load();
+		break;	
     default:
-      if(this.debug)
-        alert(api + ' not supported by mapstraction');
+			if(this.debug)
+      	alert(api + ' not supported by mapstraction');
   }
 
-
-  // this.resizeTo(getStyle($m(element),'width'), getStyle($m(element),'height'));
+     
+  // this.resizeTo(getStyle($(element),'width'), getStyle($(element),'height'));
   // the above line was called on all APIs but MSFT alters with the div size when it loads
   // so you have to find the dimensions and set them again (see msft constructor).
   // FIXME: test if google/yahoo etc need this resize called. Also - getStyle returns
@@ -458,30 +360,30 @@ Mapstraction.prototype.addAPI = function(element,api) {
 }
 
 /* Returns the loaded state of a Map Provider
- *
- * @param {String} api Optional API to query for. If not specified, returns state of the originally created API
- * @returns the state of the map loading
- * @type Boolean
- */
-  Mapstraction.prototype.isLoaded = function(api){
-    if(api == null)
-      api = this.api;
-
-    return this.loaded[api];
-  }
+	*
+	* @param {String} api Optional API to query for. If not specified, returns state of the originally created API
+  * @returns the state of the map loading
+  * @type Boolean
+*/
+Mapstraction.prototype.isLoaded = function(api){
+	if(api == null)
+		api = this.api;
+	
+	return this.loaded[api];
+}
 
 /* Set the debugging on or off - shows alert panels for functions that don't exist in Mapstraction
- * 
- * @param {Bool} debug true to turn on debugging, false to turn it off
- * @returns the state of debugging
- * @type Boolean
- */
-  Mapstraction.prototype.setDebug = function(debug){
-    if(debug != null)
-      return this.debug = debug;
-    else
-      return this.debug;
-  }
+	* 
+	* @param {Bool} debug true to turn on debugging, false to turn it off
+  * @returns the state of debugging
+  * @type Boolean
+*/
+Mapstraction.prototype.setDebug = function(debug){
+	if(debug != null)
+		return this.debug = debug;
+	else
+		return this.debug;
+}
 
 /* Resize the current map to the specified width and height
  * (since it is actually on a child div of the mapElement passed
@@ -492,12 +394,12 @@ Mapstraction.prototype.addAPI = function(element,api) {
  * @param {int} height The width the map should be.
  */
 Mapstraction.prototype.resizeTo = function(width,height){
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.resizeTo(width,height); } );
-    return;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.resizeTo(width,height); } );
+		return;
+	}
+		
   switch (this.api) {
     case 'yahoo':
       this.maps[this.api].resizeTo(new YSize(width,height));
@@ -511,19 +413,16 @@ Mapstraction.prototype.resizeTo = function(width,height){
     case 'microsoft':
       this.maps[this.api].Resize(width, height);
       break;
-    case 'multimap':
-      this.currentElement.style.width = width;
-      this.currentElement.style.height = height;
-      this.maps[this.api].resize();
-      break;
-    case 'mapquest':
-      this.currentElement.style.width = width;
-      this.currentElement.style.height = height;
+		case 'multimap':
+			this.currentElement.style.width = width;
+			this.currentElement.style.height = height;
+			this.maps[this.api].resize();
+			break;
+		case 'mapquest':
+			this.currentElement.style.width = width;
+			this.currentElement.style.height = height;
       this.maps[this.api].setSize(new MQSize(width, height));
-      break;
-    case 'map24':
-      Map24.MapApplication.Map.Canvas['c'].resizeTo(width,height);
-      break;
+			break;
   }
 }
 
@@ -579,12 +478,12 @@ Mapstraction.prototype.addEventListener = function(type, func) {
  * @param {args} array Which controls to switch on
  */
 Mapstraction.prototype.addControls = function( args ) {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.addControls(args); } );
-    return;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.addControls(args); } );
+		return;
+	}
+		
   var map = this.maps[this.api];
 
   this.addControlsArgs = args;
@@ -614,11 +513,11 @@ Mapstraction.prototype.addControls = function( args ) {
         }
       }
       if ( args.scale    ) { c.unshift(new GScaleControl()); map.addControl(c[0]); }
-
-      if (this.api != "openstreetmap") {	 
-        if ( args.overview ) { c.unshift(new GOverviewMapControl()); map.addControl(c[0]); }
-        if ( args.map_type ) { c.unshift(new GMapTypeControl()); map.addControl(c[0]); }
-      }
+    
+			if (this.api != "openstreetmap") {	 
+	      if ( args.overview ) { c.unshift(new GOverviewMapControl()); map.addControl(c[0]); }
+      	if ( args.map_type ) { c.unshift(new GMapTypeControl()); map.addControl(c[0]); }
+			}
       break;
 
     case 'yahoo':
@@ -634,22 +533,22 @@ Mapstraction.prototype.addControls = function( args ) {
       map.addControl(new OpenLayers.Control.LayerSwitcher());
       break;
 
-    case 'multimap':
-      //FIXME -- removeAllWidgets();  -- can't call addControls repeatedly
+		case 'multimap':
+			//FIXME -- removeAllWidgets();  -- can't call addControls repeatedly
 
-      pan_zoom_widget = "MM";
-      if (args.zoom && args.zoom == "small") { pan_zoom_widget = pan_zoom_widget + "Small"; }
-      if (args.pan) { pan_zoom_widget = pan_zoom_widget + "Pan"; }
-      if (args.zoom) { pan_zoom_widget = pan_zoom_widget + "Zoom"; }
-      pan_zoom_widget = pan_zoom_widget + "Widget";
+			pan_zoom_widget = "MM";
+			if (args.zoom && args.zoom == "small") { pan_zoom_widget = pan_zoom_widget + "Small"; }
+			if (args.pan) { pan_zoom_widget = pan_zoom_widget + "Pan"; }
+			if (args.zoom) { pan_zoom_widget = pan_zoom_widget + "Zoom"; }
+			pan_zoom_widget = pan_zoom_widget + "Widget";
 
-      if (pan_zoom_widget != "MMWidget") {
-        eval(" map.addWidget( new " + pan_zoom_widget + "() );");
-      } 
+			if (pan_zoom_widget != "MMWidget") {
+				eval(" map.addWidget( new " + pan_zoom_widget + "() );");
+			} 
 
-      if ( args.map_type ) { map.addWidget( new MMMapTypeWidget() ); }
-      if ( args.overview ) { map.addWidget( new MMOverviewWidget() ); }			
-      break;
+			if ( args.map_type ) { map.addWidget( new MMMapTypeWidget() ); }
+			if ( args.overview ) { map.addWidget( new MMOverviewWidget() ); }			
+			break;
 
     case 'mapquest':
       //remove old controls
@@ -665,8 +564,8 @@ Mapstraction.prototype.addControls = function( args ) {
       if ( args.pan ) { c.unshift(new MQPanControl()); map.addControl(c[0], new MQMapCornerPlacement(MQMapCorner.TOP_LEFT, new MQSize(0,0))); }
       if ( args.zoom == 'large' ) { c.unshift(new MQLargeZoomControl()); map.addControl(c[0], new MQMapCornerPlacement(MQMapCorner.TOP_LEFT, new MQSize(0,0))); }
       else if ( args.zoom == 'small' ) { c.unshift(new MQZoomControl()); map.addControl(c[0],  new MQMapCornerPlacement(MQMapCorner.BOTTOM_LEFT, new MQSize(0,0))); }
-
-      // TODO: Map View Control is wonky
+			
+			// TODO: Map View Control is wonky
       if ( args.map_type ) { c.unshift(new MQViewControl()); map.addControl(c[0], new MQMapCornerPlacement(MQMapCorner.TOP_RIGHT, new MQSize(0,0))); }
       break;
   }
@@ -678,12 +577,12 @@ Mapstraction.prototype.addControls = function( args ) {
  * Supported by: yahoo, google, openstreetmap, openlayers, multimap, mapquest
  */
 Mapstraction.prototype.addSmallControls = function() {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.addSmallControls(); } );
-    return;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.addSmallControls(); } );
+		return;
+	}
+		
   var map = this.maps[this.api];
 
   switch (this.api) {
@@ -707,13 +606,13 @@ Mapstraction.prototype.addSmallControls = function() {
       this.addControlsArgs.pan = true; 
       this.addControlsArgs.zoom = 'small';
       break;
-    case 'mapquest':
-      map.addControl(new MQZoomControl(map));
-      map.addControl(new PanControl(map));
+		case 'mapquest':
+			map.addControl(new MQZoomControl(map));
+			map.addControl(new PanControl(map));
       this.addControlsArgs.pan = true; 
       this.addControlsArgs.zoom = 'small';
 
-      break;
+			break;
   }
 }
 
@@ -722,12 +621,12 @@ Mapstraction.prototype.addSmallControls = function() {
  * Supported by: yahoo, google, openstreetmap, multimap, mapquest
  */
 Mapstraction.prototype.addLargeControls = function() {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.addLargeControls(); } );
-    return;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.addLargeControls(); } );
+		return;
+	}
+		
   var map = this.maps[this.api];
 
   switch (this.api) {
@@ -754,15 +653,15 @@ Mapstraction.prototype.addLargeControls = function() {
       map.addWidget( panzoomWidget );
       this.addControlsArgs.pan = true;  // keep the controls in case of swap
       this.addControlsArgs.zoom = 'large';
-      break;
-    case 'mapquest':
-      map.addControl(new MQLargeZoomControl(map));
-      map.addControl(new PanControl(map));
-      map.addControl(new MQViewControl(map));
+ 			break;
+		case 'mapquest':
+			map.addControl(new MQLargeZoomControl(map));
+			map.addControl(new PanControl(map));
+			map.addControl(new MQViewControl(map));
       this.addControlsArgs.pan = true; 
       this.addControlsArgs.zoom = 'large';
       this.addControlsArgs.map_type = true; 
-      break;
+			break;
   }
 }
 
@@ -771,12 +670,12 @@ Mapstraction.prototype.addLargeControls = function() {
  * Supported by: yahoo, google, openstreetmap, multimap, mapquest
  */
 Mapstraction.prototype.addMapTypeControls = function() {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.addMapTypeControls(); } );
-    return;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.addMapTypeControls(); } );
+		return;
+	}
+		
   var map = this.maps[this.api];
 
   switch (this.api) {
@@ -787,12 +686,12 @@ Mapstraction.prototype.addMapTypeControls = function() {
     case 'openstreetmap':
       map.addControl(new GMapTypeControl());
       break;
-    case 'multimap':
-      map.addWidget( new MMMapTypeWidget() );
-      break;
-    case 'mapquest':
-      map.addControl(new MQViewControl(map));
-      break;
+		case 'multimap':
+			map.addWidget( new MMMapTypeWidget() );
+			break;
+		case 'mapquest':
+			map.addControl(new MQViewControl(map));
+			break;
   }
 }
 
@@ -804,12 +703,12 @@ Mapstraction.prototype.addMapTypeControls = function() {
  * @param {on} on Boolean
  */
 Mapstraction.prototype.dragging = function(on) {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.dragging(on); } );
-    return;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.dragging(on); } );
+		return;
+	}
+		
   var map = this.maps[this.api];
 
   switch (this.api) {
@@ -828,16 +727,16 @@ Mapstraction.prototype.dragging = function(on) {
         map.disableDragMap();
       }
       break;
-    case 'multimap':
-      if (on) {
-        map.setOption("drag","dragmap");
-      } else {
-        map.setOption("drag","");
-      }
-      break;
-    case 'mapquest':
-      map.enableDragging(on);
-      break;
+		case 'multimap':
+			if (on) {
+				map.setOption("drag","dragmap");
+			} else {
+				map.setOption("drag","");
+			}
+			break;
+		case 'mapquest':
+			map.enableDragging(on);
+			break;
   }
 }
 
@@ -847,11 +746,12 @@ Mapstraction.prototype.dragging = function(on) {
  * @param {int} zoom The zoom level where 0 is all the way out.
  */
 Mapstraction.prototype.setCenterAndZoom = function(point, zoom) {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.setCenterAndZoom(point, zoom); } );
-    return;
-  }
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.setCenterAndZoom(point, zoom); } );
+		return;
+	}
+		
   var map = this.maps[this.api];
 
   switch (this.api) {
@@ -874,31 +774,33 @@ Mapstraction.prototype.setCenterAndZoom = function(point, zoom) {
       map.setZoomFactor( zoom );
       break;
     case 'map24':
-      var newSettings = new Object();
-      newSettings.Latitude = point.lat*60;
-      newSettings.Longitude = point.lon*60;
-      var client = map.MapClient['Static'];
-      var dLon = getDegreesFromGoogleZoomLevel 
-        (client.getCanvasSize().Width,zoom);
-      newSettings.MinimumWidth = lonToMetres (dLon, point.lat);
-      Map24.MapApplication.center ( newSettings );
+      var mrcContainer = new Map24.Webservices.Request.MapletRemoteControl(  );
+      mrcContainer.push(
+          new Map24.Webservices.MRC.SetMapView({
+Coordinates: new Map24.Coordinate( point.lon * 60.0, point.lat * 60.0 ),
+ClippingWidth: new Map24.Webservices.ClippingWidth(
+  { MinimumWidth: 5000 }              
+  )
+})
+          );
+      map.Webservices.sendRequest( mrcContainer );
       break;
-      case 'mapquest':
-      // MapQuest's zoom levels appear to be off by '3' from the other providers for the same bbox
-      map.setCenter(new MQLatLng( point.lat, point.lng ), zoom - 3 );
+    case 'mapquest':
+			// MapQuest's zoom levels appear to be off by '3' from the other providers for the same bbox
+			map.setCenter(new MQLatLng( point.lat, point.lng ), zoom - 3 );
       break;
-      case 'freeearth':
-      if (this.freeEarthLoaded) {
-      map.setTargetLatLng( point.toFreeEarth() );
-      } else {
-        self = this;
-        this.freeEarthOnLoad.push( function() { self.setCenterAndZoom(point); } );
+		case 'freeearth':
+			if (this.freeEarthLoaded) {
+				map.setTargetLatLng( point.toFreeEarth() );
+			} else {
+				self = this;
+				this.freeEarthOnLoad.push( function() { self.setCenterAndZoom(point); } );
+			}
+		break;
+		default:
+			if(this.debug)
+      	alert(this.api + ' not supported by Mapstraction.setCenterAndZoom');
       }
-      break;
-      default:
-      if(this.debug)
-  alert(this.api + ' not supported by Mapstraction.setCenterAndZoom');
-  }
 }
 
 
@@ -908,12 +810,12 @@ Mapstraction.prototype.setCenterAndZoom = function(point, zoom) {
  * @param {old} old If true, doesn't add this marker to the markers array. Used by the "swap" method
  */
 Mapstraction.prototype.addMarker = function(marker,old) {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.addMarker(marker, old); } );
-    return;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.addMarker(marker, old); } );
+		return;
+	}
+		
   var map = this.maps[this.api];
   marker.api = this.api;
   marker.map = this.maps[this.api];
@@ -941,33 +843,50 @@ Mapstraction.prototype.addMarker = function(marker,old) {
       //this.map.addPopup(new OpenLayers.Popup("chicken", new OpenLayers.LonLat(5,40), new OpenLayers.Size(200,200), "example popup"));
       break;
     case 'multimap':
-      var mmpin = marker.toMultiMap();
-      marker.setChild(mmpin);
-      map.addOverlay(mmpin);
-      if (! old) { this.markers.push(marker); }
+			var mmpin = marker.toMultiMap();
+			marker.setChild(mmpin);
+			map.addOverlay(mmpin);
+			if (! old) { this.markers.push(marker); }
       break;
     case 'map24':
-      var m24pin = marker.toMap24();
-      marker.setChild(m24pin);
-      m24pin.commit();
-      if (! old) { this.markers.push(marker); }
+      var mrcContainer = new Map24.Webservices.Request.MapletRemoteControl( );
+      mrcContainer.push(
+          new Map24.Webservices.MRC.DeclareMap24Location({
+MapObjectID: "pin" + marker.location.lon + '-' + marker.location.lat,
+Coordinate: new Map24.Coordinate( marker.location.lon * 60.0, marker.location.lat * 60.0 ),
+LogoURL: "http://www.example.com/example.jpg", // FIXME
+SymbolID: 20100
+})
+          );
+      mrcContainer.push(
+          new Map24.Webservices.MRC.ControlMapObject({
+Control: "ENABLE",
+MapObjectIDs:  "pin" + marker.location.lon + '-' + marker.location.lat
+})
+          );
+      map.Webservices.sendRequest( mrcContainer );
       break;
-      case 'mapquest':
-      var mqpin = marker.toMapQuest();
-      marker.setChild(mqpin);
-      map.addPoi(mqpin);
-      if (! old) { this.markers.push(marker); }
+    case 'mapquest':
+			var mqpin = marker.toMapQuest();
+			marker.setChild(mqpin);
+			map.addPoi(mqpin);
+			if (! old) { this.markers.push(marker); }
       break;
-      case 'freeearth':
-      var fepin = marker.toFreeEarth();
-      marker.setChild(fepin);
-      map.addOverlay(fepin);
-      if (! old) { this.markers.push(marker); }
-      break;
-      default:
-      if(this.debug)
-  alert(this.api + ' not supported by Mapstraction.addMarker');
-  }
+		case 'freeearth':
+			if (this.freeEarthLoaded) {
+				var fepin = marker.toFreeEarth();
+				marker.setChild(fepin);
+				map.addOverlay(fepin);
+			} else {
+				self = this;
+				this.freeEarthOnLoad.push( function() { self.addMarker(marker,old); } );
+			}
+			if (! old) { this.markers.push(marker); }
+			break;
+		default:
+			if(this.debug)
+      	alert(this.api + ' not supported by Mapstraction.addMarker');
+      }
 }
 
 /**
@@ -976,8 +895,8 @@ Mapstraction.prototype.addMarker = function(marker,old) {
  * @param{data} data A data has to add
  */
 Mapstraction.prototype.addMarkerWithData = function(marker,data) {
-  marker.addData(data);
-  this.addMarker(marker);
+	marker.addData(data);
+	this.addMarker(marker);
 }
 
 /**
@@ -986,8 +905,8 @@ Mapstraction.prototype.addMarkerWithData = function(marker,data) {
  * @param{data} data A data has to add
  */
 Mapstraction.prototype.addPolylineWithData = function(polyline,data) {
-  polyline.addData(data);
-  this.addPolyline(polyline);
+	polyline.addData(data);
+	this.addPolyline(polyline);
 }
 
 /**
@@ -995,12 +914,12 @@ Mapstraction.prototype.addPolylineWithData = function(polyline,data) {
  * @param {Marker} marker The marker to remove
  */
 Mapstraction.prototype.removeMarker = function(marker) {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.removeMarker(marker); } );
-    return;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.removeMarker(marker); } );
+		return;
+	}
+		
   var map = this.maps[this.api];
 
   var tmparray = new Array();
@@ -1018,15 +937,12 @@ Mapstraction.prototype.removeMarker = function(marker) {
         case 'microsoft':
           map.DeletePushpin(marker.pinID);
           break;
-        case 'multimap':
-          map.removeOverlay(marker.proprietary_marker);
-          break;
-        case 'mapquest':
-          map.removePoi(marker.proprietary_marker);
-          break;
-        case 'map24':
-          marker.proprietary_marker.remove();
-          break;
+				case 'multimap':
+					map.removeOverlay(marker.proprietary_marker);
+					break;
+				case 'mapquest':
+					map.removePoi(marker.proprietary_marker);
+					break;
       }
       marker.onmap = false;
       break;
@@ -1041,12 +957,12 @@ Mapstraction.prototype.removeMarker = function(marker) {
  * removeAllMarkers removes all the Markers on a map
  */
 Mapstraction.prototype.removeAllMarkers = function() {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.removeAllMarkers(); } );
-    return;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.removeAllMarkers(); } );
+		return;
+	}
+		
   var map = this.maps[this.api];
 
   switch (this.api) {
@@ -1066,17 +982,9 @@ Mapstraction.prototype.removeAllMarkers = function() {
     case 'mapquest':
       map.removeAllPois();
       break;
-    case 'map24':
-      // don't think map24 has a specific method for this
-      var current_marker;
-      while(this.markers.length > 0) {
-        current_marker = this.markers.pop();
-        current_marker.proprietary_marker.remove();
-      }
-      break;
     default:
-      if(this.debug)
-        alert(this.api + ' not supported by Mapstraction.removeAllMarkers');
+			if(this.debug)
+      	alert(this.api + ' not supported by Mapstraction.removeAllMarkers');
   }
 
   this.markers = new Array(); // clear the mapstraction list of markers too
@@ -1088,13 +996,12 @@ Mapstraction.prototype.removeAllMarkers = function() {
  * Add a polyline to the map
  */
 Mapstraction.prototype.addPolyline = function(polyline,old) {
-
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.addPolyline(polyline,old); } );
-    return;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.addPolyline(polyline,old); } );
+		return;
+	}
+		
   var map = this.maps[this.api];
 
   switch (this.api) {
@@ -1118,30 +1025,24 @@ Mapstraction.prototype.addPolyline = function(polyline,old) {
       if(!old) {this.polylines.push(polyline);}
       break;
     case 'openlayers':
-      if(this.debug)
-        alert(this.api + ' not supported by Mapstraction.addPolyline');
+			if(this.debug)
+      	alert(this.api + ' not supported by Mapstraction.addPolyline');
       break;
-    case 'multimap':
-      mmpolyline = polyline.toMultiMap();
-      polyline.setChild(mmpolyline);
-      map.addOverlay( mmpolyline );
-      if(!old) {this.polylines.push(polyline);}
-      break;
-    case 'mapquest':
-      mqpolyline = polyline.toMapQuest();
-      polyline.setChild(mqpolyline);
-      map.addOverlay( mqpolyline );
-      if(!old) {this.polylines.push(polyline);}
-      break;
-    case 'map24':
-      var m24polyline = polyline.toMap24();
-      polyline.setChild(m24polyline);
-      m24polyline.commit();
-      if(!old) {this.polylines.push(polyline);}
-      break;			
+		case 'multimap':
+			mmpolyline = polyline.toMultiMap();
+			polyline.setChild(mmpolyline);
+			map.addOverlay( mmpolyline );
+			if(!old) {this.polylines.push(polyline);}
+			break;
+		case 'mapquest':
+			mqpolyline = polyline.toMapQuest();
+			polyline.setChild(mqpolyline);
+			map.addOverlay( mqpolyline );
+			if(!old) {this.polylines.push(polyline);}
+			break;			
     default:
-      if(this.debug)
-        alert(this.api + ' not supported by Mapstraction.addPolyline');
+			if(this.debug)
+      	alert(this.api + ' not supported by Mapstraction.addPolyline');
   }
 }
 
@@ -1149,12 +1050,12 @@ Mapstraction.prototype.addPolyline = function(polyline,old) {
  * Remove the polyline from the map
  */ 
 Mapstraction.prototype.removePolyline = function(polyline) {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.removePolyline(polyline); } );
-    return;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.removePolyline(polyline); } );
+		return;
+	}
+		
   var map = this.maps[this.api];
 
   var tmparray = new Array();
@@ -1172,15 +1073,12 @@ Mapstraction.prototype.removePolyline = function(polyline) {
         case 'microsoft':
           map.DeletePolyline(polyline.pllID);
           break;
-        case 'multimap':
-          polyline.proprietary_polyline.remove();
-          break;
-        case 'mapquest':
-          map.removeOverlay(polyline.proprietary_polyline);
-          break;
-        case 'map24':
-          polyline.proprietary_polyline.remove();
-          break;					
+				case 'multimap':
+					polyline.proprietary_polyline.remove();
+					break;
+				case 'mapquest':
+					map.removeOverlay(polyline.proprietary_polyline);
+					break;					
       }
       polyline.onmap = false;
       break;
@@ -1195,12 +1093,12 @@ Mapstraction.prototype.removePolyline = function(polyline) {
  * Removes all polylines from the map
  */
 Mapstraction.prototype.removeAllPolylines = function() {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.removeAllPolylines(); } );
-    return;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.removeAllPolylines(); } );
+		return;
+	}
+		
   var map = this.maps[this.api];
 
   switch (this.api) {
@@ -1218,26 +1116,18 @@ Mapstraction.prototype.removeAllPolylines = function() {
     case 'microsoft':
       map.DeleteAllPolylines();
       break;
-    case 'multimap':
+		case 'multimap':
       for(var i = 0, length = this.polylines.length;i < length;i++){
-        this.polylines[i].proprietary_polyline.remove();
+				this.polylines[i].proprietary_polyline.remove();
       }
-      break;
-    case 'mapquest':
-      map.removeAllOverlays();
-      break;
-    case 'map24':
-      // don't think map24 has a specific method for this
-      var current_polyline;
-      while(this.polylines.length > 0) {
-        current_polyline = this.polylines.pop();
-        current_polyline.proprietary_polyline.remove();
-      }
-      break;
+			break;
+		case 'mapquest':
+			map.removeAllOverlays();
+			break;
     default:
-      if(this.debug)
-        alert(this.api + ' not supported by Mapstraction.removeAllPolylines');
-
+			if(this.debug)
+      	alert(this.api + ' not supported by Mapstraction.removeAllPolylines');
+			
   }
   this.polylines = new Array(); 
 }
@@ -1248,10 +1138,10 @@ Mapstraction.prototype.removeAllPolylines = function() {
  * @type LatLonPoint
  */
 Mapstraction.prototype.getCenter = function() {
-  if(this.loaded[this.api] == false) {
-    return null;
-  }
-
+	if(this.loaded[this.api] == false) {
+		return null;
+	}
+		
   var map = this.maps[this.api];
 
   var point = undefined;
@@ -1269,23 +1159,18 @@ Mapstraction.prototype.getCenter = function() {
       var pt = map.GetCenter();
       point = new LatLonPoint(pt.Latitude,pt.Longitude);
       break;
-    case 'multimap':
-      var pt = map.getCurrentPosition();
-      point = new LatLonPoint(pt.y, pt.x);
-      break;
-    case 'mapquest':
-      var pt = map.getCenter();
-      point = new LatLonPoint(pt.getLatitude(), pt.getLongitude());
-      break;
-    case 'map24':
-      var pt = map.MapClient['Static'].getCurrentMapView().getCenter();
-      point = new LatLonPoint(pt.Y/60,pt.X/60);
-      break;
-
-
+		case 'multimap':
+			var pt = map.getCurrentPosition();
+			point = new LatLonPoint(pt.y, pt.x);
+			break;
+		case 'mapquest':
+			var pt = map.getCenter();
+			point = new LatLonPoint(pt.getLatitude(), pt.getLongitude());
+			break;
+			
     default:
       if(this.debug)
-        alert(this.api + ' not supported by Mapstraction.getCenter');
+      	alert(this.api + ' not supported by Mapstraction.getCenter');
   }
   return point;
 }
@@ -1295,12 +1180,12 @@ Mapstraction.prototype.getCenter = function() {
  * @param {LatLonPoint} point The point at which to center the map
  */
 Mapstraction.prototype.setCenter = function(point) {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.setCenter(point); } );
-    return;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.setCenter(point); } );
+		return;
+	}
+		
   var map = this.maps[this.api];
 
   switch (this.api) {
@@ -1314,37 +1199,23 @@ Mapstraction.prototype.setCenter = function(point) {
     case 'microsoft':
       map.SetCenter(point.toMicrosoft());
       break;
-    case 'multimap':
-      map.goToPosition(point.toMultiMap());
-      break;
-    case 'mapquest':
-      map.setCenter(point.toMapQuest());
-      break;
-    case 'freeearth':
-      if (this.freeEarthLoaded) {
-      map.setTargetLatLng( point.toFreeEarth() );
-      } else {
-        self = this;
-        this.freeEarthOnLoad.push( function() { self.setCenterAndZoom(point); }
-            );
-      }
-      break;
-    case 'map24':
-      // Since center changes the zoom level to default 
-      // we have to get the original metre width and pass it back in when
-      // centering.
-      var mv = map.MapClient['Static'].getCurrentMapView();
-      var newSettings = new Object();
-      newSettings.MinimumWidth = lonToMetres 
-        (mv.LowerRight.Longitude - mv.TopLeft.Longitude,
-         (mv.LowerRight.Latitude+mv.TopLeft.Latitude)/2);
-      newSettings.Latitude =  point.lat*60;
-      newSettings.Longitude = point.lon*60;
-      Map24.MapApplication.center(newSettings);
-      break;
+		case 'multimap':
+			map.goToPosition(point.toMultiMap());
+			break;
+		case 'mapquest':
+			map.setCenter(point.toMapQuest());
+			break;
+		case 'freeearth':
+			if (this.freeEarthLoaded) {
+				map.setTargetLatLng( point.toFreeEarth() );
+			} else {
+				self = this;
+				this.freeEarthOnLoad.push( function() { self.setCenterAndZoom(point); } );
+			}
+			break;
     default:
       if(this.debug)
-        alert(this.api + ' not supported by Mapstraction.setCenter');
+      	alert(this.api + ' not supported by Mapstraction.setCenter');
   }
 }
 /**
@@ -1354,12 +1225,12 @@ Mapstraction.prototype.setCenter = function(point) {
  * @param {int} zoom The (native to the map) level zoom the map to.
  */
 Mapstraction.prototype.setZoom = function(zoom) {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.setZoom(zoom); } );
-    return;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.setZoom(zoom); } );
+		return;
+	}
+		
   var map = this.maps[this.api];
 
   switch (this.api) {
@@ -1374,27 +1245,15 @@ Mapstraction.prototype.setZoom = function(zoom) {
     case 'microsoft':
       map.SetZoomLevel(zoom);
       break;
-    case 'multimap':
-      map.setZoomFactor(zoom);
-      break;
-    case 'mapquest':
-      map.setZoomLevel(zoom - 3); // MapQuest seems off by 3
-      break;			
-    case 'map24':
-      // get the current centre than calculate the settings based on this
-      var point = this.getCenter();
-      var newSettings = new Object();
-      newSettings.Latitude = point.lat*60;
-      newSettings.Longitude = point.lon*60;
-      var client = map.MapClient['Static'];
-      var dLon = getDegreesFromGoogleZoomLevel 
-        (client.getCanvasSize().Width,zoom);
-      newSettings.MinimumWidth = lonToMetres (dLon, point.lat);
-      Map24.MapApplication.center ( newSettings );
-      break;
+		case 'multimap':
+			map.setZoomFactor(zoom);
+			break;
+		case 'mapquest':
+			map.setZoomLevel(zoom - 3); // MapQuest seems off by 3
+			break;			
     default:
       if(this.debug)
-        alert(this.api + ' not supported by Mapstraction.setZoom');
+      	alert(this.api + ' not supported by Mapstraction.setZoom');
   }
 }
 /**
@@ -1403,18 +1262,18 @@ Mapstraction.prototype.setZoom = function(zoom) {
  *
  */
 Mapstraction.prototype.autoCenterAndZoom = function() {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.autoCenterAndZoom(); } );
-    return;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.autoCenterAndZoom(); } );
+		return;
+	}
+		
   var lat_max = -90;
   var lat_min = 90;
   var lon_max = -180;
   var lon_min = 180;
 
-  for (var i=0; i<this.markers.length; i++) {
+  for (i=0; i<this.markers.length; i++) {
     lat = this.markers[i].location.lat;
     lon = this.markers[i].location.lon;
     if (lat > lat_max) lat_max = lat;
@@ -1431,11 +1290,11 @@ Mapstraction.prototype.autoCenterAndZoom = function() {
  * @type int
  */
 Mapstraction.prototype.getZoom = function() {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    return -1;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		return -1;
+	}
+		
   var map = this.maps[this.api];
 
   switch (this.api) {
@@ -1446,21 +1305,13 @@ Mapstraction.prototype.getZoom = function() {
       return map.getZoom();
     case 'microsoft':
       return map.GetZoomLevel();
-    case 'multimap':
-      return map.getZoomFactor();
-    case 'mapquest':
-      return map.getZoomLevel() + 3; // Mapquest seems off by 3?			
-    case 'map24': 
-      // since map24 doesn't use a Google-style set of zoom levels, we have
-      // to round to the nearest zoom
-      var mv = map.MapClient['Static'].getCurrentMapView();
-      var dLon = (mv.LowerRight.Longitude - mv.TopLeft.Longitude) / 60;
-      var width = map.MapClient['Static'].getCanvasSize().Width;
-      var zoom = getGoogleZoomLevelFromDegrees (width,dLon);
-      return Math.round(zoom);
+		case 'multimap':
+			return map.getZoomFactor();
+		case 'mapquest':
+			return map.getZoomLevel() + 3; // Mapquest seems off by 3?			
     default:
       if(this.debug)
-        alert(this.api + ' not supported by Mapstraction.getZoom');
+      	alert(this.api + ' not supported by Mapstraction.getZoom');
   }
 }
 
@@ -1471,11 +1322,11 @@ Mapstraction.prototype.getZoom = function() {
  * @type int
  */
 Mapstraction.prototype.getZoomLevelForBoundingBox = function( bbox ) {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    return -1;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		return -1;
+	}
+		
   var map = this.maps[this.api];
 
   // NE and SW points from the bounding box.
@@ -1488,24 +1339,15 @@ Mapstraction.prototype.getZoomLevelForBoundingBox = function( bbox ) {
       var gbox = new GLatLngBounds( sw.toGoogle(), ne.toGoogle() );
       var zoom = map.getBoundsZoomLevel( gbox );
       return zoom;
-      break;
-    case 'multimap':
-      var mmlocation = map.getBoundsZoomFactor( sw.toMultiMap(), ne.toMultiMap() );
-      var zoom = mmlocation.zoom_factor();
-      return zoom;
-      break;
-    case 'map24':
-      // since map24 doesn't use a Google-style set of zoom levels, we work
-      // out what zoom level will show the given longitude difference within
-      // the current map pixel width
-      var dLon = ne.lon - sw.lon; 
-      var width = map.MapClient['Static'].getCanvasSize().Width;
-      var zoom = getGoogleZoomLevelFromDegrees (width,dLon);
-      return Math.round(zoom);
-      break;
+			break;
+		case 'multimap':
+			var mmlocation = map.getBoundsZoomFactor( sw.toMultiMap(), ne.toMultiMap() );
+			var zoom = mmlocation.zoom_factor();
+			return zoom;
+			break;
     default:
       if(this.debug)
-        alert( this.api + ' not supported by Mapstraction.getZoomLevelForBoundingBox' );
+      	alert( this.api + ' not supported by Mapstraction.getZoomLevelForBoundingBox' );
   }
 }
 
@@ -1524,12 +1366,12 @@ Mapstraction.HYBRID = 3;
  * @param {int} type The (native to the map) level zoom the map to.
  */
 Mapstraction.prototype.setMapType = function(type) {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.setMapType(type); } );
-    return;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.setMapType(type); } );
+		return;
+	}
+		
   var map = this.maps[this.api];
 
   switch (this.api) {
@@ -1580,48 +1422,48 @@ Mapstraction.prototype.setMapType = function(type) {
           map.SetMapStyle(Msn.VE.MapStyle.Road);
       }
       break;
-    case 'multimap':
-      maptypes = map.getAvailableMapTypes();
-      maptype = -1;
-      for (var i = 0; i < maptypes.length; i++) {
-        switch (maptypes[i]) {
-          case MM_WORLD_MAP:
-            if (type == Mapstraction.ROAD) {
-              maptype = maptypes[i];
-            }
-            default_type = maptypes[i];
-            break;
-          case MM_WORLD_AERIAL:
-            if (type == Mapstraction.SATELLITE) {
-              maptype = maptypes[i];
-            }
-            break;
-          case MM_WORLD_HYBRID:
-            if (type == Mapstraction.HYBRID) {
-              maptype = maptypes[i];
-            }
-            break;
-        }
+		case 'multimap':
+			maptypes = map.getAvailableMapTypes();
+			maptype = -1;
+			for (var i = 0; i < maptypes.length; i++) {
+				switch (maptypes[i]) {
+					case MM_WORLD_MAP:
+						if (type == Mapstraction.ROAD) {
+							maptype = maptypes[i];
+						}
+						default_type = maptypes[i];
+						break;
+					case MM_WORLD_AERIAL:
+						if (type == Mapstraction.SATELLITE) {
+							maptype = maptypes[i];
+						}
+						break;
+					case MM_WORLD_HYBRID:
+						if (type == Mapstraction.HYBRID) {
+							maptype = maptypes[i];
+						}
+						break;
+				}
       }
-      if (maptype == -1) { maptype = default_type; }
-      map.setMapType(maptype);
-      break;
-    case 'mapquest':
-      switch (type) {
-        case Mapstraction.ROAD:
-          map.setMapType("map");
-          break;
-        case Mapstraction.SATELLITE:
-          map.setMapType("sat");
-          break;
-        case Mapstraction.HYBRID:
-          map.setMapType("hyb");
-          break;
-      }
-      break;
+			if (maptype == -1) { maptype = default_type; }
+			map.setMapType(maptype);
+			break;
+		case 'mapquest':
+			switch (type) {
+				case Mapstraction.ROAD:
+					map.setMapType("map");
+					break;
+				case Mapstraction.SATELLITE:
+					map.setMapType("sat");
+					break;
+				case Mapstraction.HYBRID:
+					map.setMapType("hyb");
+					break;
+			}
+			break;
     default:
       if(this.debug)
-        alert(this.api + ' not supported by Mapstraction.setMapType');
+      	alert(this.api + ' not supported by Mapstraction.setMapType');
   }
 }
 
@@ -1633,11 +1475,11 @@ Mapstraction.prototype.setMapType = function(type) {
  * Mapstraction.HYBRID
  */
 Mapstraction.prototype.getMapType = function() {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    return -1;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		return -1;
+	}
+		
   var map = this.maps[this.api];
 
   var type;
@@ -1692,10 +1534,10 @@ Mapstraction.prototype.getMapType = function() {
           return null;
       }
       break;
-    case 'multimap':
-      maptypes = map.getAvailableMapTypes();
-      type = map.getMapType();
-      switch(type) {
+		case 'multimap':
+			maptypes = map.getAvailableMapTypes();
+			type = map.getMapType();
+			switch(type) {
         case MM_WORLD_MAP:
           return Mapstraction.ROAD;
           break;
@@ -1707,27 +1549,27 @@ Mapstraction.prototype.getMapType = function() {
           break;
         default:
           return null;
-      }
-      break;
+			}
+			break;
     case 'mapquest':
       type = map.getMapType();
       switch(type) {
         case "map":
           return Mapstraction.ROAD;
-        break;
+          break;
         case "sat":
           return Mapstraction.SATELLITE;
-        break;
+          break;
         case "hyb":
           return Mapstraction.HYBRID;
-        break;
+          break;
         default:
-        return null;
+          return null;
       }
       break;			
     default:
       if(this.debug)
-        alert(this.api + ' not supported by Mapstraction.getMapType');
+      	alert(this.api + ' not supported by Mapstraction.getMapType');
   } 
 }
 
@@ -1737,10 +1579,10 @@ Mapstraction.prototype.getMapType = function() {
  * @type BoundingBox
  */
 Mapstraction.prototype.getBounds = function () {
-  if(this.loaded[this.api] == false) {
-    return null; 
-  }
-
+	if(this.loaded[this.api] == false) {
+		return null; 
+	}
+		
   var map = this.maps[this.api];
 
   switch (this.api) {
@@ -1761,35 +1603,22 @@ Mapstraction.prototype.getBounds = function () {
       var se = mbox.BottomRightLatLong;
       return new BoundingBox(se.Latitude,nw.Longitude,nw.Latitude,se.Longitude);
       break;
-    case 'multimap':
-      var mmbox = map.getMapBounds();
-      var sw = mmbox.getSouthWest();
+		case 'multimap':
+			var mmbox = map.getMapBounds();
+			var sw = mmbox.getSouthWest();
       var ne = mmbox.getNorthEast();
-      return new BoundingBox(sw.lat, sw.lon, ne.lat, ne.lon);
-      break;
-    case 'mapquest':
-      var mqbox = map.getMapBounds(); // MQRectLL
-      var se = mqbox.getLowerRightLatLng();
+			return new BoundingBox(sw.lat, sw.lon, ne.lat, ne.lon);
+			break;
+		case 'mapquest':
+			var mqbox = map.getMapBounds(); // MQRectLL
+			var se = mqbox.getLowerRightLatLng();
       var nw = mqbox.getUpperLeftLatLng();
-
-      // NW is this correct ???
-      // return new BoundingBox(se.lat, se.lon, nw.lat, nw.lon);
-
-      // should be this instead 
-      return new BoundingBox(se.lat, nw.lon, nw.lat, se.lon);
-
-      break;            
-    case 'map24':
-      var mv = map.MapClient['Static'].getCurrentMapView();
-      var se = mv.LowerRight;
-      var nw = mv.TopLeft;
-      return new BoundingBox (se.Latitude/60, nw.Longitude/60, 
-          nw.Latitude/60, se.Longitude/60 );
-      break;			
+			return new BoundingBox(se.lat, se.lon, nw.lat, nw.lon);
+			break;			
     default:
       if(this.debug)
-        alert(this.api + ' not supported by Mapstraction.getBounds');
-
+      	alert(this.api + ' not supported by Mapstraction.getBounds');
+			
   }
 }
 
@@ -1798,12 +1627,12 @@ Mapstraction.prototype.getBounds = function () {
  * @param {BoundingBox} the bounding box you want the map to show
  */
 Mapstraction.prototype.setBounds = function(bounds){
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.setBounds(bounds); } );
-    return;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.setBounds(bounds); } );
+		return;
+	}
+		
   var map = this.maps[this.api];
 
   var sw = bounds.getSouthWest();
@@ -1837,37 +1666,24 @@ Mapstraction.prototype.setBounds = function(bounds){
     case 'microsoft':
       map.SetMapView([new VELatLong(sw.lat,sw.lon),new VELatLong(ne.lat,ne.lon)]);
       break;
-    case 'multimap':
-      var mmlocation = map.getBoundsZoomFactor( sw.toMultiMap(), ne.toMultiMap() );
-      var center = new LatLonPoint(mmlocation.coords.lat, mmlocation.coords.lon);
-      this.setCenterAndZoom(center, mmlocation.zoom_factor);
-      break;
-    case 'mapquest':
-      // TODO: MapQuest.setBounds
+		case 'multimap':
+			var mmlocation = map.getBoundsZoomFactor( sw.toMultiMap(), ne.toMultiMap() );
+			var center = new LatLonPoint(mmlocation.coords.lat, mmlocation.coords.lon);
+			this.setCenterAndZoom(center, mmlocation.zoom_factor);
+			break;
+		case 'mapquest':
+			// TODO: MapQuest.setBounds
       if(this.debug)
-        alert(this.api + ' not supported by Mapstraction.setBounds');			
-
-      break;			
-    case 'freeearth':
-      var center = new LatLonPoint((sw.lat + ne.lat)/2, (ne.lon + sw.lon)/2);
-      this.setCenter(center);	
-      break;
-
-    case 'map24':
-      var settings = new Object();
-      settings.Latitude = ((sw.lat+ne.lat) / 2) * 60;    
-      settings.Longitude = ((sw.lon+ne.lon) / 2) * 60;    
-
-      // need to convert lat/lon to metres
-      settings.MinimumWidth = lonToMetres 
-        (ne.lon-sw.lon, (ne.lat+sw.lat)/2);
-
-      Map24.MapApplication.center ( settings );
-
-      break;
+      	alert(this.api + ' not supported by Mapstraction.setBounds');			
+			
+			break;			
+		case 'freeearth':
+			var center = new LatLonPoint((sw.lat + ne.lat)/2, (ne.lon + sw.lon)/2);
+			this.setCenter(center);	
+			break;
     default:
       if(this.debug)
-        alert(this.api + ' not supported by Mapstraction.setBounds');			
+      	alert(this.api + ' not supported by Mapstraction.setBounds');			
   }
 }
 
@@ -1882,12 +1698,12 @@ Mapstraction.prototype.setBounds = function(bounds){
  * @param {north} north boundary
  */
 Mapstraction.prototype.addImageOverlay = function(id, src, opacity, west, south, east, north) {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.addImageOverlay(id, src, opacity, west, south, east, north); } );
-    return;
-  }
-
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.addImageOverlay(id, src, opacity, west, south, east, north); } );
+		return;
+	}
+		
   var map = this.maps[this.api];
 
   var b = document.createElement("img");
@@ -1911,26 +1727,26 @@ Mapstraction.prototype.addImageOverlay = function(id, src, opacity, west, south,
       GEvent.bind(map, "moveend", this, function(){this.setImagePosition(id)});
       break;
 
-    case 'multimap':
-      map.getContainer().appendChild(b);
-      this.setImageOpacity(id, opacity);
-      this.setImagePosition(id);
-      me = this;
-      map.addEventHandler( 'changeZoom', function(eventType, eventTarget, arg1, arg2, arg3) {
-          me.setImagePosition(id);
-          });
-      map.addEventHandler( 'drag', function(eventType, eventTarget, arg1, arg2, arg3) {
-          me.setImagePosition(id);
-          });
-      map.addEventHandler( 'endPan', function(eventType, eventTarget, arg1, arg2, arg3) {
-          me.setImagePosition(id);
-          });
-      break;
+		case 'multimap':
+			map.getContainer().appendChild(b);
+			this.setImageOpacity(id, opacity);
+			this.setImagePosition(id);
+			me = this;
+			map.addEventHandler( 'changeZoom', function(eventType, eventTarget, arg1, arg2, arg3) {
+				me.setImagePosition(id);
+			});
+			map.addEventHandler( 'drag', function(eventType, eventTarget, arg1, arg2, arg3) {
+				me.setImagePosition(id);
+			});
+			map.addEventHandler( 'endPan', function(eventType, eventTarget, arg1, arg2, arg3) {
+				me.setImagePosition(id);
+			});
+			break;
 
     default:
       b.style.display = 'none';
       if(this.debug)
-        alert(this.api + "not supported by Mapstraction.addImageOverlay not supported");
+      	alert(this.api + "not supported by Mapstraction.addImageOverlay not supported");
       break;
   }
 }	 
@@ -1940,88 +1756,88 @@ Mapstraction.prototype.setImageOpacity = function(id, opacity) {
   var c=opacity/100;
   var d=document.getElementById(id);
   if(typeof(d.style.filter)=='string'){d.style.filter='alpha(opacity:'+opacity+')';}
-      if(typeof(d.style.KHTMLOpacity)=='string'){d.style.KHTMLOpacity=c;}
-      if(typeof(d.style.MozOpacity)=='string'){d.style.MozOpacity=c;}
-      if(typeof(d.style.opacity)=='string'){d.style.opacity=c;} 
-      }
+  if(typeof(d.style.KHTMLOpacity)=='string'){d.style.KHTMLOpacity=c;}
+  if(typeof(d.style.MozOpacity)=='string'){d.style.MozOpacity=c;}
+  if(typeof(d.style.opacity)=='string'){d.style.opacity=c;} 
+}
 
-      Mapstraction.prototype.setImagePosition = function(id) {
-      if(this.loaded[this.api] == false) {
-      self = this;
-      this.onload[this.api].push( function() { self.setImagePosition(id); } );
-      return;
-      }
+Mapstraction.prototype.setImagePosition = function(id) {
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.setImagePosition(id); } );
+		return;
+	}
+		
+	var map = this.maps[this.api];
+	var x = document.getElementById(id);
+	var d; var e;
 
-      var map = this.maps[this.api];
-      var x = document.getElementById(id);
-      var d; var e;
+	switch (this.api) {
+    case 'google':
+    case 'openstreetmap':
+			d = map.fromLatLngToDivPixel(new GLatLng(x.getAttribute('north'), x.getAttribute('west')));
+			e = map.fromLatLngToDivPixel(new GLatLng(x.getAttribute('south'), x.getAttribute('east')));
+			break;
+		case 'multimap':
+			d = map.geoPosToContainerPixels(new MMLatLon(x.getAttribute('north'), x.getAttribute('west')));
+			e = map.geoPosToContainerPixels(new MMLatLon(x.getAttribute('south'), x.getAttribute('east')));
+			break;
+	}
 
-      switch (this.api) {
-      case 'google':
-      case 'openstreetmap':
-      d = map.fromLatLngToDivPixel(new GLatLng(x.getAttribute('north'), x.getAttribute('west')));
-      e = map.fromLatLngToDivPixel(new GLatLng(x.getAttribute('south'), x.getAttribute('east')));
-      break;
-      case 'multimap':
-      d = map.geoPosToContainerPixels(new MMLatLon(x.getAttribute('north'), x.getAttribute('west')));
-      e = map.geoPosToContainerPixels(new MMLatLon(x.getAttribute('south'), x.getAttribute('east')));
-      break;
-      }
-
-      x.style.top=d.y+'px';
-      x.style.left=d.x+'px';
-      x.style.width=e.x-d.x+'px';
-      x.style.height=e.y-d.y+'px'; 
-      }
+	x.style.top=d.y+'px';
+ 	x.style.left=d.x+'px';
+	x.style.width=e.x-d.x+'px';
+	x.style.height=e.y-d.y+'px'; 
+}
 
 /**
  * addGeoRSSOverlay adds a GeoRSS overlay to the map
  * @param{georssURL} GeoRSS feed URL
  */
 Mapstraction.prototype.addGeoRSSOverlay = function(georssURL) {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.addGeoRSSOverlay(georssURL); } );
-    return;
-  }
-
-  var map = this.maps[this.api];
-
-  switch (this.api) {
-    case 'yahoo':
-      map.addOverlay(new YGeoRSS(georssURL));
-      break;
-      // case 'openstreetmap': // OSM uses the google interface, so allow cascade
-    case 'google':
-      map.addOverlay(new GGeoXml(georssURL));
-      break;
-    case 'microsoft':
-      var veLayerSpec = new VELayerSpecification();
-      veLayerSpec.Type = VELayerType.GeoRSS;
-      veLayerSpec.ID = 1;
-      veLayerSpec.LayerSource = georssURL;
-      veLayerSpec.Method = 'get';
-      // veLayerSpec.FnCallback = onFeedLoad;
-      map.AddLayer(veLayerSpec);
-      break;
-      // case 'openlayers':
-      // 	map.addLayer(new OpenLayers.Layer.GeoRSS("GeoRSS Layer", georssURL));
-      // break;
-    case 'multimap':
-      break;
-    case 'freeearth':
-      if (this.freeEarthLoaded) {
-      var ferss = new FE.GeoRSS(georssURL);
-      map.addOverlay(ferss);
-      } else {
-        self = this;
-        this.freeEarthOnLoad.push( function() { self.addGeoRSSOverlay(georssURL); } );
-      }
-      break;
-    default:
-      if(this.debug)
-        alert(this.api + ' not supported by Mapstraction.addGeoRSSOverlay');
-  }
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.addGeoRSSOverlay(georssURL); } );
+		return;
+	}
+		
+	var map = this.maps[this.api];
+	
+	switch (this.api) {
+		case 'yahoo':
+			map.addOverlay(new YGeoRSS(georssURL));
+			break;
+		// case 'openstreetmap': // OSM uses the google interface, so allow cascade
+		case 'google':
+			map.addOverlay(new GGeoXml(georssURL));
+			break;
+		case 'microsoft':
+		    var veLayerSpec = new VELayerSpecification();
+            veLayerSpec.Type = VELayerType.GeoRSS;
+            veLayerSpec.ID = 1;
+            veLayerSpec.LayerSource = georssURL;
+            veLayerSpec.Method = 'get';
+            // veLayerSpec.FnCallback = onFeedLoad;
+            map.AddLayer(veLayerSpec);
+			break;
+		// case 'openlayers':
+		// 	map.addLayer(new OpenLayers.Layer.GeoRSS("GeoRSS Layer", georssURL));
+			// break;
+		case 'multimap':
+			break;
+		case 'freeearth':
+			if (this.freeEarthLoaded) {
+				var ferss = new FE.GeoRSS(georssURL);
+      	map.addOverlay(ferss);
+			} else {
+				self = this;
+				this.freeEarthOnLoad.push( function() { self.addGeoRSSOverlay(georssURL); } );
+			}
+			break;
+		default:
+			if(this.debug)
+      	alert(this.api + ' not supported by Mapstraction.addGeoRSSOverlay');
+	}
 
 }
 
@@ -2032,141 +1848,141 @@ Mapstraction.prototype.addGeoRSSOverlay = function(georssURL) {
  * @param {value} the value to compare against
  */
 Mapstraction.prototype.addFilter = function(field, operator, value) {
-  if (! this.filters) {
-    this.filters = [];
-  }
-  this.filters.push( [field, operator, value] );
+	if (! this.filters) {
+		this.filters = [];
+	}
+	this.filters.push( [field, operator, value] );
 }
 
 /**
  * removeFilter
  */
 Mapstraction.prototype.removeFilter = function(field, operator, value) {
-  if (! this.filters) { return; }
+	if (! this.filters) { return; }
 
-  var del;
-  for (var f=0; f<this.filters.length; f++) {
-    if (this.filters[f][0] == field && 
-        (! operator || (this.filters[f][1] == operator && this.filters[f][2] == value))) {
-      this.filters.splice(f,1);
-      f--; //array size decreased
-    }
-  }
+	var del;
+	for (var f=0; f<this.filters.length; f++) {
+			if (this.filters[f][0] == field && 
+				(! operator || (this.filters[f][1] == operator && this.filters[f][2] == value))) {
+				this.filters.splice(f,1);
+				f--; //array size decreased
+			}
+	}
 }
 
 /*
  * toggleFilter: delete the current filter if present; otherwise add it
  */
 Mapstraction.prototype.toggleFilter = function(field, operator, value) {
-  if (! this.filters) { 
-    this.filters = [];
+	if (! this.filters) { 
+		this.filters = [];
   }
 
-  var found = false;
-  for (var f=0; f<this.filters.length; f++) {
-    if (this.filters[f][0] == field && this.filters[f][1] == operator && this.filters[f][2] == value) {
-      this.filters.splice(f,1);
-      f--; //array size decreased
-      found = true;
-    }
-  }
+	var found = false;
+	for (var f=0; f<this.filters.length; f++) {
+		if (this.filters[f][0] == field && this.filters[f][1] == operator && this.filters[f][2] == value) {
+			this.filters.splice(f,1);
+			f--; //array size decreased
+			found = true;
+		}
+	}
 
-  if (! found) {
-    this.addFilter(field, operator, value);
-  }
+	if (! found) {
+			this.addFilter(field, operator, value);
+	}
 }
 
 /*
  * removeAllFilters
  */
 Mapstraction.prototype.removeAllFilters = function() {
-  this.filters = [];
+	this.filters = [];
 }
 
 /**
  * doFilter executes all filters added since last call
  */
 Mapstraction.prototype.doFilter = function() {
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.doFilter(); } );
-    return;
-  }
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.doFilter(); } );
+		return;
+	}
+			
+	var map = this.maps[this.api];
 
-  var map = this.maps[this.api];
+	if (this.filters) {
 
-  if (this.filters) {
-
-    switch (this.api) {
-      case 'multimap':
-        /* TODO polylines aren't filtered in multimap */
-        var mmfilters = [];
-        for (var f=0; f<this.filters.length; f++) {
-          mmfilters.push( new MMSearchFilter( this.filters[f][0], this.filters[f][1], this.filters[f][2] ));
-        }
-        map.setMarkerFilters( mmfilters );	
-        map.redrawMap();			
-        break;
-      default:
-        var vis;	
-        for (var m=0; m<this.markers.length; m++) {
-          vis = true;
-          for (var f=0; f<this.filters.length; f++) {
-            if (! this.applyFilter(this.markers[m], this.filters[f])) {
-              vis = false;
-            }
-          }
-          if (vis) {
-            this.markers[m].show();
-          } else {
-            this.markers[m].hide();
-          }
-        }
+		switch (this.api) {
+			case 'multimap':
+			/* TODO polylines aren't filtered in multimap */
+				var mmfilters = [];
+				for (var f=0; f<this.filters.length; f++) {
+					mmfilters.push( new MMSearchFilter( this.filters[f][0], this.filters[f][1], this.filters[f][2] ));
+				}
+				map.setMarkerFilters( mmfilters );	
+				map.redrawMap();			
+			break;
+			default:
+				var vis;	
+				for (var m=0; m<this.markers.length; m++) {
+					vis = true;
+					for (var f=0; f<this.filters.length; f++) {
+						if (! this.applyFilter(this.markers[m], this.filters[f])) {
+							vis = false;
+						}
+					}
+					if (vis) {
+						this.markers[m].show();
+					} else {
+						this.markers[m].hide();
+					}
+				}
 
 
-        /*
-           for (var p=0; m<this.polylines.length; p++) {
-           vis = true;
-           for (var f=0; f<this.filters.length; f++) {
-           if (! this.applyFilter(this.polylines[p], this.filters[f])) {
-           vis = false;
-           }
-           }
-           if (vis) {
-           this.polylines[p].show();
-           } else {
-           this.polylines[p].hide();
-           }
-           }
-         */
-        break;
-    }
+/*
+				for (var p=0; m<this.polylines.length; p++) {
+					vis = true;
+					for (var f=0; f<this.filters.length; f++) {
+						if (! this.applyFilter(this.polylines[p], this.filters[f])) {
+							vis = false;
+						}
+					}
+					if (vis) {
+						this.polylines[p].show();
+					} else {
+						this.polylines[p].hide();
+					}
+				}
+*/
+			break;
+		}
 
-  }
+	}
 
 }
 
 Mapstraction.prototype.applyFilter = function(o, f) {
-  var vis = true;
-  switch (f[1]) {
-    case 'ge':
-      if (o.getAttribute( f[0] ) < f[2]) {
-        vis = false;
-      }
-      break;
-    case 'le':
-      if (o.getAttribute( f[0] ) > f[2]) {
-        vis = false;
-      }
-      break;
-    case 'eq':
-      if (o.getAttribute( f[0] ) != f[2]) {
-        vis = false;
-      }
-      break;
-  }
+	var vis = true;
+	switch (f[1]) {
+		case 'ge':
+			if (o.getAttribute( f[0] ) < f[2]) {
+				vis = false;
+			}
+			break;
+		case 'le':
+			if (o.getAttribute( f[0] ) > f[2]) {
+				vis = false;
+			}
+			break;
+		case 'eq':
+			if (o.getAttribute( f[0] ) != f[2]) {
+				vis = false;
+			}
+			break;
+	}
 
-  return vis;
+	return vis;
 }
 
 /**
@@ -2175,26 +1991,26 @@ Mapstraction.prototype.applyFilter = function(o, f) {
  * @returns {array} of minimum/maximum
  */
 Mapstraction.prototype.getAttributeExtremes = function(field) {
-  var min;
-  var max;
-  for (var m=0; m<this.markers.length; m++) {
-    if (! min || min > this.markers[m].getAttribute(field)) {
-      min = this.markers[m].getAttribute(field);
-    }
-    if (! max || max < this.markers[m].getAttribute(field)) {
-      max = this.markers[m].getAttribute(field);
-    }
-  }
-  for (var p=0; m<this.polylines.length; m++) {
-    if (! min || min > this.polylines[p].getAttribute(field)) {
-      min = this.polylines[p].getAttribute(field);
-    }
-    if (! max || max < this.polylines[p].getAttribute(field)) {
-      max = this.polylines[p].getAttribute(field);
-    }
-  }
+	var min;
+	var max;
+	for (var m=0; m<this.markers.length; m++) {
+		if (! min || min > this.markers[m].getAttribute(field)) {
+			min = this.markers[m].getAttribute(field);
+		}
+		if (! max || max < this.markers[m].getAttribute(field)) {
+			max = this.markers[m].getAttribute(field);
+		}
+	}
+	for (var p=0; m<this.polylines.length; m++) {
+		if (! min || min > this.polylines[p].getAttribute(field)) {
+			min = this.polylines[p].getAttribute(field);
+		}
+		if (! max || max < this.polylines[p].getAttribute(field)) {
+			max = this.polylines[p].getAttribute(field);
+		}
+	}
 
-  return [min, max];
+	return [min, max];
 }
 
 /**
@@ -2255,7 +2071,7 @@ LatLonPoint.prototype.toMicrosoft = function() {
  * @returns a MMLatLon
  */
 LatLonPoint.prototype.toMultiMap = function() {
-  return new MMLatLon(this.lat, this.lon);
+	return new MMLatLon(this.lat, this.lon);
 }
 
 /**
@@ -2263,7 +2079,7 @@ LatLonPoint.prototype.toMultiMap = function() {
  * @returns a MQLatLng
  */
 LatLonPoint.prototype.toMapQuest = function() {
-  return new MQLatLng(this.lat, this.lon);
+	return new MQLatLng(this.lat, this.lon);
 }
 
 /**
@@ -2273,16 +2089,6 @@ LatLonPoint.prototype.toMapQuest = function() {
 LatLonPoint.prototype.toFreeEarth = function() {
   return new FE.LatLng(this.lat,this.lon);
 }
-
-/**
- * toMap24 returns a Map24 point
- * @returns a Map24.Point 
- */
-LatLonPoint.prototype.toMap24 = function() {
-  return new Map24.Point (this.lon,this.lat);
-}
-
-
 /**
  * toString returns a string represntation of a point
  * @returns a string like '51.23, -0.123'
@@ -2400,7 +2206,7 @@ function Marker(point) {
   this.location = point;
   this.onmap = false;
   this.proprietary_marker = false;
-  this.attributes = new Array();
+	this.attributes = new Array;
   this.pinID = "mspin-"+new Date().getTime()+'-'+(Math.floor(Math.random()*Math.pow(2,16)));
 }
 
@@ -2414,34 +2220,34 @@ Marker.prototype.setLabel = function(labelText) {
 }
 
 /**
- * addData conviniently set a hash of options on a marker
+ * addData conveniently set a hash of options on a marker
  */
-  Marker.prototype.addData = function(options){
-    if(options.label)
-      this.setLabel(options.label);
-    if(options.infoBubble)
-      this.setInfoBubble(options.infoBubble);
-    if(options.icon) {
-      if(options.iconSize)
-        this.setIcon(options.icon, new Array(options.iconSize[0], options.iconSize[1]));
-      else
-        this.setIcon(options.icon);
-    }
-    if(options.infoDiv)
-      this.setInfoDiv(options.infoDiv[0],options.infoDiv[1]);
-    if(options.draggable)
-      this.setDraggable(options.draggable);
-    if(options.hover)
-      this.setHover(options.hover);
-    if(options.hoverIcon)
-      this.setHoverIcon(options.hoverIcon);
-    if(options.openBubble)
-      this.openBubble();
-    if(options.date)
-      this.setAttribute( 'date', eval(options.date) );
-    if(options.category)
-      this.setAttribute( 'category', options.category );
-  }
+Marker.prototype.addData = function(options){
+	if(options.label)
+		this.setLabel(options.label);
+	if(options.infoBubble)
+		this.setInfoBubble(options.infoBubble);
+	if(options.icon) {
+		if(options.iconSize)
+		this.setIcon(options.icon, new Array(options.iconSize[0], options.iconSize[1]));
+		else
+		this.setIcon(options.icon);
+	}
+	if(options.infoDiv)
+		this.setInfoDiv(options.infoDiv[0],options.infoDiv[1]);
+	if(options.draggable)
+		this.setDraggable(options.draggable);
+	if(options.hover)
+		this.setHover(options.hover);
+	if(options.hoverIcon)
+		this.setHoverIcon(options.hoverIcon);
+	if(options.openBubble)
+		this.openBubble();
+	if(options.date)
+		this.setAttribute( 'date', eval(options.date) );
+	if(options.category)
+		this.setAttribute( 'category', options.category );
+}
 
 /**
  * setInfoBubble sets the html/text content for a bubble popup for a marker
@@ -2468,15 +2274,15 @@ Marker.prototype.setInfoDiv = function(infoDiv,div){
  */
 Marker.prototype.setIcon = function(iconUrl, iconSize){
   this.iconUrl = iconUrl;
-  if(iconSize)
-    this.iconSize = iconSize;
+	if(iconSize)
+		this.iconSize = iconSize;
 }
 
 Marker.prototype.setHoverIcon = function(hoverIconUrl){
   this.hoverIconUrl = hoverIconUrl;
 }
 
-/**
+ /**
  * setDraggable sets the draggable state of the marker
  * @param {Bool} draggable set to true if marker should be draggable by the user
  */
@@ -2506,39 +2312,39 @@ Marker.prototype.toYahoo = function() {
     ymarker = new YMarker(this.location.toYahoo());
   }
   if(this.iconSize) {
-    ymarker.size = new YSize(this.iconSize[0], this.iconSize[1]);
-  }
+		ymarker.size = new YSize(this.iconSize[0], this.iconSize[1]);
+	}
   if(this.labelText) {
     ymarker.addLabel(this.labelText);
   }
 
-  if(this.infoBubble) {
-    var theInfo = this.infoBubble;
-    var event_action;
-    if(this.hover) {
-      event_action = EventsList.MouseOver;
-    }
-    else {
-      event_action = EventsList.MouseClick;
-    }
-    YEvent.Capture(ymarker, event_action, function() {
-        ymarker.openSmartWindow(theInfo); });
+	if(this.infoBubble) {
+		var theInfo = this.infoBubble;
+		var event_action;
+		if(this.hover) {
+			event_action = EventsList.MouseOver;
+		}
+		else {
+			event_action = EventsList.MouseClick;
+		}
+		YEvent.Capture(ymarker, event_action, function() {
+			ymarker.openSmartWindow(theInfo); });
 
-  }
+	}
 
-  if(this.infoDiv) {
-    var theInfo = this.infoDiv;
-    var div = this.div;
-    var event_div;
-    if(this.hover) {
-      event_action = EventsList.MouseOver;
-    }
-    else {
-      event_action = EventsList.MouseClick;
-    }
-    YEvent.Capture(ymarker, event_action, function() {
-        document.getElementById(div).innerHTML = theInfo;}); 
-  }
+	if(this.infoDiv) {
+		var theInfo = this.infoDiv;
+		var div = this.div;
+		var event_div;
+		if(this.hover) {
+			event_action = EventsList.MouseOver;
+		}
+		else {
+			event_action = EventsList.MouseClick;
+		}
+		YEvent.Capture(ymarker, event_action, function() {
+			document.getElementById(div).innerHTML = theInfo;}); 
+	}
 
   return ymarker;
 }
@@ -2548,61 +2354,61 @@ Marker.prototype.toYahoo = function() {
  * @returns Google Maps compatible marker
  */
 Marker.prototype.toGoogle = function() {
-  var options = new Object();
-  if(this.labelText) {
-    options.title =  this.labelText;
-  }
-  if(this.iconUrl){
-    var icon = new GIcon(G_DEFAULT_ICON,this.iconUrl);
-    if(this.iconSize)
-      icon.iconSize = new GSize(this.iconSize[0], this.iconSize[1]);
+	var options = new Object();
+	if(this.labelText) {
+		options.title =  this.labelText;
+	}
+	if(this.iconUrl){
+		var icon = new GIcon(G_DEFAULT_ICON,this.iconUrl);
+		if(this.iconSize)
+			icon.iconSize = new GSize(this.iconSize[0], this.iconSize[1]);
     options.icon = icon;
-  }
-  if(this.draggable){
-    options.draggable = this.draggable;
-  }
-  var gmarker = new GMarker( this.location.toGoogle(),options);
+	}
+	if(this.draggable){
+		options.draggable = this.draggable;
+	}
+	var gmarker = new GMarker( this.location.toGoogle(),options);
 
 
-  if(this.infoBubble) {
-    var theInfo = this.infoBubble;
-    var event_action;
-    if(this.hover) {
-      event_action = "mouseover";
-    }
-    else {
-      event_action = "click";
-    }
-    GEvent.addListener(gmarker, event_action, function() {
-        gmarker.openInfoWindowHtml(theInfo, {maxWidth: 100});
-        });
-  }
+	if(this.infoBubble) {
+		var theInfo = this.infoBubble;
+		var event_action;
+		if(this.hover) {
+			event_action = "mouseover";
+		}
+		else {
+			event_action = "click";
+		}
+		GEvent.addListener(gmarker, event_action, function() {
+			gmarker.openInfoWindowHtml(theInfo, {maxWidth: 100});
+		});
+	}
 
-  if(this.hoverIconUrl) {
-    GEvent.addListener(gmarker, "mouseover", function() {
-        gmarker.setImage(this.hoverIconUrl);
-        });
-    GEvent.addListener(gmarker, "mouseout", function() {
-        gmarker.setImage(this.iconUrl);
-        });
-  }
+	if(this.hoverIconUrl) {
+		GEvent.addListener(gmarker, "mouseover", function() {
+			gmarker.setImage(this.hoverIconUrl);
+		});
+		GEvent.addListener(gmarker, "mouseout", function() {
+			gmarker.setImage(this.iconUrl);
+		});
+	}
 
-  if(this.infoDiv){
-    var theInfo = this.infoDiv;
-    var div = this.div;
-    var event_action;
-    if(this.hover) {
-      event_action = "mouseover";
-    }
-    else {
-      event_action = "click";
-    }
-    GEvent.addListener(gmarker, event_action, function() {
-        document.getElementById(div).innerHTML = theInfo;
-        });
-  }
+	if(this.infoDiv){
+		var theInfo = this.infoDiv;
+		var div = this.div;
+		var event_action;
+		if(this.hover) {
+			event_action = "mouseover";
+		}
+		else {
+			event_action = "click";
+		}
+		GEvent.addListener(gmarker, event_action, function() {
+			document.getElementById(div).innerHTML = theInfo;
+		});
+	}
 
-  return gmarker;
+	return gmarker;
 }
 
 /**
@@ -2615,69 +2421,33 @@ Marker.prototype.toMicrosoft = function() {
   return pin;
 }
 
-/**
- * toMap24 returns a Map24 Location 
- * @returns Map24 Location
- */
-Marker.prototype.toMap24 = function() {
-
-  var ops = new Object();
-  ops.Longitude = this.location.lon*60;
-  ops.Latitude = this.location.lat*60;
-  if(this.infoBubble) {
-    // not sure how map24 differentiates between tooltips and 
-    // info bubble content
-    ops.TooltipContent =  this.infoBubble;
-  }
-
-  if(this.labelText) {
-    // ????
-  }
-
-  ops.LogoURL = this.iconUrl ? this.iconUrl :
-    "http://www.free-map.org.uk/images/marker.png";
-
-  ops.TooltipLayout = Map24.MapObject.LAYOUT_BUBBLE;
-
-  if(this.hover) {
-    ops.TooltipOpen = "OnMouseOver";
-    //        ops.TooltipClose = "OnMouseOut";
-  } else {
-    ops.TooltipOpen = "OnClick";
-    //        ops.TooltipClose = "OnMouseOut";
-  }
-
-
-  var m24Location = new Map24.Location ( ops );
-  return m24Location;
-}
 
 /**
  * toMultiMap returns a MultiMap compatible marker pin
  * @returns MultiMap compatible marker
  */
 Marker.prototype.toMultiMap = function() {
-  if (this.iconUrl) {
-    var icon = new MMIcon(this.iconUrl);
-    icon.iconSize = new MMDimensions(32, 32); //how to get this?
+	if (this.iconUrl) {
+		var icon = new MMIcon(this.iconUrl);
+		icon.iconSize = new MMDimensions(32, 32); //how to get this?
+		
+		var mmmarker = new MMMarkerOverlay( this.location.toMultiMap(), {'icon' : icon} );
+	} else {
+		var mmmarker = new MMMarkerOverlay( this.location.toMultiMap());
+	}
+	if(this.labelText){
+	}
+	if(this.infoBubble) {
+		mmmarker.setInfoBoxContent(this.infoBubble);
+	}
+	if(this.infoDiv) {
+	}
 
-    var mmmarker = new MMMarkerOverlay( this.location.toMultiMap(), {'icon' : icon} );
-  } else {
-    var mmmarker = new MMMarkerOverlay( this.location.toMultiMap());
-  }
-  if(this.labelText){
-  }
-  if(this.infoBubble) {
-    mmmarker.setInfoBoxContent(this.infoBubble);
-  }
-  if(this.infoDiv) {
-  }
+	for (var key in this.attributes) {
+		mmmarker.setAttribute(key, this.attributes[ key ]);
+	}
 
-  for (var key in this.attributes) {
-    mmmarker.setAttribute(key, this.attributes[ key ]);
-  }
-
-  return mmmarker;
+	return mmmarker;
 }
 
 /**
@@ -2690,10 +2460,10 @@ Marker.prototype.toMapQuest = function() {
 
   if(this.iconUrl){
     var mqicon = new MQMapIcon();
-    mqicon.setImage(this.iconUrl,32,32,true,false);
-    // TODO: Finish MapQuest icon params - icon file location, width, height, recalc infowindow offset, is it a PNG image?
-    mqmarker.setIcon(mqicon);
-    // mqmarker.setLabel('Hola!');
+		mqicon.setImage(this.iconUrl,32,32,true,false);
+		// TODO: Finish MapQuest icon params - icon file location, width, height, recalc infowindow offset, is it a PNG image?
+		mqmarker.setIcon(mqicon);
+		// mqmarker.setLabel('Hola!');
   }
 
   if(this.labelText) { mqmarker.setInfoTitleHTML( this.labelText ); }
@@ -2716,31 +2486,31 @@ Marker.prototype.toMapQuest = function() {
  * @returns FreeEarth compatible marker
  */
 Marker.prototype.toFreeEarth = function() {
-  var feicon;
+	var feicon;
 
-  if (this.iconUrl) {
-    feicon = new FE.Icon(this.iconUrl);
-  } else {
-    feicon = new FE.Icon("http://freeearth.poly9.com/images/bullmarker.png");
-  }
-  var femarker = new FE.Pushpin( this.location.toFreeEarth(), feicon);
+	if (this.iconUrl) {
+		feicon = new FE.Icon(this.iconUrl);
+	} else {
+		feicon = new FE.Icon("http://freeearth.poly9.com/images/bullmarker.png");
+	}
+	var femarker = new FE.Pushpin( this.location.toFreeEarth(), feicon);
 
-  if(this.infoBubble) {
-    var theBubble = this.infoBubble;
-    FE.Event.addListener(femarker, 'click', function() {
-        femarker.openInfoWindowHtml( theBubble, 200, 100 ); 
-        } );
-  }
+	if(this.infoBubble) {
+		var theBubble = this.infoBubble;
+		FE.Event.addListener(femarker, 'click', function() {
+			femarker.openInfoWindowHtml( theBubble, 200, 100 ); 
+		} );
+	}
 
-  if(this.infoDiv) {
-    var theInfo = this.infoDiv;
-    var div = this.div;
-    FE.Event.addListener(femarker, 'click', function() {
-        document.getElementById(div).innerHTML = theInfo;
-        });
-  }
+	if(this.infoDiv) {
+			var theInfo = this.infoDiv;
+			var div = this.div;
+			FE.Event.addListener(femarker, 'click', function() {
+				document.getElementById(div).innerHTML = theInfo;
+			});
+	}
 
-  return femarker;
+	return femarker;
 }
 
 /**
@@ -2749,7 +2519,7 @@ Marker.prototype.toFreeEarth = function() {
  * @arg value
  */
 Marker.prototype.setAttribute = function(key,value) {
-  this.attributes[key] = value;
+	this.attributes[key] = value;
 }
 
 /**
@@ -2758,7 +2528,7 @@ Marker.prototype.setAttribute = function(key,value) {
  * @returns value
  */
 Marker.prototype.getAttribute = function(key) {
-  return this.attributes[key];
+	return this.attributes[key];
 }
 
 
@@ -2781,18 +2551,18 @@ Marker.prototype.openBubble = function() {
       case 'microsoft':
         var pin = this.proprietary_marker;
         // bloody microsoft -- this is broken
-        var el = $m(this.pinID + "_" + this.maps[this.api].GUID).onmouseover;
+        var el = $(this.pinID + "_" + this.maps[this.api].GUID).onmouseover;
         setTimeout(el, 1000); // wait a second in case the map is booting as it cancels the event
-        break;
-      case 'multimap':
-        this.proprietary_marker.openInfoBox();
-        break;
-      case 'mapquest':
-        // MapQuest hack to work around bug when opening marker
-        this.proprietary_marker.setRolloverEnabled(false);
-        this.proprietary_marker.showInfoWindow();
-        this.proprietary_marker.setRolloverEnabled(true);			
-        break;
+				break;
+			case 'multimap':
+				this.proprietary_marker.openInfoBox();
+				break;
+			case 'mapquest':
+				// MapQuest hack to work around bug when opening marker
+				this.proprietary_marker.setRolloverEnabled(false);
+				this.proprietary_marker.showInfoWindow();
+				this.proprietary_marker.setRolloverEnabled(true);			
+				break;
     }
   } else {
     alert('You need to add the marker before opening it');
@@ -2803,58 +2573,52 @@ Marker.prototype.openBubble = function() {
  * hide the marker
  */
 Marker.prototype.hide = function() {
-  if (this.api) {
-    switch (this.api) {
-      case 'google':
-      case 'openstreetmap':
-        this.proprietary_marker.hide();
-        break;
-      case 'yahoo':
-        this.proprietary_marker.hide();
-        break;
-      case 'map24':
-        this.proprietary_marker.hide();
-        break;
-      case 'multimap':
-        this.proprietary_marker.setVisibility(false);
-        break;
-      case 'mapquest':
-        this.proprietary_marker.setVisible(false);
-        break;				
-      default:
-        if(this.debug)
-          alert(this.api + "not supported by Marker.hide");
-    }
-  }
+	if (this.api) {
+		switch (this.api) {
+			case 'google':
+			case 'openstreetmap':
+				this.proprietary_marker.hide();
+				break;
+			case 'yahoo':
+				this.proprietary_marker.hide();
+				break;
+			case 'multimap':
+				this.proprietary_marker.setVisibility(false);
+				break;
+			case 'mapquest':
+				this.proprietary_marker.setVisible(false);
+				break;				
+			default:
+				if(this.debug)
+      		alert(this.api + "not supported by Marker.hide");
+		}
+	}
 }
 
 /**
  * show the marker
  */
 Marker.prototype.show = function() {
-  if (this.api) {
-    switch (this.api) {
-      case 'google':
-      case 'openstreetmap':
-        this.proprietary_marker.show();
-        break;
-      case 'map24':
-        this.proprietary_marker.show();
-        break;
-      case 'yahoo':
-        this.proprietary_marker.unhide();
-        break;
-      case 'multimap':
-        this.proprietary_marker.setVisibility(true);
-        break;
-      case 'mapquest':
-        this.proprietary_marker.setVisible(true);
-        break;	
-      default:
-        if(this.debug)
-          alert(this.api + "not supported by Marker.show");
-    }
-  }
+	if (this.api) {
+		switch (this.api) {
+			case 'google':
+			case 'openstreetmap':
+				this.proprietary_marker.show();
+				break;
+			case 'yahoo':
+				this.proprietary_marker.unhide();
+				break;
+			case 'multimap':
+				this.proprietary_marker.setVisibility(true);
+				break;
+			case 'mapquest':
+				this.proprietary_marker.setVisible(true);
+				break;	
+			default:
+				if(this.debug)
+      		alert(this.api + "not supported by Marker.show");
+		}
+	}
 }
 
 ///////////////
@@ -2864,27 +2628,28 @@ Marker.prototype.show = function() {
 
 function Polyline(points) {
   this.points = points;
-  this.attributes = new Array();
+	this.attributes = [];
   this.onmap = false;
   this.proprietary_polyline = false;
+	this.attributes = new Array;
   this.pllID = "mspll-"+new Date().getTime()+'-'+(Math.floor(Math.random()*Math.pow(2,16)));
 }
 
 /**
  * addData conviniently set a hash of options on a polyline
  */
-  Polyline.prototype.addData = function(options){
+Polyline.prototype.addData = function(options){
     if(options.color)
-      this.setColor(options.color);
+	this.setColor(options.color);
     if(options.width)
-      this.setWidth(options.width); // NW corrected from setInfoBubble()
+	this.setInfoBubble(options.width);
     if(options.opacity)
-      this.setIcon(options.opacity);
-    if(options.date)
-      this.setAttribute( 'date', eval(options.date) );
-    if(options.category)
-      this.setAttribute( 'category', options.category );
-  }
+	this.setIcon(options.opacity);
+		if(options.date)
+	this.setAttribute( 'date', eval(options.date) );
+		if(options.category)
+	this.setAttribute( 'category', options.category );
+}
 
 Polyline.prototype.setChild = function(some_proprietary_polyline) {
   this.proprietary_polyline = some_proprietary_polyline;
@@ -2892,9 +2657,8 @@ Polyline.prototype.setChild = function(some_proprietary_polyline) {
 }
 
 //in the form: #RRGGBB
-//Note map24 insists on upper case, so we convert it.
 Polyline.prototype.setColor = function(color){
-  this.color = (color.length==7 && color[0]=="#") ? color.toUpperCase() : color;
+  this.color = color;
 }
 
 //An integer
@@ -2927,28 +2691,6 @@ Polyline.prototype.toGoogle = function() {
   return gpolyline;
 }
 
-Polyline.prototype.toMap24 = function() {
-  var m24polyline;
-  var m24longs = ""; 
-  var m24lats = ""; 
-  for (var i=0; i<this.points.length; i++) {
-    if(i) {
-      m24longs += "|";
-      m24lats += "|";
-    }
-    m24longs += (this.points[i].lon*60);
-    m24lats += (this.points[i].lat*60);
-  }
-
-  m24polyline = new Map24.Polyline({
-Longitudes: m24longs,
-Latitudes: m24lats,
-Color: this.color || "black",
-Width: this.width || 3
-});
-return m24polyline;
-}
-
 Polyline.prototype.toMicrosoft = function() {
   var mpolyline;
   var mpoints = [];
@@ -2969,39 +2711,28 @@ Polyline.prototype.toMicrosoft = function() {
 }
 
 Polyline.prototype.toMultiMap = function() {
-  var mmpolyline;
-  var mmpoints = [];
-  for (var i = 0, length = this.points.length ; i< length; i++){
+	var mmpolyline;
+	var mmpoints = [];
+	 for (var i = 0, length = this.points.length ; i< length; i++){
     mmpoints.push(this.points[i].toMultiMap());
   }
-  mmpolyline = new MMPolyLineOverlay(mmpoints, this.color, this.opacity, this.width, false, undefined);
-  return mmpolyline;
+	mmpolyline = new MMPolyLineOverlay(mmpoints, this.color, this.opacity, this.width, false, undefined);
+	return mmpolyline;
 }
 
 Polyline.prototype.toMapQuest = function() {
-  var mqpolyline = new MQLineOverlay();
-  mqpolyline.setColor(this.color||"red");
-  mqpolyline.setBorderWidth(this.width || 3);
-  mqpolyline.setKey("Line");
-  mqpolyline.setColorAlpha(this.opacity);
+	var mqpolyline = new MQLineOverlay();
+	mqpolyline.setColor(this.color||"red");
+	mqpolyline.setBorderWidth(this.width || 3);
+	mqpolyline.setKey("Line");
+	mqpolyline.setColorAlpha(this.opacity);
 
-  var mqpoints = new MQLatLngCollection();
-  for (var i = 0, length = this.points.length ; i< length; i++){
-    mqpoints.add(this.points[i].toMapQuest());
-  }
-  mqpolyline.setShapePoints(mqpoints);
-  return mqpolyline;
-}
-Polyline.prototype.toFreeEarth = function() {
-  var fepoints = new Array();
-
-  for (var i = 0, length = this.points.length ; i< length; i++){
-    fepoints.push(this.points[i].toFreeEarth());
-  }
-
-  var fepolyline = new FE.Polyline(fepoints, this.color || '0xff0000', this.width || 1, this.opacity || 1);
-
-  return fepolyline;
+	var mqpoints = new MQLatLngCollection();
+	for (var i = 0, length = this.points.length ; i< length; i++){
+	  mqpoints.add(this.points[i].toMapQuest());
+	}
+	mqpolyline.setShapePoints(mqpoints);
+	return mqpolyline;
 }
 
 /**
@@ -3010,7 +2741,7 @@ Polyline.prototype.toFreeEarth = function() {
  * @arg value
  */
 Polyline.prototype.setAttribute = function(key,value) {
-  this.attributes[key] = value;
+	this.attributes[key] = value;
 }
 
 /**
@@ -3019,23 +2750,23 @@ Polyline.prototype.setAttribute = function(key,value) {
  * @returns value
  */
 Polyline.prototype.getAttribute = function(key) {
-  return this.attributes[key];
+	return this.attributes[key];
 }
 
 /**
  * show: not yet implemented
  */
 Polyline.prototype.show = function() {
-  if (this.api) {
-  }
+	if (this.api) {
+	}
 }
 
 /**
  * hide: not yet implemented
  */
 Polyline.prototype.hide = function() {
-  if (this.api) {
-  }
+	if (this.api) {
+	}
 }
 
 /////////////
@@ -3048,20 +2779,20 @@ Polyline.prototype.hide = function() {
  * @params {Object} route The route object returned in the callback from MapstractionRouter
  */
 Mapstraction.prototype.showRoute = function(route) { 
-  if(this.loaded[this.api] == false) {
-    self = this;
-    this.onload[this.api].push( function() { self.showRoute(route); } );
-    return;
-  }	
-  var map = this.maps[this.api];
-  switch (this.api) {
-    case 'mapquest':
-      map.addRouteHighlight(route['bounding_box'],"http://map.access.mapquest.com",route['session_id'],true);
-      break;
+	if(this.loaded[this.api] == false) {
+		self = this;
+		this.onload[this.api].push( function() { self.showRoute(route); } );
+		return;
+	}	
+	var map = this.maps[this.api];
+	switch (this.api) {
+		case 'mapquest':
+			map.addRouteHighlight(route['bounding_box'],"http://map.access.mapquest.com",route['session_id'],true);
+			break;
     default:
-      if(this.debug)
-        alert(api + ' not supported by Mapstration.showRoute');
-      break;
-  }
+			if(this.debug)
+      		alert(api + ' not supported by Mapstration.showRoute');
+			break;
+	}
 }
-
+	
