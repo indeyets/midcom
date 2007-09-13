@@ -177,6 +177,16 @@ if (array_key_exists('add_position', $_POST))
     $manual = org_routamc_positioning_importer::create('manual');
 
     $manual_position = Array();
+    
+    if (array_key_exists('geocoder', $_POST))
+    {
+        $manual_position['geocoder'] = $_POST['geocoder'];
+    }
+
+    if (array_key_exists('street', $_POST))
+    {
+        $manual_position['street'] = $_POST['street'];
+    }
 
     if (array_key_exists('city', $_POST))
     {
@@ -188,12 +198,14 @@ if (array_key_exists('add_position', $_POST))
         $manual_position['country'] = $_POST['country'];
     }
 
-    if (array_key_exists('latitude', $_POST))
+    if (   array_key_exists('latitude', $_POST)
+        && !empty($_POST['latitude']))
     {
         $manual_position['latitude'] = $_POST['latitude'];
     }
 
-    if (array_key_exists('longitude', $_POST))
+    if (   array_key_exists('longitude', $_POST)
+        && !empty($_POST['longitude']))
     {
         $manual_position['longitude'] = $_POST['longitude'];
     }
@@ -207,14 +219,23 @@ $coordinates = $user_position->get_coordinates();
 
 if ($coordinates)
 {
-    echo sprintf('According to Midgard your position is now %s', org_routamc_positioning_utils::pretty_print_coordinates($coordinates['latitude'], $coordinates['longitude']));
+    echo "<p>" . sprintf('According to Midgard your position is now %s', org_routamc_positioning_utils::pretty_print_coordinates($coordinates['latitude'], $coordinates['longitude'])) . "</p>\n";
 }
 ?>
 <form method="post">
+    <label>Street <input type="text" name="street" value="Valhallankatu" /></label>, 
     <label>City <input type="text" name="city" value="Helsinki" /></label>
     and <label>Country <input type="text" name="country" value="FI" /></label><br />
-    OR<br />
-    <label>Latitude <input type="text" name="latitude" value="60.175556" /></label>
-    and <label>Longitude <input type="text" name="longitude" value="24.934166" /></label><br />
+    <label>
+        Geocoder
+        <select name="geocoder">
+            <option value="city">Local city database</option>
+            <option value="geonames">GeoNames</option>
+            <option value="yahoo">Yahoo!</option>
+        </select>
+    </label>
+    <p>OR</p>
+    <label>Latitude <input type="text" name="latitude" /></label>
+    and <label>Longitude <input type="text" name="longitude" /></label><br />
     <input type="submit" name="add_position" value="Set" />
 </form>

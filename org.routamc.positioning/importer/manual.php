@@ -114,49 +114,27 @@ class org_routamc_positioning_importer_manual extends org_routamc_positioning_im
         }
 
         // City and country entered
-        if (   array_key_exists('city', $log)
-            && array_key_exists('country', $log))
+        if (array_key_exists('city', $log))
         {
-            // City position is not very accurate
-            $this->log->accuracy = ORG_ROUTAMC_POSITIONING_ACCURACY_CITY;
-            $this->log->altitude = 0;
-            // Normalize country name
-            $country = $this->normalize_country($log['country']);
-
-            // Seek the city entry, first by accurate match
-            $city_entry = null;
-            $qb = org_routamc_positioning_city_dba::new_query_builder();
-            $qb->add_constraint('city', '=', $log['city']);
-            $qb->add_constraint('country', '=', $country);
-            $matches = $qb->execute();
-            if (count($matches) > 0)
+            if (!isset($log['geocoder']))
             {
-                $city_entry = $matches[0];
+                $log['geocoder'] = 'city';
             }
-
-            if (is_null($city_entry))
-            {
-                // Seek the city entry by alternate names via a LIKE query
-                $qb = org_routamc_positioning_city_dba::new_query_builder();
-                $qb->add_constraint('alternatenames', 'LIKE', "%|{$log['city']}|%");
-                $qb->add_constraint('country', '=', $country);
-                $matches = $qb->execute();
-                if (count($matches) > 0)
-                {
-                    $city_entry = $matches[0];
-                }
-            }
-
-            if (is_null($city_entry))
+            $geocoder = org_routamc_positioning_geocoder::create($log['geocoder']);
+            $position = $geocoder->geocode($log);
+            
+            if (   !$position['latitude']
+                || !$position['longitude'])
             {
                 // Couldn't match the entered city to a location
                 $this->error = 'POSITIONING_CITY_NOT_FOUND';
                 return false;
             }
 
-            // Normalize coordinates
-            $this->log->latitude = $city_entry->latitude;
-            $this->log->longitude = $city_entry->longitude;
+            foreach ($position as $key => $value)
+            {
+                $this->log->$key = $value;
+            }
         }
 
         // Save altitude if provided
