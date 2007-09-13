@@ -103,7 +103,7 @@ var loadedToEditor = false;
 var tableShown = false;
 
 /**
- * We have to call this via BODY onLoad because during the header we can't
+ * We have to call this via BODY onload because during the header we can't
  * yet getElementById the table
  */
 function populateData()
@@ -119,7 +119,7 @@ function populateData()
 }
         </script>
     </head>
-    <body id="org_openpsa_popup"  onLoad="populateData()">
+    <body id="org_openpsa_popup"  onload="populateData()">
         <div id="org_openpsa_toolbar">
             <div id="org_openpsa_object_metadata">
                 <h1>Hour reporting</h1>
@@ -160,7 +160,7 @@ function populateData()
                     Description
                     <textarea name="description" id="org_openpsa_projects_houreditor_description"></textarea>
                 </label>
-                <input type="button" id="org_openpsa_projects_houreditor_save" onClick="javascript:ooAjaxConvertEditorToRow();" value="Save" />
+                <input type="button" id="org_openpsa_projects_houreditor_save" onclick="javascript:ooAjaxConvertEditorToRow();" value="Save" />
             </form>
             </div>
         </div>

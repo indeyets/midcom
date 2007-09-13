@@ -935,7 +935,7 @@ class org_openpsa_calendarwidget_month
 
         if ($this->use_javascript)
         {
-            return " onMouseOver=\"org_openpsa_calendarwidget_month_show_box('org_openpsa_calendarwidget_month_{$timestamp}_{$this->additional_name_for_links}');\" onMouseOut=\"org_openpsa_calendarwidget_month_hide_box('org_openpsa_calendarwidget_month_{$timestamp}_{$this->additional_name_for_links}');\"";
+            return " onmouseover=\"org_openpsa_calendarwidget_month_show_box('org_openpsa_calendarwidget_month_{$timestamp}_{$this->additional_name_for_links}');\" onmouseout=\"org_openpsa_calendarwidget_month_hide_box('org_openpsa_calendarwidget_month_{$timestamp}_{$this->additional_name_for_links}');\"";
         }
     }
 
@@ -1036,7 +1036,7 @@ class org_openpsa_calendarwidget_month
         if ($this->use_javascript)
         {
             $style = ' style="display: none;"';
-            $ticker = "<span class=\"{$this->css_close_checker}\" onClick=\"hide_box('org_openpsa_calendarwidget_month_{$timestamp}_{$this->additional_name_for_links}');\" title=\"Close window\">X</span>";
+            $ticker = "<span class=\"{$this->css_close_checker}\" onclick=\"hide_box('org_openpsa_calendarwidget_month_{$timestamp}_{$this->additional_name_for_links}');\" title=\"Close window\">X</span>";
             $class .= ' hover';
         }
         else

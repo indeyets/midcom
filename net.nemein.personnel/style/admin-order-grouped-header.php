@@ -10,7 +10,7 @@ if (   !$title
 <h1><?php echo $data['l10n']->get('sort personnel into sub groups'); ?></h1>
 <div id="net_nemein_personnel_new_group">
     <input id="net_nemein_personnel_new_group_name" type="text" />
-    <input type="button" onClick="javascript:create_group();" value="<?php echo $data['l10n']->get('create a new group'); ?>" />
+    <input type="button" onclick="javascript:create_group();" value="<?php echo $data['l10n']->get('create a new group'); ?>" />
 </div>
 <form method="post" action="&(_MIDGARD['uri']);" id="net_nemein_personnel_group_order" class="datamanager2">
     <div class="groups_list">

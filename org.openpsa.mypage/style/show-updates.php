@@ -32,7 +32,7 @@ foreach ($view_types as $type)
             {
                 case "calendar":
                     $url = "#";
-                    $onclick = " onClick=\"javascript:window.open('{$document->document_url}', 'event', 'toolbar=0,location=0,status=0,height=600,width=300,resizable=1');\"";
+                    $onclick = " onclick=\"javascript:window.open('{$document->document_url}', 'event', 'toolbar=0,location=0,status=0,height=600,width=300,resizable=1');\"";
                     break;
                 default:
                     $url = $document->document_url;

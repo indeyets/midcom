@@ -10,7 +10,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         <form id="org_openpsa_contacts_document_deleteform" method="post">
             <input type="hidden" name="org_openpsa_documents_deleteok" value="1" />
             <input type="submit" class="button delete" value="<?php echo $data['l10n_midcom']->get('delete'); ?>" />
-            <input type="button" class="button cancel" value="<?php echo $data['l10n_midcom']->get('cancel'); ?>" onClick="window.location='<?php echo $prefix . 'document_metadata/'.$data['metadata']->guid.'/'; ?>'" />
+            <input type="button" class="button cancel" value="<?php echo $data['l10n_midcom']->get('cancel'); ?>" onclick="window.location='<?php echo $prefix . 'document_metadata/'.$data['metadata']->guid.'/'; ?>'" />
         </form>
     </div>
 </div>

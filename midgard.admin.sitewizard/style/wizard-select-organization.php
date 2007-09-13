@@ -90,7 +90,7 @@ if ($data['17_compatibility'])
     {
         ?>
         <label for="&(view_form_prefix);quota_enable"><input type="checkbox" 
-          name="&(view_form_prefix);quota_enable" id="&(view_form_prefix);quota_enable" onClick="handleQuota();"  
+          name="&(view_form_prefix);quota_enable" id="&(view_form_prefix);quota_enable" onclick="handleQuota();"  
           /><?php echo $data['l10n']->get("organization quota"); ?></label>
           <label for="&(view_form_prefix);sitegroup_quota"><input type="text" class="shorttext short inline" name="&(view_form_prefix);sitegroup_quota" id="&(view_form_prefix);sitegroup_quota" 
           disabled="disabled" /><?php echo $data['l10n']->get("Mb"); ?></label>

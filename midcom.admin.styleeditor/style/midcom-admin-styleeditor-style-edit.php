@@ -5,13 +5,13 @@
     {
     ?>
     <fieldset class="component_default">
-        <legend class="<?php if (isset($data['style_element_object'])) { echo 'hidden'; } else { echo 'visible'; } ?>" onClick="javascript:toggle_twisty('midcom_admin_styleeditor_style_contents');">
+        <legend class="<?php if (isset($data['style_element_object'])) { echo 'hidden'; } else { echo 'visible'; } ?>" onclick="javascript:toggle_twisty('midcom_admin_styleeditor_style_contents');">
             <?php echo $_MIDCOM->i18n->get_string('component default', 'midcom.admin.styleeditor'); ?>
             <img class="twisty" src="<?php echo MIDCOM_STATIC_URL; ?>/midcom.admin.styleeditor/twisty-<?php echo (isset($data['style_element_object'])) ? 'hidden' : 'down'; ?>.gif" alt="-" />
         </legend>
         <div id="midcom_admin_styleeditor_style_contents" style="display: <?php if (isset($data['style_element_object'])) { echo 'none'; } else { echo 'block'; } ?>;" class="description">
             <div class="wrapper">
-                <button class="copy" onClick="javascript:copy_to_edit('midcom_admin_styleeditor_style_edit', this.parentNode.getElementsByTagName('pre')[0].innerHTML);">
+                <button class="copy" onclick="javascript:copy_to_edit('midcom_admin_styleeditor_style_edit', this.parentNode.getElementsByTagName('pre')[0].innerHTML);">
                     <?php echo $_MIDCOM->i18n->get_string('copy to editor', 'midcom.admin.styleeditor'); ?>
                 </button>
                 <pre id="midcom_admin_styleeditor_style_view">&(data['style_element_default_contents']);</pre>

@@ -261,7 +261,7 @@ class org_openpsa_projects_hours_widget
         $this->_datamanager->display_form('hourlist_'.$this->_request_data['task']->guid.'_editor',true,true);
         echo '
             <div class="form_toolbar">
-                <input type="button" class="org_openpsa_projects_savebutton" id="hourlist_'.$this->_request_data['task']->guid.'_savebutton" onClick="javascript:ooAjaxTableFormHandler_'.$this->_request_data['task']->guid.'.convertEditorToRow();" value="'.$this->_request_data['l10n_midcom']->get('save').'" />
+                <input type="button" class="org_openpsa_projects_savebutton" id="hourlist_'.$this->_request_data['task']->guid.'_savebutton" onclick="javascript:ooAjaxTableFormHandler_'.$this->_request_data['task']->guid.'.convertEditorToRow();" value="'.$this->_request_data['l10n_midcom']->get('save').'" />
             </div>
         </div>
         ';

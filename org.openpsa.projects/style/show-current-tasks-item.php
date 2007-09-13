@@ -55,7 +55,7 @@ switch($data['task']->status)
             {
                 ?>
                 <ul class="task_tools">
-                    <li><input type="button" onClick="ooToggleHourWidgetDisplay('<?php echo $data['task']->guid; ?>');" class="hours" value="<?php echo $data['l10n']->get('report hours'); ?>" /></li>
+                    <li><input type="button" onclick="ooToggleHourWidgetDisplay('<?php echo $data['task']->guid; ?>');" class="hours" value="<?php echo $data['l10n']->get('report hours'); ?>" /></li>
                 </ul>
                 <?php
                 $data['hours_widget'][$data['task']->guid]->show(false);

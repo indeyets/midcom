@@ -437,7 +437,7 @@ if(strlen($statuserrors)>0)
 		<br /><br />
 		<fieldset>
 			<legend>Tuotteet</legend>
-			<input style="float:left;" type="button" value="<?php echo $data['l10n']->get('add a field'); ?>" onClick="add_field();" />
+			<input style="float:left;" type="button" value="<?php echo $data['l10n']->get('add a field'); ?>" onclick="add_field();" />
 			<input style="margin-left:30px; float:left;" name="refresh" onclick="refresh_form();" type="button" value="<?php echo $data['l10n']->get('Refresh'); ?>" /><br />
 			<div class="clear_both">&nbsp;<br /></div>
 			<table cellpadding="0" cellspacing="2" border="0">
@@ -497,7 +497,7 @@ foreach ($data['products'] as $guid => $product)
 			</table>
 
 			<div id="write_seed"></div><br /><br />
-			<input type="button" value="<?php echo $data['l10n']->get('add a field'); ?>" onClick="add_field();" />
+			<input type="button" value="<?php echo $data['l10n']->get('add a field'); ?>" onclick="add_field();" />
 		</fieldset>
 <br /><br />
 		<fieldset>

@@ -2040,7 +2040,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         <?php echo $_MIDCOM->print_head_elements(); ?>
     </head>
 
-    <body onLoad="self.focus();document.midcom_services_auth_frontend_form.username.focus();">
+    <body onload="self.focus();document.midcom_services_auth_frontend_form.username.focus();">
 		<div id="container">
 			<div id="branding">
 				<div id="title"><h1>Midgard CMS</h1><h2><?php echo $title; ?></h2></div>
@@ -2172,7 +2172,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         <?php echo $_MIDCOM->print_head_elements(); ?>
     </head>
 
-    <body onLoad="self.focus();document.midcom_services_auth_frontend_form.username.focus();">
+    <body onload="self.focus();document.midcom_services_auth_frontend_form.username.focus();">
 		<div id="container">
 			<div id="branding">
 				<div id="title"><h1>Midgard CMS</h1><h2><?php echo $title; ?></h2></div>

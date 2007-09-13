@@ -1,6 +1,6 @@
 <a name="<?php echo str_replace('.', '_', $data['component']); ?>"></a>
 <fieldset id="midcom_admin_styleeditor_<?php echo str_replace('.', '_', $data['component']); ?>">
-        <legend onClick="javascript:toggle_twisty('<?php echo str_replace('.', '_', $data['component']); ?>_contents');">
+        <legend onclick="javascript:toggle_twisty('<?php echo str_replace('.', '_', $data['component']); ?>_contents');">
             <?php echo $data['component_details']['name']; ?> (&(data['component']:h);)
             <img class="twisty" src="<?php echo MIDCOM_STATIC_URL; ?>/midcom.admin.styleeditor/twisty-<?php echo ($data['display'] === 'none') ? 'hidden' : 'down'; ?>.gif" alt="-" />
         </legend>
