@@ -11,3 +11,5 @@
 
 'map_provider' => 'google',
 'map_api_key'  => '',
+
+'yahoo_application_key' => 'fXM3gd3V34H6hqVeOgJEkFRTtvOvvJyVzeoXJ0CsoJZQYtPIFVD6ScwnbKIVoPMhbX5k',

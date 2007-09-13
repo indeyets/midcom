@@ -9,7 +9,7 @@ Legend:
 
 2007-09-13 bergie
   + Added XEP-0080 compatible civic location attributes for the location object
-  + Added new geocoding service
+  + Added new geocoding service with local city database, Yahoo! and GeoNames as backends
 
 2007-08-20 bergie
   + Added country information to the database

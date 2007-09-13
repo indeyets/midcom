@@ -48,7 +48,9 @@ class org_routamc_positioning_interface extends midcom_baseclasses_components_in
         define('ORG_ROUTAMC_POSITIONING_ACCURACY_GPS', 10);
         define('ORG_ROUTAMC_POSITIONING_ACCURACY_PLAZES', 15);
         define('ORG_ROUTAMC_POSITIONING_ACCURACY_HTML', 15);
+        define('ORG_ROUTAMC_POSITIONING_ACCURACY_ADDRESS', 15);
         define('ORG_ROUTAMC_POSITIONING_ACCURACY_MANUAL', 20);
+        define('ORG_ROUTAMC_POSITIONING_ACCURACY_STREET', 20);
         define('ORG_ROUTAMC_POSITIONING_ACCURACY_CITY', 30);
         define('ORG_ROUTAMC_POSITIONING_ACCURACY_IP', 40);
 

@@ -12,7 +12,7 @@
  *
  * @package org.routamc.positioning
  */
-class org_routamc_positioning_geocoder_geonames extends midcom_baseclasses_components_purecode
+class org_routamc_positioning_geocoder_geonames extends org_routamc_positioning_geocoder
 {
     /**
      * Initializes the class. The real startup is done by the initialize() call.
@@ -21,7 +21,7 @@ class org_routamc_positioning_geocoder_geonames extends midcom_baseclasses_compo
     {
          $this->_component = 'org.routamc.positioning';
          $_MIDCOM->load_library('org.openpsa.httplib');
-         parent::midcom_baseclasses_components_purecode();
+         parent::org_routamc_positioning_geocoder();
     }
 
     /**
@@ -42,21 +42,22 @@ class org_routamc_positioning_geocoder_geonames extends midcom_baseclasses_compo
         if (   !isset($location['postalcode'])
             && !isset($location['city']))
         {
+            $this->error = 'POSITIONING_MISSING_ATTRIBUTES';
             return null;
         }
         $params = array();
         
         if (isset($location['postalcode']))
         {
-            $params[] = "postalcode={$location['postalcode']}";
+            $params[] = 'postalcode=' . urlencode($location['postalcode']);
         }
         if (isset($location['city']))
         {
-            $params[] = "placename={$location['city']}";
+            $params[] = 'placename=' . urlencode($location['city']);
         }
         if (isset($location['country']))
         {
-            $params[] = "country={$location['country']}";
+            $params[] = 'country=' . urlencode($location['country']);
         }
         
         $http_request = new org_openpsa_httplib();

@@ -12,7 +12,7 @@
  *
  * @package org.routamc.positioning
  */
-class org_routamc_positioning_geocoder_city extends midcom_baseclasses_components_purecode
+class org_routamc_positioning_geocoder_city extends org_routamc_positioning_geocoder
 {
     /**
      * Initializes the class. The real startup is done by the initialize() call.
@@ -20,7 +20,7 @@ class org_routamc_positioning_geocoder_city extends midcom_baseclasses_component
     function org_routamc_positioning_geocoder_city()
     {
          $this->_component = 'org.routamc.positioning';
-         parent::midcom_baseclasses_components_purecode();
+         parent::org_routamc_positioning_geocoder();
     }
 
     /**
@@ -40,6 +40,7 @@ class org_routamc_positioning_geocoder_city extends midcom_baseclasses_component
             
         if (!isset($location['city']))
         {
+            $this->error = 'POSITIONING_MISSING_ATTRIBUTES';        
             return null;
         }
         
