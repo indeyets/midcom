@@ -8,6 +8,15 @@ else
     $service = $_GET['service'];
 }
 
+if (!isset($_GET['dir']))
+{
+    $direction = '';
+}
+else
+{
+    $direction = 'reverse_';
+}
+
 $geocoder = org_routamc_positioning_geocoder::create($service);
 
 $location = array();
@@ -15,6 +24,12 @@ foreach ($_GET as $key => $value)
 {
     switch ($key)
     {
+        case 'longitude':
+        case 'latitude':
+            if (! empty($direction))
+            {
+                $location[$key] = $value;
+            }
         // Accept only XEP-0080 values
         case 'area':
         case 'building':
@@ -33,7 +48,9 @@ foreach ($_GET as $key => $value)
     }
 }
 
-$position = $geocoder->geocode($location);
+$method_name = "{$direction}geocode";
+
+$position = $geocoder->$method_name($location);
 if (is_null($position))
 {
     $error_str = 'unknown';

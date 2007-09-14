@@ -114,4 +114,16 @@ class org_routamc_positioning_geocoder_yahoo extends org_routamc_positioning_geo
 
         return $position;
     }
+    
+    /**
+     * Empty default implementation, this won't do anything yet
+     *
+     * @param Array $coordinates Contains latitude and longitude values
+     * @return Array containing geocoded information
+     */
+    function reverse_geocode($coordinates,$options=array())
+    {
+        $this->error = 'METHOD_NOT_IMPLEMENTED';        
+        return null;
+    }
 }

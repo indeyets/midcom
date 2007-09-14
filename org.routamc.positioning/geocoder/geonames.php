@@ -25,7 +25,6 @@ class org_routamc_positioning_geocoder_geonames extends org_routamc_positioning_
     }
 
     /**
-     * Empty default implementation, this calls won't do much.
      *
      * @param Array $location Parameters to geocode with, conforms to XEP-0080
      * @return Array containing geocoded information
@@ -79,6 +78,78 @@ class org_routamc_positioning_geocoder_geonames extends org_routamc_positioning_
         $position['country' ] = (string) $city_entry->countryCode;
         $position['postalcode' ] = (string) $city_entry->postalcode;
         $position['accuracy'] = ORG_ROUTAMC_POSITIONING_ACCURACY_CITY;
+
+        return $position;
+    }
+    
+    /**
+     *
+     * @param Array $coordinates Contains latitude and longitude values
+     * @return Array containing geocoded information
+     */
+    function reverse_geocode($coordinates,$options=array())
+    {
+        $parameters = array
+        (
+            'radius' => null,
+            'maxRows' => null,
+            'style' => 'FULL'
+        );
+        
+        if (! empty($options))
+        {
+            foreach ($options as $key => $value)
+            {
+                if (isset($parameters[$key]))
+                {
+                    $parameters[$key] = $value;
+                }
+            }
+        }
+            
+        if (   !isset($coordinates['latitude'])
+            && !isset($coordinates['longitude']))
+        {
+            $this->error = 'POSITIONING_MISSING_ATTRIBUTES';
+            return null;
+        }
+        $params = array();
+        
+        $params[] = 'lat=' . urlencode($coordinates['latitude']);
+        $params[] = 'lng=' . urlencode($coordinates['longitude']);
+        
+        foreach ($parameters as $key => $value)
+        {
+            if (! is_null($value))
+            {
+                $params[] = "{$key}=" . urlencode($value);
+            }
+        }
+        
+        $http_request = new org_openpsa_httplib();
+        $response = $http_request->get('http://ws.geonames.org/findNearbyPlaceName?' . implode('&', $params));
+        $simplexml = simplexml_load_string($response);
+
+        if (   !isset($simplexml->geoname)
+            || count($simplexml->geoname) == 0)
+        {
+            $this->error = 'POSITIONING_DETAILS_NOT_FOUND';
+            
+            if (isset($simplexml->status))
+            {
+                $constant_name = strtoupper(str_replace(" ", "_",$simplexml->status));
+                $this->error = $constant_name;
+            }
+            return null;
+        }
+        
+        $entry = $simplexml->geoname[0];
+        $position['latitude' ] = (float) $entry->lat;
+        $position['longitude' ] = (float) $entry->lng;
+        $position['city' ] = (string) $entry->name;
+        $position['region' ] = (string) $entry->adminName2;
+        $position['country' ] = (string) $entry->countryCode;
+        $position['accuracy'] = ORG_ROUTAMC_POSITIONING_ACCURACY_GPS;
 
         return $position;
     }
