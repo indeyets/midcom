@@ -43,7 +43,7 @@ class org_maemo_devcodes_handler_index  extends midcom_baseclasses_components_ha
     {
         // PONDER: Is there a better way to construct prefix that we can use with DL ?
         $data['prefix'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-        $data['dl_prefix'] = preg_replace("#(^.*?://{$_SERVER['SERVER_NAME']})?{$_MIDGARD['self']}#", '', $data['prefix']);
+        $data['dl_prefix'] = preg_replace("#^(.*?://{$_SERVER['SERVER_NAME']})?{$_MIDGARD['self']}#", '', $data['prefix']);
 
         $data['title'] = 'org.maemo.devcodes';
         if ($this->_topic->can_do('org.maemo.devcodes:manage'))
