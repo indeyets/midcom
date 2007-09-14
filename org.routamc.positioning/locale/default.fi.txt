@@ -3,6 +3,14 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING city
+Kaupunki
+---STRINGEND
+
+---STRING country
+Maa
+---STRINGEND
+
 ---STRING georss
 GeoRSS-syöte
 ---STRINGEND
@@ -19,8 +27,16 @@ Ulkoisen HTML-tiedoston metatiedot
 Leveyspiiri
 ---STRINGEND
 
+---STRING longitude
+Pituuspiiri
+---STRINGEND
+
 ---STRING manual
 käsin syötetty
+---STRINGEND
+
+---STRING map
+Kartta
 ---STRINGEND
 
 ---STRING org.routamc.org
@@ -29,6 +45,10 @@ Paikkatiedon käsittelykirjasto
 
 ---STRING org.routamc.positioning
 Paikkatiedon käsittelykirjasto
+---STRINGEND
+
+---STRING place
+Paikka
 ---STRINGEND
 
 ---STRING plazes
@@ -43,11 +63,19 @@ Plazes salasana
 Plazes käyttäjätunnus
 ---STRINGEND
 
+---STRING postalcode
+Postinumero
+---STRINGEND
+
 ---STRING source %s
 lähde: %s
 ---STRINGEND
 
----STRING longitude
-Pituuspiiri
+---STRING street
+Katuosoite
+---STRINGEND
+
+---STRING coordinates
+Koordinaatit
 ---STRINGEND
 

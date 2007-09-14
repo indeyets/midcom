@@ -3,6 +3,14 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING city
+City
+---STRINGEND
+
+---STRING country
+Country
+---STRINGEND
+
 ---STRING georss
 GeoRSS feed
 ---STRINGEND
@@ -19,12 +27,24 @@ Metadata in remote HTML document
 Latitude
 ---STRINGEND
 
+---STRING longitude
+Longitude
+---STRINGEND
+
 ---STRING manual
 manually inputted
 ---STRINGEND
 
+---STRING map
+Map
+---STRINGEND
+
 ---STRING org.routamc.positioning
 Geospatial toolkit
+---STRINGEND
+
+---STRING place
+Place
 ---STRINGEND
 
 ---STRING plazes
@@ -39,11 +59,19 @@ Plazes password
 Plazes username
 ---STRINGEND
 
+---STRING postalcode
+Postal code
+---STRINGEND
+
 ---STRING source %s
 source: %s
 ---STRINGEND
 
----STRING longitude
-Longitude
+---STRING street
+Street address
+---STRINGEND
+
+---STRING coordinates
+Coordinates
 ---STRINGEND
 
