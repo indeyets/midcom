@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    <type name="org_maemo_devcodes_device" table="org_maemo_devcodes_device" parent="midgard_topic" parentfield="node">
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="node" link="midgard_topic:id" reverse="no" type="integer" parentfield="node"/>
+        <property name="codename" type="string" />
+        <property name="title" type="string" />
+        <property name="notes" type="text" />
+        <property name="start" type="datetime" />
+        <property name="end" type="datetime" />
+    </type>
+    <type name="org_maemo_devcodes_code" table="org_maemo_devcodes_code" parent="org_maemo_devcodes_device" parentfield="device">
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="device" link="org_maemo_devcodes_device:id" reverse="no" type="integer" parentfield="device"/>
+        <property name="code" type="string" />
+        <property name="area" type="string" />
+        <property name="recipient" link="org_openpsa_person:id" reverse="no" type="integer"/>
+    </type>
+    <type name="org_maemo_devcodes_application" table="org_maemo_devcodes_application" parent="org_openpsa_person" parentfield="device">
+        <property name="id" type="integer" primaryfield="id"/>
+        <property name="device" link="org_maemo_devcodes_device:id" reverse="no" type="integer" parentfield="device"/>
+        <property name="applicant" link="org_openpsa_person:id" reverse="no" type="integer"/>
+        <property name="code" link="org_maemo_devcodes_code:id" reverse="no" type="integer" />        
+        <property name="summary" type="string" />
+        <property name="content" type="text" />
+        <property name="state" type="integer" />
+    </type>
+</Schema>
