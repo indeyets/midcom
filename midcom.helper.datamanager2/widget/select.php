@@ -186,9 +186,13 @@ class midcom_helper_datamanager2_widget_select extends midcom_helper_datamanager
         }
 
         $this->_type->selection = $selection;
-        if ($this->_type->allow_other)
+        if ($this->_type->allow_other && $results[$this->name]['other'] != '')
         {
             $this->_type->others = explode(',', $results[$this->name]['other']);
+        }
+        else
+        {
+            $this->_type->others = null;
         }
     }
 
