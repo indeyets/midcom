@@ -229,6 +229,10 @@ class org_maemo_devcodes_viewer extends midcom_baseclasses_components_request
     {   
         foreach (array_keys($this->_request_data['schemadb']) as $name)
         {
+            if ($name === 'application-user')
+	    {
+	        continue;
+            }
             $this->_node_toolbar->add_item(Array(
                 MIDCOM_TOOLBAR_URL => "{$name}/create.html",
                 MIDCOM_TOOLBAR_LABEL => sprintf
