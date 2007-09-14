@@ -3,13 +3,13 @@
     width: 450px;
 }
 
-.position_widget_tab_content_place .geoclue_button
+.position_widget_tab_content_place .geodata_btn
 {
     margin-right: 5px;
     float: right;
     width: 16px;
     height: 16px;
-    background: url('refresh_geoclue.png');
+    background: url('refresh_geodata.png');
     cursor: pointer;
 }
 

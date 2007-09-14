@@ -63,6 +63,10 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
     
     var $service = null;
     
+    var $_countrylist = array();
+    
+    var $_other_xep_keys = array();
+    
     /**
      * The initialization event handler post-processes the maxlength setting.
      *
@@ -136,6 +140,19 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         $script = "jQuery('#{$this->_element_id }').tabs({$config});\n";
         $_MIDCOM->add_jquery_state_script($script);
         
+        $this->_get_country_list();
+        
+        $this->_other_xep_keys = array(
+            'area',
+            'building',
+            'description',
+            'floor',
+            'region',
+            'room',
+            'text',
+            'uri',
+        );
+        
         return true;
     }
     
@@ -200,18 +217,21 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
     {
         $html = "\n<div id=\"{$this->_element_id}_tab_content_place\" class=\"position_widget_tab_content_place\"><!-- tab_content_place starts -->\n";        
         
-        $html .= "<div class=\"geoclue_button\" id='{$this->_element_id}_geoclue_button'></div>";
+        $html .= "<div class=\"geodata_btn\" id='{$this->_element_id}_geodata_btn'></div>";
         $html .= "<div class=\"indicator\" id='{$this->_element_id}_indicator' style=\"display: none;\"></div>";
         
-        // $html .= "<label for='{$this->_element_id}_input_place_name' id='{$this->_element_id}_input_place_name_label'>";
-        // $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('name', 'org.routamc.positioning') . "</span>";        
-        // $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_name\" id=\"{$this->_element_id}_input_place_name\" name=\"{$this->_element_id}_input_place_name\" type=\"text\" value=\"\" />";
-        // $html .= "</label>";
+        // $html .= "<div class=\"add_xep_keys_menu\" id='{$this->_element_id}_add_xep_keys_menu_holder'>";
+        // $html .= "<select class=\"dropdown\" id=\"{$this->_element_id}_add_xep_keys_menu\" name=\"{$this->_element_id}_add_xep_keys_menu\">";
+        // $html .= "<option value=\"\">" . $_MIDCOM->i18n->get_string('add xep keys', 'org.routamc.positioning') . "</option>";
+        // 
+        // foreach ($this->_other_xep_keys as $xep_key)
+        // {
+        //     $html .= "<option value=\"{$xep_key}\">{$xep_key}</option>";            
+        // }        
+        // $html .= "</select>";
+        // $html .= "</div>";
         
-        $html .= "<label for='{$this->_element_id}_input_place_country' id='{$this->_element_id}_input_place_country_label'>";
-        $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('country', 'org.routamc.positioning') . "</span>";        
-        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_country\" id=\"{$this->_element_id}_input_place_country\" name=\"{$this->_element_id}_input_place_country\" type=\"text\" value=\"{$this->_type->location->country}\" />";
-        $html .= "</label>";
+        $html .= $this->_render_country_list($this->_type->location->country);
 
         $city_name = '';
         $city = new org_routamc_positioning_city_dba($this->_type->location->city);
@@ -234,7 +254,18 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('postalcode', 'org.routamc.positioning') . "</span>";        
         $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_postalcode\" id=\"{$this->_element_id}_input_place_postalcode\" name=\"{$this->_element_id}_input_place_postalcode\" type=\"text\" value=\"{$this->_type->location->postalcode}\" />";
         $html .= "</label>";
-
+        
+        foreach ($this->_other_xep_keys as $xep_key)
+        {
+            if ($this->_type->location->$xep_key != '')
+            {
+                $html .= "<label for='{$this->_element_id}_input_place_{$xep_key}' id='{$this->_element_id}_input_place_{$xep_key}_label'>";
+                $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string($xep_key, 'org.routamc.positioning') . "</span>";        
+                $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_{$xep_key}\" id=\"{$this->_element_id}_input_place_{$xep_key}\" name=\"{$this->_element_id}_input_place_{$xep_key}\" type=\"text\" value=\"{$this->_type->location->$xep_key}\" />";
+                $html .= "</label>";                
+            }
+        }
+        
         $html .= "<div id=\"{$this->_element_id}_status_box\" class=\"status_box\"></div>";
         
         $html .= "\n</div><!-- tab_content_place ends -->\n";
@@ -310,7 +341,6 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         $html = "\n<div id=\"{$this->_element_id}_tab_content_map\" class=\"position_widget_tab_content_map\"><!-- tab_content_map starts -->\n";        
 
         $orp_map = new org_routamc_positioning_map("{$this->_element_id}_map");
-        //$orp_map->add_object($this->_type->storage);
         $html .= $orp_map->show(420,300,false);
 
         $html .= "\n</div><!-- tab_content_map ends -->\n";
@@ -394,6 +424,66 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         // );
     }
     
+    function _get_country_list()
+    {
+        $this->_countrylist = array
+        (
+            '' => $this->_l10n_midcom->get('select your country'),
+        );
+        
+        $qb = org_routamc_positioning_country_dba::new_query_builder();
+        $qb->add_constraint('code', '<>', '');
+        $qb->add_order('name', 'ASC');
+        $countries = $qb->execute_unchecked();
+
+        if (count($countries) == 0)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Cannot render country list: No countries found. You have to use org.routamc.positioning to import countries to database.');
+            debug_pop();
+        }
+        
+        foreach ($countries as $country)
+        {
+            $this->_countrylist[$country->code] = $country->name;
+        }
+    }
+    
+    function _render_country_list($current='')
+    {
+        $html = '';
+        
+        if (   empty($this->_countrylist)
+            || count($this->_countrylist) == 1)
+        {
+            $html .= "<label for='{$this->_element_id}_input_place_country' id='{$this->_element_id}_input_place_country_label'>";
+            $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('country', 'org.routamc.positioning') . "</span>";
+            $html .= "<input size=\"30\" class=\"shorttext position_widget_input position_widget_input_place_country\" id=\"{$this->_element_id}_input_place_country\" name=\"{$this->_element_id}_input_place_country\" type=\"text\" value=\"{$current}\" />";
+            $html .= "</label>";
+                    
+            return $html;
+        }
+        
+        $html .= "<label for='{$this->_element_id}_input_place_country' id='{$this->_element_id}_input_place_country_label'>";
+        $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('country', 'org.routamc.positioning') . "</span>";
+        $html .= "<select class=\"dropdown position_widget_input position_widget_input_place_country\" id=\"{$this->_element_id}_input_place_country\" name=\"{$this->_element_id}_input_place_country\">";
+
+        foreach ($this->_countrylist as $code => $name)
+        {
+            $selected = '';
+            if ($code == $current)
+            {
+                $selected = 'selected="selected"';
+            }
+            $html .= "<option value=\"{$code}\" {$selected}>{$name}</option>";
+        }
+        
+        $html .= "</select>";
+        $html .= "</label>";
+        
+        return $html;
+    }
+    
     function get_default()
     {        
         $city_name = '';
@@ -403,7 +493,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
             $city_name = $city->city;
         }
         
-        $script = "init_current_pos({$this->_type->location->latitude},{$this->_type->location->longitude});\n";
+        $script = "init_current_pos('{$this->_element_id}',{$this->_type->location->latitude},{$this->_type->location->longitude});\n";
         $_MIDCOM->add_jquery_state_script($script);
         
         return Array
