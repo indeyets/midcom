@@ -148,7 +148,7 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
 	        elseif ($this->_creation_root_topic_parent_guid != '')
 	        {
 	    
-	        $structure_creator->create_creation_root_topic($this->_creation_root_topic_parent_guid, 
+	            $structure_creator->create_creation_root_topic($this->_creation_root_topic_parent_guid, 
 		        $this->_home_name, $this->_home_title, $this->_creation_root_topic_component, 
 		        $this->_creation_root_topic_parameters, $this->_home_title, true);
 	        }

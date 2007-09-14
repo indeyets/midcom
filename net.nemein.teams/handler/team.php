@@ -34,6 +34,10 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     
     var $_teams_list = Array();
     
+    var $_team_player_list = Array();
+    
+    var $_team_manager = null;
+    
     var $_pending = null;
 
     /**
@@ -431,6 +435,67 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         }
         
         return true;
+    }
+    
+    function _handler_team_player_list($handler_id, $args, &$data)
+    {
+        if (!empty($args[0]))
+        {
+            $qb = net_nemein_teams_team_dba::new_query_builder();
+            $qb->add_constraint('groupguid', '=', $args[0]);
+            
+            if (!$teams = $qb->execute())
+            {
+                //return false;
+            }
+            
+            if (count($teams) > 0)
+            {
+                $qb = midcom_db_member::new_query_builder();
+                $qb->add_constraint('gid.guid', '=', $teams[0]->groupguid);
+                
+                if (!$members = $qb->execute())
+                {
+                   
+                }
+                else
+                {
+                    foreach ($members as $member)
+                    {
+                        $person = new midcom_db_person();
+                        $person->get_by_id($member->uid);
+                        
+                        if ($teams[0]->managerguid == $person->guid)
+                        {
+                            $this->_team_manager = $person;
+                        }
+                        else
+                        {
+                            $this->_team_player_list[] = $person;
+                        }
+                    } 
+                }
+            }
+        }
+        
+    
+        return true;
+    }
+
+    function _show_team_player_list($handler_id, &$data)
+    {
+        $this->_request_data['team_manager'] = $this->_team_manager;
+    
+        midcom_show_style('team_player_list_start');
+
+        foreach ($this->_team_player_list as $player)
+        {
+            $this->_request_data['team_player'] = $player;
+
+            midcom_show_style('team_player_list_item');
+        }
+    
+        midcom_show_style('team_player_list_end');
     }
 
     function _show_pending($handler_id, &$data)

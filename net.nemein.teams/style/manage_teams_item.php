@@ -4,7 +4,7 @@
 
 <li>
 <?php
-echo "<a href=\"manage/delete/{$data['group_guid']}.html\">
+echo "<a href=\"manage/team/{$data['group_guid']}\">
     {$data['team_name']}</a>";
 ?>
 </li>

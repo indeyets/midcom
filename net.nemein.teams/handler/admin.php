@@ -39,7 +39,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         $title = $this->_l10n_midcom->get('index');
         $_MIDCOM->set_pagetitle(":: {$title}");
         
-	return true;
+	    return true;
     }
 
     function _handler_log ($handler_id, $args, &$data)
@@ -58,7 +58,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
 	    $this->_request_data['logs'] = $logs;
  
 
-	return true;
+	    return true;
     }
     
     function _handler_manage ($handler_id, $args, &$data)
@@ -90,7 +90,11 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
                     }
                     
                     $team_group->delete();
-                    $team_topic->delete();
+                    
+                    // Setting topic invisible at this point
+                    // We might need to delete this for real
+                    $team_topic->set_parameter('midcom.helper.metadata', 'nav_noentry', 1);
+                                     
                     $team->delete();
                     
                     $_MIDCOM->relocate('manage');
@@ -105,6 +109,27 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
     
         return true;
     }
+    
+    function _handler_manage_team($handler_id, $args, &$data)
+    {
+    
+        $qb = net_nemein_teams_team_dba::new_query_builder();
+        $qb->add_constraint('groupguid', '=', $args[0]);
+        
+        $teams = $qb->execute();
+        
+        if (count($teams) > 0)
+        {
+        
+        }
+    
+        return true;
+    }
+    
+    function _show_manage_team($handler_id, &$data)
+    {
+        midcom_show_style('manage_team');
+    }    
     
     function _show_manage($handler_id, &$data)
     {
