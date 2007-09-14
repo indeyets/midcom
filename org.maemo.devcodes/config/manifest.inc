@@ -8,8 +8,8 @@
 /* use this to set default privileges */
 'privileges' => array
 (
-    'manage' => MIDCOM_PRIVILEGY_DENY
-    'read' => MIDCOM_PRIVILEGY_DENY
+    'manage' => MIDCOM_PRIVILEGE_DENY,
+    'read' => MIDCOM_PRIVILEGE_DENY,
 ),
 /* use this to initialize your own MgdSchema classes */
 'class_definitions' => array('midcom_dba_classes.inc'),
