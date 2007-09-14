@@ -193,6 +193,11 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
      */
     function _handler_view ($handler_id, $args, &$data)
     {
+        if ($handler_id == 'view-ajax')
+        {
+            $_MIDCOM->skip_page_style = true;
+        }
+        
         $this->_manage = false;
         
         if ($handler_id == 'manage')

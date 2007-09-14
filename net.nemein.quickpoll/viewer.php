@@ -65,7 +65,7 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('edit'),
             'variable_args' => 1,
         );
-        // Handle /manage/<article_id>.html
+        // Handle /manage/<article_id>
         $this->_request_switch['manage'] = array
         (
             'handler' => Array('net_nemein_quickpoll_handler_index', 'view'),
@@ -87,18 +87,34 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nemein_quickpoll_handler_index', 'index'),
         );
         
-        // Handle /<article_id>.html
+        // Handle /<article_id>
         $this->_request_switch['view'] = array
         (
             'handler' => Array('net_nemein_quickpoll_handler_index', 'view'),
             'variable_args' => 1,
         );
         
-         // Handle /vote/<article_id>.html
+        // Handle /ajax/<article_id>
+        $this->_request_switch['view-ajax'] = array
+        (
+            'handler' => Array('net_nemein_quickpoll_handler_index', 'view'),
+            'fixed_args' => Array('ajax'),
+            'variable_args' => 1,
+        );
+        
+         // Handle /vote/<article_id>
         $this->_request_switch['vote'] = Array
         (
             'handler' => Array('net_nemein_quickpoll_handler_vote', 'vote'),
             'fixed_args' => Array('vote'),
+            'variable_args' => 1,
+        );
+
+         // Handle /vote/ajax/<article_id>
+        $this->_request_switch['vote-ajax'] = Array
+        (
+            'handler' => Array('net_nemein_quickpoll_handler_vote', 'vote'),
+            'fixed_args' => Array('vote', 'ajax'),
             'variable_args' => 1,
         );
         

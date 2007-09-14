@@ -8,5 +8,5 @@
 
 'archive_enable' => true,
 'show_navigation_pseudo_leaves' => true,   // Set this to false if you want to hide archive and feeds navigation items
-'enable_anonoymous' => true,
+'enable_anonymous' => true,
 

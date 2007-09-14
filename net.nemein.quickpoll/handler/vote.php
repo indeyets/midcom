@@ -199,7 +199,7 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
             // This will exit.
         }
         
-        if ($this->_config->get('enable_anonoymous'))
+        if ($this->_config->get('enable_anonymous'))
         {
             $sudo_mode = true;
             $_MIDCOM->auth->request_sudo('net.nemein.quickpoll');
@@ -231,8 +231,19 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
         {
             $_MIDCOM->auth->drop_sudo();
         }
-        $_MIDCOM->relocate($prefix.$args[0].'.html');
-
+        
+        if (   array_key_exists('net_nemein_quickpoll_vote_return_prefix', $_REQUEST)
+            && !empty($_REQUEST['net_nemein_quickpoll_vote_return_prefix']))
+        {
+            $prefix = $_REQUEST['net_nemein_quickpoll_vote_return_prefix'];
+        }
+        
+        if ($handler_id == 'vote-ajax')
+        {
+            $_MIDCOM->relocate($prefix.'ajax/'.$args[0].'/');
+        }
+        $_MIDCOM->relocate($prefix.$args[0].'/');
+        
         $this->_prepare_request_data();
 
         return true;

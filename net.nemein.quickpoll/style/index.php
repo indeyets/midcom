@@ -34,13 +34,13 @@ $vote_count_string = $data['l10n']->get('vote count');
         <?php
         if (array_key_exists('manage',$data) && $data['manage'])
         {
-        ?>a:
+        ?>
         &(view["options"]:h);
         <?php
         }
         elseif (array_key_exists('voted',$data) && $data['voted'])
         {
-        ?>b:
+        ?>
         &(view["options"]:h);
         <br />
         &(vote_count_string);: &(data['vote_count']);
@@ -48,7 +48,7 @@ $vote_count_string = $data['l10n']->get('vote count');
         }
         else
         {
-        ?>c:
+        ?>
         <form method="post"  id="net_nemein_quickpoll_vote_form" name="net_nemein_quickpoll_vote_form" action="&(prefix);vote/&(view_id);.html">
         &(view["options"]:h);
         <br /><br /><input type="submit" value="&(submit_string);" />
