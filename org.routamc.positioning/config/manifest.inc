@@ -8,7 +8,7 @@
   array (
     0 => 'midcom_dba_classes.inc',
   ),
-  'version' => '1.1.2beta1',
+  'version' => '1.1.2beta3',
   'state' => 'beta',
   'package.xml' => 
   array (
@@ -20,6 +20,12 @@
         'name' => 'Henri Bergius',
         'email' => 'henri.bergius@iki.fi',
         'role' => 'lead',
+      ),
+      'w_i' => 
+      array (
+        'name' => 'Jerry Jalava',
+        'email' => 'jerry.jalava@gmail.com',
+        'role' => 'developer',
       ),
     ),
     'dependencies' => 

@@ -29,14 +29,27 @@ class org_routamc_positioning_geocoder_geonames extends org_routamc_positioning_
      * @param Array $location Parameters to geocode with, conforms to XEP-0080
      * @return Array containing geocoded information
      */
-    function geocode($location)
+    function geocode($location, $options=array())
     {
-        $position = array
+        $results = array();
+        
+        $parameters = array
         (
-            'latitude' => null,
-            'longitude' => null,
-            'accuracy' => null,
+            'radius' => null,
+            'maxRows' => 1,
+            'style' => 'FULL',
         );
+        
+        if (! empty($options))
+        {
+            foreach ($options as $key => $value)
+            {
+                if (isset($parameters[$key]))
+                {
+                    $parameters[$key] = $value;
+                }
+            }
+        }
             
         if (   !isset($location['postalcode'])
             && !isset($location['city']))
@@ -58,6 +71,14 @@ class org_routamc_positioning_geocoder_geonames extends org_routamc_positioning_
         {
             $params[] = 'country=' . urlencode($location['country']);
         }
+
+        foreach ($parameters as $key => $value)
+        {
+            if (! is_null($value))
+            {
+                $params[] = "{$key}=" . urlencode($value);
+            }
+        }
         
         $http_request = new org_openpsa_httplib();
         $response = $http_request->get('http://ws.geonames.org/postalCodeSearch?' . implode('&', $params));
@@ -69,17 +90,34 @@ class org_routamc_positioning_geocoder_geonames extends org_routamc_positioning_
             $this->error = 'POSITIONING_CITY_NOT_FOUND';
             return null;
         }
-        
-        $city_entry = $simplexml->code[0];
-        $position['latitude' ] = (float) $city_entry->lat;
-        $position['longitude' ] = (float) $city_entry->lng;
-        $position['city' ] = (string) $city_entry->name;
-        $position['region' ] = (string) $city_entry->adminName2;
-        $position['country' ] = (string) $city_entry->countryCode;
-        $position['postalcode' ] = (string) $city_entry->postalcode;
-        $position['accuracy'] = ORG_ROUTAMC_POSITIONING_ACCURACY_CITY;
+                
+        for ($i=0; $i<$parameters['maxRows']; $i++)
+        {
+            if (! isset($simplexml->code[$i]))
+            {
+                break;
+            }
+            $entry = $simplexml->code[$i];
+            
+            $position = array();
+            $position['latitude' ] = (float) $entry->lat;
+            $position['longitude' ] = (float) $entry->lng;
+            $position['distance'] = array
+            (
+                'meters' => round( (float) $entry->distance * 1000 ),
+                'bearing' => null,
+            );
+            $position['city' ] = (string) $entry->name;
+            $position['region' ] = (string) $entry->adminName2;
+            $position['country' ] = (string) $entry->countryCode;
+            $position['postalcode' ] = (string) $entry->postalcode;
+            $position['alternate_names'] = (string) $entry->alternateNames;
+            $position['accuracy'] = ORG_ROUTAMC_POSITIONING_ACCURACY_CITY;
+            
+            $results[] = $position;
+        }
 
-        return $position;
+        return $results;
     }
     
     /**
@@ -87,13 +125,15 @@ class org_routamc_positioning_geocoder_geonames extends org_routamc_positioning_
      * @param Array $coordinates Contains latitude and longitude values
      * @return Array containing geocoded information
      */
-    function reverse_geocode($coordinates,$options=array())
+    function reverse_geocode($coordinates, $options=array())
     {
+        $results = array();
+        
         $parameters = array
         (
-            'radius' => null,
-            'maxRows' => null,
-            'style' => 'FULL'
+            'radius' => 10,
+            'maxRows' => 1,
+            'style' => 'FULL',
         );
         
         if (! empty($options))
@@ -127,9 +167,10 @@ class org_routamc_positioning_geocoder_geonames extends org_routamc_positioning_
         }
         
         $http_request = new org_openpsa_httplib();
-        $response = $http_request->get('http://ws.geonames.org/findNearbyPlaceName?' . implode('&', $params));
+        $url = 'http://ws.geonames.org/findNearbyPlaceName?' . implode('&', $params);
+        $response = $http_request->get($url);
         $simplexml = simplexml_load_string($response);
-
+        
         if (   !isset($simplexml->geoname)
             || count($simplexml->geoname) == 0)
         {
@@ -143,14 +184,47 @@ class org_routamc_positioning_geocoder_geonames extends org_routamc_positioning_
             return null;
         }
         
-        $entry = $simplexml->geoname[0];
-        $position['latitude' ] = (float) $entry->lat;
-        $position['longitude' ] = (float) $entry->lng;
-        $position['city' ] = (string) $entry->name;
-        $position['region' ] = (string) $entry->adminName2;
-        $position['country' ] = (string) $entry->countryCode;
-        $position['accuracy'] = ORG_ROUTAMC_POSITIONING_ACCURACY_GPS;
+        for ($i=0; $i<$parameters['maxRows']; $i++)
+        {
+            if (! isset($simplexml->geoname[$i]))
+            {
+                break;
+            }
+            
+            $entry = $simplexml->geoname[$i];
 
-        return $position;
+            $entry_coordinates = array
+            (
+                'latitude'  => (float) $entry->lat,
+                'longitude' => (float) $entry->lng,
+            );
+
+            $meters = round( org_routamc_positioning_utils::get_distance($coordinates, $entry_coordinates) * 1000 );
+            $entry_meters = round( (float) $entry->distance * 1000 );
+            
+            if ($entry_meters < $meters)
+            {
+                $meters = $entry_meters;
+            }
+            
+            $position = array();
+            $position['latitude' ] = (float) $entry->lat;
+            $position['longitude' ] = (float) $entry->lng;
+            $position['distance'] = array
+            (
+                'meters' => $meters,
+                'bearing' => org_routamc_positioning_utils::get_bearing($coordinates, $entry_coordinates),
+            );
+            $position['city'] = (string) $entry->name;
+            $position['region'] = (string) $entry->adminName2;
+            $position['country'] = (string) $entry->countryCode;
+            $position['postalcode' ] = (string) $entry->postalcode;
+            $position['alternate_names'] = (string) $entry->alternateNames;
+            $position['accuracy'] = ORG_ROUTAMC_POSITIONING_ACCURACY_GPS;
+
+            $results[] = $position;            
+        }
+        
+        return $results;
     }
 }
