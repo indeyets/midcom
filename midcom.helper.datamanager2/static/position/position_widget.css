@@ -3,7 +3,7 @@
     width: 450px;
 }
 
-.position_widget_tab_content_place .geodata_btn
+.position_widget_tab_content .geodata_btn
 {
     margin-right: 5px;
     float: right;
@@ -13,11 +13,21 @@
     cursor: pointer;
 }
 
-.position_widget_tab_content_place .indicator
+.position_widget_tab_content .indicator
 {
     margin-right: 5px;
     float: right;
     width: 16px;
     height: 16px;
     background: url('../ajax-loading-small.gif');
+}
+
+.position_widget_actions
+{
+    margin-bottom: 10px;
+}
+.position_widget_actions div
+{
+    font-weight: bold;
+    cursor: pointer;
 }

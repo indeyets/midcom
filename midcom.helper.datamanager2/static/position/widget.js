@@ -1,23 +1,227 @@
-var widgets = [];
-var current_pos = null;
-var position_marker = null;
-var widgets_mapstrations = [];
+// var widgets = [];
+// var current_pos = [];
+// var position_marker = [];
+// var alternative_markers = [];
+// var alternative_markers_visible = [];
+// var widgets_mapstractions = [];
+// var widget_options = [];
 
-function init_position_widget(widget_id, mapstration)
-{   
-    jQuery('#' + widget_id).each(function(i,w){
-        var widget = jQuery(w);
+jQuery.fn.extend({
+	dm2_position_widget: function(mapstraction, options) {
+		options = jQuery.extend(jQuery.midcom_helper_datamanager2_widget_position.defaults, options);
+        return this.each(function() {
+		    return new jQuery.midcom_helper_datamanager2_widget_position(this, mapstraction, options);
+        });
+	},
+	dm2_pw_new_position: function(point) {
+		return this.trigger("new_position",[point]);
+	},
+	dm2_pw_clear_alternative_markers: function() {
+		return this.trigger("clear_alternative_markers",[]);
+	},
+	dm2_pw_set_marker: function(label, info) {
+		return this.trigger("set_marker",[label, info]);
+	},
+	dm2_pw_init_current_pos: function(lat, lon)
+	{
+	    return this.trigger("init_current_pos",[lat, lon]);
+	},
+	dm2_pw_position_map_to_current: function() {
+		return this.trigger("position_map_to_current",[]);
+	}
+});
 
-        widgets[w.id] = widget;
+jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapstraction, options) {
+    
+    var widget = jQuery(widget_block);
+    var widget_id = widget.attr('id');
 
-        var geodata_btn = jQuery('#' + widget_id + '_geodata_btn', widget);
-        var indicator = jQuery('#' + widget_id + '_indicator', widget);
-        var status_box = jQuery('#' + widget_id + '_status_box', widget);
+    mapstraction.addMapTypeControls();
+    mapstraction.addEventListener('click', new_position);
+    
+    var geodata_btn = jQuery('#' + widget_id + '_geodata_btn', widget);
+    var indicator = jQuery('#' + widget_id + '_indicator', widget);
+    
+    var revgeodata_btn = jQuery('#' + widget_id + '_revgeodata_btn', widget);
+    var revindicator = jQuery('#' + widget_id + '_revindicator', widget);
+    
+    var actions_cam = jQuery('#' + widget_id + '_position_widget_action_cam', widget);
+    
+    var status_box = jQuery('#' + widget_id + '_status_box', widget);
 
-        var backend_url = jQuery('input.position_widget_backend_url',widget).attr('value');
-        var backend_service = jQuery('input.position_widget_backend_service',widget).attr('value');
+    var current_pos_icon_url = MIDCOM_STATIC_URL + '/midcom.helper.datamanager2/position/current_position_marker.png'
+    var backend_url = jQuery('input.position_widget_backend_url',widget).attr('value');
+    var backend_service = jQuery('input.position_widget_backend_service',widget).attr('value');        
+    var input_data = {};
+    var current_pos = null;
+    var position_marker = null;
+    var alternative_markers = null;
+    var alternative_markers_visible = true;
         
-        var input_data = {};
+    widget.bind("new_position", function(event, point){
+        new_position(point);
+	}).bind("clear_alternative_markers", function(event, point){
+        clear_alternative_markers();
+    }).bind("set_marker", function(event, label, info){
+        set_marker(label, info);
+    }).bind("init_current_pos", function(event, lat, lon){
+        init_current_pos(lat, lon);
+    }).bind("position_map_to_current", function(event){
+        position_map_to_current();
+    });
+    
+    indicator.hide();
+    revindicator.hide();
+    
+    geodata_btn.bind('click', function(e){
+        refresh_geodata();
+        geodata_btn.hide();
+        indicator.show();
+    });
+    revgeodata_btn.bind('click', function(e){
+        var lat = jQuery('#' + input_data['latitude']['id']).attr('value');
+        var lon = jQuery('#' + input_data['longitude']['id']).attr('value');
+        
+        new_position(new LatLonPoint(lat,lon));
+        
+        revgeodata_btn.hide();
+        revindicator.show();
+    });
+
+    actions_cam.bind('click', function(e){
+        clear_alternative_markers();
+    });
+	
+	jQuery('.position_widget_input',widget).each(function(i, o){
+        var jqo = jQuery(o);
+        var key = get_key_name(jqo.attr('name'));
+        input_data[key] = {
+            id: jqo.attr('id'),
+            value: jqo.attr('value')
+        };
+
+        if (input_data[key]['value'] == undefined)
+        {
+            input_data[key]['value'] = '';
+        }
+    });
+    
+    function disable_tabs()
+    {
+        widget.disableTab(1);
+        widget.disableTab(2);
+        widget.disableTab(3);
+    }
+    function enable_tabs()
+    {
+        widget.enableTab(1);
+        widget.enableTab(2);
+        widget.enableTab(3);
+    }
+    
+    function new_position(point)
+    {
+        current_pos = point;
+        
+        jQuery('#' + input_data['latitude']['id']).attr('value', current_pos.lat);
+        jQuery('#' + input_data['longitude']['id']).attr('value', current_pos.lon);
+        
+        set_marker('Current position', '');
+        get_reversed_geodata();
+    }
+    
+    function get_reversed_geodata()
+    {
+        disable_tabs();
+        clear_alternative_markers();
+        
+        var opts_str = '?';
+        jQuery.each(options, function(key,value){
+            opts_str += 'options[' + key + ']=' + value + '&';
+        });
+        
+        opts_str = opts_str.substr(0,opts_str.length-1);
+        
+        var get_params = {
+            service: backend_service,
+            dir: 'reverse',
+            latitude: current_pos.lat,
+            longitude: current_pos.lon
+        };
+        
+        jQuery.ajax({
+            type: "GET",
+            url: backend_url + opts_str,
+            data: get_params,
+            dataType: "xml",
+            error: function(request, type, expobj){
+                parse_error(request.responseText);
+            },
+            success: function(data){
+                var parsed = parse_response(data);
+                update_widget_inputs(parsed[0]);
+                handle_alternatives(parsed);
+            }
+        });
+        
+        function parse_error(error_string)
+    	{
+            indicator.hide();
+            revindicator.hide();
+            geodata_btn.show();
+            revgeodata_btn.show();
+            enable_tabs();
+            
+            status_box.html(error_string);
+    	}
+
+        function parse_response(data)
+    	{
+    	    status_box.html('');
+    	    
+            var results = [];
+            jQuery('position',data).each(function(idx) {            
+                var rel_this = jQuery(this);
+
+                results[idx] = {
+                    latitude: rel_this.find("latitude").text(),
+                    longitude: rel_this.find("longitude").text(),
+                    distance: {
+                        meters: rel_this.find("distance").find("meters").text(),
+                        bearing: rel_this.find("distance").find("bearing").text()
+                    },
+                    city: rel_this.find("city").text(),
+                    region: rel_this.find("region").text(),
+                    country: rel_this.find("country").text(),
+                    alternate_names: rel_this.find("alternate_names").text(),
+                    accuracy: rel_this.find("accuracy").text()
+                };
+            });
+
+        	return results;
+    	}
+    }
+    
+    function refresh_geodata()
+    {
+        disable_tabs();
+        clear_alternative_markers();
+
+        var opts_str = '?';            
+        var opts_len = options.length;
+        var i = 1;
+        jQuery.each(options, function(key,value){
+            if (i < opts_len)
+            {
+                opts_str += '&';
+            }
+            opts_str += 'options[' + key + ']=' + value;
+            i++;
+        });
+        
+        var get_params = {
+            service: backend_service,
+        };
 
         jQuery('.position_widget_input',widget).each(function(i, o){
             var jqo = jQuery(o);
@@ -31,256 +235,250 @@ function init_position_widget(widget_id, mapstration)
             {
                 input_data[key]['value'] = '';
             }
+            else
+            {
+                get_params[key] = input_data[key]['value'];
+            }
         });
 
-        widgets_mapstrations[widget_id] = mapstration;
-        widgets_mapstrations[widget_id].addMapTypeControls();
-        widgets_mapstrations[widget_id].addEventListener('click', new_position);
-        
-        function new_position(point)
-        {
-            current_pos = point;
-            
-            jQuery('#' + input_data['latitude']['id']).attr('value',current_pos.lat);
-            jQuery('#' + input_data['longitude']['id']).attr('value',current_pos.lon);
-            
-            set_marker('Current position','',widget_id);
-            get_reversed_geodata();
-        }
-
-        indicator.hide();
-
-        geodata_btn.bind('click', function(e){
-            refresh_geodata();
-            geodata_btn.hide();
-            indicator.show();
+        jQuery.ajax({
+            type: "GET",
+            url: backend_url + opts_str,
+            data: get_params,
+            dataType: "xml",
+            error: function(request, type, expobj){
+                parse_error(request.responseText);
+            },
+            success: function(data){
+                var parsed = parse_response(data);
+                update_widget(parsed[0]);
+                handle_alternatives(parsed);
+            }
         });
-        
-        function get_reversed_geodata()
-        {
-            var get_params = {
-                service: backend_service,
-                dir: 'reverse',
-                latitude: current_pos.lat,
-                longitude: current_pos.lon
-            };
-            
-            jQuery.ajax({
-                type: "GET",
-                url: backend_url,
-                data: get_params,
-                dataType: "xml",
-                error: function(request, type, expobj){
-                    parse_error(request.responseText);
-                },
-                success: function(data){
-                    var parsed = parse_response(data);
-                    update_widget_inputs(parsed);
-                }
-            });
-            
-            function parse_error(error_string)
-        	{
-                indicator.hide();
-                geodata_btn.show();
-                
-                status_box.html(error_string);
-        	}
 
-            function parse_response(data)
-        	{
-        	    status_box.html('');
-        	    
-                var results = [];
-                jQuery('position',data).each(function(idx) {            
-                    var rel_this = jQuery(this);
-
-                    results[idx] = {
-                        accuracy: rel_this.find("accuracy").text(),
-                        city: rel_this.find("city").text(),
-                        region: rel_this.find("region").text(),
-                        country: rel_this.find("country").text(),
-                        accuracy: rel_this.find("accuracy").text()
-                    };
-                });
-
-            	return results[0];
-        	}
-        }
-        
-        function refresh_geodata()
-        {
-            var get_params = {
-                service: backend_service
-            };
-
-            jQuery('.position_widget_input',widget).each(function(i, o){
-                var jqo = jQuery(o);
-                var key = get_key_name(jqo.attr('name'));
-                input_data[key] = {
-                    id: jqo.attr('id'),
-                    value: jqo.attr('value')
-                };
-
-                if (input_data[key]['value'] == undefined)
-                {
-                    input_data[key]['value'] = '';
-                }
-                else
-                {
-                    get_params[key] = input_data[key]['value'];
-                }
-            });
-
-            // jQuery.each(input_data, function(i,o){
-            //     if (o['value'] != '')
-            //     {
-            //         get_params[i] = o['value'];
-            //     }
-            // });
-
-            jQuery.ajax({
-                type: "GET",
-                url: backend_url,
-                data: get_params,
-                dataType: "xml",
-                error: function(request, type, expobj){
-                    parse_error(request.responseText);
-                },
-                success: function(data){
-                    var parsed = parse_response(data);
-                    update_widget(parsed);
-                }
-            });
-
-            function parse_error(error_string)
-        	{
-                indicator.hide();
-                geodata_btn.show();
-                
-                status_box.html(error_string);
-        	}
-
-            function parse_response(data)
-        	{
-        	    status_box.html('');
-        	    
-                var results = [];
-                jQuery('position',data).each(function(idx) {            
-                    var rel_this = jQuery(this);
-
-                    results[idx] = {      	    
-                        latitude: rel_this.find("latitude").text(), 
-                        longitude: rel_this.find("longitude").text(),
-                        accuracy: rel_this.find("accuracy").text(),
-                        city: rel_this.find("city").text(),
-                        region: rel_this.find("region").text(),
-                        country: rel_this.find("country").text(),
-                        postalcode: rel_this.find("postalcode").text()
-                    };
-                });
-
-            	return results[0];
-        	}
-        }
-
-        function update_widget(location_data)
-        {
+        function parse_error(error_string)
+    	{
             indicator.hide();
+            revindicator.hide();
             geodata_btn.show();
-
-            update_widget_inputs(location_data);
-
-            current_pos = new LatLonPoint(location_data['latitude'],location_data['longitude']);
-
-            var info = location_data['city'] + ", " + location_data['country'] + ", " + location_data['postalcode'];
-            var label = 'Current position';
-            if (input_data['description'])
-            {
-                label = input_data['description'];
-            }
-            else if (location_data['description'])
-            {
-                label = location_data['description'];
-            }
+            revgeodata_btn.show();
+            enable_tabs();
             
-            set_marker(label, info, widget_id);
+            status_box.html(error_string);
+    	}
+
+        function parse_response(data)
+    	{
+    	    status_box.html('');
+    	    
+            var results = [];
+            jQuery('position',data).each(function(idx) {            
+                var rel_this = jQuery(this);
+
+                results[idx] = {      	    
+                    latitude: rel_this.find("latitude").text(), 
+                    longitude: rel_this.find("longitude").text(),
+                    distance: {
+                        meters: rel_this.find("distance").find("meters").text(),
+                        bearing: rel_this.find("distance").find("bearing").text()
+                    },
+                    accuracy: rel_this.find("accuracy").text(),
+                    city: rel_this.find("city").text(),
+                    region: rel_this.find("region").text(),
+                    country: rel_this.find("country").text(),
+                    alternate_names: rel_this.find("alternate_names").text(),
+                    postalcode: rel_this.find("postalcode").text()
+                };
+            });
+
+        	return results;
+    	}
+    }
+    
+    function update_widget(location_data)
+    {
+        update_widget_inputs(location_data);
+
+        current_pos = new LatLonPoint(location_data['latitude'],location_data['longitude']);
+
+        var info = location_data['city'] + ", " + location_data['country'] + ", " + location_data['postalcode'];
+        var label = 'Current position';
+        if (input_data['description'])
+        {
+            label = input_data['description'];
+        }
+        else if (location_data['description'])
+        {
+            label = location_data['description'];
         }
         
-        function update_widget_inputs(location_data)
+        set_marker(label, info);
+    }
+    
+    function update_widget_inputs(location_data)
+    {
+        enable_tabs();
+        indicator.hide();
+        revindicator.hide();
+        geodata_btn.show();
+        revgeodata_btn.show();
+                    
+        jQuery.each(location_data, function(key,value){
+            if (input_data[key])
+            {
+                jQuery('#' + input_data[key]['id']).attr('value',value);
+            }
+        });
+    }
+
+    function get_key_name(key)
+    {
+        var re = /widget_([a-z]*)_([a-z]{5,11})_([a-z]*)/;
+        var reg = re.exec(key);
+        
+        return reg[3];
+    }
+    
+    function handle_alternatives(items)
+    {
+        var total = items.length;
+        for (var i=1; i<total; i++)
+        {               
+            var point = new LatLonPoint(items[i]['latitude'],items[i]['longitude']);
+            var info = items[i]['city'] + ", " + items[i]['country'] + ", " + items[i]['postalcode'];
+            set_alternative_marker('Alternative position', info, point);
+        }
+    }
+    
+    function init_current_pos(lat, lon)
+    {
+        current_pos = new LatLonPoint(lat,lon);
+        set_marker('Current position', '');
+    }
+
+    function set_marker(label, info)
+    {
+        if (position_marker != null)
         {
-            jQuery.each(location_data, function(key,value){
-                if (input_data[key])
-                {
-                    jQuery('#' + input_data[key]['id']).attr('value',value);
-                }
-                else
-                {
-                    //console.log("Key: "+key+" not found in items.");
-                }
-            });
+             mapstraction.removeMarker(position_marker);
         }
 
-        function get_key_name(key)
+        position_marker = new Marker(current_pos);
+        position_marker.setIcon(current_pos_icon_url);
+        
+        //position_marker.draggable = true;
+        //position_marker.draggable_end_event = function(marker){var p = marker.getPoint(); alert(p.lat);};
+        //position_marker.addEventListener('dragend', function(){alert('drop');});
+        // jQuery.extend(this, function(){
+        //             var point = position_marker.getPoint();
+        //             dm2_pw_new_position(point);
+        //         });
+
+        if (label != undefined)
         {
-            //var re = /^\s*(\s*)_(\w{5,11})_(\s*)$/;
-            var re = /widget_([a-z]*)_([a-z]{5,11})_([a-z]*)/;
-            var reg = re.exec(key);
-            // console.log("Reg: "+reg);
-            // console.log("Reg.length: "+reg.length);
-            // console.log("Reg[0]: "+reg[0]+" Reg[1]: "+reg[1]+" Reg[2]: "+reg[2]);
-            
-            return reg[3];
+            position_marker.setLabel(label);                
         }
 
-    });
-}
+        if (   info != undefined
+            && info != '')
+        {
+            position_marker.setInfoBubble(info);
+        }
 
-function init_current_pos(widget_id,lat,lon)
-{
-    current_pos = new LatLonPoint(lat,lon);
-    set_marker('Current position','',widget_id);
-}
+        mapstraction.addMarker(position_marker);
 
-function set_marker(label, info, widget_id)
-{
-    // console.log("set_marker label: "+label+" info: "+info+" widget_id: "+widget_id);
-    
-    if (position_marker != null)
-    {
-         widgets_mapstrations[widget_id].removeMarker(position_marker);
+        // if (info != undefined)
+        // {
+        //     position_marker[widget_id].openBubble();
+        // }
     }
-    
-    position_marker = new Marker(current_pos);
-    
-    if (label != undefined)
-    {
-        position_marker.setLabel(label);                
-    }
-    
-    if (   info != undefined
-        && info != '')
-    {
-        position_marker.setInfoBubble(info);
-    }
-    
-    widgets_mapstrations[widget_id].addMarker(position_marker);
 
-    // if (info != undefined)
-    // {
-    //     position_marker.openBubble();
-    // }
-}
-
-function position_map_to_current(widget_id)
-{
-    //console.log("position_map_to_current widget_id: "+widget_id);
-    //console.log("current_pos: "+current_pos);
-    
-    if (current_pos != null)
+    function set_alternative_marker(label, info, pos)
     {
-        widgets_mapstrations[widget_id].resizeTo(400,280);
-        widgets_mapstrations[widget_id].setCenterAndZoom(current_pos, 13);
-        widgets_mapstrations[widget_id].resizeTo(420,300);
+        if (! alternative_markers)
+        {
+            alternative_markers = [];
+        }
+
+        var last_key = alternative_markers.push( new Marker(pos) );
+
+        if (label != undefined)
+        {
+            alternative_markers[last_key-1].setLabel(label);                
+        }
+
+        if (   info != undefined
+            && info != '')
+        {
+            alternative_markers[last_key-1].setInfoBubble(info);
+        }
+
+        mapstraction.addMarker(alternative_markers[last_key-1]);
+
+        // if (info != undefined)
+        // {
+        //     alternative_markers[widget_id][last_key-1].openBubble();
+        // }
     }
-}
+
+    function clear_alternative_markers()
+    {
+        if (   alternative_markers
+            && alternative_markers.length > 0)
+        {
+            var length = alternative_markers.length;
+            for (var i=0; i<length; i++)
+            {
+                mapstraction.removeMarker(alternative_markers[i]);
+            }
+        }
+    }
+
+    function toggle_alternative_markers()
+    {
+        if (! alternative_markers_visible)
+        {
+            alternative_markers_visible = true;
+
+            if (   alternative_markers
+                && alternative_markers.length > 0)
+            {
+                var length = alternative_markers.length;
+                for (var i=0; i<length; i++)
+                {
+                    alternative_markers[i].show();
+                }
+            }
+        }
+        else
+        {
+            alternative_markers_visible = false;
+
+            if (   alternative_markers
+                && alternative_markers.length > 0)
+            {
+                var length = alternative_markers.length;
+                for (var i=0; i<length; i++)
+                {
+                    alternative_markers[i].hide();
+                }
+            }
+        }
+    }
+
+    function position_map_to_current()
+    {
+        if (current_pos != null)
+        {
+            mapstraction.resizeTo(400,280);
+            mapstraction.setCenterAndZoom(current_pos, 13);
+            mapstraction.resizeTo(420,300);
+        }
+    }    
+    
+};
+
+jQuery.midcom_helper_datamanager2_widget_position.defaults = {
+    maxRows: 1,
+    radius: 5
+};
