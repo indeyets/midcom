@@ -55,6 +55,18 @@
     <target name="packjs">
         <mkdir dir="${target_dir}"/>
         <packJavascripts
+            action="pack"
+            path="${path}"
+            target_dir="${target_dir}"
+            returnProperty="statistics"
+        >
+        </packJavascripts>
+        <echo>${statistics}</echo>
+    </target>
+    <target name="unpackjs">
+        <mkdir dir="${target_dir}"/>
+        <packJavascripts
+            action="unpack"
             path="${path}"
             target_dir="${target_dir}"
             returnProperty="statistics"
@@ -64,14 +76,27 @@
     </target>
     <target name="package">
         <mkdir dir="${target_dir}"/>
+        <packJavascripts
+            action="pack"
+            path="${module}"
+            target_dir="${target_dir}"
+            returnProperty="statistics"
+        >
+        </packJavascripts>
         <packageMidCOM
             path="${project.basedir}"
             package="${module}"
             target_dir="${target_dir}"
             returnProperty="pear_name"
         >
-
         </packageMidCOM>
+        <packJavascripts
+            action="unpack"
+            path="${module}"
+            target_dir="${target_dir}"
+            returnProperty="statistics"
+        >
+        </packJavascripts>
         <echo>Package ${pear_name} created in ${target_dir}</echo>
     </target>
     <target name="package-all">
@@ -86,6 +111,8 @@ To install a symlinked version of midcom:
     phing install [ -Dinstall_dir="somedir" ]
 To pack javascripts inside given folder and its subfolders:
 	phing packjs -Dpath=pathtofolder
+To unpack javascripts inside given folder and its subfolders:
+	phing unpackjs -Dpath=pathtofolder
 To create a pear package of a module:
     phing package -Dmodule=com.example.module
 To create a new module:
