@@ -109,16 +109,22 @@ class org_routamc_positioning_geocoder_yahoo extends org_routamc_positioning_geo
                 break;
             }
             
-            $entry = $simplexml->Result[$i];            
+            $entry = $simplexml->Result[$i];
             
             $position = array();
             $position['latitude'] = (float) $entry->Latitude;
             $position['longitude'] = (float) $entry->Longitude;
+            $position['distance'] = array
+            (
+                'meters' => 0,
+                'bearing' => null,
+            );
             $position['street'] = (string) $entry->Address;
             $position['city'] = (string) $entry->City;
             $position['region'] = (string) $entry->State;
             $position['country'] = (string) $entry->Country;
             $position['postalcode'] = (string) $entry->Zip;
+            $position['alternate_names'] = '';
             $position['accuracy'] = ORG_ROUTAMC_POSITIONING_ACCURACY_CITY;
 
             // Cleaner cases, Yahoo! returns uppercase
