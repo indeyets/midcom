@@ -26,6 +26,11 @@
                          name="packageMidCOM"
                          classpath="/${project.basedir}"
                 />
+    <taskdef classname="build.packageMidCOMcore"
+                         name="packageMidCOMcore"
+                         classpath="/${project.basedir}"
+                />
+ 
     <!-- task to package static-icons for now -->
     <taskdef classname="build.packageStatic"
                              name="packageStatic"
@@ -74,6 +79,19 @@
         </packJavascripts>
         <echo>${statistics}</echo>
     </target>
+    <target name="packageCore">
+        <mkdir dir="${target_dir}"/>
+        <packageMidCOMcore
+            path="${project.basedir}/midcom.core"
+            package="midcom"
+            template="${project.basedir}/midcom.core/package-template.xml"
+            target_dir="${target_dir}"
+            returnProperty="pear_name"
+        >
+        </packageMidCOMcore>
+        <echo>Package ${pear_name} created in ${target_dir}</echo>
+    </target>
+
     <target name="package">
         <mkdir dir="${target_dir}"/>
         <packJavascripts
@@ -81,8 +99,7 @@
             path="${module}"
             target_dir="${target_dir}"
             returnProperty="statistics"
-        >
-        </packJavascripts>
+            />
         <packageMidCOM
             path="${project.basedir}"
             package="${module}"
@@ -102,7 +119,7 @@
     <target name="package-all">
         <makeProjectList path="${project.basedir}"
                          returnProperty="projects" />
-        <foreach list="${projects}" param="package" target="package"/>
+        <foreach list="${projects}" param="module" target="package"/>
     </target>
     <target name="help">
         <echo>
