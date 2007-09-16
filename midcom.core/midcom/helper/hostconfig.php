@@ -177,9 +177,14 @@ class midcom_helper_hostconfig
         // Hook that may be used for local settings like MIDCOM_ROOT on SVN-powered installations
         $codeinit .= "\n?><(code-init-before-midcom)><?php\n";
         
+        if (!defined('MIDCOM_ROOT')) {
+            $root = dirname(dirname(dirname(__FILE__)));
+        } else {
+            $root = MIDCOM_ROOT;
+        }
         $codeinit .= "\nif(!defined('MIDCOM_ROOT')) {";
         
-        $codeinit .= "\n    define('MIDCOM_ROOT','".MIDCOM_ROOT."');";
+        $codeinit .= "\n    define('MIDCOM_ROOT','". $root."');";
         $codeinit .= "\n}\n";
         
         // Include MidCOM
