@@ -25,7 +25,7 @@ class packageMidCOM extends Task
 
 	function __construct()
 	{
-
+        ini_set('memory_limit', '-1'); 
 	}
 
 	protected $returnProperty; // name of property to set to return value

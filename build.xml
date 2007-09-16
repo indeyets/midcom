@@ -26,6 +26,11 @@
                          name="packageMidCOM"
                          classpath="/${project.basedir}"
                 />
+    <taskdef classname="build.pearPackagePackage"
+                         name="pearPackagePackage"
+                         classpath="/${project.basedir}"
+                />
+
     <taskdef classname="build.packageMidCOMcore"
                          name="packageMidCOMcore"
                          classpath="/${project.basedir}"
@@ -85,10 +90,13 @@
             path="${project.basedir}/midcom.core"
             package="midcom"
             template="${project.basedir}/midcom.core/package-template.xml"
-            target_dir="${target_dir}"
             returnProperty="pear_name"
         >
         </packageMidCOMcore>
+        <pearPackagePackage 
+            path="${project.basedir}/midcom.core"
+            target_dir="${target_dir}"
+            />
         <echo>Package ${pear_name} created in ${target_dir}</echo>
     </target>
 
