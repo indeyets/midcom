@@ -132,7 +132,7 @@ class org_routamc_positioning_geocoder_geonames extends org_routamc_positioning_
         $parameters = array
         (
             'radius' => 10,
-            'maxRows' => 1,
+            'maxRows' => 20,
             'style' => 'FULL',
         );
         
