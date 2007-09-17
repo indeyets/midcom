@@ -502,6 +502,10 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         {
             $this->_type->location->street = $results["{$this->_element_id}_input_place_street"];
         }
+        if (isset($results["{$this->_element_id}_input_place_region"]))
+        {
+            $this->_type->location->region = $results["{$this->_element_id}_input_place_region"];
+        }
         if (isset($results["{$this->_element_id}_input_place_postalcode"]))
         {
             $this->_type->location->postalcode = $results["{$this->_element_id}_input_place_postalcode"];
