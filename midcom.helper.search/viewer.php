@@ -95,8 +95,39 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
     {
         $indexer =& $_MIDCOM->get_service('indexer');
         
-        $data['type'] = $_REQUEST['type'];
+        // Sane defaults for REQUEST vars
+        if (!isset($_REQUEST['type']))
+        {
+            $_REQUEST['type'] = 'basic';
+        }
+        if (!isset($_REQUEST['page']))
+        {
+            $_REQUEST['page'] = 1;
+        }
+        if (!isset($_REQUEST['component']))
+        {
+            $_REQUEST['component'] = '';
+        }
+        if (!isset($_REQUEST['topic']))
+        {
+            $_REQUEST['topic'] = '';
+        }
+        if (!isset($_REQUEST['lastmodified']))
+        {
+            $_REQUEST['lastmodified'] = 0;
+        }
         
+        // If we don't have a query string, relocate to empty search form
+        if (!isset($_REQUEST['query']))
+        {
+            if ($data['type'] == 'basic')
+            {
+                $_MIDCOM->relocate('');
+            }
+            $_MIDCOM->relocate('advanced/');
+        }
+
+        $data['type'] = $_REQUEST['type'];
         switch ($data['type'])
         {
             case 'basic':
