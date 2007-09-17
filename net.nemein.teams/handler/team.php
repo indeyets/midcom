@@ -420,11 +420,20 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     {
         $qb = net_nemein_teams_team_dba::new_query_builder();
         $qb->add_constraint('managerguid', '=', $_MIDCOM->auth->user->guid);
-            
+        
+        $teams = $qb->execute();
+        
+        $max_players = $this->_config->get('max_players_per_team');
+        
+        $qb = midcom_db_member::new_query_builder();
+        $qb->add_constraint('gid.guid', '=', $teams[0]->groupguid);
+        
+        $member_count = $qb->count();
+        
+        if ($member_count < $max_players)
+        {     
         if (isset($_POST['approve_pending']))
         {
-            $teams = $qb->execute();
-        
             foreach($_POST as $key => $value)
             {
                 if ($value == "on")
@@ -453,6 +462,11 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 }
             }
         }     
+        }
+        else
+        {
+            $this->_request_data['team_full'] = true;
+        } 
         
         if ($qb->count() > 0)
         {
@@ -490,7 +504,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 
                 if (!$members = $qb->execute())
                 {
-                   
+                    return false;
                 }
                 else
                 {
@@ -518,7 +532,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     
     function _show_error($handler_id, &$data)
     {
-        echo "Error creating net team_creation_form";
+        echo "Error creating team";
     }
 
     function _show_team_player_list($handler_id, &$data)
@@ -541,13 +555,20 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     {
         midcom_show_style('teams_pending_list_start');
     
-        foreach($this->_pending as $pending)
+        if (isset($this->_request_data['team_full']) && $this->_request_data['team_full'])
         {
-            $player = new midcom_db_person($pending->playerguid);
+            echo $this->_l10n->get('team is full');
+        }
+        else
+        {
+            foreach($this->_pending as $pending)
+            {
+                $player = new midcom_db_person($pending->playerguid);
         
-            $this->_request_data['pending'] = $pending;  
-            $this->_request_data['player_username'] = $player->username;
-            midcom_show_style('teams_pending_list_item');
+                $this->_request_data['pending'] = $pending;  
+                $this->_request_data['player_username'] = $player->username;
+                midcom_show_style('teams_pending_list_item');
+            }
         }
     
         midcom_show_style('teams_pending_list_end');

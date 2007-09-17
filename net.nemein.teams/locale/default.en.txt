@@ -57,3 +57,7 @@ Pending
 ---STRING approve
 Approve
 ---STRINGEND
+
+---STRING team is full
+Team is full at the moment
+---STRINGEND

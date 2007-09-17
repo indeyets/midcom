@@ -72,6 +72,13 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
 	        'fixed_args' => Array('log'),
         );
         
+        // Manage / System
+        $this->_request_switch['manage_system'] = array
+        (
+            'handler' => Array('net_nemein_teams_handler_admin', 'manage_system'),
+	        'fixed_args' => Array('manage_system'),
+        );  
+              
         // Error /
         $this->_request_switch['error'] = array
         (
@@ -316,7 +323,7 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
      */
     function _populate_node_toolbar()
     {   
-        /*
+    /*
         if ($this->_content_topic->can_do('midgard:create'))
         {
             foreach (array_keys($this->_request_data['schemadb']) as $name)
@@ -333,6 +340,31 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
             }
         }
         */
+        
+        if ($_MIDCOM->auth->require_admin_user())
+        {
+            $this->_node_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => 'manage',
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('manage teams'),
+                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('manage teams'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+                )
+            );
+            $this->_node_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => 'manage_system',
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('manage system'),
+                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('manage system'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+                )
+            );        
+        }
+        
         if (   $this->_topic->can_do('midgard:update')
             && $this->_topic->can_do('midcom:component_config'))
         {

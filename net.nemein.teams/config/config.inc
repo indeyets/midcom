@@ -19,7 +19,10 @@
 'create_team_home_plugin' => 'create_team_home',
 'display_teams_per_page' => 1,
 'display_pages' => 10, 
+'max_players_per_team' => 10,
 
+
+// Are these used for anything...=)
 'private_pendings_url' => '/leet_teams/pending',
 'private_pendings_link' => 'approve/decline',
 

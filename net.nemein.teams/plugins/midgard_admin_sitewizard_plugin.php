@@ -167,7 +167,7 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
 	        
 	        $this->_logger->log("Team home folder created by " . $_MIDCOM->auth->user->_storage->username, $this->_team_guid);
 
-	        //$_MIDCOM->relocate($my_way_home);
+	        $_MIDCOM->relocate($this->_home_name);
 
 	    }
 	    catch (midgard_admin_sitewizard_exception $e)
@@ -177,6 +177,7 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
 	        echo "<p>";
 	        $e->error();
 	        echo "</p>";
+	        $_MIDCOM->relocate('error');
         }
 	   echo "</pre>";
     }

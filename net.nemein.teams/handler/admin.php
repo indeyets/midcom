@@ -76,6 +76,8 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
     
     function _handler_manage_delete($handler_id, $args, &$data)
     {    
+        $_MIDCOM->auth->require_admin_user();
+    
         if (isset($_POST['remove']))
         {     
             if (!empty($args[0]))
@@ -87,9 +89,6 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
                 {
                    // TODO: handle this
                 }
-                
-                print_r($args);
-                print_r($teams);
                 
                 if (count($teams) > 0)
                 {
@@ -113,6 +112,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
                         // Setting topic invisible at this point
                         // We might need to delete this for real
                         $team_topic->navnoentry = true;
+                        //$team_topic->update();
                                      
                         $team->delete();
                         
@@ -134,6 +134,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
     
     function _handler_manage_team($handler_id, $args, &$data)
     {
+        $_MIDCOM->auth->require_admin_user();
     
         $qb = net_nemein_teams_team_dba::new_query_builder();
         $qb->add_constraint('groupguid', '=', $args[0]);
@@ -146,6 +147,18 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         }
     
         return true;
+    }
+    
+    function _handler_manage_system($handler_id, $args, &$data)
+    {
+        $_MIDCOM->auth->require_admin_user();
+    
+        return true;
+    }
+    
+    function _show_manage_system($handler_id, &$data)
+    {
+        midcom_show_style('manage_system');
     }
     
     function _show_manage_delete($handler_id, &$data)
