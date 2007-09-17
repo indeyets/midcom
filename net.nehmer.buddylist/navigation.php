@@ -37,10 +37,10 @@ class net_nehmer_buddylist_navigation extends midcom_baseclasses_components_navi
                     MIDCOM_NAV_NAME => $this->_l10n->get('buddy requests'),
                 ),
                 MIDCOM_NAV_ADMIN => null,
-                MIDCOM_META_CREATOR => $this->_topic->creator,
-                MIDCOM_META_EDITOR => $this->_topic->revisor,
-                MIDCOM_META_CREATED => $this->_topic->created,
-                MIDCOM_META_EDITED => $this->_topic->revised
+                MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
+                MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
+                MIDCOM_META_CREATED => $this->_topic->metadata->created,
+                MIDCOM_META_EDITED => $this->_topic->metadata->revised
             );
         }
 
