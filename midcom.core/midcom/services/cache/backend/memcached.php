@@ -113,7 +113,7 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
         return (@$this->_cache->get($key));
     }
 
-    function _put($key, $data, $timeout)
+    function _put($key, $data, $timeout=false)
     {
         if ($timeout !== FALSE) {
             @$this->_cache->set($key, $data, 0, $timeout);
