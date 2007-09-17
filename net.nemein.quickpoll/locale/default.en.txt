@@ -15,6 +15,10 @@ Close options management
 Create poll
 ---STRINGEND
 
+---STRING delete poll
+Delete poll
+---STRINGEND
+
 ---STRING edit poll
 Edit poll
 ---STRINGEND
@@ -31,6 +35,10 @@ Poll
 option
 ---STRINGEND
 
+---STRING poll settings
+Poll settings
+---STRINGEND
+
 ---STRING vote
 Vote
 ---STRINGEND
@@ -39,7 +47,7 @@ Vote
 Vote count
 ---STRINGEND
 
----STRING delete poll
-Delete poll
+---STRING enable_anonymous
+Enable anonymous voting
 ---STRINGEND
 

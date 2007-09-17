@@ -15,6 +15,10 @@ Sulje vaihtoehtojen muokkaus
 Luo äänestys
 ---STRINGEND
 
+---STRING delete poll
+Poista äänestys
+---STRINGEND
+
 ---STRING edit poll
 Muokkaa äänestystä
 ---STRINGEND
@@ -31,6 +35,10 @@ Muokkaa vaihtoehtoja
 vaihtoehto
 ---STRINGEND
 
+---STRING poll settings
+Äänestysasetukset
+---STRINGEND
+
 ---STRING vote
 Äänestä
 ---STRINGEND
@@ -39,7 +47,7 @@ vaihtoehto
 Äänimäärä
 ---STRINGEND
 
----STRING delete poll
-Poista äänestys
+---STRING enable_anonymous
+Salli äänestäminen anonyymisti
 ---STRINGEND
 

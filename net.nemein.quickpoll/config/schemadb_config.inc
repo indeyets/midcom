@@ -6,25 +6,21 @@
     'fields'      => array
     (
 
-        'index_entries' => array
+        'enable_anonymous' => array
         (
-            'description' => 'index_entries',
+            'description' => 'enable_anonymous',
             'datatype' => 'text',
             'location' => 'config',
             'config_domain' => 'net.nemein.quickpoll',
-            'config_key' => 'index_entries',
-            'widget' => 'text',
-            'start_fieldgroup' => Array ( 'title' => 'blog settings' ),
-        ),
-        
-        'categories' => array
-        (
-            'description' => 'categories',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nemein.quickpoll',
-            'config_key' => 'categories',
-            'widget' => 'text',
+            'config_key' => 'enable_anonymous',
+            'widget' => 'config_radiobox',
+            'widget_radiobox_choices' => Array
+            (
+                '' => 'default setting',
+                '1' => 'yes',
+                '0' => 'no',
+            ),
+            'start_fieldgroup' => Array ( 'title' => 'poll settings' ),
             'end_fieldgroup' => '',
         ),
 
@@ -35,8 +31,7 @@
             'location' => 'config',
             'config_domain' => 'net.nemein.quickpoll',
             'config_key' => 'schemadb',
-            'widget' => 'select',
-            'widget_select_choices' => $GLOBALS['net_nemein_quickpoll_schemadbs'],
+            'widget' => 'text',
             'start_fieldgroup' => Array ( 'title' => 'schema settings' ),
         ),
 
