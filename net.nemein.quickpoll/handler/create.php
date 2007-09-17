@@ -206,9 +206,8 @@ class net_nemein_quickpoll_handler_create extends midcom_baseclasses_components_
                         $tries++;
                     }
                 }
-
-                // *** FALL THROUGH ***
-
+                $_MIDCOM->relocate("manage/{$this->_article->guid}/");
+                
             case 'cancel':
                 $_MIDCOM->relocate('');
                 // This will exit.

@@ -1,45 +1,45 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE fi
 
 ---STRING archive
-Archive
+Arkisto
 ---STRINGEND
 
 ---STRING close manage
-Close options management
+Sulje vaihtoehtojen muokkaus
 ---STRINGEND
 
 ---STRING create poll
-Create poll
+Luo äänestys
 ---STRINGEND
 
 ---STRING edit poll
-Edit poll
+Muokkaa äänestystä
 ---STRINGEND
 
 ---STRING manage
-Manage options
+Muokkaa vaihtoehtoja
 ---STRINGEND
 
 ---STRING net.nemein.quickpoll
-Poll
+Äänestys
 ---STRINGEND
 
 ---STRING option
-option
+vaihtoehto
 ---STRINGEND
 
 ---STRING vote
-Vote
+Äänestä
 ---STRINGEND
 
 ---STRING vote count
-Vote count
+Äänimäärä
 ---STRINGEND
 
 ---STRING delete poll
-Delete poll
+Poista äänestys
 ---STRINGEND
 

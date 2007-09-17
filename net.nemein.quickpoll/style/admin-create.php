@@ -1,11 +1,7 @@
 <?php
 // Available request keys: controller, indexmode, schema, schemadb
-
-//$data =& $_MIDCOM->get_custom_context_data('request_data');
 ?>
 
-<h2><?php echo $data['l10n']->get('create article'); ?>: <?php echo $data['topic']->extra; ?></h2>
-
-<?php if ($data['indexmode']) { midcom_show_style('admin-create-indexnote'); } ?>
+<h1><?php echo $data['l10n']->get('create poll'); ?>: <?php echo $data['topic']->extra; ?></h1>
 
 <?php $data['controller']->display_form (); ?>

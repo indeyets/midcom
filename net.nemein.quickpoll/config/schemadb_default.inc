@@ -10,7 +10,10 @@
             'storage' => 'name',
             'type'    => 'text',
             'widget'  => 'text',
-            'hidden'  => (!$_MIDCOM->auth->admin),
+            'write_privilege' => array
+            (
+                'privilege' => 'midcom:urlname',
+            ),
         ),    
         'title' => Array
         (
@@ -29,37 +32,6 @@
             'type' => 'text',
             'widget' => 'textarea',
         ),
-        'content' => Array
-        (
-            // COMPONENT-REQUIRED
-            'title' => 'content',
-            'storage' => 'content',
-            'required' => true,
-            'type' => 'text',
-            'type_config' => Array 
-            ( 
-                'output_mode' => 'html' 
-            ),
-            'widget' => 'tinymce',
-        ),
-        'categories' => Array
-        (
-            'title' => 'categories',
-            'storage' => 'extra1',
-            'type' => 'select',
-            'widget' => 'select',
-            'type_config' => Array 
-            ( 
-                'options'        => Array(),
-                'allow_other'    => true,
-                'allow_multiple' => true,
-                'multiple_storagemode' => 'imploded_wrapped',
-            ),    
-            'widget_config' => Array 
-            ( 
-                'height' => 3,
-            ),        
-        ),
         'options' => Array
         (
             'title' => 'options',
@@ -74,6 +46,7 @@
                 'window_mode' => false,
                 'child_foreign_key_fieldname' => 'article',
                 'parent_key_fieldname' => 'id',
+                'enable_creation' => false,
             ),
             'widget' => 'composite',
         ),

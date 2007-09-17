@@ -218,7 +218,7 @@ class net_nemein_quickpoll_handler_admin extends midcom_baseclasses_components_h
         $this->_prepare_request_data();
         $_MIDCOM->substyle_append($this->_controller->datamanager->schema->name);
         $_MIDCOM->substyle_append('admin');
-        $_MIDCOM->set_26_request_metadata($this->_article->revised, $this->_article->guid);
+        $_MIDCOM->set_26_request_metadata($this->_article->metadata->revised, $this->_article->guid);
         $this->_view_toolbar->bind_to($this->_article);
         $this->_component_data['active_leaf'] = $this->_article->id;
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_article->title}");
@@ -277,14 +277,14 @@ class net_nemein_quickpoll_handler_admin extends midcom_baseclasses_components_h
         if (array_key_exists('net_nemein_quickpoll_deletecancel', $_REQUEST))
         {
             // Redirect to view page.
-            $_MIDCOM->relocate("{$this->_article->name}.html");
+            $_MIDCOM->relocate("{$this->_article->name}/");
             // This will exit()
         }
 
         $this->_prepare_request_data();
         $_MIDCOM->substyle_append($this->_datamanager->schema->name);
         $_MIDCOM->substyle_append('admin');
-        $_MIDCOM->set_26_request_metadata($this->_article->revised, $this->_article->guid);
+        $_MIDCOM->set_26_request_metadata($this->_article->metadata->revised, $this->_article->guid);
         $this->_view_toolbar->bind_to($this->_article);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_article->title}");
         $this->_component_data['active_leaf'] = $this->_article->id;

@@ -55,7 +55,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         if ($this->_article->can_do('midgard:update'))
         {
             $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "edit/{$this->_article->guid}.html",
+                MIDCOM_TOOLBAR_URL => "edit/{$this->_article->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'e',
@@ -63,7 +63,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
             if ($this->_manage)
             {
                 $this->_view_toolbar->add_item(Array(
-                    MIDCOM_TOOLBAR_URL => "{$this->_article->id}.html",
+                    MIDCOM_TOOLBAR_URL => "{$this->_article->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('close manage'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                     MIDCOM_TOOLBAR_ACCESSKEY => 'm',
@@ -72,7 +72,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
             else
             {
                 $this->_view_toolbar->add_item(Array(
-                    MIDCOM_TOOLBAR_URL => "manage/{$this->_article->id}.html",
+                    MIDCOM_TOOLBAR_URL => "manage/{$this->_article->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('manage'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                     MIDCOM_TOOLBAR_ACCESSKEY => 'm',
@@ -83,7 +83,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         if ($this->_article->can_do('midgard:delete'))
         {
             $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "delete/{$this->_article->guid}.html",
+                MIDCOM_TOOLBAR_URL => "delete/{$this->_article->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'd',
@@ -121,7 +121,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_content_topic->id);
         $qb->add_constraint('up', '=', 0);
-        $qb->add_order('created', 'DESC');
+        $qb->add_order('metadata.created', 'DESC');
         $qb->set_limit(1);
         $index_poll = $qb->execute();
         if(array_key_exists(0, $index_poll))
@@ -137,16 +137,6 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         $this->_load_datamanager();
         
         $this->_request_data['name']  = "net.nemein.quickpoll";
-        // the handler must return true
-        /***
-         * Set the breadcrumb text
-         */
-        $this->_update_breadcrumb_line($handler_id);
-        /**
-         * change the pagetitle. (must be supported in the style)
-         */
-        $title = $this->_l10n_midcom->get('index');
-        $_MIDCOM->set_pagetitle(":: {$title}");
         
         $qb_vote_count_total = net_nemein_quickpoll_vote_dba::new_query_builder();
         $qb_vote_count_total->add_constraint('article', '=', $this->_article->id);
@@ -188,13 +178,24 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
      */
     function _load_datamanager()
     {
-        $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
-
-        if (   ! $this->_datamanager
-            || ! $this->_datamanager->autoset_storage($this->_article))
+        if ($this->_manage)
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a DM2 instance for article {$this->_article->id}.");
-            // This will exit.
+            $this->_request_data['controller'] =& midcom_helper_datamanager2_controller::create('ajax');
+            $this->_request_data['controller']->schemadb =& $this->_request_data['schemadb'];
+            $this->_request_data['controller']->set_storage($this->_article);
+            $this->_request_data['controller']->process_ajax();
+            $this->_datamanager =& $this->_request_data['controller'];
+        }
+        else
+        {
+            $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
+
+            if (   ! $this->_datamanager
+                || ! $this->_datamanager->autoset_storage($this->_article))
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a DM2 instance for article {$this->_article->id}.");
+                // This will exit.
+            }
         }
     }
     
@@ -207,7 +208,35 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         $this->_request_data['view_article'] = $this->_datamanager->get_content_html();
         midcom_show_style('index');
     }
-    
+
+    /**
+     * Can-Handle check against the article name. We have to do this explicitly
+     * in can_handle already, otherwise we would hide all subtopics as the request switch
+     * accepts all argument count matches unconditionally.
+     */
+    function _can_handle_view ($handler_id, $args, &$data)
+    {
+        $qb = midcom_db_article::new_query_builder();
+        $qb->add_constraint('topic', '=', $this->_content_topic->id);
+        $qb->add_constraint('up', '=', 0);
+        $qb->begin_group('OR');
+            $qb->add_constraint('name', '=', $args[0]);
+            $qb->add_constraint('guid', '=', $args[0]);
+        $qb->end_group();
+        $articles = $qb->execute();
+        if (count($articles) > 0)
+        {
+            $this->_article = $articles[0];
+        }
+        
+        if (!$this->_article)
+        {
+            return false;
+            // This will 404
+        }
+        
+        return true;
+    }    
     
     /**
      * The handler for the index article. 
@@ -223,27 +252,39 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         }
         
         $this->_manage = false;
-        
+
         if ($handler_id == 'manage')
         {
             $this->_manage = true;
+
+            // Enable creation of new options in the management mode            
+            foreach ($this->_request_data['schemadb'] as $schemaname => $schema)
+            {
+                $this->_request_data['schemadb'][$schemaname]->fields['options']['type_config']['enable_creation'] = true;
+            }
         }
-        
-        $this->_article = new midcom_db_article($args[0]);
 
         $this->_load_datamanager();
         
         $this->_request_data['name']  = "net.nemein.quickpoll";
-        // the handler must return true
-        /***
-         * Set the breadcrumb text
-         */
-        $this->_update_breadcrumb_line($handler_id);
-        /**
-         * change the pagetitle. (must be supported in the style)
-         */
-        $title = $this->_l10n_midcom->get('index');
-        $_MIDCOM->set_pagetitle(":: {$title}");
+
+        $tmp = Array();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "{$this->_article->guid}/",
+            MIDCOM_NAV_NAME => $this->_article->title,
+        );
+        if ($this->_manage)
+        {
+            $tmp[] = Array
+            (
+                MIDCOM_NAV_URL => "manage/{$this->_article->guid}/",
+                MIDCOM_NAV_NAME => $this->_l10n->get('manage'),
+            );
+        }
+        
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        $_MIDCOM->set_pagetitle($this->_article->title);
         
         $qb_vote_count_total = net_nemein_quickpoll_vote_dba::new_query_builder();
         $qb_vote_count_total->add_constraint('article', '=', $this->_article->id);
@@ -286,25 +327,6 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
     {
         $this->_request_data['view_article'] = $this->_datamanager->get_content_html();
         midcom_show_style('index');
-    }
-    
-    
-    /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
-     * location.
-     *
-     */
-    function _update_breadcrumb_line()
-    {
-        $tmp = Array();
-
-        $tmp[] = Array
-        (
-            MIDCOM_NAV_URL => "/",
-            MIDCOM_NAV_NAME => $this->_l10n->get('index'),
-        );
-
-        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
 }
 ?>

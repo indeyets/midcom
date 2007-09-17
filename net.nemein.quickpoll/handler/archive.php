@@ -155,7 +155,7 @@ class net_nemein_quickpoll_handler_archive extends midcom_baseclasses_components
 
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "{$handler_id}/{$this->_article->guid}.html",
+            MIDCOM_NAV_URL => "{$handler_id}/{$this->_article->name}.html",
             MIDCOM_NAV_NAME => $this->_l10n_midcom->get($handler_id),
         );
 
@@ -181,7 +181,8 @@ class net_nemein_quickpoll_handler_archive extends midcom_baseclasses_components
         
         
         $this->_prepare_request_data();
-        
+
+        $this->_component_data['active_leaf'] = NET_NEMEIN_QUICKPOLL_LEAFID_ARCHIVE;
         
         return true;
 
@@ -204,7 +205,7 @@ class net_nemein_quickpoll_handler_archive extends midcom_baseclasses_components
                 $qb_vote->add_constraint('article', '=', $this->_article->id);
                 $vote_count = $qb_vote->count();
                 $this->_request_data['vote_count'] =$vote_count;
-                $this->_request_data['view_url'] = $prefix.'/'.$this->_article->id.'.html';
+                $this->_request_data['view_url'] = "{$prefix}{$this->_article->name}/";
                 $this->_request_data['article'] = $this->_article;
                 midcom_show_style('archive-item');
             }

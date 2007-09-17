@@ -65,6 +65,13 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('edit'),
             'variable_args' => 1,
         );
+        // Handle /delete/
+        $this->_request_switch['delete'] = Array
+        (
+            'handler' => Array('net_nemein_quickpoll_handler_admin', 'delete'),
+            'fixed_args' => Array('delete'),
+            'variable_args' => 1,
+        );
         // Handle /manage/<article_id>
         $this->_request_switch['manage'] = array
         (
