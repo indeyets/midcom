@@ -167,6 +167,8 @@ class midcom_admin_styleeditor_handler_list extends midcom_baseclasses_component
         $_MIDCOM->skip_page_style = true;
         
         // Get the list of all components
+        $_MIDCOM->load_library('midcom.admin.folder');
+        require_once(MIDCOM_ROOT . '/midcom/admin/folder/folder_management.php');
         $this->_component_list = midcom_admin_folder_folder_management::get_component_list();
         
         $this->_component_list['midcom'] = array
