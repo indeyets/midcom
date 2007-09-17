@@ -7,6 +7,10 @@
 City
 ---STRINGEND
 
+---STRING coordinates
+Coordinates
+---STRINGEND
+
 ---STRING country
 Country
 ---STRINGEND
@@ -71,7 +75,7 @@ source: %s
 Street address
 ---STRINGEND
 
----STRING coordinates
-Coordinates
+---STRING region
+Region
 ---STRINGEND
 

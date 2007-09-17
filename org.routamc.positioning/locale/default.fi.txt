@@ -7,6 +7,10 @@
 Kaupunki
 ---STRINGEND
 
+---STRING coordinates
+Koordinaatit
+---STRINGEND
+
 ---STRING country
 Maa
 ---STRINGEND
@@ -75,7 +79,7 @@ lähde: %s
 Katuosoite
 ---STRINGEND
 
----STRING coordinates
-Koordinaatit
+---STRING region
+Alue
 ---STRINGEND
 
