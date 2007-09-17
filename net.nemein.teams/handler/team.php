@@ -96,6 +96,26 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         
         return false;
     }
+    
+    function _team_exists($team_name = '')
+    {
+        $qb = midcom_db_group::new_query_builder();
+        $qb->add_constraint('name', '=', $team_name);
+        
+        if (!$teams = $qb->execute())
+        {
+            // TODO: handle this
+        }
+        else
+        {
+            if (count($teams) > 0)
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
    
     function _is_player($playerguid = null)
     {
@@ -105,7 +125,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	    $qb->add_constraint('owner', '=', $this->_root_group->id);
 
 	    $teams = $qb->execute();
-
+	    
 	    if (count($teams) > 0)
 	    {
 	        // Checing if user is a member of a team
@@ -125,17 +145,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	            }
 	        
 		        $members = $qb->execute();
-
+		        
 		        if (count($members) > 0)
 		        {
-                    $members++;
+                    return true;
 		        }
 	        }
-	    }
-	    
-	    if ($members > 0)
-	    {
-	        return true;
 	    }
 	    
 	    return false;
@@ -188,10 +203,17 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         $this->_team_group = new midcom_db_group();
         $this->_team_group->owner = $this->_root_group->id;
 
+        // check if team exists
+        /*
+         echo $name . "<br/>";
+         //$controller->datamanager->types['team_name']->value
+         echo $controller->datamanager->schema->fields[$name]['type'];
+         print_r( $controller->datamanager->types[$name]);
+        */      
+
         if (!$this->_team_group->create())
         {
-            // TODO: handle error
-
+        
 	    }
 	    else
 	    {
@@ -351,6 +373,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
 	    return true;
     }
+    
+    function _handler_error ($handler_id, $args, &$data)
+    {
+    
+        return true;
+    }
 
     function _handler_index ($handler_id, $args, &$data)
     {
@@ -486,6 +514,11 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         
     
         return true;
+    }
+    
+    function _show_error($handler_id, &$data)
+    {
+        echo "Error creating net team_creation_form";
     }
 
     function _show_team_player_list($handler_id, &$data)

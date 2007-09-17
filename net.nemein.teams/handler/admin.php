@@ -78,12 +78,15 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
     {    
         if (isset($_POST['remove']))
         {     
-            if (isset($args[0]))
+            if (!empty($args[0]))
             {
                 $qb = net_nemein_teams_team_dba::new_query_builder();
                 $qb->add_constraint('groupguid', '=', $args[0]);
             
-                $teams = $qb->execute();
+                if (!$teams = $qb->execute())
+                {
+                   // TODO: handle this
+                }
                 
                 print_r($args);
                 print_r($teams);
@@ -102,18 +105,18 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
                     
                         foreach ($members as $member)
                         {
-                            //$member->delete();
+                            $member->delete();
                         }
                     
-                        //$team_group->delete();
+                        $team_group->delete();
                     
                         // Setting topic invisible at this point
                         // We might need to delete this for real
-                        //$team_topic->set_parameter('midcom.helper.metadata', 'nav_noentry', 1);
+                        $team_topic->navnoentry = true;
                                      
-                        //$team->delete();
+                        $team->delete();
                         
-                        $this->_logger->log("Team " . $team_group->name . " was deleted by "
+                        $this->_logger->log("Team (" . $team_group->name . ") was deleted by "
                             . $_MIDCOM->auth->user->_storage->username, $team->guid);
                     
                         $_MIDCOM->relocate('manage');
@@ -139,7 +142,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         
         if (count($teams) > 0)
         {
-            $this->_request_data['team_guid'] = $teams[0]->guid;
+            $this->_request_data['team_guid'] = $teams[0]->groupguid;
         }
     
         return true;

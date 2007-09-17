@@ -72,6 +72,13 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
 	        'fixed_args' => Array('log'),
         );
         
+        // Error /
+        $this->_request_switch['error'] = array
+        (
+            'handler' => Array('net_nemein_teams_handler_team', 'error'),
+	        'fixed_args' => Array('error'),
+        );
+        
         // Manage /
         $this->_request_switch['manage'] = array
         (

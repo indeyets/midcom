@@ -49,3 +49,11 @@ Remove team
 ---STRING really remove team
 Do you really want to remove this team
 ---STRINGEND
+
+---STRING pending
+Pending
+---STRINGEND
+
+---STRING approve
+Approve
+---STRINGEND
