@@ -211,7 +211,7 @@ class net_nemein_quickpoll_handler_admin extends midcom_baseclasses_components_h
                 // *** FALL-THROUGH ***
 
             case 'cancel':
-                $_MIDCOM->relocate("{$this->_article->name}.html");
+                $_MIDCOM->relocate("{$this->_article->name}");
                 // This will exit.
         }
 

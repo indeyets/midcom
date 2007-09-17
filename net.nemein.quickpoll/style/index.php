@@ -49,7 +49,7 @@ $vote_count_string = $data['l10n']->get('vote count');
         else
         {
         ?>
-        <form method="post"  id="net_nemein_quickpoll_vote_form" name="net_nemein_quickpoll_vote_form" action="&(prefix);vote/&(view_id);.html">
+        <form method="post"  id="net_nemein_quickpoll_vote_form" name="net_nemein_quickpoll_vote_form" action="&(prefix);vote/&(view_id);">
         &(view["options"]:h);
         <br /><br /><input type="submit" value="&(submit_string);" />
         </form>

@@ -1,7 +1,7 @@
 
   'name' => 'net.nemein.quickpoll',
   'purecode' => false,
-  'version' => '1.0.2beta1',
+  'version' => '1.0.2beta2',
   'state' => 'beta',
   'privileges' => 
   array (
@@ -21,6 +21,12 @@
         'name' => 'Oskari Kokko',
         'email' => 'oskari.kokko@iki.fi',
         'role' => 'lead',
+      ),
+      'w_i' => 
+      array (
+        'name' => 'Jerry Jalava',
+        'email' => 'jerry.jalava@gmail.com',
+        'role' => 'developer',
       ),
     ),
     'dependencies' => 

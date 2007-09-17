@@ -151,6 +151,30 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         $qb_vote_count_total = net_nemein_quickpoll_vote_dba::new_query_builder();
         $qb_vote_count_total->add_constraint('article', '=', $this->_article->id);
         $this->_vote_count = $qb_vote_count_total->count();
+
+        $qb_vote = net_nemein_quickpoll_vote_dba::new_query_builder();
+        $qb_vote->add_constraint('article', '=', $this->_article->id);
+        $qb_vote->begin_group('OR');
+            $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
+            $qb_vote->add_constraint('ip', '=', $_SERVER['REMOTE_ADDR']);
+        $qb_vote->end_group();
+        $vote_count = $qb_vote->count();
+
+        if ($vote_count > 0)
+        {
+            $this->_request_data['voted'] =  true;
+        }
+        else
+        {
+            $this->_request_data['voted'] =  false;
+        }
+        
+        if (   !$this->_config->get('enable_anonymous')
+            && (   !$_MIDCOM->auth->user
+                && !$_MIDCOM->auth->admin))
+        {
+            $this->_request_data['voted'] =  true;
+        }
         
         $this->_prepare_request_data();
         
@@ -229,10 +253,12 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         
         $qb_vote = net_nemein_quickpoll_vote_dba::new_query_builder();
         $qb_vote->add_constraint('article', '=', $this->_article->id);
-        $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
-        $qb_vote->add_constraint('ip', '=', $_SERVER['REMOTE_ADDR']);
+        $qb_vote->begin_group('OR');
+            $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
+            $qb_vote->add_constraint('ip', '=', $_SERVER['REMOTE_ADDR']);
+        $qb_vote->end_group();
         $vote_count = $qb_vote->count();
-        
+
         if ($vote_count > 0)
         {
             $this->_request_data['voted'] =  true;
@@ -242,7 +268,12 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
             $this->_request_data['voted'] =  false;
         }
         
-
+        if (   !$this->_config->get('enable_anonymous')
+            && (   !$_MIDCOM->auth->user
+                && !$_MIDCOM->auth->admin))
+        {
+            $this->_request_data['voted'] =  true;
+        }
         
         return true;
     }
