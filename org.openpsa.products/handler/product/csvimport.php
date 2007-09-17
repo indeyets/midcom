@@ -210,7 +210,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
                 $separator = $data['separator'];
                 $total_columns = 0;
                 while (   $read_rows < 2
-                       && $csv_line = fgetcsv($handle, 1000, $separator))
+                       && $csv_line = fgetcsv($handle, 3000, $separator))
                 {
                     if ($total_columns == 0)
                     {
@@ -284,7 +284,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
         $handle = fopen($_POST['org_openpsa_products_import_tmp_file'], 'r');
         $separator = $data['separator'];
 
-        while ($csv_line = fgetcsv($handle, 1000, $separator))
+        while ($csv_line = fgetcsv($handle, 3000, $separator))
         {
 
             if ($total_columns == 0)
