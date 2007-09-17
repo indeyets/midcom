@@ -1,11 +1,3 @@
-// var widgets = [];
-// var current_pos = [];
-// var position_marker = [];
-// var alternative_markers = [];
-// var alternative_markers_visible = [];
-// var widgets_mapstractions = [];
-// var widget_options = [];
-
 jQuery.fn.extend({
 	dm2_position_widget: function(mapstraction, options) {
 		options = jQuery.extend(jQuery.midcom_helper_datamanager2_widget_position.defaults, options);
@@ -207,17 +199,12 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
         disable_tabs();
         clear_alternative_markers();
 
-        var opts_str = '?';            
-        var opts_len = options.length;
-        var i = 1;
+        var opts_str = '?';
         jQuery.each(options, function(key,value){
-            if (i < opts_len)
-            {
-                opts_str += '&';
-            }
-            opts_str += 'options[' + key + ']=' + value;
-            i++;
+            opts_str += 'options[' + key + ']=' + value + '&';
         });
+        
+        opts_str = opts_str.substr(0,opts_str.length-1);
         
         var get_params = {
             service: backend_service,

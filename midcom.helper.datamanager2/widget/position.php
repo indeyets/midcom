@@ -34,7 +34,7 @@ require_once MIDCOM_ROOT . '/midcom/helper/datamanager2/widget/simpleposition.ph
  * @package midcom.helper.datamanager2
  */
 
-class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanager2_widget_simpleposition
+class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanager2_widget
 {
     /**
      * id of the element
