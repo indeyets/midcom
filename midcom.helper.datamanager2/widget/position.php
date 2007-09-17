@@ -72,7 +72,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
      * Possible values:
      * - (int) maxRows : Maximum amount of results returned. If this is set greater than 1,
      *   the widget will show alternative results and lets user to choose the best match.
-     *   Defaults to: 1
+     *   Defaults to: 20
      * - (int) radius : Radius of the area we search for alternatives. (in Kilometers)
      *   Defaults to: 5
      */
@@ -426,7 +426,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
 
     function _init_widgets_js_options()
     {
-        $this->js_options['maxRows'] = 1;
+        $this->js_options['maxRows'] = 20;
         $this->js_options['radius'] = 5;
         
         if (   !is_null($this->js_maxRows)

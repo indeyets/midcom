@@ -466,6 +466,6 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
 };
 
 jQuery.midcom_helper_datamanager2_widget_position.defaults = {
-    maxRows: 1,
+    maxRows: 20,
     radius: 5
 };
