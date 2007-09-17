@@ -770,7 +770,41 @@ class midcom_helper__styleloader {
         $this->_snippetdir = $this->_getComponentSnippetdir($this->_topic);
         return true;
     }
+    
+    /**
+     * Include all text/css attachments of current style to MidCOM headers
+     */
+    function add_database_head_elements()
+    {
+        static $called = false;
+        if ($called)
+        {
+            return;
+        }
+        $style = new midcom_db_style($_MIDGARD['style']);
+        $mc = midcom_baseclasses_database_attachment::new_collector('parentguid', $style->guid);
+        $mc->add_constraint('mimetype', '=', 'text/css');
+        $mc->add_value_property('name');
+        $mc->execute();
+        $attachments = $mc->list_keys();
+        
+        foreach ($attachments as $guid => $values)
+        {
+            // TODO: Support media types
+            $filename = $mc->get_subkey($guid, 'name');
+            $_MIDCOM->add_link_head
+            (
+                array
+                (
+                    'rel' => 'stylesheet',
+                    'type' => 'text/css',
+                    'href' => "{$_MIDGARD['self']}midcom-serveattachment-{$guid}/{$filename}",
+                )
+            );
+        }
 
+        $called = true;
+    }
 }
 
 /**
