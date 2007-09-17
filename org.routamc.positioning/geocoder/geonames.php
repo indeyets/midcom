@@ -82,6 +82,12 @@ class org_routamc_positioning_geocoder_geonames extends org_routamc_positioning_
         
         $http_request = new org_openpsa_httplib();
         $response = $http_request->get('http://ws.geonames.org/postalCodeSearch?' . implode('&', $params));
+        if (empty($response))
+        {
+            $this->error = 'POSITIONING_SERVICE_NOT_AVAILABLE';
+            return null;
+        }
+        
         $simplexml = simplexml_load_string($response);
 
         if (   !isset($simplexml->code)
