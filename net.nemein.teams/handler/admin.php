@@ -17,6 +17,8 @@
 class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_handler 
 {
     var $_teams_list = null;
+    
+    var $_logger = null;
 
 
     /**
@@ -32,6 +34,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
      */
     function _on_initialize()
     {
+        $this->_logger = new net_nemein_teams_logger();
     }
 
     function _handler_admin ($handler_id, $args, &$data)
@@ -64,50 +67,66 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
     function _handler_manage ($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_admin_user();
-        
-        if (isset($args[0]))
-        {
-            $qb = net_nemein_teams_team_dba::new_query_builder();
-            $qb->add_constraint('groupguid', '=', $args[0]);
-            
-            $teams = $qb->execute();
-            
-            if (count($teams) > 0)
-            {
-                foreach ($teams as $team)
-                {
-                    $team_group = new midcom_db_group($team->groupguid);
-                    $team_topic = new midcom_db_topic($team->topicguid);
-                    
-                    $qb = midcom_db_member::new_query_builder();
-                    $qb->add_constraint('gid', '=', $team_group->id);
-                    
-                    $members = $qb->execute();
-                    
-                    foreach ($members as $member)
-                    {
-                        $member->delete();
-                    }
-                    
-                    $team_group->delete();
-                    
-                    // Setting topic invisible at this point
-                    // We might need to delete this for real
-                    $team_topic->set_parameter('midcom.helper.metadata', 'nav_noentry', 1);
-                                     
-                    $team->delete();
-                    
-                    $_MIDCOM->relocate('manage');
-                }
-            
-            }
-        
-        }
-        
+                
         $qb = net_nemein_teams_team_dba::new_query_builder();
         $this->_teams_list = $qb->execute();
     
         return true;
+    }
+    
+    function _handler_manage_delete($handler_id, $args, &$data)
+    {    
+        if (isset($_POST['remove']))
+        {     
+            if (isset($args[0]))
+            {
+                $qb = net_nemein_teams_team_dba::new_query_builder();
+                $qb->add_constraint('groupguid', '=', $args[0]);
+            
+                $teams = $qb->execute();
+                
+                print_r($args);
+                print_r($teams);
+                
+                if (count($teams) > 0)
+                {
+                    foreach ($teams as $team)
+                    {
+                        $team_group = new midcom_db_group($team->groupguid);
+                        $team_topic = new midcom_db_topic($team->topicguid);
+                    
+                        $qb = midcom_db_member::new_query_builder();
+                        $qb->add_constraint('gid', '=', $team_group->id);
+                    
+                        $members = $qb->execute();
+                    
+                        foreach ($members as $member)
+                        {
+                            //$member->delete();
+                        }
+                    
+                        //$team_group->delete();
+                    
+                        // Setting topic invisible at this point
+                        // We might need to delete this for real
+                        //$team_topic->set_parameter('midcom.helper.metadata', 'nav_noentry', 1);
+                                     
+                        //$team->delete();
+                        
+                        $this->_logger->log("Team " . $team_group->name . " was deleted by "
+                            . $_MIDCOM->auth->user->_storage->username, $team->guid);
+                    
+                        $_MIDCOM->relocate('manage');
+                    }           
+                }      
+            }       
+        }
+        elseif (isset($_POST['cancel']))
+        {
+            $_MIDCOM->relocate('manage');
+        }
+
+        return true;    
     }
     
     function _handler_manage_team($handler_id, $args, &$data)
@@ -120,10 +139,15 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         
         if (count($teams) > 0)
         {
-        
+            $this->_request_data['team_guid'] = $teams[0]->guid;
         }
     
         return true;
+    }
+    
+    function _show_manage_delete($handler_id, &$data)
+    {
+        midcom_show_style('manage_team_delete');
     }
     
     function _show_manage_team($handler_id, &$data)

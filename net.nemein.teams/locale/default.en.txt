@@ -2,11 +2,50 @@
 ---VERSION 2.1.0
 ---LANGUAGE en
 
----STRING This is the index
-This is the index
+---STRING registered
+Registered
 ---STRINGEND
 
----STRING You can change this to something else :-)
-You can change this to something else :-)
+---STRING player
+Player
 ---STRINGEND
 
+---STRING create a team
+Create a team
+---STRINGEND
+
+---STRING teams
+Teams
+---STRINGEND
+
+---STRING application
+Application
+---STRINGEND
+
+---STRING apply to team
+Apply to team
+---STRINGEND
+
+---STRING teams list
+Teams list
+---STRINGEND
+
+---STRING create team home
+Create team home
+---STRINGEND
+
+---STRING manage team
+Manage team
+---STRINGEND
+
+---STRING manage teams
+Manage teams
+---STRINGEND
+
+---STRING remove team
+Remove team
+---STRINGEND
+
+---STRING really remove team
+Do you really want to remove this team
+---STRINGEND

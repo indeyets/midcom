@@ -4,5 +4,11 @@
  * Use this to get variables etc from the handler:
  */
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
+
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
-<h1></h1>
+<h1><?php echo $data['l10n']->get('teams'); ?></h1>
+
+<?php
+    $_MIDCOM->dynamic_load("{$prefix}/list");
+?>

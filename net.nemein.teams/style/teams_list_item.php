@@ -5,9 +5,14 @@
 <li>
 <?php
 
-  echo $data['view_team']['team_name'];
-  echo $data['view_team']['team_logo'];
-  echo "<a href=\"application/{$data['view_team']['team_group_guid']}.html\">
+    echo "<a href=\"team_home_{$data['view_team']['team_group_guid']}\">
       {$data['view_team']['team_name']}</a>";
+      
+    echo $data['view_team']['team_logo'];
+  
+/*  
+    echo "<a href=\"application/{$data['view_team']['team_group_guid']}\">
+          {$data['l10n']->get('application')}</a>";
+  */  
 ?>
 </li>

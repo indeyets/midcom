@@ -6,8 +6,8 @@
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
 
 ?>
-<h1><?php echo $data['l10n']->get('Application'); ?></h1>
-<h2><?php echo $data['l10n']->get('Apply to team') . " - " . $data['team_name']; ?></h2>
+<h1><?php echo $data['l10n']->get('application'); ?></h1>
+<h2><?php echo $data['l10n']->get('apply to team') . " - " . $data['team_name']; ?></h2>
 <p>
 <form method="post" name="team_application" class="net_nmein_team_application">
     <input type="hidden" name="applyee" value="<?php echo $_MIDCOM->auth->user->guid; ?>"/>

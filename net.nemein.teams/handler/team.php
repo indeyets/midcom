@@ -332,6 +332,9 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 {
                     return false;
                 }
+                
+                $this->_logger->log("User " . $_MIDCOM->auth->user->_storage->username . " has applied to team "
+                . $team_group->name, $team_group->guid);
 
 	            $subject = $this->_l10n->get('New application from');
                 $subject .= " " . $_MIDCOM->auth->user->_storage->username; 
@@ -404,6 +407,9 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                     }
                     else
                     {
+                         $this->_logger->log("User " . $_MIDCOM->auth->user->_storage->username . " has approved player GUID: "
+                             . $key, $teams[0]->guid);
+                    
                         // Removing from pending
                         $qb = net_nemein_teams_pending_dba::new_query_builder();
                         $qb->add_constraint('groupguid', '=', $teams[0]->groupguid);

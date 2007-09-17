@@ -82,7 +82,7 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         // Manage / Delete
         $this->_request_switch['manage_delete'] = array
         (
-            'handler' => Array('net_nemein_teams_handler_admin', 'manage'),
+            'handler' => Array('net_nemein_teams_handler_admin', 'manage_delete'),
 	        'fixed_args' => Array('manage', 'delete'),
 	        'variable_args' => 1,
         );
