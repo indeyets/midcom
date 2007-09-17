@@ -140,6 +140,12 @@ class midcom_helper__styleloader {
      * The stack of directories to check for styles.
      */
     var $_styledirs = array();
+    
+    /**
+     * The actual Midgard style object
+     */
+    var $object = null;
+    
     /**
      * Simple initialization
      */
@@ -771,6 +777,15 @@ class midcom_helper__styleloader {
         return true;
     }
     
+    function get_style()
+    {
+        if (is_null($this->object))
+        {
+            $this->object = new midcom_db_style($_MIDGARD['style']);
+        }
+        return $this->object;
+    }
+    
     /**
      * Include all text/css attachments of current style to MidCOM headers
      */
@@ -781,7 +796,7 @@ class midcom_helper__styleloader {
         {
             return;
         }
-        $style = new midcom_db_style($_MIDGARD['style']);
+        $style = $this->get_style();
         $mc = midcom_baseclasses_database_attachment::new_collector('parentguid', $style->guid);
         $mc->add_constraint('mimetype', '=', 'text/css');
         $mc->add_value_property('name');
