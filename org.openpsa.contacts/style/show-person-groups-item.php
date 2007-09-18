@@ -9,7 +9,7 @@ if ($_MIDCOM->auth->can_do('midgard:update', $data['member']))
 {
     $view_title_form = "<input id=\"editable_title_{$group_guid}_ajaxDefault\" value=\"".$data['l10n']->get('<title>')."\" type=\"hidden\" />\n";
     $view_title_form .= "<input id=\"editable_title_{$group_guid}_ajaxUrl\" value=\"{$node[MIDCOM_NAV_FULLURL]}group/{$group_guid}/update_member_title/\" type=\"hidden\" />\n";
-    $view_title_form .= "<input id=\"editable_title_{$group_guid}\" name=\"member_title[{$data['member']->id}]\" class=\"ajax_editable\" style=\"width: 80%;\" onFocus=\"ooAjaxFocus(this)\" onBlur=\"ooAjaxBlur(this)\" value=\"{$data['member_title']}\" />\n";
+    $view_title_form .= "<input id=\"editable_title_{$group_guid}\" name=\"member_title[{$data['member']->id}]\" class=\"ajax_editable\" style=\"width: 80%;\" onfocus=\"ooAjaxFocus(this)\" onblur=\"ooAjaxBlur(this)\" value=\"{$data['member_title']}\" />\n";
 }
 else
 {

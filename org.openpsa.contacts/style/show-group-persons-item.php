@@ -14,7 +14,7 @@ if ($_MIDCOM->auth->can_do('midgard:update', $data['member']))
     $contact->extra_html = "<li>
         <input id=\"editable_title_{$data['person']->guid}_ajaxDefault\" value=\"".$data['l10n']->get('<title>')."\" type=\"hidden\" />
         <input id=\"editable_title_{$data['person']->guid}_ajaxUrl\" value=\"{$node[MIDCOM_NAV_FULLURL]}group/{$data['group']->guid}/update_member_title/\" type=\"hidden\" />
-        <input id=\"editable_title_{$data['person']->guid}\" name=\"member_title[{$data['member']->id}]\" class=\"ajax_editable\" style=\"width: 80%;\" onFocus=\"ooAjaxFocus(this)\" onBlur=\"ooAjaxBlur(this)\" value=\"{$data['member_title']}\" />
+        <input id=\"editable_title_{$data['person']->guid}\" name=\"member_title[{$data['member']->id}]\" class=\"ajax_editable\" style=\"width: 80%;\" onfocus=\"ooAjaxFocus(this)\" onblur=\"ooAjaxBlur(this)\" value=\"{$data['member_title']}\" />
         </li>\n";
 }
 else
