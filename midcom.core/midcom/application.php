@@ -2550,12 +2550,26 @@ class midcom_application
         }
         $this->_linkhrefs[] = $attributes['href'];
         
-        $output = '';        
+        $output = '';
+        
+        if (array_key_exists('condition', $attributes))
+        {
+            $this->_link_head .= "<!--[if {$attributes['condition']}]>\n";
+        }
+        
         foreach ($attributes as $key => $val)
         {
-            $output .= " {$key}=\"{$val}\" ";
+            if ($key != 'conditions')
+            {
+                $output .= " {$key}=\"{$val}\" ";                
+            }
         }
         $this->_link_head .= "<link{$output}/>\n";
+
+        if (array_key_exists('condition', $attributes))
+        {
+            $this->_link_head .= "<![endif]-->\n";
+        }
     }
 
     /**
