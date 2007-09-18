@@ -78,6 +78,13 @@ class org_maemo_devcodes_handler_device_view extends midcom_baseclasses_componen
             MIDCOM_TOOLBAR_ENABLED => $this->_device->can_do('midgard:read'),
         ));
 
+        $this->_view_toolbar->add_item(Array(
+            MIDCOM_TOOLBAR_URL => "code/assign/{$this->_device->guid}.html",
+            MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('assign codes to applicants'),
+            MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/printer.png',
+            MIDCOM_TOOLBAR_ENABLED => $this->_device->can_do('org.maemo.devcodes:manage'),
+        ));
+
     }
 
 
