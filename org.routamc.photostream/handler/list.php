@@ -470,7 +470,15 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
                 $data['datamanager'] =& $data['controllers'][$photo->id]->datamanager;
                 
                 $videothumbnail = $data['datamanager']->types['photo']->attachments_info['view'];
-                $video = $data['datamanager']->types['photo']->attachments_info['main_video'];
+                if (isset($data['datamanager']->types['photo']->attachments_info['main_video']))
+                {
+                    $video = $data['datamanager']->types['photo']->attachments_info['main_video'];
+                }
+                else
+                {
+                    $video = $data['datamanager']->types['photo']->attachments_info['view'];
+                }
+                
                 
                 $duration = 0;
                 if (isset($view['duration']))
@@ -488,19 +496,17 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
                 
                 $published = strftime('%x %X', $photo->taken);
                 
-                echo "
-                <item>\n
-                    <id>{$photo->id}</id>
-                    <guid>{$photo->guid}</guid>
-                    <title><![CDATA[{$photo->title}]]></title>
-                    <duration><![CDATA[{$duration}]]></duration>
-                    <video_url><![CDATA[{$video_url}]]></video_url>
-                    <thumbnail_url><![CDATA[{$videothumbnail_url}]]></thumbnail_url>
-                    <data_url><![CDATA[{$data_url}]]></data_url>
-                    <author><![CDATA[{$author}]]></author>
-                    <added><![CDATA[{$published}]]></added>
-                </item>\n                
-                ";
+                echo "<item>\n";
+                echo "    <id>{$photo->id}</id>\n";
+                echo "    <guid>{$photo->guid}</guid>\n";
+                echo "    <title><![CDATA[{$photo->title}]]></title>\n";
+                echo "    <duration><![CDATA[{$duration}]]></duration>\n";
+                echo "    <video_url><![CDATA[{$video_url}]]></video_url>\n";
+                echo "    <thumbnail_url><![CDATA[{$videothumbnail_url}]]></thumbnail_url>\n";
+                echo "    <data_url><![CDATA[{$data_url}]]></data_url>\n";
+                echo "    <author><![CDATA[{$author}]]></author>\n";
+                echo "    <added><![CDATA[{$published}]]></added>\n";
+                echo "</item>\n";
             }
             
             echo "</playlist>\n";         
