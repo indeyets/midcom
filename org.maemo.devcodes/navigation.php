@@ -55,7 +55,7 @@ class org_maemo_devcodes_navigation extends midcom_baseclasses_components_naviga
             (
                 MIDCOM_NAV_SITE => Array
                 (
-                    MIDCOM_NAV_URL => "{$device->guid}.html",
+                    MIDCOM_NAV_URL => "device/{$device->guid}.html",
                     MIDCOM_NAV_NAME => $device->title,
                 ),
                 MIDCOM_NAV_ADMIN => null,
