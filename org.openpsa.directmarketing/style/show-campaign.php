@@ -8,9 +8,9 @@ $node = $nap->get_node($nap->get_current_node());
 $contacts_node = midcom_helper_find_node_by_component('org.openpsa.contacts');
 ?>
 <script type="text/javascript">
-function org_openpsa_directmarketing_ajax_unsubscribe(person_guid)
+function org_openpsa_directmarketing_ajax_unsubscribe(person_guid, membership_guid)
 {
-    url = '&(node[MIDCOM_NAV_FULLURL]);campaign/<?php echo $data['campaign']->guid; ?>/ajax';
+    url = '&(node[MIDCOM_NAV_FULLURL]);campaign/unsubscribe/ajax/'+membership_guid;
     ooAjaxPost(url, 'org_openpsa_ajax_mode=unsubscribe&org_openpsa_ajax_person_guid=' + person_guid, document.getElementById('org_openpsa_directmarketing_unsubscribe-' +  person_guid), false, 'org_openpsa_directmarketing_ajax_unsubscribe_callback');
 }
 function org_openpsa_directmarketing_ajax_unsubscribe_callback(response, element)
@@ -79,8 +79,7 @@ function hideElement(element)
 
             //TODO: Localize, use proper constants, better icon for bounce etc
             $delete_string = sprintf('remove %s from campaign', $member->name);
-            // TODO: re-enable this when the unsubscribe handler has ajax support
-            //$contact->prefix_html .= '<input type="image" style="float: right;" src="' . MIDCOM_STATIC_URL . '/stock-icons/16x16/not_approved.png" class="delete" id="org_openpsa_directmarketing_unsubscribe-' . $member->guid . '" onclick="org_openpsa_directmarketing_ajax_unsubscribe(\'' . $member->guid . '\')" value="' . $delete_string . '" title="' . $delete_string . '" alt="' . $delete_string . '">';
+            $contact->prefix_html .= '<input type="image" style="float: right;" src="' . MIDCOM_STATIC_URL . '/stock-icons/16x16/not_approved.png" class="delete" id="org_openpsa_directmarketing_unsubscribe-' . $member->guid . '" onclick="org_openpsa_directmarketing_ajax_unsubscribe(\'' . $member->guid . '\', \'' . $data['memberships'][$k]->guid . '\')" value="' . $delete_string . '" title="' . $delete_string . '" alt="' . $delete_string . '">';
             if ($data['memberships'][$k]->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_CAMPAIGN_MEMBER_BOUNCED)
             {
                 $bounce_string = sprintf('%s has bounced', $member->name);

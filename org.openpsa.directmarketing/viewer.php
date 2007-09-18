@@ -207,6 +207,13 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
             'handler' => array('org_openpsa_directmarketing_handler_subscriber', 'unsubscribe'),
             'variable_args' => 1,
         );
+        
+        // Match /campaign/unsubscribe/ajax/<membership GUID>
+        $this->_request_switch['subscriber_unsubscribe'] = array(
+            'fixed_args' => Array('campaign','unsubscribe', 'ajax'),
+            'handler' => array('org_openpsa_directmarketing_handler_subscriber', 'unsubscribe_ajax'),
+            'variable_args' => 1,
+        );
 
         // Match /campaign/unsubscribe_all/<person GUID>
         $this->_request_switch['subscriber_unsubscribe_all'] = array(
@@ -302,6 +309,7 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
 
         // This component uses Ajax, include the handler javascripts
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/org.openpsa.helpers/ajaxutils.js");
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/org.openpsa.helpers/messages.js");
         // This is no longer autoloaded by core
         $_MIDCOM->add_link_head
         (
