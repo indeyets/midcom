@@ -1030,10 +1030,12 @@ class midcom_application
 
         if (!$handler->handle($this->_parser->get_current_object(), $this->_parser->argc, $this->_parser->argv, $this->_currentcontext))
         {
-            debug_add("Component $path failed to handle the request:", MIDCOM_LOG_ERROR);
-            debug_add("# Error Code: " . $handler->errcode($this->_currentcontext), MIDCOM_LOG_ERROR);
-            debug_add("# Error String: " . $handler->errstr($this->_currentcontext), MIDCOM_LOG_ERROR);
-            $this->generate_error($handler->errcode($this->_currentcontext), $handler->errstr($this->_currentcontext));
+            // debug_add("Component $path failed to handle the request:", MIDCOM_LOG_ERROR);
+            // debug_add("# Error Code: " . $handler->errcode($this->_currentcontext), MIDCOM_LOG_ERROR);
+            // debug_add("# Error String: " . $handler->errstr($this->_currentcontext), MIDCOM_LOG_ERROR);
+            // $this->generate_error($handler->errcode($this->_currentcontext), $handler->errstr($this->_currentcontext));
+            $this->generate_error(MIDCOM_ERRCRIT, "Component $path failed to handle the request");
+            
             // This will exit.
         }
 
