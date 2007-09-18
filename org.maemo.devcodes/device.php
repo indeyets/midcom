@@ -314,7 +314,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
         $devices = $qb->execute();
         foreach ($devices as $device)
         {
-            if ($device->is_open())
+            if (!$device->is_open())
             {
                 // Not open for applications
                 continue;
