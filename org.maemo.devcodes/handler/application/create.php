@@ -209,7 +209,7 @@ class org_maemo_devcodes_handler_application_create extends midcom_baseclasses_c
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The device '{$args[0]}' was not found.");
             // This will exit.
         }
-        if ($this->_device->is_open())
+        if (!$this->_device->is_open())
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "The device '{$args[0]}' is not open for applications.");
             // This will exit.
