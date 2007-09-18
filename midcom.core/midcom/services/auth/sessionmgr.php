@@ -96,11 +96,11 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
         if ($user->_storage->password == '')
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Refusing login as the user has no password associated with him.", MIDCOM_LOG_ERROR);
+            debug_add("User #{$user->_storage->id} has no password associated with him (Most likely we just failed to read it)", MIDCOM_LOG_ERROR);
             debug_pop();
             // Undo Midgard auth.
-            mgd_unsetuid();
-            return false;
+            //mgd_unsetuid();
+            //return false;
         }
 
         $session = new midcom_core_login_session_db();
