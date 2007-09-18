@@ -761,6 +761,8 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         // Generate the actication link
         $activation_link = $_MIDCOM->get_page_prefix() . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "register/activate/{$person->guid}/{$activation_hash}.html";
         
+        $activation_link = str_replace("//","/", $activation_link);
+        
         // Store the information in parameters for activation
         $person->set_parameter('net.nehmer.account', 'password', $password);
         $person->set_parameter('net.nehmer.account', 'activation_hash', $activation_hash);
@@ -975,6 +977,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
      */
     function _activate_account()
     {
+        // debug_push_class(__CLASS__, __FUNCTION__);
         if (! $_MIDCOM->auth->request_sudo('net.nehmer.account'))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
@@ -985,13 +988,16 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         $password = $this->_person->get_parameter('net.nehmer.account', 'password');
         if (! empty($password))
         {
+            // debug_add("Get person parameter password");
             $this->_person->password = $this->_person->get_parameter('net.nehmer.account', 'password');
         }
         else
         {
+            // debug_add("Get person password");
             $password = $this->_person->password;
         }
-        
+        // debug_add("Final password: ".$password);
+        // debug_pop();
         if (! $this->_person->update())
         {
             $_MIDCOM->auth->drop_sudo();
@@ -1021,7 +1027,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         $this->_person->delete_parameter('net.nehmer.account', 'activation_hash');
         $this->_person->delete_parameter('net.nehmer.account', 'activation_hash_created');
 
-        // $_MIDCOM->auth->drop_sudo();
+        $_MIDCOM->auth->drop_sudo();
 
         $auto_login_sitegroup = $this->_config->get('auto_login_on_activation');
         if ($auto_login_sitegroup)
@@ -1043,7 +1049,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
 
         // $this->_send_welcome_mail();
         
-        // $_MIDCOM->auth->request_sudo('net.nehmer.account');
+        $_MIDCOM->auth->request_sudo('net.nehmer.account');
         
         // Trigger post-activation hooks
         $this->_auto_publish_account_details();
