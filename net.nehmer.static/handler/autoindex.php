@@ -48,18 +48,18 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
         // Get last modified timestamp
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_topic->id);
-        $qb->add_order('revised', 'DESC');
+        $qb->add_order('metadata.revised', 'DESC');
         $qb->set_limit(1);
         $result = $qb->execute();
         if ($result)
         {
-            $article_time = $result[0]->revised;
+            $article_time = $result[0]->metadata->revised;
         }
         else
         {
             $article_time = 0;
         }
-        $topic_time = $this->_topic->revised;
+        $topic_time = $this->_topic->metadata->revised;
         $_MIDCOM->set_26_request_metadata(max($article_time, $topic_time), null);
         return true;
     }
@@ -163,7 +163,7 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
         $view[$filename]['size'] = '?';
         $view[$filename]['desc'] = $datamanager->types['title']->value;
         $view[$filename]['type'] = 'text/html';
-        $view[$filename]['lastmod'] = strftime('%x %X', $article->revised);
+        $view[$filename]['lastmod'] = strftime('%x %X', $article->metadata->revised);
 
         foreach ($datamanager->schema->field_order as $name)
         {
