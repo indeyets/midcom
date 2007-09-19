@@ -65,12 +65,11 @@ class net.nemein.flashplayer.assets.Thumbnails extends MovieClip
         //_console.info("Thumbnails::initialize");
 
         num_thumbs = items_array.length;
-        //_console.info("num_thumbs: "+num_thumbs);
+        //_console.debug("num_thumbs: "+num_thumbs);
 
         if (num_thumbs)
         {
             _first_thumb.update(items_array[0]);
-            _last_thumb = _first_thumb;
         }
         
         for (var i = 1; i < num_thumbs; ++i)
@@ -157,11 +156,11 @@ class net.nemein.flashplayer.assets.Thumbnails extends MovieClip
             if (mouse_x > _arena_w)
             {
                 mouse_x = _arena_w;
-            } // end if
+            }
             if (mouse_x < 0)
             {
                 mouse_x = 0;
-            } // end if
+            }
             _first_thumb._x = thumb_center - empty_space * (mouse_x / _arena_w);
         }
         else

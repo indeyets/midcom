@@ -1,10 +1,10 @@
-import flashBug;
+//import flashBug;
 import com.macromedia.javascript.JavaScriptProxy;
 
 class net.nemein.flashplayer.Playlist extends MovieClip
 {
     private var _proxy:JavaScriptProxy;
-    private var _console:flashBug;
+    //private var _console:flashBug;
 
     private var _playlist_id:String;
     private static var _self:Playlist;
@@ -17,7 +17,7 @@ class net.nemein.flashplayer.Playlist extends MovieClip
 	public function Playlist()
 	{
 	    super();
-	    _console = new flashBug(true);
+	    //_console = new flashBug(true);
 	    //_console.info("Playlist::Playlist");
 	    
 	    _self = this;
@@ -33,8 +33,16 @@ class net.nemein.flashplayer.Playlist extends MovieClip
         //_console.info("Playlist::initialize");
 
         _playlist_id = _root.playlist_id;
-        //_console.info("_playlist_id: "+_playlist_id);
+        //_console.debug("_playlist_id: "+_playlist_id);
 
+	    /*_proxy = new JavaScriptProxy(_playlist_id, Delegate.create(this, function(){
+	               _console.info("proxy deletgate");
+	               function playlist_loading_success(args)
+	                {
+	                    _console.info("delegate loading_success");
+	                   embedded(args);
+	                }
+	           }));*/
 	    _proxy = new JavaScriptProxy(_playlist_id, this);
         
 	    Stage.scaleMode = "noScale";
@@ -62,9 +70,9 @@ class net.nemein.flashplayer.Playlist extends MovieClip
             thumbnail_container._x = bg_mc.xMin;
             thumbnail_container._y = bg_mc.yMax;*/
         }
-        //_console.debug("thumbnail_container._visible: "+thumbnail_container._visible);
-        //_console.debug("thumbnail_container._x: "+thumbnail_container._x);
-        //_console.debug("thumbnail_container._y: "+thumbnail_container._y);
+/*        _console.debug("thumbnail_container._visible: "+thumbnail_container._visible);
+        _console.debug("thumbnail_container._x: "+thumbnail_container._x);
+        _console.debug("thumbnail_container._y: "+thumbnail_container._y);*/
     }
     
     public function change_movie(item)
@@ -95,10 +103,10 @@ class net.nemein.flashplayer.Playlist extends MovieClip
         //_console.info("Playlist::playlist_loading_success");
         
         var playlist_content = args.content;
-        _console.info("Playlist::playlist_loading_success playlist_content.length: "+playlist_content.length);
+        //_console.info("Playlist::playlist_loading_success playlist_content.length: "+playlist_content.length);
                 
         _thumbnails.initialize(playlist_content);
-        
+        _thumbnails.setCurrentThumb(0);
         this.renderThumbnails();
     }
 }

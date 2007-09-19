@@ -68,10 +68,14 @@ Macromedia
 function Exception(name, message)
 {
     if (name)
-        this.name = name;
+    {
+        this.name = name;        
+    }
     if (message)
-        this.message = message;
-}
+    {
+        this.message = message;        
+    }
+};
 
 /**
  * Set the name of the exception. 
@@ -165,7 +169,12 @@ FlashTag.prototype.setFlashvars = function(fv)
  */
 FlashTag.prototype.toString = function()
 {
-    var ie = (navigator.appName.indexOf ("Microsoft") != -1) ? 1 : 0;
+    var ie =  0;
+    if (navigator.appName.indexOf ("Microsoft") != -1)
+    {
+        ie = 1;
+    }
+    
     var flashTag = new String();
     if (ie)
     {
@@ -376,9 +385,13 @@ FlashSerializer.prototype._addName= function(name)
 FlashSerializer.prototype._escapeXml = function(str)
 {
     if (this.useCdata)
-        return '<![CDATA['+str+']]>';
+    {
+        return '<![CDATA['+str+']]>';        
+    }
     else
-        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+    {
+        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;');        
+    }
 }
 
 /**
@@ -405,7 +418,6 @@ function FlashProxy(uid, proxySwfName)
  */
 FlashProxy.prototype.call = function()
 {
-
     if (arguments.length == 0)
     {
         throw new Exception("Flash Proxy Exception",

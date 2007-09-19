@@ -26,8 +26,8 @@ class net.nemein.flashplayer.Player extends MovieClip
 	public function Player()
 	{
 	    super();
-/*      _console = new flashBug(true);      
-        //_console.info("Player::Player");*/
+        //_console = new flashBug(true);      
+        //_console.info("Player::Player");
 	    
 	    _self = this;
         
@@ -50,6 +50,14 @@ class net.nemein.flashplayer.Player extends MovieClip
         //_console.debug("_player_id: "+_player_id);
 
 	    _proxy = new JavaScriptProxy(_player_id, this);
+	        /*Delegate.create(this, function(){
+	        _console.info("proxy deletgate");
+	        function player_embedded(args)
+            {
+                _console.info("delegate embedded");
+            	embedded(args);
+            }
+	    }));*/
         
 	    Stage.scaleMode = "noScale";
         Stage.addListener(this);
