@@ -31,6 +31,11 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
      * @access private
      */
     var $_open_handle = null;
+    
+    /**
+     * Internal tracking state variable, TRUE if the attachment has a handle opened in write mode
+     */
+    var $_open_write_mode = false;
 
     function midcom_baseclasses_database_attachment($id = null)
     {
@@ -173,20 +178,23 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
         fclose ($this->_open_handle);
         $this->_open_handle = null;
 
-        // We need to update the attachment now, this cannot be done in the Midgard Core
-        // at this time.
-        if (! $this->update())
+        if ($this->_open_write_mode)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Failed to update attachment {$this->id}", MIDCOM_LOG_WARN);
-            debug_pop();
-            return;
-        }
-
-        $object = $this->get_parent();
-        if ($object !== null)
-        {
-            $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);
+            // We need to update the attachment now, this cannot be done in the Midgard Core
+            // at this time.
+            if (! $this->update())
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Failed to update attachment {$this->id}", MIDCOM_LOG_WARN);
+                debug_pop();
+                return;
+            }
+    
+            $object = $this->get_parent();
+            if ($object !== null)
+            {
+                $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);
+            }
         }
     }
 
