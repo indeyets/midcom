@@ -673,6 +673,8 @@ class midcom_helper_toolbar {
     function _generate_item_label($item)
     {
         $label = $item[MIDCOM_TOOLBAR_LABEL];
+        $label = htmlentities($label);
+        
         if (!is_null($item[MIDCOM_TOOLBAR_ACCESSKEY]))
         {
             // Try finding uppercase version of the accesskey first
@@ -682,8 +684,12 @@ class midcom_helper_toolbar {
             if ($position !== false)
             {
                 $new_label  = substr($label, 0, $position);
-                $new_label .= "<u>{$accesskey_upper}</u>";
-                $new_label .= substr($label, $position + 1);
+                // FIXME: This is an ugly IE rendering fix
+                $new_label = str_replace(' ', '&nbsp;', $new_label);
+                $new_label .= "<span style=\"text-decoration: underline;\">{$accesskey_upper}</span>";
+                // FIXME: This is an ugly IE rendering fix
+                $new_label .= str_replace(' ', '&nbsp;', substr($label, $position + 1));
+                //$new_label .= substr($label, $position + 1);
                 $label = $new_label;
             }
             else
@@ -693,14 +699,18 @@ class midcom_helper_toolbar {
                 if ($position !== false)
                 {
                     $new_label  = substr($label, 0, $position);
-                    $new_label .= "<u>{$accesskey_lower}</u>";
-                    $new_label .= substr($label, $position + 1);
+                    // FIXME: This is an ugly IE rendering fix
+                    $new_label = str_replace(' ', '&nbsp;', $new_label);
+                    $new_label .= "<span style=\"text-decoration: underline;\">{$accesskey_lower}</span>";
+                    // FIXME: This is an ugly IE rendering fix
+                    $new_label .= str_replace(' ', '&nbsp;', substr($label, $position + 1));
+                    //$new_label .= substr($label, $position + 1);
                     $label = $new_label;
                 }
             }
         }
-        // FIXME: This is an ugly IE rendering fix
-        return str_replace(' ', '&nbsp;', $label);
+
+        return $label;
     }
 
     /**
