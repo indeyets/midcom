@@ -6,7 +6,7 @@ $_MIDCOM->cache->content->enable_live_mode();
 @ini_set('memory_limit', -1);
 @ini_set('max_execution_time', 0);
 
-require('/Users/bergie/devel/midgard/midcom/htmlpurifier-2.1.1-strict/library/HTMLPurifier.auto.php');
+require('HTMLPurifier.auto.php');
 while(@ob_end_flush());
 ?>
 <h1>Import content from Apache Forrest XML files</h1>
