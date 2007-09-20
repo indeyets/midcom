@@ -233,7 +233,7 @@ foreach ($results as $object)
     }
 
 
-    $title = @$object->$gotfield;
+    $title = rawurlencode(@$object->$gotfield);
     debug_add("adding result: id={$id} title='{$title}' titlefield='{$gotfield}'");
     echo "      <line>\n";
     echo "          <id>{$id}</id>\n";
