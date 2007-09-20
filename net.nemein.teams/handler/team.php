@@ -62,6 +62,19 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	    }
 
 	    $this->_content_topic =& $this->_request_data['content_topic'];
+	    
+	    $this->_request_data['is_registered'] = false;
+        $this->_request_data['is_player'] = false;
+        
+        if ($_MIDCOM->auth->user)
+	    {
+	        $this->_request_data['is_registered'] = true;
+	        
+            if ($this->_is_player())
+	        {
+                $this->_request_data['is_player'] = true;
+	        }
+        }
     }
     
     function _join_team($groupguid, $playerguid)
@@ -128,20 +141,20 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	    
 	    if (count($teams) > 0)
 	    {
-	        // Checing if user is a member of a team
+	        // Checking if user is a member of a team
 	        foreach($teams as $team)
 	        {
 	            $qb = midcom_db_member::new_query_builder();
-		        $qb->add_constraint('gid.id', '=', $team->id);
+		        $qb->add_constraint('gid', '=', $team->id);
 		        
 		        if(!is_null($playerguid))
 		        {
 		            $player = new midcom_db_person($playerguid);
-		            $qb->add_constraint('uid.id', '=', $player->id);    	        
+		            $qb->add_constraint('uid', '=', $player->id);    	        
 		        }
 		        else
 		        {
-		            $qb->add_constraint('uid.id', '=', $_MIDCOM->auth->user->_storage->id);
+		            $qb->add_constraint('uid', '=', $_MIDCOM->auth->user->_storage->id);
 	            }
 	        
 		        $members = $qb->execute();
@@ -340,7 +353,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	    {	        
 	        // Creating a pending application
 	        $pending = new net_nemein_teams_pending_dba();
-	        $pending->playerguid = $_POST['applyee'];
+	        $pending->playerguid = $_POST['applier'];
 	        $pending->groupguid = $args[0];
 	        $pending->managerguid = $_POST['manager'];
 	        
@@ -383,10 +396,17 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     function _handler_index ($handler_id, $args, &$data)
     {
         $title = $this->_l10n_midcom->get('index');
-        $_MIDCOM->set_pagetitle(":: {$title}");
+        $tmp = Array();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "",
+            MIDCOM_NAV_NAME => $this->_topic->extra,
+        );
+        
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        $_MIDCOM->set_pagetitle("{$this->_topic->extra} :: {$title}");
 
-
-	   return true;
+        return true;
     }
     
     function _handler_create_team_home ($handler_id, $args, &$data)
@@ -578,18 +598,43 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     {       
         $member_count = 0;
         
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        $urlgenerator = false;
+        if ($_MIDCOM->serviceloader->can_load('midcom_core_service_urlgenerator'))
+        {
+            $urlgenerator = $_MIDCOM->serviceloader->load('midcom_core_service_urlgenerator');            
+        }
+        
         midcom_show_style('teams_list_start');
         
         foreach($this->_teams_list as $team)
         {
             $member_count = $team->count_members();
             $team_group = new midcom_db_group($team->groupguid);
- 
+            $is_recruiting = $team_group->get_parameter('net.nemein.teams:preferences','is_recruiting');
+            
 	        $this->_load_datamanager($team_group);
 	        $this->_request_data['view_team'] = $this->_request_data['datamanager']->get_content_html();
-	        $this->_request_data['view_team']['team_member_count'] = $member_count;
-	        $this->_request_data['view_team']['team_group_guid'] = $team->groupguid;
-	        
+	        $this->_request_data['view_team']['member_count'] = $member_count;
+	        $this->_request_data['view_team']['group_guid'] = $team->groupguid;
+	        $this->_request_data['view_team']['description'] = $team_group->get_parameter('midcom.helper.datamanager2','team_description');
+	        $this->_request_data['view_team']['location'] = $team_group->get_parameter('midcom.helper.datamanager2','team_location');
+	        $this->_request_data['view_team']['is_recruiting'] = false;
+	        	        
+	        if (   $member_count < $this->_config->get('max_players_per_team')
+	            && $is_recruiting)
+	        {
+    	        $this->_request_data['view_team']['is_recruiting'] = true;
+	        }
+	        	        
+	        $url_name = $team->guid;
+            if ($urlgenerator)
+            {
+                $url_name = $urlgenerator->from_string($team_group->name);
+            }
+            
+            $this->_request_data['view_team']['profile_url'] = "{$prefix}{$url_name}";
+            
             midcom_show_style('teams_list_item');
 	    }
 
@@ -615,21 +660,21 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
     function _show_index($handler_id, &$data)
     {
-        if ($_MIDCOM->auth->user)
-	    {
-            if ($this->_is_player())
-	        {
-                midcom_show_style('player_index');
-	        }
-	        else
-	        {
-                midcom_show_style('registered_index');
-	        }
-        }
-	    else
-	    {
+        //         if ($_MIDCOM->auth->user)
+        // {
+        //             if ($this->_is_player())
+        //     {
+        //                 midcom_show_style('player_index');
+        //     }
+        //     else
+        //     {
+        //                 midcom_show_style('registered_index');
+        //     }
+        //         }
+        // else
+        // {
              midcom_show_style('index');
-	    }
+        // }
     }
     
     

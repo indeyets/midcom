@@ -123,8 +123,15 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
         
         $this->_team_guid = $teams[0]->groupguid;
         $group = new midcom_db_group($this->_team_guid);
- 
-        $this->_home_name = "team_home_" . $group->guid;
+        
+        $url_name = $group->guid;        
+        if ($_MIDCOM->serviceloader->can_load('midcom_core_service_urlgenerator'))
+        {
+            $urlgenerator = $_MIDCOM->serviceloader->load('midcom_core_service_urlgenerator');
+            $url_name = $urlgenerator->from_string($group->name);
+        }
+        
+        $this->_home_name = $url_name;
         $this->_home_title = $group->name;
 
         return true;
@@ -132,6 +139,7 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
 
     function _show_create_team_home()
     {
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         echo "<pre>";
         try
         {
@@ -167,7 +175,7 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
 	        
 	        $this->_logger->log("Team home folder created by " . $_MIDCOM->auth->user->_storage->username, $this->_team_guid);
 
-	        $_MIDCOM->relocate($this->_home_name);
+	        $_MIDCOM->relocate("{$prefix}{$this->_home_name}");
 
 	    }
 	    catch (midgard_admin_sitewizard_exception $e)

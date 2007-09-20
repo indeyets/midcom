@@ -341,7 +341,7 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         }
         */
         
-        if ($_MIDCOM->auth->require_admin_user())
+        if ($_MIDCOM->auth->admin)
         {
             $this->_node_toolbar->add_item
             (
