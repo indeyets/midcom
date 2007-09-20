@@ -35,9 +35,9 @@ class midcom_baseclasses_database_topic extends __midcom_baseclasses_database_to
      */
     function get_parent_guid_uncached()
     {
-        return midcom_baseclasses_database_topic::get_parent_guid_uncached_static($this->guid);
+        return midcom_baseclasses_database_topic::_get_parent_guid_uncached_static_topic($this->up);
     }
-
+    
     /**
      * Statically callable method to get parent guid when object guid is given
      * 
@@ -73,12 +73,42 @@ class midcom_baseclasses_database_topic extends __midcom_baseclasses_database_to
         }
         $mc_topic_keys = $mc_topic->list_keys();
         list ($key, $copy) = each ($mc_topic_keys);
-        $parent_id = $mc_topic->get_subkey($key, 'up');
+        $parent_id = (int) $mc_topic->get_subkey($key, 'up');
         if ($parent_id == 0)
+        {
+            // Root-level topic
+            return null;
+        }
+        $mc_parent = midcom_baseclasses_database_topic::new_collector('id', $parent_id);
+        $mc_parent->add_value_property('guid');
+        if (!$mc_parent->execute())
+        {
+            // ErrorA
+            return null;
+        }
+        $mc_parent_keys = $mc_parent->list_keys();
+        $parent_guids = array_keys($mc_parent_keys);
+        $parent_guid = $parent_guids[0];
+        if ($parent_guid === false)
         {
             return null;
         }
-        
+        return $parent_guid;
+    }
+    
+    /**
+     * Get topic guid statically
+     *
+     * used by get_parent_guid_uncached_static
+     *
+     * @param id $parent_id id of topic to get the guid for
+     */
+    function _get_parent_guid_uncached_static_topic($parent_id)
+    {
+        if (empty($parent_id))
+        {
+            return null;
+        }
         $mc_parent = midcom_baseclasses_database_topic::new_collector('id', $parent_id);
         $mc_parent->add_value_property('guid');
         if (!$mc_parent->execute())
@@ -87,8 +117,8 @@ class midcom_baseclasses_database_topic extends __midcom_baseclasses_database_to
             return null;
         }
         $mc_parent_keys = $mc_parent->list_keys();
-        list ($key2, $copy2) = each ($mc_parent_keys);
-        $parent_guid = $mc_parent->get_subkey($key2, 'guid');
+        $parent_guids = array_keys($mc_parent_keys);
+        $parent_guid = $parent_guids[0];
         if ($parent_guid === false)
         {
             return null;

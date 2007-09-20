@@ -840,7 +840,8 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             $user =& $this->user;
         }
 
-        if ($user == 'EVERYONE')
+        if (   is_string($user)
+            && $user == 'EVERYONE')
         {
             $user = null;
         }
