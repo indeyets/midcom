@@ -7,11 +7,15 @@
 Archive
 ---STRINGEND
 
+---STRING best of %s
+Best of %s
+---STRINGEND
+
 ---STRING org.maemo.socialnews
 Social news aggregator
 ---STRINGEND
 
----STRING best of %s
-Best of %s
+---STRING item %s has been registered for score recalculation
+Item %s has been registered for score recalculation.
 ---STRINGEND
 

@@ -27,9 +27,9 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
     function _handler_create($handler_id, $args, &$data)
     {
         $guid = $args[1];
-    	$objectType_eval = $args[0] . "()";
     	$objectType = $args[0];
-
+    	$objectType_eval = $args[0] . "()";
+    	
         // Trying to get the object
         $obj = null;	
     	eval("\$obj = new $objectType_eval;");
@@ -41,10 +41,17 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
         $qb->add_constraint('objectGuid', '=', $guid);
         if ($qb->count_unchecked() > 0)
         {
-            $_MIDCOM->uimessages->add($this->_l10n->get('net.nemein.favourites'), $this->_l10n->get('you have already favourited the item'), 'warning');
-            // Quick fix to form-based authentication. TODO: Move relocation URL to GET params
-            $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($guid));
-            //$_MIDCOM->relocate($_SERVER['HTTP_REFERER']);
+            $favs = $qb->execute();
+            if ($favs[0]->bury)
+            {
+                $_MIDCOM->uimessages->add($this->_l10n->get('net.nemein.favourites'), $this->_l10n->get('you have already buried the item'), 'warning');
+            }
+            else
+            {
+                $_MIDCOM->uimessages->add($this->_l10n->get('net.nemein.favourites'), $this->_l10n->get('you have already favourited the item'), 'warning');
+            }
+            // Redirecting back to the previous page
+    	    $_MIDCOM->relocate($_POST['net_nemein_favourites_referer']);
             // This will exit
         }
 
@@ -55,20 +62,28 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
             $favourite->objectType = $objectType;
     	    $favourite->objectGuid = $guid;
     	    $favourite->objectTitle = $_POST['net_nemein_favourite_title'];
-
+    	    
+            if ($handler_id == 'bury')
+            {
+                $favourite->bury = true;
+            }
+            
             if (!$favourite->create())
             {
-                $_MIDCOM->uimessages->add($this->_l10n->get('net.nemein.favourites'), sprintf($this->_l10n->get('favouriting %s failed: %s'), $_POST['net_nemein_favourite_title'], mgd_errstr()), 'error');
-                // Quick fix to form-based authentication. TODO: Move relocation URL to GET params
-                $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($guid));
-                //$_MIDCOM->relocate($_POST['net_nemein_favourites_referer']);
+                if ($handler_id == 'bury')
+                {
+                    $_MIDCOM->uimessages->add($this->_l10n->get('net.nemein.favourites'), sprintf($this->_l10n->get('burying %s failed: %s'), $_POST['net_nemein_favourite_title'], mgd_errstr()), 'error');
+                }
+                else
+                {
+                    $_MIDCOM->uimessages->add($this->_l10n->get('net.nemein.favourites'), sprintf($this->_l10n->get('favouriting %s failed: %s'), $_POST['net_nemein_favourite_title'], mgd_errstr()), 'error');
+                }
+                $_MIDCOM->relocate($_POST['net_nemein_favourites_referer']);
                 // This will exit
             }
             
             // Redirecting back to the previous page
-            // Quick fix to form-based authentication. TODO: Move relocation URL to GET params
-            $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($guid));
-    	    //$_MIDCOM->relocate($_POST['net_nemein_favourites_referer']);
+    	    $_MIDCOM->relocate($_POST['net_nemein_favourites_referer']);
             //This will exit
     	}
     	elseif (is_object($obj))
@@ -100,9 +115,38 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
     	    }
 
             $this->_favourite_title = $title;
-    	    $this->_my_way_back = $_MIDCOM->permalinks->create_permalink($guid);
+            
+            if (isset($_GET['return']))
+            {
+                // We have a specified return URL
+                $this->_my_way_back = $_GET['return'];
+            }
+            else
+            {
+                // Fall back to permalinks
+        	    $this->_my_way_back = $_MIDCOM->permalinks->create_permalink($guid);
+            }
     	}
-
+    	
+    	if ($handler_id == 'bury')
+    	{
+    	   $data['view_title'] = $this->_l10n->get('bury item');
+    	   $data['bury'] = true;
+        }
+        else
+        {
+    	   $data['view_title'] = $this->_l10n->get('add to favourites');
+    	   $data['bury'] = false;
+        }
+    	
+    	$tmp = array();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => '',
+            MIDCOM_NAV_NAME => $data['view_title'],
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");
         return true;
     }
 

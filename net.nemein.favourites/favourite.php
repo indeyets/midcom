@@ -29,17 +29,34 @@ class net_nemein_favourites_favourite_dba extends __net_nemein_favourites_favour
     }
 
     /**
-     * Returns the number of comments associated with a given object. This is intended for
-     * outside usage to render stuff like "15 comments". The count is executed unchecked.
+     * Returns the number of favs associated with a given object. This is intended for
+     * outside usage to render stuff like "15 favs". The count is executed unchecked.
      * 
      * May be called statically.
      *
-     * @return int Number of comments matching a given result. 
+     * @return int Number of favs matching a given result. 
      */
     function count_by_objectguid($guid)
     {
         $qb = net_nemein_favourites_favourite_dba::new_query_builder();
         $qb->add_constraint('objectGuid', '=', $guid);        
+        $qb->add_constraint('bury', '=', false);
+        return $qb->count_unchecked();
+    }
+    
+    /**
+     * Returns the number of buries associated with a given object. This is intended for
+     * outside usage to render stuff like "15 buries". The count is executed unchecked.
+     * 
+     * May be called statically.
+     *
+     * @return int Number of buries matching a given result. 
+     */
+    function count_buries_by_objectguid($guid)
+    {
+        $qb = net_nemein_favourites_favourite_dba::new_query_builder();
+        $qb->add_constraint('objectGuid', '=', $guid);    
+        $qb->add_constraint('bury', '=', true);    
         return $qb->count_unchecked();
     }
 }

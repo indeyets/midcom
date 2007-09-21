@@ -24,6 +24,9 @@
 'favourites_enable' => true,
 'favourites_modifier' => 0.7,
 
+'buries_enable' => true,
+'buries_modifier' => -5,
+
 'delicious_enable' => false,
 'delicious_modifier' => 0.5,
 

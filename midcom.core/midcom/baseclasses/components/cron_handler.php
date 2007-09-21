@@ -75,7 +75,6 @@ class midcom_baseclasses_components_cron_handler
      */
     public function midcom_baseclasses_components_cron_handler()
     {
-        parent::midcom_baseclasses_core_object();
     }
 
     /**
@@ -103,7 +102,6 @@ class midcom_baseclasses_components_cron_handler
             $this->_config = $this->_component_data['config'];
             $this->_component_interface =& $_MIDCOM->componentloader->get_interface_class($this->_component);
         }
-
         return $this->_on_initialize();
     }
 
@@ -115,7 +113,7 @@ class midcom_baseclasses_components_cron_handler
      *
      * @return bool Returns true, if initialization was successful, false if anything went wrong.
      */
-    private function _on_initialize()
+    public function _on_initialize()
     {
         return true;
     }
@@ -134,7 +132,7 @@ class midcom_baseclasses_components_cron_handler
      * the user of any errors. As long as everything goes fine, you should not print anything
      * to avoid needles cron mailings.
      */
-    private function _on_execute() {}
+    public function _on_execute() {}
 
 
     /**

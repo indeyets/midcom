@@ -9,6 +9,17 @@
 'privileges' => array(),
 /* use this to initialize your own MgdSchema classes */
 'class_definitions' => Array('midcom_dba_classes.inc'),
+'watches' => array
+(
+    array
+    (
+        'classes' => array
+        (
+            'net_nemein_favourites_favourite',
+        ),
+        'operations' => MIDCOM_OPERATION_DBA_CREATE,
+    ),
+),
 /**
  * This is used by the PEAR packaging.
  */

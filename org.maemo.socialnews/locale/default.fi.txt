@@ -7,11 +7,15 @@
 Arkisto
 ---STRINGEND
 
+---STRING best of %s
+%s:n parhaat
+---STRINGEND
+
 ---STRING org.maemo.socialnews
 Sosiaalinen uutispalvelu
 ---STRINGEND
 
----STRING best of %s
-%s:n parhaat
+---STRING item %s has been registered for score recalculation
+Dokumentti %s on rekisteröity pisteiden uudelleenlaskentaan.
 ---STRINGEND
 

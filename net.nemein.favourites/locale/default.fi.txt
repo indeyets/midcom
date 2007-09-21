@@ -7,6 +7,26 @@
 Lisää
 ---STRINGEND
 
+---STRING add to favourites
+Lisää suosikkeihin
+---STRINGEND
+
+---STRING bury
+Hautaa
+---STRINGEND
+
+---STRING bury item
+Hautaa dokumentti
+---STRINGEND
+
+---STRING deleting favourite %s failed: %s
+Suosikin "%s" poisto epäonnistui: %s
+---STRINGEND
+
+---STRING favourite
+Suosikki
+---STRINGEND
+
 ---STRING favouriting %s failed: %s
 Dokumentin "%s" tallennus suosikkeihin epäonnistui: %s
 ---STRINGEND
@@ -19,6 +39,10 @@ Suosikit
 Palaa takaisin ja jätä lisäämättä
 ---STRINGEND
 
+---STRING you are adding the following item to buries list
+Olet hautaamassa seuraava dokumenttia. Klikkaa nappia "Lisää" vahvistaaksesi.
+---STRINGEND
+
 ---STRING you are adding the following item to favourites
 Olet lisäämässä oheista dokumenttia suosikkeihisi. Klikkaa nappia "lisää" tallentaaksesi sen.
 ---STRINGEND
@@ -27,7 +51,7 @@ Olet lisäämässä oheista dokumenttia suosikkeihisi. Klikkaa nappia "lisää" 
 Olet jo tallentanut tämän dokumentin suosikkeihisi
 ---STRINGEND
 
----STRING deleting favourite %s failed: %s
-Suosikin "%s" poisto epäonnistui: %s
+---STRING buried
+Haudattu
 ---STRINGEND
 
