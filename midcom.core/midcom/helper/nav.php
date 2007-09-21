@@ -349,11 +349,9 @@ class midcom_helper_nav
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("NAP::resolve_guid: The Guid {$guid} leads to an unknown topic not in our tree.", MIDCOM_LOG_WARN);
-                debug_print_r('Retrieved topic was:', $object);
                 debug_pop();
                 return false;
             }
-            debug_pop();
             return $this->get_node($object->id);
         }
 
@@ -365,7 +363,6 @@ class midcom_helper_nav
             if (! $this->is_node_in_tree($object->topic, $this->get_root_node()))
             {
                 debug_add("NAP::resolve_guid: The Guid {$guid} leads to an unknown topic not in our tree.", MIDCOM_LOG_WARN);
-                debug_print_r('Retrieved article was:', $object);
                 debug_pop();
                 return false;
             }
@@ -373,6 +370,7 @@ class midcom_helper_nav
             $topic = new midcom_db_topic($object->topic);
             if (! $topic)
             {
+                debug_pop();
                 $_MIDCOM->generate_error
                 (
                     MIDCOM_ERRCRIT,
@@ -394,7 +392,6 @@ class midcom_helper_nav
             }
 
             debug_add("The Article GUID {$guid} is somehow hidden from the NAP data in its topic, no results shown.", MIDCOM_LOG_INFO);
-            debug_print_r('Retrieved article was:', $object);
             debug_pop();
             return false;
         }

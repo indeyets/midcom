@@ -296,7 +296,7 @@ class midcom_helper__basicnav
                 break;
 
             default:
-                debug_push("_basicnav::constructor");
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("_loadNode failed, see above error for details.", MIDCOM_LOG_ERROR);
                 debug_pop();
                 return false;
@@ -424,6 +424,7 @@ class midcom_helper__basicnav
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Could not get interface class of '{$path}' to the topic {$topic->id}, cannot add it to the NAP list.",
                 MIDCOM_LOG_ERROR);
+            debug_pop();
             return null;
         }
         
@@ -517,13 +518,6 @@ class midcom_helper__basicnav
      */
     function _get_leaves($node)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
-        if (is_object($node[MIDCOM_NAV_OBJECT]))
-        {
-            debug_add("Trying to load NAP leaf data for topic {$node[MIDCOM_NAV_OBJECT]->name} (#{$node[MIDCOM_NAV_OBJECT]->id})");
-        }
-
         $entry_name = "{$node[MIDCOM_NAV_ID]}-leaves";
 
         /*
@@ -545,8 +539,9 @@ class midcom_helper__basicnav
         {
             // Appearantly, the leaves have not yet been loaded for this topic, so we have to do this now.
             // Afterwards we update the cache.
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('The leaves have not yet been loaded from the database, we do this now.');
-
+            debug_pop();
             $leaves = $this->_get_leaves_from_database($node);
 
             // Cache disabled until #252 is resolved
@@ -559,7 +554,7 @@ class midcom_helper__basicnav
 
         // Don't log, this can get really big.
         // debug_print_r("We will return these leaves:", $leaves);
-        debug_pop();
+
         return $leaves;
     }
 
@@ -868,7 +863,6 @@ class midcom_helper__basicnav
     function _loadNodeData($node)
     {
         global $midcom_errstr;
-        debug_push_class(__CLASS__, __FUNCTION__);
 
         // Load the object.
         if (!is_object($node))
@@ -877,6 +871,7 @@ class midcom_helper__basicnav
             $topic = new midcom_db_topic($topic_id);
             if (!$topic)
             {
+                debug_push_class(__CLASS__, __FUNCTION__);            
                 $midcom_errstr = "Could not open Topic: " . mgd_errstr();
                 debug_add($midcom_errstr, MIDCOM_LOG_ERROR);
                 debug_pop();
@@ -894,7 +889,6 @@ class midcom_helper__basicnav
 
         if (! $this->_is_object_visible($nodedata))
         {
-            debug_pop();
             return MIDCOM_ERRFORBIDDEN;
         }
         // The node is visible, add it to the list.
@@ -908,8 +902,10 @@ class midcom_helper__basicnav
             $interface =& $this->_loader->get_interface_class($nodedata[MIDCOM_NAV_COMPONENT]);
             if (!$interface)
             {
+                debug_push_class(__CLASS__, __FUNCTION__);            
                 debug_add("Could not get interface class of '{$nodedata[MIDCOM_NAV_COMPONENT]}' to the topic {$topic->id}, cannot add it to the NAP list.",
                     MIDCOM_LOG_ERROR);
+                debug_pop();
                 return null;
             }            
             $currentleaf = $interface->get_current_leaf();
@@ -919,7 +915,6 @@ class midcom_helper__basicnav
             }
         }
         
-        debug_pop();
         return MIDCOM_ERROK;
     }
 
@@ -1112,11 +1107,10 @@ class midcom_helper__basicnav
     function list_nodes($parent_node, $show_noentry)
     {
         global $midcom_errstr;
-
-        debug_push(__CLASS__, __FUNCTION__);
         
         if (! is_numeric($parent_node))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);        
             debug_add("Parameter passed is no integer: [$parent_node]", MIDCOM_LOG_ERROR);
             debug_print_type('Type was:', $parent_node);
             debug_pop();
@@ -1127,6 +1121,7 @@ class midcom_helper__basicnav
         {
             if ($this->_loadNode($parent_node) != MIDCOM_ERROK)
             {
+                debug_push_class(__CLASS__, __FUNCTION__);            
                 debug_add("Unable to load parent node $parent_node", MIDCOM_LOG_ERROR);
                 debug_pop();
                 return false;
@@ -1160,14 +1155,13 @@ class midcom_helper__basicnav
             
             if ($this->_loadNode($id) !== MIDCOM_ERROK)
             {
-                debug_add("Node {$id} could not be loaded, ignoring it", MIDCOM_LOG_INFO);
+                //debug_add("Node {$id} could not be loaded, ignoring it", MIDCOM_LOG_INFO);
                 continue;
             }
 
             $result[] = $id;
         }
         
-        debug_pop();
         return $result;
     }
 
@@ -1183,10 +1177,9 @@ class midcom_helper__basicnav
     // Keep this doc in sync with midcom_helper_nav
     function list_leaves ($parent_node, $show_noentry)
     {
-        debug_push ("_basicnav::list_leaves");
-
         if (! is_numeric($parent_node))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);        
             debug_add("Parameter passed is no integer: [$parent_node]", MIDCOM_LOG_ERROR);
             debug_print_type('Type was:', $parent_node);
             debug_pop();
@@ -1197,7 +1190,6 @@ class midcom_helper__basicnav
         {
             if ($this->_loadNode($parent_node) != MIDCOM_ERROK)
             {
-                debug_pop();
                 return false;
             }
         }
@@ -1216,7 +1208,6 @@ class midcom_helper__basicnav
             }
         }
 
-        debug_pop();
         return $result;
     }
 
@@ -1235,7 +1226,6 @@ class midcom_helper__basicnav
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Parameter passed is no integer: [$node_id]", MIDCOM_LOG_ERROR);
-            debug_print_type('Type was:', $node_id);
             debug_pop();
             return false;
         }
@@ -1341,18 +1331,15 @@ class midcom_helper__basicnav
     // Keep this doc in sync with midcom_helper_nav
     function get_leaf_uplink($leaf_id)
     {
-        debug_push ("_basicnav::get_leaf_uplink");
-
         if (! $this->_check_leaf_id($leaf_id))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);        
             debug_add("This leaf is unkown, aborting.", MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
 
-        debug_pop ();
         return $this->_leaves[$leaf_id][MIDCOM_NAV_NODEID];
-
     }
 
     /**
@@ -1365,12 +1352,10 @@ class midcom_helper__basicnav
     // Keep this doc in sync with midcom_helper_nav
     function get_node_uplink($node_id)
     {
-        debug_push ("_basicnav::get_node_uplink");
-
         if (! is_numeric($node_id))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);        
             debug_add("Parameter passed is no integer: [$node_id]", MIDCOM_LOG_ERROR);
-            debug_print_type('Type was:', $node_id);
             debug_pop();
             return false;
         }
@@ -1379,12 +1364,10 @@ class midcom_helper__basicnav
         {
             if ($this->_loadNode($node_id) != MIDCOM_ERROK)
             {
-                debug_pop();
                 return false;
             }
         }
-
-        debug_pop();
+        
         return $this->_nodes[$node_id][MIDCOM_NAV_NODEID];
     }
 
