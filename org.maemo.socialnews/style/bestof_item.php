@@ -1,6 +1,7 @@
 <?php
 $article = $data['article'];
 $node = $data['node'];
+$article->abstract = strip_tags($article->abstract);
 
 $author_string = '';
 if (isset($article->metadata->authors))

@@ -28,6 +28,14 @@ class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_
         parent::midcom_baseclasses_components_handler();
     }
     
+    /**
+     * Load the paged query builder
+     */
+    function _on_initialize()
+    {   
+        $_MIDCOM->load_library('org.openpsa.qbpager');
+    }
+    
     private function get_node($node_id)
     {
         static $nap = null;
@@ -105,9 +113,10 @@ class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_
     function _handler_index($handler_id, $args, &$data)
     {
         // Find items matching our criteria
-        $qb = org_maemo_socialnews_score_article_dba::new_query_builder();
+        $qb = new org_openpsa_qbpager('org_maemo_socialnews_score_article_dba', 'org_maemo_socialnews_best');
+        $data['qb'] =& $qb;
         $qb->add_order('score', 'DESC');
-        $qb->set_limit((int) $this->_config->get('bestof_items'));
+        $qb->results_per_page = (int) $this->_config->get('bestof_items');
         $scores = $qb->execute();
         foreach ($scores as $score)
         {
@@ -164,14 +173,8 @@ class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_
         
         $data['view_title'] = sprintf($this->_l10n->get('best of %s'), $title);
         $_MIDCOM->set_pagetitle($data['view_title']);
-        
-        $breadcrumb = Array();
-        $breadcrumb[] = Array
-        (
-            MIDCOM_NAV_URL => "best/",
-            MIDCOM_NAV_NAME => $data['view_title'],
-        );
-        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
+
+        $this->_component_data['active_leaf'] = "{$this->_topic->id}_BEST";
     
         return true;
     }

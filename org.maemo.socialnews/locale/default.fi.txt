@@ -1,17 +1,17 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE fi
 
 ---STRING archive
-Archive
+Arkisto
 ---STRINGEND
 
 ---STRING org.maemo.socialnews
-Social news aggregator
+Sosiaalinen uutispalvelu
 ---STRINGEND
 
 ---STRING best of %s
-Best of %s
+%s:n parhaat
 ---STRINGEND
 

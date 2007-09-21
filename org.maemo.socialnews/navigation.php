@@ -23,6 +23,54 @@ class org_maemo_socialnews_navigation extends midcom_baseclasses_components_navi
     {
         parent::midcom_baseclasses_components_navigation();
     }
+    
+    /**
+     * Returns a static leaf list with access to the archive.
+     */
+    function get_leaves()
+    {
+        $leaves = array();
+        
+        if ($this->_config->get('show_navigation_pseudo_leaves'))
+        {
+        
+            $title = $this->_config->get('socialnews_title');
+            if (empty($title))
+            {
+                $title = $this->_topic->extra;
+            }
+            
+            $leaves["{$this->_topic->id}_BEST"] = array
+            (
+                MIDCOM_NAV_SITE => Array
+                (
+                    MIDCOM_NAV_URL => "best/",
+                    MIDCOM_NAV_NAME => sprintf($this->_l10n->get('best of %s'), $title),
+                ),
+                MIDCOM_NAV_ADMIN => null,
+                MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
+                MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
+                MIDCOM_META_CREATED => $this->_topic->metadata->created,
+                MIDCOM_META_EDITED => $this->_topic->metadata->revised,
+            );
+        
+            $leaves["{$this->_topic->id}_ARCHIVE"] = array
+            (
+                MIDCOM_NAV_SITE => Array
+                (
+                    MIDCOM_NAV_URL => "archive/",
+                    MIDCOM_NAV_NAME => $this->_l10n->get('archive'),
+                ),
+                MIDCOM_NAV_ADMIN => null,
+                MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
+                MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
+                MIDCOM_META_CREATED => $this->_topic->metadata->created,
+                MIDCOM_META_EDITED => $this->_topic->metadata->revised,
+            );
+        }
+        
+        return $leaves;
+    }
 }
 
 ?>

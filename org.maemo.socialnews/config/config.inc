@@ -16,6 +16,7 @@
 
 'archive_generation_topic' => null,
 'archive_generation_substyle' => '',
+'archive_enable' => true,
 
 'comments_enable' => true,
 'comments_modifier' => 1.5,
@@ -39,3 +40,5 @@
 'technorati_enable' => false,
 'technorati_modifier' => 0.8,
 'technorati_apikey' => '', 
+
+'show_navigation_pseudo_leaves' => true,   // Set this to false if you want to hide archive and "best of" navigation items

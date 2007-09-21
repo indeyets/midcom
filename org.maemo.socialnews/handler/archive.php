@@ -71,6 +71,9 @@ class org_maemo_socialnews_handler_archive extends midcom_baseclasses_components
     {
         $this->_compute_welcome_data();
         $this->_prepare_request_data();
+        
+        $this->_component_data['active_leaf'] = "{$this->_topic->id}_ARCHIVE";
+        
         return true;
     }
 
@@ -317,6 +320,7 @@ class org_maemo_socialnews_handler_archive extends midcom_baseclasses_components
             $this->_end->subtractSeconds(86400);
         }
 
+        $this->_component_data['active_leaf'] = "{$this->_topic->id}_ARCHIVE";
         $breadcrumb = Array();
         $start = $this->_start->format($this->_l10n_midcom->get('short date'));
         $end = $this->_end->format($this->_l10n_midcom->get('short date'));
@@ -328,6 +332,7 @@ class org_maemo_socialnews_handler_archive extends midcom_baseclasses_components
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
 
         $this->_prepare_request_data();
+        
         return true;
     }
 
