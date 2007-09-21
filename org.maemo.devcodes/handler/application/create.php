@@ -111,7 +111,7 @@ class org_maemo_devcodes_handler_application_create extends midcom_baseclasses_c
     /**
      * DM2 creation callback, binds to the current content topic.
      */
-    function & dm2_create_callback (&$controller)
+    function &dm2_create_callback (&$controller)
     {
         $this->_application = new org_maemo_devcodes_application_dba();
         if (isset($_POST['device']))
@@ -254,7 +254,7 @@ class org_maemo_devcodes_handler_application_create extends midcom_baseclasses_c
                 $indexer =& $_MIDCOM->get_service('indexer');
                 org_maemo_devcodes::index($this->_controller->datamanager, $indexer, $this->_topic);
                 */
-                $this->_device->set_parameter('midcom.helper.datamanager2', 'schema_name', 'application');
+                $this->_application->set_parameter('midcom.helper.datamanager2', 'schema_name', 'application');
                 // TODO remove owner privileges from the current user (so that they can't do any funny stuff)
 
                 // TODO: Relocate somewhere else ??

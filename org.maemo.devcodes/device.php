@@ -111,6 +111,12 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
         return true;
     }
 
+    function _on_updated()
+    {
+        // This will update the campaign titles as well...
+        $this->create_smart_campaigns();
+    }
+
     /**
      * Check if the codename we would like to use is still available
      *
@@ -161,11 +167,27 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
     }
 
     /**
-     * Check if there are developer codes or applications for code for this device
+     * Check if we have any "automatically" create smart campaigns for this device
      *
-     * @return boolean indicating precense of dependencies
+     * @see create_smart_campaigns
+     * @return boolean indicating precense of campaigns
      */
-    function has_dependencies()
+    function _has_dependencies_check_campaigns()
+    {
+        $params = $this->list_parameters('org.maemo.devodes:autocreated_campaigns');
+        if (!empty($params))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if device has applications for it
+     *
+     * @return boolean indicating precense of applications
+     */
+    function _has_dependencies_check_applications()
     {
         $qb = org_maemo_devcodes_application_dba::new_query_builder();
         $qb->add_constraint('device', '=', $this->id);
@@ -180,8 +202,16 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
             // we have applications for this device
             return true;
         }
-        unset($qb);
+        return false;
+    }
 
+    /**
+     * Check if device has codes for it
+     *
+     * @return boolean indicating precense of codes
+     */
+    function _has_dependencies_check_codes()
+    {
         $qb = org_maemo_devcodes_code_dba::new_query_builder();
         $qb->add_constraint('device', '=', $this->id);
         $codes_count = $qb->count_unchecked();
@@ -195,7 +225,30 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
             // we have codes linked to this device
             return true;
         }
-        unset($qb);
+        return false;
+    }
+
+    /**
+     * Check if there are developer codes or applications for code for this device
+     *
+     * @return boolean indicating precense of dependencies
+     */
+    function has_dependencies()
+    {
+        $checks = array
+        (
+            'campaigns',
+            'applications',
+            'codes',
+        );
+        foreach ($checks as $check)
+        {
+            $method = "_has_dependencies_check_{$check}";
+            if ($this->$method())
+            {
+                return true;
+            }
+        }
 
         return false;
     }
@@ -406,6 +459,319 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
             return null;
         }
         return $parent->guid;
+    }
+
+    /**
+     * Creates various usefull smart campaigns related to this device
+     *
+     * @return bool indicating success/failure
+     */
+    function create_smart_campaigns()
+    {
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.directmarketing');
+        if (!class_exists('org_openpsa_directmarketing_campaign'))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Could not load org.openpsa.directmarketing, aborting', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+
+        $types = array
+        (
+            'accepted',
+            'rejected',
+            'assigned',
+        );
+
+        foreach($types as $type)
+        {
+            $method = "_create_smart_campaign_{$type}";
+            if (!$this->$method())
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("\$this->{$method}() returned failure, aborting", MIDCOM_LOG_ERROR);
+                debug_pop();
+                /* We might not want to do this afterall
+                $this->remove_smart_campaigns();
+                */
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Fetch/create campaign object for given type of autocreated campaign
+     *
+     * @param string type to fetch/create for
+     * @return refrence to org_openpsa_directmarketing_campaign object
+     */
+    function &_create_smart_campaign_prepare_campaign_object($type)
+    {
+        $existing_guid = $this->get_parameter('org.maemo.devodes:autocreated_campaigns', $type);
+        if (!empty($existing_guid))
+        {
+            $campaign = new org_openpsa_directmarketing_campaign($existing_guid);
+            if (   $campaign
+                || $campaign->guid == $existing->guid)
+            {
+                return $campaign;
+            }
+            else
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Got bad result when instatiating campaign {$existing_guid} (type: {$type}), creating new one", MIDCOM_LOG_ERROR);
+                debug_print_r('got result: ', $campaign);
+                debug_pop();
+                unset($campaign);
+            }
+        }
+        $_MIDCOM->auth->request_sudo();
+        $campaign = new org_openpsa_directmarketing_campaign();
+        $campaign->title = "newly created {$type} for device #{$this->id}";
+        $campaign->orgOpenpsaObtype = ORG_OPENPSA_OBTYPE_CAMPAIGN_SMART;
+        if (!$campaign->create())
+        {
+            $_MIDCOM->auth->drop_sudo();
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Could not create campaign, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+            debug_pop();
+            $x = false;
+            return $x;
+        }
+        $_MIDCOM->auth->drop_sudo();
+        $this->set_parameter('org.maemo.devodes:autocreated_campaigns', $type, $campaign->guid);
+        return $campaign;
+    }
+
+    /**
+     * Helper to create a smart campaign for recipients of codes assigned for this device
+     *
+     * @see create_smart_campaigns
+     * @return bool indicating success/failure
+     */
+    function _create_smart_campaign_assigned()
+    {
+        $campaign =& $this->_create_smart_campaign_prepare_campaign_object('assigned');
+        if (!$campaign)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('$this->_create_smart_campaign_prepare_campaign_object(\'assigned\') failed', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+
+        $campaign->rules = array
+        (
+            'type' => 'AND',
+            'classes' => array
+            (
+                array
+                (
+                    'comment' => "Assigned codes for device \"{$this->title}\"",
+                    'type'    => 'AND',
+                    'class'   => 'org_maemo_devcodes_code_dba',
+                    'rules'   => array
+                    (
+                        array
+                        (
+                            'property' => 'device',
+                            'match'    => '=',
+                            'value'    => $this->id,
+                        ),
+                        array
+                        (
+                            'property' => 'recipient',
+                            'match'    => '<>',
+                            'value'    => 0,
+                        ),
+                    ),
+                ),
+            ),
+        );
+
+        // TODO: localize
+        $campaign->title = "Code recipients for {$this->title}";
+        if (!$campaign->update())
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Failed to update campaign #{$campaign->id}, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        $campaign->schedule_update_smart_campaign_members();
+        return true;
+    }
+
+    /**
+     * Helper to create a smart campaign for applicants of accepted applications
+     *
+     * @see create_smart_campaigns
+     * @return bool indicating success/failure
+     */
+    function _create_smart_campaign_accepted()
+    {
+        $campaign =& $this->_create_smart_campaign_prepare_campaign_object('accepted');
+        if (!$campaign)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('$this->_create_smart_campaign_prepare_campaign_object(\'accepted\') failed', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+
+        $campaign->rules = array
+        (
+            'type' => 'AND',
+            'classes' => array
+            (
+                array
+                (
+                    'comment' => "Accepted applications for device \"{$this->title}\"",
+                    'type'    => 'AND',
+                    'class'   => 'org_maemo_devcodes_application_dba',
+                    'rules'   => array
+                    (
+                        array
+                        (
+                            'property' => 'device',
+                            'match'    => '=',
+                            'value'    => $this->id,
+                        ),
+                        array
+                        (
+                            'property' => 'state',
+                            'match'    => '=',
+                            'value'    => ORG_MAEMO_DEVCODES_APPLICATION_ACCEPTED,
+                        ),
+                    ),
+                ),
+            ),
+        );
+        // TODO: localize
+        $campaign->title = "Accepted applicants for {$this->title}";
+        if (!$campaign->update())
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Failed to update campaign #{$campaign->id}, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        $campaign->schedule_update_smart_campaign_members();
+        return true;
+    }
+
+    /**
+     * Helper to create a smart campaign for applicants of rejected applications
+     *
+     * @see create_smart_campaigns
+     * @return bool indicating success/failure
+     */
+    function _create_smart_campaign_rejected()
+    {
+        $campaign =& $this->_create_smart_campaign_prepare_campaign_object('rejected');
+        if (!$campaign)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('$this->_create_smart_campaign_prepare_campaign_object(\'rejected\') failed', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+
+        $campaign->rules = array
+        (
+            'type' => 'AND',
+            'classes' => array
+            (
+                array
+                (
+                    'comment' => "Rejected applications for device \"{$this->title}\"",
+                    'type'    => 'AND',
+                    'class'   => 'org_maemo_devcodes_application_dba',
+                    'rules'   => array
+                    (
+                        array
+                        (
+                            'property' => 'device',
+                            'match'    => '=',
+                            'value'    => $this->id,
+                        ),
+                        array
+                        (
+                            'property' => 'state',
+                            'match'    => '=',
+                            'value'    => ORG_MAEMO_DEVCODES_APPLICATION_ACCEPTED,
+                        ),
+                    ),
+                ),
+            ),
+        );
+        // TODO: localize
+        $campaign->title = "Rejected applicants for {$this->title}";
+        if (!$campaign->update())
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Failed to update campaign #{$campaign->id}, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        $campaign->schedule_update_smart_campaign_members();
+        return true;
+
+    }
+
+    /**
+     * Removes the "automatically" created smart-campaigns created with create_smart_campaigns
+     *
+     * @see create_smart_campaigns()
+     * @return bool indicating success/failure
+     */
+    function remove_smart_campaigns()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.directmarketing');
+        if (!class_exists('org_openpsa_directmarketing_campaign'))
+        {
+            debug_add('Could not load org.openpsa.directmarketing, aborting', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        $params = $this->list_parameters('org.maemo.devodes:autocreated_campaigns');
+        if (empty($params))
+        {
+            debug_pop();
+            return true;
+        }
+        foreach ($params as $key => $guid)
+        {
+            $campaign = new org_openpsa_directmarketing_campaign($guid);
+            if (   !$campaign
+                || empty($campaign->guid))
+            {
+                if (mgd_errno() === MGD_ERR_OBJECT_DELETED)
+                {
+                    debug_add("Could not instantiate campaign {$guid}, it's already deleted, removing link", MIDCOM_LOG_INFO);
+                    $this->delete_parameter('org.maemo.devodes:autocreated_campaigns', $key);
+                    continue;
+                }
+                else
+                {
+                    debug_add("Could not instantiate campaign {$guid}, aborting", MIDCOM_LOG_ERROR);
+                    debug_pop();
+                    return false;
+                }
+                if (!$campaign->delete())
+                {
+                    debug_add("Could not delete campaign {$guid}, aborting", MIDCOM_LOG_ERROR);
+                    debug_pop();
+                    return false;
+                }
+                $this->delete_parameter('org.maemo.devodes:autocreated_campaigns', $key);
+            }
+        }
+        debug_pop();
+        return true;
     }
 
     /**

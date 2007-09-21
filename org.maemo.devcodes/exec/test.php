@@ -22,6 +22,8 @@ foreach($all_devprogs as $guid => $title)
     $device = org_maemo_devcodes_device_dba::get_cached($guid);
     $deps = (int)$device->has_dependencies();
     echo "{$title} has_dependencies returned {$deps}<br>\n";
+    $campaigns = (int)$device->create_smart_campaigns();
+    echo "{$title} create_smart_campaigns returned {$campaigns}<br>\n";
 }
 
 $applicable_devprogs = org_maemo_devcodes_device_dba::list_applicable();
