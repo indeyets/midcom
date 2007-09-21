@@ -68,6 +68,9 @@ class org_openpsa_directmarketing_campaign_ruleresolver
 
     function org_openpsa_directmarketing_campaign_ruleresolver($rules = false)
     {
+        // Make sure all supported classes are loaded
+        $_MIDCOM->componentloader->load_graceful('org.maemo.devcodes');
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.contacts');
         if ($rules)
         {
             return $this->resolve($rules);
