@@ -139,7 +139,7 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
             $qb->set_limit(1);
             $result = $qb->execute();
 
-            if (! $result)
+            if (empty($result))
             {
                 if ($this->_content_topic->can_do('midgard:create'))
                 {
