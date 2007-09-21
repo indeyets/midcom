@@ -276,15 +276,18 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                 );
             }
 
-            $this->person_toolbar->add_item
-            (
-                array
+            if ($this->_config->get('allow_change_password'))
+            {
+                $this->person_toolbar->add_item
                 (
-                    MIDCOM_TOOLBAR_URL => "password/",
-                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('change password'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
-                )
-            );
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "password/",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('change password'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
+                    )
+                );
+            }
         
             if ($this->_config->get('allow_change_username'))
             {

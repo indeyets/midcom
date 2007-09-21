@@ -91,6 +91,11 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
      */
     function _handler_password($handler_id, $args, &$data)
     {
+        if (!$this->_config->get('allow_change_password'))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Password changing is disabled');
+            // This will exit()
+        }
         $_MIDCOM->auth->require_valid_user();
         $this->_account = $_MIDCOM->auth->user->get_storage();
         net_nehmer_account_viewer::verify_person_privileges($this->_account);

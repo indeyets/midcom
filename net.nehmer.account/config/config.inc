@@ -9,6 +9,7 @@
 // Features
 'allow_register' => true,
 'allow_change_username' => true,
+'allow_change_password' => true,
 'allow_cancel_membership' => true,
 'allow_publish' => true,
 'allow_view_by_username' => true, // the paranoid may want to disable this as it allows determining username validity

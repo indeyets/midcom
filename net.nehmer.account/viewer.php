@@ -183,11 +183,14 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             );
         }
 
-        $this->_request_switch['password'] = Array
-        (
-            'handler' => Array('net_nehmer_account_handler_maintain', 'password'),
-            'fixed_args' => Array('password'),
-        );
+        if ($this->_config->get('allow_change_password'))
+        {
+            $this->_request_switch['password'] = Array
+            (
+                'handler' => Array('net_nehmer_account_handler_maintain', 'password'),
+                'fixed_args' => Array('password'),
+            );
+        }
 
         if ($this->_config->get('allow_change_username'))
         {
