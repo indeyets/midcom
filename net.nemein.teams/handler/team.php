@@ -345,7 +345,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         
         if (count($teams) > 1)
         {
-            // TODO: this shouldn't happen...handle error
+            $_MIDCOM->relocate('');
         }
         
         $team_group = new midcom_db_group($teams[0]->groupguid);
@@ -376,6 +376,8 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	        {
 	            if ($this->_config->get('pm_manager'))
 	            {
+	                $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+	            
 	                if (! $_MIDCOM->componentloader->load_graceful('net.nehmer.mail'))
                     {
                         return false;
@@ -385,11 +387,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                     . $team_group->name, $team_group->guid);
 
                     $manager = $_MIDCOM->auth->get_user($pending->managerguid);
+                    echo $prefix;
                     
 	                $subject = $this->_l10n->get('New application from');
                     $subject .= " " . $_MIDCOM->auth->user->_storage->username; 
                     $body = $this->_l10n->get('User has applied for your team') . "<br/>";
-                    $body .= "<a href=\"" . $this->_config->get('private_pendings_url') . "\">"
+                    $body .= "<a href=\"" . $prefix . "pending/\">"
                     . $this->_config->get('private_pendings_link') . "</a>";
 
                     $mail = new net_nehmer_mail_mail();
@@ -398,7 +401,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                     $mail->body = $body;
                     $mail->received = time();
                     $mail->status = NET_NEHMER_MAIL_STATUS_SENT;
-                    $mail->owner = $_MIDCOM->auth->user->id;
+                    $mail->owner = $_MIDCOM->auth->user->_storage->id;
                 
                     if (!$mail->create())
                     {

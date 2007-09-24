@@ -22,10 +22,7 @@
 'max_players_per_team' => 10,
 // Should net.nehmer.mail be user to private massage team manager
 'pm_manager' => true,
-
-
-// Are these used for anything...=)
-'private_pendings_url' => '/leet_teams/pending',
+// Link text in the pm
 'private_pendings_link' => 'approve/decline',
 
 /**
