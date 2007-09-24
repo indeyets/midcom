@@ -2,6 +2,10 @@
 ---VERSION 2.1.0
 ---LANGUAGE en
 
+---STRING decline
+Decline
+---STRINGEND
+
 ---STRING you have quit your team
 You have quit your team
 ---STRINGEND

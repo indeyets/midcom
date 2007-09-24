@@ -331,6 +331,11 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         {
             $_MIDCOM->relocate('lockdown');
         }    
+        
+        if ($this->_is_player())
+        {
+            $_MIDCOM->relocate('');
+        }
     
         $title = $this->_l10n_midcom->get('application');
         $_MIDCOM->set_pagetitle("{$title}");
@@ -387,7 +392,6 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                     . $team_group->name, $team_group->guid);
 
                     $manager = $_MIDCOM->auth->get_user($pending->managerguid);
-                    echo $prefix;
                     
 	                $subject = $this->_l10n->get('New application from');
                     $subject .= " " . $_MIDCOM->auth->user->_storage->username; 
@@ -501,22 +505,47 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         
         if ($member_count < $max_players)
         {     
-        if (isset($_POST['approve_pending']))
-        {
-            foreach($_POST as $key => $value)
+            if (isset($_POST['approve_pending']))
             {
-                if ($value == "on")
+                foreach($_POST as $key => $value)
                 {
-                    if (!$this->_join_team($teams[0]->groupguid, $key))
+                    if ($value == "on")
                     {
-                        // TODO: handle this
-                    }
-                    else
-                    {
-                         $this->_logger->log("User " . $_MIDCOM->auth->user->_storage->username . " has approved player GUID: "
-                             . $key, $teams[0]->guid);
+                        if (!$this->_join_team($teams[0]->groupguid, $key))
+                        {
+                            // TODO: handle this
+                        }
+                        else
+                        {
+                            $this->_logger->log("User " . $_MIDCOM->auth->user->_storage->username . " has approved player GUID: "
+                                . $key, $teams[0]->guid);
                     
-                        // Removing from pending
+                            // Removing all pending applications
+                            $qb = net_nemein_teams_pending_dba::new_query_builder();
+                            //$qb->add_constraint('groupguid', '=', $teams[0]->groupguid);
+                            $qb->add_constraint('playerguid', '=', $key);
+                    
+                            $pending = $qb->execute();
+                        
+                            foreach($pending as $item)
+                            {
+                                $item->delete();
+                            }                          
+                        }
+                    }
+                }
+            }   
+        
+            if (isset($_POST['decline_pending']))
+            {
+                foreach($_POST as $key => $value)
+                {
+                    if ($value == 'on')
+                    {
+                        $this->_logger->log("User " . $_MIDCOM->auth->user->_storage->username . " has declined player GUID: "
+                            . $key, $teams[0]->guid);
+                    
+                        // Removing pending applications
                         $qb = net_nemein_teams_pending_dba::new_query_builder();
                         $qb->add_constraint('groupguid', '=', $teams[0]->groupguid);
                         $qb->add_constraint('playerguid', '=', $key);
@@ -526,11 +555,10 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                         foreach($pending as $item)
                         {
                             $item->delete();
-                        }                          
+                        }                     
                     }
                 }
-            }
-        }     
+            }  
         }
         else
         {
