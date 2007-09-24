@@ -35,6 +35,19 @@
 				'created' => 'created',
 			),
 		),
-		
+        'system_lockdown' => array
+        (
+            'description' => 'Set teams to lockdown',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nemein.teams',
+            'config_key' => 'system_lockdown',
+            'widget' => 'config_radiobox',
+            'widget_radiobox_choices' => Array
+            (
+                '0' => 'no',
+                '1' => 'yes',
+            ),
+        ),
 	)
 ),

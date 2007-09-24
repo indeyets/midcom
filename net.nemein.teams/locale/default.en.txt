@@ -2,6 +2,30 @@
 ---VERSION 2.1.0
 ---LANGUAGE en
 
+---STRING you have quit your team
+You have quit your team
+---STRINGEND
+
+---STRING confirm
+Confirm
+---STRINGEND
+
+---STRING cancel
+Cancel
+---STRINGEND
+
+---STRING really quit?
+Really quit?
+---STRINGEND
+
+---STRING back to teams
+Back to teams
+---STRINGEND
+
+---STRING system lockdown
+The system is currently in lockdown
+---STRINGEND
+
 ---STRING registered
 Registered
 ---STRINGEND

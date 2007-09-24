@@ -161,7 +161,8 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 		        
 		        if (count($members) > 0)
 		        {
-                    return true;
+		            return $members[0]->gid;
+                    //return true;
 		        }
 	        }
 	    }
@@ -256,6 +257,11 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
     function _handler_create ($handler_id, $args, &$data)
     {
+        if ($this->_config->get('system_lockdown') == 1)
+        {
+            $_MIDCOM->relocate('lockdown');
+        }    
+    
         $title = $this->_l10n_midcom->get('create team');
         $_MIDCOM->set_pagetitle(":: {$title}");
         
@@ -321,8 +327,13 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
     function _handler_application ($handler_id, $args, &$data)
     {
+        if ($this->_config->get('system_lockdown') == 1)
+        {
+            $_MIDCOM->relocate('lockdown');
+        }    
+    
         $title = $this->_l10n_midcom->get('application');
-        $_MIDCOM->set_pagetitle(":: {$title}");
+        $_MIDCOM->set_pagetitle("{$title}");
                 
         $qb = net_nemein_teams_team_dba::new_query_builder();
         $qb->add_constraint('groupguid', '=', $args[0]);
@@ -363,24 +374,51 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	        }
 	        else
 	        {
-	            if (! $_MIDCOM->componentloader->load_graceful('net.nehmer.mail'))
-                {
-                    return false;
-                }
+	            if ($this->_config->get('pm_manager'))
+	            {
+	                if (! $_MIDCOM->componentloader->load_graceful('net.nehmer.mail'))
+                    {
+                        return false;
+                    }
                 
-                $this->_logger->log("User " . $_MIDCOM->auth->user->_storage->username . " has applied to team "
-                . $team_group->name, $team_group->guid);
+                    $this->_logger->log("User " . $_MIDCOM->auth->user->_storage->username . " has applied to team "
+                    . $team_group->name, $team_group->guid);
 
-	            $subject = $this->_l10n->get('New application from');
-                $subject .= " " . $_MIDCOM->auth->user->_storage->username; 
-                $body = $this->_l10n->get('User has applied for your team') . "<br/>";
-                $body .= "<a href=\"" . $this->_config->get('private_pendings_url') . "\">"
+                    $manager = $_MIDCOM->auth->get_user($pending->managerguid);
+                    
+	                $subject = $this->_l10n->get('New application from');
+                    $subject .= " " . $_MIDCOM->auth->user->_storage->username; 
+                    $body = $this->_l10n->get('User has applied for your team') . "<br/>";
+                    $body .= "<a href=\"" . $this->_config->get('private_pendings_url') . "\">"
                     . $this->_config->get('private_pendings_link') . "</a>";
 
-                $inbox = net_nehmer_mail_mailbox::get_inbox($_MIDCOM->auth->get_user($pending->managerguid));
-                $result = $inbox->deliver_mail($_MIDCOM->auth->user, $subject, $body);	        
-	        }     
+                    $mail = new net_nehmer_mail_mail();
+                    $mail->sender = $_MIDCOM->auth->user->id;
+                    $mail->subject = $subject;
+                    $mail->body = $body;
+                    $mail->received = time();
+                    $mail->status = NET_NEHMER_MAIL_STATUS_SENT;
+                    $mail->owner = $manager->_storage->id;
+                
+                    if (!$mail->create())
+                    {
+                        debug_push_class(__CLASS__, __FUNCTION__);
+                        debug_add('Failed to send welcome mail', MIDCOM_ERRCRIT);
+                        debug_pop();            
+                    }
+                    else
+                    {
+                        $receiver = new midcom_db_person($manager->_storage->guid);
+                        $receivers = array($receiver);
+                        $mail->deliver_to(&$receivers);            
+                    }
 
+                    //$inbox = net_nehmer_mail_mailbox::get_inbox($_MIDCOM->auth->get_user($pending->managerguid));
+                    //$result = $inbox->deliver_mail($_MIDCOM->auth->user, $subject, $body);	
+                }        
+	        }     
+             
+            // Should relocate somewhere 
             //$_MIDCOM->relocate('');
 	    }
 
@@ -411,10 +449,13 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     
     function _handler_create_team_home ($handler_id, $args, &$data)
     {
-        $title = $this->_l10n_midcom->get('create team home');
-        $_MIDCOM->set_pagetitle(":: {$title}");
+        if ($this->_config->get('system_lockdown') == 1)
+        {
+            $_MIDCOM->relocate('lockdown');
+        }
 
-	    // TODO: sitewizard magic
+        $title = $this->_l10n_midcom->get('create team home');
+        $_MIDCOM->set_pagetitle("{$title}");
     
         return true;
     }
@@ -438,6 +479,11 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     
     function _handler_pending($handler_id, $args, &$data)
     {
+        if ($this->_config->get('system_lockdown') == 1)
+        {
+            $_MIDCOM->relocate('lockdown');
+        }    
+    
         $qb = net_nemein_teams_team_dba::new_query_builder();
         $qb->add_constraint('managerguid', '=', $_MIDCOM->auth->user->guid);
         
@@ -548,6 +594,95 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         
     
         return true;
+    }
+    
+    function _handler_quit($handler_id, $args, &$data)
+    {
+        $_MIDCOM->set_pagetitle("Quit");
+    
+        if ($this->_config->get('system_lockdown') == 1)
+        {
+            $_MIDCOM->relocate('lockdown');
+        }
+        
+        if (isset($_POST['confirm_quit']))
+        {
+            $_MIDCOM->relocate('quit/confirm/');
+        }
+        elseif (isset($_POST['cancel']))
+        {
+            $_MIDCOM->relocate('');
+        }
+                       
+        return true;
+    }
+    
+    function _handler_quit_confirm($handler_id, $args, &$data)
+    {
+        $_MIDCOM->set_pagetitle("Confirm");
+    
+        if ($this->_config->get('system_lockdown') == 1)
+        {
+            $_MIDCOM->relocate('lockdown');
+        }
+        
+        if ($_MIDCOM->auth->user)
+        {
+            if ($group_id = $this->_is_player())
+            {
+                $team_group = new midcom_db_group();
+                $team_group->get_by_id($group_id);
+        
+                $this->_logger->log("User " . $_MIDCOM->auth->user->_storage->username . " has quit team GUID: " 
+                . $team_group->guid, $team_group->guid);
+                
+                // Removing team membership
+                $qb = midcom_db_member::new_query_builder();
+                $qb->add_constraint('gid', '=', $team_group->id);
+            
+                if (!$members = $qb->execute())
+                {
+                    return false;
+                }
+                else
+                {
+                    foreach($members as $member)
+                    {
+                        $member->delete();
+                    }
+                }                          
+            }     
+        }
+        return true;
+    }
+    
+    function _show_quit_confirm($handler_id, &$data)
+    {
+        midcom_show_style('team_quit_confirm');
+    }
+    
+    function _handler_lockdown($handler_id, $args, &$data)
+    {
+        $_MIDCOM->set_pagetitle(":: Lockdown");
+    
+        return true;
+    }
+    
+    function _show_lockdown($handler_id, &$data)
+    {
+        midcom_show_style('teams_lockdown');
+    }
+    
+    function _show_quit($handler_id, &$data)
+    {
+        if ($this->_is_player())
+        {
+            midcom_show_style('team_quit');
+        }
+        else
+        {
+            $_MIDCOM->relocate('');
+        }
     }
     
     function _show_error($handler_id, &$data)

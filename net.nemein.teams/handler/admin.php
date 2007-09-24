@@ -149,6 +149,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         return true;
     }
     
+    /*
     function _handler_manage_system($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_admin_user();
@@ -160,6 +161,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
     {
         midcom_show_style('manage_system');
     }
+    */
     
     function _show_manage_delete($handler_id, &$data)
     {

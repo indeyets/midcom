@@ -20,6 +20,8 @@
 'display_teams_per_page' => 1,
 'display_pages' => 10, 
 'max_players_per_team' => 10,
+// Should net.nehmer.mail be user to private massage team manager
+'pm_manager' => true,
 
 
 // Are these used for anything...=)
