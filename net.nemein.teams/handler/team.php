@@ -398,7 +398,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                     $mail->body = $body;
                     $mail->received = time();
                     $mail->status = NET_NEHMER_MAIL_STATUS_SENT;
-                    $mail->owner = $manager->_storage->id;
+                    $mail->owner = $_MIDCOM->auth->user->id;
                 
                     if (!$mail->create())
                     {
@@ -639,6 +639,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 // Removing team membership
                 $qb = midcom_db_member::new_query_builder();
                 $qb->add_constraint('gid', '=', $team_group->id);
+                $qb->add_constraint('uid', '', $_MIDCOM->auth->user->_storage->id);
             
                 if (!$members = $qb->execute())
                 {
