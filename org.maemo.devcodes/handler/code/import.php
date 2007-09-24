@@ -217,6 +217,8 @@ class org_maemo_devcodes_handler_code_import extends midcom_baseclasses_componen
             ++$data['import_stats']['failed'];
             return false;
         }
+        $code->set_parameter('midcom.helper.datamanager2', 'schema_name', 'code');
+        
 
         ++$data['import_stats']['ok'];
         return true;

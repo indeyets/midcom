@@ -4,4 +4,4 @@
 
 <h2>&(data['title']);</h2>
 
-<?php $data['controller']->display_form (); ?>
+<?php $data['controller']->display_form(); ?>

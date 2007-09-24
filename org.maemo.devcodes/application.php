@@ -84,7 +84,7 @@ class org_maemo_devcodes_application_dba extends __org_maemo_devcodes_applicatio
             }
             debug_pop();
         }
-        $this->state = ORG_MAEMO_DEVCODES_APPLICATION_ACCEPTED;
+        $this->state = ORG_MAEMO_DEVCODES_APPLICATION_REJECTED;
 
         // Do something else ??
         

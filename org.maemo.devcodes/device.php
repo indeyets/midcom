@@ -372,7 +372,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
                 // Not open for applications
                 continue;
             }
-            if (org_maemo_devcodes_application_dba::has_applied($device->id, $user))
+            if (org_maemo_devcodes_application_dba::can_apply($device->id, $user, true))
             {
                 // Given user has already applied
                 continue;
