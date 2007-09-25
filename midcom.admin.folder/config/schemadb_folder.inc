@@ -6,7 +6,7 @@
     (
         'name' => array
         (
-            'title' => 'name',
+            'title' => 'url name',
             'storage' => 'name',
             'type' => 'text',
             'widget' => 'text',
