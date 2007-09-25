@@ -269,35 +269,34 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
         if ($this->_is_player())
 	    {
-            // TODO: redirect somewhere
+            // TODO: add growl notifying the user that he is a player and cannot create a team
             $_MIDCOM->relocate('');
             
 	    }
-	    else
-	    {
-            $this->_content_topic->require_do('midgard:create');
-  
-            switch ($this->_controller->process_form())
-	        {
+
+        $this->_content_topic->require_do('midgard:create');
+
+        switch ($this->_controller->process_form())
+        {
 	        case 'save':
-                    
+                
 		        $team = new net_nemein_teams_team_dba();
                 $team->groupguid = $this->_team_group->guid;
 		        $team->managerguid = $_MIDCOM->auth->user->guid;
-		        
+	        
 		        if (!$team->create())
 		        {
                         // TODO: Handle error
 		        }
 		        else
 		        {
-		            $this->_logger->log("Team object created by " . $_MIDCOM->auth->user->_storage->username, 
+		            $this->_logger->log("Team object created by " . $_MIDCOM->auth->user->username, 
 	                    $this->_team_group->guid);
-		        
+	        
                     if ($this->_config->get('create_team_home'))
 			        {
-			            $plugin_name = $this->_config->get('create_team_home_plugin');
-			        
+			            /*$plugin_name = $this->_config->get('create_team_home_plugin');
+		        
 			            if (!empty($plugin_name))
 			            {
                             $_MIDCOM->relocate("plugin/{$plugin_name}");
@@ -305,7 +304,8 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                         else
                         {
                             $_MIDCOM->relocate('');
-                        }
+                        }*/
+                        $_MIDCOM->relocate('create/profile');
 			        }
 			        else
 			        {
@@ -317,12 +317,11 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
 	             $_MIDCOM->relocate('');
 	             // This will exit.
-	    }
+        }
 
 	    $this->_prepare_request_data();
-	}
 
-	return true;
+	    return true;
     }
 
     function _handler_application ($handler_id, $args, &$data)
@@ -454,8 +453,36 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         return true;
     }
     
-    function _handler_create_team_home ($handler_id, $args, &$data)
+    function _handler_create_profile($handler_id, $args, &$data)
     {
+        // $title = $this->_l10n_midcom->get('create team home');
+        // $_MIDCOM->set_pagetitle(":: {$title}");
+
+	    require_once MIDCOM_ROOT . '/com/planetleet/website/helpers/profile_wizard.php';
+	    
+	    $_MIDCOM->componentloader->load_graceful('com.planetleet.website');
+
+        $_component = 'com.planetleet.website';    
+
+        $_i18n =& $_MIDCOM->i18n;
+        $_l10n =& $_i18n->get_l10n($_component);
+        $_component_data =& $GLOBALS['midcom_component_data'][$_component];
+        $_config = $_component_data['config']->_merged['profile_wizard'];
+        
+        $user =& $_MIDCOM->auth->user;
+
+        if (! is_array($_config))
+        {
+            $_config = array();
+        }
+        if (! is_array($_config['team']))
+        {
+            $_config['team'] = array();
+        }
+
+        $profile_wizard = new com_planetleet_website_helpers_profile_wizard($_config, 'team');
+        $status = $profile_wizard->create_team_profile($user);
+
         if ($this->_config->get('system_lockdown') == 1)
         {
             $_MIDCOM->relocate('lockdown');
@@ -844,6 +871,15 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         // }
     }
     
+    function _handler_action($handler_id, $args, &$data)
+    {
+        print_r($args);
+        return true;
+    }
+    
+    function _show_action($handler_id, &$data)
+    {
+    }
     
     /**
      * Helper, updates the context so that we get a complete breadcrum line towards the current

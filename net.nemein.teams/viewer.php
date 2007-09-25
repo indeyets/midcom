@@ -50,6 +50,12 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nemein_teams_handler_team', 'index'),
         );
 
+        $this->_request_switch['action'] = array
+        (
+            'handler' => Array('net_nemein_teams_handler_team', 'action'),
+            'variable_args' => 2,
+        );
+
         // Application /
         $this->_request_switch['application'] = array
         (
@@ -146,6 +152,13 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
 	        'fixed_args' => Array('create'),
         );
         
+        // Matches create/profile
+        $this->_request_switch['create-profile'] = array
+        (
+            'handler' => Array('net_nemein_teams_handler_team', 'create_profile'),
+            'fixed_args' => Array('create','profile'),
+        );
+        
         // Quit /
         $this->_request_switch['quit'] = array
         (
@@ -165,8 +178,7 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         (
             'handler' => Array('net_nemein_teams_handler_team', 'lockdown'),
 	        'fixed_args' => Array('lockdown'),
-        );         
-        
+        );
 /*
         // Create / home
         $this->_request_switch['create_team_home'] = array
