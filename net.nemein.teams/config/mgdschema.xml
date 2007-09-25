@@ -12,6 +12,7 @@
         <property name="groupguid" type="string" />
         <property name="topicguid" type="string" />
         <property name="managerguid" type="string" />
+        <property name="nicename" type="string" />
     </type>
     
     <type name="net_nemein_teams_pending" table="net_nemein_teams_pending">

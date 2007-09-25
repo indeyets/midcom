@@ -87,6 +87,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
             
                 if (!$teams = $qb->execute())
                 {
+                
                    // TODO: handle this
                 }
                 
@@ -107,19 +108,20 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
                             $member->delete();
                         }
                     
-                        $team_group->delete();
+                        $team->delete();
                     
                         // Setting topic invisible at this point
                         // We might need to delete this for real
-                        $team_topic->navnoentry = true;
-                        //$team_topic->update();
-                                     
-                        $team->delete();
+                        // This is segfaulting on devel-xen-devel
+                        $team_topic->metadata->hidden = true;
+                        $team_topic->update();   
+                        
+                        //$team_group->delete();       
                         
                         $this->_logger->log("Team (" . $team_group->name . ") was deleted by "
                             . $_MIDCOM->auth->user->_storage->username, $team->guid);
                     
-                        $_MIDCOM->relocate('manage');
+                        //$_MIDCOM->relocate('manage');
                     }           
                 }      
             }       
