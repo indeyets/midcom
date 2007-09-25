@@ -17,10 +17,18 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
     <form action="&(data['delete_form_action']);" method="post" />
     <table border="0">
     <tr>
-       <th width="50%" align="left"><?php $data['l10n_midcom']->show('username'); ?></th>
-       <th align="center"><?php $data['l10n_midcom']->show('online state'); ?></th>
-       <th align="center">&nbsp;</th>
-       <th align="center"><?php $data['l10n_midcom']->show('delete'); ?></th>
+        <th width="50%" align="left"><?php $data['l10n_midcom']->show('username'); ?></th>
+        <th align="center"><?php $data['l10n_midcom']->show('online state'); ?></th>
+        <th align="center">&nbsp;</th>
+        <?php
+        if (   $_MIDCOM->auth->user
+            && $data['user']->guid == $_MIDCOM->auth->user->guid)
+        {
+            ?>
+            <th align="center"><?php $data['l10n_midcom']->show('delete'); ?></th>
+            <?php
+        }
+        ?>
     </tr>
     <?php
         foreach ($data['buddies'] as $username => $user)
@@ -60,13 +68,20 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 ?>
                 <td align="center">&nbsp;</td>
                 <?php 
-            } 
+            }
+            
+            if (   $_MIDCOM->auth->user
+                && $data['user']->guid == $_MIDCOM->auth->user->guid)
+            {
+                ?>
+                <td align="center">
+                    <input type="checkbox"
+                           name="&(buddy_meta['delete_checkbox_name']);"
+                    />
+                </td>
+                <?php
+            }
             ?>
-            <td align="center">
-                <input type="checkbox"
-                       name="&(buddy_meta['delete_checkbox_name']);"
-                />
-            </td>
         </tr>
         <?php
         }
@@ -75,12 +90,20 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td align="center">
-                <input type="submit"
-                       name="&(data['delete_submit_button_name']);"
-                       value="<?php $data['l10n']->show('delete selected'); ?>"
-                />
-            </td>
+            <?php
+            if (   $_MIDCOM->auth->user
+                && $data['user']->guid == $_MIDCOM->auth->user->guid)
+            {
+                ?>
+                <td align="center">
+                    <input type="submit"
+                           name="&(data['delete_submit_button_name']);"
+                           value="<?php $data['l10n']->show('delete selected'); ?>"
+                    />
+                </td>
+                <?php
+            }
+            ?>
         </tr>
     </table>
     </form>
@@ -92,6 +115,12 @@ else
     <p><?php $data['l10n']->show('no buddies found.'); ?></p>
 <?php } ?>
 
-<?php if (net_nehmer_buddylist_entry::get_unapproved_count() > 0) { ?>
+<?php 
+if (   $_MIDCOM->auth->user
+    && net_nehmer_buddylist_entry::get_unapproved_count() > 0) 
+{ 
+    ?>
     <p><a href="&(prefix);pending/list.html"><?php $data['l10n']->show('new buddy requests pending.'); ?></a></p>
-<?php } ?>
+    <?php 
+}
+?>

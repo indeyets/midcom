@@ -70,7 +70,7 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
     function _get_buddy_qb($user)
     {
         $qb = net_nehmer_buddylist_entry::new_query_builder();
-        $qb->add_constraint('account', '=', $user->guid);
+        //$qb->add_constraint('account', '=', $user->guid);
         $qb->add_constraint('isapproved', '=', true);
         $qb->add_constraint('blacklisted', '=', false);
         return $qb;
@@ -107,7 +107,7 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
             if ($buddies === false)
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add('Failed to query the buddy list. Last Midgard error was: ' . mgd_errstr, MIDCOM_LOG_INFO);
+                debug_add('Failed to query the buddy list. Last Midgard error was: ' . mgd_errstr(), MIDCOM_LOG_INFO);
                 debug_pop();
             }
             return Array();
@@ -336,7 +336,11 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
         (
             'EVERYONE' => Array('midgard:read' => MIDCOM_PRIVILEGE_DENY),
             'ANONYMOUS' => Array(),
-            'USERS' => Array('midgard:create' => MIDCOM_PRIVILEGE_ALLOW)
+            'USERS' => Array
+            (
+                'midgard:create' => MIDCOM_PRIVILEGE_ALLOW,
+                'midgard:read' => MIDCOM_PRIVILEGE_ALLOW
+            )
         );
     }
 

@@ -62,10 +62,8 @@ class net_nehmer_buddylist_handler_welcome extends midcom_baseclasses_components
      * settings and prepares the type listings.
      */
     function _handler_welcome($handler_id, $args, &$data)
-    {
-        $_MIDCOM->auth->require_valid_user();
-
-        $this->_buddies = net_nehmer_buddylist_entry::list_buddies();
+    {   
+        $this->_buddies = net_nehmer_buddylist_entry::list_buddies($data['user']);
         $this->_prepare_buddies_meta();
 
         $this->_prepare_request_data();
@@ -98,7 +96,15 @@ class net_nehmer_buddylist_handler_welcome extends midcom_baseclasses_components
         }
 
         $this->_buddies_meta = Array();
-        $online_buddies = net_nehmer_buddylist_entry::list_online_buddies();
+        
+        if ($_MIDCOM->auth->user)
+        {
+            $online_buddies = net_nehmer_buddylist_entry::list_online_buddies();
+        }
+        else
+        {
+            $online_buddies = array();
+        }
         foreach ($this->_buddies as $username => $copy)
         {
             $user =& $this->_buddies[$username];
