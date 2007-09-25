@@ -36,15 +36,21 @@ class net_nehmer_buddylist_handler_delete extends midcom_baseclasses_components_
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Incomplete request.');
             // This will exit.
         }
+        
+        $relocate_to = '';
+        if (array_key_exists('relocate_to', $_REQUEST))
+        {
+            $relocate_to = $_REQUEST['relocate_to'];
+        }
 
         // Filter all account_* request params out so that we know which buddies we do no
         // longer want.
         $to_delete = Array();
         foreach ($_REQUEST as $key => $value)
         {
-            if (   strlen($key) == 40
-                && substr($key, 0, 8) == 'account_')
+            if (substr($key, 0, 8) == 'account_')
             {
+            
                 $to_delete[] = substr($key, 8);
             }
         }
@@ -52,7 +58,8 @@ class net_nehmer_buddylist_handler_delete extends midcom_baseclasses_components_
         {
             // In case we have no checks in the request, we just return to the welcome
             // page and do nothing.
-            $_MIDCOM->relocate('');
+            $_MIDCOM->uimessages->add($this->_l10n->get('net.nehmer.buddylist'), $this->_l10n->get('no entries to be deleted.'), 'ok');
+            $_MIDCOM->relocate($relocate_to);
             // This will exit.
         }
 
@@ -71,10 +78,16 @@ class net_nehmer_buddylist_handler_delete extends midcom_baseclasses_components_
                 debug_pop();
                 continue;
             }
-
+            
             $result[0]->delete();
         }
-
+        
+        if ($relocate_to != '')
+        {
+            $_MIDCOM->uimessages->add($this->_l10n->get('net.nehmer.buddylist'), $this->_l10n->get('the buddies have been deleted.'), 'ok');
+            $_MIDCOM->relocate($relocate_to);
+        }
+        
         $_MIDCOM->set_26_request_metadata(time(), null);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: " . $this->_l10n->get('buddies deleted'));
         $tmp = Array

@@ -75,6 +75,12 @@ class net_nehmer_buddylist_handler_request extends midcom_baseclasses_components
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The user guid {$args[0]} is unknown.");
         }
 
+        $relocate_to = '';
+        if (array_key_exists('relocate_to', $_REQUEST))
+        {
+            $relocate_to = $_REQUEST['relocate_to'];
+        }
+
         if (net_nehmer_buddylist_entry::is_on_buddy_list($this->_buddy_user))
         {
             $this->_processing_msg_raw = 'user already on your buddylist.';
@@ -86,6 +92,12 @@ class net_nehmer_buddylist_handler_request extends midcom_baseclasses_components
             $entry->buddy = $this->_buddy_user->guid;
             $entry->create();
             $this->_processing_msg_raw = 'buddy request sent.';
+        }
+
+        if ($relocate_to != '')
+        {
+            $_MIDCOM->uimessages->add($this->_l10n->get('buddy request'), $this->_l10n->get($this->_processing_msg_raw), 'ok');
+            $_MIDCOM->relocate($relocate_to);
         }
 
         $this->_prepare_request_data();
