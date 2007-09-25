@@ -309,9 +309,11 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
         if ($this->_is_player())
 	    {
-            // TODO: add growl notifying the user that he is a player and cannot create a team
-            $_MIDCOM->relocate('');
-            
+            $_MIDCOM->uimessages->add(
+                $this->_l10n->get('net.nemein.teams'),
+                $this->_l10n->get('you cannot be part of more than one team')
+            );
+            $_MIDCOM->relocate('');    
 	    }
 
         $this->_content_topic->require_do('midgard:create');
@@ -326,22 +328,27 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	        
 		        if (!$team->create())
 		        {
-                        // TODO: Handle error
+                        $_MIDCOM->uimessages->add(
+                            $this->_l10n->get('net.nemein.teams'),
+                            $this->_l10n->get('error happened during team creation')
+                        );
+                        $_MIDCOM->relocate('');
+		        }
+
+	            $this->_logger->log("Team object created by " . $_MIDCOM->auth->user->username,  $this->_team_group->guid);
+        
+                if ($this->_config->get('create_team_home'))
+		        {
+                    $_MIDCOM->relocate('create/profile');
 		        }
 		        else
 		        {
-		            $this->_logger->log("Team object created by " . $_MIDCOM->auth->user->username, 
-	                    $this->_team_group->guid);
-	        
-                    if ($this->_config->get('create_team_home'))
-			        {
-                        $_MIDCOM->relocate('create/profile');
-			        }
-			        else
-			        {
-                        $_MIDCOM->relocate('');
-			        }
-                }
+                    $_MIDCOM->uimessages->add(
+                        $this->_l10n->get('net.nemein.teams'),
+                        $this->_l10n->get('team created')
+                    );
+                    $_MIDCOM->relocate('');
+		        }
 
             case 'cancel':
 
@@ -367,7 +374,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         {
             $_MIDCOM->uimessages->add(
                 $this->_l10n->get('net.nemein.teams'),
-                $this->_l10n->get('you cannot join more than one team')
+                $this->_l10n->get('you cannot be part of more than one team')
             );
             $_MIDCOM->relocate('');
         }
@@ -468,7 +475,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         
         if ($this->_config->get('on_create_profile'))
         {
-    	    $this->_invoke_profile_creation_callback(&$user);            
+    	    $this->_invoke_profile_creation_callback(&$_MIDCOM->auth->user);            
         }
         else
         {
