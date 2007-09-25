@@ -93,10 +93,10 @@ class org_openpsa_contacts_handler_buddy_list extends midcom_baseclasses_compone
     {        
         if ($handler_id == 'buddylist_xml')
         {
+            $_MIDCOM->auth->require_valid_user('basic');        
             $_MIDCOM->skip_page_style = true;
             $_MIDCOM->cache->content->content_type("text/xml");
             $_MIDCOM->header("Content-type: text/xml; charset=UTF-8");
-            $_MIDCOM->auth->require_valid_user('basic');
         }
         else
         {

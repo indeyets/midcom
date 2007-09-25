@@ -258,7 +258,10 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
      */
     function _on_handle($handler, $args)
     {
-        $_MIDCOM->auth->require_valid_user();
+        if ($handler != 'buddylist_xml')
+        {
+            $_MIDCOM->auth->require_valid_user();
+        }
     
         // Safety
         if (!class_exists('midcom_helper_datamanager2_schema'))
