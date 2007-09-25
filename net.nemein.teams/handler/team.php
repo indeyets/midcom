@@ -77,6 +77,35 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         }
     }
     
+    function _send_private_message($sender_id, $receiver_guid, $subject, $body)
+    {
+        if (! $_MIDCOM->componentloader->load_graceful('net.nehmer.mail'))
+        {
+             return false;
+        }
+        
+        $mail = new net_nehmer_mail_mail();
+        $mail->sender = $sender_id;
+        $mail->subject = $subject;
+        $mail->body = $body;
+        $mail->received = time();
+        $mail->status = NET_NEHMER_MAIL_STATUS_SENT;
+        $mail->owner = $sender_id;
+                
+        if (!$mail->create())
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Failed to send welcome mail', MIDCOM_ERRCRIT);
+            debug_pop();            
+        }
+        else
+        {
+            $receiver = new midcom_db_person($receiver_guid);
+            $receivers = array($receiver);
+            $mail->deliver_to(&$receivers);            
+        }    
+    }
+    
     function _join_team($groupguid, $playerguid)
     {
         if (!empty($groupguid) && !empty($playerguid))
@@ -382,10 +411,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	            {
 	                $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 	            
+	            /*
 	                if (! $_MIDCOM->componentloader->load_graceful('net.nehmer.mail'))
                     {
                         return false;
                     }
+                    */
                 
                     $this->_logger->log("User " . $_MIDCOM->auth->user->_storage->username . " has applied to team "
                     . $team_group->name, $team_group->guid);
@@ -397,7 +428,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                     $body = $this->_l10n->get('User has applied for your team') . "<br/>";
                     $body .= "<a href=\"" . $prefix . "pending/\">"
                     . $this->_config->get('private_pendings_link') . "</a>";
+                    
+                    $sender_id = $_MIDCOM->auth->user->_storage->id;
+                    $receiver_guid = $manager->_storage->guid;
+                    $this->_send_private_message($sender_id, $receiver_guid, $subject, $body);
 
+/*
                     $mail = new net_nehmer_mail_mail();
                     $mail->sender = $_MIDCOM->auth->user->id;
                     $mail->subject = $subject;
@@ -418,7 +454,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                         $receivers = array($receiver);
                         $mail->deliver_to(&$receivers);            
                     }
-
+*/
                     //$inbox = net_nehmer_mail_mailbox::get_inbox($_MIDCOM->auth->get_user($pending->managerguid));
                     //$result = $inbox->deliver_mail($_MIDCOM->auth->user, $subject, $body);	
                 }        
@@ -546,7 +582,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                         {
                             $this->_logger->log("User " . $_MIDCOM->auth->user->_storage->username . " has approved player GUID: "
                                 . $key, $teams[0]->guid);
-                    
+                                
                             // Removing all pending applications
                             $qb = net_nemein_teams_pending_dba::new_query_builder();
                             //$qb->add_constraint('groupguid', '=', $teams[0]->groupguid);
@@ -557,7 +593,18 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                             foreach($pending as $item)
                             {
                                 $item->delete();
-                            }                          
+                            }                      
+                                
+                            $player = $_MIDCOM->auth->get_user($key);
+                    
+	                        $subject = $this->_l10n->get('application was accepted by');
+                            $subject .= " " . $_MIDCOM->auth->user->_storage->username; 
+                            $body = $this->_l10n->get('your application to team') . " " . $teams[0]->name;
+                            $body .= $this->_l10n->get('has been accepted');
+
+                            $sender_id = $_MIDCOM->auth->user->_storage->id;
+                            $receiver_guid = $player->_storage->guid;
+                            $this->_send_private_message($sender_id, $receiver_guid, $subject, $body);                                              
                         }
                     }
                 }
@@ -571,7 +618,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                     {
                         $this->_logger->log("User " . $_MIDCOM->auth->user->_storage->username . " has declined player GUID: "
                             . $key, $teams[0]->guid);
-                    
+                            
                         // Removing pending applications
                         $qb = net_nemein_teams_pending_dba::new_query_builder();
                         $qb->add_constraint('groupguid', '=', $teams[0]->groupguid);
@@ -582,7 +629,41 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                         foreach($pending as $item)
                         {
                             $item->delete();
-                        }                     
+                        }   
+                            
+                        $player = $_MIDCOM->auth->get_user($key);
+                    
+	                    $subject = $this->_l10n->get('application declined by');
+                        $subject .= " " . $_MIDCOM->auth->user->_storage->username; 
+                        $body = $this->_l10n->get('your application to team') . " " . $teams[0]->name;
+                        $body .= $this->_l10n->get('has been declined');
+
+                        $sender_id = $_MIDCOM->auth->user->_storage->id;
+                        $receiver_guid = $player->_storage->guid;
+                        $this->_send_private_message($sender_id, $receiver_guid, $subject, $body);
+/*
+                        $mail = new net_nehmer_mail_mail();
+                        $mail->sender = $_MIDCOM->auth->user->id;
+                        $mail->subject = $subject;
+                        $mail->body = $body;
+                        $mail->received = time();
+                        $mail->status = NET_NEHMER_MAIL_STATUS_SENT;
+                        $mail->owner = $_MIDCOM->auth->user->_storage->id;
+                
+                        if (!$mail->create())
+                        {
+                            debug_push_class(__CLASS__, __FUNCTION__);
+                            debug_add('Failed to send welcome mail', MIDCOM_ERRCRIT);
+                            debug_pop();            
+                        }
+                        else
+                        {
+                            $receiver = new midcom_db_person($player->_storage->guid);
+                            $receivers = array($receiver);
+                            $mail->deliver_to(&$receivers);            
+                        }
+                    */
+                                      
                     }
                 }
             }  
