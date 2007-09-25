@@ -603,6 +603,28 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 ),
                 'id_field' => 'guid',
             ),
+            'topic' => array
+            (
+                'class' => 'midcom_db_topic',
+                'component' => 'midcom.admin.folder',
+                'headers' => array
+                (
+                    'extra',
+                    'component',
+                ),
+                'constraints' => array(),
+                'searchfields' => array
+                (
+                    'extra',
+                    'name',
+                ),
+                'orders' => array
+                (
+                    array('extra' => 'ASC'), 
+                    array('metadata.published' => 'ASC'),
+                ),
+                'id_field' => 'guid',
+            ),
         );
         
         if (array_key_exists($this->clever_class,$clever_classes))
