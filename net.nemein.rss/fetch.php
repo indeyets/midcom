@@ -406,7 +406,8 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
     private function import_event($item)
     {
         // Check that we're trying to import item suitable to be an event
-        if (!isset($item['xcal']))
+        if (   !isset($item['xcal'])
+            && !isset($item['gd']['when@']))
         {
             // Not an event
             return false;
@@ -433,11 +434,22 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         $end = null;
         if (isset($item['xcal']['dtstart']))
         {
+            // xCal RSS feed, for example Upcoming or Last.fm
             $start = strtotime($item['xcal']['dtstart']);
         }
+        elseif (isset($item['gd']['when@starttime']))
+        {
+            // gData Atom feed, for example Dopplr
+            $start = strtotime($item['gd']['when@starttime']);
+        }
+        
         if (isset($item['xcal']['dtend']))
         {
             $end = strtotime($item['xcal']['dtend']);
+        }
+        elseif (isset($item['gd']['when@starttime']))
+        {
+            $end = strtotime($item['gd']['when@endtime']);
         }
         
         if (   !$start
@@ -465,6 +477,10 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         if (isset($item['xcal']['x-calconnect-venue_adr_x-calconnect-city']))
         {
             $location_parts[] = $item['xcal']['x-calconnect-venue_adr_x-calconnect-city'];
+        }
+        if (isset($item['gd']['where@valuestring']))
+        {
+            $location_parts[] = $item['gd']['where@valuestring'];
         }
         $location = implode(', ', $location_parts);
 
