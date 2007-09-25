@@ -2,8 +2,16 @@
 ---VERSION 2.1.0
 ---LANGUAGE en
 
+---STRING application was accepted by
+Application was accepted by
+---STRINGEND
+
+---STRING has been accepted
+has been accepted
+---STRINGEND
+
 ---STRING has been declined
-Has been declined
+has been declined
 ---STRINGEND
 
 ---STRING your application to team

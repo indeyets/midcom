@@ -121,7 +121,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
                         $this->_logger->log("Team (" . $team_group->name . ") was deleted by "
                             . $_MIDCOM->auth->user->_storage->username, $team->guid);
                     
-                        //$_MIDCOM->relocate('manage');
+                        $_MIDCOM->relocate('manage');
                     }           
                 }      
             }       
