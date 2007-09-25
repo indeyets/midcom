@@ -83,6 +83,12 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
                 'fixed_args' => 'buddylist',
                 'handler' => Array('org_openpsa_contacts_handler_buddy_list', 'list'),
             );
+            
+            // Match /buddylist/xml
+            $this->_request_switch['buddylist_xml'] = array(
+                'fixed_args' => array('buddylist', 'xml'),
+                'handler' => Array('org_openpsa_contacts_handler_buddy_list', 'list'),
+            );            
 
             // Match /buddylist/add/<person guid>
             $this->_request_switch[] = array(

@@ -93,6 +93,13 @@ class org_openpsa_contacts_handler_buddy_list extends midcom_baseclasses_compone
     {
         $_MIDCOM->auth->require_valid_user();
         $user = $_MIDCOM->auth->user->get_storage();
+        
+        if ($handler_id == 'buddylist_xml')
+        {
+            $_MIDCOM->skip_page_style = true;
+            $_MIDCOM->cache->content->content_type("text/xml");
+            $_MIDCOM->header("Content-type: text/xml; charset=UTF-8");
+        }
 
         $this->_request_data['buddylist'] = array();
 
@@ -117,13 +124,37 @@ class org_openpsa_contacts_handler_buddy_list extends midcom_baseclasses_compone
     {
         if (count($this->_request_data['buddylist']) > 0)
         {
-            midcom_show_style("show-buddylist-header");
-            foreach ($this->_request_data['buddylist'] as $person)
+            if ($handler_id == 'buddylist_xml')
             {
-                $this->_request_data['person'] =& $person;
-                midcom_show_style("show-buddylist-item");
+                $datamanager = new midcom_helper_datamanager2_datamanager($data['schemadb_person']);
+                $xml = '<buddies></buddies>';
+                $simplexml = simplexml_load_string($xml);
+                
+                foreach ($data['buddylist'] as $person)
+                {
+                    $buddy = $simplexml->addChild('buddy');
+                    $buddy->addAttribute('guid', $person->guid);
+                    $datamanager->autoset_storage($person);
+                    $person_data = $datamanager->get_content_xml();
+                    
+                    foreach ($person_data as $key => $value)
+                    {
+                        $buddy->addChild($key, $value);
+                    }
+                }
+                
+                echo $simplexml->asXml();
             }
-            midcom_show_style("show-buddylist-footer");
+            else
+            {
+                midcom_show_style("show-buddylist-header");
+                foreach ($data['buddylist'] as $person)
+                {
+                    $data['person'] =& $person;
+                    midcom_show_style("show-buddylist-item");
+                }
+                midcom_show_style("show-buddylist-footer");
+            }
         }
     }
 }
