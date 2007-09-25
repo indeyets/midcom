@@ -25,6 +25,14 @@
 // Link text in the pm
 'private_pendings_link' => 'approve/decline',
 
+'on_create_profile' => null,
+// 'on_create_profile' => Array
+// (
+//     'callback' => 'callback_function_name',
+//     'autoload_snippet' => 'snippet_name', // optional
+//     'autoload_file' => 'filename', // optional
+// ),
+
 /**
  * Plugins and other miscellaneous configuration keys
  */

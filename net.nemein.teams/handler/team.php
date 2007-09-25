@@ -165,6 +165,11 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
    
     function _is_player($playerguid = null)
     {
+        if (! $_MIDCOM->auth->user)
+        {
+            return false;
+        }
+        
         $members = 0;
     
         $qb = midcom_db_group::new_query_builder();
@@ -289,11 +294,13 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     }
 
     function _handler_create ($handler_id, $args, &$data)
-    {
+    {        
         if ($this->_config->get('system_lockdown') == 1)
         {
             $_MIDCOM->relocate('lockdown');
         }    
+        
+        $_MIDCOM->auth->require_valid_user();
     
         $title = $this->_l10n_midcom->get('create team');
         $_MIDCOM->set_pagetitle(":: {$title}");
@@ -328,16 +335,6 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	        
                     if ($this->_config->get('create_team_home'))
 			        {
-			            /*$plugin_name = $this->_config->get('create_team_home_plugin');
-		        
-			            if (!empty($plugin_name))
-			            {
-                            $_MIDCOM->relocate("plugin/{$plugin_name}");
-                        }
-                        else
-                        {
-                            $_MIDCOM->relocate('');
-                        }*/
                         $_MIDCOM->relocate('create/profile');
 			        }
 			        else
@@ -460,44 +457,79 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     }
     
     function _handler_create_profile($handler_id, $args, &$data)
-    {
-        // $title = $this->_l10n_midcom->get('create team home');
-        // $_MIDCOM->set_pagetitle(":: {$title}");
-
-	    require_once MIDCOM_ROOT . '/com/planetleet/website/helpers/profile_wizard.php';
-	    
-	    $_MIDCOM->componentloader->load_graceful('com.planetleet.website');
-
-        $_component = 'com.planetleet.website';    
-
-        $_i18n =& $_MIDCOM->i18n;
-        $_l10n =& $_i18n->get_l10n($_component);
-        $_component_data =& $GLOBALS['midcom_component_data'][$_component];
-        $_config = $_component_data['config']->_merged['profile_wizard'];
-        
-        $user =& $_MIDCOM->auth->user;
-
-        if (! is_array($_config))
-        {
-            $_config = array();
-        }
-        if (! is_array($_config['team']))
-        {
-            $_config['team'] = array();
-        }
-
-        $profile_wizard = new com_planetleet_website_helpers_profile_wizard($_config, 'team');
-        $status = $profile_wizard->create_team_profile($user);
+    {        
+        $title = $this->_l10n_midcom->get('create team home');
+        $_MIDCOM->set_pagetitle("{$title}");
 
         if ($this->_config->get('system_lockdown') == 1)
         {
             $_MIDCOM->relocate('lockdown');
         }
+        
+        if ($this->_config->get('on_create_profile'))
+        {
+    	    $this->_invoke_profile_creation_callback(&$user);            
+        }
+        else
+        {
+            $plugin_name = $this->_config->get('create_team_home_plugin');
 
-        $title = $this->_l10n_midcom->get('create team home');
-        $_MIDCOM->set_pagetitle("{$title}");
+            if (!empty($plugin_name))
+            {
+                $_MIDCOM->relocate("plugin/{$plugin_name}");
+            }
+            else
+            {
+                $_MIDCOM->relocate('');
+            }            
+        }
     
         return true;
+    }
+    
+    /**
+     * This function invokes the callback set in the component configuration upon
+     * activation of an account. It will be executed at the end of the activation
+     * with current users privileges.
+     *
+     * Configuration syntax:
+     * <pre>
+     * 'on_create_profile' => Array
+     * (
+     *     'callback' => 'callback_function_name',
+     *     'autoload_snippet' => 'snippet_name', // optional
+     *     'autoload_file' => 'filename', // optional
+     * ),
+     * </pre>
+     *
+     * The callback function will receive the midcom_db_person object instance as an argument.
+     *
+     * @access private
+     */
+    function _invoke_profile_creation_callback(&$user)
+    {
+        $callback = $this->_config->get('on_create_profile');
+        if ($callback)
+        {
+            // Try autoload:
+            if (array_key_exists('autoload_snippet', $callback))
+            {
+                mgd_include_snippet_php($callback['autoload_snippet']);
+            }
+            if (array_key_exists('autoload_file', $callback))
+            {
+                require_once($callback['autoload_file']);
+            }
+
+            if (! function_exists($callback['callback']))
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Failed to load the callback {$callback['callback']} for team profile creation, the function is not defined.", MIDCOM_ERRCRIT);
+                debug_pop();
+                return;
+            }
+            $callback['callback']($user);
+        }
     }
 
     /**
