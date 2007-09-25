@@ -80,6 +80,11 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
             $user = $_MIDCOM->auth->user->get_storage();
             $this->_defaults['photographer'] = $user->id;
         }
+        
+        if (isset($_REQUEST['to_gallery']))
+        {
+            $this->_defaults['to_gallery'] = $_REQUEST['to_gallery'];
+        }
     }
 
     /**
@@ -354,23 +359,15 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add('Called');
-        /* This seems not to work, let's try a more raw approach
-        if (!isset($this->_controller->datamanager->types['to_gallery']))
-        {
-            debug_add('Could not find to_gallery-field in schema');
-            debug_pop();
-            return;
-        }
-        debug_print_r('to_gallery: ', $this->_controller->datamanager->types['to_gallery']);
-        $gallery =& $this->_controller->datamanager->types['to_gallery']->value;
-        */
-        if (!isset($_POST['to_gallery']))
+
+        if (!isset($_POST['org_routamc_photostream_to_gallery_chooser_widget_selections']))
         {
             debug_add('Could not find to_gallery-field in POST');
             debug_pop();
             return;
         }
-        $gallery =& $_POST['to_gallery'];
+
+        $gallery = (int) $_POST['org_routamc_photostream_to_gallery_chooser_widget_selections'];
         if (empty($gallery))
         {
             debug_add("to_gallery value ({$gallery}) is empty, skipping");
@@ -395,6 +392,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
         }
         debug_add("Photo #{$this->_photo->id} linked to gallery #{$gallery}", MIDCOM_LOG_INFO);
         debug_pop();
+
         return;
     }
 
@@ -425,7 +423,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
         switch ($this->_controller->process_form())
         {
             case 'save':
-                // Change schema on the fly ffrom upload to photo
+                // Change schema on the fly from 'upload' to 'photo'
                 $this->_photo->parameter('midcom.helper.datamanager2', 'schema_name', 'photo');
                 $this->_photo->read_exif_data(true);
                 $this->_photo->update();

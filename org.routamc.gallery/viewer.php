@@ -83,15 +83,19 @@ class org_routamc_gallery_viewer extends midcom_baseclasses_components_request
             // We got a topic. Make it a NAP node
             $nap = new midcom_helper_nav();
             $photostream_node = $nap->get_node($photostream->id);
+            
             return $photostream_node;
         }
-
+        
         // No photostream specified, autoprobe
         $photostream_node = midcom_helper_find_node_by_component('org.routamc.photostream');
 
         // Cache the data
-        // TODO: sudo here?
-        $this->_topic->parameter('org.routamc.gallery', 'photostream', $photostream_node[MIDCOM_NAV_GUID]);
+        if ($_MIDCOM->auth->request_sudo('org.routamc.gallery'))
+        {
+            $this->_topic->parameter('org.routamc.gallery', 'photostream', $photostream_node[MIDCOM_NAV_GUID]);
+            $_MIDCOM->auth->drop_sudo();
+        }
 
         return $photostream_node;
     }
@@ -107,7 +111,7 @@ class org_routamc_gallery_viewer extends midcom_baseclasses_components_request
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "{$this->_request_data['photostream'][MIDCOM_NAV_FULLURL]}upload.html",
+                MIDCOM_TOOLBAR_URL => "{$this->_request_data['photostream'][MIDCOM_NAV_FULLURL]}upload.html?to_gallery={$this->_topic->id}",
                 MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('upload photos', 'org.routamc.photostream'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/images.png',

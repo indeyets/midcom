@@ -623,7 +623,6 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                     array('extra' => 'ASC'), 
                     array('metadata.published' => 'ASC'),
                 ),
-                'id_field' => 'guid',
             ),
         );
         
@@ -1022,11 +1021,12 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         
         // Add existing and static selections
         $existing_elements = $this->_type->selection;
+        
         // debug_print_r('existing_elements',$existing_elements);
 
         // debug_print_r('static_options',$this->static_options);
         
-        $elements = array_merge($this->static_options,$existing_elements);
+        $elements = array_merge($this->static_options, $existing_elements);
         // debug_print_r('all elements to be added',$elements);
                 
         $ee_script = '';
@@ -1296,15 +1296,17 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             return;
         }
         $real_results =& $results["{$this->_element_id}_selections"];
-        
-        foreach ($real_results as $key => $value)
+        if (is_array($real_results))
         {
-            // debug_add("checking key {$key} with value ".var_dump($value));
-            if (   $value != "0"
-                || $value != 0)
+            foreach ($real_results as $key => $value)
             {
-                // debug_add("adding key {$key} to selection");
-                $this->_type->selection[] = $key;                
+                // debug_add("checking key {$key} with value ".var_dump($value));
+                if (   $value != "0"
+                    || $value != 0)
+                {
+                    // debug_add("adding key {$key} to selection");
+                    $this->_type->selection[] = $key;                
+                }
             }
         }
         

@@ -125,8 +125,10 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
         debug_add('found ' . count($photolinks) . ' links');
         foreach ($photolinks as $photolink)
         {
+
             $photo = new org_routamc_photostream_photo_dba($photolink->photo);
-            if (!$photo)
+            if (   !$photo
+                || !$photo->guid)
             {
                 debug_add("Could not read photo #{$photolink->photo}, errstr: " . mgd_errstr(), MIDCOM_LOG_WARN);
                 continue;

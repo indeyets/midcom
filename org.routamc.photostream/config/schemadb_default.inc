@@ -28,27 +28,11 @@
                  'require_corresponding_option' => false,
                  'options' => array(),
             ),
-            'widget' => 'universalchooser',
+            'widget' => 'chooser',
             'widget_config' => array
             (
-                'class'       => 'midcom_db_person',
-                'component'   => 'org.openpsa.contacts',
-                'titlefield'  => 'name',
-                'idfield'     => 'id',
-                'constraints' => array
-                (
-                ),
-                'searchfields'  => array
-                (
-                    'lastname',
-                    'firstname',
-                    'username'
-                ),
-                'orders'        => array
-                (
-                    array('lastname'   => 'ASC'),
-                    array('firstname'  => 'ASC'),
-                ),
+                'clever_class' => 'person',
+                'id_field' => 'id',
             ),
         ),
         'taken' => Array
@@ -151,53 +135,6 @@
             'widget' => 'text',
             'index_method' => 'title',
         ),
-        'description' => Array
-        (
-            'title' => 'description',
-            'storage' => 'description',
-            'type' => 'text',
-            'widget' => 'textarea',
-        ),
-        'photographer' => array
-        (
-            'title' => 'photographer',
-            'storage' => 'photographer',
-            'type' => 'select',
-            'type_config' => array
-            (
-                 'require_corresponding_option' => false,
-                 'options' => array(),
-            ),
-            'widget' => 'universalchooser',
-            'widget_config' => array
-            (
-                'class'       => 'midcom_db_person',
-                'component'   => 'org.openpsa.contacts',
-                'titlefield'  => 'name',
-                'idfield'     => 'id',
-                'constraints' => array
-                (
-                ),
-                'searchfields'  => array
-                (
-                    'lastname',
-                    'firstname',
-                    'username'
-                ),
-                'orders'        => array
-                (
-                    array('lastname'    => 'ASC'),
-                    array('firstname'  => 'ASC'),
-                ),
-            ),
-            'required' => true,
-        ),
-        'tags' => Array
-        (
-            'title' => 'tags',
-            'type' => 'tags',
-            'widget' => 'text',
-        ),
         /* NOTE: You *will* want to migrate all changes made here to the same
           field in the photo schema as well */
         'photo' => Array
@@ -215,6 +152,75 @@
                 ),
             ),
             'widget' => 'photo',
+        ),
+        'description' => Array
+        (
+            'title' => 'description',
+            'storage' => 'description',
+            'type' => 'text',
+            'widget' => 'textarea',
+        ),
+        'tags' => Array
+        (
+            'title' => 'tags',
+            'type' => 'tags',
+            'widget' => 'text',
+        ),  
+        'photographer' => array
+        (
+            'title' => 'photographer',
+            'storage' => 'photographer',
+            'type' => 'select',
+            'type_config' => array
+            (
+                 'require_corresponding_option' => false,
+                 'options' => array(),
+            ),
+            'widget' => 'chooser',
+            'widget_config' => array
+            (
+                'clever_class' => 'person',
+                'id_field' => 'id',
+            ),
+            'required' => true,
+        ),
+        'to_gallery' => array
+        (
+            'title' => 'upload to gallery',
+            'storage' => 'parameter',
+            'type' => 'select',
+            'type_config' => array
+            (
+                 'require_corresponding_option' => false,
+                 'options' => array(),
+            ),
+            'widget' => 'chooser',
+            'widget_config' => array
+            (
+                'clever_class' => 'topic',
+                'id_field' => 'id',
+                'constraints' => array
+                (
+                    array
+                    (
+                        'field' => 'component',
+                        'op' => '=',
+                        'value' => 'org.routamc.gallery',
+                    ),
+                    array
+                    (
+                        'field' => 'parameter.name',
+                        'op' => '=',
+                        'value' => 'gallery_type',
+                    ),
+                    array
+                    (
+                        'field' => 'parameter.value',
+                        'op' => '=',
+                        'value' => 10, //ORG_ROUTAMC_GALLERY_TYPE_HANDPICKED
+                    ),
+                ),
+            ),
         ),
         'private' => Array
         (
@@ -245,56 +251,6 @@
                 ),
             ),
             'widget' => 'privilegecheckbox',
-        ),
-        'to_gallery' => array
-        (
-            'title' => 'upload to gallery',
-            'storage' => null,
-            'type' => 'select',
-            'type_config' => array
-            (
-                 'require_corresponding_option' => false,
-                 'options' => array(),
-            ),
-            'widget' => 'universalchooser',
-            'widget_config' => array
-            (
-                'class'       => 'midcom_db_topic',
-                'component'   => 'org.routamc.photostream',
-                'titlefield'  => 'extra',
-                'idfield'     => 'id',
-                'constraints' => array
-                (
-                    array
-                    (
-                        'field' => 'parameter.domain',
-                        'op' => '=',
-                        'value' => 'org.routamc.gallery',
-                    ),
-                    array
-                    (
-                        'field' => 'parameter.name',
-                        'op' => '=',
-                        'value' => 'gallery_type',
-                    ),
-                    array
-                    (
-                        'field' => 'parameter.value',
-                        'op' => '=',
-                        'value' => 10, //ORG_ROUTAMC_GALLERY_TYPE_HANDPICKED
-                    ),
-                ),
-                'searchfields'  => array
-                (
-                    'name',
-                    'extra',
-                ),
-                'orders'        => array
-                (
-                    array('extra'    => 'ASC'),
-                    array('name'  => 'ASC'),
-                ),
-            ),
         ),
     )
 ),
