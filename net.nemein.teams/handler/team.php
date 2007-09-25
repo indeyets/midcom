@@ -252,9 +252,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
     function & dm2_create_callback (&$controller)
     {
+        $_MIDCOM->auth->request_sudo('net.nemein.teams');
+        
         $this->_team_group = new midcom_db_group();
         $this->_team_group->owner = $this->_root_group->id;
-
+        $this->_team_group->set_privilege('midgard:owner', $_MIDCOM->auth->user);
+        
         // check if team exists
         /*
          echo $name . "<br/>";
@@ -265,17 +268,27 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
         if (!$this->_team_group->create())
         {
-        
+            $_MIDCOM->uimessages->add(
+                $this->_l10n->get('net.nemein.teams'),
+                $this->_l10n->get('error happened during team creation')
+            );
+            $_MIDCOM->relocate('');
 	    }
 	    else
 	    {
 	        $this->_team_member = new midcom_db_member();
 	        $this->_team_member->gid = $this->_team_group->id;
 	        $this->_team_member->uid = $_MIDCOM->auth->user->_storage->id;
+	        $this->_team_member->set_privilege('midgard:owner', $_MIDCOM->auth->user);
 	        
 	        if (!$this->_team_member->create())
 	        {
-	            // TODO: handle error
+	            // TODO: Cleanup
+                $_MIDCOM->uimessages->add(
+                    $this->_l10n->get('net.nemein.teams'),
+                    $this->_l10n->get('error happened during team creation')
+                );
+	            $_MIDCOM->relocate('');
 	        }
 	        else
 	        {
@@ -283,7 +296,32 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	                $this->_team_group->guid);
 	        }
         }
-
+        
+        $team = new net_nemein_teams_team_dba();
+        $team->groupguid = $this->_team_group->guid;
+        $team->managerguid = $_MIDCOM->auth->user->guid;
+        $team->set_privilege('midgard:owner', $_MIDCOM->auth->user);
+        $url_name = $team_group->guid;        
+        if ($_MIDCOM->serviceloader->can_load('midcom_core_service_urlgenerator'))
+        {
+            $urlgenerator = $_MIDCOM->serviceloader->load('midcom_core_service_urlgenerator');
+            $url_name = $urlgenerator->from_string($team_group->name);
+        }
+        $team->name = $url_name;
+        
+        if (!$team->create())
+        {
+                $_MIDCOM->uimessages->add(
+                    $this->_l10n->get('net.nemein.teams'),
+                    $this->_l10n->get('error happened during team creation')
+                );
+                $_MIDCOM->relocate('');
+        }
+        
+        $this->_logger->log("Team object created by " . $_MIDCOM->auth->user->username,  $this->_team_group->guid);
+                
+        $_MIDCOM->auth->drop_sudo();
+        
 	    return $this->_team_group;
     }
 
@@ -320,22 +358,8 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
         switch ($this->_controller->process_form())
         {
-	        case 'save':
-                
-		        $team = new net_nemein_teams_team_dba();
-                $team->groupguid = $this->_team_group->guid;
-		        $team->managerguid = $_MIDCOM->auth->user->guid;
-	        
-		        if (!$team->create())
-		        {
-                        $_MIDCOM->uimessages->add(
-                            $this->_l10n->get('net.nemein.teams'),
-                            $this->_l10n->get('error happened during team creation')
-                        );
-                        $_MIDCOM->relocate('');
-		        }
-
-	            $this->_logger->log("Team object created by " . $_MIDCOM->auth->user->username,  $this->_team_group->guid);
+	        case 'save':                
+                $_MIDCOM->auth->request_sudo('net.nemein.teams');
         
                 if ($this->_config->get('create_team_home'))
 		        {
@@ -347,7 +371,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                         $this->_l10n->get('net.nemein.teams'),
                         $this->_l10n->get('team created')
                     );
-                    $_MIDCOM->relocate('');
+                    $_MIDCOM->relocate($team->name);
 		        }
 
             case 'cancel':
@@ -473,7 +497,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
             $_MIDCOM->relocate('lockdown');
         }
         
-        if ($this->_config->get('on_create_profile'))
+        if (! is_null($this->_config->get('on_create_profile')))
         {
     	    $this->_invoke_profile_creation_callback(&$_MIDCOM->auth->user);            
         }
@@ -719,7 +743,6 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 }
             }
         }
-        
     
         return true;
     }
@@ -897,7 +920,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 $url_name = $urlgenerator->from_string($team_group->name);
             }
             
-            $this->_request_data['view_team']['profile_url'] = "{$prefix}{$url_name}";
+            $this->_request_data['view_team']['profile_url'] = "{$prefix}{$team->name}";
             
             midcom_show_style('teams_list_item');
 	    }
@@ -910,6 +933,11 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         $this->_request_data['controller'] = $this->_controller;
         
         midcom_show_style('team_creation_form');
+    }
+    
+    function _show_create_profile($handler_id, &$data)
+    {
+        $_MIDCOM->relocate('');
     }
 
     function _show_application($handler_id, &$data)
