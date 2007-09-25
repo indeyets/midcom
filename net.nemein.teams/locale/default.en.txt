@@ -74,6 +74,10 @@ Application
 Apply to team
 ---STRINGEND
 
+---STRING new application from %s
+New application from %s
+---STRINGEND
+
 ---STRING teams list
 Teams list
 ---STRINGEND

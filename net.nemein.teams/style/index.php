@@ -2,14 +2,6 @@
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
 $title = $data['l10n']->get('teams');
-if ($data['is_registered'])
-{
-    $title = $data['l10n']->get('registered');    
-}
-if ($data['is_player'])
-{
-    $title = $data['l10n']->get('player');    
-}
 
 ?>
 <h1><?php echo $title; ?></h1>
