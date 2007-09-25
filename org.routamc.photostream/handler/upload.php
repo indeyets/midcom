@@ -364,7 +364,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
         {
             debug_add('Could not find to_gallery-field in POST');
             debug_pop();
-            return;
+            return false;
         }
 
         $gallery = (int) $_POST['org_routamc_photostream_to_gallery_chooser_widget_selections'];
@@ -372,14 +372,14 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
         {
             debug_add("to_gallery value ({$gallery}) is empty, skipping");
             debug_pop();
-            return;
+            return false;
         }
         $_MIDCOM->componentloader->load_graceful('org.routamc.gallery');
         if (!class_exists('org_routamc_gallery_photolink_dba'))
         {
             debug_add('Required class org_routamc_gallery_photolink_dba not available (could not load component org.routamc.gallery ?)', MIDCOM_LOG_ERROR);
             debug_pop();
-            return;
+            return false;
         }
         $link = new org_routamc_gallery_photolink_dba();
         $link->node = $gallery;
@@ -388,12 +388,12 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
         {
             debug_add("Could not link photo #{$this->_photo->id} to gallery #{$gallery}", MIDCOM_LOG_ERROR);
             debug_pop();
-            return;
+            return false;
         }
         debug_add("Photo #{$this->_photo->id} linked to gallery #{$gallery}", MIDCOM_LOG_INFO);
         debug_pop();
 
-        return;
+        return $gallery;
     }
 
     /**
@@ -427,7 +427,17 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
                 $this->_photo->parameter('midcom.helper.datamanager2', 'schema_name', 'photo');
                 $this->_photo->read_exif_data(true);
                 $this->_photo->update();
-                $this->_check_link_photo_gallery();
+                $gallery = $this->_check_link_photo_gallery();
+                if ($gallery)
+                {
+                    $nap = new midcom_helper_nav();
+                    $gallery_node = $nap->get_node($gallery);
+                    if ($gallery_node)
+                    {
+                        $_MIDCOM->relocate("{$gallery_node[MIDCOM_NAV_FULLURL]}photo/{$this->_photo->guid}/");
+                        // This will exit
+                    }
+                }
 
                 $_MIDCOM->relocate("photo/{$this->_photo->guid}/");
                 // This will exit.
