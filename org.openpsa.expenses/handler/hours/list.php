@@ -127,15 +127,18 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
     {
         midcom_show_style('hours_list_header');
         
+        $total_hours = 0;
         foreach ($data['hours'] as $hour_report)
         {
             $this->_datamanager->autoset_storage($hour_report);
             $data['hour_report'] = $hour_report;
             $data['view_hour_report'] = $this->_datamanager->get_content_html();
+            $total_hours += $hour_report->hours;
             
             midcom_show_style('hours_list_item');
         }
         
+        $data['total_hours'] = $total_hours;
         midcom_show_style('hours_list_footer');
     }
 }
