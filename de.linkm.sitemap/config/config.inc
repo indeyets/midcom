@@ -4,3 +4,4 @@
 'root_topic'    => null,
 'hide_index_articles' => true,
 'google_sitemap_mode' => false,
+'show_levels' => 99,

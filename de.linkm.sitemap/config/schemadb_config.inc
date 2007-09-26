@@ -73,6 +73,14 @@
             "widget_select_size" => 10,
             'multiselect_selection_list' => de_linkm_sitemap_viewer::list_root_nodes(),
         ),
+        'show_levels' => array 
+        (
+            'description'   => 'Show levels',
+            'datatype'      => 'text',
+            'location'      => 'config',
+            'config_domain' => 'de.linkm.sitemap',
+            "config_key"    => 'show_levels',
+        ),
         'google_sitemap_mode' => array
         (
             'description'   => 'use google sitemap mode',

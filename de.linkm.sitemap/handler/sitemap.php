@@ -89,11 +89,22 @@ class de_linkm_sitemap_handler_sitemap extends midcom_baseclasses_components_han
             $this->_root_node_id = $topics[0]->id;
         }
 
-        $this->_show_levels = 99;
-        if (isset($_REQUEST['de_linkm_sitemap_set_levels']))
+        if (  $this->_config->get('show_levels') != ''
+            && is_int($this->_config->get('show_levels'))
+           )
+        {
+            $this->_show_levels = $this->_config->get('show_levels');
+        }
+        else
+        {
+            $this->_show_levels = 99;
+        }
+        if (   isset($_REQUEST['de_linkm_sitemap_set_levels']) 
+            && $_REQUEST['de_linkm_sitemap_set_levels'] < $this->_show_levels
+           )
         {
             $this->_show_levels = $_REQUEST['de_linkm_sitemap_set_levels'];
-        }        
+        }
     }
     
     /**
