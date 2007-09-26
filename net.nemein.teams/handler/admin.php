@@ -83,7 +83,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
             if (!empty($args[0]))
             {
                 $qb = net_nemein_teams_team_dba::new_query_builder();
-                $qb->add_constraint('groupguid', '=', $args[0]);
+                $qb->add_constraint('guid', '=', $args[0]);
             
                 if (!$teams = $qb->execute())
                 {
@@ -109,14 +109,14 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
                         }
                     
                         $team->delete();
-                    
+                        $team_group->delete();
+                                            
                         // Setting topic invisible at this point
                         // We might need to delete this for real
                         // This is segfaulting on devel-xen-devel
-                        $team_topic->metadata->hidden = true;
-                        $team_topic->update();   
-                        
-                        //$team_group->delete();       
+                        // $team_topic->metadata->hidden = true;
+                        // $team_topic->update();
+                        $team_topic->delete();
                         
                         $this->_logger->log("Team (" . $team_group->name . ") was deleted by "
                             . $_MIDCOM->auth->user->_storage->username, $team->guid);
@@ -181,9 +181,10 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         
         foreach($this->_teams_list as $team)
         {
-            $this->_request_data['group_guid'] = $team->groupguid;
+            $this->_request_data['team'] = $team;
             $team_group = new midcom_db_group($team->groupguid);
-            $this->_request_data['team_name'] = $team_group->name;
+            $this->_request_data['team_group'] = $team_group;
+
             midcom_show_style('manage_teams_item');
         }
         
