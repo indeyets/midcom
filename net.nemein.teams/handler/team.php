@@ -389,7 +389,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         $_MIDCOM->auth->require_valid_user();
     
         $title = $this->_l10n_midcom->get('create team');
-        $_MIDCOM->set_pagetitle(":: {$title}");
+        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
         
         $this->_load_controller();
 
@@ -413,7 +413,8 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 		        }
 		        else
 		        {
-                    $_MIDCOM->uimessages->add(
+                    $_MIDCOM->uimessages->add
+                    (
                         $this->_l10n->get('net.nemein.teams'),
                         $this->_l10n->get('team created')
                     );
@@ -425,6 +426,14 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         }
 
 	    $this->_prepare_request_data();
+
+        $tmp = Array();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => 'create/',
+            MIDCOM_NAV_NAME => $title,
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
 
 	    return true;
     }

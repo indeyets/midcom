@@ -71,13 +71,24 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         $qb = net_nemein_teams_team_dba::new_query_builder();
         $this->_teams_list = $qb->execute();
     
+        $data['title'] = $this->_l10n->get('manage teams');
+        $tmp = Array();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "manage/",
+            MIDCOM_NAV_NAME => $data['title'],
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        $_MIDCOM->set_pagetitle($data['title']);
+    
         return true;
     }
     
     function _handler_manage_delete($handler_id, $args, &$data)
     {    
         $_MIDCOM->auth->require_admin_user();
-    
+        $data['team'] = new net_nemein_teams_team_dba($args[0]);
+
         if (isset($_POST['remove']))
         {     
             if (!empty($args[0]))
@@ -109,13 +120,9 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
                         }
                     
                         $team->delete();
+
                         $team_group->delete();
-                                            
-                        // Setting topic invisible at this point
-                        // We might need to delete this for real
-                        // This is segfaulting on devel-xen-devel
-                        // $team_topic->metadata->hidden = true;
-                        // $team_topic->update();
+
                         $team_topic->delete();
                         
                         $this->_logger->log("Team (" . $team_group->name . ") was deleted by "
@@ -130,6 +137,21 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         {
             $_MIDCOM->relocate('manage');
         }
+        
+        $data['title'] = sprintf($this->_l10n->get('delete team %s'), $data['team']->name);
+        $tmp = Array();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => 'manage/',
+            MIDCOM_NAV_NAME => $this->_l10n->get('manage teams'),
+        );
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "manage/delete/{$data['team']->guid}",
+            MIDCOM_NAV_NAME => $data['title'],
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        $_MIDCOM->set_pagetitle($data['title']);
 
         return true;    
     }
