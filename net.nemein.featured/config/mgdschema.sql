@@ -16,3 +16,4 @@ CREATE TABLE net_nemein_featured_item (
   KEY net_nemein_featured_item_defaultStyle_idx(`defaultDtyle` (30)),
   KEY net_nemein_featured_item_itemOrder_idx(`itemOrder`)
 );
+ALTER TABLE net_nemein_featured_item ADD COLUMN title varchar(255) NOT NULL default '';

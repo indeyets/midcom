@@ -3,6 +3,14 @@
     'description' => 'featured',
     'fields'      => array
     (
+        'title' => Array
+        (
+            // COMPONENT-REQUIRED
+            'title' => 'title',
+            'storage' => 'title',
+            'type' => 'text',
+            'widget' => 'text',
+        ),
         'group_name' => Array
         (
             // COMPONENT-REQUIRED
@@ -22,6 +30,7 @@
             'storage' => 'objectLocation',
             'type' => 'text',
             'widget' => 'text',
+            'required' => true,
         ),
         'defaultStyle' => Array
         (

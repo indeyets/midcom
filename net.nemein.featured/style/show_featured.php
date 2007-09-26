@@ -8,22 +8,22 @@ foreach ($featured_groups as $key => $group)
 {
     $title = $group['title'];
     $groups_objects =& $featured_objects[$key];
-?>
+    ?>
     <h1>&(title);</h1>
 
-<?php
+    <?php
     if (!empty($groups_objects))
     {
-        foreach ($groups_objects as $key => $data)
+        foreach ($groups_objects as $key => $item)
         {
-            $data->load_featured_item();
+            $item->load_featured_item();
         }
     }
     else
     {
-?>
+        ?>
         <p><?php $data['l10n']->show('no items found.');?></p>
-<?php
+        <?php
     }
 }
 ?>

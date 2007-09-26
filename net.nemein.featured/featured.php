@@ -24,6 +24,11 @@ class net_nemein_featured_item_dba extends __net_nemein_featured_item_dba
     	    }
     	}
 
+        if (substr($this->objectLocation, 0, 1) != '/')
+        {
+            $this->objectLocation = "/{$this->objectLocation}";
+        }
+
         // Dynamic loading the featured stuff
         $_MIDCOM->dynamic_load($substyle_parameter . $this->objectLocation);
     }

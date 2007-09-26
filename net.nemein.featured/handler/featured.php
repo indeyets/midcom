@@ -46,8 +46,33 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
     function _load_controller()
     {
         $this->_load_schemadb();
+        
+        $this->_request_data['defaults'] = Array();
+        // Allow setting defaults from query string, useful for things like "create event for today" and chooser        
+        if (   isset($_GET['defaults'])
+            && is_array($_GET['defaults']))
+        {
+            foreach ($_GET['defaults'] as $key => $value)
+            {
+                if (!isset($this->_schemadb['default']->fields[$key]))
+                {
+                    // No such field in schema
+                    continue;
+                }
+                
+                if ($key == 'object_location')
+                {
+                    $value = str_replace($_MIDCOM->get_host_prefix(), '', $value);
+                }
+                
+                $this->_request_data['defaults'][$key] = $value;
+            }
+        }
+
+        
         $this->_controller =& midcom_helper_datamanager2_controller::create('create');
         $this->_controller->schemadb =& $this->_schemadb;
+        $this->_controller->defaults = $this->_request_data['defaults'];
         $this->_controller->callback_object =& $this;
         if (! $this->_controller->initialize())
         {
@@ -98,6 +123,7 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
     function _handler_manage($handler_id, $args, &$data)
     {
         $this->_content_topic->require_do('midgard:create');
+        
         $this->_load_controller();
 
         switch ($this->_controller->process_form())

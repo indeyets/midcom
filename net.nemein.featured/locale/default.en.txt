@@ -1,52 +1,69 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.en.txt 6059 2007-05-25 17:29:41Z flack $
+---CVS $Id$
 ---LANGUAGE en
 
----STRING title
-Title
----STRINGEND
-
----STRING submit
-Submit
----STRINGEND
-
----STRING edit
-Edit
----STRINGEND
-
----STRING delete
-Delete
----STRINGEND
-
----STRING move up
-Move up
----STRINGEND
-
----STRING move down
-Move down
----STRINGEND
-
----STRING edit featured
-Edit featured item
+---STRING add to featured
+Add to featured
 ---STRINGEND
 
 ---STRING create featured
 Create featured item
 ---STRINGEND
 
----STRING group name
-Group name
+---STRING delete
+Delete
 ---STRINGEND
 
----STRING object location
-Object location
+---STRING edit
+Edit
+---STRINGEND
+
+---STRING edit featured
+Edit featured item
+---STRINGEND
+
+---STRING get bookmarklet
+Get bookmarklet
+---STRINGEND
+
+---STRING group name
+Group name
 ---STRINGEND
 
 ---STRING manage
 Manage
 ---STRINGEND
 
+---STRING move down
+Move down
+---STRINGEND
+
+---STRING move up
+Move up
+---STRINGEND
+
+---STRING net.nemein.featured
+Featured content
+---STRINGEND
+
 ---STRING no items found.
 No featured items found in this group.
 ---STRINGEND
+
+---STRING object location
+Object location
+---STRINGEND
+
+---STRING submit
+Submit
+---STRINGEND
+
+---STRING title
+Title
+---STRINGEND
+
+---STRING default style
+Substyle to use
+---STRINGEND
+
