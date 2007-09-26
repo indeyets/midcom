@@ -152,6 +152,7 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
         $data['previous'] = null;
         
         // Set the active leaf
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         foreach ($photolinks as $photolink)
         {
             if ($photolink == $this->_photo->id)
@@ -159,12 +160,12 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
                 if (isset($photolinks[$i - 1]))
                 {
                     $previous = new org_routamc_photostream_photo_dba($photolinks[$i - 1]);
-                    $data['previous'] = '<a href="' . $previous->guid . '.html">&laquo;&nbsp;' . $this->_l10n->get('previous') . '</a>&nbsp;';
+                    $data['previous'] = "<a href=\"{$prefix}photo/{$previous->guid}/\">&laquo;&nbsp;" . $this->_l10n->get('previous') . '</a>&nbsp;';
                 }
                 if (isset($photolinks[$i + 1]))
                 {
                     $next = new org_routamc_photostream_photo_dba($photolinks[$i + 1]);
-                    $data['next'] = '&nbsp;<a href="' . $next->guid . '.html">' . $this->_l10n->get('next') . '&nbsp;&raquo;</a>';
+                    $data['next'] = "&nbsp;<a href=\"{$prefix}photo/{$next->guid}/\">" . $this->_l10n->get('next') . '&nbsp;&raquo;</a>';
                 }
                 break;
             }

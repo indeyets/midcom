@@ -218,7 +218,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
         {
             // Move failed
             debug_add("failed to execute '{$mv_cmd}'", MIDCOM_LOG_ERROR);
-            unlink($tmp_name);
+            @unlink($tmp_name);
             debug_pop();
             return false;
         }
