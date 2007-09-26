@@ -937,11 +937,6 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         $member_count = 0;
         
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-        $urlgenerator = false;
-        if ($_MIDCOM->serviceloader->can_load('midcom_core_service_urlgenerator'))
-        {
-            $urlgenerator = $_MIDCOM->serviceloader->load('midcom_core_service_urlgenerator');            
-        }
         
         midcom_show_style('teams_list_start');
         
@@ -964,14 +959,19 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	        {
     	        $this->_request_data['view_team']['is_recruiting'] = true;
 	        }
-	        	        
-	        $url_name = $team->guid;
-            if ($urlgenerator)
-            {
-                $url_name = $urlgenerator->from_string($team_group->name);
-            }
             
-            $this->_request_data['view_team']['profile_url'] = "{$prefix}{$team->name}/";
+            $qb = midcom_db_topic::new_query_builder();
+            $qb->add_constraint('up', '=', $this->_topic->id);
+            $qb->add_constraint('name', '=', $team->name);
+            
+            if ($qb->count() == 0)
+            {
+                $this->_request_data['view_team']['profile_url'] = null;
+            }
+            else
+            {
+                $this->_request_data['view_team']['profile_url'] = "{$prefix}{$team->name}";
+            }
             
             midcom_show_style('teams_list_item');
 	    }
