@@ -5,4 +5,4 @@
 $node =& $data['photostream_node'];
 ?>
 </ol>
-<?php echo '<p>' . $data['l10n']->get('done recreating derived images') . ", <a href='{$node[MIDCOM_NAV_FULLURL]}'>" . $data['l10n']->get('return to photostream') . "</a></p>\n";
+<?php echo '<p>' . $data['l10n']->get('done recreating derived images') . ", <a href='{$node[MIDCOM_NAV_FULLURL]}'>" . $data['l10n']->get('return to photostream') . "</a></p>\n"; ?>
