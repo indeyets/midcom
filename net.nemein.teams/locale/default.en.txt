@@ -107,6 +107,10 @@ Team introduction
 Team is full at the moment
 ---STRINGEND
 
+---STRING team location
+Location
+---STRINGEND
+
 ---STRING team logo
 Logo
 ---STRINGEND
@@ -131,7 +135,7 @@ You have quit your team
 Your application to team
 ---STRINGEND
 
----STRING team location
-Location
+---STRING net.nemein.teams
+Team management
 ---STRINGEND
 
