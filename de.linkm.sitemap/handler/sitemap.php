@@ -90,7 +90,7 @@ class de_linkm_sitemap_handler_sitemap extends midcom_baseclasses_components_han
         }
 
         if (  $this->_config->get('show_levels') != ''
-            && is_int($this->_config->get('show_levels'))
+            && is_numeric($this->_config->get('show_levels'))
            )
         {
             $this->_show_levels = $this->_config->get('show_levels');
