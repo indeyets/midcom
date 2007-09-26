@@ -14,7 +14,7 @@
  * */
 'schema_team_create' => 'team',
 
-'teams_root_guid' => 'bd153978547111dcbbc6cf47b1b3dd3fdd3f',
+'teams_root_guid' => null,
 'create_team_home' => true,
 'create_team_home_plugin' => 'create_team_home',
 'display_teams_per_page' => 1,

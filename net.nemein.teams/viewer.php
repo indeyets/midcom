@@ -49,6 +49,13 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         (
             'handler' => Array('net_nemein_teams_handler_team', 'index'),
         );
+        
+        // Matches rootgroup
+        $this->_request_switch['create-rootgroup'] = array
+        (
+            'handler' => Array('net_nemein_teams_handler_team', 'rootgroup'),
+            'fixed_args' => Array('rootgroup'),
+        );
 
         // // Matches create/profile
         // $this->_request_switch['create-profile'] = array
@@ -439,7 +446,17 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
             midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
 
         $this->_populate_node_toolbar();
-	
+
+        // Load root event or redirect to creation
+        if (   !$this->_config->get('teams_root_guid')
+            && $handler != 'create-rootgroup')
+        {
+            $nap = new midcom_helper_nav();
+            $node = $nap->get_node($this->_topic->id);
+                
+            $_MIDCOM->relocate("{$node[MIDCOM_NAV_FULLURL]}rootgroup/");
+            // This will exit
+        }
 
         return true;
     }

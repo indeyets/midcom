@@ -61,7 +61,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     {
         $this->_logger = new net_nemein_teams_logger();
 	
-	    if ($this->_config->get('teams_root_guid') != '')
+	    if ($this->_config->get('teams_root_guid'))
         {
 	        $root_group_guid = $this->_config->get('teams_root_guid');
 	        $this->_root_group = new midcom_db_group($root_group_guid);
@@ -71,7 +71,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	    
 	    $this->_request_data['is_registered'] = false;
         $this->_request_data['is_player'] = false;
-        
+
         if ($_MIDCOM->auth->user)
 	    {
 	        $this->_request_data['is_registered'] = true;
@@ -172,7 +172,8 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
             return false;
         }
         
-        if (!$this->_root_group->guid)
+        if (   !$this->_root_group
+            || !$this->_root_group->guid)
         {
             return false;
         }
@@ -346,6 +347,38 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         $this->_request_data['datamanager'] =& $this->_datamanager;
     }
 
+
+    /**
+     * Creates a root group if necessary.
+     */
+    function _handler_rootgroup($handler_id, $args, &$data)
+    {
+        $_MIDCOM->auth->require_valid_user();
+
+        if (array_key_exists('teams_root_guid', $data))
+        {
+            // We have this already
+            $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
+        }
+        
+        $this->_root_group = new midcom_db_group();
+        $this->_root_group->owner = 0;
+        $this->_root_group->name = sprintf('__%s root team', $this->_topic->guid);
+        if ($this->_root_group->create())
+        {
+            $this->_topic->set_parameter('net.nemein.teams', 'teams_root_guid', $this->_root_group->guid);
+            $_MIDCOM->uimessages->add($this->_l10n->get('net.nemein.teams'), sprintf($this->_l10n->get('root group %s created'), $this->_root_group->guid), 'ok');
+            
+            $_MIDCOM->relocate(''); 
+            // This will exit;           
+        }
+        else
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create root group, reason ".mgd_errstr());
+            // This will exit;
+        }
+    }
+
     function _handler_create ($handler_id, $args, &$data)
     {        
         if ($this->_config->get('system_lockdown') == 1)
@@ -485,6 +518,11 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     function _handler_index ($handler_id, $args, &$data)
     {
         $title = $this->_l10n_midcom->get('index');
+        
+        if (!$this->_root_group->guid)
+        {
+            return false;
+        }
         
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
 
