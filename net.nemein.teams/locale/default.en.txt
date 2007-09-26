@@ -47,6 +47,10 @@ Create team home
 Decline
 ---STRINGEND
 
+---STRING delete team %s
+Delete team %s
+---STRINGEND
+
 ---STRING has been accepted
 has been accepted
 ---STRINGEND
@@ -95,8 +99,20 @@ Remove team
 The system is currently in lockdown
 ---STRINGEND
 
+---STRING team introduction text
+Team introduction
+---STRINGEND
+
 ---STRING team is full
 Team is full at the moment
+---STRINGEND
+
+---STRING team logo
+Logo
+---STRINGEND
+
+---STRING team name
+Team name
 ---STRINGEND
 
 ---STRING teams
@@ -115,7 +131,7 @@ You have quit your team
 Your application to team
 ---STRINGEND
 
----STRING delete team %s
-Delete team %s
+---STRING team location
+Location
 ---STRINGEND
 
