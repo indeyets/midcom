@@ -596,12 +596,12 @@ function mgd_delete_extensions(&$object) {
 
 
 // This function will be available in Midgard 1.6.0
-if (!function_exists('mgd_get_snippet_by_path')) 
+if (!function_exists('mgd_get_snippet_by_path'))
 {
     /**
      * @ignore
      */
-    function mgd_get_snippet_by_path($path) 
+    function mgd_get_snippet_by_path($path)
     {
         $snippet = new midcom_baseclasses_database_snippet();
         $snippet->get_by_path($path);
@@ -912,7 +912,12 @@ function midcom_helper_get_mime_icon($mimetype, $fallback = '')
     $mime_fspath = MIDCOM_STATIC_ROOT . '/stock-icons/mime';
     $mime_urlpath = MIDCOM_STATIC_URL . '/stock-icons/mime';
     $mimetype_filename = str_replace('/', '-', $mimetype);
-
+    if (!is_readable($mime_fspath))
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Couldn't read directory {$mime_fspath}", MIDCOM_LOG_WARN);
+        debug_pop();
+    }
     $check_files = Array();
     $check_files[] = "{$mimetype_filename}.png";
     $check_files[] = "gnome-{$mimetype_filename}.png";
@@ -1036,7 +1041,7 @@ if (!function_exists('midcom_helper_toc_formatter'))
             echo mgd_format($data, 'h');
             return;
         }
-    
+
         $current_tag_level = false;
         $current_list_level = 1;
         echo "\n<ol class=\"midcom_helper_toc_formatter level_{$current_list_level}\">\n";
@@ -1083,10 +1088,10 @@ if (!function_exists('midcom_helper_toc_formatter'))
             $prefix = midcom_helper_toc_formatter_prefix($i-1);
             echo "{$prefix}</ol>\n";
         }
-    
+
         echo mgd_format($data, 'h');
     }
-    
+
     /**
      * Register the formatter as "toc", meaning that &(variable:xtoc); will filter through it
      */
