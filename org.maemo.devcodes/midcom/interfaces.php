@@ -27,7 +27,6 @@ class org_maemo_devcodes_interface extends midcom_baseclasses_components_interfa
         $this->_autoload_files = array
         (
             'viewer.php', 
-            'admin.php', 
             'navigation.php',
             'device.php',
             'code.php',
