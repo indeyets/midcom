@@ -90,48 +90,30 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         $data['team'] = new net_nemein_teams_team_dba($args[0]);
 
         if (isset($_POST['remove']))
-        {     
-            if (!empty($args[0]))
+        {
+            $team_group = new midcom_db_group($data['team']->groupguid);
+            $team_topic = new midcom_db_topic($data['team']->topicguid);
+        
+            $qb = midcom_db_member::new_query_builder();
+            $qb->add_constraint('gid', '=', $team_group->id);
+        
+            $members = $qb->execute();
+        
+            foreach ($members as $member)
             {
-                $qb = net_nemein_teams_team_dba::new_query_builder();
-                $qb->add_constraint('guid', '=', $args[0]);
+                $member->delete();
+            }
+        
+            $data['team']->delete();
+
+            $team_group->delete();
+
+            $team_topic->delete();
             
-                if (!$teams = $qb->execute())
-                {
-                
-                   // TODO: handle this
-                }
-                
-                if (count($teams) > 0)
-                {
-                    foreach ($teams as $team)
-                    {
-                        $team_group = new midcom_db_group($team->groupguid);
-                        $team_topic = new midcom_db_topic($team->topicguid);
-                    
-                        $qb = midcom_db_member::new_query_builder();
-                        $qb->add_constraint('gid', '=', $team_group->id);
-                    
-                        $members = $qb->execute();
-                    
-                        foreach ($members as $member)
-                        {
-                            $member->delete();
-                        }
-                    
-                        $team->delete();
-
-                        $team_group->delete();
-
-                        $team_topic->delete();
-                        
-                        $this->_logger->log("Team (" . $team_group->name . ") was deleted by "
-                            . $_MIDCOM->auth->user->_storage->username, $team->guid);
-                    
-                        $_MIDCOM->relocate('manage');
-                    }           
-                }      
-            }       
+            $this->_logger->log("Team (" . $team_group->name . ") was deleted by "
+                . $_MIDCOM->auth->user->_storage->username, $team->guid);
+        
+            $_MIDCOM->relocate('manage');
         }
         elseif (isset($_POST['cancel']))
         {

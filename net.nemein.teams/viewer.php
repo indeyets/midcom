@@ -402,8 +402,8 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
                 array
                 (
                     MIDCOM_TOOLBAR_URL => 'manage',
-                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('manage teams'),
-                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('manage teams'),
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('manage teams'),
+                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n->get('manage teams'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
                 )
             );

@@ -1,9 +1,50 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
+---CVS $Id$
 ---LANGUAGE en
+
+---STRING application
+Application
+---STRINGEND
+
+---STRING application declined by
+Application declined by
+---STRINGEND
 
 ---STRING application was accepted by
 Application was accepted by
+---STRINGEND
+
+---STRING apply to team
+Apply to team
+---STRINGEND
+
+---STRING approve
+Approve
+---STRINGEND
+
+---STRING back to teams
+Back to teams
+---STRINGEND
+
+---STRING cancel
+Cancel
+---STRINGEND
+
+---STRING confirm
+Confirm
+---STRINGEND
+
+---STRING create a team
+Create a team
+---STRINGEND
+
+---STRING create team home
+Create team home
+---STRINGEND
+
+---STRING decline
+Decline
 ---STRINGEND
 
 ---STRING has been accepted
@@ -14,78 +55,6 @@ has been accepted
 has been declined
 ---STRINGEND
 
----STRING your application to team
-Your application to team
----STRINGEND
-
----STRING application declined by
-Application declined by
----STRINGEND
-
----STRING decline
-Decline
----STRINGEND
-
----STRING you have quit your team
-You have quit your team
----STRINGEND
-
----STRING confirm
-Confirm
----STRINGEND
-
----STRING cancel
-Cancel
----STRINGEND
-
----STRING really quit?
-Really quit?
----STRINGEND
-
----STRING back to teams
-Back to teams
----STRINGEND
-
----STRING system lockdown
-The system is currently in lockdown
----STRINGEND
-
----STRING registered
-Registered
----STRINGEND
-
----STRING player
-Player
----STRINGEND
-
----STRING create a team
-Create a team
----STRINGEND
-
----STRING teams
-Teams
----STRINGEND
-
----STRING application
-Application
----STRINGEND
-
----STRING apply to team
-Apply to team
----STRINGEND
-
----STRING new application from %s
-New application from %s
----STRINGEND
-
----STRING teams list
-Teams list
----STRINGEND
-
----STRING create team home
-Create team home
----STRINGEND
-
 ---STRING manage team
 Manage team
 ---STRINGEND
@@ -94,22 +63,59 @@ Manage team
 Manage teams
 ---STRINGEND
 
----STRING remove team
-Remove team
----STRINGEND
-
----STRING really remove team
-Do you really want to remove this team
+---STRING new application from %s
+New application from %s
 ---STRINGEND
 
 ---STRING pending
 Pending
 ---STRINGEND
 
----STRING approve
-Approve
+---STRING player
+Player
+---STRINGEND
+
+---STRING really quit?
+Really quit?
+---STRINGEND
+
+---STRING really remove team
+Do you really want to remove this team
+---STRINGEND
+
+---STRING registered
+Registered
+---STRINGEND
+
+---STRING remove team
+Remove team
+---STRINGEND
+
+---STRING system lockdown
+The system is currently in lockdown
 ---STRINGEND
 
 ---STRING team is full
 Team is full at the moment
 ---STRINGEND
+
+---STRING teams
+Teams
+---STRINGEND
+
+---STRING teams list
+Teams list
+---STRINGEND
+
+---STRING you have quit your team
+You have quit your team
+---STRINGEND
+
+---STRING your application to team
+Your application to team
+---STRINGEND
+
+---STRING delete team %s
+Delete team %s
+---STRINGEND
+
