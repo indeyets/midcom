@@ -172,6 +172,11 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
             return false;
         }
         
+        if (!$this->_root_group->guid)
+        {
+            return false;
+        }
+        
         $members = 0;
     
         $qb = midcom_db_group::new_query_builder();
@@ -480,15 +485,8 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     function _handler_index ($handler_id, $args, &$data)
     {
         $title = $this->_l10n_midcom->get('index');
-        $tmp = Array();
-        $tmp[] = Array
-        (
-            MIDCOM_NAV_URL => "",
-            MIDCOM_NAV_NAME => $this->_topic->extra,
-        );
         
-        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
-        $_MIDCOM->set_pagetitle("{$this->_topic->extra} :: {$title}");
+        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
 
         return true;
     }

@@ -145,6 +145,17 @@ class org_openpsa_contacts_handler_buddy_list extends midcom_baseclasses_compone
                     {
                         $buddy->addChild($key, $value);
                     }
+                    
+                    $qb = midcom_db_member::new_query_builder();
+                    $qb->add_constraint('uid', '=', $person->id);
+                    $memberships = $qb->execute();
+                    foreach ($memberships as $membership)
+                    {
+                        $group = new org_openpsa_contacts_group($membership->gid);
+                        //$buddy->addChild('company', htmlentities($group->get_label(), ENT_NOQUOTES, 'UTF-8'));
+                        $buddy->addChild('company', str_replace('&', '&amp;', $group->get_label()));
+                        break;
+                    }
                 }
                 
                 echo $simplexml->asXml();
