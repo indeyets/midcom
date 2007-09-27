@@ -772,7 +772,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 $person = new midcom_db_person();
                 $person->get_by_id($member->uid);
                 
-                $this->_team_members[] = $person;
+                $this->_team_members[] =& $_MIDCOM->auth->get_user($member->uid);//$person;
             } 
         }
     
