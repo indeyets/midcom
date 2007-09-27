@@ -34,10 +34,19 @@ class net_nemein_favourites_handler_view extends midcom_baseclasses_components_h
         $data['qb'] =& $qb;
     	$qb->add_constraint('metadata.creator', '=', $this->_request_data['user']->guid);
     	$qb->add_constraint('bury', '=', false);
+    	$qb->add_order('objectType');
     	$qb->add_order('metadata.created', 'DESC');
         $qb->results_per_page = (int) $this->_config->get('favourites_per_page');
 
-        $this->_favourite_objects = $qb->execute();
+        $favs = $qb->execute();
+        foreach ($favs as $fav)
+        {
+            if (!isset($this->_favourite_objects[$fav->objectType]))
+            {
+                $this->_favourite_objects[$fav->objectType] = array();
+            }
+            $this->_favourite_objects[$fav->objectType][] = $fav;
+        }
   
         return true;
     }
@@ -45,12 +54,19 @@ class net_nemein_favourites_handler_view extends midcom_baseclasses_components_h
     function _show_view($handler_id, &$data) 
     {
         midcom_show_style('show_index_header');
-        $data['favourite_object'] = null;
 
-        foreach ($this->_favourite_objects as $favourite_object)
+        foreach ($this->_favourite_objects as $type => $favs)
         {
-    	    $data['favourite_object'] = $favourite_object;
-            midcom_show_style('show_index_item');
+            $data['type'] = $type;
+            midcom_show_style('show_type_header');
+            
+            foreach ($favs as $favourite_object)
+            {
+        	    $data['favourite_object'] = $favourite_object;
+                midcom_show_style('show_index_item');
+            }
+            
+            midcom_show_style('show_type_footer');
         }
 
     	midcom_show_style('show_index_footer');
