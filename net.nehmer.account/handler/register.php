@@ -489,32 +489,6 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
                 $this->_stage = 'success';
                 $form_stage_element->setValue('success');
 
-                /**
-                 * Ok, if the user is registering an account from invitation
-                 * we need to delete the corresponding invitation from db
-                 */
-                $session = new midcom_service_session();
-                if ($session->exists('invite_hash'))
-                {
-                    $hash = $session->get('invite_hash');
-                     
-                    if (isset($hash))
-                    {
-                        $qb = net_nehmer_accounts_invites_invite_dba::new_query_builder();
-                        $qb->add_constraint('hash', '=', $hash);
-                        $invites = $qb->execute();
-            
-                        foreach ($invites as $invite)
-                        {
-                            $invite->delete();
-            
-                            $this->_add_inviter_as_buddy($invite->buddy);
-                        }                 
-                    }
-                    
-                    $session->remove('invite_hash');
-                }
-
                 break;
 
             case 'edit':
@@ -777,7 +751,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         );
         
         // Generate the actication link
-        $activation_link = $_MIDCOM->get_page_prefix() . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "register/activate/{$this->_person->guid}/{$activation_hash}.html";
+        $activation_link = $_MIDCOM->get_host_name() . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "register/activate/{$this->_person->guid}/{$activation_hash}.html";
         
         $activation_link = str_replace("//","/", $activation_link);
         
@@ -808,6 +782,32 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         else
         {
             net_nehmer_account_viewer::send_registration_mail($this->_person, substr($password, 2), $activation_link, $this->_config);
+        }
+        
+        /**
+         * Ok, if the user is registering an account from invitation
+         * we need to delete the corresponding invitation from db
+         */
+        $session = new midcom_service_session();
+        if ($session->exists('invite_hash'))
+        {
+            $hash = $session->get('invite_hash');
+             
+            if (isset($hash))
+            {
+                $qb = net_nehmer_accounts_invites_invite_dba::new_query_builder();
+                $qb->add_constraint('hash', '=', $hash);
+                $invites = $qb->execute();
+    
+                foreach ($invites as $invite)
+                {
+                    $invite->delete();
+    
+                    $this->_add_inviter_as_buddy($invite->buddy);
+                }                 
+            }
+            
+            $session->remove('invite_hash');
         }
 
         $_MIDCOM->auth->drop_sudo();
