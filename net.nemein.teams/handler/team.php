@@ -972,6 +972,8 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
             {
                 $this->_request_data['view_team']['profile_url'] = "{$prefix}{$team->name}";
             }
+
+            $this->_request_data['team'] =& $team;
             
             midcom_show_style('teams_list_item');
 	    }
