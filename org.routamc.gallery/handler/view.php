@@ -196,8 +196,6 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
                     MIDCOM_TOOLBAR_ACCESSKEY => 'e',
                 )
             );
-            /*
-            // PONDER: should  this be just delete from this gallery (ie, use the censored property) ??
             $this->_view_toolbar->add_item
             (
                 array
@@ -210,7 +208,6 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
                     MIDCOM_TOOLBAR_ACCESSKEY => 'd',
                 )
             );
-            */
         }
         
         $_MIDCOM->bind_view_to_object($data['photo'], $this->_datamanager->schema->name);
