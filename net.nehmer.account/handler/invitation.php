@@ -105,7 +105,7 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
                 
         if (!$this->_mail->send())
         {
-            debug_add("Sending invitation email failed!");
+            debug_add("Sending invitation email failed: " . $this->_mail->_backend->error->getMessage(), MIDCOM_LOG_ERROR);
         }
         debug_pop();
     }
