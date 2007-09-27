@@ -204,7 +204,6 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
 
         $qb = net_nehmer_accounts_invites_invite_dba::new_query_builder();
         $qb->add_constraint('hash', '=', $hash);
-
         $invites = $qb->execute();
 
         /**
@@ -214,13 +213,14 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         {
             if ($current_time > ($invite->metadata->created + $keep_sent_invites * 86400))
             {
-                    $invite->delete();
+                $invite->delete();
+                continue;
             }
             
+            $data['invite'] = $invite;
         }
     
         $this->_sent_invites = $qb->execute();
-    
     
         if (isset($_POST['net_nehmer_account_register_invitation']))
         {
@@ -430,30 +430,29 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
     {
         if (!$_MIDCOM->componentloader->is_loaded('net.nehmer.buddylist'))
         {
-            if ($_MIDCOM->componentloader->load_graceful('net.nehmer.buddylist'))
-            {
-                $_MIDCOM->auth->require_valid_user();
-
-                // Setup.
-                $buddy_user = $_MIDCOM->auth->get_user($inviter_guid);
-                if (!$buddy_user)
-                {
-                    $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The user guid {$buddy_user} is unknown.");
-                }
+            $_MIDCOM->componentloader->load_graceful('net.nehmer.buddylist');
+        }
         
-                if (net_nehmer_buddylist_entry::is_on_buddy_list($buddy_user))
-                {
-                    $this->_processing_msg_raw = 'user already on your buddylist.';
-                }
-                else
-                {
-                    $entry = new net_nehmer_buddylist_entry();
-                    $entry->account = $_MIDCOM->auth->user->guid;
-                    $entry->buddy = $buddy_user->guid;
-                    $entry->isapproved = true;
-                    $entry->create();
-                    $this->_processing_msg_raw = 'buddy request sent.';
-                }
+        if (class_exists('net_nehmer_buddylist_entry'))
+        {
+            $buddy_user = $_MIDCOM->auth->get_user($inviter_guid);
+            if (!$buddy_user)
+            {
+                return;
+            }
+    
+            if (net_nehmer_buddylist_entry::is_on_buddy_list($buddy_user, $this->_person))
+            {
+                $this->_processing_msg_raw = 'user already on your buddylist.';
+            }
+            else
+            {
+                $entry = new net_nehmer_buddylist_entry();
+                $entry->account = $this->_person->guid;
+                $entry->buddy = $buddy_user->guid;
+                $entry->isapproved = true;
+                $entry->create();
+                $this->_processing_msg_raw = 'buddy added';
             }
         }
     }
@@ -494,22 +493,27 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
                  * Ok, if the user is registering an account from invitation
                  * we need to delete the corresponding invitation from db
                  */
-                 $session = new midcom_service_session();
-                 $hash = $session->get('invite_hash');
-                 
-                 if (isset($hash))
-                 {
-                     $qb = net_nehmer_accounts_invites_invite_dba::new_query_builder();
-                             $qb->add_constraint('hash', '=', $hash);
-                     $invites = $qb->execute();
-        
-                     foreach ($invites as $invite)
-                     {
-                                 $invite->delete();
-        
-                                 $this->_add_inviter_as_buddy($invite->buddy);
-                     }                 
-                 }
+                $session = new midcom_service_session();
+                if ($session->exists('invite_hash'))
+                {
+                    $hash = $session->get('invite_hash');
+                     
+                    if (isset($hash))
+                    {
+                        $qb = net_nehmer_accounts_invites_invite_dba::new_query_builder();
+                        $qb->add_constraint('hash', '=', $hash);
+                        $invites = $qb->execute();
+            
+                        foreach ($invites as $invite)
+                        {
+                            $invite->delete();
+            
+                            $this->_add_inviter_as_buddy($invite->buddy);
+                        }                 
+                    }
+                    
+                    $session->remove('invite_hash');
+                }
 
                 break;
 
@@ -585,10 +589,24 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
      */
     function _create_null_controller()
     {
+        $defaults = array();
+        $session = new midcom_service_session();
+        if ($session->exists('invite_hash'))
+        {
+            // Load data we got from the original invitation
+            $qb = net_nehmer_accounts_invites_invite_dba::new_query_builder();
+            $qb->add_constraint('hash', '=', $session->get('invite_hash'));
+            $invites = $qb->execute();
+            if (count($invites) > 0)
+            {
+                $defaults['email'] = $invites[0]->email;  
+            }
+        }
+    
         $this->_controller = midcom_helper_datamanager2_controller::create('nullstorage');
         $this->_controller->schemadb = $this->_schemadb;
         $this->_controller->schemaname = $this->_account_type;
-        $this->_controller->defaults = array();
+        $this->_controller->defaults = $defaults;
         $this->_controller->initialize();
         $this->_register_username_validation_rule($this->_controller);
     }
@@ -655,31 +673,31 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         }
 
         // Create the person object
-        $person = new midcom_db_person();
-        $person->lastname = 'Temporary net.nehmer.account record; ' . time();
+        $this->_person = new midcom_db_person();
+        $this->_person->lastname = 'Temporary net.nehmer.account record; ' . time();
         
         // Error handling
-        if (! $person->create())
+        if (! $this->_person->create())
         {
             $_MIDCOM->auth->drop_sudo();
 
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Failed to create a person record, last error was: ' . mgd_errstr(), MIDCOM_LOG_ERROR);
-            debug_print_r('Tried to create this record:', $person);
+            debug_print_r('Tried to create this record:', $this->_person);
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 'Failed to create a person record, last error was: ' . mgd_errstr());
             // This will exit.
         }
 
         // Set ownership and datamanager parameters
-        $person->unset_all_privileges();
-        $person->set_privilege('midgard:owner', "user:{$person->guid}");
-        $person->set_parameter('midcom.helper.datamanager2', 'schema_name', $this->_account_type);
+        $this->_person->unset_all_privileges();
+        $this->_person->set_privilege('midgard:owner', "user:{$this->_person->guid}");
+        $this->_person->set_parameter('midcom.helper.datamanager2', 'schema_name', $this->_account_type);
         
         // Create and initialize the DM2 controller instance
         $controller = midcom_helper_datamanager2_controller::create('simple');
         $controller->schemadb = $this->_schemadb;
-        $controller->set_storage($person, $this->_account_type);
+        $controller->set_storage($this->_person, $this->_account_type);
         $controller->initialize();
         
         $this->_register_username_validation_rule($controller);
@@ -693,8 +711,8 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
     
                 if ($this->_config->get('username_is_email'))
                 {
-                    $person->username = $person->email;
-                    $person->update();
+                    $this->_person->username = $this->_person->email;
+                    $this->_person->update();
                 }
                 
                 if ($this->_config->get('assign_to_group') != null)
@@ -704,7 +722,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
     
                     if ($group)
                     {
-                        $person->add_to_group($group->name);
+                        $this->_person->add_to_group($group->name);
                     }
                 }
                 break;
@@ -725,11 +743,11 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
                 // Ups. Something went really wrong here. We shouldn't end up in the edit mode here,
                 // unless something was tampered with. We bail out therefore and throw a critical
                 // error.
-                $person->delete();
+                $this->_person->delete();
                 $_MIDCOM->auth->drop_sudo();
     
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_print_r('Original person record we tried to update:', $person);
+                debug_print_r('Original person record we tried to update:', $this->_person);
                 debug_print_r('Request data passed to us:', $controller->formmanager->form->getSubmitValues());
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     "Failed to store the data into the newly created record, this indicates tampering with the request data");
@@ -752,44 +770,44 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         $activation_hash = md5
         (
               serialize(microtime())
-            . $person->username
+            . $this->_person->username
             . serialize($_MIDGARD)
             . $password
             . serialize($_SERVER)
         );
         
         // Generate the actication link
-        $activation_link = $_MIDCOM->get_page_prefix() . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "register/activate/{$person->guid}/{$activation_hash}.html";
+        $activation_link = $_MIDCOM->get_page_prefix() . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "register/activate/{$this->_person->guid}/{$activation_hash}.html";
         
         $activation_link = str_replace("//","/", $activation_link);
         
         // Store the information in parameters for activation
-        $person->set_parameter('net.nehmer.account', 'password', $password);
-        $person->set_parameter('net.nehmer.account', 'activation_hash', $activation_hash);
-        $person->set_parameter('net.nehmer.account', 'activation_hash_created', strftime('%Y-%m-%d', time()));
+        $this->_person->set_parameter('net.nehmer.account', 'password', $password);
+        $this->_person->set_parameter('net.nehmer.account', 'activation_hash', $activation_hash);
+        $this->_person->set_parameter('net.nehmer.account', 'activation_hash_created', strftime('%Y-%m-%d', time()));
 
         $session = new midcom_service_session();
         if ($session->exists('register_returnto'))
         {
-            $person->set_parameter('net.nehmer.account', 'activation_returnto',
+            $this->_person->set_parameter('net.nehmer.account', 'activation_returnto',
                 $session->remove('register_returnto'));
         }
         
         if ($this->_config->get('require_activation'))
         {
             // Set a parameter to note that this user account is requiring approval
-            $person->set_parameter('net.nehmer.account', 'require_approval', 'require_approval');
+            $this->_person->set_parameter('net.nehmer.account', 'require_approval', 'require_approval');
             
             // Store the activation link so that it can be fetched straight from the person record
-            $person->set_parameter('net.nehmer.account', 'activation_link', $activation_link);
+            $this->_person->set_parameter('net.nehmer.account', 'activation_link', $activation_link);
             
             // Send a message both to the applicant and to the configured administrator
-            $this->_send_activation_pending_mail($person);
-            $this->_send_activation_request_mail($person);
+            $this->_send_activation_pending_mail($this->_person);
+            $this->_send_activation_request_mail($this->_person);
         }
         else
         {
-            net_nehmer_account_viewer::send_registration_mail($person, substr($password, 2), $activation_link, $this->_config);
+            net_nehmer_account_viewer::send_registration_mail($this->_person, substr($password, 2), $activation_link, $this->_config);
         }
 
         $_MIDCOM->auth->drop_sudo();
@@ -801,15 +819,15 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
      * Send an email to the user waiting for approval
      * 
      * @access private
-     * @param midcom_db_person $person  The newly created person account
+     * @param midcom_db_person $this->_person  The newly created person account
      * @todo: Make this configurable (as well as method $this->_send_registration_mail)
      */
-    function _send_activation_pending_mail($person)
+    function _send_activation_pending_mail()
     {
         $from = $this->_config->get('activation_mail_sender');
         if (!$from)
         {
-            $from = $person->email;
+            $from = $this->_person->email;
         }
         
         $template = array
@@ -829,14 +847,14 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         $mail = new midcom_helper_mailtemplate($template);
         
         // Get the commonly used parameters
-        $parameters = net_nehmer_account_viewer::get_mail_parameters($person);
+        $parameters = net_nehmer_account_viewer::get_mail_parameters($this->_person);
         
         // Set the parameters and parse the message
         $mail->set_parameters($parameters);
         $mail->parse();
         
         // Finally send the email
-        return $mail->send($person->email);
+        return $mail->send($this->_person->email);
     }
     
     /**
@@ -847,12 +865,12 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
      * @param midcom_db_person   Person record
      * @return boolean           Indicating success
      */
-    function _send_activation_request_mail($person)
+    function _send_activation_request_mail()
     {
         $from = $this->_config->get('activation_mail_sender');
         if (!$from)
         {
-            $from = $person->email;
+            $from = $this->_person->email;
         }
         
         $template = array
@@ -875,8 +893,8 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         
         // Get the common parameters for net.nehmer.account mails
-        $parameters = net_nehmer_account_viewer::get_mail_parameters($person);
-        $parameters['APPROVALURI'] = "{$prefix}pending/{$person->guid}/";
+        $parameters = net_nehmer_account_viewer::get_mail_parameters($this->_person);
+        $parameters['APPROVALURI'] = "{$prefix}pending/{$this->_person->guid}/";
         
         // Set the parameters and parse the message
         $mail->set_parameters($parameters);

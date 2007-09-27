@@ -14,6 +14,7 @@
 'allow_publish' => true,
 'allow_view_by_username' => true, // the paranoid may want to disable this as it allows determining username validity
 'allow_socialweb' => true,
+'allow_invite' => true,
 
 // Add group id to automatically assign the user to it
 'assign_to_group' => null,
@@ -111,7 +112,7 @@
 /**
  * Invite email subject
  */
-'email_subject' => "invitation subject",
+'email_subject' => 'website invitation from %s',
 
 /**
  * Keep sent invites for x days

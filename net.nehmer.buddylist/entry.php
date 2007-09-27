@@ -70,7 +70,7 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
     function _get_buddy_qb($user)
     {
         $qb = net_nehmer_buddylist_entry::new_query_builder();
-        //$qb->add_constraint('account', '=', $user->guid);
+        $qb->add_constraint('account', '=', $user->guid);
         $qb->add_constraint('isapproved', '=', true);
         $qb->add_constraint('blacklisted', '=', false);
         return $qb;
@@ -97,7 +97,7 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
             $_MIDCOM->auth->require_valid_user();
             $user =& $_MIDCOM->auth->user;
         }
-
+        
         $qb = net_nehmer_buddylist_entry::_get_buddy_qb($user);
         $buddies = $qb->execute();
 
@@ -372,13 +372,17 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
      * @param midcom_core_user $user The user to check for.
      * @return bool True, if the user already is on your buddy list.
      */
-    function is_on_buddy_list(&$user)
+    function is_on_buddy_list(&$buddy, $user = null)
     {
-        $_MIDCOM->auth->require_valid_user();
+        if ($user === null)
+        {
+            $_MIDCOM->auth->require_valid_user();
+            $user =& $_MIDCOM->auth->user;
+        }
 
         $qb = net_nehmer_buddylist_entry::new_query_builder();
-        $qb->add_constraint('account', '=', $_MIDCOM->auth->user->guid);
-        $qb->add_constraint('buddy', '=', $user->guid);
+        $qb->add_constraint('account', '=', $user->guid);
+        $qb->add_constraint('buddy', '=', $buddy->guid);
         if ($qb->count_unchecked())
         {
             return true;

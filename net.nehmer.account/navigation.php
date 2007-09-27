@@ -39,10 +39,10 @@ class net_nehmer_account_navigation extends midcom_baseclasses_components_naviga
                         MIDCOM_NAV_NAME => $this->_l10n->get('account registration'),
                     ),
                     MIDCOM_NAV_ADMIN => null,
-                    MIDCOM_META_CREATOR => $this->_topic->creator,
-                    MIDCOM_META_EDITOR => $this->_topic->revisor,
-                    MIDCOM_META_CREATED => $this->_topic->created,
-                    MIDCOM_META_EDITED => $this->_topic->revised
+                    MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
+                    MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
+                    MIDCOM_META_CREATED => $this->_topic->metadata->created,
+                    MIDCOM_META_EDITED => $this->_topic->metadata->revised
                 );
             }
             $leaves[NET_NEHMER_ACCOUNT_LEAFID_LOSTPASSWORD] = array
@@ -53,10 +53,10 @@ class net_nehmer_account_navigation extends midcom_baseclasses_components_naviga
                     MIDCOM_NAV_NAME => $this->_l10n->get('lost password'),
                 ),
                 MIDCOM_NAV_ADMIN => null,
-                MIDCOM_META_CREATOR => $this->_topic->creator,
-                MIDCOM_META_EDITOR => $this->_topic->revisor,
-                MIDCOM_META_CREATED => $this->_topic->created,
-                MIDCOM_META_EDITED => $this->_topic->revised
+                MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
+                MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
+                MIDCOM_META_CREATED => $this->_topic->metadata->created,
+                MIDCOM_META_EDITED => $this->_topic->metadata->revised
             );
         }
 
@@ -80,10 +80,10 @@ class net_nehmer_account_navigation extends midcom_baseclasses_components_naviga
                     MIDCOM_NAV_NAME => $this->_l10n->get('pending approvals') . " ({$count})",
                 ),
                 MIDCOM_NAV_ADMIN => null,
-                MIDCOM_META_CREATOR => $this->_topic->creator,
-                MIDCOM_META_EDITOR => $this->_topic->revisor,
-                MIDCOM_META_CREATED => $this->_topic->created,
-                MIDCOM_META_EDITED => $this->_topic->revised
+                MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
+                MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
+                MIDCOM_META_CREATED => $this->_topic->metadata->created,
+                MIDCOM_META_EDITED => $this->_topic->metadata->revised
             );
         }
         

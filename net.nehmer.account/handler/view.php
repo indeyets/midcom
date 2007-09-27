@@ -262,6 +262,19 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                     )
                 );
             }
+
+            if ($this->_config->get('allow_invite'))
+            {
+                $this->person_toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "invite/",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('import contacts'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail-send.png',
+                    )
+                );
+            }
         
             if ($this->_config->get('allow_socialweb'))
             {
