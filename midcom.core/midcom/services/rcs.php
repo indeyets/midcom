@@ -79,7 +79,7 @@ class midcom_services_rcs extends midcom_baseclasses_core_object
             || !method_exists($handler, 'update'))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_print_r('RCS: Could not load handler! Object is', $object);
+            debug_add('Could not load handler!');
             debug_pop();
             return false;
         }
@@ -87,8 +87,7 @@ class midcom_services_rcs extends midcom_baseclasses_core_object
             && $this->config->use_rcs()) 
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_print_r('RCS: Could not save file! Object is', $object);
-            debug_print_r('RCS: Could not save file! Handler is', $handler);
+            debug_add('RCS: Could not save file!');
             debug_pop();
             return false;
         }
