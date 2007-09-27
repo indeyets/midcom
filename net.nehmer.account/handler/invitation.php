@@ -87,6 +87,11 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
         /**
          * Sending invitations
          */
+        if (!$_MIDCOM->auth->user->_storage->email)
+        {
+            $_MIDCOM->auth->user->_storage->email = "webmaster@{$_SERVER['HTTP_HOST']}";
+        }
+         
         debug_push_class(__CLASS__, __FUNCTION__);         
         debug_add("Sending email to {$email}, {$name}");
         $this->_mail = new org_openpsa_mail();
