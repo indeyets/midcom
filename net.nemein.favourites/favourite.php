@@ -25,7 +25,7 @@ class net_nemein_favourites_favourite_dba extends __net_nemein_favourites_favour
      */
     function get_parent_guid_uncached()
     {
-        return $this->objectGuid;
+        return $this->metadata->creator;
     }
 
     /**

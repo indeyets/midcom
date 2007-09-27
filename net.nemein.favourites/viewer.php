@@ -48,11 +48,24 @@ class net_nemein_favourites_viewer extends midcom_baseclasses_components_request
 
     function _on_handle($handler_id, $args)
     {
-        $_MIDCOM->auth->require_valid_user();
+        if ($this->_config->get('user'))
+        {
+            $this->_request_data['user'] = $_MIDCOM->auth->get_user('user:' . $this->_config->get('user'));
+            if (!$this->_request_data['user'])
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'No user found for this buddy list.');
+                // This will exit.
+            }
+        }
+        else
+        {
+            $_MIDCOM->auth->require_valid_user();
+            $this->_request_data['user'] = $_MIDCOM->auth->user;
+        }
 	
-	$this->_content_topic = new midcom_db_topic($this->_topic->id);
+    	$this->_content_topic = new midcom_db_topic($this->_topic->id);
 
-	return true;
+    	return true;
     }
     
     function get_add_link($objectType, $guid, $url = '', $link_for_anonymous = true)

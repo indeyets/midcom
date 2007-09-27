@@ -32,7 +32,7 @@ class net_nemein_favourites_handler_view extends midcom_baseclasses_components_h
         // Getting favourite objects for the current user
         $qb = new org_openpsa_qbpager('net_nemein_favourites_favourite_dba', 'net_nemein_favourites');
         $data['qb'] =& $qb;
-    	$qb->add_constraint('metadata.creator', '=', $_MIDCOM->auth->user->guid);
+    	$qb->add_constraint('metadata.creator', '=', $this->_request_data['user']->guid);
     	$qb->add_constraint('bury', '=', false);
     	$qb->add_order('metadata.created', 'DESC');
         $qb->results_per_page = (int) $this->_config->get('favourites_per_page');

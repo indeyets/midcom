@@ -26,6 +26,7 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
 
     function _handler_create($handler_id, $args, &$data)
     {
+        $_MIDCOM->auth->require_valid_user();
         $guid = $args[1];
     	$objectType = $args[0];
     	$objectType_eval = $args[0] . "()";

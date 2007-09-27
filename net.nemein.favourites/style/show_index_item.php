@@ -1,5 +1,6 @@
 <?php
 $favourite_object = $data['favourite_object'];
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
     <li class="net_nemein_favourites_list_item net_nemein_favourites_type_<?php echo $favourite_object->objectType; ?>" 
         id="<?php echo $favourite_object->objectGuid; ?>" >
@@ -19,7 +20,7 @@ $favourite_object = $data['favourite_object'];
         <?php
         if ($data['favourite_object']->can_do('midgard:delete'))
         {
-            echo " <a href=\"delete/{$favourite_object->guid}.html\" title=\"{$data['l10n']->get('delete')}\">";
+            echo " <a href=\"{$prefix}delete/{$favourite_object->guid}/\" title=\"{$data['l10n']->get('delete')}\">";
             echo "<img style=\"border: 0px;\" src=\"/midcom-static/stock-icons/16x16/trash.png\" alt=\"delete\"/>";
             echo "</a>";
         }
