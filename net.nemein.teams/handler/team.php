@@ -511,7 +511,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
             $_MIDCOM->uimessages->add(
                 $this->_l10n->get('net.nemein.teams'),
-                $this->_l10n->get('application sended to teams manager')
+                $this->_l10n->get('application sent to teams manager')
             );
              
             $_MIDCOM->relocate('');
