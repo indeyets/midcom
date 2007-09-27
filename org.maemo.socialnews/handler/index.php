@@ -44,7 +44,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         return $this->nodes[$node_id];
     }
     
-    private function determine_score($id, $timestamp)
+    private function get_initial_score($id)
     {
         $score = 0;
         $sc = org_maemo_socialnews_score_article_dba::new_collector('article', $id);
@@ -55,7 +55,11 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         {
             $score = $sc->get_subkey($guid, 'score');
         }
-        
+        return $score;
+    }
+    
+    private function count_age($score, $timestamp)
+    {        
         $article_age = round((time() - $timestamp) / 3600);
         return $score - ($article_age * $this->_config->get('frontpage_score_hour_penalty'));
     }
@@ -73,8 +77,13 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         $articles = $qb->execute();
         foreach ($articles as $article)
         {
+            $initial_score = $this->get_initial_score($article->id);
+            if ($initial_score < $this->_config->get('frontpage_score_start'))
+            {
+                continue;
+            }
             $articles_by_guid[$article->guid] = $article;
-            $this->articles_scores[$article->guid] = $this->determine_score($article->id, $article->metadata->published);
+            $this->articles_scores[$article->guid] = $this->count_age($initial_score, $article->metadata->published);
         }
         
         arsort($this->articles_scores);
