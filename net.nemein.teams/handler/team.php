@@ -1036,7 +1036,9 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         {
             $this->_request_data['view_team']['profile_url'] = "{$prefix}{$this->_current_team->name}/";
         }
-        
+
+        $_MIDCOM->bind_view_to_object($this->_current_team, $this->_request_data['datamanager']->schema->name);        
+        $_MIDCOM->set_26_request_metadata($this->_current_team->metadata->revised, $this->_current_team->guid);
         return true;
     }
     function _show_view($handler_id, &$data)

@@ -27,7 +27,6 @@ class net_nemein_teams_interface extends midcom_baseclasses_components_interface
         $this->_autoload_files = array
         (
             'viewer.php', 
-            //'admin.php', 
             'navigation.php',
 	        'log.php',
 	        'logger.php',
@@ -40,8 +39,19 @@ class net_nemein_teams_interface extends midcom_baseclasses_components_interface
         (
             'midcom.helper.datamanager2',
             'org.openpsa.qbpager',
-            //'net.nehmer.mail',
         );
+    }
+    
+    function _on_resolve_permalink($topic, $config, $guid)
+    {
+        $team = new net_nemein_teams_team_dba($guid);
+        if (   ! $team
+            || ! $team->guid)
+        {
+            return null;
+        }
+
+        return "team/{$team->name}/view/";
     }
 }
 ?>
