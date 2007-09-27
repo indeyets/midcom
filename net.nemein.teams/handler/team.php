@@ -439,6 +439,44 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	    return true;
     }
 
+    function _handler_edit($handler_id, $args, &$data)
+    {        
+        if ($this->_config->get('system_lockdown') == 1)
+        {
+            $_MIDCOM->relocate('lockdown');
+        }    
+        
+        $_MIDCOM->auth->require_valid_user();
+        $this->_current_team->require_do('midgard:update');
+    
+        $title = sprintf($this->_l10n_midcom->get('edit %s'), $this->_current_team_group->name);
+        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
+        
+        $this->_load_schemadb();
+	    $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
+	    $this->_controller->schemadb =& $this->_schemadb;
+        $this->_controller->set_storage($this->_current_team);
+	    if (! $this->_controller->initialize())
+	    {   
+	        $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");
+	        // This will exit.
+	    }
+
+        $this->_content_topic->require_do('midgard:create');
+
+        switch ($this->_controller->process_form())
+        {
+	        case 'save':        
+            case 'cancel':
+                $_MIDCOM->relocate("team/{$this->_current_team->name}/view/");
+	             // This will exit.
+        }
+
+	    $this->_prepare_request_data();
+
+	    return true;
+    }
+
     function _handler_application ($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -968,6 +1006,13 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         midcom_show_style('team_creation_form');
     }
     
+    function _show_edit($handler_id, &$data)
+    {
+        $this->_request_data['controller'] = $this->_controller;
+        
+        midcom_show_style('team_edit_form');
+    }
+    
     function _show_create_profile($handler_id, &$data)
     {
         $_MIDCOM->relocate('');
@@ -1103,6 +1148,17 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 );
                 
                 break;
+            case 'edit':
+                $this->_current_action = 'edit';
+                $this->_handler_edit($handler_id, $args, &$data);
+                
+                $tmp[] = Array
+                (
+                    MIDCOM_NAV_URL => "team/{$this->_current_team->name}/edit/",
+                    MIDCOM_NAV_NAME => $this->_l10n_midcom->get('edit'),
+                );
+                
+                break;
             case 'view':
                 $this->_current_action = 'view';
                 $this->_handler_view($handler_id, $args, &$data);
@@ -1111,6 +1167,19 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 //TODO: Notify user with growl. (Action not found)
                 $_MIDCOM->relocate('');
                 //This will exit
+        }
+
+        if ($this->_current_team->can_do('midgard:update'))
+        {
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "team/{$this->_current_team->name}/edit/",
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                )
+            );
         }
 
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
@@ -1133,6 +1202,9 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 break;
             case 'members':
                 $this->_show_team_members($handler_id, &$data);
+                break;
+            case 'edit':
+                $this->_show_edit($handler_id, &$data);
                 break;
             case 'view':
                 $this->_show_view($handler_id, &$data);
