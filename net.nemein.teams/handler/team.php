@@ -447,7 +447,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         }    
         
         $_MIDCOM->auth->require_valid_user();
-        $this->_current_team->require_do('midgard:update');
+        $this->_current_team_group->require_do('midgard:update');
     
         $title = sprintf($this->_l10n_midcom->get('edit %s'), $this->_current_team_group->name);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
@@ -455,7 +455,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         $this->_load_schemadb();
 	    $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
 	    $this->_controller->schemadb =& $this->_schemadb;
-        $this->_controller->set_storage($this->_current_team);
+        $this->_controller->set_storage($this->_current_team_group);
 	    if (! $this->_controller->initialize())
 	    {   
 	        $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");
