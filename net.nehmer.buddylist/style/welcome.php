@@ -108,6 +108,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
     </table>
     </form>
     <?php
+    $data['qb']->show_pages();
 }
 else
 {

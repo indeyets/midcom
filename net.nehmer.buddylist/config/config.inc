@@ -8,3 +8,5 @@
 
 // Make the buddy list show buddies of a specific person
 'user' => null,
+
+'buddies_per_page' => 20,

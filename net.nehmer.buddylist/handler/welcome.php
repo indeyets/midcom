@@ -21,7 +21,7 @@ class net_nehmer_buddylist_handler_welcome extends midcom_baseclasses_components
      * @var Array
      * @access protected
      */
-    var $_buddies = null;
+    var $_buddies = array();
 
     /**
      * A listing of meta-information for the current buddylist, indexed by the username,
@@ -63,7 +63,21 @@ class net_nehmer_buddylist_handler_welcome extends midcom_baseclasses_components
      */
     function _handler_welcome($handler_id, $args, &$data)
     {   
-        $this->_buddies = net_nehmer_buddylist_entry::list_buddies($data['user']);
+
+        $qb = new org_openpsa_qbpager('net_nehmer_buddylist_entry', 'net_nehmer_buddylist');
+        $data['qb'] =& $qb;
+        $qb->results_per_page = $this->_config->get('buddies_per_page');
+        $qb->add_constraint('account', '=', $data['user']->guid);
+        $qb->add_constraint('isapproved', '=', true);
+        $qb->add_constraint('blacklisted', '=', false);
+        $buddies = $qb->execute();
+        
+        foreach ($buddies as $buddy)
+        {
+            $user =& $buddy->get_buddy_user();
+            $this->_buddies[$user->username] =& $user;
+        }
+        
         $this->_prepare_buddies_meta();
 
         $this->_prepare_request_data();
