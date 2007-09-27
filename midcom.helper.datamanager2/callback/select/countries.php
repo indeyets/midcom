@@ -18,9 +18,7 @@
  * @package net.nehmer.account
  */
 
-//require_once MIDCOM_ROOT . '/org/routamc/positioning/country.php';
-
-$_MIDCOM->componentloader->load_graceful('org.routamc.positioning');
+$_MIDCOM->load_library('org.routamc.positioning');
 
 class midcom_helper_datamanager2_callback_select_countries extends midcom_baseclasses_components_purecode
 {
