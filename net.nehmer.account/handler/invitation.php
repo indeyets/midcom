@@ -50,95 +50,101 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
     /**
      * Adds a buddy
      */
- function _add_as_buddy($buddy_user_guid)
- {
-     if (!$_MIDCOM->componentloader->is_loaded('net.nehmer.buddylist'))
+     function _add_as_buddy($buddy_user_guid)
      {
-         if ($_MIDCOM->componentloader->load_graceful('net.nehmer.buddylist'))
+         if (!$_MIDCOM->componentloader->is_loaded('net.nehmer.buddylist'))
          {
-             $_MIDCOM->auth->require_valid_user();
-
-             // Setup.
-             $buddy_user =& $_MIDCOM->auth->get_user($buddy_user_guid);
-             if (!$buddy_user)
+             if ($_MIDCOM->componentloader->load_graceful('net.nehmer.buddylist'))
              {
-                 //$_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The user guid {$buddy_user} is unknown.");
-                 debug_add("The user guid {$buddy_user} is unknown.");
-             }
-
-             if (net_nehmer_buddylist_entry::is_on_buddy_list($buddy_user))
-             {
-                 $this->_processing_msg_raw = 'user already on your buddylist.';
-             }
-             else
-             {
-                 $entry = new net_nehmer_buddylist_entry();
-                 $entry->account = $_MIDCOM->auth->user->guid;
-                 $entry->buddy = $buddy_user->guid;
-                 $entry->create();
-                 $this->_processing_msg_raw = 'buddy request sent.';
+                 $_MIDCOM->auth->require_valid_user();
+    
+                 // Setup.
+                 $buddy_user =& $_MIDCOM->auth->get_user($buddy_user_guid);
+                 if (!$buddy_user)
+                 {
+                     //$_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The user guid {$buddy_user} is unknown.");
+                     debug_add("The user guid {$buddy_user} is unknown.");
+                 }
+    
+                 if (net_nehmer_buddylist_entry::is_on_buddy_list($buddy_user))
+                 {
+                     $this->_processing_msg_raw = 'user already on your buddylist.';
+                 }
+                 else
+                 {
+                     $entry = new net_nehmer_buddylist_entry();
+                     $entry->account = $_MIDCOM->auth->user->guid;
+                     $entry->buddy = $buddy_user->guid;
+                     $entry->create();
+                     $this->_processing_msg_raw = 'buddy request sent.';
+                 }
              }
          }
      }
- }
 
-    function _send_email_invitation($email, $name=false)
+    function _send_email_invitation($email, $name='')
     {
-    /**
-	 * Sending invitations
-	 */
-	 debug_add("Sending email to {$email}, {$name}");
-	 $this->_mail = new org_openpsa_mail();
-	 $this->_mail->to = $email;
-	 $this->_mail->from = $_MIDCOM->auth->user->_storage->email;
-	 $this->_mail->subject = $this->_l10n->get($this->_config->get('email_subject'));
-	 // This may be a hack, but it allows us tons more control in rendering the email
-	 $_MIDCOM->style->enter_context(0);
-	 $this->_request_data['sender_username'] = $_MIDCOM->auth->user->_storage->username;
-	 $this->_request_data['user_message'] = $this->_user_defined_message;
-	 ob_start();
-	 midcom_show_style('invitation-email-body');
-	 $this->_mail->body = ob_get_contents();
-	 ob_end_clean();
-	 $_MIDCOM->style->leave_context();
-	 debug_pop();
-	        
-	 if (!$this->_mail->send())
-	 {
-	     debug_add("Sending invitation email failed!");
-	 }
+        /**
+         * Sending invitations
+         */
+        debug_push_class(__CLASS__, __FUNCTION__);         
+        debug_add("Sending email to {$email}, {$name}");
+        $this->_mail = new org_openpsa_mail();
+        $this->_mail->to = $email;
+        $this->_mail->from = $_MIDCOM->auth->user->_storage->email;
+        $this->_mail->subject = $this->_l10n->get($this->_config->get('email_subject'));
+        // This may be a hack, but it allows us tons more control in rendering the email
+        $_MIDCOM->style->enter_context(0);
+        $this->_request_data['sender_username'] = $_MIDCOM->auth->user->_storage->username;
+        $this->_request_data['user_message'] = $this->_user_defined_message;
+        ob_start();
+        midcom_show_style('invitation-email-body');
+        $this->_mail->body = ob_get_contents();
+        ob_end_clean();
+        $_MIDCOM->style->leave_context();
+                
+        if (!$this->_mail->send())
+        {
+            debug_add("Sending invitation email failed!");
+        }
+        debug_pop();
     }
 
     function _handler_remind_invite($handler_id, $args, &$data)
     {
         $this->_request_data['hash'] = $args[0];
-        $this->_send_email_invitation();
+        
+        $qb = net_nehmer_accounts_invites_invite_dba::new_query_builder();
+        $qb->add_constraint('hash', '=', $args[0]);
+    
+        $invites = $qb->execute();
+        foreach ($invites as $invite)
+        {
+            $this->_send_email_invitation($invite->email);
+        }
 
         $_MIDCOM->relocate('sent_invites');
 
         return true;
     }
-    function _show_remind_invite($handler_id, &$data)
-    {
-
-    }
 
     function _handler_delete_invite($handler_id, $args, &$data)
     {
         $qb = net_nehmer_accounts_invites_invite_dba::new_query_builder();
-	$qb->add_constraint('hash', '=', $args[0]);
-
-	$invites = $qb->execute();
-
-	foreach($invites as $invite)
-	{
+        $qb->add_constraint('hash', '=', $args[0]);
+    
+        $invites = $qb->execute();
+    
+        foreach($invites as $invite)
+        {
             $invite->delete();
-	}
-
-	$_MIDCOM->relocate('sent_invites');
+        }
+    
+        $_MIDCOM->relocate('sent_invites');
 
         return true;
     }
+    
     function _show_delete_invite($handler_id, &$data)
     {
 
@@ -207,7 +213,8 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
 
                     $this->_request_data['hash'] = $this->_invite->hash;
 
-                    $this->_send_email_invitation(
+                    $this->_send_email_invitation
+                    (
                         $_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"],
                         $_POST["net_nehmer_accounts_invitation_invitee_name_{$i}"]
                     );
@@ -225,6 +232,16 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
 	        $this->_request_data['skip_url'] = "{$prefix}{$step_overrides['invite']}";
 	    }
 	    
+        $_MIDCOM->set_pagetitle($this->_l10n->get('import contacts'));
+        $tmp = Array();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => 'invite/',
+            MIDCOM_NAV_NAME => $this->_l10n->get('import contacts'),
+        );
+
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        	    
         return true;
     }
 
