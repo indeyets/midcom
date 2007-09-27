@@ -342,7 +342,7 @@ class org_openpsa_contacts_interface extends midcom_baseclasses_components_inter
         {
             // We have the Microformats parsing hKit available, see if the page includes a hCard
             $hkit = new hKit();
-            $hcards = $hkit->getByURL('hcard', $url);
+            $hcards = @$hkit->getByURL('hcard', $url);
             if (   is_array($hcards)
                 && count($hcards) > 0)
             {
