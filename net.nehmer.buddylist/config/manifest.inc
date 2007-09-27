@@ -40,6 +40,9 @@
       'midcom' => 
       array (
       ),
+      'org.openpsa.qbpager' => 
+      array (
+      ),
     ),
   ),
   'state' => 'beta',

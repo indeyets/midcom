@@ -63,7 +63,7 @@ class net_nehmer_buddylist_handler_welcome extends midcom_baseclasses_components
      */
     function _handler_welcome($handler_id, $args, &$data)
     {   
-
+        $_MIDCOM->load_library('org.openpsa.qbpager');
         $qb = new org_openpsa_qbpager('net_nehmer_buddylist_entry', 'net_nehmer_buddylist');
         $data['qb'] =& $qb;
         $qb->results_per_page = $this->_config->get('buddies_per_page');
