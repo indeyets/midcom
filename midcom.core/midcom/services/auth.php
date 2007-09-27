@@ -2272,6 +2272,17 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             return;
         }
 
+        if (!method_exists($class, 'get_class_magic_default_privileges'))
+        {
+            $this->_default_magic_class_privileges[$loadable_class] = array
+            (
+                'EVERYONE' => array(),
+                'ANONYMOUS' => array(),
+                'USERS' => array()
+            );
+            return;
+        }
+        
         $privs = $class->get_class_magic_default_privileges();
         $this->_default_magic_class_privileges[$loadable_class] = $privs;
 

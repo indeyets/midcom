@@ -2,7 +2,10 @@
 'purecode' => true,
 'version' => '2.0.0beta1',
 'state' => 'devel',
-'privileges' => array(),
+'privileges' => array
+(
+    'access' => MIDCOM_PRIVILEGE_DENY,
+),
 'class_definitions' => array(),
 /**
  * This is used by the PEAR packaging.

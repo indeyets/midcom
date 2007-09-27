@@ -23,7 +23,8 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
     function get_plugin_handlers()
     {
         $_MIDCOM->load_library('midgard.admin.asgard');
-        $_MIDCOM->auth->require_valid_user();
+        $_MIDCOM->auth->require_user_do('midgard.admin.asgard:access', null, 'midgard_admin_asgard_plugin');
+        
         return array
         (
             /**
