@@ -59,6 +59,10 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
 
         $this->_component = 'net.nemein.rss';
         
+        if (!isset($GLOBALS['midcom_component_data'][$this->_node->component]))
+        {
+            $_MIDCOM->componentloader->load_graceful($this->_node->component);
+        }
         $this->_node_config = $GLOBALS['midcom_component_data'][$this->_node->component]['config'];
         
         parent::midcom_baseclasses_components_purecode();
