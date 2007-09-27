@@ -992,6 +992,13 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         
         $this->_load_datamanager($this->_current_team_group);
         $this->_request_data['datamanager'] =& $this->_datamanager;
+
+        $this->_request_data['team_logo'] = false;
+        $logo = $this->_request_data['datamanager']->types['team_logo']->attachments_info;
+        if ($logo)
+        {
+            $this->_request_data['team_logo'] =& $logo;
+        }
         
         $this->_request_data['view_team'] = $this->_request_data['datamanager']->get_content_html();
         $this->_request_data['view_team']['member_count'] = $member_count;
@@ -999,7 +1006,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         $this->_request_data['view_team']['description'] = $this->_current_team_group->get_parameter('midcom.helper.datamanager2','team_description');
         $this->_request_data['view_team']['location'] = $this->_current_team_group->get_parameter('midcom.helper.datamanager2','team_location');
         $this->_request_data['view_team']['is_recruiting'] = false;
-        	        	        
+
         if (   $member_count < $this->_config->get('max_players_per_team')
             && $is_recruiting)
         {
