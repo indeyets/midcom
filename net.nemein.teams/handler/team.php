@@ -1048,31 +1048,53 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
             $_MIDCOM->relocate('');
         }
         
+        $tmp = Array();
+
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "{$this->_current_team->name}/",
+            MIDCOM_NAV_NAME => $this->_current_team_group->name,
+        );
+        
         switch ($args[1])
         {
             case 'application':
                 $this->_current_action = 'application';
                 $this->_handler_application($handler_id, $args, &$data);
+                
+                $tmp[] = Array
+                (
+                    MIDCOM_NAV_URL => "team/{$this->_current_team->name}/application/",
+                    MIDCOM_NAV_NAME => sprintf($this->_l10n->get('apply to %s'), $this->_current_team_group->name),
+                );
+                
                 break;
             case 'pending':
                 $this->_current_action = 'pending';
                 $this->_handler_pending($handler_id, $args, &$data);
-                break;
-            case 'create':
-                if (   isset($args[2])
-                    && $args[2] == 'profile')
-                {
-                    $this->_current_action = 'create_profile';
-                    $this->_handler_create_profile($handler_id, $args, &$data);
-                }
+                
+                $tmp[] = Array
+                (
+                    MIDCOM_NAV_URL => "team/{$this->_current_team->name}/pending/",
+                    MIDCOM_NAV_NAME => $this->_l10n->get('process pending applications'),
+                );
+                
                 break;
             case 'create_profile':
                 $this->_current_action = 'create_profile';
                 $this->_handler_create_profile($handler_id, $args, &$data);
+                
                 break;
             case 'members':
                 $this->_current_action = 'members';
                 $this->_handler_team_members($handler_id, $args, &$data);
+                
+                $tmp[] = Array
+                (
+                    MIDCOM_NAV_URL => "team/{$this->_current_team->name}/members/",
+                    MIDCOM_NAV_NAME => $this->_l10n->get('members'),
+                );
+                
                 break;
             case 'view':
                 $this->_current_action = 'view';
@@ -1083,6 +1105,8 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 $_MIDCOM->relocate('');
                 //This will exit
         }
+
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         
         return true;
     }
@@ -1148,24 +1172,6 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
             );
             $_MIDCOM->relocate('');
         }
-    }
-    
-    /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
-     * location.
-     *
-     */
-    function _update_breadcrumb_line()
-    {
-        $tmp = Array();
-
-        $tmp[] = Array
-        (
-            MIDCOM_NAV_URL => "/",
-            MIDCOM_NAV_NAME => $this->_l10n->get('index'),
-        );
-
-        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
 }
 ?>
