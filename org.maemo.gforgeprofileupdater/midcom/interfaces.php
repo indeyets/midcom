@@ -41,7 +41,7 @@ class org_maemo_gforgeprofileupdater_interface extends midcom_baseclasses_compon
     function _on_initialize()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        include_once('SOAP/Client.php');
+        @include_once('SOAP/Client.php');
         if (!class_exists('SOAP_Client'))
         {
             debug_add('Could not load PEAR SOAP client, aborting');
