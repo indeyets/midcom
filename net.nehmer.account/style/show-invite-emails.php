@@ -15,16 +15,18 @@ $total_contacts = 0;
 <h2><?php echo $data['l10n']->get("import contacts"); ?></h2>
 
 <?php
-$_MIDCOM->componentloader->load('com.magnettechnologies.contactgrabber');
-$crabber = new com_magnettechnologies_contactgrabber();
-$crabber_contacts = $crabber->_crab_contacts();
-
-if (is_array($crabber_contacts))
+if ($_MIDCOM->load_library('com.magnettechnologies.contactgrabber'))
 {
-    foreach($crabber_contacts['name'] as $key => $name)
-    { 
-        $contacts[$key]['name'] = $name;
-        $contacts[$key]['email'] = $crabber_contacts['email'][$key];
+    $crabber = new com_magnettechnologies_contactgrabber();
+    $crabber_contacts = $crabber->grab_contacts();
+
+    if (is_array($crabber_contacts))
+    {
+        foreach($crabber_contacts['name'] as $key => $name)
+        { 
+            $contacts[$key]['name'] = $name;
+            $contacts[$key]['email'] = $crabber_contacts['email'][$key];
+        }
     }
 }
 

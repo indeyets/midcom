@@ -29,11 +29,6 @@ class com_magnettechnologies_contactgrabber_interface extends midcom_baseclasses
         (
             'contactgrabber.php', 
         );
-        
-        // Load all libraries used by component here
-        $this->_autoload_libraries = array
-        (
-        );
     }
 
 }

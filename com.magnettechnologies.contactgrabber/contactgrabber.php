@@ -58,7 +58,9 @@ class com_magnettechnologies_contactgrabber extends midcom_baseclasses_component
 
     function _create_resource_object()
     {
-        if((isset($_POST['username'])) && (isset($_POST['password']))) 
+        if(   isset($_POST['domain'])
+           && isset($_POST['username'])
+           && isset($_POST['password'])) 
         {
             if($_POST['domain']=="rediff.com")
             {
@@ -106,7 +108,7 @@ class com_magnettechnologies_contactgrabber extends midcom_baseclasses_component
         }
     }
 
-    function _grab_contacts()
+    function grab_contacts()
     {
         // $this->_show_search_form();
         $this->_create_resource_object();
