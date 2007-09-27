@@ -876,7 +876,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
     function _show_team_members($handler_id, &$data)
     {    
-        midcom_show_style('team_player_list_start');
+        midcom_show_style('team-members-list-start');
         
         foreach ($this->_team_members as $member)
         {
@@ -888,10 +888,10 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
             
             $this->_request_data['team_member'] = $member;
 
-            midcom_show_style('team_player_list_item');
+            midcom_show_style('team-members-list-item');
         }
     
-        midcom_show_style('team_player_list_end');
+        midcom_show_style('team-members-list-end');
     }
 
     function _show_pending($handler_id, &$data)
