@@ -1,11 +1,22 @@
 <?php
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
 
-$player = $data['team_player'];
+$member =& $data['team_member'];
 ?>
 
 <li>
 <?php
-    echo $player->name . " (I is a player)";
+if ($data['is_manager'])
+{
+?>
+<div class="net_nemein_teams_team_manager">&(member.name);</div>
+<?php    
+}
+else
+{
+?>
+<div class="net_nemein_teams_team_player">&(member.name);</div>
+<?php
+}
 ?>
 </li>

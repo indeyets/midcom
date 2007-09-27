@@ -279,7 +279,8 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         $this->_team_group = new midcom_db_group();
         $this->_team_group->name = $values['team_name'];
         $this->_team_group->owner = $this->_root_group->id;
-        $this->_team_group->set_privilege('midgard:owner', $_MIDCOM->auth->user);
+        $this->_team_group->set_privilege('midgard:owner', $_MIDCOM->auth->user);                
+        $this->_team_group->set_parameter('net.nemein.teams:preferences', 'is_recruiting', true);
 
         if (! $this->_team_group->create())
         {
@@ -502,7 +503,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
              
                 $subject = sprintf($this->_l10n->get('new application from %s'), $_MIDCOM->auth->user->username);
                 $body = $this->_l10n->get('User has applied for your team') . "<br/>";
-                $body .= "<a href=\"" . $prefix . "pending/\">"
+                $body .= "<a href=\"" . $prefix . "team/{$this->_current_team->name}/pending/\">"
                 . $this->_config->get('private_pendings_link') . "</a>";
                     
                 $this->_send_private_message($_MIDCOM->auth->user->_storage->id, $this->_request_data['team_manager']->guid, $subject, $body);
@@ -754,45 +755,25 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         return true;
     }
     
-    function _handler_team_player_list($handler_id, $args, &$data)
+    function _handler_team_members($handler_id, $args, &$data)
     {
-        if (!empty($args[0]))
+
+        $qb = midcom_db_member::new_query_builder();
+        $qb->add_constraint('gid.guid', '=', $this->_current_team_group->guid);
+        
+        if (!$members = $qb->execute())
         {
-            $qb = net_nemein_teams_team_dba::new_query_builder();
-            $qb->add_constraint('groupguid', '=', $args[0]);
-            
-            if (!$teams = $qb->execute())
+            return false;
+        }
+        else
+        {
+            foreach ($members as $member)
             {
-                //return false;
-            }
-            
-            if (count($teams) > 0)
-            {
-                $qb = midcom_db_member::new_query_builder();
-                $qb->add_constraint('gid.guid', '=', $teams[0]->groupguid);
+                $person = new midcom_db_person();
+                $person->get_by_id($member->uid);
                 
-                if (!$members = $qb->execute())
-                {
-                    return false;
-                }
-                else
-                {
-                    foreach ($members as $member)
-                    {
-                        $person = new midcom_db_person();
-                        $person->get_by_id($member->uid);
-                        
-                        if ($teams[0]->managerguid == $person->guid)
-                        {
-                            $this->_team_manager = $person;
-                        }
-                        else
-                        {
-                            $this->_team_player_list[] = $person;
-                        }
-                    } 
-                }
-            }
+                $this->_team_members[] = $person;
+            } 
         }
     
         return true;
@@ -893,15 +874,19 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         echo "Error creating team";
     }
 
-    function _show_team_player_list($handler_id, &$data)
-    {
-        $this->_request_data['team_manager'] = $this->_team_manager;
-    
+    function _show_team_members($handler_id, &$data)
+    {    
         midcom_show_style('team_player_list_start');
-
-        foreach ($this->_team_player_list as $player)
+        
+        foreach ($this->_team_members as $member)
         {
-            $this->_request_data['team_player'] = $player;
+            $this->_request_data['is_manager'] = false;            
+            if ($this->_current_team->managerguid == $member->guid)
+            {
+                $this->_request_data['is_manager'] = true;
+            }
+            
+            $this->_request_data['team_member'] = $member;
 
             midcom_show_style('team_player_list_item');
         }
@@ -1090,9 +1075,9 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 $this->_current_action = 'create_profile';
                 $this->_handler_create_profile($handler_id, $args, &$data);
                 break;
-            case 'players':
-                $this->_current_action = 'players';
-                $this->_handler_team_player_list($handler_id, $args, &$data);
+            case 'members':
+                $this->_current_action = 'members';
+                $this->_handler_team_members($handler_id, $args, &$data);
                 break;
             case 'view':
                 $this->_current_action = 'view';
@@ -1113,13 +1098,15 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         {
             case 'application':
                 $this->_show_application($handler_id, &$data);
+                break;
             case 'pending':
                 $this->_show_pending($handler_id, &$data);
+                break;
             case 'create_profile':
                 $this->_show_create_profile($handler_id, &$data);
                 break;
-            case 'players':
-                $this->_show_team_player_list($handler_id, &$data);
+            case 'members':
+                $this->_show_team_members($handler_id, &$data);
                 break;
             case 'view':
                 $this->_show_view($handler_id, &$data);
