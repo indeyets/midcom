@@ -409,7 +409,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	        case 'save':        
                 if ($this->_config->get('create_team_home'))
 		        {
-                    $_MIDCOM->relocate($this->_team->name . "/create/profile");
+                    $_MIDCOM->relocate("/team/" . $this->_team->name . "/create/profile");
 		        }
 		        else
 		        {
@@ -1001,6 +1001,49 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
          midcom_show_style('index');
     }
     
+    function _handler_view($handler_id, $args, &$data)
+    {
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        
+        $member_count = $this->_current_team->count_members();
+        $is_recruiting = $this->_current_team_group->get_parameter('net.nemein.teams:preferences','is_recruiting');
+        
+        $this->_load_datamanager($this->_current_team_group);
+        $this->_request_data['datamanager'] =& $this->_datamanager;
+        
+        $this->_request_data['view_team'] = $this->_request_data['datamanager']->get_content_html();
+        $this->_request_data['view_team']['member_count'] = $member_count;
+        $this->_request_data['view_team']['group_guid'] = $this->_current_team_group->guid;
+        $this->_request_data['view_team']['description'] = $this->_current_team_group->get_parameter('midcom.helper.datamanager2','team_description');
+        $this->_request_data['view_team']['location'] = $this->_current_team_group->get_parameter('midcom.helper.datamanager2','team_location');
+        $this->_request_data['view_team']['is_recruiting'] = false;
+        	        	        
+        if (   $member_count < $this->_config->get('max_players_per_team')
+            && $is_recruiting)
+        {
+	        $this->_request_data['view_team']['is_recruiting'] = true;
+        }
+        
+        $qb = midcom_db_topic::new_query_builder();
+        $qb->add_constraint('up', '=', $this->_topic->id);
+        $qb->add_constraint('name', '=', $this->_current_team->name);
+        
+        if ($qb->count() == 0)
+        {
+            $this->_request_data['view_team']['profile_url'] = null;
+        }
+        else
+        {
+            $this->_request_data['view_team']['profile_url'] = "{$prefix}{$this->_current_team->name}/";
+        }
+        
+        return true;
+    }
+    function _show_view($handler_id, &$data)
+    {
+        midcom_show_style('show-team');
+    }
+    
     function _handler_action($handler_id, $args, &$data)
     {                
         if (count($args) < 2)
@@ -1011,8 +1054,6 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
             );
             $_MIDCOM->relocate('');
         }
-        
-        // Piti lähtee
         
         if (!$this->_get_team_by_name($args[0]))
         {
@@ -1042,11 +1083,17 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 }
                 break;
             case 'players':
+                $this->_current_action = 'players';
                 $this->_handler_team_player_list($handler_id, $args, &$data);
+                break;
+            case 'view':
+                $this->_current_action = 'view';
+                $this->_handler_view($handler_id, $args, &$data);
                 break;
             default:
                 //TODO: Notify user with growl. (Action not found)
                 $_MIDCOM->relocate('');
+                //This will exit
         }
         
         return true;
@@ -1065,6 +1112,9 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 break;
             case 'players':
                 $this->_show_team_player_list($handler_id, &$data);
+                break;
+            case 'view':
+                $this->_show_view($handler_id, &$data);
                 break;
         }
     }

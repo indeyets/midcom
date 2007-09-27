@@ -147,11 +147,11 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         );
 
         // Approve /
-        $this->_request_switch['pending'] = array
-        (
-            'handler' => Array('net_nemein_teams_handler_team', 'pending'),
-	        'fixed_args' => Array('pending'),
-        );
+        // $this->_request_switch['pending'] = array
+        // (
+        //     'handler' => Array('net_nemein_teams_handler_team', 'pending'),
+        //          'fixed_args' => Array('pending'),
+        // );
 
         // Create /
         $this->_request_switch['create'] = array
@@ -184,12 +184,14 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         $this->_request_switch['action'] = array
         (
             'handler' => Array('net_nemein_teams_handler_team', 'action'),
-            'variable_args' => 2,
+	        'fixed_args' => Array('team'),
+            'variable_args' => 3,
         );
         $this->_request_switch['action'] = array
         (
             'handler' => Array('net_nemein_teams_handler_team', 'action'),
-            'variable_args' => 3,
+	        'fixed_args' => Array('team'),
+            'variable_args' => 2,
         );
 /*
         // Create / home
