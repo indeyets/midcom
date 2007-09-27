@@ -868,11 +868,6 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
             $_MIDCOM->relocate('');
         }
     }
-    
-    function _show_error($handler_id, &$data)
-    {
-        echo "Error creating team";
-    }
 
     function _show_team_members($handler_id, &$data)
     {    
