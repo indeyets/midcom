@@ -409,7 +409,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	        case 'save':        
                 if ($this->_config->get('create_team_home'))
 		        {
-                    $_MIDCOM->relocate("team/{$this->_team->name}/create/profile");
+                    $_MIDCOM->relocate("team/{$this->_team->name}/create_profile");
 		        }
 		        else
 		        {
@@ -1083,6 +1083,10 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                     $this->_current_action = 'create_profile';
                     $this->_handler_create_profile($handler_id, $args, &$data);
                 }
+                break;
+            case 'create_profile':
+                $this->_current_action = 'create_profile';
+                $this->_handler_create_profile($handler_id, $args, &$data);
                 break;
             case 'players':
                 $this->_current_action = 'players';

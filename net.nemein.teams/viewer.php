@@ -181,12 +181,12 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
 	        'fixed_args' => Array('lockdown'),
         );
         
-        $this->_request_switch['action'] = array
-        (
-            'handler' => Array('net_nemein_teams_handler_team', 'action'),
-	        'fixed_args' => Array('team'),
-            'variable_args' => 3,
-        );
+        // $this->_request_switch['action'] = array
+        // (
+        //     'handler' => Array('net_nemein_teams_handler_team', 'action'),
+        //          'fixed_args' => Array('team'),
+        //     'variable_args' => 3,
+        // );
         $this->_request_switch['action'] = array
         (
             'handler' => Array('net_nemein_teams_handler_team', 'action'),
