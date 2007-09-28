@@ -147,6 +147,12 @@ class org_maemo_devcodes_handler_device_view extends midcom_baseclasses_componen
         return true;
     }
 
+    function _load_schemadb()
+    {
+        $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_device'));
+        $this->_schemadb =& $this->_request_data['schemadb'];
+    }
+
     /**
      * Internal helper, loads the datamanager for the current device. Any error triggers a 500.
      *
@@ -154,6 +160,7 @@ class org_maemo_devcodes_handler_device_view extends midcom_baseclasses_componen
      */
     function _load_datamanager()
     {
+        $this->_load_schemadb();
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
 
         if (   ! $this->_datamanager

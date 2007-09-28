@@ -103,6 +103,7 @@ class org_maemo_devcodes_handler_device_admin extends midcom_baseclasses_compone
      */
     function _load_schemadb()
     {
+        $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_device'));
         $this->_schemadb =& $this->_request_data['schemadb'];
     }
 

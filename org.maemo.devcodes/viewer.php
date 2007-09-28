@@ -227,23 +227,16 @@ class org_maemo_devcodes_viewer extends midcom_baseclasses_components_request
      */
     function _populate_node_toolbar()
     {   
-        foreach (array_keys($this->_request_data['schemadb']) as $name)
-        {
-            if ($name === 'application-user')
-	    {
-	        continue;
-            }
-            $this->_node_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "{$name}/create.html",
-                MIDCOM_TOOLBAR_LABEL => sprintf
-                (
-                    $this->_l10n_midcom->get('create %s'),
-                    $this->_request_data['schemadb'][$name]->description
-                ),
+        $this->_node_toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "device/create.html",
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('create device program'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
                 MIDCOM_TOOLBAR_ENABLED => $this->_topic->can_do('midgard:create'),
-            ));
-        }
+            )
+        );
         $this->_node_toolbar->add_item
         (
             array
@@ -263,7 +256,7 @@ class org_maemo_devcodes_viewer extends midcom_baseclasses_components_request
      */
     function _on_handle($handler, $args)
     {
-        $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
+        //$this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
 
         $this->_populate_node_toolbar();
 

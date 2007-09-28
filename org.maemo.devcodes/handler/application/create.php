@@ -85,6 +85,7 @@ class org_maemo_devcodes_handler_application_create extends midcom_baseclasses_c
      */
     function _load_schemadb()
     {
+        $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_application'));
         $this->_schemadb =& $this->_request_data['schemadb'];
     }
 

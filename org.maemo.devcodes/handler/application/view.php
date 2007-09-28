@@ -115,6 +115,12 @@ class org_maemo_devcodes_handler_application_view extends midcom_baseclasses_com
         return true;
     }
 
+    function _load_schemadb()
+    {
+        $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_application'));
+        $this->_schemadb =& $this->_request_data['schemadb'];
+    }
+
     /**
      * Internal helper, loads the datamanager for the current application. Any error triggers a 500.
      *
@@ -122,6 +128,7 @@ class org_maemo_devcodes_handler_application_view extends midcom_baseclasses_com
      */
     function _load_datamanager()
     {
+        $this->_load_schemadb();
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
 
         if (   ! $this->_datamanager
