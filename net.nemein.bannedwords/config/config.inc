@@ -1,3 +1,11 @@
+// Schema database to use
+'schemadb' => 'file:/net/nemein/bannedwords/config/schemadb_default.inc',
+'schemadbs'      => Array
+(
+    'file:/net/nemein/bannedwords/config/schemadb_default.inc' => 'Default Schema Database',
+),
+
+
 /**
  * These configure how to show the censored words.
  * Default is "***Censored***"

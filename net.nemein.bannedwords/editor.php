@@ -39,7 +39,7 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
     function _load_schemadb()
     {
         $this->_schemadb =& midcom_helper_datamanager2_schema::load_database(
-	'file:/net/nemein/bannedwords/config/schemadb_default.inc');
+	$this->_config->get('schemadb'));
     }
 
     function _load_controller()
