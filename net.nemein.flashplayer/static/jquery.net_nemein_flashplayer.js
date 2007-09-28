@@ -136,7 +136,7 @@ jQuery.net_nemein_flashplayer_player.defaults = {
 	set_video_callback: false,
 	auto_play: false,
 	player_width: 450,
-	player_height: 337
+	player_height: 358
 };
 
 jQuery.fn.extend({
