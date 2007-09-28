@@ -153,21 +153,25 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
 
     function _show_manage($handler_id, &$data)
     {
-
-	foreach($this->_lang_banned_objects as $lang => $lang_banned)
-	{
-	    $this->_request_data['language'] = $lang; 
-            midcom_show_style('net_nemein_bannedwords_wordlist_start');
+        if (!is_array($this->_lang_banned_objects))
+        {
+            $this->_lang_banned_objects = array();
+        }
+        
+    	foreach($this->_lang_banned_objects as $lang => $lang_banned)
+    	{
+    	    $this->_request_data['language'] = $lang; 
+                midcom_show_style('net_nemein_bannedwords_wordlist_start');
 	    
-	    foreach($lang_banned as $banned)
-	    {
-                $this->_request_data['banned_object'] = $banned;
-	        midcom_show_style('net_nemein_bannedwords_wordlist_item');
-	    }
+    	    foreach($lang_banned as $banned)
+    	    {
+                    $this->_request_data['banned_object'] = $banned;
+    	        midcom_show_style('net_nemein_bannedwords_wordlist_item');
+    	    }
 
-	    midcom_show_style('net_nemein_bannedwords_wordlist_end');
+    	    midcom_show_style('net_nemein_bannedwords_wordlist_end');
 
-	}
+    	}
         $this->_request_data['controller'] = $this->_controller;
         midcom_show_style('net_nemein_bannedwords_word_add');
     }
