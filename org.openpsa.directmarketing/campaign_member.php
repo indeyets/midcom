@@ -136,6 +136,20 @@ class midcom_org_openpsa_campaign_member extends __midcom_org_openpsa_campaign_m
             }
         }
         $content = str_replace('<PASSWD>', $plaintext_password, $content);
+        // Callback functions
+        if (preg_match_all('/<CALLBACK:(.*?)>/', $content, $callback_matches))
+        {
+            foreach($callback_matches[0] as $k => $search)
+            {
+                $callback_func =& $callback_matches[1][$k];
+                if (!is_callable($callback_func))
+                {
+                    continue;
+                }
+                $replace = call_user_func($callback_func, $person, $this);
+                $content = str_replace($search, $replace, $content);
+            }
+        }
 
         return $content;
     }
