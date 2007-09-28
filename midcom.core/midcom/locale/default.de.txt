@@ -283,7 +283,7 @@ Anmelden
 Ihr Benutzerkonto besitzt keine ausreichenden Berechtigungen.
 ---STRINGEND
 
----STRING login message - please enter credencials
+---STRING login message - please enter credentials
 Bitte geben Sie Ihren Benutzernamen und Ihr Passwort ein.
 ---STRINGEND
 

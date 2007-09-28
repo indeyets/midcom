@@ -9,7 +9,7 @@
 
 /**
  * Authentication frontend, responsible for rendering the login screen, reading
- * the credencials and displaying access denied information.
+ * the credentials and displaying access denied information.
  * 
  * All functions must be implemented, see their individual documentation about 
  * what exactly they should do.

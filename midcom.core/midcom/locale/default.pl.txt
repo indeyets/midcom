@@ -307,7 +307,7 @@ Login
 Brak wymaganych uprawnień.
 ---STRINGEND
 
----STRING login message - please enter credencials
+---STRING login message - please enter credentials
 Podaj użytkownika i hasło.
 ---STRINGEND
 

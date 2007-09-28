@@ -75,7 +75,7 @@
  * a single argument will be taken.
  *
  * The scripts executed need to do their own permission checks, they will work with
- * the credencials of the current MidCOM instance unconditionally.
+ * the credentials of the current MidCOM instance unconditionally.
  *
  * Example: http://$host/midcom-exec-midcom/upgrade_metadata.php
  *

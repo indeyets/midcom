@@ -58,7 +58,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
 
     /**
      * Creates a login session using the given arguments. Returns a session identifier.
-     * The call will validate the passed credencials and thus authenticate for the given
+     * The call will validate the passed credentials and thus authenticate for the given
      * user at the same time, so there is no need to call authenticate_session() after
      * creating it. A failed password check will of course not create a login session.
      *

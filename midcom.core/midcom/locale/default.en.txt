@@ -307,7 +307,7 @@ Login
 Your user account does not have sufficient privileges.
 ---STRINGEND
 
----STRING login message - please enter credencials
+---STRING login message - please enter credentials
 Please enter your username and password.
 ---STRINGEND
 

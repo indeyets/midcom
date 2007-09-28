@@ -10,7 +10,7 @@
 /**
  * Authentication backend, responsible for validating user/password pairs and
  * mapping them to a given user as well as the "sessioning" part, e.g. the transition
- * of the authentication credencials over several requests.
+ * of the authentication credentials over several requests.
  * 
  * All functions except authenticate() must be implemented, see their individual 
  * documentation about what exactly they should do.
@@ -78,7 +78,7 @@ class midcom_services_auth_backend extends midcom_baseclasses_core_object
     }
 
     /**
-     * This function stores a login session using the given credencials through the
+     * This function stores a login session using the given credentials through the
      * session service. It assumes that no login has concluded earlier. The login 
      * session management system is used for authentication. If the login session
      * was created successfully, the _on_login_session_created() handler is called

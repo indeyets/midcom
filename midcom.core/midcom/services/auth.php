@@ -456,14 +456,14 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     var $_auth_frontend = null;
 
     /**
-     * Flag, which is set to true if the system encountered any new login credencials
+     * Flag, which is set to true if the system encountered any new login credentials
      * during startup. If this is true, but no user is authenticated, login did fail.
      *
      * The variable is to be considered read-only.
      *
      * @var public
      */
-    var $auth_credencials_found = false;
+    var $auth_credentials_found = false;
 
     /**
      * Simple constructor, calls base class and initializes the data members where applicable.
@@ -504,30 +504,30 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     }
 
     /**
-     * Internal startup helper, checks if the current authentication fronted has new credencials
+     * Internal startup helper, checks if the current authentication fronted has new credentials
      * ready. If yes, it processes the login accordingly.
      *
-     * @return bool Returns true, if an new login session was created, false if no credencials were found.
+     * @return bool Returns true, if an new login session was created, false if no credentials were found.
      * @access private
      */
     function _check_for_new_login_session()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
-        $credencials = $this->_auth_frontend->read_authentication_data();
+        $credentials = $this->_auth_frontend->read_authentication_data();
 
-        if (! $credencials)
+        if (! $credentials)
         {
             return false;
         }
 
-        $this->auth_credencials_found = true;
+        $this->auth_credentials_found = true;
 
         // Try to start up a new session, this will authenticate as well.
-        if (! $this->_auth_backend->create_login_session($credencials['username'], $credencials['password']))
+        if (! $this->_auth_backend->create_login_session($credentials['username'], $credentials['password']))
         {
             debug_add('The login information passed to the system was invalid.', MIDCOM_LOG_ERROR);
-            debug_add("Username was {$credencials['username']}");
+            debug_add("Username was {$credentials['username']}");
             // No password logging for security reasons.
             debug_pop();
             return false;
@@ -590,7 +590,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         if (! $this->sessionmgr->authenticate_session($this->_auth_backend->session_id))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('Failed to re-authenticate a previous login session, not changing credencials.');
+            debug_add('Failed to re-authenticate a previous login session, not changing credentials.');
             debug_pop();
             return;
         }
@@ -1108,7 +1108,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      *
      * You have to call midcom_services_auth::drop_sudo() as soon as you no longer
      * need the elevated privileges, which will reset the authentication data to the
-     * initial credencials.
+     * initial credentials.
      *
      * @param string $domain The domain to request sudo for. This is a component name.
      * @return bool True if admin privileges were granted, false otherwise.
@@ -1985,7 +1985,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             // The user has insufficient privileges
             $login_warning = $_MIDCOM->i18n->get_string('login message - insufficient privileges', 'midcom');
         }
-        else if ($this->auth_credencials_found)
+        else if ($this->auth_credentials_found)
         {
             $login_warning = $_MIDCOM->i18n->get_string('login message - user or password wrong', 'midcom');
         }
@@ -2131,7 +2131,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
         // Determine login warning so that wrong user/pass is shown.
         $login_warning = '';
-        if (   $this->auth_credencials_found
+        if (   $this->auth_credentials_found
             && is_null($this->user))
         {
             $login_warning = $_MIDCOM->i18n->get_string('login message - user or password wrong', 'midcom');
@@ -2190,7 +2190,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
                 <?php
                 if ($login_warning == '')
                 {
-                    echo "<div id=\"ok\">" . $_MIDCOM->i18n->get_string('login message - please enter credencials', 'midcom') . "</div>\n";
+                    echo "<div id=\"ok\">" . $_MIDCOM->i18n->get_string('login message - please enter credentials', 'midcom') . "</div>\n";
                 }
                 else
                 {

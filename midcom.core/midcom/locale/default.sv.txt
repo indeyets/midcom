@@ -227,7 +227,7 @@ Logga in
 Ditt användarkonto saknas nödvändiga rättigheter.
 ---STRINGEND
 
----STRING login message - please enter credencials
+---STRING login message - please enter credentials
 Skriv in användarnamn och lösenord.
 ---STRINGEND
 

@@ -307,7 +307,7 @@ Kirjaudu
 Käyttäjätunnuksellasi ei ole riittäviä oikeuksia
 ---STRINGEND
 
----STRING login message - please enter credencials
+---STRING login message - please enter credentials
 Syötä käyttäjätunnus ja salasana
 ---STRINGEND
 
