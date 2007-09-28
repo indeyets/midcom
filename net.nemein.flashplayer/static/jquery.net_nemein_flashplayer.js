@@ -1,1 +1,468 @@
-eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--){d[e(c)]=k[c]||e(c)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('1 M(1Z,1s,1t){3 10=4(\'[@H=\'+1Z+\']\');d(10.q(\'1m\')==\'u\'){10.1W(1s,1t)}2k{10.1D(1s,1t)}}4.25.w({2j:1(2){2=4.w({},4.t.p,{},2);6 r 4.t(b,2)},1W:1(9,5){6 b.g("M",[9,5])},1q:1(9,5){6 b.g("1q",[9,5])},s:1(7,2){6 b.g("s",[7,2])}});4.t=1(13,2){3 C=13;3 Z=19();3 18=r 1C(Z,D(2.N));3 Y="a="+Z;3 11=r 1H(D(2.21),2.28,2.1F);11.1O(2.R);11.1M(Y);C.q("H",Z).q("1m","u").1J(11.1I()).f("M",1(e,9,5){3 l=1a(9);l.1p(l,[5])}).f("1q",1(e,9,5){c(9,5)}).f("s",1(e,7,2){s(7,2)});c(\'2l\',{1B:C.q("o")});1 s(7,2c){3 26=4.w({1d:2.1d},2c||{});3 1i=[7,26];d(2.12&&2i(2.12)=="1"){3 l=1a(2.12);l.1p(l,[1i])}c(\'s\',1i)}1 c(9,5){18.2d(9,5)}1 19(){16=17.1N(17.1L()*1G);6"2n"+(1U+(16*22))}1 D(W){6 2.Q+2.K+W}1 2o(5){}};4.t.p={Q:\'/\',K:\'2g-2h/\',N:\'1l.1f.1x/2m/2r.1c\',21:\'1l.1f.1x/u.1c\',R:\'8,0,0,0\',12:h,1d:h,28:1Q,1F:2y};4.25.w({2A:1(2){2=4.w({},4.T.p,{},2);6 r 4.T(b,2)},1D:1(9,5){6 b.g("M",[9,5])},1n:1(9,5){6 b.g("1n",[9,5])},J:1(m){6 b.g("J",[m])},F:1(1E){3 7=r 4.S(1E);6 b.g("F",[7])},A:1(j){6 b.g("A",[j])},G:1(a){6 b.g("G",[a])},I:1(a){6 b.g("I",[a])},O:1(7){6 b.g("O",[7])}});4.T=1(13,2){3 C=13;3 L=19();3 18=r 1C(L,D(2.N));3 k=[];3 1k=h;3 1h=h;3 1j=h;3 B=[];3 Y="1K="+L;3 X=r 1H(D(2.2e),2.2b,2.29);X.1O(2.R);X.1M(Y);C.q("H",L).q("1m","27").1J(X.1I()).f("M",1(e,9,5){3 l=1a(9);l.1p(l,[5])}).f("1n",1(e,9,5){c(9,5)}).f("J",1(e,m){J(m)}).f("F",1(e,7){F(7)}).f("A",1(e,j){A(j)}).f("G",1(e,a){G(a)}).f("I",1(e,a){I(a)}).f("O",1(e,7){O(7)});c(\'2p\',{1B:C.q("o")});1 O(7){3 x={7:7,2:{},1K:L};4(B).1e(1(i,u){u.s(7)})}1 1o(a){3 E=h;E=4.U(B,1(n,i){6 n.q("H")==a});d(E==h){6 h}6 15}1 G(a){d(!1o(a)){3 u=4(\'[@H=\'+a+\']\');B.2f(u)}}1 I(a){d(1o(a)){B=4.U(B,1(n,i){6 n!=a})}}1 1b(j){3 E=h;E=4.U(k,1(n,i){6 n.o==j});d(!E){6 h}6 15}1 F(7){d(!1b(7.o)){k.2f(7);3 5={7:7};c(\'F\',5)}}1 A(j){d(1b(j)){k=4.U(k,1(n,i){6 n.o!=j});3 5={o:j};c(\'A\',5)}}1 J(m){1S(m,2a,1R)}1 2a(1V){3 14=[];4(\'7\',1V).1e(1(V){3 v=4(b);14[V]={2q:V,o:v.y("o").z(),1g:v.y("1g").z(),1v:v.y("1v").z(),1y:v.y("1y").z(),1z:v.y("1z").z()};4.1e(2.1X,1(i,1A){14[V][1A]=v.y(1A).z()})});k=14;1h=15;d(k.23>0&&1k&&!1j){3 5={1P:k};c(\'1T\',5)}}1 1R(P,1w){3 1r=P;3 5={1r:1r};c(\'2t\',5)}1 1S(m,1u,1Y){4.2v({P:"2u",m:m,2E:\'2s\',x:4.w({2w:2.24},{}),2x:1(2B,P,1w){1Y(P,1w)},1u:1(x){1u(x)}})}1 c(9,5){18.2d(9,5)}1 19(){16=17.1N(17.1L()*1G);6"2z"+(1U+(16*22))}1 D(W){6 2.Q+2.K+W}1 2C(5){1k=15;d(k.23>0&&!1j){3 5={1P:k};d(1h){c(\'1T\',5)}}}};4.T.p={Q:4.t.p.Q,K:4.t.p.K,N:4.t.p.N,2e:\'1l.1f.1x/27.1c\',R:\'8,0,0,0\',1X:[],24:20,2b:1Q,29:2D};4.S=1(x){x=4.w({},4.S.p,{},x);6 b};4.S.p={o:\'\',1g:\'\',1v:\'\',1y:\'\',1z:\'\'};',62,165,'|function|options|var|jQuery|args|return|item||action|player_id|this|proxy_send|if|event|bind|trigger|false||item_id|_playlist_content|functionToCall|url||id|defaults|attr|new|set_video|net_nemein_flashplayer_player|player|rel_this|extend|data|find|text|remove_item|_players|_object|generate_static_url|existing|add_item|connect_player|nnf_id|disconnect_player|load_playlist|static_prefix|_playlist_id|run_client_action|proxy_gateway_swf_path|change_movie|type|site_root|flash_version|net_nemein_flashplayer_playlist_item|net_nemein_flashplayer_playlist|grep|idx|suffix|flashplaylist_tag|_flashvars|_player_id|receiver|flashplayer_tag|set_video_callback|object|results|true|random_key|Math|_proxy|generate_id|eval|_item_exists|swf|auto_play|each|nemein|title|_playlist_loaded|send_args|_playlist_sended|_playlist_initialized|net|nnf_type|run_playlist_action|_player_exists|apply|run_player_action|status|action_name|action_data|success|video_url|expobj|flashplayer|thumbnail_url|data_url|key|element_id|FlashProxy|run_playlistclient_action|item_data|player_height|4013|FlashTag|toString|html|playlist_id|random|setFlashvars|floor|setVersion|content|450|loading_failure|_request|playlist_loading_success|10016486|server_data|run_playerclient_action|item_extra_keys|failure|client_id||flash_player_path|22423|length|max_items|fn|args_options|playlist|player_width|height|loading_success|width|video_options|call|flash_playlist_path|push|midcom|static|typeof|net_nemein_flashplayer|else|player_embedded|gw|net_nemein_flashplayer_player_|player_initialized|playlist_embedded|index|JavaScriptFlashGateway|xml|playlist_loading_failure|GET|ajax|limit|error|358|net_nemein_flashplayer_playlist_|net_nemein_flashplaylist|obj|playlist_initialized|118|dataType'.split('|'),0,{}))
+function run_client_action(client_id, action_name, action_data)
+{
+    //console.log("run_client_action client_id: "+client_id+" action_name: "+action_name);
+    
+    var receiver = jQuery('[@nnf_id=' + client_id + ']');
+    //console.log("receiver nnf_id: "+receiver.attr('nnf_id'));
+    //console.log("receiver nnf_type: "+receiver.attr('nnf_type'));
+    
+    if (receiver.attr('nnf_type') == 'player')
+    {
+        receiver.run_playerclient_action(action_name, action_data);
+    }
+    else
+    {
+        receiver.run_playlistclient_action(action_name, action_data);        
+    }
+}
+
+/*
+ * jQuery("#video_holder").net_nemein_flashplayer();
+ * jQuery("#playlist_holder").net_nemein_flashplaylist();
+ * jQuery("#video_holder").connect_playlist( jQuery("#playlist_holder").getID() );
+ */
+
+jQuery.fn.extend({
+	net_nemein_flashplayer: function(options) {
+		options = jQuery.extend({}, jQuery.net_nemein_flashplayer_player.defaults, {
+		}, options);
+	    return new jQuery.net_nemein_flashplayer_player(this, options);
+	},
+	run_playerclient_action: function(action, args) {
+		return this.trigger("run_client_action",[action, args]);
+	},
+	run_player_action: function(action, args) {
+		return this.trigger("run_player_action",[action, args]);
+	},
+	set_video: function(item, options) {
+		return this.trigger("set_video",[item, options]);
+	}
+});
+
+jQuery.net_nemein_flashplayer_player = function(object, options)
+{    
+    //console.log("net_nemein_flashplayer_player object: "+object);
+    
+    var _object = object;
+    var _player_id = generate_id();
+    var _proxy = new FlashProxy(_player_id, generate_static_url(options.proxy_gateway_swf_path));
+    
+    var _flashvars = "player_id="+_player_id;
+    
+    var flashplayer_tag = new FlashTag(generate_static_url(options.flash_player_path), options.player_width, options.player_height);
+    flashplayer_tag.setVersion(options.flash_version);
+    flashplayer_tag.setFlashvars(_flashvars);
+    
+    _object.attr("nnf_id",_player_id)
+    .attr("nnf_type","player")
+    .html(flashplayer_tag.toString())
+    .bind("run_client_action", function(event, action, args){
+	    //console.log("player run_client_action action: "+action);
+	    //console.log("player run_client_action args: "+args);
+        var functionToCall = eval(action);
+        functionToCall.apply(functionToCall, [args]);
+	}).bind("run_player_action", function(event, action, args){
+	    //console.log("run_player_action action: "+action);
+	    //console.log("run_player_action args.length: "+args.length);
+	    proxy_send(action, args);
+	}).bind("set_video", function(event, item, options){
+	    //console.log("set_video item.id: "+item.id);
+	    //console.log("set_video item.video_url: "+item.video_url);
+	    //console.log("set_video options: "+options);
+	    set_video(item, options);
+	});
+	
+	proxy_send('player_embedded', {element_id: _object.attr("id")});
+	
+	function set_video(item, video_options)
+	{
+	    //console.log("set_video item:"+item+" video_options:"+video_options);
+	    
+	    var args_options = jQuery.extend({
+	        auto_play: options.auto_play
+	    }, video_options || {});
+        
+        //console.log("item.video_url: "+item.video_url);
+        
+	    var send_args = [
+	        item,
+	        args_options
+	    ];
+	    
+	    if (   options.set_video_callback
+	        && typeof(options.set_video_callback) == "function")
+	    {
+            var functionToCall = eval(options.set_video_callback);
+            functionToCall.apply(functionToCall, [send_args]);
+	    }
+	    
+	    proxy_send('set_video',send_args);
+	}
+    
+    function proxy_send(action, args)
+    {
+        _proxy.call(action, args);
+    }
+    
+    function generate_id()
+    {
+        random_key = Math.floor(Math.random()*4013);
+        return "net_nemein_flashplayer_player_" + (10016486 + (random_key * 22423));
+    }
+    
+    function generate_static_url(suffix)
+    {
+        return options.site_root + options.static_prefix + suffix;
+    }
+    
+    /**
+     * Functions callable from flash
+    **/
+    
+    function player_initialized(args)
+    {
+        //console.log("player_initialized");
+    }
+    
+    return this;
+};
+
+jQuery.net_nemein_flashplayer_player.defaults = {
+    site_root: '/',
+    static_prefix: 'midcom-static/',
+    proxy_gateway_swf_path: 'net.nemein.flashplayer/gw/JavaScriptFlashGateway.swf',
+    flash_player_path: 'net.nemein.flashplayer/player.swf',
+    flash_version: '8,0,0,0',
+	set_video_callback: false,
+	auto_play: false,
+	player_width: 450,
+	player_height: 337
+};
+
+jQuery.fn.extend({
+	net_nemein_flashplaylist: function(options) {
+		options = jQuery.extend({}, jQuery.net_nemein_flashplayer_playlist.defaults, {
+		}, options);
+		return new jQuery.net_nemein_flashplayer_playlist(this, options);
+	},
+	run_playlistclient_action: function(action, args) {
+	    //console.log("run_playlistclient_action action: "+action);
+	    //console.log("run_playlistclient_action args: "+args);
+	    return this.trigger("run_client_action",[action, args]);
+	},
+	run_playlist_action: function(action, args) {
+		return this.trigger("run_playlist_action",[action, args]);
+	},
+	load_playlist: function(url) {
+		return this.trigger("load_playlist",[url]);
+	},
+	add_item: function(item_data) {
+		var item = new jQuery.net_nemein_flashplayer_playlist_item(item_data);
+		return this.trigger("add_item",[item]);
+	},
+	remove_item: function(item_id) {
+		return this.trigger("remove_item",[item_id]);
+	},
+	connect_player: function(player_id) {
+		return this.trigger("connect_player",[player_id]);
+	},
+	disconnect_player: function(player_id) {
+		return this.trigger("disconnect_player",[player_id]);
+	},
+	change_movie: function(item) {
+	    return this.trigger("change_movie",[item]);
+	}
+});
+
+jQuery.net_nemein_flashplayer_playlist = function(object, options)
+{
+    //console.log("net_nemein_flashplayer_playlist object: "+object);
+
+    var _object = object;
+    var _playlist_id = generate_id();
+    var _proxy = new FlashProxy(_playlist_id, generate_static_url(options.proxy_gateway_swf_path));
+    var _playlist_content = [];
+    
+    var _playlist_initialized = false;
+    var _playlist_loaded = false;
+    var _playlist_sended = false;
+    
+    var _players = [];
+    
+    var _flashvars = "playlist_id="+_playlist_id;
+    
+    var flashplaylist_tag = new FlashTag(generate_static_url(options.flash_playlist_path), options.width, options.height);
+    flashplaylist_tag.setVersion(options.flash_version);
+    flashplaylist_tag.setFlashvars(_flashvars);
+        
+    _object.attr("nnf_id",_playlist_id)
+    .attr("nnf_type","playlist")
+    .html(flashplaylist_tag.toString())    
+    .bind("run_client_action", function(event, action, args){
+	    //console.log("playlist run_client_action action: "+action);
+	    //console.log("playlist run_client_action args: "+args);
+        var functionToCall = eval(action);
+        functionToCall.apply(functionToCall, [args]);
+	})
+    .bind("run_playlist_action", function(event, action, args){
+	    //console.log("run_playlist_action action: "+action);
+	    //console.log("run_playlist_action args.length: "+args.length);
+	    proxy_send(action, args);
+	})
+    .bind("load_playlist", function(event, url){
+	    //console.log("set_video url: "+url);
+	    load_playlist(url);
+	}).bind("add_item", function(event, item){
+	    //console.log("add_item item: "+item);
+	    add_item(item);
+	}).bind("remove_item", function(event, item_id){
+	    //console.log("remove_item item_id: "+item_id);
+	    remove_item(item_id);
+    }).bind("connect_player", function(event, player_id){
+	    //console.log("connect_player player_id: "+player_id);
+	    connect_player(player_id);
+	}).bind("disconnect_player", function(event, player_id){
+	    //console.log("disconnect_player player_id: "+player_id);
+	    disconnect_player(player_id);
+	}).bind("change_movie", function(event, item){
+	    //console.log("change_movie item.id: "+item.id);
+	    change_movie(item);
+	});
+
+	proxy_send('playlist_embedded', {element_id: _object.attr("id")});
+    
+    function change_movie(item)
+    {
+        // var data = {
+        //     item: item,
+        //     options: {},
+        //     playlist_id: _playlist_id
+        // };
+        //console.log("change_movie item.video_url: "+item.video_url);
+        jQuery(_players).each(function(i,player){
+            player.set_video(item);
+        });
+    }
+    
+	function _player_exists(player_id)
+	{   
+	    var existing = false;
+        existing = jQuery.grep( _players, function(n,i){
+           return n.attr("nnf_id") == player_id;
+        });
+        
+        if (existing == false)
+        {
+            return false;
+        }
+
+        return true;
+	}
+	
+    function connect_player(player_id)
+    {
+        //console.log("connect_player player_id: "+player_id);
+        if (!_player_exists(player_id))
+        {
+            var player = jQuery('[@nnf_id=' + player_id + ']');
+            _players.push(player);
+        }
+    }
+    
+    function disconnect_player(player_id)
+    {
+        //console.log("disconnect_player player_id: "+player_id);
+        if (_player_exists(player_id))
+        {
+            _players = jQuery.grep( _players, function(n,i){
+              return n != player_id;
+            });
+        }
+    }
+    
+    function _item_exists(item_id)
+    {
+	    var existing = false;
+        existing = jQuery.grep( _playlist_content, function(n,i){
+           return n.id == item_id;
+        });
+        
+        if (!existing)
+        {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    function add_item(item)
+    {
+        if (!_item_exists(item.id))
+        {
+            _playlist_content.push(item);
+
+            var args = {
+                item: item
+            };
+            proxy_send('add_item',args);
+        }
+    }
+    
+    function remove_item(item_id)
+    {
+        if (_item_exists(item_id))
+        {
+            _playlist_content = jQuery.grep( _playlist_content, function(n,i){
+              return n.id != item_id;
+            });
+
+            var args = {
+                id: item_id
+            };
+            proxy_send('remove_item',args);
+        }
+    }
+    
+    function load_playlist(url)
+    {
+        //console.log("load_playlist url: "+url);
+    
+        _request(url, loading_success, loading_failure)
+    }
+    
+    function loading_success(server_data)
+    {        
+        var results = [];
+        jQuery('item',server_data).each(function(idx) {            
+            var rel_this = jQuery(this);
+    	    
+            results[idx] = {
+                index:idx,
+                id:rel_this.find("id").text(),
+                title:rel_this.find("title").text(),
+                video_url:rel_this.find("video_url").text(),
+                thumbnail_url:rel_this.find("thumbnail_url").text(),
+                data_url:rel_this.find("data_url").text()
+            };
+            
+            jQuery.each(options.item_extra_keys,function(i,key){
+                //console.log("rel_this.find("+key+").text(): "+rel_this.find(key).text());
+                results[idx][key] = rel_this.find(key).text();
+            });
+        });
+    	
+        _playlist_content = results;
+        
+        //console.log("_playlist_content.length: "+_playlist_content.length);
+        _playlist_loaded = true;
+        
+        if (   _playlist_content.length > 0
+            && _playlist_initialized
+            && !_playlist_sended)
+        {
+            var args = {
+                content: _playlist_content
+            };
+            proxy_send('playlist_loading_success',args);
+        }
+    }
+    
+	function loading_failure(type, expobj) {
+	    //console.log("loading_failure type: "+type);
+	    
+	    var status = type;
+	    
+        var args = {
+            status: status
+        };
+        proxy_send('playlist_loading_failure',args);
+	}    
+
+	function _request(url, success, failure) {
+	    //console.log("_request url: "+url);
+        
+		jQuery.ajax({
+		    type: "GET",
+			url: url,
+			dataType: 'xml',
+			data: jQuery.extend({
+    			limit: options.max_items
+    		}, {}),
+            error: function(obj, type, expobj) {
+                failure(type, expobj);
+            },
+			success: function(data) {
+				success(data);
+			}
+		});
+	}
+    
+    function proxy_send(action, args)
+    {
+        //console.log("Call Flash Playlist with action: "+action);
+        _proxy.call(action, args);
+    }	
+    
+    function generate_id()
+    {
+        random_key = Math.floor(Math.random()*4013);
+        return "net_nemein_flashplayer_playlist_" + (10016486 + (random_key * 22423));
+    }
+
+    function generate_static_url(suffix)
+    {
+        return options.site_root + options.static_prefix + suffix;
+    }
+    
+    /**
+     * Functions callable from flash
+    **/
+    
+    function playlist_initialized(args)
+    {
+        //console.log("playlist_initialized");
+        _playlist_initialized = true;
+        
+        if (   _playlist_content.length > 0
+            && !_playlist_sended)
+        {
+            var args = {
+                content: _playlist_content
+            };
+            if (_playlist_loaded)
+            {
+                proxy_send('playlist_loading_success',args);
+            }
+        }
+    }
+};
+
+jQuery.net_nemein_flashplayer_playlist.defaults = {
+    site_root: jQuery.net_nemein_flashplayer_player.defaults.site_root,
+    static_prefix: jQuery.net_nemein_flashplayer_player.defaults.static_prefix,
+    proxy_gateway_swf_path: jQuery.net_nemein_flashplayer_player.defaults.proxy_gateway_swf_path,
+    flash_playlist_path: 'net.nemein.flashplayer/playlist.swf',
+    flash_version: '8,0,0,0',
+    item_extra_keys: [],
+	max_items: 20,
+	width: 450,
+	height: 118
+};
+
+jQuery.net_nemein_flashplayer_playlist_item = function(data)
+{
+    //console.log("net_nemein_flashplayer_playlist_item data: "+data);
+
+    data = jQuery.extend({}, jQuery.net_nemein_flashplayer_playlist_item.defaults, {
+	}, data);    
+    
+    return this;
+};
+
+jQuery.net_nemein_flashplayer_playlist_item.defaults = {
+    id: '',
+    title: '',
+    video_url: '',
+    thumbnail_url: '',
+    data_url: ''
+};
