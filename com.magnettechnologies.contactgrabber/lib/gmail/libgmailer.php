@@ -7,17 +7,17 @@
   * Author: Magnet Technologies, vishal.kothari@magnettechnologies.com
   * Credits: Janak Prajapati, Pravin Shukla, Tapan Moharana 
   * Copyright (C) 2007
-
+  *
   * This program is free software; you can redistribute it and/or
   * modify it under the terms of the GNU General Public License
   * as published by the Free Software Foundation; either version 2
   * of the License, or (at your option) any later version.
-
+  *
   * This program is distributed in the hope that it will be useful,
   * but WITHOUT ANY WARRANTY; without even the implied warranty of
   * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   * GNU General Public License for more details.
-
+  *
   * You should have received a copy of the GNU General Public License
   * along with this program; if not, write to the Free Software
   * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -40,7 +40,7 @@ ob_start();
  *
  * @var bool
  */
-define("GM_USE_LIB_AS_MODULE",      false); // Normal operation
+define("GM_USE_LIB_AS_MODULE",      true); // Normal operation
 
 /**#@+ 
  * URL's of Gmail.
@@ -323,7 +323,7 @@ class GMailer {
                 $a = array(
                     "action"        => "constructing GMailer object",
                     "status"        => "failed",
-                    "message"       => "libgmailer: Using a multithread server. Ensure php_curl.dll has been enabled (uncommented) in your php.ini."
+                    "message"       => "Using a multithread server. Ensure php_curl.dll has been enabled (uncommented) in your php.ini."
                 );
                 array_unshift($this->return_status, $a);
 
@@ -333,7 +333,7 @@ class GMailer {
                     $a = array(
                         "action"        => "constructing GMailer object",
                         "status"        => "failed",
-                        "message"       => "libgmailer: unable to load curl extension."
+                        "message"       => "unable to load curl extension."
                     );
                     array_unshift($this->return_status, $a);
                 }
@@ -344,7 +344,7 @@ class GMailer {
             $a = array(
                 "action"        => "constructing GMailer object",
                 "status"        => "failed",
-                "message"       => "libgmailer: No curl."
+                "message"       => "No curl found."
             );
             array_unshift($this->return_status, $a);
         }
@@ -360,7 +360,7 @@ class GMailer {
             $a = array(
                 "action"        => "constructing GMailer object",
                 "status"        => "success",
-                "message"       => "libgmailer: Constructing completed."
+                "message"       => "Constructing completed."
             );
             array_unshift($this->return_status, $a);
         }
@@ -383,7 +383,7 @@ class GMailer {
         $a = array(
             "action"        => "set login info",
             "status"        => "success",
-            "message"       => "libgmailer: LoginInfo set."
+            "message"       => "LoginInfo set."
         );
         array_unshift($this->return_status, $a);
     }
@@ -400,8 +400,8 @@ class GMailer {
         if ($my_domain === "") {
             $a = array(
                 "action"        => "set hosted domain info",
-                "status"        => "sucess",
-                "message"       => "libgmailer: Using the default gmail/googlemail domain."
+                "status"        => "success",
+                "message"       => "Using the default gmail/googlemail domain."
             );
             array_unshift($this->return_status, $a);
             return;
@@ -411,7 +411,7 @@ class GMailer {
             $a = array(
                 "action"        => "set hosted domain info",
                 "status"        => "failed",
-                "message"       => "libgmailer: cannot use \"$my_domain\" as a hosted domain.  The default gmail.com or googlemail.com will be used."
+                "message"       => "cannot use \"$my_domain\" as a hosted domain.  The default gmail.com or googlemail.com will be used."
             );
             array_unshift($this->return_status, $a);
             return;
@@ -431,7 +431,7 @@ class GMailer {
         $a = array(
             "action"        => "set hosted domain info",
             "status"        => "success",
-            "message"       => "libgmailer: Domain set."
+            "message"       => "Domain set."
         );
         array_unshift($this->return_status, $a);
     }
@@ -464,14 +464,14 @@ class GMailer {
             $a = array(
                 "action"        => "set proxy",
                 "status"        => "success",
-                "message"       => "libgmailer: Proxy set."
+                "message"       => "Proxy set."
             );
             array_unshift($this->return_status, $a);
         } else {
             $a = array(
                 "action"        => "set proxy",
                 "status"        => "failed",
-                "message"       => "libgmailer: no hostname supplied."
+                "message"       => "no hostname supplied."
             );
             array_unshift($this->return_status, $a);
         }
@@ -621,7 +621,7 @@ class GMailer {
             $postdata .= "&continue=".urlencode($this->GM_LNK_GMAIL);
             $postdata .= "&service=mail";
             $postdata .= "&rm=false";
-            $postdata .= "&ltmpl=yj_blanco";
+//            $postdata .= "&ltmpl=yj_blanco";
             $postdata .= "&hl=en";
             $postdata .= "&Email=".urlencode($this->login);
             $postdata .= "&Passwd=".urlencode($this->pwd);
@@ -731,7 +731,8 @@ class GMailer {
 
 /*      Debugger::say("first phase: ".print_r($this->gmail_data,true)); */
 /*      exit; */
-
+// var_dump($this, 1);
+// die('connect');
         $a = array(
             "action"        => "connecting to Gmail (without cookie)",
             "status"        => (($this->gmail_data != "") ? "success" : "failed"),
@@ -769,7 +770,7 @@ class GMailer {
                 $a = array(
                     "action"        => "sign in",
                     "status"        => "failed",
-                    "message"       => "Username and password do not match. (Did you mean ".$suggest." ?)",
+                    "message"       => "Username and password do not match. (Did you mean ".$suggest."?)",
                     "login_error"   => "userpass_suggest",
                     "login_suggest" => $suggest
                 );
@@ -839,7 +840,7 @@ class GMailer {
             $a = array(
                 "action"        => "sign in",
                 "status"        => "failed",
-                "message"       => "Gmail: Invalid request. (libgmailer: Gmail seems to have changed the URL again.)",
+                "message"       => "Gmail: Invalid request. (Gmail seems to have changed the URL again.)",
                 "login_error"   => "URL"
             );
             array_unshift($this->return_status, $a);
@@ -853,7 +854,7 @@ class GMailer {
             $a = array(
                 "action"        => "sign in",
                 "status"        => "failed",
-                "message"       => "libgmailer: Phase one cookie not obtained. Gmail may be down.",
+                "message"       => "Phase one cookie not obtained. Gmail may be down.",
                 "login_error"   => "cookie"
             );
             array_unshift($this->return_status, $a);
@@ -991,7 +992,7 @@ class GMailer {
             "status"        => "status",
             "message"       => "Cookie: ".$data
         );
-        array_unshift($this->return_status, $a);            
+        array_unshift($this->return_status, $a);
         
         return true;
         
@@ -1652,7 +1653,7 @@ class GMailer {
             $a = array(
                 "action"        => "message action",
                 "status"        => "failed",
-                "message"       => "libgmailer: not connected"
+                "message"       => "not connected"
             );
             array_unshift($this->return_status, $a);
 
@@ -1946,7 +1947,7 @@ class GMailer {
             $a = array(
                 "action"        => "invite",
                 "status"        => "failed",
-                "message"       => "libgmailer: feature not available for hosted domains"
+                "message"       => "feature not available for hosted domains"
             );
             array_unshift($this->return_status, $a);
             return false;
@@ -1981,7 +1982,7 @@ class GMailer {
             $a = array(
                 "action"        => "invite",
                 "status"        => "failed",
-                "message"       => "libgmailer: not connected"
+                "message"       => "not connected"
             );
             array_unshift($this->return_status, $a);
 
@@ -2091,12 +2092,26 @@ class GMailer {
             }
             else 
             {
-                die("Fail to connect because: ".$this->lastActionStatus());
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add('Fail to connect because: ' . $this->lastActionStatus(), MIDCOM_ERRCRIT);
+                debug_pop();
+                $_MIDCOM->uimessages->add(
+                    $_MIDCOM->i18n->get_string('com.magnettechnologies.contactgrabber', 'com.magnettechnologies.contactgrabber'),
+                    sprintf($_MIDCOM->i18n->get_string('Fail to connect! Reason: %s', 'com.magnettechnologies.contactgrabber'), $this->lastActionStatus())
+                );
+                return false;
             }
         } 
         else 
         {
-            die("Failed to create GMailer because: ".$this->lastActionStatus());
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Failed to create GMailer because: ' . $this->lastActionStatus(), MIDCOM_ERRCRIT);
+            debug_pop();
+            $_MIDCOM->uimessages->add(
+                $_MIDCOM->i18n->get_string('com.magnettechnologies.contactgrabber', 'com.magnettechnologies.contactgrabber'),
+                sprintf($_MIDCOM->i18n->get_string('Fail to init GMailer library! Reason: %s', 'com.magnettechnologies.contactgrabber'), $this->lastActionStatus())
+            );
+            return false;
         }
         return $result;
     }
@@ -3303,7 +3318,11 @@ Referer: http://mail.google.com/mail/?&ik=xxxxxxx&view=pr&pnl=g&zx=xorfqampe0ml
 
         // debugging cURL
         if (GM_DEBUG_CURL) {
-            $fd = fopen("debug_curl.txt", "a+");
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Saved cURL debug log to /tmp/debug_curl.txt');
+            debug_pop();
+            
+            $fd = @fopen("/tmp/debug_curl.txt", "a+");
             curl_setopt($c, CURLOPT_VERBOSE, 1);
             curl_setopt($c, CURLOPT_STDERR, $fd);
         }

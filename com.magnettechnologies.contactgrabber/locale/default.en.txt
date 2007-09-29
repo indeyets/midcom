@@ -2,6 +2,10 @@
 ---VERSION 2.1.0
 ---LANGUAGE en
 
+---STRING com.magnettechnologies.contactgrabber
+Contact grabber
+---STRINGEND
+
 ---STRING enter login details to fetch your contacts
 Enter login details to fetch your contacts
 ---STRINGEND
