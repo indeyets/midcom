@@ -18,6 +18,10 @@ Your contacts are your private information. We will not store your username or p
 Username
 ---STRINGEND
 
+---STRING password
+Password
+---STRINGEND
+
 ---STRING invite your gmail friends
 Invite your gmail friends
 ---STRINGEND

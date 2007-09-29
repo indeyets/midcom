@@ -1,6 +1,5 @@
 <?php
 $email_parts = array('','');
-$yahoo_user = '';
 $gmail_user = '';
 
 if ($_MIDCOM->auth->user)
@@ -18,7 +17,7 @@ if ($_MIDCOM->auth->user)
     </div>
 
     <div class="tabs_content" id="invite_gmail">
-        <h2><?php echo $data['l10n']->get('invite your gmail friends'); ?></h2>
+        <h2><?php echo $_MIDCOM->i18n->get_string('invite your gmail friends', 'com.magnettechnologies.contactgrabber'); ?></h2>
         <div class="invite_login_form">
             <form name="invite_gmail" method="POST" onsubmit="return com_magnettechnologies_contactgrabber_validate(this);" action="">
                 <input type="hidden" name="domain" value="gmail.com" />
@@ -28,13 +27,13 @@ if ($_MIDCOM->auth->user)
                     $gmail_user = $user_email;
                 }
                 ?>
-                <label><?php echo $data['l10n']->get('username'); ?>:</label><input class="text" type="text" name="username" value="&(gmail_user);" />
+                <label><?php echo $_MIDCOM->i18n->get_string('username', 'com.magnettechnologies.contactgrabber'); ?>:</label><input class="text" type="text" name="username" value="&(gmail_user);" />
                 <div class="clear_fix"></div>
-                <label><?php echo $data['l10n']->get('password'); ?>:</label><input class="text" type="password" name="password" value="" /><input type="submit" name="sign_in" value="<?php echo $data['l10n']->get('fetch'); ?>" />
+                <label><?php echo $_MIDCOM->i18n->get_string('password', 'com.magnettechnologies.contactgrabber'); ?>:</label><input class="text" type="password" name="password" value="" /><input type="submit" name="sign_in" value="<?php echo $data['l10n']->get('fetch'); ?>" />
             </form>
         </div>
         <div class="description">
-            <?php echo $data['l10n']->get('no details are stored'); ?>
+            <?php echo $_MIDCOM->i18n->get_string('no details are stored', 'com.magnettechnologies.contactgrabber'); ?>
         </div>
     </div>
 </div>
