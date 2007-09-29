@@ -18,7 +18,7 @@ if ($_MIDCOM->auth->user)
     </div>
 
     <div class="tabs_content" id="invite_gmail">
-        <h2>Invite your gMail friends</h2>
+        <h2><?php echo $data['l10n']->get('invite your gmail friends'); ?></h2>
         <div class="invite_login_form">
             <form name="invite_gmail" method="POST" onsubmit="return com_magnettechnologies_contactgrabber_validate(this);" action="">
                 <input type="hidden" name="domain" value="gmail.com" />
@@ -34,7 +34,7 @@ if ($_MIDCOM->auth->user)
             </form>
         </div>
         <div class="description">
-            <?php echo $_MIDCOM->i18n->get_string('no details are stored', 'com.magnettechnologies.contactgrabber'); ?>
+            <?php echo $data['l10n']->get('no details are stored'); ?>
         </div>
     </div>
 </div>
