@@ -433,7 +433,7 @@ class midcom_application
         // Initialize Root Topic
         $root_node = new midcom_db_topic($GLOBALS['midcom_config']['midcom_root_topic_guid']);
         if (   ! $root_node
-            || !$root_node->guid)
+            || empty($root_node->guid))
         {
             if (mgd_errno() == MGD_ERR_ACCESS_DENIED)
             {
@@ -449,7 +449,6 @@ class midcom_application
             }
             // This will exit.
         }
-        
         // Initialize Context Storage
         $this->_currentcontext = $this->_create_context(0, $root_node);
 
@@ -904,7 +903,7 @@ class midcom_application
         do 
         {
             $object = $this->_parser->get_current_object();
-            if (!is_object($object))
+            if (!is_object($object) || empty($object->guid) )
             {
                 debug_add("Root node missing.", MIDCOM_LOG_ERROR);
                 $this->generate_error(MIDCOM_ERRCRIT, "Root node missing.");
@@ -915,6 +914,7 @@ class midcom_application
             if (!$path) 
             {
                 debug_add("No component defined for this node.", MIDCOM_LOG_ERROR);
+                debug_print_r("Root node:",$object,MIDCOM_LOG_DEBUG);
                 $this->generate_error(MIDCOM_ERRCRIT, "No component defined for this node.");
             }
 
