@@ -580,6 +580,20 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
         $parameters = net_nehmer_account_viewer::get_mail_parameters($person);
         
         // Extra parameters
+        $parameters['USERNAME'] = $person->username;
+        if (isset($person->name))
+        {
+            $parameters['NAME'] = $person->name;
+        }
+        if (isset($person->firstname))
+        {
+            $parameters['FIRSTNAME'] = $person->firstname;            
+        }
+        if (isset($person->lastname))
+        {
+            $parameters['LASTNAME'] = $person->lastname;            
+        }
+        
         $parameters['PASSWORD'] = $password;
         $parameters['ACTIVATIONLINK'] = $activation_link;
         
