@@ -995,7 +995,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
      */
     function _activate_account()
     {
-        // debug_push_class(__CLASS__, __FUNCTION__);
+        debug_push_class(__CLASS__, __FUNCTION__);
         if (! $_MIDCOM->auth->request_sudo('net.nehmer.account'))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
@@ -1020,7 +1020,6 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         {
             $_MIDCOM->auth->drop_sudo();
 
-            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Failed to update a person record, last error was: ' . mgd_errstr(), MIDCOM_LOG_ERROR);
             debug_print_r('Tried to update this record:', $this->_person);
             debug_pop();
@@ -1034,10 +1033,8 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         $this->_account_type = $this->_person->get_parameter('midcom.helper.datamanager2', 'schema_name');
         if (! $this->_person->add_to_group($this->_account_type))
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Failed to create group membership for current record, most probably the group {$this->_account_type} does not exist. Continuing silently.",
                 MIDCOM_LOG_ERROR);
-            debug_pop();
         }
 
         // Clean up
@@ -1055,23 +1052,21 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
             {
                 $this->logged_in = true;
                 $_MIDCOM->auth->_sync_user_with_backend();
+                debug_add("Initated a login session for the user");
             }
             
             if (! $this->logged_in)
             {
-                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Failed to login automatically with username '{$this->_person->username}'.", MIDCOM_LOG_ERROR);
-                debug_pop();
             }
         }
         
         $_MIDCOM->auth->request_sudo('net.nehmer.account');
         
         // Trigger post-activation hooks
+        $this->_send_welcome_mail();
         $this->_auto_publish_account_details();
         $this->_invoke_account_activation_callback();
-        
-        $this->_send_welcome_mail();
 
         // Check for a custom return_url
         $return_to = $this->_person->get_parameter('net.nehmer.account', 'activation_returnto');
@@ -1086,8 +1081,11 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         $relocate_to = $this->_config->get('relocate_after_activation');
         if ($relocate_to)
         {
+            debug_pop();
             $_MIDCOM->relocate($relocate_to);
         }
+        
+        debug_pop();
     }
     
     /**
