@@ -145,7 +145,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         $qb_vote = net_nemein_quickpoll_vote_dba::new_query_builder();
         $qb_vote->add_constraint('article', '=', $this->_article->id);
         
-        if ($this->config->get('lock_ip_address'))
+        if ($this->_config->get('lock_ip_address'))
         {
             $qb_vote->begin_group('OR');
                 $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
