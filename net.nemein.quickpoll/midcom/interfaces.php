@@ -42,5 +42,16 @@ class net_nemein_quickpoll_interface extends midcom_baseclasses_components_inter
         );
     }
 
+    function _on_resolve_permalink($topic, $config, $guid)
+    {
+        $article = new midcom_baseclasses_database_article($guid);
+        if (   ! $article
+            || $article->topic != $topic->id)
+        {
+            return null;
+        }
+
+        return "{$article->guid}.html";
+    }
 }
 ?>
