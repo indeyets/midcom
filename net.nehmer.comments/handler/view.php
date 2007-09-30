@@ -121,7 +121,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             }
             else
             {
-                $value = $ratings_total / count($rating_comments);
+                $value = $ratings_total / $rating_comments;
             }
             
             if ($this->_config->get('ratings_cache_to_object_property_metadata'))
