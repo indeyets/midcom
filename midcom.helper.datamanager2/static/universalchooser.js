@@ -178,7 +178,7 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
     add_result: function(key, title)
     {
         /* Render a result in the results list */
-        jsCall = 'javascript:midcom_helper_datamanager2_widget_universalchooser_add_option("' + this.idsuffix + '", "' + key + '", \'' + escape(title) + '\');';
+        jsCall = 'javascript:midcom_helper_datamanager2_widget_universalchooser_add_option(\'' + this.idsuffix.replace("'", "\\'") + '\', \'' + key.replace("'", "\\'") + '\', \'' + title.replace("'", "\\'") + '\');';
         result_li = this.create_element('li', null, false);
         result_link = this.create_element('a', 
                             {
