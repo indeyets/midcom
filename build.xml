@@ -4,6 +4,7 @@
     -->
     <property file="build.properties"  />
     <property name="absolute_basedir" value="" />
+    <property name="phpdocdir" value="documentation/api" />
     <resolvepath propertyName="absolute_basedir" file="${project.basedir}"/>
 
     <taskdef classname="build.installMidcomDir"
@@ -90,10 +91,10 @@
         <if>
             <equals arg1="${withDoc}" arg2="true" />
             <then>
-            <mkdir dir="${project.basedir}/midcom.core/documentation/phpdoc"/>
+            <mkdir dir="${project.basedir}/midcom.core/${phpdocdir}"/>
             <phpdoc 
                 title="MidCOM Documentation" 
-                destdir="${project.basedir}/midcom.core/documentation/phpdoc" 
+                destdir="${project.basedir}/midcom.core/${phpdocdir}" 
                 output="HTML:frames:earthli">
                 <fileset dir="${project.basedir}/midcom.core/" >
                     <include name="**/*.php"/>
@@ -121,10 +122,10 @@
         <if>
             <equals arg1="${withDoc}" arg2="true" />
             <then>
-                <mkdir dir="${project.basedir}/${module}/documentation"/>
+                <mkdir dir="${project.basedir}/${module}/${phpdocdir}"/>
             <phpdoc 
                 title="Documentation for ${module}" 
-                destdir="${project.basedir}/${module}/documentation/phpdoc" 
+                destdir="${project.basedir}/${module}/${phpdocdir}" 
                 output="HTML:frames:earthli">
                 <fileset dir="${project.basedir}/${module}/" >
                     <include name="**/*.php"/>
