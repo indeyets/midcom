@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
-    <type name="net_nemein_discussion_thread" table="net_nemein_discussion_thread">
+    <type name="net_nemein_discussion_thread" table="net_nemein_discussion_thread" parent="midgard_topic" parentfield="node">
         <property name="id" type="integer" primaryfield="id"/>
         <property name="title" type="text"/>
         <property name="name" type="text"/>
-        <property name="node" link="midgard_topic:id" reverse="no" type="integer"/>
+        <property name="node" link="midgard_topic:id" reverse="no" type="integer" parentfield="node"/>
 
         <!-- cached data -->
         <property name="posts" type="integer"/>
@@ -21,11 +21,11 @@
         <!-- /required metadata -->        
     </type>
     
-    <type name="net_nemein_discussion_post" table="net_nemein_discussion_post">
+    <type name="net_nemein_discussion_post" table="net_nemein_discussion_post" parent="net_nemein_discussion_thread" parentfield="thread">
         <property name="id" type="integer" primaryfield="id"/>
         <property name="subject" type="text"/>
-        <property name="thread" link="net_nemein_discussion_thread:id" reverse="no" type="integer"/>
-        <property name="replyto" link="net_nemein_discussion_post:id" reverse="no" type="integer"/>
+        <property name="thread" link="net_nemein_discussion_thread:id" reverse="no" type="integer" parentfield="thread"/>
+        <property name="replyto" link="net_nemein_discussion_post:id" reverse="no" type="integer" upfield="replyto"/>
         <property name="content" type="text"/>
         <property name="status" type="integer"/>
                 
