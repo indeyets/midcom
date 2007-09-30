@@ -49,5 +49,16 @@ class org_routamc_gallery_interface extends midcom_baseclasses_components_interf
         return true;
     }
 
+    function _on_resolve_permalink($topic, $config, $guid)
+    {
+        $photo = new org_routamc_gallery_photolink_dba($guid);
+        if (   ! $photo
+            || $photo->node != $topic->id)
+        {
+            return null;
+        }
+
+        return "photo/{$photo->guid}/";
+    }
 }
 ?>

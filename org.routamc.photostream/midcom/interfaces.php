@@ -40,5 +40,17 @@ class org_routamc_photostream_interface extends midcom_baseclasses_components_in
 
         return true;
     }
+    
+    function _on_resolve_permalink($topic, $config, $guid)
+    {
+        $photo = new org_routamc_photostream_photo_dba($guid);
+        if (   ! $photo
+            || $photo->node != $topic->id)
+        {
+            return null;
+        }
+
+        return "photo/{$photo->guid}/";
+    }
 }
 ?>
