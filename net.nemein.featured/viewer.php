@@ -41,23 +41,35 @@ class net_nemein_featured_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nemein_featured_handler_featured', 'delete'),
             'fixed_args' => Array('delete'),
             'variable_args' => 1,
-            );
+        );
         $this->_request_switch['move_down'] = Array
         (
             'handler' => Array('net_nemein_featured_handler_featured', 'move_down'),
             'fixed_args' => Array('move_down'),
             'variable_args' => 1,
-            );
+        );
         $this->_request_switch['move_up'] = Array
         (
             'handler' => Array('net_nemein_featured_handler_featured', 'move_up'),
             'fixed_args' => Array('move_up'),
             'variable_args' => 1,
-            );
+        );
         $this->_request_switch['index'] = Array
         (
             'handler' => Array('net_nemein_featured_handler_view', 'view'),
-            );
+        );
+        $this->_request_switch['list'] = Array
+        (
+            'handler' => Array('net_nemein_featured_handler_view', 'view'),
+            'fixed_args' => Array('list'),
+            'variable_args' => 1,
+        );
+        $this->_request_switch['list_top'] = Array
+        (
+            'handler' => Array('net_nemein_featured_handler_view', 'view'),
+            'fixed_args' => Array('list'),
+            'variable_args' => 2,
+        );
     }
 
     function _populate_node_toolbar()
