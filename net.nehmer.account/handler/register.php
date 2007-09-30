@@ -1064,8 +1064,6 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
                 debug_pop();
             }
         }
-
-        // $this->_send_welcome_mail();
         
         $_MIDCOM->auth->request_sudo('net.nehmer.account');
         
