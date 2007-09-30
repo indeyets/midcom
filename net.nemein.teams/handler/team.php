@@ -282,7 +282,6 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         $this->_team_group->name = $values['team_name'];
         $this->_team_group->owner = $this->_root_group->id;
         $this->_team_group->set_privilege('midgard:owner', $user);                
-        $this->_team_group->set_parameter('net.nemein.teams:preferences', 'is_recruiting', true);
 
         if (! $this->_team_group->create())
         {
@@ -294,6 +293,8 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	    }
 	    else
 	    {
+            $this->_team_group->set_parameter('net.nemein.teams:preferences', 'is_recruiting', true);
+            	        
 	        $this->_team_member = new midcom_db_member();
 	        $this->_team_member->gid = $this->_team_group->id;
 	        $this->_team_member->uid = $user->_storage->id;
