@@ -112,7 +112,7 @@
 /**
  * Invite email subject
  */
-'email_subject' => 'website invitation from %s',
+'invitation_mail_subject' => 'website invitation from %s',
 
 /**
  * Keep sent invites for x days

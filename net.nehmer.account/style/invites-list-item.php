@@ -1,8 +1,5 @@
 <?php
-
-$invite = $data['invite'];
-//print_r($invite);
-
+$invite =& $data['invite'];
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
 <li>
@@ -10,4 +7,3 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
  <a href="<?php echo $prefix . "remind_invite/" . $invite->hash . ".html"; ?>">Remind</a> | 
  <a href="<?php echo $prefix . "delete_invite/" . $invite->hash . ".html"; ?>">Delete</a>
 </li>
-
