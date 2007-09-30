@@ -1,5 +1,13 @@
 <?php
 
+function wfile($obj, $f) {
+
+    ob_start();
+    var_dump($obj);
+    file_put_contents($f, ob_get_contents());
+    ob_end_clean();
+
+}
 
 /**
  * Created on 10/09/2006
@@ -76,7 +84,9 @@ class packageMidCOMcore extends Task
     }
 
     // todo: add a setVersion from the commandline
-	protected $copyfiles = array ();
+    protected $copyfiles = array ();
+    /* array of files in the static dir. */
+    protected $staticFiles ;
 
 	/**
 	 * The init method: Do init steps.
@@ -95,8 +105,10 @@ class packageMidCOMcore extends Task
         $baseOptions = array('filelistgenerator' => 'File',
             'packagedirectory' => $this->path,
             'baseinstalldir' => 'midcom/lib',
+            'installexceptions' => array( 'support' => '/'),
+            'dir_roles' => array(), 
             'simpleoutput' => true,
-			            'include' => array('*.php', 'midcom/*', 'support/*'),
+			            'include' => array('*.php', 'midcom*', 'support*'),
             );
           
         $package = $this->makeBase($baseOptions);
@@ -114,6 +126,8 @@ class packageMidCOMcore extends Task
 
         $package->generateContents();
 
+        $this->addStatic($package);
+
         if ($package->debugPackageFile()) {
             echo "Writing package.....\n";
             $package->writePackageFile();
@@ -124,6 +138,43 @@ class packageMidCOMcore extends Task
     
     protected function getNotes($package) {
         // todo add release notes...
+    }
+    /*
+     * This method builds the list of files in the static dir and adds them to the 
+     * */
+    protected function addStatic($package) 
+    {
+
+        $this->staticFiles = array();
+        $this->getDirFilesRecursive($this->path . "/static");
+        foreach ($this->staticFiles as $path => $files ) 
+        {
+            $fpath = str_replace($this->path . '/static/', "", $path);
+            foreach ($files as $filename) 
+            {
+                $dir = '/static';
+                $filen =  $fpath .'/' . $filename ;
+                $package->addFile($dir, $filen , array(
+                            'role' => 'web', 
+                            'baseinstalldir' => '/', 
+                            'install-as' => $fpath ."/". $filename ) );
+            }
+        }
+
+    }
+
+    protected function getDirFilesRecursive($path) {
+        $list = dir($path);
+        while (($file = $list->read()) !== FALSE) {
+            if ($file{0} == '.') continue; // skipp .svn , . and ..
+            if (is_dir($path .'/'.$file)) {
+                $this->getDirFilesRecursive($path .'/' . $file);
+            } else {
+                if (!isset($this->staticFiles[$path])) $this->staticFiles[$path] = array();
+                $this->staticFiles[$path][] = $file;
+            }
+        }
+        $list->close();
     }
 
     /*
