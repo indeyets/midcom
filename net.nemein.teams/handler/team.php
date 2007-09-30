@@ -517,9 +517,9 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	        $pending->playerguid = $_MIDCOM->auth->user->guid;
 	        $pending->groupguid = $this->_current_team->groupguid;
 	        $pending->managerguid = $this->_current_team->managerguid;
-	        
+                
 	        if (!$pending->create())
-	        {	            
+	        {
                 $_MIDCOM->uimessages->add(
                     $this->_l10n->get('net.nemein.teams'),
                     $this->_l10n->get('error submitting application'),
@@ -544,6 +544,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
              
                 $subject = sprintf($this->_l10n->get('new application from %s'), $_MIDCOM->auth->user->username);
                 $body = $this->_l10n->get('User has applied for your team') . "<br/>";
+                $body . nl2br($_POST['private_application']) . "<br /><br />";
                 $body .= "<a href=\"" . $prefix . "team/{$this->_current_team->name}/pending/\">"
                 . $this->_config->get('private_pendings_link') . "</a>";
                     
