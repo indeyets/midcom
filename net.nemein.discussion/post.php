@@ -212,6 +212,10 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
      */
     function _update_thread_cache()
     {
+        if (!$_MIDCOM->auth->request_sudo('net.nemein.discussion'))
+        {
+            return true;
+        }
         $thread = $this->get_parent();
         $latest_post = new net_nemein_discussion_post_dba($thread->latestpost);
 
@@ -244,6 +248,9 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
                 $thread->update();
             }
         }
+        
+        $_MIDCOM->auth->drop_sudo();
+        
         return true;
     }
 }
