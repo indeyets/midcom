@@ -1212,7 +1212,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         }
 
         $subject = $this->_l10n->get($this->_config->get('welcome_mail_subject'));
-        $subject = str_replace('__USERNAME__', $this->_account->username, $subject);
+        $subject = str_replace('__USERNAME__', $this->_person->username, $subject);
         $body = $this->_l10n->get($this->_config->get('welcome_mail_body'));
         $body = str_replace('__USERNAME__', $this->_account->username, $body);
         
