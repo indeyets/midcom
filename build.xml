@@ -85,7 +85,23 @@
         <echo>${statistics}</echo>
     </target>
     <target name="packageCore">
+
         <mkdir dir="${target_dir}"/>
+        <if>
+            <equals arg1="${withDoc}" arg2="true" />
+            <then>
+            <mkdir dir="${project.basedir}/midcom.core/documentation/phpdoc"/>
+            <phpdoc 
+                title="MidCOM Documentation" 
+                destdir="${project.basedir}/midcom.core/documentation/phpdoc" 
+                output="HTML:frames:earthli">
+                <fileset dir="${project.basedir}/midcom.core/" >
+                    <include name="**/*.php"/>
+                </fileset>
+            </phpdoc>
+            </then>
+        </if>
+
         <packageMidCOMcore
             path="${project.basedir}/midcom.core"
             package="midcom"
@@ -102,6 +118,22 @@
 
     <target name="package">
         <mkdir dir="${target_dir}"/>
+        <if>
+            <equals arg1="${withDoc}" arg2="true" />
+            <then>
+                <mkdir dir="${project.basedir}/${module}/documentation"/>
+            <phpdoc 
+                title="Documentation for ${module}" 
+                destdir="${project.basedir}/${module}/documentation/phpdoc" 
+                output="HTML:frames:earthli">
+                <fileset dir="${project.basedir}/${module}/" >
+                    <include name="**/*.php"/>
+                </fileset>
+            </phpdoc>
+            </then>
+        </if>
+
+
         <packJavascripts
             action="pack"
             path="${module}"
@@ -138,8 +170,14 @@ To pack javascripts inside given folder and its subfolders:
 	phing packjs -Dpath=pathtofolder
 To unpack javascripts inside given folder and its subfolders:
 	phing unpackjs -Dpath=pathtofolder
-To create a pear package of a module:
-    phing package -Dmodule=com.example.module
+To create a pear package of a module: 
+    phing package -Dmodule=com.example.module [-DwithDoc=true]
+To create a pear package of the midcom core: 
+    phing packageCore [-DwithDoc=true]
+
+Note: -DwithDoc=true needs phpdocumentor installed. When set it will generate phpdocs
+in the modules documentation directory. 
+
 To create a new module:
     phing scaffold -Dmodule=com.example.mymodule
 To generate a suggested schemafile to place in the midgard schemadirectory:
