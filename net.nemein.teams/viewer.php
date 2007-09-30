@@ -470,6 +470,7 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
 
         return true;
     }
+
 }
 
 ?>

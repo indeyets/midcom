@@ -38,7 +38,19 @@
 	        'type' => 'text',
 	        'widget' => 'text',
         ),
-
+        'recruiting' => Array
+        (
+	        'title' => 'Is recruiting',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'net.nemein.teams:preferences',
+                'name'     => 'is_recruiting',
+            ),
+	        'type' => 'boolean',
+	        'widget' => 'checkbox',
+	        'default' => true,
+        ),
     )
 ), // team
 

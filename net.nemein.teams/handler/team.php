@@ -260,6 +260,8 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
     function & dm2_create_callback (&$controller)
     {
+        $user = $_MIDCOM->auth->user;
+        
         $_MIDCOM->auth->request_sudo('net.nemein.teams');
         
         $values = $controller->formmanager->form->getSubmitValues( true );
@@ -279,7 +281,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         $this->_team_group = new midcom_db_group();
         $this->_team_group->name = $values['team_name'];
         $this->_team_group->owner = $this->_root_group->id;
-        $this->_team_group->set_privilege('midgard:owner', $_MIDCOM->auth->user);                
+        $this->_team_group->set_privilege('midgard:owner', $user);                
         $this->_team_group->set_parameter('net.nemein.teams:preferences', 'is_recruiting', true);
 
         if (! $this->_team_group->create())
@@ -294,8 +296,8 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	    {
 	        $this->_team_member = new midcom_db_member();
 	        $this->_team_member->gid = $this->_team_group->id;
-	        $this->_team_member->uid = $_MIDCOM->auth->user->_storage->id;
-	        $this->_team_member->set_privilege('midgard:owner', $_MIDCOM->auth->user);
+	        $this->_team_member->uid = $user->_storage->id;
+	        $this->_team_member->set_privilege('midgard:owner', $user);
 	        
 	        if (! $this->_team_member->create())
 	        {
@@ -314,7 +316,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         
         $this->_team = new net_nemein_teams_team_dba();
         $this->_team->groupguid = $this->_team_group->guid;
-        $this->_team->managerguid = $_MIDCOM->auth->user->guid;
+        $this->_team->managerguid = $user->guid;
         
         $url_name = $this->_team_group->guid;        
         if ($_MIDCOM->serviceloader->can_load('midcom_core_service_urlgenerator'))
@@ -324,7 +326,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         }
         $this->_team->name = $url_name;
 
-        $this->_team->set_privilege('midgard:owner', $_MIDCOM->auth->user);
+        $this->_team->set_privilege('midgard:owner', $user);
 
         if (!$this->_team->create())
         {
@@ -335,7 +337,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 $_MIDCOM->relocate('');
         }
         
-        $this->_logger->log("Team object created by " . $_MIDCOM->auth->user->username,  $this->_team_group->guid);
+        $this->_logger->log("Team object created by " . $user->username,  $this->_team_group->guid);
                 
         $_MIDCOM->auth->drop_sudo();
         
