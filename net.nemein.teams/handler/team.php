@@ -519,9 +519,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	        $pending->managerguid = $this->_current_team->managerguid;
 	        
 	        if (!$pending->create())
-	        {
-                $pending->set_privilege('midgard:owner', $this->_request_data['team_manager']);
-	            
+	        {	            
                 $_MIDCOM->uimessages->add(
                     $this->_l10n->get('net.nemein.teams'),
                     $this->_l10n->get('error submitting application'),
@@ -529,6 +527,8 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 );
 	            $_MIDCOM->relocate('');
 	        }
+	        
+	        $pending->set_privilege('midgard:owner', "user:{$this->_current_team->managerguid}");
 
             if ($this->_config->get('pm_manager'))
             {
@@ -682,15 +682,15 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         
         $this->_require_manager();
         
-        $qb = net_nemein_teams_team_dba::new_query_builder();
-        $qb->add_constraint('managerguid', '=', $_MIDCOM->auth->user->guid);
-        
-        $teams = $qb->execute();
+        // $qb = net_nemein_teams_team_dba::new_query_builder();
+        // $qb->add_constraint('managerguid', '=', $_MIDCOM->auth->user->guid);
+        // 
+        // $teams = $qb->execute();
         
         $max_players = $this->_config->get('max_players_per_team');
         
         $qb = midcom_db_member::new_query_builder();
-        $qb->add_constraint('gid.guid', '=', $teams[0]->groupguid);
+        $qb->add_constraint('gid.guid', '=', $this->_current_team->groupguid);
         
         $member_count = $qb->count();
         
@@ -782,7 +782,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         if ($qb->count() > 0)
         {
             $qb = net_nemein_teams_pending_dba::new_query_builder();
-            $qb->add_constraint('managerguid', '=', $_MIDCOM->auth->user->guid);
+            $qb->add_constraint('managerguid', '=', $this->_request_data['team_manager']->guid);
             
             $pending = $qb->execute();
             
@@ -943,7 +943,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         else
         {
             $this->_request_data['total_pending'] = count($this->_pending);  
-            
+
             foreach($this->_pending as $pending)
             {
                 $player = new midcom_db_person($pending->playerguid);
