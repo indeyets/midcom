@@ -1,6 +1,5 @@
-function com_magnettechnologies_contactgrabber_validate(form)
+function com_magnettechnologies_contactgrabber_validate(form, library)
 {
-    console.log("com_magnettechnologies_contactgrabber_validate");
     var inputs = jQuery(":input",form);
     var uname_passed = false;
     var pwd_passed = false;
@@ -10,13 +9,24 @@ function com_magnettechnologies_contactgrabber_validate(form)
         if (   input.val() == '')
         {
             input.addClass('error');
+            return;
         }
-        else
+        
+        if (library == 'gmail')
         {
-            uname_passed = true;
-            input.removeClass('error');
+            var re = /@gmail.com/;
+            var val = String(input.val());
+            var is_email = re.exec(val);
+            
+            if (is_email)
+            {
+                input.addClass('error');
+                return;
+            }
         }
-        console.log("validate_username");
+
+        uname_passed = true;
+        input.removeClass('error');
     }
     
     function validate_password(input)
@@ -30,12 +40,9 @@ function com_magnettechnologies_contactgrabber_validate(form)
             pwd_passed = true;
             input.removeClass('error');
         }
-        console.log("validate_password");
     }
 
-    console.log("inputs: "+inputs);
     jQuery(inputs).each(function(i,n){
-        console.log("i: "+i+" n: "+n);
         if (n.name == 'username')
         {
             validate_username(jQuery(n));
