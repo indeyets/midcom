@@ -24,7 +24,7 @@ if ($_MIDCOM->auth->user)
                 <?php
                 if ($email_parts[1] == 'gmail.com')
                 {
-                    $gmail_user = $user_email;
+                    $gmail_user = $email_parts[0];
                 }
                 ?>
                 <label><?php echo $_MIDCOM->i18n->get_string('username', 'com.magnettechnologies.contactgrabber'); ?>:</label><input class="text" type="text" name="username" value="&(gmail_user);" /><label>@gmail.com</label>
