@@ -131,7 +131,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         else
         {
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-            $_MIDCOM->relocate($prefix.'create/default.html');
+            $_MIDCOM->relocate($prefix.'create/'.$this->_config->get('schema'));
         }
     
         $this->_load_datamanager();
@@ -144,10 +144,19 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
 
         $qb_vote = net_nemein_quickpoll_vote_dba::new_query_builder();
         $qb_vote->add_constraint('article', '=', $this->_article->id);
-        $qb_vote->begin_group('OR');
+        
+        if ($this->config->get('lock_ip_address'))
+        {
+            $qb_vote->begin_group('OR');
+                $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
+                $qb_vote->add_constraint('ip', '=', $_SERVER['REMOTE_ADDR']);
+            $qb_vote->end_group();            
+        }
+        else if ($_MIDGARD['user'])
+        {
             $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
-            $qb_vote->add_constraint('ip', '=', $_SERVER['REMOTE_ADDR']);
-        $qb_vote->end_group();
+        }
+        
         $vote_count = $qb_vote->count();
 
         if ($vote_count > 0)
