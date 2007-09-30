@@ -1071,18 +1071,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         $this->_auto_publish_account_details();
         $this->_invoke_account_activation_callback();
         
-        if ($auto_login_sitegroup)
-        {
-            $_MIDCOM->auth->drop_sudo();
-
-            $this->_send_welcome_mail();
-
-            $_MIDCOM->auth->request_sudo('net.nehmer.account');            
-        }
-        else
-        {
-            $this->_send_welcome_mail();
-        }
+        $this->_send_welcome_mail();
 
         // Check for a custom return_url
         $return_to = $this->_person->get_parameter('net.nehmer.account', 'activation_returnto');
@@ -1187,6 +1176,9 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
     {
         if (! $this->_config->get('have_net_nehmer_mail'))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Sending of welcome mails disabled by configuration');
+            debug_pop();
             return;
         }
         if (! $_MIDCOM->componentloader->load_graceful('net.nehmer.mail'))
