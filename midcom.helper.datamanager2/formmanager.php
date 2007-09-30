@@ -208,7 +208,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
 
         $this->namespace = "{$name}_";
 
-        $this->form = new HTML_QuickForm($name, 'post', '', '_self', Array('id' => $name), true);
+        $this->form = new HTML_QuickForm($name, 'post', $_SERVER['REQUEST_URI'], '_self', Array('id' => $name), true);
         $defaults = Array();
         $this->widgets = Array();
 

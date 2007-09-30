@@ -209,7 +209,7 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
         (
             'id'    => "{$this->_namespace}{$this->name}_upload_button",
         );
-        $elements[] =& HTML_QuickForm::createElement('submit', "{$this->name}_upload", $this->_l10n->get('upload file'), $attributes);
+        //$elements[] =& HTML_QuickForm::createElement('submit', "{$this->name}_upload", $this->_l10n->get('upload file'), $attributes);
 
         // Add Title line if configured to do so
         if ($this->show_title)
@@ -354,7 +354,7 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
         (
             'id'    => "{$this->_namespace}{$this->name}_upload_button",
         );
-        $elements[] =& HTML_QuickForm::createElement('submit', "{$this->name}_upload", $this->_l10n->get('upload file'), $attributes);
+        //$elements[] =& HTML_QuickForm::createElement('submit', "{$this->name}_upload", $this->_l10n->get('upload file'), $attributes);
 
         // Add Title line if configured to do so.
         if ($this->show_title)
@@ -402,7 +402,7 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
         (
             'id'    => "{$this->_namespace}{$this->name}_upload_button_video",
         );
-        $elements[] =& HTML_QuickForm::createElement('submit', "{$this->name}_upload_video", $this->_l10n->get('upload file'), $attributes);
+        //$elements[] =& HTML_QuickForm::createElement('submit', "{$this->name}_upload_video", $this->_l10n->get('upload file'), $attributes);
 	
 	$static_html = "</td></tr>\n";
 
@@ -453,7 +453,7 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
         (
             'id'    => "{$this->_namespace}{$this->name}_upload_button_video",
         );
-        $elements[] =& HTML_QuickForm::createElement('submit', "{$this->name}_upload_video", $this->_l10n->get('upload file'), $attributes);
+        //$elements[] =& HTML_QuickForm::createElement('submit', "{$this->name}_upload_video", $this->_l10n->get('upload file'), $attributes);
 	
 	$static_html = "</td></tr>";
 
@@ -569,66 +569,68 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
                 debug_pop();
             }
 
-        }       
-	elseif ($this->_upload_element_video->isUploadedFile())
-	{
-
-            $file_video = $this->_upload_element_video->getValue();
-
-echo "<pre>";
-//print_r($this->_upload_element_video);
-//print_r($this->_upload_element);
-echo "</pre>";
-
-	    if (!empty($file_video['name']))
-	    {
-                if (! $this->_type->set_video($file_video['name'], $file_video['tmp_name'], 'Video file'))
+        }   
+    	else
+    	{
+            if ($this->_upload_element_video->isUploadedFile())
+            {
+    
+                $file_video = $this->_upload_element_video->getValue();
+    
+                //echo "<pre>";
+                //print_r($this->_upload_element_video);
+                //print_r($this->_upload_element);
+                //echo "</pre>";
+    
+                if (!empty($file_video['name']))
                 {
-                    debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add("Failed to process image {$this->name}.", MIDCOM_LOG_INFO);
-                    debug_pop();
-                    $this->_cast_formgroup_to_upload_video();
+                    if (! $this->_type->set_video($file_video['name'], $file_video['tmp_name'], 'Video file'))
+                    {
+                        debug_push_class(__CLASS__, __FUNCTION__);
+                        debug_add("Failed to process image {$this->name}.", MIDCOM_LOG_INFO);
+                        debug_pop();
+                        $this->_cast_formgroup_to_upload_video();
+                    }
+                    else
+                    {
+                        $this->_cast_formgroup_to_replacedelete_video();
+                    }
                 }
-	        else
-	        {
-                    $this->_cast_formgroup_to_replacedelete_video();
-	        }
-	    }
-
-        }
-	elseif ($this->_upload_element->isUploadedFile())
-        {
-            $file = $this->_upload_element->getValue();
-	    
-echo "<pre>";
-//print_r($this->_upload_element_video);
-//print_r($this->_upload_element);
-echo "</pre>";
-
-
-            if ($this->show_title)
-            {
-                $title = $results["{$this->name}_title"];
-            }
-            else
-            {
-                $title = '';
             }
             
-	    if (!empty($file['name']))
-	    {
-                if (! $this->_type->set_image($file['name'], $file['tmp_name'], $title))
+            if ($this->_upload_element->isUploadedFile())
+            {
+                $file = $this->_upload_element->getValue();
+            
+                //echo "<pre>";
+                //print_r($this->_upload_element_video);
+                //print_r($this->_upload_element);
+                //echo "</pre>";
+    
+                if ($this->show_title)
                 {
-                    debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add("Failed to process image {$this->name}.", MIDCOM_LOG_INFO);
-                    debug_pop();
-                    $this->_cast_formgroup_to_upload();
+                    $title = $results["{$this->name}_title"];
                 }
                 else
                 {
-                    $this->_cast_formgroup_to_replacedelete();
+                    $title = '';
                 }
-	    }
+                
+                if (!empty($file['name']))
+                {
+                    if (! $this->_type->set_image($file['name'], $file['tmp_name'], $title))
+                    {
+                        debug_push_class(__CLASS__, __FUNCTION__);
+                        debug_add("Failed to process image {$this->name}.", MIDCOM_LOG_INFO);
+                        debug_pop();
+                        $this->_cast_formgroup_to_upload();
+                    }
+                    else
+                    {
+                        $this->_cast_formgroup_to_replacedelete();
+                    }
+                }
+            }
         }
     }
 
