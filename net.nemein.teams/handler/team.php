@@ -702,14 +702,14 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 {
                     if ($value == "on")
                     {
-                        if (!$this->_join_team($teams[0]->groupguid, $key))
+                        if (!$this->_join_team($this->_current_team->groupguid, $key))
                         {
                             // TODO: handle this
                         }
                         else
                         {
                             $this->_logger->log("User " . $_MIDCOM->auth->user->_storage->username . " has approved player GUID: "
-                                . $key, $teams[0]->guid);
+                                . $key, $this->_current_team->guid);
                                 
                             // Removing all pending applications
                             $qb = net_nemein_teams_pending_dba::new_query_builder();
@@ -727,7 +727,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                     
 	                        $subject = $this->_l10n->get('application was accepted by');
                             $subject .= " " . $_MIDCOM->auth->user->_storage->username; 
-                            $body = sprintf($this->_l10n->get('your application to team %s '), $teams[0]->name);
+                            $body = sprintf($this->_l10n->get('your application to team %s '), $this->_current_team->name);
                             $body .= $this->_l10n->get('has been accepted');
 
                             $sender_id = $_MIDCOM->auth->user->_storage->id;
@@ -745,11 +745,11 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                     if ($value == 'on')
                     {
                         $this->_logger->log("User " . $_MIDCOM->auth->user->_storage->username . " has declined player GUID: "
-                            . $key, $teams[0]->guid);
+                            . $key, $this->_current_team->guid);
                             
                         // Removing pending applications
                         $qb = net_nemein_teams_pending_dba::new_query_builder();
-                        $qb->add_constraint('groupguid', '=', $teams[0]->groupguid);
+                        $qb->add_constraint('groupguid', '=', $this->_current_team->groupguid);
                         $qb->add_constraint('playerguid', '=', $key);
                     
                         $pending = $qb->execute();
@@ -763,7 +763,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                     
 	                    $subject = $this->_l10n->get('application declined by');
                         $subject .= " " . $_MIDCOM->auth->user->_storage->username; 
-                        $body = $this->_l10n->get('your application to team') . " " . $teams[0]->name;
+                        $body = $this->_l10n->get('your application to team') . " " . $this->_current_team->name;
                         $body .= $this->_l10n->get('has been declined');
 
                         $sender_id = $_MIDCOM->auth->user->_storage->id;
