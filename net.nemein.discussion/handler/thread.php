@@ -94,7 +94,10 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
             )
         );
         
-        if ($post->status < NET_NEMEIN_DISCUSSION_MODERATED)
+        if (   $post->can_do('midgard:update')
+            && $_MIDCOM->auth->user
+            && $post->metadata->creator != $_MIDCOM->auth->user->guid
+            && $post->status < NET_NEMEIN_DISCUSSION_MODERATED)
         {
             if ($post->status > NET_NEMEIN_DISCUSSION_REPORTED_ABUSE)
             {
