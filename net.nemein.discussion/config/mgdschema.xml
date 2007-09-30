@@ -2,8 +2,8 @@
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
     <type name="net_nemein_discussion_thread" table="net_nemein_discussion_thread" parent="midgard_topic" parentfield="node">
         <property name="id" type="integer" primaryfield="id"/>
-        <property name="title" type="text"/>
-        <property name="name" type="text"/>
+        <property name="title" type="string"/>
+        <property name="name" type="string"/>
         <property name="node" link="midgard_topic:id" reverse="no" type="integer" parentfield="node"/>
 
         <!-- cached data -->
@@ -23,17 +23,17 @@
     
     <type name="net_nemein_discussion_post" table="net_nemein_discussion_post" parent="net_nemein_discussion_thread" parentfield="thread">
         <property name="id" type="integer" primaryfield="id"/>
-        <property name="subject" type="text"/>
+        <property name="subject" type="string"/>
         <property name="thread" link="net_nemein_discussion_thread:id" reverse="no" type="integer" parentfield="thread"/>
         <property name="replyto" link="net_nemein_discussion_post:id" reverse="no" type="integer" upfield="replyto"/>
         <property name="content" type="text"/>
         <property name="status" type="integer"/>
                 
         <!-- poster metadata -->
-        <property name="sendername" type="text"/>
-        <property name="senderip" type="text"/>
-        <property name="senderurl" type="text"/>        
-        <property name="senderemail" type="text"/>
+        <property name="sendername" type="string"/>
+        <property name="senderip" type="string"/>
+        <property name="senderurl" type="string"/>        
+        <property name="senderemail" type="string"/>
         <property name="sender" link="midgard_person:id" reverse="no" type="integer"/>
         <!-- /poster metadata -->
         
