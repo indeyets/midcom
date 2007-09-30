@@ -933,13 +933,17 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     function _show_pending($handler_id, &$data)
     {
         midcom_show_style('teams_pending_list_start');
-    
+        
+        $this->_request_data['total_pending'] = 0;  
+        
         if (isset($this->_request_data['team_full']) && $this->_request_data['team_full'])
         {
             echo $this->_l10n->get('team is full');
         }
         else
         {
+            $this->_request_data['total_pending'] = count($this->_pending);  
+            
             foreach($this->_pending as $pending)
             {
                 $player = new midcom_db_person($pending->playerguid);
