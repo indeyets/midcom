@@ -101,9 +101,15 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             // Handle ratings
             $comments = net_nehmer_comments_comment::list_by_objectguid($this->_objectguid);
             $ratings_total = 0;
+            $rating_comments = 0;
             foreach ($comments as $comment)
             {
-                $ratings_total += $comment->rating;
+                if (   isset($comment->rating)
+                    && !empty($comment->rating))
+                {
+                    $rating_comments++;
+                    $ratings_total += $comment->rating;
+                }
             }
             
             // Get parent object
@@ -115,7 +121,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             }
             else
             {
-                $value = $ratings_total / count($comments);
+                $value = $ratings_total / count($rating_comments);
             }
             
             if ($this->_config->get('ratings_cache_to_object_property_metadata'))
