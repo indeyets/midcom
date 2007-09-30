@@ -60,7 +60,8 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
         $data['object'] = null;
         $data['folder'] = $this->_topic;
         
-        if ($handler_id != '____ais-imagepopup-list_folder_noobject')
+        if (   $handler_id != '____ais-imagepopup-list_folder_noobject'
+            && isset($args[1]))
         {
             $data['object'] = $_MIDCOM->dbfactory->get_object_by_guid($args[1]);
             
