@@ -10,5 +10,5 @@
 'show_navigation_pseudo_leaves' => true,   // Set this to false if you want to hide archive and feeds navigation items
 'enable_anonymous' => true,
 
-'lock_ip_address' = true,
+'lock_ip_address' => true,
 
