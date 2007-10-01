@@ -88,6 +88,11 @@ class midcom_baseclasses_database_topic extends __midcom_baseclasses_database_to
         }
         $mc_parent_keys = $mc_parent->list_keys();
         $parent_guids = array_keys($mc_parent_keys);
+        if (count($parent_guids) == 0)
+        {
+            return null;
+        }
+        
         $parent_guid = $parent_guids[0];
         if ($parent_guid === false)
         {
