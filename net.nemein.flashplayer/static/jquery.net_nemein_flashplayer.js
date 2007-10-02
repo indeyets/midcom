@@ -55,15 +55,16 @@ jQuery.net_nemein_flashplayer_player = function(object, options)
     // flashplayer_tag.setFlashvars(_flashvars);
 
     var flashplayer_tag = { movie: generate_static_url(options.flash_player_path), width: options.player_width, height: options.player_height, flashvars: _flashvars };    
-    if (!_object[0].id)
+    if (   _object.attr('id') == undefined
+        || _object.attr('id') == '')
     {
-        _object[0].id = _player_id;
+        _object.attr('id', _player_id);
     }
-    UFO.create(flashplayer_tag, _object[0].id);
-    
+    UFO.create(flashplayer_tag, _object.attr('id'));
+
     _object.attr("nnf_id",_player_id)
     .attr("nnf_type","player")
-    .html(UFO.writeSWF(_object[0].id));
+    .html(UFO.writeSWF(_object.attr('id')));
     //.html(flashplayer_tag.toString())
     
     _object.bind("run_client_action", function(event, action, args){
@@ -211,15 +212,16 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
     flashplaylist_tag.setFlashvars(_flashvars);*/
 
     var flashplaylist_tag = { movie: generate_static_url(options.flash_playlist_path), width: options.width, height: options.height, flashvars: _flashvars };    
-    if (!_object[0].id)
+    if (   _object.attr('id') == undefined
+        || _object.attr('id') == '')
     {
-        _object[0].id = _playlist_id;
+        _object.attr('id', _playlist_id);
     }
-    UFO.create(flashplaylist_tag, _object[0].id);
+    UFO.create(flashplaylist_tag, _object.attr('id'));
         
     _object.attr("nnf_id",_playlist_id)
     .attr("nnf_type","playlist")//;//.html(flashplaylist_tag.toString());
-    .html(UFO.writeSWF(_object[0].id));
+    .html(UFO.writeSWF(_object.attr('id')));
     
     function activeXForIE()
     {
