@@ -43,6 +43,7 @@ jQuery.net_nemein_flashplayer_player = function(object, options)
 {    
     //console.log("net_nemein_flashplayer_player object: "+object);
     
+    var _self = this;    
     var _object = object;
     var _player_id = generate_id();
     var _proxy = new FlashProxy(_player_id, generate_static_url(options.proxy_gateway_swf_path));
@@ -70,9 +71,16 @@ jQuery.net_nemein_flashplayer_player = function(object, options)
 	    //console.log("set_video item.video_url: "+item.video_url);
 	    //console.log("set_video options: "+options);
 	    set_video(item, options);
+	}).bind('embedded', function(e){
+	    if (options.on_embedded) {
+    	    options.on_embedded(e);
+	    }
 	});
 	
 	proxy_send('player_embedded', {element_id: _object.attr("id")});
+	_object.trigger('embedded');
+	
+	//proxy_send('player_embedded', {element_id: _object.attr("id")});
 	
 	function set_video(item, video_options)
 	{
