@@ -72,8 +72,11 @@ jQuery.net_nemein_flashplayer_player = function(object, options)
     }
         
     _object.attr("nnf_id",_player_id)
-    .attr("nnf_type","player")
-    .html(player_content);
+    .attr("nnf_type","player");
+    if (player_content != '')
+    {
+        _object.html(player_content);        
+    }
     //.html(UFO.writeSWF(_object.attr('id')));
     
     _object.bind("run_client_action", function(event, action, args){
@@ -239,8 +242,11 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
     }
         
     _object.attr("nnf_id",_playlist_id)
-    .attr("nnf_type","playlist")
-    .html(player_content);
+    .attr("nnf_type","playlist");
+    if (player_content != '')
+    {
+        _object.html(player_content);        
+    }
     //.html(UFO.writeSWF(_object.attr('id')));
     
     _object.bind("run_client_action", function(event, action, args){
