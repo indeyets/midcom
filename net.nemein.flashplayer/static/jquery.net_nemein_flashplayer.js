@@ -50,14 +50,23 @@ jQuery.net_nemein_flashplayer_player = function(object, options)
     
     var _flashvars = "player_id="+_player_id;
     
-    var flashplayer_tag = new FlashTag(generate_static_url(options.flash_player_path), options.player_width, options.player_height);
-    flashplayer_tag.setVersion(options.flash_version);
-    flashplayer_tag.setFlashvars(_flashvars);
+    // var flashplayer_tag = new FlashTag(generate_static_url(options.flash_player_path), options.player_width, options.player_height);
+    // flashplayer_tag.setVersion(options.flash_version);
+    // flashplayer_tag.setFlashvars(_flashvars);
+
+    var flashplayer_tag = { movie: generate_static_url(options.flash_player_path), width: options.player_width, height: options.player_height, flashvars: _flashvars };    
+    if (!_object[0].id)
+    {
+        _object[0].id = _player_id;
+    }
+    UFO.create(flashplayer_tag, _object[0].id);
     
     _object.attr("nnf_id",_player_id)
     .attr("nnf_type","player")
-    .html(flashplayer_tag.toString())
-    .bind("run_client_action", function(event, action, args){
+    .html(UFO.writeSWF(_object[0].id));
+    //.html(flashplayer_tag.toString())
+    
+    _object.bind("run_client_action", function(event, action, args){
 	    //console.log("player run_client_action action: "+action);
 	    //console.log("player run_client_action args: "+args);
         var functionToCall = eval(action);
@@ -197,14 +206,60 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
     
     var _flashvars = "playlist_id="+_playlist_id;
     
-    var flashplaylist_tag = new FlashTag(generate_static_url(options.flash_playlist_path), options.width, options.height);
-    flashplaylist_tag.setVersion(options.flash_version);
-    flashplaylist_tag.setFlashvars(_flashvars);
+    //var flashplaylist_tag = new FlashTag(generate_static_url(options.flash_playlist_path), options.width, options.height);
+    /*flashplaylist_tag.setVersion(options.flash_version);
+    flashplaylist_tag.setFlashvars(_flashvars);*/
+
+    var flashplaylist_tag = { movie: generate_static_url(options.flash_playlist_path), width: options.width, height: options.height, flashvars: _flashvars };    
+    if (!_object[0].id)
+    {
+        _object[0].id = _playlist_id;
+    }
+    UFO.create(flashplaylist_tag, _object[0].id);
         
     _object.attr("nnf_id",_playlist_id)
-    .attr("nnf_type","playlist")
-    .html(flashplaylist_tag.toString())    
-    .bind("run_client_action", function(event, action, args){
+    .attr("nnf_type","playlist")//;//.html(flashplaylist_tag.toString());
+    .html(UFO.writeSWF(_object[0].id));
+    
+    function activeXForIE()
+    {
+    	if (navigator.appName == "Microsoft Internet Explorer")
+            {
+
+    		//Array of elements to be replaced
+    		var arrElements = new Array(3);
+    		arrElements[0] = "object";
+    		arrElements[1] = "embed";
+    		arrElements[2] = "applet";
+
+
+    		//Loop over element types
+    		for (n = 0; n < arrElements.length; n++) {
+
+    			//set object for brevity
+    			replaceObj = document.getElementsByTagName(arrElements[n]);
+
+    			//loop over element objects returned
+    			for (i = 0; i < replaceObj.length; i++ ) {
+    				//set parent object for brevity
+    				parentObj = replaceObj[i].parentNode;
+
+    				//grab the html inside of the element before removing it from the DOM
+    				newHTML = parentObj.innerHTML;
+
+    				//remove element from the DOM
+    				parentObj.removeChild(replaceObj[i]);
+
+    				//stick the element right back in, but as a new object
+    				parentObj.innerHTML = newHTML;
+
+    			}
+    		}
+    	}
+    };
+    //activeXForIE();
+    
+    _object.bind("run_client_action", function(event, action, args){
 	    //console.log("playlist run_client_action action: "+action);
 	    //console.log("playlist run_client_action args: "+args);
         var functionToCall = eval(action);
@@ -369,6 +424,7 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
             var args = {
                 content: _playlist_content
             };
+            //alert(args);
             proxy_send('playlist_loading_success',args);
         }
     }
