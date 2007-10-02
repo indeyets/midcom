@@ -1,0 +1,9 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---LANGUAGE en
+
+---STRING midgard wizards
+Midgard Wizards
+---STRINGEND
+
+
