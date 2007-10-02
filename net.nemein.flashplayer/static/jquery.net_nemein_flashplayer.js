@@ -77,10 +77,8 @@ jQuery.net_nemein_flashplayer_player = function(object, options)
 	    }
 	});
 	
-	proxy_send('player_embedded', {element_id: _object.attr("id")});
-	_object.trigger('embedded');
-	
 	//proxy_send('player_embedded', {element_id: _object.attr("id")});
+	_object.trigger('embedded');
 	
 	function set_video(item, video_options)
 	{
@@ -237,7 +235,7 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
 	    change_movie(item);
 	});
 
-	proxy_send('playlist_embedded', {element_id: _object.attr("id")});
+	//proxy_send('playlist_embedded', {element_id: _object.attr("id")});
     
     function change_movie(item)
     {
