@@ -61,10 +61,11 @@ jQuery.net_nemein_flashplayer_player = function(object, options)
         _object.attr('id', _player_id);
     }
     UFO.create(flashplayer_tag, _object.attr('id'));
-
+    UFO.writeSWF(_object.attr('id'));
+        
     _object.attr("nnf_id",_player_id)
-    .attr("nnf_type","player")
-    .html(UFO.writeSWF(_object.attr('id')));
+    .attr("nnf_type","player");
+    //.html(UFO.writeSWF(_object.attr('id')));
     //.html(flashplayer_tag.toString())
     
     _object.bind("run_client_action", function(event, action, args){
@@ -77,9 +78,9 @@ jQuery.net_nemein_flashplayer_player = function(object, options)
 	    //console.log("run_player_action args.length: "+args.length);
 	    proxy_send(action, args);
 	}).bind("set_video", function(event, item, options){
-	    //console.log("set_video item.id: "+item.id);
-	    //console.log("set_video item.video_url: "+item.video_url);
-	    //console.log("set_video options: "+options);
+        // console.log("set_video item.id: "+item.id);
+        // console.log("set_video item.video_url: "+item.video_url);
+        // console.log("set_video options: "+options);
 	    set_video(item, options);
 	}).bind('embedded', function(e){
 	    if (options.on_embedded) {
@@ -218,10 +219,11 @@ jQuery.net_nemein_flashplayer_playlist = function(object, options)
         _object.attr('id', _playlist_id);
     }
     UFO.create(flashplaylist_tag, _object.attr('id'));
+    UFO.writeSWF(_object.attr('id'));
         
     _object.attr("nnf_id",_playlist_id)
-    .attr("nnf_type","playlist")//;//.html(flashplaylist_tag.toString());
-    .html(UFO.writeSWF(_object.attr('id')));
+    .attr("nnf_type","playlist");//;//.html(flashplaylist_tag.toString());
+    //.html(UFO.writeSWF(_object.attr('id')));
     
     function activeXForIE()
     {
