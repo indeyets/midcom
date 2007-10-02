@@ -151,6 +151,13 @@ class midcom_core_group_midgard extends midcom_core_group
     function list_members()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
+        if (   !is_object($this->_storage)
+            || empty($this->_storage->id))
+        {
+            debug_add('$this->storage is not object or id is empty', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return array();
+        }
 
         $qb = new midgard_query_builder('midgard_member');
         $qb->add_constraint('gid', '=', $this->_storage->id);
