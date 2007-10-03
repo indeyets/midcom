@@ -1,0 +1,8 @@
+Simple steps how to make email-api working.
+
+1. Install org.openpsa.core. You will need mda_posturl.php file from there.
+2. Enable email - api from the component's settings
+3. Put following line to your cron or some other similar system
+     fetchmail -s -m "$PATH_TO_FILE/mda_posturl $URL_TO_PHOTOSTREAM/api/email" -u usename -a your.mailserver.com
+4. Ensure that the person that is the sender of the mail has been created to your system. Email receiver checks that the email - address is in the system
+5. Start sending mails with attached images to your mailbox that you descrived above.
