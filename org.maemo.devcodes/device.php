@@ -362,24 +362,30 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
         {
             return $ret;
         }
+        debug_push_class(__CLASS__, __FUNCTION__);
         $qb = org_maemo_devcodes_device_dba::new_query_builder();
         $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
         $devices = $qb->execute();
+        debug_add('Initially found ' . count($devices) . ' devices');
         foreach ($devices as $device)
         {
             if (!$device->is_open())
             {
                 // Not open for applications
+                debug_add("Device #{$device->id} is not open for applications, skipping");
                 continue;
             }
-            if (org_maemo_devcodes_application_dba::can_apply($device->id, $user, true))
+            if (!org_maemo_devcodes_application_dba::can_apply($device->id, $user, true))
             {
-                // Given user has already applied
+                // Given user cannot apply for this device
+                debug_add("User #{$user} cannot apply for device #{$device->id}, errstr: " . mgd_errstr());
                 continue;
             }
             $ret[$device->guid] = $device;
         }
 
+        debug_add('Returning ' . count($ret) . ' devices');
+        debug_pop();
         return $ret;
     }
 
@@ -396,10 +402,6 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
         if ($this->start !== '0000-00-00 00:00:00')
         {
             $start_ts = strtotime($this->start);
-        }
-        if ($this->end !== '0000-00-00 00:00:00')
-        {
-            $end_ts = strtotime($this->end);
         }
         $now = time();
 
@@ -420,15 +422,24 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
     {
         $start_ts = -1;
         $end_ts = -1;
-        if ($this->start !== '0000-00-00 00:00:00')
+        if (   $this->start !== '0000-00-00 00:00:00'
+            && !empty($this->start))
         {
             $start_ts = strtotime($this->start);
         }
-        if ($this->end !== '0000-00-00 00:00:00')
+        if (   $this->end !== '0000-00-00 00:00:00'
+            && !empty($this->end))
         {
             $end_ts = strtotime($this->end);
         }
         $now = time();
+
+        /*
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("\$this->start: {$this->start}, \$this->end: {$this->end}");
+        debug_add("compares\n===\nstart: {$start_ts}\n  end: {$end_ts}\n  now: {$now}\n===\n");
+        debug_pop();
+        */
 
         if (   $now < $start_ts
             || $start_ts === -1)
