@@ -56,6 +56,14 @@ class midcom_helper_datamanager2_widget_select extends midcom_helper_datamanager
      */
     var $_select_element = null;
 
+	/**
+	 * JS actions bound to widget
+	 *
+	 * @var array
+	 */
+
+	var $jsevents = null;
+
     /**
      * The initialization event handler verifies the correct type.
      *
@@ -106,6 +114,15 @@ class midcom_helper_datamanager2_widget_select extends midcom_helper_datamanager
             'class' => ($this->_type->allow_multiple) ? 'list' : 'dropdown',
             'id'    => "{$this->_namespace}{$this->name}",
         );
+        
+        if (is_array($this->jsevents) && count($this->jsevents))
+        {
+            foreach ($this->jsevents as $event => $action)
+            {
+                $select_attributes[$event] = $action;
+            }
+        }
+        
         $select_element =& HTML_QuickForm::createElement('select', $this->name, $this->_translate($this->_field['title']),
             $this->_all_elements, $select_attributes);
         $select_element->setMultiple($this->_type->allow_multiple);
