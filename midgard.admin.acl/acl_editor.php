@@ -51,12 +51,16 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
      * @var Array
      * @access private
      */
-    var $_privileges = Array();
+    var $_privileges = array();
+    
+    var $_header = '';
+    var $_row_labels = array();
+    var $_rendered_row_labels = array();
 
     function midgard_admin_acl_editor_plugin()
-    {
+    {        
         parent::midcom_baseclasses_components_handler();
-
+        
         $this->_privileges[] = 'midgard:read';        
         $this->_privileges[] = 'midgard:create';
         $this->_privileges[] = 'midgard:update';
@@ -70,6 +74,10 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
         {
             $this->_privileges[] = 'midcom:approve';
         }
+        
+        $_MIDCOM->enable_jquery();
+        $script = "function submit_privileges(form){jQuery('#submit_action',form).attr({name: 'midcom_helper_datamanager2_save', value: 'Save'});form.submit();};";
+        $_MIDCOM->add_jscript($script);
     }
     
     function get_plugin_handlers()
@@ -193,6 +201,7 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
         
         // Populate all resources having existing privileges
         $existing_privileges = $this->_object->get_privileges();
+
         foreach ($existing_privileges as $privilege)
         {
         
@@ -200,11 +209,18 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
             if (!$assignee)
             {
                 // This is a magic assignee
-                $assignees[$privilege->assignee] = $_MIDCOM->i18n->get_string($privilege->assignee, 'midgard.admin.acl');
+                $label = $_MIDCOM->i18n->get_string($privilege->assignee, 'midgard.admin.acl');                
             }
             else
             {
-                $assignees[$privilege->assignee] = $assignee->name;
+                $label = $assignee->name;
+            }
+            $assignees[$privilege->assignee] = $label;
+            
+            $key = str_replace(':', '_', $privilege->assignee);
+            if (! isset($this->_row_labels[$key]))
+            {
+                $this->_row_labels[$key] = $label;
             }
             
             // This one is already an assignee, remove from "Add assignee" options
@@ -217,21 +233,18 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
         // Add the "Add assignees" choices to schema
         $this->_schemadb['privileges']->fields['add_assignee']['type_config']['options'] = $additional_assignees;
                 
-        //$sitegroup = mgd_get_sitegroup($_MIDGARD['sitegroup']);
+        $header = "<table width=\"100%\" border=\"0\">\n";
+        $header_start = "<tr>\n";
+        $header_end = "</tr>\n";
+        $header_items = array();
+        
+        $header .= $header_start;
         
         foreach ($assignees as $assignee => $label)
         {
-            $prepended = false;
+            
             foreach ($this->_privileges as $privilege)
             {
-                $prepend = '';
-                if (!$prepended)
-                {   
-                    $prepend = "<h3 style='clear: left;'>{$label}</h3>\n";
-                    $prepended = true;
-                }
-                $prepend .= '<fieldset class="radio">';
-                $append = '</fieldset>';
                 
                 $privilege_components = explode(':', $privilege);
                 if (   $privilege_components[0] == 'midcom'
@@ -245,25 +258,35 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
                     // This is a component-specific privilege, call component to localize it
                     $privilege_label = $_MIDCOM->i18n->get_string("privilege {$privilege_components[1]}", $privilege_components[0]);
                 }
-                            
+                
+                if (! isset($header_items[$privilege_label]))
+                {
+                    $header_items[$privilege_label] = "<th scope=\"col\">{$_MIDCOM->i18n->get_string($privilege_label, 'midgard.admin.acl')}</th>\n";
+                }
+                
                 $this->_schemadb['privileges']->append_field(str_replace(':', '_', $assignee) . '_' . str_replace(':', '_', str_replace('.', '_', $privilege)), Array
                     (
-                        'title'       => $privilege_label,
+                        'title' => $privilege_label,
                         'helptext'    => sprintf($_MIDCOM->i18n->get_string('sets privilege %s', 'midgard.admin.acl'), $privilege),
-                        'storage'     => null,
-                        'type'        => 'privilege',
+                        'storage' => null,
+                        'type' => 'privilege',
                         'type_config' => Array
                         (
                             'privilege_name' => $privilege,
                             'assignee'       => $assignee,
                         ),
-                        'widget' => 'privilege',
-                        'static_prepend' => $prepend,
-                        'static_append' => $append,
+                        'widget' => 'privilegeselection',
                     )
                 );
             }
         }
+        $header .= "<th align=\"left\" scope=\"col\">&nbsp;</th>\n";
+        foreach ($header_items as $key => $item)
+        {
+            $header .= $item;
+        }
+        $header .= $header_end;
+        $this->_header = $header;
     }
 
     /**
@@ -287,6 +310,8 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
 
     function _handler_edit($handler_id, $args, &$data)
     {
+        $_MIDCOM->auth->require_valid_user();
+        
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
         if (!$this->_object)
         {
@@ -294,7 +319,7 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
         }
         $this->_object->require_do('midgard:privileges');
         
-        if (!is_a($this->_object, 'midcom_baseclasses_database_topic'))
+        if (! is_a($this->_object, 'midcom_baseclasses_database_topic'))
         {
             $_MIDCOM->bind_view_to_object($this->_object);
         }
@@ -320,7 +345,6 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
                     $_MIDCOM->relocate($_MIDGARD['uri']);
                     // This will exit.
                 }
-                
             case 'cancel':
                 $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($this->_object->guid));
                 // This will exit.
@@ -366,9 +390,7 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
                 $type = $type_parts[count($type_parts)-1];
         }
         $data['title'] = sprintf($_MIDCOM->i18n->get_string('permissions for %s %s', 'midgard.admin.acl'), $type, $this->_resolve_object_title($this->_object));
-        $_MIDCOM->set_pagetitle($data['title']);        
-        
-        // $_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('interview %s'), $this->_object->title));
+        $_MIDCOM->set_pagetitle($data['title']);
         
         return true;
     }
@@ -376,7 +398,206 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
     function _show_edit($handler_id, &$data)
     {    
         echo "<h1>{$data['title']}</h1>\n";
-        $this->_controller->display_form();
+        
+        // var_dump($this->_controller->formmanager->form, 1);
+        
+        $form_start = "<form ";
+        foreach ($this->_controller->formmanager->form->_attributes as $key => $value)
+        {
+            $form_start .= "{$key}=\"{$value}\" ";
+        }
+        $form_start .= "/>\n";
+        echo $form_start;
+        
+        $table_start = "<table width=\"100%\" border=\"0\">\n";
+        echo $table_start;
+        
+        $priv_item_cnt = count($this->_privileges);
+        
+        foreach ($this->_controller->formmanager->form->_elements as $i => $row)
+        {
+            if (is_a($row, 'HTML_QuickForm_hidden'))
+            {
+                $html = "<input type=\"hidden\" ";
+                foreach ($row->_attributes as $key => $value)
+                {
+                    $html .= "{$key}=\"{$value}\" ";
+                }
+                $html .= "/>\n";
+                echo $html;
+            }
+            
+            if (is_a($row, 'HTML_QuickForm_select'))
+            {
+                $html = "<tr></td>\n";
+                $html .= "<label for=\"{$row->_attributes['id']}\">\n<span class=\"field_text\">{$row->_label}</span>\n";
+                $html .= $this->_render_select($row);
+                $html .= "</label>\n";
+                $html .= "</td></tr>\n";
+                
+                echo $html;
+                
+                $this->_render_header();
+            }
+            
+            if (is_a($row, 'HTML_QuickForm_group'))
+            {
+                $html = '';
+                
+                if ($row->_name == 'form_toolbar')
+                {
+                    $html .= "<tr><td>\n";
+                    foreach ($row->_elements as $k => $element)
+                    {
+                        if (is_a($element, 'HTML_QuickForm_submit'))
+                        {
+                            $html .= $this->_render_button($element);
+                        }
+                        $html .= $row->_separator;
+                    }
+                    $html .= "</td></tr>\n";
+
+                    echo $html;                    
+                    continue;                    
+                }
+                
+                $label = $this->_render_row_label($row->_name);
+                $html .= $label;
+                
+                foreach ($row->_elements as $k => $element)
+                {
+                    if (is_a($element, 'HTML_QuickForm_select'))
+                    {
+                        $html .= $this->_render_select($element);
+                    }
+                    if (is_a($element, 'HTML_QuickForm_static'))
+                    {
+                        if (strpos($element->_attributes['name'], 'holder_start') !== false)
+                        {
+                            $html .= '<td align="center">';
+                        }
+                        
+                        $html .= $this->_render_static($element);
+                        if (strpos($element->_attributes['name'], 'initscripts') !== false)
+                        {
+                            $html .= '</td>';
+                        }
+                    }
+                    
+                }
+                
+                if ($i == $priv_item_cnt+1)
+                {
+                    $html .= "</tr>\n";                    
+                }
+                
+                echo $html;
+            }
+        }
+
+        $table_end = '</table>';
+        echo $table_end;
+        
+        echo "<input type=\"hidden\" name=\"\" value=\"\" id=\"submit_action\"/>\n";
+        
+        echo "</form>\n";
+    }
+    
+    function _render_select($object)
+    {
+        $html = '';
+        $element_name = '';
+        
+        $html .= "<select ";
+        foreach ($object->_attributes as $key => $value)
+        {
+            $html .= "{$key}=\"{$value}\" ";
+            if ($key == 'name')
+            {
+                $element_name = $value;
+            }
+        }
+        $html .= ">\n";
+        
+        $selected_val = '';
+        if (isset($this->_controller->formmanager->form->_defaultValues[$element_name]))
+        {
+            $selected_val = $this->_controller->formmanager->form->_defaultValues[$element_name];
+        }
+        if (isset($this->_controller->formmanager->form->_submitValues[$element_name]))
+        {
+            $selected_val = $this->_controller->formmanager->form->_submitValues[$element_name];
+        }
+        
+        foreach ($object->_options as $k => $item)
+        {            
+            $selected = '';
+            if (   $selected_val != ''
+                && $selected_val == $item['attr']['value'])
+            {
+                $selected = 'selected="selected"';
+            }
+            
+            $html .= "<option value=\"{$item['attr']['value']}\" {$selected}>{$item['text']}</option>\n";
+        }
+        
+        $html .= "</select>\n";
+                
+        return $html;
+    }
+
+    function _render_button($object)
+    {
+        $html = "<input type=\"$object->_type\" ";
+        foreach ($object->_attributes as $key => $value)
+        {
+            $html .= "{$key}=\"{$value}\" ";
+            if ($key == 'name')
+            {
+                $element_name = $value;
+            }
+        }
+        $html .= ">\n";
+        
+        return $html;
+    }
+    
+    function _render_static($object)
+    {
+        $html = $object->_text;
+        
+        return $html;
+    }
+    
+    function _render_header()
+    {
+        if ($this->_header != '')
+        {
+            echo $this->_header;
+            $this->_header = '';
+        }
+    }
+    
+    function _render_row_label($row_name)
+    {
+        foreach ($this->_row_labels as $key => $label)
+        {
+            if (   strpos($row_name, $key) !== false
+                && !isset($this->_rendered_row_labels[$key]))
+            {
+                $this->_rendered_row_labels[$key] = true;
+                
+                $actions = "<div class=\"actions\" id=\"privilege_row_actions_{$key}\">";
+                $actions .= "<script type=\"text/javascript\">";
+                $actions .= "jQuery('#privilege_row_{$key}').privilege_actions('{$key}');";
+                $actions .= "</script>";
+                $actions .= "</div>";
+                
+                return "<tr id=\"privilege_row_{$key}\">\n<td align=\"left\">{$actions}{$label}</td>\n";
+            }
+        }
+        
+        return '';     
     }
 }
 ?>

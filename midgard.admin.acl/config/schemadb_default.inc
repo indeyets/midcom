@@ -19,6 +19,13 @@
                 'options' => Array(),
             ),
             'widget' => 'select',
+            'widget_config' => array
+            (
+                'jsevents' => array
+                (
+                    'onchange' => 'submit_privileges(this.form);',
+                ),
+            ),
         ),         
         // This is dynamically filled later
         
