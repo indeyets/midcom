@@ -753,7 +753,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         // Generate the actication link
         $activation_link = $_MIDCOM->get_host_prefix() . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "register/activate/{$this->_person->guid}/{$activation_hash}.html";
         
-        $activation_link = str_replace("//","/", $activation_link);
+        //$activation_link = str_replace("//","/", $activation_link);
         
         // Store the information in parameters for activation
         $this->_person->set_parameter('net.nehmer.account', 'password', $password);
