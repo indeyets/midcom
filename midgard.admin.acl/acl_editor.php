@@ -310,8 +310,6 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
 
     function _handler_edit($handler_id, $args, &$data)
     {
-        $_MIDCOM->auth->require_valid_user();
-        
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
         if (!$this->_object)
         {
