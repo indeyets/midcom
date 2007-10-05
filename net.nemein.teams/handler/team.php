@@ -814,11 +814,34 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 $person = new midcom_db_person();
                 $person->get_by_id($member->uid);
                 
-                $this->_team_members[] =& $_MIDCOM->auth->get_user($member->uid);//$person;
+                if ($this->_current_team->managerguid == $member->guid)
+                {
+                    $this->_team_members['manager'] =& $_MIDCOM->auth->get_user($member->uid);
+                }
+                $this->_team_members['players'][] =& $_MIDCOM->auth->get_user($member->uid);//$person;
             } 
         }
     
         return true;
+    }
+    
+    function _show_team_members($handler_id, &$data)
+    {    
+        midcom_show_style('team-members-list-start');
+        
+        if (isset($this->_team_members['manager']))
+        {
+            $this->_request_data['team_member'] = $this->_team_members['manager'];
+            midcom_show_style('team-members-manager-list-item');
+        }
+        
+        foreach ($this->_team_members['players'] as $member)
+        {
+            $this->_request_data['team_member'] = $member;
+            midcom_show_style('team-members-player-list-item');
+        }
+    
+        midcom_show_style('team-members-list-end');
     }
     
     function _handler_quit($handler_id, $args, &$data)
@@ -909,26 +932,6 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         {
             $_MIDCOM->relocate('');
         }
-    }
-
-    function _show_team_members($handler_id, &$data)
-    {    
-        midcom_show_style('team-members-list-start');
-        
-        foreach ($this->_team_members as $member)
-        {
-            $this->_request_data['is_manager'] = false;            
-            if ($this->_current_team->managerguid == $member->guid)
-            {
-                $this->_request_data['is_manager'] = true;
-            }
-            
-            $this->_request_data['team_member'] = $member;
-
-            midcom_show_style('team-members-list-item');
-        }
-    
-        midcom_show_style('team-members-list-end');
     }
 
     function _show_pending($handler_id, &$data)
