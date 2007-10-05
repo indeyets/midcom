@@ -164,7 +164,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         // this seems to cause problems:
         //settype ($revision, "float");
         
-        $command = "co -r" . trim($revision) .  " " . $filepath . "2>&1";
+        $command = "co -r" . trim($revision) .  " " . $filepath . " 2>/dev/null";
         $output = null;
         $status = null;
         unset($output);
