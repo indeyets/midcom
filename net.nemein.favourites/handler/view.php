@@ -27,8 +27,6 @@ class net_nemein_favourites_handler_view extends midcom_baseclasses_components_h
 
     function _handler_view($handler_id, $args, &$data)
     {
-        $_MIDCOM->auth->require_valid_user();
-    
         // Getting favourite objects for the current user
         $qb = new org_openpsa_qbpager('net_nemein_favourites_favourite_dba', 'net_nemein_favourites');
         $data['qb'] =& $qb;
