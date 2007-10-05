@@ -115,7 +115,8 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
     function _on_resolve_permalink($topic, $config, $guid)
     {
         $thread = new net_nemein_discussion_thread_dba($guid);
-        if ($thread)
+        if (   $thread
+            && $thread->guid)
         {
             if ($thread->node != $topic->id)
             {
@@ -125,7 +126,8 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
         }
         
         $post = new net_nemein_discussion_post_dba($guid);
-        if ($post)
+        if (   $post
+            && $post->guid)
         {
             $thread = new net_nemein_discussion_thread_dba($post->thread);
             if ($thread->node != $topic->id)
