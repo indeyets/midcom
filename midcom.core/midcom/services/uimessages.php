@@ -107,8 +107,9 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
         if ($_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_uimessages'))
         {        
             // $_MIDCOM->enable_jquery();
-            // $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/jquery.midcom_services_uimessages.js');
-            // 
+            // $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/jquery.midcom_services_uimessages.js');            
+            // $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/metadata.js');
+            //             
             // $_MIDCOM->add_link_head(
             //     array
             //     (
@@ -150,7 +151,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
             );            
         }
 
-        if (!$_MIDGARD['user'])
+        if (! $_MIDGARD['user'])
         {
             // Don't use sessioning for non-users as that kills cache usage
             // TODO: Device a better approach for this
@@ -267,7 +268,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
             if ($_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_uimessages'))
             {
                 echo "<script type=\"text/javascript\">\n";
-
+                //echo '<div class="midcom_services_uimessages_holder">';
                 foreach ($this->_message_stack as $id => $message)
                 {
                     // TODO: Use our own JS call for this
@@ -278,9 +279,8 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
                     //     title: '{$message['title']}',
                     //     message: '{$message['message']}'
                     // }";
-                    // echo "    jQuery('<div>').midcom_services_uimessage({$options}, {$data});";
+                    //echo "    jQuery('<div>').midcom_services_uimessage({$options}, {$data});";
                     echo "    new protoGrowl({type: '{$message['type']}', title: '{$message['title']}', message: '{$message['message']}'});\n";
-                    // echo "ooDisplayMessage('{$message['title']}: {$message['message']}', '{$message['type']}');\n";
                     
                     //$this->_render_message($message);
                     
@@ -288,6 +288,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
                     unset($this->_message_stack[$id]);
                 }
                 echo "</script>\n";
+                //echo '</div>';
             }
             else
             {
@@ -331,7 +332,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
      */    
     function _render_message($message)
     {
-        echo "<div class=\"midcom_services_uimessages_message {$message['type']}\">";
+        echo "<div class=\"midcom_services_uimessages_message msu_{$message['type']}\">";
 
         echo "    <div class=\"midcom_services_uimessages_message_type\">{$message['type']}</div>";                
         echo "    <div class=\"midcom_services_uimessages_message_title\">{$message['title']}</div>";

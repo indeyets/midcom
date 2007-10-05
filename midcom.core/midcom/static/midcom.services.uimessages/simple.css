@@ -13,23 +13,23 @@ div.midcom_services_uimessages_message
 {
     margin: 10px 0 10px 0;
 }
-div.midcom_services_uimessages_message.info
+div.msu_info
 {
     border: 1px solid green;
 }
-div.midcom_services_uimessages_message.ok
+div.msu_ok
 {
     border: 1px solid green;
 }
-div.midcom_services_uimessages_message.warning
+div.msu_warning
 {
     border: 1px solid red;
 }
-div.midcom_services_uimessages_message.error
+div.msu_error
 {
     border: 1px solid red;
 }
-div.midcom_services_uimessages_message.debug
+div.msu_debug
 {
     border: 1px solid yellow;
 }
