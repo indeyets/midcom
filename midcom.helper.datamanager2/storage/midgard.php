@@ -41,6 +41,7 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_print_r('Object passed:', $object);
+            debug_pop();
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 'The midgard storage backend requires a MidCOM DBA object.');
             // This will exit.

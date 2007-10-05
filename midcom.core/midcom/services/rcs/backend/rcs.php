@@ -127,14 +127,14 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
             return 2;
         }
         
-        $command = "co -l {$filename}";
+        $command = "co -l {$filename} 2>&1";
         $status = $this->exec($command);
         
         $data = $this->rcs_object2data($object);
         
      
         $this->rcs_writefile($guid, $data);
-        $command = "ci -m'" . $message . "' {$filename}";
+        $command = "ci -m'" . $message . "' {$filename} 2>&1";
         $status = $this->exec($command);
     
         chmod ($rcsfilename, 0770);
@@ -164,7 +164,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         // this seems to cause problems:
         //settype ($revision, "float");
         
-        $command = "co -r" . trim($revision) .  " " . $filepath;
+        $command = "co -r" . trim($revision) .  " " . $filepath . "2>&1";
         $output = null;
         $status = null;
         unset($output);
@@ -510,7 +510,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
             return 3;
         }
         
-        $command = sprintf("ci -i -t-'%s' %s", $description, $filepath);
+        $command = sprintf("ci -i -t-'%s' %s 2>&1", $description, $filepath);
         $status = $this->exec($command);
         
         $filename = $filepath . ",v";
@@ -526,7 +526,12 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
     {
         $status = null;
         $output = null;
-        @exec($command, $output, $status);
+
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Executing '{$command}'");
+        debug_pop();
+        
+        @exec($command, $output, $status);                
         return $status;   
     }
 
@@ -601,9 +606,11 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
                             $return[$attribute]['diff'] = str_replace('</ins>', '</span>', $return[$attribute]['diff']);
                         }
                     }
-                } elseif (!is_null($GLOBALS['midcom_config']['utility_diff'])){
+                } 
+                elseif (!is_null($GLOBALS['midcom_config']['utility_diff']))
+                {
                     /* this doesnt work */
-                    $command = $GLOBALS['midcom_config']['utility_diff'] . " -u <(echo \"$oldest_value\") <(echo \"{$newest[$attribute]}\") ";
+                    $command = $GLOBALS['midcom_config']['utility_diff'] . " -u <(echo \"$oldest_value\") <(echo \"{$newest[$attribute]}\")";
                     
                     $output = array();
                     $result = shell_exec($command);
