@@ -953,32 +953,52 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         //Storage for events that have been modified due the course of this method
         $modified_events = array();
 
-        //We attack this "backwards" in the sense that in the end we need the events but this is faster way to filter them
-        $qb_ev = org_openpsa_calendar_eventmember::new_query_builder();
-        $this->_busy_em_event_constraints($qb_ev, 'eid');
-        //Shared eventmembers
-        $qb_ev->begin_group('OR');
-            reset ($this->participants);
-            foreach ($this->participants as $uid => $bool)
-            {
-                $qb_ev->add_constraint('uid', '=', $uid);
-            }
-        $qb_ev->end_group();
-        $ret_ev = $qb_ev->execute();
+        /**
+         * Look for duplicate events only if we have participants or resources, otherwise we incorrectly get all events at 
+         * the same timeframe as duplicates since there are no participant constraints to narrow things down
+         */
+        if (!empty($this->participants))
+        {
+            //We attack this "backwards" in the sense that in the end we need the events but this is faster way to filter them
+            $qb_ev = org_openpsa_calendar_eventmember::new_query_builder();
+            $this->_busy_em_event_constraints($qb_ev, 'eid');
+            //Shared eventmembers
+            $qb_ev->begin_group('OR');
+                reset ($this->participants);
+                foreach ($this->participants as $uid => $bool)
+                {
+                    $qb_ev->add_constraint('uid', '=', $uid);
+                }
+            $qb_ev->end_group();
+            $ret_ev = $qb_ev->execute();
+            unset($qb_ev);
+        }
+        else
+        {
+            $ret_ev = array();
+        }
 
-        // Shared tasks need a separate check (different member object)
+        // Shared resources need a separate check (different member object)
+        if (!empty($this->resources))
+        {
+            $qb_ev2 = org_openpsa_calendar_event_resource_dba::new_query_builder();
+            $this->_busy_em_event_constraints($qb_ev2, 'event');
+            $qb_ev2->begin_group('OR');
+                reset ($this->resources);
+                foreach ($this->resources as $resource => $bool)
+                {
+                    $qb_ev2->add_constraint('resource', '=', $resource);
+                }
+            $qb_ev2->end_group();
+            $ret_ev2 = $qb_ev2->execute();
+            unset($qb_ev2);
+        }
+        else
+        {
+            $ret_ev2 = array();
+        }
 
-        // Shared resoruces need a separate check (different member object)
-        $qb_ev2 = org_openpsa_calendar_event_resource_dba::new_query_builder();
-        $this->_busy_em_event_constraints($qb_ev2, 'event');
-        $qb_ev2->begin_group('OR');
-            reset ($this->resources);
-            foreach ($this->resources as $resource => $bool)
-            {
-                $qb_ev2->add_constraint('resource', '=', $resource);
-            }
-        $qb_ev2->end_group();
-        $ret_ev2 = $qb_ev2->execute();
+        // TODO: Shared tasks need a separate check (different member object)
 
         // Both QBs returned empty sets
         if (   (   !is_array($ret_ev)
