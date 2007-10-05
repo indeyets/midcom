@@ -93,7 +93,32 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
     function _can_handle_view ($handler_id, $args, &$data)
     {
         $qb = midcom_db_article::new_query_builder();
-        $qb->add_constraint('topic', '=', $this->_content_topic->id);
+
+        // Include the article links to the indexes if enabled
+        if ($this->_config->get('enable_article_links'))
+        {
+            $mc = net_nehmer_blog_link_dba::new_collector('topic', $this->_content_topic->id);
+            $mc->add_value_property('article');
+            $mc->add_constraint('topic', '=', $this->_content_topic->id);
+            $mc->add_order('metadata.published', 'DESC');
+            // Get the results
+            $mc->execute();
+            
+            $links = $mc->list_keys();
+            $qb->begin_group('OR');
+                foreach ($links as $guid => $link)
+                {
+                    $article_id = $mc->get_subkey($guid, 'article');
+                    $qb->add_constraint('id', '=', $article_id);
+                }
+                $qb->add_constraint('topic', '=', $this->_content_topic->id);
+            $qb->end_group();
+        }
+        else
+        {
+            $qb->add_constraint('topic', '=', $this->_content_topic->id);
+        }
+        
         $qb->add_constraint('up', '=', 0);
         $qb->begin_group('OR');
             $qb->add_constraint('name', '=', $args[0]);

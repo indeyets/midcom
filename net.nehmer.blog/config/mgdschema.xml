@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    <type name="net_nehmer_blog_link" table="net_nehmer_blog_link">
+        <property name="id" type="integer" primaryfield="id" />
+        <property name="topic" type="integer" link="midgard_topic:id" reverse="no" parentfield="topic"/>
+        <property name="article" type="integer" link="midgard_article:id" reverse="no" />
+    </type>
+</Schema>

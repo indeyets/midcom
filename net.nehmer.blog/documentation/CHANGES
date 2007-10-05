@@ -8,6 +8,10 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-10-05 adrenalin
+  + Added support for linking articles to different net.nehmer.blog topics
+  + Added support for callback function after article creation
+
 2007-09-04 bergie
   + Added paged news archive display
 

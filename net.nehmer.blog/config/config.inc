@@ -52,3 +52,15 @@
 
 'rss_subscription_enable' => false,
 'link_to_external_url' => false,
+
+// Page linking system
+'enable_article_links' => false,
+'enable_editing_of_linked_articles' => false,
+'include_linked_articles_to_feeds' => true,
+
+// Creation callback snippet for defining site-specific function
+'callback_snippet' => null,
+
+// Callback function will be called after creation e.g. to provide interface for page linking system
+// $callback_function($article, $topic)
+'callback_function' => null,

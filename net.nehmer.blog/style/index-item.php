@@ -23,7 +23,15 @@ if (array_key_exists('comments_enable', $data))
 
 <div class="hentry counter_&(view_counter); &(class_str);" style="clear: left;">
     <h2 class="entry-title"><a href="&(data['view_url']);" rel="bookmark">&(view['title']:h);</a></h2>
-    <p class="published">&(published:h);</p>
+    <p class="published">
+        &(published:h);
+            <?php
+            if ($data['linked'])
+            {
+                echo $data['l10n']->get('to') ." <a href=\"{$data['node'][MIDCOM_NAV_FULLURL]}\">{$data['node'][MIDCOM_NAV_NAME]}</a>\n";
+            }
+            ?>
+    </p>
     <?php if (array_key_exists('image', $view) && $view['image']) { ?>
         <div style="float: left; padding: 5px;">&(view['image']:h);</div>
     <?php 

@@ -81,7 +81,32 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
 
         // Get the articles,
         $qb = midcom_db_article::new_query_builder();
-        $qb->add_constraint('topic', '=', $this->_content_topic->id);
+        
+        // Include the article links to the indexes if enabled
+        if ($this->_config->get('enable_article_links'))
+        {
+            $mc = net_nehmer_blog_link_dba::new_collector('topic', $this->_content_topic->id);
+            $mc->add_value_property('article');
+            $mc->add_constraint('topic', '=', $this->_content_topic->id);
+            $mc->add_order('metadata.published', 'DESC');
+            $mc->set_limit((int) $this->_config->get('rss_count'));
+            
+            $links = $mc->list_keys();
+            
+            // Add single items to the query
+            $qb->begin_group('OR');
+                foreach ($links as $guid => $link)
+                {
+                    $article_id = $mc->get_subkey($guid, 'article');
+                    $qb->add_constraint('id', '=', $article_id);
+                }
+                $qb->add_constraint('topic', '=', $this->_content_topic->id);
+            $qb->end_group();
+        }
+        else
+        {
+            $qb->add_constraint('topic', '=', $this->_content_topic->id);
+        }
 
         $qb->add_order('metadata.published', 'DESC');
 

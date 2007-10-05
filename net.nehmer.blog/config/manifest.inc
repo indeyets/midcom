@@ -1,6 +1,10 @@
 'name' => 'net.nehmer.blog',
-'version' => '1.4.0beta1',
-'state' => 'stable',
+'version' => '1.5.0beta1',
+'state' => 'beta',
+'class_definitions' => array
+(
+    'midcom_dba_classes.inc',
+),
 'package.xml' => array
 (
     'summary' => 'Weblog system',
@@ -24,7 +28,7 @@
         'adrenalin' => array
         (
             'name' => 'Arttu Manninen',
-            'email' => 'arttu.manninen@protie.fi',
+            'email' => 'arttu@kaktus.cc',
             'role' => 'developer',
             'active' => 'yes',
         ),

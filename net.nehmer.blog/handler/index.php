@@ -77,7 +77,57 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($data['schemadb']);
         $qb = new org_openpsa_qbpager('midcom_db_article', 'net_nehmer_blog_index');
         $data['qb'] =& $qb;
-        $qb->add_constraint('topic', '=', $this->_content_topic->id);
+        
+        // Include the article links to the indexes if enabled
+        if ($this->_config->get('enable_article_links'))
+        {
+            $mc = net_nehmer_blog_link_dba::new_collector('topic', $this->_content_topic->id);
+            $mc->add_value_property('article');
+            $mc->add_constraint('topic', '=', $this->_content_topic->id);
+            $mc->add_order('metadata.published', 'DESC');
+            
+            // Use sophisticated guess to limit the amount: there shouldn't be more than
+            // the required amount of links that is needed. Even if some links would fall
+            // off due to a broken link (i.e. removed article), there should be enough
+            // of content to fill the blank
+            switch ($handler_id)
+            {
+                case 'index':
+                case 'index-category':
+                    $mc->set_limit((int) $this->_config->get('index_entries'));
+                    break;
+                
+                case 'latest':
+                    $mc->set_limit((int) $args[0]);
+                    break;
+                
+                case 'latest-category':
+                    $mc->set_limit((int) $args[1]);
+                    break;
+                    
+                default:
+                    $mc->set_limit((int) $this->_config->get('index_entries'));
+                    break;
+            }
+            
+            // Get the results
+            $mc->execute();
+            
+            $links = $mc->list_keys();
+            $qb->begin_group('OR');
+                foreach ($links as $guid => $link)
+                {
+                    $article_id = $mc->get_subkey($guid, 'article');
+                    $qb->add_constraint('id', '=', $article_id);
+                }
+                $qb->add_constraint('topic', '=', $this->_content_topic->id);
+            $qb->end_group();
+        }
+        else
+        {
+            $qb->add_constraint('topic', '=', $this->_content_topic->id);
+        }
+
         $qb->add_constraint('up', '=', 0);
 
         // Set default page title
@@ -222,6 +272,18 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
                     }
                 }
 
+                if ($article->topic === $this->_content_topic->id)
+                {
+                    $data['linked'] = false;
+                }
+                else
+                {
+                    $data['linked'] = true;
+                    
+                    $nap = new midcom_helper_nav();
+                    $data['node'] = $nap->get_node($article->topic);
+                }
+                
                 midcom_show_style('index-item');
             }
         }

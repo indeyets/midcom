@@ -319,3 +319,39 @@ Käytä 'view'-etuliitettä osoitteissa
 Näytetäänkö kansio
 ---STRINGEND
 
+---STRING article %s deleted
+Artikkeli %s poistettu
+---STRINGEND
+
+---STRING blog link deleted
+Blogilinkki poistettu
+---STRINGEND
+
+---STRING delete article link
+Poista artikkelilinkki
+---STRINGEND
+
+---STRING delete cancelled
+Poistaminen peruutettu
+---STRINGEND
+
+---STRING delete link
+Poista linkki
+---STRINGEND
+
+---STRING failed to delete the blog link, contact the site administrator
+Blogilinkin poistaminen epäonnistui, ota yhteyttä sivuston ylläpitäjään
+---STRINGEND
+
+---STRING from
+Kansiosta
+---STRINGEND
+
+---STRING if you want to delete the original article, <a href="%s">click here</a>
+Jos haluat poistaa alkuperäisen artikkelin, <a href="%s">klikkaa tästä</a>.
+---STRINGEND
+
+---STRING this blog entry has been linked from <a href="%s">%s</a> and confirming will delete only the link
+Tämä blogiartikkeli on linkitetty kansiosta <a href="%s">%s</a> ja vahvistaminen poistaa vain linkin.
+---STRINGEND
+

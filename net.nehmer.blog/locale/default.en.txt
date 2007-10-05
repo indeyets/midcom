@@ -319,3 +319,42 @@ Should the topic be visible
 Related stories
 ---STRINGEND
 
+---STRING failed to delete the blog link, contact the site administrator
+Failed to delete the blog link, contact the site administrator
+---STRINGEND
+
+---STRING delete cancelled
+Delete cancelled
+---STRINGEND
+
+---STRING blog link deleted
+Blog link deleted
+---STRINGEND
+
+---STRING article %s deleted
+Article %s deleted
+---STRINGEND
+
+---STRING delete link
+Delete link
+---STRINGEND
+
+---STRING delete article link
+delete article link
+---STRINGEND
+
+---STRING this blog entry has been linked from <a href="%s">%s</a> and confirming will delete only the link
+This blog entry has been linked from <a href="%s">%s</a> and confirming will delete only the link.
+---STRINGEND
+
+---STRING if you want to delete the original article, <a href="%s">click here</a>
+If you want to delete the original article, <a href="%s">click here</a>.
+---STRINGEND
+
+---STRING delete article link
+Delete article link
+---STRINGEND
+
+---STRING from
+From
+---STRINGEND
