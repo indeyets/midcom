@@ -1087,6 +1087,15 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         {
             $this->_request_data['view_team']['profile_url'] = "{$prefix}{$this->_current_team->name}/";
         }
+        
+        $qb = midcom_db_member::new_query_builder();
+        $qb->add_constraint('gid.guid', '=', $this->_current_team_group->guid);
+        $member_count = $qb->count_unchecked();
+        if ($member_count === false)
+        {
+            $member_count = 0;
+        }
+        $this->_request_data['view_team']['member_count'] = $member_count;
 
         $_MIDCOM->bind_view_to_object($this->_current_team, $this->_request_data['datamanager']->schema->name);        
         $_MIDCOM->set_26_request_metadata($this->_current_team->metadata->revised, $this->_current_team->guid);
