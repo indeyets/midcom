@@ -802,23 +802,29 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
         $qb = midcom_db_member::new_query_builder();
         $qb->add_constraint('gid.guid', '=', $this->_current_team_group->guid);
+
+        $this->_team_members['manager'] = false;
+        $this->_team_members['players'] = array();
         
         if (!$members = $qb->execute())
         {
             return false;
         }
         else
-        {
+        {            
             foreach ($members as $member)
             {
                 $person = new midcom_db_person();
                 $person->get_by_id($member->uid);
                 
-                if ($this->_current_team->managerguid == $member->guid)
+                if ($this->_current_team->managerguid == $person->guid)
                 {
                     $this->_team_members['manager'] =& $_MIDCOM->auth->get_user($member->uid);
                 }
-                $this->_team_members['players'][] =& $_MIDCOM->auth->get_user($member->uid);//$person;
+                else
+                {
+                    $this->_team_members['players'][] =& $_MIDCOM->auth->get_user($member->uid);                    
+                }
             } 
         }
     
@@ -829,7 +835,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     {    
         midcom_show_style('team-members-list-start');
         
-        if (isset($this->_team_members['manager']))
+        if ($this->_team_members['manager'])
         {
             $this->_request_data['team_member'] = $this->_team_members['manager'];
             midcom_show_style('team-members-manager-list-item');
