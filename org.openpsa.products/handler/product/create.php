@@ -165,6 +165,8 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
         switch ($this->_controller->process_form())
         {
             case 'save':
+                $_MIDCOM->cache->invalidate($this->_product->guid);
+		
                 $_MIDCOM->relocate("product/{$this->_product->guid}/");
                 // This will exit.
 
