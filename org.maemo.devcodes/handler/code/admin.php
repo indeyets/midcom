@@ -242,50 +242,44 @@ class org_maemo_devcodes_handler_code_admin extends midcom_baseclasses_component
         }
         $this->_code->require_do('midgard:delete');
 
-        $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Not implemented');
-        /*
-        $this->_load_datamanager();
+        $data['show_form'] =  true;
+        $data['message'] = '<p>' . $this->_l10n->get('are you sure you want to delete this code') . '</p>';
+        if ($this->_code->has_dependencies())
+        {
+            $data['show_form'] =  false;
+            $data['message'] = '<p>' . $this->_l10n->get('object has dependencies') . '</p>';
+        }
 
-        if (array_key_exists('net_nehmer_blog_deleteok', $_REQUEST))
+        //$this->_load_datamanager();
+
+        if (array_key_exists('org_maemo_devcodes_delete_confirm', $_REQUEST))
         {
             // Deletion confirmed.
-            if (! $this->_code->delete())
+            if (!$this->_code->delete())
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to delete code {$args[0]}, last Midgard error was: " . mgd_errstr());
                 // This will exit.
             }
-
-            // Update the index
-            $indexer =& $_MIDCOM->get_service('indexer');
-            $indexer->delete($this->_code->guid);
 
             // Delete ok, relocating to welcome.
             $_MIDCOM->relocate('');
             // This will exit.
         }
 
-        if (array_key_exists('net_nehmer_blog_deletecancel', $_REQUEST))
+        if (array_key_exists('org_maemo_devcodes_delete_cancel', $_REQUEST))
         {
-            // Redirect to view page.
-            if ($this->_config->get('view_in_url'))
-            {
-                $_MIDCOM->relocate("view/{$this->_code->name}.html");
-            }
-            else
-            {
-                $_MIDCOM->relocate("{$this->_code->name}.html");
-            }
+            $_MIDCOM->relocate("code/{$this->_code->guid}.html");
             // This will exit()
         }
 
         $this->_prepare_request_data();
         $_MIDCOM->set_26_request_metadata($this->_code->metadata->revised, $this->_code->guid);
         $this->_view_toolbar->bind_to($this->_code);
+        $this->_request_data['title'] = sprintf($this->_l10n_midcom->get('delete %s'), $this->_code->title);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_code->title}");
         $this->_update_breadcrumb_line($handler_id);
 
         return true;
-        */
     }
 
 

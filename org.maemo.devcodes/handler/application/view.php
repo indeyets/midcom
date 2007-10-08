@@ -30,6 +30,8 @@ class org_maemo_devcodes_handler_application_view extends midcom_baseclasses_com
      */
     var $_datamanager = null;
 
+    var $_schema = false;
+
     /**
      * Simple helper which references all important members to the request data listing
      * for usage within the style listing.
@@ -130,9 +132,18 @@ class org_maemo_devcodes_handler_application_view extends midcom_baseclasses_com
     {
         $this->_load_schemadb();
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
+        if (!$this->_application->can_do('org.maemo.devcodes:manage'))
+        {
+            $this->_schema = 'application-user';
+        }
+        else
+        {
+            $this->_schema = 'application';
+        }
 
         if (   ! $this->_datamanager
-            || ! $this->_datamanager->autoset_storage($this->_application))
+            || ! $this->_datamanager->set_schema($this->_schema)
+            || ! $this->_datamanager->set_storage($this->_application))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a DM2 instance for application {$this->_application->id}.");
             // This will exit.
@@ -157,7 +168,14 @@ class org_maemo_devcodes_handler_application_view extends midcom_baseclasses_com
         */
         $this->_request_data['view_application'] = $this->_datamanager->get_content_html();
 
-        midcom_show_style('view-application');
+        if (strpos($this->_schema, '-user'))
+        {
+            midcom_show_style('view-application-user');
+        }
+        else
+        {
+            midcom_show_style('view-application');
+        }
     }
 }
 

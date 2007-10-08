@@ -135,7 +135,15 @@ class org_maemo_devcodes_handler_application_admin extends midcom_baseclasses_co
         $this->_load_schemadb();
         $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
         $this->_controller->schemadb =& $this->_schemadb;
-        $this->_controller->set_storage($this->_application);
+        if (!$this->_application->can_do('org.maemo.devcodes:manage'))
+        {
+            $schema = 'application-user';
+        }
+        else
+        {
+            $schema = 'application';
+        }
+        $this->_controller->set_storage($this->_application, $schema);
         if (! $this->_controller->initialize())
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 controller instance for application {$this->_application->id}.");
@@ -242,51 +250,44 @@ class org_maemo_devcodes_handler_application_admin extends midcom_baseclasses_co
             // This will exit.
         }
         $this->_application->require_do('midgard:delete');
+        $data['show_form'] =  true;
+        $data['message'] = '<p>' . $this->_l10n->get('are you sure you want to delete this application') . '</p>';
+        if ($this->_application->has_dependencies())
+        {
+            $data['show_form'] =  false;
+            $data['message'] = '<p>' . $this->_l10n->get('object has dependencies') . '</p>';
+        }
 
-        $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Not implemented');
-        /*
-        $this->_load_datamanager();
+        //$this->_load_datamanager();
 
-        if (array_key_exists('net_nehmer_blog_deleteok', $_REQUEST))
+        if (array_key_exists('org_maemo_devcodes_delete_confirm', $_REQUEST))
         {
             // Deletion confirmed.
-            if (! $this->_application->delete())
+            if (!$this->_application->delete())
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to delete application {$args[0]}, last Midgard error was: " . mgd_errstr());
                 // This will exit.
             }
-
-            // Update the index
-            $indexer =& $_MIDCOM->get_service('indexer');
-            $indexer->delete($this->_application->guid);
 
             // Delete ok, relocating to welcome.
             $_MIDCOM->relocate('');
             // This will exit.
         }
 
-        if (array_key_exists('net_nehmer_blog_deletecancel', $_REQUEST))
+        if (array_key_exists('org_maemo_devcodes_delete_cancel', $_REQUEST))
         {
-            // Redirect to view page.
-            if ($this->_config->get('view_in_url'))
-            {
-                $_MIDCOM->relocate("view/{$this->_application->name}.html");
-            }
-            else
-            {
-                $_MIDCOM->relocate("{$this->_application->name}.html");
-            }
+            $_MIDCOM->relocate("application/{$this->_application->guid}.html");
             // This will exit()
         }
 
         $this->_prepare_request_data();
         $_MIDCOM->set_26_request_metadata($this->_application->metadata->revised, $this->_application->guid);
         $this->_view_toolbar->bind_to($this->_application);
+        $this->_request_data['title'] = sprintf($this->_l10n_midcom->get('delete %s'), $this->_application->title);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_application->title}");
         $this->_update_breadcrumb_line($handler_id);
 
         return true;
-        */
     }
 
 

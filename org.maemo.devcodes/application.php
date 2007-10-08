@@ -50,6 +50,16 @@ class org_maemo_devcodes_application_dba extends __org_maemo_devcodes_applicatio
         return true;
     }
 
+    function _on_deleting()
+    {
+        if ($this->has_dependencies())
+        {
+            mgd_set_errno(MGD_ERR_HAS_DEPENDANTS);
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Reject this application for a device 
      *
@@ -328,6 +338,21 @@ class org_maemo_devcodes_application_dba extends __org_maemo_devcodes_applicatio
         $qb = org_maemo_devcodes_application_dba::new_query_builder();
         $qb->add_constraint('applicant', '=', (int)$user);
         return $qb->execute();
+    }
+
+    /**
+     * Check for existence of dependencies
+     *
+     * @return boolean indicating precense of dependencies
+     */
+    function has_dependencies()
+    {
+        if ($this->state !== ORG_MAEMO_DEVCODES_APPLICATION_PENDING)
+        {
+            // If the application is no longer pending then it should be considered it's own dependency
+            return true;
+        }
+        return false;
     }
 }
 
