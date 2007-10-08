@@ -8,6 +8,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-10-08 adrenalin
+  - Deletes now all the links pointing to article, which is being deleted
+
 2007-10-05 adrenalin
   + Added support for linking articles to different net.nehmer.blog topics
   + Added support for callback function after article creation

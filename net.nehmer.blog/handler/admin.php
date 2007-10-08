@@ -414,6 +414,7 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
         if (array_key_exists('net_nehmer_blog_deleteok', $_REQUEST))
         {
             $title = $this->_article->title;
+            $id = $this->_article->id;
             
             // Deletion confirmed.
             if (! $this->_article->delete())
@@ -421,11 +422,23 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to delete article {$args[0]}, last Midgard error was: " . mgd_errstr());
                 // This will exit.
             }
+            
+            // Delete all the links pointing to the article
+            $qb = net_nehmer_blog_link_dba::new_query_builder();
+            $qb->add_constraint('article', '=', $this->_article->id);
+            $links = $qb->execute_unchecked();
+            
+            $_MIDCOM->auth->request_sudo('net.nehmer.blog');
+            foreach ($links as $link)
+            {
+                $link->delete();
+            }
+            $_MIDCOM->auth->drop_sudo();
 
             // Update the index
             $indexer =& $_MIDCOM->get_service('indexer');
             $indexer->delete($this->_article->guid);
-
+            
             // Show user interface message
             $_MIDCOM->uimessages->add($this->_l10n->get('net.nehmer.blog'), sprintf($this->_l10n->get('article %s deleted'), $title));
             
@@ -447,7 +460,7 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
             {
                 $_MIDCOM->relocate("{$this->_article->name}.html");
             }
-            // This will exit()
+            // This will exit
         }
 
         $this->_prepare_request_data();
