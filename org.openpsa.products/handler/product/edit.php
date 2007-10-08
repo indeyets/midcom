@@ -98,9 +98,8 @@ class org_openpsa_products_handler_product_edit extends midcom_baseclasses_compo
         switch ($this->_request_data['controller']->process_form())
         {
             case 'save':
-                // Reindex the article
-                //$indexer =& $_MIDCOM->get_service('indexer');
-                //net_nemein_wiki_viewer::index($this->_request_data['controller']->datamanager, $indexer, $this->_topic);
+                // Invalidate cache for this product.
+                $_MIDCOM->cache->invalidate($this->_product->guid);
                 // *** FALL-THROUGH ***
             case 'cancel':
                 $_MIDCOM->relocate("product/{$this->_product->guid}.html");
