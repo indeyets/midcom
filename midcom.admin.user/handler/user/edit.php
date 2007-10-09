@@ -92,7 +92,6 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
     
         $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('edit %s', 'midcom.admin.user'), $this->_person->name);
         $_MIDCOM->set_pagetitle($data['view_title']);
-        $this->_update_breadcrumb();
                 
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
         
@@ -113,6 +112,10 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
         $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
         $_MIDCOM->style->prepend_component_styledir('midcom.admin.user');
         $_MIDCOM->skip_page_style = true;
+
+        $data['language_code'] = '';
+        midgard_admin_asgard_plugin::bind_to_object($this->_person, $handler_id, &$data);
+        $this->_update_breadcrumb();
         
         return true;
     }

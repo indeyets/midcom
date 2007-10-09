@@ -121,6 +121,10 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
         $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
         $_MIDCOM->style->prepend_component_styledir('midcom.admin.user');
         $_MIDCOM->skip_page_style = true;
+
+        $data['language_code'] = '';
+        midgard_admin_asgard_plugin::bind_to_object($this->_group, $handler_id, &$data);
+        $this->_update_breadcrumb();
         
         return true;
     }
