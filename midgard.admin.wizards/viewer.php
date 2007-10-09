@@ -278,7 +278,34 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
     
         if ($argc = 2 && isset($argv[1]))
         {
-            $this->_request_data["current_plugin"] = $argv[1];
+            $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        
+            $this->_request_data['current_wizard'] = $argv[0];
+            $this->_request_data['current_plugin'] = $argv[1];
+            
+            $groups = $this->_config->get('plugin_groups');
+            $plugins = $groups[$argv[0]]['plugins'];
+            $plugin_names = array_keys($plugins);
+            
+            foreach($plugin_names as $key => $name)
+            {
+                if ($name == $argv[1])
+                {
+                    $next_key = $key+1;
+                
+                    if (array_key_exists($next_key, $plugin_names))
+                    {
+                        $this->_request_data['next_plugin'] = $plugin_names[$next_key];
+                    }
+                    else
+                    {
+                        $this->_request_data['next_plugin'] = $argv[1];
+                    }
+                }
+            }
+            
+            $this->_request_data['next_plugin_full_path'] = $prefix . $argv[0] . "/" 
+                . $this->_request_data['next_plugin'] ."/";
         
             /**
              * We do not need to check result of this operation, it populates request switch

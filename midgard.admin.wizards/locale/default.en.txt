@@ -6,4 +6,42 @@
 Midgard Wizards
 ---STRINGEND
 
+---STRING select structure
+Select structure
+---STRINGEND
 
+---STRING no structure
+No structure
+---STRINGEND
+
+---STRING select style
+Select style
+---STRINGEND
+
+---STRING next
+Next
+---STRINGEND
+
+---STRING new midgard host
+New Midgard host
+---STRINGEND
+
+---STRING site name
+Website name
+---STRINGEND
+
+---STRING host
+Host
+---STRINGEND
+
+---STRING custom
+Custom
+---STRINGEND
+
+---STRING completely empty style
+Completely empty style
+---STRINGEND
+
+---STRING create
+Create
+---STRINGEND
