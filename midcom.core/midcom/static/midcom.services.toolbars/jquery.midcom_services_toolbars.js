@@ -31,7 +31,8 @@ jQuery.midcom_services_toolbars = function(root, settings, with_items) {
         debug: false,
         enable_memory: false,
         class_name: 'midcom_services_toolbars_fancy',
-        show_logos: true
+        show_logos: true,
+        allow_auto_create: false
     }, settings);
     
     debug('Initializing', 'info');
@@ -58,6 +59,19 @@ jQuery.midcom_services_toolbars = function(root, settings, with_items) {
     
     var root_element = null;
     var item_holder = null;
+
+    var type_configs = Array();
+    type_configs[MIDCOM_SERVICES_TOOLBARS_TYPE_MENU] = {
+        height: 25,
+        width: 0,
+        draggable: false
+    };
+    type_configs[MIDCOM_SERVICES_TOOLBARS_TYPE_PALETTE] = {
+        height: 20,
+        width: 300,
+        draggable: true
+    };
+    type_configs[settings.type] = jQuery.extend(type_configs[settings.type], settings.type_config);
     
     if (settings.create_root)
     {
@@ -73,7 +87,14 @@ jQuery.midcom_services_toolbars = function(root, settings, with_items) {
         }
         else
         {
-            root_element = create_root();
+            if (settings.allow_auto_create)
+            {
+                root_element = create_root();
+            }
+            else
+            {
+                return;
+            }
         }
     }
     
@@ -86,19 +107,6 @@ jQuery.midcom_services_toolbars = function(root, settings, with_items) {
     {
         client_memory = new protoMemory( 'midcom.services.toolbars' );
     }
-
-    var type_configs = Array();
-    type_configs[MIDCOM_SERVICES_TOOLBARS_TYPE_MENU] = {
-        height: 25,
-        width: 0,
-        draggable: false
-    };
-    type_configs[MIDCOM_SERVICES_TOOLBARS_TYPE_PALETTE] = {
-        height: 20,
-        width: 300,
-        draggable: true
-    };
-    type_configs[settings.type] = jQuery.extend(type_configs[settings.type], settings.type_config);
         
     var memorized_position = null;
     if (   (   client_memory != null
@@ -179,17 +187,26 @@ jQuery.midcom_services_toolbars = function(root, settings, with_items) {
         }        
         root_element.css({ left: posX, top: posY });
         
-        if (jQuery.browser.safari)
-        {
-            root_element.css({ position: 'fixed' });
-        }
+        // if (jQuery.browser.safari)
+        // {
+        //     root_element.css({ position: 'fixed' });
+        // }
+        // if (jQuery.browser.ie)
+        // {
+        root_element.css({ position: 'absolute' });
+        // }
         
         jQuery('div.item', item_holder).each(function(i,n){
             debug("i: "+i+" n: "+n);
             var item = jQuery(n);
             var handle = jQuery('.midcom_services_toolbars_topic_title',item);
             var children = jQuery('ul',item);
-                        
+            
+            if (jQuery.browser.ie)
+            {
+                jQuery('li', children).css({ width: '9em' });
+            }
+            
             item.bind('mouseover',function(e){
                 jQuery('.midcom_services_toolbars_topic_title', item_holder).removeClass("hover").index(handle);
                 handle.addClass("hover");
@@ -217,13 +234,22 @@ jQuery.midcom_services_toolbars = function(root, settings, with_items) {
         root_element.show();
         
         debug('enable_toolbar finished', 'info');
+        
+        init_auto_move();
+    }
+    
+    function init_auto_move()
+    {
+        // jQuery('window').bind('scroll', function(e){
+        //     console.log("Body scroll");
+        // });
     }
     
     function save_position(event)
     {
         debug('save_position start', 'info');
         
-        var new_pos = jQuery(root_element).position();
+        var new_pos = root_element.position();
         
         var pos = { x: new_pos.left,
                     y: new_pos.top };
