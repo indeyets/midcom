@@ -34,48 +34,6 @@ class midcom_baseclasses_database_article extends __midcom_baseclasses_database_
     {
         parent::__midcom_baseclasses_database_article($id);
     }
-    
-    /**
-     * Check that article by same name doesn't exist in the topic in
-     * Classic Midgard API fashion.
-     *
-     * @return boolean Whether the name is acceptable
-     */
-    function _check_name()
-    {
-        if ($this->name == '')
-        {
-            return true;
-        }
-
-        $mc = midcom_baseclasses_database_article::new_collector('name', $this->name);
-        $mc->add_constraint('name', '=', $this->name);
-
-        if ($this->id)
-        {
-            $mc->add_constraint('id', '<>', $this->id);
-        }
-
-        if ($this->up != 0)
-        {
-            // "Reply article", we care only about the up field
-            $mc->add_constraint('up', '=', $this->up);
-        }
-        else
-        {
-            // Toplevel article, check topic
-            $mc->add_constraint('topic', '=', $this->topic);
-        }
-
-        // Run the uniqueness check
-        if ($mc->count > 0)
-        {
-            // This name is already taken
-            mgd_set_errno(MGD_ERR_OBJECT_NAME_EXISTS);
-            return false;
-        }
-        return true;
-    }
 
     /**
      * Internal helper function, invoked during create and update which
@@ -272,12 +230,6 @@ class midcom_baseclasses_database_article extends __midcom_baseclasses_database_
     function _on_creating()
     {
         $this->_check_author();
-        
-        if (!$this->_check_name())
-        {
-            return false;
-        }
-        
         return true;
     }
 
@@ -289,12 +241,6 @@ class midcom_baseclasses_database_article extends __midcom_baseclasses_database_
     function _on_updating()
     {
         $this->_check_author();
-        
-        if (!$this->_check_name())
-        {
-            return false;
-        }
-        
         return true;
     }
     
