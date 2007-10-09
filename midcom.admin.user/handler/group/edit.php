@@ -31,16 +31,24 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
     {
         // Populate breadcrumb
         $tmp = Array();
+        
+        $grp = $this->_group;       
+        while ($grp)
+        {        
+            $tmp[] = Array
+            (
+                MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.user/group/edit/{$grp->guid}",
+                MIDCOM_NAV_NAME => $grp->official,
+            );
+            $grp = $grp->get_parent();
+        }
         $tmp[] = Array
         (
             MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.user/",
             MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('user management', 'midcom.admin.user'),
-        );
-        $tmp[] = Array
-        (
-            MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.user/edit/{$this->_group->guid}",
-            MIDCOM_NAV_NAME => $this->_request_data['view_title'],
-        );
+        ); 
+        $tmp = array_reverse($tmp);
+        
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
 
