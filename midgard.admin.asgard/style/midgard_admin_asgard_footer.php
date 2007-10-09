@@ -71,7 +71,6 @@
         </div>
 <?php
 $_MIDCOM->uimessages->show();
-$_MIDCOM->toolbars->show();
 ?>
     </body>
 </html>

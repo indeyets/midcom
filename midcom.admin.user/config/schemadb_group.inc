@@ -30,6 +30,7 @@
             'type_config' => array
             (
                  'require_corresponding_option' => false,
+                 'allow_multiple' => false,
                  'options' => array(),
             ),
             'widget' => 'chooser',

@@ -1332,6 +1332,10 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 }
             }
         }
+        elseif (!$this->allow_multiple)
+        {
+            $this->_type->selection[] = $real_results;
+        }
         
         // debug_print_r('real_results', $real_results);
         // debug_print_r('_type->selection', $this->_type->selection);                
