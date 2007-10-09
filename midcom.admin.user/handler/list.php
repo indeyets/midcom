@@ -157,7 +157,18 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
         $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
         $_MIDCOM->style->prepend_component_styledir('midcom.admin.user');
         $_MIDCOM->skip_page_style = true;
+
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . '/midcom.admin.user/usermgmt.css',
+            )
+        );
         
+
         return true;
     }
     
@@ -177,10 +188,19 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
         $data['persons'] =& $this->_persons;
         midcom_show_style('midcom-admin-user-personlist-header');
         
+        $data['even'] = false;
         foreach ($data['persons'] as $person)
         {
             $data['person'] = $person;
             midcom_show_style('midcom-admin-user-personlist-item');
+            if (!$data['even'])
+            {
+                $data['even'] = true;
+            }
+            else
+            {
+                $data['even'] = false;
+            }
         }
         
         midcom_show_style('midcom-admin-user-personlist-footer');

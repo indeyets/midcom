@@ -1,0 +1,34 @@
+form.midcom_admin_user_search .helptext
+{
+    font-size: smaller;
+}
+
+form.midcom_admin_user_search
+{
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+table.midcom_admin_user_search_results
+{
+    border-collapse: collapse;
+}
+
+table.midcom_admin_user_search_results thead
+{
+    background-color: #555753;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+table.midcom_admin_user_search_results thead th,
+table.midcom_admin_user_search_results tbody td
+{
+    padding-left: 4px;
+    padding-right: 2px;
+    text-align: left;
+}
+
+table.midcom_admin_user_search_results tr.even td
+{
+    background-color: #eeeeef;
+}

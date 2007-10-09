@@ -1,4 +1,4 @@
-<form method="get">
+<form method="get" class="midcom_admin_user_search">
     <label>
         <span><?php echo $_MIDCOM->i18n->get_string('search', 'midcom.admin.user'); ?></span>
         <input type="text" name="midcom_admin_user_search" value="<?php if (isset($_REQUEST['midcom_admin_user_search'])) { echo $_REQUEST['midcom_admin_user_search']; } ?>" />
@@ -16,7 +16,7 @@ if (count($data['persons']) > 0)
 {
     ?>
     <form method="post">
-    <table>
+    <table class="midcom_admin_user_search_results">
         <thead>
             <tr>
                 <th>&nbsp;</th>

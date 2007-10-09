@@ -1,4 +1,4 @@
-<tr>
+<tr<?php if ($data['even']) { echo ' class="even"'; } ?>>
     <?php
     $checked = '';
     if (isset($_POST['midcom_admin_user'])
@@ -6,6 +6,11 @@
         && in_array($data['person']->id, $_POST['midcom_admin_user']))
     {
         $checked = ' checked="checked"';
+    }
+    
+    if (!$data['person']->can_do('midgard:update'))
+    {
+        $checked .= ' disabled="disabled"';
     }
     ?>
     <td><input type="checkbox" name="midcom_admin_user[]" value="<?php echo $data['person']->id; ?>" <?php echo $checked; ?>/></td>
