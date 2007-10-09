@@ -15,6 +15,8 @@ class net.nemein.flashplayer.Player extends MovieClip
     private var _active_video:Object;
     private var _last_playlist_controller_id:String;
     
+    private var _standalone:Boolean = false;
+    
     public var Movie:MovieClip;
     public var Controller:net.nemein.flashplayer.assets.Controller;
     
@@ -46,18 +48,18 @@ class net.nemein.flashplayer.Player extends MovieClip
     {
         //_console.info("Player::initialize");
 
-        _player_id = _root.player_id;
+        _player_id = root.player_id;
         //_console.debug("_player_id: "+_player_id);
-
-	    _proxy = new JavaScriptProxy(_player_id, this);
-	        /*Delegate.create(this, function(){
-	        _console.info("proxy deletgate");
-	        function player_embedded(args)
-            {
-                _console.info("delegate embedded");
-            	embedded(args);
-            }
-	    }));*/
+        
+        if (! _player_id)
+        {
+            _standalone = true;
+        }
+        
+        if (! _standalone)
+        {
+    	    _proxy = new JavaScriptProxy(_player_id, this);            
+        }
         
 	    Stage.scaleMode = "noScale";
         Stage.addListener(this);
@@ -69,12 +71,39 @@ class net.nemein.flashplayer.Player extends MovieClip
                 return (true);
             });
         }
-
-        var action_data = {};
-        execute_on_client(_player_id, 'player_initialized', action_data);
+        
+        if (! _standalone)
+        {
+            var action_data = {};
+            execute_on_client(_player_id, 'player_initialized', action_data);            
+        }
 
         Controller.registerMovie(Movie);
         this.onResize();
+        
+        if (_standalone)
+        {
+            var video = {};
+            var options = {};
+            
+            video.guid = root.video_guid;
+            video.thumbnail_url = root.thumbnail_url;
+            video.video_url = root.video_url;
+            if (root.video_title)
+            {
+                video.title = root.video_title;
+            }
+            if (root.author)
+            {
+                video.author = root.author;
+            }
+            if (root.added)
+            {
+                video.added = root.added;
+            }
+            //_console.info(video);
+            setVideo(video, options);
+        }
     }
     
     public function onResize(w, h)
@@ -90,9 +119,6 @@ class net.nemein.flashplayer.Player extends MovieClip
             var width_perc = w / FIX_WIDTH * 100;
             var height_perc = h / FIX_HEIGHT * 100;
             
-            /*thumbnail_container._visible = false;
-                        left_paddle._visible = false;
-                        right_paddle._visible = false;*/
             min_resize = true;
             if (width_perc > height_perc)
             {
@@ -118,10 +144,9 @@ class net.nemein.flashplayer.Player extends MovieClip
     {
         var controller_height = Controller.bg._height;
         Movie.resize(w, h - controller_height);
-        /*this.fitPaddles();*/
         
         Controller.resize_width(Movie._width);
-        Controller._y = Movie._y + Movie._height; - (Controller._height - controller_height);// / 2;
+        Controller._y = Movie._y + Movie._height; - (Controller._height - controller_height);
     }
     
     function setVideo(video, options)

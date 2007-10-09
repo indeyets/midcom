@@ -26,8 +26,8 @@ class net.nemein.flashplayer.assets.MovieOverlay extends MovieClip
     {
         //_console.info("MovieOverlay::showLoading");
         spinner_mc = this.attachMovie("Spinner", "spinner_mc", this.getNextHighestDepth());
-        spinner_mc._xscale = 200;
-        spinner_mc._yscale = 200;
+        spinner_mc._xscale = 100;
+        spinner_mc._yscale = 100;
         _setSpinnerPosition();
         play_btn._visible = false;
     }
@@ -61,7 +61,15 @@ class net.nemein.flashplayer.assets.MovieOverlay extends MovieClip
         //_console.info("MovieOverlay::resize");
         background_mc._width = w;
         background_mc._height = h;
+        this._setPlayBtnPosition();
         this.resize_image();
+    }
+
+    private function _setPlayBtnPosition()
+    {
+        //_console.info("MovieOverlay::_setPlayBtnPosition"); 
+        play_btn._x = ((_width / 2) - (play_btn._width / 2));
+        play_btn._y = ((_height / 2) - (play_btn._height / 2));
     }
 
     private function _setSpinnerPosition()
