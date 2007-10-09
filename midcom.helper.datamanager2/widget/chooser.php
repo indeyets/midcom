@@ -266,7 +266,8 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
      */
     function _on_initialize()
     {
-        if (is_a('midcom_helper_datamanager2_type_select', $this->_type))
+        if (   is_a('midcom_helper_datamanager2_type_select', $this->_type)
+            || is_a('midcom_helper_datamanager2_type_mnrelation', $this->_type))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Warning, the field {$this->name} is not a select type or subclass thereoff, you cannot use the chooser widget with it.",
@@ -623,6 +624,28 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                     array('extra' => 'ASC'), 
                     array('metadata.published' => 'ASC'),
                 ),
+            ),
+            'group' => array
+            (
+                'class' => 'midcom_db_group',
+                'component' => 'midgard.admin.asgard',
+                'headers' => array
+                (
+                    'name',
+                    'official',
+                ),
+                'constraints' => array(),
+                'searchfields' => array
+                (
+                    'name',
+                    'official',
+                ),
+                'orders' => array
+                (
+                    array('extra' => 'ASC'), 
+                    array('metadata.published' => 'ASC'),
+                ),
+                'id_field' => 'id',
             ),
         );
         

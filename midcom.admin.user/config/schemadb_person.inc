@@ -72,5 +72,30 @@
             // TODO: Switch to chooser
             'widget' => 'radiocheckselect',
         ),
+        /*'groups' => array
+        (
+            'title' => 'groups',
+            'storage' => null,
+            'type' => 'mnrelation',
+            'type_config' => array
+            (
+                'mapping_class_name' => 'midcom_db_member',
+                'master_fieldname' => 'uid',
+                'member_fieldname' => 'gid',
+                'master_is_id' => true,
+                'option_callback' => 'midcom_helper_datamanager2_callback_select_grouplister',
+                'option_callback_arg' => array
+                (
+                    'value_field' => 'official',
+                    'key_field' => 'id'
+                ),
+            ),
+            'widget' => 'chooser',
+            'widget_config' => array
+            (
+                'clever_class' => 'group',
+                'id_field' => 'id',
+            ),
+        ),*/
     ),
 ),
