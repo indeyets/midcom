@@ -459,8 +459,8 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
     
     function _check_callback()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);        
-        debug_add("Checking callback class {$this->_callback_class}");
+        // debug_push_class(__CLASS__, __FUNCTION__);        
+        // debug_add("Checking callback class {$this->_callback_class}");
         
         if (! class_exists($this->_callback_class))
         {
@@ -485,7 +485,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         }
         $this->_callback = new $this->_callback_class($this->_callback_args);
         
-        debug_pop();
+        // debug_pop();
         
         if (is_callable(array($this->_callback, 'initialize')))
         {
@@ -1138,8 +1138,8 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
     
     function _object_to_jsdata(&$object)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);        
-        debug_add("converting object with id {$object->id} to jsdata");
+        // debug_push_class(__CLASS__, __FUNCTION__);        
+        // debug_add("converting object with id {$object->id} to jsdata");
         
         $id = @$object->id;
         $guid = @$object->guid;
@@ -1167,7 +1167,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 $item_name = $header_item['name'];
                 $value = @$object->$item_name;
                 $value = rawurlencode($value);
-                debug_add("adding header item: name={$item_name} value={$value}");
+                // debug_add("adding header item: name={$item_name} value={$value}");
                 $jsdata .= "{$item_name}: '{$value}'";
                 
                 if ($i < $hi_count)
@@ -1181,15 +1181,15 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
 
         $jsdata .= "}";
         
-        debug_pop();
+        // debug_pop();
         
         return $jsdata;
     }
     
     function _get_key_data($key, $in_render_mode=false)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);        
-        debug_add("get_key_data for key: {$key}");
+        // debug_push_class(__CLASS__, __FUNCTION__);        
+        // debug_add("get_key_data for key: {$key}");
         
         if ($this->_callback)
         {
@@ -1208,7 +1208,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 return false;
             }
             
-            debug_pop();
+            // debug_pop();
             
             if ($this->_renderer_callback)
             {
@@ -1311,7 +1311,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
          // debug_print_r('defaults',$defaults);         
          // debug_pop();
          
-         return Array($this->name => $defaults);
+         return array($this->name => $defaults);
      }
 
     /**

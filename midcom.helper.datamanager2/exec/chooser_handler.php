@@ -10,8 +10,7 @@
  */
 
 debug_push_class('midcom_helper_datamanager2_widget_chooser_handler', 'initialize');
-
-debug_print_r('_REQUEST',  $_REQUEST);
+// debug_print_r('_REQUEST',  $_REQUEST);
 
 // Common variables
 $encoding = 'UTF-8';
@@ -51,16 +50,16 @@ $map = array
 $extra_params = unserialize(base64_decode($_REQUEST['extra_params']));
 foreach ($map as $map_key)
 {
-    debug_add("map extras :: checking map_key {$map_key}");
+    // debug_add("map extras :: checking map_key {$map_key}");
     if (   isset($extra_params[$map_key])
         && !empty($extra_params[$map_key]))
     {
-        debug_add("found");
+        // debug_add("found");
         $$map_key = $extra_params[$map_key];
     }
     else
     {
-        debug_add("Not found");
+        // debug_add("Not found");
         $$map_key = false;
     }
 }
@@ -122,8 +121,8 @@ if (!empty($_callback_class))
 }
 else
 {
-    debug_add("Using component: {$component}");
-    debug_add("Using class: {$class}");
+    // debug_add("Using component: {$component}");
+    // debug_add("Using class: {$class}");
     
     // Load component if required
     if (!class_exists($class))
@@ -149,15 +148,6 @@ else
         $_MIDCOM->finish();
         exit();
     }
-
-    // if (!empty($reflector_key))
-    // {
-    //     $qb = new midgard_query_builder($class);
-    // }
-    // else
-    // {
-    //     $qb = call_user_func(array($class, 'new_query_builder'));
-    // }
     
     $qb = @call_user_func(array($class, 'new_query_builder'));
     if (! $qb)
