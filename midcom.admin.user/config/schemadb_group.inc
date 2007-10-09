@@ -1,10 +1,10 @@
 // This is for a midcom_db_person object
 'default' => array 
 (
-    'description' => 'group card',
+    'description' => 'group',
     'fields'      => array
     (
-        'username' => array 
+        'name' => array 
         (
             // COMPONENT-REQUIRED
             'title'       => 'name',
@@ -21,6 +21,23 @@
             'type'        => 'text',
             'widget'      => 'text',
             'required'    => true,
+        ),
+        'owner' => array
+        (
+            'title' => 'owner group',
+            'storage' => 'owner',
+            'type' => 'select',
+            'type_config' => array
+            (
+                 'require_corresponding_option' => false,
+                 'options' => array(),
+            ),
+            'widget' => 'chooser',
+            'widget_config' => array
+            (
+                'clever_class' => 'group',
+                'id_field' => 'id',
+            ),
         ),
         'email' => array
         (
