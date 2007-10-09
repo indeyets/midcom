@@ -26,6 +26,7 @@ if (count($data['persons']) > 0)
                     echo '<th>' . $_MIDCOM->i18n->get_string($field, 'midcom.admin.user') . "</th>\n";
                 }
                 ?>
+                <th><?php echo $_MIDCOM->i18n->get_string('groups', 'midcom.admin.user'); ?></th>
             </tr>
         </thead>
         <tbody>

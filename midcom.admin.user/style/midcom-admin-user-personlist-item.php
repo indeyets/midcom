@@ -27,5 +27,22 @@
         }
         echo "<td>{$value}</td>\n";
     }
+    
+    $qb = midcom_db_member::new_query_builder();
+    $qb->add_constraint('uid', '=', $data['person']->id);
+    $memberships = $qb->execute();
+    $groups = array();
+    foreach ($memberships as $member)
+    {
+        if (!is_object($data['groups'][$member->gid]))
+        {
+            $groups[] = $data['groups'][$member->gid];
+        }
+        else
+        {
+            $groups[] = $data['groups'][$member->gid]->official;
+        }
+    }
+    echo "<td>" . implode(', ', $groups) . "</td>\n";
     ?>
 </tr>

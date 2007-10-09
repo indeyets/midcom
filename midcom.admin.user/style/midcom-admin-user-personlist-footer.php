@@ -21,10 +21,12 @@ if (count($data['persons']) > 0)
                     </select>
                     <select name="midcom_admin_user_group" id="midcom_admin_user_group" style="display: none;">
                         <?php
-                        $qb = midcom_db_group::new_query_builder();
-                        $groups = $qb->execute();
-                        foreach ($groups as $group)
+                        foreach ($data['groups'] as $group)
                         {
+                            if (!is_object($group))
+                            {
+                                continue;
+                            }
                             echo "<option value=\"{$group->id}\">{$group->official}</option>\n";
                         }
                         ?>

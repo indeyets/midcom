@@ -137,6 +137,20 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
             }
         }
         
+        $data['groups'] = array
+        (
+            0 => 'Midgard Administrators',
+        );
+        if (count($this->_persons) > 0)
+        {
+            $qb = midcom_db_group::new_query_builder();
+            $groups = $qb->execute();
+            foreach ($groups as $group)
+            {
+                $data['groups'][$group->id] = $group;
+            }
+        }
+        
         $this->_update_breadcrumb();
         
         // Ensure we get the correct styles
@@ -158,6 +172,7 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
     {
         midcom_show_style('midgard_admin_asgard_header');
         midcom_show_style('midgard_admin_asgard_middle');
+        $data['config'] =& $this->_config;
         
         $data['persons'] =& $this->_persons;
         midcom_show_style('midcom-admin-user-personlist-header');
