@@ -1,0 +1,77 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING apply to selected
+Apply to selected
+---STRINGEND
+
+---STRING choose action
+Choose action
+---STRINGEND
+
+---STRING city
+City
+---STRINGEND
+
+---STRING create user
+Create user
+---STRINGEND
+
+---STRING email
+Email
+---STRINGEND
+
+---STRING firstname
+Firstname
+---STRINGEND
+
+---STRING go
+Go
+---STRINGEND
+
+---STRING groups
+Groups
+---STRINGEND
+
+---STRING lastname
+Lastname
+---STRINGEND
+
+---STRING members
+Members
+---STRINGEND
+
+---STRING midcom.admin.user
+User management
+---STRINGEND
+
+---STRING official
+Official name
+---STRINGEND
+
+---STRING owner group
+Owner group
+---STRINGEND
+
+---STRING postcode
+Postcode
+---STRINGEND
+
+---STRING search person
+Search users
+---STRINGEND
+
+---STRING the following fields will be searched: %s
+The following fields will be searched: %s
+---STRINGEND
+
+---STRING username
+Username
+---STRINGEND
+
+---STRING workphone
+Work phone
+---STRINGEND
+

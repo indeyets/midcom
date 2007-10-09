@@ -2,6 +2,7 @@
 'default' => array 
 (
     'description' => 'person',
+    'l10n_db' => 'midcom.admin.user',
     'fields'      => array 
     (
         'username' => array 
@@ -39,17 +40,24 @@
         ),
         'workphone' => array 
         (
-            'title'       => 'work phone',
+            'title'       => 'workphone',
             'type'        => 'text',
             'widget'      => 'text',
             'storage'     => 'workphone'
         ),
-        'workphone' => array 
+        'postcode' => array
         (
-            'title'       => 'work phone',
+            'title'       => 'postcode',
             'type'        => 'text',
             'widget'      => 'text',
-            'storage'     => 'workphone'
+            'storage'     => 'postcode',
+        ),
+        'city' => array
+        (
+            'title'       => 'city',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'storage'     => 'city',
         ),
         'groups' => array
         (

@@ -2,6 +2,7 @@
 'default' => array 
 (
     'description' => 'group',
+    'l10n_db' => 'midcom.admin.user',
     'fields'      => array
     (
         'name' => array 
@@ -48,16 +49,9 @@
             'storage'     => 'email',
             'validation'  => 'email',
         ),
-        'street' => array
-        (
-            'title'       => 'street address',
-            'type'        => 'text',
-            'widget'      => 'text',
-            'storage'     => 'street',
-        ),
         'postcode' => array
         (
-            'title'       => 'postal code',
+            'title'       => 'postcode',
             'type'        => 'text',
             'widget'      => 'text',
             'storage'     => 'postcode',
@@ -71,7 +65,7 @@
         ),
         'persons' => array
         (
-            'title' => 'persons',
+            'title' => 'members',
             'storage' => null,
             'type' => 'mnrelation',
             'type_config' => array

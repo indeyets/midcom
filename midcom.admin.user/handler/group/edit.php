@@ -45,7 +45,7 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
         $tmp[] = Array
         (
             MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.user/",
-            MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('user management', 'midcom.admin.user'),
+            MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('midcom.admin.user', 'midcom.admin.user'),
         ); 
         $tmp = array_reverse($tmp);
         

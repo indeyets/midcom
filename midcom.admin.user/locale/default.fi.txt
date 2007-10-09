@@ -1,0 +1,77 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE fi
+
+---STRING apply to selected
+Tee valituille
+---STRINGEND
+
+---STRING choose action
+Valitse toiminto
+---STRINGEND
+
+---STRING city
+Kaupunki
+---STRINGEND
+
+---STRING create user
+Luo käyttäjä
+---STRINGEND
+
+---STRING email
+Sähköposti
+---STRINGEND
+
+---STRING firstname
+Etunimi
+---STRINGEND
+
+---STRING go
+Hae
+---STRINGEND
+
+---STRING groups
+Ryhmät
+---STRINGEND
+
+---STRING lastname
+Sukunimi
+---STRINGEND
+
+---STRING members
+Jäsenet
+---STRINGEND
+
+---STRING midcom.admin.user
+Käyttäjien hallinta
+---STRINGEND
+
+---STRING official
+Virallinen nimi
+---STRINGEND
+
+---STRING owner group
+Omistajaryhmä
+---STRINGEND
+
+---STRING postcode
+Postinumero
+---STRINGEND
+
+---STRING search person
+Hae käyttäjiä
+---STRINGEND
+
+---STRING the following fields will be searched: %s
+Haku tehdään seuraavista kentistä: %s
+---STRINGEND
+
+---STRING username
+Käyttäjätunnus
+---STRINGEND
+
+---STRING workphone
+Työpuhelin
+---STRINGEND
+

@@ -34,7 +34,7 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
         $tmp[] = Array
         (
             MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.user/",
-            MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('user management', 'midcom.admin.user'),
+            MIDCOM_NAV_NAME => $this->_request_data['view_title'],
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
@@ -50,7 +50,7 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
      */
     function _handler_list($handler_id, $args, &$data)
     {   
-        $data['view_title'] = $_MIDCOM->i18n->get_string('user management', 'midcom.admin.user');
+        $data['view_title'] = $_MIDCOM->i18n->get_string('midcom.admin.user', 'midcom.admin.user');
         $_MIDCOM->set_pagetitle($data['view_title']);
         
         $data['asgard_toolbar'] = new midcom_helper_toolbar();   

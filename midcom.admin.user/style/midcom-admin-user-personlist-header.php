@@ -1,12 +1,17 @@
 <form method="get" class="midcom_admin_user_search">
     <label>
-        <span><?php echo $_MIDCOM->i18n->get_string('search', 'midcom.admin.user'); ?></span>
+        <span><?php echo $_MIDCOM->i18n->get_string('search person', 'midcom.admin.user'); ?></span>
         <input type="text" name="midcom_admin_user_search" value="<?php if (isset($_REQUEST['midcom_admin_user_search'])) { echo $_REQUEST['midcom_admin_user_search']; } ?>" />
     </label>
     <input type="submit" value="<?php echo $_MIDCOM->i18n->get_string('go', 'midcom.admin.user'); ?>" />
     <div class="helptext">
-        <?php 
-        echo sprintf($_MIDCOM->i18n->get_string('the following fields will be searched: %s', 'midcom.admin.user'), implode(', ', $data['search_fields']));
+        <?php
+        $data['search_fields_l10n'] = array();
+        foreach ($data['search_fields'] as $field)
+        {
+            $data['search_fields_l10n'][] = $_MIDCOM->i18n->get_string($field, 'midcom.admin.user');
+        }
+        echo sprintf($_MIDCOM->i18n->get_string('the following fields will be searched: %s', 'midcom.admin.user'), implode(', ', $data['search_fields_l10n']));
         ?>
     </div>
 </form>
