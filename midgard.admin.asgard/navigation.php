@@ -174,7 +174,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
                         $label = "#{$child->id}";
                     }
                     
-                    echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$child->guid}/\">{$icon}{$label}</a>\n";
+                    echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$child->guid}/\" title=\"GUID: {$child->guid}, ID: {$child->id}\">{$icon}{$label}</a>\n";
                     
 
                     if ($selected)
@@ -260,7 +260,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
                             $label = "#{$object->id}";
                         }
                         
-                        echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$object->guid}/\">{$icon}{$label}</a>\n";
+                        echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$object->guid}/\" title=\"GUID: {$object->guid}, ID: {$object->id}\">{$icon}{$label}</a>\n";
 
                         if ($selected)
                         {
