@@ -105,7 +105,6 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
         
         if (isset($_REQUEST['midcom_admin_user_search']))
         {
-
             // Run the person-seeking QB
             $qb = midcom_db_person::new_query_builder();
             $qb->begin_group('OR');
@@ -118,6 +117,19 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
             $qb->add_order('firstname');
             
             $this->_persons = $qb->execute();
+        }
+        else
+        {
+            // List all persons if there are less than N of them
+            $qb = midcom_db_person::new_query_builder();
+            
+            if ($qb->count() < $this->_config->get('list_without_search'))
+            {
+                $qb->add_order('lastname');
+                $qb->add_order('firstname');
+            
+                $this->_persons = $qb->execute();
+            }
         }
         
         $this->_update_breadcrumb();
