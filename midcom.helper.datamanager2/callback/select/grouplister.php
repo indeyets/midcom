@@ -102,6 +102,8 @@ class midcom_helper_datamanager2_callback_select_grouplister
         {
             $this->_process_options($options);
         }
+        
+        return true;
     }
 
     /**
@@ -215,7 +217,7 @@ class midcom_helper_datamanager2_callback_select_grouplister
      *
      * @param mixed $key The key to look up.
      */
-    function _load_group($key)
+    function _load_group($key, $return=false)
     {
         if ($this->_list_all_done)
         {
@@ -250,7 +252,39 @@ class midcom_helper_datamanager2_callback_select_grouplister
             $key = $this->_get_key($group);
             $value = $group->{$this->_value_field};
             $this->_loaded_groups[$key] = $value;
+            if ($return)
+            {
+                return $group;
+            }
         }
+    }
+
+    /**
+     * Chooser related methods
+     */
+    
+    function get_key_data($key)
+    {
+        return $this->_load_group($key, true);
+    }
+    
+    function run_search($query, &$request)
+    {
+        $qb = midcom_db_group::new_query_builder();
+        
+        $qb->begin_group('OR');
+        $qb->add_constraint('name', 'LIKE', $query);
+        $qb->add_constraint('official', 'LIKE', $query);
+        $qb->end_group();
+        
+        $results = $qb->execute();
+        
+        if (count($results) <= 0)
+        {
+            return false;
+        }
+        
+        return $results;        
     }
 
 }

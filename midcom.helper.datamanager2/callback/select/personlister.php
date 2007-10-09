@@ -102,6 +102,8 @@ class midcom_helper_datamanager2_callback_select_personlister
         {
             $this->_process_options($options);
         }
+        
+        return true;
     }
 
     /**
@@ -217,7 +219,7 @@ class midcom_helper_datamanager2_callback_select_personlister
      *
      * @param mixed $key The key to look up.
      */
-    function _load_person($key)
+    function _load_person($key, $return=false)
     {
         if ($this->_list_all_done)
         {
@@ -254,7 +256,44 @@ class midcom_helper_datamanager2_callback_select_personlister
             $key = $this->_get_key($person);
             $value = $person->{$this->_value_field};
             $this->_loaded_persons[$key] = $value;
+            
+            if ($return)
+            {
+                return $person;
+            }
         }
+    }
+
+    /**
+     * Chooser related methods
+     */
+    
+    function get_key_data($key)
+    {
+        return $this->_load_person($key, true);
+    }
+    
+    function run_search($query, &$request)
+    {
+        $qb = midcom_db_person::new_query_builder();
+        
+        $qb->begin_group('OR');
+        $qb->add_constraint('firstname', 'LIKE', $query);
+        $qb->add_constraint('lastname', 'LIKE', $query);
+        $qb->add_constraint('username', 'LIKE', $query);
+        $qb->add_constraint('email', 'LIKE', $query);
+        $qb->add_constraint('city', 'LIKE', $query);
+        $qb->add_constraint('postcode', 'LIKE', $query);
+        $qb->end_group();
+        
+        $results = $qb->execute();
+        
+        if (count($results) <= 0)
+        {
+            return false;
+        }
+        
+        return $results;        
     }
 
 }
