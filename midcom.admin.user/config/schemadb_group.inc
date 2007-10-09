@@ -1,0 +1,100 @@
+// This is for a midcom_db_person object
+'default' => array 
+(
+    'description' => 'group card',
+    'fields'      => array
+    (
+        'username' => array 
+        (
+            // COMPONENT-REQUIRED
+            'title'       => 'name',
+            'storage'     => 'name',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'index_method' => 'noindex',
+        ),
+        'official' => array
+        (
+            // COMPONENT-RECOMMENDED
+            'title'       => 'official',
+            'storage'     => 'official',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'required'    => true,
+        ),
+        'email' => array
+        (
+            'title'       => 'email',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'storage'     => 'email',
+            'validation'  => 'email',
+        ),
+        'street' => array
+        (
+            'title'       => 'street address',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'storage'     => 'street',
+        ),
+        'postcode' => array
+        (
+            'title'       => 'postal code',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'storage'     => 'postcode',
+        ),
+        'city' => array
+        (
+            'title'       => 'city',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'storage'     => 'city',
+        ),
+        'persons' => array
+        (
+            'title' => 'persons',
+            'storage' => null,
+            'type' => 'mnrelation',
+            'type_config' => array
+            (
+                'mapping_class_name' => 'midcom_db_member',
+                'master_fieldname' => 'gid',
+                'member_fieldname' => 'uid',
+                'master_is_id' => true,
+                'option_callback' => 'midcom_helper_datamanager2_callback_select_personlister',
+                'option_callback_arg' => array
+                (
+                    'key_field' => 'id'
+                ),
+            ),
+            // TODO: Switch to chooser
+            'widget' => 'radiocheckselect',
+        ),
+        /*'groups' => array
+        (
+            'title' => 'groups',
+            'storage' => null,
+            'type' => 'mnrelation',
+            'type_config' => array
+            (
+                'mapping_class_name' => 'midcom_db_member',
+                'master_fieldname' => 'uid',
+                'member_fieldname' => 'gid',
+                'master_is_id' => true,
+                'option_callback' => 'midcom_helper_datamanager2_callback_select_grouplister',
+                'option_callback_arg' => array
+                (
+                    'value_field' => 'official',
+                    'key_field' => 'id'
+                ),
+            ),
+            'widget' => 'chooser',
+            'widget_config' => array
+            (
+                'clever_class' => 'group',
+                'id_field' => 'id',
+            ),
+        ),*/
+    ),
+),

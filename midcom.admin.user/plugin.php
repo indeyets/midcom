@@ -73,6 +73,17 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
     		 	'handler' => array ('midcom_admin_user_handler_user_create','create'),
     		 	'fixed_args' => array ('create'),
     		 ),
+            /**
+             * Edit a group
+             * 
+             * Match /user-editor/group/edit/<guid>/
+             */
+            'group_edit' => array
+            (
+                'handler' => array ('midcom_admin_user_handler_group_edit', 'edit'),
+                'fixed_args' => array ('group', 'edit'),
+                'variable_args' => 1,
+            ),
         );
     }
 }

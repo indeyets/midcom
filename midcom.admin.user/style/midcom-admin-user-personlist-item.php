@@ -40,7 +40,7 @@
         }
         else
         {
-            $groups[] = $data['groups'][$member->gid]->official;
+            $groups[] = "<a href=\"{$prefix}__mfa/asgard_midcom.admin.user/group/edit/{$data['groups'][$member->gid]->guid}/\">{$data['groups'][$member->gid]->official}</a>";
         }
     }
     echo "<td>" . implode(', ', $groups) . "</td>\n";
