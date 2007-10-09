@@ -61,6 +61,7 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
                 MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.user/user/create/",
                 MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create user', 'midcom.admin.user'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_person.png',
+                MIDCOM_TOOLBAR_ENABLED => $this->_config->get('allow_manage_accounts'),
             )
         );      
         
@@ -79,6 +80,10 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
                 switch ($_POST['midcom_admin_user_action'])
                 {
                     case 'removeaccount':
+                        if (!$this->_config->get('allow_manage_accounts'))
+                        {
+                            break;
+                        }
                         $person->parameter('net.nehmer.account', 'username', $person->username);
                         $person->username = '';
                         $person->password = '';
