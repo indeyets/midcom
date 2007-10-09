@@ -36,6 +36,7 @@ if (! isset($_REQUEST["query"]))
 }
 
 $query = $_REQUEST["query"];
+$query = str_replace("*","%", $query);
 
 $map = array
 (
