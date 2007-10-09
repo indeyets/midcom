@@ -35,11 +35,6 @@ class midcom_baseclasses_database_group extends __midcom_baseclasses_database_gr
      */
     function _on_loaded()
     {
-        if (! parent::_on_loaded())
-        {
-            return false;
-        }
-
         if (empty($this->official))
         {
             $this->official = $this->name;
