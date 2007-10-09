@@ -13,5 +13,13 @@
             'widget' => 'text',
             'readonly' => 'true',
         ),
+        'id' => Array
+        (
+            'title' => 'id',
+            'storage' => 'id',
+            'type' => 'number',
+            'widget' => 'text',
+            'readonly' => 'true',
+        ),
     )
 ),
