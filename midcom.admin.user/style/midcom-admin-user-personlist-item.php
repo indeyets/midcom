@@ -1,5 +1,14 @@
 <tr>
-    <td><input type="checkbox" name="midcom_admin_user[]" value="<?php echo $data['person']->id; ?>" /></td>
+    <?php
+    $checked = '';
+    if (isset($_POST['midcom_admin_user'])
+        && is_array($_POST['midcom_admin_user'])
+        && in_array($data['person']->id, $_POST['midcom_admin_user']))
+    {
+        $checked = ' checked="checked"';
+    }
+    ?>
+    <td><input type="checkbox" name="midcom_admin_user[]" value="<?php echo $data['person']->id; ?>" <?php echo $checked; ?>/></td>
     <?php
     $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
     $linked = 0;

@@ -68,6 +68,41 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
         $data['search_fields'] = $this->_config->get('search_fields');
         $data['list_fields'] = $this->_config->get('list_fields');
         
+        if (   isset($_POST['midcom_admin_user'])
+            && is_array($_POST['midcom_admin_user'])
+            && $_POST['midcom_admin_user_action'])
+        {
+            foreach ($_POST['midcom_admin_user'] as $person_id)
+            {
+                $person = new midcom_db_person($person_id);
+                
+                switch ($_POST['midcom_admin_user_action'])
+                {
+                    case 'removeaccount':
+                        $person->parameter('net.nehmer.account', 'username', $person->username);
+                        $person->username = '';
+                        $person->password = '';
+                        if ($person->update())
+                        {
+                            $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('midcom.admin.user'), sprintf($this->_l10n->get('user account revoked for %s'), $person->name));
+                        }
+                        break;
+                        
+                    case 'groupadd':
+                        if (isset($_POST['midcom_admin_user_group']))
+                        {
+                            $member = new midcom_db_member();
+                            $member->uid = $person->id;
+                            $member->gid = (int) $_POST['midcom_admin_user_group'];
+                            if ($member->create())
+                            {
+                                $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('midcom.admin.user'), sprintf($this->_l10n->get('user %s added to group'), $person->name));
+                            }
+                        }
+                }
+            }
+        }
+        
         if (isset($_REQUEST['midcom_admin_user_search']))
         {
 
