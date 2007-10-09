@@ -602,13 +602,16 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
     
 	function inactivate(id)
     {
-	    jQuery('#'+options.widget_id + '_result_item_'+id+'_input', list).attr({ value: id });
+	    jQuery('#'+options.widget_id + '_result_item_'+id+'_input', list).attr({ value: 0 });
 	    jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.DELETED);
 	    jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.ACTIVE);
         jQuery('#'+options.widget_id + '_result_item_'+id).addClass(CLASSES.INACTIVE);
 	    jQuery('#'+options.widget_id + '_result_item_'+id).attr("keep_on_list","false");
 	    jQuery('#'+options.widget_id + '_result_item_'+id).attr("deleted","false");
-	    selected_items.push(id);
+	    //selected_items.push(id);
+	    selected_items = jQuery.grep( selected_items, function(n,i){
+            return n != id;
+        });
     }
     
     function delete_unseleted_from_list()

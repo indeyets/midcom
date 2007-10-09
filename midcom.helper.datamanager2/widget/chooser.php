@@ -211,7 +211,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
     var $_callback_class = null;
 
     /**
-     * The argument to pass to the option callback constructor.
+     * The arguments to pass to the option callback constructor.
      *
      * @var mixed
      * @access public
@@ -292,8 +292,9 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 debug_add("Warning, the field {$this->name} does not have proper class definitions set.",
                     MIDCOM_LOG_WARN);
                 debug_pop();
+                
+                return false;
             }
-            return false;
         }
         
         if (   !empty($this->renderer)
@@ -315,25 +316,26 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             return false;
         }
 
-        if (empty($this->class))
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Warning, the field {$this->name} does not have class defined.",
-                MIDCOM_LOG_WARN);
-            debug_pop();
-            return false;
-        }
+        // if (empty($this->class))
+        // {
+        //     debug_push_class(__CLASS__, __FUNCTION__);
+        //     debug_add("Warning, the field {$this->name} does not have class defined.",
+        //         MIDCOM_LOG_WARN);
+        //     debug_pop();
+        //     return false;
+        // }
 
-        if (empty($this->component))
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Warning, the field {$this->name} does not have component the class {$this->class} belongs to defined.",
-                MIDCOM_LOG_WARN);
-            debug_pop();
-            return false;
-        }
+        // if (empty($this->component))
+        // {
+        //     debug_push_class(__CLASS__, __FUNCTION__);
+        //     debug_add("Warning, the field {$this->name} does not have component the class {$this->class} belongs to defined.",
+        //         MIDCOM_LOG_WARN);
+        //     debug_pop();
+        //     return false;
+        // }
 
-        if (empty($this->searchfields))
+        if (   empty($this->searchfields)
+            && !isset($this->_callback_class))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Warning, the field {$this->name} does not have searchfields defined, it can never return results.",
@@ -352,7 +354,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             )
         );
         
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/chooser/jquery.chooser_widget.pack.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/chooser/jquery.chooser_widget.js');
         
         $this->_element_id = "{$this->_namespace}{$this->name}_chooser_widget";
 
@@ -457,8 +459,8 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
     
     function _check_callback()
     {
-        // debug_push_class(__CLASS__, __FUNCTION__);        
-        // debug_add("Checking callback class {$this->_callback_class}");
+        debug_push_class(__CLASS__, __FUNCTION__);        
+        debug_add("Checking callback class {$this->_callback_class}");
         
         if (! class_exists($this->_callback_class))
         {
@@ -483,8 +485,14 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         }
         $this->_callback = new $this->_callback_class($this->_callback_args);
         
-        // debug_pop();
-        return $this->_callback->initialize();
+        debug_pop();
+        
+        if (is_callable(array($this->_callback, 'initialize')))
+        {
+            return $this->_callback->initialize();
+        }
+        
+        return $this->_callback;
     }
     
     function _check_clever_class()
@@ -947,7 +955,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
      */
     function add_elements_to_form()
     {
-        // debug_push_class(__CLASS__, __FUNCTION__);
+        //debug_push_class(__CLASS__, __FUNCTION__);
         
         // Get url to search handler
         $nav = new midcom_helper_nav();
@@ -1045,13 +1053,14 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         // Add existing and static selections
         $existing_elements = $this->_type->selection;
         
-        // debug_print_r('existing_elements',$existing_elements);
+        //debug_print_r('existing_elements',$existing_elements);
 
         // debug_print_r('static_options',$this->static_options);
         
         $elements = array_merge($this->static_options, $existing_elements);
         // debug_print_r('all elements to be added',$elements);
-                
+        // debug_pop();
+        
         $ee_script = '';
         if ($this->_renderer_callback)
         {
@@ -1129,8 +1138,8 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
     
     function _object_to_jsdata(&$object)
     {
-        // debug_push_class(__CLASS__, __FUNCTION__);        
-        // debug_add("converting object with id {$object->id} to jsdata");
+        debug_push_class(__CLASS__, __FUNCTION__);        
+        debug_add("converting object with id {$object->id} to jsdata");
         
         $id = @$object->id;
         $guid = @$object->guid;
@@ -1146,7 +1155,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         {
             $value = @$object->get_label();
             $value = rawurlencode($value);
-            // debug_add("adding header item: name=label value={$value}");
+            //debug_add("adding header item: name=label value={$value}");
             $jsdata .= "label: '{$value}'";
         }
         else
@@ -1158,7 +1167,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 $item_name = $header_item['name'];
                 $value = @$object->$item_name;
                 $value = rawurlencode($value);
-                // debug_add("adding header item: name={$item_name} value={$value}");
+                debug_add("adding header item: name={$item_name} value={$value}");
                 $jsdata .= "{$item_name}: '{$value}'";
                 
                 if ($i < $hi_count)
@@ -1172,15 +1181,15 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
 
         $jsdata .= "}";
         
-        return $jsdata;        
+        debug_pop();
         
-        // debug_pop();
+        return $jsdata;
     }
     
     function _get_key_data($key, $in_render_mode=false)
     {
-        // debug_push_class(__CLASS__, __FUNCTION__);        
-        // debug_add("get_key_data for key: {$key}");
+        debug_push_class(__CLASS__, __FUNCTION__);        
+        debug_add("get_key_data for key: {$key}");
         
         if ($this->_callback)
         {
@@ -1189,17 +1198,17 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             if ($in_render_mode)
             {
                 // debug_pop();
-                return $_callback->resolve_object_name($key);
+                return $this->_callback->resolve_object_name($key);
             }
             
-            $results = $_callback->get_key_data($key);
+            $results = $this->_callback->get_key_data($key);
             
             if (! $results)
             {
                 return false;
             }
             
-            // debug_pop();
+            debug_pop();
             
             if ($this->_renderer_callback)
             {

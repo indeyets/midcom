@@ -64,13 +64,34 @@ foreach ($map as $map_key)
     }
 }
 
-if (!empty($reflector_key))
+if (! empty($reflector_key))
 {
     $_MIDCOM->componentloader->load_graceful('midgard.admin.asgard');
 }
 
 debug_pop();
 debug_push_class('midcom_helper_datamanager2_widget_chooser_handler', 'search');
+
+// Handle automatic wildcards
+if (   !empty($auto_wildcards)
+    && strpos($query, '%') === false)
+{
+    switch($auto_wildcards)
+    {
+        case 'both':
+            $query = "%{$query}%";
+            break;
+        case 'start':
+            $query = "%{$query}";
+            break;
+        case 'end':
+            $query = "{$query}%";
+            break;
+        default:
+            debug_add("Don't know how to handle auto_wildcards value '{$auto_wildcards}'", MIDCOM_LOG_WARN);
+            break;
+    }
+}
 
 if (!empty($_callback_class))
 {
@@ -126,27 +147,6 @@ else
         echo "</response>\n";
         $_MIDCOM->finish();
         exit();
-    }
-
-    // Handle automatic wildcards
-    if (   !empty($auto_wildcards)
-        && strpos($query, '%') === false)
-    {
-        switch($auto_wildcards)
-        {
-            case 'both':
-                $query = "%{$query}%";
-                break;
-            case 'start':
-                $query = "%{$query}";
-                break;
-            case 'end':
-                $query = "{$query}%";
-                break;
-            default:
-                debug_add("Don't know how to handle auto_wildcards value '{$auto_wildcards}'", MIDCOM_LOG_WARN);
-                break;
-        }
     }
 
     // if (!empty($reflector_key))
