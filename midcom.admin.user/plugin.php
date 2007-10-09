@@ -84,6 +84,17 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
                 'fixed_args' => array ('group', 'edit'),
                 'variable_args' => 1,
             ),
+            /**
+    		 * Create new user
+    		 *
+    		 * Match /create/
+    		 *
+    		 */
+    		 'group_create' => array
+    		 (
+    		 	'handler' => array ('midcom_admin_user_handler_group_create','create'),
+    		 	'fixed_args' => array ('group', 'create'),
+    		 ),
         );
     }
 }

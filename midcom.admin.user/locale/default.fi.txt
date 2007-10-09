@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING add to group
+Lisää ryhmään
+---STRINGEND
+
 ---STRING apply to selected
 Tee valituille
 ---STRINGEND
@@ -55,8 +59,16 @@ Virallinen nimi
 Omistajaryhmä
 ---STRINGEND
 
+---STRING person %s saved
+Käyttäjä %s tallennettu
+---STRINGEND
+
 ---STRING postcode
 Postinumero
+---STRINGEND
+
+---STRING remove account
+Poista käyttäjätunnus
 ---STRINGEND
 
 ---STRING search person
@@ -73,5 +85,9 @@ Käyttäjätunnus
 
 ---STRING workphone
 Työpuhelin
+---STRINGEND
+
+---STRING create group
+Luo ryhmä
 ---STRINGEND
 

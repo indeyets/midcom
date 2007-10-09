@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING add to group
+Add to group
+---STRINGEND
+
 ---STRING apply to selected
 Apply to selected
 ---STRINGEND
@@ -55,8 +59,16 @@ Official name
 Owner group
 ---STRINGEND
 
+---STRING person %s saved
+User %s saved
+---STRINGEND
+
 ---STRING postcode
 Postcode
+---STRINGEND
+
+---STRING remove account
+Remove account
 ---STRINGEND
 
 ---STRING search person
@@ -73,5 +85,9 @@ Username
 
 ---STRING workphone
 Work phone
+---STRINGEND
+
+---STRING create group
+Create group
 ---STRINGEND
 
