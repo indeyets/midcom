@@ -203,25 +203,6 @@ class net_nehmer_blog_handler_create extends midcom_baseclasses_components_handl
                 // Index the article
                 $indexer =& $_MIDCOM->get_service('indexer');
                 net_nehmer_blog_viewer::index($this->_controller->datamanager, $indexer, $this->_content_topic);
-
-                // Generate URL name
-                if ($this->_article->name == '')
-                {
-                    $this->_article->name = midcom_generate_urlname_from_string($this->_article->title);
-                    $tries = 0;
-                    $maxtries = 999;
-                    while(   !$this->_article->update()
-                          && $tries < $maxtries)
-                    {
-                        $this->_article->name = midcom_generate_urlname_from_string($this->_article->title);
-                        if ($tries > 0)
-                        {
-                            // Append an integer if articles with same name exist
-                            $this->_article->name .= sprintf("-%03d", $tries);
-                        }
-                        $tries++;
-                    }
-                }
                 // *** FALL THROUGH ***
 
             case 'cancel':

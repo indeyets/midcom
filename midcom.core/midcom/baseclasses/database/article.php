@@ -296,7 +296,29 @@ class midcom_baseclasses_database_article extends __midcom_baseclasses_database_
         }
         
         return true;
-    }  
+    }
+    
+    /**
+     * Generates a new URL-safe name.
+     *
+     * @access protected
+     */
+    function _on_created()
+    {
+        midcom_baseclasses_core_dbobject::generate_urlname($this);
+        return true;
+    }
+    
+    /**
+     * Generates a new URL-safe name.
+     *
+     * @access protected
+     */
+    function _on_updated()
+    {
+        midcom_baseclasses_core_dbobject::generate_urlname($this);
+        return true;
+    } 
 }
 
 ?>

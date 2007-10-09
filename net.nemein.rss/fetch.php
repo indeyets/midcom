@@ -223,11 +223,11 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
             $updated = true;
         }
         
-        if ($article->name != md5($item['guid']))
+        /*if ($article->name != md5($item['guid']))
         {
             $article->name = md5($item['guid']);
             $updated = true;
-        }
+        }*/
         
         // FIXME: This breaks with URLs longer than 255 chars
         if ($article->$guid_property != $item['guid'])

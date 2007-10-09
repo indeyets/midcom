@@ -134,7 +134,29 @@ class midcom_baseclasses_database_topic extends __midcom_baseclasses_database_to
     function get_dba_parent_class()
     {
         return 'midcom_baseclasses_database_topic';
-    }    
+    }
+    
+    /**
+     * Generates a new URL-safe name.
+     *
+     * @access protected
+     */
+    function _on_created()
+    {
+        midcom_baseclasses_core_dbobject::generate_urlname($this, 'extra');
+        return true;
+    }
+    
+    /**
+     * Generates a new URL-safe name.
+     *
+     * @access protected
+     */
+    function _on_updated()
+    {
+        midcom_baseclasses_core_dbobject::generate_urlname($this, 'extra');
+        return true;
+    } 
 }
 
 ?>

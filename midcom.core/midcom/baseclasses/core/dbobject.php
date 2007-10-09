@@ -846,6 +846,50 @@ class midcom_baseclasses_core_dbobject
             }
         }
     }
+    
+    /**
+     * Generates URL-safe name for an object and stores it if needed
+     */
+    function generate_urlname($object, $titlefield = 'title')
+    {
+        if (!isset($object->name))
+        {
+            return false;
+        }
+        
+        if (   !isset($object->$titlefield)
+            || empty($object->$titlefield))
+        {
+            return false;
+        }
+        
+        if (!$_MIDCOM->serviceloader->can_load('midcom_core_service_urlgenerator'))
+        {
+            return false;
+        }
+        
+        $urlgenerator = $_MIDCOM->serviceloader->load('midcom_core_service_urlgenerator');
+        $name = $urlgenerator->from_string($object->$titlefield);
+        if (   $object->name == $name
+            || (   !empty($object->name)
+                && $object->name == $urlgenerator->from_string($object->name)))
+        {
+            // We're happy with the existing URL name
+            return true;
+        }
+        
+        $object->name = $name;
+        $tries = 0;
+        $maxtries = 999;
+        while(   !$object->update()
+              && $tries < $maxtries)
+        {
+            // Append an integer if articles with same name exist
+            $object->name = $name . sprintf("-%03d", $tries);
+            $tries++;
+        }
+        return true;
+    }
 
     /**
      * This is a simple wrapper with (currently) no additional functionality

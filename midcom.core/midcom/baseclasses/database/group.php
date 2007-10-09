@@ -28,6 +28,11 @@ class midcom_baseclasses_database_group extends __midcom_baseclasses_database_gr
         parent::__midcom_baseclasses_database_group($id);
     }
 
+    function get_label()
+    {
+        return $this->official;
+    }
+
     /**
      * Updates all computed members.
      *
@@ -44,6 +49,28 @@ class midcom_baseclasses_database_group extends __midcom_baseclasses_database_gr
         {
             $this->official = "Group #{$this->id}";
         }
+        return true;
+    }
+    
+    /**
+     * Generates a new URL-safe name.
+     *
+     * @access protected
+     */
+    function _on_created()
+    {
+        midcom_baseclasses_core_dbobject::generate_urlname($this, 'official');
+        return true;
+    }
+    
+    /**
+     * Generates a new URL-safe name.
+     *
+     * @access protected
+     */
+    function _on_updated()
+    {
+        midcom_baseclasses_core_dbobject::generate_urlname($this, 'official');
         return true;
     }
 
