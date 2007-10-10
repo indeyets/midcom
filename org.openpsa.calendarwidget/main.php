@@ -817,6 +817,8 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
                     echo "      <td{$css_class} width=\"{$slot_width}\" style=\"width: {$slot_width}px;\"{$additional_free_attributes}>&nbsp;</td>\n";
                 }
             }
+            
+            echo "    </tr>\n";
         }
         //$resources_shown = true;
         echo "  </tbody>\n";
