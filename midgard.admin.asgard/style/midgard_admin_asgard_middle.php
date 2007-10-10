@@ -20,7 +20,8 @@
                         {
                             // FIXME: It would be better to reflect whether object is MultiLang
                             if (   $data['object']->lang == 0
-                                && $data['language_code'] != '')
+                                && isset($data['language_code'])
+                                && $data['language_code'] !== '')
                             {
                                 echo "<span class=\"object_language\">" . $_MIDCOM->i18n->get_string('in fallback language', 'midgard.admin.asgard') . '</span>';
                             }
