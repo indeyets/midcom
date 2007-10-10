@@ -108,7 +108,7 @@
         (
             // COMPONENT-RECOMMENDED
             'title'       => 'name',
-            'storage'     => 'name',
+            'storage'     => 'official',
             'type'        => 'text',
             'widget'      => 'text',
             'required'    => true,
