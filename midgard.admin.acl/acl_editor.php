@@ -233,7 +233,7 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
         // Add the "Add assignees" choices to schema
         $this->_schemadb['privileges']->fields['add_assignee']['type_config']['options'] = $additional_assignees;
                 
-        $header = "<table width=\"100%\" border=\"0\">\n";
+        $header = "<table width=\"100%\" border=\"0\" id=\"midgard_admin_acl\">\n";
         $header_start = "<tr>\n";
         $header_end = "</tr>\n";
         $header_items = array();
@@ -407,7 +407,7 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
         $form_start .= "/>\n";
         echo $form_start;
         
-        $table_start = "<table width=\"100%\" border=\"0\">\n";
+        $table_start = "<table width=\"100%\" border=\"0\" id=\"midgard_admin_acl\">\n";
         echo $table_start;
         
         $priv_item_cnt = count($this->_privileges);
@@ -444,7 +444,7 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
                 
                 if ($row->_name == 'form_toolbar')
                 {
-                    $html .= "<tr><td>\n";
+                    $html .= "<tr><td class=\"privilege_row\">\n";
                     foreach ($row->_elements as $k => $element)
                     {
                         if (is_a($element, 'HTML_QuickForm_submit'))
