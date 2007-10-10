@@ -11,12 +11,28 @@ HTTP POST to <code>%s</code>
 Archive to <code>%s</code>
 ---STRINGEND
 
+---STRING automatic
+Automatic
+---STRINGEND
+
+---STRING disabled
+Disabled
+---STRINGEND
+
+---STRING email transport
+Email transport
+---STRINGEND
+
 ---STRING exported
 Exported from database
 ---STRINGEND
 
 ---STRING exporter
 Exporting type
+---STRINGEND
+
+---STRING file archive transport
+File archive transport
 ---STRINGEND
 
 ---STRING from log file
@@ -31,8 +47,16 @@ Imported to database
 Manage replication
 ---STRINGEND
 
+---STRING manual
+Manual
+---STRINGEND
+
 ---STRING mirroring subscription
 Mirror
+---STRINGEND
+
+---STRING never
+Never
 ---STRINGEND
 
 ---STRING replication information
@@ -55,15 +79,15 @@ Replication pipelines
 Staging/live
 ---STRINGEND
 
+---STRING status
+Status
+---STRINGEND
+
 ---STRING subscription
 Pipeline
 ---STRINGEND
 
 ---STRING transporter
 Transporting type
----STRINGEND
-
----STRING never
-Never
 ---STRINGEND
 

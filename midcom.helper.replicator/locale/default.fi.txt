@@ -35,6 +35,10 @@ Hallinnoi replikointia
 Peilaus
 ---STRINGEND
 
+---STRING never
+Ei koskaan
+---STRINGEND
+
 ---STRING replication information
 Replikointitiedot
 ---STRINGEND
@@ -63,7 +67,27 @@ Jono
 Siirtotyyppi
 ---STRINGEND
 
----STRING never
-Ei koskaan
+---STRING automatic
+Automaattinen
+---STRINGEND
+
+---STRING disabled
+Pois käytöstä
+---STRINGEND
+
+---STRING email transport
+Sähköpostisiirto
+---STRINGEND
+
+---STRING file archive transport
+Tiedostoarkistosiirto
+---STRINGEND
+
+---STRING manual
+Manuaalinen
+---STRINGEND
+
+---STRING status
+Status
 ---STRINGEND
 

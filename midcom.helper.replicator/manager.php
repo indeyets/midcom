@@ -119,11 +119,20 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
         midgard_admin_asgard_plugin::prepare_plugin('', &$this->_request_data);        
         foreach (array_keys($this->_schemadb) as $name)
         {
+            if (preg_match('/midcom.helper.replicator\/create\//', $_MIDGARD['uri']))
+            {
+                $prefix = '';
+            }
+            else
+            {
+                $prefix = 'create/';
+            }
+            
             $this->_request_data['asgard_toolbar']->add_item
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "create/{$name}.html",
+                    MIDCOM_TOOLBAR_URL => "{$prefix}{$name}.html",
                     MIDCOM_TOOLBAR_LABEL => sprintf
                     (
                         $this->_l10n_midcom->get('create %s'),
