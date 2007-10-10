@@ -63,6 +63,17 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
                 'variable_args' => 1,
             ),
             /**
+             * Edit a user's password
+             * 
+             * Match /user-editor/edit/<guid>/
+             */
+            'user_edit_password' => array
+            (
+                'handler' => array ('midcom_admin_user_handler_user_edit', 'edit'),
+                'fixed_args' => array ('password'),
+                'variable_args' => 1,
+            ),
+            /**
     		 * Create new user
     		 *
     		 * Match /create/

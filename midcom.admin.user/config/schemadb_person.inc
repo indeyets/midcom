@@ -5,15 +5,6 @@
     'l10n_db' => 'midcom.admin.user',
     'fields'      => array 
     (
-        'username' => array 
-        (
-            // COMPONENT-REQUIRED
-            'title'       => 'username',
-            'storage'     => 'username',
-            'type'        => 'text',
-            'widget'      => 'text',
-            'index_method' => 'noindex',
-        ),
         'firstname' => array 
         (
             'title'       => 'firstname',

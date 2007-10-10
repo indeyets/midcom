@@ -47,9 +47,9 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
     /**
      * Loads and prepares the schema database.
      */
-    function _load_schemadb()
+    function _load_schemadb($config_key)
     {
-        $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_person'));
+        $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get($config_key));
     }
 
     /**
@@ -59,7 +59,6 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
      */
     function _load_controller()
     {
-        $this->_load_schemadb();
         $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
         $this->_controller->schemadb =& $this->_schemadb;
         $this->_controller->set_storage($this->_person, 'default');
@@ -94,6 +93,16 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
         $_MIDCOM->set_pagetitle($data['view_title']);
                 
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
+
+        
+        if ($handler_id == '____mfa-asgard_midcom.admin.user-user_edit_password')
+        {
+            $this->_load_schemadb('schemadb_account');
+        }
+        else
+        {
+            $this->_load_schemadb('schemadb_person');
+        }
         
         $this->_load_controller();
         switch ($this->_controller->process_form())
