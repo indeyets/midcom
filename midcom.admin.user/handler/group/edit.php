@@ -110,7 +110,8 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
             case 'save':
                 // Show confirmation for the group
                 $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('midcom.admin.user'), sprintf($this->_l10n->get('group %s saved'), $this->_group->name));
-                break;
+                $_MIDCOM->relocate("__mfa/asgard_midcom.admin.user/group/edit/{$this->_group->guid}/");
+                // This will exit.
                 
             case 'cancel':
                 $_MIDCOM->relocate('__mfa/asgard_midcom.admin.user/');
