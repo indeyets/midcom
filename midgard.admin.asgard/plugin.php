@@ -116,6 +116,17 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 'variable_args' => 1,
             ),
             /**
+             * Edit object permissions
+             * 
+             * Match /asgard/object/permissions/<guid>/
+             */
+            'object_permissions' => array
+            (
+                'handler' => array ('midgard_admin_asgard_handler_object_permissions', 'edit'),
+                'fixed_args' => array ('object', 'permissions'),
+                'variable_args' => 1,
+            ),
+            /**
              * Create an object
              * 
              * Match /asgard/object/create/type/<parent guid>/
@@ -253,6 +264,19 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             case '____mfa-asgard-object_parameters':
                 $title_string = $_MIDCOM->i18n->get_string('parameters of %s %s', 'midgard.admin.asgard');
                 break;
+            case '____mfa-asgard-object_permissions':
+                // Figure out label for the object's class
+                switch (get_class($this->_object))
+                {
+                    case 'midcom_baseclasses_database_topic':
+                        $type = $_MIDCOM->i18n->get_string('folder', 'midgard.admin.acl');
+                        break;
+                    default:
+                        $type_parts = explode('_', get_class($this->_object));
+                        $type = $type_parts[count($type_parts)-1];
+                }
+                $title_string = sprintf($_MIDCOM->i18n->get_string('permissions for %s %s', 'midgard.admin.acl'), $type, midgard_admin_asgard_handler_object_permissions::resolve_object_title($this->_object));
+                break;
             case '____mfa-asgard-object_create':
                 $title_string = sprintf($_MIDCOM->i18n->get_string('create %s under %s', 'midgard.admin.asgard'), midgard_admin_asgard_plugin::get_type_label($data['new_type_arg']), '%s %s');
                 break;
@@ -317,6 +341,17 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('parameters', 'midcom'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
                     MIDCOM_TOOLBAR_ENABLED => $object->can_do('midgard:parameters'),
+                )
+            );
+            
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/permissions/{$object->guid}/",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('privileges', 'midcom'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+                    MIDCOM_TOOLBAR_ENABLED => $object->can_do('midgard:privileges'),
                 )
             );
         }
@@ -424,6 +459,14 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('parameters', 'midcom'),
                 );
                 $toolbar->disable_item("__mfa/asgard/object/parameters/{$object->guid}/");
+                break;
+            case '____mfa-asgard-object_permissions':
+                $breadcrumb[] = array
+                (
+                    MIDCOM_NAV_URL => "__mfa/asgard/object/permissions/{$object->guid}/",
+                    MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('privileges', 'midcom'),
+                );
+                $toolbar->disable_item("__mfa/asgard/object/permissions/{$object->guid}/");
                 break;
             case '____mfa-asgard-object_create':
                 $breadcrumb[] = array

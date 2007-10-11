@@ -40,6 +40,12 @@
         	'email' => 'olga@olga.pl',
         	'role' => 'developer',
         ),
+        'w_i' => array
+        (
+        	'name' => 'Jerry Jalava',
+        	'email' => 'jerry.jalava@gmail.com',
+        	'role' => 'developer',
+        ),
     ),
     /* Define what modules this module depends on.  */
     'dependencies' => Array

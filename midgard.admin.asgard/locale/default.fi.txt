@@ -67,3 +67,74 @@ Tämä tyyppi on osa Midgard-julkaisujärjestelmää.
 Tämä tyyppi on osa komponenttia %s.
 ---STRINGEND
 
+---STRING ANONYMOUS
+Tunnistamattomat käyttäjät
+---STRINGEND
+
+---STRING EVERYONE
+Kaikki
+---STRINGEND
+
+---STRING USERS
+Kaikki tunnistautuneet käyttäjät
+---STRINGEND
+
+---STRING add assignee
+Lisää ryhmä käyttöoikeuksia varten
+---STRINGEND
+
+---STRING folder
+kansio
+---STRINGEND
+
+---STRING group %s
+Ryhmä %s
+---STRINGEND
+
+---STRING midcom:approve
+Hyväksyntä
+---STRINGEND
+
+---STRING midcom:component_config
+Asetukset
+---STRINGEND
+
+---STRING midgard.admin.acl
+Käyttöoikeuksien hallinta
+---STRINGEND
+
+---STRING midgard:create
+Luonti
+---STRINGEND
+
+---STRING midgard:delete
+Poisto
+---STRINGEND
+
+---STRING midgard:owner
+Omistus
+---STRINGEND
+
+---STRING midgard:read
+Luku
+---STRINGEND
+
+---STRING midgard:update
+Päivitys
+---STRINGEND
+
+---STRING permissions for %s %s
+Käyttöoikeudet %s-olioon %s
+---STRINGEND
+
+---STRING privileges
+Käyttöoikeudet
+---STRINGEND
+
+---STRING topic privileges
+Kansion käyttöoikeudet
+---STRINGEND
+
+---STRING privilege reserve
+Varaus
+---STRINGEND
