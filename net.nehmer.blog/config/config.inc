@@ -32,6 +32,7 @@
 'archive_item_order' => 'ASC',
 
 'comments_enable' => false,
+'comments_topic' => '',
 
 // Navigation
 'show_latest_in_navigation' => false,  // Set this to true if you want to show latest news in navigation

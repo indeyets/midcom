@@ -205,6 +205,44 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
     }
 
     /**
+     * Try to find a comments node (cache results)
+     * 
+     * @access private
+     */
+    function _seek_comments()
+    {
+        if ($this->_config->get('comments_topic'))
+        {
+            // We have a specified photostream here
+            $comments_topic = new midcom_db_topic($this->_config->get('comments_topic'));
+            if (   !is_object($comments_topic)
+                || !isset($comments_topic->guid)
+                || empty($comments_topic->guid))
+            {
+                return false;
+            }
+
+            // We got a topic. Make it a NAP node
+            $nap = new midcom_helper_nav();
+            $comments_node = $nap->get_node($comments_topic->id);
+            
+            return $comments_node;
+        }
+        
+        // No comments topic specified, autoprobe
+        $comments_node = midcom_helper_find_node_by_component('net.nehmer.comments');
+
+        // Cache the data
+        if ($_MIDCOM->auth->request_sudo('net.nehmer.blog'))
+        {
+            $this->_topic->parameter('net.nehmer.blog', 'comments_topic', $comments_node[MIDCOM_NAV_GUID]);
+            $_MIDCOM->auth->drop_sudo();
+        }
+
+        return $comments_node;
+    }
+
+    /**
      * Shows the loaded article.
      */
     function _show_view ($handler_id, &$data)
@@ -221,7 +259,7 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
 
         if ($this->_config->get('comments_enable'))
         {
-            $comments_node = midcom_helper_find_node_by_component('net.nehmer.comments');
+            $comments_node = $this->_seek_comments();
             if ($comments_node)
             {
                 $this->_request_data['comments_url'] = $comments_node[MIDCOM_NAV_RELATIVEURL] . "comment/{$this->_article->guid}";
