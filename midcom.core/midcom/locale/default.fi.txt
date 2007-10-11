@@ -103,6 +103,10 @@ Hyväksyttyjen muutosten replikointi alkaa minuutin kuluessa
 Hyväksynyt
 ---STRINGEND
 
+---STRING arrangement score
+Järjestelyarvo
+---STRINGEND
+
 ---STRING back
 Takaisin
 ---STRINGEND
@@ -328,7 +332,7 @@ Pienet kirjaimet, ei erikoismerkkejä, ääkkösiä tai välejä
 ---STRINGEND
 
 ---STRING metadata
-Metadata
+Metatiedot
 ---STRINGEND
 
 ---STRING midcom administration
@@ -739,7 +743,7 @@ Kirjoita sähköposti
 Kyllä
 ---STRINGEND
 
----STRING arrangement score
-Järjestelyarvo
+---STRING parameters
+Parametrit
 ---STRINGEND
 
