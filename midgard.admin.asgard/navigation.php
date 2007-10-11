@@ -195,7 +195,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         foreach ($customdata as $component => $plugin_config)
         {
             $this->_request_data['section_url'] = "{$_MIDGARD['self']}__mfa/asgard_{$component}/";
-            $this->_request_data['section_name'] = $plugin_config['name'];
+            $this->_request_data['section_name'] = $_MIDCOM->i18n->get_string($plugin_config['name'], $component);
             midcom_show_style('midgard_admin_asgard_navigation_section_header');
             midcom_show_style('midgard_admin_asgard_navigation_section_footer');
         }
