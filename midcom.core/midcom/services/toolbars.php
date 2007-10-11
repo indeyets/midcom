@@ -330,6 +330,16 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                     MIDCOM_TOOLBAR_ACCESSKEY => 'o',
                 )
             );
+            
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/view/{$topic->guid}",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('manage object', 'midgard.admin.asgard'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+                )
+            );
         }
 
         // TEMPORARY CODE: This links the old midcom approval helpers into the site
@@ -762,7 +772,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "{$prefix}__ais/folder/metadata/{$object->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "{$prefix}__ais/folder/metadata/{$object->guid}",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit metadata', 'midcom.admin.folder'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
                     MIDCOM_TOOLBAR_ACCESSKEY => 'm',
@@ -777,11 +787,16 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "{$prefix}__ais/folder/move/{$object->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "{$prefix}__ais/folder/move/{$object->guid}",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('move', 'midcom.admin.folder'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/topic-score.png',
                 )
             );
+            $toolbar->add_item(Array(
+                MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard/object/view/{$object->guid}",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('manage object', 'midgard.admin.asgard'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+            ));
         }
         
         if (   $GLOBALS['midcom_config']['midcom_services_rcs_enable']
