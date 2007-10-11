@@ -389,20 +389,6 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             }
         }
         
-        if (   array_key_exists('midcom.helper.replicator', $_MIDCOM->componentloader->manifests)
-            && $_MIDGARD['admin'] == true)
-        {
-            $toolbar->add_item
-            (
-                array
-                (
-                    MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.helper.replicator/object/{$topic->guid}.html",
-                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('replication information', 'midcom.helper.replicator'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
-                )
-            );
-        }
-        
         if ($topic->can_do('midcom.admin.folder:template_management'))
         {
             if ($topic->style != '')
@@ -750,20 +736,6 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                     MIDCOM_TOOLBAR_ACCESSKEY => 'a',
                 ));
             }
-        }
-
-        if (   array_key_exists('midcom.helper.replicator', $_MIDCOM->componentloader->manifests)
-            && $_MIDGARD['admin'] == true)
-        {
-            $toolbar->add_item
-            (
-                array
-                (
-                    MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard_midcom.helper.replicator/object/{$object->guid}.html",
-                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('replication information', 'midcom.helper.replicator'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
-                )
-            );
         }
 
         if ($object->can_do('midgard:update'))

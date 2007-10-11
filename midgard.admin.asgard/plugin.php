@@ -354,6 +354,21 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     MIDCOM_TOOLBAR_ENABLED => $object->can_do('midgard:privileges'),
                 )
             );
+            
+
+            if (   array_key_exists('midcom.helper.replicator', $_MIDCOM->componentloader->manifests)
+                && $_MIDCOM->auth->admin)
+            {
+                $toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.helper.replicator/object/{$object->guid}/",
+                        MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('replication information', 'midcom.helper.replicator'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
+                    )
+                );
+            }
         }
         
         if ($object->can_do('midgard:create'))
@@ -485,7 +500,16 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 );
                 $toolbar->disable_item("__mfa/asgard/object/delete/{$object->guid}/{$data['language_code']}");
                 break;
+            case '____mfa-asgard_midcom.helper.replicator-object':
+                $breadcrumb[] = array
+                (
+                    MIDCOM_NAV_URL => "__mfa/asgard_midcom.helper.replicator/object/{$object->guid}/",
+                    MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('replication information', 'midcom.helper.replicator'),
+                );
+                $toolbar->disable_item("__mfa/asgard_midcom.helper.replicator/object/{$object->guid}/");
+                break;
         }
+        
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
         
         return $toolbar;

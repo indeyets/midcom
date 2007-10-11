@@ -383,7 +383,8 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
     {
         $vars = get_object_vars($object);
         
-        if (array_key_exists('title', $vars)) 
+        if (   array_key_exists('title', $vars)
+            && $object->title) 
         {
             return $object->title;
         } 
@@ -433,29 +434,16 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
             return false;
         }
         
-        $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('replication information for %s', 'midcom.helper.replicator'), $this->_resolve_object_title($data['object']));
-        $_MIDCOM->set_pagetitle($data['view_title']);
 
         if ($bind_toolbar)
         {
             $_MIDCOM->bind_view_to_object($data['object']);
         }
+        $data['language_code'] = '';
+        midgard_admin_asgard_plugin::bind_to_object($data['object'], $handler_id, &$data);
 
-        $tmp = array();
-        if (!is_a($data['object'], 'midcom_baseclasses_database_topic'))
-        { 
-            $tmp[] = Array
-            (
-                MIDCOM_NAV_URL => $_MIDCOM->permalinks->create_permalink($data['object']->guid),
-                MIDCOM_NAV_NAME => $this->_resolve_object_title($data['object']),
-            );
-        }
-        $tmp[] = Array
-        (
-            MIDCOM_NAV_URL => "__mfa/replication/object/{$data['object']->guid}.html",
-            MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('replication information', 'midcom.helper.replicator'),
-        );
-        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('replication information for %s', 'midcom.helper.replicator'), $this->_resolve_object_title($data['object']));
+        $_MIDCOM->set_pagetitle($data['view_title']);
         
         $_MIDCOM->add_link_head
         (
