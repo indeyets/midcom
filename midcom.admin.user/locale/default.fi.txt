@@ -47,6 +47,10 @@ Hae
 Ryhmät
 ---STRINGEND
 
+---STRING group %s saved
+Ryhmä %s tallennettu
+---STRINGEND
+
 ---STRING lastname
 Sukunimi
 ---STRINGEND

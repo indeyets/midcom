@@ -43,6 +43,10 @@ Firstname
 Go
 ---STRINGEND
 
+---STRING group %s saved
+Group %s saved
+---STRINGEND
+
 ---STRING groups
 Groups
 ---STRINGEND

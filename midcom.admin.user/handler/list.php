@@ -98,7 +98,7 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
                         $person->password = '';
                         if ($person->update())
                         {
-                            $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('midcom.admin.user'), sprintf($this->_l10n->get('user account revoked for %s'), $person->name));
+                            $_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.user'), sprintf($this->_l10n->get('user account revoked for %s'), $person->name));
                         }
                         break;
                         
@@ -110,7 +110,7 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
                             $member->gid = (int) $_POST['midcom_admin_user_group'];
                             if ($member->create())
                             {
-                                $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('midcom.admin.user'), sprintf($this->_l10n->get('user %s added to group'), $person->name));
+                                $_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.user'), sprintf($this->_l10n->get('user %s added to group'), $person->name));
                             }
                         }
                 }
