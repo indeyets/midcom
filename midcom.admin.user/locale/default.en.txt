@@ -27,6 +27,10 @@ Create group
 Create user
 ---STRINGEND
 
+---STRING edit account
+Edit account
+---STRINGEND
+
 ---STRING email
 Email
 ---STRINGEND
@@ -83,15 +87,19 @@ Search users
 The following fields will be searched: %s
 ---STRINGEND
 
+---STRING user %s added to group
+User %s added to group
+---STRINGEND
+
+---STRING user account revoked for %s
+User account revoked for %s
+---STRINGEND
+
 ---STRING username
 Username
 ---STRINGEND
 
 ---STRING workphone
 Work phone
----STRINGEND
-
----STRING edit account
-Edit account
 ---STRINGEND
 
