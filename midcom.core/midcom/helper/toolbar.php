@@ -692,7 +692,7 @@ class midcom_helper_toolbar {
                 //$new_label .= substr($label, $position + 1);
                 $label = $new_label;
             }
-            else
+            elseif ($_MIDCOM->i18n->get_current_language() == 'en')
             {
                 // Try lowercase too
                 $position = strpos($label, $accesskey_lower);
