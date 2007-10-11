@@ -7,8 +7,20 @@
 HTTP POST to <code>%s</code>
 ---STRINGEND
 
+---STRING URL to POST to
+URL to POST data to
+---STRINGEND
+
+---STRING archive file path
+Archive file path
+---STRINGEND
+
 ---STRING archive to %s
 Archive to <code>%s</code>
+---STRINGEND
+
+---STRING archive type
+Archive type
 ---STRINGEND
 
 ---STRING automatic
@@ -17,6 +29,10 @@ Automatic
 
 ---STRING disabled
 Disabled
+---STRINGEND
+
+---STRING edit %s
+Edit %s
 ---STRINGEND
 
 ---STRING email transport
@@ -59,6 +75,10 @@ Mirror
 Never
 ---STRINGEND
 
+---STRING overwrite existing file
+Overwrite existing file
+---STRINGEND
+
 ---STRING replication information
 Replication information
 ---STRINGEND
@@ -87,7 +107,15 @@ Status
 Pipeline
 ---STRINGEND
 
+---STRING tar.bz2 archive
+tar.bz2 archive
+---STRINGEND
+
 ---STRING transporter
 Transporting type
+---STRINGEND
+
+---STRING use force when importing
+Force changes to be imported
 ---STRINGEND
 

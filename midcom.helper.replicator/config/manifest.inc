@@ -53,7 +53,7 @@
         (
             'class' => 'midcom_helper_replicator_manager',
             'src' => 'file:/midcom/helper/replicator/manager.php',
-            'name' => 'Replication management',
+            'name' => 'replication subscriptions',
             'config' => null,
         ),
         'midcom.services.cron' => array

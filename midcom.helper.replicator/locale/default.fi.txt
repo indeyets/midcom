@@ -7,8 +7,36 @@
 HTTP POST-lähetys osoitteeseen <code>%s</code>
 ---STRINGEND
 
+---STRING URL to POST to
+URL-osoite johon tiedot lähtetään POST:illa
+---STRINGEND
+
+---STRING archive file path
+Arkiston tiedostopolku
+---STRINGEND
+
 ---STRING archive to %s
 Arkistointi tiedostoon <code>%s</code>
+---STRINGEND
+
+---STRING archive type
+Tiedoston tyyppi
+---STRINGEND
+
+---STRING automatic
+Automaattinen
+---STRINGEND
+
+---STRING disabled
+Pois käytöstä
+---STRINGEND
+
+---STRING edit %s
+Muokkaa %s
+---STRINGEND
+
+---STRING email transport
+Sähköpostisiirto
 ---STRINGEND
 
 ---STRING exported
@@ -17,6 +45,10 @@ Viety tietokannasta ulos
 
 ---STRING exporter
 Vientityyppi
+---STRINGEND
+
+---STRING file archive transport
+Tiedostoarkistosiirto
 ---STRINGEND
 
 ---STRING from log file
@@ -31,12 +63,20 @@ Tuotu ulkopuolelta tietokantaan
 Hallinnoi replikointia
 ---STRINGEND
 
+---STRING manual
+Manuaalinen
+---STRINGEND
+
 ---STRING mirroring subscription
 Peilaus
 ---STRINGEND
 
 ---STRING never
 Ei koskaan
+---STRINGEND
+
+---STRING overwrite existing file
+Ylikirjoita olemassaoleva
 ---STRINGEND
 
 ---STRING replication information
@@ -59,35 +99,23 @@ Replikointijonot
 Esikatselu/tuotanto
 ---STRINGEND
 
+---STRING status
+Status
+---STRINGEND
+
 ---STRING subscription
 Jono
+---STRINGEND
+
+---STRING tar.bz2 archive
+tar.bz2 arkisto
 ---STRINGEND
 
 ---STRING transporter
 Siirtotyyppi
 ---STRINGEND
 
----STRING automatic
-Automaattinen
----STRINGEND
-
----STRING disabled
-Pois käytöstä
----STRINGEND
-
----STRING email transport
-Sähköpostisiirto
----STRINGEND
-
----STRING file archive transport
-Tiedostoarkistosiirto
----STRINGEND
-
----STRING manual
-Manuaalinen
----STRINGEND
-
----STRING status
-Status
+---STRING use force when importing
+Pakota muutosten sisäänluku
 ---STRINGEND
 
