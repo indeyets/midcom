@@ -143,3 +143,7 @@ Permissions
 Folder permissions
 ---STRINGEND
 
+---STRING manage object
+Manage object
+---STRINGEND
+

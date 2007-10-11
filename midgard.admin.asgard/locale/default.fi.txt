@@ -138,3 +138,7 @@ Kansion käyttöoikeudet
 ---STRING privilege reserve
 Varaus
 ---STRINGEND
+
+---STRING manage object
+Hallinnointi
+---STRINGEND
