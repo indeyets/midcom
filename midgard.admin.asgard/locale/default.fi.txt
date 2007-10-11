@@ -3,6 +3,22 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING ANONYMOUS
+Tunnistamattomat käyttäjät
+---STRINGEND
+
+---STRING EVERYONE
+Kaikki
+---STRINGEND
+
+---STRING USERS
+Kaikki tunnistautuneet käyttäjät
+---STRINGEND
+
+---STRING add assignee
+Lisää ryhmä käyttöoikeuksia varten
+---STRINGEND
+
 ---STRING asgard
 Asgard
 ---STRINGEND
@@ -31,6 +47,14 @@ Poista %s %s
 Muokkaa %s %s
 ---STRINGEND
 
+---STRING folder
+kansio
+---STRINGEND
+
+---STRING group %s
+Ryhmä %s
+---STRINGEND
+
 ---STRING in %s
 %s:ssa
 ---STRINGEND
@@ -43,52 +67,12 @@ oletuskielellä
 Viimeksi muokannut %s %s (muutos %s)
 ---STRINGEND
 
+---STRING manage object
+Hallinnointi
+---STRINGEND
+
 ---STRING metadata of %s %s
 %s %s metatiedot
----STRINGEND
-
----STRING midgard.admin.asgard
-Midgardin hallintakäyttöliittymä
----STRINGEND
-
----STRING parameters of %s %s
-%s %s parametrit
----STRINGEND
-
----STRING this is a midgard core type
-Tämä tyyppi on osa Midgard-julkaisujärjestelmää.
----STRINGEND
-
----STRING under %s
-%s alla
----STRINGEND
-
----STRING this type belongs to %s component
-Tämä tyyppi on osa komponenttia %s.
----STRINGEND
-
----STRING ANONYMOUS
-Tunnistamattomat käyttäjät
----STRINGEND
-
----STRING EVERYONE
-Kaikki
----STRINGEND
-
----STRING USERS
-Kaikki tunnistautuneet käyttäjät
----STRINGEND
-
----STRING add assignee
-Lisää ryhmä käyttöoikeuksia varten
----STRINGEND
-
----STRING folder
-kansio
----STRINGEND
-
----STRING group %s
-Ryhmä %s
 ---STRINGEND
 
 ---STRING midcom:approve
@@ -101,6 +85,10 @@ Asetukset
 
 ---STRING midgard.admin.acl
 Käyttöoikeuksien hallinta
+---STRINGEND
+
+---STRING midgard.admin.asgard
+Midgardin hallintakäyttöliittymä
 ---STRINGEND
 
 ---STRING midgard:create
@@ -123,22 +111,39 @@ Luku
 Päivitys
 ---STRINGEND
 
+---STRING parameters of %s %s
+%s %s parametrit
+---STRINGEND
+
 ---STRING permissions for %s %s
 Käyttöoikeudet %s-olioon %s
----STRINGEND
-
----STRING privileges
-Käyttöoikeudet
----STRINGEND
-
----STRING topic privileges
-Kansion käyttöoikeudet
 ---STRINGEND
 
 ---STRING privilege reserve
 Varaus
 ---STRINGEND
 
----STRING manage object
-Hallinnointi
+---STRING privileges
+Käyttöoikeudet
 ---STRINGEND
+
+---STRING this is a midgard core type
+Tämä tyyppi on osa Midgard-julkaisujärjestelmää.
+---STRINGEND
+
+---STRING this type belongs to %s component
+Tämä tyyppi on osa komponenttia %s.
+---STRINGEND
+
+---STRING topic privileges
+Kansion käyttöoikeudet
+---STRINGEND
+
+---STRING under %s
+%s alla
+---STRINGEND
+
+---STRING guid
+GUID-tunniste
+---STRINGEND
+

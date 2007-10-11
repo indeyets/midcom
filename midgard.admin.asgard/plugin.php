@@ -365,7 +365,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     (
                         MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.helper.replicator/object/{$object->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('replication information', 'midcom.helper.replicator'),
-                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
+                        MIDCOM_TOOLBAR_ICON => 'midcom.helper.replicator/replicate-server-16.png',
                     )
                 );
             }

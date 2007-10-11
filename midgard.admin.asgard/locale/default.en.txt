@@ -3,6 +3,22 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING ANONYMOUS
+Anonymous users
+---STRINGEND
+
+---STRING EVERYONE
+Everyone
+---STRINGEND
+
+---STRING USERS
+All users
+---STRINGEND
+
+---STRING add assignee
+Add group for privilege assignment
+---STRINGEND
+
 ---STRING asgard
 Asgard
 ---STRINGEND
@@ -31,6 +47,14 @@ Delete %s %s
 Edit %s %s
 ---STRINGEND
 
+---STRING folder
+folder
+---STRINGEND
+
+---STRING group %s
+Group %s
+---STRINGEND
+
 ---STRING in %s
 in %s
 ---STRINGEND
@@ -43,56 +67,12 @@ In fallback language
 Last edited by %s on %s (revision %s)
 ---STRINGEND
 
+---STRING manage object
+Manage object
+---STRINGEND
+
 ---STRING metadata of %s %s
 Metadata of %s %s
----STRINGEND
-
----STRING midgard.admin.asgard
-Midgard Administration UI
----STRINGEND
-
----STRING parameter
-Parameter
----STRINGEND
-
----STRING parameters of %s %s
-Parameters of %s %s
----STRINGEND
-
----STRING this is a midgard core type
-This is a Midgard CMS core type.
----STRINGEND
-
----STRING under %s
-Under %s
----STRINGEND
-
----STRING this type belongs to %s component
-This type belongs to %s component.
----STRINGEND
-
----STRING ANONYMOUS
-Anonymous users
----STRINGEND
-
----STRING EVERYONE
-Everyone
----STRINGEND
-
----STRING USERS
-All users
----STRINGEND
-
----STRING add assignee
-Add group for privilege assignment
----STRINGEND
-
----STRING folder
-folder
----STRINGEND
-
----STRING group %s
-Group %s
 ---STRINGEND
 
 ---STRING midcom:approve
@@ -105,6 +85,10 @@ Configuration
 
 ---STRING midgard.admin.acl
 Access Control Lists editor
+---STRINGEND
+
+---STRING midgard.admin.asgard
+Midgard Administration UI
 ---STRINGEND
 
 ---STRING midgard:create
@@ -127,6 +111,14 @@ Read
 Update
 ---STRINGEND
 
+---STRING parameter
+Parameter
+---STRINGEND
+
+---STRING parameters of %s %s
+Parameters of %s %s
+---STRINGEND
+
 ---STRING permissions for %s %s
 Permissions for %s %s
 ---STRINGEND
@@ -139,11 +131,23 @@ Reserve
 Permissions
 ---STRINGEND
 
+---STRING this is a midgard core type
+This is a Midgard CMS core type.
+---STRINGEND
+
+---STRING this type belongs to %s component
+This type belongs to %s component.
+---STRINGEND
+
 ---STRING topic privileges
 Folder permissions
 ---STRINGEND
 
----STRING manage object
-Manage object
+---STRING under %s
+Under %s
+---STRINGEND
+
+---STRING guid
+Unique identifier
 ---STRINGEND
 
