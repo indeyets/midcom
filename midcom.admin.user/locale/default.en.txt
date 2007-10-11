@@ -19,6 +19,10 @@ Choose action
 City
 ---STRINGEND
 
+---STRING create group
+Create group
+---STRINGEND
+
 ---STRING create user
 Create user
 ---STRINGEND
@@ -87,7 +91,7 @@ Username
 Work phone
 ---STRINGEND
 
----STRING create group
-Create group
+---STRING edit account
+Edit account
 ---STRINGEND
 

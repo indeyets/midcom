@@ -19,6 +19,10 @@ Valitse toiminto
 Kaupunki
 ---STRINGEND
 
+---STRING create group
+Luo ryhmä
+---STRINGEND
+
 ---STRING create user
 Luo käyttäjä
 ---STRINGEND
@@ -87,7 +91,7 @@ Käyttäjätunnus
 Työpuhelin
 ---STRINGEND
 
----STRING create group
-Luo ryhmä
+---STRING edit account
+Muokkaa käyttäjätunnusta
 ---STRINGEND
 

@@ -27,7 +27,7 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
         parent::midcom_baseclasses_components_handler();
      }
     
-    function _update_breadcrumb()
+    function _update_breadcrumb($handler_id)
     {
         // Populate breadcrumb
         $tmp = Array();
@@ -41,6 +41,16 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
             MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.user/edit/{$this->_person->guid}",
             MIDCOM_NAV_NAME => $this->_request_data['view_title'],
         );
+        
+        if ($handler_id == '____mfa-asgard_midcom.admin.user-user_edit_password')
+        {
+            $tmp[] = Array
+            (
+                MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.user/password/{$this->_person->guid}",
+                MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('edit account', 'midcom.admin.user'),
+            );
+        }
+        
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
 
@@ -91,9 +101,6 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
     
         $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('edit %s', 'midcom.admin.user'), $this->_person->name);
         $_MIDCOM->set_pagetitle($data['view_title']);
-                
-        $data['asgard_toolbar'] = new midcom_helper_toolbar();
-
         
         if ($handler_id == '____mfa-asgard_midcom.admin.user-user_edit_password')
         {
@@ -125,7 +132,20 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
 
         $data['language_code'] = '';
         midgard_admin_asgard_plugin::bind_to_object($this->_person, $handler_id, &$data);
-        $this->_update_breadcrumb();
+        
+        if ($handler_id != '____mfa-asgard_midcom.admin.user-user_edit_password')
+        {
+            $data['asgard_toolbar']->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.user/password/{$this->_person->guid}/",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit account', 'midcom.admin.user'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
+                )
+            );
+        }
+        $this->_update_breadcrumb($handler_id);
         
         return true;
     }
