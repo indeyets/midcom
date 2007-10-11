@@ -443,16 +443,6 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 // for terminate d is used by everyone to go to the location bar
             ));
         }
-        if ($topic->can_do('midgard:privileges'))
-        {
-            $toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "__ais/acl/edit/{$topic->guid}.html",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('topic privileges', 'midgard.admin.acl'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
-                MIDCOM_TOOLBAR_ACCESSKEY => 'p',
-            ));
-        }
-        
         
     }
     
@@ -792,15 +782,6 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/topic-score.png',
                 )
             );
-        }
-
-        if ($object->can_do('midgard:privileges'))
-        {
-            $toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "{$prefix}__ais/acl/edit/{$object->guid}.html",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('privileges', 'midgard.admin.acl'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
-            ));
         }
         
         if (   $GLOBALS['midcom_config']['midcom_services_rcs_enable']
