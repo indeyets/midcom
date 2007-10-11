@@ -514,19 +514,6 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_refresh.png',
                 )
             );
-            
-            if (array_key_exists('midcom.helper.replicator', $_MIDCOM->componentloader->manifests))
-            {
-                $toolbar->add_item
-                (
-                    array
-                    (
-                        MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}__mfa/asgard_midcom.helper.replicator/",
-                        MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('manage replication', 'midcom.helper.replicator'),
-                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
-                    )
-                );
-            }
         }
 
     	if ($_MIDGARD['admin'] == true)
