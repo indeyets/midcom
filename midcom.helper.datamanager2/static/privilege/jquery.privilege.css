@@ -54,11 +54,15 @@ div.privilege_action
   cursor: pointer;
 }
 
+#midgard_admin_acl
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 #midgard_admin_acl th
 {
   vertical-align: bottom;
 }
-
 #midgard_admin_acl tbody td
 {
   white-space: nowrap;
