@@ -519,7 +519,8 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         }
         else
         {
-            if ($this->_config->get('navigate_with_context'))
+            if (   $this->_config->get('navigate_with_context')
+                && isset($data['url_suffix']))
             {
                 $data['suffix'] = $data['url_suffix'];
             }
