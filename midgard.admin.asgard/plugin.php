@@ -256,7 +256,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."/midcom-logout-",
+                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."midcom-logout-",
                 MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('logout','midcom'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/exit.png',
             )

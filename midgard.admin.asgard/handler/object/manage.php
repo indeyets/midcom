@@ -310,7 +310,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                     }
                     else
                     {
-                        $field_label = sprintf($this->_l10n->get('%s %s'), $key, $type_label);
+                        $field_label = sprintf($this->_l10n->get('%s (%s)'), $key, $type_label);
                     }
                 }
 
@@ -516,6 +516,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
 
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
+
         if (! $this->_object)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The GUID '{$args[0]}' was not found.");
