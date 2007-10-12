@@ -7,6 +7,10 @@
 Asgard
 ---STRINGEND
 
+---STRING asgard plugins
+Narzędzia
+---STRINGEND
+
 ---STRING back to site
 Powrót do serwisu
 ---STRINGEND
@@ -47,6 +51,10 @@ Ostatnia zmiana: %s przez %s (Wersja %s)
 Metadane of %s %s
 ---STRINGEND
 
+---STRING midgard objects
+Obiekty
+---STRINGEND
+
 ---STRING midgard.admin.asgard
 Administracja Midgarda
 ---STRINGEND
@@ -57,5 +65,97 @@ Parametry %s %s
 
 ---STRING under %s
 W %s
+---STRINGEND
+
+---STRING ANONYMOUS
+Anonimy
+---STRINGEND
+
+---STRING EVERYONE
+Wszyscy
+---STRINGEND
+
+---STRING USERS
+Użytkownicy
+---STRINGEND
+
+---STRING add assignee
+Dodaj grupę
+---STRINGEND
+
+---STRING folder
+folder
+---STRINGEND
+
+---STRING group %s
+Grupa %s
+---STRINGEND
+
+---STRING guid
+GUID
+---STRINGEND
+
+---STRING manage object
+Zarządzaj obiektem
+---STRINGEND
+
+---STRING midcom:approve
+Zatwierdź
+---STRINGEND
+
+---STRING midcom:component_config
+Konfiguracja
+---STRINGEND
+
+---STRING midgard.admin.acl
+Edycja uprawnień
+---STRINGEND
+
+---STRING midgard:create
+Tworzenie
+---STRINGEND
+
+---STRING midgard:delete
+Usuwanie
+---STRINGEND
+
+---STRING midgard:owner
+Właściciel
+---STRINGEND
+
+---STRING midgard:read
+Odczyt
+---STRINGEND
+
+---STRING midgard:update
+Zapis
+---STRINGEND
+
+---STRING parameter
+Paramtery
+---STRINGEND
+
+---STRING permissions for %s %s
+Uprawnienia dla %s %s
+---STRINGEND
+
+---STRING privilege reserve
+Zastrzeżone
+---STRINGEND
+
+---STRING privileges
+Uprawnienia
+---STRINGEND
+
+---STRING this is a midgard core type
+To jest typ systemowy
+---STRINGEND
+
+---STRING this type belongs to %s component
+Ten typ należy do komponentu %s
+---STRINGEND
+
+---STRING topic privileges
+Uprawnienia folderu
 ---STRINGEND
 

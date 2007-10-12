@@ -23,6 +23,10 @@ Add group for privilege assignment
 Asgard
 ---STRINGEND
 
+---STRING asgard plugins
+Asgard plugins
+---STRINGEND
+
 ---STRING back to site
 Back to site
 ---STRINGEND
@@ -55,6 +59,10 @@ folder
 Group %s
 ---STRINGEND
 
+---STRING guid
+Unique identifier
+---STRINGEND
+
 ---STRING in %s
 in %s
 ---STRINGEND
@@ -81,6 +89,10 @@ Approve
 
 ---STRING midcom:component_config
 Configuration
+---STRINGEND
+
+---STRING midgard objects
+Midgard objects
 ---STRINGEND
 
 ---STRING midgard.admin.acl
@@ -145,9 +157,5 @@ Folder permissions
 
 ---STRING under %s
 Under %s
----STRINGEND
-
----STRING guid
-Unique identifier
 ---STRINGEND
 

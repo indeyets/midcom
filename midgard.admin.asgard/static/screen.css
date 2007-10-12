@@ -62,6 +62,15 @@ body
   margin: 0;
 }
 
+#navigation div.chapter h3
+{
+  background-color: #d3d7cf;
+  text-align:center;
+  font-size: 100%;
+  margin-bottom: 6px;
+}
+
+
 #navigation div.section
 {
   background-color: #eeeeec;
