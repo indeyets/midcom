@@ -1,5 +1,4 @@
 <?php
-//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 $languages = $data['l10n']->_language_db;
 
@@ -26,7 +25,7 @@ else
 }
 
 echo "<tr class=\"{$status}\">\n";
-echo "    <th class=\"component\"><a href=\"{$prefix}__ais/l10n/edit/{$data['component']}/{$data['language']}/\">{$data['component']}</a></th>\n";
+echo "    <th class=\"component\"><a href=\"{$prefix}__mfa/asgard_midcom.admin.babel/edit/{$data['component']}/{$data['language']}/\">{$data['component']}</a></th>\n";
 echo "    <td>{$data['string_counts']['translated']}</td>\n";
 echo "    <td>{$data['string_counts']['total']}</td>\n";
 if ($data['string_counts']['total'] > 0)

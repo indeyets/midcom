@@ -11,6 +11,10 @@ Component
 Status (core components)
 ---STRINGEND
 
+---STRING core components
+Core components
+---STRINGEND
+
 ---STRING default
 default
 ---STRINGEND
@@ -29,6 +33,14 @@ MidCOM Localization tool
 
 ---STRING other component status
 Status (others)
+---STRINGEND
+
+---STRING other components
+Other components
+---STRINGEND
+
+---STRING percentage
+Percentage
 ---STRINGEND
 
 ---STRING perm-denied text
@@ -52,7 +64,15 @@ Select language to translate
 String ID
 ---STRINGEND
 
+---STRING translated strings
+Translated strings
+---STRINGEND
+
 ---STRING translation status for language %s
 Translation status of %s
+---STRINGEND
+
+---STRING strings total
+Strings total
 ---STRINGEND
 
