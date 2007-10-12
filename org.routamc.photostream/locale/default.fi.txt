@@ -175,3 +175,7 @@ Lataa galleriaan
 Käyttöliittymäasetukset
 ---STRINGEND
 
+---STRING all
+Kaikki
+---STRINGEND
+

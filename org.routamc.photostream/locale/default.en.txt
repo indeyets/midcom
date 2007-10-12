@@ -175,3 +175,7 @@ Upload to gallery
 User interface settings
 ---STRINGEND
 
+---STRING all
+All
+---STRINGEND
+

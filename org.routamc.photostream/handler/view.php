@@ -325,7 +325,7 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
         }
         
         // Include the tag constraints
-        if ($this->_tags_shared)
+        if (!is_null($this->_tags_shared))
         {
             if (count($this->_tags_shared) > 0)
             {
@@ -375,17 +375,9 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
                 MIDCOM_NAV_NAME => $this->_request_data['gallery_node'][MIDCOM_NAV_NAME],
             );
         }
-        else
-        {
-            $tmp[] = array
-            (
-                MIDCOM_NAV_URL => "list/{$this->_request_data['user_url']}/",
-                MIDCOM_NAV_NAME => sprintf($this->_l10n->get('photos of %s'), $this->_request_data['photographer']->name),
-            );
-        }
         
         // Add special limits
-        if ($handler_id === 'photo_limited')
+        if (preg_match('/photo_args_/', $handler_id))
         {
             if (isset($args[1]))
             {
@@ -394,8 +386,13 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
                     case 'tag':
                         $tmp[] = array
                         (
-                            MIDCOM_NAV_URL => "tag/{$this->_request_data['user_url']}/{$args[2]}",
-                            MIDCOM_NAV_NAME => sprintf($this->_l10n->get('tagged %s'), $args[2]),
+                            MIDCOM_NAV_URL => "list/{$args[2]}/",
+                            MIDCOM_NAV_NAME => ($args[2] === 'all') ? $this->_l10n->get('all') : $this->_request_data['photographer']->name,
+                        );
+                        $tmp[] = array
+                        (
+                            MIDCOM_NAV_URL => "tag/{$args[2]}/{$args[3]}",
+                            MIDCOM_NAV_NAME => sprintf($this->_l10n->get('tagged %s'), $args[3]),
                         );
                         break;
                     
@@ -424,6 +421,14 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
                         );
                 }
             }
+        }
+        else
+        {
+            $tmp[] = array
+            (
+                MIDCOM_NAV_URL => "list/{$this->_request_data['user_url']}/",
+                MIDCOM_NAV_NAME => sprintf($this->_l10n->get('photos of %s'), $this->_request_data['photographer']->name),
+            );
         }
 
         $tmp[] = array

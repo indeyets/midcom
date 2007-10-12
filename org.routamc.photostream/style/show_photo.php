@@ -43,6 +43,9 @@ if ($data['next_guid'])
         }
         ?>
     </div>
+    <div class="taken photographer">
+        <?php echo $data['l10n']->get('photographer'); ?>: <a href="&(prefix);list/&(data['user_url']);/"><?php echo $data['photographer']->name; ?></a>
+    </div>
 
     <div class="description">
         &(view['description']:h);
