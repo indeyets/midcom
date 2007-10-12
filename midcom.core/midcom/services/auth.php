@@ -2014,6 +2014,16 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
         $_MIDCOM->cache->content->no_cache();
 
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL.'/midcom.services.auth/style.css',
+            )
+        );
+
         if (   function_exists('mgd_is_element_loaded')
             && mgd_is_element_loaded('midcom_services_auth_access_denied'))
         {
@@ -2021,15 +2031,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         }
         else
         {
-            $_MIDCOM->add_link_head
-            (
-                array
-                (
-                    'rel' => 'stylesheet',
-                    'type' => 'text/css',
-                    'href' => MIDCOM_STATIC_URL.'/midcom.services.auth/style.css',
-                )
-            );
         
             echo '<?'.'xml version="1.0" encoding="ISO-8859-1"?'.">\n";
             ?>
@@ -2137,6 +2138,16 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             $login_warning = $_MIDCOM->i18n->get_string('login message - user or password wrong', 'midcom');
         }
 
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL.'/midcom.services.auth/style.css',
+            )
+        );
+
         if (   function_exists('mgd_is_element_loaded')
             && mgd_is_element_loaded('midcom_services_auth_login_page'))
         {
@@ -2144,15 +2155,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         }
         else
         {
-            $_MIDCOM->add_link_head
-            (
-                array
-                (
-                    'rel' => 'stylesheet',
-                    'type' => 'text/css',
-                    'href' => MIDCOM_STATIC_URL.'/midcom.services.auth/style.css',
-                )
-            );
+
             $accounts_node = midcom_helper_find_node_by_component('net.nehmer.account');
             if (!empty($accounts_node))
             {
