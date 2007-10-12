@@ -1,7 +1,7 @@
   'name' => 'midcom.admin.babel',
   'description' => 'MidCOM localization utility',
   'purecode' => true,
-  'version' => '0.1.2beta1',
+  'version' => '0.2.0beta1',
   'privileges' =>
   array (
   ),
@@ -34,7 +34,7 @@
       (
           'class' => 'midcom_admin_babel_plugin',
           'src' => 'file:/midcom/admin/babel/plugin.php',
-          'name' => 'Localization tool',
+          'name' => 'midcom.admin.babel',
           'config' => null,
       ),
   ),
