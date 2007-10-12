@@ -37,6 +37,9 @@ if (!function_exists('array2code')) {
                 case is_array($v):
                     $code = array2code($v, $level+2, $code);
                     break;
+                case is_numeric($v):
+                    $code .= "{$v},\n";
+                    break;
                 default:
                     $code .= "'" . str_replace("'", "\'", $v) . "',\n";
                     break;
