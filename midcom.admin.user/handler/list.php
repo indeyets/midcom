@@ -73,6 +73,27 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_people.png',
             )
         );
+
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('back to site', 'midgard.admin.asgard'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/gohome.png',
+            )
+        );
+
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."/midcom-logout-",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('logout','midcom'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/exit.png',
+            )
+        );
+
         
         // See what fields we want to use in the search
         $data['search_fields'] = $this->_config->get('search_fields');
