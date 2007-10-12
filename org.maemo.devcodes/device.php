@@ -712,7 +712,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
                         (
                             'property' => 'state',
                             'match'    => '=',
-                            'value'    => ORG_MAEMO_DEVCODES_APPLICATION_ACCEPTED,
+                            'value'    => ORG_MAEMO_DEVCODES_APPLICATION_REJECTED,
                         ),
                     ),
                 ),
