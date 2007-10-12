@@ -60,6 +60,54 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         
     }
     
+
+    function _prepare_toolbar(&$data)
+    {
+
+        // Set the Asgard toolbar
+        $data['asgard_toolbar'] = new midcom_helper_toolbar();
+        
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/create/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create a new element', 'midcom.admin.styleeditor'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/text-x-generic-template.png',
+            )
+        );        
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/files/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
+            )
+        );
+
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('back to site', 'midgard.admin.asgard'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/gohome.png',
+            )
+        );
+
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."/midcom-logout-",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('logout','midcom'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/exit.png',
+            )
+        );
+
+    }
+
     /**
      * Rewrite a filename to URL safe form
      *
@@ -366,28 +414,8 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         // Skip the page styles
         $_MIDCOM->skip_page_style = true;
         
-        // Set the Asgard toolbar
-        $data['asgard_toolbar'] = new midcom_helper_toolbar();
-        
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/create/",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create a new element', 'midcom.admin.styleeditor'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/text-x-generic-template.png',
-            )
-        );        
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/files/",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
-            )
-        );
-        
+        $this->_prepare_toolbar($data);
+
         // Add the page title
         $data['view_title'] = $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor');
         
@@ -471,28 +499,8 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         
         // Add the page title
         $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('edit file %s', 'midcom.admin.styleeditor'), "'{$args[0]}'");
-        
-        // Set the Asgard toolbar
-        $data['asgard_toolbar'] = new midcom_helper_toolbar();
-        
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/create/",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create a new element', 'midcom.admin.styleeditor'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/text-x-generic-template.png',
-            )
-        );        
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/files/",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
-            )
-        );
+
+        $this->_prepare_toolbar($data);        
         
         return true;
     }
@@ -581,27 +589,7 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         // Add the page title
         $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('delete file %s', 'midcom.admin.styleeditor'), "'{$args[0]}'");
         
-        // Set the Asgard toolbar
-        $data['asgard_toolbar'] = new midcom_helper_toolbar();
-        
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/create/",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create a new element', 'midcom.admin.styleeditor'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/text-x-generic-template.png',
-            )
-        );        
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/files/",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
-            )
-        );
+        $this->_prepare_toolbar($data);
         
         return true;
     }

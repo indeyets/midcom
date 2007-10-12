@@ -300,6 +300,26 @@ class midcom_admin_styleeditor_handler_edit extends midcom_baseclasses_component
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
             )
         );
+
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('back to site', 'midgard.admin.asgard'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/gohome.png',
+            )
+        );
+
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."/midcom-logout-",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('logout','midcom'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/exit.png',
+            )
+        );
         
         // Add the page title
         $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('edit element %s', 'midcom.admin.styleeditor'), "<({$data['style_element']})>");
