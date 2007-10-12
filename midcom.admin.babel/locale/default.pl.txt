@@ -64,6 +64,10 @@ Wybierz język
 Identyfikator napisu
 ---STRINGEND
 
+---STRING strings total
+Wszystkie
+---STRINGEND
+
 ---STRING translated strings
 Przetłumaczone
 ---STRINGEND
@@ -72,7 +76,7 @@ Przetłumaczone
 Stan tłumaczenia %s
 ---STRINGEND
 
----STRING strings total
-Wszystkie
+---STRING new string
+Dodaj napis
 ---STRINGEND
 

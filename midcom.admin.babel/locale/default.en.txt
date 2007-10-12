@@ -64,6 +64,10 @@ Select language to translate
 String ID
 ---STRINGEND
 
+---STRING strings total
+Strings total
+---STRINGEND
+
 ---STRING translated strings
 Translated strings
 ---STRINGEND
@@ -72,7 +76,7 @@ Translated strings
 Translation status of %s
 ---STRINGEND
 
----STRING strings total
-Strings total
+---STRING new string
+New string
 ---STRINGEND
 

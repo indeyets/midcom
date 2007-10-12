@@ -2,6 +2,20 @@
 
 class midcom_admin_babel_handler_process extends midcom_baseclasses_components_handler
 {
+    var $_debug_prefix;
+
+    /** which language is edited */
+    var $_lang = 'en';
+
+    /** path of the component to localize */
+    var $_component_path = null;
+
+    /** data to be saved */
+    var $_save_new;
+    var $_save_update;
+
+    /** midcom_l10n instance $_component_path */
+    var $_component_l10n;
 
     /**
      * Simple constructor
@@ -22,6 +36,26 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         $_MIDCOM->skip_page_style = true;
 
         $this->_l10n = $_MIDCOM->i18n->get_l10n('midcom.admin.babel');
+
+        $this->_debug_prefix = "midcom_admin_babel::";
+
+        $this->_save_new = false;
+        $this->_save_update = false;
+
+        $_MIDCOM->cache->content->no_cache();
+
+        $_MIDCOM->skip_page_style = true;
+
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel'   => 'stylesheet',
+                'type'  => 'text/css',
+                'media' => 'screen',
+                'href'  => MIDCOM_STATIC_URL ."/midcom.admin.babel/babel.css"
+            )
+        );
 
     }
 
@@ -108,6 +142,20 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         midcom_show_style('midgard_admin_asgard_footer');
     }
 
+    function validate_language($lang)
+    {
+        // TODO: Validate via ML instead
+        if (array_key_exists($lang, $this->_l10n->_language_db))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
     function _handler_select($handler_id, $args, &$data)
     {
         $this->_update_breadcrumb_line($handler_id);
@@ -120,14 +168,13 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         $this->_asgard_header();
         midcom_show_style('midcom_admin_babel_select');
         $this->_asgard_footer();
-
     }
 
     function _handler_save($handler_id, $args, &$data)
     {
         $this->_component_path = $args[0];
         $this->_lang = $args[1];
-        if (!midcom_admin_babel_plugin::validate_language($this->_lang))
+        if (!$this->validate_language($this->_lang))
         {
             return false;
         }
@@ -252,7 +299,7 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
     function _handler_status($handler_id, $args, &$data)
     {
         $this->_lang = $args[0];
-        if (!midcom_admin_babel_plugin::validate_language($this->_lang))
+        if (!$this->validate_language($this->_lang))
         {
             return false;
         }
@@ -303,7 +350,7 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
     {
         $this->_component_path = $args[0];
         $this->_lang = $args[1];
-        if (!midcom_admin_babel_plugin::validate_language($this->_lang))
+        if (!$this->validate_language($this->_lang))
         {
             return false;
         }
@@ -347,7 +394,7 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
  
     function _show_edit($handler_id, &$data)
     {
-        $this->_show_permission_check($handler_id, &$data);
+
         
         $this->_request_data['view_component'] = $this->_component_path;
         $this->_request_data['view_lang'] = $this->_lang;
@@ -378,6 +425,7 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
     	$this->_request_data['view_strings'] = $view_strings;
 
         $this->_asgard_header();
+        $this->_show_permission_check($handler_id, &$data);
         midcom_show_style('midcom_admin_babel_edit');
         $this->_asgard_footer();
 
@@ -396,7 +444,7 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         }
         $en = "{$path}/default.en.txt";
         $main = "{$path}/default.{$this->_lang}.txt";
-        
+
         if (    ! is_writable($path)
             || (file_exists($en) && ! is_writable($en))
             || (file_exists($main) && ! is_writable($main)))

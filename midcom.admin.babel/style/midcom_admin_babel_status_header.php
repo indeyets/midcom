@@ -6,7 +6,7 @@ $languages = $data['l10n']->_language_db;
 
 <table class="midcom_admin_babel_languages">
     <thead>
-        <tr>
+        <tr class="header">
             <th><?php echo $data['l10n']->get('component'); ?></th>
             <th><?php echo $data['l10n']->get('translated strings'); ?></th>
             <th><?php echo $data['l10n']->get('strings total'); ?></th>

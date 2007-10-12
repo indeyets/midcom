@@ -1,6 +1,4 @@
 <?php
-
-//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $prefix = $data['plugin_anchorprefix'];
 
 // available languages
@@ -17,16 +15,16 @@ $editlang = $languages[$data['view_lang']]['enname'];
     echo sprintf($data['l10n']->get('edit strings for %s [%s]'), $data['component_translated'], $editlang);
 ?></h1>
 
-<form method="post" action="&(prefix);save/&(data['view_component']);/&(data['view_lang']);/" class="datamanager">
+<form method="post" action="&(prefix);save/&(data['view_component']);/&(data['view_lang']);/" class="datamanager2">
 
 <div class="form_toolbar">
   <input type="submit" name="f_submit" accesskey="s" value="<?php echo $data['l10n_midcom']->get('save');?>" class="save">
   <input type="submit" name="f_cancel" accesskey="c" value="<?php echo $data['l10n_midcom']->get('cancel');?>" class="cancel">
 </div>
-
-<table border="1">
+<br />
+<table class="midcom_admin_babel_languages">
     <thead>
-        <tr>
+        <tr class="header">
             <th><?php echo $data['l10n']->get('string-id')?></th>
             <th>&(deflang); (<?php echo $data['l10n']->get('default');?>)</th>
             <?php 
@@ -43,13 +41,13 @@ $editlang = $languages[$data['view_lang']]['enname'];
     <tbody>
     
         <tr class="newstring">
-            <td><input type="text" name="new_stringid" size="35" /></td>
-            <td><textarea type="text" name="new_en" cols="40" rows="2" wrap="virtual"></textarea></td>
+            <td><?php echo $data['l10n']->get('new string')?><br /><input type="text" name="new_stringid" size="35" /></td>
+            <td><textarea type="text" name="new_en" cols="30" rows="3" wrap="virtual"></textarea></td>
             <?php 
             if ($data['view_lang'] != 'en') 
             { 
                 ?>
-                <td><textarea type="text" name="new_loc" cols="40" rows="2" wrap="virtual"></textarea></td>
+                <td><textarea type="text" name="new_loc" cols="30" rows="3" wrap="virtual"></textarea></td>
                 <?php 
             } 
             ?>
@@ -61,8 +59,9 @@ $editlang = $languages[$data['view_lang']]['enname'];
         {
             $en = $str['en'];
             $loc = $str[$data['view_lang']];
+            $row = ($count/2 == floor($count/2))?"even":"odd";
             ?>
-            <tr>
+            <tr class="string-&(row);">
                 <th>&(id);</th>
                 <?php 
                 if ($data['view_lang'] != 'en') 
@@ -72,7 +71,7 @@ $editlang = $languages[$data['view_lang']]['enname'];
                     <?php 
                 } 
                 ?>
-                <td><input type="hidden" name="string_id[&(count);]" value="&(id);" /><textarea name="string_value[&(count);]" cols="40" rows="2" wrap="virtual"><?php echo htmlspecialchars($loc); ?></textarea></td>
+                <td><input type="hidden" name="string_id[&(count);]" value="&(id);" /><textarea name="string_value[&(count);]" cols="30" rows="3" wrap="virtual"><?php echo htmlspecialchars($loc); ?></textarea></td>
             </tr>   
             <?php
             $count++;
@@ -80,7 +79,7 @@ $editlang = $languages[$data['view_lang']]['enname'];
         ?>
     </tbody>
 </table>
-
+<br />
 <div class="form_toolbar">
   <input type="submit" name="f_submit" accesskey="s" value="<?php echo $data['l10n_midcom']->get('save');?>" class="save">
   <input type="submit" name="f_cancel" accesskey="c" value="<?php echo $data['l10n_midcom']->get('cancel');?>" class="cancel">

@@ -9,7 +9,7 @@ $curlang = $_MIDCOM->i18n->get_current_language();
 
 <table class="midcom_admin_babel_languages">
     <thead>
-        <tr>
+        <tr class="header">
             <th><?php echo $data['l10n']->get('language','midcom.admin.babel'); ?></th>
             <th><?php echo $data['l10n']->get('core component status'); ?></th>
             <th><?php echo $data['l10n']->get('other component status'); ?></th>
@@ -40,7 +40,7 @@ $curlang = $_MIDCOM->i18n->get_current_language();
             }        
             
             echo "        <tr class=\"{$status}\">\n";
-            echo "            <td><a href=\"{$prefix}__mfa/asgard_midcom.admin.babel/status/{$language}/\">{$language_name}</a></td>\n";
+            echo "            <th class=\"component\"><a href=\"{$prefix}__mfa/asgard_midcom.admin.babel/status/{$language}/\">{$language_name}</a></td>\n";
             echo "            <td title=\"{$state['strings_core']['translated']} / {$state['strings_core']['total']}\">{$percentage}%</td>\n";
             echo "            <td title=\"{$state['strings_other']['translated']} / {$state['strings_other']['total']}\">{$percentage_other}%</td>\n";
             echo "        </tr>\n";
