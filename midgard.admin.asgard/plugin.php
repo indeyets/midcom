@@ -182,6 +182,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
         $_MIDCOM->skip_page_style = true;
         $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
+
     }
     
     function get_type_label($type)
@@ -248,6 +249,16 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
                 MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('back to site', 'midgard.admin.asgard'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/gohome.png',
+            )
+        );
+
+		$data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."/midcom-logout-",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('logout','midcom'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/exit.png',
             )
         );
         
@@ -514,5 +525,6 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         
         return $toolbar;
     }
+
 }
 ?>
