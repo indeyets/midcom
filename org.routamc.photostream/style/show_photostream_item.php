@@ -7,7 +7,7 @@ $photo_url = "{$prefix}photo/{$data['photo']->guid}/";
 
 if (isset($data['url_suffix']))
 {
-    $photo_url .= $data['url_suffix'];
+    $photo_url .= $data['suffix'];
 }
 ?>
 <li class="photo">

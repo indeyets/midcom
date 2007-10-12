@@ -104,6 +104,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         {
             // Limit list of photos to the user
             $qb->add_constraint('photographer', '=', $data['user']->id);
+            $data['url_suffix'] = "user/{$args[0]}/";
         }
 
         $qb->add_order('taken', 'DESC');
@@ -182,7 +183,6 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      * The handler for displaying photos in time window
      * @param mixed $handler_id the array key from the requestarray
      * @param array $args the arguments given to the handler
-     * @todo 1.7 support
      */
     function _handler_photostream_between($handler_id, $args, &$data)
     {
@@ -203,7 +203,10 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
 
         // Make photos AJAX-editable
         $this->_prepare_ajax_controllers();
-
+        
+        // Add URL suffix
+        $data['url_suffix'] = "between/" . implode('/', $args) . '/';
+        
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");
         $this->_update_breadcrumb_line($handler_id);
 
@@ -514,6 +517,15 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         }
         else
         {
+            if ($this->_config->get('navigate_with_context'))
+            {
+                $data['suffix'] = $data['url_suffix'];
+            }
+            else
+            {
+                $data['suffix'] = '';
+            }
+            
             midcom_show_style('show_photostream_header');
 
             foreach ($data['photos'] as $photo)

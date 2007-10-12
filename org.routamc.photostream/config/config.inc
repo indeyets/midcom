@@ -14,3 +14,9 @@
 // Flickr synchronization rules
 'flickr_api_key' => 'f68bbf3e322b2f6cb487b7c50f003fea',
 'flickr_import_size' => 'Large', // In some cases you want Original
+
+// Use AJAX for editing
+'enable_ajax_editing' => true,
+
+// Stick to the context in photo navigation (e.g. show the next and previous only from the selected user or tag group)
+'navigate_with_context' => true,

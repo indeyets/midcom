@@ -7,6 +7,10 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2007-10-12 adrenalin
+  ! Added next and previous photo links to photo view; not possible to backport to branch Midgard 1.7
+  - Configuration keys to configuration schema
+
 2007-05-06 rambo
   + "Semi-public" privilege checkbox to default schema
   + Upload photos directly to gallery

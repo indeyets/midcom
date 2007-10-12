@@ -10,6 +10,14 @@
 class org_routamc_photostream_handler_view extends midcom_baseclasses_components_handler
 {
     /**
+     * Datamanager2 instance for AJAX editing of a photo
+     * 
+     * @access private
+     * @var midcom_helper_datamanager2_controller $_controller
+     */
+    var $_controller;
+    
+    /**
      * GUIDs of the photos that share the requested tag
      * 
      * @access private
@@ -45,6 +53,16 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "DM2 could not set storage");
             // This will exit
         }
+        
+        // Enable AJAX editing
+        if ($this->_config->get('enable_ajax_editing'))
+        {
+            $this->_controller = midcom_helper_datamanager2_controller::create('ajax');
+            $this->_controller->schemadb =& $data['schemadb'];
+            $this->_controller->set_storage($data['photo']);
+            $this->_controller->process_ajax();
+        }
+        
         return true;
     }
 
@@ -57,7 +75,7 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
     function _handler_view($handler_id, $args, &$data)
     {
         $data =& $this->_request_data;
-
+        
         // Prepare object and DM2
         if (!$this->_load_photo($args[0]))
         {
@@ -130,14 +148,20 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
         $data['next_guid'] = $this->_get_surrounding_photo('>', $args, $data['photo']);
         
         // Create the link suffix
-        if (   isset($args[1])
+        $data['suffix'] = '';
+        if (   $this->_config->get('navigate_with_context')
+            && isset($args[1])
             && isset($args[2]))
         {
-            $data['suffix'] = "{$args[1]}/{$args[2]}/";
-        }
-        else
-        {
-            $data['suffix'] = '';
+            foreach ($args as $key => $arg)
+            {
+                if ($key === 0)
+                {
+                    continue;
+                }
+                
+                $data['suffix'] .= "{$arg}/";
+            }
         }
 
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");
@@ -152,8 +176,16 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
      */
     function _show_view($handler_id, &$data)
     {
-        $data['photo_view'] = $data['datamanager']->get_content_html();
-
+        // Enable AJAX editing
+        if ($this->_config->get('enable_ajax_editing'))
+        {
+            $data['photo_view'] = $this->_controller->get_content_html();
+        }
+        else
+        {
+            $data['photo_view'] = $data['datamanager']->get_content_html();
+        }
+        
         if ($handler_id == 'photo_raw')
         {
             midcom_show_style('show_photo_raw');
@@ -174,70 +206,9 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
         $data['suffix'] = '';
         $guids = array();
         
-        $constraint = array
-        (
-            'key' => 'sitegroup',
-            'value' => $_MIDGARD['sitegroup'],
-        );
-        
-        if (isset($args[1]))
-        {
-            switch ($args[1])
-            {
-                case 'user';
-                    $mc = midcom_db_person::new_collector('username', $args[2]);
-                    $mc->add_value_property('id');
-                    $mc->add_constraint('username', '=', $args[2]);
-                    $mc->set_limit(1);
-                    $mc->execute();
-                    
-                    $persons = $mc->list_keys();
-                    
-                    foreach ($persons as $guid => $array)
-                    {
-                        $id = $mc->get_subkey($guid, 'id');
-                        break;
-                    }
-                    
-                    $constraint['key'] = 'id';
-                    $constraint['value'] = $id;
-                    break;
-                
-                case 'tag':
-                    // Get the list of tags only once
-                    if ($this->_tags_shared)
-                    {
-                        break;
-                    }
-                    
-                    // Get a list of guids that share the requested tag
-                    $mc = net_nemein_tag_link_dba::new_collector('fromClass', 'org_routamc_photostream_photo_dba');
-                    $mc->add_value_property('fromGuid');
-                    $mc->add_constraint('tag.tag', '=', $args[2]);
-                    $mc->add_constraint('fromGuid', '<>', $photo->guid);
-                    $mc->execute();
-                    
-                    $tags = $mc->list_keys();
-                    
-                    // Initialize the array
-                    $this->_tags_shared = array();
-                    
-                    // Store the object guids for later use
-                    foreach ($tags as $guid => $array)
-                    {
-                        $this->_tags_shared[] = $mc->get_subkey($guid, 'fromGuid');
-                    }
-                    
-                    break;
-                
-                case 'all':
-                default:
-                    // TODO - anything needed?
-            }
-        }
-        
         // Initialize the collector
-        $mc = org_routamc_photostream_photo_dba::new_collector($constraint['key'], $constraint['value']);
+        // Patch to the collector bug of forced second parameter
+        $mc = org_routamc_photostream_photo_dba::new_collector('sitegroup', $_MIDGARD['sitegroup']);
         
         // Add first the common constraints
         $mc->add_value_property('title');
@@ -254,6 +225,101 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
         }
         
         $mc->set_limit(1);
+        
+        // Check the corresponding limiter actions
+        if (isset($args[1]))
+        {
+            switch ($args[1])
+            {
+                case 'user';
+                    $mc_person = midcom_db_person::new_collector('username', $args[2]);
+                    $mc_person->add_value_property('id');
+                    $mc_person->add_constraint('username', '=', $args[2]);
+                    $mc_person->set_limit(1);
+                    $mc_person->execute();
+                    
+                    $persons = $mc_person->list_keys();
+                    
+                    foreach ($persons as $guid => $array)
+                    {
+                        $id = $mc_person->get_subkey($guid, 'id');
+                        $mc->add_constraint('photographer', '=', $id);
+                        break;
+                    }
+                    break;
+                
+                case 'tag':
+                    // Get the list of tags only once
+                    if ($this->_tags_shared)
+                    {
+                        break;
+                    }
+                    
+                    // Get a list of guids that share the requested tag
+                    $mc_tag = net_nemein_tag_link_dba::new_collector('fromClass', 'org_routamc_photostream_photo_dba');
+                    $mc_tag->add_value_property('fromGuid');
+                    $mc_tag->add_constraint('tag.tag', '=', $args[2]);
+                    $mc_tag->add_constraint('fromGuid', '<>', $photo->guid);
+                    $mc_tag->execute();
+                    
+                    $tags = $mc_tag->list_keys();
+                    
+                    // Initialize the array
+                    $this->_tags_shared = array();
+                    
+                    // Store the object guids for later use
+                    foreach ($tags as $guid => $array)
+                    {
+                        $this->_tags_shared[] = $mc_tag->get_subkey($guid, 'fromGuid');
+                    }
+                    
+                    break;
+                
+                case 'between':
+                    if (!isset($args[4]))
+                    {
+                        $start = @strtotime($args[2]);
+                        $end = @strtotime($args[3]);
+                    }
+                    else
+                    {
+                        // Add the person delimiter
+                        $mc_person = midcom_db_person::new_collector('username', $args[2]);
+                        $mc_person->add_value_property('id');
+                        $mc_person->add_constraint('username', '=', $args[2]);
+                        $mc_person->set_limit(1);
+                        $mc_person->execute();
+                        
+                        $persons = $mc_person->list_keys();
+                        
+                        foreach ($persons as $guid => $array)
+                        {
+                            $id = $mc_person->get_subkey($guid, 'id');
+                            break;
+                        }
+                        
+                        $mc->add_constraint('photographer', '=', $id);
+                        
+                        $start = @strtotime($args[3]);
+                        $end = @strtotime($args[4]);
+                    }
+                    
+                    if (   !$start
+                        || !$end)
+                    {
+                        return false;
+                    }
+                    
+                    $mc->add_constraint('taken', '>=', $start);
+                    $mc->add_constraint('taken', '<=', $end);
+                    
+                    break;
+                
+                case 'all':
+                default:
+                    // TODO - anything needed?
+            }
+        }
         
         // Include the tag constraints
         if ($this->_tags_shared)
@@ -329,6 +395,30 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
                             MIDCOM_NAV_NAME => sprintf($this->_l10n->get('tagged %s'), $args[2]),
                         );
                         break;
+                    
+                    case 'between':
+                        if (isset($args[4]))
+                        {
+                            $user = "{$args[2]}/";
+                            $start = @strtotime($args[3]);
+                            $end = @strtotime($args[4]);
+                            $raw_start = $args[3];
+                            $raw_end = $args[4];
+                        }
+                        else
+                        {
+                            $user = '';
+                            $start = @strtotime($args[2]);
+                            $end = @strtotime($args[3]);
+                            $raw_start = $args[2];
+                            $raw_end = $args[3];
+                        }
+                        
+                        $tmp[] = array
+                        (
+                            MIDCOM_NAV_URL => "between/{$user}{$raw_start}/{$raw_end}/",
+                            MIDCOM_NAV_NAME => sprintf($this->_l10n->get('between %s-%s'), strftime('%x', $start), strftime('%x', $end)),
+                        );
                 }
             }
         }
