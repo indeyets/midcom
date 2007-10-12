@@ -222,7 +222,7 @@ class midcom_admin_styleeditor_handler_create extends midcom_baseclasses_compone
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."/midcom-logout-",
+                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."midcom-logout-",
                 MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('logout','midcom'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/exit.png',
             )
