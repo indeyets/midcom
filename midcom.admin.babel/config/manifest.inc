@@ -33,7 +33,7 @@
       'asgard_plugin' => array
       (
           'class' => 'midcom_admin_babel_plugin',
-          'src' => 'file:/midcom/admin/babel/main.php',
+          'src' => 'file:/midcom/admin/babel/plugin.php',
           'name' => 'Localization tool',
           'config' => null,
       ),
