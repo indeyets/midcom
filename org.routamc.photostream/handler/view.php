@@ -231,23 +231,6 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
         {
             switch ($args[1])
             {
-                case 'user';
-                    $mc_person = midcom_db_person::new_collector('username', $args[2]);
-                    $mc_person->add_value_property('id');
-                    $mc_person->add_constraint('username', '=', $args[2]);
-                    $mc_person->set_limit(1);
-                    $mc_person->execute();
-                    
-                    $persons = $mc_person->list_keys();
-                    
-                    foreach ($persons as $guid => $array)
-                    {
-                        $id = $mc_person->get_subkey($guid, 'id');
-                        $mc->add_constraint('photographer', '=', $id);
-                        break;
-                    }
-                    break;
-                
                 case 'tag':
                     // Get the list of tags only once
                     if ($this->_tags_shared)
@@ -258,7 +241,7 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
                     // Get a list of guids that share the requested tag
                     $mc_tag = net_nemein_tag_link_dba::new_collector('fromClass', 'org_routamc_photostream_photo_dba');
                     $mc_tag->add_value_property('fromGuid');
-                    $mc_tag->add_constraint('tag.tag', '=', $args[2]);
+                    $mc_tag->add_constraint('tag.tag', '=', $args[3]);
                     $mc_tag->add_constraint('fromGuid', '<>', $photo->guid);
                     $mc_tag->execute();
                     
@@ -273,6 +256,26 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
                         $this->_tags_shared[] = $mc_tag->get_subkey($guid, 'fromGuid');
                     }
                     
+                    // Fall through
+                    
+                case 'user':
+                    if ($args[2] !== 'all')
+                    {
+                        $mc_person = midcom_db_person::new_collector('username', $args[2]);
+                        $mc_person->add_value_property('id');
+                        $mc_person->add_constraint('username', '=', $args[2]);
+                        $mc_person->set_limit(1);
+                        $mc_person->execute();
+                        
+                        $persons = $mc_person->list_keys();
+                        
+                        foreach ($persons as $guid => $array)
+                        {
+                            $id = $mc_person->get_subkey($guid, 'id');
+                            $mc->add_constraint('photographer', '=', $id);
+                            break;
+                        }
+                    }
                     break;
                 
                 case 'between':

@@ -22,7 +22,7 @@
             }
             
             echo "<li class=\"{$class}\">";
-            $tag_link = "<a href=\"{$prefix}tag/all/{$tag}/\" class=\"tag\" rel=\"tag\">{$tag}</a>";
+            $tag_link = "<a href=\"{$prefix}tag/{$data['user_url']}/{$tag}/\" class=\"tag\" rel=\"tag\">{$tag}</a>";
             echo sprintf($data['l10n']->get('%d photos tagged with %s'), $count, $tag_link);
             echo "</li>\n";
         }

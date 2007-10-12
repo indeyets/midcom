@@ -270,7 +270,8 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _handler_photostream_tags($handler_id, $args, &$data)
     {
-        if ($handler_id == 'photostream_tag')
+        if (   $handler_id === 'photostream_tag'
+            || $handler_id === 'photostream_tags')
         {
             $data['user'] = $this->_resolve_user($args[0]);
             if (!$data['user'])
@@ -280,6 +281,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
 
             $data['view_title'] = sprintf($this->_l10n->get('photo tags of %s'), $data['user']->name);
             $data['user_url'] = $args[0];
+            
             $data['tags'] = net_nemein_tag_handler::get_tags_by_class('org_routamc_photostream_photo_dba', $data['user']);
         }
         else
@@ -326,7 +328,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
             $data['user_url'] = 'all';
         }
         $data['photos'] = array();
-        $data['url_suffix'] = "tag/{$data['tag']}";
+        $data['url_suffix'] = "tag/{$data['user_url']}/{$data['tag']}";
 
         // Get photo GUIDs from tags
         // TODO: Use MidgardCollector for this
