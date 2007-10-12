@@ -7,6 +7,10 @@ Legend:
   not guaranteed to be backwards compatible to previous versions
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
+2007-10-13 solt
+  + Moved to Asgard plugin
+  + Made nicer look
+  + Added navigation in Asgard
 
 2006-10-30 bergie
   + Split components in listing and statistics to "core" and "others"
