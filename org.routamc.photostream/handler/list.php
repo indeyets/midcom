@@ -323,6 +323,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
             $data['user_url'] = 'all';
         }
         $data['photos'] = array();
+        $data['url_suffix'] = "tag/{$data['tag']}";
 
         // Get photo GUIDs from tags
         // TODO: Use MidgardCollector for this

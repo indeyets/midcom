@@ -27,6 +27,10 @@ Poista valokuva
 Muokkaa valokuvaa
 ---STRINGEND
 
+---STRING flickr_username
+Flickr-käyttäjätunnus
+---STRINGEND
+
 ---STRING if checked only logged in users can see this photo
 Jos merkitty niin vain kirjautuneet käyttäjät voivat nähdä tämän valokuvan
 ---STRINGEND
@@ -41,6 +45,10 @@ Omat valokuvani
 
 ---STRING my tags
 Omat merkintäni
+---STRINGEND
+
+---STRING next
+Seuraava
 ---STRINGEND
 
 ---STRING not public
@@ -103,6 +111,10 @@ Päivitä generoidut kuvakoot
 Aloita
 ---STRINGEND
 
+---STRING tagged %s
+Merkitty '%s'
+---STRINGEND
+
 ---STRING taken
 Kuva otettu
 ---STRINGEND
@@ -131,7 +143,7 @@ Tuotavien tiedostojen maksimikoko
 Lataa galleriaan
 ---STRINGEND
 
----STRING flickr_username
-Flickr-käyttäjätunnus
+---STRING previous
+Edellinen
 ---STRINGEND
 

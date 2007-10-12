@@ -263,6 +263,14 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             'fixed_args' => Array('photo'),
             'variable_args' => 1,
         );
+        
+        // Handler /photo/<guid>/<limiter>/<limit>
+        $this->_request_switch['photo_limited'] = Array
+        (
+            'handler' => Array('org_routamc_photostream_handler_view', 'view'),
+            'fixed_args' => array('photo'),
+            'variable_args' => 3,
+        );
 
         // Handle /photo/raw/<guid>
         $this->_request_switch['photo_raw'] = Array

@@ -10,6 +10,13 @@
 class org_routamc_photostream_handler_view extends midcom_baseclasses_components_handler
 {
     /**
+     * GUIDs of the photos that share the requested tag
+     * 
+     * @access private
+     */
+    var $_tags_shared = null;
+    
+    /**
      * Simple default constructor.
      */
     function org_routamc_photostream_handler_view()
@@ -117,10 +124,25 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
         {
             $_MIDCOM->skip_page_style = true;
         }
+        
+        // Get the next and previous
+        $data['previous_guid'] = $this->_get_surrounding_photo('<', $args, $data['photo']);
+        $data['next_guid'] = $this->_get_surrounding_photo('>', $args, $data['photo']);
+        
+        // Create the link suffix
+        if (   isset($args[1])
+            && isset($args[2]))
+        {
+            $data['suffix'] = "{$args[1]}/{$args[2]}/";
+        }
+        else
+        {
+            $data['suffix'] = '';
+        }
 
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");
 
-        $this->_update_breadcrumb_line($handler_id);
+        $this->_update_breadcrumb_line($handler_id, $args);
 
         return true;
     }
@@ -141,18 +163,141 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
             midcom_show_style('show_photo');
         }
     }
+    
+    /**
+     * Get the next and previous photo guids
+     * 
+     * @access private
+     */
+    function _get_surrounding_photo($direction, $args, $photo)
+    {
+        $data['suffix'] = '';
+        $guids = array();
+        
+        $constraint = array
+        (
+            'key' => 'sitegroup',
+            'value' => $_MIDGARD['sitegroup'],
+        );
+        
+        if (isset($args[1]))
+        {
+            switch ($args[1])
+            {
+                case 'user';
+                    $mc = midcom_db_person::new_collector('username', $args[2]);
+                    $mc->add_value_property('id');
+                    $mc->add_constraint('username', '=', $args[2]);
+                    $mc->set_limit(1);
+                    $mc->execute();
+                    
+                    $persons = $mc->list_keys();
+                    
+                    foreach ($persons as $guid => $array)
+                    {
+                        $id = $mc->get_subkey($guid, 'id');
+                        break;
+                    }
+                    
+                    $constraint['key'] = 'id';
+                    $constraint['value'] = $id;
+                    break;
+                
+                case 'tag':
+                    // Get the list of tags only once
+                    if ($this->_tags_shared)
+                    {
+                        break;
+                    }
+                    
+                    // Get a list of guids that share the requested tag
+                    $mc = net_nemein_tag_link_dba::new_collector('fromClass', 'org_routamc_photostream_photo_dba');
+                    $mc->add_value_property('fromGuid');
+                    $mc->add_constraint('tag.tag', '=', $args[2]);
+                    $mc->add_constraint('fromGuid', '<>', $photo->guid);
+                    $mc->execute();
+                    
+                    $tags = $mc->list_keys();
+                    
+                    // Initialize the array
+                    $this->_tags_shared = array();
+                    
+                    // Store the object guids for later use
+                    foreach ($tags as $guid => $array)
+                    {
+                        $this->_tags_shared[] = $mc->get_subkey($guid, 'fromGuid');
+                    }
+                    
+                    break;
+                
+                case 'all':
+                default:
+                    // TODO - anything needed?
+            }
+        }
+        
+        // Initialize the collector
+        $mc = org_routamc_photostream_photo_dba::new_collector($constraint['key'], $constraint['value']);
+        
+        // Add first the common constraints
+        $mc->add_value_property('title');
+        
+        if ($direction === '<')
+        {
+            $mc->add_constraint('taken', '<', $photo->taken);
+            $mc->add_order('taken', 'DESC');
+        }
+        else
+        {
+            $mc->add_constraint('taken', '>', $photo->taken);
+            $mc->add_order('taken');
+        }
+        
+        $mc->set_limit(1);
+        
+        // Include the tag constraints
+        if ($this->_tags_shared)
+        {
+            if (count($this->_tags_shared) > 0)
+            {
+                $mc->begin_group('OR');
+                foreach ($this->_tags_shared as $guid)
+                {
+                    $mc->add_constraint('guid', '=', $guid);
+                }
+                $mc->end_group();
+                $link = $mc->list_keys();
+            }
+            else
+            {
+                $link = array();
+            }
+        }
+        else
+        {
+            $mc->execute();
+            $link = $mc->list_keys();
+        }
+        
+        foreach ($link as $guid => $array)
+        {
+            return $guid;
+        }
+        
+        return false;
+    }
 
     /**
      * Helper, updates the context so that we get a complete breadcrum line towards the current
      * location.
      *
      */
-    function _update_breadcrumb_line($handler_id)
+    function _update_breadcrumb_line($handler_id, $args)
     {
         $tmp = array();
 
         // TODO: How can we present the correct gallery/stream page in breacrumb ?
-        if ($handler_id == 'photo_gallery')
+        if ($handler_id === 'photo_gallery')
         {
             // Point user back to gallery
             $tmp[] = array
@@ -168,6 +313,24 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
                 MIDCOM_NAV_URL => "list/{$this->_request_data['user_url']}/",
                 MIDCOM_NAV_NAME => sprintf($this->_l10n->get('photos of %s'), $this->_request_data['photographer']->name),
             );
+        }
+        
+        // Add special limits
+        if ($handler_id === 'photo_limited')
+        {
+            if (isset($args[1]))
+            {
+                switch ($args[1])
+                {
+                    case 'tag':
+                        $tmp[] = array
+                        (
+                            MIDCOM_NAV_URL => "tag/{$this->_request_data['user_url']}/{$args[2]}",
+                            MIDCOM_NAV_NAME => sprintf($this->_l10n->get('tagged %s'), $args[2]),
+                        );
+                        break;
+                }
+            }
         }
 
         $tmp[] = array

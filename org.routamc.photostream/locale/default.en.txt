@@ -27,6 +27,10 @@ Delete photo
 Edit photo
 ---STRINGEND
 
+---STRING flickr_username
+Flickr username
+---STRINGEND
+
 ---STRING if checked only logged in users can see this photo
 If checked only logged in users can see this photo
 ---STRINGEND
@@ -41,6 +45,10 @@ My photos
 
 ---STRING my tags
 My tags
+---STRINGEND
+
+---STRING next
+Next
 ---STRINGEND
 
 ---STRING not public
@@ -103,6 +111,10 @@ Recreate derived images
 Start
 ---STRINGEND
 
+---STRING tagged %s
+Tagged '%s'
+---STRINGEND
+
 ---STRING taken
 Photo taken on
 ---STRINGEND
@@ -131,7 +143,7 @@ Size limit for uploaded files
 Upload to gallery
 ---STRINGEND
 
----STRING flickr_username
-Flickr username
+---STRING previous
+Previous
 ---STRINGEND
 
