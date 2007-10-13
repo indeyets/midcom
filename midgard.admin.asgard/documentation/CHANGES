@@ -7,6 +7,10 @@ Legend:
   not guranteed to be backwards compatible to previous versions
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
+2007-10-12 solt
+  + More styling
+  + Added interface for plugin navigation
+  + Fixed help on objects reading
 
 2007-07-24 bergie
   + Started using validation for typical PHP code fields

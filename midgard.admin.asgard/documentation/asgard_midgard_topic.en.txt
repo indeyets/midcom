@@ -1,1 +1,1 @@
-topic to taki topic
+Topic is a core Midgard type. It is usualy used for storing content in similar to folders way.
