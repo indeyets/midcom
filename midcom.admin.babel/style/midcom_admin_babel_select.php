@@ -10,7 +10,7 @@ $curlang = $_MIDCOM->i18n->get_current_language();
 <table class="midcom_admin_babel_languages">
     <thead>
         <tr class="header">
-            <th><?php echo $data['l10n']->get('language','midcom.admin.babel'); ?></th>
+            <th><?php echo $data['l10n']->get('language'); ?></th>
             <th><?php echo $data['l10n']->get('core component status'); ?></th>
             <th><?php echo $data['l10n']->get('other component status'); ?></th>
         </tr>
