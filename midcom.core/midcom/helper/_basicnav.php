@@ -448,6 +448,7 @@ class midcom_helper__basicnav
             debug_pop();
             return null;
         }
+//debug_print_r("Nodedata: ",$nodedata, MIDCOM_LOG_ERROR);
 
         // Now complete the node data structure, we need a metadata object for this:
         $metadata =& midcom_helper_metadata::retrieve($topic);
@@ -1000,7 +1001,7 @@ class midcom_helper__basicnav
             && !$topic->is_in_tree($this->_root, $topic->id))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Node #{$topic->id} is not in the MidCOM content tree #{$this->_root}. Aborting", MIDCOM_LOG_ERROR);
+            debug_add("Node #{$topic->id} is not in the MidCOM content tree #{$this->_root}. Aborting", MIDCOM_LOG_WARN);
             debug_pop();
             return MIDCOM_ERRNOTFOUND;
         }
@@ -1039,7 +1040,7 @@ class midcom_helper__basicnav
                 {
                     case MIDCOM_ERRFORBIDDEN:
                         debug_push_class(__CLASS__, __FUNCTION__);
-                        debug_add("The Node {$uptopic->id} is invisible, could not satisfy the the dependency chain to Node #{$node_id}", MIDCOM_LOG_ERROR);
+                        debug_add("The Node {$uptopic->id} is invisible, could not satisfy the the dependency chain to Node #{$node_id}", MIDCOM_LOG_WARN);
                         debug_pop();
                         return MIDCOM_ERRFORBIDDEN;
 
