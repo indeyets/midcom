@@ -14,6 +14,13 @@
  */
 class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_handler
 {
+    /**
+     * Navigation access point
+     * 
+     * @var midcom_helper_nav $_nap
+     */
+    var $_nap;
+    
     /*
      * The midcom_baseclasses_components_handler class defines a bunch of helper vars
      * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
@@ -138,11 +145,12 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
         
         // Get sub galleries
         $data['galleries'] = array();
-        $nap = new midcom_helper_nav();
-        $nodes = $nap->list_nodes($this->_topic->id);
+        
+        $this->_nap = new midcom_helper_nav();
+        $nodes = $this->_nap->list_nodes($this->_topic->id);
         foreach ($nodes as $node_id)
         {
-            $node = $nap->get_node($node_id);
+            $node = $this->_nap->get_node($node_id);
             if ($node[MIDCOM_NAV_COMPONENT] === 'org.routamc.gallery')
             {
                 $data['galleries'][] = $node;
@@ -154,6 +162,56 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
         $this->_prepare_ajax_controllers();
 
         return true;
+    }
+    
+    /**
+     * Scan the subgalleries for photo links
+     * 
+     * @access private
+     * @param integer $node    ID of the photo gallery
+     * @return org_routamc_photostream_photo_dba or false on failure
+     */
+    function _scan_subgalleries($node)
+    {
+        $mc = org_routamc_gallery_photolink_dba::new_collector('node', $node);
+        $mc->add_value_property('photo');
+        $mc->add_constraint('censored', '=', 0);
+        $mc->add_order('photo.taken', 'DESC');
+        $mc->set_limit(1);
+        $mc->execute();
+        $photolinks = $mc->list_keys();
+        
+        foreach ($photolinks as $guid => $array)
+        {
+            $id = $mc->get_subkey($guid, 'photo');
+            $photo = new org_routamc_photostream_photo_dba($id);
+            return $photo;
+        }
+        
+        $mc = midcom_db_topic::new_collector('up', $node);
+        $mc->add_value_property('id');
+        $mc->add_constraint('up', '=', $node);
+        $mc->add_constraint('component', '=', 'org.routamc.gallery');
+        $mc->add_constraint('metadata.navnoentry', '=', 0);
+        $mc->add_order('score');
+        
+        $mc->execute();
+        
+        $nodes = $mc->list_keys();
+        
+        foreach ($nodes as $guid => $array)
+        {
+            $id = $mc->get_subkey($guid, 'id');
+            
+            $link = $this->_scan_subgalleries($id);
+            
+            if ($link)
+            {
+                return $link;
+            }
+        }
+        
+        return false;
     }
 
     /**
@@ -169,24 +227,14 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
         foreach ($data['galleries'] as $gallery)
         {
             $data['gallery'] =& $gallery;
-            $qb = org_routamc_gallery_photolink_dba::new_query_builder();
-            $qb->set_limit(1);
-            $qb->add_constraint('node', '=', $gallery[MIDCOM_NAV_ID]);
-
-            // FIXME: This property should be rethought
-            $qb->add_constraint('censored', '=', 0);
-
-            $photolinks = $qb->execute();
-            if (count($photolinks) == 0)
+            
+            // Get the subgallery photo
+            $data['photo'] = $this->_scan_subgalleries($gallery[MIDCOM_NAV_ID]);
+            
+            if (   !$data['photo']
+                || !is_a($data['photo'], 'org_routamc_photostream_photo_dba')
+                || !$data['photo']->guid)
             {
-                // Skip this gallery, it has no images
-                continue;
-            }
-
-            $data['photo'] = new org_routamc_photostream_photo_dba($photolinks[0]->photo);
-            if (!$data['photo'])
-            {
-                // Something wrong with this gallery
                 continue;
             }
 

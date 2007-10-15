@@ -7,6 +7,10 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-10-13 adrenalin
+  - Subgalleries do now a recursive search to find a photo on the index pages
+  - Changed to resolve subgallery photos with midgard_collector
+
 2007-08-30 adrenalin
   - Changed to resolve photos with midgard_collector instead of midgard_query_builder
 
