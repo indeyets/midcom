@@ -354,7 +354,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
             foreach ($tags as $guid => $array)
             {
                 $photo = $mc->get_subkey($guid, 'fromGuid');
-                $qb->add_constraint('guid', '=', $photo;
+                $qb->add_constraint('guid', '=', $photo);
             }
             $qb->end_group();
 
