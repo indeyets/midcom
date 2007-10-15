@@ -1,6 +1,5 @@
 <?php
-//$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-$prefix = '/';
+$prefix = $_MIDGARD['self'];
 $item =& $data['result'];
 $mime_icon = null;
 $item_type = "image";
@@ -8,14 +7,10 @@ $item_type = "image";
 	<?php
 		switch ($item->mimetype)
 		{
+            case 'image/x-png':
 			case 'image/png':
 			case 'image/jpeg':
-	?>
-	<?php
-				break;
 			case 'image/gif':
-	?>
-	<?php
 				break;
 			default:
 				$item_type = "attachment";
