@@ -198,7 +198,8 @@ body
   display: block;
   list-style: none;
   background-color: #eeeeef;
-  padding: 0.2em 1em;
+  padding: 0.4em 1em;
+  line-height: 22px;
   -moz-border-radius: 6px;
 }
 
@@ -206,7 +207,9 @@ body
 {
   display: inline;
   margin: 0;
-  padding: 0 6px;
+  padding: 4px;
+  margin-right: 2px;
+  -moz-border-radius: 6px;
 }
 
 #container #toolbar ul li a
@@ -215,9 +218,16 @@ body
   white-space: nowrap;
 }
 
-#container #toolbar ul li a img
+#container #toolbar ul li abbr
+{
+  border: none;
+}
+
+#container #toolbar ul li img
 {
     border: none;
+    vertical-align: middle;
+    margin-bottom: 3px;
 }
 
 #container #toolbar ul li:hover,
@@ -227,6 +237,10 @@ body
 #container #toolbar ul li.selected a
 {
   background-color: white;
+}
+#container #toolbar ul li.disabled
+{
+  background-color: #d3d7cf;
 }
 
 #breadcrumb
