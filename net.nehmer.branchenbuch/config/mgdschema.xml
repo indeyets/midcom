@@ -3,15 +3,15 @@
 
   <type name="net_nehmer_branchenbuch_branche_db" table="net_nehmer_branchenbuch_branche_db">
     <property name="id" type="integer" primaryfield="id" />
-    <property name="parent" type="text" />
-    <property name="name" type="text" />
+    <property name="parent" type="string" link="net_nehmer_branchenbuch_branche_db:guid" upfield="parent" />
+    <property name="name" type="string" />
     <property name="type" type="text" />
     <property name="itemcount" type="integer" />
   </type>
 
-  <type name="net_nehmer_branchenbuch_entry_db" table="net_nehmer_branchenbuch_entry_db">
+  <type name="net_nehmer_branchenbuch_entry_db" table="net_nehmer_branchenbuch_entry_db" parent="net_nehmer_branchenbuch_branche_db">
     <property name="id" type="integer" primaryfield="id" />
-    <property name="branche" type="text" />
+    <property name="branche" type="text" link="net_nehmer_branchenbuch_branche_db:guid" parentfield="branche" />
     <property name="type" type="text" />
     <property name="account" type="text" />
     <property name="firstname" type="text" />
