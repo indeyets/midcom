@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
-    <type name="org_openpsa_salesproject" table="org_openpsa_salesproject" parent="org_openpsa_salesproject" parentfield="up">
+    <type name="org_openpsa_salesproject" table="org_openpsa_salesproject" parent="midgard_person" parentfield="owner">
         <property name="id" type="integer" primaryfield="id"/>
         <!-- in practise all salesprojects will have up of 0 but in case we someday wish to divide a huge salesproject to subprojects this is here -->
         <property name="up" upfield="up" link="org_openpsa_salesproject:id" reverse="no" type="integer"/>
@@ -15,7 +15,7 @@
         <property name="customer" link="org_openpsa_organization:id" reverse="no" type="integer"/>
         <!-- Customer contacts are handled as members to project -->
 
-        <property name="owner" link="midgard_person:id" reverse="no" type="integer"/>
+        <property name="owner" link="midgard_person:id" reverse="no" type="integer" parentfield="owner"/>
 
         <!-- Common OpenPSA properties -->
 
@@ -37,7 +37,7 @@
     <type name="org_openpsa_salesproject_member" table="org_openpsa_salesproject_member" parent="org_openpsa_salesproject" parentfield="salesproject">
         <property name="id" type="integer" primaryfield="id"/>
         <property name="person" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="salesproject" link="org_openpsa_salesproject:id" type="integer"/>
+        <property name="salesproject" link="org_openpsa_salesproject:id" type="integer" parentfield="salesproject"/>
         <property name="extra" type="text" />
         <!-- Common OpenPSA properties -->
 

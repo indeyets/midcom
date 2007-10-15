@@ -382,6 +382,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             case (is_a($obj, 'midgard_member')):
             case (is_a($obj, 'midgard_group')):
             case (is_a($obj, 'org_openpsa_organization')):
+            case (is_a($obj, 'net_nehmer_buddylist_entry_db')):
                 $icon='stock_people.png';
                 break;
             case (is_a($obj, 'midgard_host')):
@@ -389,8 +390,10 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
                 break;
             case (is_a($obj, 'midgard_pageelement')):
             case (is_a($obj, 'midgard_element')):
-
                 $icon = 'new-html.png';
+                break;
+            case (is_a($obj, 'org_openpsa_notifications_notification')):
+                $icon = 'stock_news.png';
                 break;
 
             default:

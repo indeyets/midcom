@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
-    
-    <type name="net_nemein_teams_log" table="net_nemein_teams_log">
-        <property name="id" type="integer" primaryfield="id" />
-        <property name="teamguid" type="string" />
-        <property name="message" type="string" />
-    </type>
-
-    <type name="net_nemein_teams_team" table="net_nemein_teams_team">
+    <type name="net_nemein_teams_team" table="net_nemein_teams_team" parent="midgard_person">
         <property name="id" type="integer" primaryfield="id" />
         <property name="groupguid" type="string" />
         <property name="topicguid" type="string" />
-        <property name="managerguid" type="string" />
+        <property name="managerguid" type="string" link="midgard_person:guid" parentfield="manager"/>
         <property name="name" type="string" />
     </type>
     
-    <type name="net_nemein_teams_pending" table="net_nemein_teams_pending">
+    <type name="net_nemein_teams_log" table="net_nemein_teams_log" parent="net_nemein_teams_team">
+        <property name="id" type="integer" primaryfield="id" />
+        <property name="teamguid" type="string" link="net_nemein_teams_team:guid" parentfield="teamguid"/>
+        <property name="message" type="string" />
+    </type>
+    
+    <type name="net_nemein_teams_pending" table="net_nemein_teams_pending" parent="midgard_group">
         <property name="id" type="integer" primaryfield="id" />
         <property name="playerguid" type="string" />
-        <property name="groupguid" type="string" />
+        <property name="groupguid" type="string" link="midgard_group:guid" parentfield="groupguid"/>
         <property name="managerguid" type="string" />
         <property name="message" type="string" />
     </type>

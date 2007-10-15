@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
 
-  <type name="net_nemein_quickpoll_option" table="net_nemein_quickpoll_option">
+  <type name="net_nemein_quickpoll_option" table="net_nemein_quickpoll_option" parent="midgard_article" parentfield="article">
     <property name="id" type="integer" primaryfield="id" />
 
     <property name="title" type="text" />
-    <property name="article" link="midgard_article:id" reverse="no" type="integer"/>
+    <property name="article" link="midgard_article:id" reverse="no" type="integer" parentfield="article"/>
         
     <!-- Cached vote count -->
     <property name="votes" type="integer" />
@@ -19,10 +19,10 @@
     <!-- /required metadata -->     
   </type>
   
-  <type name="net_nemein_quickpoll_vote" table="net_nemein_quickpoll_vote">
+  <type name="net_nemein_quickpoll_vote" table="net_nemein_quickpoll_vote" parent="net_nemein_quickpoll_option" parentfield="selectedoption">
     <property name="id" type="integer" primaryfield="id" />
 
-    <property name="selectedoption" link="net_nemein_quickpoll_option:id" reverse="no" type="integer"/>
+    <property name="selectedoption" link="net_nemein_quickpoll_option:id" reverse="no" parentfield="selectedoption" type="integer"/>
     <property name="article" link="midgard_article:id" reverse="no" type="integer"/>
         
     <!-- Voter information: user and IP -->
