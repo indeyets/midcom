@@ -2076,7 +2076,7 @@ class midcom_baseclasses_core_dbobject
     function is_object_visible_onsite($object)
     {
         debug_push_class($object, __FUNCTION__);
-        
+
         $metadata =& $object->get_metadata();
         if (! $metadata)
         {
