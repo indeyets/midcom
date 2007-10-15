@@ -30,21 +30,14 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
 
     function _on_initialize()
     {
-        // Ensure we get the correct styles
-        $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
-        $_MIDCOM->style->prepend_component_styledir('midcom.admin.babel');
-        $_MIDCOM->skip_page_style = true;
 
         $this->_l10n = $_MIDCOM->i18n->get_l10n('midcom.admin.babel');
-
+        $this->_request_data['l10n'] = $this->_l10n;
         $this->_debug_prefix = "midcom_admin_babel::";
-
         $this->_save_new = false;
         $this->_save_update = false;
 
         $_MIDCOM->cache->content->no_cache();
-
-        $_MIDCOM->skip_page_style = true;
 
         $_MIDCOM->add_link_head
         (
@@ -57,37 +50,15 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
             )
         );
 
+        // Initialize Asgard plugin
+        
+        midgard_admin_asgard_plugin::prepare_plugin($this->_l10n->get('midcom.admin.babel'),$this->_request_data);
+
     }
 
     function _prepare_toolbar(&$data)
     {
-        $data['l10n'] = $this->_l10n;
-
-        $data['view_title'] = $this->_l10n->get('midcom.admin.babel');
-        $_MIDCOM->set_pagetitle($data['view_title']);
-
-        $data['asgard_toolbar'] = new midcom_helper_toolbar();
-
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('back to site', 'midgard.admin.asgard'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/gohome.png',
-            )
-        );
-
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."midcom-logout-",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('logout','midcom'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/exit.png',
-            )
-        );
-
+        midgard_admin_asgard_plugin::get_common_toolbar($data);
     }
 
     /**
@@ -131,17 +102,6 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
 
-    function _asgard_header()
-    {
-        midcom_show_style('midgard_admin_asgard_header');
-        midcom_show_style('midgard_admin_asgard_middle');
-    }
-
-    function _asgard_footer()
-    {
-        midcom_show_style('midgard_admin_asgard_footer');
-    }
-
     function validate_language($lang)
     {
         // TODO: Validate via ML instead
@@ -160,14 +120,15 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
     {
         $this->_update_breadcrumb_line($handler_id);
         $this->_prepare_toolbar($data);
+        $_MIDCOM->set_pagetitle($data['view_title']);
         return true;
     }
 
     function _show_select($handler_id, &$data)
     {
-        $this->_asgard_header();
+        midgard_admin_asgard_plugin::asgard_header();
         midcom_show_style('midcom_admin_babel_select');
-        $this->_asgard_footer();
+        midgard_admin_asgard_plugin::asgard_footer();
     }
 
     function _handler_save($handler_id, $args, &$data)
@@ -278,6 +239,7 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         }
         
         $this->_update_breadcrumb_line($handler_id);
+        $_MIDCOM->set_pagetitle($data['view_title']);
         debug_pop();
         
         $_MIDCOM->relocate("__mfa/asgard_midcom.admin.babel/edit/{$this->_component_path}/{$this->_lang}/");
@@ -306,12 +268,13 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         
         $this->_update_breadcrumb_line($handler_id);
         $this->_prepare_toolbar($data);
+        $_MIDCOM->set_pagetitle($data['view_title']);
         return true;
     }
     
     function _show_status($handler_id, &$data)
     {
-        $this->_asgard_header();
+        midgard_admin_asgard_plugin::asgard_header();
 
         $data['language'] = $this->_lang;
         
@@ -343,7 +306,7 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         midcom_show_style('midcom_admin_babel_status_section_footer');
 
         midcom_show_style('midcom_admin_babel_status_footer');
-        $this->_asgard_footer();
+        midgard_admin_asgard_plugin::asgard_footer();
     }
 
     function _handler_edit($handler_id, $args, &$data) 
@@ -383,6 +346,7 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
             
                 $this->_update_breadcrumb_line($handler_id);
                 $this->_prepare_toolbar($data);
+                $_MIDCOM->set_pagetitle($data['view_title']);
                 debug_pop();
                 return true;
             }
@@ -424,10 +388,10 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
 
     	$this->_request_data['view_strings'] = $view_strings;
 
-        $this->_asgard_header();
+        midgard_admin_asgard_plugin::asgard_header();
         $this->_show_permission_check($handler_id, &$data);
         midcom_show_style('midcom_admin_babel_edit');
-        $this->_asgard_footer();
+        midgard_admin_asgard_plugin::asgard_footer();
 
         return true;
     }
