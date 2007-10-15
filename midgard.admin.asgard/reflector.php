@@ -365,6 +365,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         		$icon = $obj->get_icon();
         		break;
             case (is_a($obj, 'midgard_person')):
+            case (is_a($obj, 'org_openpsa_person')):
                 $icon = 'stock_person.png';
                 break;
         		
@@ -380,6 +381,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             case (is_a($obj, 'midgard_eventmember')):
             case (is_a($obj, 'midgard_member')):
             case (is_a($obj, 'midgard_group')):
+            case (is_a($obj, 'org_openpsa_organization')):
                 $icon='stock_people.png';
                 break;
             case (is_a($obj, 'midgard_host')):
