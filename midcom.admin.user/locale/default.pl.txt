@@ -1,0 +1,113 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE pl
+
+---STRING add to group
+Dodaj do grupy
+---STRINGEND
+
+---STRING apply to selected
+Wykonaj dla zaznaczonych
+---STRINGEND
+
+---STRING choose action
+Wybierz akcję
+---STRINGEND
+
+---STRING city
+Miasto
+---STRINGEND
+
+---STRING create group
+Dodaj grupę
+---STRINGEND
+
+---STRING create user
+Dodaj użytkownika
+---STRINGEND
+
+---STRING edit account
+Edytuj konto
+---STRINGEND
+
+---STRING email
+Email
+---STRINGEND
+
+---STRING firstname
+Imię
+---STRINGEND
+
+---STRING go
+Dalej
+---STRINGEND
+
+---STRING group %s saved
+Grupa %s zapisana
+---STRINGEND
+
+---STRING groups
+Grupy
+---STRINGEND
+
+---STRING lastname
+Nazwisko
+---STRINGEND
+
+---STRING members
+Członkowie
+---STRINGEND
+
+---STRING midcom.admin.user
+Zarządzanie użytkownikami
+---STRINGEND
+
+---STRING official
+Nazwa oficjalna
+---STRINGEND
+
+---STRING owner group
+Właściciel
+---STRINGEND
+
+---STRING person %s saved
+Użytkownik %s zapisany
+---STRINGEND
+
+---STRING postcode
+Kod pocztowy
+---STRINGEND
+
+---STRING remove account
+Usuń konto
+---STRINGEND
+
+---STRING search person
+Szukaj
+---STRINGEND
+
+---STRING the following fields will be searched: %s
+Przeszukane będą następujące pola: %s
+---STRINGEND
+
+---STRING user %s added to group
+Użytkownik %s dodany do grupy
+---STRINGEND
+
+---STRING user account revoked for %s
+Użytkownik %s usunięty z grupy
+---STRINGEND
+
+---STRING username
+Użytkownik
+---STRINGEND
+
+---STRING workphone
+Telefon służbowy
+---STRINGEND
+
+---STRING edit %s
+Edytuj %s
+---STRINGEND
+
