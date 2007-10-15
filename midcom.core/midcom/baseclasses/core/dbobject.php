@@ -116,8 +116,10 @@ class midcom_baseclasses_core_dbobject
         }
 
         $object->_on_updated();
-        $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);       
-
+        
+        $_MIDCOM->cache->invalidate($object->guid);
+        
+        $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);
         debug_pop();
     }
 
@@ -498,6 +500,8 @@ class midcom_baseclasses_core_dbobject
             $rcs =& $_MIDCOM->get_service('rcs');
             $rcs->update(&$object, $object->get_rcs_message());
         }
+        
+        $_MIDCOM->cache->invalidate($object->guid);
 
         debug_pop();
     }
