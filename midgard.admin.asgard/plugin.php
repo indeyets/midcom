@@ -361,7 +361,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 (
                     MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/permissions/{$object->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('privileges', 'midcom'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+                    MIDCOM_TOOLBAR_ICON => 'midgard.admin.asgard/permissions-16.png',
                     MIDCOM_TOOLBAR_ENABLED => $object->can_do('midgard:privileges'),
                 )
             );
