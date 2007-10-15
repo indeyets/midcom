@@ -67,6 +67,20 @@ class net_nemein_favourites_admin
         {
             $qb->add_constraint('metadata.creator', '=', $_MIDCOM->auth->user->guid);
         }
+
+        $return_url = rawurlencode($_SERVER['REQUEST_URI']);        
+        $bury = array
+        (
+            'icon' => MIDCOM_STATIC_URL . '/net.nemein.favourites/not-buried.png',
+            'title' => $l10n->get('bury'),
+            'url' => "{$url}bury/{$objectType}/{$guid}/?return={$return_url}"
+        );
+        $fav = array
+        (
+            'icon' => MIDCOM_STATIC_URL . '/net.nemein.favourites/not-favorite.png',
+            'title' => $l10n->get('add to favourites'),
+            'url' => "{$url}create/{$objectType}/{$guid}/?return={$return_url}"
+        );
         
         $qb->add_constraint('objectGuid', '=', $guid);
         if (   $_MIDCOM->auth->user
@@ -75,19 +89,40 @@ class net_nemein_favourites_admin
             $favs = $qb->execute();
             if ($favs[0]->bury)
             {
-                return "<span class=\"net_nemein_favourites\">". sprintf($l10n->get('%d favs'), $total_favs) . " <img src=\"" . MIDCOM_STATIC_URL . "/net.nemein.favourites/bury.png\" alt=\"" . $l10n->get('buried') . "\" title=\"" . $l10n->get('buried') . "\" /></span>\n";
+                // User has already buried the item
+                $bury['icon'] = MIDCOM_STATIC_URL . '/net.nemein.favourites/bury.png';
+                $bury['title'] = $l10n->get('buried');
+                $bury['url'] = null;
+                $fav['url'] = null;
             }
             else
             {
-                return "<span class=\"net_nemein_favourites\">". sprintf($l10n->get('%d favs'), $total_favs) . " <img src=\"" . MIDCOM_STATIC_URL . "/net.nemein.favourites/favorite.png\" alt=\"" . $l10n->get('favourite') . "\" title=\"" . $l10n->get('favourite') . "\" /></span>\n";
+                // User has already favourited the item
+                $fav['icon'] = MIDCOM_STATIC_URL . '/net.nemein.favourites/favorite.png';
+                $fav['title'] = $l10n->get('favourite');
+                $fav['url'] = null;
+                $bury['url'] = null;
             }
         }
 
-        $return_url = rawurlencode($_SERVER['REQUEST_URI']);
+
         $fav_button  = "<span class=\"net_nemein_favourites\">";
-        $fav_button .= sprintf($l10n->get('%d favs'), $total_favs);
-        $fav_button .= " <a href=\"{$url}create/{$objectType}/{$guid}/?return={$return_url}\" class=\"net_nemein_favourites_create\"><img src=\"" . MIDCOM_STATIC_URL . "/net.nemein.favourites/not-favorite.png\" style=\"border: none;\" alt=\"{$l10n->get('add to favourites')}\" title=\"{$l10n->get('add to favourites')}\" /></a>";
-        $fav_button .= " <a href=\"{$url}bury/{$objectType}/{$guid}/?return={$return_url}\" class=\"net_nemein_favourites_create\"><img src=\"" . MIDCOM_STATIC_URL . "/net.nemein.favourites/not-buried.png\" style=\"border: none;\" alt=\"{$l10n->get('bury')}\" title=\"{$l10n->get('bury')}\" /></a>";
+        if ($fav['url'])
+        {
+            $fav_button .= "{$total_favs} <a href=\"{$fav['url']}\" class=\"net_nemein_favourites_create\"><img src=\"{$fav['icon']}\" style=\"border: none;\" alt=\"{$fav['title']}\" title=\"{$fav['title']}\" /></a>";
+        }
+        else
+        {
+            $fav_button .= "{$total_favs} <img src=\"{$fav['icon']}\" style=\"border: none;\" alt=\"{$fav['title']}\" title=\"{$fav['title']}\" />";
+        }
+        if ($bury['url'])
+        {
+            $fav_button .= "{$total_buries} <a href=\"{$bury['url']}\" class=\"net_nemein_favourites_create\"><img src=\"{$bury['icon']}\" style=\"border: none;\" alt=\"{$bury['title']}\" title=\"{$bury['title']}\" /></a>";
+        }
+        else
+        {
+            $fav_button .= "{$total_buries} <img src=\"{$bury['icon']}\" style=\"border: none;\" alt=\"{$bury['title']}\" title=\"{$bury['title']}\" />";
+        }
         $fav_button .= "</span>";
         return $fav_button;
     }
