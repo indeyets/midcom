@@ -144,7 +144,9 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
             'midcom.admin.help',
             'midcom.admin.settings',
             'midcom.admin.styleeditor',
+            'midcom.admin.user',
             'midgard.admin.acl',
+            'midgard.admin.asgard',
             'midgard.admin.sitegroup',
             'no.bergfald.rcs',
             // From task_midgardcms dependencies
