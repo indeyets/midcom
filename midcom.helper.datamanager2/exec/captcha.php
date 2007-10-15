@@ -35,6 +35,7 @@ $options = Array
 (
     'font_path' => MIDCOM_ROOT . '/midcom/helper/datamanager2/widget/',
     'font_file' => 'captcha-font.ttf',
+    'background_color' => '#000000',
 );
 
 // Generate a new Text_CAPTCHA object, Image driver
