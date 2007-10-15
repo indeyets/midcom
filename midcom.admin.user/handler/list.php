@@ -25,7 +25,28 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
     {
         $this->_component = 'midcom.admin.user';
         parent::midcom_baseclasses_components_handler();
-     }
+    }
+
+    function _on_initialize()
+    {
+
+        $this->_l10n = $_MIDCOM->i18n->get_l10n('midcom.admin.user');
+        $this->_request_data['l10n'] = $this->_l10n;
+
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . '/midcom.admin.user/usermgmt.css',
+            )
+        );
+
+        midgard_admin_asgard_plugin::prepare_plugin($this->_l10n->get('midcom.admin.user'),$this->_request_data);
+
+    }
+
     
     function _update_breadcrumb()
     {
@@ -38,22 +59,9 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
-    
-    /**
-     * Handler method for listing style elements for the currently used component topic
-     *
-     * @access private
-     * @param string $handler_id Name of the used handler
-     * @param mixed $args Array containing the variable arguments passed to the handler
-     * @param mixed $data Data passed to the show method
-     * @return boolean Indicating successful request
-     */
-    function _handler_list($handler_id, $args, &$data)
-    {   
-        $data['view_title'] = $_MIDCOM->i18n->get_string('midcom.admin.user', 'midcom.admin.user');
-        $_MIDCOM->set_pagetitle($data['view_title']);
-        
-        $data['asgard_toolbar'] = new midcom_helper_toolbar();   
+
+    function _prepare_toolbar(&$data)
+    {
         $data['asgard_toolbar']->add_item
         (
             array
@@ -74,27 +82,21 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
             )
         );
 
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('back to site', 'midgard.admin.asgard'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/gohome.png',
-            )
-        );
+        midgard_admin_asgard_plugin::get_common_toolbar($data);
+    }
+    
+    /**
+     * Handler method for listing style elements for the currently used component topic
+     *
+     * @access private
+     * @param string $handler_id Name of the used handler
+     * @param mixed $args Array containing the variable arguments passed to the handler
+     * @param mixed $data Data passed to the show method
+     * @return boolean Indicating successful request
+     */
+    function _handler_list($handler_id, $args, &$data)
+    {   
 
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."midcom-logout-",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('logout','midcom'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/exit.png',
-            )
-        );
-
-        
         // See what fields we want to use in the search
         $data['search_fields'] = $this->_config->get('search_fields');
         $data['list_fields'] = $this->_config->get('list_fields');
@@ -182,22 +184,8 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
         }
         
         $this->_update_breadcrumb();
-        
-        // Ensure we get the correct styles
-        $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
-        $_MIDCOM->style->prepend_component_styledir('midcom.admin.user');
-        $_MIDCOM->skip_page_style = true;
-
-        $_MIDCOM->add_link_head
-        (
-            array
-            (
-                'rel' => 'stylesheet',
-                'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL . '/midcom.admin.user/usermgmt.css',
-            )
-        );
-        
+        $this->_prepare_toolbar($data);
+        $_MIDCOM->set_pagetitle($data['view_title']);        
 
         return true;
     }
@@ -211,8 +199,7 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
      */
     function _show_list($handler_id, &$data)
     {
-        midcom_show_style('midgard_admin_asgard_header');
-        midcom_show_style('midgard_admin_asgard_middle');
+        midgard_admin_asgard_plugin::asgard_header();
         $data['config'] =& $this->_config;
         
         $data['persons'] =& $this->_persons;
@@ -234,8 +221,8 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
         }
         
         midcom_show_style('midcom-admin-user-personlist-footer');
+        midgard_admin_asgard_plugin::asgard_footer();
         
-        midcom_show_style('midgard_admin_asgard_footer');    
     }
 }
 ?>

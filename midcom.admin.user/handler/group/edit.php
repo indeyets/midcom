@@ -26,6 +26,26 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
         $this->_component = 'midcom.admin.user';
         parent::midcom_baseclasses_components_handler();
      }
+
+    function _on_initialize()
+    {
+
+        $this->_l10n = $_MIDCOM->i18n->get_l10n('midcom.admin.user');
+        $this->_request_data['l10n'] = $this->_l10n;
+
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . '/midcom.admin.user/usermgmt.css',
+            )
+        );
+
+        midgard_admin_asgard_plugin::prepare_plugin($this->_l10n->get('midcom.admin.user'),$this->_request_data);
+
+    }
     
     function _update_breadcrumb()
     {
@@ -98,9 +118,6 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
         }
         $this->_group->require_do('midgard:update');
     
-        $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('edit %s', 'midcom.admin.user'), $this->_group->official);
-        $_MIDCOM->set_pagetitle($data['view_title']);
-        $this->_update_breadcrumb();
                 
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
         
@@ -118,13 +135,13 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
                 // This will exit.
         }
         
-        // Ensure we get the correct styles
-        $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
-        $_MIDCOM->style->prepend_component_styledir('midcom.admin.user');
-        $_MIDCOM->skip_page_style = true;
 
         $data['language_code'] = '';
         midgard_admin_asgard_plugin::bind_to_object($this->_group, $handler_id, &$data);
+
+        $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('edit %s', 'midcom.admin.user'), $this->_group->official);
+        $_MIDCOM->set_pagetitle($data['view_title']);
+
         $this->_update_breadcrumb();
         
         return true;
@@ -139,14 +156,13 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
      */
     function _show_edit($handler_id, &$data)
     {
-        midcom_show_style('midgard_admin_asgard_header');
-        midcom_show_style('midgard_admin_asgard_middle');
-        
+        midgard_admin_asgard_plugin::asgard_header();        
+
         $data['group'] =& $this->_group;
         $data['controller'] =& $this->_controller;
         midcom_show_style('midcom-admin-user-group-edit');
         
-        midcom_show_style('midgard_admin_asgard_footer');    
+        midgard_admin_asgard_plugin::asgard_footer();
     }
 }
 ?>

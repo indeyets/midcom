@@ -26,6 +26,26 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
         $this->_component = 'midcom.admin.user';
         parent::midcom_baseclasses_components_handler();
      }
+
+    function _on_initialize()
+    {
+
+        $this->_l10n = $_MIDCOM->i18n->get_l10n('midcom.admin.user');
+        $this->_request_data['l10n'] = $this->_l10n;
+
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . '/midcom.admin.user/usermgmt.css',
+            )
+        );
+
+        midgard_admin_asgard_plugin::prepare_plugin($this->_l10n->get('midcom.admin.user'),$this->_request_data);
+
+    }
     
     function _update_breadcrumb($handler_id)
     {
@@ -53,6 +73,26 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
         
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
+
+    function _prepare_toolbar(&$data,$handler_id)
+    {
+        if ($handler_id != '____mfa-asgard_midcom.admin.user-user_edit_password')
+        {
+            $data['asgard_toolbar']->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.user/password/{$this->_person->guid}/",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit account', 'midcom.admin.user'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
+                ),
+                '/'
+            );
+        }
+
+    }
+
+
 
     /**
      * Loads and prepares the schema database.
@@ -99,9 +139,6 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
         }
         $this->_person->require_do('midgard:update');
     
-        $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('edit %s', 'midcom.admin.user'), $this->_person->name);
-        $_MIDCOM->set_pagetitle($data['view_title']);
-        
         if ($handler_id == '____mfa-asgard_midcom.admin.user-user_edit_password')
         {
             $this->_load_schemadb('schemadb_account');
@@ -125,26 +162,12 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
                 // This will exit.
         }
         
-        // Ensure we get the correct styles
-        $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
-        $_MIDCOM->style->prepend_component_styledir('midcom.admin.user');
-        $_MIDCOM->skip_page_style = true;
-
         $data['language_code'] = '';
         midgard_admin_asgard_plugin::bind_to_object($this->_person, $handler_id, &$data);
-        
-        if ($handler_id != '____mfa-asgard_midcom.admin.user-user_edit_password')
-        {
-            $data['asgard_toolbar']->add_item
-            (
-                array
-                (
-                    MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.user/password/{$this->_person->guid}/",
-                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit account', 'midcom.admin.user'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
-                )
-            );
-        }
+
+        $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('edit %s', 'midcom.admin.user'), $this->_person->name);
+        $_MIDCOM->set_pagetitle($data['view_title']);
+        $this->_prepare_toolbar($data,$handler_id);
         $this->_update_breadcrumb($handler_id);
         
         return true;
@@ -159,14 +182,13 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
      */
     function _show_edit($handler_id, &$data)
     {
-        midcom_show_style('midgard_admin_asgard_header');
-        midcom_show_style('midgard_admin_asgard_middle');
-        
+        midgard_admin_asgard_plugin::asgard_header();
+
         $data['person'] =& $this->_person;
         $data['controller'] =& $this->_controller;
         midcom_show_style('midcom-admin-user-person-edit');
-        
-        midcom_show_style('midgard_admin_asgard_footer');    
+
+        midgard_admin_asgard_plugin::asgard_footer();
     }
 }
 ?>

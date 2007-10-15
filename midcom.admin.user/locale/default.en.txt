@@ -107,3 +107,7 @@ Username
 Work phone
 ---STRINGEND
 
+---STRING edit %s
+Edit %s
+---STRINGEND
+

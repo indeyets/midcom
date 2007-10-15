@@ -26,6 +26,27 @@ class midcom_admin_user_handler_user_create extends midcom_baseclasses_component
         $this->_component = 'midcom.admin.user';
         parent::midcom_baseclasses_components_handler();
      }
+
+    function _on_initialize()
+    {
+
+        $this->_l10n = $_MIDCOM->i18n->get_l10n('midcom.admin.user');
+        $this->_request_data['l10n'] = $this->_l10n;
+
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . '/midcom.admin.user/usermgmt.css',
+            )
+        );
+
+        midgard_admin_asgard_plugin::prepare_plugin($this->_l10n->get('midcom.admin.user'),$this->_request_data);
+
+    }
+
     
     function _update_breadcrumb()
     {
@@ -104,11 +125,7 @@ class midcom_admin_user_handler_user_create extends midcom_baseclasses_component
      */
     function _handler_create($handler_id, $args, &$data)
     {    
-        $data['view_title'] = $_MIDCOM->i18n->get_string('create user', 'midcom.admin.user');
-        $_MIDCOM->set_pagetitle($data['view_title']);
-                
-        $data['asgard_toolbar'] = new midcom_helper_toolbar();
-        
+
         $this->_load_controller();
         switch ($this->_controller->process_form())
         {
@@ -122,11 +139,8 @@ class midcom_admin_user_handler_user_create extends midcom_baseclasses_component
                 // This will exit.
         }
         
-        // Ensure we get the correct styles
-        $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
-        $_MIDCOM->style->prepend_component_styledir('midcom.admin.user');
-        $_MIDCOM->skip_page_style = true;
-
+        $data['view_title'] = $_MIDCOM->i18n->get_string('create user', 'midcom.admin.user');
+        $_MIDCOM->set_pagetitle($data['view_title']);
         $this->_update_breadcrumb();
         
         return true;
@@ -141,14 +155,11 @@ class midcom_admin_user_handler_user_create extends midcom_baseclasses_component
      */
     function _show_create($handler_id, &$data)
     {
-        midcom_show_style('midgard_admin_asgard_header');
-        midcom_show_style('midgard_admin_asgard_middle');
-        
+        midgard_admin_asgard_plugin::asgard_header();        
         $data['person'] =& $this->_person;
         $data['controller'] =& $this->_controller;
         midcom_show_style('midcom-admin-user-person-create');
-        
-        midcom_show_style('midgard_admin_asgard_footer');    
+        midgard_admin_asgard_plugin::asgard_footer();        
     }
 }
 ?>
