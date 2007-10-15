@@ -39,6 +39,7 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
         $qb->display_pages = $this->_config->get('display_pages');
         $qb->add_constraint('node', '=', $this->_topic->id);
         $qb->add_constraint('posts', '>', 0);
+        $qb->add_order('sticky', 'DESC');
         $qb->add_order($this->_config->get('order_threads_by'), 'DESC');
         $threads = $qb->execute_unchecked();
         $this->_request_data['thread_qb'] =& $qb;

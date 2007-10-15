@@ -5,6 +5,7 @@
         <property name="title" type="string"/>
         <property name="name" type="string"/>
         <property name="node" link="midgard_topic:id" reverse="no" type="integer" parentfield="node"/>
+        <property name="sticky" type="boolean"/>
 
         <!-- cached data -->
         <property name="posts" type="integer"/>
