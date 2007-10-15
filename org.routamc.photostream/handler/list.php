@@ -332,15 +332,18 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
 
         // Get photo GUIDs from tags
         // TODO: Use MidgardCollector for this
-        $qb = net_nemein_tag_link_dba::new_query_builder();
-        $qb->add_constraint('tag.tag', '=', $data['tag']);
-        $qb->begin_group('OR');
-            $qb->add_constraint('fromClass', '=', 'org_routamc_photostream_photo_dba');
-            $qb->add_constraint('fromClass', '=', 'org_routamc_photostream_photo');
-        $qb->end_group();
-        //mgd_debug_start();
-        $tags = $qb->execute();
-        //mgd_debug_stop();
+        $mc = net_nemein_tag_link_dba::new_collector('sitegroup', $_MIDGARD['sitegroup']);
+        $mc->add_value_property('fromGuid');
+        
+        $mc->begin_group('OR');
+            $mc->add_constraint('fromClass', '=', 'org_routamc_photostream_photo_dba');
+            $mc->add_constraint('fromClass', '=', 'org_routamc_photostream_photo');
+        $mc->end_group();
+        
+        $mc->add_constraint('tag.tag', '=', $data['tag']);
+        $mc->execute();
+        
+        $tags = $mc->list_keys();
 
         if (count($tags) > 0)
         {
@@ -348,23 +351,10 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
             $qb =& $this->_prepare_photo_qb();
 
             $qb->begin_group('OR');
-            foreach ($tags as $tag)
+            foreach ($tags as $guid => $array)
             {
-                if (class_exists('midgard_query_builder'))
-                {
-                    // 1.8 allows us to do this sanely
-                    $qb->add_constraint('guid', '=', $tag->fromGuid);
-                }
-                else
-                {
-                    // 1.7 much less so...
-                    $photo = new org_routamc_photostream_photo_dba($tag->fromGuid);
-                    if (!$photo)
-                    {
-                        continue;
-                    }
-                    $qb->add_constraint('id', '=', $photo->id);
-                }
+                $photo = $mc->get_subkey($guid, 'fromGuid');
+                $qb->add_constraint('guid', '=', $photo;
             }
             $qb->end_group();
 
