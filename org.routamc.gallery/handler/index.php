@@ -64,9 +64,42 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
 
         $data['node'] =& $this->_topic;
         
-        //mgd_debug_start();
+        // Get sub galleries
+        $data['galleries'] = array();
+        $this->_nap = new midcom_helper_nav();
+        $nodes = $this->_nap->list_nodes($this->_topic->id);
+        
+        foreach ($nodes as $node_id)
+        {
+            $node = $this->_nap->get_node($node_id);
+            if ($node[MIDCOM_NAV_COMPONENT] === 'org.routamc.gallery')
+            {
+                $data['galleries'][] = $node;
+            }
+        }
+        
+        // Initialize QB Pager
         $qb = new org_openpsa_qbpager('org_routamc_gallery_photolink_dba', 'gallery_index');
-        $qb->results_per_page = $this->_config->get('photos_per_page');
+        
+        // TODO: Something like this offset should be possible to be done in org.openpsa.qbpager,
+        // but has to be done there first. This will push the result set backwards to include the
+        // subgalleries in the result set, but not to overflow because of them!
+        /*
+        // Check the offset
+        if (   !isset($_GET['org_openpsa_qbpager_gallery_index_page'])
+            || $_GET['org_openpsa_qbpager_gallery_index_page'] == 1)
+        {
+            $offset = count($data['galleries']);
+        }
+        else
+        {
+            $offset = -1 * (count($data['galleries']));
+        }
+        
+        $qb->results_per_page = $this->_config->get('photos_per_page') - $offset;
+        */
+        
+        $qb->results_per_page = $this->_config->get('photos_per_page') - $offset;
         $qb->add_constraint('node', '=', $this->_topic->id);
 
         // FIXME: This property should be rethought
@@ -143,19 +176,6 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
             $data['photos'][] = $photo;
         }
         
-        // Get sub galleries
-        $data['galleries'] = array();
-        
-        $this->_nap = new midcom_helper_nav();
-        $nodes = $this->_nap->list_nodes($this->_topic->id);
-        foreach ($nodes as $node_id)
-        {
-            $node = $this->_nap->get_node($node_id);
-            if ($node[MIDCOM_NAV_COMPONENT] === 'org.routamc.gallery')
-            {
-                $data['galleries'][] = $node;
-            }
-        }
         
         debug_pop();
         // Make photos AJAX-editable
@@ -224,31 +244,36 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
 
         $data['datamanager'] = new midcom_helper_datamanager2_datamanager($data['schemadb']);
 
-        foreach ($data['galleries'] as $gallery)
+        // Show the subgalleries only on the frontpage of the gallery
+        if (   !isset($_GET['org_openpsa_qbpager_gallery_index_page'])
+            || $_GET['org_openpsa_qbpager_gallery_index_page'] == 1)
         {
-            $data['gallery'] =& $gallery;
-            
-            // Get the subgallery photo
-            $data['photo'] = $this->_scan_subgalleries($gallery[MIDCOM_NAV_ID]);
-            
-            if (   !$data['photo']
-                || !is_a($data['photo'], 'org_routamc_photostream_photo_dba')
-                || !$data['photo']->guid)
+            foreach ($data['galleries'] as $gallery)
             {
-                continue;
+                $data['gallery'] =& $gallery;
+                
+                // Get the subgallery photo
+                $data['photo'] = $this->_scan_subgalleries($gallery[MIDCOM_NAV_ID]);
+                
+                if (   !$data['photo']
+                    || !is_a($data['photo'], 'org_routamc_photostream_photo_dba')
+                    || !$data['photo']->guid)
+                {
+                    continue;
+                }
+    
+                if (! $data['datamanager']->autoset_storage($data['photo']))
+                {
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("The datamanager for photo {$data['photo']->id} could not be initialized, skipping it.");
+                    debug_print_r('Object was:', $data['photo']);
+                    debug_pop();
+                    continue;
+                }
+                $data['photo_view'] = $data['datamanager']->get_content_html();
+    
+                midcom_show_style('show_index_gallery');
             }
-
-            if (! $data['datamanager']->autoset_storage($data['photo']))
-            {
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("The datamanager for photo {$data['photo']->id} could not be initialized, skipping it.");
-                debug_print_r('Object was:', $data['photo']);
-                debug_pop();
-                continue;
-            }
-            $data['photo_view'] = $data['datamanager']->get_content_html();
-
-            midcom_show_style('show_index_gallery');
         }
 
         foreach ($data['photos'] as $photo)
