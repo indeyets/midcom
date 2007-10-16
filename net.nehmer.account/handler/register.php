@@ -1186,10 +1186,11 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
             debug_pop();
             return;
         }
-
-        if ($this->_config->get('welcome_mail_sender'))
+        
+        $sender_guid = $this->_config->get('welcome_mail_sender');
+        
+	if (!empty($sender_guid))
         {
-            $sender_guid = $this->_config->get('welcome_mail_sender');
             $sender =& $_MIDCOM->auth->get_user($sender_guid);
             if (! $sender)
             {
