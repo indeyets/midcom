@@ -91,6 +91,26 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
         return $this->_current_page;
     }
 
+
+    /** 
+     * Fetch all $_GET variables, but leave out the page number
+     *
+     */
+    function _get_query_string()
+    {
+	$query_string = '';
+        foreach(explode('&',$_SERVER["QUERY_STRING"]) as $key)
+        {
+    	    if( !preg_match('/org_openpsa_qbpager/', $key) 
+		&& $key != '')
+    	    {
+		$query_string .= '&amp;'.$key;
+            }
+        }
+        return $query_string;
+    } 
+    
+    
     /**
      * Displays previous/next selector
      */
@@ -121,13 +141,13 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
         if ($data['current_page'] > 1)
         {
             $previous = $data['current_page'] - 1;
-            echo "\n<a class=\"previous_page\" href=\"?{$page_var}={$previous}\">" . $this->_l10n->get('previous') . "</a>";
+            echo "\n<a class=\"previous_page\" href=\"?{$page_var}={$previous}" . $this->_get_query_string() . "\">" . $this->_l10n->get('previous') . "</a>";
         }
 
         if ($data['current_page'] < $data['page_count'])
         {
             $next = $data['current_page'] + 1;
-            echo "\n<a class=\"next_page\" href=\"?{$page_var}={$next}\">" . $this->_l10n->get('next') . "</a>";
+            echo "\n<a class=\"next_page\" href=\"?{$page_var}={$next}" . $this->_get_query_string() . "\">" . $this->_l10n->get('next') . "</a>";
         }
 
         echo "\n</div>\n";
@@ -178,9 +198,9 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
             $previous = $data['current_page'] - 1;
             if ($previous != 1)
             {
-                echo "\n<a class=\"first_page\" href=\"?{$page_var}=1\">" . $this->_l10n->get('first') . "</a>";
+                echo "\n<a class=\"first_page\" href=\"?{$page_var}=1" . $this->_get_query_string() . "\">" . $this->_l10n->get('first') . "</a>";
             }
-            echo "\n<a class=\"previous_page\" href=\"?{$page_var}={$previous}\">" . $this->_l10n->get('previous') . "</a>";
+            echo "\n<a class=\"previous_page\" href=\"?{$page_var}={$previous}" . $this->_get_query_string() . "\">" . $this->_l10n->get('previous') . "</a>";
         }
 
 
@@ -195,17 +215,17 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
                 echo "\n<span class=\"current_page\">{$page}</span>";
                 continue;
             }
-            echo "\n<a class=\"select_page\" href=\"?{$page_var}={$page}\">{$page}</a>";
+            echo "\n<a class=\"select_page\" href=\"?{$page_var}={$page}" . $this->_get_query_string() . "\">{$page}</a>";
         }
 
         if ($data['current_page'] < $data['page_count'])
         {
             $next = $data['current_page'] + 1;
-            echo "\n<a class=\"next_page\" href=\"?{$page_var}={$next}\">" . $this->_l10n->get('next') . "</a>";
+            echo "\n<a class=\"next_page\" href=\"?{$page_var}={$next}" . $this->_get_query_string() . "\">" . $this->_l10n->get('next') . "</a>";
 
             if ($next != $data['page_count'])
             {
-                echo "\n<a class=\"last_page\" href=\"?{$page_var}={$data['page_count']}\">" . $this->_l10n->get('last') . "</a>";
+                echo "\n<a class=\"last_page\" href=\"?{$page_var}={$data['page_count']}" . $this->_get_query_string() . "\">" . $this->_l10n->get('last') . "</a>";
             }
         }
 
