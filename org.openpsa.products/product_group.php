@@ -72,6 +72,11 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
             $qb->add_constraint('id', '<>', $this->id);
         }
 
+        if ($this->up)
+        {
+            $qb->add_constraint('up', '=', $this->up);
+        }
+
         $result = $qb->execute_unchecked();
         if (count($result) > 0)
         {
