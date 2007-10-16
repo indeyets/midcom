@@ -1,6 +1,8 @@
 <?php
 // Bind the view data, remember the reference assignment:
 $view = $data['view_event'];
+$data['event']->start = strtotime($data['event']->start);
+$data['event']->end = strtotime($data['event']->end);
 ?>
 <div class="vevent" id="<?php echo $data['event']->guid; ?>">
     <h1 class="summary">&(view['title']:h);</h1>

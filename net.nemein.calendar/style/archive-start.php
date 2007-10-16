@@ -9,7 +9,7 @@ $summary = sprintf($data['l10n']->get('there is a total of %d events.'), $data['
 if ($data['first_event'])
 {
     $summary .= ' ' . sprintf($data['l10n']->get('first event started on %s.'),
-        strftime('%x', $data['first_event']->start));
+        strftime('%x', strtotime($data['first_event']->start)));
 }
 
 $summary .= ' ' . $data['l10n']->get('numbers in parantheses show ongoing events.')

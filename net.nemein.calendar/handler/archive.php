@@ -43,21 +43,6 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
      * @access private
      */
     var $_master_event = null;
-    
-    /**
-     * If we list from a common master, this is an Array of events that are immediate
-     * descendants of the master event. They are used in the IN up constraint limiting
-     * the consecutive queries to the event subtree. 
-     * 
-     * If we don't list from a common master, this is null.
-     * 
-     * The array is indexed by event ID so that the key list can be used directly in 
-     * an IN constraint.
-     * 
-     * @var Array
-     * @access private 
-     */
-    var $_root_events = null;
 
     /**
      * Simple helper which references all important members to the request data listing
@@ -76,50 +61,6 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
     }
 
     /**
-     * Loads the master / root events.
-     */
-    function _load_base_events()
-    {
-        if ($this->_config->get('list_from_master'))
-        {
-            $guid = $this->_config->get('master_event');
-            $this->_master_event = new net_nemein_calendar_event($guid);
-            if (! $this->_master_event)
-            {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    "The master event '{$guid}' could not be loaded: " . mgd_errstr());
-                // This will exit.
-            }
-            
-            $mc = net_nemein_calendar_event::new_collector('up', $this->_master_event->id);
-            $mc->set_key_property('up');
-            $mc->add_value_property('id');
-            $mc->execute();
-            $events = $mc->list_keys();
-            
-            $this->_root_events = Array();
-            foreach ($events as $guid => $array)
-            {
-                $id = $mc->get_subkey($guid, 'id');
-                $this->_root_events[$id] = $id;
-            }
-        }
-        else
-        {
-            $guid = $this->_config->get('root_event');
-            $this->_master_event = new net_nemein_calendar_event($guid);
-            if (! $this->_master_event)
-            {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    "The root event '{$guid}' could not be loaded: " . mgd_errstr());
-                // This will exit.
-            }
-            
-            $this->_root_events = null;
-        }
-    }
-
-    /**
      * Returns an QB initialized to query all events matching the current topic 
      * constraints.
      * 
@@ -129,13 +70,13 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
     {
         $qb = net_nemein_calendar_event::new_query_builder();
         
-        if ($this->_root_events)
+        if ($this->_config->get('list_from_master'))
         {
-            $qb->add_constraint('up', 'IN', array_keys($this->_root_events));
+            $qb->add_constraint('up', 'INTREE', $this->_request_data['master_event']);
         }
         else
         {
-            $qb->add_constraint('up', '=', $this->_master_event->id);
+            $qb->add_constraint('node', '=', $this->_request_data['content_topic']->id);
         }
         
         return $qb;
@@ -154,7 +95,6 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
             return false;
         }
     
-        $this->_load_base_events();
         $this->_compute_welcome_data();
         $_MIDCOM->set_26_request_metadata($this->get_last_modified(), $this->_topic->guid);
         
@@ -196,7 +136,7 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
         if ($result)
         {
             $this->_request_data['first_event'] = $result[0];
-            return Calendar_Factory::createByTimestamp('Month', $result[0]->start);
+            return Calendar_Factory::createByTimestamp('Month', strtotime($result[0]->start));
         }
         else
         {
@@ -239,7 +179,7 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
         if ($result)
         {
             $this->_request_data['last_event'] = $result[0];
-            return Calendar_Factory::createByTimestamp('Month', $result[0]->end);
+            return Calendar_Factory::createByTimestamp('Month', strtotime($result[0]->end));
         }
         else
         {
@@ -296,8 +236,8 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
     function _compute_events_count_between($start, $end)
     {
         $qb = $this->_get_events_qb();
-        $qb->add_constraint('start', '<', $end);
-        $qb->add_constraint('end', '>', $start);
+        $qb->add_constraint('start', '<', gmdate('Y-m-d H:i:s', $end));
+        $qb->add_constraint('end', '>', gmdate('Y-m-d H:i:s', $start));
         return $qb->count_unchecked();
     }
     

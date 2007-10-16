@@ -7,7 +7,7 @@
         (
             // COMPONENT-REQUIRED
             'title'   => 'url name',
-            'storage' => 'extra',
+            'storage' => 'name',
             'type'    => 'text',
             'widget'  => 'text',
             'write_privilege' => array
@@ -31,7 +31,7 @@
             'title' => 'start',
             'storage' => 'start',
             'type' => 'date',
-            'type_config' => Array ( 'storage_type' => 'UNIXTIME' ),
+            'type_config' => Array ( 'storage_type' => 'ISO' ),
             'widget' => 'jsdate',
         ),
         'end' => Array
@@ -40,7 +40,7 @@
             'title' => 'end',
             'storage' => 'end',
             'type' => 'date',
-            'type_config' => Array ( 'storage_type' => 'UNIXTIME' ),
+            'type_config' => Array ( 'storage_type' => 'ISO' ),
             'widget' => 'jsdate',
         ),
                

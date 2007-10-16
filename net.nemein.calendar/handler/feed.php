@@ -105,7 +105,7 @@ class net_nemein_calendar_handler_feed extends midcom_baseclasses_components_han
         }
         else
         {
-            $qb->add_constraint('up', '=', $data['root_event']->id);
+            $qb->add_constraint('node', '=', $data['content_topic']->id);
         }
         
         // Add filtering constraints

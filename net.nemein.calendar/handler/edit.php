@@ -63,7 +63,7 @@ class net_nemein_calendar_handler_edit extends midcom_baseclasses_components_han
         if ($this->_request_data['event'])
         {
             if (   !$this->_config->get('show_events_locally')
-                && $this->_request_data['event']->up != $this->_request_data['root_event']->id)
+                && $this->_request_data['event']->node != $this->_request_data['content_topic']->id)
             {
                 debug_pop();
                 $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, 'Event not in the event tree');
@@ -97,7 +97,7 @@ class net_nemein_calendar_handler_edit extends midcom_baseclasses_components_han
                 // *** FALL-THROUGH ***
 
             case 'cancel':
-                $_MIDCOM->relocate("{$this->_request_data['event']->extra}/");
+                $_MIDCOM->relocate("{$this->_request_data['event']->name}/");
                 // This will exit.
         }
 
@@ -108,7 +108,7 @@ class net_nemein_calendar_handler_edit extends midcom_baseclasses_components_han
         // Set the breadcrumb
         $breadcrumb[] = array
         (
-            MIDCOM_NAV_URL => "{$this->_request_data['event']->extra}/",
+            MIDCOM_NAV_URL => "{$this->_request_data['event']->name}/",
             MIDCOM_NAV_NAME => $this->_request_data['event']->title,
         );
         $breadcrumb[] = array

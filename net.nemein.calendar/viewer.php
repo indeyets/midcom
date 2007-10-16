@@ -17,6 +17,15 @@
 class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
 {
     /**
+     * The topic in which to look for articles. This defaults to the current content topic
+     * unless overridden by the symlink topic feature.
+     *
+     * @var midcom_db_topic
+     * @access private
+     */
+    var $_content_topic = null;
+    
+    /**
      * Simple constructor, connect to the parent class constructor method
      * 
      * @access public
@@ -33,6 +42,8 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
      */
     function _on_initialize()
     {
+        $this->_determine_content_topic();
+        $this->_request_data['content_topic'] =& $this->_content_topic;
 
         // Define the URL space
 
@@ -239,16 +250,13 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
     
     function _on_handle($handler, $args)
     {
-        if (array_key_exists('root_event', $this->_request_data))
-        {
-            // Load schema database
-            $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
-            $this->_add_categories();
-        
-            // Populate toolbars
-            $this->_populate_node_toolbar();
-        }
-        
+        // Load schema database
+        $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
+        $this->_add_categories();
+    
+        // Populate toolbars
+        $this->_populate_node_toolbar();
+    
         $_MIDCOM->add_link_head
         (
             array
@@ -285,31 +293,9 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             $master_event = new net_nemein_calendar_event($this->_config->get('master_event'));
             if (!$master_event)
             {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Master event not found: ".mgd_errstr());
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Master event not found: " . mgd_errstr());
             }
             $this->_request_data['master_event'] = $master_event->id;
-        }
-        
-        
-        // Load root event or redirect to creation
-        if (is_null($this->_config->get('root_event')))
-        {
-            if ($arg !== 'rootevent')
-            {
-                $nap = new midcom_helper_nav();
-                $node = $nap->get_node($this->_topic->id);
-                
-                $_MIDCOM->relocate("{$node[MIDCOM_NAV_FULLURL]}rootevent/");
-                // This will exit
-            }
-        }
-        
-        $this->_request_data['root_event'] = new net_nemein_calendar_event($this->_config->get('root_event'));
-        
-        if (!is_object($this->_request_data['root_event']))
-        {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Root event not found: ".mgd_errstr());
-            // This will exit
         }
     }
 
@@ -320,7 +306,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
      */
     function _populate_node_toolbar()
     {
-        if ($this->_request_data['root_event']->can_do('midgard:create'))
+        if ($this->_content_topic->can_do('midgard:create'))
         {
             foreach (array_keys($this->_request_data['schemadb']) as $name)
             {
@@ -374,6 +360,49 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
                 )
             );
         }
+    }
+    
+    /**
+     * Set the content topic to use. This will check against the configuration setting
+     * 'symlink_topic'.
+     *
+     * @access protected
+     */
+    function _determine_content_topic()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+
+        $guid = $this->_config->get('symlink_topic');
+        if (is_null($guid))
+        {
+            // No symlink topic
+            // Workaround, we should talk to an DBA object automatically here in fact.
+            $this->_content_topic = new midcom_db_topic($this->_topic->id);
+            debug_pop();
+            return;
+        }
+
+        $this->_content_topic = new midcom_db_topic($guid);
+
+        // Validate topic.
+
+        if (! $this->_content_topic)
+        {
+            debug_add('Failed to open symlink content topic, (might also be an invalid object) last Midgard Error: '
+                . mgd_errstr(), MIDCOM_LOG_ERROR);
+            $_MIDCOM->generate_error('Failed to open symlink content topic.');
+            // This will exit.
+        }
+
+        if ($this->_content_topic->component != 'net.nemein.calendar')
+        {
+            debug_print_r('Retrieved topic was:', $this->_content_topic);
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
+                'Symlink content topic is invalid, see the debug level log for details.');
+            // This will exit.
+        }
+
+        debug_pop();
     }
     
     /**

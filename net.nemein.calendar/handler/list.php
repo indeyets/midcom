@@ -69,10 +69,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         $this->_load_datamanager();
         $this->_request_data['archive_mode'] = false;
         
-        $this->_request_data['index_count'] = $args[0];
-        
-        // Bind toolbar by default to root event
-        $this->_view_toolbar->bind_to($this->_request_data['root_event']);        
+        $this->_request_data['index_count'] = $args[0];     
         
         $this->_request_data['events'] = array();
 
@@ -90,7 +87,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         }
         else
         {
-            $qb->add_constraint('up', '=', $this->_request_data['root_event']->id);
+            $qb->add_constraint('node', '=', $data['content_topic']->id);
         }
         
         // Add filtering constraints
@@ -114,11 +111,11 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         }
 
         // Show only events that haven't started
-        $qb->add_constraint('start', '>', time());
+        $qb->add_constraint('start', '>', gmdate('Y-m-d H:i:s', time()));
         
         // Show only open events
-        $qb->add_constraint('closeregistration', '>', time());
-        $qb->add_constraint('openregistration', '<=', time());
+        $qb->add_constraint('closeregistration', '>', gmdate('Y-m-d H:i:s', time()));
+        $qb->add_constraint('openregistration', '<=', gmdate('Y-m-d H:i:s', time()));
 
         $qb->set_limit($this->_request_data['index_count']);
         
@@ -146,20 +143,14 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         else
         {
             $this->_request_data['index_count'] = $this->_config->get('index_count');
-        }
-        
-        // Bind toolbar by default to root event
-        $this->_view_toolbar->bind_to($this->_request_data['root_event']);        
+        }     
         
         $this->_request_data['events'] = array();
 
         $this->_load_filters();
 
-        // FIXME: This will be cleaner when done via QB
-        $epoch_end = mktime(0, 0, 0, 1, 18, 2038);
-
         // Get the events
-        $this->_get_event_listing(time(), $epoch_end);
+        $this->_get_event_listing(time(), null);
 
         return true;
     }
@@ -223,7 +214,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                 return false;
             }        
             $this->_request_data['archive_mode'] = true;
-            $this->_component_data['active_leaf'] = "{$this->_topic->id}_ARCHIVE";
+            $this->_component_data['active_leaf'] = "{$data['content_topic']->id}_ARCHIVE";
         }
         else
         {
@@ -294,7 +285,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
     function _get_week_start($timestamp)
     {
         // FIXME: Use the method from o.o.calendarwidget
-        return mktime(0, 0, 0, date('m',$timestamp), date('d',$timestamp) - strftime('%u', $timestamp) + 1, date('Y',$timestamp));
+        return mktime(0, 0, 0, gmdate('m',$timestamp), gmdate('d',$timestamp) - strftime('%u', $timestamp) + 1, gmdate('Y',$timestamp));
     }
 
     /**
@@ -305,7 +296,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
     function _get_week_end($timestamp)
     {
         // FIXME: Use the method from o.o.calendarwidget
-        return mktime(23, 59, 59, date('m',$timestamp), strftime('%d', $this->_get_week_start($timestamp)) + 6, date('Y',$timestamp));
+        return mktime(23, 59, 59, gmdate('m',$timestamp), strftime('%d', $this->_get_week_start($timestamp)) + 6, gmdate('Y',$timestamp));
     }
 
     /**
@@ -328,7 +319,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         }
         else
         {
-            $qb->add_constraint('up', '=', $this->_request_data['root_event']->id);
+            $qb->add_constraint('node', '=', $this->_request_data['content_topic']->id);
         }
         
         // Add filtering constraints
@@ -353,7 +344,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             
             if (!$this->_request_data['archive_mode'])
             {
-                $this->_component_data['active_leaf'] = "{$this->_topic->id}_CAT_{$this->_request_data['category']}";
+                $this->_component_data['active_leaf'] = "{$data['content_topic']->id}_CAT_{$this->_request_data['category']}";
             }
         }
 
@@ -361,20 +352,29 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         $qb->begin_group('OR');
             // The event begins during [$from, $to]
             $qb->begin_group('AND');
-                $qb->add_constraint('start', '>=', $from);
-                $qb->add_constraint('start', '<=', $to);
+                $qb->add_constraint('start', '>=', gmdate('Y-m-d H:i:s', $from));
+                if (!is_null($to))
+                {
+                    $qb->add_constraint('start', '<=', gmdate('Y-m-d H:i:s', $to));
+                }
             $qb->end_group();
             if ($this->_config->get('list_started'))
             {
                 // The event begins before and ends after [$from, $to]
                 $qb->begin_group('AND');
-                    $qb->add_constraint('start', '<=', $from);
-                    $qb->add_constraint('end', '>=', $to);
+                    $qb->add_constraint('start', '<=', gmdate('Y-m-d H:i:s', $from));
+                    if (!is_null($to))
+                    {
+                        $qb->add_constraint('end', '>=', gmdate('Y-m-d H:i:s', $to));
+                    }
                 $qb->end_group();
                  // The event ends during [$from, $to]
                 $qb->begin_group('AND');
-                    $qb->add_constraint('end', '>=', $from);
-                    $qb->add_constraint('end', '<=', $to);
+                    $qb->add_constraint('end', '>=', gmdate('Y-m-d H:i:s', $from));
+                    if (!is_null($to))
+                    {
+                        $qb->add_constraint('end', '<=', gmdate('Y-m-d H:i:s', $to));
+                    }
                 $qb->end_group();
             }
         $qb->end_group();
@@ -386,7 +386,9 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         
         $qb->add_order('start');
         
+        mgd_debug_start();
         $this->_request_data['events'] = $qb->execute();
+        mgd_debug_stop();
     }
 
     /**
@@ -425,16 +427,16 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         $event_url = '';
-        if (   $event->up == $this->_request_data['root_event']
+        if (   $event->node == $this->_request_data['content_topic']->id
             || $this->_config->get('show_events_locally'))
         {
             if ($this->_request_data['archive_mode'])
             {
-                $event_url = "{$prefix}archive/view/{$event->extra}/";
+                $event_url = "{$prefix}archive/view/{$event->name}/";
             }
             else
             {
-                $event_url = "{$prefix}{$event->extra}";
+                $event_url = "{$prefix}{$event->name}";
             }
         }
         else
@@ -452,8 +454,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
     function _show_event_listing($handler_id)
     {
         $this->_request_data['in_listing'] = false;
-        $this->_request_data['root_event'] = $this->_request_data['root_event']->id;
-        $this->_request_data['node_title'] = $this->_topic->extra;
+        $this->_request_data['node_title'] = $this->_request_data['content_topic']->extra;
         midcom_show_style('show_listing_header');
 
         if (   $handler_id == 'upcoming'
@@ -464,22 +465,22 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             {
                 if ($this->_request_data['events'])
                 {
-                    $start = max($this->_request_data['events'][0]->start,
+                    $start = max(strtotime($this->_request_data['events'][0]->start),
                         $this->_request_data['start']);
                 }
                 else
                 {
                     $start = $this->_request_data['start'];
                 }
-                $year_shown = date('Y', $start);
-                $month_shown = date('m', $start);
-                $day_shown = date('d', $start);
+                $year_shown = gmdate('Y', $start);
+                $month_shown = gmdate('m', $start);
+                $day_shown = gmdate('d', $start);
             }
             else
             {
-                $year_shown = date('Y');
-                $month_shown = date('m');
-                $day_shown = date('d');
+                $year_shown = gmdate('Y');
+                $month_shown = gmdate('m');
+                $day_shown = gmdate('d');
             }
 
             // midcom_show_style('show_listing_end');
@@ -492,7 +493,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             
             if (   count($this->_request_data['events']) > 0
                 && array_key_exists(0, $this->_request_data['events'])
-                && $month_shown == date('m', $this->_request_data['events'][0]->start))
+                && $month_shown == gmdate('m', strtotime($this->_request_data['events'][0]->start)))
             {
                 midcom_show_style('show_listing_month_header');
             }
@@ -515,9 +516,9 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                 $this->_initialize_datamanager_for_event();
 
                 // Handle headers for changing months and years
-                $this->_request_data['event_year'] = date('Y', $event->start);
-                $this->_request_data['event_month'] = date('m', $event->start);
-                $this->_request_data['event_day'] = date('d', $event->start);
+                $this->_request_data['event_year'] = gmdate('Y', strtotime($event->start));
+                $this->_request_data['event_month'] = gmdate('m', strtotime($event->start));
+                $this->_request_data['event_day'] = gmdate('d', strtotime($event->start));
 
                 if ($this->_request_data['event_year'] > $year_shown)
                 {
@@ -582,8 +583,8 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         
         if (!array_key_exists(0, $args))
         {
-            $this->_year = (int) date('Y');
-            $this->_month = (int) date('m');
+            $this->_year = (int) gmdate('Y');
+            $this->_month = (int) gmdate('m');
             return true;
         }
         
@@ -620,7 +621,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         foreach ($this->_request_data['events'] as $event)
         {
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-            $event->link = "{$prefix}{$event->extra}/";
+            $event->link = "{$prefix}{$event->name}/";
             $this->_calendar->add_event($event);
         }
     }
@@ -632,7 +633,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
      */
     function _show_calendar($handler_id, &$data)
     {
-        $this->_request_data['page_title'] = $this->_topic->extra;
+        $this->_request_data['page_title'] = $data['content_topic']->extra;
         midcom_show_style('show_calendar_header');
         
         // Initialize org.openpsa.calendarwidget.month to show the calendar

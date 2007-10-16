@@ -71,8 +71,8 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
         }
         
         $qb = net_nemein_calendar_event::new_query_builder();
-        $qb->add_constraint('up', '=', $this->_request_data['root_event']->id);
-        $qb->add_constraint('extra', '=', $args[0]);
+        $qb->add_constraint('node', '=', $this->_request_data['content_topic']->id);
+        $qb->add_constraint('name', '=', $args[0]);
         
         if ($qb->count() === 0)
         {
@@ -101,7 +101,7 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
         {
             $this->_request_data['archive_mode'] = false;
         }
-        if ($this->_request_data['event']->up == $this->_request_data['root_event']->id)
+        if ($this->_request_data['event']->node == $this->_request_data['content_topic']->id)
         {
             $this->_view_toolbar->add_item
             (

@@ -1,5 +1,5 @@
 'master_event'         => null,   // Event under which all root events are placed
-'root_event'           => null,   // Root event of a particular topic
+'symlink_topic'        => null,
 'schemadb'             => 'file:/net/nemein/calendar/config/schemadb_default.inc',
 
 'index_count'          => 10,      // How many upcoming events to display on index

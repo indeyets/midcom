@@ -32,54 +32,17 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
     }
 
     /**
-     * Creates a root event if necessary.
-     */
-    function _handler_rootevent($handler_id, $args, &$data)
-    {
-        $_MIDCOM->auth->require_valid_user();
-        
-        if (array_key_exists('root_event', $data))
-        {
-            // We have this already
-            $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
-        }
-        
-        $data['root_event'] = new net_nemein_calendar_event();
-        
-        if (array_key_exists('master_event', $data))
-        {
-            $data['root_event']->up = $data['master_event'];
-        }
-        else
-        {
-            $data['root_event']->up = 0;
-        }
-        
-        $data['root_event']->title = sprintf('__%s root event', $this->_topic->guid);
-        
-        if ($data['root_event']->create())
-        {
-            $this->_topic->parameter('net.nemein.calendar', 'root_event', $data['root_event']->guid);
-            
-            $_MIDCOM->uimessages->add('net.nemein.calendar', "Root event {$data['root_event']->guid} created", 'ok');
-            
-            $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)); 
-            // This will exit;           
-        }
-        else
-        {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create root event, reason ".mgd_errstr());
-            // This will exit;
-        }
-    }
-
-    /**
      * DM2 creation callback, binds to the current content topic.
      */
     function & dm2_create_callback (&$controller)
     {
         $this->_request_data['event'] = new net_nemein_calendar_event();
-        $this->_request_data['event']->up = $this->_request_data['root_event']->id;
+        $this->_request_data['event']->node = $this->_request_data['content_topic']->id;
+        
+        if ($data['master_event'])
+        {
+            $this->_request_data['event']->up = $data['master_event'];
+        }
 
         if (! $this->_request_data['event']->create())
         {
@@ -122,7 +85,7 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
      */
     function _handler_create($handler_id, $args, &$data)
     {
-        $data['root_event']->require_do('midgard:create');
+        $data['content_topic']->require_do('midgard:create');
         $data['event'] = null;
 
         $data['schema'] = $args[0];
@@ -159,19 +122,19 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
                 net_nemein_calendar_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
                 
                 // Generate URL name
-                if ($data['event']->extra == '')
+                if ($data['event']->name == '')
                 {
-                    $data['event']->extra = midcom_generate_urlname_from_string($data['event']->title);
+                    $data['event']->name = midcom_generate_urlname_from_string($data['event']->title);
                     $tries = 0;
                     $maxtries = 999;
                     while(   !$data['event']->update()
                           && $tries < $maxtries)
                     {
-                        $data['event']->extra = midcom_generate_urlname_from_string($data['event']->title);
+                        $data['event']->name = midcom_generate_urlname_from_string($data['event']->title);
                         if ($tries > 0)
                         {
                             // Append an integer if articles with same name exist
-                            $data['event']->extra .= sprintf("-%03d", $tries);
+                            $data['event']->name .= sprintf("-%03d", $tries);
                         }
                         $tries++;
                     }
@@ -179,7 +142,7 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
 
                 if ($handler_id != 'create_chooser')
                 {
-                    $_MIDCOM->relocate("{$data['event']->extra}/");
+                    $_MIDCOM->relocate("{$data['event']->name}/");
                     // This will exit.
                 }
                 break;

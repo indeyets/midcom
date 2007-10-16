@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
 
-  <type name="net_nemein_calendar_event_db" table="event" upfield="up">
-    <!-- Start copied from midgard_event -->
+  <type name="net_nemein_calendar_event_db" table="net_nemein_calendar_event_db" parent="midgard_topic" upfield="up">
     <property name="id"       type="integer" primaryfield="id"/>
-    <property name="start"    type="integer"/>
-    <property name="end"      type="integer"/>
-    <property name="title"    type="string"/>
-    <property name="description" type="longtext"/>
-    <property name="type"     type="integer"/>
-    <property name="extra"    type="string"/>
-    <property name="busy"     type="boolean"/>
-    <property name="up"       type="integer" upfield="up" link="net_nemein_calendar_event_db:id"/>
-    <!-- End copied from midgard_event -->
-    
-    <property name="openregistration" type="integer"/>
-    <property name="closeregistration" type="integer"/>
+    <property name="start"    type="datetime"/>
+    <property name="end"      type="datetime"/>
+    <property name="name"     type="string"/>
+    <property name="title"    type="string" multilang="yes" table="net_nemein_calendar_event_db_i"/>
+    <property name="description" type="longtext" multilang="yes" table="net_nemein_calendar_event_db_i"/>
+    <property name="type" type="integer"/>
+    <property name="extra" type="longtext"/>
+    <property name="up" type="integer" upfield="up" link="net_nemein_calendar_event_db:id"/>
+    <property name="node" link="midgard_topic:id" reverse="no" type="integer" parentfield="node"/>
+    <property name="openregistration" type="datetime"/>
+    <property name="closeregistration" type="datetime"/>
     <property name="location" type="string" />
   </type>
   

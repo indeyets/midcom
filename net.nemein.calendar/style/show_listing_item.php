@@ -1,5 +1,7 @@
 <?php
 $view = $data['datamanager']->get_content_raw();
+$data['event']->start = strtotime($data['event']->start);
+$data['event']->end = strtotime($data['event']->end);
 ?>
 <li class="vevent" id="<?php echo $data['event']->guid; ?>">
     <div class="dates">
