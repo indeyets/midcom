@@ -49,6 +49,16 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
      * @var int
      */
     var $maxyear = 2010;
+    
+    /**
+     * First items for selections.
+     *
+     * @var array
+     */
+    var $first_items = array('d' => 'DD', 'm' => 'MM', 'Y' => 'YYYY');
+    
+    var $_items = array();
+    var $_elements = array();    
 
     /**
      * Validates the base type
@@ -63,6 +73,9 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
             debug_pop();
             return false;
         }
+        
+        $this->_generate_items();
+        
         return true;
     }
 
@@ -70,16 +83,121 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
      * Adds a PEAR Date widget to the form
      */
     function add_elements_to_form()
+    {        
+        for($i = 0; $i < strlen($this->format); $i++)
+        {
+            $key = $this->format{$i};
+            
+            $this->_elements[] =& HTML_QuickForm::createElement
+            (
+                'select',
+                "{$this->name}[{$key}]",
+                '',
+                $this->_items[$key],
+                array
+                (
+                    'class'         => 'dropdown',
+                    'id'            => "{$this->_namespace}{$this->name}_{$key}",
+                )
+            );
+        }
+        
+        $this->_form->addGroup($this->_elements, $this->name, $this->_translate($this->_field['title']), '');
+    }
+    
+    function _generate_items()
     {
-        $options = Array
-        (
-            'language' => $_MIDCOM->i18n->get_current_language(),
-            'format' => $this->format,
-            'minYear' => $this->minyear,
-            'maxYear' => $this->maxyear,
-            'addEmptyOption' => true,
-        );
-        $this->_form->addElement('date', $this->name, $this->_translate($this->_field['title']), $options);
+        for($i = 0; $i < strlen($this->format); $i++)
+        {
+            switch ($this->format{$i})
+            {
+                case 'd':
+                    $this->_items[$this->format{$i}] = array();
+                    $this->_populate_first_item($this->format{$i});
+                    
+                    for ($d=1; $d<=31; $d++)
+                    {
+                        $value = $d<10?"0{$d}":$d;
+                        $this->_items[$this->format{$i}][] = $value;
+                    }
+                    break;
+                case 'M':
+                case 'm':
+                case 'F':
+                    $this->_items[$this->format{$i}] = array();
+                    $this->_populate_first_item($this->format{$i});
+                
+                    for ($m=1; $m<=12; $m++)
+                    {
+                        $value = $m<10?"0{$m}":$m;
+                        $this->_items[$this->format{$i}][] = $value;
+                    }
+                    break;
+                case 'Y':
+                    $this->_items[$this->format{$i}] = array();
+                    $this->_populate_first_item($this->format{$i});
+                
+                    for ($y=$this->minyear; $y<=$this->maxyear; $y++)
+                    {
+                        $value = $y;
+                        $this->_items[$this->format{$i}][] = $value;
+                    }
+                    break;
+                case 'y':
+                    $this->_items[$this->format{$i}] = array();
+                    $this->_populate_first_item($this->format{$i});
+                
+                    for ($y=$this->minyear; $y<=$this->maxyear; $y++)
+                    {
+                        $value = substr($y, -2);
+                        $this->_items[$this->format{$i}][] = $value;
+                    }
+                    break;
+                case 'H':
+                    $this->_items[$this->format{$i}] = array();
+                    $this->_populate_first_item($this->format{$i});
+            
+                    for ($h=0; $h<=12; $h++)
+                    {
+                        $value = $h<10?"0{$h}":$h;
+                        $this->_items[$this->format{$i}][] = $value;
+                    }
+                    break;
+                case 'i':
+                    $this->_items[$this->format{$i}] = array();
+                    $this->_populate_first_item($this->format{$i});
+            
+                    for ($m=0; $m<=59; $m++)
+                    {
+                        $value = $m<10?"0{$m}":$m;
+                        $this->_items[$this->format{$i}][] = $value;
+                    }
+                    break;
+                case 's':
+                    $this->_items[$this->format{$i}] = array();
+                    $this->_populate_first_item($this->format{$i});
+        
+                    for ($s=0; $s<=59; $s++)
+                    {
+                        $value = $s<10?"0{$s}":$s;
+                        $this->_items[$this->format{$i}][] = $value;
+                    }
+                    break;
+            }
+        }
+    }
+    
+    function _populate_first_item($key)
+    {
+
+        if (isset($this->first_items[$key]))
+        {
+            $this->_items[$key][] = $this->first_items[$key];
+        }
+        else
+        {
+            $this->_items[$key][] = '';
+        }
     }
 
     /**
