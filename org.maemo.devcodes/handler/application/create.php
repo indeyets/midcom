@@ -63,6 +63,7 @@ class org_maemo_devcodes_handler_application_create extends midcom_baseclasses_c
     function _prepare_request_data()
     {
         $this->_request_data['controller'] =& $this->_controller;
+        $this->_request_data['device'] =& $this->_device;
     }
 
 
