@@ -96,7 +96,7 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
         debug_add("Sending email to {$email}, {$name}");
         $this->_mail = new org_openpsa_mail();
         $this->_mail->to = $email;
-        $this->_mail->from = $_MIDCOM->auth->user->_storage->email;
+        $this->_mail->from = $this->_config->get('invitation_mail_sender');
         $this->_mail->subject = sprintf($this->_l10n->get($this->_config->get('invitation_mail_subject')), $_MIDCOM->auth->user->name);
         // This may be a hack, but it allows us tons more control in rendering the email
         $_MIDCOM->style->enter_context(0);

@@ -112,6 +112,7 @@
 /**
  * Invite email subject
  */
+'invitation_mail_sender' => 'noreply',
 'invitation_mail_subject' => 'website invitation from %s',
 
 /**
