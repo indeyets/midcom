@@ -189,7 +189,6 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
     
     function _populate_first_item($key)
     {
-
         if (isset($this->first_items[$key]))
         {
             $this->_items[$key][] = $this->first_items[$key];
@@ -266,16 +265,12 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
                     break;
             }
         }
-        var_dump($defaults, 1);
+
         return Array($this->name => $defaults);
     }
 
     function sync_type_with_widget($results)
-    {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_print_r('results: ',$results[$this->name]);
-        debug_pop();
-        
+    {        
         if (! $results[$this->name])
         {
             return;
