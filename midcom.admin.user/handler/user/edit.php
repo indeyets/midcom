@@ -86,7 +86,7 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit account', 'midcom.admin.user'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
                 ),
-                '/'
+                $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
             );
         }
 
