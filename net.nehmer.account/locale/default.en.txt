@@ -497,3 +497,6 @@ Your registration is now pending for approval
 These settings control data import from various social web services.
 ---STRINGEND
 
+---STRING show lost password in navi
+Show Lost password-link in navi
+---STRINGEND

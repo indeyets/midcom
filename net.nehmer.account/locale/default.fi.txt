@@ -475,3 +475,6 @@ Käyttäjätunnuksesi odottaa nyt hyväksyntää.
 Nämä asetukset vaikuttavat tiedon tuontiin eri sosiaalistista verkkopalveluista.
 ---STRINGEND
 
+---STRING show lost password in navi
+Näytä Unohtunut salasana-linkki navigaatiossa
+---STRINGEND

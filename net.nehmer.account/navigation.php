@@ -45,19 +45,22 @@ class net_nehmer_account_navigation extends midcom_baseclasses_components_naviga
                     MIDCOM_META_EDITED => $this->_topic->metadata->revised
                 );
             }
-            $leaves[NET_NEHMER_ACCOUNT_LEAFID_LOSTPASSWORD] = array
-            (
-                MIDCOM_NAV_SITE => Array
+            if ($this->_config->get('show_lost_password_in_navi'))
+            {
+                $leaves[NET_NEHMER_ACCOUNT_LEAFID_LOSTPASSWORD] = array
                 (
-                    MIDCOM_NAV_URL => "lostpassword.html",
-                    MIDCOM_NAV_NAME => $this->_l10n->get('lost password'),
-                ),
-                MIDCOM_NAV_ADMIN => null,
-                MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
-                MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
-                MIDCOM_META_CREATED => $this->_topic->metadata->created,
-                MIDCOM_META_EDITED => $this->_topic->metadata->revised
-            );
+                    MIDCOM_NAV_SITE => Array
+                    (
+                        MIDCOM_NAV_URL => "lostpassword.html",
+                        MIDCOM_NAV_NAME => $this->_l10n->get('lost password'),
+                    ),
+                    MIDCOM_NAV_ADMIN => null,
+                    MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
+                    MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
+                    MIDCOM_META_CREATED => $this->_topic->metadata->created,
+                    MIDCOM_META_EDITED => $this->_topic->metadata->revised
+                );
+            }
         }
 
         // Pending registrations

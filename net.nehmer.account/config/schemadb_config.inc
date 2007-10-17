@@ -220,6 +220,27 @@
             ),
             'widget' => 'select',
         ),
+        'show_lost_password_in_navi' => array
+        (
+            'title' => 'show lost password in navi',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'net.nehmer.account',
+                'name'     => 'show_lost_password_in_navi',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+        ),
         'administrator_email' => array
         (
             'title' => 'administrator email address where a notice will be sent',
@@ -287,4 +308,5 @@
                 ),
             ),
         ),
-    ),),
+    ),
+),
