@@ -37,11 +37,12 @@ foreach ($topics as $topic)
         //$newevent->closeregistration = gmdate('Y-m-d H:i:s', $event->closeregistration);
         
         $newevent->node = $topic->id;
-        
+        //mgd_debug_start();
         if (!$newevent->create())
         {
             echo "Failed copying event {$event->title}: " . mgd_errstr() . "\n";
         }
+        //mgd_debug_stop();
         
         $params = $event->list_parameters();
         foreach ($params as $domain => $params)

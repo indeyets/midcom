@@ -6,6 +6,7 @@
     <property name="start"    type="datetime"/>
     <property name="end"      type="datetime"/>
     <property name="name"     type="string"/>
+    <property name="sid" type="integer" multilang="yes" table="net_nemein_calendar_event_i"/>
     <property name="title"    type="string" multilang="yes" table="net_nemein_calendar_event_i"/>
     <property name="description" type="longtext" multilang="yes" table="net_nemein_calendar_event_i"/>
     <property name="type" type="integer"/>
