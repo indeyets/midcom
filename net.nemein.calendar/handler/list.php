@@ -620,6 +620,8 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         
         foreach ($this->_request_data['events'] as $event)
         {
+            $event->start = strtotime($event->start);
+            $event->end = strtotime($event->end);
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             $event->link = "{$prefix}{$event->name}/";
             $this->_calendar->add_event($event);
