@@ -694,7 +694,7 @@ class org_openpsa_calendarwidget_month
     {
         echo "<table class=\"{$this->css_calendar}\">\n";
         echo "    <thead>\n";
-        echo "        <tr>\n";
+        echo "        <tr class=\"nav-row\">\n";
         echo "            <th class=\"{$this->css_month_navi} {$this->css_previous}\">\n";
         
         $suffix = '';
@@ -769,7 +769,7 @@ class org_openpsa_calendarwidget_month
         echo "        </tr>\n";
 
         // Draw day names
-        echo "        <tr>\n";
+        echo "        <tr class=\"weekday-row\">\n";
 
         if ($this->week_numbers)
         {
@@ -912,6 +912,10 @@ class org_openpsa_calendarwidget_month
                 $this->_draw_details_box($this->_events[date('Y-m-d', $timestamp)], $timestamp);
             }
 
+        }
+        else
+        {
+            echo "                <span class=\"outside-month-day\">". strftime('%d', $timestamp) ."</span>\n";
         }
         echo "            </td>\n";
     }
