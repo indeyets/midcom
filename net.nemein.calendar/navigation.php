@@ -116,6 +116,7 @@ class net_nemein_calendar_navigation extends midcom_baseclasses_components_navig
                 );
                 $year = $next_year;
             }
+            $leaves = array_reverse($leaves);
         }
         
         return $leaves;
