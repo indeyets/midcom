@@ -206,21 +206,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
     function _handler_between($handler_id, $args, &$data)
     {
         $this->_load_datamanager();
-        
-        if ($handler_id == 'archive-between')
-        {
-            if (!$this->_config->get('archive_enable'))
-            {
-                return false;
-            }        
-            $this->_request_data['archive_mode'] = true;
-            $this->_component_data['active_leaf'] = "{$data['content_topic']->id}_ARCHIVE";
-        }
-        else
-        {
-            $this->_request_data['archive_mode'] = false;            
-        }
-        
+
         // Get the requested date range
         // TODO: Check format as YYYY-MM-DD via regexp
         $start = @strtotime($args[0]);
@@ -231,6 +217,30 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             // We couldn't generate the dates
             return false;
         }
+        
+        if ($handler_id == 'archive-between')
+        {
+            if (!$this->_config->get('archive_enable'))
+            {
+                return false;
+            }        
+            $this->_request_data['archive_mode'] = true;
+            
+            if ($this->_config->get('archive_in_navigation'))
+            {
+                $this->_component_data['active_leaf'] = "{$data['content_topic']->id}_ARCHIVE";
+            }
+            else
+            {
+                $this->_component_data['active_leaf'] = "{$data['content_topic']->id}_ARCHIVE_" . date('Y', $start);
+            }
+        }
+        else
+        {
+            $this->_request_data['archive_mode'] = false;            
+        }
+        
+
 
         $this->_request_data['start'] = $start;
         $this->_request_data['end'] = $end;

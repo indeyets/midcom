@@ -15,9 +15,12 @@
 
 'archive_enable' => true,
 'archive_year_order'   => 'ASC',  // Order for years in archive welcome page
+'archive_in_navigation' => false,
+'archive_years_in_navigation' => true,
 
 'show_navigation_pseudo_leaves' => true,   // Set this to false if you want to hide archive navigation items
 
 'categories' => '',
+'categories_in_navigation' => false,
 
 'rss_subscription_enable' => false,
