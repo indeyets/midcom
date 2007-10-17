@@ -684,16 +684,18 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      */
     function add_constraint($field, $operator, $value)
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
+
         $this->_reset();
-        // Add check against null values, Core QB is too stupid to get this right.
+        // Add check against null values, Core MC is too stupid to get this right.
         if ($value === null)
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                'QueryBuilder: Cannot add constraints with null values.');
+            debug_add("QueryBuilder: Cannot add constraint on field '{$field}' with null value.",MIDCOM_LOG_WARN);
+            debug_pop();
+            return false;
         }
         if (! $this->_qb->add_constraint($field, $operator, $value))
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Failed to exectue add_constraint.", MIDCOM_LOG_ERROR);
             debug_add("Class = '{$this->_real_class}, Field = '{$field}', Operator = '{$operator}'");
             debug_print_r('Value:', $value);
@@ -703,7 +705,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         }
 
         $this->_constraint_count++;
-
+        debug_pop();
         return true;
     }
 
