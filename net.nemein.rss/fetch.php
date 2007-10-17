@@ -416,22 +416,6 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
             // Not an event
             return false;
         }
-            
-        // Load root event
-        if (!$this->_node_config->get('root_event'))
-        {
-            // This calendar is not really functional
-            return false;
-        }   
-        static $root_event = null;
-        if (is_null($root_event))
-        {
-            $root_event = new net_nemein_calendar_event($this->_node_config->get('root_event'));
-        }
-        if (!$root_event->guid)
-        {
-            return false;
-        }
         
         // Get start and end times
         $start = null;
@@ -488,8 +472,8 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         }
         $location = implode(', ', $location_parts);
 
-        $qb = net_nemein_calendar_event::new_query_builder();
-        $qb->add_constraint('up', '=', $root_event->id);
+        $qb = net_nemein_calendar_event_dba::new_query_builder();
+        $qb->add_constraint('node', '=', $this->_feed->node);
         $qb->add_constraint('extra', '=', md5($item['guid']));
         $events = $qb->execute();  
         if (count($events) > 0)
@@ -500,11 +484,11 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         else
         {
             // This is a new item
-            $event = new net_nemein_calendar_event();
+            $event = new net_nemein_calendar_event_dba();
             $event->start = $start;
             $event->end = $end;
             $event->extra = md5($item['guid']);
-            $event->up = $root_event->id;
+            $event->node = $this->_feed->node;
             if (!$event->create())
             {
                 return false;

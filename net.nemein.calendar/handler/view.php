@@ -140,6 +140,7 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
         $_MIDCOM->set_pagetitle($this->_request_data['event']->title);
         
         $_MIDCOM->bind_view_to_object($this->_request_data['event'], $this->_datamanager->schema->name);
+        $_MIDCOM->set_26_request_metadata($this->_request_data['event']->metadata->revised, $this->_request_data['event']->guid);
 
         // Set the breadcrumb
         $breadcrumb[] = array

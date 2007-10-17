@@ -112,23 +112,12 @@ class net_nemein_calendar_interface extends midcom_baseclasses_components_interf
             return null;
         }
         
-        $root_event = new net_nemein_calendar_event_dba($config->get('root_event'));
-        if (!$root_event)
+        if ($event->node != $topic->id)
         {
             return null;
         }
         
-        if ($event->id == $root_event->id)
-        {
-            return '';
-        }
-        
-        if ($event->up != $root_event->id)
-        {
-            return null;
-        }
-        
-        return "{$event->extra}/";
+        return "{$event->name}/";
     }
 }
 
