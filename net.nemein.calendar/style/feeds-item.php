@@ -15,13 +15,13 @@ if ($author_user)
     $item->author = trim("{$author->name} <{$author->email}>");
 }
 
-$item->title = sprintf('%s: %s', strftime('%x', $data['event']->start), $data['event']->title);
-$arg = $data['event']->extra ? $data['event']->extra : $data['event']->guid;
+$item->title = sprintf('%s: %s', strftime('%x', strtotime($data['event']->start)), $data['event']->title);
+$arg = $data['event']->name ? $data['event']->name : $data['event']->guid;
 $item->link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$arg}.html";
 
 // Add xCal data to item
-$item->additionalElements['xcal:dtstart'] = gmdate('Ymd\THis\Z', $data['event']->start);
-$item->additionalElements['xcal:dtend'] = gmdate('Ymd\THis\Z', $data['event']->end);
+$item->additionalElements['xcal:dtstart'] = $data['event']->start . 'Z';
+$item->additionalElements['xcal:dtend'] = $data['event']->end . 'Z';
 
 $item->guid = $_MIDCOM->permalinks->create_permalink($data['event']->guid);
 $item->date = $data['event']->metadata->published;
