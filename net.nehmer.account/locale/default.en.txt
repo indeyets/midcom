@@ -500,3 +500,15 @@ These settings control data import from various social web services.
 ---STRING show lost password in navi
 Show Lost password-link in navi
 ---STRINGEND
+
+---STRING where to redirect from edit page
+Where to redirect from edit page
+---STRINGEND
+
+---STRING view page
+View page
+---STRINGEND
+
+---STRING publish account details page
+Publish account details page
+---STRINGEND

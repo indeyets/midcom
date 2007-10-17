@@ -478,3 +478,15 @@ Nämä asetukset vaikuttavat tiedon tuontiin eri sosiaalistista verkkopalveluist
 ---STRING show lost password in navi
 Näytä Unohtunut salasana-linkki navigaatiossa
 ---STRINGEND
+
+---STRING where to redirect from edit page
+Mihin uudelleenohjataan editointisivun jälkeen
+---STRINGEND
+
+---STRING view page
+Käyttäjän oma profiili
+---STRINGEND
+
+---STRING publish account details page
+Käyttäjän julkisten tietojen valintasivulle
+---STRINGEND
