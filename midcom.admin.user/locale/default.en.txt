@@ -47,12 +47,20 @@ Enable AJAX features of centralized toolbar
 Enable AJAX features of notifications
 ---STRINGEND
 
+---STRING enable asgard
+Enable Asgard usage
+---STRINGEND
+
 ---STRING enable centralized toolbar
 Enable centralized toolbar
 ---STRINGEND
 
 ---STRING firstname
 Firstname
+---STRINGEND
+
+---STRING folders
+Folders
 ---STRINGEND
 
 ---STRING go
@@ -123,7 +131,7 @@ Username
 Work phone
 ---STRINGEND
 
----STRING enable asgard
-Enable Asgard usage
+---STRING folders of %s
+Folders of %s
 ---STRINGEND
 

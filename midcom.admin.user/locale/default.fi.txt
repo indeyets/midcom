@@ -43,12 +43,20 @@ Käytä työkalupalkin AJAX-ominaisuuksia
 Käytä ilmoitusten AJAX-ominaisuuksia
 ---STRINGEND
 
+---STRING enable asgard
+Salli Asgardin käyttö
+---STRINGEND
+
 ---STRING enable centralized toolbar
 Käytä keskitettyä työkalupalkkia
 ---STRINGEND
 
 ---STRING firstname
 Etunimi
+---STRINGEND
+
+---STRING folders
+Kansiot
 ---STRINGEND
 
 ---STRING go
@@ -119,7 +127,7 @@ Käyttäjätunnus
 Työpuhelin
 ---STRINGEND
 
----STRING enable asgard
-Salli Asgardin käyttö
+---STRING folders of %s
+Ryhmän %s kansiot
 ---STRINGEND
 

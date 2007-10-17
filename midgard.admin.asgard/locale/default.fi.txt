@@ -55,6 +55,10 @@ kansio
 Ryhmä %s
 ---STRINGEND
 
+---STRING guid
+GUID-tunniste
+---STRINGEND
+
 ---STRING in %s
 %s:ssa
 ---STRINGEND
@@ -143,7 +147,15 @@ Kansion käyttöoikeudet
 %s alla
 ---STRINGEND
 
----STRING guid
-GUID-tunniste
+---STRING asgard plugins
+Asgardin lisätoiminnot
+---STRINGEND
+
+---STRING midgard objects
+Midgardin tietueet
+---STRINGEND
+
+---STRING parameter
+Parametri
 ---STRINGEND
 
