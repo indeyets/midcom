@@ -17,7 +17,7 @@ class net_nemein_calendar_handler_delete extends midcom_baseclasses_components_h
     /**
      * The calendar event we're deleting
      *
-     * @var net_nemein_calendar_event
+     * @var net_nemein_calendar_event_dba
      * @access private
      */
     var $_event = null;
@@ -54,7 +54,7 @@ class net_nemein_calendar_handler_delete extends midcom_baseclasses_components_h
     
     function _handler_delete($handler_id, $args, &$data, $delete_mode = true)
     {
-        $this->_event = new net_nemein_calendar_event($args[0]);
+        $this->_event = new net_nemein_calendar_event_dba($args[0]);
         if (!$this->_event)
         {
             return false;

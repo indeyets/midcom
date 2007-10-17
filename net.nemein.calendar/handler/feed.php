@@ -96,7 +96,7 @@ class net_nemein_calendar_handler_feed extends midcom_baseclasses_components_han
         // Filter the upcoming list by a type if required
         $type_filter = $this->_config->get('type_filter_upcoming');
         
-        $qb = net_nemein_calendar_event::new_query_builder();
+        $qb = net_nemein_calendar_event_dba::new_query_builder();
 
         // Add root event constraints
         if ($this->_config->get('list_from_master'))

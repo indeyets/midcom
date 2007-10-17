@@ -290,7 +290,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
         }
         else
         {
-            $master_event = new net_nemein_calendar_event($this->_config->get('master_event'));
+            $master_event = new net_nemein_calendar_event_dba($this->_config->get('master_event'));
             if (!$master_event)
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Master event not found: " . mgd_errstr());

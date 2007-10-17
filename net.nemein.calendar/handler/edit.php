@@ -58,7 +58,7 @@ class net_nemein_calendar_handler_edit extends midcom_baseclasses_components_han
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         
-        $this->_request_data['event'] = new net_nemein_calendar_event($args[0]);
+        $this->_request_data['event'] = new net_nemein_calendar_event_dba($args[0]);
         
         if ($this->_request_data['event'])
         {

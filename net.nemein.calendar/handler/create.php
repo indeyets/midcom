@@ -36,7 +36,7 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
      */
     function & dm2_create_callback (&$controller)
     {
-        $this->_request_data['event'] = new net_nemein_calendar_event();
+        $this->_request_data['event'] = new net_nemein_calendar_event_dba();
         $this->_request_data['event']->node = $this->_request_data['content_topic']->id;
         
         if ($data['master_event'])

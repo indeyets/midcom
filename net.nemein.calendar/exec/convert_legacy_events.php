@@ -25,7 +25,7 @@ foreach ($topics as $topic)
     $events = $qb->execute();
     foreach ($events as $event)
     {
-        $newevent = new net_nemein_calendar_event();
+        $newevent = new net_nemein_calendar_event_dba();
         $newevent->name = $event->extra;
         $newevent->title = $event->title;
         $newevent->description = $event->description;

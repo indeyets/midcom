@@ -70,7 +70,7 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
             return false;
         }
         
-        $qb = net_nemein_calendar_event::new_query_builder();
+        $qb = net_nemein_calendar_event_dba::new_query_builder();
         $qb->add_constraint('node', '=', $this->_request_data['content_topic']->id);
         $qb->add_constraint('name', '=', $args[0]);
         

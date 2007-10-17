@@ -12,7 +12,7 @@
  *
  * @package net.nemein.calendar
  */
-class net_nemein_calendar_event extends __net_nemein_calendar_event
+class net_nemein_calendar_event_dba extends __net_nemein_calendar_event_dba
 {
     function net_nemein_calendar_event($guid = null) 
     {

@@ -39,7 +39,7 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
      * The master event to use in case we list from a common master or the root event
      * in case we don't. 
      *
-     * @var net_nemein_calendar_event
+     * @var net_nemein_calendar_event_dba
      * @access private
      */
     var $_master_event = null;
@@ -68,7 +68,7 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
      */
     function _get_events_qb()
     {
-        $qb = net_nemein_calendar_event::new_query_builder();
+        $qb = net_nemein_calendar_event_dba::new_query_builder();
         
         if ($this->_config->get('list_from_master'))
         {
@@ -370,8 +370,8 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
      * Context data for all elements:
      *
      * - int total_count (total number of events)
-     * - net_nemein_calendar_event first_event (the event on which the first month is based, may be null)
-     * - net_nemein_calendar_event last_event (the event on which the last month is based, may be null)
+     * - net_nemein_calendar_event_dba first_event (the event on which the first month is based, may be null)
+     * - net_nemein_calendar_event_dba last_event (the event on which the last month is based, may be null)
      * - CalendarMonth first_month (the first event month, may be null)
      * - CalendarMonth last_month (the last event month, may be null)
      * - Array year_data (the year data, contains the year context info as outlined below)

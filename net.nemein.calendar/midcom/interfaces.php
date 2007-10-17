@@ -68,13 +68,13 @@ class net_nemein_calendar_interface extends midcom_baseclasses_components_interf
             return false;
         }
         
-        $root_event = new net_nemein_calendar_event($root_event_guid);
+        $root_event = new net_nemein_calendar_event_dba($root_event_guid);
         if (!$root_event)
         {
             return false;
         }
         
-        $qb = net_nemein_calendar_event::new_query_builder();
+        $qb = net_nemein_calendar_event_dba::new_query_builder();
         $qb->add_constraint('up', '=', $root_event->id);
         $events = $qb->execute();
 
@@ -106,13 +106,13 @@ class net_nemein_calendar_interface extends midcom_baseclasses_components_interf
      */
     function _on_resolve_permalink($topic, $config, $guid)
     {    
-        $event = new net_nemein_calendar_event($guid);
+        $event = new net_nemein_calendar_event_dba($guid);
         if (!$event)
         {
             return null;
         }
         
-        $root_event = new net_nemein_calendar_event($config->get('root_event'));
+        $root_event = new net_nemein_calendar_event_dba($config->get('root_event'));
         if (!$root_event)
         {
             return null;

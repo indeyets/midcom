@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
 
-  <type name="net_nemein_calendar_event_db" table="net_nemein_calendar_event_db" parent="midgard_topic" upfield="up">
+  <type name="net_nemein_calendar_event" table="net_nemein_calendar_event" parent="midgard_topic" upfield="up" parentfield="node">
     <property name="id"       type="integer" primaryfield="id"/>
     <property name="start"    type="datetime"/>
     <property name="end"      type="datetime"/>
     <property name="name"     type="string"/>
-    <property name="title"    type="string" multilang="yes" table="net_nemein_calendar_event_db_i"/>
-    <property name="description" type="longtext" multilang="yes" table="net_nemein_calendar_event_db_i"/>
+    <property name="title"    type="string" multilang="yes" table="net_nemein_calendar_event_i"/>
+    <property name="description" type="longtext" multilang="yes" table="net_nemein_calendar_event_i"/>
     <property name="type" type="integer"/>
     <property name="extra" type="longtext"/>
-    <property name="up" type="integer" upfield="up" link="net_nemein_calendar_event_db:id"/>
+    <property name="up" type="integer" upfield="up" link="net_nemein_calendar_event:id"/>
     <property name="node" link="midgard_topic:id" reverse="no" type="integer" parentfield="node"/>
     <property name="openregistration" type="datetime"/>
     <property name="closeregistration" type="datetime"/>
