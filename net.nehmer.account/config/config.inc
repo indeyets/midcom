@@ -136,3 +136,5 @@
 'net_nehmer_buddylist_integration' => false,
 
 'show_lost_password_in_navi' => true,
+
+'redirect_edit_to' => 'view',

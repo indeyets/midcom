@@ -82,7 +82,17 @@ class net_nehmer_account_handler_edit extends midcom_baseclasses_components_hand
             net_nehmer_account_viewer::verify_person_privileges($this->_account);
             $_MIDCOM->auth->require_do('midgard:update', $this->_account);
             $_MIDCOM->auth->require_do('midgard:parameters', $this->_account);
-            $return_url = '';
+            switch ($this->_config->get('redirect_edit_to'))
+            {
+                case 'view':
+                default:
+                    $return_url = '';
+                    break;
+                case 'publish':
+                default:
+                    $return_url = 'publish';
+                    break;
+            }
         }
 
         // This will shortcut without creating any datamanager to avoid the possibly

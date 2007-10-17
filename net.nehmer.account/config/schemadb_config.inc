@@ -241,6 +241,27 @@
             ),
             'widget' => 'select',
         ),
+        'redirect_edit_to' => array
+        (
+            'title' => 'where to redirect from edit page',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'net.nehmer.account',
+                'name'     => 'redirect_edit_to',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    'view' => 'view page',
+                    'publish' => 'publish account details page',
+                ),
+            ),
+            'widget' => 'select',
+        ),
         'administrator_email' => array
         (
             'title' => 'administrator email address where a notice will be sent',
