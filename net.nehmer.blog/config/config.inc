@@ -26,10 +26,13 @@
 'rss_language' => '',
 'rss_use_content' => true, // Set this to false to use only the abstract field instead of the content field.
 'rss_use_image' => false, // Set this to true to include the image field into RSS content
+'feeds_in_navigation' => false,
 
 // Archive status
 'archive_enable' => true,
 'archive_item_order' => 'ASC',
+'archive_in_navigation' => false,
+'archive_years_in_navigation' => true,
 
 'comments_enable' => false,
 'comments_topic' => '',
@@ -44,6 +47,7 @@
 // Comma-separated list of categories enabled in this blog
 'categories' => '',
 'categories_custom_enable' => true,
+'categories_in_navigation' => false,
 
 'api_email_enable' => false,
 'api_email_schema' => 'default',

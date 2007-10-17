@@ -48,6 +48,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
         $leaves = array();
         
         if (   $this->_config->get('archive_enable')
+            && $this->_config->get('archive_in_navigation')
             && $this->_config->get('show_navigation_pseudo_leaves'))
         {
             $leaves["{$this->_topic->id}_ARCHIVE"] = array
@@ -65,6 +66,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
             );
         }
         if (   $this->_config->get('rss_enable')
+            && $this->_config->get('feeds_in_navigation')
             && $this->_config->get('show_navigation_pseudo_leaves'))
         {
             $leaves[NET_NEHMER_BLOG_LEAFID_FEEDS] = array
@@ -79,6 +81,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
         }
 
         if (   $this->_config->get('show_navigation_pseudo_leaves')
+            && $this->_config->get('categories_in_navigation')
             && $this->_config->get('categories') != '')
         {
             $categories = explode(',', $this->_config->get('categories'));
@@ -98,6 +101,37 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
                     MIDCOM_META_EDITED => $this->_content_topic->metadata->revised,
                 );
             }
+        }
+        
+        if (   $this->_config->get('show_navigation_pseudo_leaves')
+            && $this->_config->get('archive_years_in_navigation'))
+        {
+            $qb = midcom_db_article::new_query_builder();    
+            $qb->add_constraint('topic', '=', $this->_content_topic->id);
+            $qb->add_order('metadata.published');
+            $qb->set_limit(1);
+            $result = $qb->execute_unchecked();
+            $first_year = (int) date('Y', $result[0]->metadata->published);
+            $year = $first_year;
+            $this_year = (int) date('Y', time());
+            while ($year <= $this_year)
+            {
+                $leaves["{$this->_topic->id}_ARCHIVE_{$year}"] = array
+                (
+                    MIDCOM_NAV_SITE => Array
+                    (
+                        MIDCOM_NAV_URL => "archive/year/{$year}",
+                        MIDCOM_NAV_NAME => $year,
+                    ),
+                    MIDCOM_NAV_ADMIN => null,
+                    MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
+                    MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
+                    MIDCOM_META_CREATED => $this->_topic->metadata->created,
+                    MIDCOM_META_EDITED => $this->_topic->metadata->revised,
+                );
+                $year = $year + 1;
+            }
+            $leaves = array_reverse($leaves);
         }
         
         // Return the request here if latest items aren't requested to be shown in navigation
