@@ -28,7 +28,11 @@ Language
 ---STRINGEND
 
 ---STRING midcom.admin.babel
-MidCOM Localization tool
+Localization tool
+---STRINGEND
+
+---STRING new string
+New string
 ---STRINGEND
 
 ---STRING other component status
@@ -74,9 +78,5 @@ Translated strings
 
 ---STRING translation status for language %s
 Translation status of %s
----STRINGEND
-
----STRING new string
-New string
 ---STRINGEND
 

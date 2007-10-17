@@ -3,7 +3,7 @@ table.midcom_admin_babel_languages
   background-color: #eeeeef;
   padding: 0.5em;
   -moz-border-radius: 10px;
-  width: 100%;
+  width: 600px;
   border-bottom: solid 1px #000;
   border-right: solid 1px #000;
 
@@ -71,6 +71,17 @@ table.midcom_admin_babel_languages tr.newstring
 
 }
 
+table.midcom_admin_babel_languages tr td
+{
+    width: 33%;
+    padding: 4px;
+}
+
+table.midcom_admin_babel_languages tr td span
+{
+    display: block;
+    overflow: auto;
+}
 
 table.midcom_admin_babel_languages tr.string-even
 {
@@ -82,16 +93,6 @@ table.midcom_admin_babel_languages tr.string-odd
 {
     background: #cccccc;
     -moz-border-radius: 6px;
-}
-
-table.midcom_admin_babel_languages tr.string-even td
-{
-    width: 33%;
-}
-
-table.midcom_admin_babel_languages tr.string-odd td
-{
-    width: 33%;
 }
 
 #content-text h1

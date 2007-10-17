@@ -67,7 +67,7 @@ $editlang = $languages[$data['view_lang']]['enname'];
                 if ($data['view_lang'] != 'en') 
                 { 
                     ?>
-                    <td>&(en);</td>
+                    <td><span>&(en);</span></td>
                     <?php 
                 } 
                 ?>

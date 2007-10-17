@@ -24,11 +24,15 @@ Kieli
 ---STRINGEND
 
 ---STRING midcom.admin.babel
-MidCOM-käyttöliittymien kääntäminen
+Käyttöliittymien kääntäminen
 ---STRINGEND
 
 ---STRING other component status
 Tila (muut)
+---STRINGEND
+
+---STRING perm-denied text
+<p>MidCOMilla ei ole oikeutta kirjoittaa käännöksiä. Tarkista että Apache-käyttäjällä on oikeudet komponentin "locale"-kansioon ja sen alla oleviin tiedostoihin.</p>
 ---STRINGEND
 
 ---STRING read information from midgard wiki on how to add languages
@@ -51,7 +55,27 @@ Viestin tunniste
 Kielen %s käännösten tila
 ---STRINGEND
 
----STRING perm-denied text
-<p>MidCOMilla ei ole oikeutta kirjoittaa käännöksiä. Tarkista että Apache-käyttäjällä on oikeudet komponentin "locale"-kansioon ja sen alla oleviin tiedostoihin.</p>
+---STRING core components
+Ydinkomponentit
+---STRINGEND
+
+---STRING new string
+Uusi viesti
+---STRINGEND
+
+---STRING other components
+Muut komponentit
+---STRINGEND
+
+---STRING percentage
+Prosentit
+---STRINGEND
+
+---STRING strings total
+Viestejä yhteensä
+---STRINGEND
+
+---STRING translated strings
+Käännettyjä viestejä
 ---STRINGEND
 
