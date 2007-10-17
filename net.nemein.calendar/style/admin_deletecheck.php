@@ -4,7 +4,7 @@
 $dn_data= $data['datamanager']->get_content_html();
 ?>
 
-<h2><?php echo $data['l10n_midcom']->get('delete'); ?> &(view.title);</h2>
+<h2><?php echo $data['l10n_midcom']->get('delete'); ?> <?php echo $dn_data['title']; ?></h2>
 
 <?php $data['datamanager']->display_view (); ?>
 

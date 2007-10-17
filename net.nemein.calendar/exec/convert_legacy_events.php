@@ -1,56 +1,63 @@
 <?php
 $_MIDCOM->auth->require_admin_user();
-$_MIDCOM->load_library('net.nehmer.markdown');
 
-$qb = net_nemein_calendar_event::new_query_builder();
-$qb->add_constraint('up', '<>', 0);
-$qb->add_constraint('closeregistration', '=', 0);
-$events = $qb->execute();
-foreach ($events as $event)
+$topic_qb = midcom_db_topic::new_query_builder();
+$topic_qb->add_constraint('component', '=', 'net.nemein.calendar');
+$topics = $topic_qb->execute();
+
+foreach ($topics as $topic)
 {
-    $update_event = false;
-    
-    $old_close_registration = $event->get_parameter('midcom.helper.datamanager2', 'close_registration');
-    $old_open_registration = $event->get_parameter('midcom.helper.datamanager2', 'open_registration');
-    
-    if ($old_close_registration != '')
+    $root_event_guid = $topic->parameter('net.nemein.calendar', 'root_event');
+    if (!$root_event_guid)
     {
-        $close_registration = @strtotime($old_close_registration);
-        if ($close_registration != -1)
-        {
-            $event->closeregistration = $close_registration;
-            $update_event = true;
-        }
+        continue;
     }
     
-    if ($old_open_registration != '')
+    $root_event = new midcom_db_event($root_event_guid);
+    if (   !$root_event
+        || !$root_event->guid)
     {
-        $open_registration = @strtotime($old_open_registration);
-        if ($open_registration != -1)
-        {
-            $event->openregistration = $open_registration;
-            $update_event = true;
-        }
+        continue;
     }
     
-    // TODO: Demarkdownize
-    if (array_key_exists('demarkdownize', $_GET)
-        && $_GET['demarkdownize'] == 1)
+    $qb = midcom_db_event::new_query_builder();
+    $qb->add_constraint('up', '=', $root_event->id);
+    $events = $qb->execute();
+    foreach ($events as $event)
     {
-        $markdown = new net_nehmer_markdown_markdown();
-        $old_description = $event->description;
-        $event->description = $markdown->render($old_description);
+        $newevent = new net_nemein_calendar_event();
+        $newevent->name = $event->extra;
+        $newevent->title = $event->title;
+        $newevent->description = $event->description;
+        //$newevent->location = $event->location;
+                
+        $newevent->start = gmdate('Y-m-d H:i:s', $event->start);
+        $newevent->end = gmdate('Y-m-d H:i:s', $event->end);
+        //$newevent->openregistration = gmdate('Y-m-d H:i:s', $event->openregistration);
+        //$newevent->closeregistration = gmdate('Y-m-d H:i:s', $event->closeregistration);
         
-        if (   !empty($event->description)
-            && $event->description != $old_description)
+        $newevent->node = $topic->id;
+        
+        if (!$newevent->create())
         {
-            $update_event = true;
+            echo "Failed copying event {$event->title}: " . mgd_errstr() . "\n";
         }
-    }
-    
-    if ($update_event)
-    {
-        $event->update();
+        
+        $params = $event->list_parameters();
+        foreach ($params as $domain => $params)
+        {
+            foreach ($params as $name => $value)
+            {
+                $newevent->parameter($domain, $name, $value);
+            }
+        }
+        
+        // Link between the two in case something needs to be done manually afterwards
+        $event->parameter('net.nemein.calendar', 'new_event', $newevent->guid);
+        $newevent->parameter('net.nemein.calendar', 'old_event', $event->guid);
+        
+        // TODO: Copy atts?
+        // TODO: Delete old event?
     }
 }
 ?>
