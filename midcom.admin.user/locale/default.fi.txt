@@ -35,6 +35,18 @@ Muokkaa käyttäjätunnusta
 Sähköposti
 ---STRINGEND
 
+---STRING enable ajax in toolbar
+Käytä työkalupalkin AJAX-ominaisuuksia
+---STRINGEND
+
+---STRING enable ajax in uimessages
+Käytä ilmoitusten AJAX-ominaisuuksia
+---STRINGEND
+
+---STRING enable centralized toolbar
+Käytä keskitettyä työkalupalkkia
+---STRINGEND
+
 ---STRING firstname
 Etunimi
 ---STRINGEND
@@ -43,12 +55,12 @@ Etunimi
 Hae
 ---STRINGEND
 
----STRING groups
-Ryhmät
----STRINGEND
-
 ---STRING group %s saved
 Ryhmä %s tallennettu
+---STRINGEND
+
+---STRING groups
+Ryhmät
 ---STRINGEND
 
 ---STRING lastname
@@ -91,6 +103,14 @@ Hae käyttäjiä
 Haku tehdään seuraavista kentistä: %s
 ---STRINGEND
 
+---STRING user %s added to group
+Käyttäjä %s lisätty ryhmään
+---STRINGEND
+
+---STRING user account revoked for %s
+Käyttäjätunnus %s mitätöity
+---STRINGEND
+
 ---STRING username
 Käyttäjätunnus
 ---STRINGEND
@@ -99,11 +119,7 @@ Käyttäjätunnus
 Työpuhelin
 ---STRINGEND
 
----STRING user %s added to group
-Käyttäjä %s lisätty ryhmään
----STRINGEND
-
----STRING user account revoked for %s
-Käyttäjätunnus %s mitätöity
+---STRING enable asgard
+Salli Asgardin käyttö
 ---STRINGEND
 

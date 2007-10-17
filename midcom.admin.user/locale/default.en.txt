@@ -27,12 +27,28 @@ Create group
 Create user
 ---STRINGEND
 
+---STRING edit %s
+Edit %s
+---STRINGEND
+
 ---STRING edit account
 Edit account
 ---STRINGEND
 
 ---STRING email
 Email
+---STRINGEND
+
+---STRING enable ajax in toolbar
+Enable AJAX features of centralized toolbar
+---STRINGEND
+
+---STRING enable ajax in uimessages
+Enable AJAX features of notifications
+---STRINGEND
+
+---STRING enable centralized toolbar
+Enable centralized toolbar
 ---STRINGEND
 
 ---STRING firstname
@@ -107,7 +123,7 @@ Username
 Work phone
 ---STRINGEND
 
----STRING edit %s
-Edit %s
+---STRING enable asgard
+Enable Asgard usage
 ---STRINGEND
 

@@ -54,6 +54,13 @@ class midcom_helper_datamanager2_type_privilege extends midcom_helper_datamanage
     var $assignee = null;
     
     /**
+     * Classname the privilege applies to
+     * 
+     * @var string
+     */    
+    var $classname = '';
+    
+    /**
      * This startup handler validates that the class is populated correctly.
      */
     function _on_initialize()
@@ -107,7 +114,7 @@ class midcom_helper_datamanager2_type_privilege extends midcom_helper_datamanage
             }
             $object =& $this->storage->object;
             
-            $this->privilege = $object->get_privilege($this->privilege_name, $this->assignee);
+            $this->privilege = $object->get_privilege($this->privilege_name, $this->assignee, $this->classname);
             $this->privilege->value = $value;
         }
         // If we have no object and should set INHERIT, we do nothing, this
@@ -123,8 +130,7 @@ class midcom_helper_datamanager2_type_privilege extends midcom_helper_datamanage
         if (   $this->storage->object
             && $this->storage->object->can_do('midgard:privileges'))
         {
-            $this->privilege = $this->storage->object->get_privilege(
-                $this->privilege_name, $this->assignee);
+            $this->privilege = $this->storage->object->get_privilege($this->privilege_name, $this->assignee, $this->classname);
         }
 
     }

@@ -1086,13 +1086,6 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
                     'name' => 'Folder administration',
                     'config' => null,
                 ),
-                'acl' => Array
-                (
-                    'class' => 'midgard_admin_acl_editor_plugin',
-                    'src' => 'file:/midgard/admin/acl/acl_editor.php',
-                    'name' => 'Privileges',
-                    'config' => null,
-                ),
                 'rcs' => Array
                 (
                     'class' => 'no_bergfald_rcs_handler',
@@ -1112,13 +1105,6 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
             	    'class' => 'midcom_admin_settings_editor',
             	    'src' => 'file:/midcom/admin/settings/editor.php',
             	    'name' => 'MidCOM site configuration',
-            	    'config' => null,
-            	),
-            	'l10n' => array
-            	(
-            	    'class' => 'midcom_admin_babel_main',
-            	    'src' => 'file:/midcom/admin/babel/main.php',
-            	    'name' => 'MidCOM localization',
             	    'config' => null,
             	),
             	'help' => array

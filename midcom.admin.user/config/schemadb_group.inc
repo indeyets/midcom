@@ -97,5 +97,57 @@
                 ),
             ),
         ),
+        'centralized_toolbar' => array
+        (
+            'title'       => 'enable centralized toolbar',
+            'type'        => 'privilege',
+            'type_config' => array
+            (
+                'privilege_name' => 'midcom:centralized_toolbar',
+                'assignee'       => 'SELF',
+                'classname'      => 'midcom_services_toolbars',
+            ),
+            'widget'      => 'privilege',
+            'storage'     => null,
+        ),
+        'ajax_toolbar' => array
+        (
+            'title'       => 'enable ajax in toolbar',
+            'type'        => 'privilege',
+            'type_config' => array
+            (
+                'privilege_name' => 'midcom:ajax',
+                'assignee'       => 'SELF',
+                'classname'      => 'midcom_services_toolbars',
+            ),
+            'widget'      => 'privilege',
+            'storage'     => null,
+        ),
+        'ajax_uimessages' => array
+        (
+            'title'       => 'enable ajax in uimessages',
+            'type'        => 'privilege',
+            'type_config' => array
+            (
+                'privilege_name' => 'midcom:ajax',
+                'assignee'       => 'SELF',
+                'classname'      => 'midcom_services_uimessages',
+            ),
+            'widget'      => 'privilege',
+            'storage'     => null,
+        ),
+        'asgard_access' => array
+        (
+            'title'       => 'enable asgard',
+            'type'        => 'privilege',
+            'type_config' => array
+            (
+                'privilege_name' => 'midgard.admin.asgard:access',
+                'assignee'       => 'SELF',
+                'classname'      => 'midgard_admin_asgard_plugin',
+            ),
+            'widget'      => 'privilege',
+            'storage'     => null,
+        ),
     ),
 ),

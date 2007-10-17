@@ -37,6 +37,8 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
         $_MIDCOM->load_library('midgard.admin.asgard');
         $_MIDCOM->load_library('midcom.admin.user');
         
+        $_MIDCOM->auth->require_valid_user();
+        
         return array
         (
             /**

@@ -33,3 +33,10 @@ table.midcom_admin_user_search_results tr.even td
 {
     background-color: #eeeeef;
 }
+
+
+form.datamanager2 fieldset label,
+form.datamanager2 fieldset input
+{
+    display: inline !important;
+}

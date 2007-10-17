@@ -178,6 +178,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
      */
     function prepare_plugin($title, &$data)
     {
+        $_MIDCOM->auth->require_user_do('midgard.admin.asgard:access', null, 'midgard_admin_asgard_plugin');    
         $data['view_title'] = $title;
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
         $_MIDCOM->skip_page_style = true;
