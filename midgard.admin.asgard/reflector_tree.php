@@ -454,7 +454,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
      *
      * @access private
      */
-    function &_child_objects_type_qb(&$schema_type, &$for_object, &$deleted)
+    function _child_objects_type_qb(&$schema_type, &$for_object, &$deleted)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         if ($deleted)
@@ -522,6 +522,11 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         {
             $uptype = $ref->get_midgard_type($upfield);
             $uptarget = $ref->get_link_target($upfield);
+            if (!isset($for_object->$uptarget))
+            {
+                $qb->end_group();
+                return false;
+            }
             switch ($uptype)
             {
                 case MGD_TYPE_STRING:
@@ -535,6 +540,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
                 default:
                     debug_add("Do not know how to handle upfield '{$upfield}' has type {$uptype}", MIDCOM_LOG_ERROR);
                     debug_pop();
+                    $qb->end_group();
                     return false;
             }
         }
@@ -551,11 +557,12 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
                     break;
                 case MGD_TYPE_INT:
                 case MGD_TYPE_UINT:
-                    $qb->add_constraint($parentfield, '=', (int)$for_object->$parenttarget);
+                        $qb->add_constraint($parentfield, '=', (int)$for_object->$parenttarget);
                     break;
                 default:
                     debug_add("Do not know how to handle parentfield '{$parentfield}' has type {$parenttype}", MIDCOM_LOG_ERROR);
                     debug_pop();
+                    $qb->end_group();
                     return false;
             }
         }

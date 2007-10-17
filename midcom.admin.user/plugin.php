@@ -98,6 +98,17 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
                 'variable_args' => 1,
             ),
             /**
+             * List folders group has privileges to
+             * 
+             * Match /user-editor/group/folders/<guid>/
+             */
+            'group_folders' => array
+            (
+                'handler' => array ('midcom_admin_user_handler_group_permissions', 'folders'),
+                'fixed_args' => array ('group', 'folders'),
+                'variable_args' => 1,
+            ),
+            /**
     		 * Create new user
     		 *
     		 * Match /create/
