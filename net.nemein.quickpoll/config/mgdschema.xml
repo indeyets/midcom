@@ -4,7 +4,7 @@
   <type name="net_nemein_quickpoll_option" table="net_nemein_quickpoll_option" parent="midgard_article" parentfield="article">
     <property name="id" type="integer" primaryfield="id" />
 
-    <property name="title" type="text" />
+    <property name="title" type="string" />
     <property name="article" link="midgard_article:id" reverse="no" type="integer" parentfield="article"/>
         
     <!-- Cached vote count -->

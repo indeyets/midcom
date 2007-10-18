@@ -10,18 +10,16 @@ class net_nemein_quickpoll_vote_dba extends __net_nemein_quickpoll_vote_dba
         return parent::__net_nemein_quickpoll_vote_dba($id);
     }
     
-    function get_parent_guid_uncached()
+    /**
+     * Human-readable label for cases like Asgard navigation
+     */
+    function get_label()
     {
-        // FIXME: Midgard Core should do this
-        if ($this->article != 0)
+        if ($this->user)
         {
-            $parent = new midcom_db_article($this->article);
-            return $parent;
+            return $this->user;
         }
-        else
-        {
-            return null;
-        }
+        return $this->ip;
     }
  }
 ?>

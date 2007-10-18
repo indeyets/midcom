@@ -3,26 +3,26 @@
 
   <type name="midcom_core_group_virtual_db" table="midcom_group_virtual">
     <property name="id" type="integer" primaryfield="id" />
-    <property name="component" type="text" />
-    <property name="identifier" type="text" />
-    <property name="name" type="text" />
+    <property name="component" type="string" />
+    <property name="identifier" type="string" />
+    <property name="name" type="string" />
   </type>
 
   <type name="midcom_core_privilege_db" table="midcom_core_privilege">
     <property name="id" type="integer" primaryfield="id" />
-    <property name="objectguid" type="text" />
-    <property name="name" type="text" />
-    <property name="assignee" type="text" />
-    <property name="classname" type="text" />
+    <property name="objectguid" type="string" />
+    <property name="name" type="string" />
+    <property name="assignee" type="string" />
+    <property name="classname" type="string" />
     <property name="value" type="integer" />
   </type>
 
   <type name="midcom_core_login_session_db" table="midcom_core_login_session">
     <property name="id" type="integer" primaryfield="id" />
-    <property name="userid" type="text" />
-    <property name="username" type="text" />
-    <property name="password" type="text" />
-    <property name="clientip" type="text" />
+    <property name="userid" type="string" />
+    <property name="username" type="string" />
+    <property name="password" type="string" />
+    <property name="clientip" type="string" />
     <property name="timestamp" type="integer" />
   </type>
 

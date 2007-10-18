@@ -178,6 +178,32 @@ body
     color: blue;
 }
 
+#content form.datamanager2 div.form_toolbar
+{
+    margin-top: 6px;
+}
+#content form.datamanager2 div.form_toolbar input
+{
+    color: #204A87;
+    background-color: #d3d7cf;
+    border: none;
+    margin-right: 14px;
+    padding: 4px;
+    padding-left: 22px;
+    background-position: 4px;
+    cursor: pointer;
+}
+#content form.datamanager2 div.form_toolbar input.save
+{
+    background-color: #eeeeec;
+    color: #000000;
+    border-top: 3px solid #ffffff;
+    border-left: 3px solid #ffffff;
+    border-right: 3px solid #babdb6;
+    border-bottom: 3px solid #babdb6;
+    -moz-border-radius: 6px;
+}
+
 #container a:link,
 #container a:visited
 {
