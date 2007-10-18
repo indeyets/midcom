@@ -1606,7 +1606,8 @@ class midcom_application
      *
      * @return int The context ID.
      */
-    function get_current_context () {
+    function get_current_context ()
+    {
         return $this->_currentcontext;
     }
 
@@ -1625,7 +1626,8 @@ class midcom_application
      * @param string $newsub The substyle to append.
      * @see midcom_application::substyle_prepend()
      */
-    function substyle_append ($newsub) {
+    function substyle_append ($newsub)
+    {
         if ($this->_status < MIDCOM_STATUS_HANDLE) {
             $this->generate_error(MIDCOM_ERRCRIT, "Cannot do a substyle_append before the HANDLE phase.");
         }
@@ -1658,7 +1660,8 @@ class midcom_application
      * @param string $newsub The substyle to prepend.
      * @see midcom_application::substyle_append()
      */
-    function substyle_prepend($newsub) {
+    function substyle_prepend($newsub)
+    {
         if ($this->_status < MIDCOM_STATUS_HANDLE) {
             $this->generate_error(MIDCOM_ERRCRIT, "Cannot do a substyle_append before the HANDLE phase.");
         }
@@ -1859,7 +1862,8 @@ class midcom_application
      * @return bool    Indicating if the switch was successful.
      * @access private
      */
-    function _set_current_context($id) {
+    function _set_current_context($id)
+    {
         debug_push("midcom_application::_set_current_context");
 
         if ($id < 0 || $id >= count ($this->_context)) {
@@ -1879,7 +1883,8 @@ class midcom_application
      *
      * @return int    One of the MIDCOM_STATUS_... constants indicating current state.
      */
-    function get_status() {
+    function get_status()
+    {
         return $this->_status;
     }
 
@@ -1932,7 +1937,8 @@ class midcom_application
      *
      * @param string $string    The title to set.
      */
-    function set_pagetitle($string) {
+    function set_pagetitle($string)
+    {
         $this->_set_context_data($string, MIDCOM_CONTEXT_PAGETITLE);
     }
 
@@ -2118,7 +2124,8 @@ class midcom_application
      *
      * @param An old-style db-snippet path that is translated into the midcom library dir.
      */
-    function load_snippet($path) {
+    function load_snippet($path)
+    {
         debug_push("midcom_application::load_snippet");
         debug_add("Use of deprecated function", MIDCOM_LOG_WARN);
         trigger_error ('Use of deprecated function midcom_application::load_snippet($path);', E_USER_NOTICE);
@@ -2152,7 +2159,8 @@ class midcom_application
      *
      * @param MidgardSnippet $snippet    The snippet that should be delivered to the client.
      */
-    function serve_snippet (& $snippet) {
+    function serve_snippet (& $snippet)
+    {
         if ($snippet->parameter("midcom", "allow_serve") != "true") {
             debug_add("This snippet may not be served.", MIDCOM_LOG_ERROR);
             $this->generate_error(MIDCOM_ERRFORBIDDEN, "This snippet may not be served.");
@@ -2344,7 +2352,8 @@ class midcom_application
      *
      * @returns MidgardObject    Midgard status information.
      */
-    function get_midgard() {
+    function get_midgard()
+    {
         $midgard = mgd_get_midgard();
 
         $midgard->self .= $this->_prefix;
@@ -2377,13 +2386,14 @@ class midcom_application
      * @see midcom_application::print_jscripts();
      * @see midcom_application::print_jsonload();
      */
-    function add_jsfile($url, $prepend = false) {
+    function add_jsfile($url, $prepend = false)
+    {
         // Adds an URL for a <script type="text/javascript" src="htmlarea.js"></script>
         // like call. $url is inserted into src. Duplicates are omitted.
         if (! in_array($url, $this->_jsfiles))
         {
             $this->_jsfiles[] = $url;
-            $js_call = '<script type="text/javascript" src="' . $url . '"></script>' . "\n";
+            $js_call = "<script type=\"text/javascript\" src=\"{$url}\"></script>\n";
             if ($prepend)
             {
                 // Add the javascript include to the beginning, not the end of array
@@ -2421,9 +2431,9 @@ class midcom_application
      * @see midcom_application::print_jscripts();
      * @see midcom_application::print_jsonload();
      */
-    function add_jscript($script, $defer = "", $prepend = false) {
-
-        $js_call = '<script type="text/javascript" '. $defer . '>' . "\n";
+    function add_jscript($script, $defer = '', $prepend = false)
+    {
+        $js_call = "<script type=\"text/javascript\"{$defer}>\n";
         $js_call .= trim($script) . "\n";
         $js_call .= "</script>\n";
         if ($prepend)
@@ -2447,7 +2457,7 @@ class midcom_application
      * @param string $state    The state where to include the code to. Defaults to document.ready
      * @see midcom_application::print_jquery_statuses();
      */
-    function add_jquery_state_script($script, $state = "document.ready")
+    function add_jquery_state_script($script, $state = 'document.ready')
     {
         $js_call = "\n" . trim($script) . "\n";
 
@@ -2473,7 +2483,8 @@ class midcom_application
      *
      */
 
-    function add_object_head ($script, $attributes = null) {
+    function add_object_head ($script, $attributes = null)
+    {
         $output = "";
         if (!is_null($attributes) ) foreach ($attributes as $key => $val)
         {
@@ -2597,7 +2608,8 @@ class midcom_application
      * @see midcom_application::print_jscripts();
      * @see midcom_application::print_jsonload();
      */
-    function add_jsonload($method) {
+    function add_jsonload($method)
+    {
         // Adds an method name for <body onload=".."> The string must not end with a ;, it is added automagically
         $this->_jsonload[] = $method;
     }
@@ -2636,7 +2648,8 @@ class midcom_application
      * @see midcom_application::add_jsonload();
      * @see midcom_application::print_jscripts();
      */
-    function print_jsonload() {
+    function print_jsonload()
+    {
         if (count ($this->_jsonload) > 0) {
             $calls = implode("; ", $this->_jsonload);
             echo " onload=\"$calls\" ";
@@ -2665,7 +2678,8 @@ class midcom_application
      * @see midcom_application::add_jsfile();
      * @see midcom_application::add_jscript();
      */
-    function print_head_elements() {
+    function print_head_elements()
+    {
         if (!empty($this->_prepend_jshead))
         {
             foreach ($this->_prepend_jshead as $js_call)
@@ -2673,6 +2687,7 @@ class midcom_application
                 echo $js_call;
             }           
         }
+        
         echo $this->_link_head;
         echo $this->_object_head;
         echo $this->_style_head;
@@ -2698,7 +2713,14 @@ class midcom_application
         }
         
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/jQuery/jquery-{$version}.pack.js", true);
-        $script = 'var $j = jQuery.noConflict();'."\n";
+        
+        $script = '';
+        
+        if ($GLOBALS['midcom_config']['jquery_no_conflict'])
+        {
+            $script .= 'var $j = jQuery.noConflict();'."\n";
+        }
+        
         $script .= "var MIDCOM_STATIC_URL = '" . MIDCOM_STATIC_URL . "';\n";
         $script .= "var MIDCOM_PAGE_PREFIX = '" . $_MIDCOM->get_page_prefix() . "';\n";
 
@@ -2814,7 +2836,8 @@ class midcom_application
      * @param mixed $count Number of lines to be dumped or 'all' for everything
      * @access private
      */
-    function _showdebuglog($count) {
+    function _showdebuglog($count)
+    {
         if ($GLOBALS['midcom_config']['log_tailurl_enable'] !== true)
         {
             $this->generate_error(MIDCOM_ERRFORBIDDEN, "Access to the debug log is disabled.");
