@@ -162,11 +162,11 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
             case 'microsoft':
                 if ($echo_output)
                 {
-                    echo "<script type=\"text/javascript\" src=\"http://dev.virtualearth.net/mapcontrol/v3/mapcontrol.js\"></script>\n";                    
+                    echo "<script type=\"text/javascript\" src=\"http://dev.virtualearth.net/mapcontrol/v5/mapcontrol.js\"></script>\n";                    
                 }
                 else
                 {
-                    $_MIDCOM->add_jsfile('http://dev.virtualearth.net/mapcontrol/v3/mapcontrol.js');
+                    $_MIDCOM->add_jsfile('http://dev.virtualearth.net/mapcontrol/v5/mapcontrol.js');
                 }
                 break;
             case 'yahoo':
@@ -232,7 +232,7 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
         
         foreach ($this->markers as $marker)
         {
-            $marker_instance = $this->create_js_marker($marker);
+            $marker_instance = $this->create_js_marker($marker, &$script);
             $script .= "mapstraction_{$this->id}.addMarker({$marker_instance});\n";
         }
         $script .= "mapstraction_{$this->id}.addSmallControls();\n";
@@ -258,24 +258,24 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
     /**
      * Create a marker javascript object and return its name
      */
-    function create_js_marker($marker)
+    function create_js_marker($marker, &$script)
     {
         static $i = 0;
         $i++;
-
+        
 		// Just in case.. cast lat/lon to 'dot' delimited numbers
 		$lat = number_format($marker['coordinates']['latitude'],6);
 		$lon = number_format($marker['coordinates']['longitude'],6);
 
-        echo "var marker_{$i} = new Marker(new LatLonPoint({$lat}, {$lon}))\n";
+        $script .= "var marker_{$i} = new Marker(new LatLonPoint({$lat}, {$lon}))\n";
         
 		$title = htmlspecialchars($marker['title'],ENT_QUOTES);
-        echo "marker_{$i}.setLabel('{$title}');\n";
+        $script .= "marker_{$i}.setLabel('{$title}');\n";
         
         if (isset($marker['abstract']))
         {
 			$abstract = htmlspecialchars($marker['abstract'],ENT_QUOTES);
-            echo "marker_{$i}.setInfoBubble('{$abstract}');\n";
+            $script .= "marker_{$i}.setInfoBubble('{$abstract}');\n";
         }
         
         // TODO: Set other marker properties
