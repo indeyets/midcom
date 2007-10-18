@@ -8,7 +8,7 @@
 foreach ($data['pages'] as $page)
 {
 ?>
-            <li><img src="<?php echo MIDCOM_STATIC_URL; ?>/stock-icons/16x16/new-text.png" alt="" /> <input type="hidden" name="midcom_admin_content_page_score[]" value="&(page.id);" />&(page.title);</li>
+            <li><img src="<?php echo MIDCOM_STATIC_URL; ?>/stock-icons/16x16/document.png" alt="" /> <input type="hidden" name="midcom_admin_content_page_score[]" value="&(page.id);" />&(page.title);</li>
 <?php
 }
 ?>

@@ -292,7 +292,7 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
                 (
                     MIDCOM_TOOLBAR_URL => 'feeds/subscribe/',
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('subscribe feeds', 'net.nemein.rss'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_news.png',
+                    MIDCOM_TOOLBAR_ICON => 'net.nemein.rss/rss-16.png',
                     MIDCOM_TOOLBAR_ENABLED => $this->_topic->can_do('midgard:create'),
                 )
             );

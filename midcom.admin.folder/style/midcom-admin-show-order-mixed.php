@@ -15,7 +15,7 @@ foreach ($data['mixed'] as $id => $name)
     }
     else
     {
-        $image = 'new-text.png';
+        $image = 'document.png';
     }
 ?>
             <li class="&(type[2]);"><img src="<?php echo MIDCOM_STATIC_URL; ?>/stock-icons/16x16/&(image);" alt="" /> <input type="hidden" name="midcom_admin_content_mixed_score[]" value="&(id);" />&(name);</li>

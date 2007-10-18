@@ -372,6 +372,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             case (is_a($obj, 'midgard_topic')):
             case (is_a($obj, 'midgard_snippetdir'));
             case (is_a($obj, 'midgard_style')):
+            case (is_a($obj, 'midgard_page')):
                 $icon='stock_folder.png';
                 break;
             case (is_a($obj, 'midgard_event')):
@@ -383,6 +384,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             case (is_a($obj, 'midgard_group')):
             case (is_a($obj, 'org_openpsa_organization')):
             case (is_a($obj, 'net_nehmer_buddylist_entry_db')):
+            case (is_a($obj, 'org_openpsa_campaign')):
                 $icon='stock_people.png';
                 break;
             case (is_a($obj, 'midgard_host')):
@@ -390,14 +392,17 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
                 break;
             case (is_a($obj, 'midgard_pageelement')):
             case (is_a($obj, 'midgard_element')):
-                $icon = 'new-html.png';
+                $icon = 'text-x-generic-template.png';
                 break;
             case (is_a($obj, 'org_openpsa_notifications_notification')):
                 $icon = 'stock_news.png';
                 break;
+            case (is_a($obj, 'org_routamc_positioning_country')):
+                $icon = 'locale.png';
+                break;
 
             default:
-                $icon = 'new-text.png';
+                $icon = 'document.png';
         }
 
         $icon = "<img src='/midcom-static/stock-icons/16x16/{$icon}' align='absmiddle' border='0' /> ";

@@ -138,7 +138,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
                         $this->_l10n_midcom->get('create %s'),
                         $_MIDCOM->i18n->get_string($this->_schemadb[$name]->description, 'midcom.helper.replicator')
                     ),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_refresh.png',
+                    MIDCOM_TOOLBAR_ICON => 'midcom.helper.replicator/replicate-server-16.png',
                 )
             );
         }

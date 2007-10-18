@@ -305,7 +305,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 (
                     MIDCOM_TOOLBAR_URL => "__ais/folder/metadata/{$topic->guid}.html",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit folder metadata', 'midcom.admin.folder'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/metadata.png',
                 )
             );
             // TEMPORARY CODE END
@@ -316,7 +316,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 (
                     MIDCOM_TOOLBAR_URL => "__ais/folder/move/{$topic->guid}.html",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('move', 'midcom.admin.folder'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/topic-score.png',
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/save-as.png',
                 )
             );
             
@@ -490,7 +490,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 (
                     MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}__mfa/asgard/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('midgard.admin.asgard', 'midgard.admin.asgard'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-master-document.png',
+                    MIDCOM_TOOLBAR_ICON => 'midgard.admin.asgard/asgard-16.png',
                     MIDCOM_TOOLBAR_ACCESSKEY => 'a',
                 )
             );
@@ -501,7 +501,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 (
                     MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}__ais/midcom-settings/edit.html",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('host configuration', 'midcom.admin.settings'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/configuration.png',
                 )
             );
             
@@ -516,20 +516,6 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             );
         }
 
-    	if ($_MIDGARD['admin'] == true)
-    	{
-            $toolbar->add_item
-            (
-                array
-                (
-                    MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}__ais/l10n/",
-                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('midcom.admin.babel', 'midcom.admin.babel'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
-                    MIDCOM_TOOLBAR_ACCESSKEY => 'z',
-                )
-            );
-    	}
-
         if ($_MIDGARD['admin'] == true)
         {
             $toolbar->add_item
@@ -538,7 +524,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 (
                     MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}midcom-exec-midcom/config-test.php",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('test settings', 'midcom'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/start-here.png',
                 )
             );
         }
@@ -733,7 +719,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 (
                     MIDCOM_TOOLBAR_URL => "{$prefix}__ais/folder/metadata/{$object->guid}",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit metadata', 'midcom.admin.folder'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/metadata.png',
                     MIDCOM_TOOLBAR_ACCESSKEY => 'm',
                 )
             );
@@ -748,7 +734,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 (
                     MIDCOM_TOOLBAR_URL => "{$prefix}__ais/folder/move/{$object->guid}",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('move', 'midcom.admin.folder'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/topic-score.png',
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/save-as.png',
                 )
             );
             $toolbar->add_item(Array(
@@ -767,7 +753,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 (
                     MIDCOM_TOOLBAR_URL => "{$prefix}__ais/rcs/{$object->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('show history', 'no.bergfald.rcs'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/history.png',
                     MIDCOM_TOOLBAR_ACCESSKEY => 'v',
                 )
             );

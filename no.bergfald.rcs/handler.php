@@ -301,7 +301,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
                     MIDCOM_TOOLBAR_URL => "__ais/rcs/restore/{$this->_guid}/{$revision}.html",
                     MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_get('restore this revision (%s)'), $revision),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_task-recurring.png',
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/editpaste.png',
                     MIDCOM_TOOLBAR_ENABLED => $this->_object->can_do('midgard:update'),
                 )
             );
