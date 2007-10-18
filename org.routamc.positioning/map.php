@@ -162,11 +162,11 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
             case 'microsoft':
                 if ($echo_output)
                 {
-                    echo "<script type=\"text/javascript\" src=\"http://dev.virtualearth.net/mapcontrol/v5/mapcontrol.js\"></script>\n";                    
+                    echo "<script type=\"text/javascript\" src=\"http://dev.virtualearth.net/mapcontrol/v3/mapcontrol.js\"></script>\n";                    
                 }
                 else
                 {
-                    $_MIDCOM->add_jsfile('http://dev.virtualearth.net/mapcontrol/v5/mapcontrol.js');
+                    $_MIDCOM->add_jsfile('http://dev.virtualearth.net/mapcontrol/v3/mapcontrol.js');
                 }
                 break;
             case 'yahoo':
