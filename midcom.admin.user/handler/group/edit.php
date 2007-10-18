@@ -151,7 +151,8 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
                 MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.user/group/folders/{$this->_group->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('folders', 'midcom.admin.user'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/folder.png',
-            )
+            ),
+            $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
         );
         
         return true;
