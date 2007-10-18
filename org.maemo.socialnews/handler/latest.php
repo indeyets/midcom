@@ -92,6 +92,12 @@ class org_maemo_socialnews_handler_latest  extends midcom_baseclasses_components
             }
             $date = $date_id;
             
+            if (empty($article->url))
+            {
+                // Local item
+                $article->url = $_MIDCOM->permalinks->create_permalink($article->guid);
+            }
+            
             // TODO: Datamanager
             $data['article'] = $article;
             $data['node'] = $this->get_node($article->topic);
