@@ -151,7 +151,7 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
             },
             success: function(data){
                 var parsed = parse_response(data);
-                update_widget_inputs(parsed[0]);
+                update_widget_inputs(parsed[0], true);
                 handle_alternatives(parsed);
             }
         });
@@ -302,8 +302,13 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
         set_marker(label, info);
     }
     
-    function update_widget_inputs(location_data)
+    function update_widget_inputs(location_data, skip_lat_lon)
     {
+        if (skip_lat_lon == undefined)
+        {
+            var skip_lat_lon = false;
+        }
+        
         enable_tabs();
         indicator.hide();
         revindicator.hide();
@@ -313,7 +318,18 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
         jQuery.each(location_data, function(key,value){
             if (input_data[key])
             {
-                jQuery('#' + input_data[key]['id']).attr('value',value);
+                if (skip_lat_lon)
+                {
+                    if (   key != 'latitude'
+                        && key != 'longitude')
+                    {
+                        jQuery('#' + input_data[key]['id']).attr('value',value);                    
+                    }                    
+                }
+                else
+                {
+                    jQuery('#' + input_data[key]['id']).attr('value',value);
+                }
             }
         });
     }
