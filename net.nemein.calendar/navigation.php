@@ -95,6 +95,12 @@ class net_nemein_calendar_navigation extends midcom_baseclasses_components_navig
             $qb->add_order('start');
             $qb->set_limit(1);
             $result = $qb->execute_unchecked();
+            
+            if (count($result) == 0)
+            {
+                return $leaves;
+            }
+            
             $first_year = (int) date('Y', strtotime($result[0]->start));
             $year = $first_year;
             $this_year = (int) date('Y', time());

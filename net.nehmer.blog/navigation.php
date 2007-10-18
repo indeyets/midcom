@@ -111,6 +111,12 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
             $qb->add_order('metadata.published');
             $qb->set_limit(1);
             $result = $qb->execute_unchecked();
+            
+            if (count($result) == 0)
+            {
+                return $leaves;
+            }
+            
             $first_year = (int) date('Y', $result[0]->metadata->published);
             $year = $first_year;
             $this_year = (int) date('Y', time());
