@@ -31,8 +31,8 @@
 // Archive status
 'archive_enable' => true,
 'archive_item_order' => 'ASC',
-'archive_in_navigation' => false,
-'archive_years_in_navigation' => true,
+'archive_in_navigation' => true,
+'archive_years_in_navigation' => false,
 
 'comments_enable' => false,
 'comments_topic' => '',

@@ -135,8 +135,8 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         // Got component, try to load the l10n helper for it
         $component = $_MIDCOM->dbclassloader->_mgdschema_class_handler[$midcom_dba_classname];
         debug_add("Class {$midcom_dba_classname} is handled by component {$component}");
-        $midcom_i18n =& $_MIDCOM->get_service('i18n');
-        $component_l10n =& $midcom_i18n->get_l10n($component);
+        $midcom_i18n = $_MIDCOM->get_service('i18n');
+        $component_l10n = $midcom_i18n->get_l10n($component);
         if (!empty($component_l10n))
         {
             debug_add("Got l10n handler for component {$component}, returning that");

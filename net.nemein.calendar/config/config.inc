@@ -15,8 +15,8 @@
 
 'archive_enable' => true,
 'archive_year_order'   => 'ASC',  // Order for years in archive welcome page
-'archive_in_navigation' => false,
-'archive_years_in_navigation' => true,
+'archive_in_navigation' => true,
+'archive_years_in_navigation' => false,
 
 'show_navigation_pseudo_leaves' => true,   // Set this to false if you want to hide archive navigation items
 
