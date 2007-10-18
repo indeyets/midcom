@@ -263,7 +263,7 @@
  *   the tools <i>mogrify</i>, <i>identify</i> and <i>convert</i> are needed for almost
  *   all kinds of image operations in MidCOM and have to be present therefore. The path
  *   entered here requires a trailing slash.
- * - <b>string utility_jpegtran:</b> JPEGTran is used to do losless rotation of JPEG
+ * - <b>string utility_jpegtran:</b> JPEGTran is used to do lossless rotation of JPEG
  *   images for automatic EXIF rotation in n.s.photos for example. If unavailable,
  *   there is an automatic fallback to imagemagick.
  * - <b>string utility_unzip:</b> The unzip utility, used for bulk uploads.
@@ -482,7 +482,7 @@ $GLOBALS['midcom_config_default']['metadata_approval'] = false;
 $GLOBALS['midcom_config_default']['metadata_scheduling'] = false;
 $GLOBALS['midcom_config_default']['staging2live_staging'] = false;
 
-// Set the DM1 schema used by the Metadata Service
+// Set the DM2 schema used by the Metadata Service
 $GLOBALS['midcom_config_default']['metadata_schema'] = 'file:/midcom/config/metadata_default.inc';
 
 // Component system
@@ -501,6 +501,12 @@ $GLOBALS['midcom_config_default']['page_class_include_component'] = true;
 
 // If this argument is set to true, All midcom_show_style calls wrap the style with HTML comments defining the style path
 $GLOBALS['midcom_config_default']['wrap_style_show_with_name'] = false;
+
+// Related to JavaScript libraries
+$GLOBALS['midcom_config_default']['enable_prototype'] = true;
+$GLOBALS['midcom_config_default']['enable_scriptaculous'] = true;
+$GLOBALS['midcom_config_default']['jquery_no_conflict'] = true;
+
 
 /* ----- Include the site config ----- */
 /* This should be replaced by $_MIDGARD constructs */
@@ -540,5 +546,4 @@ $GLOBALS['midcom_config'] = array_merge
     $GLOBALS['midcom_config_site'],
     $GLOBALS['midcom_config_local']
 );
-
 ?>
