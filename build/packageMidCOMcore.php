@@ -108,6 +108,7 @@ class packageMidCOMcore extends Task
             'installexceptions' => array( 'support' => '/'),
             'dir_roles' => array(), 
             'simpleoutput' => true,
+			            'ignore' => array('package-template.xml'),
 			            'include' => array('*.php', 'midcom*', 'support*'),
             );
           
@@ -121,6 +122,8 @@ class packageMidCOMcore extends Task
         $package->addRole('js','web');
         $package->addRole('htc','web');
         $package->addRole('css','web');
+        $package->addRole('inc','php');
+        $package->addRole('txt','php');
         $package->addRole('sql','midgardsql');
         $package->addRole('xml', 'mgdschema');
 
