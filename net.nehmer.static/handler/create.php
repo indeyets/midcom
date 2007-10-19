@@ -145,7 +145,7 @@ class net_nehmer_static_handler_create extends midcom_baseclasses_components_han
     /**
      * DM2 creation callback, binds to the current content topic.
      */
-    function & dm2_create_callback (&$controller)
+    function &dm2_create_callback (&$controller)
     {
         $this->_article = new midcom_db_article();
         $this->_article->topic = $this->_content_topic->id;
@@ -263,9 +263,5 @@ class net_nehmer_static_handler_create extends midcom_baseclasses_components_han
     {
         midcom_show_style('admin-create');
     }
-
-
-
 }
-
 ?>
