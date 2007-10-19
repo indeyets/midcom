@@ -169,7 +169,7 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
         $this->_feed->description = $this->_config->get('rss_description');
         $this->_feed->language = $this->_config->get('rss_language');
         $this->_feed->editor = $this->_config->get('rss_webmaster');
-        $this->_feed->link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        $this->_feed->link = substr($_MIDCOM->get_host_prefix(), 0, -1) . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         $this->_feed->cssStyleSheet = false;
 
         switch($handler_id)
