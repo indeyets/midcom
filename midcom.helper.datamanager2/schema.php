@@ -119,6 +119,14 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
     var $_raw_schemadb = null;
 
     /**
+     * The schema database path as read by the system.
+     *
+     * @access private
+     * @var Array
+     */
+    var $_schemadb_path = null;
+
+    /**
      * A simple array holding the fields in the order they should be rendered identified
      * by their name.
      *
@@ -171,10 +179,11 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
      *     specified schema database. If unspecified, the default schema is used.
      * @see midcom_get_snippet_content()
      */
-    function midcom_helper_datamanager2_schema($schemadb, $name = null)
+    function midcom_helper_datamanager2_schema($schemadb, $name = null, $schemadb_path = null)
     {
-         $this->_component = 'midcom.helper.datamanager2';
-         parent::midcom_baseclasses_components_purecode();
+        $this->_component = 'midcom.helper.datamanager2';
+        parent::midcom_baseclasses_components_purecode();
+        $this->_schemadb_path = $schemadb_path;
 
         $this->_load_schemadb($schemadb);
 
@@ -277,6 +286,31 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
         {
             $data['name'] = $name;
             $this->append_field($name, $data);
+        }
+        
+        if (   $this->_config->get('include_metadata_required')
+            && $this->_schemadb_path
+            && $this->_schemadb_path != $GLOBALS['midcom_config']['metadata_schema'])
+        {
+            // Include required fields from metadata schema to the schema
+            $metadata_schema = midcom_helper_datamanager2_schema::load_database($GLOBALS['midcom_config']['metadata_schema']);
+            if (isset($metadata_schema['metadata']))
+            {
+                $prepended = false;
+                foreach ($metadata_schema['metadata']->fields as $name => $field)
+                {
+
+                    if ($field['required'])
+                    {
+                        if (!$prepended)
+                        {   
+                            $field['static_prepend'] = "<h3 style='clear: left;'>" . $_MIDCOM->i18n->get_string('metadata', 'midcom') . "</h3>\n" . $field['static_prepend'];
+                            $prepended = true;
+                        }
+                        $this->append_field($name, $field);
+                    }
+                }
+            }
         }
     }
 
@@ -512,8 +546,10 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
      */
     function load_database($raw_db)
     {
+        $path = null;
         if (is_string($raw_db))
         {
+            $path = $raw_db;
             $data = midcom_get_snippet_content($raw_db);
             $result = eval ("\$raw_db = Array ( {$data}\n );");
             if ($result === false)
@@ -528,7 +564,7 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
 
         foreach ($raw_db as $name => $raw_schema)
         {
-            $schemadb[$name] = new midcom_helper_datamanager2_schema($raw_db, $name);
+            $schemadb[$name] = new midcom_helper_datamanager2_schema($raw_db, $name, $path);
         }
         return $schemadb;
     }

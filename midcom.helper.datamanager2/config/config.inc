@@ -8,3 +8,5 @@
 'tinymce_default_config_snippet' => "file://midcom/helper/datamanager2/config/tinymce_default",
 'tinymce_use_compressor' => false,
 //'tinymce_default_config_snippet' => "{$GLOBALS['midcom_config']['midcom_sgconfig_basedir']}/midcom.helper.datamanager2/tinymce",
+
+'include_metadata_required' => false,
