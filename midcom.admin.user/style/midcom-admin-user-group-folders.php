@@ -25,7 +25,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             echo "<tr>\n";
             echo "<th><a href=\"{$prefix}__mfa/asgard/object/permissions/{$object->guid}/\">{$object->extra}</a></th>\n";
             
-            foreach ($data['privileges'] as $privilege)
+            foreach ($privs as $privilege)
             {
                 echo "<td>";
                 if (!isset($privs[$privilege]))
