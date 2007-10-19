@@ -147,3 +147,42 @@ Onko kansio näkyvissä
 Luodaanko artikkelin URL-nimi automaattisesti?
 ---STRINGEND
 
+---STRING failed to delete the article link, contact the site administrator
+Artikkelilinkin poistaminen epäonnistui, ota yhteys sivuston ylläpitäjään.
+---STRINGEND
+
+---STRING delete cancelled
+Poistaminen peruutettu
+---STRINGEND
+
+---STRING article link deleted
+Artikkelilinkki poistettu
+---STRINGEND
+
+---STRING article %s deleted
+Artikkeli %s poistettu
+---STRINGEND
+
+---STRING delete link
+Poista linkki
+---STRINGEND
+
+---STRING delete article link
+Poista artikkelilinkki
+---STRINGEND
+
+---STRING this article has been linked from <a href="%s">%s</a> and confirming will delete only the link
+Tämä artikkeli on linkitetty osoitteesta <a href="%s">%s</a> ja vahvistaminen poistaa vain linkin.
+---STRINGEND
+
+---STRING if you want to delete the original article, <a href="%s">click here</a>
+Jos haluat poistaa alkuperäisen artikkelin, <a href="%s">klikkaa tästä</a>.
+---STRINGEND
+
+---STRING delete article link
+Poista artikkelilinkki
+---STRINGEND
+
+---STRING delete_link
+Poista linkki
+---STRINGEND

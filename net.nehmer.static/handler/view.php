@@ -101,10 +101,34 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
         }
 
         $qb = midcom_baseclasses_database_article::new_query_builder();
-        $qb->add_constraint('topic', '=', $this->_content_topic->id);
         $qb->add_constraint('name', '=', $args[0]);
         $qb->add_constraint('up', '=', 0);
         $qb->set_limit(1);
+        
+        // Include the article links to the indexes if enabled
+        if ($this->_config->get('enable_article_links'))
+        {
+            $mc = net_nehmer_static_link_dba::new_collector('topic', $this->_content_topic->id);
+            $mc->add_value_property('article');
+            $mc->add_constraint('topic', '=', $this->_content_topic->id);
+            
+            // Get the results
+            $mc->execute();
+            
+            $links = $mc->list_keys();
+            $qb->begin_group('OR');
+                foreach ($links as $guid => $link)
+                {
+                    $article_id = $mc->get_subkey($guid, 'article');
+                    $qb->add_constraint('id', '=', $article_id);
+                }
+                $qb->add_constraint('topic', '=', $this->_content_topic->id);
+            $qb->end_group();
+        }
+        else
+        {
+            $qb->add_constraint('topic', '=', $this->_content_topic->id);
+        }
         
         $result = $qb->execute();
 
@@ -134,9 +158,34 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
         if ($handler_id == 'index')
         {
             $qb = midcom_db_article::new_query_builder();
-            $qb->add_constraint('topic', '=', $this->_content_topic->id);
             $qb->add_constraint('name', '=', 'index');
             $qb->set_limit(1);
+            
+            // Include the article links to the indexes if enabled
+            if ($this->_config->get('enable_article_links'))
+            {
+                $mc = net_nehmer_static_link_dba::new_collector('topic', $this->_content_topic->id);
+                $mc->add_value_property('article');
+                $mc->add_constraint('topic', '=', $this->_content_topic->id);
+                
+                // Get the results
+                $mc->execute();
+                
+                $links = $mc->list_keys();
+                $qb->begin_group('OR');
+                    foreach ($links as $guid => $link)
+                    {
+                        $article_id = $mc->get_subkey($guid, 'article');
+                        $qb->add_constraint('id', '=', $article_id);
+                    }
+                    $qb->add_constraint('topic', '=', $this->_content_topic->id);
+                $qb->end_group();
+            }
+            else
+            {
+                $qb->add_constraint('topic', '=', $this->_content_topic->id);
+            }
+            
             $result = $qb->execute();
 
             if (empty($result))

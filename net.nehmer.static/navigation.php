@@ -47,7 +47,7 @@ class net_nehmer_static_navigation extends midcom_baseclasses_components_navigat
     public function get_leaves()
     {
         // Get the required information with midgard_collector
-        $mc = midcom_db_article::new_collector('topic', $this->_content_topic->id);
+        $mc = midcom_db_article::new_collector('up', 0);
         $mc->set_key_property('topic');
         $mc->add_value_property('id');
         $mc->add_value_property('guid');
@@ -55,7 +55,30 @@ class net_nehmer_static_navigation extends midcom_baseclasses_components_navigat
         $mc->add_value_property('title');
         
         $mc->add_constraint('topic', '=', $this->_content_topic->id);
-        $mc->add_constraint('up', '=', 0);
+        if (!$this->_config->get('enable_article_links'))
+        {
+            $mc->add_constraint('topic', '=', $this->_content_topic->id);
+        }
+        else
+        {
+            // Get the linked articles as well
+            $mc_link = net_nehmer_static_link_dba::new_collector('topic', $this->_content_topic->id);
+            $mc_link->add_value_property('article');
+            $mc_link->add_constraint('topic', '=', $this->_content_topic->id);
+            $mc_link->execute();
+            
+            $links = $mc_link->list_keys();
+            
+            $mc->begin_group('OR');
+                $mc->add_constraint('topic', '=', $this->_content_topic->id);
+                foreach ($links as $guid => $array)
+                {
+                    $id = $mc_link->get_subkey($guid, 'id');
+                    $mc->add_constraint('id', '=', $id);
+                }
+            $mc->end_group();
+        }
+        
         $mc->add_constraint('metadata.navnoentry', '=', 0);
         
         // Unless in Auto-Index mode or the index article is hidden, we skip the index article.

@@ -58,6 +58,12 @@ class net_nehmer_static_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('delete'),
             'variable_args' => 1,
         );
+        $this->_request_switch['delete_link'] = array
+        (
+            'handler' => array('net_nehmer_static_handler_admin', 'deletelink'),
+            'fixed_args' => array('delete', 'link'),
+            'variable_args' => 1,
+        );
         $this->_request_switch['create'] = Array
         (
             'handler' => Array('net_nehmer_static_handler_create', 'create'),

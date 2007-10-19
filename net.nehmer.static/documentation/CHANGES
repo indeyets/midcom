@@ -8,6 +8,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2007-10-19 adrenalin
+  ! Added article linking support similar to the one of net.nehmer.blog
+
 2007-04-24 adrenalin
   - Ported some new stuff to branch-26
 

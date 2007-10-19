@@ -147,3 +147,46 @@ View Article
 Should the topic be visible
 ---STRINGEND
 
+---STRING failed to delete the article link, contact the site administrator
+Failed to delete the article link, contact the site administrator
+---STRINGEND
+
+---STRING delete cancelled
+Delete cancelled
+---STRINGEND
+
+---STRING article link deleted
+Article link deleted
+---STRINGEND
+
+---STRING article %s deleted
+Article %s deleted
+---STRINGEND
+
+---STRING delete link
+Delete link
+---STRINGEND
+
+---STRING delete article link
+delete article link
+---STRINGEND
+
+---STRING this article has been linked from <a href="%s">%s</a> and confirming will delete only the link
+This article has been linked from <a href="%s">%s</a> and confirming will delete only the link.
+---STRINGEND
+
+---STRING if you want to delete the original article, <a href="%s">click here</a>
+If you want to delete the original article, <a href="%s">click here</a>.
+---STRINGEND
+
+---STRING delete article link
+Delete article link
+---STRINGEND
+
+---STRING from
+From
+---STRINGEND
+
+---STRING delete_link
+Delete link
+---STRINGEND

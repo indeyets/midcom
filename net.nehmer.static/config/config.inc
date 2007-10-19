@@ -26,3 +26,15 @@
 
 // Set this to true if you want to enable on-site AJAX editing
 'enable_ajax_editing' => false,
+
+// Page linking system
+'enable_article_links' => true,
+'enable_editing_of_linked_articles' => false,
+'include_linked_articles_to_feeds' => true,
+
+// Creation callback snippet for defining site-specific function
+'callback_snippet' => null,
+
+// Callback function will be called after creation e.g. to provide interface for page linking system
+// $callback_function($article, $topic)
+'callback_function' => null,

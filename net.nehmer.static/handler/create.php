@@ -172,6 +172,24 @@ class net_nehmer_static_handler_create extends midcom_baseclasses_components_han
             // This will exit.
         }
 
+        // Callback possibility
+        if ($this->_config->get('callback_function'))
+        {
+            if ($this->_config->get('callback_snippet'))
+            {
+                // mgd_include_snippet($this->_config->get('callback_snippet'));
+                $eval = midcom_get_snippet_content($this->_config->get('callback_snippet'));
+                
+                if ($eval)
+                {
+                    eval($eval);
+                }
+            }
+            
+            $callback = $this->_config->get('callback_function');
+            $callback($this->_article, $this->_content_topic);
+        }
+        
         return $this->_article;
     }
 
