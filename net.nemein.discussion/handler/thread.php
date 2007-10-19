@@ -356,6 +356,14 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
         }
         
         $thread = $requested_post->get_parent();
+        if (is_a($thread, 'net_nemein_discussion_post'))
+        {
+            // This post has up pointing to another post, setting the parent in that way
+            while (!is_a($thread, 'net_nemein_discussion_thread'))
+            {
+                $thread = $thread->get_parent();
+            }
+        }
         if ($thread->node != $this->_topic->id)
         {
             return false;

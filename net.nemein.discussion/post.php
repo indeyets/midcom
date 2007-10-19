@@ -17,20 +17,6 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
         return parent::__net_nemein_discussion_post_dba($id);
     }
     
-    function get_parent_guid_uncached()
-    {
-        // FIXME: Midgard Core should do this
-        if ($this->thread != 0)
-        {
-            $parent = new net_nemein_discussion_thread_dba($this->thread);
-            return $parent;
-        }
-        else
-        {
-            return null;
-        }
-    }
-    
     /**
      * Marks the message as reported abuse
      */
@@ -220,7 +206,10 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
         if (is_a($thread, 'net_nemein_discussion_post'))
         {
             // This post has up pointing to another post, setting the parent in that way
-            return $thread->_update_thread_cache();
+            while (!is_a($thread, 'net_nemein_discussion_thread'))
+            {
+                $thread = $thread->get_parent();
+            }
         }
         
         $latest_post = new net_nemein_discussion_post_dba($thread->latestpost);
