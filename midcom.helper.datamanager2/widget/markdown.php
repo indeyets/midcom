@@ -73,6 +73,7 @@ class midcom_helper_datamanager2_widget_markdown extends midcom_helper_datamanag
             return false;
         }
         
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Prototype/prototype.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/control.textarea.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/control.textarea.markdown.js');
         $_MIDCOM->add_link_head
