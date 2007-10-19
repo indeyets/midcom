@@ -217,6 +217,12 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
             return true;
         }
         $thread = $this->get_parent();
+        if (is_a($thread, 'net_nemein_discussion_post'))
+        {
+            // This post has up pointing to another post, setting the parent in that way
+            return $thread->_update_thread_cache();
+        }
+        
         $latest_post = new net_nemein_discussion_post_dba($thread->latestpost);
 
         $qb = net_nemein_discussion_post_dba::new_query_builder();
