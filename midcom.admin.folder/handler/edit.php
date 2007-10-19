@@ -57,6 +57,12 @@ class midcom_admin_folder_handler_edit extends midcom_baseclasses_components_han
     {
         // Load the configuration
         $_MIDCOM->componentloader->load('midcom.admin.folder');
+        
+        if (!class_exists('midcom_helper_datamanager2'))
+        {
+            $_MIDCOM->componentloader->load('midcom.helper.datamanager2');
+        }
+        
         $this->_config =& $GLOBALS['midcom_component_data']['midcom.admin.folder']['config'];
     }
     

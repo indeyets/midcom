@@ -6,6 +6,10 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-10-19 adrenalin
+  - Added midcom.helper.datamanager2 to load at startup, otherwise editing of folders that
+    do not load it would be impossible
+
 2007-09-06 bergie
   + Localization changes
   + Added folder classification feature to folder editing

@@ -24,6 +24,7 @@ class midcom_admin_folder_interface extends midcom_baseclasses_components_interf
         $this->_autoload_libraries = array
         (
             'midcom.admin.help',
+            'midcom.helper.datamanager2',
         );
     }
 }
