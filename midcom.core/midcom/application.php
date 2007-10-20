@@ -981,12 +981,12 @@ class midcom_application
             
             if ($this->get_current_context() == 0) 
             {
-                $this->generate_error(MIDCOM_ERRNOTFOUND, "This page is not available on this server {$this->_currentcontext}");
+                $this->generate_error(MIDCOM_ERRNOTFOUND, "This page is not available on this server.");
             }
 
             $this->_status = MIDCOM_STATUS_ABORT;
             debug_pop();
-            return ;// This will exit.
+            return false;// This will exit.
         }
 
         if (   $this->_currentcontext == 0
