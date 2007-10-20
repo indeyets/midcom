@@ -36,3 +36,13 @@
         'midcom.admin.folder' => array (),
     ),
 ),
+'customdata' => array
+(
+    'asgard_plugin' => array
+    (
+        'class' => 'midcom_admin_settings_editor',
+        'src' => 'file:/midcom/admin/settings/editor.php',
+        'name' => 'midcom.admin.settings',
+        'config' => null,
+    ),
+),
