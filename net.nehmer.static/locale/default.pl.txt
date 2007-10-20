@@ -11,8 +11,16 @@ Pokaż tylko zatwierdzone artykuły
 Automatycznie twórz artykuł indeksowy.
 ---STRINGEND
 
+---STRING ajax_enable
+Włącz edycję poprzez AJAX
+---STRINGEND
+
 ---STRING approve
 Zatwierdź
+---STRINGEND
+
+---STRING article
+Artykuł
 ---STRINGEND
 
 ---STRING auto_approved
@@ -25,6 +33,10 @@ Artykuł indeksowy to artykuł wyświetlany po podaniu adresu URL kategorii. Sk�
 
 ---STRING back to overview
 Wstecz
+---STRINGEND
+
+---STRING content
+Treść
 ---STRINGEND
 
 ---STRING create article
@@ -71,6 +83,10 @@ Rozmiar pliku
 Typ pliku
 ---STRINGEND
 
+---STRING indexinnav
+Pokaż indeks w nawigacji
+---STRINGEND
+
 ---STRING net.nehmer.static
 Treść statyczna
 ---STRINGEND
@@ -103,6 +119,10 @@ Wybierz schemat
 Ustawienia
 ---STRINGEND
 
+---STRING simple_name_handling
+Automatyczne tworzenie URLi.
+---STRINGEND
+
 ---STRING symlink_topic
 Link do innego folderu ("symlink")
 ---STRINGEND
@@ -127,23 +147,43 @@ Pokaż artykuł
 Folder jest widoczny
 ---STRINGEND
 
----STRING ajax_enable
-Włącz edycję poprzez AJAX
+---STRING article %s deleted
+Artykuł "%s" został usunięty
 ---STRINGEND
 
----STRING article
-Artykuł
+---STRING article link deleted
+Link do artykułu został usunięty
 ---STRINGEND
 
----STRING content
-Treść
+---STRING delete article link
+Usuń link
 ---STRINGEND
 
----STRING indexinnav
-Pokaż indeks w nawigacji
+---STRING delete cancelled
+Usuwanie anulowano
 ---STRINGEND
 
----STRING simple_name_handling
-Automatyczne tworzenie URLi.
+---STRING delete link
+Usuń link
+---STRINGEND
+
+---STRING delete_link
+Usuń link
+---STRINGEND
+
+---STRING failed to delete the article link, contact the site administrator
+Błąd usuwania linku.
+---STRINGEND
+
+---STRING from
+Z
+---STRINGEND
+
+---STRING if you want to delete the original article, <a href="%s">click here</a>
+Jeśli chcesz usunąć artykuł oryginalny <a href="%s">kliknij tu</a>.
+---STRINGEND
+
+---STRING this article has been linked from <a href="%s">%s</a> and confirming will delete only the link
+Ten artykuł jest linkiem do <a href="%s">%s</a> usunięty zostanie tylko link.
 ---STRINGEND
 
