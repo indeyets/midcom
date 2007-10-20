@@ -231,7 +231,7 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
                 // *** FALL-THROUGH ***
 
             case 'cancel':
-                $_MIDCOM->relocate('');
+                $_MIDCOM->relocate('__mfa/asgard_midcom.admin.settings/');
                 // This will exit.
         }
         
