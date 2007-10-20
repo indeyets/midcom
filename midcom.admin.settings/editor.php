@@ -48,13 +48,37 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
      * Simple helper which references all important members to the request data listing
      * for usage within the style listing.
      */
-    function _prepare_request_data()
+    function _prepare_request_data(&$data)
     {
         $this->_request_data['datamanager'] =& $this->_datamanager;
         $this->_request_data['controller'] =& $this->_controller;
-        
-    }
+        $this->_l10n = $_MIDCOM->i18n->get_l10n('midcom.admin.settings');
 
+        $data['l10n'] = $this->_l10n;
+        $data['view_title'] = $this->_l10n->get('midcom.admin.settings');
+        
+        $data['asgard_toolbar'] = new midcom_helper_toolbar();
+
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('back to site', 'midgard.admin.asgard'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/gohome.png',
+            )
+        );
+
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."midcom-logout-",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('logout','midcom'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/exit.png',
+            )
+        );
+    }
 
     /**
      * Simple default constructor.
@@ -62,24 +86,36 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
     function midcom_admin_settings_editor()
     {
         parent::midcom_baseclasses_components_handler();
-        
         $this->_config_storage = new midcom_db_page($_MIDGARD['page']);
 
         require_once MIDCOM_ROOT . '/midcom/helper/hostconfig.php';
         require_once MIDCOM_ROOT . '/midcom/admin/folder/folder_management.php';
-
-        $_MIDCOM->load_library('midcom.helper.datamanager2');
+        $_MIDCOM->load_library('midgard.admin.asgard');
         $_MIDCOM->load_library('midcom.admin.folder');
+
+        $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
+        $_MIDCOM->style->prepend_component_styledir('midcom.admin.settings');
+        $_MIDCOM->skip_page_style = true;
+
+        $this->_l10n = $_MIDCOM->i18n->get_l10n('midcom.admin.settings');
+
+        $this->_debug_prefix = "midcom_admin_settings::";
+
+
     }
 
     function get_plugin_handlers()
     {
         return Array
         (
+            'index' => Array
+            (
+                'handler' => Array('midcom_admin_settings_editor', 'edit'),
+            ),
             'edit' => Array
             (
                 'handler' => Array('midcom_admin_settings_editor', 'edit'),
-                'fixed_args' => 'edit',
+                'variable_args' => 1,
             ),
         );
     }
@@ -129,6 +165,26 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
      */
     function _handler_edit($handler_id, $args, &$data)
     {
+
+        $data['hostname'] = $_SERVER['SERVER_NAME'];
+
+        if ($args[0])
+        {
+            $host = new midcom_db_host($args[0]);
+            if ($host->root)
+            {
+                $data['hostname'] = $host->name;
+                $this->_config_storage = new midcom_db_page($host->root);
+            }
+            else
+            {
+                $this->_prepare_request_data($data);
+                $this->_config_storage = null;
+                $data['hostname'] = $args[0];
+                return true;
+            }
+        }
+
         $_MIDCOM->auth->require_admin_user();
         
         $qb = midcom_db_pageelement::new_query_builder();
@@ -180,7 +236,7 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
         }
         
 
-        $this->_prepare_request_data();
+        $this->_prepare_request_data($data);
         
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_config_storage->title}");
 
@@ -202,12 +258,12 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
         $tmp[] = Array
         (
             MIDCOM_NAV_URL => '__ais/midcom-settings/edit.html',
-            MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('host configuration', 'midcom.admin.settings'),
+            MIDCOM_NAV_NAME => $this->_l10n->get('host configuration'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         
         // Set page title
-        $_MIDCOM->set_pagetitle($_MIDCOM->i18n->get_string('host configuration', 'midcom.admin.settings'));
+        $_MIDCOM->set_pagetitle($this->_l10n->get('host configuration')." : ".$data['hostname']);
 
         return true;
     }
@@ -218,7 +274,16 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
      */
     function _show_edit ($handler_id, &$data)
     {
-        midcom_show_style('midcom-admin-settings-edit');
+        midgard_admin_asgard_plugin::asgard_header();
+        if(is_null($this->_config_storage))
+        {
+            midcom_show_style('midcom-admin-settings-empty');
+        }
+        else
+        {
+            midcom_show_style('midcom-admin-settings-edit');
+        }
+        midgard_admin_asgard_plugin::asgard_footer();
     }
 
     function _get_code_init() 
@@ -269,6 +334,34 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
             $i++;
         }
         return $minutes;
+    }
+
+    function navigation()
+    {
+        $qb = midcom_db_host::new_query_builder();
+        $qb->add_order('name');
+        $rst = $qb->execute();
+
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+
+        echo '<ul class="midgard_admin_asgard_navigation">';
+
+        foreach ($rst as $host)
+        {
+            $mc = midcom_db_pageelement::new_collector('page',$host->root);
+            $mc->add_constraint('name', '=', 'code-init');
+            $mc->execute();
+            $codeinits = $mc->list_keys();
+
+            if (count ($codeinits) && $host->can_do("midgard:update"))
+            {
+                //TODO: detect only midcom hosts
+                echo "            <li class=\"status\"><a href=\"{$prefix}__mfa/asgard_midcom.admin.settings/{$host->guid}.html\">{$host->name}{$host->prefix}/</a></li>";
+            }
+        }
+
+        echo "</ul>";
+
     }
 
 }

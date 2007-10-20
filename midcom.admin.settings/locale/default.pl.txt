@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE pl
 
+---STRING allowed components (leave empty to allow all)
+Dozwolone komponenty (pozostaw puste aby zezwolić na używanie wszystkich)
+---STRINGEND
+
 ---STRING auth_allow_sudo
 Zezwalaj na uruchamianie modułów w trybie SUDO
 ---STRINGEND
@@ -113,6 +117,10 @@ revalidate
 
 ---STRING default (%s)
 (Domyślnie: %s )
+---STRINGEND
+
+---STRING excluded components (leave empty to allow all)
+Zablokowane komponenty (pozostaw puste aby zezwolić na używanie wszystkich)
 ---STRINGEND
 
 ---STRING failed to save settings, reason %s
@@ -307,11 +315,7 @@ Plik polecenia unrtf
 Plik polecenia unzip
 ---STRINGEND
 
----STRING allowed components (leave empty to allow all)
-Dozwolone komponenty (pozostaw puste aby zezwolić na używanie wszystkich)
----STRINGEND
-
----STRING excluded components (leave empty to allow all)
-Zablokowane komponenty (pozostaw puste aby zezwolić na używanie wszystkich)
+---STRING host "%s" not found. try using menu.
+Brak serwisu GUID: "%s". Użyj menu aby wybrać serwis.
 ---STRINGEND
 

@@ -315,3 +315,7 @@ Path to unrtf application
 Path to unzip application
 ---STRINGEND
 
+---STRING host "%s" not found. try using menu.
+Host "%s" not found. Try using menu.
+---STRINGEND
+
