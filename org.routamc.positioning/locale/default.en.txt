@@ -67,15 +67,15 @@ Plazes username
 Postal code
 ---STRINGEND
 
+---STRING region
+Region
+---STRINGEND
+
 ---STRING source %s
 source: %s
 ---STRINGEND
 
 ---STRING street
 Street address
----STRINGEND
-
----STRING region
-Region
 ---STRINGEND
 
