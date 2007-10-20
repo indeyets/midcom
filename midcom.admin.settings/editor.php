@@ -44,41 +44,7 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
      */
     var $_defaults = array();
 
-    /**
-     * Simple helper which references all important members to the request data listing
-     * for usage within the style listing.
-     */
-    function _prepare_request_data(&$data)
-    {
-        $this->_request_data['datamanager'] =& $this->_datamanager;
-        $this->_request_data['controller'] =& $this->_controller;
-        $this->_l10n = $_MIDCOM->i18n->get_l10n('midcom.admin.settings');
 
-        $data['l10n'] = $this->_l10n;
-        $data['view_title'] = $this->_l10n->get('midcom.admin.settings');
-        
-        $data['asgard_toolbar'] = new midcom_helper_toolbar();
-
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('back to site', 'midgard.admin.asgard'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/gohome.png',
-            )
-        );
-
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."midcom-logout-",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('logout','midcom'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/exit.png',
-            )
-        );
-    }
 
     /**
      * Simple default constructor.
@@ -86,6 +52,10 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
     function midcom_admin_settings_editor()
     {
         parent::midcom_baseclasses_components_handler();
+    }
+
+    function _on_initialize()
+    {
         $this->_config_storage = new midcom_db_page($_MIDGARD['page']);
 
         require_once MIDCOM_ROOT . '/midcom/helper/hostconfig.php';
@@ -93,16 +63,17 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
         $_MIDCOM->load_library('midgard.admin.asgard');
         $_MIDCOM->load_library('midcom.admin.folder');
 
-        $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
-        $_MIDCOM->style->prepend_component_styledir('midcom.admin.settings');
-        $_MIDCOM->skip_page_style = true;
-
         $this->_l10n = $_MIDCOM->i18n->get_l10n('midcom.admin.settings');
-
         $this->_debug_prefix = "midcom_admin_settings::";
 
+        $this->_request_data['l10n'] = $this->_l10n;
+        $_MIDCOM->cache->content->no_cache();
+
+        // Initialize Asgard plugin
+        midgard_admin_asgard_plugin::prepare_plugin($this->_l10n->get('midcom.admin.settings'),$this->_request_data);
 
     }
+
 
     function get_plugin_handlers()
     {
@@ -120,6 +91,16 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
         );
     }
 
+    /**
+     * Simple helper which references all important members to the request data listing
+     * for usage within the style listing.
+     */
+    function _prepare_request_data(&$data)
+    {
+        $this->_request_data['datamanager'] =& $this->_datamanager;
+        $this->_request_data['controller'] =& $this->_controller;
+        midgard_admin_asgard_plugin::get_common_toolbar($data);
+    }
 
     /**
      * Loads and prepares the schema database.
@@ -237,21 +218,6 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
         
 
         $this->_prepare_request_data($data);
-        
-        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_config_storage->title}");
-
-        // Ensure we get the correct styles
-        $_MIDCOM->style->prepend_component_styledir('midcom.admin.settings');                                         
-    
-        $_MIDCOM->add_link_head
-        (
-            array
-            (
-                'rel' => 'stylesheet',
-                'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL.'/midcom.helper.datamanager2/legacy.css',
-            )
-        );
         
         // Add the view to breadcrumb trail
         $tmp = Array();
