@@ -10,7 +10,7 @@
 /**
  * TODO listing interface class
  *
- * Defines the privilege cc.kaktus.todo::moderation to superseed the original
+ * Defines the privilege cc.kaktus.todo::moderation to supersede the original
  * moderator group.
  *
  * @package cc.kaktus.todo
@@ -19,15 +19,15 @@ class cc_kaktus_todo_interface extends midcom_baseclasses_components_interface
 {
     /**
      * Simple constructor, which links to the parent class
-     * 
+     *
      * @access public
      */
     function cc_kaktus_todo_interface()
     {
         parent::midcom_baseclasses_components_interface();
-        
+
         $this->_component = 'cc.kaktus.todo';
-        
+
         $this->_autoload_files = array
         (
             'navigation.php',
@@ -35,12 +35,12 @@ class cc_kaktus_todo_interface extends midcom_baseclasses_components_interface
             'viewer.php',
             'dba_classes/item_dba.php',
         );
-        
+
         $this->_autoload_libraries = array
         (
             'midcom.helper.datamanager2',
         );
-        
+
         define ('CC_KAKTUS_TODO_TIME_FINISHED', 1);
         define ('CC_KAKTUS_TODO_TIME_OVERTIME', 2);
         define ('CC_KAKTUS_TODO_TIME_FUTURE', 3);

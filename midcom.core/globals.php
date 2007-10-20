@@ -1,7 +1,7 @@
 <?php
 
 /**
- * The last non-critical MidCOM error message. This is slowly superseeded
+ * The last non-critical MidCOM error message. This is slowly superseded
  * by having all errors call generate_error.
  * 
  * @global string $GLOBALS['midcom_errstr']

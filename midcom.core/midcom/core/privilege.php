@@ -38,7 +38,7 @@
  * way to gain one of those original arrays. This functionality is deprecated already, and will
  * be removed before the final 2.6 release. It has been done to ease the immediate transition.
  *
- * Essentially, this class will superseed the original privileges_io.php helpers.
+ * Essentially, this class will supersede the original privileges_io.php helpers.
  *
  * Torben (2005-07-29)
  *

@@ -861,7 +861,7 @@ class midcom_helper_toolbar {
     /**
      * Dummy function to hide that this is not a midcom_admin_content_toolbar.
      *
-     * @deprecated since MidCOM 2.6 (superseeded by midcom_services_toolbars)
+     * @deprecated since MidCOM 2.6 (superseded by midcom_services_toolbars)
      */
     function disable_view_page() {}
 

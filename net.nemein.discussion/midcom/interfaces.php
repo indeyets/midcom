@@ -11,7 +11,7 @@
 /**
  * Forum MidCOM interface class.
  *
- * Defines the privilege net.nemein.discussion::moderation to superseed the original
+ * Defines the privilege net.nemein.discussion::moderation to supersede the original
  * moderator group.
  *
  * @package net.nemein.discussion

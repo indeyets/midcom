@@ -214,7 +214,7 @@ class midcom_helper_nav
 
     /**
      * This function returns the toolbar definition for the NAP object passed. This must
-     * superseed all calls to $nap_object[MIDCOM_NAV_TOOLBAR] as this information is
+     * supersede all calls to $nap_object[MIDCOM_NAV_TOOLBAR] as this information is
      * not usable directly - it would result from the MidCOM cache and thus be out of date
      * always (and especially not adapted to the current user).
      *

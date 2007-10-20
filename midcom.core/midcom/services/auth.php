@@ -189,7 +189,7 @@
  * is made.
  *
  * - <i>midgard:read</i> controls read access to the object, if denied, you cannot load the object
- *   from the database. This privilege is granted by default, and superseeds the current ViewerGroups
+ *   from the database. This privilege is granted by default, and supersedes the current ViewerGroups
  *   implementation.
  * - <i>midgard:update</i> controls updating of objects. Be aware, that you need to be able to read
  *   the object before updating it, it is granted by default only for owners.

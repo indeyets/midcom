@@ -10,7 +10,7 @@
 /**
  * Baseclass to use for the component interface in MIDCOM.
  *
- * The interface presented here superseeds all original component interface
+ * The interface presented here supersedes all original component interface
  * classes (COMPONENT, CONTENTADMIN, MIDCOM and NAP). The class uses an event
  * based approache for subclasses to influence the default behavoir.
  *
@@ -262,22 +262,22 @@ class midcom_baseclasses_components_interface
     /**#@-*/
 
     /**
-     * @deprecated This has been superseeded by the component manifest as of 2005-09-08
+     * @deprecated This has been superseded by the component manifest as of 2005-09-08
      */
     var $_version = 0;
 
     /**
-     * @deprecated This has been superseeded by the component manifest as of 2005-09-08
+     * @deprecated This has been superseded by the component manifest as of 2005-09-08
      */
     var $_autoload_class_definitions = Array();
 
     /**
-     * @deprecated This has been superseeded by the component manifest as of 2005-09-08
+     * @deprecated This has been superseded by the component manifest as of 2005-09-08
      */
     var $_acl_privileges = Array();
 
     /**
-     * @deprecated This has been superseeded by the component manifest as of 2005-09-08
+     * @deprecated This has been superseded by the component manifest as of 2005-09-08
      */
     var $_purecode = false;
 
@@ -320,7 +320,7 @@ class midcom_baseclasses_components_interface
 
 
     /** @ignore */
-    // Superseeded by the Manifest
+    // Superseded by the Manifest
     var $_parsed_acl_privileges = null;
 
     // END OF COMPONENT STATE VARIABLES
@@ -365,7 +365,7 @@ class midcom_baseclasses_components_interface
             }
         }
 
-        // Compatibility stuff, this is now superseeded by the manifest code.
+        // Compatibility stuff, this is now superseded by the manifest code.
         $this->_autoload_class_definitions = $this->_manifest->class_definitions;
         $this->_parsed_acl_privileges = $this->_manifest->privileges;
         $this->_version = $this->_manifest->version;

@@ -69,7 +69,7 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
      * the current topic.
      *
      * The globals view_title, view_l10n and view_l10n_midcom are populated for compatibility reasons
-     * only, they have been superseeded
+     * only, they have been superseded
      * by the corresponding request data key. The global will be dropped after MidCOM 2.6.
      *
      * @deprecate The globals view_title, view_l10n and view_l10n_midcom will be deprecated after MidCOM 2.6.
