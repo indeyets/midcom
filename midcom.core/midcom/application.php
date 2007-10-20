@@ -432,8 +432,8 @@ class midcom_application
 
         // Initialize Root Topic
         $root_node = new midcom_db_topic($GLOBALS['midcom_config']['midcom_root_topic_guid']);
-        if (   ! $root_node
-            || empty($root_node->guid))
+
+        if (   !$root_node->guid)
         {
             if (mgd_errno() == MGD_ERR_ACCESS_DENIED)
             {
@@ -578,6 +578,9 @@ class midcom_application
      */
     public function content() 
     {
+
+
+
         debug_push_class(__CLASS__, __FUNCTION__);    
 
         // Enter Context
@@ -707,6 +710,13 @@ class midcom_application
 
         // Processing, upon error the generate_error function will die here...
         $this->_process();
+
+        if ($this->_status == MIDCOM_STATUS_ABORT)
+        {
+            debug_add("Dynamic load _process() phase edned up with 404 Error. Aborting...", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return;
+        }
 
         // If MIDCOM_REQUEST_CONTENT: Tell Style to enter Context
         if ($type == MIDCOM_REQUEST_CONTENT)
@@ -903,7 +913,7 @@ class midcom_application
         do 
         {
             $object = $this->_parser->get_current_object();
-            if (!is_object($object) || empty($object->guid) )
+            if (!is_object($object) || !$object->guid )
             {
                 debug_add("Root node missing.", MIDCOM_LOG_ERROR);
                 $this->generate_error(MIDCOM_ERRCRIT, "Root node missing.");
@@ -964,8 +974,19 @@ class midcom_application
             }
             */
 
-            $this->generate_error(MIDCOM_ERRNOTFOUND, "This page is not available on this server");
-            // This will exit.
+            /**
+             * Simple: if current context is not '0' we were called from another context. 
+             * If so we should not break application now - just gracefully continue.
+             */
+            
+            if ($this->get_current_context() == 0) 
+            {
+                $this->generate_error(MIDCOM_ERRNOTFOUND, "This page is not available on this server {$this->_currentcontext}");
+            }
+
+            $this->_status = MIDCOM_STATUS_ABORT;
+            debug_pop();
+            return ;// This will exit.
         }
 
         if (   $this->_currentcontext == 0
