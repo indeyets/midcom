@@ -63,6 +63,10 @@ Firstname
 Folders
 ---STRINGEND
 
+---STRING folders of %s
+Folders of %s
+---STRINGEND
+
 ---STRING go
 Go
 ---STRINGEND
@@ -129,9 +133,5 @@ Username
 
 ---STRING workphone
 Work phone
----STRINGEND
-
----STRING folders of %s
-Folders of %s
 ---STRINGEND
 

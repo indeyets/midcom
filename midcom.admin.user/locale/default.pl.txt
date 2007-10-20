@@ -27,6 +27,10 @@ Dodaj grupę
 Dodaj użytkownika
 ---STRINGEND
 
+---STRING edit %s
+Edytuj %s
+---STRINGEND
+
 ---STRING edit account
 Edytuj konto
 ---STRINGEND
@@ -40,7 +44,7 @@ Imię
 ---STRINGEND
 
 ---STRING go
-Dalej
+Wykonaj
 ---STRINGEND
 
 ---STRING group %s saved
@@ -107,7 +111,27 @@ Użytkownik
 Telefon służbowy
 ---STRINGEND
 
----STRING edit %s
-Edytuj %s
+---STRING enable ajax in toolbar
+Włącz tollbar w AJAXie
+---STRINGEND
+
+---STRING enable ajax in uimessages
+Włącz powiadomienia
+---STRINGEND
+
+---STRING enable asgard
+Dostęp do Asgarda
+---STRINGEND
+
+---STRING enable centralized toolbar
+Włącz toolbar
+---STRINGEND
+
+---STRING folders
+Foldery
+---STRINGEND
+
+---STRING folders of %s
+Foldery należące do "%s"
 ---STRINGEND
 
