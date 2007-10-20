@@ -23,12 +23,20 @@ Włącz obsługę AJAX
 Archiwum
 ---STRINGEND
 
+---STRING archive item order
+Kolejność w archiwum
+---STRINGEND
+
 ---STRING archive_enable
 Włącz wyświetlanie archiwum
 ---STRINGEND
 
 ---STRING article
 Artykuł
+---STRINGEND
+
+---STRING ascending
+Rosnąco
 ---STRINGEND
 
 ---STRING atom feed
@@ -77,6 +85,10 @@ Dodaj news
 
 ---STRING delete article
 Usuń
+---STRINGEND
+
+---STRING descending
+Malejąco
 ---STRINGEND
 
 ---STRING display settings
@@ -135,8 +147,16 @@ Ustawienia indeksu
 Liczba pozycji w indeksie
 ---STRINGEND
 
+---STRING link_to_external_url
+Linkuj do zewnętrznych URLi jeśli możliwe
+---STRINGEND
+
 ---STRING list old items in index
 Pokaż stare elementy w indeksie
+---STRINGEND
+
+---STRING navigation options
+Opcje nawigacji
 ---STRINGEND
 
 ---STRING net.nehmer.blog
@@ -251,8 +271,24 @@ Baza schematów
 Wybierz typ artykułów
 ---STRINGEND
 
+---STRING set this to no if you want to hide feeds and archive links in navigation
+Wybierz 'Nie' jeśli chcesz ukryć link do Archiwum i Wsadów w nawigacji.
+---STRINGEND
+
+---STRING set to no for de.linkm.newsticker compatibility
+Wybierz 'Nie' żeby włączyć zgodność z de.linkm.newsticker
+---STRINGEND
+
 ---STRING settings
 Ustawienia
+---STRINGEND
+
+---STRING show latest items in navigation
+Pokaż ostatnie wpisy w nawigacji
+---STRINGEND
+
+---STRING show pseudo leaves in navigation
+Pokaż pseudo strony w nawigacji
 ---STRINGEND
 
 ---STRING sort order
@@ -271,47 +307,51 @@ Nie wybrano kategorii
 %d postów.
 ---STRINGEND
 
+---STRING use view prefix in url
+Używaj elementu 'view' w URLach
+---STRINGEND
+
 ---STRING visible
 Widoczny?
 ---STRINGEND
 
----STRING archive item order
-Kolejność w archiwum
+---STRING article %s deleted
+Artykuł "%s" został usunięty
 ---STRINGEND
 
----STRING ascending
-Rosnąco
+---STRING blog link deleted
+Link do newsa usunięto.
 ---STRINGEND
 
----STRING descending
-Malejąco
+---STRING delete article link
+Usuń link
 ---STRINGEND
 
----STRING link_to_external_url
-Linkuj do zewnętrznych URLi jeśli możliwe
+---STRING delete cancelled
+Usuwanie anulowane
 ---STRINGEND
 
----STRING navigation options
-Opcje nawigacji
+---STRING delete link
+Usuń link
 ---STRINGEND
 
----STRING set this to no if you want to hide feeds and archive links in navigation
-Wybierz 'Nie' jeśli chcesz ukryć link do Archiwum i Wsadów w nawigacji.
+---STRING failed to delete the blog link, contact the site administrator
+Błąd usuwania linku.
 ---STRINGEND
 
----STRING set to no for de.linkm.newsticker compatibility
-Wybierz 'Nie' żeby włączyć zgodność z de.linkm.newsticker
+---STRING from
+Z
 ---STRINGEND
 
----STRING show latest items in navigation
-Pokaż ostatnie wpisy w nawigacji
+---STRING if you want to delete the original article, <a href="%s">click here</a>
+Jeśli chesz usunąć artykuł oryginalny <a href="%s">kliknij tu</a>
 ---STRINGEND
 
----STRING show pseudo leaves in navigation
-Pokaż pseudo strony w nawigacji
+---STRING related stories
+Artykuły powiązane
 ---STRINGEND
 
----STRING use view prefix in url
-Używaj elementu 'view' w URLach
+---STRING this blog entry has been linked from <a href="%s">%s</a> and confirming will delete only the link
+Ten news jest linkiem do <a href="%s">%s</a> i tylko ten link zostanie usunięty.
 ---STRINGEND
 

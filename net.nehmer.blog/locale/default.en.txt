@@ -35,6 +35,10 @@ Enable archive browsing
 Article
 ---STRINGEND
 
+---STRING article %s deleted
+Article %s deleted
+---STRINGEND
+
 ---STRING ascending
 Ascending
 ---STRINGEND
@@ -53,6 +57,10 @@ The following content syndication feed formats are available:
 
 ---STRING back to overview
 Back to overview
+---STRINGEND
+
+---STRING blog link deleted
+Blog link deleted
 ---STRINGEND
 
 ---STRING blog settings
@@ -85,6 +93,18 @@ Create news article
 
 ---STRING delete article
 Delete Article
+---STRINGEND
+
+---STRING delete article link
+Delete article link
+---STRINGEND
+
+---STRING delete cancelled
+Delete cancelled
+---STRINGEND
+
+---STRING delete link
+Delete link
 ---STRINGEND
 
 ---STRING descending
@@ -131,8 +151,20 @@ Include all subtopic's News Articles into Index (and RSS)
 Expert settings
 ---STRINGEND
 
+---STRING failed to delete the blog link, contact the site administrator
+Failed to delete the blog link, contact the site administrator
+---STRINGEND
+
 ---STRING first post was made on %s.
 The first posting was made on %s.
+---STRINGEND
+
+---STRING from
+From
+---STRINGEND
+
+---STRING if you want to delete the original article, <a href="%s">click here</a>
+If you want to delete the original article, <a href="%s">click here</a>.
 ---STRINGEND
 
 ---STRING index count
@@ -201,6 +233,10 @@ Datamanager schema to use for public posting
 
 ---STRING public posting user
 Midgard username to use for public posting (leave empty to use the currently authenticated user)
+---STRINGEND
+
+---STRING related stories
+Related stories
 ---STRINGEND
 
 ---STRING rss 0.91 feed
@@ -307,6 +343,10 @@ No topic selected
 There is a total of %d posts.
 ---STRINGEND
 
+---STRING this blog entry has been linked from <a href="%s">%s</a> and confirming will delete only the link
+This blog entry has been linked from <a href="%s">%s</a> and confirming will delete only the link.
+---STRINGEND
+
 ---STRING use view prefix in url
 Use 'view' prefix in url
 ---STRINGEND
@@ -315,46 +355,3 @@ Use 'view' prefix in url
 Should the topic be visible
 ---STRINGEND
 
----STRING related stories
-Related stories
----STRINGEND
-
----STRING failed to delete the blog link, contact the site administrator
-Failed to delete the blog link, contact the site administrator
----STRINGEND
-
----STRING delete cancelled
-Delete cancelled
----STRINGEND
-
----STRING blog link deleted
-Blog link deleted
----STRINGEND
-
----STRING article %s deleted
-Article %s deleted
----STRINGEND
-
----STRING delete link
-Delete link
----STRINGEND
-
----STRING delete article link
-delete article link
----STRINGEND
-
----STRING this blog entry has been linked from <a href="%s">%s</a> and confirming will delete only the link
-This blog entry has been linked from <a href="%s">%s</a> and confirming will delete only the link.
----STRINGEND
-
----STRING if you want to delete the original article, <a href="%s">click here</a>
-If you want to delete the original article, <a href="%s">click here</a>.
----STRINGEND
-
----STRING delete article link
-Delete article link
----STRINGEND
-
----STRING from
-From
----STRINGEND
