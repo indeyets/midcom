@@ -109,6 +109,14 @@ body
 {
     margin-left: 20px;
 }
+#navigation div.section ul.midgard_admin_asgard_navigation li a
+{
+    display: block;
+}
+#navigation div.section ul.midgard_admin_asgard_navigation li a:hover
+{
+    background-color: white;
+}
 #navigation div.section ul.midgard_admin_asgard_navigation li.current a
 {
     font-weight: bold;
@@ -131,6 +139,7 @@ body
 #navigation h3 a
 {
   color: black !important;
+  display: block;
 }
 
 #content
