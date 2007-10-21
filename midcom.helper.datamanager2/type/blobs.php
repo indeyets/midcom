@@ -230,7 +230,19 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         $info['description'] = $att->title;
         $info['mimetype'] = $att->mimetype;
         $name = urlencode($att->name);
-        $info['url'] = "{$this->attachment_server_url}{$att->guid}/{$name}";
+
+        $nap = new midcom_helper_nav();
+        $parent = $nap->resolve_guid($att->parentguid);
+        if (   is_array($parent)
+            && $parent[MIDCOM_NAV_TYPE] == 'node')
+        {
+            $info['url'] = "{$_MIDGARD['self']}{$parent[MIDCOM_NAV_RELATIVEURL]}{$name}";
+            echo $info['url'];
+        }
+        else
+        {
+            $info['url'] = "{$this->attachment_server_url}{$att->guid}/{$name}";
+        }
         $info['id'] = $att->id;
         $info['guid'] = $att->guid;
 
