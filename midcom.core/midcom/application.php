@@ -918,6 +918,11 @@ class midcom_application
                 debug_add("Root node missing.", MIDCOM_LOG_ERROR);
                 $this->generate_error(MIDCOM_ERRCRIT, "Root node missing.");
             }
+            
+            if (is_a($object, 'midgard_attachment'))
+            {
+                $this->serve_attachment($object);
+            }
 
             $path = $object->component;
 

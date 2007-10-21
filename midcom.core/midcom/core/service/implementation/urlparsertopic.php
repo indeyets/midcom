@@ -131,9 +131,19 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
 
         if ($qb->count() == 0)
         {
+            // No topics matching path, check for attachments
+            $att_qb =  midcom_baseclasses_database_attachment::new_query_builder();
+            $att_qb->add_constraint('name', '=', $this->argv[0]);
+            $att_qb->add_constraint('parentguid', '=', $this->current_object->guid);
+            if ($att_qb->count() == 0)
+            {
+                // allow for handler switches to work
+                return false;
+            }
 
-            // No topics matching path, allow for handler switches to work
-            return false;
+            $atts = $att_qb->execute();
+            $this->current_object = $atts[0];
+            return $this->current_object;
         }
         
         $topics = $qb->execute();
