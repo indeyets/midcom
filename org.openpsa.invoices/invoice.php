@@ -40,7 +40,7 @@ class org_openpsa_invoices_invoice extends __org_openpsa_invoices_invoice
     {
         // TODO: Make configurable
         $qb = org_openpsa_invoices_invoice::new_query_builder();
-        $qb->add_order('created', 'DESC');
+        $qb->add_order('.metadata.created', 'DESC');
         $qb->set_limit(1);
         $last_invoice = $qb->execute_unchecked();
         if (count($last_invoice) == 0)
