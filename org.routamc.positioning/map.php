@@ -179,6 +179,16 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
                     $_MIDCOM->add_jsfile('http://api.maps.yahoo.com/ajaxymap?v=3.4&amp;appid=YellowMasp4R');
                 }
                 break;
+            case 'openlayers':
+                if ($echo_output)
+                {
+                    echo "<script type=\"text/javascript\" src=\"http://www.openlayers.org/api/OpenLayers.js\"></script>\n";
+                }
+                else
+                {
+                    $_MIDCOM->add_jsfile('http://www.openlayers.org/api/OpenLayers.js');
+                }
+                break;          
             case 'google':
             // TODO: As soon as mapstraction supports openlayers OSM will be the default
             case 'openstreetmap':
@@ -228,6 +238,12 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
         {
             // Workaround, Google requires you to start with a center
             $script .= "mapstraction_{$this->id}.setCenter(new LatLonPoint(0, 0));\n";
+        }
+        
+        if ($this->type == 'openlayers')
+        {
+            $script .= 'var layer = new OpenLayers.Layer.TMS( "Openstreetmap", "http://tile.openstreetmap.org/", {type:\'png\', getURL: get_osm_url, displayOutsideMaxExtent: true} );' . "\n";
+            $script .= "mapstraction_{$this->id}.maps[openlayers].addLayer(layer);\n";
         }
         
         foreach ($this->markers as $marker)

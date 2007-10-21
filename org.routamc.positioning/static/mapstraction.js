@@ -316,15 +316,17 @@ Mapstraction.prototype.addAPI = function(element,api) {
           tilelayers[0].getTileUrl = function (a, b) {
             return "http://tile.openstreetmap.org/"+b+"/"+a.x+"/"+a.y+".png";
           };
-
+          tilelayers[0].isPng = function() { return true;};
+          tilelayers[0].getOpacity = function() { return 1.0; }
+          
           var custommap = new GMapType(tilelayers, new GMercatorProjection(19), "OSM", {errorMessage:"More OSM coming soon"}); 
           this.maps[api].addMapType(custommap); 
+          this.loaded[api] = true;
 
           var myPoint = new LatLonPoint(50.6805,-1.4062505);
           this.setCenterAndZoom(myPoint, 11);
 
           this.maps[api].setMapType(custommap);
-          this.loaded[api] = true;
         }
         else {
           alert('browser not compatible with Google Maps');
@@ -1425,6 +1427,21 @@ Mapstraction.prototype.autoCenterAndZoom = function() {
   this.setBounds( new BoundingBox(lat_min, lon_min, lat_max, lon_max) );
 }
 
+/** 
+ * centerAndZoomOnPoints sets the center and zoom of the map from an array of points
+ * 
+ * This is useful if you don't want to have to add markers to the map
+ */
+Mapstraction.prototype.centerAndZoomOnPoints = function(points) {
+	var bounds = new BoundingBox(points[0].lat,points[0].lon,points[0].lat,points[0].lon);
+	
+	for (var i=1, len = points.length ; i<len; i++) {
+		bounds.extend(points[i]);
+	}
+     
+	this.setBounds(bounds);
+} 
+
 /**
  * getZoom returns the zoom level of the map
  * @returns the zoom level of the map
@@ -2383,6 +2400,21 @@ BoundingBox.prototype.contains = function(point){
  */
 BoundingBox.prototype.toSpan = function() {
   return new LatLonPoint( Math.abs(this.sw.lat - this.ne.lat), Math.abs(this.sw.lon - this.ne.lon) );
+}
+/**
+ * extend extends the bounding box to include the new point
+ */
+BoundingBox.prototype.extend = function(point) {
+	if(this.sw.lat > point.lat)
+		this.sw.setLat(point.lat);
+	if(this.sw.lon > point.lon)
+		this.sw.setLon(point.lon);
+	if(this.ne.lat < point.lat)
+		this.ne.setLat(point.lat);
+	if(this.ne.lon < point.lon)
+		this.ne.setLon(point.lon);
+		
+  return;
 }
 
 //////////////////////////////
