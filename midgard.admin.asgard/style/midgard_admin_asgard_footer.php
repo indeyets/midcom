@@ -34,7 +34,7 @@
                             $lang_qb = midcom_baseclasses_database_language::new_query_builder();
                             $lang_qb->add_order('name');
                             $langs = $lang_qb->execute();
-                            echo "<select class=\"language_chooser\" onchange=\"window.location='/__mfa/asgard/object/view/{$data['object']->guid}/' + this.options[this.selectedIndex].value;\">\n";
+                            echo "<select class=\"language_chooser\" onchange=\"window.location='{$_MIDGARD['self'}__mfa/asgard/object/view/{$data['object']->guid}/' + this.options[this.selectedIndex].value;\">\n";
                             echo "    <option value=\"\">" . $_MIDCOM->i18n->get_string('default language', 'midgard.admin.asgard') . "</option>\n";
                             foreach ($langs as $lang)
                             {

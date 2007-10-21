@@ -699,6 +699,8 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
         {
             $_MIDCOM->cache->content->expires($this->_handler['expires']);
         }
+        
+        $this->_on_handled($this->_handler['id'], $this->_handler['args']);
 
         return $result;
     }
@@ -799,6 +801,8 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
 
         $handler->$method($this->_handler['id'], $this->_request_data);
 
+        $this->_on_shown($this->_handler['id']);
+
         debug_pop();
     }
 
@@ -851,6 +855,10 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
     {
         return true;
     }
+    
+    public function _on_handled($handler, $args)
+    {
+    }
 
     /**
      * Component specific initialization code for the can_handle phase.
@@ -886,6 +894,10 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
     public function _on_show($handler)
     {
         return true;
+    }
+    
+    public function _on_shown($handler)
+    {
     }
 
     /**#@-*/

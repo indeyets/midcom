@@ -258,6 +258,18 @@ class midcom_services_i18n
         
         return $this->_current_content_language;
     }
+    
+    function code_to_id($code)
+    {
+        $qb = new MidgardQueryBuilder('midgard_language');
+        $qb->add_constraint('code', '=', $code);
+        $ret = $qb->execute();
+        if ($ret)
+        {
+            return $ret[0]->id;
+        }
+        return null;
+    }
 
     /**
      * Set the Midgard Language to the one defined in the language database.
@@ -278,19 +290,16 @@ class midcom_services_i18n
         {
             debug_add("Trying to retrieve the Midgard language record for the code '{$this->_language_db[$this->_current_content_language]['midgard_code']}'");
 
-            $qb = new MidgardQueryBuilder('midgard_language');
-            $qb->add_constraint('code', '=', $this->_language_db[$this->_current_content_language]['midgard_code']);
-            $ret = $qb->execute();
-            if ($ret)
-            {
-                debug_print_r('Loaded this language record:', $ret[0]);
-                mgd_set_lang($ret[0]->id); 
-            }
-            else
+            $lang = $this->code_to_id($this->_language_db[$this->_current_content_language]['midgard_code']);
+            if (is_null($lang))
             {
                 debug_add("The Midgard language record for the code '{$this->_language_db[$this->_current_content_language]['midgard_code']}' could not be found, using language 0 instedad. Last error was:"
                     . mgd_errstr(), MIDCOM_LOG_INFO);
                 mgd_set_lang(0);
+            }
+            else
+            {
+                mgd_set_lang($lang); 
             }
         }
         debug_pop();

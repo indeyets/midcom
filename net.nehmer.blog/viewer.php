@@ -345,9 +345,55 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
         $this->_add_categories();
 
         $this->_add_link_head();
-        $this->_populate_node_toolbar();        
+        $this->_populate_node_toolbar();
+        
+        $lang = $this->_config->get('language');
+        if ($lang)
+        {
+            $this->_request_data['original_language'] = $_MIDGARD['lang'];
+            
+            $language = $_MIDCOM->i18n->code_to_id($lang);
+            if ($language)
+            {
+                mgd_set_lang($language);
+            }
+        }
+           
         return true;
     }
+    
+    function _on_handled($handler, $args)
+    {
+        if (isset($this->_request_data['original_language']))
+        {
+            mgd_set_lang($this->_request_data['original_language']);
+        }
+    }
+    
+    function _on_show($handler)
+    {
+        $lang = $this->_config->get('language');
+        if ($lang)
+        {
+            $this->_request_data['original_language'] = $_MIDGARD['lang'];
+            
+            $language = $_MIDCOM->i18n->code_to_id($lang);
+            if ($language)
+            {
+                mgd_set_lang($language);
+            }
+        }
+        return true;
+    }
+    
+    function _on_shown($handler)
+    {
+        if (isset($this->_request_data['original_language']))
+        {
+            mgd_set_lang($this->_request_data['original_language']);
+        }
+    }
+    
     
     /**
      * Populate the categories configured for the topic into the schemas

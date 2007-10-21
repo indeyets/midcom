@@ -149,6 +149,13 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
             return false;
             // This will 404
         }
+        
+        if (   isset($data['original_language'])
+            && $this->_article->lang == $data['original_language'])
+        {
+            // Re-fetch the article into the new language context
+            $this->_article = new midcom_db_article($this->_article->guid);
+        }
 
         $this->_load_datamanager();
 
