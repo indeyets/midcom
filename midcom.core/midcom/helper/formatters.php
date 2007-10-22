@@ -14,6 +14,11 @@ if (!function_exists('midcom_helper_formatters_links'))
 
         foreach ($blocks as $block)
         {
+            if (empty($block))
+            {
+                continue;
+            }
+            
             $start = strpos($content, $block, $start);
                         
             if (eregi('(([[:alpha:]]+://)|^(www\.))+[^<>[:space:]]+[[:alnum:]/]',$block))
@@ -74,6 +79,11 @@ if (!function_exists('midcom_helper_formatters_maillinks'))
         
         foreach ($blocks as $block)
         {
+            if (empty($block))
+            {
+                continue;
+            }
+            
             $start = strpos($content, $block, $start);
             
             if (eregi('([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})',$block))
