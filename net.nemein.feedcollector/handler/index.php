@@ -53,23 +53,26 @@ class net_nemein_feedcollector_handler_index  extends midcom_baseclasses_compone
         $qb_feedtopics->add_constraint('node', '=', (int)$this->_content_topic->id);
         $qb_feedtopics->add_order($this->_config->get('sort_order'));
         $feedtopics = $qb_feedtopics->execute();
-        foreach($feedtopics as $feedtopic)
+        if(count($feedtopics) > 0)
         {
-            $this->topics[$feedtopic->guid]['object'] = $feedtopic;
-            $qb_news = midcom_db_article::new_query_builder();
-            $qb_news->add_constraint('topic','=', (int)$feedtopic->feedtopic);
-            if($feedtopic->categories != '||' && $feedtopic->categories != '')
+            foreach($feedtopics as $feedtopic)
             {
-                $categories = explode('|', $feedtopic->categories);
-                foreach($categories as $category)
+                $this->topics[$feedtopic->guid]['object'] = $feedtopic;
+                $qb_news = midcom_db_article::new_query_builder();
+                $qb_news->add_constraint('topic','=', (int)$feedtopic->feedtopic);
+                if($feedtopic->categories != '||' && $feedtopic->categories != '')
                 {
-                    $category = str_replace('|', '', $category);
-                    $qb_news->add_constraint('extra1', 'LIKE', "%|{$category}|%");
+                    $categories = explode('|', $feedtopic->categories);
+                    foreach($categories as $category)
+                    {
+                        $category = str_replace('|', '', $category);
+                        $qb_news->add_constraint('extra1', 'LIKE', "%|{$category}|%");
+                    }
                 }
+                $qb_news->set_limit($this->_config->get('articles_count_index'));
+                $items = $qb_news->execute();
+                $this->topics[$feedtopic->guid]['items'] = $items;
             }
-            $qb_news->set_limit($this->_config->get('articles_count_index'));
-            $items = $qb_news->execute();
-            $this->topics[$feedtopic->guid]['items'] = $items;
         }
         
         
@@ -89,20 +92,26 @@ class net_nemein_feedcollector_handler_index  extends midcom_baseclasses_compone
         $this->_request_data['counters']['topic_item'] = 0;
         // Counts overall items
         $this->_request_data['counters']['items'] = 0;
-        foreach($this->topics as $topic)
+        if(isset($this->topics) && count($this->topics) > 0)
         {
-            $this->_request_data['counters']['topic']++;
-            $this->_request_data['topic'] = $topic;
-            midcom_show_style('topic-header');
-            foreach($topic['items'] as $item)
+            foreach($this->topics as $topic)
             {
-                $this->_request_data['counters']['topic_item']++;
-                $this->_request_data['counters']['items']++;
-                $this->_request_data['item'] = $item;
-                midcom_show_style('topic-item');
+                $this->_request_data['counters']['topic']++;
+                $this->_request_data['topic'] = $topic;
+                midcom_show_style('topic-header');
+                if(count($topic['items']) > 0)
+                {
+                    foreach($topic['items'] as $item)
+                    {
+                        $this->_request_data['counters']['topic_item']++;
+                        $this->_request_data['counters']['items']++;
+                        $this->_request_data['item'] = $item;
+                        midcom_show_style('topic-item');
+                    }
+                }
+                midcom_show_style('topic-footer');
+                $this->_request_data['counters']['topic_item'] = 0;
             }
-            midcom_show_style('topic-footer');
-            $this->_request_data['counters']['topic_item'] = 0;
         }
         midcom_show_style('index-footer');
     }
