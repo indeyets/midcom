@@ -1108,29 +1108,45 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         $group =& $this->_form->addGroup($this->widget_elements, $this->name, $this->_translate($this->_field['title']), '', array('class' => 'midcom_helper_datamanager2_widget_chooser'));
     }
     
+    function _get_object_values(&$object)
+    {
+        $name_components = array();
+        foreach ($this->result_headers as $header_item)
+        {
+            $item_name = $header_item['name'];
+            
+            if (   !isset($object->$item_name)
+                || empty($object->$item_name))
+            {
+                continue;
+            }
+            
+            $value = $object->$item_name;
+            $value = rawurlencode($value);
+            $name_components[$item_name] = $value;
+        }
+        return $name_components;
+    }
+    
     function _resolve_object_name(&$object)
     {
         // debug_push_class(__CLASS__, __FUNCTION__);
         // debug_add("resolving object name from id {$object->id}");
         
-        $name = @$object->get_label();
+        $name = null;
+        if (method_exists($object, 'get_label'))
+        {
+            $name = @$object->get_label();
+        }
         
         if (empty($name))
         {
-            foreach ($this->result_headers as $header_item)
-            {
-                $item_name = $header_item['name'];
-                $value = @$object->$item_name;
-                $value = rawurlencode($value);
-                $name .= "{$item_name}: '{$value}'";
-                
-                if ($i < $hi_count)
-                {
-                    $name .= ", ";
-                }
-                
-                $i++;
-            }
+            $name = implode(', ', $this->_get_object_values($object));
+        }
+        
+        if (empty($name))
+        {
+            $name = get_class($object) . " #{$object->id}";
         }
         
         return $name;
@@ -1250,7 +1266,6 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         //$qb->end_group();
         
         $results = $qb->execute();        
-        
         // debug_print_r("Got results:",$results);
         
         if (count($results) == 0)
@@ -1354,23 +1369,27 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
     function render_content()
     {
         // debug_push_class(__CLASS__, __FUNCTION__);
-        
-        echo '<ul>';
+        echo "<table class=\"chooser_results\">\n";
         if (count($this->_type->selection) == 0)
         {
-            echo '<li>' . $this->_translate('type select: no selection') . '</li>';
+            echo '<tr><td>' . $this->_translate('type select: no selection') . '</td></tr>';
         }
         else
         {
-            // debug_add("We have selections!");
-            
             foreach ($this->_type->selection as $key)
             {
-                $data = $this->_get_key_data($key, true);
-                echo '<li>' . $data . '</li>';
+                if (   !$key
+                    && count($this->_type->selection) == 1)
+                {
+                    echo '<tr><td>' . $this->_translate('type select: no selection') . '</td></tr>';
+                    continue;
+                }
+                
+                $data = rawurldecode($this->_get_key_data($key, true));
+                echo '<tr><td>' . $data . '</td></tr>';
             }
         }
-        echo '</ul>';
+        echo "</table>\n";
         
         // debug_pop();
     }

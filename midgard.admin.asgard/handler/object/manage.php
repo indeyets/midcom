@@ -285,7 +285,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 continue;
             }
             
-            // Linked fields should use universalchooser
+            // Linked fields should use chooser
             if ($this->_reflector->is_link($key))
             {
                 $linked_type = $this->_reflector->get_link_name($key);
@@ -337,15 +337,17 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                                     'require_corresponding_option' => false,
                                     'options' => array(),
                                     'allow_other' => true,
+                                    'allow_multiple' => false,
                                 ),
-                                'widget' => 'universalchooser',
+                                'widget' => 'chooser',
                                 'widget_config' => array
                                 (
                                     'class' => $class,
                                     'component' => $component,
                                     'titlefield' => $linked_type_reflector->get_label_property(),
-                                    'idfield' => $this->_reflector->get_link_target($key),
+                                    'id_field' => $this->_reflector->get_link_target($key),
                                     'searchfields' => $linked_type_reflector->get_search_properties(),
+                                    'result_headers' => $linked_type_reflector->get_result_headers(),
                                     'orders' => array(),
                                 ),
                             )

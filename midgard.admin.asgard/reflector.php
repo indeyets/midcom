@@ -411,6 +411,24 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         debug_pop();
         return $icon;
     }
+    
+    /**
+     * Get headers to be used with chooser
+     */
+    function get_result_headers()
+    {
+        $headers = array();
+        $properties = $this->get_search_properties();
+        foreach ($properties as $property)
+        {
+            $headers[] = array
+            (
+                'name' => $property,
+                'title' => ucfirst($this->_l10n->get($property)),
+            );
+        }
+        return $headers;
+    }
 
     /**
      * Get class properties to use as search fields in univeralchooser etc
