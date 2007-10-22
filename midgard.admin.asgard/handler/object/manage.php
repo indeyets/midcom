@@ -689,7 +689,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         }
         $data['new_type_arg'] = $args[0];        
         
-        $defaults = array();        
+        $data['defaults'] = array();        
         if ($handler_id == '____mfa-asgard-object_create_toplevel')
         {
             $_MIDCOM->auth->require_user_do('midgard:create', null, $this->_new_type);
@@ -717,17 +717,33 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Could not establish link between {$this->_new_type} and " . get_class($this->_object));
             }
             $parent_property = $link_info[1];
-            $defaults[$link_info[0]] = $this->_object->$parent_property;
+            $data['defaults'][$link_info[0]] = $this->_object->$parent_property;
         }
 
         $this->_load_schemadb($this->_new_type);
         $this->_schemadb['object']->fields['guid']['hidden'] = true;
         
+        // Allow setting defaults from query string, useful for things like "create event for today" and chooser        
+        if (   isset($_GET['defaults'])
+            && is_array($_GET['defaults']))
+        {
+            foreach ($_GET['defaults'] as $key => $value)
+            {
+                if (!isset($this->_schemadb['object']->fields[$key]))
+                {
+                    // No such field in schema
+                    continue;
+                }
+                
+                $data['defaults'][$key] = $value;
+            }
+        }
+        
         $this->_controller = midcom_helper_datamanager2_controller::create('create');
         $this->_controller->schemadb =& $this->_schemadb;
         $this->_controller->schema = 'object';
         $this->_controller->callback_object =& $this;
-        $this->_controller->defaults = $defaults;
+        $this->_controller->defaults = $data['defaults'];
         if (! $this->_controller->initialize())
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");

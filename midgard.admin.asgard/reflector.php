@@ -397,6 +397,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
                 $icon = 'text-x-generic-template.png';
                 break;
             case (is_a($obj, 'org_openpsa_notifications_notification')):
+            case (is_a($obj, 'net_nemein_rss_feed')):
                 $icon = 'stock_news.png';
                 break;
             case (is_a($obj, 'org_routamc_positioning_country')):
