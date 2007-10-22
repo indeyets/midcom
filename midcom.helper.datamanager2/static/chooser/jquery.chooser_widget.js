@@ -530,8 +530,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
     	{
     	    var item_content = midcom_helper_datamanager2_widget_chooser_format_item(data,options)
     	    .appendTo(li_elem);
-            var input_elem = jQuery("<input>")
-            .attr({ type: 'hidden', name: input_elem_name, value: 0, id: options.widget_id + '_result_item_'+item_id+'_input' })
+            var input_elem = jQuery("<input type=\"hidden\">")
+            .attr({ name: input_elem_name, value: 0, id: options.widget_id + '_result_item_'+item_id+'_input' })
             .hide()
             .appendTo(li_elem);
     	}
