@@ -1526,6 +1526,33 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     }
 
     /**
+     * This is a wrapper for get_user, which allows user retrieval by its email address.
+     * If the email is empty or unknown, false is returned.
+     *
+     * @param string $email The email of the user to look up.
+     * @return midcom_core_user A reference to the user object matching the email,
+     *     or false if the email is unknown.
+     */
+    function & get_user_by_email($email)
+    {
+        if (empty($email)) {
+            return false;
+        }
+        
+        $qb = new midgard_query_builder('midgard_person');
+        $qb->add_constraint('email', '=', $email);
+        $result = @$qb->execute();
+        
+        if (   !$result
+            || count($result) == 0)
+        {
+            return false;
+        }
+        
+        return $this->get_user($result[0]);
+    }
+
+    /**
      * This is a wrapper for get_group, which allows Midgard Group retrieval by its name.
      * If the group name is unknown, false is returned.
      *
