@@ -47,7 +47,32 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
     {
         // Get last modified timestamp
         $qb = midcom_db_article::new_query_builder();
-        $qb->add_constraint('topic', '=', $this->_topic->id);
+        
+        // Include the article links to the indexes if enabled
+        if ($this->_config->get('enable_article_links'))
+        {
+            $mc = net_nehmer_static_link_dba::new_collector('topic', $this->_content_topic->id);
+            $mc->add_value_property('article');
+            $mc->add_constraint('topic', '=', $this->_content_topic->id);
+            
+            // Get the results
+            $mc->execute();
+            
+            $links = $mc->list_keys();
+            $qb->begin_group('OR');
+                foreach ($links as $guid => $link)
+                {
+                    $article_id = $mc->get_subkey($guid, 'article');
+                    $qb->add_constraint('id', '=', $article_id);
+                }
+                $qb->add_constraint('topic', '=', $this->_content_topic->id);
+            $qb->end_group();
+        }
+        else
+        {
+            $qb->add_constraint('topic', '=', $this->_content_topic->id);
+        }
+        
         $qb->add_order('metadata.revised', 'DESC');
         $qb->set_limit(1);
         $result = $qb->execute();
@@ -59,7 +84,7 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
         {
             $article_time = 0;
         }
-        $topic_time = $this->_topic->metadata->revised;
+        $topic_time = $this->_content_topic->metadata->revised;
         $_MIDCOM->set_26_request_metadata(max($article_time, $topic_time), null);
         return true;
     }
@@ -130,21 +155,23 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
         $qb->add_constraint('topic', '=', $this->_content_topic->id);
         $result = $qb->execute();
 
-        if ($result)
+        if (count($result) === 0)
         {
-            foreach ($result as $article)
+            return $view;
+        }
+        
+        foreach ($result as $article)
+        {
+            if (! $datamanager->autoset_storage($article))
             {
-                if (! $datamanager->autoset_storage($article))
-                {
-                    debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add("The datamanager for article {$article->id} could not be initialized, skipping it.");
-                    debug_print_r('Object was:', $article);
-                    debug_pop();
-                    continue;
-                }
-
-                $this->_process_datamanager($datamanager, $article, $view);
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("The datamanager for article {$article->id} could not be initialized, skipping it.");
+                debug_print_r('Object was:', $article);
+                debug_pop();
+                continue;
             }
+
+            $this->_process_datamanager($datamanager, $article, $view);
         }
         ksort ($view);
         return $view;
@@ -197,7 +224,5 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
         }
 
     }
-
 }
-
 ?>
