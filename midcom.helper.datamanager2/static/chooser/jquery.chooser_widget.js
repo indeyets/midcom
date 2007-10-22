@@ -467,14 +467,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
             element.show();
         }
 	    
-	    if (options.allow_multiple)
-	    {
-    	    var input_elem_name = options.widget_id + "_selections[" + item_id + "]";
-	    }
-        else
-        {
-            var input_elem_name = options.widget_id + "_selections";
-        }
+        
+	    var input_elem_name = options.widget_id + "_selections[" + item_id + "]";
         
 	    var li_elem = jQuery("<li>")
 	    .attr({ id: options.widget_id + '_result_item_'+item_id })
@@ -697,6 +691,9 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 	    },
 	    activate_item: function(item)
 	    {
+            // if (options.allow_multiple) {
+            //     
+            // }
 	        var item_id = item[options.id_field];
 	        activate(item_id);
 	    },
