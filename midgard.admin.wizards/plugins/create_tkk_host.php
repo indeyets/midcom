@@ -62,24 +62,12 @@ class create_tkk_host extends midcom_baseclasses_components_handler
                 $sitewizard = new midgard_admin_sitewizard();
                 
                 $host_creator = $sitewizard->initialize_host_creation($this->_sitegroup_id);
+                $host_creator->set_page_title($_POST['tkk_sitewizard_sitename']);
                 $host_creator->set_host_url($_POST['tkk_sitewizard_host']);
                 $host_creator->set_host_port(80);
                 
-                /*
-                if (isset($_POST['tkk_sitewizard_prefix']) && !empty($_POST['tkk_sitewizard_prefix']))
-                {
-                    $host_creator->set_host_prefix($_POST['tkk_sitewizard_prefix']);
-                }
-                
-                if (isset($_POST['tkk_sitewizard_port']) && !empty($_POST['tkk_sitewizard_port']))
-                {
-                    $host_creator->set_host_port($_POST['tkk_sitewizard_port']);
-                }
-                */
-                
                 $session = new midcom_service_session();
-                $session_id = time();
-                $session->set("midgard_admin_wizards_koe", $host_creator);
+                $session->set("midgard_admin_wizards_{$this->_request_data['session_id']}", $host_creator);
                 
                 $_MIDCOM->relocate($this->_request_data['next_plugin_full_path']);
             }

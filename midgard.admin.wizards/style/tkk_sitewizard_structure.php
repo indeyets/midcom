@@ -8,14 +8,14 @@
 <h1><?php echo $data['l10n']->get('select structure'); ?></h1>
 
 <form method="post" name="tkk_sitewizard_structure">
-
+<!--
       <fieldset>
         <label for="tkk_sitewizard_structure_select_template_none);" class="action_select">
         <input type="radio" name="tkk_sitewizard_structure_select_template" value="none"
         id="tkk_sitewizard_structure_select_template_none);"/><?php echo $data['l10n']->get('no structure'); ?>
         </label>
       </fieldset>
-
+-->
   <?php
     
   foreach($data['structure_templates'] as $key => $structure)

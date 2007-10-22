@@ -59,6 +59,16 @@
                     'structure_config_path' => '/usr/share/midgard/svn/midcom-trunk/midgard.admin.wizards/config/templates/',
                 ),            
             ),
+            'configure_tkk_structure' => array
+            (
+                'class' => 'configure_tkk_structure',
+                'src' => 'file:/midgard/admin/wizards/plugins/configure_tkk_structure.php',
+                'name' => 'TKK Structure Configuration',
+                'config' => array
+                (
+                    'sitewizard_path' => '/usr/share/php/midcom/static/data/midgard_admin_sitewizard.php',
+                ),            
+            ),
             'create_tkk_website' => Array
             (
                 'class' => 'create_tkk_website',
@@ -66,23 +76,19 @@
                 'name' => 'TKK Website Creation',
                 'config' => Array
                 (
-                    'sitewizard_path' => '/usr/share/php/midcom/static/data/midgard_admin_sitewizard.php',
-                    
+                    'sitewizard_path' => '/usr/share/php/midcom/static/data/midgard_admin_sitewizard.php',                  
                     'creation_root_topic_guid' => '5c7c4a76761711dc96616575a3e41a5c1a5c',
-                    /*
-                    'creation_root_topic_parent_guid' => '6d3af3384be911dcb7b0b3bf4b275d0d5d0d',
-                    'creation_root_topic_component' => 'net.nehmer.static',
-                    'creation_root_topic_parameters' => array(),
-                    */
                     'creation_root_group_guid' => 'e32da6065ac411dba4b95bbbb548039a039a',
-                    //'creation_root_group_parent_guid' => '',
-                    //'creation_root_group_name' => '',
                     
-                    'verbose' => true,
+                    'verbose' => false,
                     'structure_config_path' => '/usr/share/midgard/svn/midcom-trunk/midgard.admin.wizards/config/templates/',
+                    'vhost_save_path' => '/usr/share/midgard/svn/midcom-trunk/midgard.admin.wizards/',
+                    'notification_email' => 'juhana@nemein.com',
+                    'host_ip' => '84.34.133.216',
+                    'mysql_db_user_pass' => 'midgard midgard midgard',
+                    'document_root' => '/var/lib/midgard/vhosts/devel-xen-devel.nemein.net/80/',
                 ),
             ),
-
         ),    
     ),
     

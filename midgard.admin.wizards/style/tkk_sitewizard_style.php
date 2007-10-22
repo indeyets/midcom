@@ -9,6 +9,7 @@
 
 <form method="post" name="tkk_sitewizard_style">
 
+<!--
     <fieldset class="style">
       <img src="<?php echo MIDCOM_STATIC_URL; ?>/midgard.admin.sitewizard/no-style-preview.jpg" width="130" alt="Custom" />
       <label for="tkk_sitewizard_style_select_template_custom" class="action_select">
@@ -17,6 +18,7 @@
       </label>
       <div class="description"><?php echo $data['l10n']->get('completely empty style'); ?></div>
     </fieldset>
+-->
 <?php    
         foreach ($data['templates'] as $template)
         {

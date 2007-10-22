@@ -6,6 +6,30 @@
 Midgard Wizards
 ---STRINGEND
 
+---STRING generated vhost
+Generated vhost
+---STRINGEND
+
+---STRING notification has been sent to
+Notification has been sent to
+---STRINGEND
+
+---STRING run sitewizard again
+Run sitewizard again
+---STRINGEND
+
+---STRING new website created
+New website created
+---STRINGEND
+
+---STRING generating vhost config
+Generating vhost config
+---STRINGEND
+
+---STRING move vhost config under apache vhosts and restart
+Move vhost config under apache vhosts and restart
+---STRINGEND
+
 ---STRING select structure
 Select structure
 ---STRINGEND
@@ -44,4 +68,16 @@ Completely empty style
 
 ---STRING create
 Create
+---STRINGEND
+
+---STRING create website
+Create website
+---STRINGEND
+
+---STRING report
+Report
+---STRINGEND
+
+---STRING configure structure
+Configure structure
 ---STRINGEND

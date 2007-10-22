@@ -58,8 +58,9 @@ class midgard_admin_wizards_handler_index  extends midcom_baseclasses_components
         {
             $first = each($config[$args[0]]['plugins']);
             $plugin = $first['key'];
+            $session_id = time();
             
-            $_MIDCOM->relocate($prefix . $args[0] . "/" . $plugin . "/");
+            $_MIDCOM->relocate($prefix . $args[0] . "/" . $plugin . "/" . $session_id);
         }
         else
         {

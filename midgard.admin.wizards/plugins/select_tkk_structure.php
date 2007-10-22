@@ -104,31 +104,33 @@ class select_tkk_structure extends midcom_baseclasses_components_handler
         {    
             $session = new midcom_service_session();
             
-            if (!$session->exists("midgard_admin_wizards_koe"))
+            if (!$session->exists("midgard_admin_wizards_{$this->_request_data['session_id']}"))
             {
                 echo "HERE";
             }
             else
             {
-                $host_creator = $session->get("midgard_admin_wizards_koe");
+                $host_creator = $session->get("midgard_admin_wizards_{$this->_request_data['session_id']}");
             }
             
             try
             {
-            /*
-            $host_creator->set_verbose(true);
-            $host_creator->execute();
-            print_r($host_creator);
-            */
-            
                 $structure_creator = $host_creator->next_link();
                 $structure_creator->set_verbose(true);
-                $structure_creator->read_config($this->_request_data['plugin_config']['structure_config_path']
-                    . $_POST['tkk_sitewizard_structure_select_template'] . ".inc");
-                //$structure_creator->set_creation_root_group('e32da6065ac411dba4b95bbbb548039a039a');
-                //$structure_creator->set_creation_root_topic('5c7c4a76761711dc96616575a3e41a5c1a5c');
+            
+                if ($_POST['tkk_sitewizard_structure_select_template'] == 'none')
+                {
+                
+                }
+                else
+                {         
+                    $structure_creator->read_config($this->_request_data['plugin_config']['structure_config_path']
+                        . $_POST['tkk_sitewizard_structure_select_template'] . ".inc");
+                    //$structure_creator->set_creation_root_group('e32da6065ac411dba4b95bbbb548039a039a');
+                    //$structure_creator->set_creation_root_topic('5c7c4a76761711dc96616575a3e41a5c1a5c');
+                } 
                              
-                $session->set("midgard_admin_wizards_koe", $structure_creator);
+                $session->set("midgard_admin_wizards_{$this->_request_data['session_id']}", $structure_creator);
                                 
                 $_MIDCOM->relocate($this->_request_data['next_plugin_full_path']);
             }

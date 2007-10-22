@@ -68,7 +68,7 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
      *     option.
      * @access private
      */
-    function _load_nna_plugin($group, $name)
+    function _load_nna_plugin($group, $name, $session_id)
     {
         // Validate the plugin name and load the associated configuration
         $groups = $this->_config->get('plugin_groups');
@@ -125,7 +125,7 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
         foreach ($handlers as $identifier => $handler_config)
         {
         
-            $handler_config['variable_args'] = 2;
+            $handler_config['variable_args'] = 3;
         /*
             // First, update the fixed args list (be tolarent here)
             if (! array_key_exists('fixed_args', $handler_config))
@@ -276,12 +276,13 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
     {
         $_MIDCOM->auth->require_admin_user();
     
-        if ($argc = 2 && isset($argv[1]))
+        if ($argc = 3 && isset($argv[1]))
         {
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         
             $this->_request_data['current_wizard'] = $argv[0];
             $this->_request_data['current_plugin'] = $argv[1];
+            $this->_request_data['session_id'] = $argv[2];
             
             $groups = $this->_config->get('plugin_groups');
             $plugins = $groups[$argv[0]]['plugins'];
@@ -305,13 +306,13 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
             }
             
             $this->_request_data['next_plugin_full_path'] = $prefix . $argv[0] . "/" 
-                . $this->_request_data['next_plugin'] ."/";
+                . $this->_request_data['next_plugin'] ."/" . $argv[2];
         
             /**
              * We do not need to check result of this operation, it populates request switch
              * if successfull and does nothing if not, this means normal request handling is enough
              */
-            $this->_load_nna_plugin($argv[0], $argv[1]);
+            $this->_load_nna_plugin($argv[0], $argv[1], $argv[2]);
         }
 
         return true;

@@ -56,20 +56,20 @@ class select_tkk_style extends midcom_baseclasses_components_handler
         {      
             $session = new midcom_service_session();
             
-            if (!$session->exists("midgard_admin_wizards_koe"))
+            if (!$session->exists("midgard_admin_wizards_{$this->_request_data['session_id']}"))
             {
-                echo "HERE";
+                
             }
             else
             {
-                $host_creator = $session->get("midgard_admin_wizards_koe");
+                $host_creator = $session->get("midgard_admin_wizards_{$this->_request_data['session_id']}");
             }
             
             try
             {            
                 $host_creator->set_host_style($_POST[tkk_sitewizard_style_select_template]);
                 
-                $session->set("midgard_admin_wizards_koe", $host_creator);
+                $session->set("midgard_admin_wizards_{$this->_request_data['session_id']}", $host_creator);
                 
                 $_MIDCOM->relocate($this->_request_data['next_plugin_full_path']);
             }
