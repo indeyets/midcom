@@ -35,7 +35,7 @@
     'description' => 'Lists defined content in alphabetical order',
     'maintainers' => array
     (
-        'username' => array
+        'w_i' => array
         (
             'name' => 'Jerry Jalava',
             'email' => 'jerry.jalava@gmail.com',
