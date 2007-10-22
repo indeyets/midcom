@@ -204,9 +204,11 @@ class midcom_services__i18n_l10n {
             $file = fopen("{$this->_library_filename}.{$lang}.txt", 'w');
             if (! $file)
             {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    "Failed to open the file '{$this->_library_filename}.{$lang}.txt' for writing.");
-                // This will exit()
+                $_MIDCOM->uimessages->add("L10N Error", "Failed to open the file '{$this->_library_filename}.{$lang}.txt' for writing.", 'error');
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Failed to open the file '{$this->_library_filename}.{$lang}.txt' for writing.",MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;
             }
             
             fwrite($file, "---# MidCOM String Database\n");
