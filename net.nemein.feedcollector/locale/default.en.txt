@@ -1,0 +1,63 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---LANGUAGE en
+
+---STRING manage
+Manage
+---STRINGEND
+
+---STRING management
+Management
+---STRINGEND
+
+---STRING management helptext
+From here you can manage all the feeds you like to list in this folder
+---STRINGEND
+
+---STRING create
+Create
+---STRINGEND
+
+---STRING create helptext
+Create a new feedcollector topic to fetch
+---STRINGEND
+
+---STRING latest
+Latest
+---STRINGEND
+
+---STRING categories
+Categories
+---STRINGEND
+
+---STRING remove
+Remove
+---STRINGEND
+
+---STRING edit
+Edit
+---STRINGEND
+
+---STRING edit metadata
+Edit metadata
+---STRINGEND
+
+---STRING articles count index
+Articles count in index page per topic
+---STRINGEND
+
+---STRING articles count latest default
+Default articles count in latest page
+---STRINGEND
+
+---STRING this text comes to the top of your content
+This text comes to the top of your content
+---STRINGEND
+
+---STRING text to place over the content
+Text to place over the content
+---STRINGEND
+
+---STRING display settings
+Display settings
+---STRINGEND

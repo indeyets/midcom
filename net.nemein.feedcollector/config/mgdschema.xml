@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+
+  <type name="net_nemein_feedcollector_topic" table="net_nemein_feedcollector_topic" parent="midgard_topic">
+    <property name="id" type="integer" primaryfield="id" />
+    <property name="node" type="integer" link="midgard_topic:id" parentfield="node" />
+    <property name="feedtopic" type="string" link="midgard_topic:id" />
+    <property name="title" type="string" />
+    <property name="categories" type="string" />
+  </type>
+
+</Schema>
