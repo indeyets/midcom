@@ -292,13 +292,11 @@ if (!function_exists('midcom_helper_formatters_noimages'))
             '/<img [^>]*src="([^"]+)"[^>]*alt="([^"]+)"[^>]*>/is',
             '/<img [^>]*src="([^"]+)"[^>]*[^>]*>/is',
         );
-        $replace = array
-        (
-            _midcom_helper_formatters_noimages_link('\\1','\\2'),
-            _midcom_helper_formatters_noimages_link('\\1'),
-        );
         
-        $content = preg_replace($search, $replace, $content);
+        foreach ($search as $re)
+        {
+            $content = preg_replace_callback($re, "_midcom_helper_formatters_noimages_link", $content);            
+        }
         
         if ($echo_results)
         {
@@ -311,8 +309,15 @@ if (!function_exists('midcom_helper_formatters_noimages'))
     }
     _midcom_helper_formatters_register_filter('noimages');
     
-    function _midcom_helper_formatters_noimages_link($url, $title='')
+    function _midcom_helper_formatters_noimages_link($matches)
     {
+        $url = $matches[1];
+        $title = '';
+        if (isset($matches[2]))
+        {
+            $title = $matches[2];
+        }
+        
         $link = '';
         if (empty($url))
         {
@@ -326,7 +331,8 @@ if (!function_exists('midcom_helper_formatters_noimages'))
             $title = $url_parts[(count($url_parts)-1)];
         }
         
-        $link = "<a href=\"{$url}\" title=\"{$title}\">{$title}</a>";
+        $title_prefix = $_MIDCOM->i18n->get_string('image','midcom');
+        $link = "<a href=\"{$url}\" title=\"{$title}\">[{$title_prefix}:{$title}]</a>";
         
         return $link;
     }
@@ -347,12 +353,37 @@ _midcom_helper_formatters_register_filter('linksobfmails','midcom_helper_formatt
 
 function midcom_helper_formatters_links_and_maillinks($content)
 {
-    $content = mgd_format($content, 'xmaillink');
-    $content = mgd_format($content, 'xlinks');
+    $content = midcom_helper_formatters_maillinks($content, false);//mgd_format($content, 'xmaillink');
+    $content = midcom_helper_formatters_links($content, false);//mgd_format($content, 'xlinks');
     
     echo $content;
 }
 _midcom_helper_formatters_register_filter('linksmails','midcom_helper_formatters_links_and_maillinks');
+
+function midcom_helper_formatters_automatic($content)
+{
+    print_r($GLOBALS['midcom_config']['auto_formatter']);
+
+    if (   isset($GLOBALS['midcom_config']['auto_formatter'])
+        && !empty($GLOBALS['midcom_config']['auto_formatter']))
+    {
+        foreach ($GLOBALS['midcom_config']['auto_formatter'] as $formatter)
+        {
+            echo "content before {$formatter}\n";
+            if (in_array($formatter, array('h', 'F')))
+            {
+                $content = mgd_format($content, $formatter);
+            }
+            else
+            {
+                $content = $formatter($content, false);
+            }
+        }
+    }
+
+    echo $content;
+}
+_midcom_helper_formatters_register_filter('af','midcom_helper_formatters_automatic');
 
 /**
  * Helpers

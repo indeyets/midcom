@@ -507,6 +507,8 @@ $GLOBALS['midcom_config_default']['enable_prototype'] = true;
 $GLOBALS['midcom_config_default']['enable_scriptaculous'] = true;
 $GLOBALS['midcom_config_default']['jquery_no_conflict'] = true;
 
+$GLOBALS['midcom_config_default']['auto_formatter'] = array();
+
 
 /* ----- Include the site config ----- */
 /* This should be replaced by $_MIDGARD constructs */
