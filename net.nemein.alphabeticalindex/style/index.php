@@ -7,6 +7,11 @@ if ($data['topic']->can_do('midgard:delete'))
 {
     $enable_delete = true;
 }
+$enable_update = false;
+if ($data['topic']->can_do('midgard:update'))
+{
+    $enable_update = true;
+}
 ?>
 <h1><?php echo $data['l10n']->get('index'); ?></h1>
 
@@ -35,15 +40,31 @@ echo $data['alphabets_nav'];
                 }
                 echo "    <li class=\"{$class}\"><a href=\"{$item->url}\" target=\"{$target}\" rel=\"Bookmark\" title=\"{$item->title}\">{$item->title}</a>";
                 
+                if (   $enable_update
+                    || $enable_delete)
+                {
+                    echo "<div class=\"actions\">";                    
+                }
+
+                if ($enable_update)
+                {
+                    echo "<a href=\"{$prefix}edit/{$item->guid}.html\">";
+                    echo "<img src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/properties.png\" alt=\"" . $data['l10n_midcom']->get('edit') . "\" border=\"0\"/>";
+                    echo "</a>";
+                }
                 if ($enable_delete)
                 {
-                    echo "<div class=\"actions\">";
                     echo "<a href=\"{$prefix}delete/{$item->guid}.html\">";
                     echo "<img src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/trash.png\" alt=\"" . $data['l10n_midcom']->get('delete') . "\" border=\"0\"/>";
                     echo "</a>";
+                }
+
+                if (   $enable_update
+                    || $enable_delete)
+                {
                     echo "</div>";
                 }
-                
+                                
                 echo "</li>\n";
             }
             echo "</ul>\n";

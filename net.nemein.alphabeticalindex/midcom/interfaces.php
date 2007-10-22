@@ -40,11 +40,11 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
     
     function _on_watched_dba_create($object)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_print_r("object: ",$object);
+        // debug_push_class(__CLASS__, __FUNCTION__);
+        // debug_print_r("object: ",$object);
 
         $show_in_list = $object->get_parameter('net.nemein.alphabeticalindex:show_in_list','status');
-        debug_add("show_in_list: {$show_in_list}");
+        // debug_add("show_in_list: {$show_in_list}");
         
         if ($show_in_list)
         {
@@ -58,16 +58,16 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
             }
         }
 
-        debug_pop();
+        // debug_pop();
     }
 
     function _on_watched_dba_update($object)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_print_r("object: ",$object);
+        // debug_push_class(__CLASS__, __FUNCTION__);
+        // debug_print_r("object: ",$object);
         
         $show_in_list = $object->get_parameter('net.nemein.alphabeticalindex:show_in_list','status');
-        debug_add("show_in_list: {$show_in_list}");
+        // debug_add("show_in_list: {$show_in_list}");
         
         if ($show_in_list)
         {            
@@ -92,7 +92,7 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
             net_nemein_alphabeticalindex_interface::_on_watched_dba_delete($object, true);
         }
         
-        debug_pop();
+        // debug_pop();
     }
 
     /**
@@ -101,15 +101,15 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
      */
     function _on_watched_dba_delete($object,$skip_status=false)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_print_r("object: ",$object);
+        // debug_push_class(__CLASS__, __FUNCTION__);
+        // debug_print_r("object: ",$object);
         
         $show_in_list = true;
         
         if (!$skip_status)
         {
             $show_in_list = $object->get_parameter('net.nemein.alphabeticalindex:show_in_list','status');
-            debug_add("show_in_list: {$show_in_list}");            
+            // debug_add("show_in_list: {$show_in_list}");            
         }
         
         if ($show_in_list)
@@ -132,7 +132,7 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
         }
 
         
-        debug_pop();
+        // debug_pop();
     }
 
     function _resolve_object_title(&$object)

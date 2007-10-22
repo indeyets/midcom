@@ -62,6 +62,14 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
             'variable_args' => 1
         );
         
+        // Handle /edit/[guid]
+        $this->_request_switch['edit'] = array
+        (
+            'handler' => Array('net_nemein_alphabeticalindex_handler_edit', 'edit'),
+            'fixed_args' => Array('edit'),
+            'variable_args' => 1
+        );
+        
         $_MIDCOM->add_link_head
         (
             array

@@ -30,7 +30,7 @@
     'name'        => 'internal items',
     'description' => 'internal items',
     'fields'      => array (
-    
+
     	/* Start of component required fields */
         
     	'article' => array
@@ -49,6 +49,7 @@
             'widget_config' => array
             (
                 'clever_class' => 'article',
+                'id_field' => 'guid'
             ),
             'required' => false,
         ),
@@ -69,6 +70,7 @@
             'widget_config' => array
             (
                 'clever_class' => 'topic',
+                'id_field' => 'guid'
             ),
             'required' => false,
         ),
@@ -77,4 +79,24 @@
         
     )
 ), // internal
+
+'edit' => array (
+    'name'        => 'edit item',
+    'description' => 'edit item',
+    'fields'      => array (
+    
+    	/* Start of component required fields */
+        
+        'title' => array (
+            'title' => 'title',
+            'type'    => 'text',
+            'storage'    => 'title', 
+            'required' => true,
+            'widget' => 'text',
+        ),
+        
+        /* End of component required fields */
+        
+    )
+), // edit
 

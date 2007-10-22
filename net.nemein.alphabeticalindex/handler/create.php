@@ -187,7 +187,7 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
 
                         $qb = net_nemein_alphabeticalindex_item::new_query_builder();
                         $qb->add_constraint('objectGuid', '=', $object->guid);
-                        if ($qb->count() == 0)
+                        if ($qb->count_unchecked() == 0)
                         {
                             $item = new net_nemein_alphabeticalindex_item();            
                             $item->title = $object->title;
@@ -253,7 +253,8 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
         
         $this->_load_controller($handler_id);
         $this->_prepare_request_data($handler_id);
-                
+        $this->_update_breadcrumb_line();
+        
         switch ($this->_controller->process_form())
         {
             case 'save':
@@ -269,6 +270,28 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
     function _show_create($handler_id, &$data)
     {
         midcom_show_style('item-create');
+    }
+
+    /**
+     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * location.
+     *
+     */
+    function _update_breadcrumb_line()
+    {
+        $tmp = Array();
+
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "/",
+            MIDCOM_NAV_NAME => sprintf
+            (
+                $this->_l10n_midcom->get('create %s'),
+                $this->_l10n->get("{$this->_type} item")
+            ),
+        );
+
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
 
 }
