@@ -126,8 +126,9 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
         }
         */
 
-        $url = "http://" . $GLOBALS['midcom_config']['indexer_xmltcp_host'] . 
-            ":" . $GLOBALS['midcom_config']['indexer_xmltcp_port'] . "/solr/select?q=$query&fl=*,score";
+        // TODO: Make this configurable, even better: adapt the whole indexer system to fetching enable querying for counts and slices
+        $maxrows = 1000;
+        $url = "http://{$GLOBALS['midcom_config']['indexer_xmltcp_host']}:{$GLOBALS['midcom_config']['indexer_xmltcp_port']}/solr/select?q={$query}&fl=*,score&rows={$maxrows}";
         if (isset($_REQUEST['debug'])) var_dump($url);
 
         $options = array();
