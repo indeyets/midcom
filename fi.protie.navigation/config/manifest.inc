@@ -1,5 +1,5 @@
 'name' => 'fi.protie.navigation',
-'version' => '1.1.1beta1',
+'version' => '1.1.2beta1',
 'state' => 'beta',
 'purecode' => true,
 'package.xml' => Array
@@ -25,6 +25,12 @@
             'name' => 'Oskari Kokko',
             'email' => 'oskari.kokko@iki.fi',
             'role' => 'lead',
+        ),
+        'w_i' => Array
+        (
+            'name' => 'Jerry Jalava',
+            'email' => 'jerry.jalava@gmail.com',
+            'role' => 'developer',
         ),
     ),
     'dependencies' => Array

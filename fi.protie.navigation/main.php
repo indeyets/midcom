@@ -166,7 +166,7 @@ class fi_protie_navigation
      */
     var $component_name_to_class = false;
     
-     /**
+    /**
      * Add first and last-class names to list item ul class name
      * 
      * @access public
@@ -247,6 +247,39 @@ class fi_protie_navigation
     var $css_active = 'active';
     
     /**
+     * parameter listening enabled
+     * 
+     * @access private
+     * @var boolean
+     */
+    var $_listen_params = false;
+    
+    /**
+     * Registered get -parameters for listening
+     * 
+     * @access private
+     * @var array
+     */
+    var $_get_params = array();
+
+    /**
+     * Registered post -parameters for listening
+     * Not supported yet.
+     * 
+     * @access private
+     * @var array
+     */
+    var $_post_params = array();
+    
+    /**
+     * Cache for parameters to be listened
+     * 
+     * @access private
+     * @var string
+     */
+    var $_params_cache = false;
+    
+    /**
      * Constructor method. Here we initialize the classes and variables
      * needed through the class.
      * 
@@ -261,6 +294,80 @@ class fi_protie_navigation
         {
             $this->root_id = $id;
         }
+    }
+    
+    function listen_parameter($name, $value=false, $type='get')
+    {
+        if (empty($name))
+        {
+            return;
+        }
+        
+        $type = strtolower($type);
+        
+        switch($type)
+        {
+            case 'post':
+                if (   isset($this->_post_params[$name])
+                    && $this->_post_params[$name] == $value)
+                {
+                    return;
+                }
+                $this->_post_params[$name] = $value;
+            break;
+            case 'get':            
+            default:
+                if (   isset($this->_get_params[$name])
+                    && $this->_get_params[$name] == $value)
+                {
+                    return;
+                }
+                $this->_get_params[$name] = $value;
+        }
+        
+        $this->_listen_params = true;
+    }
+    
+    function _collect_parameters()
+    {
+        if (empty($this->_get_params))
+        {
+            $this->_params_cache = '';
+            return;
+        }
+        
+        $_prefix = '?';
+        $this->_params_cache = '';
+        
+        foreach ($this->_get_params as $key => $value)
+        {
+            if (isset($_GET[$key]))
+            {
+                if ($value)
+                {
+                    if ($_GET[$key] == $value)
+                    {
+                        $this->_params_cache .= "{$_prefix}{$key}={$value}";
+                        $_prefix = '&';                        
+                    }
+                }
+                elseif (! $_GET[$key])
+                {
+                    $this->_params_cache .= "{$_prefix}{$key}";
+                    $_prefix = '&';                    
+                }
+            }
+        }
+    }
+    
+    function _get_parameter_string()
+    {
+        if (! $this->_params_cache)
+        {
+            $this->_collect_parameters();
+        }
+        
+        return $this->_params_cache;
     }
     
     /**
@@ -356,10 +463,10 @@ class fi_protie_navigation
         }
         
         echo "{$indent}<ul class=\"{$this->css_list_style} node-{$id}\"{$element_id}>\n";
-
+        
         $item_count = count($children);
         $item_counter = 0;
-
+        
         // Draw each child element
         foreach ($children as $child)
         {
@@ -371,7 +478,7 @@ class fi_protie_navigation
             $url_name_to_class = '';
             $first_last = '';
             $has_childs = '';
-
+            
             if($item_counter == 1 && $item_counter == $item_count)
             {
                 $first_last = $this->css_first_last;
@@ -384,7 +491,7 @@ class fi_protie_navigation
             {
                 $first_last = $this->css_last;
             }
-
+            
             $item = $this->_nap->get_node($child);
             
             if (   $item[MIDCOM_NAV_ID] === $this->_nap->get_current_node()
@@ -494,7 +601,7 @@ class fi_protie_navigation
                 {
                     continue;
                 }
-                
+
                 $item = $this->_nap->get_node($child[MIDCOM_NAV_ID]);
                 
                 if (   $item[MIDCOM_NAV_ID] === $this->_nap->get_current_node()
@@ -516,7 +623,7 @@ class fi_protie_navigation
             else
             {
                 $item = $this->_nap->get_leaf($child[MIDCOM_NAV_ID]);
-                
+
                 // Place the corresponding css class for the currently active leaf)
                 if ($item[MIDCOM_NAV_ID] === $this->_nap->get_current_leaf())
                 {
@@ -538,10 +645,9 @@ class fi_protie_navigation
         {
             $url_name_to_class = ereg_replace('\.|/', '', $item[MIDCOM_NAV_URL]);
         }
-        
-        
+
         $css_class = $selected;
-        
+
         // Check if the class is active
         if ($active !== '')
         {
@@ -560,7 +666,7 @@ class fi_protie_navigation
             $css_class .= ' '.$url_name_to_class;
         }
         
-        // Check if the first or last is supposed to be drawn
+         // Check if the first or last is supposed to be drawn
         if ($this->first_and_last_to_class && $first_last !== '')
         {
             $css_class .= ' '.$first_last;
@@ -570,13 +676,6 @@ class fi_protie_navigation
         if ($this->has_childs_to_class && $has_childs !== '')
         {
             $css_class .= ' '.$has_childs;
-        }
-        
-        // Add information about the object's translation status
-        if (   isset($item[MIDCOM_NAV_OBJECT]->lang)
-            && $item[MIDCOM_NAV_OBJECT]->lang != $_MIDCOM->i18n->get_midgard_language())
-        {
-            $css_class .= ' untranslated';
         }
         
         $css_class = trim($css_class);
@@ -591,8 +690,10 @@ class fi_protie_navigation
             $class = '';
         }
         
+        $get_params = $this->_get_parameter_string();
+        
         echo "{$indent}  <li{$class}>\n";
-        echo "{$indent}    <a href=\"{$item[MIDCOM_NAV_FULLURL]}\">{$item[MIDCOM_NAV_NAME]}</a>\n";
+        echo "{$indent}    <a href=\"{$item[MIDCOM_NAV_FULLURL]}{$get_params}\">{$item[MIDCOM_NAV_NAME]}</a>\n";
         
         // If either of the follow nodes switches is on, follow all the nodes
         if (   $item[MIDCOM_NAV_TYPE] === 'node'
