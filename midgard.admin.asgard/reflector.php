@@ -185,6 +185,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
                 $this->get_class_label_l10n_ok = false;
             }
         }
+        debug_pop();
         return $label;
     }
 
@@ -243,6 +244,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             default:
                 $property = 'guid';
         }
+        debug_pop();
         return $property;
     }
 
@@ -334,7 +336,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             default:
                 $label = $obj->guid;
         }
-
+        debug_pop();
         return $label;
     }
 
@@ -406,7 +408,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         }
 
         $icon = "<img src='/midcom-static/stock-icons/16x16/{$icon}' align='absmiddle' border='0' /> ";
-
+        debug_pop();
         return $icon;
     }
 
