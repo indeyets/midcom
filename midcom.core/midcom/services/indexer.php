@@ -293,7 +293,8 @@ class midcom_services_indexer
             if ($document->is_a('midcom'))
             {
                 // Try to retrieve object:
-                $object = $_MIDCOM->dbfactory->get_object_by_guid($document->RI);
+                // Strip language code from end of RI if it looks like "<GUID>_<LANG>" (because *many* places suppose it's plain GUID)
+                $object = $_MIDCOM->dbfactory->get_object_by_guid(preg_replace('/^([0-9a-f]{32,80})_[a-z]{2}$/', '\\1', $document->RI));
                 if (! $object)
                 {
                     // Skip document, the obhect is hidden.

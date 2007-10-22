@@ -60,7 +60,7 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
      */   
     function index ($documents)
     {
-
+        $this->factory->reset();
         if (!is_array($documents)) 
         {
             $documents = array( $documents );
@@ -107,6 +107,7 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
      */
     function query ($query, $filter)
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
         if ($filter !== null) 
         {
             if ($filter->type == 'datefilter') 
@@ -118,6 +119,12 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
                                     gmdate($format, ($filter->get_end() == 0 ) ? time() : $filter->get_end()) . "Z");
             }
         }
+        /* In fact this is probably best left for midcom.helper.search to decide
+        if ($GLOBALS['midcom_config']['i18n_multilang_strict'])
+        {
+            $query .= ' AND (__LANG:"' . $_MIDCOM->i18n->get_current_language() . '" OR __LANG:"")';
+        }
+        */
 
         $url = "http://" . $GLOBALS['midcom_config']['indexer_xmltcp_host'] . 
             ":" . $GLOBALS['midcom_config']['indexer_xmltcp_port'] . "/solr/select?q=$query&fl=*,score";
@@ -135,10 +142,12 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
         if ($this->code != 200 || PEAR :: isError($err)) {
             $msg = (is_object($err)) ? $err->getMessage() : "";
             debug_add("Failed to execute Request {$url}:{$this->code} {$msg}", MIDCOM_LOG_WARN); 
+            debug_pop();
             return false;
         }
-    
-        $response = DomDocument::loadXML($request->getResponseBody());
+        $body = $request->getResponseBody();
+        debug_add("Got response\n===\n{$body}\n===\n");
+        $response = DomDocument::loadXML($body);
         $xquery = new DomXPath($response);
         $result = array();
 
@@ -147,8 +156,8 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
             return array();
         }
 
-        foreach ($xquery->query('/response/result/doc') as $res) {
-            
+        foreach ($xquery->query('/response/result/doc') as $res)
+        {
     	    $doc = new midcom_services_indexer_document();
             foreach ($res->childNodes as $str) {
                 $name = $str->getAttribute('name');
@@ -162,8 +171,10 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
                 }
                 
             }
-            $result[$doc->RI] = $doc;
+            $result[] = $doc;
         }
+        debug_add(sprintf('Returning %d results', count($result)), MIDCOM_LOG_INFO);
+        debug_pop();
         return $result;
     }
 }
@@ -181,7 +192,13 @@ class midcom_services_indexer_solrDocumentFactory {
      * */
     var $document = null;
 
-    public function __construct() {
+    public function __construct()
+    {
+        $this->xml = new DomDocument('1.0', 'UTF-8');
+    }
+
+    function reset()
+    {
         $this->xml = new DomDocument('1.0', 'UTF-8');
     }
 
@@ -215,13 +232,14 @@ class midcom_services_indexer_solrDocumentFactory {
      */
     public function delete($id) 
     {
+        $this->reset();
         $root = $this->xml->createElement('delete');
         $this->xml->appendChild($root);
         //$element = $this->xml->createElement('delete');
         //$this->xml->documentElement->appendChild($element);
         $id_element = $this->xml->createElement('id');
         $this->xml->documentElement->appendChild($id_element);
-        $query->nodeValue = $id;
+        $id_element->nodeValue = $id;
     }
     /**
      * Deletes all elements with the id defined
@@ -229,6 +247,7 @@ class midcom_services_indexer_solrDocumentFactory {
      */
     public function delete_all() 
     {
+        $this->reset();
         $root = $this->xml->createElement('delete');
         $this->xml->appendChild($root);
         $element = $this->xml->createElement('delete');
@@ -282,8 +301,9 @@ class midcom_services_indexer_solrRequest {
     /*
      * posts the xml to the suggested url using HTTP_Request.
      * */
-    function do_post($xml) {
-
+    function do_post($xml)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
         $options = array();
         $options['method'] = HTTP_REQUEST_METHOD_POST ;
         //$url = $GLOBALS['midcom_config']['indexer_solr_url'];
@@ -294,13 +314,17 @@ class midcom_services_indexer_solrRequest {
         $this->request->addRawPostData($xml);
         $this->request->addHeader('Accept-Charset', 'UTF-8');
         $this->request->addHeader('Content-type', 'text/xml; charset=utf-8');
+        debug_add("POSTing XML to {$url}\n===\n{$xml}\n===\n");
         $err = $this->request->sendRequest(true);
 
         $this->code = $this->request->getResponseCode();
+        debug_add("Got response code {$this->code}, body\n===\n" . $this->request->getResponseBody() . "\n===\n");
 
-        if ($this->code != 200 || PEAR :: isError($err)) {
-            debug_add("Failed to execute Request {$url}:{$this->code} {$err->getMessage()}", MIDCOM_LOG_WARN); 
-            debug_add("Request content: \n$xml", MIDCOM_LOG_DEBUG); 
+        if ($this->code != 200 || PEAR :: isError($err))
+        {
+            debug_add("Failed to execute Request {$url}:{$this->code} {$err}", MIDCOM_LOG_WARN); 
+            debug_add("Request content: \n$xml", MIDCOM_LOG_DEBUG);
+            debug_pop();
             return false;
         }
         $this->request->addRawPostData('<commit/>');
@@ -308,11 +332,15 @@ class midcom_services_indexer_solrRequest {
         $this->request->addHeader('Content-type', 'text/xml; charset=utf-8');
         $err = $this->request->sendRequest(true);
 
-        if ($this->request->getResponseCode() != 200 || PEAR :: isError($err)) {
+        if ($this->request->getResponseCode() != 200 || PEAR :: isError($err))
+        {
             debug_add("Failed to execute Request {$url}: {$err->getMessage()}", MIDCOM_LOG_WARN); 
             debug_add("Request content: \n$xml", MIDCOM_LOG_INFO); 
+            debug_pop();
             return false;
         }
+        debug_add('POST ok');
+        debug_pop();
         return true;
 
     }        

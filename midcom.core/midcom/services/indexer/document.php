@@ -87,6 +87,15 @@ class midcom_services_indexer_document
     var $RI = '';
 
     /**
+     * Two letter language code of the document contnet
+     *
+     * This field is optional.
+     *
+     * @var string
+     */
+    var $lang = '';
+
+    /**
      * The GUID of the topic the document is assigned to. May be empty for
      * non-midgard resources.
      *
@@ -211,7 +220,7 @@ class midcom_services_indexer_document
 
     /**
      * The full path to the topic that houses the document. For external resources,
-     * this should be either a MidCOM topic, to which this resource is associated or
+     * this should be either a MidCOM topic, to which this resource is accociated or
      * some "directory" after which you could filter. You may also leave
      * it empty prohibiting it to appear on any topic-specific search.
      *
@@ -266,7 +275,7 @@ class midcom_services_indexer_document
      */
     function midcom_services_indexer_document()
     {
-        $this->_i18n =& $_MIDCOM->get_service('i18n');
+        $this->_i18n =& $GLOBALS['midcom']->get_service('i18n');
     }
 
 
@@ -443,6 +452,7 @@ class midcom_services_indexer_document
         }
 
         // __RI does not need to be populated, this is done by backends.
+        $this->add_unindexed('__LANG', $this->lang);
         $this->add_text('__TOPIC_GUID', $this->topic_guid);
         $this->add_text('__COMPONENT', $this->component);
         $this->add_unindexed('__DOCUMENT_URL', $this->document_url);
@@ -492,6 +502,7 @@ class midcom_services_indexer_document
     function fields_to_members()
     {
         $this->RI = $this->get_field('__RI');
+        $this->lang = $this->get_field('__LANG');
         $this->topic_guid = $this->get_field('__TOPIC_GUID');
         $this->component = $this->get_field('__COMPONENT');
         $this->document_url = $this->get_field('__DOCUMENT_URL');
@@ -516,8 +527,15 @@ class midcom_services_indexer_document
         $this->abstract = $this->get_field('abstract');
         $this->type = $this->get_field('__TYPE');
         $this->security = $this->get_field('__SECURITY');
-    }
 
+        /**
+         * Strip language code from end of RI if it looks like "<GUID>_<LANG>"
+         * (because *many* places suppose it's plain GUID)
+         *
+         * Actually we can't do it at this level....
+        $this->RI = preg_replace('/^([0-9a-f]{32,80})_[a-z]{2}$/', '\\1', $this->RI);
+        */
+    }
 
     /**
      * Internal helper which actually stores a field.
@@ -567,6 +585,7 @@ class midcom_services_indexer_document
         debug_add("Edited: " . strftime('%x %X', $this->edited), $loglevel);
         debug_add("Editor: " . (! is_object($this->editor) ? 'none' : $this->editor->name), $loglevel);
         debug_add("RI: {$this->RI}", $loglevel);
+        debug_add("Language: {$this->lang}", $loglevel);
         debug_add("Score: {$this->score}", $loglevel);
         debug_add("Source: {$this->source}", $loglevel);
         debug_add("Title: {$this->title}", $loglevel);
@@ -583,7 +602,7 @@ class midcom_services_indexer_document
     }
 
     /**
-     * This is a small helper that converts HTML to plain text (relatively simple):
+     * This is a small helper that converts HTML to plain text (relativly simple):
      *
      * Basically, JavaScript blocks and
      * HTML Tags are stripped, and all HTML Entities
