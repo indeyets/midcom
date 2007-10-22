@@ -349,6 +349,9 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                                     'searchfields' => $linked_type_reflector->get_search_properties(),
                                     'result_headers' => $linked_type_reflector->get_result_headers(),
                                     'orders' => array(),
+                                    'creation_mode_enabled' => true,
+                                    'creation_handler' => "{$_MIDGARD['self']}__mfa/asgard/object/create/chooser/{$linked_type}/",
+                                    'creation_default_key' => $linked_type_reflector->get_label_property(),
                                 ),
                             )
                         );
@@ -690,7 +693,8 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         $data['new_type_arg'] = $args[0];        
         
         $data['defaults'] = array();        
-        if ($handler_id == '____mfa-asgard-object_create_toplevel')
+        if (   $handler_id == '____mfa-asgard-object_create_toplevel'
+            || $handler_id == '____mfa-asgard-object_create_chooser')
         {
             $_MIDCOM->auth->require_user_do('midgard:create', null, $this->_new_type);
             
@@ -764,10 +768,16 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 //net_nemein_wiki_viewer::index($this->_request_data['controller']->datamanager, $indexer, $this->_topic);
                 // *** FALL-THROUGH ***
                 $this->_new_object->set_parameter('midcom.helper.datamanager2', 'schema_name', 'default');
-                $_MIDCOM->relocate("__mfa/asgard/object/edit/{$this->_new_object->guid}/{$data['language_code']}");
-                // This will exit.
+                
+                if ($handler_id != '____mfa-asgard-object_create_chooser')
+                {
+                    $_MIDCOM->relocate("__mfa/asgard/object/edit/{$this->_new_object->guid}/{$data['language_code']}");
+                    // This will exit.
+                }
+                break;
 
             case 'cancel':
+                $data['cancelled'] = true;
                 if ($this->_object)
                 {
                     $objecturl = "object/view/{$this->_object->guid}/";
@@ -777,8 +787,11 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                     $objecturl = $args[0];
                 }
 
-                $_MIDCOM->relocate("__mfa/asgard/{$objecturl}{$data['language_code']}");
-                // This will exit.
+                if ($handler_id != '____mfa-asgard-object_create_chooser')
+                {
+                    $_MIDCOM->relocate("__mfa/asgard/{$objecturl}{$data['language_code']}");
+                    // This will exit.
+                }
         }
 
         $this->_prepare_request_data();
@@ -791,10 +804,61 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
      */
     function _show_create($handler_id, &$data)
     {
+        if ($handler_id == '____mfa-asgard-object_create_chooser')
+        {
+            midcom_show_style('midgard_admin_asgard_popup_header');        
+            if (   $this->_new_object
+                || isset($data['cancelled']))
+            {
+                $data['jsdata'] = $this->_object_to_jsdata($this->_new_object);
+                midcom_show_style('midgard_admin_asgard_object_create_after');
+            }
+            else
+            {
+                midcom_show_style('midgard_admin_asgard_object_create');
+
+            }
+            midcom_show_style('midgard_admin_asgard_popup_footer');
+            return;
+        }
+        
         midcom_show_style('midgard_admin_asgard_header');
         midcom_show_style('midgard_admin_asgard_middle');
         midcom_show_style('midgard_admin_asgard_object_create');
         midcom_show_style('midgard_admin_asgard_footer');
+    }
+    
+    
+    function _object_to_jsdata(&$object)
+    {        
+        $id = @$object->id;
+        $guid = @$object->guid;
+        
+        $jsdata = "{";
+        
+        $jsdata .= "id: '{$id}',";
+        $jsdata .= "guid: '{$guid}',";
+        $jsdata .= "pre_selected: true,";
+                        
+        $hi_count = count($this->_schemadb['object']->fields);
+        $i = 1;
+        foreach ($this->_schemadb['object']->fields as $field => $field_data)
+        {
+            $value = @$object->$field;
+            $value = rawurlencode($value);
+            $jsdata .= "{$field}: '{$value}'";
+            
+            if ($i < $hi_count)
+            {
+                $jsdata .= ", ";
+            }
+            
+            $i++;
+        }   
+
+        $jsdata .= "}";
+        
+        return $jsdata;
     }
     
     /**

@@ -127,6 +127,17 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 'variable_args' => 1,
             ),
             /**
+             * Create a toplevel object with chooser
+             * 
+             * Match /asgard/object/create/type/<parent guid>/
+             */
+            'object_create_chooser' => array
+            (
+                'handler' => array ('midgard_admin_asgard_handler_object_manage', 'create'),
+                'fixed_args' => array ('object', 'create', 'chooser'),
+                'variable_args' => 1,
+            ),
+            /**
              * Create an object
              * 
              * Match /asgard/object/create/type/<parent guid>/
@@ -137,6 +148,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 'fixed_args' => array ('object', 'create'),
                 'variable_args' => 2,
             ),
+
             /**
              * Create a toplevel object
              * 
@@ -147,7 +159,8 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 'handler' => array ('midgard_admin_asgard_handler_object_manage', 'create'),
                 'fixed_args' => array ('object', 'create'),
                 'variable_args' => 1,
-            ),          
+            ),
+        
             /**
              * Delete an object
              * 
