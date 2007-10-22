@@ -219,12 +219,6 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
      */
     function _on_can_handle($handler, $args)
     {
-        // Prevent infinite loops
-        if (in_array('rootevent', $args))
-        {
-            return true;
-        }
-        
         // Load master and root event
         if (count($args) > 0)
         {
@@ -246,6 +240,29 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
         }
         
         return true;
+    }
+    
+    function _enter_language()
+    {
+        $lang = $this->_config->get('language');
+        if ($lang)
+        {
+            $this->_request_data['original_language'] = $_MIDGARD['lang'];
+            
+            $language = $_MIDCOM->i18n->code_to_id($lang);
+            if ($language)
+            {
+                mgd_set_lang($language);
+            }
+        }
+    }
+    
+    function _exit_language()
+    {
+        if (isset($this->_request_data['original_language']))
+        {
+            mgd_set_lang($this->_request_data['original_language']);
+        }
     }
     
     function _on_handle($handler, $args)
@@ -278,7 +295,24 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             )
         );
         
+        $this->_enter_language();
         return true;
+    }
+    
+    function _on_handled($handler, $args)
+    {
+        $this->_exit_language();
+    }
+    
+    function _on_show($handler)
+    {
+        $this->_enter_language();
+        return true;
+    }
+    
+    function _on_shown($handler)
+    {
+        $this->_exit_language();
     }
     
     function _load_root_objects($arg = '')

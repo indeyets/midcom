@@ -94,23 +94,31 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
             {
                 return false;
             }        
-            $this->_request_data['archive_mode'] = true;
+            $data['archive_mode'] = true;
             $this->_component_data['active_leaf'] = "{$this->_topic->id}_ARCHIVE";
         }
         else
         {
-            $this->_request_data['archive_mode'] = false;
+            $data['archive_mode'] = false;
         }
-        if ($this->_request_data['event']->node == $this->_request_data['content_topic']->id)
+        
+        if (   isset($data['original_language'])
+            && $data['event']->lang == $data['original_language'])
+        {
+            // Re-fetch the article into the new language context
+            $data['event'] = new net_nemein_calendar_event_dba($data['event']->guid);
+        }
+        
+        if ($data['event']->node == $data['content_topic']->id)
         {
             $this->_view_toolbar->add_item
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "edit/{$this->_request_data['event']->guid}/",
-                    MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('edit'),
+                    MIDCOM_TOOLBAR_URL => "edit/{$data['event']->guid}/",
+                    MIDCOM_TOOLBAR_LABEL => $data['l10n_midcom']->get('edit'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
-                    MIDCOM_TOOLBAR_ENABLED => $this->_request_data['event']->can_do('midgard:update'),
+                    MIDCOM_TOOLBAR_ENABLED => $data['event']->can_do('midgard:update'),
                     MIDCOM_TOOLBAR_ACCESSKEY => 'e',
                 )
             );
@@ -118,10 +126,10 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "delete/{$this->_request_data['event']->guid}/",
-                    MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('delete'),
+                    MIDCOM_TOOLBAR_URL => "delete/{$data['event']->guid}/",
+                    MIDCOM_TOOLBAR_LABEL => $data['l10n_midcom']->get('delete'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
-                    MIDCOM_TOOLBAR_ENABLED => $this->_request_data['event']->can_do('midgard:delete'),
+                    MIDCOM_TOOLBAR_ENABLED => $data['event']->can_do('midgard:delete'),
                     MIDCOM_TOOLBAR_ACCESSKEY => 'd',
                 )
             );
@@ -132,21 +140,21 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
         if ($this->_config->get('enable_ajax_editing'))
         {
             $this->_request_data['controller'] =& midcom_helper_datamanager2_controller::create('ajax');
-            $this->_request_data['controller']->schemadb =& $this->_request_data['schemadb'];
-            $this->_request_data['controller']->set_storage($this->_request_data['event']);
+            $this->_request_data['controller']->schemadb =& $data['schemadb'];
+            $this->_request_data['controller']->set_storage($data['event']);
             $this->_request_data['controller']->process_ajax();
         }
 
-        $_MIDCOM->set_pagetitle($this->_request_data['event']->title);
+        $_MIDCOM->set_pagetitle(strftime('%x', strtotime($data['event']->start)) . ": " . $data['event']->title);
         
-        $_MIDCOM->bind_view_to_object($this->_request_data['event'], $this->_datamanager->schema->name);
-        $_MIDCOM->set_26_request_metadata($this->_request_data['event']->metadata->revised, $this->_request_data['event']->guid);
+        $_MIDCOM->bind_view_to_object($data['event'], $this->_datamanager->schema->name);
+        $_MIDCOM->set_26_request_metadata($data['event']->metadata->revised, $data['event']->guid);
 
         // Set the breadcrumb
         $breadcrumb[] = array
         (
-            MIDCOM_NAV_URL => "{$this->_request_data['event']->extra}/",
-            MIDCOM_NAV_NAME => $this->_request_data['event']->title,
+            MIDCOM_NAV_URL => "{$data['event']->extra}/",
+            MIDCOM_NAV_NAME => $data['event']->title,
         );
         
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);

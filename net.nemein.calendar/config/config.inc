@@ -24,3 +24,5 @@
 'categories_in_navigation' => false,
 
 'rss_subscription_enable' => false,
+
+'language' => null,
