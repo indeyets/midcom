@@ -392,6 +392,11 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         jQuery.each( options.result_headers, function(i,n) {
             var li_elem = jQuery("<li>")
                 .addClass('chooser_widget_header_item')
+        	    .css({
+        	        margin: 0,
+        	        padding: 0,
+        	        background: 'none'
+        	    })
                 .attr({ id: 'chooser_widget_header_item_'+n.name });
             var item_content = jQuery("<div>")
                 .html( n.title )
@@ -476,6 +481,11 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 	    .attr("keep_on_list","false")
 	    .attr("pre_selected","false")
 	    .addClass("chooser_widget_result_item")
+	    .css({
+	        margin: 0,
+	        padding: 0,
+	        background: 'none'
+	    })
     	.click(function(event) {
     	    var li_element = target(event);
 
