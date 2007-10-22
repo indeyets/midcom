@@ -145,13 +145,11 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
         $data['type'] = $_REQUEST['type'];
         $data['query'] = trim($_REQUEST['query']);
 
-        if (   $GLOBALS['midcom_config']['indexer_backend'] != 'solr'
-            && count(explode(' ', $data['query'])) == 1
+        if (   count(explode(' ', $data['query'])) == 1
             && strpos($data['query'], '*') === false)
         {
             /**
-             * If there is only one search term AND the backend is not Solr
-             * Append * to the query (Solr does this wilcard automagically)
+             * If there is only one search term append * to the query
              */
             $data['query'] .= '*';
         }
