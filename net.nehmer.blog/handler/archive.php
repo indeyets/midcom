@@ -315,11 +315,28 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
     {    
         // Get Articles, distinguish by handler.
         $qb = midcom_db_article::new_query_builder();
-        $qb->add_constraint('topic', '=', $this->_topic->id);
+        $qb->add_constraint('topic', '=', $this->_content_topic->id);
 
         // Use helper functions to determine start/end
         switch ($handler_id)
         {
+            case 'archive-year-category':
+                $data['category'] = $args[1];
+                $multiple_categories = true;
+                if (   isset($data['schemadb']['default']->fields['categories'])
+                    && array_key_exists('allow_multiple', $data['schemadb']['default']->fields['categories']['type_config'])
+                    && !$data['schemadb']['default']->fields['categories']['type_config']['allow_multiple'])
+                {
+                    $multiple_categories = false;
+                }
+                if ($multiple_categories)
+                {
+                    $qb->add_constraint('extra1', 'LIKE', "%|{$this->_request_data['category']}|%");
+                }
+                else
+                {
+                    $qb->add_constraint('extra1', '=', (string) $data['category']);
+                }
             case 'archive-year':
                 $this->_set_startend_from_year($args[0]);
                 break;
@@ -514,6 +531,18 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
                     {
                         $data['view_url'] = "{$prefix}{$arg}.html";
                     }
+                }
+                
+                if ($article->topic === $this->_content_topic->id)
+                {
+                    $data['linked'] = false;
+                }
+                else
+                {
+                    $data['linked'] = true;
+                    
+                    $nap = new midcom_helper_nav();
+                    $data['node'] = $nap->get_node($article->topic);
                 }
 
                 midcom_show_style('archive-list-item');

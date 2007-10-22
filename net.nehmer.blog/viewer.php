@@ -122,6 +122,12 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('archive', 'year'),
             'variable_args' => 1,
         );
+        $this->_request_switch['archive-year-category'] = Array
+        (
+            'handler' => Array('net_nehmer_blog_handler_archive', 'list'),
+            'fixed_args' => Array('archive', 'year'),
+            'variable_args' => 2,
+        );
         $this->_request_switch['archive-month'] = Array
         (
             'handler' => Array('net_nehmer_blog_handler_archive', 'list'),
