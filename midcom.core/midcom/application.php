@@ -300,7 +300,9 @@ class midcom_application
      * @access private
      */
     private $_jquery_enabled = false;
-
+    
+    private $_jquery_init_scripts = '';
+    
     /**
      * Array with all JQuery state scripts for the page's head.
      *
@@ -2473,10 +2475,10 @@ class midcom_application
     }
 
     /**
-     * Register JavaScript snippets to JQuery states.
+     * Register JavaScript snippets to jQuery states.
      *
      * This allows MidCOM components to register JavaScript code
-     * to the Jquery states.
+     * to the jQuery states.
      * Possible ready states: document.ready
      *
      * @param string $script    The code to be included in the state.
@@ -2706,6 +2708,11 @@ class midcom_application
      */
     function print_head_elements()
     {
+        if ($this->_jquery_enabled)
+        {
+            echo $this->_jquery_init_scripts;
+        }
+        
         if (!empty($this->_prepend_jshead))
         {
             foreach ($this->_prepend_jshead as $js_call)
@@ -2731,27 +2738,24 @@ class midcom_application
      * This method adds jQuery support to the page
      *
      */
-    function enable_jquery($version="1.1.4")
+    function enable_jquery($version="1.2.1")
     {
         if ($this->_jquery_enabled)
         {
             return;
         }
         
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/jQuery/jquery-{$version}.pack.js", true);
+        $url = MIDCOM_STATIC_URL . "/jQuery/jquery-{$version}.js";
+        $this->_jquery_init_scripts = '<script type="text/javascript" src="' . $url . '"></script>' . "\n";
         
-        $script = '';
-        
-        if ($GLOBALS['midcom_config']['jquery_no_conflict'])
-        {
-            $script .= 'var $j = jQuery.noConflict();'."\n";
-        }
-        
+        $script = 'var $j = jQuery.noConflict();'."\n";
         $script .= "var MIDCOM_STATIC_URL = '" . MIDCOM_STATIC_URL . "';\n";
         $script .= "var MIDCOM_PAGE_PREFIX = '" . $_MIDCOM->get_page_prefix() . "';\n";
 
-        $_MIDCOM->add_jscript($script, "", false);
-        
+        $this->_jquery_init_scripts .= "<script type=\"text/javascript\">\n";
+        $this->_jquery_init_scripts .= trim($script) . "\n";
+        $this->_jquery_init_scripts .= "</script>\n";
+    
         $this->_jquery_enabled = true;
     }
 
