@@ -87,6 +87,8 @@
 'password_reset_mail_subject' => 'password_reset_mail_subject', // Will be localized
 'password_reset_mail_body' => 'password_reset_mail_body', // Will be localized
 
+'lost_password_reset_mail_subject' => 'lost_password_reset_mail_subject',
+'lost_password_reset_mail_body' => 'lost_password_reset_mail_body',
 
 /**
  * Plugins and other miscellaneous configuration keys
