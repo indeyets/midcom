@@ -146,11 +146,10 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
         $data['query'] = trim($_REQUEST['query']);
 
         if (   count(explode(' ', $data['query'])) == 1
-            && strpos($data['query'], '*') === false)
+            && strpos($data['query'], '*') === false
+            && $this->_config->get('single_term_auto_wilcard'))
         {
-            /**
-             * If there is only one search term append * to the query
-             */
+            //If there is only one search term append * to the query if auto_wildcard is enabled
             $data['query'] .= '*';
         }
 
