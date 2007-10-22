@@ -221,7 +221,8 @@ class midcom_services_indexer_solrDocumentFactory {
             $field_record = $document->get_field_record($field_name);
             $field = $this->xml->createElement('field');
             $field->setAttribute('name', $field_record['name']);
-            $field->nodeValue = $field_record['content'];
+            // Escape entities etc to prevent Solr from throwing a hissy fit
+            $field->nodeValue = htmlspecialchars($field_record['content']);
             $element->appendChild($field);
         }
 
