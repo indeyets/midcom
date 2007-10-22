@@ -82,7 +82,20 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
     {
         midcom_show_style('search_form');
     }
-    
+
+    /**
+     * Appends language to search terms
+     *
+     * @param $final_query reference to the query string to be passed on to the indexer.
+     */
+    function add_multilang_terms(&$final_query)
+    {
+        if ($GLOBALS['midcom_config']['i18n_multilang_strict'])
+        {
+            $final_query .= ' AND (__LANG:"' . $_MIDCOM->i18n->get_current_language() . '" OR __LANG:"")';
+        }
+    }
+
     /**
      * Queries the information from the index and prepares to display the result page.
      * 
@@ -93,6 +106,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
      */
     function _handler_result($handler_id, $args, &$data)
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
         $indexer =& $_MIDCOM->get_service('indexer');
         
         // Sane defaults for REQUEST vars
@@ -116,10 +130,11 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
         {
             $_REQUEST['lastmodified'] = 0;
         }
-        
         // If we don't have a query string, relocate to empty search form
         if (!isset($_REQUEST['query']))
         {
+            debug_add('$_REQUEST["query"] is not set, relocating back to form', MIDCOM_LOG_INFO);
+            debug_pop();
             if ($data['type'] == 'basic')
             {
                 $_MIDCOM->relocate('');
@@ -128,34 +143,29 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
         }
 
         $data['type'] = $_REQUEST['type'];
+        $data['query'] = trim($_REQUEST['query']);
+
+        if (   $GLOBALS['midcom_config']['indexer_backend'] != 'solr'
+            && count(explode(' ', $data['query'])) == 1
+            && strpos($data['query'], '*') === false)
+        {
+            /**
+             * If there is only one search term AND the backend is not Solr
+             * Append * to the query (Solr does this wilcard automagically)
+             */
+            $data['query'] .= '*';
+        }
+
         switch ($data['type'])
         {
             case 'basic':
-                $data['query'] = trim($_REQUEST['query']);
-                
-				if (   count(explode(' ', $data['query'])) == 1
-				    && !strstr($data['query'], '*'))
-				{
-				    // Single search term, append *
-                    if ($GLOBALS['midcom_config']['indexer_backend'] != 'solr') 
-                    {
-				        $data['query'] .= '*';
-                    }
-				}
-				
-				$result = $indexer->query($data['query']);
+				$final_query = $data['query'];
+                $this->add_multilang_terms($final_query);
+                debug_add("Final query: {$final_query}");
+				$result = $indexer->query($final_query);
                 break;
             
             case 'advanced':
-                $data['query'] = trim($_REQUEST['query']);
-                
-				if (   count(explode(' ', $data['query'])) == 1
-				    && !strstr($data['query'], '*') && $GLOBALS['midcom_config']['indexer_backend'] != 'solr' )
-				{
-				    // Single search term, append *
-				    $data['query'] .= '*';
-				}
-				
 				$data['request_topic'] = trim($_REQUEST['topic']);
                 $data['component'] = trim($_REQUEST['component']);
                 $data['lastmodified'] = (integer) trim($_REQUEST['lastmodified']);
@@ -194,6 +204,8 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
                     }
                     $final_query .= "__COMPONENT:{$data['component']}";
                 }
+
+                $this->add_multilang_terms($final_query);
                 debug_add("Final query: {$final_query}");
                 
                 $result = $indexer->query($final_query, $filter);
@@ -202,6 +214,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
             default:
                 $this->errstr = "Wrong handler ID {$handler_id} for searchform handler";
                 $this->errcode = MIDCOM_ERRCRIT;
+                debug_pop();
                 return false;
         }
         
@@ -211,6 +224,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
             // a broken query. We don't have yet a way to pass error messages from
             // the indexer backend though (what would I give for a decent exectpion
             // handling here...)
+            debug_add('Got boolean false as resultset (likely broken query), casting to empty array', MIDCOM_LOG_WARN);
             $result = Array();
         }
         
@@ -233,6 +247,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
             $data['results_per_page'] = $results_per_page;
             $data['result'] = array_slice($result, $first_document_id, $results_per_page);
         }
+        debug_pop();
         return true;
     }
     
