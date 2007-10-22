@@ -87,3 +87,58 @@
         ),
     ),
 ),
+'lostpassword_by_email' => Array
+(
+    'description' => 'lostpassword',
+    'fields' => Array
+    (
+        'email' => Array
+        (
+            'title' => 'email',
+            'description' => '',
+            'helptext' => '',
+            'storage' => 'email',
+            'type' => 'text',
+            'type_config' => Array
+            (
+                'maxlength' => 100,
+            ),
+            'widget' => 'text',
+            'validation' => 'email',
+            'required' => true,
+        ),
+    ),
+),
+'lostpassword_by_email_username' => Array
+(
+    'description' => 'lostpassword',
+    'fields' => Array
+    (
+        'username' => Array
+        (
+            'title' => 'username',
+            'description' => '',
+            'helptext' => '',
+
+            'storage' => 'username',
+            'required' => true,
+            'type' => 'text',
+            'widget' => 'text',
+        ),
+        'email' => Array
+        (
+            'title' => 'email',
+            'description' => '',
+            'helptext' => '',
+            'storage' => 'email',
+            'type' => 'text',
+            'type_config' => Array
+            (
+                'maxlength' => 100,
+            ),
+            'widget' => 'text',
+            'validation' => 'email',
+            'required' => true,
+        ),
+    ),
+),

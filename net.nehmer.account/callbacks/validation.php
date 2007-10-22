@@ -73,6 +73,25 @@ class net_nehmer_account_callbacks_validation extends midcom_baseclasses_compone
             return true;
         }
     }
+    
+    /**
+     * This function checks an email against the database for existence.
+     *
+     * @param string $email The email to check.
+     * @return bool Indicating existence.
+     */
+    function verify_existing_user_email($email)
+    {
+        $test =& $_MIDCOM->auth->get_user_by_email($email);
+        if (! $test)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
 }
 
 ?>

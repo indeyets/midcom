@@ -418,16 +418,169 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
 
         return true;
     }
+    
+     /**
+     * Password reset activation hash handler
+     */
+    function _handler_lostpassword_reset($handler_id, $args, &$data)
+    {
+        $guid = $args[0];
+        $hash = $args[1];
+
+        if (! $_MIDCOM->auth->request_sudo('net.nehmer.account'))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to request sudo privileges for account password reset.');
+            // This will exit.
+        }
+
+        $person = new midcom_db_person($guid);
+
+        if (empty($person->guid))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, 'Invalid reset link, the person record was not found.');
+            // This will exit.
+        }
+
+        $this->_account = $_MIDCOM->auth->get_user($person);
+
+        $reset_hash = $person->get_parameter('net.nehmer.account', 'lostpassword_reset_hash');
+
+        if ($reset_hash != $hash)
+        {
+            if ($reset_hash)
+            {
+                // wrong reset hash has been passed.
+                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, 'Invalid reset link.');
+                // This will exit
+            }
+            $this->_processing_msg = $this->_l10n->get('password already reset');
+            $this->_processing_msg_raw = 'password already reset';
+        }
+        else
+        {
+            $this->_reset_password($person->username);
+
+            //Cleanup
+            $person->delete_parameter('net.nehmer.account', 'lostpassword_reset_hash');
+            $person->delete_parameter('net.nehmer.account', 'lostpassword_reset_hash_created');
+            $person->delete_parameter('net.nehmer.account', 'lostpassword_reset_link');
+
+            $this->_processing_msg = $this->_l10n->get('password reset, mail sent.');
+            $this->_processing_msg_raw = 'password reset, mail sent.';
+        }
+        
+        $_MIDCOM->auth->drop_sudo();
+
+        $this->_prepare_request_data();
+
+        return true;
+    }
+
+    function _show_lostpassword_reset($handler_id, &$data)
+    {
+        midcom_show_style('show-lostpassword-ok');
+    }
+
+    function _send_lostpassword_reset_link($email, $username=false)
+    {
+        if (! $_MIDCOM->auth->request_sudo('net.nehmer.account'))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to request sudo privileges for account password reset.');
+            // This will exit.
+        }
+        
+        if ($username)
+        {
+            $user =& $_MIDCOM->auth->get_user_by_name($username);
+        }
+        else
+        {
+            $user =& $_MIDCOM->auth->get_user_by_email($email);            
+        }
+        
+        if (! $user)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Failed to find user with given email {$email}.");
+            debug_pop();
+            $this->_processing_msg = $this->_l10n->get('failed to find user with given email');
+            $this->_processing_msg_raw = 'failed to find user with given email';
+            return false;
+        }
+        if (is_array($user))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Found multiple users with given email {$email}.");
+            debug_pop();
+            $this->_processing_msg = $this->_l10n->get('multiple users found with given email');
+            $this->_processing_msg_raw = 'multiple users found with given email';            
+            return false;
+        }
+
+        $person =& $user->get_storage();
+
+        // Generate actication hash by entering unique enough information
+        $reset_hash = md5
+        (
+              serialize(microtime())
+            . $person->username
+            . serialize($_MIDGARD)
+            . serialize($_SERVER)
+        );
+
+        // Generate the actication link
+        $reset_link = substr($_MIDCOM->get_host_prefix(), 0, -1) . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "lostpassword/reset/{$person->guid}/{$reset_hash}/";
+
+        // Store the information in parameters for activation
+        $person->set_parameter('net.nehmer.account', 'lostpassword_reset_hash', $reset_hash);
+        $person->set_parameter('net.nehmer.account', 'lostpassword_reset_hash_created', strftime('%Y-%m-%d', time()));
+
+        // Store the reset link so that it can be fetched straight from the person record
+        $person->set_parameter('net.nehmer.account', 'lostpassword_reset_link', $reset_link);
+
+        $_MIDCOM->auth->drop_sudo();
+        
+        net_nehmer_account_viewer::send_password_reset_mail($person, $reset_link, $this->_config);
+        
+        return true;
+    }
+
 
     /**
      * This function prepares the form manager used to change the password.
      */
     function _prepare_lostpassword_formmanager()
-    {
+    {   
+        $include_username = false;
+        
+        if (   isset($_POST['email'])
+            && $this->_config->get('lostpassword_email_reset'))
+        {
+            $user =& $_MIDCOM->auth->get_user_by_email($_POST['email']);
+            if (is_array($user))
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Found multiple users with given email {$_POST['email']}.");
+                debug_pop();
+                $this->_processing_msg = $this->_l10n->get('multiple users found with given email');
+                $this->_processing_msg_raw = 'multiple users found with given email';
+
+                $include_username = true;
+            }
+        }
+        
         $this->_controller =& midcom_helper_datamanager2_controller::create('nullstorage');
         $schemadb = midcom_helper_datamanager2_schema::load_database('file:/net/nehmer/account/config/schemadb_internal.inc');
         $this->_controller->schemadb = $schemadb;
         $this->_controller->schemaname = 'lostpassword';
+        if ($this->_config->get('lostpassword_email_reset'))
+        {
+            $this->_controller->schemaname = 'lostpassword_by_email';
+            if ($include_username)
+            {
+                $this->_controller->schemaname = 'lostpassword_by_email_username';
+            }
+        }
         $this->_controller->initialize();
 
         // Add further validation rules, this is done with the form directly,
@@ -435,23 +588,59 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
         // file manually, as we don't add it to the standard loader code.
         // This will prohibit duplicate user names.
         require_once(MIDCOM_ROOT . '/net/nehmer/account/callbacks/validation.php');
-        $this->_controller->formmanager->form->registerRule
-        (
-            'verify_existing_user_name',
-            'callback',
-            'verify_existing_user_name',
-            'net_nehmer_account_callbacks_validation'
-        );
         
-        if ($this->_account)
+        if($this->_config->get('lostpassword_email_reset'))
         {
-            $this->_controller->formmanager->form->addRule
+            $this->_controller->formmanager->form->registerRule
             (
-                'username',
-                 $this->_l10n->get('the username is unknown.'),
-                'verify_existing_user_name',
-                $this->_account->username
+                'verify_existing_user_email',
+                'callback',
+                'verify_existing_user_email',
+                'net_nehmer_account_callbacks_validation'
             );
+            
+            if ($include_username)
+            {
+                $this->_controller->formmanager->form->registerRule
+                (
+                    'verify_existing_user_name',
+                    'callback',
+                    'verify_existing_user_name',
+                    'net_nehmer_account_callbacks_validation'
+                );
+            }
+            
+            if ($this->_account)
+            {
+                $this->_controller->formmanager->form->addRule
+                (
+                    'email',
+                     $this->_l10n->get('the email is unknown'),
+                    'verify_existing_user_email',
+                    $this->_account->email
+                );
+            }
+        }
+        else
+        {
+            $this->_controller->formmanager->form->registerRule
+            (
+                'verify_existing_user_name',
+                'callback',
+                'verify_existing_user_name',
+                'net_nehmer_account_callbacks_validation'
+            );
+
+            if ($this->_account)
+            {
+                $this->_controller->formmanager->form->addRule
+                (
+                    'username',
+                     $this->_l10n->get('the username is unknown.'),
+                    'verify_existing_user_name',
+                    $this->_account->username
+                );
+            }            
         }
     }
 
@@ -464,10 +653,45 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
         switch ($this->_controller->process_form())
         {
             case 'save':
-                $this->_reset_password($this->_controller->datamanager->types['username']->value);
-                $this->_processing_msg = $this->_l10n->get('password reset, mail sent.');
-                $this->_processing_msg_raw = 'password reset, mail sent.';
-                $this->_success = true;
+                if ($this->_config->get('lostpassword_email_reset'))
+                {
+                    $email = $this->_controller->datamanager->types['email']->value;
+                    $username = false;
+                    $send_email = true;
+                    if (isset($this->_controller->datamanager->types['username']))
+                    {
+                        $username = $this->_controller->datamanager->types['username']->value;
+                        $user =& $_MIDCOM->auth->get_user_by_name($username);                        
+                        if ($user)
+                        {
+                            $person =& $user->get_storage();
+                            if ($person->email != $email)
+                            {
+                                $this->_processing_msg = $this->_l10n->get("username and email doesn't match");
+                                $this->_processing_msg_raw = "username and email doesn't match";
+                                $send_email = false;                                
+                            }
+                        }
+                    }
+                    
+                    if ($send_email)
+                    {
+                        if ($this->_send_lostpassword_reset_link($email, $username))
+                        {
+                            $this->_processing_msg = $this->_l10n->get('password reset request sent, check your email.');
+                            $this->_processing_msg_raw = 'password reset request sent, check your email.';
+                            $this->_success = true;                            
+                        }                        
+                    }
+                }
+                else
+                {
+                    $this->_reset_password($this->_controller->datamanager->types['username']->value);
+                    $this->_processing_msg = $this->_l10n->get('password reset, mail sent.');
+                    $this->_processing_msg_raw = 'password reset, mail sent.';
+                    $this->_success = true;
+                }
+
                 break;
 
             case 'cancel':

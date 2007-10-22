@@ -1530,10 +1530,10 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * If the email is empty or unknown, false is returned.
      *
      * @param string $email The email of the user to look up.
-     * @return midcom_core_user A reference to the user object matching the email,
+     * @return array/midcom_core_user A reference to the user object matching the email, array if multiple matches
      *     or false if the email is unknown.
      */
-    function & get_user_by_email($email)
+    function get_user_by_email($email)
     {
         if (empty($email)) {
             return false;
@@ -1541,15 +1541,25 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         
         $qb = new midgard_query_builder('midgard_person');
         $qb->add_constraint('email', '=', $email);
-        $result = @$qb->execute();
-        
-        if (   !$result
-            || count($result) == 0)
+        $results = @$qb->execute();
+
+        if (   !$results
+            || count($results) == 0)
         {
             return false;
         }
         
-        return $this->get_user($result[0]);
+        if (count($results) > 1)
+        {
+            $users = array();
+            foreach ($results as $result)
+            {
+                $users[] = $this->get_user($result);
+            }
+            return $users;
+        }
+        
+        return $this->get_user($results[0]);
     }
 
     /**

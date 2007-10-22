@@ -201,6 +201,12 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
                 'fixed_args' => Array('username'),
             );
         }
+        $this->_request_switch['lostpassword_reset'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_maintain', 'lostpassword_reset'),
+            'fixed_args' => Array('lostpassword', 'reset'),
+            'variable_args' => 2,
+        );
         $this->_request_switch['lostpassword'] = Array
         (
             'handler' => Array('net_nehmer_account_handler_maintain', 'lostpassword'),
@@ -553,7 +559,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      * @access static public
      * @todo Make this configurable.
      */
-    function send_registration_mail($person, $password, $activation_link, $config)
+    function send_registration_mail(&$person, $password, $activation_link, $config)
     {
         $from = $config->get('activation_mail_sender');
         if (! $from)
@@ -602,6 +608,67 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
         $mail->parse();
         return $mail->send($person->email);
     }
+
+     /**
+     * This is a simple function which generates and sends a link for resetting a password
+     *
+     * @param midcom_db_person $person Person account.
+     * @param $link for resetting password
+     * @access static public
+     */
+    function send_password_reset_mail($person, $link, &$config)
+    {
+        $from = $config->get('password_reset_mail_sender');
+        if (! $from)
+        {
+            $from = $person->email;
+        }
+
+        $template = array
+        (
+            'from' => $from,
+            'reply-to' => '',
+            'cc' => '',
+            'bcc' => '',
+            'x-mailer' => '',
+            'subject' => $_MIDCOM->i18n->get_string($config->get('lost_password_reset_mail_subject'), 'net.nehmer.account'),
+            'body' => $_MIDCOM->i18n->get_string($config->get('lost_password_reset_mail_body'), 'net.nehmer.account'),
+            'body_mime_type' => 'text/plain',
+            'charset' => 'UTF-8',
+        );
+
+        $mail = new midcom_helper_mailtemplate($template);
+        
+        $prefix = substr($_MIDCOM->get_host_prefix(), 0, -1) . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        
+        // Get the commonly used parameters
+        $parameters = net_nehmer_account_viewer::get_mail_parameters($person);
+        $parameters['CURRENTADDRESS'] = "{$prefix}lostpassword/reset/";
+        
+        // Extra parameters
+        $parameters['USERNAME'] = $person->username;
+        if (isset($person->name))
+        {
+            $parameters['NAME'] = $person->name;
+        }
+        if (isset($person->firstname))
+        {
+            $parameters['FIRSTNAME'] = $person->firstname;
+        }
+        if (isset($person->lastname))
+        {
+            $parameters['LASTNAME'] = $person->lastname;
+        }
+
+        $parameters['PASSWORD_RESET_LINK'] = $link;
+
+        // Set the parameters and parse the message
+        $mail->set_parameters($parameters);
+        $mail->parse();
+        
+        return $mail->send($person->email);
+    }
+
     
     /**
      * Generate the commonly used parameters used in messages sent to the user.
@@ -613,14 +680,14 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
     function get_mail_parameters($person)
     {
         // Prefix
-        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        $prefix = substr($_MIDCOM->get_host_prefix(), 0, -1) . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         
         // Set the variable parameters
         $parameters = array
         (
             'PERSON' => $person,
             'CURRENTTIME' => strftime('%c'),
-            'CURRENTADDRESS' => "{$prefix}register/account.html",
+            'CURRENTADDRESS' => "{$prefix}register/account/",
             'APPROVALURI' => "{$prefix}pending/{$person->guid}/",
         );
         

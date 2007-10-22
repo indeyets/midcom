@@ -138,3 +138,8 @@
 'show_lost_password_in_navi' => true,
 
 'redirect_edit_to' => 'view',
+
+/**
+ * Use optional way to handle reset password request (sends email to the user before resetting the password)
+ */
+'lostpassword_email_reset' => false,
