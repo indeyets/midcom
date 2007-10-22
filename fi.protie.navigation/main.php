@@ -678,6 +678,13 @@ class fi_protie_navigation
             $css_class .= ' '.$has_childs;
         }
         
+        // Add information about the object's translation status 
+        if (   isset($item[MIDCOM_NAV_OBJECT]->lang) 
+            && $item[MIDCOM_NAV_OBJECT]->lang != $_MIDCOM->i18n->get_midgard_language()) 
+        { 
+            $css_class .= ' untranslated';
+        }
+
         $css_class = trim($css_class);
         
         // Finalize the class naming
