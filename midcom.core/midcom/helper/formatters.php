@@ -362,14 +362,11 @@ _midcom_helper_formatters_register_filter('linksmails','midcom_helper_formatters
 
 function midcom_helper_formatters_automatic($content)
 {
-    print_r($GLOBALS['midcom_config']['auto_formatter']);
-
     if (   isset($GLOBALS['midcom_config']['auto_formatter'])
         && !empty($GLOBALS['midcom_config']['auto_formatter']))
     {
         foreach ($GLOBALS['midcom_config']['auto_formatter'] as $formatter)
         {
-            echo "content before {$formatter}\n";
             if (in_array($formatter, array('h', 'F')))
             {
                 $content = mgd_format($content, $formatter);
@@ -405,7 +402,5 @@ function _midcom_helper_formatters_replace_content(&$in, $replace, $start, $end)
     $end   = substr($in, $end, strlen($in)-$end);
     $in    = $begin.$replace.$end;
 }
-
-
 
 ?>
