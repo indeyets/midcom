@@ -196,6 +196,7 @@ class net_nehmer_static_handler_admin extends midcom_baseclasses_components_hand
                     MIDCOM_NAV_URL => "{$handler_id}/{$this->_article->guid}.html",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get($handler_id),
                 );
+                break;
         }
         
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
