@@ -410,10 +410,10 @@
             
                                 ),
                             ),
-                            'toimitusyhteistyo' => array
+                            'tutkimusyhteistyo' => array
                             (
-                                'name' => 'toimitusyhteistyo',
-                                'title' => 'Toimitusyhteistyo',
+                                'name' => 'tutkimusyhteistyo',
+                                'title' => 'Tutkimusyhteistyo',
                                 'component' => 'net.nehmer.static',
                                 'acl' => array
                                 (
@@ -628,7 +628,565 @@
                 'parameters' => array
                 (
                 ),         
-                // en nodes   
+                // en nodes  
+                'nodes' => array
+                (
+                    'news' => array
+                    (
+                        'name' => 'news',
+                        'title' => 'News',
+                        'component' => 'net.nehmer.blog',
+                        'acl' => array
+                        (
+                            'authors' => array
+                            (
+                                'midgard:delete' => MIDCOM_PRIVILEGE_ALLOW,
+                            ),
+                        ),
+                        'parameters' => array
+                        (
+                            'net.nehmer.comments' => array
+                            (
+                                'allow_anonymous' => true,
+                            ),
+                        ),
+                    ),
+                   'department' => array
+                    (
+                        'name' => 'department',
+                        'title' => 'Department',
+                        'component' => 'net.nehmer.static',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+        
+                        ),
+                        
+                        // Child node definitions
+                        'nodes' => array
+                        (
+                            'contact_information_and_location' => array
+                            (
+                                'name' => 'contact_information_and_location',
+                                'title' => 'Contact Information and Location',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+        
+                                ),
+                                'parameters' => array
+                                (
+        
+                                ),
+                            ),
+                            'administration' => array
+                            (
+                                'name' => 'administration',
+                                'title' => 'Administration',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+        
+                                ),
+                                'parameters' => array
+                                (
+        
+                                ),
+                            ),
+                            'laboratories_and_other_units' => array
+                            (
+                                'name' => 'laboratories_and_other_units',
+                                'title' => 'Laboratories and Other Units',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+        
+                                ),
+                                'parameters' => array
+                                (
+        
+                                ),
+                            ),
+                            'statistics' => array
+                            (
+                                'name' => 'statistics',
+                                'title' => 'Statistics',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                 (
+        
+                                ),
+                                'parameters' => array
+                                (
+        
+                                ),
+                            ),
+                            'for_media' => array
+                            (
+                                'name' => 'for_media',
+                                'title' => 'For Media',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+                                 ),
+                                 'parameters' => array
+                                (
+        
+                                ),
+                            ),
+                            'alumni' => array
+                            (
+                                'name' => 'alumni',
+                                'title' => 'Alumni',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+        
+                                ),
+                                'parameters' => array
+                                (
+        
+                                ),
+                             ),
+                            'corporate_cooperation' => array
+                            (
+                                'name' => 'corporate_cooperation',
+                                'title' => 'Corporate Cooperation',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+        
+                                ),
+                                'parameters' => array
+                                (
+        
+                                ),
+                            ),
+                            'for_staff' => array
+                            (
+                                'name' => 'for_staff',
+                                'title' => 'For Staff',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+        
+                                ),
+                                'parameters' => array
+                                (
+        
+                                ),
+                            ),
+                        ),
+                    ),
+                    'studies' => array
+                    (
+                        'name' => 'studies',
+                        'title' => 'Studies',
+                        'component' => 'net.nehmer.static',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+            
+                        ),
+                        // Child node definitions
+                        'nodes' => array
+                        (
+                            'study_programme' => array
+                            (
+                                'name' => 'study_programme',
+                                'title' => 'Study Programme',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'international_masters_programme' => array
+                            (
+                                'name' => 'international_masters_programme',
+                                'title' => 'International Master\'s Programme',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'graduate_studies' => array
+                            (
+                                'name' => 'graduate_studies',
+                                'title' => 'Graduate Studies',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'courses' => array
+                            (
+                                'name' => 'courses',
+                                'title' => 'Courses',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'schedule_of_classes_and_order_of_exams' => array
+                            (
+                                'name' => 'schedule_of_classes_and_order_of_exams',
+                                'title' => 'Schedule of Classes and Order of Exams',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'internship' => array
+                            (
+                                'name' => 'internship',
+                                'title' => 'Internship',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'study_councelling' => array
+                            (
+                                'name' => 'study_councelling',
+                                'title' => 'Study Councelling',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'forms' => array
+                            (
+                                'name' => 'forms',
+                                'title' => 'Forms',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                        ),
+                    ),
+                    'research' => array
+                    (
+                        'name' => 'research',
+                        'title' => 'Research',
+                        'component' => 'net.nehmer.static',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+            
+                        ),
+            
+                        // Child node definitions
+                        'nodes' => array
+                        (
+                            'research_in_laboratories' => array
+                            (
+                                'name' => 'research_in_laboratories',
+                                'title' => 'Research in Laboratories',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'centers_of_exellence_groups_prices' => array
+                            (
+                                'name' => 'centers_of_exellence_groups_prices',
+                                'title' => 'Centers of Exellence, Groups, Prizes',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'professors' => array
+                            (
+                                'name' => 'professors',
+                                'title' => 'Professors',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'publications' => array
+                            (
+                                'name' => 'publications',
+                                'title' => 'Publications',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'research_cooperation' => array
+                            (
+                                'name' => 'research_cooperation',
+                                'title' => 'Research Cooperation',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                        ),
+                    ),
+                    'prospective_students' => array
+                    (
+                        'name' => 'prospective_students',
+                        'title' => 'Prospective Students',
+                        'component' => 'net.nehmer.static',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+            
+                        ),
+            
+                        'nodes' => array
+                        (
+                            'department_introduction' => array
+                            (
+                                'name' => 'department_introduction',
+                                'title' => 'Department Introduction',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'studying_at_the_department' => array
+                            (
+                                'name' => 'studying_at_the_department',
+                                'title' => 'Studying at the Department',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'stories_from_tkk_graduates' => array
+                            (
+                                'name' => 'stories_from_tkk_graduates',
+                                'title' => 'Stories from TKK Graduates',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'how_to_become_a_joo_student' => array
+                            (
+                                'name' => 'how_to_become_a_joo_student',
+                                'title' => 'How to Become a JOO-Student',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'international_masters_programme' => array
+                            (
+                                'name' => 'international_masters_programme',
+                                'title' => 'International Master\'s programme',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'prospective_graduate_students' => array
+                            (
+                                'name' => 'prospective_graduate_students',
+                                'title' => 'Prospective Graduate Students',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'continuing_education' => array
+                            (
+                                'name' => 'continuing_education',
+                                'title' => 'Continuing Education',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                        ),
+                    ),
+                    'library' => array
+                    (
+                        'name' => 'library',
+                        'title' => 'Library',
+                        'component' => 'net.nehmer.static',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+            
+                        ),
+                
+                        // Child node definitions
+                        'nodes' => array
+                        (
+                            'services' => array
+                            (
+                                'name' => 'services',
+                                'title' => 'Services',
+                                'component' => 'net.nemein.personnel',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'collections' => array
+                            (
+                                'name' => 'collections',
+                                'title' => 'Collections',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'information_searches' => array
+                            (
+                                'name' => 'information_searches',
+                                'title' => 'Information Searches',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'contact_information' => array
+                            (
+                                'name' => 'contact_information',
+                                'title' => 'Contact Information',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                        ),
+                    ),
+                ), 
             ),
             'sv' => array
             (
@@ -641,7 +1199,565 @@
                 'parameters' => array
                 (
                 ),   
-                // sv nodes         
+                // sv nodes  
+                'nodes' => array
+                (
+                    'aktuellt' => array
+                    (
+                        'name' => 'aktuellt',
+                        'title' => 'Aktuellt',
+                        'component' => 'net.nehmer.blog',
+                        'acl' => array
+                        (
+                            'authors' => array
+                            (
+                                'midgard:delete' => MIDCOM_PRIVILEGE_ALLOW,
+                            ),
+                        ),
+                        'parameters' => array
+                        (
+                            'net.nehmer.comments' => array
+                            (
+                                'allow_anonymous' => true,
+                            ),
+                        ),
+                    ),
+                   'avdelningen' => array
+                    (
+                        'name' => 'avdelningen',
+                        'title' => 'Avdelningen',
+                        'component' => 'net.nehmer.static',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+        
+                        ),
+                        
+                        // Child node definitions
+                        'nodes' => array
+                        (
+                            'kontaktuppgifter_och_lage' => array
+                            (
+                                'name' => 'kontaktuppgifter_och_lage',
+                                'title' => 'Kontaktuppgifter och lŠge',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+        
+                                ),
+                                'parameters' => array
+                                (
+        
+                                ),
+                            ),
+                            'avgelningens_forvaltning' => array
+                            (
+                                'name' => 'avgelningens_forvaltning',
+                                'title' => 'Avgelningens fšrvaltning',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+        
+                                ),
+                                'parameters' => array
+                                (
+        
+                                ),
+                            ),
+                            'laboratorier_och_ovriga_enheter' => array
+                            (
+                                'name' => 'laboratorier_och_ovriga_enheter',
+                                'title' => 'Laboratorier och švriga enheter',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+        
+                                ),
+                                'parameters' => array
+                                (
+        
+                                ),
+                            ),
+                            'statistik' => array
+                            (
+                                'name' => 'statistik',
+                                'title' => 'Statistik',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                 (
+        
+                                ),
+                                'parameters' => array
+                                (
+        
+                                ),
+                            ),
+                            'for_media' => array
+                            (
+                                'name' => 'for_media',
+                                'title' => 'Fšr media',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+                                 ),
+                                 'parameters' => array
+                                (
+        
+                                ),
+                            ),
+                            'alumner' => array
+                            (
+                                'name' => 'alumner',
+                                'title' => 'Alumner',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+        
+                                ),
+                                'parameters' => array
+                                (
+        
+                                ),
+                             ),
+                            'narlingslivssemverka' => array
+                            (
+                                'name' => 'narlingslivssemverka',
+                                'title' => 'NŠrlingslivssemverka',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+        
+                                ),
+                                'parameters' => array
+                                (
+        
+                                ),
+                            ),
+                            'for_personalen' => array
+                            (
+                                'name' => 'for_personalen',
+                                'title' => 'Fšr personalen',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+        
+                                ),
+                                'parameters' => array
+                                (
+        
+                                ),
+                            ),
+                        ),
+                    ),
+                    'studier' => array
+                    (
+                        'name' => 'studier',
+                        'title' => 'Studier',
+                        'component' => 'net.nehmer.static',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+            
+                        ),
+                        // Child node definitions
+                        'nodes' => array
+                        (
+                            'examensprogram_och_studieguide' => array
+                            (
+                                'name' => 'examensprogram_och_studieguide',
+                                'title' => 'Examensprogram och studieguide',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'international_masters_programme' => array
+                            (
+                                'name' => 'international_masters_programme',
+                                'title' => 'International Master\'s Programme',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'forskarstudier' => array
+                            (
+                                'name' => 'forskarstudier',
+                                'title' => 'Forskarstudier',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'kurser' => array
+                            (
+                                'name' => 'kurser',
+                                'title' => 'Kurser',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'las_och_tentamensordningar' => array
+                            (
+                                'name' => 'las_och_tentamensordningar',
+                                'title' => 'LŠs och tentamensordningar',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'praktik' => array
+                            (
+                                'name' => 'praktik',
+                                'title' => 'Praktik',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'studiehandledning_och_radgivning' => array
+                            (
+                                'name' => 'studiehandledning_och_radgivning',
+                                'title' => 'Studiehandledning och rŒdgivning',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'blanketter' => array
+                            (
+                                'name' => 'blanketter',
+                                'title' => 'Blanketter',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                        ),
+                    ),
+                    'forskning' => array
+                    (
+                        'name' => 'forskning',
+                        'title' => 'Forskning',
+                        'component' => 'net.nehmer.static',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+            
+                        ),
+            
+                        // Child node definitions
+                        'nodes' => array
+                        (
+                            'forskning_enligt_laboratorier' => array
+                            (
+                                'name' => 'forskning_enligt_laboratorier',
+                                'title' => 'Forskning enligt laboratorier',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'spetsenheter_och_grupper_prisbelonade_forskare' => array
+                            (
+                                'name' => 'spetsenheter_och_grupper_prisbelonade_forskare',
+                                'title' => 'Spetsenheter och -grupper, prisbelonade forskare',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'professorer' => array
+                            (
+                                'name' => 'professorer',
+                                'title' => 'Professorer',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'publicationer' => array
+                            (
+                                'name' => 'publicationer',
+                                'title' => 'Publicationer',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'forskningssamverka' => array
+                            (
+                                'name' => 'forskningssamverka',
+                                'title' => 'Forskningssamverka',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                        ),
+                    ),
+                    'bli_studerande' => array
+                    (
+                        'name' => 'bli_studerande',
+                        'title' => 'Bli studerande',
+                        'component' => 'net.nehmer.static',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+            
+                        ),
+            
+                        'nodes' => array
+                        (
+                            'presentation_av_omradet' => array
+                            (
+                                'name' => 'presentation_av_omradet',
+                                'title' => 'Presentation av omrŒdet',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'att_studera_pa_avdelningen' => array
+                            (
+                                'name' => 'att_studera_pa_avdelningen',
+                                'title' => 'Att studera pŒ avdelningen',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'utexaminerades_berattelser' => array
+                            (
+                                'name' => 'utexaminerades_berattelser',
+                                'title' => 'Utexaminerades BerŠttelser',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'att_bli_joo_studerande' => array
+                            (
+                                'name' => 'att_bli_joo_studerande',
+                                'title' => 'Att bli JOO-studerande',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'international_masters_programme' => array
+                            (
+                                'name' => 'international_masters_programme',
+                                'title' => 'International Master\'s programme',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'att_bli_forskarstuderande' => array
+                            (
+                                'name' => 'att_bli_forskarstuderande',
+                                'title' => 'Att bli forskarstuderande',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'fortbildning' => array
+                            (
+                                'name' => 'fortbildning',
+                                'title' => 'Fortbildning',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                        ),
+                    ),
+                    'biblioteket' => array
+                    (
+                        'name' => 'biblioteket',
+                        'title' => 'Biblioteket',
+                        'component' => 'net.nehmer.static',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+            
+                        ),
+                
+                        // Child node definitions
+                        'nodes' => array
+                        (
+                            'service' => array
+                            (
+                                'name' => 'service',
+                                'title' => 'Service',
+                                'component' => 'net.nemein.personnel',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'samlingar' => array
+                            (
+                                'name' => 'samlingar',
+                                'title' => 'Samlingar',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'informationssokning' => array
+                            (
+                                'name' => 'informationssokning',
+                                'title' => 'Informationssškning',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                            'kontaktuppgifter' => array
+                            (
+                                'name' => 'kontaktuppgifter',
+                                'title' => 'Kontaktuppgifter',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+            
+                                ),
+                                'parameters' => array
+                                (
+            
+                                ),
+                            ),
+                        ),
+                    ),
+                ),       
             ),
         ),
     ),

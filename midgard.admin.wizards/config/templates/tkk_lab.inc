@@ -261,7 +261,169 @@
                 'parameters' => array
                 (
                 ),         
-                // en nodes   
+                // en nodes  
+                'nodes' => array
+                (
+                    'news' => array
+                    (
+                        'name' => 'news',
+                        'title' => 'News',
+                        'component' => 'net.nehmer.blog',
+                        'acl' => array
+                        (
+                            'authors' => array
+                            (
+                                'midgard:delete' => MIDCOM_PRIVILEGE_ALLOW,
+                            ),
+                        ),
+                        'parameters' => array
+                        (
+                            'net.nehmer.comments' => array
+                            (
+                                'allow_anonymous' => '__SCHEMA_anonymous',
+                            ),
+                        ),
+                    ),
+                    'studies' => array
+                    (
+                        'name' => 'studies',
+                        'title' => 'Studies',
+                        'component' => 'net.nehmer.static',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+                
+                        ),
+                        // Child node definitions
+                        'nodes' => array
+                        (
+                            'modules' => array
+                            (
+                                'name' => 'modules',
+                                'title' => 'Modules',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+                
+                                ),
+                                'parameters' => array
+                                (
+                
+                                ),
+                            ),
+                            'courses' => array
+                            (
+                                'name' => 'courses',
+                                'title' => 'Courses',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+                
+                                ),
+                                'parameters' => array
+                                (
+                
+                                ),
+                            ),
+                        ),
+                    ),
+                    'research' => array
+                    (
+                        'name' => 'research',
+                        'title' => 'Research',
+                        'component' => 'net.nehmer.static',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+            
+                        ),
+        
+                        // Child node definitions
+                        'nodes' => array
+                        (
+                            'research_areas' => array
+                            (
+                                'name' => 'research_areas',
+                                'title' => 'Research areas',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+                
+                                ),
+                                'parameters' => array
+                                (
+                
+                                ),
+                            ),
+                            'project' => array
+                            (
+                                'name' => 'project',
+                                'title' => 'Project',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+                
+                                ),
+                                'parameters' => array
+                                (
+                
+                                ),
+                            ),
+                        ),
+                    ),
+                    'publications' => array
+                    (
+                        'name' => 'publications',
+                        'title' => 'Publications',
+                        'component' => 'net.nehmer.static',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+            
+                        ),
+                    ),
+                    'contact_information' => array
+                    (
+                        'name' => 'contact_information',
+                        'title' => 'Contact Information',
+                        'component' => 'net.nehmer.static',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+                
+                        ),
+            
+                        // Child node definitions
+                        'nodes' => array
+                        (
+                            'personnel' => array
+                            (
+                                'name' => 'personnel',
+                                'title' => 'Personnel',
+                                'component' => 'net.nemein.personnel',
+                                'acl' => array
+                                (
+        
+                                ),
+                                'parameters' => array
+                                (
+                                    'net.nemein.personnel' => array
+                                    (
+                                        'group' => '__GROUPGUID_authors',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'sv' => array
             (
@@ -274,7 +436,169 @@
                 'parameters' => array
                 (
                 ),   
-                // sv nodes         
+                // sv nodes 
+                'nodes' => array
+                (
+                    'aktuellt' => array
+                    (
+                        'name' => 'aktuellt',
+                        'title' => 'Aktuellt',
+                        'component' => 'net.nehmer.blog',
+                        'acl' => array
+                        (
+                            'authors' => array
+                            (
+                                'midgard:delete' => MIDCOM_PRIVILEGE_ALLOW,
+                            ),
+                        ),
+                        'parameters' => array
+                        (
+                            'net.nehmer.comments' => array
+                            (
+                                'allow_anonymous' => '__SCHEMA_anonymous',
+                            ),
+                        ),
+                    ),
+                    'studier' => array
+                    (
+                        'name' => 'studier',
+                        'title' => 'Studier',
+                        'component' => 'net.nehmer.static',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+                
+                        ),
+                        // Child node definitions
+                        'nodes' => array
+                        (
+                            'moduler' => array
+                            (
+                                'name' => 'moduler',
+                                'title' => 'Moduler',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+                
+                                ),
+                                'parameters' => array
+                                (
+                
+                                ),
+                            ),
+                            'kurser' => array
+                            (
+                                'name' => 'kurser',
+                                'title' => 'Kurser',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+                
+                                ),
+                                'parameters' => array
+                                (
+                
+                                ),
+                            ),
+                        ),
+                    ),
+                    'forskning' => array
+                    (
+                        'name' => 'forskning',
+                        'title' => 'Forskning',
+                        'component' => 'net.nehmer.static',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+            
+                        ),
+        
+                        // Child node definitions
+                        'nodes' => array
+                        (
+                            'forskningsomrade' => array
+                            (
+                                'name' => 'forskningsomrade',
+                                'title' => 'ForskningsomrŒde',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+                
+                                ),
+                                'parameters' => array
+                                (
+                
+                                ),
+                            ),
+                            'projekt' => array
+                            (
+                                'name' => 'projekt',
+                                'title' => 'Projekt',
+                                'component' => 'net.nehmer.static',
+                                'acl' => array
+                                (
+                
+                                ),
+                                'parameters' => array
+                                (
+                
+                                ),
+                            ),
+                        ),
+                    ),
+                    'publikationer' => array
+                    (
+                        'name' => 'publikationer',
+                        'title' => 'Publikationer',
+                        'component' => 'net.nehmer.static',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+            
+                        ),
+                    ),
+                    'kontaktuppgifter' => array
+                    (
+                        'name' => 'kontaktuppgifter',
+                        'title' => 'Kontaktuppgifter',
+                        'component' => 'net.nehmer.static',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+                
+                        ),
+            
+                        // Child node definitions
+                        'nodes' => array
+                        (
+                            'personal' => array
+                            (
+                                'name' => 'personal',
+                                'title' => 'Personal',
+                                'component' => 'net.nemein.personnel',
+                                'acl' => array
+                                (
+        
+                                ),
+                                'parameters' => array
+                                (
+                                    'net.nemein.personnel' => array
+                                    (
+                                        'group' => '__GROUPGUID_authors',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),                
+                ),        
             ),
         ),
     ),
