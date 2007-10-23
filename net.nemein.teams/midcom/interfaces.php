@@ -53,5 +53,38 @@ class net_nemein_teams_interface extends midcom_baseclasses_components_interface
 
         return "team/{$team->name}/view/";
     }
+    
+    function _on_reindex($topic, $config, &$indexer)
+    {
+        $qb = net_nemein_teams_team_dba::new_query_builder();
+        
+        if ($teams = $qb->execute())
+        {
+            foreach($teams as $team)
+            {
+                $group = new midcom_db_group($team->groupguid);
+                $qb = midcom_db_member::new_query_builder();
+                $qb->add_constraint('gid', '=', $group->id);
+                
+                if ($members = $qb->execute())
+                {
+                    foreach($members as $member)
+                    {
+                        $player = new midcom_db_person();
+                        $player->get_by_id($member->id);
+                        
+                        $document = $indexer->new_document($palyer);
+                        $document->title = "{$player->username}";
+                        $document->abstract = "{$player->username}{$group->name}";
+                        $document->content = "{$player->username}{$group->name}
+                            {$player->extra}{$document->content}";
+                        $document->read_metadata_from_object($player->storage->object);
+                        $indexer->index($document);
+                    }
+                }
+            }    
+        }
+        return true;
+    }
 }
 ?>
