@@ -75,8 +75,8 @@ class net_nemein_teams_interface extends midcom_baseclasses_components_interface
                         
                         $document = $indexer->new_document($player);
                         $document->title = "{$player->username}";
-                        $document->abstract = "{$player->username}{$group->name}";
-                        $document->content = "{$player->username}{$group->name}{$player->extra}{$document->content}";
+                        $document->abstract = "{$player->username} - {$group->name}";
+                        $document->content = "{$player->username} {$group->name} {$player->extra} {$document->content}";
                         $document->read_metadata_from_object($player->storage->object);
                         $indexer->index($document);
                     }
