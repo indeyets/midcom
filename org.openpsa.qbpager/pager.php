@@ -556,6 +556,12 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
         $this->_midcom_qb_count->end_group();
         return $this->_midcom_qb->end_group();
     }
+    
+    function include_deleted()
+    {
+        $this->_midcom_qb_count->include_deleted();
+        return $this->_midcom_qb->include_deleted();
+    }
 
     function set_lang($lang)
     {
