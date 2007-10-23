@@ -678,8 +678,10 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         }
         
         $qb = new org_openpsa_qbpager('net_nemein_teams_team_dba', 'net_nemein_teams_team');
-        $qb->listen_parameter('net_nemein_teams_order');
-        $qb->listen_parameter('net_nemein_teams_order_by');
+        $qb->listen_parameter('net_nemein_teams_order', 'asc');
+        $qb->listen_parameter('net_nemein_teams_order', 'desc');
+        $qb->listen_parameter('net_nemein_teams_order_by', 'name');
+        $qb->listen_parameter('net_nemein_teams_order_by', 'metadata.published');
         $qb->results_per_page = $this->_config->get('display_teams_per_page');
         $qb->display_pages = $this->_config->get('display_pages');
         $qb->add_order($order_by, $order);
