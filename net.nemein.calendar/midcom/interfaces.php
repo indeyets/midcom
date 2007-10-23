@@ -62,20 +62,8 @@ class net_nemein_calendar_interface extends midcom_baseclasses_components_interf
      */
     function _on_reindex($topic, $config, &$indexer)
     {
-        $root_event_guid = $config->get('root_event');
-        if (!$root_event_guid)
-        {
-            return false;
-        }
-        
-        $root_event = new net_nemein_calendar_event_dba($root_event_guid);
-        if (!$root_event)
-        {
-            return false;
-        }
-        
         $qb = net_nemein_calendar_event_dba::new_query_builder();
-        $qb->add_constraint('up', '=', $root_event->id);
+        $qb->add_constraint('node', '=', $topic->id);
         $events = $qb->execute();
 
         $schemadb = midcom_helper_datamanager2_schema::load_database($config->get('schemadb'));
