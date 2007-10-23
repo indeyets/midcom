@@ -126,9 +126,9 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         );        
 
         // Handle / Team list
-        $this->_request_switch['teams_list'] = array
+        $this->_request_switch['list'] = array
         (
-            'handler' => Array('net_nemein_teams_handler_team', 'teams_list'),
+            'handler' => Array('net_nemein_teams_handler_team', 'list'),
 	        'fixed_args' => Array('list'),
         );
 

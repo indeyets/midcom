@@ -280,6 +280,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         
         $this->_team_group = new midcom_db_group();
         $this->_team_group->name = $values['team_name'];
+        $this->_team_group->official = $values['team_name'];
         $this->_team_group->owner = $this->_root_group->id;
         $this->_team_group->set_privilege('midgard:owner', $user);                
 
@@ -469,7 +470,9 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
         switch ($this->_controller->process_form())
         {
-	        case 'save':        
+	        case 'save':
+	            $this->_current_team_group->name = $_REQUEST['team_name'];
+	            $this->_current_team_group->update();
             case 'cancel':
                 $_MIDCOM->relocate("team/{$this->_current_team->name}/view/");
 	             // This will exit.
@@ -660,11 +663,24 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     /**
      * Populates a lis of all registered teams
      */
-    function _handler_teams_list($handler_id, $args, &$data)
-    {        
+    function _handler_list($handler_id, $args, &$data)
+    {
+        $order_by = 'name';
+        $order = 'ASC';
+        
+        if (isset($_REQUEST['net_nemein_teams_order']))
+        {
+            $order = strtoupper($_REQUEST['net_nemein_teams_order']);
+        }
+        if (isset($_REQUEST['net_nemein_teams_order_by']))
+        {
+            $order_by = $_REQUEST['net_nemein_teams_order_by'];
+        }
+        
         $qb = new org_openpsa_qbpager('net_nemein_teams_team_dba', 'net_nemein_teams_team');
         $qb->results_per_page = $this->_config->get('display_teams_per_page');
         $qb->display_pages = $this->_config->get('display_pages');
+        $qb->add_order($order_by, $order);
 
         $data['team_qb'] =& $qb;
         $this->_teams_list = $qb->execute();
@@ -673,7 +689,56 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
         return true;
     }
-    
+
+    function _show_list($handler_id, &$data)
+    {        
+        $member_count = 0;
+        
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        
+        midcom_show_style('teams_list_start');
+        
+        foreach($this->_teams_list as $team)
+        {
+            $member_count = $team->count_members();
+            $team_group = new midcom_db_group($team->groupguid);
+            $is_recruiting = $team_group->get_parameter('net.nemein.teams:preferences','is_recruiting');
+            
+	        $this->_load_datamanager($team_group);
+	        $this->_request_data['view_team'] = $this->_request_data['datamanager']->get_content_html();
+	        $this->_request_data['view_team']['member_count'] = $member_count;
+	        $this->_request_data['view_team']['group_guid'] = $team->groupguid;
+	        $this->_request_data['view_team']['description'] = $team_group->get_parameter('midcom.helper.datamanager2','team_description');
+	        $this->_request_data['view_team']['location'] = $team_group->get_parameter('midcom.helper.datamanager2','team_location');
+	        $this->_request_data['view_team']['is_recruiting'] = false;
+	        	        	        
+	        if (   $member_count < $this->_config->get('max_players_per_team')
+	            && $is_recruiting)
+	        {
+    	        $this->_request_data['view_team']['is_recruiting'] = true;
+	        }
+            
+            $qb = midcom_db_topic::new_query_builder();
+            $qb->add_constraint('up', '=', $this->_topic->id);
+            $qb->add_constraint('name', '=', $team->name);
+            
+            if ($qb->count() == 0)
+            {
+                $this->_request_data['view_team']['profile_url'] = null;
+            }
+            else
+            {
+                $this->_request_data['view_team']['profile_url'] = "{$prefix}{$team->name}";
+            }
+
+            $this->_request_data['team'] =& $team;
+            
+            midcom_show_style('teams_list_item');
+	    }
+
+	    midcom_show_style('teams_list_end');
+    }
+        
     function _handler_pending($handler_id, $args, &$data)
     {
         if ($this->_config->get('system_lockdown') == 1)
@@ -966,55 +1031,6 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     
         midcom_show_style('teams_pending_list_end');
     }
-
-    function _show_teams_list($handler_id, &$data)
-    {        
-        $member_count = 0;
-        
-        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-        
-        midcom_show_style('teams_list_start');
-        
-        foreach($this->_teams_list as $team)
-        {
-            $member_count = $team->count_members();
-            $team_group = new midcom_db_group($team->groupguid);
-            $is_recruiting = $team_group->get_parameter('net.nemein.teams:preferences','is_recruiting');
-            
-	        $this->_load_datamanager($team_group);
-	        $this->_request_data['view_team'] = $this->_request_data['datamanager']->get_content_html();
-	        $this->_request_data['view_team']['member_count'] = $member_count;
-	        $this->_request_data['view_team']['group_guid'] = $team->groupguid;
-	        $this->_request_data['view_team']['description'] = $team_group->get_parameter('midcom.helper.datamanager2','team_description');
-	        $this->_request_data['view_team']['location'] = $team_group->get_parameter('midcom.helper.datamanager2','team_location');
-	        $this->_request_data['view_team']['is_recruiting'] = false;
-	        	        	        
-	        if (   $member_count < $this->_config->get('max_players_per_team')
-	            && $is_recruiting)
-	        {
-    	        $this->_request_data['view_team']['is_recruiting'] = true;
-	        }
-            
-            $qb = midcom_db_topic::new_query_builder();
-            $qb->add_constraint('up', '=', $this->_topic->id);
-            $qb->add_constraint('name', '=', $team->name);
-            
-            if ($qb->count() == 0)
-            {
-                $this->_request_data['view_team']['profile_url'] = null;
-            }
-            else
-            {
-                $this->_request_data['view_team']['profile_url'] = "{$prefix}{$team->name}";
-            }
-
-            $this->_request_data['team'] =& $team;
-            
-            midcom_show_style('teams_list_item');
-	    }
-
-	    midcom_show_style('teams_list_end');
-    }
     
     function _show_create($handler_id, &$data)
     {
@@ -1067,7 +1083,6 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         $this->_request_data['view_team']['group_guid'] = $this->_current_team_group->guid;
         $this->_request_data['view_team']['description'] = $this->_current_team_group->get_parameter('midcom.helper.datamanager2','team_description');
         $this->_request_data['view_team']['location'] = $this->_current_team_group->get_parameter('midcom.helper.datamanager2','team_location');
-        //$this->_request_data['view_team']['location'] = '';
         
         $_MIDCOM->load_library('org.routamc.positioning');
         $position = new org_routamc_positioning_object($this->_current_team_group);
@@ -1279,7 +1294,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
             $this->_request_data['team'] = $this->_current_team;
             $this->_current_team_group = new midcom_db_group($this->_current_team->groupguid);
             $this->_request_data['team_group'] = $this->_current_team_group;
-            $this->_request_data['team_name'] = $this->_current_team_group->name;
+            $this->_request_data['team_name'] = $this->_current_team_group->official || $this->_current_team_group->name;
             $this->_request_data['team_manager'] =& $_MIDCOM->auth->get_user($this->_current_team->managerguid);
             return true;
         }
