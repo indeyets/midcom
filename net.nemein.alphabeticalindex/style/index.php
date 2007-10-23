@@ -13,7 +13,7 @@ if ($data['topic']->can_do('midgard:update'))
     $enable_update = true;
 }
 ?>
-<h1><?php echo $data['l10n']->get('index'); ?></h1>
+<h1><?php echo $data['topic']->extra; ?></h1>
 
 <?php
 echo "<a name=\"top\"></a>\n";

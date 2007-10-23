@@ -1,21 +1,21 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE fi
 
 ---STRING external item
-External item
+Ulkoinen tietue
 ---STRINGEND
 
 ---STRING internal item
-Internal items
+Sisäisiä tietueita
 ---STRINGEND
 
 ---STRING net.nemein.alphabeticalindex
-Alphabetical index
+Aakkosellinen hakemisto
 ---STRINGEND
 
 ---STRING to top
-To top
+Takaisin ylös
 ---STRINGEND
 

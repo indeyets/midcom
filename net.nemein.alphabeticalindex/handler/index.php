@@ -87,17 +87,11 @@ class net_nemein_alphabeticalindex_handler_index extends midcom_baseclasses_comp
         $this->_render_nav();        
         
         $this->_prepare_request_data($handler_id);
-        
-        /***
-         * Set the breadcrumb text
-         */
-        $this->_update_breadcrumb_line($handler_id);
 
         /**
          * change the pagetitle. (must be supported in the style)
          */
-        $title = $this->_l10n_midcom->get('index');
-        $_MIDCOM->set_pagetitle(":: {$title}");
+        $_MIDCOM->set_pagetitle($this->_topic->extra);
 
         return true;
     }
@@ -192,24 +186,6 @@ class net_nemein_alphabeticalindex_handler_index extends midcom_baseclasses_comp
     {
         // hint: look in the style/index.php file to see what happens here.
         midcom_show_style('index');
-    }
-    
-    /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
-     * location.
-     *
-     */
-    function _update_breadcrumb_line()
-    {
-        $tmp = Array();
-
-        $tmp[] = Array
-        (
-            MIDCOM_NAV_URL => "/",
-            MIDCOM_NAV_NAME => $this->_l10n->get('index'),
-        );
-
-        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
 }
 ?>
