@@ -78,5 +78,13 @@ class org_openpsa_invoices_invoice extends __org_openpsa_invoices_invoice
             }
         }
     }
+    
+    /**
+     * Human-readable label for cases like Asgard navigation
+     */
+    function get_label()
+    {
+    	return $this->invoiceNumber;
+    }
 }
 ?>
