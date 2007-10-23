@@ -109,6 +109,11 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
     
     function _get_parameter_string()
     {
+        if (! $this->_listen_params)
+        {
+            return '';
+        }
+        
         if (! $this->_params_cache)
         {
             $this->_collect_parameters();
