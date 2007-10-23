@@ -49,10 +49,10 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
     {
         $this->type = $args[0];
         $root_types = midgard_admin_asgard_reflector_tree::get_root_classes();
-        if (!in_array($this->type, $root_types))
+        /*if (!in_array($this->type, $root_types))
         {
             return false;
-        }
+        }*/
     
         $this->_prepare_request_data();
 

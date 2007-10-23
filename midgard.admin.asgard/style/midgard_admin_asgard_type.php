@@ -1,4 +1,5 @@
 <?php
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 if ($data['component'] == 'midgard')
 {
     $component_label = 'Midgard CMS';
@@ -24,3 +25,11 @@ else
 ?>
 
 &(data['help']:h);
+
+<?php
+$qb = new midgard_query_builder($data['type']);
+$qb->include_deleted();
+$qb->add_constraint('metadata.deleted', '=', true);
+$deleted = $qb->count();
+echo "<p><a href=\"{$prefix}__mfa/asgard/trash/{$data['type']}/\">" . sprintf($_MIDCOM->i18n->get_string('%s deleted items', 'midgard.admin.asgard'), $deleted) . "</a></p>\n";
+?>

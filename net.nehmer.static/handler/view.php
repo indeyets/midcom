@@ -259,7 +259,8 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
      */
     function _show_view ($handler_id, &$data)
     {
-        if ($this->_config->get('enable_ajax_editing'))
+        if (   $this->_config->get('enable_ajax_editing')
+            && isset($data['controller']))
         {
             // For AJAX handling it is the controller that renders everything
             $this->_request_data['view_article'] = $this->_request_data['controller']->get_content_html();
