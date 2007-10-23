@@ -94,7 +94,17 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
             {
                 if ($value)
                 {
-                    if ($_GET[$key] == $value)
+                    if (is_array($value))
+                    {
+                        foreach ($value as $val)
+                        {
+                            if ($_GET[$key] == $val)
+                            {
+                                $this->_params_cache .= "{$_prefix}{$key}={$val}";
+                            }
+                        }
+                    }
+                    elseif ($_GET[$key] == $value)
                     {
                         $this->_params_cache .= "{$_prefix}{$key}={$value}";
                     }
