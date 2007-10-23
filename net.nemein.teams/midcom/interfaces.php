@@ -71,14 +71,13 @@ class net_nemein_teams_interface extends midcom_baseclasses_components_interface
                     foreach($members as $member)
                     {
                         $player = new midcom_db_person();
-                        $player->get_by_id($member->id);
+                        $player->get_by_id($member->uid);
                         
-                        $document = $indexer->new_document($palyer);
+                        $document = $indexer->new_document($player);
                         $document->title = "{$player->username}";
                         $document->abstract = "{$player->username}{$group->name}";
-                        $document->content = "{$player->username}{$group->name}
-                            {$player->extra}{$document->content}";
-                        //$document->read_metadata_from_object($player->storage->object);
+                        $document->content = "{$player->username}{$group->name}{$player->extra}{$document->content}";
+                        $document->read_metadata_from_object($player->storage->object);
                         $indexer->index($document);
                     }
                 }
