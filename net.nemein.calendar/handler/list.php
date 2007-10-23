@@ -354,7 +354,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             
             if (!$this->_request_data['archive_mode'])
             {
-                $this->_component_data['active_leaf'] = "{$data['content_topic']->id}_CAT_{$this->_request_data['category']}";
+                $this->_component_data['active_leaf'] = "{$this->_request_data['content_topic']->id}_CAT_{$this->_request_data['category']}";
             }
         }
 
