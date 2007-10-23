@@ -17,6 +17,30 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
     var $_count_mode = false;
     var $display_pages = 10;
 
+    /**
+     * parameter listening enabled
+     * 
+     * @access private
+     * @var boolean
+     */
+    var $_listen_params = false;
+    
+    /**
+     * Registered get -parameters for listening
+     * 
+     * @access private
+     * @var array
+     */
+    var $_get_params = array();
+    
+    /**
+     * Cache for parameters to be listened
+     * 
+     * @access private
+     * @var string
+     */
+    var $_params_cache = false;
+
     function org_openpsa_qbpager($classname, $pager_id)
     {
         $this->_component = 'org.openpsa.qbpager';
@@ -34,6 +58,63 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
         $this->_prefix = 'org_openpsa_qbpager_' . $this->_pager_id . '_';
 
         return true;
+    }
+
+    function listen_parameter($name, $value=false)
+    {
+        if (empty($name))
+        {
+            return;
+        }
+        
+        if (   isset($this->_get_params[$name])
+            && $this->_get_params[$name] == $value)
+        {
+            return;
+        }
+        $this->_get_params[$name] = $value;
+        
+        $this->_listen_params = true;
+    }
+    
+    function _collect_parameters()
+    {
+        if (empty($this->_get_params))
+        {
+            $this->_params_cache = '';
+            return;
+        }
+        
+        $_prefix = '&';
+        $this->_params_cache = '';
+        
+        foreach ($this->_get_params as $key => $value)
+        {
+            if (isset($_GET[$key]))
+            {
+                if ($value)
+                {
+                    if ($_GET[$key] == $value)
+                    {
+                        $this->_params_cache .= "{$_prefix}{$key}={$value}";
+                    }
+                }
+                elseif (! $_GET[$key])
+                {
+                    $this->_params_cache .= "{$_prefix}{$key}";
+                }
+            }
+        }
+    }
+    
+    function _get_parameter_string()
+    {
+        if (! $this->_params_cache)
+        {
+            $this->_collect_parameters();
+        }
+        
+        return $this->_params_cache;
     }
 
     /**
@@ -230,6 +311,109 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
         }
 
         echo "\n</div>\n";
+
+        return;
+    }
+    
+    /**
+     * Displays page selector as list
+     */
+    function show_pages_as_list($acl_checks=false)
+    {
+        $link_suffix = $this->_get_parameter_string();
+        
+        $this->_request_data['prefix'] = $this->_prefix;
+        $this->_request_data['current_page'] = $this->_current_page;
+        $this->_request_data['page_count'] = $this->count_pages($acl_checks);
+        $this->_request_data['results_per_page'] = $this->_limit;
+        $this->_request_data['offset'] = $this->_offset;
+        $this->_request_data['display_pages'] = $this->display_pages;
+        //Won't work (wrong scope), so the code is copied below.
+        //midcom_show_style('show-pages');
+        $data =& $this->_request_data;
+
+        //Skip the header in case we only have one page
+        if ($data['page_count'] <= 1)
+        {
+            return;
+        }
+
+        //TODO: "showing results (offset)-(offset+limit)
+        //TODO: Localizations
+        $page_var = $data['prefix'] . 'page';
+        $results_var =  $data['prefix'] . 'results';
+        echo '<div class="org_openpsa_qbpager_pages">';
+        echo "\n    <ul>\n";
+        $page = 0;
+        $display_start = $data['current_page'] - ceil($data['display_pages']/2);
+        if ($display_start < 0)
+        {
+            $display_start = 0;
+        }
+        $display_end = $data['current_page'] + ceil($data['display_pages']/2);
+        if ($display_end > $data['page_count'])
+        {
+            $display_end = $data['page_count'];
+        }
+        
+        if ($data['current_page'] > 1)
+        {
+            $previous = $data['current_page'] - 1;
+            if ($previous != 1)
+            {
+                //echo "\n<li class=\"first\"><a class=\"first_page\" href=\"?{$page_var}=1\">&nbsp;</a></li>";
+                //echo "\n<li class=\"separator\"></li>";
+            }
+
+            echo "\n<li class=\"prev\" onclick=\"window.location='?{$page_var}={$previous}{$link_suffix}';\"></li>";
+
+            if ($display_start > 1)
+            {
+                echo "\n<li class=\"separator\"></li>";
+                echo "\n<li class=\"page last\" onclick=\"window.location='?{$page_var}=1{$link_suffix}';\">1</li>";
+                echo "\n<li class=\"separator\"></li>";
+                echo "\n<li class=\"page splitter\">...</li>";
+                echo "\n<li class=\"separator\"></li>";
+            }
+        }
+
+
+        while ($page++ < $display_end)
+        {
+            if ($page < $display_start)
+            {
+                continue;
+            }
+            if ($page == $data['current_page'])
+            {
+                echo "\n<li class=\"page active\">{$page}</li>";
+                echo "\n<li class=\"separator\"></li>";
+                continue;
+            }
+            echo "\n<li class=\"page\" onclick=\"window.location='?{$page_var}={$page}{$link_suffix}';\">{$page}</li>";
+            echo "\n<li class=\"separator\"></li>";
+        }
+
+        if ($data['current_page'] < $data['page_count'])
+        {
+            $next = $data['current_page'] + 1;
+            
+            if ($next != $data['page_count'])
+            {
+                // echo "\n<li class=\"separator\"></li>";
+                //echo "\n<li class=\"last\"><a class=\"last_page\" href=\"?{$page_var}={$data['page_count']}\">&nbsp;</a></li>";
+                echo "\n<li class=\"separator\"></li>";
+                echo "\n<li class=\"page splitter\">...</li>";
+                echo "\n<li class=\"separator\"></li>";
+                echo "\n<li class=\"page last\" onclick=\"window.location='?{$page_var}={$data['page_count']}{$link_suffix}';\">{$data['page_count']}</li>";
+            }
+            
+            
+            echo "\n<li class=\"next\" onclick=\"window.location='?{$page_var}={$next}{$link_suffix}';\"></li>";
+        }
+
+        echo "\n    </ul>\n";
+        echo "</div>\n";
 
         return;
     }
