@@ -111,6 +111,7 @@ class create_tkk_website extends midcom_baseclasses_components_handler
                         $vhost_config = str_replace('__SERVER_NAME__', $host->name, $vhost_config);
                         $vhost_config = str_replace('__DOC_ROOT__', $this->_request_data['plugin_config']['document_root'], $vhost_config);
                         $vhost_config = str_replace('__MYSQL_DB_USER_PASS__', $this->_request_data['plugin_config']['mysql_db_user_pass'], $vhost_config);
+                        $vhost_config = str_replace('__MIDGARD_ROOT__', $this->_request_data['plugin_config']['midgard_root'], $vhost_config);
 
                         $_MIDCOM->uimessages->add(
                             $this->_l10n->get('midcom.admin.wizards'),

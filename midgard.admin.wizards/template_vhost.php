@@ -1,8 +1,7 @@
 <?php
 
 $vhost_config = "
-
-<VirtualHost __HOST_IP__:__HOST_PORT__>
+<VirtualHost *:__HOST_PORT__>
 ServerName __SERVER_NAME__
 DocumentRoot __DOC_ROOT__
 
@@ -22,7 +21,7 @@ MidgardEngine on
 # You may uncomment this line and comment next two to disable caching facility.
 #MidgardRootfile /usr/lib/apache2/modules/midgard-root-nommp.php
 MidgardPageCacheDir /var/cache/midgard/midgard
-MidgardRootFile /usr/lib/apache2/modules/midgard-root.php
+MidgardRootFile __MIDGARD_ROOT__
 
 <Directory /var/cache/midgard>
         Allow from all
@@ -81,6 +80,5 @@ AddDefaultCharset utf-8
 # --- SSL rewrite End ---
 
 </VirtualHost>
-
 ";
 ?>

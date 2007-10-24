@@ -87,6 +87,7 @@
                     'host_ip' => '84.34.133.216',
                     'mysql_db_user_pass' => 'midgard midgard midgard',
                     'document_root' => '/var/lib/midgard/vhosts/devel-xen-devel.nemein.net/80/',
+                    'midgard_root' => '/usr/lib/apache2/modules/midgard-root.php',
                 ),
             ),
         ),    
