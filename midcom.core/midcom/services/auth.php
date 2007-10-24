@@ -2051,24 +2051,27 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
         $_MIDCOM->cache->content->no_cache();
 
-        $_MIDCOM->add_link_head
-        (
-            array
-            (
-                'rel' => 'stylesheet',
-                'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL.'/midcom.services.auth/style.css',
-            )
-        );
 
         if (   function_exists('mgd_is_element_loaded')
             && mgd_is_element_loaded('midcom_services_auth_access_denied'))
         {
+            // Pass our local but very usefull variables on to the style element
+            $GLOBALS['midcom_services_auth_access_denied_message'] = $message;
+            $GLOBALS['midcom_services_auth_access_denied_title'] = $title;
+            $GLOBALS['midcom_services_auth_access_denied_login_warning'] = $login_warning;
             mgd_show_element('midcom_services_auth_access_denied');
         }
         else
         {
-        
+            $_MIDCOM->add_link_head
+            (
+                array
+                (
+                    'rel' => 'stylesheet',
+                    'type' => 'text/css',
+                    'href' => MIDCOM_STATIC_URL.'/midcom.services.auth/style.css',
+                )
+            );
             echo '<?'.'xml version="1.0" encoding="ISO-8859-1"?'.">\n";
             ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -2179,6 +2182,9 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         if (   function_exists('mgd_is_element_loaded')
             && mgd_is_element_loaded('midcom_services_auth_login_page'))
         {
+            // Pass our local but very usefull variables on to the style element
+            $GLOBALS['midcom_services_auth_show_login_page_title'] = $title;
+            $GLOBALS['midcom_services_auth_show_login_page_login_warning'] = $login_warning;
             mgd_show_element('midcom_services_auth_login_page');
         }
         else
@@ -2192,16 +2198,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
                     'href' => MIDCOM_STATIC_URL.'/midcom.services.auth/style.css',
                 )
             );
-            $accounts_node = midcom_helper_find_node_by_component('net.nehmer.account');
-            if (!empty($accounts_node))
-            {
-                $passwd_url = $accounts_node[MIDCOM_NAV_FULLURL] . 'lostpassword.html';
-            }
-            else
-            {
-                $passwd_url = false;
-            }
-
             echo '<?'.'xml version="1.0" encoding="ISO-8859-1"?'.">\n";
             ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -2234,11 +2230,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
                 else
                 {
                     echo "<div id=\"error\">{$login_warning}</div>\n";
-                }
-                // PONDER: Only display if we have login warning ??
-                if (!empty($passwd_url))
-                {
-                    echo "                <div class=\"notice\"><a href=\"{$passwd_url}\">" . $_MIDCOM->i18n->get_string('lost password ?') . "</a></div>\n";
                 }
                 ?>
             </div>
