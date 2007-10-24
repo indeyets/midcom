@@ -149,6 +149,8 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
      */
     function _handler_trash_type($handler_id, $args, &$data)
     {
+        $_MIDCOM->auth->require_admin_user();
+    
         $this->type = $args[0];
         $root_types = midgard_admin_asgard_reflector_tree::get_root_classes();
 

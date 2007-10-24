@@ -74,6 +74,38 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
             );
         }
         
+        if ($_MIDCOM->auth->admin)
+        {
+            $qb = new midgard_query_builder($this->type);
+            $qb->include_deleted();
+            $qb->add_constraint('metadata.deleted', '=', true);
+            $deleted = $qb->count();
+            if ($deleted > 0)
+            {
+                $data['asgard_toolbar']->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "__mfa/asgard/trash/{$this->type}/",
+                        MIDCOM_TOOLBAR_LABEL => sprintf($_MIDCOM->i18n->get_string('%s deleted items', 'midgard.admin.asgard'), $deleted),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash-full.png',
+                    )
+                );
+            }
+            else
+            {
+                $data['asgard_toolbar']->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "__mfa/asgard/trash/{$this->type}/",
+                        MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('trash is empty', 'midgard.admin.asgard'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                    )
+                );
+            }
+        }
+        
         midgard_admin_asgard_plugin::get_common_toolbar($data);
 
         
