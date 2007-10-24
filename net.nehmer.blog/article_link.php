@@ -1,6 +1,6 @@
 <?php
 /**
- * @package cc.kaktus.query
+ * @package net.nehmer.blog
  * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: aerodrome.php 3630 2006-06-19 10:03:59Z bergius $
  * @copyright The Midgard Project, http://www.midgard-project.org
@@ -10,7 +10,7 @@
 /**
  * MidCOM wrapper class for objects
  *
- * @package cc.kaktus.query
+ * @package net.nehmer.blog
  */
 class net_nehmer_blog_link_dba extends __net_nehmer_blog_link_dba
 {
