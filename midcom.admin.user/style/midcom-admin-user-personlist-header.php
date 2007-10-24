@@ -19,6 +19,7 @@
 <?php
 if (count($data['persons']) > 0)
 {
+    $data['enabled'] = 0;
     ?>
     <form method="post">
     <table class="midcom_admin_user_search_results">

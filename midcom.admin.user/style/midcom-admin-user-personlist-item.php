@@ -12,6 +12,10 @@
     {
         $checked .= ' disabled="disabled"';
     }
+    else
+    {
+        $data['enabled']++;
+    }
     ?>
     <td><input type="checkbox" name="midcom_admin_user[]" value="<?php echo $data['person']->id; ?>" <?php echo $checked; ?>/></td>
     <?php
@@ -41,12 +45,23 @@
     {
         if (!is_object($data['groups'][$member->gid]))
         {
-            $groups[] = $data['groups'][$member->gid];
+            if ($member->gid == 0)
+            {
+                $groups[] = 'ROOT';
+            }
+            else
+            {
+                $groups[] = "#{$member->gid}";
+            }
+            continue;
         }
-        else
+    
+        $value = $data['groups'][$member->gid]->official;
+        if ($data['groups'][$member->gid]->can_do('midgard:update'))
         {
-            $groups[] = "<a href=\"{$prefix}__mfa/asgard_midcom.admin.user/group/edit/{$data['groups'][$member->gid]->guid}/\">{$data['groups'][$member->gid]->official}</a>";
+            $value = "<a href=\"{$prefix}__mfa/asgard_midcom.admin.user/group/edit/{$data['groups'][$member->gid]->guid}/\">{$value}</a>";
         }
+        $groups[] = $value;
     }
     echo "<td>" . implode(', ', $groups) . "</td>\n";
     ?>

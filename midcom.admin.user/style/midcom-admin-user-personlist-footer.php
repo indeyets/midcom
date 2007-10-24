@@ -1,13 +1,21 @@
 <?php
 if (count($data['persons']) > 0)
 {
+    if ($data['enabled'] == 0)
+    {
+        $disabled = ' disabled="disabled"';
+    }
+    else
+    {
+        $disabled = '';
+    }
     ?>
         </tbody>
         <tfoot>
             <tr>
                 <td>&nbsp;</td>
                 <td colspan="<?php echo count($data['list_fields']); ?>">
-                    <select name="midcom_admin_user_action">
+                    <select name="midcom_admin_user_action"<?php echo $disabled; ?>>
                         <option value=""><?php echo $_MIDCOM->i18n->get_string('choose action', 'midcom.admin.user'); ?></option>
                         <?php
                         if ($data['config']->get('allow_manage_accounts'))
@@ -19,7 +27,7 @@ if (count($data['persons']) > 0)
                         ?>
                         <option value="groupadd" onclick="javascript:document.getElementById('midcom_admin_user_group').style.display='inline';"><?php echo $_MIDCOM->i18n->get_string('add to group', 'midcom.admin.user'); ?></option>
                     </select>
-                    <select name="midcom_admin_user_group" id="midcom_admin_user_group" style="display: none;">
+                    <select name="midcom_admin_user_group" id="midcom_admin_user_group" style="display: none;"<?php echo $disabled; ?>>
                         <?php
                         foreach ($data['groups'] as $group)
                         {
@@ -31,7 +39,7 @@ if (count($data['persons']) > 0)
                         }
                         ?>
                     </select>
-                    <input type="submit" value="<?php echo $_MIDCOM->i18n->get_string('apply to selected', 'midcom.admin.user'); ?>" />
+                    <input type="submit" value="<?php echo $_MIDCOM->i18n->get_string('apply to selected', 'midcom.admin.user'); ?>"<?php echo $disabled; ?> />
                 </td>
             </tr>
         </tfoot>
