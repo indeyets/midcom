@@ -88,6 +88,14 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
     function _load_controller()
     {
         $this->_load_schemadb();
+        
+        $qb = midcom_db_member::new_query_builder();
+        $qb->add_constraint('gid', '=', $this->_group->id);
+        if ($qb->count_unchecked() > $this->_config->get('list_users_max'))
+        {
+            unset($this->_schemadb['default']->fields['persons']);
+        }
+        
         $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
         $this->_controller->schemadb =& $this->_schemadb;
         $this->_controller->set_storage($this->_group, 'default');
@@ -117,8 +125,7 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
             return false;
         }
         $this->_group->require_do('midgard:update');
-    
-                
+                    
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
         
         $this->_load_controller();
