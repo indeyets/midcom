@@ -499,6 +499,13 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         $this->_update_attachment_info($identifier);
         $this->_sort_attachments();
 
+        if ($this->storage->object)
+        {
+            $document = new midcom_services_indexer_document_attachment($attachment, $this->storage->object);
+            $indexer =& $_MIDCOM->get_service('indexer');
+            $indexer->index($document);
+        }
+
         return true;
     }
 
@@ -670,6 +677,13 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
 
         $this->_update_attachment_info($identifier);
         $this->_sort_attachments();
+
+        if ($this->storage->object)
+        {
+            $document = new midcom_services_indexer_document_attachment($attachment, $this->storage->object);
+            $indexer =& $_MIDCOM->get_service('indexer');
+            $indexer->index($document);
+        }
 
         return true;
     }
