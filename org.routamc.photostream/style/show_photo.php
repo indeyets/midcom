@@ -6,14 +6,14 @@ $view = $data['photo_view'];
 <div class="org_routamc_photostream_photo">
     <div class="photo-navigation">
 <?php
-if ($data['previous_guid'])
+if (@$data['previous_guid'])
 {
 ?>
         <a class="previous" href="&(prefix);photo/&(data['previous_guid']);/&(data['suffix']);">&lt; <?php echo $data['l10n']->get('previous'); ?></a>
 <?php
 }
 
-if ($data['next_guid'])
+if (@$data['next_guid'])
 {
 ?>
         <a class="next" href="&(prefix);photo/&(data['next_guid']);/&(data['suffix']);"><?php echo $data['l10n']->get('next'); ?> &gt;</a>

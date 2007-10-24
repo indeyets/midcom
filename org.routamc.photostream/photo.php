@@ -23,6 +23,13 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
      * Raw read EXIF data
      */
     var $raw_exif = false;
+    
+    /**
+     * Force the reading of EXIF data on updating
+     * 
+     * @var boolean force_exif
+     */
+    var $force_exif = false;
 
     /**
      * Database encoding, convert all auto-read data to this.
@@ -56,13 +63,14 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
         {
             $this->photographer =  $_MIDGARD['user'];
         }
+        
         return true;
     }
 
     function _on_updating()
     {
         $this->update_attachment_links(false);
-        $this->read_exif_data();
+        $this->read_exif_data($this->force_exif);
         if (!$this->photographer)
         {
             $this->photographer =  $_MIDGARD['user'];
@@ -393,7 +401,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
             debug_pop();
             return false;
         }
-
+        
         // Read photo taken time
         $this->_read_exif_data_taken($data, $overwrite);
 
@@ -410,7 +418,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
         return true;
     }
 
-    function _read_exif_data_taken(&$data, &$overwrite)
+    function _read_exif_data_taken(&$data, $overwrite)
     {
         $regex = '/([0-9]{4}):([0-9]{1,2}):([0-9]{1,2})\s+([0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2})/';
         $repl = '\1-\2-\3 \4';
@@ -435,6 +443,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
             default:
                 $taken = false;
         }
+        
         if (   $taken > 7200
             && (   !$this->taken
                 || $overwrite))
@@ -443,7 +452,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
         }
     }
 
-    function _read_exif_data_camera(&$data, &$overwrite)
+    function _read_exif_data_camera(&$data, $overwrite)
     {
         $cameraid_components = array();
         if (   isset($data['IFD0'])
@@ -477,7 +486,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
         */
     }
 
-    function _read_exif_data_description(&$data, &$overwrite)
+    function _read_exif_data_description(&$data, $overwrite)
     {
         $encoding = false;
         switch(true)

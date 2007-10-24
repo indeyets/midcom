@@ -269,12 +269,6 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
         // Handle archives with subdirectories correctly
         $this->_batch_handler_get_files_recursive($tmp_dir, $files);
 
-        /*
-        echo "would process files<pre>\n";
-        print_r($files);
-        echo "</pre>\n";
-        */
-
         foreach ($files as $file)
         {
             // PONDER: Output something so browser won't timeout ??
@@ -291,6 +285,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
                     // Change schema on the fly
                     $this->_photo->parameter('midcom.helper.datamanager2', 'schema_name', 'photo');
                     $this->_photo->read_exif_data(true);
+                    $this->_photo->force_exif = true;
                     $this->_photo->update();
                     $this->_check_link_photo_gallery();
                     // Set batch number

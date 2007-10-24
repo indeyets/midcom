@@ -351,6 +351,140 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
                 'index'
             ),
         );
+
+        $this->_register_feed_handlers();
+    }
+
+    function _register_feed_handlers()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_print_r('$this->_request_switch is now: ', $this->_request_switch);
+        debug_add('Start');
+        foreach ($this->_request_switch as $handler_id => $switch_data)
+        {
+            debug_add("Checking id '{$handler_id}', it has handler class '{$switch_data['handler'][0]}'");
+            if ($switch_data['handler'][0] !== 'org_routamc_photostream_handler_list')
+            {
+                debug_add('Not interested, next!');
+                // We only care about the list views
+                continue;
+            }
+            $new_id = "feed:{$handler_id}";
+            if (isset($this->_request_switch[$new_id]))
+            {
+                debug_add("Not reating new switch '{$new_id}', it already exists", MIDCOM_LOG_INFO);
+                continue;
+            }
+            debug_add("Creating new switch with id '{$new_id}'");
+            // PHP5-TODO: Must be copy-by-value
+            $new_switch = $switch_data;
+            // switch handler to the feed dispatcher
+            $new_switch['handler'] = array('org_routamc_photostream_handler_feed', 'dispatcher');
+            // add a variable arg to end of list for feed type
+            if (!isset($new_switch['variable_args']))
+            {
+                $new_switch['variable_args'] = 0;
+            }
+            $new_switch['variable_args']++;
+            
+            if (!$this->_sanity_check_switch($new_switch))
+            {
+                // ULR-space clash, prepend /feed/ to list fixed args
+                debug_add("Prepending 'feed' to fixed_args");
+                array_unshift($new_switch['fixed_args'], 'feed');
+            }
+            if (!$this->_sanity_check_switch($new_switch))
+            {
+                // URL-space still clashes
+                debug_add("New switch '{$new_id}' would never be match    ed, not adding", MIDCOM_LOG_WARN);
+                continue;
+            }
+            // Add the new switch
+            debug_print_r("Setting \$this->_request_switch['{$new_id}'] to: ", $new_switch);
+            $this->_request_switch[$new_id] = $new_switch;
+
+            // If we were not forced to use the feed url space earlier add it anyway so we have at least one consistent interface
+            if ($new_switch['fixed_args'][0] !== 'feed')
+            {
+                array_unshift($new_switch['fixed_args'], 'feed');
+                $new_id = "feed2:{$handler_id}";
+                debug_print_r("Setting \$this->_request_switch['{$new_id}'] to: ", $new_switch);
+                $this->_request_switch[$new_id] = $new_switch;
+            }
+
+            unset($new_id, $new_switch);
+        }
+        debug_add('Done.');
+        debug_print_r('$this->_request_switch is now: ', $this->_request_switch);
+        debug_pop();
+    }
+
+    function _sanity_check_switch(&$new_switch)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        foreach ($this->_request_switch as $handler_id => $switch_data)
+        {
+            debug_add("Comparing with handler '{$handler_id}'");
+            switch(true)
+            {
+                case (   !isset($switch_data['fixed_args'])
+                      && isset($new_switch['fixed_args'])):
+                    debug_add('existing switch has not-set fixed_args and new_switch has');
+                    $fixed_diff = true;
+                    break;
+                case (   !isset($new_switch['fixed_args'])
+                      && isset($switch_data['fixed_args'])):
+                    debug_add('new_switch has not-set fixed_args and existing switch has');
+                    $fixed_diff = true;
+                    break;
+                case (   !is_array($switch_data['fixed_args'])
+                      && is_array($new_switch['fixed_args'])):
+                    debug_add('existing switch fixed_args is not array, new_switch fixed_args is');
+                    $fixed_diff = true;
+                    break;
+                case (   !is_array($new_switch['fixed_args'])
+                      && is_array($switch_data['fixed_args'])):
+                    debug_add('new_switch fixed_args is not array, existing switch fixed_args is');
+                    $fixed_diff = true;
+                    break;
+                case (   is_array($switch_data['fixed_args'])
+                      && is_array($new_switch['fixed_args'])):
+                    debug_add('new_switch and existing switch fixed_args are both arrays, calling array_diff');
+                    $fixed_diff = array_diff($switch_data['fixed_args'], $new_switch['fixed_args']);
+                    if (empty($fixed_diff))
+                    {
+                        /**
+                         * array_diff() returns an array consisting of all elements in $array1 that are not in $array2,
+                         * NOT a true diff, thus we need to check again with reversed order
+                         */
+                        $fixed_diff = array_diff($new_switch['fixed_args'], $switch_data['fixed_args']);
+                    }
+                    break;
+                default:
+                    debug_add('defaulting fixed_diff to false');
+                    $fixed_diff = false;
+            }
+            debug_print_r('$fixed_diff: ', $fixed_diff);
+            if (!empty($fixed_diff))
+            {
+                // Fixed args differ
+                continue;
+            }
+            if (   !isset($switch_data['variable_args'])
+                || !isset($new_switch['variable_args'])
+                || $switch_data['variable_args'] < $new_switch['variable_args'])
+            {
+                // Variable args do not overlap
+                continue;
+            }
+            debug_add("handler '{$handler_id}' already implements the url space", MIDCOM_LOG_INFO);
+            debug_print_r('$new_switch was: ', $new_switch, MIDCOM_LOG_INFO);
+            debug_print_r("\$this->_request_switch['{$handler_id}'] was: ", $switch_data, MIDCOM_LOG_INFO);
+            debug_pop();
+            return false;
+        }
+        debug_pop();
+        return true;       
     }
 
     /**
@@ -461,9 +595,10 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             )
         );
 
+        // the feed dispatcher needs this information, it might be available otherwise but I couldn't find it
+        $this->_request_data['request_switch'] =& $this->_request_switch;
+        
         return true;
     }
-
 }
-
 ?>
