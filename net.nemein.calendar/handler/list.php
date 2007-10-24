@@ -377,6 +377,10 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                     {
                         $qb->add_constraint('end', '>=', gmdate('Y-m-d H:i:s', $to));
                     }
+                    else
+                    {
+                        $qb->add_constraint('end', '>=', gmdate('Y-m-d H:i:s', $from));
+                    }
                 $qb->end_group();
                  // The event ends during [$from, $to]
                 $qb->begin_group('AND');
