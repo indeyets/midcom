@@ -66,6 +66,10 @@ class create_tkk_host extends midcom_baseclasses_components_handler
                 $host_creator->set_host_url($_POST['tkk_sitewizard_host']);
                 $host_creator->set_host_port(80);
                 
+                $host_creator->set_make_host_copy(true);
+                $host_creator->set_copy_host_url($_POST['tkk_sitewizard_host']);
+                $host_creator->set_copy_host_port(8001);
+                
                 $session = new midcom_service_session();
                 $session->set("midgard_admin_wizards_{$this->_request_data['session_id']}", $host_creator);
                 

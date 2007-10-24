@@ -33,6 +33,7 @@
         'name' => '__HOSTNAME__',
         'title' => '__HOSTTITLE__',
         'component' => 'net.nehmer.static',
+        'create_index' => true,
         'acl' => array
         (
             'authors' => array

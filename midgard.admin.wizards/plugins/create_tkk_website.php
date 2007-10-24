@@ -76,6 +76,8 @@ class create_tkk_website extends midcom_baseclasses_components_handler
                 {
                     $structure_creator->set_verbose($this->_request_data['plugin_config']['verbose']);
                 }
+                
+                $structure_creator->set_midcom_path(MIDCOM_ROOT);
                 //$structure_creator->create_creation_root_group(0, $root_page->title . " Administrators");
                 $structure_creator->execute(); 
                 
@@ -155,6 +157,7 @@ class create_tkk_website extends midcom_baseclasses_components_handler
                             }
                         }
 
+                        $session->remove("midgard_admin_wizards_{$this->_request_data['session_id']}");
                         fclose($handle);
                     }
                     else
