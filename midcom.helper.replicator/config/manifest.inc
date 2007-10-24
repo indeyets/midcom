@@ -40,11 +40,12 @@
         'role' => 'lead',
       ),
     ),
-    'dependencies' => 
-    array (
-      'midcom' => 
-      array (
-      ),
+    'dependencies' => array
+    (
+        'midcom' => array
+        (
+            'org_openpsa_httplib',
+        ),
     ),
   ),
   'customdata' => array 
