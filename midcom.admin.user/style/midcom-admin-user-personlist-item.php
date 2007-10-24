@@ -43,7 +43,8 @@
     $groups = array();
     foreach ($memberships as $member)
     {
-        if (!is_object($data['groups'][$member->gid]))
+        if (   !isset($data['groups'][$member->gid])
+            || !is_object($data['groups'][$member->gid]))
         {
             if ($member->gid == 0)
             {
