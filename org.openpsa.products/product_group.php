@@ -17,19 +17,6 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
         return parent::__org_openpsa_products_product_group_dba($id);
     }
 
-    function get_parent_guid_uncached()
-    {
-        if ($this->up != 0)
-        {
-            $parent = new org_openpsa_products_product_group_dba($this->up);
-            return $parent->guid;
-        }
-        else
-        {
-            return null;
-        }
-    }
-
     function _on_creating()
     {
         if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
