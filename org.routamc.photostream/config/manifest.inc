@@ -1,6 +1,6 @@
 'name' => 'org.routamc.photostream',
 'purecode' => false,
-'version' => '1.0.4beta2',
+'version' => '1.1.0beta1',
 'state' => 'beta',
 'privileges' => array (),
 'class_definitions' => array
