@@ -160,7 +160,7 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
             // List all persons if there are less than N of them
             $qb = midcom_db_person::new_query_builder();
             
-            if ($qb->count() < $this->_config->get('list_without_search'))
+            if ($qb->count_unchecked() < $this->_config->get('list_without_search'))
             {
                 $qb->add_order('lastname');
                 $qb->add_order('firstname');
