@@ -52,5 +52,6 @@
             'channel' => 'pearified.com',
         ),
         'midcom' => array (),
+        'midcom.helper.imagepopup' => array (),
     ),
 ),
