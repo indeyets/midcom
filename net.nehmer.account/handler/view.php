@@ -715,7 +715,6 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
 
             case 'never':
             case 'skip':
-                echo "RETURN FALSE";
                 return false;
 
             case 'link':
