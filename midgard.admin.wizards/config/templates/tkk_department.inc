@@ -53,11 +53,16 @@
                 'name' => 'fi',
                 'title' => 'TKK',
                 'component' => 'net.nehmer.static',
+                'create_index' => true,
                 'acl' => array
                 (
                 ),
                 'parameters' => array
                 (
+                    'net.nehmer.static' => array
+                    (
+                        'schemadb' => '/sitegroup-config/net.nehmer.static/schemadb_frontpage',
+                    ),
                 ),
                 'nodes' => array
                 (
@@ -628,6 +633,10 @@
                 ),
                 'parameters' => array
                 (
+                    'net.nehmer.static' => array
+                    (
+                        'schemadb' => '/sitegroup-config/net.nehmer.static/schemadb_frontpage',
+                    ),
                 ),         
                 // en nodes  
                 'nodes' => array
@@ -1199,7 +1208,11 @@
                 ),
                 'parameters' => array
                 (
-                ),   
+                    'net.nehmer.static' => array
+                    (
+                        'schemadb' => '/sitegroup-config/net.nehmer.static/schemadb_frontpage',
+                    ),
+                ), 
                 // sv nodes  
                 'nodes' => array
                 (

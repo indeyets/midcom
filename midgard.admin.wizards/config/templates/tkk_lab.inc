@@ -37,7 +37,7 @@
             (
                 'mailto' => Array
                 (
-                    'title' => 'mailto',
+                    'title' => 'Palautelomakkeen vastaanottaja (email-osoite)',
                     'storage' => 'null',
                     'type' => 'text',
                     'widget' => 'text',
@@ -46,8 +46,8 @@
                 (
                     'title' => 'Allow anonymous',
                     'storage' => 'null',
-                    'type' => 'text',
-                    'widget' => 'text',
+                    'type' => 'boolean',
+                    'widget' => 'checkbox',
                 ),
             ),
         ),
