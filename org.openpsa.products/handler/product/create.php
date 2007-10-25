@@ -112,8 +112,13 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
     function & dm2_create_callback (&$controller)
     {
         $this->_product = new org_openpsa_products_product_dba();
+        
+        if (isset($_POST['productGroup']))
+        {
+            $this->_request_data['up'] = (int) $_POST['productGroup'];
+        }
         $this->_product->productGroup = $this->_request_data['up'];
-
+        
         if (! $this->_product->create())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
