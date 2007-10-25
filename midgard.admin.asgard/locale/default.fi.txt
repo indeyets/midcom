@@ -23,8 +23,24 @@ Lisää ryhmä käyttöoikeuksia varten
 Asgard
 ---STRINGEND
 
+---STRING asgard plugins
+Asgardin lisätoiminnot
+---STRINGEND
+
 ---STRING back to site
 Takaisin sivustolle
+---STRINGEND
+
+---STRING content
+Sisältö
+---STRINGEND
+
+---STRING contentchanged
+Sisältöä muutettu
+---STRINGEND
+
+---STRING contentowner
+Sisällön omistaja
 ---STRINGEND
 
 ---STRING create %s under %s
@@ -87,6 +103,10 @@ Hyväksyntä
 Asetukset
 ---STRINGEND
 
+---STRING midgard objects
+Midgardin tietueet
+---STRINGEND
+
 ---STRING midgard.admin.acl
 Käyttöoikeuksien hallinta
 ---STRINGEND
@@ -113,6 +133,14 @@ Luku
 
 ---STRING midgard:update
 Päivitys
+---STRINGEND
+
+---STRING owner
+Omistaja
+---STRINGEND
+
+---STRING parameter
+Parametri
 ---STRINGEND
 
 ---STRING parameters of %s %s
@@ -143,19 +171,15 @@ Tämä tyyppi on osa komponenttia %s.
 Kansion käyttöoikeudet
 ---STRINGEND
 
+---STRING trash is empty
+Roskakori on tyhjä
+---STRINGEND
+
 ---STRING under %s
 %s alla
 ---STRINGEND
 
----STRING asgard plugins
-Asgardin lisätoiminnot
----STRINGEND
-
----STRING midgard objects
-Midgardin tietueet
----STRINGEND
-
----STRING parameter
-Parametri
+---STRING info
+Info
 ---STRINGEND
 

@@ -318,12 +318,12 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 {
                     case MGD_TYPE_INT:
                     case MGD_TYPE_STRING:
-                    	$class = $_MIDCOM->dbclassloader->get_midcom_class_name_for_legacy_midgard_class($linked_type);
-                    	if (! $class)
-                    	{
-                    	    break;
-                    	}
-                    	$component = $_MIDCOM->dbclassloader->_mgdschema_class_handler[$class];
+                        $class = $_MIDCOM->dbclassloader->get_midcom_class_name_for_legacy_midgard_class($linked_type);
+                        if (! $class)
+                        {
+                            break;
+                        }
+                        $component = $_MIDCOM->dbclassloader->_mgdschema_class_handler[$class];
                         $this->_schemadb['object']->append_field
                         (
                             $key, 
@@ -391,7 +391,16 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                         case 'description':
                             $height = 30;
                             $output_mode = 'html';
-                            $widget = 'tinymce';
+                            
+                            if ($this->_config->get('tinymce_enabled'))
+                            {
+                                $widget = 'tinymce';
+                            }
+                            else
+                            {
+                                $widget = 'textarea';
+                            }
+                            
                             break;
                         case 'value':
                         case 'code':
@@ -399,7 +408,16 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                             $height = 30;
                             $dm_type = 'php';
                             $output_mode = 'code';
-                            $widget = 'codepress';
+                            
+                            if ($this->_config->get('codepress_enabled'))
+                            {
+                                $widget = 'codepress';
+                            }
+                            else
+                            {
+                                $widget = 'textarea';
+                            }
+                            
                             break;
                             
                         default:

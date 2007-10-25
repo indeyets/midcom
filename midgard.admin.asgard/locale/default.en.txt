@@ -31,6 +31,18 @@ Asgard plugins
 Back to site
 ---STRINGEND
 
+---STRING content
+Content
+---STRINGEND
+
+---STRING contentchanged
+Content changed
+---STRINGEND
+
+---STRING contentowner
+Content owner
+---STRINGEND
+
 ---STRING create %s under %s
 Create %s under %s
 ---STRINGEND
@@ -123,6 +135,10 @@ Read
 Update
 ---STRINGEND
 
+---STRING owner
+Owner
+---STRINGEND
+
 ---STRING parameter
 Parameter
 ---STRINGEND
@@ -155,7 +171,15 @@ This type belongs to %s component.
 Folder permissions
 ---STRINGEND
 
+---STRING trash is empty
+Trash is empty
+---STRINGEND
+
 ---STRING under %s
 Under %s
+---STRINGEND
+
+---STRING info
+Info
 ---STRINGEND
 

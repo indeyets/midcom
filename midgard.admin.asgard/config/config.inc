@@ -140,3 +140,7 @@
 ),
 
 'experimental_root_class_detection' => false,
+
+// User interface
+'tinymce_enabled' => true,
+'codepress_enabled' => true,

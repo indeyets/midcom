@@ -7,6 +7,10 @@ Legend:
   not guranteed to be backwards compatible to previous versions
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
+
+2007-10-25 adrenalin
+  - Configuration options for enabling and disabling TinyMCE and Codepress
+
 2007-10-12 solt
   + More styling
   + Added interface for plugin navigation
