@@ -705,13 +705,43 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
             $member_count = $team->count_members();
             $team_group = new midcom_db_group($team->groupguid);
             $is_recruiting = $team_group->get_parameter('net.nemein.teams:preferences','is_recruiting');
-            
+            $location = null;
+                        
 	        $this->_load_datamanager($team_group);
 	        $this->_request_data['view_team'] = $this->_request_data['datamanager']->get_content_html();
 	        $this->_request_data['view_team']['member_count'] = $member_count;
 	        $this->_request_data['view_team']['group_guid'] = $team->groupguid;
 	        $this->_request_data['view_team']['description'] = $team_group->get_parameter('midcom.helper.datamanager2','team_description');
 	        $this->_request_data['view_team']['location'] = $team_group->get_parameter('midcom.helper.datamanager2','team_location');
+
+            $_MIDCOM->load_library('org.routamc.positioning');
+            $position = new org_routamc_positioning_object($this->_current_team_group);
+
+            if (isset($position->_object->guid))
+            {
+                $location = $position->seek_location_object();                
+            }
+            if (! is_null($location))
+            {
+                 $city = new org_routamc_positioning_city_dba($location->city);
+                 if ($city)
+                 {
+                    $city_name = $city->city;
+                 }
+
+                 $qb = org_routamc_positioning_country_dba::new_query_builder();
+                 $qb->add_constraint('code', '=', $location->country);
+                 $countries = $qb->execute_unchecked();
+                 $country_name = $location->country;
+                 if (count($countries) > 0)
+                 {
+                    $country_name = $countries[0]->name;
+                 }
+
+                 $this->_request_data['view_team']['location_object'] =& $location; 
+                 $this->_request_data['view_team']['location'] = "{$city_name}, {$country_name}";
+            }
+
 	        $this->_request_data['view_team']['is_recruiting'] = false;
 	        	        	        
 	        if (   $member_count < $this->_config->get('max_players_per_team')
@@ -1069,6 +1099,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         
         $member_count = $this->_current_team->count_members();
         $is_recruiting = $this->_current_team_group->get_parameter('net.nemein.teams:preferences','is_recruiting');
+        $location = null;
         
         $this->_load_datamanager($this->_current_team_group);
         $this->_request_data['datamanager'] =& $this->_datamanager;
@@ -1088,7 +1119,10 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         
         $_MIDCOM->load_library('org.routamc.positioning');
         $position = new org_routamc_positioning_object($this->_current_team_group);
-        $location = $position->seek_location_object();
+        if (isset($position->_object->guid))
+        {
+            $location = $position->seek_location_object();                
+        }
         if (! is_null($location))
         {
              $city = new org_routamc_positioning_city_dba($location->city);
