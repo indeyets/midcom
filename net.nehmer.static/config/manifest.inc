@@ -1,5 +1,5 @@
 'name' => 'net.nehmer.static',
-'version' => '1.0.10beta2',
+'version' => '1.0.11beta2',
 'state' => 'beta',
 'class_definitions' => array
 (

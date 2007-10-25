@@ -186,3 +186,7 @@ Poista artikkelilinkki
 ---STRING delete_link
 Poista linkki
 ---STRINGEND
+
+---STRING show blobs in autoindex
+Näytä liitetiedostot automaattisessa sisällysluettelossa
+---STRINGEND

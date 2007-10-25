@@ -187,3 +187,6 @@ View Article
 Should the topic be visible
 ---STRINGEND
 
+---STRING show blobs in autoindex
+Show blobs in autoindex
+---STRINGEND

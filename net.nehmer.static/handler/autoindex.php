@@ -152,14 +152,34 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
         $datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
 
         $qb = midcom_db_article::new_query_builder();
-        $qb->add_constraint('topic', '=', $this->_content_topic->id);
-        $result = $qb->execute();
-
-        if (count($result) === 0)
+        
+        // Include the article links to the indexes if enabled
+        if ($this->_config->get('enable_article_links'))
         {
-            return $view;
+            $mc = net_nehmer_static_link_dba::new_collector('topic', $this->_content_topic->id);
+            $mc->add_value_property('article');
+            $mc->add_constraint('topic', '=', $this->_content_topic->id);
+            
+            // Get the results
+            $mc->execute();
+            
+            $links = $mc->list_keys();
+            $qb->begin_group('OR');
+                foreach ($links as $guid => $link)
+                {
+                    $article_id = $mc->get_subkey($guid, 'article');
+                    $qb->add_constraint('id', '=', $article_id);
+                }
+                $qb->add_constraint('topic', '=', $this->_content_topic->id);
+            $qb->end_group();
+        }
+        else
+        {
+            $qb->add_constraint('topic', '=', $this->_content_topic->id);
         }
         
+        $result = $qb->execute();
+
         foreach ($result as $article)
         {
             if (! $datamanager->autoset_storage($article))
@@ -185,13 +205,21 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         $filename = "{$article->name}.html";
 
+        $view[$filename]['article'] = $article;
         $view[$filename]['name'] = $filename;
         $view[$filename]['url'] = $prefix . $filename;
-        $view[$filename]['size'] = '?';
+        $view[$filename]['size'] = $article->metadata->size;
         $view[$filename]['desc'] = $datamanager->types['title']->value;
         $view[$filename]['type'] = 'text/html';
         $view[$filename]['lastmod'] = strftime('%x %X', $article->metadata->revised);
-
+        $view[$filename]['view_article'] = $datamanager->get_content_html();
+        
+        // Stop the press, if blobs should not be visible
+        if (!$this->_config->get('show_blobs_in_autoindex'))
+        {
+            return;
+        }
+        
         foreach ($datamanager->schema->field_order as $name)
         {
             if (is_a($datamanager->types[$name], 'midcom_helper_datamanager2_type_image'))
@@ -208,7 +236,7 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
                     $view[$filename]['lastmod'] = strftime('%x %X', $data['lastmod']);
                 }
             }
-            else if (is_a($datamanager->types[$name], 'midcom_helper_datamanager2_type_blobs'))
+            elseif (is_a($datamanager->types[$name], 'midcom_helper_datamanager2_type_blobs'))
             {
                 foreach ($datamanager->types[$name]->attachments_info as $identifier => $data)
                 {
@@ -222,7 +250,6 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
                 }
             }
         }
-
     }
 }
 ?>

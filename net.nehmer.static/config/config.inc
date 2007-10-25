@@ -10,6 +10,7 @@
 
 // Generate a directory index if no index article is found?
 'autoindex' => false,
+'show_blobs_in_autoindex' => true,
 
 // If not in autoindex mode, show the index article in NAP?
 'indexinnav' => false,
@@ -29,8 +30,6 @@
 
 // Page linking system
 'enable_article_links' => true,
-'enable_editing_of_linked_articles' => false,
-'include_linked_articles_to_feeds' => true,
 
 // Creation callback snippet for defining site-specific function
 'callback_snippet' => null,
