@@ -715,7 +715,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	        $this->_request_data['view_team']['location'] = $team_group->get_parameter('midcom.helper.datamanager2','team_location');
 
             $_MIDCOM->load_library('org.routamc.positioning');
-            $position = new org_routamc_positioning_object($this->_current_team_group);
+            $position = new org_routamc_positioning_object($team_group);
 
             if (isset($position->_object->guid))
             {
