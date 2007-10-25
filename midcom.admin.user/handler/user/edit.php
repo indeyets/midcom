@@ -76,7 +76,8 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
 
     function _prepare_toolbar(&$data,$handler_id)
     {
-        if ($handler_id != '____mfa-asgard_midcom.admin.user-user_edit_password')
+        if (   $handler_id != '____mfa-asgard_midcom.admin.user-user_edit_password'
+            && $this->_config->get('allow_manage_accounts'))
         {
             $data['asgard_toolbar']->add_item
             (
@@ -141,6 +142,10 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
     
         if ($handler_id == '____mfa-asgard_midcom.admin.user-user_edit_password')
         {
+            if (!$this->_config->get('allow_manage_accounts'))
+            {
+                return false;
+            }
             $this->_load_schemadb('schemadb_account');
         }
         else
