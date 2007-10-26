@@ -92,7 +92,7 @@ class net_nemein_teams_interface extends midcom_baseclasses_components_interface
                                 $document->title = "{$player->username}";
                                 $document->abstract = "{$player->username} - {$group->name}";
                                 $document->content = "{$player->username} {$group->name} {$player->extra} {$document->content}";
-                                $document->component = "net.nehmer.account";
+                                $document->component = "net.nemein.teams";
 			        $document->read_metadata_from_object($player->storage->object);
                                 $indexer->index($document);
                             }
