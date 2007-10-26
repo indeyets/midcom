@@ -257,22 +257,6 @@
  * bulk uploads.
  *
  *
- * <b>Copyright references:</b>
- *
- * HTMLAREA, copyright (c) 2002-2004,
- * interactivetools.com, inc.
- * HTMLAREA is available under a BSD-derived license. More information
- * at http://www.interactivetools.com/products/htmlarea/license.html
- *
- * The DHTML Calendar, version 0.9.6 "Keep cool but don't freeze"
- * Copyright Mihai Bazon, 2002, 2003  |  http://dynarch.com/mishoo/
- *
- * Details and latest version at:
- * http://dynarch.com/mishoo/calendar.epl
- *
- * This script is distributed under the GNU Lesser General Public License.
- * Read the entire license text here: http://www.gnu.org/licenses/lgpl.html
- *
  * @package midcom.helper.datamanager
  */
 

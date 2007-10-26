@@ -45,7 +45,7 @@ form.datamanager label.missing
 
 
 /* Normal content entry */
-div.form_viewfield, form.datamanager input.shorttext, form.datamanager textarea, form.datamanager select, form.datamanager input.fileselector, form.datamanager .htmlarea, form.datamanager span.mceEditorContainer
+div.form_viewfield, form.datamanager input.shorttext, form.datamanager textarea, form.datamanager select, form.datamanager input.fileselector, form.datamanager span.mceEditorContainer
 {
     font-size: 1.15em;
     min-height: 1.15em;
@@ -56,10 +56,6 @@ div.form_viewfield, form.datamanager input.shorttext, form.datamanager textarea,
 form.datamanager span.mceEditorContainer select
 {
     width: 20%;
-}
-form.datamanager .htmlarea
-{
-    margin-left: 10%;
 }
 form.datamanager textarea.longtext
 {

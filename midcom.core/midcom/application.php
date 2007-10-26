@@ -104,7 +104,7 @@
  *
  * @package midcom
  */
-class midcom_application 
+class midcom_application
 {
     /**
      * Holds the component context information. This is an array of arrays, the outer
@@ -300,9 +300,9 @@ class midcom_application
      * @access private
      */
     private $_jquery_enabled = false;
-    
+
     private $_jquery_init_scripts = '';
-    
+
     /**
      * Array with all JQuery state scripts for the page's head.
      *
@@ -418,10 +418,10 @@ class midcom_application
         //$this->midgard = $this->get_midgard();
 
         $this->_status = MIDCOM_STATUS_PREPARE;
-        
+
         // Load the services that are always needed, including the serviceloader
         $this->_load_core_services();
-        
+
         // Start-up some of the services
         $this->auth->initialize();
         $this->toolbars->initialize();
@@ -482,16 +482,16 @@ class midcom_application
         $this->dbfactory = new midcom_helper__dbfactory();
         $this->style = new midcom_helper__styleloader();
         $this->auth = new midcom_services_auth();
-        
+
         // These can be refactored behind serviceloader
-        $this->permalinks = new midcom_services_permalinks();    
+        $this->permalinks = new midcom_services_permalinks();
         $this->tmp = new midcom_services_tmp();
         $this->toolbars = new midcom_services_toolbars();
         $this->uimessages = new midcom_services_uimessages();
         $this->metadata = new midcom_services_metadata();
         $this->_services['rcs'] = new midcom_services_rcs($GLOBALS['midcom_config']);
     }
-    
+
     /**
      * Load core DBA classes
      *
@@ -543,10 +543,10 @@ class midcom_application
      *
      * @see midcom_application::_process()
      */
-    public function codeinit() 
+    public function codeinit()
     {
         if ($this->get_current_context() == 0)
-        {    
+        {
             // Initialize the UI message stack from session
             $this->uimessages->initialize();
         }
@@ -554,8 +554,8 @@ class midcom_application
         // Parse the URL
         $this->_parser = $this->serviceloader->load('midcom_core_service_urlparser');
         $this->_parser->parse($GLOBALS['midgard']->argv);
-        
-        if (!$this->_parser) 
+
+        if (!$this->_parser)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('URL Parser is not instantinated, bailing out.', MIDCOM_LOG_ERROR);
@@ -564,7 +564,7 @@ class midcom_application
         }
 
         $this->_process();
-        
+
         if ($this->get_current_context() == 0)
         {
             // Let metadata service add its meta tags
@@ -578,12 +578,12 @@ class midcom_application
      * This function must be called in the content area of the
      * Style template, usually <(content)>.
      */
-    public function content() 
+    public function content()
     {
 
 
 
-        debug_push_class(__CLASS__, __FUNCTION__);    
+        debug_push_class(__CLASS__, __FUNCTION__);
 
         // Enter Context
         debug_add("Entering Context 0 (old Context: {$this->_currentcontext})", MIDCOM_LOG_DEBUG);
@@ -672,7 +672,7 @@ class midcom_application
      * @param Array $config                A key=>value array with any configuration overrides.
      * @return int                        The ID of the newly created context.
      */
-    public function dynamic_load($url, $config = array(), $type = MIDCOM_REQUEST_CONTENT) 
+    public function dynamic_load($url, $config = array(), $type = MIDCOM_REQUEST_CONTENT)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
@@ -820,32 +820,32 @@ class midcom_application
                         $substyle = $value;
                         debug_add("Substyle '$substyle' selected", MIDCOM_LOG_INFO);
                         break;
-    
+
                     case 'serveattachmentguid':
                     case 'serveattachment':
                         if ($this->_parser->argc > 1)
                         {
                             debug_add('Too many arguments remaining for serve_attachment.', MIDCOM_LOG_ERROR);
                         }
-                        
+
                         debug_add("Trying to serve Attachment with GUID {$value}", MIDCOM_LOG_INFO);
-                        
+
                         $attachment = new midcom_baseclasses_database_attachment($value);
                         if (   !$attachment
                             && !$attachment->guid)
                         {
                             $this->generate_error(MIDCOM_ERRNOTFOUND, 'Failed to access attachment: ' . mgd_errstr());
                         }
-                        
+
                         if (!$attachment->can_do('midgard:autoserve_attachment'))
                         {
                             $this->generate_error(MIDCOM_ERRNOTFOUND, 'Failed to access attachment: Autoserving denied.');
                         }
-                        
+
                         $this->serve_attachment($attachment);
                         $this->finish();
                         exit();
-                        
+
                     case 'permalink':
                         $guid = $value;
                         $destination = $this->permalinks->resolve_permalink($guid);
@@ -854,12 +854,12 @@ class midcom_application
                             $this->generate_error(MIDCOM_ERRNOTFOUND, "This Permalink is unknown.");
                             // This will exit;
                         }
-    
+
                         // We use "302 Found" here so that search engines and others will keep using the PermaLink instead of the temporary
                         $this->header("Location: {$destination}", 302);
                         $this->finish();
                         exit();
-    
+
                     case 'cache':
                         if ($value == 'invalidate')
                         {
@@ -879,7 +879,7 @@ class midcom_application
                         $this->cache->content->no_cache();
                         $this->auth->logout();
                         // This will exit;
-    
+
                     case 'login':
                         // Value is ignored
                         if ($this->auth->is_valid_user())
@@ -901,7 +901,7 @@ class midcom_application
                         }
                         $this->_showdebuglog($value);
                         break;
-    
+
                     default:
                         debug_add("Unknown MidCOM URL Property ignored: {$key} => {$value}", MIDCOM_LOG_WARN);
                         $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "This MidCOM URL method is unknown.");
@@ -912,7 +912,7 @@ class midcom_application
 
         $this->_status = MIDCOM_STATUS_CANHANDLE;
 
-        do 
+        do
         {
             $object = $this->_parser->get_current_object();
             if (!is_object($object) || !$object->guid )
@@ -920,7 +920,7 @@ class midcom_application
                 debug_add("Root node missing.", MIDCOM_LOG_ERROR);
                 $this->generate_error(MIDCOM_ERRCRIT, "Root node missing.");
             }
-            
+
             if (is_a($object, 'midgard_attachment'))
             {
                 $this->serve_attachment($object);
@@ -928,7 +928,7 @@ class midcom_application
 
             $path = $object->component;
 
-            if (!$path) 
+            if (!$path)
             {
                 debug_add("No component defined for this node.", MIDCOM_LOG_ERROR);
                 debug_print_r("Root node:",$object,MIDCOM_LOG_DEBUG);
@@ -940,12 +940,12 @@ class midcom_application
             // Check whether the component can handle the request.
             // If so, execute it, if not, continue.
 
-            if ($this->_can_handle($object)) 
+            if ($this->_can_handle($object))
             {
                 $this->_status = MIDCOM_STATUS_HANDLE;
 
                 $prefix = $this->_parser->get_url();
-                
+
                 // Initialize context
                 $this->_context[$this->_currentcontext][MIDCOM_CONTEXT_ANCHORPREFIX] = $prefix;
                 $this->_context[$this->_currentcontext][MIDCOM_CONTEXT_SUBSTYLE] = $substyle;
@@ -982,11 +982,11 @@ class midcom_application
             */
 
             /**
-             * Simple: if current context is not '0' we were called from another context. 
+             * Simple: if current context is not '0' we were called from another context.
              * If so we should not break application now - just gracefully continue.
              */
-            
-            if ($this->get_current_context() == 0) 
+
+            if ($this->get_current_context() == 0)
             {
                 $this->generate_error(MIDCOM_ERRNOTFOUND, "This page is not available on this server.");
             }
@@ -1051,7 +1051,7 @@ class midcom_application
             debug_add("Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE], MIDCOM_LOG_ERROR);
             $this->generate_error(MIDCOM_ERRCRIT, "Unkown Request Type encountered:"  . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE]);
         }
-        
+
         $handler =& $this->componentloader->get_interface_class($path);
 
         $this->_set_context_data($this->_parser->get_current_object(), MIDCOM_CONTEXT_CONTENTTOPIC);
@@ -1063,7 +1063,7 @@ class midcom_application
             // debug_add("# Error String: " . $handler->errstr($this->_currentcontext), MIDCOM_LOG_ERROR);
             // $this->generate_error($handler->errcode($this->_currentcontext), $handler->errstr($this->_currentcontext));
             $this->generate_error(MIDCOM_ERRCRIT, "Component $path failed to handle the request");
-            
+
             // This will exit.
         }
 
@@ -1139,10 +1139,10 @@ class midcom_application
             debug_pop();
             $this->generate_error(MIDCOM_ERRCRIT, "Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE]);
         }
-        
+
         // Get component interface class
         $component_interface =& $this->componentloader->get_interface_class($path);
-        if ($component_interface === null) 
+        if ($component_interface === null)
         {
             $path = 'midcom.core.nullcomponent';
             $this->_set_context_data($path, MIDCOM_CONTEXT_COMPONENT);
@@ -1166,7 +1166,7 @@ class midcom_application
             debug_pop();
             return false;
         }
-        
+
         debug_add("Component {$path} in {$object->name} will handle request.", MIDCOM_LOG_INFO);
         debug_pop();
         return true;
@@ -1183,7 +1183,7 @@ class midcom_application
      * @return midcom_helper_configuration    Reference to the newly constructed configuration object.
      * @access private
      */
-    private function & _loadconfig($object) 
+    private function & _loadconfig($object)
     {
         $path = $this->get_context_data(MIDCOM_CONTEXT_COMPONENT);
         $result = new midcom_helper_configuration($object, $path);
@@ -1225,7 +1225,7 @@ class midcom_application
             debug_add("Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE], MIDCOM_LOG_ERROR);
             $this->generate_error(MIDCOM_ERRCRIT, "Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE]);
         }
-        
+
         $component =& $this->componentloader->get_interface_class($this->get_context_data(MIDCOM_CONTEXT_COMPONENT));
         $component->show_content($this->_currentcontext);
 
@@ -1377,7 +1377,7 @@ class midcom_application
      *
      * @return midcom_helper__componentloader The reference of the component loader in use.
      */
-    public function & get_component_loader () 
+    public function & get_component_loader ()
     {
         return $this->componentloader;
     }
@@ -1449,7 +1449,7 @@ class midcom_application
             $contextid = $param1;
             $key = $param2;
         }
-        
+
         if (!is_array($this->_context))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -1491,7 +1491,7 @@ class midcom_application
      * @see midcom_application::get_context_data()
      * @access private
      */
-    function _set_context_data($value, $param1, $param2 = null) 
+    function _set_context_data($value, $param1, $param2 = null)
     {
         if (is_null($param2))
         {
@@ -1836,10 +1836,10 @@ class midcom_application
      * @param string $header    The header to send.
      * @param integer $response_code HTTP response code to send with the header
      */
-    function header($header, $response_code = null) 
+    function header($header, $response_code = null)
     {
         $this->cache->content->register_sent_header($header);
-        
+
         if (!is_null($response_code))
         {
             // Send the HTTP response code as requested, works on PHP 4.3.0+
@@ -2032,7 +2032,7 @@ class midcom_application
                 $title = "OK";
                 $code = 200;
                 break;
-        
+
             case MIDCOM_ERRNOTFOUND:
                 $header = "HTTP/1.0 404 Not Found";
                 $title = "Not Found";
@@ -2301,7 +2301,7 @@ class midcom_application
         }
         fpassthru($f);
         $attachment->close();
-        
+
         //$this->exit();
         exit();
     }
@@ -2416,7 +2416,7 @@ class midcom_application
      */
     function add_jsfile($url, $prepend = false)
     {
-        // Adds an URL for a <script type="text/javascript" src="htmlarea.js"></script>
+        // Adds an URL for a <script type="text/javascript" src="tinymce.js"></script>
         // like call. $url is inserted into src. Duplicates are omitted.
         if (! in_array($url, $this->_jsfiles))
         {
@@ -2466,7 +2466,7 @@ class midcom_application
         $js_call .= "</script>\n";
         if ($prepend)
         {
-            $this->_prepend_jshead[] = $js_call;            
+            $this->_prepend_jshead[] = $js_call;
         }
         else
         {
@@ -2578,31 +2578,31 @@ class midcom_application
         {
             return false;
         }
-        
+
         if (!array_key_exists('href', $attributes))
         {
             return false;
         }
-        
+
         // Register each URL only once
         if (in_array($attributes['href'], $this->_linkhrefs))
         {
             return false;
         }
         $this->_linkhrefs[] = $attributes['href'];
-        
+
         $output = '';
-        
+
         if (array_key_exists('condition', $attributes))
         {
             $this->_link_head .= "<!--[if {$attributes['condition']}]>\n";
         }
-        
+
         foreach ($attributes as $key => $val)
         {
             if ($key != 'conditions')
             {
-                $output .= " {$key}=\"{$val}\" ";                
+                $output .= " {$key}=\"{$val}\" ";
             }
         }
         $this->_link_head .= "<link{$output}/>\n";
@@ -2712,15 +2712,15 @@ class midcom_application
         {
             echo $this->_jquery_init_scripts;
         }
-        
+
         if (!empty($this->_prepend_jshead))
         {
             foreach ($this->_prepend_jshead as $js_call)
             {
                 echo $js_call;
-            }           
+            }
         }
-        
+
         echo $this->_link_head;
         echo $this->_object_head;
         echo $this->_style_head;
@@ -2744,10 +2744,10 @@ class midcom_application
         {
             return;
         }
-        
+
         $url = MIDCOM_STATIC_URL . "/jQuery/jquery-{$version}.js";
         $this->_jquery_init_scripts = '<script type="text/javascript" src="' . $url . '"></script>' . "\n";
-        
+
         $script = 'var $j = jQuery.noConflict();'."\n";
         $script .= "var MIDCOM_STATIC_URL = '" . MIDCOM_STATIC_URL . "';\n";
         $script .= "var MIDCOM_PAGE_PREFIX = '" . $_MIDCOM->get_page_prefix() . "';\n";
@@ -2755,7 +2755,7 @@ class midcom_application
         $this->_jquery_init_scripts .= "<script type=\"text/javascript\">\n";
         $this->_jquery_init_scripts .= trim($script) . "\n";
         $this->_jquery_init_scripts .= "</script>\n";
-    
+
         $this->_jquery_enabled = true;
     }
 
@@ -2775,9 +2775,9 @@ class midcom_application
         {
             return;
         }
-        
+
         echo '<script type="text/javascript">' . "\n";
-        
+
         foreach ($this->_jquery_states as $status => $scripts)
         {
             $status_parts = explode('.',$status);
@@ -2785,7 +2785,7 @@ class midcom_application
             $status_method = $status_parts[1];
             echo "\n" . '$j(' . $status_target . ').' . $status_method . '(function() {'."\n";
             echo $scripts;
-            echo "\n" . '});' . "\n";           
+            echo "\n" . '});' . "\n";
         }
 
         echo '</script>' . "\n";
@@ -2914,11 +2914,11 @@ class midcom_application
         // Bind the object into the view toolbar
         $view_toolbar =& $this->toolbars->get_view_toolbar($this->_currentcontext);
         $view_toolbar->bind_to($object);
-        
+
         // Bind the object to the metadata service
         $this->metadata->bind_metadata_to_object(MIDCOM_METADATA_VIEW, $object, $this->_currentcontext);
         $this->metadata->set_page_class($page_class, $this->_currentcontext);
-        
+
         $this->substyle_append($page_class);
     }
 
