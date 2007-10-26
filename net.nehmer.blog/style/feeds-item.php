@@ -1,7 +1,7 @@
 <?php
 $item = new FeedItem();
 $item->descriptionHtmlSyndicated = true;
-$authors = explode('|', $data['article']->metadata->authors);
+$authors = explode('|', substr($data['article']->metadata->authors, 1, -1));
 if ($authors)
 {
     $author_user = $_MIDCOM->auth->get_user($authors[0]);
