@@ -405,8 +405,11 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
                 echo "\n<li class=\"separator\"></li>";
                 continue;
             }
-            echo "\n<li class=\"page\" onclick=\"window.location='?{$page_var}={$page}{$link_suffix}';\">{$page}</li>";
-            echo "\n<li class=\"separator\"></li>";
+            if ($page < $data['page_count'])
+            {
+                echo "\n<li class=\"page\" onclick=\"window.location='?{$page_var}={$page}{$link_suffix}';\">{$page}</li>";
+                echo "\n<li class=\"separator\"></li>";                
+            }
         }
 
         if ($data['current_page'] < $data['page_count'])
@@ -417,7 +420,6 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
             {
                 // echo "\n<li class=\"separator\"></li>";
                 //echo "\n<li class=\"last\"><a class=\"last_page\" href=\"?{$page_var}={$data['page_count']}\">&nbsp;</a></li>";
-                echo "\n<li class=\"separator\"></li>";
                 echo "\n<li class=\"page splitter\">...</li>";
                 echo "\n<li class=\"separator\"></li>";
                 echo "\n<li class=\"page last\" onclick=\"window.location='?{$page_var}={$data['page_count']}{$link_suffix}';\">{$data['page_count']}</li>";
