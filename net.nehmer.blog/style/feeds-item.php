@@ -14,7 +14,7 @@ if ($authors)
             $author->email = "webmaster@{$_SERVER['SERVER_NAME']}";
         }
     
-        $item->author = trim("{$author->name} <{$author->email}>");
+        $item->author = trim("{$author->email} ({$author->name})");
     }
 }
 
