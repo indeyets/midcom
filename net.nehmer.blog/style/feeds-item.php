@@ -1,17 +1,21 @@
 <?php
 $item = new FeedItem();
 $item->descriptionHtmlSyndicated = true;
-$author_user = $_MIDCOM->auth->get_user($data['article']->metadata->author);
-if ($author_user)
+$authors = explode('|', $data['article']->metadata->authors);
+if ($authors)
 {
-    $author = $author_user->get_storage();
-    
-    if (empty($author->email))
+    $author_user = $_MIDCOM->auth->get_user($authors[0]);
+    if ($author_user)
     {
-        $author->email = "webmaster@{$_SERVER['SERVER_NAME']}";
-    }
+        $author = $author_user->get_storage();
     
-    $item->author = trim("{$author->name} <{$author->email}>");
+        if (empty($author->email))
+        {
+            $author->email = "webmaster@{$_SERVER['SERVER_NAME']}";
+        }
+    
+        $item->author = trim("{$author->name} <{$author->email}>");
+    }
 }
 
 $item->title = $data['article']->title;
