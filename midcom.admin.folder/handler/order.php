@@ -281,7 +281,10 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
         
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_topic->id);
-        $qb->add_constraint('name', '<>', 'index');
+        if (!$this->_config->get('indexinnav'))
+        {
+            $qb->add_constraint('name', '<>', 'index');
+        }
         $qb->add_constraint('up', '=', 0);
         $qb->add_order('metadata.score', 'DESC');
         //$qb->add_order('name');
