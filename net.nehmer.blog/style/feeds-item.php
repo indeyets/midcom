@@ -1,7 +1,7 @@
 <?php
 $item = new FeedItem();
 $item->descriptionHtmlSyndicated = true;
-$author_user = $_MIDCOM->auth->get_user($data['article']->author);
+$author_user = $_MIDCOM->auth->get_user($data['article']->metadata->author);
 if ($author_user)
 {
     $author = $author_user->get_storage();
@@ -26,11 +26,11 @@ else
 {
     if ($data['config']->get('view_in_url'))
     {
-        $item->link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "view/{$arg}.html";
+        $item->link = substr($_MIDCOM->get_host_prefix(), 0, -1) . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "view/{$arg}/";
     }
     else
     {
-        $item->link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$arg}.html";
+        $item->link = substr($_MIDCOM->get_host_prefix(), 0, -1) . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$arg}/";
     }
 }
 
