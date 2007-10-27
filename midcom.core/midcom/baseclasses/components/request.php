@@ -225,7 +225,7 @@
  * It must define an additional function, called get_plugin_handlers(). It has to return
  * an array of standard request handler declarations. Both handler identifiers and
  * argument lists are <em>relative</em> to the base URL of the plugin (see below),
- * not to the component running the problem. You are thus completly location independant.
+ * not to the component running the problem. You are thus completely location independant.
  * The handler callback must be statically callable.
  *
  * <em>Example: Plugin handler callback</em>
@@ -866,7 +866,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * This is run before the actual evaluation of the request switch. Components can use
      * this phase to load plugins that need registering in the request switch on demand.
      *
-     * The advantage of this is that it is not neccessary, to load all plugins completly,
+     * The advantage of this is that it is not neccessary, to load all plugins completely,
      * you just have to know the "root" URL space (f.x. "/plugins/$name/").
      *
      * If you discover that you cannot handle the request already at this stage, return false

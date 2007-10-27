@@ -147,7 +147,7 @@ class net_nehmer_buddylist_handler_welcome extends midcom_baseclasses_components
     /**
      * Shows the welcome page.
      *
-     * Normally, you should completly customize this page anyway, therefore the
+     * Normally, you should completely customize this page anyway, therefore the
      * default styles are rather primitive at this time.
      */
     function _show_welcome($handler_id, &$data)

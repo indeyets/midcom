@@ -35,7 +35,7 @@
  * If the schema contains a field <i>abstract,</i> it will also be used as 
  * abstract field for the indexing process. In the same way, fields named 
  * <i>title</i> or <i>author</i> will be used for the index document's title
- * or author respectivly. The contents of abstract, title and author will also
+ * or author respectively. The contents of abstract, title and author will also
  * be appended to the content field at the end of the object construction, 
  * easing searching over this fields.
  * 

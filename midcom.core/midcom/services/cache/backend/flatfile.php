@@ -93,7 +93,7 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
     function remove_all()
     {
         // This will rename the current directory, create a new empty one and 
-        // then completly delete the original directory.
+        // then completely delete the original directory.
         $tmpdir = "{$this->_dirname}." . getmypid();
         rename($this->_dirname, $tmpdir);
         mkdir($this->_dirname);

@@ -52,7 +52,7 @@ class midcom_services_indexer_backend
     }
     
     /**
-     * Clear the index completly.
+     * Clear the index completely.
      * 
      * This will drop the current index.
      * 

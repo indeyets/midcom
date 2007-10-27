@@ -138,7 +138,7 @@ class net_nehmer_marketplace_handler_welcome extends midcom_baseclasses_componen
     /**
      * Shows the welcome page.
      *
-     * Normally, you should completly customize this page anyway, therefore the
+     * Normally, you should completely customize this page anyway, therefore the
      * default styles are rather primitive at this time.
      */
     function _show_welcome($handler_id, &$data)
@@ -249,7 +249,7 @@ class net_nehmer_marketplace_handler_welcome extends midcom_baseclasses_componen
     /**
      * Shows the mode specific welcome page.
      *
-     * Normally, you should completly customize this page anyway, therefore the
+     * Normally, you should completely customize this page anyway, therefore the
      * default styles are rather primitive at this time.
      */
     function _show_welcome_mode($handler_id, &$data)

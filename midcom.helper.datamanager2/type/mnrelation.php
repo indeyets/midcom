@@ -247,7 +247,7 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
     }
 
     /**
-     * Reads all entries from the mapping table. This overrides the base types I/O code completly.
+     * Reads all entries from the mapping table. This overrides the base types I/O code completely.
      *
      * @var mixed $source UNUSED.
      */

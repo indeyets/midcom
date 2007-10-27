@@ -145,7 +145,7 @@ class midcom_services_cache_module
     function _on_shutdown() {}
     
     /**
-     * Invalidate the cache completly, dropping all entries. The default implementation will 
+     * Invalidate the cache completely, dropping all entries. The default implementation will 
      * drop all entries from all registered cache backends using 
      * midcom_services_cache_backend::remove_all(). Override this function, if this behavoir 
      * doesn't suit your needs.

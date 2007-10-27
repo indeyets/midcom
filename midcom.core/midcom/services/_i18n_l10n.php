@@ -34,7 +34,7 @@ $GLOBALS["midcom_services_i18n__l10n_localedb"] = Array();
  * Empty lines are ignored, unless within string data.
  * 
  * All keys and values will be trim'ed when encountered, so leading and trailing
- * whitespace will be eliminated completly.
+ * whitespace will be eliminated completely.
  * 
  * Windows-style line endings (\r\n) will be silently converted to the UNIX
  * \n style.
@@ -144,7 +144,7 @@ class midcom_services__i18n_l10n {
     
     /**
      * The constructor loads the translation library indicated by the snippetdir
-     * path $library and initializes the system completly. The output character 
+     * path $library and initializes the system completely. The output character 
      * set will be initizialized to the language's default.
      * 
      * @param string $library	Name of the locale library to use.
@@ -577,7 +577,7 @@ class midcom_services__i18n_l10n {
      * @param string $string		The string-ID to edit.
      * @param string $laguage		The language to edit.
      * @param string $translation	The UTF-8 encoded string to add to the translation table.
-     * @deprecated This method is deprecated and will be dismissed in 2.2.0, the update method replaces this one completly.
+     * @deprecated This method is deprecated and will be dismissed in 2.2.0, the update method replaces this one completely.
      */
     function create ($string, $language, $translation) {
         trigger_error ('Use of deprecated function midcom_services__i18n_l10n::create($string, $language, $translation);', E_USER_NOTICE);

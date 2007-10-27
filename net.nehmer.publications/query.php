@@ -23,8 +23,8 @@
  *   easier to handle).
  *
  * This means, that you can essentially use this function in place of a QB you'd normally run
- * against. It follows the QB API completly, which means that the documentation of the core
- * class is completly valid for this class unless mentioned otherwise.
+ * against. It follows the QB API completely, which means that the documentation of the core
+ * class is completely valid for this class unless mentioned otherwise.
  *
  * The new_query_builder method of the publication class is overridden to deliver an instance
  * of this class instead of a generic query builder.

@@ -20,7 +20,7 @@
  * MidCOM Authentication and Access Control service. <i>Developers Note:</i> Be aware that
  * the basic requirements for the ACL system undergone a major chance during the implementation,
  * as the DBA layer with full access control even for database I/O was added. The proposals
- * from the mRFC are largly outdated therefore. What is documented on the main MidCOM
+ * from the mRFC are largely outdated therefore. What is documented on the main MidCOM
  * documentation has to take priority obviously.
  *
  * <b>Privilege definition</b>
@@ -56,7 +56,7 @@
  *
  * The value is one of MIDCOM_PRIVILEGE_ALLOW or MIDCOM_PRIVLEGE_DENY, which either grants or
  * revokes a privlege. Be aware, that unsetting a privilege does not set it to MIDCOM_PRIVLEGE_DENY,
- * but clears the entry completly, which means that the privilege value inherited from the parents
+ * but clears the entry completely, which means that the privilege value inherited from the parents
  * is now in effect.
  *
  * <b>How are privileges read and merged</b>
@@ -73,7 +73,7 @@
  * default value (either ALLOW or DENY) assigned to it. They serve as a basis for all privilege sets
  * and ensure, that there is a value set for all privileges.
  *
- * These defaults are defined by the MidCOM core and the components respectivly and are very restrictive,
+ * These defaults are defined by the MidCOM core and the components respectively and are very restrictive,
  * basically granting read-only access to all non sensitive information.
  *
  * Currently, there is no way to influence these privileges unless you are a developer and writing new
@@ -107,7 +107,7 @@
  * <i>User / Group specific privileges</i>
  *
  * This kind of privileges are rights, assigned directly to a user. Similar to the systemwide defaults,
- * they too apply to any operation done by the user / group respectivly throughout the system. The magic
+ * they too apply to any operation done by the user / group respectively throughout the system. The magic
  * assignee SELF is used to denote such privileges, which can obviously only be assigned to users or
  * groups. These privileges are loaded at the time of user authentication only.
  *
@@ -125,14 +125,14 @@
  * introduction, you have the most flexibility here.
  *
  * The basic idea is, that you can assign privileges based on the combination of users/groups and
- * content objects. In other words, you can say The user x has the privilege midgard:update for
+ * content objects. In other words, you can say the user x has the privilege midgard:update for
  * this object (and its decendants) only. This works with (virtual) groups as well.
  *
  * The possible assignees here are either a user, a group or one of the magic assignees EVERYONE,
  * USERS or ANONYMOuS, as outlined above.
  *
  * Be aware, that Midgard Persons and Groups count as content object when loaded from the database
- * in a tool like net.nemein.personell, as the groups are not used for authentication but for
+ * in a tool like net.nemein.personnel, as the groups are not used for authentication but for
  * regular site operation there. Therefore, the SELF privileges mentioned above are not taken into
  * account when determining the content object privileges!
  *
@@ -171,7 +171,7 @@
  *
  * Implementation notes: Internally, MidCOM separates the "user privilege set" which is everything
  * down to the line User above, and the content object privileges, which constitutes of the rest.
- * This separation has been done for performance reasons, as the user's privileges are loade
+ * This separation has been done for performance reasons, as the user's privileges are loaded
  * immediately upon authentication of the user, and the privileges of the actual content objects
  * are merged into this set then. Normally, this should be of no importance for ACL users, but it
  * explains the more complex graph in the original mRFC.
@@ -713,7 +713,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             && $content_object->sitegroup != $_MIDGARD['sitegroup'])
         {
             return false;
-        }    
+        }
         return $this->can_do_byguid($privilege, $content_object->guid, get_class($content_object), $user);
     }
 
@@ -731,7 +731,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      */
     function can_do_byguid($privilege, $object_guid, $object_class, $user = null)
     {
-        
+
         if (   is_null($user)
             && ! is_null($this->user)
             && $this->admin)
@@ -739,7 +739,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             // Administrators always have access.
             return true;
         }
-        
+
         if ($this->_internal_sudo)
         {
             //debug_push_class(__CLASS__, __FUNCTION__);
@@ -784,7 +784,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
         if (!isset($cached_privileges[$privilege_key]))
         {
-            debug_push_class(__CLASS__, __FUNCTION__);        
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Cache {$privilege_key} miss, fetching privileges for {$object_guid}");
             debug_pop();
             $full_privileges = $this->get_privileges_byguid($object_guid, $object_class, $user);
@@ -799,10 +799,10 @@ class midcom_services_auth extends midcom_baseclasses_core_object
                     $cached_privileges["{$cache_key}-{$priv}"] = false;
                 }
             }
-            
+
             if (! array_key_exists($privilege, $full_privileges))
             {
-                debug_push_class(__CLASS__, __FUNCTION__);            
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("The privilege {$privilege} is unknown at this point. Assuming not granted privilege.", MIDCOM_LOG_WARN);
                 debug_pop();
                 return false;
@@ -891,7 +891,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
                 {
                     $tmp_class_name = $tmp_object->__new_class_name__;
                 }
-                
+
                 $default_magic_class_privileges = array_merge
                 (
                     $this->_default_magic_class_privileges[$tmp_class_name]['EVERYONE'],
@@ -916,7 +916,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
                 {
                     $tmp_class_name = $tmp_object->__new_class_name__;
                 }
-                
+
                 $user_per_class_privileges = $user->get_per_class_privileges($tmp_object);
                 $default_magic_class_privileges = array_merge
                 (
@@ -1063,7 +1063,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Cache miss for {$cache_id}");
-            debug_pop();        
+            debug_pop();
             if (   is_object($user)
                 && method_exists($user, 'get_privileges')
                 && method_exists($user, 'get_per_class_privileges'))
@@ -1189,7 +1189,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             }
             $user =& $this->user;
         }
-        
+
         if ($this->admin)
         {
             // Administrators always have access.
@@ -1342,7 +1342,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("require_valid_user called", MIDCOM_LOG_DEBUG);
         debug_print_function_stack("require_valid_user called at this level");
-        debug_pop();        
+        debug_pop();
         if (! $this->is_valid_user())
         {
             switch ($method)
@@ -1350,7 +1350,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
                 case 'basic':
                     $this->_http_basic_auth();
                     break;
-            
+
                 case 'form':
                 default:
                     $this->show_login_page();
@@ -1358,7 +1358,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             }
         }
     }
-    
+
     /**
      * Handles HTTP Basic authentication
      */
@@ -1538,7 +1538,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         if (empty($email)) {
             return false;
         }
-        
+
         $qb = new midgard_query_builder('midgard_person');
         $qb->add_constraint('email', '=', $email);
         $results = @$qb->execute();
@@ -1548,7 +1548,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         {
             return false;
         }
-        
+
         if (count($results) > 1)
         {
             $users = array();
@@ -1558,7 +1558,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             }
             return $users;
         }
-        
+
         return $this->get_user($results[0]);
     }
 
@@ -1905,7 +1905,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         debug_pop();
         return true;
     }
-    
+
     /**
      * This call tells the backend to log in.
      */
@@ -1955,7 +1955,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         $_SESSION = Array();
         session_destroy();
     }
-    
+
     function _generate_http_response()
     {
         if (headers_sent())
@@ -1963,13 +1963,13 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             // We have sent output to browser already, skip setting headers
             return false;
         }
-        
+
         switch ($GLOBALS['midcom_config']['auth_login_form_httpcode'])
         {
             case 200:
                 header('HTTP/1.0 200 OK');
                 break;
-                
+
             case 403:
             default:
                 header('HTTP/1.0 403 Forbidden');
@@ -2046,7 +2046,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             // Empty Loop
         ;
         $_MIDCOM->cache->content->_obrunning = false;
-        
+
         $this->_generate_http_response();
 
         $_MIDCOM->cache->content->no_cache();
@@ -2091,19 +2091,19 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 			<div class="clear"></div>
 			<div id="content">
                 <div id="login">
-                    <?php 
-                    $_MIDCOM->auth->show_login_form(); 
+                    <?php
+                    $_MIDCOM->auth->show_login_form();
                     ?>
                     <div class="clear"></div>
                 </div>
 
                 <div id="error"><?php echo "<div>{$login_warning}</div><div>{$message}</div>"; ?></div>
             </div>
-            
+
             <div id="bottom">
                 <div id="version">version <?php echo mgd_version(); ?></div>
             </div>
-    
+
             <div id="footer">
                 <div class="midgard">
                     Copyright &copy; 1998-2006 <a href="http://www.midgard-project.org/">The Midgard Project</a>. Midgard is <a href="http://en.wikipedia.org/wiki/Free_software">free software</a> available under <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.
@@ -2217,8 +2217,8 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 			<div class="clear"></div>
 			<div id="content">
                 <div id="login">
-                    <?php 
-                    $_MIDCOM->auth->show_login_form(); 
+                    <?php
+                    $_MIDCOM->auth->show_login_form();
                     ?>
                     <div class="clear"></div>
                 </div>
@@ -2233,11 +2233,11 @@ class midcom_services_auth extends midcom_baseclasses_core_object
                 }
                 ?>
             </div>
-            
+
             <div id="bottom">
                 <div id="version">version <?php echo mgd_version(); ?></div>
             </div>
-    
+
             <div id="footer">
                 <div class="midgard">
                     Copyright &copy; 1998-2006 <a href="http://www.midgard-project.org/">The Midgard Project</a>. Midgard is <a href="http://en.wikipedia.org/wiki/Free_software">free software</a> available under <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.
@@ -2296,7 +2296,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         {
             $loadable_class = $class->__new_class_name__;
         }
-        
+
         if (array_key_exists($loadable_class, $this->_default_magic_class_privileges))
         {
             return;
@@ -2312,7 +2312,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             );
             return;
         }
-        
+
         $privs = $class->get_class_magic_default_privileges();
         $this->_default_magic_class_privileges[$loadable_class] = $privs;
 

@@ -23,7 +23,7 @@ class midcom_helper_datamanager_datatype_collection extends midcom_helper_datama
             $field["element_widget"] = "blob";
         }
         
-        // Override central default constructor completly, as the isnull handling of the
+        // Override central default constructor completely, as the isnull handling of the
         // storage object is quite different here.
         
         $this->_datamanager =& $datamanager;

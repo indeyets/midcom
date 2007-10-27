@@ -26,7 +26,7 @@
 'require_activation' => false,
 'administrator_email' => '',
 
-// This option is not yet completly implemented.
+// This option is not yet completely implemented.
 'fallback_type' => null, 
 
 'password_minlength' => 6,

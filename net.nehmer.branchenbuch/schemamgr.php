@@ -87,7 +87,7 @@ class net_nehmer_branchenbuch_schemamgr extends midcom_baseclasses_components_pu
      *     in original ordering. Any unknown fields in this list will trigger a HTTP
      *     500 error.
      * - string default_view: One of 'alpha' or 'all', used only in the display code
-     *     deciding wether the alphabetical or full listing respectivly should be
+     *     deciding wether the alphabetical or full listing respectively should be
      *     displayed by default.
      *
      * @param string $typename The name of the account type.

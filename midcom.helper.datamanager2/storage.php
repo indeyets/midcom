@@ -12,7 +12,7 @@
  *
  * It implements the basic interface required for data storage operations. Naturally,
  * only the construction of storage backends is suspect to class specific code, the actual
- * operation should be completly transparent across all storage implementations.
+ * operation should be completely transparent across all storage implementations.
  *
  * See the individual subclasses for details about their operation.
  *
@@ -221,7 +221,7 @@ class midcom_helper_datamanager2_storage extends midcom_baseclasses_components_p
     }
 
     /**
-     * This callback is invoked once the storage object has been completly updated with
+     * This callback is invoked once the storage object has been completely updated with
      * the information from all types. You need to store it to the database at this point.
      *
      * @return bool Indicating success.

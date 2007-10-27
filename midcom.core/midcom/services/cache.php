@@ -125,7 +125,7 @@ class midcom_services_cache
     }
 
     /**
-     * Invalidate all caches completly.
+     * Invalidate all caches completely.
      *
      * Use this, if you have, f.x. changes in the layout. The URL function
      * midcom-cache-invalidate will trigger this function.
@@ -135,7 +135,7 @@ class midcom_services_cache
         debug_push_class(__CLASS__, __FUNCTION__);
         foreach ($this->_unload_queue as $name)
         {
-            debug_add("Invalidating the cache module {$name} completly.");
+            debug_add("Invalidating the cache module {$name} completely.");
             $this->_modules[$name]->invalidate_all();
         }
 

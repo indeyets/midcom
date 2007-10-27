@@ -12,7 +12,7 @@
  * Base class to encaspulate a admin request to the component, instantinated by the MidCOM
  * component interface.
  *
- * This is largly equivalent to the regular request base class midcom_baseclasses_components_request
+ * This is largely equivalent to the regular request base class midcom_baseclasses_components_request
  * with the exception, that helper handlers exist for configuration management.
  *
  * Three additional member variables are defined during startup, making the topic, leaf and metadata AIS

@@ -29,7 +29,7 @@
  *
  * <b>CSS Styles in use by the Widget</b>
  *
- * All input fields use the class input.shorttext or textarea.longtext respectivly.
+ * All input fields use the class input.shorttext or textarea.longtext respectively.
  * The fieldset is set to fieldset.mailtemplate.
  *
  * @package midcom.helper.datamanager

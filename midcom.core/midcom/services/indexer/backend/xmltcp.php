@@ -94,7 +94,7 @@ class midcom_services_indexer_backend_xmltcp extends midcom_services_indexer_bac
     }
     
     /**
-     * Clear the index completly.
+     * Clear the index completely.
      * 
      * This will drop the current index.
      * 

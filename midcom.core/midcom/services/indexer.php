@@ -219,7 +219,7 @@ class midcom_services_indexer
     }
 
     /**
-     * Clear the index completly.
+     * Clear the index completely.
      *
      * This will drop the current index.
      *

@@ -81,7 +81,7 @@
  *
  * The hidden boolean flag is very similar to the enabled one: Instead of
  * having unclickable links, it just hides the toolbar button entirely.
- * This is useful for access control checks, where you want to completly
+ * This is useful for access control checks, where you want to completely
  * hide items without access. The difference from just not adding the
  * corresponding variable is that you can have a consistent set of
  * toolbar options in a "template" which you just need to tweak by

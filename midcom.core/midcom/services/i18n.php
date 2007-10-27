@@ -29,7 +29,7 @@
  *
  * All language codes used here are ISO 639-1 two-letter codes.
  *
- * <b>Important note:</b> The MidCOM I18n system is currently completly unaware
+ * <b>Important note:</b> The MidCOM I18n system is currently completely unaware
  * of the Midgard Multilang features. The integration of this is not yet scheduled
  * for any release.
  *

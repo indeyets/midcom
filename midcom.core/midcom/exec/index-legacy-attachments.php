@@ -10,7 +10,7 @@
  * - Any for of datamanager controlled attachments used for storage of long
  *   varibales, recognized by their data_ name prefix.
  * - Any blob/image type attachments, recognized by some of their parameters.
- * - Any leaves associated with net.siriux.photos topics are skipped completly.
+ * - Any leaves associated with net.siriux.photos topics are skipped completely.
  * 
  * NAP will used to traverse the registered topic tree, indexing all attachments
  * of each node and leaf found.

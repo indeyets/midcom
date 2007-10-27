@@ -88,7 +88,7 @@ class midcom_services_indexer_backend_xmlshell extends midcom_services_indexer_b
     }
     
     /**
-     * Clear the index completly.
+     * Clear the index completely.
      * 
      * This will drop the current index.
      * 

@@ -16,7 +16,7 @@ require_once('Text/Password.php');
  * Uses the PEAR Text_CAPTCHA package to provide Captcha authentification to a form.
  * Uses the PEAR Text_Password package to generate a captcha passphrase.
  *
- * The captcha is completly auto-generated, you should not have to worry about any
+ * The captcha is completely auto-generated, you should not have to worry about any
  * defaults. The captcha rendering is done using a midcom-exec callback linking into
  * the current PHP session (where the captcha phrase is stored).
  *

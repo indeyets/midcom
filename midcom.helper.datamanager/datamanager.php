@@ -141,7 +141,7 @@
  * Widgets do.
  *
  * The special fields hidden and readonly affect the bevahoir of the form and view
- * generators. Hidden fields are ignored completly, nothing will be displayed
+ * generators. Hidden fields are ignored completely, nothing will be displayed
  * either in view- or in form-mode. Readonly fields are displayed in both views,
  * but instead of drawing the widget in form-mode, the datamanager draws the
  * regular view there. Both fields default to FALSE.

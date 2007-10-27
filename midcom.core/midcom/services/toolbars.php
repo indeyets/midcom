@@ -24,13 +24,13 @@
  *    this toolbar is not touched by MidCOM.
  *
  * It is important to understand, that these default toolbars made available through this
- * service are completly specific to a given request context. If you have a dynamic_load
+ * service are completely specific to a given request context. If you have a dynamic_load
  * running on a given site, it will have its own set of toolbars for each instance.
  *
  * In addition, components my retrieve a third kind of toolbars, which are not under
  * the general control of MidCOM, the <em>Object</em> toolbars. They apply to a single
  * database object (like a bound <em>View</em> toolbar). The usage of this kind of
- * toolbars is completly component-specific: It is recommended to use them only for
+ * toolbars is completely component-specific: It is recommended to use them only for
  * cases where multiple objects are displayed simultaneously. For example, the
  * index page of a Newsticker or Image Gallery might provide them.
  *

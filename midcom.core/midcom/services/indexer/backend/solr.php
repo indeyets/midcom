@@ -88,7 +88,7 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
     }
     
     /**
-     * Clear the index completly.
+     * Clear the index completely.
      * This will drop the current index.
      * NB: It is probably better to just stop the indexer and delete the data/index directory!
      * @return bool Indicating success.
