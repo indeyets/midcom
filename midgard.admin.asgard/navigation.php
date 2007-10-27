@@ -230,12 +230,11 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
             $ref = $this->_get_reflector($root_type);
             $label_mapping[$root_type] = $ref->get_class_label();
         }
-        sort($label_mapping);
+        asort($label_mapping);
 
         foreach ($label_mapping as $root_type => $label)
         {
             $ref = $this->_get_reflector($root_type);
-
             if (in_array($root_type, $this->expanded_root_types))
             {
                 $this->_request_data['section_url'] = "{$_MIDGARD['self']}__mfa/asgard/{$root_type}";
