@@ -37,6 +37,9 @@
       'org.openpsa.calendarwidget' => 
       array (
       ),
+      'org.routamc.positioning' => 
+      array (
+      ),
       'Calendar' => 
       array (
         'channel' => 'pear.php.net',
