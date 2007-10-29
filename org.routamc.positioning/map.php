@@ -188,10 +188,9 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
                 {
                     $_MIDCOM->add_jsfile('http://www.openlayers.org/api/OpenLayers.js');
                 }
-                break;          
-            case 'google':
-            // TODO: As soon as mapstraction supports openlayers OSM will be the default
+                break;
             case 'openstreetmap':
+            case 'google':
             default:
                 if ($echo_output)
                 {
@@ -232,28 +231,24 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
         {
             $script .= "<script type=\"text/javascript\">\n";            
         }
-        $script .= "var mapstraction_{$this->id} = new Mapstraction('{$this->id}','{$this->type}');\n";
+        $script .= "var mapelement = document.getElementById('{$this->id}');\n";
+        $script .= "if (mapelement) {\n";
+        $script .= "    var mapstraction_{$this->id} = new Mapstraction('{$this->id}','{$this->type}', true);\n";
         
         if ($this->type == 'google')
         {
             // Workaround, Google requires you to start with a center
-            $script .= "mapstraction_{$this->id}.setCenter(new LatLonPoint(0, 0));\n";
-        }
-        
-        if ($this->type == 'openlayers')
-        {
-            $script .= 'var layer = new OpenLayers.Layer.TMS( "Openstreetmap", "http://tile.openstreetmap.org/", {type:\'png\', getURL: get_osm_url, displayOutsideMaxExtent: true} );' . "\n";
-            $script .= "mapstraction_{$this->id}.maps[openlayers].addLayer(layer);\n";
+            $script .= "    mapstraction_{$this->id}.setCenter(new LatLonPoint(0, 0));\n";
         }
         
         foreach ($this->markers as $marker)
         {
             $marker_instance = $this->create_js_marker($marker, &$script);
-            $script .= "mapstraction_{$this->id}.addMarker({$marker_instance});\n";
+            $script .= "    mapstraction_{$this->id}.addMarker({$marker_instance});\n";
         }
-        $script .= "mapstraction_{$this->id}.addSmallControls();\n";
-        $script .= "mapstraction_{$this->id}.autoCenterAndZoom();\n";
-        
+        $script .= "    mapstraction_{$this->id}.addSmallControls();\n";
+        $script .= "    mapstraction_{$this->id}.autoCenterAndZoom();\n";
+        $script .= "}\n";        
         if ($echo_output)
         {
             $script .= "</script>\n";

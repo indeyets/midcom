@@ -1,5 +1,5 @@
 /*
-   Copyright (c) 2006-7, Tom Carden, Steve Coast, Mikel Maron, Andrew Turner
+   Copyright (c) 2006-7, Tom Carden, Steve Coast, Mikel Maron, Andrew Turner, Henri Bergius
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -146,6 +146,7 @@ function Mapstraction(element,api,debug) {
   this.currentElement = $m(element);
   this.eventListeners = new Array();
   this.markers = new Array();
+  this.layers = new Array();
   this.polylines = new Array();
   this.images = new Array();
   this.loaded = new Object();
@@ -153,15 +154,23 @@ function Mapstraction(element,api,debug) {
 
   // optional debug support
   if(debug == true)
+  {
     this.debug = true
+  }
   else
+  {
     this.debug = false
+  }
 
-      // This is so that it is easy to tell which revision of this file 
-      // has been copied into other projects.
-      this.svn_revision_string = '$Revision$';
+  // This is so that it is easy to tell which revision of this file 
+  // has been copied into other projects.
+  this.svn_revision_string = '$Revision: 158 $';
   this.addControlsArgs = new Object();
-  this.addAPI($m(element),api);
+  
+  if (this.currentElement)
+  {
+    this.addAPI($m(element),api);
+  }
 }
 
 
@@ -285,7 +294,51 @@ Mapstraction.prototype.addAPI = function(element,api) {
       }
       break;
     case 'openlayers':
-      this.maps[api] = new OpenLayers.Map(element.id);
+      this.maps[api] = new OpenLayers.Map(
+        element.id, 
+        { /*
+          maxExtent: new OpenLayers.Bounds(-20037508,-20037508,20037508,20037508),
+          numZoomLevels: 18,
+          maxResolution: 156543,
+          units: 'm',
+          projection: "EPSG:41001" */
+          maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34), 
+          maxResolution:156543, numZoomLevels:17, units:'meters', projection: "EPSG:41001"
+        }
+      );
+      
+      this.layers['osm'] = new OpenLayers.Layer.TMS(
+         'OSM', 
+         'http://tile.openstreetmap.org/', 
+         {
+           type:'png', 
+           getURL: function (bounds) {
+			var res = this.map.getResolution();
+			var x = Math.round ((bounds.left - this.maxExtent.left) / (res * this.tileSize.w));
+			var y = Math.round ((this.maxExtent.top - bounds.top) / (res * this.tileSize.h));
+			var z = this.map.getZoom();
+			var limit = Math.pow(2, z);	
+			if (y < 0 || y >= limit) {
+				return null;
+			} else {
+				x = ((x % limit) + limit) % limit;
+				var path = z + "/" + x + "/" + y + "." + this.type; 
+				var url = this.url;
+				if (url instanceof Array) {
+					url = this.selectUrl(path, url);
+				}
+				return url + path;
+            }
+           }, 
+           displayOutsideMaxExtent: true
+         }
+       );
+      this.maps[api].addLayer(this.layers['osm']);
+      //this.layers['osm'].addOptions({isBaseLayer: true, buffer: 0, minZoomLevel: 3, maxZoomLevel: 20 });
+      //this.layers['osm'] = layer = new OpenLayers.Layer.Google( "GoogleMap" , {type: G_NORMAL_MAP} );
+	  //  this.layers['osm'].addOptions({isBaseLayer: true, buffer: 0, minZoomLevel: 3, maxZoomLevel: 20 });
+	  //  this.maps[api].addLayer(this.layers['osm']);
+      
       this.loaded[api] = true;
       break;
     case 'openstreetmap':
@@ -317,10 +370,13 @@ Mapstraction.prototype.addAPI = function(element,api) {
             return "http://tile.openstreetmap.org/"+b+"/"+a.x+"/"+a.y+".png";
           };
           tilelayers[0].isPng = function() { return true;};
-          tilelayers[0].getOpacity = function() { return 1.0; }
+          tilelayers[0].getOpacity = function() { return 1.0; }          
           
           var custommap = new GMapType(tilelayers, new GMercatorProjection(19), "OSM", {errorMessage:"More OSM coming soon"}); 
           this.maps[api].addMapType(custommap); 
+          
+          // Have to tell Mapstraction that we're good so the 
+          // setCenterAndZoom call below initializes the map
           this.loaded[api] = true;
 
           var myPoint = new LatLonPoint(50.6805,-1.4062505);
@@ -510,6 +566,11 @@ Mapstraction.prototype.resizeTo = function(width,height){
       this.currentElement.style.height = height;
       this.maps[this.api].checkResize();
       break;
+    case 'openlayers':
+      this.currentElement.style.width = width;
+      this.currentElement.style.height = height;
+      this.maps[this.api].updateSize();
+      break;
     case 'microsoft':
       this.maps[this.api].Resize(width, height);
       break;
@@ -632,8 +693,20 @@ Mapstraction.prototype.addControls = function( args ) {
       break;
 
     case 'openlayers':
-      // FIXME - which one should this be?
-      map.addControl(new OpenLayers.Control.LayerSwitcher());
+      for(ctl in map.controls) {
+        map.removeControl(map.controls[ctl]);
+      }    
+      // FIXME - can pan & zoom be separate?
+      if ( args.pan             ) map.addControl(new OpenLayers.Control.PanZoomBar());
+      else map.addControl();
+      if ( args.zoom == 'large' ) map.addControl(new OpenLayers.Control.PanZoomBar());
+      else if ( args.zoom == 'small' ) map.addControl(new OpenLayers.Control.PanZoomBar());
+      else map.addControl(new OpenLayers.Control.PanZoomBar());
+      if ( args.overview ) { map.addControl(new OpenLayers.Control.OverviewMap()); }
+      if ( args.map_type ) { map.addControl(new OpenLayers.Control.LayerSwitcher()); }
+      
+      break;
+
       break;
 
     case 'multimap':
@@ -701,7 +774,7 @@ Mapstraction.prototype.addSmallControls = function() {
       this.addControlsArgs.zoom = 'small';
       break;
     case 'openlayers':
-      map.addControl(new OpenLayers.Control.LayerSwitcher());
+      map.addControl(new OpenLayers.Control.ZoomBox());
       break;
     case 'multimap':
       smallPanzoomWidget = new MMSmallPanZoomWidget();
@@ -720,7 +793,7 @@ Mapstraction.prototype.addSmallControls = function() {
 }
 
 /**
- * addLargeControls adds a small map panning control and zoom buttons to the map
+ * addLargeControls adds a map panning control and zoom bar to the map
  * Supported by: yahoo, google, openstreetmap, multimap, mapquest
  */
 Mapstraction.prototype.addLargeControls = function() {
@@ -738,6 +811,9 @@ Mapstraction.prototype.addLargeControls = function() {
       map.addZoomLong();
       this.addControlsArgs.pan = true;  // keep the controls in case of swap
       this.addControlsArgs.zoom = 'large';
+      break;
+    case 'openlayers':
+      map.addControl(new OpenLayers.Control.PanZoomBar());
       break;
     case 'google':
       map.addControl(new GMapTypeControl());
@@ -795,6 +871,9 @@ Mapstraction.prototype.addMapTypeControls = function() {
     case 'mapquest':
       map.addControl(new MQViewControl(map));
       break;
+    case 'openlayers':
+      map.addControl( new OpenLayers.Control.LayerSwitcher({'ascending':false}) );
+      break;      
   }
 }
 
@@ -869,7 +948,7 @@ Mapstraction.prototype.setCenterAndZoom = function(point, zoom) {
       map.SetCenterAndZoom(point.toMicrosoft(),zoom);
       break;
     case 'openlayers':
-      map.setCenter(new OpenLayers.LonLat(point.lng, point.lat), zoom);
+      map.setCenter(point.toOpenLayers(), zoom);
       break;
     case 'multimap':
       map.goToPosition( new MMLatLon( point.lat, point.lng ) );
@@ -885,11 +964,11 @@ Mapstraction.prototype.setCenterAndZoom = function(point, zoom) {
       newSettings.MinimumWidth = lonToMetres (dLon, point.lat);
       Map24.MapApplication.center ( newSettings );
       break;
-      case 'mapquest':
+    case 'mapquest':
       // MapQuest's zoom levels appear to be off by '3' from the other providers for the same bbox
       map.setCenter(new MQLatLng( point.lat, point.lng ), zoom - 3 );
       break;
-      case 'freeearth':
+    case 'freeearth':
       if (this.freeEarthLoaded) {
       map.setTargetLatLng( point.toFreeEarth() );
       } else {
@@ -941,6 +1020,15 @@ Mapstraction.prototype.addMarker = function(marker,old) {
       break;
     case 'openlayers':
       //this.map.addPopup(new OpenLayers.Popup("chicken", new OpenLayers.LonLat(5,40), new OpenLayers.Size(200,200), "example popup"));
+      if (!this.layers['markers'])
+      {
+        this.layers['markers'] = new OpenLayers.Layer.Markers("markers");
+        map.addLayer(this.layers['markers']);
+      }
+      var olmarker = marker.toOpenLayers();
+      marker.setChild(olmarker);
+      this.layers['markers'].addMarker(olmarker);
+      if (! old) { this.markers.push(marker); }
       break;
     case 'multimap':
       var mmpin = marker.toMultiMap();
@@ -954,13 +1042,13 @@ Mapstraction.prototype.addMarker = function(marker,old) {
       m24pin.commit();
       if (! old) { this.markers.push(marker); }
       break;
-      case 'mapquest':
+    case 'mapquest':
       var mqpin = marker.toMapQuest();
       marker.setChild(mqpin);
       map.addPoi(mqpin);
       if (! old) { this.markers.push(marker); }
       break;
-      case 'freeearth':
+    case 'freeearth':
       var fepin = marker.toFreeEarth();
       marker.setChild(fepin);
       map.addOverlay(fepin);
@@ -968,7 +1056,7 @@ Mapstraction.prototype.addMarker = function(marker,old) {
       break;
       default:
       if(this.debug)
-  alert(this.api + ' not supported by Mapstraction.addMarker');
+        alert(this.api + ' not supported by Mapstraction.addMarker');
   }
 }
 
@@ -1029,6 +1117,10 @@ Mapstraction.prototype.removeMarker = function(marker) {
         case 'map24':
           marker.proprietary_marker.remove();
           break;
+        case 'openlayers':
+          this.layers['markers'].removeMarker(marker.proprietary_marker);
+          marker.proprietary_marker.destroy();
+          break;          
       }
       marker.onmap = false;
       break;
@@ -1076,6 +1168,9 @@ Mapstraction.prototype.removeAllMarkers = function() {
         current_marker.proprietary_marker.remove();
       }
       break;
+    case 'openlayers':
+      this.layers['markers'].clearMarkers();
+      break;      
     default:
       if(this.debug)
         alert(this.api + ' not supported by Mapstraction.removeAllMarkers');
@@ -1267,6 +1362,10 @@ Mapstraction.prototype.getCenter = function() {
       var pt = map.getCenter();
       point = new LatLonPoint(pt.lat(),pt.lng());
       break;
+    case 'openlayers':
+      var pt = map.getCenter();
+      point = new LatLonPoint(pt.lat, pt.lon);
+      break;
     case 'microsoft':
       var pt = map.GetCenter();
       point = new LatLonPoint(pt.Latitude,pt.Longitude);
@@ -1312,6 +1411,9 @@ Mapstraction.prototype.setCenter = function(point) {
     case 'google':
     case 'openstreetmap':
       map.setCenter(point.toGoogle());
+      break;
+    case 'openlayers':
+      map.setCenter(point.toOpenLayers());
       break;
     case 'microsoft':
       map.SetCenter(point.toMicrosoft());
@@ -1373,6 +1475,9 @@ Mapstraction.prototype.setZoom = function(zoom) {
     case 'openstreetmap':
       map.setZoom(zoom);
       break;
+    case 'openlayers':
+      map.zoomTo(zoom);
+      break;
     case 'microsoft':
       map.SetZoomLevel(zoom);
       break;
@@ -1416,13 +1521,24 @@ Mapstraction.prototype.autoCenterAndZoom = function() {
   var lon_max = -180;
   var lon_min = 180;
 
-  for (var i=0; i<this.markers.length; i++) {
+  for (var i=0; i<this.markers.length; i++) {;
     lat = this.markers[i].location.lat;
     lon = this.markers[i].location.lon;
     if (lat > lat_max) lat_max = lat;
     if (lat < lat_min) lat_min = lat;
     if (lon > lon_max) lon_max = lon;
     if (lon < lon_min) lon_min = lon;
+  }
+  for (i=0; i<this.polylines.length; i++) {
+    for (j=0; j<this.polylines[i].points.length; j++) {
+      lat = this.polylines[i].points[j].lat;
+      lon = this.polylines[i].points[j].lon;
+
+      if (lat > lat_max) lat_max = lat;
+      if (lat < lat_min) lat_min = lat;
+      if (lon > lon_max) lon_max = lon;
+      if (lon < lon_min) lon_min = lon;      
+    }
   }
   this.setBounds( new BoundingBox(lat_min, lon_min, lat_max, lon_max) );
 }
@@ -1461,6 +1577,8 @@ Mapstraction.prototype.getZoom = function() {
     case 'google':
     case 'openstreetmap':
       return map.getZoom();
+    case 'openlayers':
+      return map.zoom;
     case 'microsoft':
       return map.GetZoomLevel();
     case 'multimap':
@@ -1505,6 +1623,10 @@ Mapstraction.prototype.getZoomLevelForBoundingBox = function( bbox ) {
       var gbox = new GLatLngBounds( sw.toGoogle(), ne.toGoogle() );
       var zoom = map.getBoundsZoomLevel( gbox );
       return zoom;
+      break;
+    case 'openlayers':
+      var olbox = bbox.toOpenLayers();
+      var zoom = map.getZoomForExtent(olbox);
       break;
     case 'multimap':
       var mmlocation = map.getBoundsZoomFactor( sw.toMultiMap(), ne.toMultiMap() );
@@ -1768,6 +1890,9 @@ Mapstraction.prototype.getBounds = function () {
       var ne = gbox.getNorthEast();
       return new BoundingBox(sw.lat(), sw.lng(), ne.lat(), ne.lng());
       break;
+    case 'openlayers':
+      var olbox = map.calculateBounds();
+      break;
     case 'yahoo':
       var ybox = map.getBoundsLatLon();
       return new BoundingBox(ybox.LatMin, ybox.LonMin, ybox.LatMax, ybox.LonMax);
@@ -1830,6 +1955,13 @@ Mapstraction.prototype.setBounds = function(bounds){
     case 'openstreetmap':
       var gbounds = new GLatLngBounds(new GLatLng(sw.lat,sw.lon),new GLatLng(ne.lat,ne.lon));
       map.setCenter(gbounds.getCenter(), map.getBoundsZoomLevel(gbounds));
+      break;
+
+    case 'openlayers':
+      var bounds = new OpenLayers.Bounds();
+      bounds.extend(new LatLonPoint(sw.lat,sw.lon).toOpenLayers());
+      bounds.extend(new LatLonPoint(ne.lat,ne.lon).toOpenLayers());
+      map.zoomToExtent(bounds);
       break;
 
     case 'yahoo':
@@ -1976,13 +2108,13 @@ Mapstraction.prototype.setImageOpacity = function(id, opacity) {
       switch (this.api) {
       case 'google':
       case 'openstreetmap':
-      d = map.fromLatLngToDivPixel(new GLatLng(x.getAttribute('north'), x.getAttribute('west')));
-      e = map.fromLatLngToDivPixel(new GLatLng(x.getAttribute('south'), x.getAttribute('east')));
-      break;
+        d = map.fromLatLngToDivPixel(new GLatLng(x.getAttribute('north'), x.getAttribute('west')));
+        e = map.fromLatLngToDivPixel(new GLatLng(x.getAttribute('south'), x.getAttribute('east')));
+        break;
       case 'multimap':
-      d = map.geoPosToContainerPixels(new MMLatLon(x.getAttribute('north'), x.getAttribute('west')));
-      e = map.geoPosToContainerPixels(new MMLatLon(x.getAttribute('south'), x.getAttribute('east')));
-      break;
+        d = map.geoPosToContainerPixels(new MMLatLon(x.getAttribute('north'), x.getAttribute('west')));
+        e = map.geoPosToContainerPixels(new MMLatLon(x.getAttribute('south'), x.getAttribute('east')));
+        break;
       }
 
       x.style.top=d.y+'px';
@@ -2261,6 +2393,17 @@ LatLonPoint.prototype.toGoogle = function() {
   return new GLatLng(this.lat,this.lon);
 }
 /**
+ * toOpenLayers returns an OpenLayers point
+ * @returns a OpenLayers. LonLat
+ */
+LatLonPoint.prototype.toOpenLayers = function() {
+   var ollon = this.lon * 20037508.34 / 180;
+   var ollat = Math.log(Math.tan((90 + this.lat) * Math.PI / 360)) / (Math.PI / 180);
+   ollat = ollat * 20037508.34 / 180;
+
+   return new OpenLayers.LonLat(ollon, ollat);
+}
+/**
  * toMicrosoft returns a VE maps point
  * @returns a VELatLong
  */
@@ -2450,15 +2593,25 @@ Marker.prototype.setLabel = function(labelText) {
  */
   Marker.prototype.addData = function(options){
     if(options.label)
-      this.setLabel(options.label);
+    this.setLabel(options.label);
     if(options.infoBubble)
-      this.setInfoBubble(options.infoBubble);
+    this.setInfoBubble(options.infoBubble);
     if(options.icon) {
       if(options.iconSize)
-        this.setIcon(options.icon, new Array(options.iconSize[0], options.iconSize[1]));
+      this.setIcon(options.icon, new Array(options.iconSize[0], options.iconSize[1]));
       else
-        this.setIcon(options.icon);
+      this.setIcon(options.icon);
+
+      if(options.iconAnchor)
+      this.setIconAnchor(new Array(options.iconAnchor[0], options.iconAnchor[1]));
+
     }
+    if(options.iconShadow) {
+      if(options.iconShadowSize)
+      this.setShadowIcon(options.iconShadow, new Array(options.iconShadowSize[0], options.iconShadowSize[1]));
+      else
+      this.setIcon(options.iconShadow);
+    }    
     if(options.infoDiv)
       this.setInfoDiv(options.infoDiv[0],options.infoDiv[1]);
     if(options.draggable)
@@ -2498,10 +2651,38 @@ Marker.prototype.setInfoDiv = function(infoDiv,div){
  * setIcon sets the icon for a marker
  * @param {String} iconUrl The URL of the image you want to be the icon
  */
-Marker.prototype.setIcon = function(iconUrl, iconSize){
+Marker.prototype.setIcon = function(iconUrl, iconSize, iconAnchor){
   this.iconUrl = iconUrl;
-  if(iconSize)
-    this.iconSize = iconSize;
+	if(iconSize)
+		this.iconSize = iconSize;
+	if(iconAnchor)
+		this.iconAnchor = iconAnchor;
+		
+}
+/**
+ * setIconSize sets the size of the icon for a marker
+ * @param {String} iconSize The array size in pixels of the marker image
+ */
+Marker.prototype.setIconSize = function(iconSize){
+	if(iconSize)
+		this.iconSize = iconSize;		
+}
+/**
+ * setIconAnchor sets the anchor point for a marker
+ * @param {String} iconAnchor The array offset of the anchor point
+ */
+Marker.prototype.setIconAnchor = function(iconAnchor){
+	if(iconAnchor)
+		this.iconAnchor = iconAnchor;		
+}
+/**
+ * setShadowIcon sets the icon for a marker
+ * @param {String} iconUrl The URL of the image you want to be the icon
+ */
+Marker.prototype.setShadowIcon = function(iconShadowUrl, iconShadowSize){
+  this.iconShadowUrl = iconShadowUrl;
+	if(iconShadowSize)
+		this.iconShadowSize = iconShadowSize;
 }
 
 Marker.prototype.setHoverIcon = function(hoverIconUrl){
@@ -2524,7 +2705,23 @@ Marker.prototype.setHover = function(hover) {
   this.hover = hover;
 }
 
-
+/** 
+ * Dynamically changes the marker to the new icon URL
+ *
+*/
+Marker.prototype.changeIcon = function(iconUrl) {
+	if (this.proprietary_marker) {
+		this.proprietary_marker.setImage(iconUrl);
+	}
+}
+/**
+ * Reverts an icon back to its original icon
+ * 
+ * This is useful for when you change the marker and want to have it higlight on hover
+*/
+Marker.prototype.revertIcon = function() {
+	this.changeIcon(this.iconUrl);
+}
 
 /**
  * toYahoo returns a Yahoo Maps compatible marker pin
@@ -2586,8 +2783,24 @@ Marker.prototype.toGoogle = function() {
   }
   if(this.iconUrl){
     var icon = new GIcon(G_DEFAULT_ICON,this.iconUrl);
-    if(this.iconSize)
+    if(this.iconSize) {
       icon.iconSize = new GSize(this.iconSize[0], this.iconSize[1]);
+      var anchor;
+      if(this.iconAnchor) {
+        anchor = new GPoint(this.iconAnchor[0], this.iconAnchor[1]);				
+      }
+      else {
+        // FIXME: hard-coding the anchor point
+        anchor = new GPoint(this.iconSize[0]/2, this.iconSize[1]/2);
+      }
+      icon.iconAnchor = anchor;
+    }
+    if(this.iconShadowUrl) {
+      icon.shadow = this.iconShadowUrl;
+      if(this.iconShadowSize) {
+        icon.shadowSize = new GSize(this.iconShadowSize[0], this.iconShadowSize[1]);
+      }	
+    }	
     options.icon = icon;
   }
   if(this.draggable){
@@ -2635,6 +2848,41 @@ Marker.prototype.toGoogle = function() {
   }
 
   return gmarker;
+}
+
+/**
+ * toOpenLayers returns an OpenLayers compatible marker pin
+ * @returns OpenLayers compatible marker
+ */
+Marker.prototype.toOpenLayers = function() {
+    
+  if(this.iconSize) {
+    var size = new OpenLayers.Size(this.iconSize[0], this.iconSize[1]);
+  }
+  else
+  {
+    var size = new OpenLayers.Size(15,20);
+  }
+
+  if(this.iconAnchor) 
+  {
+    var anchor = new OpenLayers.Pixel(this.iconAnchor[0], this.iconAnchor[1]);
+  }
+  else
+  {
+    // FIXME: hard-coding the anchor point
+    anchor = new OpenLayers.Pixel(-(size.w/2), -size.h);
+  }
+  if(this.iconUrl) {
+    var icon = new OpenLayers.Icon(this.iconUrl, size, anchor);
+  }
+  else
+  {
+    var icon = new OpenLayers.Icon('http://boston.openguides.org/markers/AQUA.png', size, anchor);
+  }
+
+  var marker = new OpenLayers.Marker(this.location.toOpenLayers(), icon);
+  return marker;
 }
 
 /**
@@ -2841,6 +3089,9 @@ Marker.prototype.hide = function() {
       case 'openstreetmap':
         this.proprietary_marker.hide();
         break;
+      case 'openlayers':
+        this.proprietary_marker.display(false);
+        break;
       case 'yahoo':
         this.proprietary_marker.hide();
         break;
@@ -2869,6 +3120,9 @@ Marker.prototype.show = function() {
       case 'google':
       case 'openstreetmap':
         this.proprietary_marker.show();
+        break;
+      case 'openlayers':
+        this.proprietary_marker.display(true);
         break;
       case 'map24':
         this.proprietary_marker.show();

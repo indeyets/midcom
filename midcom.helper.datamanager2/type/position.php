@@ -83,15 +83,59 @@ class midcom_helper_datamanager2_type_position extends midcom_helper_datamanager
 
     function convert_to_html()
     {
+        $result = '';
+    
+        $adr_properties = array();
+        if ($this->location->description)
+        {
+            $adr_properties[] = "<span class=\"description\">{$this->location->description}</span>";
+        }
+        if ($this->location->room)
+        {
+            $adr_properties[] = "<span class=\"room\">{$this->location->room}</span>";
+        }
+        if ($this->location->street)
+        {
+            $adr_properties[] = "<span class=\"street-address\">{$this->location->street}</span>";
+        }
+        if ($this->location->postalcode)
+        {
+            $adr_properties[] = "<span class=\"postal-code\">{$this->location->postalcode}</span>";
+        }
+        if ($this->location->city)
+        {
+            $city = new org_routamc_positioning_city_dba($this->location->city);
+            $adr_properties[] = "<span class=\"locality\">{$city->city}</span>";
+        }
+        if ($this->location->region)
+        {
+            $adr_properties[] = "<span class=\"region\">{$this->location->region}</span>";
+        }
+        if ($this->location->country)
+        {
+            $adr_properties[] = "<span class=\"country-name\">{$this->location->country}</span>";
+        }
+        
+        if (count($adr_properties) > 0)
+        {
+            $result .= '<span class="adr">' . implode(', ', $adr_properties) . "</span>\n";
+        }
+            
         $latitude_string = org_routamc_positioning_utils::pretty_print_coordinate($this->location->latitude);
         $latitude_string .= ($this->location->latitude > 0) ? " N" : " S";
         $longitude_string = org_routamc_positioning_utils::pretty_print_coordinate($this->location->longitude);
         $longitude_string .= ($this->location->longitude > 0) ? " E" : " W";
         
-        $result  = "<div class=\"geo\">\n";
+        $style = '';
+        if (!empty($result))
+        {
+            $style = ' style="display: none;"';
+        }
+        
+        $result .= "<span class=\"geo\"{$style}>\n";
         $result .= "    <abbr class=\"latitude\" title=\"{$this->location->latitude}\">{$latitude_string}</abbr>\n";
         $result .= "    <abbr class=\"longitude\" title=\"{$this->location->longitude}\">{$longitude_string}</abbr>\n";
-        $result .= "</div>\n";
+        $result .= "</span>\n";
         
         // TODO: Add Microformat for civic location
         

@@ -57,8 +57,8 @@
         (
             'title' => 'location',
             'storage' => 'location',
-            'type' => 'text',
-            'widget' => 'text',
+            'type' => 'position',
+            'widget' => 'position',
         ),
         'categories' => Array
         (

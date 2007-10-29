@@ -331,7 +331,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
             $html
         );
 
-        //$script = "init_position_widget('{$this->_element_id}', mapstraction_{$this->_element_id}_map, {$this->js_options_str});";
+        $script = "init_position_widget('{$this->_element_id}', mapstraction_{$this->_element_id}_map, {$this->js_options_str});";
         $script = "jQuery('#{$this->_element_id}').dm2_position_widget(mapstraction_{$this->_element_id}_map, {$this->js_options_str});";        
         $_MIDCOM->add_jquery_state_script($script);
     }
