@@ -29,7 +29,7 @@ class midcom_helper_datamanager_midcom {
         require("{$prefix}/widget_select.php");
         require("{$prefix}/widget_multiselect.php");
         require("{$prefix}/widget_radiobox.php");
-        require("{$prefix}/widget_html.php");
+        //require("{$prefix}/widget_html.php");
         require("{$prefix}/widget_blob.php");
         require("{$prefix}/widget_collection.php");
         require("{$prefix}/widget_image.php");
