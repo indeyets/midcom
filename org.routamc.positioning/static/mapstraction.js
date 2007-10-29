@@ -612,6 +612,12 @@ Mapstraction.prototype.addEventListener = function(type, func) {
   listener.push(func);
   listener.push(type);
   this.eventListeners.push(listener);
+
+  switch (this.api) {
+    case 'openlayers':
+        this.maps[this.api].events.register(type, this, func);
+        break;
+  }
 }
 
 ////////////////////
@@ -2388,8 +2394,23 @@ LatLonPoint.prototype.toOpenLayers = function() {
    var ollon = this.lon * 20037508.34 / 180;
    var ollat = Math.log(Math.tan((90 + this.lat) * Math.PI / 360)) / (Math.PI / 180);
    ollat = ollat * 20037508.34 / 180;
-
+   //console.log("COORD: " + this.lat + ', ' + this.lon + " OL: " + ollat + ', ' +ollon);
    return new OpenLayers.LonLat(ollon, ollat);
+}
+
+/**
+ * fromOpenLayers converts an OpenLayers point to Mapstraction LatLonPoint
+ * Does a conversion from projectect coordinates to Latitude/Longitude
+ * @returns a LatLonPoint
+ */
+LatLonPoint.prototype.fromOpenLayers = function() {
+   var lon = (this.lon / 20037508.34) * 180;
+   var lat = (this.lat / 20037508.34) * 180;
+
+   lat = 180/Math.PI * (2 * Math.atan(Math.exp(lat * Math.PI / 180)) - Math.PI / 2);
+
+   this.lon = lon;
+   this.lat = lat;
 }
 /**
  * toMicrosoft returns a VE maps point

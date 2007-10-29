@@ -74,7 +74,7 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
         var lat = jQuery('#' + input_data['latitude']['id']).attr('value');
         var lon = jQuery('#' + input_data['longitude']['id']).attr('value');
         
-        new_position(new LatLonPoint(lat,lon));
+        new_position(new LatLonPoint(parseFloat(lat), parseFloat(lon)));
         
         revgeodata_btn.hide();
         revindicator.show();
@@ -113,11 +113,20 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
     
     function new_position(point)
     {
-        current_pos = point;
-        
+        switch (mapstraction.api)
+        {
+            case 'openlayers':
+                var lonlat = mapstraction.maps['openlayers'].getLonLatFromViewPortPx(point.xy);
+                var latlon = new LatLonPoint(lonlat.lat, lonlat.lon);
+                latlon.fromOpenLayers();
+                current_pos = latlon;
+                break;
+            default:
+                current_pos = point;
+                break;
+        }
         jQuery('#' + input_data['latitude']['id']).attr('value', current_pos.lat);
         jQuery('#' + input_data['longitude']['id']).attr('value', current_pos.lon);
-        
         set_marker('Current position', '');
         get_reversed_geodata();
     }
@@ -286,7 +295,7 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
     {
         update_widget_inputs(location_data);
 
-        current_pos = new LatLonPoint(location_data['latitude'],location_data['longitude']);
+        current_pos = new LatLonPoint(parseFloat(location_data['latitude']), parseFloat(location_data['longitude']));
 
         var info = location_data['city'] + ", " + location_data['country'] + ", " + location_data['postalcode'];
         var label = 'Current position';
@@ -347,7 +356,7 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
         var total = items.length;
         for (var i=1; i<total; i++)
         {               
-            var point = new LatLonPoint(items[i]['latitude'],items[i]['longitude']);
+            var point = new LatLonPoint(parseFloat(items[i]['latitude']), parseFloat(items[i]['longitude']));
             var info = items[i]['city'] + ", " + items[i]['country'] + ", " + items[i]['postalcode'];
             set_alternative_marker('Alternative position', info, point);
         }

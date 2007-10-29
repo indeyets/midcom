@@ -318,7 +318,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         $html .= "\n<div id=\"{$this->_element_id}_position_widget_action_cam\">[ Clear alternatives ]</div> \n";
         $html .= "\n</div>\n";
         
-        $orp_map = new org_routamc_positioning_map("{$this->_element_id}_map", 'google');
+        $orp_map = new org_routamc_positioning_map("{$this->_element_id}_map"/*, 'google'*/);
         $html .= $orp_map->show(420,300,false);
 
         $html .= "\n</div><!-- tab_content_map ends -->\n";
