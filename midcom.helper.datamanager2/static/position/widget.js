@@ -126,8 +126,8 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
                 current_pos = point;
                 break;
         }
-        jQuery('#' + input_data['latitude']['id']).attr('value', current_pos.lat.replace(/,/,'.'));
-        jQuery('#' + input_data['longitude']['id']).attr('value', current_pos.lon.replace(/,/,'.'));
+        jQuery('#' + input_data['latitude']['id']).attr('value', String(current_pos.lat).replace(/,/,'.'));
+        jQuery('#' + input_data['longitude']['id']).attr('value', String(current_pos.lon).replace(/,/,'.'));
         set_marker('Current position', '');
         get_reversed_geodata();
     }
@@ -147,8 +147,8 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
         var get_params = {
             service: backend_service,
             dir: 'reverse',
-            latitude: current_pos.lat.replace(/,/,'.'),
-            longitude: current_pos.lon.replace(/,/,'.')
+            latitude: String(current_pos.lat).replace(/,/,'.'),
+            longitude: String(current_pos.lon).replace(/,/,'.')
         };
         
         jQuery.ajax({
