@@ -159,6 +159,28 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
     }
 
     /**
+     * Returns a reference to the host toolbar of the specified context. The toolbars
+     * will be created if this is the first request.
+     *
+     * @param int $context_id The context to retrieve the node toolbar for, this
+     *     defaults to the current context.
+     */
+    function & get_host_toolbar ($context_id = null)
+    {
+        if ($context_id === null)
+        {
+            $context_id = $_MIDCOM->get_current_context();
+        }
+
+        if (! array_key_exists($context_id, $this->_toolbars))
+        {
+            $this->_create_toolbars($context_id);
+        }
+
+        return $this->_toolbars[$context_id][MIDCOM_TOOLBAR_HOST];
+    }
+
+    /**
      * Returns a reference to the node toolbar of the specified context. The toolbars
      * will be created if this is the first request.
      *
