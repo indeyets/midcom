@@ -46,6 +46,7 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
 
     function read_login_session()
     {
+        $reset_cookie = false;
         if (   array_key_exists($this->_cookie_id, $_GET)
             && !array_key_exists($this->_cookie_id, $_COOKIE))
         {
@@ -58,6 +59,7 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Found cookie-id in _GET but not in _COOKIE, referencing', MIDCOM_LOG_INFO);
             $_COOKIE[$this->_cookie_id] =& $_GET[$this->_cookie_id];
+            $reset_cookie = true;
             debug_pop();
         }
 
@@ -108,6 +110,14 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
             $this->_delete_cookie();
             debug_pop();
             return false;
+        }
+
+        if ($reset_cookie)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);        
+            debug_add('Re-Setting of session cookie requested, doing it', MIDCOM_LOG_INFO);
+            debug_pop();
+            $this->_set_cookie();
         }
 
         return true;
