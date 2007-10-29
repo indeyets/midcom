@@ -46,6 +46,21 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
 
     function read_login_session()
     {
+        if (   array_key_exists($this->_cookie_id, $_GET)
+            && !array_key_exists($this->_cookie_id, $_COOKIE))
+        {
+            /**
+             * Loginbroker passed us the session data via GET (browsers can be very finicky about
+             * cross-host cookies these days), make it available via $_COOKIE as well
+             *
+             * @todo checksumming ? (though hijacking this is only slightly simpler than hijacking cookies)
+             */
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Found cookie-id in _GET but not in _COOKIE, referencing', MIDCOM_LOG_INFO);
+            $_COOKIE[$this->_cookie_id] =& $_GET[$this->_cookie_id];
+            debug_pop();
+        }
+
         if (! array_key_exists($this->_cookie_id, $_COOKIE))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
