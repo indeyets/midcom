@@ -71,9 +71,10 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
         indicator.show();
     });
     revgeodata_btn.bind('click', function(e){
-        var lat = jQuery('#' + input_data['latitude']['id']).attr('value');
-        var lon = jQuery('#' + input_data['longitude']['id']).attr('value');
-        
+        var lat = jQuery.trim(jQuery('#' + input_data['latitude']['id']).attr('value'));
+        var lon = jQuery.trim(jQuery('#' + input_data['longitude']['id']).attr('value'));
+        lat = lat.replace(/,/,'.');
+        lon = lon.replace(/,/,'.');
         new_position(new LatLonPoint(parseFloat(lat), parseFloat(lon)));
         
         revgeodata_btn.hide();
@@ -125,8 +126,8 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
                 current_pos = point;
                 break;
         }
-        jQuery('#' + input_data['latitude']['id']).attr('value', current_pos.lat);
-        jQuery('#' + input_data['longitude']['id']).attr('value', current_pos.lon);
+        jQuery('#' + input_data['latitude']['id']).attr('value', current_pos.lat.replace(/,/,'.'));
+        jQuery('#' + input_data['longitude']['id']).attr('value', current_pos.lon.replace(/,/,'.'));
         set_marker('Current position', '');
         get_reversed_geodata();
     }
@@ -142,12 +143,12 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
         });
         
         opts_str = opts_str.substr(0,opts_str.length-1);
-        
+
         var get_params = {
             service: backend_service,
             dir: 'reverse',
-            latitude: current_pos.lat,
-            longitude: current_pos.lon
+            latitude: current_pos.lat.replace(/,/,'.'),
+            longitude: current_pos.lon.replace(/,/,'.')
         };
         
         jQuery.ajax({
@@ -185,8 +186,8 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
                 var rel_this = jQuery(this);
 
                 results[idx] = {
-                    latitude: rel_this.find("latitude").text(),
-                    longitude: rel_this.find("longitude").text(),
+                    latitude: rel_this.find("latitude").text().replace(/,/,'.'),
+                    longitude: rel_this.find("longitude").text().replace(/,/,'.'),
                     distance: {
                         meters: rel_this.find("distance").find("meters").text(),
                         bearing: rel_this.find("distance").find("bearing").text()
@@ -272,8 +273,8 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
                 var rel_this = jQuery(this);
 
                 results[idx] = {      	    
-                    latitude: rel_this.find("latitude").text(), 
-                    longitude: rel_this.find("longitude").text(),
+                    latitude: rel_this.find("latitude").text().replace(/,/,'.'), 
+                    longitude: rel_this.find("longitude").text().replace(/,/,'.'),
                     distance: {
                         meters: rel_this.find("distance").find("meters").text(),
                         bearing: rel_this.find("distance").find("bearing").text()

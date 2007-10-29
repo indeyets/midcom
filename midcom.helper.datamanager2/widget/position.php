@@ -173,7 +173,6 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
             'building',
             'description',
             'floor',
-            'region',
             'room',
             'text',
             'uri',
@@ -342,15 +341,18 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
 
         $html .= "<div class=\"geodata_btn\" id='{$this->_element_id}_revgeodata_btn'></div>";
         $html .= "<div class=\"indicator\" id='{$this->_element_id}_revindicator' style=\"display: none;\"></div>";
-
+        
+        $lat = str_replace(",", ".", $this->_type->location->latitude);
+        $lon = str_replace(",", ".", $this->_type->location->longitude);
+                
         $html .= "<label for='{$this->_element_id}_input_coordinates_latitude' id='{$this->_element_id}_input_coordinates_latitude_label'>";
         $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('latitude', 'org.routamc.positioning') . "</span>";        
-        $html .= "<input size=\"20\" class=\"shorttext position_widget_input position_widget_input_coordinates_latitude\" id=\"{$this->_element_id}_input_coordinates_latitude\" name=\"{$this->_element_id}_input_coordinates_latitude\" type=\"text\" value=\"{$this->_type->location->latitude}\" />";
+        $html .= "<input size=\"20\" class=\"shorttext position_widget_input position_widget_input_coordinates_latitude\" id=\"{$this->_element_id}_input_coordinates_latitude\" name=\"{$this->_element_id}_input_coordinates_latitude\" type=\"text\" value=\"{$lat}\" />";
         $html .= "</label>";
         
         $html .= "<label for='{$this->_element_id}_input_coordinates_longitude' id='{$this->_element_id}_input_coordinates_longitude_label'>";
         $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('longitude', 'org.routamc.positioning') . "</span>";        
-        $html .= "<input size=\"20\" class=\"shorttext position_widget_input position_widget_input_coordinates_longitude\" id=\"{$this->_element_id}_input_coordinates_longitude\" name=\"{$this->_element_id}_input_coordinates_longitude\" type=\"text\" value=\"{$this->_type->location->longitude}\" />";
+        $html .= "<input size=\"20\" class=\"shorttext position_widget_input position_widget_input_coordinates_longitude\" id=\"{$this->_element_id}_input_coordinates_longitude\" name=\"{$this->_element_id}_input_coordinates_longitude\" type=\"text\" value=\"{$lon}\" />";
         $html .= "</label>";
         
         $html .= "\n</div><!-- tab_content_coordinates ends -->\n";
@@ -468,7 +470,9 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         }
         
         //$script = "dm2_pw_init_current_pos('{$this->_element_id}',{$this->_type->location->latitude},{$this->_type->location->longitude});\n";
-        $script = "jQuery('#{$this->_element_id}').dm2_pw_init_current_pos({$this->_type->location->latitude},{$this->_type->location->longitude});";
+        $lat = str_replace(",", ".", $this->_type->location->latitude);
+        $lon = str_replace(",", ".", $this->_type->location->longitude);
+        $script = "jQuery('#{$this->_element_id}').dm2_pw_init_current_pos({$lat},{$lon});";
         $_MIDCOM->add_jquery_state_script($script);
         
         return Array
