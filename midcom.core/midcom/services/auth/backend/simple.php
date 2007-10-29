@@ -161,7 +161,7 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
         $this->_set_cookie();
     }
 
-    function on_login_session_deleted()
+    function _on_login_session_deleted()
     {
         $this->_delete_cookie();
     }
