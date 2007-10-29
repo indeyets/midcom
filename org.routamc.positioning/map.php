@@ -50,13 +50,20 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
      *
      * @param string $id    Id string for the map
      */
-    function org_routamc_positioning_map($id)
+    function org_routamc_positioning_map($id, $type = null)
     {
         $this->id = $id;
         $this->_component = 'org.routamc.positioning';
         parent::midcom_baseclasses_components_purecode();
         
-        $this->type = $this->_config->get('map_provider');
+        if (is_null($type))
+        {
+            $this->type = $this->_config->get('map_provider');
+        }
+        else
+        {
+            $this->type = $type;
+        }
         $this->api_key = $this->_config->get('map_api_key');
     }
     
@@ -141,8 +148,8 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
      */
     function add_jsfiles($echo_output=true)
     {
-        static $added = false;
-        if ($added)
+        static $added = array();
+        if (isset($added[$this->type]))
         {
             return false;
         }
@@ -203,7 +210,7 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
                 break;
         }
         
-        $added = true;
+        $added[$this->type] = true;
         return true;
     }
     

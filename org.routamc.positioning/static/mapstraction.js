@@ -164,7 +164,7 @@ function Mapstraction(element,api,debug) {
 
   // This is so that it is easy to tell which revision of this file 
   // has been copied into other projects.
-  this.svn_revision_string = '$Revision: 158 $';
+  this.svn_revision_string = '$Revision: 160 $';
   this.addControlsArgs = new Object();
   
   if (this.currentElement)
@@ -308,37 +308,32 @@ Mapstraction.prototype.addAPI = function(element,api) {
       );
       
       this.layers['osm'] = new OpenLayers.Layer.TMS(
-         'OSM', 
-         'http://tile.openstreetmap.org/', 
-         {
-           type:'png', 
-           getURL: function (bounds) {
-			var res = this.map.getResolution();
-			var x = Math.round ((bounds.left - this.maxExtent.left) / (res * this.tileSize.w));
-			var y = Math.round ((this.maxExtent.top - bounds.top) / (res * this.tileSize.h));
-			var z = this.map.getZoom();
-			var limit = Math.pow(2, z);	
-			if (y < 0 || y >= limit) {
-				return null;
-			} else {
-				x = ((x % limit) + limit) % limit;
-				var path = z + "/" + x + "/" + y + "." + this.type; 
-				var url = this.url;
-				if (url instanceof Array) {
-					url = this.selectUrl(path, url);
-				}
-				return url + path;
+        'OSM', 
+        'http://tile.openstreetmap.org/', 
+        {
+          type:'png', 
+          getURL: function (bounds) {
+            var res = this.map.getResolution();
+            var x = Math.round ((bounds.left - this.maxExtent.left) / (res * this.tileSize.w));
+            var y = Math.round ((this.maxExtent.top - bounds.top) / (res * this.tileSize.h));
+            var z = this.map.getZoom();
+            var limit = Math.pow(2, z);	
+            if (y < 0 || y >= limit) {
+              return null;
+            } else {
+              x = ((x % limit) + limit) % limit;
+              var path = z + "/" + x + "/" + y + "." + this.type; 
+              var url = this.url;
+              if (url instanceof Array) {
+                url = this.selectUrl(path, url);
+              }
+              return url + path;
             }
            }, 
            displayOutsideMaxExtent: true
          }
        );
-      this.maps[api].addLayer(this.layers['osm']);
-      //this.layers['osm'].addOptions({isBaseLayer: true, buffer: 0, minZoomLevel: 3, maxZoomLevel: 20 });
-      //this.layers['osm'] = layer = new OpenLayers.Layer.Google( "GoogleMap" , {type: G_NORMAL_MAP} );
-	  //  this.layers['osm'].addOptions({isBaseLayer: true, buffer: 0, minZoomLevel: 3, maxZoomLevel: 20 });
-	  //  this.maps[api].addLayer(this.layers['osm']);
-      
+      this.maps[api].addLayer(this.layers['osm']);      
       this.loaded[api] = true;
       break;
     case 'openstreetmap':
@@ -693,22 +688,15 @@ Mapstraction.prototype.addControls = function( args ) {
       break;
 
     case 'openlayers':
-      for(ctl in map.controls) {
-        map.removeControl(map.controls[ctl]);
-      }    
       // FIXME - can pan & zoom be separate?
-      if ( args.pan             ) map.addControl(new OpenLayers.Control.PanZoomBar());
-      else map.addControl();
-      if ( args.zoom == 'large' ) map.addControl(new OpenLayers.Control.PanZoomBar());
-      else if ( args.zoom == 'small' ) map.addControl(new OpenLayers.Control.PanZoomBar());
+      if ( args.pan             )      { map.addControl(new OpenLayers.Control.PanZoomBar()); }
+      else {  }
+      if ( args.zoom == 'large' )      { map.addControl(new OpenLayers.Control.PanZoomBar());}
+      else if ( args.zoom == 'small' ) { map.addControl(new OpenLayers.Control.PanZoomBar());}
       else map.addControl(new OpenLayers.Control.PanZoomBar());
       if ( args.overview ) { map.addControl(new OpenLayers.Control.OverviewMap()); }
       if ( args.map_type ) { map.addControl(new OpenLayers.Control.LayerSwitcher()); }
-      
       break;
-
-      break;
-
     case 'multimap':
       //FIXME -- removeAllWidgets();  -- can't call addControls repeatedly
 
@@ -1963,7 +1951,6 @@ Mapstraction.prototype.setBounds = function(bounds){
       bounds.extend(new LatLonPoint(ne.lat,ne.lon).toOpenLayers());
       map.zoomToExtent(bounds);
       break;
-
     case 'yahoo':
       if(sw.lon > ne.lon)
         sw.lon -= 360;
@@ -2394,6 +2381,7 @@ LatLonPoint.prototype.toGoogle = function() {
 }
 /**
  * toOpenLayers returns an OpenLayers point
+ * Does a conversion from Latitude/Longitude to projected coordinates
  * @returns a OpenLayers. LonLat
  */
 LatLonPoint.prototype.toOpenLayers = function() {
