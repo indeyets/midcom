@@ -874,17 +874,48 @@ class midcom_application
                         }
                         break;
 
-                    case 'logout':
-                        // Value is ignored
+                    case "logout":
+                        // rest of URL used as redirect
+                        $remaining_url = false;
+                        if (   !empty($tmp[MIDCOM_HELPER_URLPARSER_VALUE])
+                            || !empty($this->_parser->argv))
+                        {
+                            $remaining_url = "{$tmp[MIDCOM_HELPER_URLPARSER_VALUE]}/" . implode($this->_parser->argv, '/');
+                            $remaining_url = preg_replace('%^(.*?):/([^/])%', '\\1://\\2', $remaining_url);
+                        }
+                        //echo "remaining_url={$remaining_url}"; die();
+                        if (is_string($remaining_url))
+                        {
+                            $redirect_to = $remaining_url;
+                        }
+                        else
+                        {
+                            $redirect_to = '';
+                        }
                         $this->cache->content->no_cache();
-                        $this->auth->logout();
+                        $this->auth->logout($redirect_to);
                         // This will exit;
-
-                    case 'login':
-                        // Value is ignored
+    
+                    case "login":
+                        // rest of URL used as redirect
+                        $remaining_url = false;
+                        if (   !empty($tmp[MIDCOM_HELPER_URLPARSER_VALUE])
+                            || !empty($this->_parser->argv))
+                        {
+                            $remaining_url = "{$tmp[MIDCOM_HELPER_URLPARSER_VALUE]}/" . implode($this->_parser->argv, '/');
+                            $remaining_url = preg_replace('%^(.*?):/([^/])%', '\\1://\\2', $remaining_url);
+                        }
+                        if (is_string($remaining_url))
+                        {
+                            $redirect_to = $remaining_url;
+                        }
+                        else
+                        {
+                            $redirect_to = '';
+                        }
                         if ($this->auth->is_valid_user())
                         {
-                            $this->relocate('');
+                            $this->relocate($redirect_to);
                             // This will exit;
                         }
                         $this->auth->show_login_page();
