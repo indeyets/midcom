@@ -8,6 +8,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2007-10-30 adrenalin
+  - Fixed the including of linked articles to navigation
+
 2007-10-25 adrenalin
   - Added a configuration key for hiding blobs from autoindex list
 

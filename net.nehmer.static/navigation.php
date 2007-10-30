@@ -54,7 +54,7 @@ class net_nehmer_static_navigation extends midcom_baseclasses_components_navigat
         $mc->add_value_property('name');
         $mc->add_value_property('title');
         
-        $mc->add_constraint('topic', '=', $this->_content_topic->id);
+        // Check whether to include the linked articles to navigation list
         if (!$this->_config->get('enable_article_links'))
         {
             $mc->add_constraint('topic', '=', $this->_content_topic->id);
