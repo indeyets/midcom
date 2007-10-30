@@ -823,9 +823,10 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * @param midcom_core_user $user The user against which to check the privilege, defaults to the currently authenticated user,
      *     you may specify 'EVERYONE' here to check what an anonymous user can do.
      * @param string $class Optional parameter to set if the check should take type specific permissions into account. The class must be default constructible.
+     * @param string $component Component providing the class
      * @return bool True if the privilege has been grante, false otherwise.
      */
-    function can_user_do($privilege, $user = null, $class = null)
+    function can_user_do($privilege, $user = null, $class = null, $component = null)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
@@ -869,6 +870,16 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
         if ($class !== null)
         {
+            if (!class_exists($class))
+            {
+                if (   is_null($component)
+                    || !$_MIDCOM->componentloader->load_graceful($component))
+                {
+                    debug_add("can_user_do check to undefined class '{$class}'.", MIDCOM_LOG_ERROR);
+                    debug_pop();
+                    return false;
+                }
+            }
             $tmp_object = new $class();
             $this->_load_class_magic_privileges($tmp_object);
         }
