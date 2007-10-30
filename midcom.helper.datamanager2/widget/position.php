@@ -154,7 +154,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         $this->_element_id = "{$this->_namespace}{$this->name}_chooser_widget";
         
         $config = "{
-            fxAutoHeight: true,
+            fxAutoHeight: false,
             fxSpeed: 'fast',
             onShow: function() {
                 //dm2_pw_position_map_to_current('{$this->_element_id}');
