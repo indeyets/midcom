@@ -8,6 +8,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-10-30 xfade
+  + allow to link by username without 'view' fixed arg. (can be enabled in config)
+
 2007-08-09 adrenalin
   + It is now possible to require administrator approval
   ! moved configuration to DM2 based configuration schema

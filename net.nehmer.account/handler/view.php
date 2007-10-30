@@ -31,13 +31,16 @@ require_once('Date.php');
  * - edit_url: Only applicable if in view-self mode, it contains the URL to the
  *   edit record screen.
  *
- * This class listens to the handlers IDs 'self', 'self_quick', 'other' and 'other_quick',
- * invoking the appropriate view code. Unknown handler IDs will be rejected with generate_error.
- * It expects the following URL structures, relative to ANCHOR_PREFIX:
+ * This class listens to the handlers IDs 'self', 'self_quick', 'other', 'other_direct' and 
+ * 'other_quick', invoking the appropriate view code. The 'other_direct' ID will only be 
+ * used when 'allow_by_username_only' => true. Unknown handler IDs will be rejected
+ * with generate_error. It expects the following URL structures, relative to ANCHOR_PREFIX:
+ * 
  *
  * - 'self': /
  * - 'self_quick': /quick/
  * - 'other': /view/$guid/
+ * - 'other_direct': /$guid/
  * - 'other_quick': /view/quick/$guid/
  *
  * @package net.nehmer.account
@@ -134,6 +137,25 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
     var $person_toolbar_html = '';
 
     /**
+     * Can-Handle check against account name.
+     * 
+     */
+    function _can_handle_view($handler_id, $args, &$data)
+    {
+        if ($handler_id == 'self')
+        {
+	    	return true;
+        }
+
+        if ($this->_get_account($args[0]))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * The view handler will load the account and set the appropriate flags for startup preparation
      * according to the handler name.
      */
@@ -166,6 +188,13 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                 if (!$this->_get_account($args[0]))
                 {
                     return false;
+                }
+                break;
+
+            case 'other_direct':
+                if (!$this->_get_account($args[0]))
+                {
+            	    return false;
                 }
                 $this->_view_self = false;
                 $this->_view_quick = false;

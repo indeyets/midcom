@@ -199,6 +199,27 @@
             ),
             'widget' => 'select',
         ),
+        'allow_view_by_username_only' => array
+        (
+            'title' => 'allow publishing user accounts without /view/',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain'   => 'net.nehmer.account',
+                'name'     => 'allow_publish_direct',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+        ),
         'require_activation' => array
         (
             'title' => 'require administrator approval for a new user account',

@@ -15,6 +15,7 @@
 'allow_view_by_username' => true, // the paranoid may want to disable this as it allows determining username validity
 'allow_socialweb' => true,
 'allow_invite' => true,
+'allow_view_by_username_only' => false, // this will let you have URLs like /profile/myname. Caution: usernames like 'admin' or 'edit' won't work!
 
 // Add group id to automatically assign the user to it
 'assign_to_group' => null,
