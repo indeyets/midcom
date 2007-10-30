@@ -296,20 +296,15 @@ Mapstraction.prototype.addAPI = function(element,api) {
     case 'openlayers':
       this.maps[api] = new OpenLayers.Map(
         element.id, 
-        { /*
-          maxExtent: new OpenLayers.Bounds(-20037508,-20037508,20037508,20037508),
-          numZoomLevels: 18,
-          maxResolution: 156543,
-          units: 'm',
-          projection: "EPSG:41001" */
+        {
           maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34), 
-          maxResolution:156543, numZoomLevels:17, units:'meters', projection: "EPSG:41001"
+          maxResolution:156543, numZoomLevels:18, units:'meters', projection: "EPSG:41001"
         }
       );
-      
-      this.layers['osm'] = new OpenLayers.Layer.TMS(
-        'OSM', 
-        'http://tile.openstreetmap.org/', 
+       
+      this.layers['osmmapnik'] = new OpenLayers.Layer.TMS(
+        'OSM Mapnik', 
+        'http://tile.openstreetmap.org/',
         {
           type:'png', 
           getURL: function (bounds) {
@@ -333,7 +328,41 @@ Mapstraction.prototype.addAPI = function(element,api) {
            displayOutsideMaxExtent: true
          }
        );
-      this.maps[api].addLayer(this.layers['osm']);      
+       
+      this.layers['osm'] = new OpenLayers.Layer.TMS(
+        'OSM', 
+        [	
+			"http://osm-tah-cache.firefishy.com/~ojw/Tiles/tile.php/",
+            "http://osm.mitago.net/Tiles/tile.php/",
+    		"http://osm.terantula.com/Tiles/tile.php/",
+    		"http://osm.glasgownet.com/Tiles/tile.php/"
+		], 
+        {
+          type:'png', 
+          getURL: function (bounds) {
+            var res = this.map.getResolution();
+            var x = Math.round ((bounds.left - this.maxExtent.left) / (res * this.tileSize.w));
+            var y = Math.round ((this.maxExtent.top - bounds.top) / (res * this.tileSize.h));
+            var z = this.map.getZoom();
+            var limit = Math.pow(2, z);	
+            if (y < 0 || y >= limit) {
+              return null;
+            } else {
+              x = ((x % limit) + limit) % limit;
+              var path = z + "/" + x + "/" + y + "." + this.type; 
+              var url = this.url;
+              if (url instanceof Array) {
+                url = this.selectUrl(path, url);
+              }
+              return url + path;
+            }
+           }, 
+           displayOutsideMaxExtent: true
+         }
+       );
+
+      this.maps[api].addLayer(this.layers['osmmapnik']); 
+      this.maps[api].addLayer(this.layers['osm']);   
       this.loaded[api] = true;
       break;
     case 'openstreetmap':
@@ -694,12 +723,17 @@ Mapstraction.prototype.addControls = function( args ) {
       break;
 
     case 'openlayers':
+      // FIXME: OpenLayers has a bug removing all the controls says crschmidt
+      for (var i = map.controls.length; i>1; i--) { 
+        map.controls[i-1].deactivate();
+        map.removeControl(map.controls[i-1]); 
+      }
       // FIXME - can pan & zoom be separate?
       if ( args.pan             )      { map.addControl(new OpenLayers.Control.PanZoomBar()); }
       else {  }
       if ( args.zoom == 'large' )      { map.addControl(new OpenLayers.Control.PanZoomBar());}
-      else if ( args.zoom == 'small' ) { map.addControl(new OpenLayers.Control.PanZoomBar());}
-      else map.addControl(new OpenLayers.Control.PanZoomBar());
+      else if ( args.zoom == 'small' ) { map.addControl(new OpenLayers.Control.ZoomBox());}
+      else map.addControl(new OpenLayers.Control.ZoomBox());
       if ( args.overview ) { map.addControl(new OpenLayers.Control.OverviewMap()); }
       if ( args.map_type ) { map.addControl(new OpenLayers.Control.LayerSwitcher()); }
       break;
@@ -769,6 +803,7 @@ Mapstraction.prototype.addSmallControls = function() {
       break;
     case 'openlayers':
       map.addControl(new OpenLayers.Control.ZoomBox());
+      map.addControl(new OpenLayers.Control.LayerSwitcher({'ascending':false}));
       break;
     case 'multimap':
       smallPanzoomWidget = new MMSmallPanZoomWidget();
