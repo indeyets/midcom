@@ -252,13 +252,16 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
     var $widget_elements = array();
     
     var $allow_multiple = true;
+    var $require_corresponding_option = true;
     
     var $reflector_key = null;
 
     var $creation_mode_enabled = null;
     var $creation_handler = null;
     var $creation_default_key = null;
-            
+    
+    var $js_format_items = array();
+    
     /**
      * The initialization event handler post-processes the maxlength setting.
      *
@@ -280,6 +283,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         $this->_callback_args = $this->_type->option_callback_arg;
         
         $this->allow_multiple = $this->_type->allow_multiple;
+        $this->require_corresponding_option = $this->_type->require_corresponding_option;
         
         if (   empty($this->class)
             && empty($this->component)
@@ -315,24 +319,6 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             debug_pop();
             return false;
         }
-
-        // if (empty($this->class))
-        // {
-        //     debug_push_class(__CLASS__, __FUNCTION__);
-        //     debug_add("Warning, the field {$this->name} does not have class defined.",
-        //         MIDCOM_LOG_WARN);
-        //     debug_pop();
-        //     return false;
-        // }
-
-        // if (empty($this->component))
-        // {
-        //     debug_push_class(__CLASS__, __FUNCTION__);
-        //     debug_add("Warning, the field {$this->name} does not have component the class {$this->class} belongs to defined.",
-        //         MIDCOM_LOG_WARN);
-        //     debug_pop();
-        //     return false;
-        // }
 
         if (   empty($this->searchfields)
             && !isset($this->_callback_class))
@@ -872,6 +858,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         $this->_js_widget_options['result_headers'] = '[]';
         $this->_js_widget_options['allow_multiple'] = 'true';
         $this->_js_widget_options['id_field'] = "'$this->id_field'";
+        $this->_js_widget_options['format_items'] = 'null';
         
         if ($this->creation_mode_enabled)
         {
@@ -896,6 +883,28 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             {
                 $this->_js_widget_options['allow_multiple'] = 'true';
             }
+        }
+        if (! empty($this->js_format_items))
+        {
+            $format_items = "{ ";
+            $fi_count = count($this->js_format_items);
+            $i = 0;
+            foreach ($this->js_format_items as $k => $formatter)
+            {
+                $i++;
+                $format_items .= "'{$k}': '{$formatter}'";
+
+                if ($i == $fi_count)
+                {
+                    $format_items .= " ";
+                }
+                else
+                {
+                    $format_items .= ", ";
+                }
+            }
+            $format_items .= "}";
+            $this->_js_widget_options['format_items'] = $format_items;            
         }
                 
         $headers = "[ ";
@@ -1182,7 +1191,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             {
                 $item_name = $header_item['name'];
                 $value = @$object->$item_name;
-                $value = rawurlencode($value);
+                $value = rawurlencode(utf8_decode($value));
                 // debug_add("adding header item: name={$item_name} value={$value}");
                 $jsdata .= "{$item_name}: '{$value}'";
                 

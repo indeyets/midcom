@@ -18,6 +18,7 @@
  * @option String creation_handler Url which to load when creating new object. Default: null
  * @option String creation_default_key key which will be used when sending the query value to the creation handler. Default: 'title'
  * @option Boolean creation_mode If this is set to true, a create new -button is showed. Default: false
+ * @option Object format_items Map of key value pairs of formatters to be applied to items. Default: null
  */
  
 
@@ -329,7 +330,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser.defaults = {
 	id_field: 'guid',
 	creation_mode: false,
 	creation_handler: null,
-	creation_default_key: null
+	creation_default_key: null,
+	format_items: null
 };
 
 jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(options, input, insert_after, select_function)
@@ -446,7 +448,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 	
 	function add(data)
 	{
-	    //console.log('ResultsHolder add');
+        // console.log('ResultsHolder add');
+        // console.log(data);
 	    //console.log('data.id: '+data.id);
 	    //console.log('data.guid: '+data.guid);
 	    
@@ -573,12 +576,12 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
     
 	function remove(id)
 	{
-	    jQuery('#'+options.widget_id + '_result_item_'+id+'_input', list).attr({ value: 0 });
-	    jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.ACTIVE);
-	    jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.INACTIVE);
+        jQuery('#'+options.widget_id + '_result_item_'+id+'_input', list).attr({ value: 0 });
+        jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.ACTIVE);
+        jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.INACTIVE);
         jQuery('#'+options.widget_id + '_result_item_'+id).addClass(CLASSES.DELETED);
-	    jQuery('#'+options.widget_id + '_result_item_'+id).attr("deleted","true");
-	    selected_items = jQuery.grep( selected_items, function(n,i){
+        jQuery('#'+options.widget_id + '_result_item_'+id).attr("deleted","true");
+        selected_items = jQuery.grep( selected_items, function(n,i){
             return n != id;
         });
 	}
@@ -775,15 +778,12 @@ function midcom_helper_datamanager2_widget_chooser_format_item(item, options)
     jQuery.each( options.result_headers, function(i,n) {
         var value = null;
         
-        if (   n.name == 'start'
-            || n.name == 'end')
+        if (   options.format_items != null
+            && typeof(options.format_items[n.name]) != 'undefined')
         {
-            value = midcom_helper_datamanager2_widget_chooser_format_value('datetime', item[n.name]);
+            value = midcom_helper_datamanager2_widget_chooser_format_value(options.format_items[n.name], item[n.name]);
         }
-        else
-        {
-            value = midcom_helper_datamanager2_widget_chooser_format_value('unescape', item[n.name]);
-        }
+        value = midcom_helper_datamanager2_widget_chooser_format_value('unescape', item[n.name]);
         
         item_content = jQuery("<div>")
         .addClass('chooser_widget_item_part')
