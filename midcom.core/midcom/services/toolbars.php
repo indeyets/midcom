@@ -360,6 +360,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                     MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/view/{$topic->guid}",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('manage object', 'midgard.admin.asgard'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+                    MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_user_do('midgard.admin.asgard:access', null, 'midgard_admin_asgard_plugin'),
                 )
             );
         }
@@ -504,19 +505,20 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             );
         }
         
-        if ($_MIDGARD['admin'] == true)
-        {
-            $toolbar->add_item
+        $toolbar->add_item
+        (
+            array
             (
-                array
-                (
-                    MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}__mfa/asgard/",
-                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('midgard.admin.asgard', 'midgard.admin.asgard'),
-                    MIDCOM_TOOLBAR_ICON => 'midgard.admin.asgard/asgard-16.png',
-                    MIDCOM_TOOLBAR_ACCESSKEY => 'a',
-                )
-            );
-            
+                MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}__mfa/asgard/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('midgard.admin.asgard', 'midgard.admin.asgard'),
+                MIDCOM_TOOLBAR_ICON => 'midgard.admin.asgard/asgard-16.png',
+                MIDCOM_TOOLBAR_ACCESSKEY => 'a',
+                MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_user_do('midgard.admin.asgard:access', null, 'midgard_admin_asgard_plugin'),
+            )
+        );
+
+        if ($_MIDGARD['admin'] == true)
+        {            
             $toolbar->add_item
             (
                 array
@@ -760,11 +762,16 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                     MIDCOM_TOOLBAR_ENABLED => is_a($object, 'midgard_article')
                 )
             );
-            $toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard/object/view/{$object->guid}",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('manage object', 'midgard.admin.asgard'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
-            ));
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard/object/view/{$object->guid}",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('manage object', 'midgard.admin.asgard'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+                    MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_user_do('midgard.admin.asgard:access', null, 'midgard_admin_asgard_plugin'),
+                )
+            );
         }
         
         if (   $GLOBALS['midcom_config']['midcom_services_rcs_enable']
