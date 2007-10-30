@@ -59,6 +59,14 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
 
+	// Handle /groupsblock/<productgroup>/
+        $this->_request_switch['groupsblock'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_group_groupsblock', 'groupsblock'),
+            'fixed_args' => Array('groupsblock'),
+            'variable_args' => 2,
+        );
+
         // Handle /edit/<product_group guid>
         $this->_request_switch['edit_product_group'] = Array
         (
@@ -74,7 +82,7 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('create'),
             'variable_args' => 2,
         );
-        
+
         // Handle /import/group/csv
         $this->_request_switch['import_group_csv'] = Array
         (
@@ -89,6 +97,14 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('import', 'group', 'csv2'),
         );
 
+
+        // Handle /product/create/<schema name>
+        $this->_request_switch['create_product'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_product_create', 'create'),
+            'fixed_args' => Array('product', 'create'),
+            'variable_args' => 1,
+        );
 
         // Handle /product/create/<group id>/<schema name>
         $this->_request_switch['create_product'] = Array
@@ -127,13 +143,22 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('product'),
             'variable_args' => 1,
         );
-        
-        // Handle /product/raw/<product guid>
+
+        // Handle /product/raw/<product group>/<product guid>
         $this->_request_switch['view_product_raw'] = Array
         (
             'handler' => Array('org_openpsa_products_handler_product_view', 'view'),
             'fixed_args' => Array('product', 'raw'),
-            'variable_args' => 1,
+            'variable_args' => 2,
+        );
+        
+
+        // Handle /product/<product group>/<product guid>
+        $this->_request_switch['view_product_intree'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_product_view', 'view'),
+            'fixed_args' => Array('product'),
+            'variable_args' => 2,
         );
         
         // Handle /updated/<N>
@@ -142,6 +167,38 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'handler' => Array('org_openpsa_products_handler_product_latest', 'updated'),
             'fixed_args' => Array('updated'),
             'variable_args' => 1,
+        );
+
+        // Handle /updated/<product group>/<N>
+        $this->_request_switch['updated_products_intree'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_product_latest', 'updated'),
+            'fixed_args' => Array('updated'),
+            'variable_args' => 2,
+        );
+
+        // Handle /downloads/<product group>/<N>
+        $this->_request_switch['downloads_products_intree'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_product_downloads', 'downloads'),
+            'fixed_args' => Array('downloads'),
+            'variable_args' => 2,
+        );
+
+        // Handle /featured/<product group>/<N>
+        $this->_request_switch['featured_products_intree'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_product_featured', 'featured'),
+            'fixed_args' => Array('featured'),
+            'variable_args' => 2,
+        );
+
+        // Handle /bestrated/<product group>/<N>
+        $this->_request_switch['bestrated_products_intree'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_product_bestrated', 'bestrated'),
+            'fixed_args' => Array('bestrated'),
+            'variable_args' => 2,
         );
         
         // Handle /rss.xml
@@ -257,6 +314,14 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('api', 'product', 'csv'),
             'variable_args' => 1,
         );
+
+        // Handle /<product group>/<group guid>
+        $this->_request_switch['list_intree'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_group_list', 'list'),
+            'variable_args' => 2,
+        );
+	
     }
     
     /**
@@ -432,9 +497,10 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
     function update_breadcrumb_line($object)
     {
         $tmp = Array();
-
         while ($object)
         {
+	    $parent = $object->get_parent();
+
             if (get_class($object) == 'org_openpsa_products_product_dba')
             {
                 $tmp[] = array
@@ -445,13 +511,37 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             }
             else
             {
-                $tmp[] = array
-                (
-                    MIDCOM_NAV_URL => "{$object->guid}/",
-                    MIDCOM_NAV_NAME => $object->title,
-                );
+		if (isset($object->up)){
+		    $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
+		    $parentgroup_qb->add_constraint('id', '=', $object->up);
+		    $group = $parentgroup_qb->execute();
+		    if (count($group) > 0)
+		    {						
+            		$tmp[] = array
+        		(
+                	    MIDCOM_NAV_URL => "{$group[0]->code}/{$object->code}",
+                	    MIDCOM_NAV_NAME => $object->title,
+            		);
+		    }
+		} 
+		else if ($parent != NULL)
+		{
+            	    $tmp[] = array
+        	    (
+                	MIDCOM_NAV_URL => "{$parent->code}/{$object->code}",
+                	MIDCOM_NAV_NAME => $object->title,
+            	    );
+		}
+		else
+		{
+            	    $tmp[] = array
+        	    (
+                	MIDCOM_NAV_URL => "{$object->code}",
+                	MIDCOM_NAV_NAME => $object->title,
+            	    );
+		}
             }
-            $object = $object->get_parent();
+            $object = $parent;
         }
         $tmp = array_reverse($tmp);
         return $tmp;

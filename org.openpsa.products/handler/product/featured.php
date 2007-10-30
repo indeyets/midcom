@@ -1,14 +1,14 @@
 <?php
 /**
- * Created on 2006-08-09
- * @author Henri Bergius
+ * Created on 2007-08-15
+ * @author Henri Bergius, Niels Breet
  * @package org.openpsa.products
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  *
  */
 
-class org_openpsa_products_handler_product_latest extends midcom_baseclasses_components_handler
+class org_openpsa_products_handler_product_featured extends midcom_baseclasses_components_handler
 {
     /*
      * The midcom_baseclasses_components_handler class defines a bunch of helper vars
@@ -18,22 +18,27 @@ class org_openpsa_products_handler_product_latest extends midcom_baseclasses_com
     /**
      * Simple default constructor.
      */
-    function org_openpsa_products_handler_product_latest()
+    function org_openpsa_products_handler_product_featured()
     {
         parent::midcom_baseclasses_components_handler();
     }
     
-    function _list_products($limit = 5, $product_group = '')
+    function _list_products($show_products = 1,$product_group = '')
     {
         $product_qb = org_openpsa_products_product_dba::new_query_builder();
-        $product_qb->set_limit($limit);
-        $product_qb->add_order('metadata.published', 'DESC');
+        $product_qb->set_limit($show_products);
+	
+        $product_qb->add_constraint('parameter.name', '=', 'featured_application_date');
+        $product_qb->add_constraint('parameter.value', '<', time());
+        $product_qb->add_constraint('parameter.value', '>', 0);
+        $product_qb->add_order('parameter.value', 'DESC');	 
 
         if ($product_group != '')
         {
             $group_qb = org_openpsa_products_product_group_dba::new_query_builder();
             $group_qb->add_constraint('code', '=', $product_group);
             $groups = $group_qb->execute();
+
             if (count($groups) == 0)
             {
                 return false;
@@ -45,7 +50,6 @@ class org_openpsa_products_handler_product_latest extends midcom_baseclasses_com
                 $categories_qb->add_constraint('up', '=', $groups[0]->id);
                 $categories = $categories_qb->execute();
                 $categories_in = array();
-
                 if (count($categories) == 0){
                     /* No matching categories belonging to this group
                      * So we can search for the application using only
@@ -61,7 +65,9 @@ class org_openpsa_products_handler_product_latest extends midcom_baseclasses_com
                     }
                     $product_qb->add_constraint('productGroup', 'IN', $categories_in);
                 }
-            }
+
+	        }
+
         }
     
         $product_qb->add_constraint('start', '<=', time());
@@ -73,8 +79,18 @@ class org_openpsa_products_handler_product_latest extends midcom_baseclasses_com
             $product_qb->add_constraint('end', '=', 0);
             $product_qb->add_constraint('end', '>=', time());
         $product_qb->end_group();
+
         $this->_request_data['products'] = $product_qb->execute();
         $this->_request_data['product_group'] = $product_group;
+	
+        if ($show_products > 1)
+        {
+	    /***
+	     * Set the breadcrumb text
+	     */
+	    $this->_update_breadcrumb_line();
+					      
+        }
     }
     
     /**
@@ -83,9 +99,9 @@ class org_openpsa_products_handler_product_latest extends midcom_baseclasses_com
      * @param array $args the arguments given to the handler
      *
      */
-    function _handler_updated($handler_id, $args, &$data)
+    function _handler_featured($handler_id, $args, &$data)
     {
-        if ($handler_id == 'updated_products_intree')
+	if ($handler_id == 'featured_products_intree')
         {
             $product_group = $args[0];
             $show_products = (int) $args[1];
@@ -111,13 +127,13 @@ class org_openpsa_products_handler_product_latest extends midcom_baseclasses_com
      * This function does the output.
      *
      */
-    function _show_updated($handler_id, &$data)
+    function _show_featured($handler_id, &$data)
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
         if (count($data['products']) > 0)
         {
-            midcom_show_style('updated_products_header');
+            midcom_show_style('featured_products_header');
 
             foreach ($data['products'] as $product)
             {
@@ -134,7 +150,7 @@ class org_openpsa_products_handler_product_latest extends midcom_baseclasses_com
 
                 if ($product->code)
                 {
-                    if ($handler_id == 'updated_products_intree')
+                    if ($handler_id == 'featured_products_intree')
                     {
                         $data['view_product_url'] = "{$prefix}product/". $data['product_group'] ."/{$product->code}/";
                     }
@@ -148,13 +164,12 @@ class org_openpsa_products_handler_product_latest extends midcom_baseclasses_com
                     $data['view_product_url'] = "{$prefix}product/{$product->guid}/";
                 }
 
-                midcom_show_style('updated_products_item');
+                midcom_show_style('featured_products_item');
             }
 
-            midcom_show_style('updated_products_footer');
+            midcom_show_style('featured_products_footer');
         }
 
-        midcom_show_style('group_footer');
     }
     
     /**
@@ -168,8 +183,19 @@ class org_openpsa_products_handler_product_latest extends midcom_baseclasses_com
         $_MIDCOM->cache->content->content_type("text/xml");
         $_MIDCOM->header("Content-type: text/xml; charset=UTF-8");        
         $_MIDCOM->skip_page_style = true;
+
+        if ($handler_id == 'featured_products_intree')
+        {
+            $product_group = $args[0];
+            $show_products = (int) $args[1];
+        }
+        else
+        {
+            $show_products = (int) $args[0];
+            $product_group = '';
+        }
     
-        $this->_list_products($this->_config->get('show_items_in_feed'));
+        $this->_list_products($this->_config->get('show_items_in_feed'),$product_group);
 
         // Prepare datamanager
         $data['datamanager_product'] = new midcom_helper_datamanager2_datamanager($data['schemadb_product']);
@@ -227,5 +253,24 @@ class org_openpsa_products_handler_product_latest extends midcom_baseclasses_com
         echo $data['rss'];
 
     }
+
+    /**
+     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * location.
+     *
+     */
+    function _update_breadcrumb_line()
+    {
+        $tmp = Array();
+
+        $tmp[] = Array
+        (
+                MIDCOM_NAV_URL => '',
+                MIDCOM_NAV_NAME => 'Featured Products',
+        );
+
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', array_reverse($tmp));
+    }
+
 }
 ?>

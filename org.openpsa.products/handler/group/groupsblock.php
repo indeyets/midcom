@@ -8,7 +8,7 @@
  *
  */
 
-class org_openpsa_products_handler_group_list  extends midcom_baseclasses_components_handler
+class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses_components_handler
 {
     /*
      * The midcom_baseclasses_components_handler class defines a bunch of helper vars
@@ -18,7 +18,7 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
     /**
      * Simple default constructor.
      */
-    function org_openpsa_products_handler_group_list()
+    function org_openpsa_products_handler_group_groupsblock()
     {
         parent::midcom_baseclasses_components_handler();
     }
@@ -28,7 +28,7 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
      * in can_handle already, otherwise we would hide all subtopics as the request switch
      * accepts all argument count matches unconditionally.
      */
-    function _can_handle_list($handler_id, $args, &$data)
+    function _can_handle_groupsblock($handler_id, $args, &$data)
     {
         if ($handler_id == 'index')
         {
@@ -54,21 +54,20 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
         {
             // We're in some level of groups
             $qb = org_openpsa_products_product_group_dba::new_query_builder();
-            if (($handler_id == 'list_intree')
-                && ($args[0] != 'search')
-                && ($args[0] != 'product'))
-            {
-                $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
-                $parentgroup_qb->add_constraint('code', '=', $args[0]);
-                $groups = $parentgroup_qb->execute();
-                $qb->add_constraint('up', '=', $groups[0]->id);
-                $qb->add_constraint('code', '=', $args[1]);
-            }
-            else
-            {
-                $qb->add_constraint('code', '=', $args[0]);
-            }
-
+	    if (($handler_id == 'list_intree')
+		&& ($args[0] != 'search')
+		&& ($args[0] != 'product'))
+	    {
+		$parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
+        	$parentgroup_qb->add_constraint('code', '=', $args[0]);
+        	$groups = $parentgroup_qb->execute();
+		$qb->add_constraint('up', '=', $groups[0]->id);
+		$qb->add_constraint('code', '=', $args[1]);
+	    }
+	    else
+	    {
+        	$qb->add_constraint('code', '=', $args[0]);
+	    }
             $results = $qb->execute();
             if (count($results) == 0)
             {
@@ -98,19 +97,19 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
     }
 
     /**
-     * The handler for the group_list article.
+     * The handler for the group_groupsblock article.
      * @param mixed $handler_id the array key from the requestarray
      * @param array $args the arguments given to the handler
      *
      */
-    function _handler_list($handler_id, $args, &$data)
+    function _handler_groupsblock($handler_id, $args, &$data)
     {
         // Query for sub-objects
         $group_qb = org_openpsa_products_product_group_dba::new_query_builder();
 
-        if ($handler_id == 'list_intree')
-        {
-	        $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
+	if ($handler_id == 'list_intree')
+	{
+	    $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
             $parentgroup_qb->add_constraint('code', '=', $args[0]);
             $groups = $parentgroup_qb->execute();
             if (count($groups) == 0)
@@ -120,37 +119,39 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
             }
             else
             {
+		//echo $groups[0]->code;
                 $categories_qb = org_openpsa_products_product_group_dba::new_query_builder();
                 $categories_qb->add_constraint('up', '=', $groups[0]->id);
-                $categories_qb->add_constraint('code', '=', $args[1]);
+		$categories_qb->add_constraint('code', '=', $args[1]);
                 $categories = $categories_qb->execute();
-
-                $data['parent_category_id'] = $categories[0]->id;
-                $data['parent_category'] = $groups[0]->code;
+		//echo $categories[0]->id;
+		//$data['parent_group']=$categories[0]->id;
+		$data['parent_category_id'] = $categories[0]->id;
+		$data['parent_category'] = $groups[0]->code;
             }
 
-        } 
-        else if ($handler_id == 'list')
-        {
-            $guidgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
+	} 
+	else if ($handler_id == 'groupsblock')
+	{
+	    $guidgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
             $guidgroup_qb->add_constraint('guid', '=', $args[0]);
             $groups = $guidgroup_qb->execute();
 	    
-            if (count($groups) > 0)
-            {
-                $categories_qb = org_openpsa_products_product_group_dba::new_query_builder();
-        	    $categories_qb->add_constraint('id', '=', $groups[0]->up);
-        	    $categories = $categories_qb->execute();
+	    if (count($groups) > 0)
+	    {
+		$categories_qb = org_openpsa_products_product_group_dba::new_query_builder();
+        	$categories_qb->add_constraint('id', '=', $groups[0]->up);
+        	$categories = $categories_qb->execute();
 
-                $data['parent_category'] = $categories[0]->code;
-            }
-            else
-            {
-                //do not set the parent category. The category is already a top category.
-            }
-        }
+		$data['parent_category'] = $categories[0]->code;
+	    }
+	    else
+	    {
+	       //do not set the parent category. The category is already a top category.
+	    }
+	}
 
-        $group_qb->add_constraint('up', '=', $data['parent_group']);
+	$group_qb->add_constraint('up', '=', $data['parent_group']);
 
         $group_qb->add_order('code');
         $group_qb->add_order('title');
@@ -160,14 +161,14 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
         {
             $product_qb = new org_openpsa_qbpager('org_openpsa_products_product_dba', 'org_openpsa_products_product_dba');
             $product_qb->results_per_page = $this->_config->get('products_per_page');
-            if ($handler_id == 'list_intree')
-            {
-                $product_qb->add_constraint('productGroup', '=', $data['parent_category_id']);
-            }
-            else
-            {
-                $product_qb->add_constraint('productGroup', '=', $data['parent_group']);
-            }
+	    if ($handler_id == 'list_intree')
+	    {
+    		$product_qb->add_constraint('productGroup', '=', $data['parent_category_id']);
+	    }
+	    else
+	    {
+    		$product_qb->add_constraint('productGroup', '=', $data['parent_group']);
+	    }
 
             // This should be a helper function, same functionality, but with different config-parameter is used in /handler/product/search.php
             foreach ($this->_config->get('products_listing_order') as $ordering)
@@ -341,7 +342,7 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
      * This function does the output.
      *
      */
-    function _show_list($handler_id, &$data)
+    function _show_groupsblock($handler_id, &$data)
     {
         if ($this->_request_data['group'])
         {
@@ -350,14 +351,13 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
 
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
-        if (count($data['groups']) == 1) //FIXME: Hack
-        {
-    	    midcom_show_style('group_header');
 
+        if (count($data['groups']) > 0)
+        {
             $groups_counter = 0;
             $data['groups_count'] = count($data['groups']);
 
-            midcom_show_style('group_subgroups_header');
+            midcom_show_style('groupsblock_subgroups_header');
 
             foreach ($data['groups'] as $group)
             {
@@ -394,56 +394,7 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
                 midcom_show_style('group_subgroups_item');
             }
 
-            midcom_show_style('group_subgroups_footer');
-    	    midcom_show_style('group_footer');
-        }
-
-        if (count($data['products']) > 0)
-        {
-    	    midcom_show_style('group_header');
-
-            $products_counter = 0;
-            $data['products_count'] = count($data['products']);
-
-            midcom_show_style('group_products_header');
-
-            foreach ($data['products'] as $product)
-            {
-                $products_counter++;
-                $data['products_counter'] = $products_counter;
-
-                $data['product'] = $product;
-                if (! $data['datamanager_product']->autoset_storage($product))
-                {
-                    debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add("The datamanager for product #{$product->id} could not be initialized, skipping it.");
-                    debug_print_r('Object was:', $product);
-                    debug_pop();
-                    continue;
-                }
-                $data['view_product'] = $data['datamanager_product']->get_content_html();
-
-                if ($product->code)
-                {
-                    if (isset($data["parent_category"]))
-                    {
-                        $data['view_product_url'] = "{$prefix}product/".$data["parent_category"]."/{$product->code}/";
-                    }
-                    else
-                    {
-                        $data['view_product_url'] = "{$prefix}product/{$product->code}/";
-                    }
-                }
-                else
-                {
-                    $data['view_product_url'] = "{$prefix}product/{$product->guid}/";
-                }
-
-                midcom_show_style('group_products_item');
-            }
-
-            midcom_show_style('group_products_footer');
-    	    midcom_show_style('group_footer');
+            midcom_show_style('groupsblock_subgroups_footer');
         }
 
     }

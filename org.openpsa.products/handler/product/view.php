@@ -138,7 +138,48 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
         }
     
         $qb = org_openpsa_products_product_dba::new_query_builder();
-        $qb->add_constraint('code', '=', $args[0]);
+        if (($handler_id == 'view_product_intree')
+            ||( $handler_id == 'view_product_raw'))
+       	{
+            $group_qb = org_openpsa_products_product_group_dba::new_query_builder();
+            $group_qb->add_constraint('code', '=', $args[0]);
+            $groups = $group_qb->execute();
+
+            if (count($groups) == 0)
+            {
+                return false;
+                // No matching group
+            }
+            else
+            {
+                $categories_qb = org_openpsa_products_product_group_dba::new_query_builder();
+                $categories_qb->add_constraint('up', '=', $groups[0]->id);
+                $categories = $categories_qb->execute();
+                $categories_in = array();
+                if (count($categories) == 0){
+                    /* No matching categories belonging to this group
+                     * So we can search for the application using only
+                     * this group id
+                     */
+                    $qb->add_constraint('productGroup', 'INTREE', $groups[0]->id);
+                }
+                else
+                {
+                    for ($i = 0; $i < count($categories); $i++)
+                    {
+                        $categories_in[$i] = $categories[$i]->id;
+                    }
+                    $qb->add_constraint('productGroup', 'IN', $categories_in);
+                }
+                
+                $qb->add_constraint('code', '=', $args[1]);
+            }
+        }
+        else
+        {
+            $qb->add_constraint('code', '=', $args[0]);
+        }
+
         $qb->add_constraint('start', '<=', time());
         $qb->begin_group('OR');
             /*
@@ -149,14 +190,25 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
             $qb->add_constraint('end', '>=', time());
         $qb->end_group();
         $results = $qb->execute();
+
         if (count($results) == 0)
         {
-            if (!mgd_is_guid($args[0]))
+            if ($handler_id == 'view_product_intree')
             {
-                return false;
+                if (!mgd_is_guid($args[1]))
+                {
+                    return false;
+                }
+        	    $this->_product = new org_openpsa_products_product_dba($args[1]);
+	        }
+	        else
+	        {
+                if (!mgd_is_guid($args[0]))
+                {
+                    return false;
+                }
+                $this->_product = new org_openpsa_products_product_dba($args[0]);
             }
-
-            $this->_product = new org_openpsa_products_product_dba($args[0]);
             if (   !$this->_product
                 || !$this->_product->guid)
             {

@@ -142,7 +142,42 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
      */
     function _handler_create($handler_id, $args, &$data)
     {
-        $this->_request_data['up'] = (int) $args[0];
+        //Check if args[0] is a product group code.
+        if ((int)$args[0] == 0 
+            && strlen($args[0]) > 1)
+        {
+            $qb2 = org_openpsa_products_product_group_dba::new_query_builder();
+            $qb2->add_constraint('code', '=', $args[0]);
+            $qb2->add_order('code');
+            $up_group = $qb2->execute();
+            if (isset($up_group[0])
+                && isset($up_group[0]->id))
+            {
+                //We just pick the first category here
+                $qb = org_openpsa_products_product_group_dba::new_query_builder();
+                $qb->add_constraint('up', '=', $up_group[0]->id);
+                $qb->add_order('code','ASC');
+                $qb->set_limit(1);
+                $up_group = $qb->execute();
+                if (isset($up_group[0])
+                    && isset($up_group[0]->id))
+                {
+                    $this->_request_data['up'] = $up_group[0]->id;
+                }
+                else
+                {
+                    $this->_request_data['up'] = 0;
+                }
+            }
+            else
+            {
+                $this->_request_data['up'] = 0;
+            }
+        }
+        else
+        {
+            $this->_request_data['up'] = (int) $args[0];
+        }
         
         if ($this->_request_data['up'] == 0)
         {

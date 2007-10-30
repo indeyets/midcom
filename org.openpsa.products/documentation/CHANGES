@@ -4,6 +4,12 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-10-30 xfade
+  + Added support for listing featured, bestrated and most downloaded
+    products
+  + Added separate groups block
+  + Added support for multiple levels of categories
+
 2007-08-10 adrenalin
   - Added configurable navigation for product groups
 
