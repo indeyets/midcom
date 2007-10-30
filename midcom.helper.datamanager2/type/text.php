@@ -56,6 +56,29 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
      * @access private
      */
     var $output_mode = 'specialchars';
+    
+    /**
+     * Runs HTML contents through the HTML Purifier library to ensure safe XHTML compatibility.
+     *
+     * Note: Applies only when output_mode is 'html'
+     */
+    var $purify = false;
+    
+    /**
+     * Configuration values for HTML Purifier
+     */
+    var $purify_config = array
+    (
+        'HTML' => array
+        (
+            'Doctype' => 'XHTML 1.0 Strict',
+            'TidyLevel' => 'light',
+        ),
+        'Cache' => array
+        (
+            'SerializerPath' => '__PREFIX__/var/cache/midgard/midcom/htmlpurifier',
+        ),
+    );
 
     /**
      * Compatibility handler for the deprecated is_html configuration option.
@@ -85,6 +108,34 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
     {
         // Normalize line breaks to the UNIX format
         $this->value = preg_replace("/\n\r|\r\n|\r/", "\n", $this->value);
+                
+        if (   $this->purify
+            && $this->output_mode == 'html')
+        {
+            if (isset($this->purify_config['Cache']['SerializerPath']))
+            {
+                $this->purify_config['Cache']['SerializerPath'] = str_replace('__PREFIX__', $_MIDGARD['config']['prefix'], $this->purify_config['Cache']['SerializerPath']);
+                
+                if (!file_exists($this->purify_config['Cache']['SerializerPath']))
+                {
+                    mkdir($this->purify_config['Cache']['SerializerPath']);
+                }
+            }
+        
+            require_once('HTMLPurifier.php');
+    
+            $purifier = new HTMLPurifier();
+            
+            foreach ($this->purify_config as $domain => $config)
+            {
+                foreach ($config as $key => $val)
+                {
+                    $purifier->config->set($domain, $key, $val);
+                }
+            }
+            
+            $this->value = $purifier->purify($this->value);
+        }
         
         return $this->value;
     }

@@ -43,6 +43,10 @@
         (
             'channel' => 'pear.php.net',
         ),
+        'HTMLPurifier' => array
+        (
+            'channel' => 'htmlpurifier.org',
+        ),
         'Text_CAPTCHA' => array
         (
             'channel' => 'pear.php.net',
