@@ -35,6 +35,12 @@ class net_nehmer_comments_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('comment'),
             'variable_args' => 1,
         );
+        $this->_request_switch['view-comments-nonempty'] = Array
+        (
+            'handler' => Array('net_nehmer_comments_handler_view', 'comments'),
+            'fixed_args' => Array('comment-nonempty'),
+            'variable_args' => 1,
+        );
         $this->_request_switch['view-comments-custom'] = Array
         (
             'handler' => Array('net_nehmer_comments_handler_view', 'comments'),

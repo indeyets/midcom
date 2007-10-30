@@ -74,6 +74,40 @@ class net_nehmer_comments_comment extends __net_nehmer_comments_comment
     }
 
     /**
+     * Returns a list of comments applicable to a given object
+     * not diplaying empty comments or anonymous posts,
+     * ordered by creation date.
+     * 
+     * May be called statically.
+     *
+     * @param guid $guid The GUID of the object to bind to.
+     * @return Array List of applicable comments.
+     */
+    function list_by_objectguid_filter_anonymous($guid, $limit=false, $order='ASC')
+    {
+        $qb = net_nehmer_comments_comment::new_query_builder();
+        $qb->add_constraint('objectguid', '=', $guid);
+        $qb->add_constraint('author', '<>', '');
+        $qb->add_constraint('content', '<>', '');
+
+        if ($limit)
+        {
+            $qb->set_limit($limit);
+        }
+
+        if (version_compare(mgd_version(), '1.8', '>='))
+        {        
+            $qb->add_order('metadata.created', $order);
+        }
+        else
+        {
+            $qb->add_order('created', $order);
+        }
+
+        return $qb->execute();
+    }
+
+    /**
      * Returns the number of comments associated with a given object. This is intended for
      * outside usage to render stuff like "15 comments". The count is executed unchecked.
      * 

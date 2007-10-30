@@ -83,6 +83,31 @@
             'end_fieldgroup' => '',
         ),
         
+        'comment_count_cache_to_object' => array
+        (
+            'description' => 'comment_count_cache_to_object' ,
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nehmer.comments',
+            'config_key' => 'comment_count_cache_to_object',
+            'widget' => 'config_radiobox',
+            'widget_radiobox_choices' => array
+            (
+                '' => 'default setting',
+                '1' => 'yes',
+                '0' => 'no',
+            ),
+        ),
+	
+        'comment_count_cache_to_object_property' => array
+        (
+            'description' => 'comment_count_cache_to_object_property',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nehmer.comments',
+            'config_key' => 'comment_count_cache_to_object_property',
+        ),
+        
         'schemadb' => array
         (
             'description' => 'schemadb',

@@ -8,6 +8,11 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-10-30 xfade
+  + Added comment count caching on object
+  + Added support for rating without comment
+  + Added filter to show only non-empty comments (rating without comment creates those)
+
 2007-04-05 bergie
   + Added notifications support (sends notification to author of entry being commented)
 

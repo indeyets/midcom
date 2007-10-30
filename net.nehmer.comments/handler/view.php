@@ -96,7 +96,8 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
     function _cache_ratings()
     {
         if (   $this->_config->get('ratings_enable')
-            && $this->_config->get('ratings_cache_to_object'))
+            && ( $this->_config->get('ratings_cache_to_object')
+		|| $this->_config->get('comment_count_cache_to_object'))   )
         {
             // Handle ratings
             $comments = net_nehmer_comments_comment::list_by_objectguid($this->_objectguid);
@@ -134,6 +135,20 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
                 $parent_object = $_MIDCOM->dbfactory->get_object_by_guid($this->_objectguid);
                 // TODO: Figure out whether to round
                 $parent_object->$parent_property = $value;
+                $parent_object->update();
+            }
+
+            // Get parent object
+            $parent_property = $this->_config->get('comment_count_cache_to_object_property');
+            if ($this->_config->get('comment_count_cache_to_object_property_metadata'))
+            {
+                $metadata = midcom_helper_metadata::retrieve($this->_objectguid);
+                $metadata->set($parent_property, count($comments));
+			}
+            else
+            {
+                $parent_object = $_MIDCOM->dbfactory->get_object_by_guid($this->_objectguid);
+                $parent_object->$parent_property = count($comments);
                 $parent_object->update();
             }
             $_MIDCOM->auth->drop_sudo();
@@ -333,12 +348,24 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
                 "The GUID '{$args[0]}' is invalid. Cannot continue.");
             // This will exit.
         }
+
         $this->_objectguid = $args[0];
-        $this->_comments = net_nehmer_comments_comment::list_by_objectguid(
+        if ($handler_id == 'view-comments-nonempty')
+        {
+            $this->_comments = net_nehmer_comments_comment::list_by_objectguid_filter_anonymous(
             $this->_objectguid,
             $this->_config->get('items_to_show'),
             $this->_config->get('item_ordering')
-        );
+            );
+        }
+        else
+        {
+            $this->_comments = net_nehmer_comments_comment::list_by_objectguid(
+            $this->_objectguid,
+            $this->_config->get('items_to_show'),
+            $this->_config->get('item_ordering')
+            );
+        }
 
         if (   $_MIDCOM->auth->user
             || $this->_config->get('allow_anonymous'))

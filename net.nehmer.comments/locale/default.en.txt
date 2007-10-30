@@ -71,3 +71,10 @@ Enable ratings support
 Save total instead of average to object
 ---STRINGEND
 
+---STRING comment_count_cache_to_object
+Cache comment count to object being commented
+---STRINGEND
+
+---STRING comment_count_cache_to_object_property
+Cache comment count in object property
+---STRINGEND
