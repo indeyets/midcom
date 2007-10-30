@@ -22,6 +22,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         {
             if ($task->status_type != $status)
             {
+					$status = $task->status_type;
                     echo "</ul>\n";
                     echo "<h2>" . $data['l10n']->get($status . " tasks") . "</h2>\n";
                     echo "<ul class=\"tasks\">\n";

@@ -75,6 +75,10 @@ Erledigte Tasks
 Aktuelle Tasks
 ---STRINGEND
 
+---STRING not_started tasks
+Noch nicht begonnene Tasks
+---STRINGEND
+
 ---STRING completed
 Fertiggestellt
 ---STRINGEND

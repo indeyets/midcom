@@ -75,6 +75,10 @@ Closed tasks
 Ongoing Tasks
 ---STRINGEND
 
+---STRING not_started tasks
+Not Started Tasks
+---STRINGEND
+
 ---STRING completed
 Completed
 ---STRINGEND
