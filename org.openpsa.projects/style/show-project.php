@@ -15,10 +15,17 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
     <?php
     if (count($data['tasks']) > 0)
     {
-        echo "<h2>" . $data['l10n']->get('tasks') . "</h2>\n";
+        $status = $data['tasks'][0]->status_type;
+        echo "<h2>" . $data['l10n']->get($status . " tasks") . "</h2>\n";
         echo "<ul class=\"tasks\">\n";
         foreach ($data['tasks'] as $task)
         {
+            if ($task->status_type != $status)
+            {
+                    echo "</ul>\n";
+                    echo "<h2>" . $data['l10n']->get($status . " tasks") . "</h2>\n";
+                    echo "<ul class=\"tasks\">\n";
+            }
             echo "<li>\n";
             echo "    <div class=\"title\"><a href=\"{$prefix}task/{$task->guid}/\">{$task->title}</a></div>\n";
             echo "    <div class=\"time\">" . strftime('%x', $task->start) . ' - ' . strftime('%x', $task->end) . "</div>\n";

@@ -21,7 +21,7 @@ class org_openpsa_projects_handler_project_view extends midcom_baseclasses_compo
      * @access private
      */
     var $_project = null;
-    
+
     /**
      * The Datamanager of the project to display.
      *
@@ -29,13 +29,13 @@ class org_openpsa_projects_handler_project_view extends midcom_baseclasses_compo
      * @access private
      */
     var $_datamanager = null;
-    
-    
+
+
     function org_openpsa_projects_handler_project_view()
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Simple helper which references all important members to the request data listing
      * for usage within the style listing.
@@ -45,7 +45,7 @@ class org_openpsa_projects_handler_project_view extends midcom_baseclasses_compo
         $this->_request_data['project'] =& $this->_project;
         $this->_request_data['datamanager'] =& $this->_datamanager;
     }
-    
+
     /**
      * Internal helper, loads the datamanager for the current article. Any error triggers a 500.
      *
@@ -62,7 +62,7 @@ class org_openpsa_projects_handler_project_view extends midcom_baseclasses_compo
             // This will exit.
         }
     }
-    
+
     function _handler_view($handler_id, $args, &$data)
     {
         $this->_project = new org_openpsa_projects_project($args[0]);
@@ -70,7 +70,7 @@ class org_openpsa_projects_handler_project_view extends midcom_baseclasses_compo
         {
             return false;
         }
-        
+
         $this->_load_datamanager();
         $this->_prepare_request_data();
         $_MIDCOM->set_pagetitle($this->_project->title);
@@ -104,10 +104,11 @@ class org_openpsa_projects_handler_project_view extends midcom_baseclasses_compo
 
         $breadcrumb = org_openpsa_projects_viewer::update_breadcrumb_line($this->_project);
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
-        
+
         $task_qb = org_openpsa_projects_project::new_query_builder();
         $task_qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
         $task_qb->add_constraint('up', '=', $this->_project->id);
+        $task_qb->add_order('status');
         $task_qb->add_order('end');
         $data['tasks'] = $task_qb->execute();
 

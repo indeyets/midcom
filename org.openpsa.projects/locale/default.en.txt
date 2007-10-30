@@ -71,6 +71,10 @@ Closed by %s
 Closed tasks
 ---STRINGEND
 
+---STRING ongoing tasks
+Ongoing Tasks
+---STRINGEND
+
 ---STRING completed
 Completed
 ---STRINGEND

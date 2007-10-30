@@ -71,6 +71,10 @@ Abgeschlossen von %s
 Erledigte Tasks
 ---STRINGEND
 
+---STRING ongoing tasks
+Aktuelle Tasks
+---STRINGEND
+
 ---STRING completed
 Fertiggestellt
 ---STRINGEND
