@@ -328,6 +328,12 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
             return false;
         }
 
+        if (!$this->file_sanity_checks($tmpname))
+        {
+            // the method will log errors and raise uimessages as needed
+            return false;
+        }
+
         // Ensure that the filename is URL safe (but allow multiple extensions)
         // PONDER: make use of this configurable in type-config ??
         $filename = midcom_helper_datamanager2_type_blobs::safe_filename($filename, false);
@@ -564,6 +570,12 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Cannot add attachment, the file {$tmpname} was not found.", MIDCOM_LOG_INFO);
             debug_pop();
+            return false;
+        }
+
+        if (!$this->file_sanity_checks($tmpname))
+        {
+            // the method will log errors and raise uimessages as needed
             return false;
         }
 
@@ -855,6 +867,96 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         return $tmpname;
     }
 
+
+    /**
+     * Makes sanity checks on the uploaded file, used by add_attachment and update_attachment
+     *
+     * @see add_attachment
+     * @see update_attachment
+     * @param string $filepath path to file to check
+     * @return boolean indicating sanity
+     */
+    function file_sanity_checks($filepath)
+    {
+        static $checked_files = array();
+        static $checks = array
+        (
+            'sizenotzero',
+            'avscan',
+        );
+        // Do not check same file twice
+        if (isset($checked_files[$filepath]))
+        {
+            return $checked_files[$filepath];
+        }
+        foreach ($checks as $check)
+        {
+            $methodname = "file_sanity_checks_{$check}";
+            /*
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Calling \$this->{$methodname}({$filepath})");
+            debug_pop();
+            */
+            if (!$this->$methodname($filepath))
+            {
+                // the methods will log their own errors
+                $checked_files[$filepath] = false;
+                return false;
+            }
+        }
+        $checked_files[$filepath] = true;
+        return true;
+    }
+
+    /**
+     * Make sure given file is larger than zero bytes
+     *
+     * @see file_sanity_checks
+     * @return boolean indicating sanity
+     */
+    function file_sanity_checks_sizenotzero($filepath)
+    {
+        $size = @filesize($filepath);
+        if ($size == 0)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("filesize('{$filepath}') returned {$size} which evaluated to zero", MIDCOM_LOG_ERROR);
+            debug_pop();
+            // TODO: UIMessage ?
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Scans the file for virii
+     *
+     * @see file_sanity_checks
+     * @return boolean indicating sanity
+     */
+    function file_sanity_checks_avscan($filepath)
+    {
+        $scan_template = $this->_config->get('type_blobs_avscan_command');
+        if (empty($scan_template))
+        {
+            // silently ignore if scan command not configured
+            return true;
+        }
+        $scan_command = escapeshellcmd(sprintf($scan_template, $filepath));
+        $scan_output = array();
+        exec($scan_command, $scan_output, $exit_code);
+        if ($exit_code !== 0)
+        {
+            // Scan command returned error (likely infected file);
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("{$scan_command} returned {$exit_code}, likely file is infected", MIDCOM_LOG_ERROR);
+            debug_print_r('scanner_output', $scan_output, MIDCOM_LOG_ERROR);
+            debug_pop();
+            $_MIDCOM->uimessages->add($this->_l10n_midcom->get('midcom.helper.datamanager2'), $this->_l10n->get('virus found in uploaded file'), 'error');
+            return false;
+        }
+        return true;
+    }
 }
 
 ?>

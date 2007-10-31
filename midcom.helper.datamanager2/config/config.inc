@@ -10,3 +10,8 @@
 //'tinymce_default_config_snippet' => "{$GLOBALS['midcom_config']['midcom_sgconfig_basedir']}/midcom.helper.datamanager2/tinymce",
 
 'include_metadata_required' => false,
+/* This is passed to sprintf, use %s where file name should be */
+'type_blobs_avscan_command' => '',
+/* Example command using ClamAV
+'type_blobs_avscan_command' => 'clamscan --stdout -i --no-summary %s',
+*/

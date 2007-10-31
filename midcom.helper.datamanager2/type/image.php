@@ -583,6 +583,13 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
             debug_pop();
             return false;
         }
+        // We might get malicious upload, check it before further processing
+        if (!$this->file_sanity_checks($tmpname))
+        {
+            // the method will log errors and raise uimessages as needed
+            return false;
+        }
+
         // First, ensure that the imagefilter helper is available.
         require_once(MIDCOM_ROOT . '/midcom/helper/imagefilter.php');
 
