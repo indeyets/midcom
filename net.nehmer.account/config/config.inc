@@ -146,3 +146,20 @@
  * Use optional way to handle reset password request (sends email to the user before resetting the password)
  */
 'lostpassword_email_reset' => false,
+
+/**
+ * Karma calculation properties
+ */
+'karma_comments_enable' => true,
+'karma_comments_modifier' => 2,
+'karma_favourites_enable' => true,
+'karma_favourites_modifier' => 1,
+'karma_buries_enable' => true,
+'karma_buries_modifier' => 1,
+'karma_wikicreates_enable' => true,
+'karma_wikicreates_modifier' => 2,
+'karma_wikipages_enable' => true,
+'karma_wikipages_modifier' => 2,
+'karma_blogs_enable' => true,
+'karma_blogs_modifier' => 1,
+'karma_socialnews_enable' => false,

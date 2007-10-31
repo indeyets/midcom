@@ -53,7 +53,13 @@ class net_nehmer_account_interface extends midcom_baseclasses_components_interfa
         define ('NET_NEHMER_ACCOUNT_LEAFID_OTHER', 999);
 
         $this->_component = 'net.nehmer.account';
-        $this->_autoload_files = Array('viewer.php', 'navigation.php', 'invite.php');
+        $this->_autoload_files = array
+        (
+            'viewer.php', 
+            'navigation.php', 
+            'invite.php',
+            'calculator.php',
+        );
         $this->_autoload_libraries = Array(
             'midcom.helper.datamanager2'
         );
