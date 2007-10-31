@@ -70,7 +70,7 @@
  *   is nonzero) or non-sitegrouped mode if we are in SG0.
  * - <b>int auth_login_form_httpcode</b>: HTTP return code used in MidCOM login screens,
  *   either 403 (403 Forbidden) or 200 (200 OK), defaulting to 403.
- * - <b>bool auth_openid_enable:</b> Whether to enable OpenID authentication handled with 
+ * - <b>bool auth_openid_enable:</b> Whether to enable OpenID authentication handled with
  *   the net.nemein.openid library
  *
  * <b>Authentication Backend configuration: "simple"</b>
@@ -92,7 +92,7 @@
  *   file) is not changed.
  * - <b>string cache_base_directory:</b> The directory where to place cache files for MidCOM.
  * 	 This defaults to /tmp/ (note the trailing slash) as this is writable everywhere.
- *   
+ *
  * - <b>Array cache_module_acl:</b> If this is non-null and an array, MidCOM will create a memcached
  *   caching instance to buffer ACL reads from the DB. You set this parameter to the configuration
  *   array to use (use an empty array for the defaults). See the memcached backend for details.
@@ -363,7 +363,7 @@ $GLOBALS['midcom_config_default']['cache_module_nap_metadata_cachesize'] = 75;
 //Memory Caching Daemon
 $GLOBALS['midcom_config_default']['cache_module_memcache_backend'] = null;
 $GLOBALS['midcom_config_default']['cache_module_memcache_backend_config'] = Array();
-$GLOBALS['midcom_config_default']['cache_module_memcache_data_groups'] = Array('ACL', 'PARENT');
+$GLOBALS['midcom_config_default']['cache_module_memcache_data_groups'] = Array('ACL', 'PARENT', 'jscss_merged');
 
 // Generated class cache directory
 $GLOBALS['midcom_config_default']['cache_module_phpscripts_directory'] = 'phpscripts/';

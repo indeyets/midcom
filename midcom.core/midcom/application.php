@@ -235,6 +235,11 @@ class midcom_application
     public $auth = null;
 
     /**
+     * JS/CSS merger service
+     */
+    var $jscss = false;
+
+    /**
      * Database class loader service.
      *
      * @var midcom_services_dbclassloader
@@ -895,7 +900,7 @@ class midcom_application
                         $this->cache->content->no_cache();
                         $this->auth->logout($redirect_to);
                         // This will exit;
-    
+
                     case "login":
                         // rest of URL used as redirect
                         $remaining_url = false;
@@ -932,6 +937,18 @@ class midcom_application
                         }
                         $this->_showdebuglog($value);
                         break;
+
+	                case 'servejscsscache':
+	                    //$name = $tmp[MIDCOM_HELPER_URLPARSER_VALUE];
+	                    $name = $this->_parser->argv[0];
+	                    if (   !$this->jscss
+	                        || !is_callable(array($this->jscss, 'serve')))
+	                    {
+	                        $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Cache is not initialized');
+	                        // this will exit
+	                    }
+	                    $this->jscss->serve($name);
+	                    // this will exit()
 
                     default:
                         debug_add("Unknown MidCOM URL Property ignored: {$key} => {$value}", MIDCOM_LOG_WARN);
@@ -2447,6 +2464,15 @@ class midcom_application
      */
     function add_jsfile($url, $prepend = false)
     {
+        // use merger cache if possible
+        if (   $this->jscss
+            && is_callable(array($this->jscss, 'add_jsfile')))
+        {
+            if ($this->jscss->add_jsfile($url, $prepend))
+            {
+                return;
+            }
+        }
         // Adds an URL for a <script type="text/javascript" src="tinymce.js"></script>
         // like call. $url is inserted into src. Duplicates are omitted.
         if (! in_array($url, $this->_jsfiles))
@@ -2614,6 +2640,15 @@ class midcom_application
         {
             return false;
         }
+        // use merger cache if possible
+        if (   $this->jscss
+            && is_callable(array($this->jscss, 'add_cssfile')))
+        {
+            if ($this->jscss->add_cssfile($attributes))
+            {
+                return;
+            }
+        }
 
         // Register each URL only once
         if (in_array($attributes['href'], $this->_linkhrefs))
@@ -2753,9 +2788,19 @@ class midcom_application
         }
 
         echo $this->_link_head;
+        if (   $this->jscss
+            && is_callable(array($this->jscss, 'print_cssheaders')))
+        {
+            $this->jscss->print_cssheaders();
+        }
         echo $this->_object_head;
         echo $this->_style_head;
         echo $this->_meta_head;
+        // if (   $this->jscss
+        //     && is_callable(array($this->jscss, 'print_jsheaders')))
+        // {
+        //     $this->jscss->print_jsheaders();
+        // }
         foreach ($this->_jshead as $js_call)
         {
             echo $js_call;
