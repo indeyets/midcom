@@ -305,7 +305,19 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
         }
         
         $this->_thread->require_do('midgard:create');
-
+        
+        if ($this->_config->get('auto_quote_on_reply'))
+        {
+            $rows = preg_split("/[\n]/", preg_replace('/\x0a\x0d|\x0d\x0a|\x0d/', "\n", $this->_parent_post->content));
+            $quote = "> \n";
+            foreach ($rows as $row)
+            {
+                $quote .= "> {$row}\n";
+            }
+            $quote .= "> \n\n";
+            $this->_defaults['content'] = $quote;
+        }
+        
         $this->_load_controller();
 
         switch ($this->_controller->process_form())

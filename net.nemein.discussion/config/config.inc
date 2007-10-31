@@ -44,3 +44,5 @@
 'email_out_from' => '',
 'email_out_subject_prefix' => '',
 
+'auto_quote_on_reply' => false,
+
