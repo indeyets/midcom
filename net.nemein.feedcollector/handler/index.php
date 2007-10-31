@@ -85,35 +85,58 @@ class net_nemein_feedcollector_handler_index  extends midcom_baseclasses_compone
      */
     function _show_index($handler_id, &$data)
     {
-        midcom_show_style('index-header');
-        // Counts topics
-        $this->_request_data['counters']['topic'] = 0;
-        // Counts items under one topic
-        $this->_request_data['counters']['topic_item'] = 0;
-        // Counts overall items
-        $this->_request_data['counters']['items'] = 0;
         if(isset($this->topics) && count($this->topics) > 0)
         {
+            // Counts topics
+            $this->_request_data['counters']['topic'] = 0;
+            $this->_request_data['counters']['topics'] = count($this->topics);
+            // Counts items under one topic
+            $this->_request_data['counters']['topic_item'] = 0;
+            $this->_request_data['counters']['topic_items'] = 0;
+            // Counts overall items
+            $this->_request_data['counters']['items'] = 0;
+
+
+            // We only do this to get overall count of items
             foreach($this->topics as $topic)
             {
+                $this->_request_data['counters']['items'] .= count($topic['items']);
+            }
+
+            midcom_show_style('index-header');
+
+            foreach($this->topics as $topic)
+            {
+                $this->_request_data['counters']['topic_items'] = count($topic['items']);
                 $this->_request_data['counters']['topic']++;
-                $this->_request_data['topic'] = $topic;
+                $this->_request_data['feedtopic'] = $topic;
+                $this->_request_data['topic'] = new midcom_db_topic($topic['object']->feedtopic);
                 midcom_show_style('topic-header');
                 if(count($topic['items']) > 0)
                 {
                     foreach($topic['items'] as $item)
                     {
                         $this->_request_data['counters']['topic_item']++;
-                        $this->_request_data['counters']['items']++;
                         $this->_request_data['item'] = $item;
                         midcom_show_style('topic-item');
                     }
                 }
+                else
+                {
+                    midcom_show_style('index-no-items');
+                }
                 midcom_show_style('topic-footer');
                 $this->_request_data['counters']['topic_item'] = 0;
+                $this->_request_data['counters']['topic_items'] = 0;
             }
+
+            midcom_show_style('index-footer');
+
         }
-        midcom_show_style('index-footer');
+        else
+        {
+            midcom_show_style('index-no-topics');
+        }
     }
     
 

@@ -97,16 +97,26 @@ class net_nemein_feedcollector_handler_latest  extends midcom_baseclasses_compon
      */
     function _show_latest($handler_id, &$data)
     {
-        midcom_show_style('latest-header');
         if(isset($this->items) && is_array($this->items) && count($this->items) > 0 )
         {
+            $this->_request_data['item_counter'] = 0;
+            $this->_request_data['items'] = count($this->items);
+
+            midcom_show_style('latest-header');
+
             foreach($this->items as $item)
             {
                 $this->_request_data['item'] = $item;
                 midcom_show_style('latest-item');
             }
+
+            midcom_show_style('latest-footer');
+
         }
-        midcom_show_style('latest-footer');
+        else
+        {
+            midcom_show_style('latest-no-items');
+        }
     }
     
 
