@@ -375,6 +375,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             case (is_a($obj, 'midgard_snippetdir'));
             case (is_a($obj, 'midgard_style')):
             case (is_a($obj, 'midgard_page')):
+            case (is_a($obj, 'net_nemein_discussion_thread')):
                 $icon='stock_folder.png';
                 break;
             case (is_a($obj, 'midgard_event')):
@@ -406,6 +407,9 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
                 break;
             case (is_a($obj, 'org_routamc_positioning_location')):
                 $icon = 'geoclue.png';
+                break;
+            case (is_a($obj, 'net_nemein_discussion_post')):
+                $icon='stock-discussion.png';
                 break;
 
             default:

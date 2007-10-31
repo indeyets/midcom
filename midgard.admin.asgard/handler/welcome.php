@@ -46,10 +46,16 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
     {
         $classes = array();
         $revised = array();
+        $skip = array
+        (
+            'midgard_parameter',
+            'midcom_core_privilege_db',
+        );
+        
         // List installed MgdSchema types and convert to DBA classes
         foreach ($_MIDGARD['schema']['types'] as $schema_type => $dummy)
         {
-            if ($schema_type == 'midgard_parameter')
+            if (in_array($schema_type, $skip))
             {
                 // Skip
                 continue;
