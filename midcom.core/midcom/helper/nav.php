@@ -340,8 +340,7 @@ class midcom_helper_nav
             debug_pop();
         }
 
-        if (   $object
-            && $object->__table__ == 'topic')
+        if (is_a($object, 'midgard_topic'))
         {
             // Ok. This topic should be within the content tree,
             // we check this and return the node if everything is ok.
@@ -355,8 +354,7 @@ class midcom_helper_nav
             return $this->get_node($object->id);
         }
 
-        if (   $object
-            && $object->__table__ == 'article')
+        if (is_a($object, 'midgard_article'))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             // Ok, let's try to find the article using the topic in the tree.
