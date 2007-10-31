@@ -28,7 +28,7 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
         
         $qb = net_nehmer_comments_comment::new_query_builder();
         $qb->add_constraint('metadata.authors', 'LIKE', "%|{$guid}|%");
-        return $qb->count();
+        return $qb->count_unchecked();
     }
     
     private function count_favourites($guid)
@@ -38,7 +38,7 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
         $qb = net_nemein_favourites_favourite_dba::new_query_builder();
         $qb->add_constraint('metadata.creator', '=', $guid);
         $qb->add_constraint('bury', '=', false);
-        return $qb->count();
+        return $qb->count_unchecked();
     }
     
     private function count_buries($guid)
@@ -48,7 +48,7 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
         $qb = net_nemein_favourites_favourite_dba::new_query_builder();
         $qb->add_constraint('metadata.creator', '=', $guid);
         $qb->add_constraint('bury', '=', true);
-        return $qb->count();
+        return $qb->count_unchecked();
     }
 
     private function count_wikicreates($guid)
@@ -56,15 +56,33 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('metadata.creator', '=', $guid);
         $qb->add_constraint('topic.component', '=', 'net.nemein.wiki');
-        return $qb->count();
+        return $qb->count_unchecked();
     }
 
-    private function count_wikipages($guid)
+    private function count_wikiedits($guid)
     {
+        $edits = 0;
+        $rcs =& $_MIDCOM->get_service('rcs');    
         $qb = midcom_db_article::new_query_builder();
-        $qb->add_constraint('metadata.authors', 'LIKE', "%|{$guid}|%");
+        // TODO: Add this when wiki inserts all contributors to authors array
+        // $qb->add_constraint('metadata.authors', 'LIKE', "%|{$guid}|%");
         $qb->add_constraint('topic.component', '=', 'net.nemein.wiki');
-        return $qb->count();
+        $pages = $qb->execute_unchecked();
+        foreach ($pages as $page)
+        {
+            $object_rcs = $rcs->load_handler($page);
+            $history = $object_rcs->list_history();
+            foreach ($history as $rev => $data) 
+            {
+                if ($data['user'] == "user:{$guid}")
+                {
+                    // TODO: At some point we may consider line counts here
+                    $edits++;
+                }
+            }
+        }
+        
+        return $edits;
     }
 
     private function count_blogs($guid)
@@ -82,7 +100,7 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
         $_MIDCOM->componentloader->load_graceful('org.maemo.socialnews');        
         $blog_karma = 0;
                 
-        $blogs = $qb->execute();
+        $blogs = $qb->execute_unchecked();
 
         foreach ($blogs as $blog)
         {
@@ -106,6 +124,56 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
         }
         
         return round($blog_karma);
+    }
+
+    private function count_products($guid)
+    {
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.products');
+    
+        $qb = org_openpsa_products_product_dba::new_query_builder();
+        $qb->add_constraint('metadata.authors', 'LIKE', "%|{$guid}|%");
+        
+        if (!$this->_config->get('karma_productratings_enable'))
+        {
+            // We're not valuating products, just return their number
+            return $qb->count();
+        }
+               
+        $product_karma = 0;
+                
+        $products = $qb->execute_unchecked();
+
+        foreach ($products as $product)
+        {   
+            $product_karma = $product_karma + 1 + $product->price;
+        }
+        
+        return round($product_karma);
+    }
+    
+    private function count_discussion($id)
+    {
+        $_MIDCOM->componentloader->load_graceful('net.nemein.discussion');    
+    
+        $qb = net_nemein_discussion_post_dba::new_query_builder();
+        $qb->add_constraint('sender', '=', $id);
+        $qb->add_constraint('status', '>=', NET_NEMEIN_DISCUSSION_NEW);
+        $good_posts = $qb->count_unchecked();
+        
+        $qb = net_nemein_discussion_post_dba::new_query_builder();
+        $qb->add_constraint('sender', '=', $id);
+        $qb->add_constraint('status', '<', NET_NEMEIN_DISCUSSION_NEW);
+        $bad_posts = $qb->count_unchecked();
+        
+        $karma = $good_posts + ($bad_posts * $this->_config->get('karma_discussion_badpost_modifier'));
+        return $karma;
+    }
+
+    private function count_groups($id)
+    {
+        $qb = midcom_db_member::new_query_builder();
+        $qb->add_constraint('uid', '=', $id);
+        return $qb->count_unchecked();
     }
 
     private function calculate($object)
@@ -140,10 +208,10 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
             $karma['karma'] += $karma['wikicreates'];
         }
 
-        if ($this->_config->get('karma_wikipages_enable'))
+        if ($this->_config->get('karma_wikiedits_enable'))
         {
-            $karma['wikipages'] = $this->count_wikipages($object->guid) * $this->_config->get('karma_wikipages_modifier');
-            $karma['karma'] += $karma['wikipages'];
+            $karma['wikiedits'] = $this->count_wikiedits($object->guid) * $this->_config->get('karma_wikiedits_modifier');
+            $karma['karma'] += $karma['wikiedits'];
         }
         
         if ($this->_config->get('karma_blogs_enable'))
@@ -151,7 +219,25 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
             $karma['blogs'] = $this->count_blogs($object->guid) * $this->_config->get('karma_blogs_modifier');
             $karma['karma'] += $karma['blogs'];
         }
+
+        if ($this->_config->get('karma_products_enable'))
+        {
+            $karma['products'] = $this->count_products($object->guid) * $this->_config->get('karma_products_modifier');
+            $karma['karma'] += $karma['products'];
+        }
         
+        if ($this->_config->get('karma_discussion_enable'))
+        {
+            $karma['discussion'] = $this->count_discussion($object->id) * $this->_config->get('karma_discussion_modifier');
+            $karma['karma'] += $karma['discussion'];
+        }
+        
+        if ($this->_config->get('karma_groups_enable'))
+        {
+            $karma['groups'] = $this->count_groups($object->id) * $this->_config->get('karma_groups_modifier');
+            $karma['karma'] += $karma['groups'];
+        }
+       
         return $karma;
     }
     
@@ -161,7 +247,21 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
 
         if ($cache)
         {
-            //net_nehmer_account_karma_person_dba::store($person, $person_karma['karma']);
+            foreach ($person_karma as $source => $karma)
+            {
+                if ($source == 'karma')
+                {
+                    // Total karma is cached to metadata score for easy retrieval
+                    $person->metadata->score = $karma;
+                    $person->update();
+                    continue;
+                }
+                
+                // Karma per source goes to params
+                $person->parameter('net.nehmer.account:karma', $source, $karma);
+            }
+            
+            $person->parameter('net.nehmer.account', 'karma_calculated', gmdate('Y-m-d H:i:s'));
         }
         
         return $person_karma;

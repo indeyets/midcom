@@ -11,7 +11,7 @@ if (   isset($_GET['cache'])
 }
 
 $qb = midcom_db_person::new_query_builder();
-
+$qb->add_constraint('lastname', '=', 'Bergius');
 $persons = $qb->execute();
 $persons_array = array();
 
@@ -25,7 +25,7 @@ foreach ($persons as $person)
     }
     $karma_string = trim($karma_string);
     $person->tmp = $karma_string;
-    $persons_array[sprintf('%003d', $karmas['total'])."_{$person->guid}"] = $person;
+    $persons_array[sprintf('%003d', $karmas['karma'])."_{$person->guid}"] = $person;
 }
 krsort($persons_array);
 echo "<ul>\n";
