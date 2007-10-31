@@ -128,16 +128,16 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
             }
         }
         
+        $data['revised'] = array();
         if (isset($_REQUEST['revised_after']))
         {
             $data['revised_after'] = date('Y-m-d H:i:s\Z', $_REQUEST['revised_after']);
+            $data['revised'] = $this->_list_revised($data['revised_after']);
         }
-        else
-        {
-            $data['revised_after'] = date('Y-m-d H:i:s\Z', mktime(0, 0, 0, date('m'), date('d') - 1, date('Y')));
-        }
-        
-        $data['revised'] = $this->_list_revised($data['revised_after']);
+        // else
+        // {
+        //     $data['revised_after'] = date('Y-m-d H:i:s\Z', mktime(0, 0, 0, date('m'), date('d') - 1, date('Y')));
+        // }
         
         midgard_admin_asgard_plugin::get_common_toolbar($data);
         return true;

@@ -358,7 +358,7 @@ html > body #siteinfo
     margin-top: 5px;
 }
 
-#latest_objects .filter .revised_after
+#latest_objects .filter .revised_after,
 #latest_objects .actions .action
 {
     float: left;

@@ -66,6 +66,11 @@ if (count($data['revised']) > 0)
         {
             $approved_str = $_MIDCOM->i18n->get_string('not approved', 'midgard.admin.asgard');
         }
+        $title = substr($data['reflectors'][$class]->get_object_label(&$object), 0, 60);
+        if (empty($title))
+        {
+            $title = '[' . $_MIDCOM->i18n->get_string('no title', 'midgard.admin.asgard') . ']';
+        }
         
         if (!isset($revisors[$object->metadata->revisor]))
         {
@@ -76,7 +81,7 @@ if (count($data['revised']) > 0)
         echo "            <td class=\"selection\"><input type=\"checkbox\" name=\"selections[]\" value=\"{$object->guid}\" /></td>\n";
         //{$object->metadata->revised}_{$object->guid}_{$object->metadata->revision}
         echo "            <td class=\"icon\">" . $data['reflectors'][$class]->get_object_icon(&$object) . "</td>\n";
-        echo "            <td class=\"title\"><a href=\"{$prefix}__mfa/asgard/object/view/{$object->guid}/\" title=\"{$class}\">" . substr($data['reflectors'][$class]->get_object_label(&$object), 0, 60) . "</a></td>\n";
+        echo "            <td class=\"title\"><a href=\"{$prefix}__mfa/asgard/object/view/{$object->guid}/\" title=\"{$class}\">" . $title . "</a></td>\n";
         echo "            <td class=\"revised\">" . strftime('%x %X', $object->metadata->revised) . "</td>\n";
         echo "            <td class=\"revisor\">{$revisors[$object->metadata->revisor]->name}</td>\n";
         echo "            <td class=\"approved\">{$approved_str}</td>\n";
@@ -86,7 +91,6 @@ if (count($data['revised']) > 0)
     
     echo "    </tbody>\n";
     echo "</table>\n";
-}
 ?>
         <div class="actions">
             <div class="action">
@@ -98,5 +102,9 @@ if (count($data['revised']) > 0)
             <input type="submit" name="execute_mass_action" value="<?php echo $_MIDCOM->i18n->get_string('apply to selected', 'midgard.admin.asgard'); ?>" />    
         </div>
     </form>
+    
+<?php
+}
+?>
 
 </div>
