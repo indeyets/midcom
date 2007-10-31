@@ -183,3 +183,42 @@ Under %s
 Info
 ---STRINGEND
 
+---STRING view on site
+View on-site
+---STRINGEND
+
+---STRING 1 day
+1 day
+---STRINGEND
+
+---STRING 1 week
+1 week
+---STRINGEND
+
+---STRING 1 month
+1 month
+---STRINGEND
+
+---STRING objects revised within
+Objects changed within
+---STRINGEND
+
+---STRING filter
+Filter
+---STRINGEND
+
+---STRING not approved
+Not approved
+---STRINGEND
+
+---STRING apply to selected
+Apply to selected
+---STRINGEND
+
+---STRING object %s removed
+Object %s removed
+---STRINGEND
+
+---STRING object %s approved
+Object %s approved
+---STRINGEND

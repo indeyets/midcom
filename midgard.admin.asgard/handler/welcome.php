@@ -46,11 +46,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
     {
         $classes = array();
         $revised = array();
-        $skip = array
-        (
-            'midgard_parameter',
-            'midcom_core_privilege_db',
-        );
+        $skip = $this->_config->get('skip_in_filter');
         
         // List installed MgdSchema types and convert to DBA classes
         foreach ($_MIDGARD['schema']['types'] as $schema_type => $dummy)
@@ -60,6 +56,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
                 // Skip
                 continue;
             }
+            
             $mgdschema_class = midgard_admin_asgard_reflector::class_rewrite($schema_type);
             $dummy_object = new $mgdschema_class();
             $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($dummy_object);
@@ -86,7 +83,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
             }
             $qb = call_user_func($qb_callback);
             $qb->add_constraint('metadata.revised', '>=', $since);
-            $qb->add_order('metadata.revised', 'DESC');
+            $qb->add_order('metadata.revision', 'DESC');
             $objects = $qb->execute();
             
             if (count($objects) > 0)
@@ -99,7 +96,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
             
             foreach ($objects as $object)
             {
-                $revised["{$object->metadata->revised}_{$object->guid}"] = $object;
+                $revised["{$object->metadata->revised}_{$object->guid}_{$object->metadata->revision}"] = $object;
             }
         }
         
@@ -119,21 +116,67 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
         $_MIDCOM->set_pagetitle($data['view_title']);
         
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
-        
-        if (isset($_GET['revised_after']))
+
+        if (isset($_POST['execute_mass_action']))
         {
-            $data['revised_after'] = $_GET['revised_after'];
+            if (   isset($_POST['selections'])
+                && !empty($_POST['selections'])
+                && isset($_POST['mass_action']))
+            {
+                $method_name = "_mass_{$_POST['mass_action']}";
+                $this->$method_name($_POST['selections']);
+            }
+        }
+        
+        if (isset($_REQUEST['revised_after']))
+        {
+            $data['revised_after'] = date('Y-m-d H:i:s\Z', $_REQUEST['revised_after']);
         }
         else
         {
-            $data['revised_after'] = date('Y-m-d H:i:s\Z', mktime(0, 0, 0, date('m'), date('d') - 2, date('Y')));
+            $data['revised_after'] = date('Y-m-d H:i:s\Z', mktime(0, 0, 0, date('m'), date('d') - 1, date('Y')));
         }
         
-        // TODO: Run only on submit if this seems slow
         $data['revised'] = $this->_list_revised($data['revised_after']);
         
         midgard_admin_asgard_plugin::get_common_toolbar($data);
         return true;
+    }
+    
+    function _mass_delete($guids)
+    {
+        foreach ($guids as $guid)
+        {
+            $object =& $_MIDCOM->dbfactory->get_object_by_guid($guid);
+            if (   $object
+                && $object->can_do('midgard:delete'))
+            {
+                //$label = $object->get_label();
+                $label = $object->guid;
+                if ($object->delete())
+                {
+                    $_MIDCOM->uimessages->add($this->_l10n->get('midgard.admin.asgard'), sprintf($this->_l10n->get('object %s removed'), $label));
+                }
+            }
+        }
+    }
+    
+    function _mass_approve($guids)
+    {
+        foreach ($guids as $guid)
+        {
+            $object =& $_MIDCOM->dbfactory->get_object_by_guid($guid);
+            if (   $object
+                && $object->can_do('midgard:update')
+                && $object->can_do('midgard:approve'))
+            {
+                //$label = $object->get_label();
+                $label = $object->guid;
+                $metadata = $object->get_metadata();
+                $metadata->approve();
+                $_MIDCOM->uimessages->add($this->_l10n->get('midgard.admin.asgard'), sprintf($this->_l10n->get('object %s approved'), $label));
+            }
+        }
     }
 
     /**

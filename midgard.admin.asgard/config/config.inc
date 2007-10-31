@@ -144,3 +144,13 @@
 // User interface
 'tinymce_enabled' => true,
 'codepress_enabled' => true,
+
+// Welcome page
+// List of types we don't list on latest objects
+'skip_in_filter' => array
+(
+    'midgard_parameter',
+    'midcom_core_privilege_db',
+    'midcom_services_at_entry_db',
+    'midgard_language',
+),
