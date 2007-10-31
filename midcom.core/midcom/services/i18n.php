@@ -604,6 +604,10 @@ class midcom_services_i18n
             {
                 $params = explode(";",$data);
                 $lang = array_shift($params);
+                
+                //Fix for Safari
+                $lang = array_shift(explode("-",$lang));
+                
                 $q = 1.0;
                 $option = array_shift($params);
                 while (! is_null($option))
