@@ -30,13 +30,12 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
         $this->_request_switch['basic'] = Array ( 'handler' => 'searchform' );
         
         // Resultlists, controlled using HTTP GET/POST
-		$this->_request_switch[] = Array ( 'fixed_args' => 'result', 'no_cache' => true, 'handler' => 'result' );
+        $this->_request_switch[] = Array ( 'fixed_args' => 'result', 'no_cache' => true, 'handler' => 'result' );
         
         // Advanced search form, no args
         $this->_request_switch['advanced'] = Array ( 'fixed_args' => 'advanced', 'handler' => 'searchform' );
     }
-    
-    
+
     /**
      * Search form handler, nothing to do here.
      * 
@@ -70,7 +69,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
         $data['type'] = $handler_id;
         return true;
     }
-    
+
     /**
      * Search form show handler, displays the search form, including
      * some hints about how to write queries. 
@@ -92,8 +91,36 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
     {
         if ($GLOBALS['midcom_config']['i18n_multilang_strict'])
         {
-            $final_query .= ' AND (__LANG:"' . $_MIDCOM->i18n->get_current_language() . '" OR __LANG:"")';
+            $final_query .= ' AND (__LANG:"' . $_MIDCOM->i18n->get_current_language() . '")';
         }
+    }
+
+    /**
+     * Expand arrays of custom rules to end of query
+     *
+     * @param $final_query reference to the query string to be passed on to the indexer.
+     * @param $terms array or string to append
+     */
+    function append_terms_recursive(&$final_query, $terms)
+    {
+        if (is_array($terms))
+        {
+            foreach ($terms as $term)
+            {
+                $this->append_terms_recursive($final_query, $term);
+            }
+            return;
+        }
+        if (is_string($terms))
+        {
+            $final_query .= "{$terms}";
+            return;
+        }
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add('Don\'t know how to handle terms of type: ' . gettype($terms), MIDCOM_LOG_ERROR);
+        debug_print_r('$terms', $terms);
+        debug_pop();
+        return;
     }
 
     /**
@@ -156,14 +183,14 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
         switch ($data['type'])
         {
             case 'basic':
-				$final_query = $data['query'];
+                $final_query = $data['query'];
                 $this->add_multilang_terms($final_query);
                 debug_add("Final query: {$final_query}");
-				$result = $indexer->query($final_query);
+                $result = $indexer->query($final_query);
                 break;
             
             case 'advanced':
-				$data['request_topic'] = trim($_REQUEST['topic']);
+                $data['request_topic'] = trim($_REQUEST['topic']);
                 $data['component'] = trim($_REQUEST['component']);
                 $data['lastmodified'] = (integer) trim($_REQUEST['lastmodified']);
                 if ($data['lastmodified'] > 0)
@@ -202,6 +229,12 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
                     $final_query .= "__COMPONENT:{$data['component']}";
                 }
 
+                // Way to add very custom terms
+                if (isset($_REQUEST['append_terms']))
+                {
+                    $this->append_terms_recursive($final_query, $_REQUEST['append_terms']);
+                }
+
                 $this->add_multilang_terms($final_query);
                 debug_add("Final query: {$final_query}");
                 
@@ -230,13 +263,13 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
         
         if ($count > 0)
         {
-	        $results_per_page = $this->_config->get('results_per_page');
-	        $max_pages = ceil($count / $results_per_page);
+            $results_per_page = $this->_config->get('results_per_page');
+            $max_pages = ceil($count / $results_per_page);
             $page = min($_REQUEST['page'], $max_pages); 
-	        $first_document_id = ($page - 1) * $results_per_page;
+            $first_document_id = ($page - 1) * $results_per_page;
             $last_document_id = min(($count - 1), (($page * $results_per_page) - 1));
-	        
-	        $data['page'] = $page;
+            
+            $data['page'] = $page;
             $data['max_pages'] = $max_pages;
             $data['first_document_number'] = $first_document_id + 1;
             $data['last_document_number'] = $last_document_id + 1;
@@ -247,7 +280,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
         debug_pop();
         return true;
     }
-    
+
     /**
      * Displays the resultset.
      * 
