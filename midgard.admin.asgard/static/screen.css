@@ -341,3 +341,49 @@ html > body #siteinfo
   margin-top: 2em;
   border-top: solid 1px black;
 }
+
+#latest_objects
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#latest_objects .filter
+{
+    margin-bottom: 5px;
+}
+
+#latest_objects .actions
+{
+    margin-top: 5px;
+}
+
+#latest_objects .filter .revised_after
+#latest_objects .actions .action
+{
+    float: left;
+    margin-right: 10px;
+}
+
+#latest_objects table.results
+{   
+}
+
+#latest_objects table.results th,
+#latest_objects table.results td
+{
+    padding-right: 20px;
+}
+#latest_objects table.results th.icon,
+#latest_objects table.results td.icon
+{
+    padding-right: 5px;
+}
+
+#latest_objects table.results td.revised,
+#latest_objects table.results td.revisor,
+#latest_objects table.results td.revision,
+#latest_objects table.results td.approved
+{
+    text-align: center;
+}
