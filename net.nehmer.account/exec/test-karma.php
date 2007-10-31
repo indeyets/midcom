@@ -1,5 +1,5 @@
 <?php
-$_MIDCOM->auth->require_valid_user();
+$_MIDCOM->auth->require_admin_user();
 
 $calculator = new net_nehmer_account_calculator();
 
@@ -11,7 +11,6 @@ if (   isset($_GET['cache'])
 }
 
 $qb = midcom_db_person::new_query_builder();
-$qb->add_constraint('lastname', '=', 'Bergius');
 $persons = $qb->execute();
 $persons_array = array();
 

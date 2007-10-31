@@ -158,6 +158,11 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('view', 'quick'),
             'variable_args' => 1,
         );
+        $this->_request_switch['list'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_list', 'list'),
+            'fixed_args' => Array('list'),
+        );
 
         // EDIT LINKS
         $this->_request_switch['edit'] = Array
