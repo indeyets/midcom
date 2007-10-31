@@ -415,6 +415,9 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             case (is_a($obj, 'org_openpsa_products_product')):
                 $icon='package.png';
                 break;
+            case (is_a($obj, 'org_routamc_photostream_photo')):
+                $icon='camera.png';
+                break;
             case (is_a($obj, 'midgard_snippet')):
                 $icon='script.png';
                 break;

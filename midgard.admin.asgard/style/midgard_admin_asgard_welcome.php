@@ -95,6 +95,7 @@ if (count($data['revised']) > 0)
         <div class="actions">
             <div class="action">
                 <select name="mass_action" id="mass_action">
+                    <option value=""><?php echo $_MIDCOM->i18n->get_string('choose action', 'midgard.admin.asgard'); ?></option>
                     <option value="delete"><?php echo $_MIDCOM->i18n->get_string('delete', 'midcom'); ?></option>
                     <option value="approve"><?php echo $_MIDCOM->i18n->get_string('approve', 'midcom'); ?></option>
                 </select>
