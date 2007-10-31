@@ -327,6 +327,20 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/view.png',
             )
         );
+        
+        $link = $_MIDCOM->permalinks->resolve_permalink($object->guid);
+        if ($link)
+        {
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => $link,
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('view on site', 'midgard.admin.asgard'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_internet.png',
+                )
+            );
+        }
             
         if ($object->can_do('midgard:update'))
         {

@@ -379,6 +379,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
                 break;
             case (is_a($obj, 'midgard_event')):
             case (is_a($obj, 'org_openpsa_event')):
+            case (is_a($obj, 'net_nemein_calendar_event')):
                 $icon='stock_event.png';
                 break;
             case (is_a($obj, 'midgard_eventmember')):
@@ -402,6 +403,9 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
                 break;
             case (is_a($obj, 'org_routamc_positioning_country')):
                 $icon = 'locale.png';
+                break;
+            case (is_a($obj, 'org_routamc_positioning_location')):
+                $icon = 'geoclue.png';
                 break;
 
             default:
