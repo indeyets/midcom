@@ -376,6 +376,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             case (is_a($obj, 'midgard_style')):
             case (is_a($obj, 'midgard_page')):
             case (is_a($obj, 'net_nemein_discussion_thread')):
+            case (is_a($obj, 'org_openpsa_products_product_group')):
                 $icon='stock_folder.png';
                 break;
             case (is_a($obj, 'midgard_event')):
@@ -411,7 +412,12 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             case (is_a($obj, 'net_nemein_discussion_post')):
                 $icon='stock-discussion.png';
                 break;
-
+            case (is_a($obj, 'org_openpsa_products_product')):
+                $icon='package.png';
+                break;
+            case (is_a($obj, 'midgard_snippet')):
+                $icon='script.png';
+                break;
             default:
                 $icon = 'document.png';
         }
