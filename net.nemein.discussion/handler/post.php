@@ -311,9 +311,11 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
             $mode = $this->_request_data['schemadb']['default']->fields['content']['type_config']['output_mode'];            
             $parent_content = $this->_parent_post->content;
             $line_break = "\n";
+            $quote = "";
             
             if ($mode == 'html')
             {
+                $quote .= "<div class=\"net_nemein_discussion_post_quote\">";
                 $line_break = "<br/>";
                 $parent_content = preg_replace("/<br\s*\\/?>/i", "\n", $parent_content);
                 $parent_content = preg_replace('/\x0a\x0d|\x0d\x0a|\x0d/', "\n", $parent_content);
@@ -321,12 +323,18 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
 
             $rows = preg_split("/[\n]/", preg_replace('/\x0a\x0d|\x0d\x0a|\x0d/', "\n", $parent_content));
             
-            $quote = "> {$line_break}";
+            $quote .= "> {$line_break}";
             foreach ($rows as $row)
             {
                 $quote .= "> {$row}{$line_break}";
             }
             $quote .= "> {$line_break}{$line_break}";
+            
+            if ($mode == 'html')
+            {
+                $quote .= "</div><br />";
+            }
+            
             $this->_defaults['content'] = $quote;
         }
         
