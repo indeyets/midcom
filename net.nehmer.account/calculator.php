@@ -28,6 +28,7 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
         
         $qb = net_nehmer_comments_comment::new_query_builder();
         $qb->add_constraint('metadata.authors', 'LIKE', "%|{$guid}|%");
+        $qb->add_constraint('content', '<>', '');
         return $qb->count_unchecked();
     }
     
