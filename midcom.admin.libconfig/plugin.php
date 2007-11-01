@@ -61,6 +61,18 @@ class midcom_admin_libconfig_plugin extends midcom_baseclasses_components_reques
                 'fixed_args' => array ('edit'),
                 'variable_args' => 1,
             ),
+            /**
+             * Show current settings
+             *
+             * Match /view/<component>/
+             */
+            'view' => array
+            (
+                'handler' => array ('midcom_admin_libconfig_handler_view', 'view'),
+                'fixed_args' => array ('view'),
+                'variable_args' => 1,
+            ),
+
         );
     }
 
@@ -99,7 +111,7 @@ class midcom_admin_libconfig_plugin extends midcom_baseclasses_components_reques
         foreach ($libs as $name => $manifest) 
         {
             $label = $_MIDCOM->i18n->get_string($name,$name);
-            echo "            <li class=\"status\"><a href=\"{$prefix}__mfa/asgard_midcom.admin.libconfig/edit/{$name}/\">{$label}</a></li>\n";
+            echo "            <li class=\"status\"><a href=\"{$prefix}__mfa/asgard_midcom.admin.libconfig/view/{$name}/\">{$label}</a></li>\n";
         }
 
         echo "</ul>";

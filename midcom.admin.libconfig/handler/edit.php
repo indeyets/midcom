@@ -57,11 +57,15 @@ class midcom_admin_libconfig_handler_edit extends midcom_baseclasses_components_
             MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.libconfig/",
             MIDCOM_NAV_NAME => $this->_request_data['view_title'],
         );
-
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.libconfig/view/{$name}",
+            MIDCOM_NAV_NAME => $label,
+        );
         $tmp[] = Array
         (
             MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.libconfig/edit/{$name}",
-            MIDCOM_NAV_NAME => $label,
+            MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('edit','midcom'),
         );
 
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
@@ -94,24 +98,24 @@ class midcom_admin_libconfig_handler_edit extends midcom_baseclasses_components_
             $cfg = array();
         }
 
-        $config = new midcom_helper_configuration($cfg);
+        $this->_libconfig = new midcom_helper_configuration($cfg);
 
         // Go for the sitewide default
         $cfg = midcom_baseclasses_components_interface::read_array_from_file("/etc/midgard/midcom/{$args[0]}/config.inc");
         if ($cfg !== false)
         {
-            $config->store($cfg, false);
+            $this->_libconfig->store($cfg, false);
         }
 
         // Finally, check the sitegroup config
         $cfg = midcom_baseclasses_components_interface::read_array_from_snippet("{$GLOBALS['midcom_config']['midcom_sgconfig_basedir']}/{$args[0]}/config");
         if ($cfg !== false)
         {
-            $config->store($cfg, false);
+            $this->_libconfig->store($cfg, false);
         }
 
         //schemadb
-        $schema = $config->_global['schemadb_config'];
+        $schema = $this->_libconfig->_global['schemadb_config'];
 
         if ($schema)
         {
@@ -125,37 +129,53 @@ class midcom_admin_libconfig_handler_edit extends midcom_baseclasses_components_
             $schemadb['default']->l10n_schema = $args[0];
         }
 
-        foreach($config->_global as $key => $value)
+        foreach($this->_libconfig->_global as $key => $value)
         {
             // try to sniff what fields are missing in schema
             if (!array_key_exists($key,$schemadb['default']->fields))
             {
-                $widget = 'text';
-                if (ereg("\n",$value)) $widget = 'textarea';
+
                 $schemadb['default']->append_field
                 (
                     $key,
-                    array
-                    (
-                        'title'       => $key,
-                        'type'        => 'text',
-                        'widget'      => $widget,
-                    )
+                    $this->_detect_schema($key,$value)
                 );
+
+            }
+
+
+            if (!$this->_libconfig->_local[$key])
+            {
+                $schemadb['default']->fields[$key]['static_prepend'] = "<div class='global'><span>Global value</span>";
+                $schemadb['default']->fields[$key]['static_append'] = "</div>";
 
             }
         }
 
-        $controller =& midcom_helper_datamanager2_controller::create('nullstorage');
-        $controller->schemadb =& $schemadb;
-        $controller->defaults = $config->_global;
-        if (! $controller->initialize())
+        //prepare values
+        foreach($this->_libconfig->_merged as $key => $value)
+        {
+            if (is_array($value))
+            {
+                $defaults[$key] = $this->_draw_array($value);
+            }
+            else
+            {
+                $defaults[$key] = $value;
+            }
+        }
+
+//print_r($defaults);exit;
+        $this->_controller =& midcom_helper_datamanager2_controller::create('nullstorage');
+        $this->_controller->schemadb =& $schemadb;
+        $this->_controller->defaults = $defaults;
+        if (! $this->_controller->initialize())
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 controller instance for configuration.");
         // This will exit.
         }
 
-        switch ($controller->process_form())
+        switch ($this->_controller->process_form())
         {
             case 'save':
                 $sg_snippetdir = new midcom_baseclasses_database_snippetdir();
@@ -202,7 +222,7 @@ class midcom_admin_libconfig_handler_edit extends midcom_baseclasses_components_
                     $snippet = new midcom_baseclasses_database_snippet($sn->id);
                 }
 
-                $snippet->code = $this->_get_config($controller);
+                $snippet->code = $this->_get_config($this->_controller);
 
                 if (   $snippet->code == ''
                     || !$snippet->code)
@@ -236,7 +256,7 @@ class midcom_admin_libconfig_handler_edit extends midcom_baseclasses_components_
         }
 
 
-        $data['controller'] =& $controller;
+        $data['controller'] =& $this->_controller;
 
         $this->_update_breadcrumb($args[0]);
         $this->_prepare_toolbar($data);
@@ -262,15 +282,94 @@ class midcom_admin_libconfig_handler_edit extends midcom_baseclasses_components_
         
     }
 
-    function _get_config(&$controller)
+    function _get_config()
     {
-        foreach ($controller->formmanager->form->_submitValues as $key => $val)
+        $post = $this->_controller->formmanager->form->_submitValues;
+        foreach ($this->_libconfig->_global as $key => $val)
         {
-            if ($key == 'midcom_helper_datamanager2_save') continue;
-            $data .= "'{$key}' => '{$val}',\n";
+
+            $newval = $post[$key];
+
+            switch(gettype($this->_libconfig->_global[$key]))
+            {
+                case "boolean":
+                    $data .= ($newval)?"'{$key}' => true,\n":"'{$key}' => false,\n";
+                    break;
+                case "array":
+                    break;
+                default:
+                    if ($newval)
+                    {
+                        $data .= "'{$key}' => '{$newval}',\n";
+                    }
+            }
         }
 
         return $data;
     }
+
+    function _detect_schema($key,$value)
+    {
+        $result = array
+        (
+            'title'       => $key,
+            'type'        => 'text',
+            'widget'      => 'text',
+        );
+
+        $type = gettype($value);
+
+        switch ($type)
+        {
+            case "boolean":
+                $result['type'] = 'boolean';
+                $result['widget'] = 'checkbox';
+
+                break;
+            case "array":
+                $result['widget'] = 'textarea';
+                break;
+            default:
+                if (ereg("\n",$value))
+                {
+                    $result['widget'] = 'textarea';
+                }
+
+        }
+
+
+        return $result;
+
+    }
+
+    function _draw_array($array)
+    {
+        foreach ($array as $key => $val)
+        {
+            switch(gettype($val))
+            {
+                case "boolean":
+                    $data .= ($val)?"    '{$key}' => true,\n":"'{$key}' => false,\n";
+                    break;
+                case "array":
+                    $data .= $this->_draw_array($val);
+                    break;
+
+                default:
+                    if (is_numeric($val))
+                    {
+                        $data .= "    '{$key}' => {$val},\n";
+                    }
+                    else
+                    {
+                        $data .= "    '{$key}' => '{$val}',\n";
+                    }
+            }
+
+        }
+        $result = "array(\n{$data}),\n";
+        return $result;
+    }
+
 }
 ?>
