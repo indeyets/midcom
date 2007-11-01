@@ -339,6 +339,9 @@ $GLOBALS['midcom_config_default']['auth_backend_simple_cookie_id'] = $host->guid
 $GLOBALS['midcom_config_default']['auth_backend_simple_cookie_path'] = $_MIDGARD['self'];
 $GLOBALS['midcom_config_default']['auth_backend_simple_cookie_domain'] = null;
 
+// Where to redirect the user after a successful login
+$GLOBALS['midcom_config_default']['login_redirect_url'] = $_MIDGARD['self'];
+
 // Cache configuration
 $GLOBALS['midcom_config_default']['cache_base_directory'] = '/tmp/';
 $GLOBALS['midcom_config_default']['cache_autoload_queue'] = Array('content', /*'nap', */ 'phpscripts', 'memcache');

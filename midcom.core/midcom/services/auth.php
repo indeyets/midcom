@@ -1587,13 +1587,13 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      */
     function & get_midgard_group_by_name($name,$sg_id=null)
     {
-		//$sg_id = $sg_id == null || !is_integer($sg_id) ? $_MIDGARD['sitegroup'] : $sg_id;
+        //$sg_id = $sg_id == null || !is_integer($sg_id) ? $_MIDGARD['sitegroup'] : $sg_id;
         $qb = new midgard_query_builder('midgard_group');
         $qb->add_constraint('name', '=', $name);
-		if (is_integer($sg_id))
-		{
-			$qb->add_constraint('sitegroup', '=', $sg_id);
-		}
+        if (is_integer($sg_id))
+        {
+            $qb->add_constraint('sitegroup', '=', $sg_id);
+        }
         $result = @$qb->execute();
         if (   ! $result
             || count($result) == 0)
@@ -2094,13 +2094,13 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     </head>
 
     <body onload="self.focus();document.midcom_services_auth_frontend_form.username.focus();">
-		<div id="container">
-			<div id="branding">
-				<div id="title"><h1>Midgard CMS</h1><h2><?php echo $title; ?></h2></div>
-				<div id="grouplogo"><a href="http://www.midgard-project.org/"><img src="<?php echo MIDCOM_STATIC_URL; ?>/midcom.services.auth/images/midgard-project.gif" width="104" height="104" /></a></div>
-			</div>
-			<div class="clear"></div>
-			<div id="content">
+        <div id="container">
+            <div id="branding">
+                <div id="title"><h1>Midgard CMS</h1><h2><?php echo $title; ?></h2></div>
+                <div id="grouplogo"><a href="http://www.midgard-project.org/"><img src="<?php echo MIDCOM_STATIC_URL; ?>/midcom.services.auth/images/midgard-project.gif" width="104" height="104" /></a></div>
+            </div>
+            <div class="clear"></div>
+            <div id="content">
                 <div id="login">
                     <?php
                     $_MIDCOM->auth->show_login_form();
@@ -2220,13 +2220,13 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     </head>
 
     <body onload="self.focus();document.midcom_services_auth_frontend_form.username.focus();">
-		<div id="container">
-			<div id="branding">
-				<div id="title"><h1>Midgard CMS</h1><h2><?php echo $title; ?></h2></div>
-				<div id="grouplogo"><a href="http://www.midgard-project.org/"><img src="<?php echo MIDCOM_STATIC_URL; ?>/midcom.services.auth/images/midgard-project.gif" width="104" height="104" /></a></div>
-			</div>
-			<div class="clear"></div>
-			<div id="content">
+        <div id="container">
+            <div id="branding">
+                <div id="title"><h1>Midgard CMS</h1><h2><?php echo $title; ?></h2></div>
+                <div id="grouplogo"><a href="http://www.midgard-project.org/"><img src="<?php echo MIDCOM_STATIC_URL; ?>/midcom.services.auth/images/midgard-project.gif" width="104" height="104" /></a></div>
+            </div>
+            <div class="clear"></div>
+            <div id="content">
                 <div id="login">
                     <?php
                     $_MIDCOM->auth->show_login_form();

@@ -76,6 +76,12 @@ class midcom_services_auth_frontend_form extends midcom_services_auth_frontend
         {
             ?>
             <form name="midcom_services_auth_frontend_form" method='post' id="midcom_services_auth_frontend_form">
+                <?php
+                if (@$GLOBALS['midcom_config']['login_redirect_url'])
+                {
+                    echo "                    <input type=\"hidden\" name=\"midcom_services_auth_login_success_url\" value=\"{$GLOBALS['midcom_config']['login_redirect']}\" />\n";
+                }
+                ?>
                 <label for="username">
                     <p><?php echo $_MIDCOM->i18n->get_string('username', 'midcom'); ?></p>
                     <input name="username" id="username" class="input" />
@@ -122,7 +128,5 @@ class midcom_services_auth_frontend_form extends midcom_services_auth_frontend
      * @ignore
      */
     function access_denied($reason) { die(__CLASS__ . '::' . __FUNCTION__ . ' must be overridden.'); }
-
 }
-
 ?>
