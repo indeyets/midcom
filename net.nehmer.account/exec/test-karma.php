@@ -16,6 +16,11 @@ $persons_array = array();
 
 foreach ($persons as $person)
 {
+    if (substr($person->firstname), 0, 7) == 'DELETE ')
+    {
+        continue;
+    }
+
     $karmas = $calculator->calculate_person($person, $cache);
     $karma_string = '';
     foreach ($karmas as $source => $karma)
