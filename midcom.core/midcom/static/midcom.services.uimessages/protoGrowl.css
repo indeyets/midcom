@@ -7,6 +7,7 @@ div.midcom-service-uimessages-protogrowl
   height: 108px;
   padding: 3px;
   z-index: 99999;
+  color: #000000 !important;
 }
 
 div.midcom-service-uimessages-protogrowl-type-ok,
@@ -15,6 +16,16 @@ div.midcom-service-uimessages-protogrowl-type-info,
 div.midcom-service-uimessages-protogrowl-type-error
 {
   background-image: url('images/bg.gif');
+  background-repeat: no-repeat;
+  background-position: top left;
+}
+
+html > body div.midcom-service-uimessages-protogrowl-type-ok,
+html > body div.midcom-service-uimessages-protogrowl-type-warning,
+html > body div.midcom-service-uimessages-protogrowl-type-info,
+html > body div.midcom-service-uimessages-protogrowl-type-error
+{
+  background-image: url('images/bg.png');
   background-repeat: no-repeat;
   background-position: top left;
 }
