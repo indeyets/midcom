@@ -243,6 +243,24 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
             $karma['groups'] = $this->count_groups($object->id) * $this->_config->get('karma_groups_modifier');
             $karma['karma'] += $karma['groups'];
         }
+        
+        $plugins = $this->_config->get('karma_plugins');
+        foreach ($plugins as $plugin => $plugin_config)
+        {
+            if (!is_callable($plugin_config['function']))
+            {
+                mgd_include_snippet_php($plugin_config['snippet']);
+            }
+            
+            if (!is_callable($plugin_config['function']))
+            {
+                // Skip
+                continue;
+            }
+            
+            $karma[$plugin] = @call_user_func($plugin_config['function'], $object);
+            $karma['karma'] += $karma[$plugin];            
+        }
        
         return $karma;
     }

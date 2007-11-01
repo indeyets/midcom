@@ -158,8 +158,8 @@
 'karma_buries_enable' => true,
 'karma_buries_modifier' => 1,
 'karma_wikicreates_enable' => true,
-'karma_wikicreates_modifier' => 2,
-'karma_wikiedits_enable' => true,
+'karma_wikicreates_modifier' => 4,
+'karma_wikiedits_enable' => false, // Note: This is slow as it uses RCS subsystem
 'karma_wikiedits_modifier' => 2,
 'karma_blogs_enable' => true,
 'karma_blogs_modifier' => 1,
@@ -172,3 +172,17 @@
 'karma_discussion_badpost_modifier' => -1,
 'karma_groups_enable' => true,
 'karma_groups_modifier' => 4,
+
+/**
+ * Karma plugins as array containing key, snippet path and function name
+ *
+ * The functions called will receive a person as parameter and must return an integer
+ */
+'karma_plugins' => array
+(
+    //'bugzilla' => array
+    //(
+    //    'snippet' => '/scripts/bugzilla_karma',
+    //    'function' => 'calculate_person_bugs', // Or array('someclass', 'somemethod') for static methods
+    //),
+),

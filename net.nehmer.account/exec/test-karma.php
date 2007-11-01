@@ -11,12 +11,13 @@ if (   isset($_GET['cache'])
 }
 
 $qb = midcom_db_person::new_query_builder();
+$qb->add_constraint('username', '<>', 'admin');
 $persons = $qb->execute();
 $persons_array = array();
 
 foreach ($persons as $person)
 {
-    if (substr($person->firstname), 0, 7) == 'DELETE ')
+    if (substr($person->firstname, 0, 7) == 'DELETE ')
     {
         continue;
     }
