@@ -95,6 +95,11 @@ div.person_toolbar ul li img
 {
     border: 0;
 }
+div.person_toolbar ul li button
+{
+    border: 0;
+    background: none;
+}
 
 div.vcard img.photo
 {
