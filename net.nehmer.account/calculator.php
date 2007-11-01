@@ -258,8 +258,13 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
                 continue;
             }
             
-            $karma[$plugin] = @call_user_func($plugin_config['function'], $object);
-            $karma['karma'] += $karma[$plugin];            
+            $value = @call_user_func($plugin_config['function'], $object);
+            if ($value === true)
+            {
+                $value = 0;
+            }
+            $karma[$plugin] = (int) $value;
+            $karma['karma'] += $karma[$plugin];
         }
        
         return $karma;
