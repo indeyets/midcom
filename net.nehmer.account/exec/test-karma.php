@@ -12,6 +12,7 @@ if (   isset($_GET['cache'])
 
 $qb = midcom_db_person::new_query_builder();
 $qb->add_constraint('username', '<>', 'admin');
+$qb->add_order('metadata.score', 'DESC');
 $persons = $qb->execute();
 $persons_array = array();
 
@@ -32,6 +33,8 @@ foreach ($persons as $person)
     $person->tmp = $karma_string;
     $persons_array[sprintf('%003d', $karmas['karma'])."_{$person->guid}"] = $person;
 }
+echo count($persons_array) . " persons processed.";
+/*
 krsort($persons_array);
 echo "<ul>\n";
 foreach ($persons_array as $person)
@@ -39,4 +42,5 @@ foreach ($persons_array as $person)
     echo "<li><a href=\"{$person->homepage}\">{$person->name}</a> ({$person->tmp})</li>\n";
 }
 echo "</ul>\n";
+*/
 ?>
