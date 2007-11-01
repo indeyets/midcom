@@ -3,6 +3,18 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING 1 day
+1 day
+---STRINGEND
+
+---STRING 1 month
+1 month
+---STRINGEND
+
+---STRING 1 week
+1 week
+---STRINGEND
+
 ---STRING ANONYMOUS
 Anonymous users
 ---STRINGEND
@@ -17,6 +29,10 @@ All users
 
 ---STRING add assignee
 Add group for privilege assignment
+---STRINGEND
+
+---STRING apply to selected
+Apply to selected
 ---STRINGEND
 
 ---STRING asgard
@@ -63,6 +79,10 @@ Delete %s %s
 Edit %s %s
 ---STRINGEND
 
+---STRING filter
+Filter
+---STRINGEND
+
 ---STRING folder
 folder
 ---STRINGEND
@@ -81,6 +101,10 @@ in %s
 
 ---STRING in fallback language
 In fallback language
+---STRINGEND
+
+---STRING info
+Info
 ---STRINGEND
 
 ---STRING last edited by %s on %s (revision %s)
@@ -135,6 +159,26 @@ Read
 Update
 ---STRINGEND
 
+---STRING no title
+No title
+---STRINGEND
+
+---STRING not approved
+Not approved
+---STRINGEND
+
+---STRING object %s approved
+Object %s approved
+---STRINGEND
+
+---STRING object %s removed
+Object %s removed
+---STRINGEND
+
+---STRING objects revised within
+Objects changed within
+---STRINGEND
+
 ---STRING owner
 Owner
 ---STRINGEND
@@ -179,50 +223,11 @@ Trash is empty
 Under %s
 ---STRINGEND
 
----STRING info
-Info
----STRINGEND
-
 ---STRING view on site
 View on-site
 ---STRINGEND
 
----STRING 1 day
-1 day
+---STRING asgard homepage
+Asgard Home
 ---STRINGEND
 
----STRING 1 week
-1 week
----STRINGEND
-
----STRING 1 month
-1 month
----STRINGEND
-
----STRING objects revised within
-Objects changed within
----STRINGEND
-
----STRING filter
-Filter
----STRINGEND
-
----STRING no title
-No title
----STRINGEND
-
----STRING not approved
-Not approved
----STRINGEND
-
----STRING apply to selected
-Apply to selected
----STRINGEND
-
----STRING object %s removed
-Object %s removed
----STRINGEND
-
----STRING object %s approved
-Object %s approved
----STRINGEND

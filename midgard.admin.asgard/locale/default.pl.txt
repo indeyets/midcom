@@ -3,6 +3,34 @@
 ---CVS $Id$
 ---LANGUAGE pl
 
+---STRING 1 day
+ostatniego dnia
+---STRINGEND
+
+---STRING 1 month
+ostatniego miesiąca
+---STRINGEND
+
+---STRING 1 week
+ostatniego tygodnia
+---STRINGEND
+
+---STRING ANONYMOUS
+Anonimy
+---STRINGEND
+
+---STRING EVERYONE
+Wszyscy
+---STRINGEND
+
+---STRING USERS
+Użytkownicy
+---STRINGEND
+
+---STRING add assignee
+Dodaj grupę
+---STRINGEND
+
 ---STRING asgard
 Asgard
 ---STRINGEND
@@ -13,6 +41,18 @@ Narzędzia
 
 ---STRING back to site
 Powrót do serwisu
+---STRINGEND
+
+---STRING content
+Treść
+---STRINGEND
+
+---STRING contentchanged
+Zmiana treści
+---STRINGEND
+
+---STRING contentowner
+Właściciel treści
 ---STRINGEND
 
 ---STRING create %s under %s
@@ -35,52 +75,8 @@ Usuń %s %s
 Edytuj %s %s
 ---STRINGEND
 
----STRING in %s
-w %s
----STRINGEND
-
----STRING in fallback language
-W języku podstawowym
----STRINGEND
-
----STRING last edited by %s on %s (revision %s)
-Ostatnia zmiana: %s przez %s (Wersja %s)
----STRINGEND
-
----STRING metadata of %s %s
-Metadane of %s %s
----STRINGEND
-
----STRING midgard objects
-Obiekty
----STRINGEND
-
----STRING midgard.admin.asgard
-Administracja Midgarda
----STRINGEND
-
----STRING parameters of %s %s
-Parametry %s %s
----STRINGEND
-
----STRING under %s
-W %s
----STRINGEND
-
----STRING ANONYMOUS
-Anonimy
----STRINGEND
-
----STRING EVERYONE
-Wszyscy
----STRINGEND
-
----STRING USERS
-Użytkownicy
----STRINGEND
-
----STRING add assignee
-Dodaj grupę
+---STRING filter
+Filtr
 ---STRINGEND
 
 ---STRING folder
@@ -95,8 +91,28 @@ Grupa %s
 GUID
 ---STRINGEND
 
+---STRING in %s
+w %s
+---STRINGEND
+
+---STRING in fallback language
+W języku podstawowym
+---STRINGEND
+
+---STRING info
+Info
+---STRINGEND
+
+---STRING last edited by %s on %s (revision %s)
+Ostatnia zmiana: %s przez %s (Wersja %s)
+---STRINGEND
+
 ---STRING manage object
 Zarządzaj obiektem
+---STRINGEND
+
+---STRING metadata of %s %s
+Metadane of %s %s
 ---STRINGEND
 
 ---STRING midcom:approve
@@ -107,8 +123,16 @@ Zatwierdź
 Konfiguracja
 ---STRINGEND
 
+---STRING midgard objects
+Obiekty
+---STRINGEND
+
 ---STRING midgard.admin.acl
 Edycja uprawnień
+---STRINGEND
+
+---STRING midgard.admin.asgard
+Administracja Midgarda
 ---STRINGEND
 
 ---STRING midgard:create
@@ -131,8 +155,36 @@ Odczyt
 Zapis
 ---STRINGEND
 
+---STRING no title
+Bez nazwy
+---STRINGEND
+
+---STRING not approved
+Nie zatwierdzone
+---STRINGEND
+
+---STRING object %s approved
+Obiekt %s został zatwierdzony
+---STRINGEND
+
+---STRING object %s removed
+Obiekt %s został usunięty
+---STRINGEND
+
+---STRING objects revised within
+Obiekty zmienione w ciągu
+---STRINGEND
+
+---STRING owner
+Właściciel
+---STRINGEND
+
 ---STRING parameter
 Paramtery
+---STRINGEND
+
+---STRING parameters of %s %s
+Parametry %s %s
 ---STRINGEND
 
 ---STRING permissions for %s %s
@@ -157,5 +209,21 @@ Ten typ należy do komponentu %s
 
 ---STRING topic privileges
 Uprawnienia folderu
+---STRINGEND
+
+---STRING trash is empty
+Kosz jest pusty
+---STRINGEND
+
+---STRING under %s
+W %s
+---STRINGEND
+
+---STRING view on site
+Pokaż w serwisie
+---STRINGEND
+
+---STRING asgard homepage
+Asgard Home
 ---STRINGEND
 
