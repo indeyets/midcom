@@ -79,7 +79,7 @@ class midcom_services_auth_frontend_form extends midcom_services_auth_frontend
                 <?php
                 if (@$GLOBALS['midcom_config']['login_redirect_url'])
                 {
-                    echo "                    <input type=\"hidden\" name=\"midcom_services_auth_login_success_url\" value=\"{$GLOBALS['midcom_config']['login_redirect']}\" />\n";
+                    echo "                    <input type=\"hidden\" name=\"midcom_services_auth_login_success_url\" value=\"{$GLOBALS['midcom_config']['login_redirect_url']}\" />\n";
                 }
                 ?>
                 <label for="username">
