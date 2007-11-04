@@ -606,7 +606,11 @@ class midcom_services_i18n
                 $lang = array_shift($params);
                 
                 //Fix for Safari
-                $lang = array_shift(explode("-",$lang));
+                if (isset($_SERVER['HTTP_USER_AGENT']) 
+	                && strstr($_SERVER['HTTP_USER_AGENT'], 'Safari'))
+                {
+	                $lang = array_shift(explode("-",$lang));
+                }
                 
                 $q = 1.0;
                 $option = array_shift($params);
