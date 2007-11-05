@@ -2397,6 +2397,17 @@ class midcom_application
         }
         $path .= $this->_parser->argv[0];
 
+        if (   is_dir($path)
+            && isset($this->_parser->argv[1]))
+        {
+            $path .= '/' . $this->_parser->argv[1];
+        }
+
+        if (is_dir($path))
+        {
+            $this->generate_error(MIDCOM_ERRNOTFOUND, "File is a directory.");
+        }
+
         if (! file_exists($path))
         {
             $this->generate_error(MIDCOM_ERRNOTFOUND, "File not found.");
