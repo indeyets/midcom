@@ -89,6 +89,7 @@ class net_nemein_reservations_handler_reservation_create extends midcom_baseclas
      */
     function _on_initialize()
     {
+        $_MIDCOM->componentloader->load('org.openpsa.mail');
     }
 
     /**
@@ -311,6 +312,12 @@ class net_nemein_reservations_handler_reservation_create extends midcom_baseclas
                 {
                     $_MIDCOM->auth->drop_sudo();
                 }
+                
+                if ($email = $this->_event->get_parameter('midcom.helper.datamanager2', 'email'))
+                {
+                    $this->_send_notification($email);
+                }
+                
                 $_MIDCOM->relocate("reservation/{$this->_event->guid}/");
                 // this will exit.
 
@@ -332,6 +339,34 @@ class net_nemein_reservations_handler_reservation_create extends midcom_baseclas
         $this->_update_breadcrumb_line($handler_id);
 
         return true;
+    }
+    
+    function _send_notification($email)
+    {
+        if ($this->_config->get('new_reservation_email'))
+        {
+            $mail = new org_openpsa_mail();
+            $mail->to = $email;
+            $mail->from = $this->_config->get('new_reservation_email');
+            $mail->reply = $this->_config->get('new_reservation_email_reply');
+            $mail->cc = $this->_config->get('new_reservation_email');
+            $mail->bcc = $this->_config->get('new_reservation_email_bcc');
+            $mail->subject = $this->_replace($this->_config->get('new_reservation_email_title'));
+            $mail->body = $this->_replace($this->_config->get('new_reservation_email_body'));
+            
+            return $mail->send();
+        }
+    }
+    
+    function _replace($string)
+    {
+        $result = str_replace('__RESERVATION_name__', $this->_event->title, $string);
+        $result = str_replace('__RESOURCE_name__', $this->_resource->title, $result);
+        $result = str_replace('__ISOSTART__', date("d.m.y", $this->_event->start), $result);
+        $result = str_replace('__ISOEND__', date("d.m.y", $this->_event->end), $result);
+        $result = str_replace('__RESERVATION__', $this->_event->description, $result);
+    
+        return $result;
     }
 
     /**

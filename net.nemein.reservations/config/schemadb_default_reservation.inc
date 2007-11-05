@@ -11,6 +11,13 @@
             'widget' => 'text',
             'required' => true,
         ),
+        'email' => Array
+        (
+            'title' => 'email',
+            'storage' => 'parameter',
+            'type' => 'text',
+            'widget' => 'text',
+        ),  
         'start' => Array
         (
             // COMPONENT-REQUIRED

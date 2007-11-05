@@ -81,6 +81,54 @@
                 'true' => 'yes',
                 'false' => 'no',
             ),
+            'end_fieldgroup' => '',
         ),
+        'new_reservation_email' => array
+        (
+            'description' => 'new_reservation_email',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nemein.reservations',
+            'config_key' => 'new_reservation_email',
+            'start_fieldgroup' => array
+            (
+                'title' => 'New reservation email notification',
+            ),
+        ),
+        'new_reservation_email_reply' => array
+        (
+            'description' => 'new_reservation_email_reply',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nemein.reservations',
+            'config_key' => 'new_reservation_email_reply',
+        ),
+        'new_reservation_email_bcc' => array
+        (
+            'description' => 'new_reservation_email_bcc',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nemein.reservations',
+            'config_key' => 'new_reservation_email_bcc',
+        ),
+        'new_reservation_email_title' => array
+        (
+            'description' => 'new_reservation_email_title',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nemein.reservations',
+            'config_key' => 'new_reservation_email_title',
+        ),
+        'new_reservation_email_body' => array
+        (
+            'description' => 'new_reservation_email_body',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nemein.reservations',
+            'config_key' => 'new_reservation_email_body',
+            'widget' => 'html',
+            'helptext'  => 'new_reservation_email_body',
+            'end_fieldgroup' => '',
+        ),   
     ),
 ),
