@@ -49,11 +49,11 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
      */
     function &_root_objects_qb(&$deleted)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         $schema_type =& $this->_mgdschema_class;
         $root_classes = midgard_admin_asgard_reflector_tree::get_root_classes();
         if (!in_array($schema_type, $root_classes))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Type {$schema_type} is not a \"root\" type", MIDCOM_LOG_ERROR);
             debug_pop();
             $x = false;
@@ -71,6 +71,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
             $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($this->_dummy_object);
             if (empty($midcom_dba_classname))
             {
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("MidCOM DBA does not know how to handle {$schema_type}", MIDCOM_LOG_ERROR);
                 debug_pop();
                 $x = false;
@@ -78,6 +79,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
             }
             if (!$_MIDCOM->dbclassloader->load_mgdschema_class_handler($midcom_dba_classname))
             {
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Failed to load the handling component for {$midcom_dba_classname}, cannot continue.", MIDCOM_LOG_ERROR);
                 debug_pop();
                 $x = false;
@@ -86,6 +88,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
             $qb_callback = array($midcom_dba_classname, 'new_query_builder');
             if (!is_callable($qb_callback))
             {
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Static method {$midcom_dba_classname}::new_query_builder() is not callable", MIDCOM_LOG_ERROR);
                 debug_pop();
                 $x = false;
@@ -97,6 +100,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         // Sanity-check
         if (!$qb)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Could not get QB for type '{$schema_type}'", MIDCOM_LOG_ERROR);
             debug_pop();
             $x = false;
@@ -136,7 +140,6 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
                     return false;
             }
         }
-        debug_pop();
         return $qb;
     }
 
@@ -149,11 +152,11 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
      */
     function count_root_objects($deleted = false)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         // Check against static calling
         if (   !isset($this->_mgdschema_class)
             || empty($this->_mgdschema_class))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('May not be called statically', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -162,6 +165,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         if (   $deleted
             && !$_MIDGARD['admin'])
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Non-admins are not allowed to list deleted objects', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -170,13 +174,13 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         $qb = $this->_root_objects_qb($deleted);
         if (!$qb)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Could not get QB instance', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
 
         $count = $qb->count();
-        debug_pop();
         return $count;
     }
 
@@ -196,11 +200,11 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
      */
     function get_root_objects($deleted = false)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         // Check against static calling
         if (   !isset($this->_mgdschema_class)
             || empty($this->_mgdschema_class))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('May not be called statically', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -209,6 +213,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         if (   $deleted
             && !$_MIDGARD['admin'])
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Non-admins are not allowed to list deleted objects', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -217,6 +222,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         $qb = $this->_root_objects_qb($deleted);
         if (!$qb)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Could not get QB instance', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -224,7 +230,6 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
 
         $objects = $qb->execute();
 
-        debug_pop();
         return $objects;
     }
 
@@ -242,11 +247,11 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
      */
     function count_child_objects(&$object, $deleted = false)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         // PONDER: Check for some generic user privilege instead  ??
         if (   $deleted
             && !$_MIDGARD['admin'])
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Non-admins are not allowed to list deleted objects', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -254,6 +259,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         $resolver = new midgard_admin_asgard_reflector_tree($object);
         if (!$resolver)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Could not instantiate midgard_admin_asgard_reflector_tree from \$object", MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -261,6 +267,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         $child_classes = $resolver->get_child_classes();
         if (!$child_classes)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('resolver returned false (critical failure) from get_child_classes()', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -271,7 +278,6 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         {
             $child_counts[$schema_type] = $this->_count_child_objects_type($schema_type, $object, $deleted);
         }
-        debug_pop();
         return $child_counts;
     }
 
@@ -288,7 +294,6 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
      */
     function get_parent(&$object)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         $parent_object = false;
         $dba_parent_callback = array($object, 'get_parent');
         if (is_callable($dba_parent_callback))
@@ -302,8 +307,6 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         }
         if (!empty($parent_object))
         {
-            debug_add('Got parent from MidCOM DBA');
-            debug_pop();
             return $parent_object;
         }
         
@@ -317,6 +320,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         if (   !empty($up_property)
             && !empty($object->$up_property))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Checking if we can get something with up property {$up_property} (value: {$object->$up_property})");
             $parent_object = $resolver->_get_parent_objectresolver($object, $up_property);
             if (!empty($parent_object))
@@ -334,6 +338,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         if (   !empty($parent_property)
             && !empty($object->$parent_property))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Checking if we can get something with parent property {$parent_property} (value: {$object->$parent_property})");
             $parent_object = $resolver->_get_parent_objectresolver($object, $parent_property);
             if (!empty($parent_object))
@@ -354,7 +359,6 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
 
     function _get_parent_objectresolver(&$object, &$property)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         $ref =& $this->_mgd_reflector;
         $target_class = $ref->get_link_name($property);
         $dummy_object = new $target_class();
@@ -363,14 +367,13 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         {
             if (!$_MIDCOM->dbclassloader->load_mgdschema_class_handler($midcom_dba_classname))
             {
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Failed to load the handling component for {$midcom_dba_classname}, cannot continue.", MIDCOM_LOG_ERROR);
                 debug_pop();
                 return false;
             }
-            debug_add("Trying to instantiate: new {$midcom_dba_classname}({$object->$property})");
             // DBA classes can supposedly handle their own typecasts correctly
             $parent_object = new $midcom_dba_classname($object->$property);
-            debug_pop();
             return $parent_object;
         }
         debug_add("MidCOM DBA does not know how to handle {$schema_type}, falling back to pure MgdSchema", MIDCOM_LOG_WARN);
@@ -380,21 +383,19 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         {
             case MGD_TYPE_STRING:
             case MGD_TYPE_GUID:
-                debug_add("Trying to instantiate: new {$target_class}((string){$object->$property})");
                 $parent_object = new $target_class((string)$object->$property);
                 break;
             case MGD_TYPE_INT:
             case MGD_TYPE_UINT:
-                debug_add("Trying to instantiate: new {$target_class}((int){$object->$property})");
                 $parent_object = new $target_class((int)$object->$property);
                 break;
             default:
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Do not know how to handle linktype {$linktype}", MIDCOM_LOG_ERROR);
                 debug_pop();
                 return false;
         }
 
-        debug_pop();
         return $parent_object;
     }
 
@@ -408,11 +409,11 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
      */
     function get_child_objects(&$object, $deleted = false)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         // PONDER: Check for some generic user privilege instead  ??
         if (   $deleted
             && !$_MIDGARD['admin'])
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Non-admins are not allowed to list deleted objects', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -420,6 +421,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         $resolver = new midgard_admin_asgard_reflector_tree($object);
         if (!$resolver)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Could not instantiate midgard_admin_asgard_reflector_tree from \$object", MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -427,6 +429,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         $child_classes = $resolver->get_child_classes();
         if (!$child_classes)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('resolver returned false (critical failure) from get_child_classes()', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -445,7 +448,6 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
             $child_objects[$schema_type] = $type_children;
             unset($type_children);
         }
-        debug_pop();
         return $child_objects;
     }
 
@@ -456,7 +458,6 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
      */
     function _child_objects_type_qb(&$schema_type, &$for_object, &$deleted)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         if ($deleted)
         {
             $qb = new midgard_query_builder($schema_type);
@@ -469,6 +470,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
             $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($dummy_object);
             if (empty($midcom_dba_classname))
             {
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("MidCOM DBA does not know how to handle {$schema_type}", MIDCOM_LOG_ERROR);
                 debug_pop();
                 $x = false;
@@ -476,6 +478,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
             }
             if (!$_MIDCOM->dbclassloader->load_mgdschema_class_handler($midcom_dba_classname))
             {
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Failed to load the handling component for {$midcom_dba_classname}, cannot continue.", MIDCOM_LOG_ERROR);
                 debug_pop();
                 $x = false;
@@ -484,6 +487,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
             $qb_callback = array($midcom_dba_classname, 'new_query_builder');
             if (!is_callable($qb_callback))
             {
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Static method {$midcom_dba_classname}::new_query_builder() is not callable", MIDCOM_LOG_ERROR);
                 debug_pop();
                 $x = false;
@@ -495,6 +499,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         // Sanity-check
         if (!$qb)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Could not get QB for type '{$schema_type}'", MIDCOM_LOG_ERROR);
             debug_pop();
             $x = false;
@@ -538,6 +543,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
                     $qb->add_constraint($upfield, '=', (int)$for_object->$uptarget);
                     break;
                 default:
+                    debug_push_class(__CLASS__, __FUNCTION__);
                     debug_add("Do not know how to handle upfield '{$upfield}' has type {$uptype}", MIDCOM_LOG_ERROR);
                     debug_pop();
                     $qb->end_group();
@@ -560,6 +566,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
                         $qb->add_constraint($parentfield, '=', (int)$for_object->$parenttarget);
                     break;
                 default:
+                    debug_push_class(__CLASS__, __FUNCTION__);
                     debug_add("Do not know how to handle parentfield '{$parentfield}' has type {$parenttype}", MIDCOM_LOG_ERROR);
                     debug_pop();
                     $qb->end_group();
@@ -569,7 +576,6 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         $qb->end_group();
         // TODO: /Review this code
         
-        debug_pop();
         return $qb;
     }
 
@@ -581,16 +587,15 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
      */
     function _get_child_objects_type(&$schema_type, &$for_object, &$deleted)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         $qb = $this->_child_objects_type_qb($schema_type, $for_object, $deleted);
         if (!$qb)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Could not get QB instance', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
         $objects = $qb->execute();
-        debug_pop();
         return $objects;
     }
 
@@ -602,16 +607,15 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
      */
     function _count_child_objects_type(&$schema_type, &$for_object, &$deleted)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         $qb = $this->_child_objects_type_qb($schema_type, $for_object, $deleted);
         if (!$qb)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Could not get QB instance', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
         $count = $qb->count();
-        debug_pop();
         return $count;
     }
 
@@ -622,11 +626,11 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
      */
     function get_child_classes()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         // Check against static calling
         if (   !isset($this->_mgdschema_class)
             || empty($this->_mgdschema_class))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('May not be called statically', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -641,7 +645,6 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         {
             $child_classes = $this->_resolve_child_classes();
         }
-        debug_pop();
         return $child_classes;
     }
 
@@ -652,11 +655,11 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
      */
     function _resolve_child_classes()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         // Check against static calling
         if (   !isset($this->_mgdschema_class)
             || empty($this->_mgdschema_class))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('May not be called statically', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -676,7 +679,6 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         
         // TODO: handle exceptions
         
-        debug_pop();
         return $child_classes;
     }
 
@@ -829,8 +831,5 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         debug_pop();
         return $root_classes;
     }
-
 }
-
-
 ?>

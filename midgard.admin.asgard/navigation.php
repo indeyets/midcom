@@ -198,12 +198,12 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         {
             $this->_request_data['section_url'] = "{$_MIDGARD['self']}__mfa/asgard_{$component}/";
             $this->_request_data['section_name'] = $_MIDCOM->i18n->get_string($plugin_config['name'], $component);
-		    $class = $plugin_config['class'];
+            $class = $plugin_config['class'];
             midcom_show_style('midgard_admin_asgard_navigation_section_header');
 
             $methods = get_class_methods($class);
-		    if (   is_array($methods)
-		        && in_array('navigation', $methods)
+            if (   is_array($methods)
+                && in_array('navigation', $methods)
                 && ($this->_request_data['plugin_name'] == "asgard_{$component}"))
             {
                 eval("{$class}::navigation();");
@@ -248,7 +248,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
             midcom_show_style('midgard_admin_asgard_navigation_section_header');
             if (   isset($root_object)
                 && (is_a($root_object, $root_type)
-                	|| midgard_admin_asgard_reflector::is_same_class($root_type,$root_object->__midcom_class_name__))
+                    || midgard_admin_asgard_reflector::is_same_class($root_type,$root_object->__midcom_class_name__))
                 || in_array($root_type, $this->expanded_root_types))
             {
                 $root_objects = $ref->get_root_objects();
@@ -299,5 +299,4 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         }
     }
 }
-
 ?>
