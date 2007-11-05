@@ -34,6 +34,12 @@
             'email' => 'arttu@kaktus.cc',
             'role' => 'developer',
         ),
+        'w_i' => array
+        (
+            'name' => 'Jerry Jalava',
+            'email' => 'jerry.jalava@gmail.com',
+            'role' => 'lead',
+        ),
     ),
     'dependencies' => array
     (
