@@ -56,7 +56,7 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
     /**
      * Import the previously parsed body as post
      */
-    function import($strict_parent = true, $force = false)
+    function import($strict_parent = true, $force = false, $duplicate_is_fatal = true)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         if (!is_a($this->parsed, 'org_openpsa_mail'))
@@ -78,6 +78,12 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
         if (   !empty($duplicate)
             && !$force)
         {
+            if (!$duplicate_is_fatal)
+            {
+                debug_add("Found duplicate post #{$duplicate->id} for message-id '{$mail->headers['Message-Id']}', but configured as not-fatal, silently ignoring", MIDCOM_LOG_INFO);
+                debug_pop();
+                return true;
+            }
             debug_add("Found duplicate post #{$duplicate->id} for message-id '{$mail->headers['Message-Id']}', aborting (hint: use force)", MIDCOM_LOG_ERROR);
             debug_pop();
             return false;

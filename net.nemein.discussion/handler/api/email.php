@@ -131,7 +131,7 @@ class net_nemein_discussion_handler_api_email extends midcom_baseclasses_compone
             // TODO: Error reporting
             return false;
         }
-        if (!$importer->import($this->_config->get('api_email_strict_parent'), $this->_config->get('api_email_use_force')))
+        if (!$importer->import($this->_config->get('api_email_strict_parent'), $this->_config->get('api_email_use_force'), $this->_config->get('api_email_duplicate_is_fatal')))
         {
             // TODO: Error reporting
             return false;
