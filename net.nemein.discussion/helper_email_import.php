@@ -56,7 +56,7 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
     /**
      * Import the previously parsed body as post
      */
-    function import($strict_parent = true, $force = false, $duplicate_is_fatal = true)
+    function import($strict_parent = true, $force = false, $duplicate_is_fatal = true)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         if (!is_a($this->parsed, 'org_openpsa_mail'))
