@@ -74,12 +74,20 @@ class midcom_helper_datamanager2_widget_images extends midcom_helper_datamanager
      */
     var $_elements = null;
 
-	/**
-	 * Should the user be able to set the filename and title on upload?
-	 * If so , set this to true. 
-	 * @var boolean
-	 */
-	var $set_name_and_title_on_upload = true;
+    /**
+     * Should the user be able to set the filename and title on upload?
+     * If so , set this to true. 
+     * @var boolean
+     */
+    var $set_name_and_title_on_upload = true;
+
+    /**
+     * Maximum amount of images allowed to be stored in the same field
+     * 
+     * @access public
+     * @var integer
+     */
+    var $max_count = 0;
 
     /**
      * The initialization event handler post-processes the maxlength setting.
@@ -97,29 +105,30 @@ class midcom_helper_datamanager2_widget_images extends midcom_helper_datamanager
             return false;
         }
 
-		
+        
 
-		$_MIDCOM->add_jscript($this->_get_filename_validation_script());
+        $_MIDCOM->add_jscript($this->_get_filename_validation_script());
 
         return true;
     }
     
-    function _get_filename_validation_script() {
-    	return <<<END
+    function _get_filename_validation_script()
+    {
+        return <<<END
 function midcom_helper_dm2_widget_images_check(evt, id) {
-	evt = (evt) ? evt: ( (window.event) ? event : null);
-	var obj,reg, msg;
-	if (evt) {
-		reg = /\.(png|gif|jpe?g|tiff?)$/;
-		obj = (evt.target) ? evt.target : evt.srcElement;
-		if (!obj.value.match(reg)) {
-			obj.style.color = "red";
-			msg = document.getElementById(id);
-			msg.style.display = "block";
-		}
-	}
+    evt = (evt) ? evt: ( (window.event) ? event : null);
+    var obj,reg, msg;
+    if (evt) {
+        reg = /\.(png|gif|jpe?g|tiff?)$/;
+        obj = (evt.target) ? evt.target : evt.srcElement;
+        if (!obj.value.match(reg)) {
+            obj.style.color = "red";
+            msg = document.getElementById(id);
+            msg.style.display = "block";
+        }
+    }
 }
-	
+    
 END;
     }
 
@@ -159,6 +168,13 @@ END;
      */
     function _add_new_upload_row_old($frozen)
     {
+        // Show only a configured amount of new image rows
+        if (   $this->max_count
+            && count($this->_type->images) >= $this->max_count)
+        {
+            return;
+        }
+        
         // Filename column
         $html = "<tr >\n" .
                 "<td class='new filename'>";
@@ -212,8 +228,15 @@ END;
      * @param bool $frozen Set this to true, if you want to skip all elements which cannot be frozen.
      * @access private
      */
-	function _add_new_upload_row($frozen)
+    function _add_new_upload_row($frozen)
     {
+        // Show only a configured amount of new image rows
+        if (   $this->max_count
+            && count($this->_type->images) >= $this->max_count)
+        {
+            return;
+        }
+        
         // Filename column
         $html = "<tr >\n" .
                 "<td class='new text' colspan='1'>";
@@ -356,7 +379,7 @@ END;
                 'id'    => "{$this->_namespace}{$this->name}_e_exist_{$identifier}_upload",
             );
             $this->_elements["e_exist_{$identifier}_upload"] =& HTML_QuickForm::createElement('submit', "{$this->name}_e_exist_{$identifier}_upload", $this->_l10n->get('replace file'), $attributes);
-			            
+                        
             $attributes = Array
             (
                 'class' => 'exist delete',
@@ -364,8 +387,8 @@ END;
             );
             $this->_elements["e_exist_{$identifier}_delete"] =& HTML_QuickForm::createElement('submit', "{$this->name}_e_exist_{$identifier}_delete", $this->_l10n->get('delete file'), $attributes);
             $html = sprintf("<span id='e_exist_{$identifier}_delete' style='display:none;color:red'>%s</span>",
-            				$this->_l10n_midcom->get('You can only upload images here. This file will not be saved.')
-            				);
+                            $this->_l10n_midcom->get('You can only upload images here. This file will not be saved.')
+                            );
             $this->_elements["s_exist_{$identifier}_error"] =& HTML_QuickForm::createElement('static', "s_exist_{$identifier}_upload", '', $html);
         }
 
@@ -414,9 +437,11 @@ END;
         }
         if ($this->set_name_and_title_on_upload) 
         {
-        	$this->_add_new_upload_row_old($frozen);
-        } else {
-        	$this->_add_new_upload_row($frozen);
+            $this->_add_new_upload_row_old($frozen);
+        }
+        else
+        {
+            $this->_add_new_upload_row($frozen);
         }
         $this->_add_table_footer($frozen);
     }
@@ -439,19 +464,19 @@ END;
         {
             $file = $this->_elements['e_new_file']->getValue();
 
-        	if ( preg_match('/\.(zip|tar(\.gz|\.bz2)?|tgz)$/', strtolower($file['name']), $extension_matches))
-        	{
-            	// PHP5-TODO: This must be copy-by-value
-            	$copy = $file;
-            	unset($file);
-            	if (! $this->_type->_batch_handler($extension_matches[1], $copy))
-				{
-					debug_push_class(__CLASS__, __FUNCTION__);
-					debug_add("Failed to add attachments from compressed files to the field '{$this->name}'. Ignoring silently.", MIDCOM_LOG_WARN);
-					debug_pop();
-				}
-				return;
-        	}
+            if ( preg_match('/\.(zip|tar(\.gz|\.bz2)?|tgz)$/', strtolower($file['name']), $extension_matches))
+            {
+                // PHP5-TODO: This must be copy-by-value
+                $copy = $file;
+                unset($file);
+                if (! $this->_type->_batch_handler($extension_matches[1], $copy))
+                {
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("Failed to add attachments from compressed files to the field '{$this->name}'. Ignoring silently.", MIDCOM_LOG_WARN);
+                    debug_pop();
+                }
+                return;
+            }
 
             
             if (   array_key_exists('e_new_title', $values)
@@ -515,7 +540,8 @@ END;
                 debug_pop();
             }
         }
-        else if (   array_key_exists("e_exist_{$identifier}_file", $this->_elements)
+        else if
+        (   array_key_exists("e_exist_{$identifier}_file", $this->_elements)
                  && $this->_elements["e_exist_{$identifier}_file"]->isUploadedFile())
         {
             $file = $this->_elements["e_exist_{$identifier}_file"]->getValue();
@@ -534,7 +560,8 @@ END;
                 debug_pop();
             }
         }
-        else if (   array_key_exists("e_exist_{$identifier}_title", $values)
+        else if
+        (   array_key_exists("e_exist_{$identifier}_title", $values)
                  && isset($this->_type->images[$identifier]['main'])
                  && isset($this->_type->images[$identifier]['main']['description'])
                  && $values["e_exist_{$identifier}_title"] != $this->_type->images[$identifier]['main']['description'])
@@ -618,5 +645,4 @@ END;
         return Array ($this->name => $defaults);
     }
 }
-
 ?>
