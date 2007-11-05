@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING back to %s
+Takaisin sivulle "%s"
+---STRINGEND
+
 ---STRING changes done in revision %s to %s
 Version %s muutokset tietueeseen %s
 ---STRINGEND
@@ -15,12 +19,24 @@ Muutokset versiosta %s
 Päivämäärä
 ---STRINGEND
 
+---STRING differences between %s and %s
+Versioiden %s ja %s väliset erot
+---STRINGEND
+
+---STRING differences between versions %s and %s
+Versioiden %s ja %s väliset erot
+---STRINGEND
+
 ---STRING lines
 Rivit
 ---STRINGEND
 
 ---STRING message
 Viesti
+---STRINGEND
+
+---STRING no changes in content
+Sisällössä ei muutoksia
 ---STRINGEND
 
 ---STRING no.bergfald.rcs
@@ -51,6 +67,10 @@ Muutoshistoria tietueelle %s
 Näytä versiohistoria
 ---STRINGEND
 
+---STRING title
+Otsikko
+---STRINGEND
+
 ---STRING user
 Käyttäjä
 ---STRINGEND
@@ -75,7 +95,7 @@ Näytä tämä versio (%s)
 Versio %s tietueesta %s
 ---STRINGEND
 
----STRING back to %s
-Takaisin sivulle "%s"
+---STRING show differences
+Näytä erot
 ---STRINGEND
 

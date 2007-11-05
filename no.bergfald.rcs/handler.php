@@ -420,9 +420,14 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         $this->_request_data['diff'] = $this->_backend->get_diff($args[1], $args[2]);
 
         $this->_request_data['comment'] = $this->_backend->get_comment($args[2]);
-                
+        
+        // Set the version numbers
+        $this->_request_data['earlier_revision'] = $this->_backend->get_prev_version($args[1]);
         $this->_request_data['previous_revision'] = $args[1]; 
         $this->_request_data['latest_revision'] = $args[2]; 
+        $this->_request_data['next_revision']  = $this->_backend->get_next_version($args[2]);
+        
+        $this->_request_data['guid'] = $args[0];
 
         $this->_request_data['view_title'] = sprintf($_MIDCOM->i18n->get_string('changes done in revision %s to %s', 'no.bergfald.rcs'), $this->_request_data['latest_revision'], $this->_resolve_object_title());
         $_MIDCOM->set_pagetitle($this->_request_data['view_title']);
@@ -440,11 +445,14 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);   
         
-        
         debug_pop();
         return true;
         
     }
+    
+    /**
+     * Show the differences between the versions
+     */
     function _show_diff() 
     {
         if (!$this->_request_data['libs_ok']) 
@@ -489,6 +497,12 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);   
         
+        // Set the version numbers
+        $this->_request_data['previous_revision'] = $this->_backend->get_prev_version($args[1]);
+        $this->_request_data['latest_revision'] = $args[1];
+        $this->_request_data['next_revision']  = $this->_backend->get_next_version($args[1]);
+        $this->_request_data['guid'] = $args[0];
+        
         debug_pop();
         return true;
     }
@@ -527,6 +541,5 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, sprintf($_MIDCOM->i18n->get_string('restore to version %s failed, reason %s', 'no.bergfald.rcs'), $args[1], $this->_backend->get_error()));
         }
     } 
-    
 }
 ?>

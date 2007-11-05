@@ -19,12 +19,24 @@ Changes from version %s
 Date
 ---STRINGEND
 
+---STRING differences between %s and %s
+Differences between %s and %s
+---STRINGEND
+
+---STRING differences between versions %s and %s
+Differences between versions %s and %s
+---STRINGEND
+
 ---STRING lines
 Lines
 ---STRINGEND
 
 ---STRING message
 Message
+---STRINGEND
+
+---STRING no changes in content
+No changes in content
 ---STRINGEND
 
 ---STRING no.bergfald.rcs
@@ -55,6 +67,10 @@ Revision history of %s
 Show revision history
 ---STRINGEND
 
+---STRING title
+Title
+---STRINGEND
+
 ---STRING user
 User
 ---STRINGEND
@@ -77,5 +93,9 @@ View this revision (%s)
 
 ---STRING viewing version %s of %s
 Version %s of %s
+---STRINGEND
+
+---STRING show differences
+Show differences
 ---STRINGEND
 
