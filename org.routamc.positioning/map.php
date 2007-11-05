@@ -290,6 +290,8 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
 		$title = htmlspecialchars($marker['title'],ENT_QUOTES);
         $script .= "marker_{$i}.setLabel('{$title}');\n";
         
+        $script .= "marker_{$i}.setIcon('" . MIDCOM_STATIC_URL . "/org.routamc.positioning/pin-regular.png');\n";
+        
         if (isset($marker['abstract']))
         {
 			$abstract = htmlspecialchars($marker['abstract'],ENT_QUOTES);
