@@ -328,7 +328,17 @@ class org_maemo_devcodes_handler_code_assign extends midcom_baseclasses_componen
             $countries = $this->_expand_areas($this->_area);
             $qb->add_constraint('applicant.country', 'IN', $countries);
         }
+        // Order by applicants karma first and application date second
+        /* Creates broken SQL in 1.8.4
+        $qb->add_order('applicant.metadata.score', 'DESC');
+        $qb->add_order('metadata.created', 'ASC');
+        */
+
+        //mgd_debug_start();
         $data['applications'] = $qb->execute();
+        // See above on why we can't sort on QB level
+        uasort($data['applications'], array($this, 'sort_by_applicant_karma'));
+        //mgd_debug_stop();
 
         $data['title'] = sprintf($this->_l10n->get('assign codes for %s in %s'), $this->_device->title, $this->_area_title);
         $tmp = Array();
@@ -360,6 +370,43 @@ class org_maemo_devcodes_handler_code_assign extends midcom_baseclasses_componen
 
 
         return true;
+    }
+
+    /** 
+     * Used to sort the $data['applications'] array by applicants karma
+     * 
+     * Done this way since we can't sort by linked metadata in 1.8.4
+     */
+    function sort_by_applicant_karma($a, $b)
+    {
+        /**
+         * We need these persons in any case, and collector has issues
+         * with getting values from metadata.xxx
+         */
+        $a_applicant =& org_openpsa_contacts_person::get_cached($a->applicant);
+        $a_karma =& $a_applicant->metadata->score;
+        $b_applicant =& org_openpsa_contacts_person::get_cached($b->applicant);
+        $b_karma =& $b_applicant->metadata->score;
+        // Higher karma comes first
+        if ($a_karma > $b_karma)
+        {
+            return -1;
+        }
+        if ($a_karma < $b_karma)
+        {
+            return 1;
+        }
+        // Equal karma means first come -> first serve
+        if ($a->metadata->created > $b->metadata->created)
+        {
+            return 1;
+        }
+        if ($a->metadata->created < $b->metadata->created)
+        {
+            return -1;
+        }
+        // And last we don't know what to do (unlikely...)
+        return 0;
     }
 
     /**
