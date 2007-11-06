@@ -322,9 +322,15 @@ class midcom_services_indexer_solrRequest {
         $this->code = $this->request->getResponseCode();
         debug_add("Got response code {$this->code}, body\n===\n" . $this->request->getResponseBody() . "\n===\n");
 
-        if ($this->code != 200 || PEAR :: isError($err))
+        if (   $this->code != 200
+            || PEAR :: isError($err))
         {
-            debug_add("Failed to execute Request {$url}:{$this->code} {$err}", MIDCOM_LOG_WARN); 
+            $errstr = '';
+            if (is_a($err, 'PEAR_Error'))
+            {
+                $errstr = $err->getMessage();
+            }
+            debug_add("Failed to execute Request {$url}:{$this->code} {$errstr}", MIDCOM_LOG_WARN); 
             debug_add("Request content: \n$xml", MIDCOM_LOG_DEBUG);
             debug_pop();
             return false;
