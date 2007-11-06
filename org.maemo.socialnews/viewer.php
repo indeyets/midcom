@@ -43,6 +43,13 @@ class org_maemo_socialnews_viewer extends midcom_baseclasses_components_request
         (
             'handler' => Array('org_maemo_socialnews_handler_index', 'index'),
         );
+
+        // Handle /main
+        $this->_request_switch['main'] = array
+        (
+            'handler' => Array('org_maemo_socialnews_handler_index', 'index'),
+            'fixed_args' => Array('main'),
+        );
         
         // Handle /best
         $this->_request_switch['bestof'] = array

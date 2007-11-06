@@ -6,6 +6,26 @@ class org_maemo_socialnews_score_article_dba extends __org_maemo_socialnews_scor
         parent::__org_maemo_socialnews_score_article_dba($id);
     }
     
+    function get_label()
+    {
+        if (!$this->article)
+        {
+            return $this->guid;
+        }
+        $mc = midcom_db_article::new_collector('id', $this->article);
+        $mc->add_value_property('title');
+        $mc->execute();
+        $articles = $mc->list_keys();
+        if (!$articles)
+        {
+            return $this->guid;
+        }
+        foreach ($articles as $article_guid => $value)
+        {
+            return sprintf($_MIDCOM->i18n->get_string('score for %s', 'org.maemo.socialnews'), $mc->get_subkey($article_guid, 'title'));
+        } 
+    }
+    
     /**
      * Static method for storing score of an article
      */

@@ -238,17 +238,20 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         }
         midcom_show_style('index_main_footer');
         
-        midcom_show_style('index_secondary_header');
-        foreach ($secondary_items as $article)
+        if ($handler_id != 'main')
         {
-            // TODO: Datamanager
-            $data['article'] = $article;
-            $data['node'] = $this->get_node($article->topic);
-            midcom_show_style('index_secondary_item');
+            midcom_show_style('index_secondary_header');
+            foreach ($secondary_items as $article)
+            {
+                // TODO: Datamanager
+                $data['article'] = $article;
+                $data['node'] = $this->get_node($article->topic);
+                midcom_show_style('index_secondary_item');
+            }
+            midcom_show_style('index_secondary_footer');
         }
-        midcom_show_style('index_secondary_footer');
-        
         midcom_show_style('index_footer');
     }
+    
 }
 ?>
