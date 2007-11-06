@@ -101,7 +101,8 @@ class org_openpsa_products_handler_product_featured extends midcom_baseclasses_c
      */
     function _handler_featured($handler_id, $args, &$data)
     {
-	if ($handler_id == 'featured_products_intree')
+        $data['products'] = array();
+	    if ($handler_id == 'featured_products_intree')
         {
             $product_group = $args[0];
             $show_products = (int) $args[1];
