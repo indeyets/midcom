@@ -567,7 +567,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
                     break;
                 default:
                     debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add("Do not know how to handle parentfield '{$parentfield}' has type {$parenttype}", MIDCOM_LOG_ERROR);
+                    debug_add("Do not know how to handle parentfield '{$parentfield}' has type {$parenttype}", MIDCOM_LOG_INFO);
                     debug_pop();
                     $qb->end_group();
                     return false;
