@@ -48,7 +48,7 @@ class net_nehmer_static_navigation extends midcom_baseclasses_components_navigat
     {
         // Get the required information with midgard_collector
         $mc = midcom_db_article::new_collector('up', 0);
-        $mc->set_key_property('topic');
+//        $mc->set_key_property('topic');
         $mc->add_value_property('id');
         $mc->add_value_property('guid');
         $mc->add_value_property('name');
