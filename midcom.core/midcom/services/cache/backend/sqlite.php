@@ -49,7 +49,7 @@ class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
         // Opening database connection
         $this->_db = new SQLiteDatabase("{$this->_cache_dir}/{$this->_name}.sqlite");
         
-        $this->_table = str_replace('.', '_', $this->_name);
+        $this->_table = str_replace(array('.', '-'), '_', $this->_name);
         
         // Check if we have a DB table corresponding to current cache name        
         $result = $this->_db->query("SELECT name FROM sqlite_master WHERE type='table' AND name='{$this->_table}'");
@@ -59,8 +59,6 @@ class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
             $this->_db->query("CREATE TABLE {$this->_table} (key VARCHAR(255), value TEXT);");
             $this->_db->query("CREATE INDEX {$this->_table}_key ON {$this->_table} (key);");
         }
-        
-        $this->_auto_serialize = true;
     }
     
     function _open($write) {}
@@ -69,6 +67,10 @@ class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
 
     function _get($key)
     {
+        /* TODO: Remove when done */
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("key '{$key}')");
+        debug_pop();
         $key = sqlite_escape_string($key);
         $results = $this->_db->query("SELECT value FROM {$this->_table} WHERE key='{$key}'");
         $results = $results->fetchAll();
@@ -82,6 +84,10 @@ class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
 
     function _put($key, $data)
     {
+        /* TODO: Remove when done */
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("key '{$key}')");
+        debug_pop();
         $key = sqlite_escape_string($key);
         $data = sqlite_escape_string($data);
         $this->_db->query("REPLACE INTO {$this->_table} (key, value) VALUES ('{$key}', '{$data}')");
@@ -89,6 +95,10 @@ class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
 
     function remove($key)
     {
+        /* TODO: Remove when done */
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("key '{$key}')");
+        debug_pop();
         $key = sqlite_escape_string($key);
         $this->_db->query("DELETE FROM {$this->_table} WHERE key='{$key}'");
     }
@@ -100,6 +110,10 @@ class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
 
     function exists($key)
     {
+        /* TODO: Remove when done */
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("key '{$key}')");
+        debug_pop();
         $key = sqlite_escape_string($key);
         $results = $this->_db->query("SELECT count(*) AS exists FROM {$this->_table} WHERE key=\"{$key}\"");
 
@@ -117,3 +131,5 @@ class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
         return true;
     }
 }
+
+?>
