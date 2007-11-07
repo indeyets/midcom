@@ -96,12 +96,12 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
         fclose($handle);
     }
     
-    function remove($key)
+    function _remove($key)
     {
         @unlink("{$this->_dirname}{$key}");
     }
     
-    function remove_all()
+    function _remove_all()
     {
         // This will rename the current directory, create a new empty one and 
         // then completely delete the original directory.
@@ -128,7 +128,7 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
         }
     }
     
-    function exists($key)
+    function _exists($key)
     {
         return file_exists("{$this->_dirname}{$key}");
     }

@@ -96,7 +96,7 @@ class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
         $this->_db->query("REPLACE INTO {$this->_table} (key, value) VALUES ('{$key}', '{$data}')");
     }
 
-    function remove($key)
+    function _remove($key)
     {
         /* TODO: Remove when done */
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -106,12 +106,12 @@ class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
         $this->_db->query("DELETE FROM {$this->_table} WHERE key='{$key}'");
     }
 
-    function remove_all()
+    function _remove_all()
     {
         $this->_db->query("DELETE FROM $this->_table WHERE 1");
     }
 
-    function exists($key)
+    function _exists($key)
     {
         /* TODO: Remove when done */
         debug_push_class(__CLASS__, __FUNCTION__);
