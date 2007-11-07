@@ -703,6 +703,31 @@ class midcom_application
         $oldcontext = $this->_currentcontext;
         $this->_currentcontext = $context;
 
+        /* "content-cache" for DLs, check_hit */ 
+        $dl_request_id = 'DL' . $this->cache->content->generate_request_identifier($context);
+        debug_add("Checking if we have '{$dl_request_id}' in \$this->cache->content->_meta_cache");
+        $this->cache->content->_meta_cache->open();
+        if ($this->cache->content->_meta_cache->exists($dl_request_id))
+        {
+            $dl_content_id = $this->cache->content->_meta_cache->get($dl_request_id);
+            $this->cache->content->_meta_cache->close();
+            $this->cache->content->_data_cache->open();
+            debug_add("Checking if we have '{$dl_content_id}' in \$this->cache->content->_data_cache");
+            if ($this->cache->content->_data_cache->exists($dl_content_id))
+            {
+                debug_add('Cached content found');
+                echo $this->cache->content->_data_cache->get($dl_content_id);
+                $this->cache->content->_data_cache->close();
+                debug_pop();
+                return;
+            }
+            $this->cache->content->_data_cache->close();
+        }
+        else
+        {
+            $this->cache->content->_meta_cache->close();
+        }
+
         // Parser Init: Generate arguments and instantinate it.
         $this->_parser = $this->serviceloader->load('midcom_core_service_urlparser');
         $argv = $this->_parser->tokenize($url);
@@ -725,6 +750,7 @@ class midcom_application
             return;
         }
 
+
         // If MIDCOM_REQUEST_CONTENT: Tell Style to enter Context
         if ($type == MIDCOM_REQUEST_CONTENT)
         {
@@ -732,7 +758,40 @@ class midcom_application
             debug_add("Entering Context $context (old Context: $oldcontext)", MIDCOM_LOG_INFO);
         }
 
+        ob_start();
         $this->_output();
+        $dl_cache_data = ob_get_contents();
+        ob_end_flush();
+        /* Cache DL content */
+        $dl_content_id = 'DL' . $this->cache->content->generate_content_identifier($context);
+        $this->cache->content->_meta_cache->open(true);
+        $this->cache->content->_data_cache->open(true);
+        $this->cache->content->_meta_cache->put($dl_request_id, $dl_content_id);
+        debug_add("Writing cache entry for '{$dl_content_id}' in request '{$dl_request_id}'");
+        $this->cache->content->_data_cache->put($dl_content_id, $dl_cache_data);
+        // Cache where the object have been
+        foreach ($this->cache->content->context_guids[$context] as $guid)
+        {
+            // TODO: This needs to be array as GUIDs often appear in multiple requests
+            if ($this->cache->content->_meta_cache->exists($guid))
+            {
+                $guidmap = $this->cache->content->_meta_cache->get($guid);
+            }
+            else
+            {
+                $guidmap = array();
+            }
+            
+            if (!in_array($dl_content_id, $guidmap))
+            {
+                $guidmap[] = $dl_content_id;
+            }
+            $this->cache->content->_meta_cache->put($guid, $guidmap);
+        }
+        unset($guid, $guidmap);
+        $this->cache->content->_meta_cache->close();
+        $this->cache->content->_data_cache->close();
+        unset($dl_cache_data, $dl_content_id, $dl_request_id);
 
         // If MIDCOM_REQUEST_CONTENT: Tell Style to leave Context
         if ($type == MIDCOM_REQUEST_CONTENT)
