@@ -348,7 +348,7 @@ $GLOBALS['midcom_config_default']['cache_autoload_queue'] = Array('content', /*'
 
 // Content Cache
 $GLOBALS['midcom_config_default']['cache_module_content_name'] = $unique_host_name;
-$GLOBALS['midcom_config_default']['cache_module_content_backend'] = Array('driver' => 'flatfile');
+$GLOBALS['midcom_config_default']['cache_module_content_backend'] = Array('driver' => 'sqlite');
 // Defaults:
 // $GLOBALS['midcom_config_default']['cache_module_content_backend'] = Array ('directory' => 'content/', 'driver' => 'dba');
 // $GLOBALS['midcom_config_default']['cache_module_content_multilang'] = true;

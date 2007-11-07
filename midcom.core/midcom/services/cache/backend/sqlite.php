@@ -20,80 +20,98 @@
 class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
 {
   /**
-     * The full directory filename.
-     * 
-     * @access private
-     * @var string
-     */
+   * The full directory filename.
+   * 
+   * @access private
+   * @var string
+   */
   var $_db = null;
+  
+  /**
+   * Sanitized version of database table name
+   */
+  var $_table = '';
 
   /**
      * The constructor is empty yet.
      */
-  function midcom_services_cache_backend_sqlite()
-  {
-    parent::midcom_services_cache_backend();
-    $this->_db = new SQLiteDatabase($this->_cache_dir.'/content_cache'); // Opening database connection
-    // Nothing to do.
-  }
+    function midcom_services_cache_backend_sqlite()
+    {
+        parent::midcom_services_cache_backend();
+        // Nothing to do.
+    }
 
-  /**
+    /**
      * This handler completes the configuration.
      */
-  function _on_initialize()
-  {
-    /**
-       * Checking if table exists in cache-database
-       */
-    $result = $this->_db->query("SELECT name FROM sqlite_master WHERE type='table' AND name='$this->_table'");
-    if(count($result->fetchAll) == 0)
+    function _on_initialize()
     {
-      $this->_db->query("CREATE TABLE {$this->_table} (key VARCHAR(255), value TEXT);");
+        // Opening database connection
+        $this->_db = new SQLiteDatabase("{$this->_cache_dir}/{$this->_name}.sqlite");
+        
+        $this->_table = str_replace('.', '_', $this->_name);
+        
+        // Check if we have a DB table corresponding to current cache name        
+        $result = $this->_db->query("SELECT name FROM sqlite_master WHERE type='table' AND name='{$this->_table}'");
+        $tables = $result->fetchAll();
+        if (count($tables) == 0)
+        {
+            $this->_db->query("CREATE TABLE {$this->_table} (key VARCHAR(255), value TEXT);");
+            $this->_db->query("CREATE INDEX {$this->_table}_key ON {$this->_table} (key);");
+        }
     }
-  }
+    
+    function _open($write) {}
+    
+    function _close() {}
 
-  function get($key)
-  {
-    $key = sqlite_escape_string($key);
-    $results = $this->_db->query("SELECT value FROM $this->_table WHERE key='$key'");
-    $results = $results->fetchAll();
-    if(count($results) == 0){
-      return false; // No hit.
-    }
-    else{
-      return $results[0]['value'];
-    }
-  }
-
-  function put($key, $data)
-  {
-    $key = sqlite_escape_string($key);
-    $data = sqlite_escape_string($data);
-    $this->_db->query("REPLACE INTO $this->_name (key, value) VALUES ('$key', '$data')");
-  }
-
-  function remove($key)
-  {
-    $key = sqlite_escape_string($key);
-    $this->_db->query("DELETE FROM $this->_name WHERE key='$key'");
-  }
-
-  function remove_all()
-  {
-    $this->_db->query("DELETE FROM $this->_name WHERE 1");
-  }
-
-  function exists($key)
-  {
-    $key = sqlite_escape_string($key);
-    $results = $this->_db->query("SELECT value FROM $this->_table WHERE key='$key'");
-    $results = $results->fetchAll();
-    if(count($results) == 0){
-      return false; // No hit.
-    }
-    else
+    function _get($key)
     {
-      return true; // Hit
+        $key = sqlite_escape_string($key);
+        $results = $this->_db->query("SELECT value FROM {$this->_table} WHERE key='{$key}'");
+        $results = $results->fetchAll();
+        if(count($results) == 0)
+        {
+          return false; // No hit.
+        }
+        
+        return $results[0]['value'];
     }
-  }
+
+    function _put($key, $data)
+    {
+        $key = sqlite_escape_string($key);
+        $data = sqlite_escape_string($data);
+        $this->_db->query("REPLACE INTO {$this->_table} (key, value) VALUES ('{$key}', '{$data}')");
+    }
+
+    function remove($key)
+    {
+        $key = sqlite_escape_string($key);
+        $this->_db->query("DELETE FROM {$this->_table} WHERE key='{$key}'");
+    }
+
+    function remove_all()
+    {
+        $this->_db->query("DELETE FROM $this->_table WHERE 1");
+    }
+
+    function exists($key)
+    {
+        $key = sqlite_escape_string($key);
+        $results = $this->_db->query("SELECT count(*) AS exists FROM {$this->_table} WHERE key=\"{$key}\"");
+
+        $results = $results->fetchAll();
+        if (empty($results))
+        {
+            return false;
+        }
+        
+        if ($results[0]['exists'] == 0)
+        {
+            return false; // No hit.
+        }
+        
+        return true;
+    }
 }
