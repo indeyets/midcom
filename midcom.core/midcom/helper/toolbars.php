@@ -79,7 +79,7 @@ class midcom_helper_toolbars
     function midcom_helper_toolbars($class_style = 'midcom_toolbar', $id_style = null) 
     {
         /*
-         *         $GLOBALS['midcom_admin_content_toolbar_main'] = new midcom_admin_content_toolbar(false, 'midcom_toolbar midcom_toolbar_ais_main', null);
+        $GLOBALS['midcom_admin_content_toolbar_main'] = new midcom_admin_content_toolbar(false, 'midcom_toolbar midcom_toolbar_ais_main', null);
         $GLOBALS['midcom_admin_content_toolbar_component'] = new midcom_admin_content_toolbar(true, 'midcom_toolbar', null);
         $GLOBALS['midcom_admin_content_toolbar_meta'] = new midcom_admin_content_toolbar(false, 'midcom_toolbar midcom_toolbar_ais_meta', null);
          */
@@ -141,9 +141,6 @@ class midcom_helper_toolbars
         }
         $ret = &$instance;
         return $ret;
-    }
-    
-    
+    }   
 }
-
 ?>

@@ -1,22 +1,34 @@
 <?php
+/**
+ * @package midcom
+ * @author The Midgard Project, http://www.midgard-project.org 
+ * @version $Id:topicsfirst.php 3765 2006-07-31 08:51:39 +0000 (Mon, 31 Jul 2006) tarjei $
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
+/**
+ * Itemlist Subclass, list by score
+ * 
+ * @package midcom
+ */
 class  midcom_helper_itemlist_score extends midcom_helper_itemlist
 {
-  
-    /* get_sorted_list  - get a list objects ready for showing. 
-     * */
-  
+    /**
+     * get_sorted_list  - get a list objects ready for showing. 
+     *
+     */
     function get_sorted_list ()
     {
         $nodes_list = $this->_basicnav->list_nodes($this->parent_node_id);
         if ($nodes_list === false)
         {
-	      return false;
+            return false;
         }
         $leaves_list = $this->_basicnav->list_leaves($this->parent_node_id);
         if ($leaves_list === false)
         {
-	      return false;
+            return false;
         }
 
         // If there are no child elements, return empty array
@@ -50,13 +62,14 @@ class  midcom_helper_itemlist_score extends midcom_helper_itemlist
 
     function sort_cmp ($a, $b)
     {
-        // This should also sort out the situation were score is not
+        // This should also sort out the situation where score is not
         // set. 
-        if ($a[MIDCOM_NAV_SCORE] === $b[MIDCOM_NAV_SCORE]) {
+        if ($a[MIDCOM_NAV_SCORE] === $b[MIDCOM_NAV_SCORE])
+        {
           return strcmp($a[MIDCOM_NAV_NAME],$b[MIDCOM_NAV_NAME]);
         }
+        
         return (integer) (($a[MIDCOM_NAV_SCORE] > $b[MIDCOM_NAV_SCORE]) ? 1 : -1);
     }
-
 }
 ?>

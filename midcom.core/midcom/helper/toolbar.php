@@ -19,15 +19,15 @@
  *
  * <code>
  * $item = Array (
- *     MIDCOM_TOOLBAR_URL =&gt; $url,
- *     MIDCOM_TOOLBAR_LABEL =&gt; $label,
+ *     [MIDCOM_TOOLBAR_URL] =&gt; $url,
+ *     [MIDCOM_TOOLBAR_LABEL] =&gt; $label,
  *     [MIDCOM_TOOLBAR_HELPTEXT] =&gt; $helptext,
  *     [MIDCOM_TOOLBAR_ICON] =&gt; $icon,
  *     [MIDCOM_TOOLBAR_ENABLED] =&gt; $enabled,
- *     [MIDCOM_TOOLBAR_HIDDEN =&gt; $hidden]
- *     [MIDCOM_TOOLBAR_OPTIONS =&gt; array $options,]
- *     [MIDCOM_TOOLBAR_SUBMENU =&gt; midcom_helper_toolbar $submenu ]
- *     [MIDCOM_TOOLBAR_ACCESSKEY =&gt; (char) 'a' ]
+ *     [MIDCOM_TOOLBAR_HIDDEN] =&gt; $hidden
+ *     [MIDCOM_TOOLBAR_OPTIONS] =&gt; array $options,
+ *     [MIDCOM_TOOLBAR_SUBMENU] =&gt; midcom_helper_toolbar $submenu,
+ *     [MIDCOM_TOOLBAR_ACCESSKEY] =&gt; (char) 'a',
  *     [MIDCOM_TOOLBAR_POST] =&gt; true,
  *     [MIDCOM_TOOLBAR_POST_HIDDENARGS] =&gt; array $args,
  * );
@@ -136,8 +136,8 @@
  * @todo Add usage example to this documentation
  * @package midcom
  */
-class midcom_helper_toolbar {
-
+class midcom_helper_toolbar
+{
     /**
      * The CSS ID-Style rule that should be used for the toolbar.
      * Set to null if non should be used.
@@ -967,5 +967,4 @@ class midcom_helper_toolbar_page extends midcom_helper_toolbar
     }
 }
 */
-
 ?>

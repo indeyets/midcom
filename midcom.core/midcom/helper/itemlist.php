@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * @package midcom
  * @author The Midgard Project, http://www.midgard-project.org 
@@ -17,11 +17,10 @@
  * 
  * @package midcom
  */
-
 class midcom_helper_itemlist 
 {
    /** 
-	* A reference to the NAP instance we belong to.
+    * A reference to the NAP instance we belong to.
     *
     * @access protected
     * @var midcom_helper_nav
@@ -35,20 +34,21 @@ class midcom_helper_itemlist
      * @access protected
      * @var Array
      */    
-    var $_standard_midgard_sortparams = array (
-        "alpha"           => "Sort alphabetically", 
-        "reverse alpha"   => "Reverse of alpha", 
-        "name"            => "Sort by name (alphabetically", 
-        "reverse name"    => "Sort by reverse name", 
-        "score"           => "Sort by score", 
-        "reverse score"   => "Reverse score", 
-        "created"         => "Sort by createddate", 
-        "reverse created" => "Reverse createddate", 
-        "revised"         => "Sort by date revised", 
-        "reverse revised" => "reverse date revised"
+    var $_standard_midgard_sortparams = array
+    (
+        'alpha'           => 'Sort alphabetically', 
+        'reverse alpha'   => 'Reverse of alpha', 
+        'name'            => 'Sort by name (alphabetically', 
+        'reverse name'    => 'Sort by reverse name', 
+        'score'           => 'Sort by score', 
+        'reverse score'   => 'Reverse score', 
+        'created'         => 'Sort by createddate', 
+        'reverse created' => 'Reverse createddate', 
+        'revised'         => 'Sort by date revised', 
+        'reverse revised' => 'reverse date revised'
     );
   
-    var $parent_node_id = NULL;
+    var $parent_node_id = null;
     
     /** Initialize the object, used by the factory function.  
      * 
@@ -72,7 +72,7 @@ class midcom_helper_itemlist
     */
     function get_sorted_list () 
     {
-        die ("This function has to be overridden.");
+        die ('This function has to be overridden.');
     }
 
     
@@ -84,7 +84,8 @@ class midcom_helper_itemlist
     * */
     
     /** @ignore */
-    function get_style() {
+    function get_style()
+    {
         return false;
     }
     
@@ -109,28 +110,28 @@ class midcom_helper_itemlist
      *         object parent_topic pointer to the topic to base the list on.
      * @return midcom_helper_itemlist sortobject
      */
-  /** @ignore */
-  function factory ($sorting, &$_basicnav ,&$parent_topic) 
-  {
-     if (! is_a($parent_topic, 'midgard_topic' )) 
-     {
-        $_MIDCOM->generate_error("midcom_helper_itemlist::factory: parent topic not a midgard_topic object", MIDCOM_LOG_WARN); 
-     }
-  
-     $class = basename($sorting);
-     require_once (MIDCOM_ROOT . "/midcom/helper/itemlist/{$sorting}.php");
+    /** @ignore */
+    function factory ($sorting, &$_basicnav ,&$parent_topic) 
+    {
+        if (! is_a($parent_topic, 'midgard_topic' )) 
+        {
+           $_MIDCOM->generate_error('midcom_helper_itemlist::factory: parent topic not a midgard_topic object', MIDCOM_LOG_WARN); 
+        }
      
-     $class = "midcom_helper_itemlist_{$class}";
-     if (class_exists($class)) 
-     {
-      $sortclass = &new $class();
-      $sortclass->_init($_basicnav, $parent_topic);
-     } else {
-      $_MIDCOM->generate_error("Tried to load sorting helper class for order {$sorting}, but the class was undefined.", MIDCOM_LOG_WARN);      
-     } 
-  
-     return $sortclass;
-  } 
+        $class = basename($sorting);
+        require_once (MIDCOM_ROOT . "/midcom/helper/itemlist/{$sorting}.php");
+        
+        $class = "midcom_helper_itemlist_{$class}";
+        if (class_exists($class)) 
+        {
+         $sortclass = &new $class();
+         $sortclass->_init($_basicnav, $parent_topic);
+        } else {
+         $_MIDCOM->generate_error("Tried to load sorting helper class for order {$sorting}, but the class was undefined.", MIDCOM_LOG_WARN);      
+        } 
+     
+        return $sortclass;
+    } 
 
    /* get_config_parameters - get a list of which configurationparameters 
     * may be set for this object.
@@ -140,12 +141,7 @@ class midcom_helper_itemlist
     /** @ignore */
     function get_config_parameters () 
     {
-      
         return $this->_standard_midgard_sortparams;      
     }
-
 }
-
-
-
 ?>
