@@ -72,10 +72,11 @@ class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
 
     function _get($key)
     {
-        /* TODO: Remove when done */
+        /* TODO: Remove when done
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("key '{$key}')");
         debug_pop();
+        */
         $key = sqlite_escape_string($key);
         $results = $this->_db->query("SELECT value FROM {$this->_table} WHERE key='{$key}'");
         $results = $results->fetchAll();
@@ -89,10 +90,11 @@ class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
 
     function _put($key, $data)
     {
-        /* TODO: Remove when done */
+        /* TODO: Remove when done
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("key '{$key}')");
         debug_pop();
+        */
         $key = sqlite_escape_string($key);
         $data = sqlite_escape_string($data);
         $this->_db->query("REPLACE INTO {$this->_table} (key, value) VALUES ('{$key}', '{$data}')");
@@ -100,10 +102,11 @@ class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
 
     function _remove($key)
     {
-        /* TODO: Remove when done */
+        /* TODO: Remove when done
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("key '{$key}')");
         debug_pop();
+        */
         $key = sqlite_escape_string($key);
         $this->_db->query("DELETE FROM {$this->_table} WHERE key='{$key}'");
     }
@@ -115,10 +118,11 @@ class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
 
     function _exists($key)
     {
-        /* TODO: Remove when done */
+        /* TODO: Remove when done
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("key '{$key}')");
         debug_pop();
+        */
         $key = sqlite_escape_string($key);
         $results = $this->_db->query("SELECT count(*) AS exists FROM {$this->_table} WHERE key=\"{$key}\"");
 
