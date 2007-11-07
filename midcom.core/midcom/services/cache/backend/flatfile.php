@@ -44,7 +44,7 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
      */
  	function _on_initialize()
     {
-        $this->_dirname = "{$this->_cache_dir}{$this->_name}";
+        $this->_dirname = "{$this->_cache_dir}{$this->_name}/";
         
         // Check for file existance.
         if (! file_exists($this->_dirname))
@@ -65,7 +65,7 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
      */
     function _close() {}
      
-    function get($key)
+    function _get($key)
     {
         if (! $this->exists($key))
         {
@@ -76,7 +76,7 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
         return file_get_contents("{$this->_dirname}{$key}");
     }
     
-    function put($key, $data)
+    function _put($key, $data)
     {
         $filename = "{$this->_dirname}{$key}";
         if (file_exists($filename))

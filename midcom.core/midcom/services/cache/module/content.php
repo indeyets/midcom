@@ -230,9 +230,9 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             $identifier_source .= ';URL=' . $_SERVER['REQUEST_URI'];
         }
         
-        // TODO: Add browser capability data (mobile, desktop browser etc) here
+        // TODO: Add browser capability data (mobile, desktop browser etc) from WURFL here
         
-        return md5($identifier_source);        
+        return 'R-' . md5($identifier_source);
     }
     
     /**
@@ -246,7 +246,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             return null;
         }
         $identifier_source = implode(',', $this->context_guids[$context]);
-        return md5($identifier_source);        
+        return 'C-' . md5($identifier_source);
     }
 
     /**
@@ -849,8 +849,9 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         else
         {
             // Construct cache identifiers
-            $request_id = $this->generate_request_identifier($_MIDCOM->get_current_context());
-            $content_id = $this->generate_content_identifier($_MIDCOM->get_current_context());
+            $context = $_MIDCOM->get_current_context();
+            $request_id = $this->generate_request_identifier($context);
+            $content_id = $this->generate_content_identifier($context);
 
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Creating cache entry for {$content_id}", MIDCOM_LOG_INFO);
@@ -865,6 +866,15 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             $this->_meta_cache->put($content_id, $entry_data);
             $this->_data_cache->put($content_id, $cache_data);
             $this->_meta_cache->put($request_id, $content_id);
+            
+            // Cache where the object have been
+            /*foreach ($this->context_guids[$context] as $guid)
+            {
+                // TODO: This needs to be array as GUIDs often appear in multiple requests
+                $this->_meta_cache->put($guid, $content_id);
+            }
+            */
+            
             $this->_meta_cache->close();
         }
 
