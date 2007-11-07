@@ -718,8 +718,10 @@ class midcom_application
                 debug_add('Cached content found');
                 echo $this->cache->content->_data_cache->get($dl_content_id);
                 $this->cache->content->_data_cache->close();
+                // Leave Context
+                $this->_currentcontext = $oldcontext;
                 debug_pop();
-                return;
+                return $context;
             }
             $this->cache->content->_data_cache->close();
         }
