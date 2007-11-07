@@ -364,7 +364,7 @@ $GLOBALS['midcom_config_default']['cache_module_nap_metadata_cachesize'] = 75;
 // $GLOBALS['midcom_config_default']['cache_module_nap_backend'] =  Array ('directory' => 'nap/', 'driver' => 'dba');
 
 //Memory Caching Daemon
-$GLOBALS['midcom_config_default']['cache_module_memcache_backend'] = null;
+$GLOBALS['midcom_config_default']['cache_module_memcache_backend'] = 'sqlite';
 $GLOBALS['midcom_config_default']['cache_module_memcache_backend_config'] = Array();
 $GLOBALS['midcom_config_default']['cache_module_memcache_data_groups'] = Array('ACL', 'PARENT', 'jscss_merged');
 
