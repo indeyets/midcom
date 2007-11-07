@@ -538,10 +538,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_refresh.png',
                 )
             );
-        }
 
-        if ($_MIDGARD['admin'] == true)
-        {
             $toolbar->add_item
             (
                 array
