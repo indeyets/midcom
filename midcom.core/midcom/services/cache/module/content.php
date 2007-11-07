@@ -195,6 +195,11 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      * @var midcom_services_cache_backend
      */
     var $_data_cache = null;
+    
+    /**
+     * GUIDs loaded per context in this request
+     */
+    var $context_guids = array();
 
     /**#@-*/
 
@@ -645,6 +650,30 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
     {
         $this->invalidate_all();
     }
+    
+    /**
+     * All objects loaded within a request are stored into a list for cache invalidation purposes
+     */
+    function register($guid)
+    {
+        $context = $_MIDCOM->get_current_context();
+        if ($context != 0)
+        {
+            // We're in a dynamic_load, register it for that as well
+            if (!isset($this->context_guids[$context]))
+            {
+                $this->context_guids[$context] = array();
+            }
+            $this->context_guids[$context][] = $guid;
+        }
+        
+        // Register all GUIDs also to the root context
+        if (!isset($this->context_guids[0]))
+        {
+            $this->context_guids[0] = array();
+        }
+        $this->context_guids[0][] = $guid;
+    }
 
     /**
      * Checks, wether the browser supplied if-modified-since or if-none-match headers
@@ -745,6 +774,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      */
     function _finish_caching()
     {
+        //debug_print_r("collected guids", $this->context_guids);
         if (   $this->_no_cache
             || $this->_live_mode)
         {

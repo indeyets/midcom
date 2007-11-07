@@ -671,6 +671,10 @@ class midcom_baseclasses_core_dbobject
             debug_pop();
             midcom_baseclasses_core_dbobject::_clear_object($object);
         }
+        
+        // Register the GUID as loaded in this request
+        $_MIDCOM->cache->content->register($object->guid);
+        
         return $result;
     }
 
