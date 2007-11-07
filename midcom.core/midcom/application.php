@@ -428,7 +428,6 @@ class midcom_application
         $this->_load_core_services();
 
         // Start-up some of the services
-        $this->auth->initialize();
         $this->toolbars->initialize();
         $this->dbclassloader->load_classes('midcom', 'legacy_classes.inc');
         $this->dbclassloader->load_classes('midcom', 'core_classes.inc');
@@ -486,7 +485,6 @@ class midcom_application
         $this->dbclassloader = new midcom_services_dbclassloader();
         $this->dbfactory = new midcom_helper__dbfactory();
         $this->style = new midcom_helper__styleloader();
-        $this->auth = new midcom_services_auth();
 
         // These can be refactored behind serviceloader
         $this->permalinks = new midcom_services_permalinks();

@@ -164,6 +164,7 @@ require('midcom/services/rcs.php');
 require('midcom/application.php');
 
 $_MIDCOM = new midcom_application();
+$_MIDCOM->auth = $auth;
 //$GLOBALS['midcom'] =& $_MIDCOM;
 $_MIDCOM->initialize();
 ?>
