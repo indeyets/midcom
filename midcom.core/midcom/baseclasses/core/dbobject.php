@@ -381,6 +381,15 @@ class midcom_baseclasses_core_dbobject
             $rcs =& $_MIDCOM->get_service('rcs');
             $rcs->update(&$object, $object->get_rcs_message());
         }
+        
+        $parent = $object->get_parent();
+        if (   $parent
+            && $parent->guid)
+        {
+            // Invalidate parent from cache so content caches have chance to react
+            $_MIDCOM->cache->invalidate($parent->guid);
+        }
+        
         debug_pop();
     }
 
