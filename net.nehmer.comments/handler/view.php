@@ -320,7 +320,16 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
     {
         $this->_new_comment = new net_nehmer_comments_comment();
         $this->_new_comment->objectguid = $this->_objectguid;
-        $this->_new_comment->ip = $_SERVER['REMOTE_ADDR'];
+        //Proxy check
+        if (   isset($_SERVER["HTTP_X_FORWARDED_FOR"])
+            && !empty($_SERVER["HTTP_X_FORWARDED_FOR"]))
+        {
+            $this->_new_comment->ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+        }
+        else
+        {
+            $this->_new_comment->ip = $_SERVER['REMOTE_ADDR'];
+        }
 
         if (! $this->_new_comment->create())
         {
