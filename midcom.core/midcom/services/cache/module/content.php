@@ -175,16 +175,6 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
     /**#@+
      * Cache backend instance.
      *
-     * @access private
-     */
-
-    /**
-     * This is true, if the pages produced by the cache should not be
-     * stored in the cache database. Use this f.x. during development for
-     * a quasi-uncached behvoir (all headers are generated, the content just
-     * is not stored in the cache database, and all header processing is
-     * done nevertheless).
-     *
      * @var midcom_services_cache_backend
      */
     var $_meta_cache = null;
@@ -210,6 +200,44 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
     function midcom_services_cache_module_content()
     {
         parent::midcom_services_cache_module();
+    }
+    
+    /**
+     * Generate a valid cache identifier for a context of the current request
+     */
+    function generate_request_identifier($context)
+    {
+        $identifier_source = '';
+        
+        if ($this->_multilang)
+        {
+            $idenfitier_source .= 'LANG=' . $_MIDCOm->i18n->get_current_language();
+        }
+        else
+        {
+            $idenfitier_source .= 'LANG=ALL';
+        }
+        
+        $idenfitier_source .= ';USER=' . $_MIDGARD['user'];
+        $idenfitier_source .= ';URL=' . $_MIDCOM->get_context_data($context, MIDCOM_CONTEXT_URI);
+        
+        // TODO: Add browser capability data (mobile, desktop browser etc) here
+        
+        return md5($identifier_source);        
+    }
+    
+    /**
+     * Generate a valid cache identifier for a context of the current content (all loaded objects).
+     */
+    function generate_content_identifier($context)
+    {
+        if (   !isset($this->context_guids[$context])
+            || empty($this->context_guids[$context]))
+        {
+            return null;
+        }
+        $identifier_source = implode(',', $this->context_guids[$context]);
+        return md5($identifier_source);        
     }
 
     /**
@@ -350,7 +378,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      */
     function _check_hit()
     {
-        foreach ($GLOBALS["argv"] as $arg)
+        foreach ($GLOBALS['argv'] as $arg)
         {
             switch ($arg)
             {
@@ -379,71 +407,68 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             return;
         }
 
-        // Construct cache identifier
-        if ($this->_multilang)
-        {
-            $i18n = new midcom_services_i18n('en');
-            $entry_name = 'LANG=' . $i18n->get_current_language() . ";" ;
-        }
-        else
-        {
-            $entry_name = 'LANG=ALL;';
-        }
-
-        $entry_name .= "USER={$_MIDGARD['user']};";
-        $entry_name .= "URL=" . $_SERVER['REQUEST_URI'];
-
+        // Check that we have cache for the identifier
         $this->_meta_cache->open();
-
-        if ($this->_meta_cache->exists($entry_name))
+                
+        $request_id = $this->generate_request_identifier($_MIDCOM->get_current_context());
+        if (!$this->_meta_cache->exists($request_id))
         {
-            $data = $this->_meta_cache->get($entry_name);
-
-            if (!is_null($data['expires']))
+            // We have no information about content cached for this request
+            $this->_meta_cache->close();
+            return;
+        }
+        
+        // Load metadata for the content identifier connected to current request
+        $content_id = $this->_meta_cache->get($request_id);
+        
+        if (!$this->_meta_cache->exists($content_id))
+        {
+            // Content cache data is missing
+            $this->_meta_cache->close();
+            return;
+        }
+        
+        $data = $this->_meta_cache->get($content_id);
+        
+        if (!is_null($data['expires']))
+        {
+            if ($data['expires'] < time())
             {
-                if ($data['expires'] < time())
-                {
-                    debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add("Current page is in cache, but has expired.", MIDCOM_LOG_INFO);
-                    debug_pop();
-                    return;
-                }
+                $this->_meta_cache->close();            
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Current page is in cache, but has expired.", MIDCOM_LOG_INFO);
+                debug_pop();
+                return;
             }
+        }
+        $this->_meta_cache->close();        
 
-            // Check If-Modified-Since and If-None-Match, do content output only if
-            // we have a not modified match.
-            if (! $this->_check_not_modified($data['last_modified'], $data['etag']))
+        // Check If-Modified-Since and If-None-Match, do content output only if
+        // we have a not modified match.
+        if (! $this->_check_not_modified($data['last_modified'], $data['etag']))
+        {
+            $this->_data_cache->open();
+            if (! $this->_data_cache->exists($content_id))
             {
-                $this->_data_cache->open();
-                if (! $this->_data_cache->exists($entry_name))
-                {
-                    $this->_data_cache->close();
-                    debug_push_class(__CLASS__, __FUNCTION__);                    
-                    debug_add("Current page is in not in the data cache, (possible ghost read).", MIDCOM_LOG_WARN);
-                    debug_pop();
-                    return;
-                }
-                $content = $this->_data_cache->get($entry_name);
                 $this->_data_cache->close();
-                $this->_meta_cache->close();
-
-                foreach ($data['sent_headers'] as $header)
-                {
-                    header($header);
-                }
-
-                // Echo the content to the client.
-                echo $content;
+                debug_push_class(__CLASS__, __FUNCTION__);                    
+                debug_add("Current page is in not in the data cache, (possible ghost read).", MIDCOM_LOG_WARN);
+                debug_pop();
+                return;
             }
-            else
+            $content = $this->_data_cache->get($entry_name);
+            $this->_data_cache->close();
+
+            foreach ($data['sent_headers'] as $header)
             {
-                $this->_meta_cache->close();
+                header($header);
             }
 
-            exit();
+            // Echo the content to the client.
+            echo $content;
         }
 
-        $this->_meta_cache->close();
+        exit();
     }
 
     /**
@@ -774,7 +799,6 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      */
     function _finish_caching()
     {
-        //debug_print_r("collected guids", $this->context_guids);
         if (   $this->_no_cache
             || $this->_live_mode)
         {
@@ -815,22 +839,12 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         }
         else
         {
-            // Construct cache identifier
-            if ($this->_multilang)
-            {
-                $i18n = new midcom_services_i18n("en");
-                $entry_name = 'LANG=' . $i18n->get_current_language() . ";" ;
-            }
-            else
-            {
-                $entry_name = 'LANG=ALL;';
-            }
-            $midgard = mgd_get_midgard(); // Reget, to have latest authentication information.
-            $entry_name .= "USER={$midgard->user};";
-            $entry_name .= "URL=" . $_SERVER["REQUEST_URI"];
+            // Construct cache identifiers
+            $request_id = $this->generate_request_identifier($_MIDCOM->get_current_context());
+            $content_id = $this->generate_content_identifier($_MIDCOM->get_current_context());
 
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Creating cache entry for {$entry_name}", MIDCOM_LOG_INFO);
+            debug_add("Creating cache entry for {$content_id}", MIDCOM_LOG_INFO);
             debug_pop();
 
             $entry_data['expires'] = $this->_expires;
@@ -839,8 +853,9 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             $entry_data['sent_headers'] = $this->_sent_headers;
 
             $this->_meta_cache->open(true);
-            $this->_meta_cache->put($entry_name, $entry_data);
-            $this->_data_cache->put($entry_name, $cache_data);
+            $this->_meta_cache->put($content_id, $entry_data);
+            $this->_data_cache->put($content_id, $cache_data);
+            $this->_meta_cache->put($request_id, $content_id);
             $this->_meta_cache->close();
         }
 
@@ -1014,68 +1029,6 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             header ($header);
             $this->_sent_headers[] = $header;
         }
-    }
-
-    /**
-     * Wrapper for number_format(number, 0, "", "."), used in the cache_stats call.
-     *
-     * @param int $number    Number to be formatted
-     * @return string        The formatted number
-     * @access private
-     */
-    function _format_filesize ($number)
-    {
-        return number_format($number, 0, '', '.');
-    }
-
-    /**
-     * Cache statistic dump to stdout.
-     *
-     * @todo implement print_statistics in the backends.
-     */
-    function print_statistics()
-    {
-        die ("Not yet implemented for the backend interface, should be there");
-        $cache_db = Array();
-        $entry_count = 0;
-        $file_list = Array();
-        $cache_size = 0;
-
-        $db = dba_open($this->_dbname, "r", $this->_handler);
-        if (!$db)
-        {
-            die("Could not open dbm File");
-        }
-        
-        $key = dba_firstkey($db);
-        while ($key != false) {
-            $control = unserialize(dba_fetch($key, $db));
-            $stat = stat ($this->_cachedir . $control["filename"]);
-            $cache_db[$key] = $control;
-            $entry_count++;
-            $cache_size += $stat[7];
-            $key = dba_nextkey($db);
-        }
-        dba_close($db);
-
-        $cache_size = $this->_format_filesize($cache_size);
-        $stat = stat($this->_dbname);
-        $db_size = $this->_format_filesize($stat[7]);
-
-        ?>
-<pre>
-================= MIDCOM CACHE STATISTICS ====================
-Cache Database       : <?php echo htmlspecialchars($this->_dbname);?> (Type: <?php echo htmlspecialchars($this->_handler);?>)
-Cache Data Directory : <?php echo htmlspecialchars($this->_cachedir);?>
-Cache Entry Count    : <?php echo htmlspecialchars($entry_count);?>
-Cache Database Size  : <?php echo htmlspecialchars($db_size);?> Bytes
-Cache Data Size      : <?php echo htmlspecialchars($cache_size);?> Bytes
-
-Cache Database Dump  :
-<?php print_r ($cache_db); ?>
-</pre>
-
-        <?php
     }
 }
 
