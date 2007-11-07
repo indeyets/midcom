@@ -46,6 +46,9 @@ class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
      */
     function _on_initialize()
     {
+        // We need to serialize data
+        $this->_auto_serialize = true;
+
         // Opening database connection
         $this->_db = new SQLiteDatabase("{$this->_cache_dir}/{$this->_name}.sqlite");
         
