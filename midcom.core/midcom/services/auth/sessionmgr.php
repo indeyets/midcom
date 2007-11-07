@@ -16,7 +16,7 @@
  * status notifications and the like.
  *
  * The single instance of this class can be accessed as
- * $_MIDCOM->auth->sessionmgr.
+ * $this->auth->sessionmgr.
  *
  * <b>Checking whether a user is online</b>
  *
@@ -47,12 +47,15 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
      * @var string
      */
     var $current_session_id = null;
+    
+    var $auth = null;
 
     /**
      * Simple, currently empty default constructor.
      */
-    function midcom_services_auth_sessionmgr()
+    function midcom_services_auth_sessionmgr($auth)
     {
+        $this->auth = $auth;
         parent::midcom_baseclasses_core_object();
     }
 
@@ -84,7 +87,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
             return false;
         }
 
-        $user =& $_MIDCOM->auth->get_user($_MIDGARD['user']);
+        $user =& $this->auth->get_user($_MIDGARD['user']);
         if (! $user)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -468,7 +471,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
      */
     function is_user_online(&$user)
     {
-        if (! $_MIDCOM->auth->can_do('midcom:isonline', $user->_storage))
+        if (! $this->auth->can_do('midcom:isonline', $user->_storage))
         {
             return 'unknown';
         }
@@ -534,7 +537,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
         {
             foreach ($query_result as $session)
             {
-                $user =& $_MIDCOM->auth->get_user($session->userid);
+                $user =& $this->auth->get_user($session->userid);
                 if (array_key_exists($user->guid, $result))
                 {
                     // Skip duplicate login sessions

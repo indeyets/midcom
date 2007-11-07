@@ -39,11 +39,14 @@ class midcom_services_auth_backend extends midcom_baseclasses_core_object
      */
     var $session_id = null;
     
+    var $auth = null;
+    
     /**
      * The constructor should do only basic initialization.
      */
-    function midcom_services_auth_backend ()
+    function midcom_services_auth_backend($auth)
     {
+        $this->auth = $auth;
         return parent::midcom_baseclasses_core_object();
     }
 
@@ -74,7 +77,7 @@ class midcom_services_auth_backend extends midcom_baseclasses_core_object
      */
     function authenticate()
     {
-        return $_MIDCOM->auth->sessionmgr->authenticate($this->_session_id);
+        return $this->auth->sessionmgr->authenticate($this->_session_id);
     }
 
     /**
@@ -97,7 +100,7 @@ class midcom_services_auth_backend extends midcom_baseclasses_core_object
             $clientip = $_SERVER['REMOTE_ADDR'];
         }
         
-        $result = $_MIDCOM->auth->sessionmgr->create_login_session($username, $password, $clientip);
+        $result = $this->auth->sessionmgr->create_login_session($username, $password, $clientip);
         
         if (! $result)
         {
@@ -139,7 +142,7 @@ class midcom_services_auth_backend extends midcom_baseclasses_core_object
             return;
         }
 
-        if (! $_MIDCOM->auth->sessionmgr->delete_session($this->session_id))
+        if (! $this->auth->sessionmgr->delete_session($this->session_id))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 
                 'The system could not log you out, check the log file for details.');

@@ -37,11 +37,11 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
     /**
      * Read the configuration
      */
-    function midcom_services_auth_backend_simple ()
+    function midcom_services_auth_backend_simple($auth)
     {
         $this->_cookie_id .= $GLOBALS['midcom_config']['auth_backend_simple_cookie_id'];
 
-        return parent::midcom_services_auth_backend();
+        return parent::midcom_services_auth_backend($auth);
     }
 
     function read_login_session()
@@ -86,7 +86,7 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
         $session_id = $data[0];
         $user_id = $data[1];
 
-        $this->user =& $_MIDCOM->auth->get_user($user_id);
+        $this->user =& $this->auth->get_user($user_id);
 
         if (! $this->user)
         {
@@ -99,7 +99,7 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
             return false;
         }
 
-        $this->session_id = $_MIDCOM->auth->sessionmgr->load_login_session($session_id, $this->user);
+        $this->session_id = $this->auth->sessionmgr->load_login_session($session_id, $this->user);
 
         if (! $this->session_id)
         {

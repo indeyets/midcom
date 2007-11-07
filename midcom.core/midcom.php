@@ -85,10 +85,17 @@ require('midcom/debug.php');
 debug_add("Start of MidCOM run: {$_SERVER['REQUEST_URI']}", MIDCOM_LOG_INFO);
 ///////////////////////////////////
 // Load first-level supporting code
-// Note that the cache check hit depends on the i18n code.
+// Note that the cache check hit depends on the i18n and auth code.
 require('midcom/helper/misc.php');
 require('midcom/helper/formatters.php');
 require('midcom/services/i18n.php');
+
+require('midcom/baseclasses/core/object.php');
+require('midcom/core/user.php');
+require('midcom/services/auth.php');
+require('midcom/services/auth/sessionmgr.php');
+$auth = new midcom_services_auth();
+$auth->initialize();
 
 //require('autoload.php');
 //////////////////////////////////////
@@ -104,7 +111,7 @@ midcom_services_cache_startup();
 // Base classes (keep an eye on the order)
 // Note that the DB classes are spawned in midcom_application as they require the
 // DB class loader to work.
-require('midcom/baseclasses/core/object.php');
+
 require('midcom/baseclasses/core/dbobject.php');
 require('midcom/baseclasses/components/cron_handler.php');
 require('midcom/baseclasses/components/handler.php');
@@ -118,7 +125,6 @@ require('midcom/baseclasses/components/request.php');
 // at this point.
 
 // Core classes
-require('midcom/core/user.php');
 require('midcom/core/group.php');
 require('midcom/core/group_midgard.php');
 require('midcom/core/group_virtual.php');
@@ -144,8 +150,6 @@ require('midcom/services/_i18n_l10n.php');
 require('midcom/services/_sessioning.php');
 require('midcom/services/session.php');
 require('midcom/services/indexer.php'); // Further indexer files are included in indexer.php
-require('midcom/services/auth.php');
-require('midcom/services/auth/sessionmgr.php');
 require('midcom/services/dbclassloader.php');
 require('midcom/services/permalinks.php');
 require('midcom/services/tmp.php');

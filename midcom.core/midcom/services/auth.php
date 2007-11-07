@@ -489,7 +489,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
-        $this->sessionmgr = new midcom_services_auth_sessionmgr();
+        $this->sessionmgr = new midcom_services_auth_sessionmgr($this);
 
         $this->_register_core_privileges();
         $this->_initialize_user_from_midgard();
@@ -545,7 +545,15 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         // Now we check whether there is a success-relocate URL given somewhere.
         if (array_key_exists('midcom_services_auth_login_success_url', $_REQUEST))
         {
-            $_MIDCOM->relocate($_REQUEST['midcom_services_auth_login_success_url']);
+            if (isset($_MIDCOM))
+            {
+                $_MIDCOM->relocate($_REQUEST['midcom_services_auth_login_success_url']);
+            }
+            else
+            {
+                header("Location: {$_REQUEST['midcom_services_auth_login_success_url']}");
+                exit();
+            }
             // This will exit.
         }
 
@@ -626,7 +634,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     {
         require_once (MIDCOM_ROOT . "/midcom/services/auth/backend/{$GLOBALS['midcom_config']['auth_backend']}.php");
         $classname = "midcom_services_auth_backend_{$GLOBALS['midcom_config']['auth_backend']}";
-        $this->_auth_backend = new $classname();
+        $this->_auth_backend = new $classname($this);
 
         require_once (MIDCOM_ROOT . "/midcom/services/auth/frontend/{$GLOBALS['midcom_config']['auth_frontend']}.php");
         $classname = "midcom_services_auth_frontend_{$GLOBALS['midcom_config']['auth_frontend']}";
