@@ -124,8 +124,8 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
             // $script = "jQuery.midcom_services_uimessages({$config}, false);";
             // $_MIDCOM->add_jquery_state_script($script);
 
-            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Prototype/prototype.js");
-            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Scriptaculous/scriptaculous.js");
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Prototype/prototype.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Scriptaculous/scriptaculous.js');
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/protoGrowl.js');
         
             $_MIDCOM->add_link_head(
@@ -151,12 +151,14 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
             );            
         }
 
+        /* Sessions service now tries to be smarter about things
         if (! $_MIDGARD['user'])
         {
             // Don't use sessioning for non-users as that kills cache usage
             // TODO: Device a better approach for this
             return true;
         }
+        */
     
         // Read messages from session
         $session = new midcom_service_session('midcom_services_uimessages');
@@ -196,13 +198,15 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
             // No unshown messages
             return true;
         }
-        
+
+        /* Sessions service now tries to be smarter about things
         if (!$_MIDGARD['user'])
         {
             // Don't use sessioning for non-users as that kills cache usage
             return true;
         }
-        
+        */
+
         // We have to be careful what messages to store to session to prevent them
         // from accumulating
         $messages_to_store = Array();
@@ -222,7 +226,12 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
 
         $session = new midcom_service_session('midcom_services_uimessages');
         
-        // TODO: Check if some other request has added stuff to session as well
+        // Check if some other request has added stuff to session as well
+        if ($session->exists('midcom_services_uimessages_stack'))
+        {
+            $old_stack = $session->get('midcom_services_uimessages_stack');
+            $messages_to_store = array_merge($old_stack, $messages_to_store);
+        }
         $session->set('midcom_services_uimessages_stack', $messages_to_store);
         $this->_message_stack = Array();           
     }

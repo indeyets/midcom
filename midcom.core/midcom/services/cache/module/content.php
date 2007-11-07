@@ -508,6 +508,9 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      */
     function no_cache()
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $GLOBALS['midcom_debugger']->print_function_stack('no_cache called from');
+        debug_pop();
         if ($this->_no_cache)
         {
             return;

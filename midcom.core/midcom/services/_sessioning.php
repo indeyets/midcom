@@ -72,8 +72,7 @@ class midcom_service__sessioning
 
         @session_start();
 
-        // Disable caching for sessioned requests
-        $_MIDCOM->cache->content->no_cache();
+        /* Cache disabling made conditional based on domain/key existence */
 
         // Check for session data and load or initialize it, if neccessary
         if (! array_key_exists("midcom_session_data", $_SESSION))
@@ -141,8 +140,14 @@ class midcom_service__sessioning
      */
     function get ($domain, $key)
     {
+        static $no_cache = false;
         if ($this->exists($domain, $key))
         {
+            if (!$no_cache)
+            {
+                $_MIDCOM->cache->content->no_cache();
+                $no_cache = true;
+            }
             return $this->_get_helper($domain, $key);
         }
         else
@@ -189,6 +194,12 @@ class midcom_service__sessioning
      */
     function set ($domain, $key, $value)
     {
+        static $no_cache = false;
+        if (!$no_cache)
+        {
+            $_MIDCOM->cache->content->no_cache();
+            $no_cache = true;
+        }
         $_SESSION["midcom_session_data"][$domain][$key] = serialize($value);
     }
 }
