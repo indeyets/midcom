@@ -700,6 +700,8 @@ class midcom_application
         // Determine new Context ID and set $this->_currentcontext,
         // enter that context and prepare its data structure.
         $context = $this->_create_context(null, $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC));
+        $this->_set_context_data($url, $context, MIDCOM_CONTEXT_URI);
+
         $oldcontext = $this->_currentcontext;
         $this->_currentcontext = $context;
 
@@ -1916,6 +1918,7 @@ class midcom_application
         $this->_context[$id] = Array();
         $this->_context[$id][MIDCOM_CONTEXT_ANCHORPREFIX] = '';
         $this->_context[$id][MIDCOM_CONTEXT_REQUESTTYPE] = MIDCOM_REQUEST_CONTENT;
+        $this->_context[$id][MIDCOM_CONTEXT_URI] = $_SERVER['REQUEST_URI'];
         $this->_context[$id][MIDCOM_CONTEXT_ROOTTOPIC] = $node;
         $this->_context[$id][MIDCOM_CONTEXT_CONTENTTOPIC] = null;
         $this->_context[$id][MIDCOM_CONTEXT_COMPONENT] = null;

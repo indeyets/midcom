@@ -71,6 +71,7 @@ define ('MIDCOM_CONTEXT_NAP',8);
 define ('MIDCOM_CONTEXT_PAGETITLE',9);
 define ('MIDCOM_CONTEXT_LASTMODIFIED', 10);
 define ('MIDCOM_CONTEXT_PERMALINKGUID', 11);
+define ('MIDCOM_CONTEXT_URI', 12);
 
 // INTERNAL Context Keys, not accessible from outside midcom_application.
 define ('MIDCOM_CONTEXT_CUSTOMDATA', 1000);
