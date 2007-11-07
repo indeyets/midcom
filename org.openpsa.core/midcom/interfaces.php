@@ -47,7 +47,6 @@ class org_openpsa_core_interface extends midcom_baseclasses_components_interface
             // Sessioning kills caching and I doubt we really need this info when we don't have a user
             && $_MIDGARD['user'])
         {
-            $session = new midcom_service_session('org.openpsa.core');
 
             if ($this->_data['config']->get('default_workgroup_filter') == 'me')
             {
@@ -67,11 +66,15 @@ class org_openpsa_core_interface extends midcom_baseclasses_components_interface
             }
 
             $GLOBALS['org_openpsa_core_workgroup_filter'] = $default_filter;
+
+            /* the workgroup filter is deprecated, let's not screw caching over with it
+            $session = new midcom_service_session('org.openpsa.core');
             if (!$session->exists('org_openpsa_core_workgroup_filter'))
             {
                 $session->set('org_openpsa_core_workgroup_filter', $default_filter);
             }
             $GLOBALS['org_openpsa_core_workgroup_filter'] = $session->get('org_openpsa_core_workgroup_filter');
+            */
         }
 
         // Load "my company" or "owner company", the group that is the main user of this instance
