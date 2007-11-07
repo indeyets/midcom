@@ -19,20 +19,20 @@
 
 class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
 {
-  /**
-   * The full directory filename.
-   * 
-   * @access private
-   * @var string
-   */
-  var $_db = null;
-  
-  /**
-   * Sanitized version of database table name
-   */
-  var $_table = '';
+    /**
+     * The full directory filename.
+     * 
+     * @access private
+     * @var string
+     */
+    var $_db = null;
 
-  /**
+    /**
+     * Sanitized version of database table name
+     */
+    var $_table = '';
+
+    /**
      * The constructor is empty yet.
      */
     function midcom_services_cache_backend_sqlite()
@@ -62,7 +62,7 @@ class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
     }
     
     function _open($write) {}
-    
+
     function _close() {}
 
     function _get($key)
