@@ -44,7 +44,8 @@ class net_nemein_rss_cron_fetchfeeds extends midcom_baseclasses_components_cron_
         foreach ($feeds as $feed)
         {
             $node = new midcom_db_topic($feed->node);
-            if (!$node)
+            if (   !$node
+                || !$node->guid)
             {
                 debug_add("Node #{$feed->node} does not exist, skipping feed #{$feed->id}", MIDCOM_LOG_ERROR);
                 continue;

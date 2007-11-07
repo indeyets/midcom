@@ -58,13 +58,15 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         $this->_node = new midcom_db_topic($this->_feed->node);
 
         $this->_component = 'net.nemein.rss';
-        
-        if (!isset($GLOBALS['midcom_component_data'][$this->_node->component]))
-        {
-            $_MIDCOM->componentloader->load_graceful($this->_node->component);
+
+        if ($this->_node->component)
+        {       
+            if (!isset($GLOBALS['midcom_component_data'][$this->_node->component]))
+            {
+                $_MIDCOM->componentloader->load_graceful($this->_node->component);
+            }
+            $this->_node_config = $GLOBALS['midcom_component_data'][$this->_node->component]['config'];
         }
-        $this->_node_config = $GLOBALS['midcom_component_data'][$this->_node->component]['config'];
-        
         parent::midcom_baseclasses_components_purecode();
     }
     
@@ -138,6 +140,11 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
     function import()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
+        if (!$this->_node->component)
+        {
+            return array();
+        }
+        
         $items = $this->fetch();
         
         if (count($items) == 0)
