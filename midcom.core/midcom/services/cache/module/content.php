@@ -465,7 +465,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
                 debug_pop();
                 return;
             }
-            $content = $this->_data_cache->get($entry_name);
+            $content = $this->_data_cache->get($content_id);
             $this->_data_cache->close();
 
             foreach ($data['sent_headers'] as $header)
@@ -682,7 +682,27 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      */
     function invalidate($guid)
     {
-        $this->invalidate_all();
+        $this->_meta_cache->open();
+
+        if (!$this->_meta_cache->exists($guid))
+        {
+            return;
+        }
+        
+        $guidmap = $this->_meta_cache->get($guid);
+        $this->_data_cache->open();
+        foreach ($guidmap as $content_id)
+        {
+            if ($this->_meta_cache->exists($content_id))
+            {
+                $this->_meta_cache->remove($content_id);
+            }
+
+            if ($this->_data_cache->exists($content_id))
+            {
+                $this->_data_cache->remove($content_id);
+            }
+        }
     }
     
     /**
@@ -868,12 +888,24 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             $this->_meta_cache->put($request_id, $content_id);
             
             // Cache where the object have been
-            /*foreach ($this->context_guids[$context] as $guid)
+            foreach ($this->context_guids[$context] as $guid)
             {
                 // TODO: This needs to be array as GUIDs often appear in multiple requests
-                $this->_meta_cache->put($guid, $content_id);
+                if ($this->_meta_cache->exists($guid))
+                {
+                    $guidmap = $this->_meta_cache->get($guid);
+                }
+                else
+                {
+                    $guidmap = array();
+                }
+                
+                if (!in_array($content_id, $guidmap))
+                {
+                    $guidmap[] = $content_id;
+                }
+                $this->_meta_cache->put($guid, $guidmap);
             }
-            */
             
             $this->_meta_cache->close();
         }
