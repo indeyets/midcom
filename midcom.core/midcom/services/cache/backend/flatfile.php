@@ -55,7 +55,16 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
         //debug_add("Flatfile Cache backend '{$this->_name}' initialized to directory: {$this->_dirname}");
     }
 
-        
+    /**
+     * This method is unused as we use flat files that are accessed per key
+     */
+    function _open($write = false) {}
+
+    /**
+     * This method is unused as we use flat files that are accessed per key
+     */
+    function _close() {}
+     
     function get($key)
     {
         if (! $this->exists($key))

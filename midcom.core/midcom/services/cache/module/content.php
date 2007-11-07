@@ -211,15 +211,24 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         
         if ($this->_multilang)
         {
-            $idenfitier_source .= 'LANG=' . $_MIDCOm->i18n->get_current_language();
+            $i18n = new midcom_services_i18n();
+            $identifier_source .= 'LANG=' . $i18n->get_current_language();
         }
         else
         {
-            $idenfitier_source .= 'LANG=ALL';
+            $identifier_source .= 'LANG=ALL';
         }
         
-        $idenfitier_source .= ';USER=' . $_MIDGARD['user'];
-        $idenfitier_source .= ';URL=' . $_MIDCOM->get_context_data($context, MIDCOM_CONTEXT_URI);
+        $identifier_source .= ';USER=' . $_MIDGARD['user'];
+        
+        if (isset($_MIDCOM))
+        {
+            $identifier_source .= ';URL=' . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_URI);
+        }
+        else
+        {
+            $identifier_source .= ';URL=' . $_SERVER['REQUEST_URI'];
+        }
         
         // TODO: Add browser capability data (mobile, desktop browser etc) here
         
@@ -409,8 +418,8 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
 
         // Check that we have cache for the identifier
         $this->_meta_cache->open();
-                
-        $request_id = $this->generate_request_identifier($_MIDCOM->get_current_context());
+        
+        $request_id = $this->generate_request_identifier(0);
         if (!$this->_meta_cache->exists($request_id))
         {
             // We have no information about content cached for this request

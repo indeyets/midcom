@@ -353,7 +353,7 @@ $GLOBALS['midcom_config_default']['cache_module_content_backend'] = Array();
 // $GLOBALS['midcom_config_default']['cache_module_content_backend'] = Array ('directory' => 'content/', 'driver' => 'dba');
 // $GLOBALS['midcom_config_default']['cache_module_content_multilang'] = true;
 // $GLOBALS['midcom_config_default']['cache_module_content_uncached'] = false;
-$GLOBALS['midcom_config_default']['cache_module_content_uncached'] = true; /* Temporary until the cache module is back working correctly */
+$GLOBALS['midcom_config_default']['cache_module_content_uncached'] = false; /* Temporary until the cache module is back working correctly */
 $GLOBALS['midcom_config_default']['cache_module_content_headers_strategy'] = 'revalidate';
 $GLOBALS['midcom_config_default']['cache_module_content_default_lifetime'] = 60; // Seconds, added to gmdate() for expiry timestamp (in case no other expiry is set)
 

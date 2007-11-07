@@ -43,6 +43,10 @@ class midcom_services_cache_backend_null extends midcom_services_cache_backend
         return;
     }
 
+    function _open($write = false) {}
+
+    function _close() {}
+
     function get($key)
     {
         return null;
