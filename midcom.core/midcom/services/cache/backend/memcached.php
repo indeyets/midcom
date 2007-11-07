@@ -92,9 +92,11 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
             // This will exit.
         }
 
+        /*
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_print_r('Current MemCache stats:', $this->_cache->getStats());
         debug_pop();
+        */
     }
 
     /**
@@ -157,6 +159,10 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
      */
     function _exists($key)
     {
+        /* TODO: Remove when done */
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Returning (@\$this->_get('{$key}') !== false)");
+        debug_pop();
         return (@$this->_get($key) !== false);
     }
 
