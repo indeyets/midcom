@@ -110,20 +110,40 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
 
     function _get($key)
     {
+        $key = "{$this->_name}-{$key}";
+        /* TODO: Remove when done */
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Returning \$this->_cache->get('{$key}')");
+        debug_pop();
         return (@$this->_cache->get($key));
     }
 
     function _put($key, $data, $timeout=false)
     {
-        if ($timeout !== FALSE) {
+        $key = "{$this->_name}-{$key}";
+        if ($timeout !== FALSE)
+        {
+            /* TODO: Remove when done */
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Returning \$this->_cache->set('{$key}', \$data, 0, {$timeout})");
+            debug_pop();
             @$this->_cache->set($key, $data, 0, $timeout);
             return;
         }
+        /* TODO: Remove when done */
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Returning \$this->_cache->set('{$key}', \$data)");
+        debug_pop();
         @$this->_cache->set($key, $data);
     }
 
     function _remove($key)
     {
+        $key = "{$this->_name}-{$key}";
+        /* TODO: Remove when done */
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Returning \$this->_cache->delete('{$key}')");
+        debug_pop();
         @$this->_cache->delete($key);
     }
 

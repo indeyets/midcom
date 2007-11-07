@@ -17,7 +17,7 @@
  * GUIDs as cache keys, whatever you do. To allow for different subsystems of the
  * Framework to share the cache, I have introduce "Data groups", which are suffixes
  * for the actual cache information. Thus, all keys in the cache follow a 
- * "{$guid}-{$datagroup}" naming scheme. These groups need to be registered in the 
+ * "{$datagroup}-{$guid}" naming scheme. These groups need to be registered in the 
  * MidCOM configuration key <i>cache_module_memcache_data_groups</i>. 
  * 
  * Number Two, it is entirely possible (as it is the default), that the memcache
@@ -96,7 +96,7 @@ class midcom_services_cache_module_memcache extends midcom_services_cache_module
             $this->_data_groups = $GLOBALS['midcom_config']['cache_module_memcache_data_groups'];
             $config = $GLOBALS['midcom_config']['cache_module_memcache_backend_config'];
             $config['driver'] = $this->_backend;
-            $this->_cache = $this->_create_backend($this->_backend, $config);
+            $this->_cache = $this->_create_backend('module_memcache', $config);
         }
     }
     
@@ -153,7 +153,7 @@ class midcom_services_cache_module_memcache extends midcom_services_cache_module
     }
     
     /**
-     * Sets a fiven key in the cache. If the data group is unknown, a Warning-Level error
+     * Sets a given key in the cache. If the data group is unknown, a Warning-Level error
      * is logged and putting is denied.
      * 
      * @param string $data_group The Data Group to look in.
