@@ -704,30 +704,12 @@ class midcom_application
         $this->_currentcontext = $context;
 
         /* "content-cache" for DLs, check_hit */ 
-        $dl_request_id = 'DL' . $this->cache->content->generate_request_identifier($context);
-        debug_add("Checking if we have '{$dl_request_id}' in \$this->cache->content->_meta_cache");
-        $this->cache->content->_meta_cache->open();
-        if ($this->cache->content->_meta_cache->exists($dl_request_id))
+        if ($this->cache->content->check_dl_hit($context, $config))
         {
-            $dl_content_id = $this->cache->content->_meta_cache->get($dl_request_id);
-            $this->cache->content->_meta_cache->close();
-            $this->cache->content->_data_cache->open();
-            debug_add("Checking if we have '{$dl_content_id}' in \$this->cache->content->_data_cache");
-            if ($this->cache->content->_data_cache->exists($dl_content_id))
-            {
-                debug_add('Cached content found');
-                echo $this->cache->content->_data_cache->get($dl_content_id);
-                $this->cache->content->_data_cache->close();
-                // Leave Context
-                $this->_currentcontext = $oldcontext;
-                debug_pop();
-                return $context;
-            }
-            $this->cache->content->_data_cache->close();
-        }
-        else
-        {
-            $this->cache->content->_meta_cache->close();
+            // The check_hit method serves cached content on hit
+            $this->_currentcontext = $oldcontext;
+            debug_pop();
+            return $context;
         }
 
         // Parser Init: Generate arguments and instantinate it.
@@ -752,6 +734,8 @@ class midcom_application
             return;
         }
 
+        // Start another buffer for caching DL results
+        ob_start();
 
         // If MIDCOM_REQUEST_CONTENT: Tell Style to enter Context
         if ($type == MIDCOM_REQUEST_CONTENT)
@@ -760,40 +744,7 @@ class midcom_application
             debug_add("Entering Context $context (old Context: $oldcontext)", MIDCOM_LOG_INFO);
         }
 
-        ob_start();
         $this->_output();
-        $dl_cache_data = ob_get_contents();
-        ob_end_flush();
-        /* Cache DL content */
-        $dl_content_id = 'DL' . $this->cache->content->generate_content_identifier($context);
-        $this->cache->content->_meta_cache->open(true);
-        $this->cache->content->_data_cache->open(true);
-        $this->cache->content->_meta_cache->put($dl_request_id, $dl_content_id);
-        debug_add("Writing cache entry for '{$dl_content_id}' in request '{$dl_request_id}'");
-        $this->cache->content->_data_cache->put($dl_content_id, $dl_cache_data);
-        // Cache where the object have been
-        foreach ($this->cache->content->context_guids[$context] as $guid)
-        {
-            // TODO: This needs to be array as GUIDs often appear in multiple requests
-            if ($this->cache->content->_meta_cache->exists($guid))
-            {
-                $guidmap = $this->cache->content->_meta_cache->get($guid);
-            }
-            else
-            {
-                $guidmap = array();
-            }
-            
-            if (!in_array($dl_content_id, $guidmap))
-            {
-                $guidmap[] = $dl_content_id;
-            }
-            $this->cache->content->_meta_cache->put($guid, $guidmap);
-        }
-        unset($guid, $guidmap);
-        $this->cache->content->_meta_cache->close();
-        $this->cache->content->_data_cache->close();
-        unset($dl_cache_data, $dl_content_id, $dl_request_id);
 
         // If MIDCOM_REQUEST_CONTENT: Tell Style to leave Context
         if ($type == MIDCOM_REQUEST_CONTENT)
@@ -801,6 +752,12 @@ class midcom_application
             $this->style->leave_context();
             debug_add("Leaving Context $context (new Context: $oldcontext)", MIDCOM_LOG_INFO);
         }
+
+        $dl_cache_data = ob_get_contents();
+        ob_end_flush();
+        /* Cache DL the content */
+        $this->cache->content->store_dl_content($context, $config, $dl_cache_data);
+        unset($dl_cache_data);
 
         // Leave Context
         $this->_currentcontext = $oldcontext;

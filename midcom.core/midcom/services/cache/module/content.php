@@ -205,7 +205,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
     /**
      * Generate a valid cache identifier for a context of the current request
      */
-    function generate_request_identifier($context)
+    function generate_request_identifier($context, $customdata = null)
     {
         $identifier_source = '';
         
@@ -228,6 +228,11 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         else
         {
             $identifier_source .= ';URL=' . $_SERVER['REQUEST_URI'];
+        }
+        // check_dl_hit needs to take config changes into account...
+        if (is_null($customdata))
+        {
+            $identifier_source .= serialize($customdata);
         }
         
         // TODO: Add browser capability data (mobile, desktop browser etc) from WURFL here
@@ -889,28 +894,11 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             $this->_meta_cache->put($content_id, $entry_data);
             $this->_data_cache->put($content_id, $cache_data);
             $this->_meta_cache->put($request_id, $content_id);
+            $this->_meta_cache->close();
             
             // Cache where the object have been
-            foreach ($this->context_guids[$context] as $guid)
-            {
-                // TODO: This needs to be array as GUIDs often appear in multiple requests
-                if ($this->_meta_cache->exists($guid))
-                {
-                    $guidmap = $this->_meta_cache->get($guid);
-                }
-                else
-                {
-                    $guidmap = array();
-                }
-                
-                if (!in_array($content_id, $guidmap))
-                {
-                    $guidmap[] = $content_id;
-                }
-                $this->_meta_cache->put($guid, $guidmap);
-            }
+            $this->store_context_guid_map($context, $content_id);
             
-            $this->_meta_cache->close();
         }
 
         // Finish caching.
@@ -920,6 +908,100 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             ob_end_flush();
             $this->_obrunning = false;
         }
+    }
+
+    function store_context_guid_map($context, $content_id)
+    {
+        $this->_meta_cache->open(true);
+        foreach ($this->context_guids[$context] as $guid)
+        {
+            // This needs to be array as GUIDs often appear in multiple requests
+            if ($this->_meta_cache->exists($guid))
+            {
+                $guidmap = $this->_meta_cache->get($guid);
+            }
+            else
+            {
+                $guidmap = array();
+            }
+            
+            if (!in_array($content_id, $guidmap))
+            {
+                $guidmap[] = $content_id;
+            }
+            $this->_meta_cache->put($guid, $guidmap);
+        }
+        $this->_meta_cache->close();
+    }
+
+    function check_dl_hit(&$context, &$dl_config)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        if (   $this->_no_cache
+            || $this->_live_mode)
+        {
+            debug_add('no_cache/live mode, not checking any further');
+            debug_pop();
+            return false;
+        }
+        $dl_request_id = 'DL' . $this->generate_request_identifier($context, $dl_config);
+        debug_add("Checking if we have '{$dl_request_id}' in \$this->_meta_cache");
+        $this->_meta_cache->open();
+        if ($this->_meta_cache->exists($dl_request_id))
+        {
+            $dl_content_id = $this->_meta_cache->get($dl_request_id);
+            $this->_meta_cache->close();
+            $this->_data_cache->open();
+            debug_add("Checking if we have '{$dl_content_id}' in \$this->_data_cache");
+            if ($this->_data_cache->exists($dl_content_id))
+            {
+                debug_add('Cached content found, serving it');
+                echo $this->_data_cache->get($dl_content_id);
+                $this->_data_cache->close();
+                debug_pop();
+                return true;
+            }
+            debug_add("We received content_id ({$dl_content_id}), but did not find corresponding data in cache", MIDCOM_LOG_INFO);
+            $this->_data_cache->close();
+        }
+        else
+        {
+            $this->_meta_cache->close();
+        }
+        debug_pop();
+        return false;
+    }
+
+    function store_dl_content(&$context, &$dl_config, &$dl_cache_data)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        if (   $this->_no_cache
+            || $this->_live_mode)
+        {
+            debug_add('no_cache/live mode, not storing data');
+            debug_pop();
+            return;
+        }
+        if ($this->_uncached)
+        {
+            debug_add('Uncached mode, not storing data');
+            debug_pop();
+            return;
+        }
+        $dl_request_id = 'DL' . $this->generate_request_identifier($context, $dl_config);
+        $dl_content_id = 'DL' . $this->generate_content_identifier($context);
+        $this->_meta_cache->open(true);
+        $this->_data_cache->open(true);
+        $this->_meta_cache->put($dl_request_id, $dl_content_id);
+        debug_add("Writing cache entry for '{$dl_content_id}' in request '{$dl_request_id}'");
+        $this->_data_cache->put($dl_content_id, $dl_cache_data);
+        // Cache where the object have been
+        $this->store_context_guid_map($context, $dl_content_id);
+        unset($guid, $guidmap);
+        $this->_meta_cache->close();
+        $this->_data_cache->close();
+        unset($dl_cache_data, $dl_content_id, $dl_request_id);
+        debug_pop();
     }
 
     /**
