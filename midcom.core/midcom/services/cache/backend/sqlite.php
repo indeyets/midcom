@@ -62,8 +62,6 @@ class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
             $this->_db->query("CREATE TABLE {$this->_table} (key VARCHAR(255), value TEXT);");
             $this->_db->query("CREATE INDEX {$this->_table}_key ON {$this->_table} (key);");
         }
-        
-        $this->_auto_serialize = true;
     }
     
     function _open($write) {}

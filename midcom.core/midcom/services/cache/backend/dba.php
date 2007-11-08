@@ -61,6 +61,9 @@ class midcom_services_cache_backend_dba extends midcom_services_cache_backend
      */
  	function _on_initialize()
     {
+        // We need to serialize data
+        $this->_auto_serialize = true;
+    
         if (array_key_exists('handler', $this->_config))
         {
             $this->_handler = $this->_config['handler'];
