@@ -122,7 +122,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             }
             else
             {
-                $value = $ratings_total / $rating_comments;
+                $value = $ratings_total / $rating_comments;                
             }
             
             if ($this->_config->get('ratings_cache_to_object_property_metadata'))
@@ -364,7 +364,8 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             $this->_comments = net_nehmer_comments_comment::list_by_objectguid_filter_anonymous(
             $this->_objectguid,
             $this->_config->get('items_to_show'),
-            $this->_config->get('item_ordering')
+            $this->_config->get('item_ordering'),
+            $this->_config->get('paging')
             );
         }
         else
@@ -372,8 +373,15 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             $this->_comments = net_nehmer_comments_comment::list_by_objectguid(
             $this->_objectguid,
             $this->_config->get('items_to_show'),
-            $this->_config->get('item_ordering')
+            $this->_config->get('item_ordering'),
+            $this->_config->get('paging')
             );
+        }
+        
+        if ($this->_config->get('paging') !== false)
+        {
+            $data['qb_pager'] = $this->_comments;
+            $this->_comments = $this->_comments->execute();
         }
 
         if (   $_MIDCOM->auth->user

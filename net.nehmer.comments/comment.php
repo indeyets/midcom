@@ -51,12 +51,22 @@ class net_nehmer_comments_comment extends __net_nehmer_comments_comment
      * @param guid $guid The GUID of the object to bind to.
      * @return Array List of applicable comments.
      */
-    function list_by_objectguid($guid, $limit=false, $order='ASC')
+    function list_by_objectguid($guid, $limit=false, $order='ASC', $paging=false)
     {
-        $qb = net_nehmer_comments_comment::new_query_builder();
+        if ($paging !== false)
+        {
+            $qb = new org_openpsa_qbpager('net_nehmer_comments_comment', 'net_nehmer_comments_comment');
+            $qb->results_per_page = $paging;
+        }
+        else
+        {
+            $qb = net_nehmer_comments_comment::new_query_builder();            
+        }
+        
         $qb->add_constraint('objectguid', '=', $guid);
         
-        if ($limit)
+        if (   $limit
+            && !$paging)
         {
             $qb->set_limit($limit);
         }
@@ -68,6 +78,11 @@ class net_nehmer_comments_comment extends __net_nehmer_comments_comment
         else
         {
             $qb->add_order('created', $order);
+        }
+
+        if ($paging !== false)
+        {
+            return $qb;
         }
 
         return $qb->execute();
@@ -83,14 +98,24 @@ class net_nehmer_comments_comment extends __net_nehmer_comments_comment
      * @param guid $guid The GUID of the object to bind to.
      * @return Array List of applicable comments.
      */
-    function list_by_objectguid_filter_anonymous($guid, $limit=false, $order='ASC')
+    function list_by_objectguid_filter_anonymous($guid, $limit=false, $order='ASC', $paging=false)
     {
-        $qb = net_nehmer_comments_comment::new_query_builder();
+        if ($paging !== false)
+        {
+            $qb = new org_openpsa_qbpager('net_nehmer_comments_comment', 'net_nehmer_comments_comment');
+            $qb->results_per_page = $paging;
+        }
+        else
+        {
+            $qb = net_nehmer_comments_comment::new_query_builder();            
+        }
+
         $qb->add_constraint('objectguid', '=', $guid);
         $qb->add_constraint('author', '<>', '');
         $qb->add_constraint('content', '<>', '');
 
-        if ($limit)
+        if (   $limit
+            && !$paging)
         {
             $qb->set_limit($limit);
         }
@@ -102,6 +127,11 @@ class net_nehmer_comments_comment extends __net_nehmer_comments_comment
         else
         {
             $qb->add_order('created', $order);
+        }
+
+        if ($paging !== false)
+        {
+            return $qb;
         }
 
         return $qb->execute();

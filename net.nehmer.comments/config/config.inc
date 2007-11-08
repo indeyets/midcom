@@ -29,3 +29,5 @@
 
 'items_to_show' => 6, //false == no limit
 'item_ordering' => 'ASC', //DESC OR ASC
+
+'paging' => false, // false == disabled or integer == number of results/page
