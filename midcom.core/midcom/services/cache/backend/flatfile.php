@@ -107,7 +107,7 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
     {
         // This will rename the current directory, create a new empty one and 
         // then completely delete the original directory.
-        $tmpdir = "{$this->_dirname}." . getmypid();
+        $tmpdir = substr($this->_dirname, 0, strlen($this->_dirname) - 1) . '.' . getmypid();
         rename($this->_dirname, $tmpdir);
         mkdir($this->_dirname);
         
@@ -116,7 +116,7 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
         $files = glob($tmpdir . "*",GLOB_NOSORT);
         foreach ($files as $file)
         {
-            if (!unlink($file))
+            if (!@unlink($file))
             {
                 debug_add( "Could not clear phpfilecache. Most probably due to missing permissions.");
             }
