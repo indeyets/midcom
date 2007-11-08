@@ -217,7 +217,7 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
         
         if ($handler_id == 'mail-compose-new-quick')
         {
-            $data['receiver'] =& $_MIDCOM->auth->get_user($args[0]);
+            $data['receiver'] = $_MIDCOM->auth->get_user($args[0]);
 
             $data['heading'] = sprintf($this->_l10n->get('write mail to %s:'), $data['receiver']->name);
         }
@@ -320,6 +320,7 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
         {
             case 'mail-compose-new-quick':
                 $receivers[] = $this->_request_data['receiver'];
+                break;
             case 'mail-compose-new':
                 $receivers_key = 'receivers';
                 if ($this->_using_chooser)
@@ -412,64 +413,8 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
         
         foreach ($receivers as $receiver)
         {
-            $this->_send_notification(&$receiver);
+            net_nehmer_mail_viewer::send_notification(&$receiver, &$this->_mail, &$this->_config);
         }
-    }
-    
-    /**
-     * Sends a notification to the user about a new mail in his inbox.
-     * This is called by _send_notifications().
-     *
-     * The mail content is configured using the configuration keys
-     * notification_mail_sender, notification_mail_subject and
-     * notification_mail_body. The values are passed through the L10n system before
-     * they are processed using midcom_helper_mailtemplate.
-     *
-     * Available template keys:
-     *
-     * - __SENDER_NAME__ name of user sending the mail.
-     * - __RECEIVER_NAME__ name of the receiver.
-     * - __SUBJECT__ contains the subject of the message.
-     * - __MAILURL__ contains the URL to display the mail.
-     *
-     * @param string $mail_guid The GUID of the mail which has been sent.
-     * @param Array $data The request data.
-     * @access private
-     */
-    function _send_notification(&$person)
-    {   
-        $recipient_guid = $person->guid;
-        
-        $mail_sender = $_MIDCOM->auth->get_user($this->_mail->sender);
-        $mail_sender =& $mail_sender->get_storage();
-
-        $from = $this->_config->get('notification_mail_sender');
-        if (! $from)
-        {
-            $from = $mail_sender->guid;
-        }
-        
-        $mail_url = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "mail/view/{$this->_mail->guid}.html";
-        
-        $title = $this->_l10n->get($this->_config->get('notification_mail_subject'));
-        $title = str_replace("__SENDER_NAME__", $mail_sender->name, $title);
-        
-        $abstract = $this->_l10n->get($this->_config->get('notification_mail_abstract_body'));
-        $abstract = str_replace("__SENDER_NAME__", $mail_sender->name, $abstract);
-        
-        $content = $this->_l10n->get($this->_config->get('notification_mail_body'));
-        $content = str_replace("__SENDER_NAME__", $mail_sender->name, $content);
-        $content = str_replace("__RECEIVER_NAME__", $person->name, $content);
-        $content = str_replace("__SUBJECT__", $this->_mail->subject, $content);
-        $content = str_replace("__MAILURL__", $mail_url, $content);
-                        
-        $message['title'] = $title;
-        $message['from'] = $from;
-        $message['abstract'] = $abstract;
-        $message['content'] = $content;
-        $message['growl_to'] = $person->name;
-                
-        org_openpsa_notifications::notify('net.nehmer.mail:new_mail', $recipient_guid, $message);
     }
 
 }

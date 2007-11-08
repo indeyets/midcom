@@ -10,3 +10,5 @@
 'notification_mail_body' => 'notification_mail_body', // Will be localized
 
 'enable_live_preview' => true,
+
+'paging' => false, // false == disabled, integer == number of mails/page

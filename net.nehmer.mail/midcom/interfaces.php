@@ -54,6 +54,7 @@ class net_nehmer_mail_interface extends midcom_baseclasses_components_interface
             'net.nehmer.markdown',
             'net.nemein.tag',
             'org.openpsa.notifications',
+            'org.openpsa.qbpager',
         );
     }
     

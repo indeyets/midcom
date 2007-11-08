@@ -235,8 +235,8 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         
-        debug_print_r('Receivers: ',$receivers);
-        debug_pop();
+        // debug_print_r('Receivers: ',$receivers);
+        // debug_pop();
         
         $_MIDCOM->auth->request_sudo();                
         foreach ($receivers as $k => $receiver)
@@ -284,15 +284,20 @@ class net_nehmer_mail_mail extends __net_nehmer_mail_mail
                 // This will exit.
             }
             
-            $user =& $_MIDCOM->auth->get_user($receiver->guid);
-            
-            $this->set_privilege('midgard:read', $user);
+            $user = $_MIDCOM->auth->get_user($receiver->guid);
 
-            $mail->set_privilege('midgard:read', $user);
-            $mail->set_privilege('midgard:delete', $user);
-            $mail->set_privilege('midgard:owner', $user);
-            //$mail->set_privilege('midgard:read');
-            $mail->unset_privilege('midgard:owner');
+            $assignee = $user->id;
+            if ($assignee == 0) {
+                $assignee = "user:{$user->guid}";
+            }
+            
+            $this->set_privilege('midgard:read', $assignee);
+
+            $mail->set_privilege('midgard:owner', $assignee);
+            
+            // $mail->set_privilege('midgard:read', $user);
+            // $mail->set_privilege('midgard:delete', $user);
+            //$mail->unset_privilege('midgard:owner');
             
             debug_add("delivered to user {$receiver->id} to mailbox {$inbox->id}");
 

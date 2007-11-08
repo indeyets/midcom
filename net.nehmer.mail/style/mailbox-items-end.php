@@ -3,6 +3,16 @@
             </tbody>
         </table>
         <?php
+        if (isset($data['qb_pager'])
+            && is_object($data['qb_pager'])
+            && method_exists($data['qb_pager'], 'show_pages'))
+        {
+            echo "<div class=\"net_nehmer_mail_pager\">\n";
+            $data['qb_pager']->show_pages();
+            echo "</div>\n";
+        }
+        ?>
+        <?php
         if ($data['show_actions'])
         {
         ?>

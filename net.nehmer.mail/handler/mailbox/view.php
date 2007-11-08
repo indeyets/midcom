@@ -195,9 +195,18 @@ class net_nehmer_mail_handler_mailbox_view extends midcom_baseclasses_components
             'net_nehmer_mail_action_mark_as_unread' => $this->_l10n->get('mark as unread'),
         );
         
+        if ($this->_config->get('paging') !== false)
+        {
+            $qb = $this->_mailbox->list_mails('reverse received', $this->_config->get('paging'));
+            $data['qb_pager'] = $qb;
+            $mails = $qb->execute();
+        }
+        else
+        {
+            $mails = $this->_mailbox->list_mails();
+        }
+
         midcom_show_style('mailbox-items-start');
-        
-        $mails = $this->_mailbox->list_mails();
         
         if (count($mails) == 0)
         {

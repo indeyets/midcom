@@ -223,3 +223,10 @@ div.livePreview_content
     font-size: 11pt;
     padding: 10px;
 }
+
+.net_nehmer_mail_pager
+{
+    text-align: right;
+    margin-top: 2px;
+    margin-bottom: 5px;
+}

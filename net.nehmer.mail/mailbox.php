@@ -239,11 +239,20 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
      *
      * @return midcom_core_querybuilder The prepared Querybuilder.
      */
-    function get_qb_mails()
+    function get_qb_mails($paging=false)
     {
         $_MIDCOM->auth->require_do('net.nehmer.mail:list_mails', $this);
-
-        $qb = net_nehmer_mail_mail::new_query_builder();
+        
+        if ($paging !== false)
+        {
+            $qb = new org_openpsa_qbpager('net_nehmer_mail_mail', 'net_nehmer_mail_mail');
+            $qb->results_per_page = $paging;
+        }
+        else
+        {
+            $qb = net_nehmer_mail_mail::new_query_builder();            
+        }
+        
         $qb->add_constraint('mailbox', '=', $this->guid);
                 
         return $qb;
@@ -256,16 +265,35 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
      *     and the optional prefix 'reverse'. The default is 'reverse received'.
      * @return Array A list of found mails, or false on failure.
      */
-    function list_mails($order = 'reverse received')
+    function list_mails($order = 'reverse received', $paging = false)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
+        // debug_push_class(__CLASS__, __FUNCTION__);
         
-        $qb = $this->get_qb_mails();
-        $qb->add_order($order);
-        $results = $qb->execute();
+        $qb =& $this->get_qb_mails($paging);
+
+        if ($paging === false)
+        {
+            $qb->add_order($order);
+        }
+        else
+        {
+            if (is_array($order))
+            {
+                $qb->add_order($order['by'], $order['dir']);
+            }
+            else
+            {
+                $qb->add_order('received', 'DESC');
+            }
+        }
+                
+        if ($paging !== false)
+        {
+            return $qb;
+        }
         
-        debug_pop();
-        return $results;
+        // debug_pop();        
+        return $qb->execute();
     }
 
     /**

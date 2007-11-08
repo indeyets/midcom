@@ -57,49 +57,11 @@
     'operations' => Array('save' => 'send mail'),
     'fields' => Array
     (
-        /*'receivers' => array
-        (
-            'title'   => 'receivers',
-            'description' => 'These are the receivers of the mail.',
-            'helptext' => '',
-            
-            'storage' => 'receivers',
-            'type' => 'select',
-            'type_config' => array
-            (
-                 'require_corresponding_option' => false,
-                 'allow_multiple' => true,
-                 'multiple_storagemode' => 'array',
-                 'options' => array(),
-            ),
-            'widget' => 'universalchooser',
-            'widget_config' => array
-            (
-                'class'       => 'org_openpsa_contacts_person',
-                'component'   => 'org.openpsa.contacts',
-                'titlefield'  => 'name',
-                'idfield'     => 'id',
-                'constraints' => array(),
-                'searchfields'  => array
-                (
-                    'firstname',
-                    'lastname',
-                    'username',
-                ),
-                'orders'        => array
-                (
-                    array('lastname'    => 'ASC'),
-                    array('firstname'    => 'ASC'),
-                ),
-            ),
-            'required' => true,
-        ),*/
         'receivers' => Array
         (
             'title' => 'receivers',
             'description' => 'These are the receivers of the mail.',
-            'helptext' => '',
-            
+            'helptext' => 'Write 3 or more letters of your buddies username or name to get results.',
             'storage' => null,
             'type' => 'select',
             'type_config' => array
