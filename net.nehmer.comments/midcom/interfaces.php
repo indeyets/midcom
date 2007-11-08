@@ -68,6 +68,7 @@ class net_nehmer_comments_interface extends midcom_baseclasses_components_interf
         (
             'midcom.helper.datamanager2',
             'org.openpsa.notifications',
+            'org.openpsa.qbpager',
         );
     }
 
