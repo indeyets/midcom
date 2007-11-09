@@ -630,6 +630,11 @@ class midcom_core_privilege extends midcom_core_privilege_db
                 $guid = null;
             }
         }
+        
+        if (is_null($guid))
+        {
+            return array();
+        }
 
         // If we have a parent, we recurse.
         //
@@ -643,7 +648,8 @@ class midcom_core_privilege extends midcom_core_privilege_db
         if ($guid === null)
         {
             $tmp = $object->get_parent();
-			if ($tmp)
+			if (   $tmp
+			    && $tmp->guid)
 			{
 				$parent_guid = $tmp->guid;
 			}
