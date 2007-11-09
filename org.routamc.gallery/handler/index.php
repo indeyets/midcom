@@ -99,7 +99,7 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
         $qb->results_per_page = $this->_config->get('photos_per_page') - $offset;
         */
         
-        $qb->results_per_page = $this->_config->get('photos_per_page') - $offset;
+        $qb->results_per_page = $this->_config->get('photos_per_page');// - $offset;
         $qb->add_constraint('node', '=', $this->_topic->id);
 
         // FIXME: This property should be rethought
