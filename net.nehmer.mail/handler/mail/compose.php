@@ -217,7 +217,8 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
         
         if ($handler_id == 'mail-compose-new-quick')
         {
-            $data['receiver'] = $_MIDCOM->auth->get_user($args[0]);
+            $user = $_MIDCOM->auth->get_user($args[0]);
+            $data['receiver'] =& $user->get_storage();
 
             $data['heading'] = sprintf($this->_l10n->get('write mail to %s:'), $data['receiver']->name);
         }
