@@ -727,7 +727,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
      * If 'editing' is returned, this means that either there was not data submitted yet, or that
      * form validation has failed.
      *
-     * This call ensures that MidCOM runs uncached.
+     * //This call ensures that MidCOM runs uncached.
      *
      * @return string One of 'editing', 'save', 'next', 'previous' and 'cancel'
      */
@@ -743,7 +743,9 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
                 'href' => MIDCOM_STATIC_URL . "/midcom.helper.datamanager2/legacy.css",
             )
         );
+        /* breaks caching on pages that DL simple forms, and with new invalidation shouldn't be neccessary
         $_MIDCOM->cache->content->no_cache();
+        */
         $results = $this->form->getSubmitValues(true);
 
         // Get the result (this includes validation)
