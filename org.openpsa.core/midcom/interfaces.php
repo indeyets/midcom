@@ -75,6 +75,7 @@ class org_openpsa_core_interface extends midcom_baseclasses_components_interface
             }
             $GLOBALS['org_openpsa_core_workgroup_filter'] = $session->get('org_openpsa_core_workgroup_filter');
             */
+            $GLOBALS['org_openpsa_core_workgroup_filter'] = $default_filter;
         }
 
         // Load "my company" or "owner company", the group that is the main user of this instance
