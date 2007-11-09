@@ -75,7 +75,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
     function _on_loaded()
     {
         $this->_unserialize_vcal();
-        $l10n =& $_MIDCOM->i18n->get_l10n('org.openpsa.calendar');
+        $l10n = $_MIDCOM->i18n->get_l10n('org.openpsa.calendar');
 
         // Check for empty title in existing events
         if (   $this->id

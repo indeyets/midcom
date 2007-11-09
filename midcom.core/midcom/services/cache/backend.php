@@ -424,7 +424,8 @@ class midcom_services_cache_backend
             $this->close();
         }
         
-        if ($this->_auto_serialize)
+        if (   $this->_auto_serialize
+            && is_string($result))
         {
             return unserialize($result);
         }
