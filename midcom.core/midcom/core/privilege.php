@@ -670,7 +670,8 @@ class midcom_core_privilege extends midcom_core_privilege_db
 
         $_MIDCOM->auth->_internal_sudo = $previous_sudo;
 
-        if ($parent_guid !== null)
+        if (   $parent_guid !== null
+            && $parent_guid != $guid)
         {
             if ($parent_class !== null)
             {
