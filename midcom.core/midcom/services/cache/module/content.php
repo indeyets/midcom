@@ -919,6 +919,10 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             if ($this->_meta_cache->exists($guid))
             {
                 $guidmap = $this->_meta_cache->get($guid);
+                if (!is_array($guidmap))
+                {
+                    $guidmap = array();
+                }
             }
             else
             {
