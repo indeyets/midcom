@@ -2332,45 +2332,85 @@ class midcom_application
      */
     function serve_attachment(& $attachment, $expires = -1)
     {
-        $stats = $attachment->stat();
+        debug_push("midcom_application::serve_attachment");
 
-        $this->header("Last-Modified: " . gmdate("D, d M Y H:i:s", $stats[9]) . ' GMT');
-        $this->header("Content-Length: " . $stats[7]);
-        // PONDER: Support ranges ("continue download") somehow ?
-        $this->header("Accept-Ranges: none");
-
-        header("Content-Type: $attachment->mimetype");
-        $this->cache->content->content_type($attachment->mimetype);
-
-        if (!is_int($expires) || $expires < -1)
+        // Sanity check expires
+        if (   !is_int($expires)
+            || $expires < -1)
         {
+            debug_pop();
             $this->generate_error(MIDCOM_ERRCRIT, "\$expires has to be a positive integer or -1.");
             // This will exit()
         }
 
-        // TODO: This should be made aware of the cache headers strategy for content cache module
+        $stats = $attachment->stat();
+        $last_modified =& $stats[9];
+
+        debug_add("Serving Attachment {$attachment->name} (parent: {$attachment->parentguid})", MIDCOM_LOG_INFO);
+
+        $etag = md5("{$last_modified}{$attachment->name}{$attachment->mimetype}{$attachment->guid}");
+
+        // Check etag and return 304 if neccessary
+        if (   $expires <> 0
+            && $this->cache->content->_check_not_modified($last_modified, $etag))
+        {
+            debug_add('_check_not_modified returned true, finishing up here then');
+            if (!headers_sent())
+            {
+                debug_add('For the weirdest reason headers have not been sent by _check_not_modified, send them again');
+                $this->cache->content->cache_control_headers();
+                // Doublemakesure these are present
+                $this->header('HTTP/1.0 304 Not Modified', 304);
+                $this->header("ETag: {$etag}");
+            }
+            while(@ob_end_flush());
+            debug_add('headers sent, exit()ing so nothing has a chance the mess things up anymore');
+            debug_pop();
+            exit();
+        }
+
+        $this->header("ETag: {$etag}");
+        $this->cache->content->register_sent_header("ETag: {$etag}");
+        $this->cache->content->content_type($attachment->mimetype);
+        $this->header("Content-Type: {$attachment->mimetype}");
+        $this->cache->content->register_sent_header("Content-Type: {$attachment->mimetype}");
+        $this->header("Last-Modified: " . gmdate("D, d M Y H:i:s", $last_modified) . ' GMT');
+        $this->cache->content->register_sent_header("Last-Modified: " . gmdate("D, d M Y H:i:s", $last_modified) . ' GMT');
+        $this->header("Content-Length: " . $stats[7]);
+        $this->cache->content->register_sent_header("Content-Length: " . $stats[7]);
+        // PONDER: Support ranges ("continue download") somehow ?
+        $this->header("Accept-Ranges: none");
+        $this->cache->content->register_sent_header("Accept-Ranges: none");
+
         if ($expires > 0)
         {
-            $this->header("Cache-Control: public max-age=$expires");
-            $this->header("Expires: " . gmdate("D, d M Y H:i:s", (time()+$expires)) . " GMT" );
+            // If custom expiry now+expires is set use that
             $this->cache->content->expires(time()+$expires);
         }
         else if ($expires == 0)
         {
+            // expires set to 0 means disable cache, so we shall
             $this->cache->content->no_cache();
         }
+        // TODO: Check metadata service for the real expiry timestamp ?
 
-        // This breaks PHP output handling, therefore we do it manually.
-        // mgd_serve_attachment($attachment->id);
         $f = $attachment->open('r');
         if (! $f)
         {
+            debug_pop();
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to open attachment for reading: ' . mgd_errstr());
+            // This will exit()
         }
+        $this->cache->content->cache_control_headers();
+        /* live mode automatically enters no_cache, so we disable buffers ourself
+        $this->cache->content->enable_live_mode();
+        */
+        while(@ob_end_flush());
         fpassthru($f);
         $attachment->close();
 
-        //$this->exit();
+        debug_add('file sent, exit()ing so nothing has a chance the mess things up anymore');
+        debug_pop();
         exit();
     }
 

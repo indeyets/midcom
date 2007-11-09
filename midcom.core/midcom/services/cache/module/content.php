@@ -1106,6 +1106,12 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             $this->_last_modified = $time;
         }
 
+        $this->cache_control_headers();
+    }
+
+    function cache_control_headers()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
         // Add Expiration and Cache Control headers
         $cache_control = false;
         $pragma = false;
@@ -1152,19 +1158,23 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             $header = "Cache-Control: {$cache_control}";
             header ($header);
             $this->_sent_headers[] = $header;
+            debug_add("Added Header '{$header}'");
         }
         if ($pragma !== false)
         {
             $header = "Pragma: {$pragma}";
             header ($header);
             $this->_sent_headers[] = $header;
+            debug_add("Added Header '{$header}'");
         }
         if ($expires !== false)
         {
             $header = "Expires: " . gmdate("D, d M Y H:i:s", $expires) . " GMT";
             header ($header);
             $this->_sent_headers[] = $header;
+            debug_add("Added Header '{$header}'");
         }
+        debug_pop();
     }
 }
 
