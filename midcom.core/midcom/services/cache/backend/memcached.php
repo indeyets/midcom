@@ -172,3 +172,4 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
     }
 
 }
+?>
