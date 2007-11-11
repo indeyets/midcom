@@ -67,7 +67,7 @@ class org_openpsa_reports_handler_reports_base extends midcom_baseclasses_compon
 
         if (!$this->_datamanagers[$type]) {
             debug_pop();
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantiated.");
             // This will exit.
         }
 

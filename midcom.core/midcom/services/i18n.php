@@ -83,7 +83,7 @@ class midcom_services_i18n
     var $_fallback_language;
 
     /**
-     * Cache of all instantinated localization classes. They are delivered
+     * Cache of all instantiated localization classes. They are delivered
      * by reference to all clients.
      *
      * @var Array

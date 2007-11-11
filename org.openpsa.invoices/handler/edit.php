@@ -28,7 +28,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         $this->_datamanager = new midcom_helper_datamanager($schemadb_snippet);
 
         if (!$this->_datamanager) {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantiated.");
             // This will exit.
         }
     }

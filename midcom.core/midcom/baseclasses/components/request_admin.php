@@ -9,7 +9,7 @@
  */
 
 /**
- * Base class to encaspulate a admin request to the component, instantinated by the MidCOM
+ * Base class to encaspulate a admin request to the component, instantiated by the MidCOM
  * component interface.
  *
  * This is largely equivalent to the regular request base class midcom_baseclasses_components_request

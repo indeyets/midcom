@@ -127,7 +127,7 @@ class midcom_helper_toolbars
      } 
      
     /**
-     * Singelton interface, returns the factory instance.
+     * singleton interface, returns the factory instance.
      *
      * @return midcom_admin_toolbar Factory instance
      */

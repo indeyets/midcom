@@ -561,7 +561,7 @@ class midcom_application
         if (!$this->_parser)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('URL Parser is not instantinated, bailing out.', MIDCOM_LOG_ERROR);
+            debug_add('URL Parser is not instantiated, bailing out.', MIDCOM_LOG_ERROR);
             debug_pop();
             $this->generate_error(MIDCOM_ERRCRIT, $GLOBALS['midcom_errstr']);
         }
@@ -719,9 +719,9 @@ class midcom_application
 
         if (!$this->_parser)
         {
-            debug_add("URL Parser could not be instantinated: $midcom_errstr", MIDCOM_LOG_ERROR);
+            debug_add("URL Parser could not be instantiated: $midcom_errstr", MIDCOM_LOG_ERROR);
             debug_pop();
-            $this->generate_error(MIDCOM_ERRCRIT, "URL Parser could not be instantinated: {$GLOBALS['midcom_errstr']}");
+            $this->generate_error(MIDCOM_ERRCRIT, "URL Parser could not be instantiated: {$GLOBALS['midcom_errstr']}");
         }
 
         // Processing, upon error the generate_error function will die here...

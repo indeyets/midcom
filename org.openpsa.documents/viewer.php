@@ -116,7 +116,7 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
         $this->_datamanagers[$type] = new midcom_helper_datamanager($schemadb);
 
         if (!$this->_datamanagers[$type]) {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantiated.");
             // This will exit.
         }
     }

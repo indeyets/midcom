@@ -8,9 +8,9 @@
  */
 
 /**
- * Base singelton class of the MidCOM sessioning service.
+ * Base singleton class of the MidCOM sessioning service.
  *
- * This is a singelton class, that is accessible through the MidCOM Service
+ * This is a singleton class, that is accessible through the MidCOM Service
  * infrastructure. It manages session data of MidCOM driven applications.
  *
  * This sessioning interface will always work with copies, never with references
@@ -42,7 +42,7 @@
  *
  * Do <b>never</b> create an instance of this class directly. This is handled
  * by the framework. Instead use midcocm_service_session which ensures the
- * singelton pattern.
+ * singleton pattern.
  *
  * Do <b>never</b> work directly with the $_SESSION["midcom_session_data"]
  * variable, this is a 100% must-not, as this will break functionality.

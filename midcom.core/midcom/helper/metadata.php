@@ -9,9 +9,9 @@
 
 /**
  * This class is an interface to the metadata of MidCOM objects. It is not to
- * be instantinated directly, as a cache is in place to avoide duplicate metadata
- * objects for the same Midgard Object. So, basically, each of these object is
- * a singelton.
+ * be instantiated directly, as a cache is in place to avoid duplicate metadata
+ * objects for the same Midgard Object. So, basically, each of these objects is
+ * a singleton.
  *
  * It will use an internal mechanism to cache repeated accesses to the same
  * metadata key during its lifetime. (Invalidating this cache will be possible
@@ -377,7 +377,7 @@ class midcom_helper_metadata
                     $value = 1;
                 }
                 break;
-                
+
             // Group property
             case 'owner':
                 $value = $this->object->metadata->$key;

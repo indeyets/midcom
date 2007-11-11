@@ -409,7 +409,7 @@ class midcom_helper_datamanager {
     var $_ourlock;
 
     /**
-     * Pointer to a RuleRegistry singeltonobject.
+     * Pointer to a RuleRegistry singletonobject.
      *
      * @var ???
      * @todo tarjei: Complete documentation
@@ -607,7 +607,7 @@ class midcom_helper_datamanager {
      * given object.
      *
      * The datamanager loads the object and
-     * initializes all local fields accordingly. All datatypes get instantinated
+     * initializes all local fields accordingly. All datatypes get instantiated
      * and the data array gets populated. If the object has no schema associated with
      * it, it defaults to the first layout in the database.
      *
@@ -2168,7 +2168,7 @@ class midcom_helper_datamanager {
 
     /**
      * Call this function if you no longer need the DM instance. It will drop
-     * all instantinated classes and resolve the cyclic references which prevent
+     * all instantiated classes and resolve the cyclic references which prevent
      * a DM instance to be garbage collected by PHP.
      */
     function destroy()

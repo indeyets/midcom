@@ -31,7 +31,7 @@ class net_nemein_payment_factory extends midcom_baseclasses_components_purecode
     /**
      * Constructor, initialize base class.
      *
-     * Do not call this directly, this class is a singelton, use get_instance()
+     * Do not call this directly, this class is a singleton, use get_instance()
      * instead.
      *
      * @see get_instance()
@@ -150,7 +150,7 @@ class net_nemein_payment_factory extends midcom_baseclasses_components_purecode
     }
 
     /**
-     * Singelton interface, returns the factory instance.
+     * Singleton interface, returns the factory instance.
      *
      * @return net_nemein_payment_factory Factory instance
      */

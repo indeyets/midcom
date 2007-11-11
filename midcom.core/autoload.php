@@ -143,7 +143,7 @@ else if (!function_exists('__autoload'))
         public $classRegularExpression =  "%(interface|class)\s+(\w+)\s+(extends\s+(\w+)\s+)?(implements\s+\w+\s*(,\s*\w+\s*)*)?{%";
 
         /**
-         * The static singelton instance
+         * The static singleton instance
          */
         private static $soleInstance = FALSE;
         /**
@@ -162,8 +162,8 @@ else if (!function_exists('__autoload'))
 			/* do something smart here */
 		}
         /**
-         * Singelton factory
-         * Remember: Singeltons are hidden GLOBALS! 
+         * Singleton factory
+         * Remember: Singletons are hidden GLOBALS! 
          * @todo: register autoloader instead
          */
         public static function instance() 

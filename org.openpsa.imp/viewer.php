@@ -245,7 +245,7 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
 
         if (!$this->_request_data['datamanager']) {
             debug_pop();
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantiated.");
             // This will exit.
         }
 

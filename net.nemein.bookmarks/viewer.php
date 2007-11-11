@@ -319,7 +319,7 @@ class net_nemein_bookmarks_viewer
             $layout = new midcom_helper_datamanager($GLOBALS["net_nemein_bookmarks_layouts"]);
             if (! $layout)
             {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Layout class could not be instantinated.");
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Layout class could not be instantiated.");
             }
              
             foreach($this->_bookmarks as $bookmark_article)
@@ -360,7 +360,7 @@ class net_nemein_bookmarks_viewer
             $layout = new midcom_helper_datamanager($GLOBALS["net_nemein_bookmarks_layouts"]);
             if (! $layout)
             {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Layout class could not be instantinated.");
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Layout class could not be instantiated.");
             }
             
             $count = $this->_config->get("count");

@@ -34,7 +34,7 @@
  * 
  * <b>Implementation Notes:</b>
  * 
- * This is a simple wrapper that provides access to the sessioning singelton.
+ * This is a simple wrapper that provides access to the sessioning singleton.
  * It has the same public member functions as midcom_service__sessioning, refer
  * to this class for a detailed documentation.
  * 
@@ -47,7 +47,7 @@
 class midcom_service_session {
     
     /**
-     * Sessioning singelton.
+     * Sessioning singleton.
      * 
      * @var midcom_service__sessioning
      * @access private

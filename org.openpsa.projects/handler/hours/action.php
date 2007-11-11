@@ -36,7 +36,7 @@ class org_openpsa_projects_handler_hours_action extends midcom_baseclasses_compo
         $this->_datamanagers[$type] = new midcom_helper_datamanager($schemadb);
 
         if (!$this->_datamanagers[$type]) {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantiated.");
             // This will exit.
         }
     }

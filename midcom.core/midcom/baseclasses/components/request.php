@@ -9,7 +9,7 @@
  */
 
 /**
- * Base class to encaspulate a request to the component, instantinated by the MidCOM
+ * Base class to encaspulate a request to the component, instantiated by the MidCOM
  * component interface.
  *
  * It provides an automatic mechanism for URL processing and validation, minimizing
@@ -21,7 +21,7 @@
  * by the "URL-space" they handle. For each handler two functions are needed, one for the
  * request handle decision ("Can Handle Phase"), one for the
  * request handling ("Handle Phase") and one for output ("Output Phase"). These handlers can
- * either be contained in this class or refer to another class which gets instantinated, if
+ * either be contained in this class or refer to another class which gets instantiated, if
  * neccesary.
  *
  * All request handlers are contained in a single array, whose keys identify the various switch
@@ -50,7 +50,7 @@
  *   request handler class, in that case you just supply the name of the method. Alternativly,
  *   you can refer to an external class for request processing using an array syntax. The
  *   first array member must either contain the name of a existing class or a reference to
- *   an already instantinated class. This value has
+ *   an already instantiated class. This value has
  *   no default and must be set. The actual methods called will have either an _handle_ or _show_
  *   prefixed to the exec_handler value, respecitvly. See below for automatic handler instances,
  *   the preferred way to set things up.

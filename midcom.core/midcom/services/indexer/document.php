@@ -24,7 +24,7 @@
  * - <i>unstored</i> is not stored, but indexed and tokenized.
  * - <i>text</i> is stored, indexed and tokenized.
  *
- * This class should not be instantinated directly, a new instance of this class
+ * This class should not be instantiated directly, a new instance of this class
  * can be obtained using the midcom_service_indexer class.
  *
  * A number of predefined fields are available using member fields. These fields
@@ -258,7 +258,7 @@ class midcom_services_indexer_document
      *   if you don't change the document during the check, you don't need to pass by-reference, so this is up to you. The topic passed is the
      *   Return true if the document is visible, false otherwise.
      * - 'class:$class_name': Like above, but using a class instead. The class must provide a statically callable <i>get_instance()</i> method, which
-     *   returns a usable instance of the class (mostly, this should be a singelton, for performance reasons). The instance returned is assigned
+     *   returns a usable instance of the class (mostly, this should be a singleton, for performance reasons). The instance returned is assigned
      *   by-reference. On that object, the method check_document_permissions, whose signature must be identical to the function callback.
      *
      * @access public

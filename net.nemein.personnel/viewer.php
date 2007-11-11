@@ -462,7 +462,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
 
         $this->_layout = new midcom_helper_datamanager($GLOBALS["net_nemein_personnel_layouts"]);
         if (!$this->_layout) {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantiated.");
             // This will exit.
         }
 
@@ -693,7 +693,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
           $this->_layout = new midcom_helper_datamanager($net_nemein_personnel_layouts);
           if (! $this->_layout)
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                "Datamanager class could not be instantinated.");
+                "Datamanager class could not be instantiated.");
 
           if (! $this->_layout->init($this->_person))
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,

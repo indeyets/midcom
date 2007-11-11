@@ -233,7 +233,7 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
         if (!$this->_datamanagers[$type])
         {
             debug_pop();
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantiated.");
             // This will exit.
         }
         debug_pop();

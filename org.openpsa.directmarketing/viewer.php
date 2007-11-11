@@ -334,7 +334,7 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
 
         if (!$this->_datamanagers[$type]) {
             debug_pop();
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantinated.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantiated.");
             // This will exit.
         }
         debug_pop();
