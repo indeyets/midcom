@@ -36,10 +36,12 @@
         'create_index' => true,
         'acl' => array
         (
+            /*
             'authors' => array
             (
                 'midgard:owner' => MIDCOM_PRIVILEGE_ALLOW,
             ),
+            */
         ),
         'parameters' => array
         (
@@ -51,7 +53,7 @@
             'fi' => array
             (
                 'name' => 'fi',
-                'title' => 'TKK',
+                'title' => 'Fi',
                 'component' => 'net.nehmer.static',
                 'create_index' => true,
                 'acl' => array
@@ -71,19 +73,19 @@
                         'name' => 'ajankohtaista',
                         'title' => 'Ajankohtaista',
                         'component' => 'net.nehmer.blog',
+                        'symlink_source_id' => 'news_fi',
                         'acl' => array
                         (
+                            /*
                             'authors' => array
                             (
                                 'midgard:delete' => MIDCOM_PRIVILEGE_ALLOW,
                             ),
+                            */
                         ),
                         'parameters' => array
                         (
-                            'net.nehmer.comments' => array
-                            (
-                                'allow_anonymous' => true,
-                            ),
+
                         ),
                     ),
                    'osasto' => array
@@ -91,6 +93,7 @@
                         'name' => 'osasto',
                         'title' => 'Osasto',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -107,6 +110,7 @@
                                 'name' => 'yhteystiedot_sijainti',
                                 'title' => 'Yhteystiedot ja sijainti',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
         
@@ -121,6 +125,7 @@
                                 'name' => 'osaston_hallinto',
                                 'title' => 'Osaston hallinto',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
         
@@ -135,6 +140,7 @@
                                 'name' => 'labosatoriot_muutyksikot',
                                 'title' => 'Laboratoriot ja muut yksikot',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
         
@@ -149,6 +155,7 @@
                                 'name' => 'tilastoja',
                                 'title' => 'Tilastoja',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                  (
         
@@ -163,6 +170,7 @@
                                 'name' => 'medialle',
                                 'title' => 'Medialle',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
                                  ),
@@ -176,6 +184,7 @@
                                 'name' => 'alumnit',
                                 'title' => 'Alumnit',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
         
@@ -190,6 +199,7 @@
                                 'name' => 'yritysyhteistyo',
                                 'title' => 'Yritysyhteistyo',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
         
@@ -204,6 +214,7 @@
                                 'name' => 'henkilokunnalle',
                                 'title' => 'Henkilokunnalle',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
         
@@ -220,6 +231,7 @@
                         'name' => 'opinnot',
                         'title' => 'Opinnot',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -235,6 +247,7 @@
                                 'name' => 'tutkintoohjelma_opas',
                                 'title' => 'Tutkinto-ohjelma ja opinto-opas',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -249,6 +262,7 @@
                                 'name' => 'international_masters_programme',
                                 'title' => 'International Master\'s Programme',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -263,6 +277,7 @@
                                 'name' => 'jatko_opinnot',
                                 'title' => 'Jatko-opinnot',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -277,6 +292,7 @@
                                 'name' => 'kurssit',
                                 'title' => 'Kurssit',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -291,6 +307,7 @@
                                 'name' => 'luku_ja_tenttijarjestykset',
                                 'title' => 'Luku- ja tenttijarjestykset',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -305,6 +322,7 @@
                                 'name' => 'harjoittelu',
                                 'title' => 'Harjoittelu',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -319,6 +337,7 @@
                                 'name' => 'opintojen_ohjaus_ja_neuvonta',
                                 'title' => 'Opintojen ohajus ja neuvonta',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -333,6 +352,7 @@
                                 'name' => 'lomakkeita',
                                 'title' => 'Lomakkeita',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -349,6 +369,7 @@
                         'name' => 'tutkimus',
                         'title' => 'Tutkimus',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -365,6 +386,7 @@
                                 'name' => 'tutkimustoiminta_laboratorioittain',
                                 'title' => 'Tutkimustoiminta laboratorioittaint',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -379,6 +401,7 @@
                                 'name' => 'huippuyksikot_ryhmat_ja_palkitut',
                                 'title' => 'Huippuyksikot, -ryhmat ja palkitut',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -393,6 +416,7 @@
                                 'name' => 'professorit',
                                 'title' => 'Professorit',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -407,6 +431,7 @@
                                 'name' => 'julkaisut',
                                 'title' => 'Julkaisut',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -421,6 +446,7 @@
                                 'name' => 'tutkimusyhteistyo',
                                 'title' => 'Tutkimusyhteistyo',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -437,6 +463,7 @@
                         'name' => 'opiskelijaksi',
                         'title' => 'Opiskelijaksi',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -452,6 +479,7 @@
                                 'name' => 'alaa_esitteleva_teksti',
                                 'title' => 'Alaa esitteleva teksti',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -466,6 +494,7 @@
                                 'name' => 'opiskelu_nn_osastolla',
                                 'title' => 'Opiskelu NN osastolla',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -480,6 +509,7 @@
                                 'name' => 'valmistuneiden_tarinoita',
                                 'title' => 'Valmistuneiden tarinoita',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -494,6 +524,7 @@
                                 'name' => 'joo_opiskelijaksi',
                                 'title' => 'JOO-opiskelijaksi',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -508,6 +539,7 @@
                                 'name' => 'international_masters_programme',
                                 'title' => 'International Master\'s programme',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -522,6 +554,7 @@
                                 'name' => 'jatko_opiskelijaksi',
                                 'title' => 'Jatko-opiskelijaksi',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -536,6 +569,7 @@
                                 'name' => 'taydennyskoulutus',
                                 'title' => 'Taydennyskoulutus',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -552,6 +586,7 @@
                         'name' => 'kirjasto',
                         'title' => 'Kirjasto',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -582,6 +617,7 @@
                                 'name' => 'kokoelmat',
                                 'title' => 'Kokoelmat',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -596,6 +632,7 @@
                                 'name' => 'tiedonhaku',
                                 'title' => 'Tiedonhaku',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -610,6 +647,7 @@
                                 'name' => 'yhteystiedot',
                                 'title' => 'Yhteystiedot',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -626,8 +664,9 @@
             'en' => array
             (
                 'name' => 'en',
-                'title' => 'TKK',
+                'title' => 'En',
                 'component' => 'net.nehmer.static',
+                'create_index' => true,
                 'acl' => array
                 (
                 ),
@@ -646,19 +685,14 @@
                         'name' => 'news',
                         'title' => 'News',
                         'component' => 'net.nehmer.blog',
+                        'symlink_target_id' => 'news_fi',
                         'acl' => array
                         (
-                            'authors' => array
-                            (
-                                'midgard:delete' => MIDCOM_PRIVILEGE_ALLOW,
-                            ),
+
                         ),
                         'parameters' => array
                         (
-                            'net.nehmer.comments' => array
-                            (
-                                'allow_anonymous' => true,
-                            ),
+
                         ),
                     ),
                    'department' => array
@@ -666,6 +700,7 @@
                         'name' => 'department',
                         'title' => 'Department',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -682,6 +717,7 @@
                                 'name' => 'contact_information_and_location',
                                 'title' => 'Contact Information and Location',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
         
@@ -696,6 +732,7 @@
                                 'name' => 'administration',
                                 'title' => 'Administration',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
         
@@ -710,6 +747,7 @@
                                 'name' => 'laboratories_and_other_units',
                                 'title' => 'Laboratories and Other Units',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
         
@@ -724,6 +762,7 @@
                                 'name' => 'statistics',
                                 'title' => 'Statistics',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                  (
         
@@ -738,6 +777,7 @@
                                 'name' => 'for_media',
                                 'title' => 'For Media',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
                                  ),
@@ -751,6 +791,7 @@
                                 'name' => 'alumni',
                                 'title' => 'Alumni',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
         
@@ -765,6 +806,7 @@
                                 'name' => 'corporate_cooperation',
                                 'title' => 'Corporate Cooperation',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
         
@@ -779,6 +821,7 @@
                                 'name' => 'for_staff',
                                 'title' => 'For Staff',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
         
@@ -795,6 +838,7 @@
                         'name' => 'studies',
                         'title' => 'Studies',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -810,6 +854,7 @@
                                 'name' => 'study_programme',
                                 'title' => 'Study Programme',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -824,6 +869,7 @@
                                 'name' => 'international_masters_programme',
                                 'title' => 'International Master\'s Programme',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -838,6 +884,7 @@
                                 'name' => 'graduate_studies',
                                 'title' => 'Graduate Studies',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -852,6 +899,7 @@
                                 'name' => 'courses',
                                 'title' => 'Courses',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -866,6 +914,7 @@
                                 'name' => 'schedule_of_classes_and_order_of_exams',
                                 'title' => 'Schedule of Classes and Order of Exams',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -880,6 +929,7 @@
                                 'name' => 'internship',
                                 'title' => 'Internship',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -894,6 +944,7 @@
                                 'name' => 'study_councelling',
                                 'title' => 'Study Councelling',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -908,6 +959,7 @@
                                 'name' => 'forms',
                                 'title' => 'Forms',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -924,6 +976,7 @@
                         'name' => 'research',
                         'title' => 'Research',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -940,6 +993,7 @@
                                 'name' => 'research_in_laboratories',
                                 'title' => 'Research in Laboratories',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -954,6 +1008,7 @@
                                 'name' => 'centers_of_exellence_groups_prices',
                                 'title' => 'Centers of Exellence, Groups, Prizes',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -968,6 +1023,7 @@
                                 'name' => 'professors',
                                 'title' => 'Professors',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -982,6 +1038,7 @@
                                 'name' => 'publications',
                                 'title' => 'Publications',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -996,6 +1053,7 @@
                                 'name' => 'research_cooperation',
                                 'title' => 'Research Cooperation',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1012,6 +1070,7 @@
                         'name' => 'prospective_students',
                         'title' => 'Prospective Students',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -1027,6 +1086,7 @@
                                 'name' => 'department_introduction',
                                 'title' => 'Department Introduction',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1041,6 +1101,7 @@
                                 'name' => 'studying_at_the_department',
                                 'title' => 'Studying at the Department',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1055,6 +1116,7 @@
                                 'name' => 'stories_from_tkk_graduates',
                                 'title' => 'Stories from TKK Graduates',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1069,6 +1131,7 @@
                                 'name' => 'how_to_become_a_joo_student',
                                 'title' => 'How to Become a JOO-Student',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1083,6 +1146,7 @@
                                 'name' => 'international_masters_programme',
                                 'title' => 'International Master\'s programme',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1097,6 +1161,7 @@
                                 'name' => 'prospective_graduate_students',
                                 'title' => 'Prospective Graduate Students',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1111,6 +1176,7 @@
                                 'name' => 'continuing_education',
                                 'title' => 'Continuing Education',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1127,6 +1193,7 @@
                         'name' => 'library',
                         'title' => 'Library',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -1157,6 +1224,7 @@
                                 'name' => 'collections',
                                 'title' => 'Collections',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1171,6 +1239,7 @@
                                 'name' => 'information_searches',
                                 'title' => 'Information Searches',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1185,6 +1254,7 @@
                                 'name' => 'contact_information',
                                 'title' => 'Contact Information',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1201,8 +1271,9 @@
             'sv' => array
             (
                 'name' => 'sv',
-                'title' => 'TKK',
+                'title' => 'Sv',
                 'component' => 'net.nehmer.static',
+                'create_index' => true,
                 'acl' => array
                 (
                 ),
@@ -1221,19 +1292,14 @@
                         'name' => 'aktuellt',
                         'title' => 'Aktuellt',
                         'component' => 'net.nehmer.blog',
+                        'symlink_target_id' => 'news_fi',
                         'acl' => array
                         (
-                            'authors' => array
-                            (
-                                'midgard:delete' => MIDCOM_PRIVILEGE_ALLOW,
-                            ),
+
                         ),
                         'parameters' => array
                         (
-                            'net.nehmer.comments' => array
-                            (
-                                'allow_anonymous' => true,
-                            ),
+
                         ),
                     ),
                    'avdelningen' => array
@@ -1241,6 +1307,7 @@
                         'name' => 'avdelningen',
                         'title' => 'Avdelningen',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -1257,6 +1324,7 @@
                                 'name' => 'kontaktuppgifter_och_lage',
                                 'title' => 'Kontaktuppgifter och lŠge',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
         
@@ -1271,6 +1339,7 @@
                                 'name' => 'avgelningens_forvaltning',
                                 'title' => 'Avgelningens fšrvaltning',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
         
@@ -1285,6 +1354,7 @@
                                 'name' => 'laboratorier_och_ovriga_enheter',
                                 'title' => 'Laboratorier och švriga enheter',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
         
@@ -1299,6 +1369,7 @@
                                 'name' => 'statistik',
                                 'title' => 'Statistik',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                  (
         
@@ -1313,6 +1384,7 @@
                                 'name' => 'for_media',
                                 'title' => 'Fšr media',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
                                  ),
@@ -1326,6 +1398,7 @@
                                 'name' => 'alumner',
                                 'title' => 'Alumner',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
         
@@ -1340,6 +1413,7 @@
                                 'name' => 'narlingslivssemverka',
                                 'title' => 'NŠrlingslivssemverka',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
         
@@ -1354,6 +1428,7 @@
                                 'name' => 'for_personalen',
                                 'title' => 'Fšr personalen',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
         
@@ -1370,6 +1445,7 @@
                         'name' => 'studier',
                         'title' => 'Studier',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -1385,6 +1461,7 @@
                                 'name' => 'examensprogram_och_studieguide',
                                 'title' => 'Examensprogram och studieguide',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1399,6 +1476,7 @@
                                 'name' => 'international_masters_programme',
                                 'title' => 'International Master\'s Programme',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1413,6 +1491,7 @@
                                 'name' => 'forskarstudier',
                                 'title' => 'Forskarstudier',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1427,6 +1506,7 @@
                                 'name' => 'kurser',
                                 'title' => 'Kurser',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1441,6 +1521,7 @@
                                 'name' => 'las_och_tentamensordningar',
                                 'title' => 'LŠs och tentamensordningar',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1455,6 +1536,7 @@
                                 'name' => 'praktik',
                                 'title' => 'Praktik',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1469,6 +1551,7 @@
                                 'name' => 'studiehandledning_och_radgivning',
                                 'title' => 'Studiehandledning och rŒdgivning',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1483,6 +1566,7 @@
                                 'name' => 'blanketter',
                                 'title' => 'Blanketter',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1499,6 +1583,7 @@
                         'name' => 'forskning',
                         'title' => 'Forskning',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -1515,6 +1600,7 @@
                                 'name' => 'forskning_enligt_laboratorier',
                                 'title' => 'Forskning enligt laboratorier',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1529,6 +1615,7 @@
                                 'name' => 'spetsenheter_och_grupper_prisbelonade_forskare',
                                 'title' => 'Spetsenheter och -grupper, prisbelonade forskare',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1543,6 +1630,7 @@
                                 'name' => 'professorer',
                                 'title' => 'Professorer',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1557,6 +1645,7 @@
                                 'name' => 'publicationer',
                                 'title' => 'Publicationer',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1571,6 +1660,7 @@
                                 'name' => 'forskningssamverka',
                                 'title' => 'Forskningssamverka',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1587,6 +1677,7 @@
                         'name' => 'bli_studerande',
                         'title' => 'Bli studerande',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -1602,6 +1693,7 @@
                                 'name' => 'presentation_av_omradet',
                                 'title' => 'Presentation av omrŒdet',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1616,6 +1708,7 @@
                                 'name' => 'att_studera_pa_avdelningen',
                                 'title' => 'Att studera pŒ avdelningen',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1630,6 +1723,7 @@
                                 'name' => 'utexaminerades_berattelser',
                                 'title' => 'Utexaminerades BerŠttelser',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1644,6 +1738,7 @@
                                 'name' => 'att_bli_joo_studerande',
                                 'title' => 'Att bli JOO-studerande',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1658,6 +1753,7 @@
                                 'name' => 'international_masters_programme',
                                 'title' => 'International Master\'s programme',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1672,6 +1768,7 @@
                                 'name' => 'att_bli_forskarstuderande',
                                 'title' => 'Att bli forskarstuderande',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1686,6 +1783,7 @@
                                 'name' => 'fortbildning',
                                 'title' => 'Fortbildning',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1702,6 +1800,7 @@
                         'name' => 'biblioteket',
                         'title' => 'Biblioteket',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -1732,6 +1831,7 @@
                                 'name' => 'samlingar',
                                 'title' => 'Samlingar',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1746,6 +1846,7 @@
                                 'name' => 'informationssokning',
                                 'title' => 'Informationssškning',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             
@@ -1760,6 +1861,7 @@
                                 'name' => 'kontaktuppgifter',
                                 'title' => 'Kontaktuppgifter',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
             

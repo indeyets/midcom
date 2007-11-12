@@ -23,11 +23,16 @@
                 (
                     'name' => 'authors',
                 ),
+                'personnel' => array
+                (
+                    'name' => 'personnel'
+                ),
             ),
         ),
     ),
     
     // DM2 schema
+    /*
     'schemadb' => array
     (
         'settings' => array
@@ -52,6 +57,7 @@
             ),
         ),
     ),
+    */
 
     
     // Root node definition		
@@ -63,16 +69,15 @@
         'create_index' => true,
         'acl' => array
         (
+            /*
             'authors' => array
             (
                 'midgard:owner' => MIDCOM_PRIVILEGE_ALLOW,
             ),
+            */
         ),
         'parameters' => array
         (
-            'net.nehmer.blog' => array
-            (
-            ),
         ),
         // Child node definitions
         'nodes' => array
@@ -80,8 +85,9 @@
             'fi' => array
             (
                 'name' => 'fi',
-                'title' => 'TKK',
+                'title' => 'Etusivu',
                 'component' => 'net.nehmer.static',
+                'create_index' => true,
                 'acl' => array
                 (
                 ),
@@ -95,19 +101,14 @@
                         'name' => 'ajankohtaista',
                         'title' => 'Ajankohtaista',
                         'component' => 'net.nehmer.blog',
+                        'symlink_source_id' => 'news_fi',
                         'acl' => array
                         (
-                            'authors' => array
-                            (
-                                'midgard:delete' => MIDCOM_PRIVILEGE_ALLOW,
-                            ),
+
                         ),
                         'parameters' => array
                         (
-                            'net.nehmer.comments' => array
-                            (
-                                'allow_anonymous' => '__SCHEMA_anonymous',
-                            ),
+ 
                         ),
                     ),
                     'opinnot' => array
@@ -115,12 +116,12 @@
                         'name' => 'opinnot',
                         'title' => 'Opinnot',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
                         'parameters' => array
                         (
-                
                         ),
                         // Child node definitions
                         'nodes' => array
@@ -130,6 +131,7 @@
                                 'name' => 'moduulit',
                                 'title' => 'Moduulit',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
                 
@@ -144,6 +146,7 @@
                                 'name' => 'kurssit',
                                 'title' => 'Kurssit',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
                 
@@ -155,11 +158,12 @@
                             ),
                         ),
                     ),
-                    'tutkimus' => array
+                    'tutkimusryhmat' => array
                     (
-                        'name' => 'tutkimus',
-                        'title' => 'Tutkimus',
+                        'name' => 'tutkimusryhmat',
+                        'title' => 'TutkimusryhmŠt',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -171,11 +175,12 @@
                         // Child node definitions
                         'nodes' => array
                         (
-                            'tutkimusala' => array
+                            'tutkimusryhma1' => array
                             (
-                                        'name' => 'tutkimusala',
-                                'title' => 'Tutkimusala',
+                                'name' => 'tutkimusryhma1',
+                                'title' => 'TutkimusryhmŠ1',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
                 
@@ -185,11 +190,12 @@
                 
                                 ),
                             ),
-                            'projekti' => array
+                            'tutkimusryhma2' => array
                             (
-                                        'name' => 'projekti',
-                                'title' => 'Projekti',
+                                'name' => 'tutkimusryhma2',
+                                'title' => 'Tutkimusryhma2',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
                 
@@ -206,6 +212,7 @@
                         'name' => 'julkaisut',
                         'title' => 'Julkaisut',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -214,26 +221,41 @@
             
                         ),
                     ),
-                    'yhteystiedot' => array
+                    'laitos' => array
                     (
-                        'name' => 'yhteystiedot',
-                        'title' => 'Yhteystiedot',
+                        'name' => 'laitos',
+                        'title' => 'Laitos',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
                         'parameters' => array
                         (
-                
-                        ),
             
+                        ),
+        
                         // Child node definitions
                         'nodes' => array
                         (
-                            'henkilokunta' => array
+                            'yhteystiedot_ja_sijainti' => array
                             (
-                                'name' => 'henkilokunta',
-                                'title' => 'Henkilokunta',
+                                'name' => 'yhteystiedot_ja_sijainti',
+                                'title' => 'Yhteystiedot ja sijainti',
+                                'component' => 'net.nehmer.static',
+                                'create_index' => true,
+                                'acl' => array
+                                (
+                                ),
+                                'parameters' => array
+                                (
+                
+                                ),
+                            ),                           
+                            'henkilokunnan_yhteystiedot' => array
+                            (
+                                'name' => 'henkilokunnan_yhteystiedot',
+                                'title' => 'Henkilokunnan yhteystiedot',
                                 'component' => 'net.nemein.personnel',
                                 'acl' => array
                                 (
@@ -243,7 +265,7 @@
                                 (
                                     'net.nemein.personnel' => array
                                     (
-                                        'group' => '__GROUPGUID_authors',
+                                        'group' => '__GROUPGUID_personnel',
                                     ),
                                 ),
                             ),
@@ -254,8 +276,9 @@
             'en' => array
             (
                 'name' => 'en',
-                'title' => 'TKK',
+                'title' => 'Home',
                 'component' => 'net.nehmer.static',
+                'create_index' => true,
                 'acl' => array
                 (
                 ),
@@ -265,24 +288,19 @@
                 // en nodes  
                 'nodes' => array
                 (
-                    'news' => array
+                    'current_affairs' => array
                     (
-                        'name' => 'news',
-                        'title' => 'News',
+                        'name' => 'current_affairs',
+                        'title' => 'Current affairs',
                         'component' => 'net.nehmer.blog',
+                        'symlink_target_id' => 'news_fi',
                         'acl' => array
                         (
-                            'authors' => array
-                            (
-                                'midgard:delete' => MIDCOM_PRIVILEGE_ALLOW,
-                            ),
+
                         ),
                         'parameters' => array
                         (
-                            'net.nehmer.comments' => array
-                            (
-                                'allow_anonymous' => '__SCHEMA_anonymous',
-                            ),
+
                         ),
                     ),
                     'studies' => array
@@ -290,6 +308,7 @@
                         'name' => 'studies',
                         'title' => 'Studies',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -305,6 +324,7 @@
                                 'name' => 'modules',
                                 'title' => 'Modules',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
                 
@@ -319,6 +339,7 @@
                                 'name' => 'courses',
                                 'title' => 'Courses',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
                 
@@ -335,6 +356,7 @@
                         'name' => 'research',
                         'title' => 'Research',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -346,11 +368,12 @@
                         // Child node definitions
                         'nodes' => array
                         (
-                            'research_areas' => array
+                            'research_group1' => array
                             (
-                                'name' => 'research_areas',
-                                'title' => 'Research areas',
+                                'name' => 'research_group1',
+                                'title' => 'Research group 1',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
                 
@@ -360,11 +383,12 @@
                 
                                 ),
                             ),
-                            'project' => array
+                            'research_group2' => array
                             (
-                                'name' => 'project',
-                                'title' => 'Project',
+                                'name' => 'research_group2',
+                                'title' => 'Research group 2',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
                 
@@ -381,6 +405,7 @@
                         'name' => 'publications',
                         'title' => 'Publications',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -389,11 +414,12 @@
             
                         ),
                     ),
-                    'contact_information' => array
+                    'departments' => array
                     (
-                        'name' => 'contact_information',
-                        'title' => 'Contact Information',
+                        'name' => 'departments',
+                        'title' => 'Departments',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -405,6 +431,20 @@
                         // Child node definitions
                         'nodes' => array
                         (
+                            'contact_information_and_location' => array
+                            (
+                                'name' => 'contact_information_and_location',
+                                'title' => 'Contact Information and location',
+                                'component' => 'net.nehmer.static',
+                                'create_index' => true,
+                                'acl' => array
+                                (
+                                ),
+                                'parameters' => array
+                                (
+                        
+                                ),
+                            ),
                             'personnel' => array
                             (
                                 'name' => 'personnel',
@@ -418,7 +458,7 @@
                                 (
                                     'net.nemein.personnel' => array
                                     (
-                                        'group' => '__GROUPGUID_authors',
+                                        'group' => '__GROUPGUID_personnel',
                                     ),
                                 ),
                             ),
@@ -429,8 +469,9 @@
             'sv' => array
             (
                 'name' => 'sv',
-                'title' => 'TKK',
+                'title' => 'Startsida',
                 'component' => 'net.nehmer.static',
+                'create_index' => true,
                 'acl' => array
                 (
                 ),
@@ -445,19 +486,14 @@
                         'name' => 'aktuellt',
                         'title' => 'Aktuellt',
                         'component' => 'net.nehmer.blog',
+                        'symlink_target_id' => 'news_fi',
                         'acl' => array
                         (
-                            'authors' => array
-                            (
-                                'midgard:delete' => MIDCOM_PRIVILEGE_ALLOW,
-                            ),
+
                         ),
                         'parameters' => array
                         (
-                            'net.nehmer.comments' => array
-                            (
-                                'allow_anonymous' => '__SCHEMA_anonymous',
-                            ),
+
                         ),
                     ),
                     'studier' => array
@@ -465,6 +501,7 @@
                         'name' => 'studier',
                         'title' => 'Studier',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -480,6 +517,7 @@
                                 'name' => 'moduler',
                                 'title' => 'Moduler',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
                 
@@ -494,6 +532,7 @@
                                 'name' => 'kurser',
                                 'title' => 'Kurser',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
                 
@@ -510,6 +549,7 @@
                         'name' => 'forskning',
                         'title' => 'Forskning',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -526,6 +566,7 @@
                                 'name' => 'forskningsomrade',
                                 'title' => 'ForskningsomrŒde',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
                 
@@ -540,6 +581,7 @@
                                 'name' => 'projekt',
                                 'title' => 'Projekt',
                                 'component' => 'net.nehmer.static',
+                                'create_index' => true,
                                 'acl' => array
                                 (
                 
@@ -556,6 +598,7 @@
                         'name' => 'publikationer',
                         'title' => 'Publikationer',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -564,11 +607,12 @@
             
                         ),
                     ),
-                    'kontaktuppgifter' => array
+                    'institutionen' => array
                     (
-                        'name' => 'kontaktuppgifter',
-                        'title' => 'Kontaktuppgifter',
+                        'name' => 'institutionen',
+                        'title' => 'Institutionen',
                         'component' => 'net.nehmer.static',
+                        'create_index' => true,
                         'acl' => array
                         (
                         ),
@@ -580,6 +624,20 @@
                         // Child node definitions
                         'nodes' => array
                         (
+                            'kontaktuppgifter' => array
+                            (
+                                'name' => 'kontaktuppgifter',
+                                'title' => 'Kontaktuppgifter',
+                                'component' => 'net.nehmer.static',
+                                'create_index' => true,
+                                'acl' => array
+                                (
+                                ),
+                                'parameters' => array
+                                (
+                        
+                                ),
+                            ),
                             'personal' => array
                             (
                                 'name' => 'personal',
@@ -593,7 +651,7 @@
                                 (
                                     'net.nemein.personnel' => array
                                     (
-                                        'group' => '__GROUPGUID_authors',
+                                        'group' => '__GROUPGUID_personnel',
                                     ),
                                 ),
                             ),
