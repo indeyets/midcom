@@ -25,6 +25,7 @@ class midcom_midcom_services_at_entry_db extends __midcom_midcom_services_at_ent
      */
     function midcom_midcom_services_at_entry_db($id = null)
     {
+        $this->_use_rcs = false;
         return parent::__midcom_midcom_services_at_entry_db($id);
     }
     
@@ -49,6 +50,10 @@ class midcom_midcom_services_at_entry_db extends __midcom_midcom_services_at_ent
         if (!$this->status)
         {
             $this->status = MIDCOM_SERVICES_AT_STATUS_SCHEDULED;
+        }
+        if (!$this->host)
+        {
+            $this->host = $_MIDGARD['host'];
         }
         $this->_serialize_arguments();
         return true;

@@ -3,6 +3,7 @@
     <type name="midcom_services_at_entry_db" table="midcom_services_at_entry_db">
         <property name="id" type="integer" primaryfield="id"/>
         <property name="status" type="integer"/>
+        <property name="host" type="integer" link="midgard_host:id"/>
         <property name="start" type="integer"/>
         <property name="component" type="string"/>
         <property name="method" type="string"/>

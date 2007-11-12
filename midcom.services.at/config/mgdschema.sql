@@ -17,3 +17,4 @@ CREATE TABLE midcom_services_at_entry_db (
   KEY midcom_services_at_entry_db_sitegroup_idx(sitegroup),
   KEY midcom_services_at_entry_db_start_idx(start)
 );
+ALTER TABLE midcom_services_at_entry_db ADD COLUMN host int(11) NOT NULL default '0';

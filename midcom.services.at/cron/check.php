@@ -30,6 +30,10 @@ class midcom_services_at_cron_check extends midcom_baseclasses_components_cron_h
 
         $qb = midcom_services_at_entry::new_query_builder();
         $qb->add_constraint('start', '<=', time());
+        $qb->begin_group('OR');
+            $qb->add_constraint('host', '=', $_MIDGARD['host']);
+            $qb->add_constraint('host', '=', 0);
+        $qb->end_group();
         $qb->add_constraint('status', '=', MIDCOM_SERVICES_AT_STATUS_SCHEDULED);
         debug_add('Executing QB');
         $_MIDCOM->auth->request_sudo('midcom.services.at');
@@ -51,24 +55,18 @@ class midcom_services_at_cron_check extends midcom_baseclasses_components_cron_h
             $entry->update();
             $_MIDCOM->auth->drop_sudo();
             $_MIDCOM->componentloader->load($entry->component);
-            $interface = str_replace('.', '_', $entry->component) . '_interface';
             $args = $entry->arguments;
             $args['midcom_services_at_entry_object'] = $entry;
-            $mret = call_user_func
-                    (
-                        array
-                        (
-                            $interface,
-                            $entry->method
-                        ), 
-                        $args,
-                        $this
-                    );
+            $interface =& $_MIDCOM->componentloader->get_interface_class($entry->component);
+            $method =& $entry->method;
+            $mret = $interface->$method($args, $this);
             if ($mret !== true)
             {
-                $error = "call_user_func(array({$interface}, {$entry->method}), {$entry->arguments}) returned '{$mret}', errstr: " . mgd_errstr();
+                $error = "\$interface->{$method}(\$args, \$this) returned '{$mret}', errstr: " . mgd_errstr();
                 $this->print_error($error);
                 debug_add($error, MIDCOM_LOG_ERROR);
+                debug_add('$interface is ' . get_class($interface));
+                debug_print_r('$args', $args);
                 //PONDER: Delete instead ? (There is currently nothing we do with failed entries)
                 $entry->status = MIDCOM_SERVICES_AT_STATUS_FAILED;
                 $_MIDCOM->auth->request_sudo('midcom.services.at');
