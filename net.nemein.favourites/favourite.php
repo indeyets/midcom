@@ -4,6 +4,7 @@ class net_nemein_favourites_favourite_dba extends __net_nemein_favourites_favour
 {
     function net_nemein_favourites_favourite_dba($id = null)
     {
+        $this->_use_rcs = false;
         parent::__net_nemein_favourites_favourite_dba($id);
     }
 

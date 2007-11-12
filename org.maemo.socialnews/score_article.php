@@ -3,6 +3,7 @@ class org_maemo_socialnews_score_article_dba extends __org_maemo_socialnews_scor
 {
     function org_maemo_socialnews_score_article_dba($id = null)
     {
+        $this->_use_rcs = false; 
         parent::__org_maemo_socialnews_score_article_dba($id);
     }
     
