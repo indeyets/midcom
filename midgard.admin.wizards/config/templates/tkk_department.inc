@@ -138,7 +138,7 @@
                             'laboratoriot_muutyksikot' => array
                             (
                                 'name' => 'labosatoriot_muutyksikot',
-                                'title' => 'Laboratoriot ja muut yksikot',
+                                'title' => 'Laboratoriot ja muut yksikÃ¶t',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -197,7 +197,7 @@
                             'yritysyhteistyo' => array
                             (
                                 'name' => 'yritysyhteistyo',
-                                'title' => 'Yritysyhteistyo',
+                                'title' => 'YritysyhteistyÃ',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -444,7 +444,7 @@
                             'tutkimusyhteistyo' => array
                             (
                                 'name' => 'tutkimusyhteistyo',
-                                'title' => 'Tutkimusyhteistyo',
+                                'title' => 'TutkimusyhteistyÃ¶',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -1322,7 +1322,7 @@
                             'kontaktuppgifter_och_lage' => array
                             (
                                 'name' => 'kontaktuppgifter_och_lage',
-                                'title' => 'Kontaktuppgifter och lŠge',
+                                'title' => 'Kontaktuppgifter och lÃ¥ge',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -1337,7 +1337,7 @@
                             'avgelningens_forvaltning' => array
                             (
                                 'name' => 'avgelningens_forvaltning',
-                                'title' => 'Avgelningens fšrvaltning',
+                                'title' => 'Avgelningens fÃ¶rvaltning',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -1352,7 +1352,7 @@
                             'laboratorier_och_ovriga_enheter' => array
                             (
                                 'name' => 'laboratorier_och_ovriga_enheter',
-                                'title' => 'Laboratorier och švriga enheter',
+                                'title' => 'Laboratorier och Ã¶vriga enheter',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -1382,7 +1382,7 @@
                             'for_media' => array
                             (
                                 'name' => 'for_media',
-                                'title' => 'Fšr media',
+                                'title' => 'FÃ¶r media',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -1411,7 +1411,7 @@
                             'narlingslivssemverka' => array
                             (
                                 'name' => 'narlingslivssemverka',
-                                'title' => 'NŠrlingslivssemverka',
+                                'title' => 'NÃ¤rlingslivssemverka',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -1426,7 +1426,7 @@
                             'for_personalen' => array
                             (
                                 'name' => 'for_personalen',
-                                'title' => 'Fšr personalen',
+                                'title' => 'FÃ¶r personalen',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -1519,7 +1519,7 @@
                             'las_och_tentamensordningar' => array
                             (
                                 'name' => 'las_och_tentamensordningar',
-                                'title' => 'LŠs och tentamensordningar',
+                                'title' => 'LÃ¤s och tentamensordningar',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -1549,7 +1549,7 @@
                             'studiehandledning_och_radgivning' => array
                             (
                                 'name' => 'studiehandledning_och_radgivning',
-                                'title' => 'Studiehandledning och rŒdgivning',
+                                'title' => 'Studiehandledning och rÃ¥dgivning',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -1691,7 +1691,7 @@
                             'presentation_av_omradet' => array
                             (
                                 'name' => 'presentation_av_omradet',
-                                'title' => 'Presentation av omrŒdet',
+                                'title' => 'Presentation av omrÃ¥det',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -1706,7 +1706,7 @@
                             'att_studera_pa_avdelningen' => array
                             (
                                 'name' => 'att_studera_pa_avdelningen',
-                                'title' => 'Att studera pŒ avdelningen',
+                                'title' => 'Att studera pÃ¥ avdelningen',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -1721,7 +1721,7 @@
                             'utexaminerades_berattelser' => array
                             (
                                 'name' => 'utexaminerades_berattelser',
-                                'title' => 'Utexaminerades BerŠttelser',
+                                'title' => 'Utexaminerades BerÃ¤ttelser',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -1844,7 +1844,7 @@
                             'informationssokning' => array
                             (
                                 'name' => 'informationssokning',
-                                'title' => 'Informationssškning',
+                                'title' => 'InformationssÃ¶kning',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array

@@ -161,7 +161,7 @@
                     'tutkimusryhmat' => array
                     (
                         'name' => 'tutkimusryhmat',
-                        'title' => 'TutkimusryhmŠt',
+                        'title' => 'TutkimusryhmÃ¤t',
                         'component' => 'net.nehmer.static',
                         'create_index' => true,
                         'acl' => array
@@ -178,7 +178,7 @@
                             'tutkimusryhma1' => array
                             (
                                 'name' => 'tutkimusryhma1',
-                                'title' => 'TutkimusryhmŠ1',
+                                'title' => 'TutkimusryhmÃ¤1',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -193,7 +193,7 @@
                             'tutkimusryhma2' => array
                             (
                                 'name' => 'tutkimusryhma2',
-                                'title' => 'Tutkimusryhma2',
+                                'title' => 'TutkimusryhmÃ¤2',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -564,7 +564,7 @@
                             'forskningsomrade' => array
                             (
                                 'name' => 'forskningsomrade',
-                                'title' => 'ForskningsomrŒde',
+                                'title' => 'ForskningsomrÃ¥de',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
