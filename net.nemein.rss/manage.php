@@ -421,6 +421,7 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
     function _handler_fetch($handler_id, $args, &$data)
     {
         $this->_topic->require_do('midgard:create');
+        $_MIDCOM->cache->content->enable_live_mode();
         
         if ($handler_id == 'feeds_fetch')
         {

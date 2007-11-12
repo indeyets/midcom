@@ -874,7 +874,8 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
             $item['description'] = '';
         }
 
-        if (   isset($item['content']) 
+        if (   isset($item['content'])
+            && is_array($item['content'])
             && isset($item['content']['encoded']))
         {
             // Some RSS feeds use "content:encoded" for storing HTML-formatted full item content, 
