@@ -92,7 +92,7 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("flatfile cache handler: Failed to create key {$key} in the database {$this->_dirname}: File does already exist.", MIDCOM_LOG_ERROR);
             debug_pop();
-            // This will exit.
+            return;
         }
         fwrite($handle, $data);
         fclose($handle);
