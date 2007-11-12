@@ -132,10 +132,16 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
         $data['batch_url_base_full'] = $node[MIDCOM_NAV_RELATIVEURL] . 'message/send_bg/' . $data['message_obj']->guid();
         debug_add("compose_url: {$data['compose_url']}");
         debug_add("batch_url base: {$data['batch_url_base_full']}");
+        $de_backup = ini_get('display_errors');
+        $le_backup = ini_get('log_errors');
+        ini_set('log_errors', true);
+        ini_set('display_errors', false);
         ob_start();
         $_MIDCOM->dynamic_load($data['compose_url']);
         $composed = ob_get_contents();
         ob_end_clean();
+        ini_set('display_errors', $de_backup);
+        ini_set('log_errors', $le_backup);
         //We force the content-type since the compositor might have set it to something else in compositor for preview purposes
         debug_add('Forcing content type: text/html');
         $_MIDCOM->cache->content->content_type('text/html');
