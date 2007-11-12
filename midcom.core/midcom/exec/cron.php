@@ -22,6 +22,8 @@ header('Content-Type: text/plain');
 
 require(MIDCOM_ROOT . '/midcom/services/cron.php');
 
+$_MIDCOM->cache->content->enable_live_mode();
+
 // Ensure cron doesn't timeout
 @ini_set('max_execution_time', 0);
 
