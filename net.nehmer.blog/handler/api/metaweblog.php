@@ -63,6 +63,8 @@ class net_nehmer_blog_handler_api_metaweblog extends midcom_baseclasses_componen
             }
             $this->_positioning = true;
         }
+        
+        $_MIDCOM->cache->content->enable_live_mode();
     }    
     
     /**
