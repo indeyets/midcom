@@ -36,6 +36,7 @@
                 (
                     'sitewizard_path' => '/usr/share/php/midcom/static/data/midgard_admin_sitewizard.php',
                     'default_sitegroup_id' => 1,
+                    'copy_host_port' => 8001,
                 ),            
             ),
             'select_tkk_style' => array
@@ -46,6 +47,10 @@
                 'config' => array
                 (
                     'sitewizard_path' => '/usr/share/php/midcom/static/data/midgard_admin_sitewizard.php',
+                    'show_style_templates' => array
+                    (
+                        'template_SimpleGray',
+                    ),
                 ),            
             ),
             'select_tkk_structure' => array

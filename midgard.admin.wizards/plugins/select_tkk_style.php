@@ -92,8 +92,26 @@ class select_tkk_style extends midcom_baseclasses_components_handler
         $qb->add_constraint('name', 'LIKE', 'template_%');
         $qb->add_constraint('up', '=', 0);
         // TODO: Check for sitegroups?
-        $this->_request_data['templates'] = $qb->execute();  
+        $templates = $qb->execute();
         
+        foreach($templates as $template)
+        {
+            if (count($this->_request_data['plugin_config']['show_style_templates']) > 0)
+            {
+                foreach($this->_request_data['plugin_config']['show_style_templates'] as $show)
+                {
+                    if ($template->name == $show)
+                    {
+                        $this->_request_data['templates'][] = $template;
+                    }
+                }
+            }
+            else
+            {
+                $this->_request_data['templates'] = $templates;
+            }
+        }
+                
         return true;
     }
     
