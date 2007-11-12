@@ -53,7 +53,7 @@
             'fi' => array
             (
                 'name' => 'fi',
-                'title' => 'Fi',
+                'title' => 'Etusivu',
                 'component' => 'net.nehmer.static',
                 'create_index' => true,
                 'acl' => array
@@ -664,7 +664,7 @@
             'en' => array
             (
                 'name' => 'en',
-                'title' => 'En',
+                'title' => 'Home',
                 'component' => 'net.nehmer.static',
                 'create_index' => true,
                 'acl' => array
@@ -1271,7 +1271,7 @@
             'sv' => array
             (
                 'name' => 'sv',
-                'title' => 'Sv',
+                'title' => 'Startsida',
                 'component' => 'net.nehmer.static',
                 'create_index' => true,
                 'acl' => array
