@@ -492,10 +492,12 @@ class midcom_baseclasses_components_interface
     {
         $snippet = new midcom_baseclasses_database_snippet();
         $snippet->get_by_path($snippetpath);
-        if ($snippet == false )
+        if (   $snippet == false
+            || !$snippet->guid)
         {
             return false;
         }
+        $_MIDCOM->cache->content->register($snippet->guid);
         $result = eval ("\$data = Array({$snippet->code}\n);");
         if ($result === false)
         {
