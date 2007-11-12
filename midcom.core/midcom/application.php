@@ -729,8 +729,12 @@ class midcom_application
 
         if ($this->_status == MIDCOM_STATUS_ABORT)
         {
-            debug_add("Dynamic load _process() phase edned up with 404 Error. Aborting...", MIDCOM_LOG_ERROR);
+            debug_add("Dynamic load _process() phase ended up with 404 Error. Aborting...", MIDCOM_LOG_ERROR);
             debug_pop();
+
+            // Leave Context
+            $this->_currentcontext = $oldcontext;
+            
             return;
         }
 
@@ -982,7 +986,8 @@ class midcom_application
         do
         {
             $object = $this->_parser->get_current_object();
-            if (!is_object($object) || !$object->guid )
+            if (   !is_object($object) 
+                || !$object->guid )
             {
                 debug_add("Root node missing.", MIDCOM_LOG_ERROR);
                 $this->generate_error(MIDCOM_ERRCRIT, "Root node missing.");
@@ -992,7 +997,6 @@ class midcom_application
             {
                 $this->serve_attachment($object);
             }
-
             $path = $object->component;
 
             if (!$path)
@@ -1006,7 +1010,6 @@ class midcom_application
 
             // Check whether the component can handle the request.
             // If so, execute it, if not, continue.
-
             if ($this->_can_handle($object))
             {
                 $this->_status = MIDCOM_STATUS_HANDLE;
@@ -1023,6 +1026,7 @@ class midcom_application
 
                 //$this->_handle($path);
                 $this->_handle( $this->get_context_data( MIDCOM_CONTEXT_COMPONENT ) );
+                
                 $success = true;
                 break;
             }
@@ -1037,16 +1041,6 @@ class midcom_application
                 $this->generate_error(MIDCOM_ERRFORBIDDEN, $this->i18n->get_string('access denied', 'midcom'));
                 // This will exit.
             }
-
-            /*
-            // Check if there is an Attachment, if yes, serve it and exit
-            if ($this->_parser->fetch_attachment())
-            {
-                $this->serve_attachment($this->_parser->get_object());
-                $this->finish();
-                exit();
-            }
-            */
 
             /**
              * Simple: if current context is not '0' we were called from another context.

@@ -488,9 +488,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
 
         $this->_register_core_plugin_namespaces();
 
-
         $this->_on_initialize();
-
     }
 
 
@@ -627,7 +625,6 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
                 return true;
             }
         }
-
         // No match
         debug_push_class($this, 'can_handle');
         debug_add('No matching handler could be found, we cannot handle this therefore.');
@@ -792,6 +789,11 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
         {
             debug_add('The _on_show event handler returned false, aborting.');
             debug_pop();
+            return;
+        }
+        
+        if (empty($this->_handler['handler']))
+        {
             return;
         }
 

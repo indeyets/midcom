@@ -642,6 +642,11 @@ class midcom_helper__styleloader {
     {
         // get component's snippetdir (for default styles)
         $loader =& $_MIDCOM->get_component_loader();
+        if (   !$topic
+            || !$topic->guid)
+        {
+            return null;
+        }
         return $loader->path_to_snippetpath($topic->component) . "/style";
     }
 
