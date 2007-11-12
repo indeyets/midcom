@@ -6,6 +6,7 @@ class midcom_org_openpsa_campaign_message_receipt extends __midcom_org_openpsa_c
 {
     function midcom_org_openpsa_campaign_message_receipt($id = null)
     {
+        $this->_use_rcs = false;
         return parent::__midcom_org_openpsa_campaign_message_receipt($id);
     }
 
