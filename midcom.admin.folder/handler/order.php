@@ -30,30 +30,58 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
      * This function will set the score.
      * 
      * @access private
+     * @return boolean Indicating success
      */
-    private function _process_order_form()
+    function _process_order_form()
     {
-        // If the navigation order is changed, it will be saved first. After this it is possible
-        // again to organize the folder
-        if ($_POST['f_navorder'] != $this->_topic->parameter('midcom.helper.nav', 'navorder'))
+        if (isset($_POST['f_navorder']))
         {
-            $this->_topic->set_parameter('midcom.helper.nav', 'navorder', $_POST['f_navorder']);
+            $this->_topic->set_parameter('midcom.helper.nav', 'nav_order', $_POST['f_navorder']);
+        }
+        
+        // Form has been handled if cancel has been pressed
+        if (isset($_POST['f_cancel']))
+        {
+            $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midcom.admin.folder'), $_MIDCOM->i18n->get_string('cancelled'));
+            $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($this->_topic->guid));
+            exit;
+            // This will exit
+        }
+        
+        // If the actual score list hasn't been posted, return false
+        if (!isset($_POST['f_submit']))
+        {
             return false;
-            // This will exit.
         }
         
-        if (array_key_exists('midcom_admin_content_page_score', $_POST))
+        // Success tells whether the update was successful or not. On default everything goes fine,
+        // but when any errors are encountered, there will be a uimessage that will be shown.
+        $success = true;
+        
+        // Loop through the sortables and store the new score
+        foreach ($_POST['sortable'] as $key => $array)
         {
-            $count = count($_POST['midcom_admin_content_page_score']);
+            // Total number of the entries
+            $count = count($array);
             
-            foreach ($_POST['midcom_admin_content_page_score'] as $key => $id)
+            foreach ($array as $guid => $i)
             {
-                $article = new midcom_db_article($id);
-                $article->score = (int) $key;
-                $article->metadata->score = (int) $count - $key;
+                // Set the score reversed: the higher the value, the higher the rank
+                $score = $count - $i;
+                
+                // Use the DB Factory to resolve the class and to get the object
+                $object = $_MIDCOM->dbfactory->get_object_by_guid($guid);
+                
+                // Skip the pages that cannot be ordered
+                if (   !$object
+                    || !isset($object->guid)
+                    || $object->guid !== $guid)
+                {
+                    continue;
+                }
                 
                 // Get the original approval status
-                $metadata =& midcom_helper_metadata::retrieve($article);
+                $metadata =& midcom_helper_metadata::retrieve($guid);
                 $approval_status = false;
                 
                 // Get the approval status if metadata object is available
@@ -63,128 +91,60 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
                     $approval_status = true;
                 }
                 
-                if (!$article->update())
+                // Store the old-fashioned score as well
+                if (isset($object->score))
                 {
-                    debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add("Updating the article with id '{$id}' failed. Reason: ". mgd_errstr(), MIDCOM_LOG_ERROR);
-                    debug_pop();
-                    
-                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Saving the order failed, see error level log for details');
-                    // This will exit
+                    $object->score = $score;
                 }
                 
-                // Maintain the approval status - if the object had been approved before
-                // it should still be kept as approved
-                if ($approval_status)
-                {
-                    $metadata =& midcom_helper_metadata::retrieve($article);
-                    $metadata->approve();
-                }
-            }
-        }
-        
-        if (array_key_exists('midcom_admin_content_folder_score', $_POST))
-        {
-            $count = count($_POST['midcom_admin_content_folder_score']);
-            
-            foreach ($_POST['midcom_admin_content_folder_score'] as $key => $id)
-            {
-                $topic = new midcom_db_topic($id);
-                $topic->score = (int) $key;
-                $topic->metadata->score = (int) $count - $key;
+                $object->metadata->score = $score;
                 
-                // Get the original approval status
-                $metadata =& midcom_helper_metadata::retrieve($topic);
-                $approval_status = false;
-                
-                // Get the approval status if metadata object is available
-                if (   is_object($metadata)
-                    && $metadata->is_approved())
-                {
-                    $approval_status = true;
-                }
-                
-                if (!$topic->update())
-                {
-                    debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add("Updating the topic with id '{$id}' failed. Reason: ". mgd_errstr(), MIDCOM_LOG_ERROR);
-                    debug_pop();
-                    
-                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Saving the order failed, see error level log for details');
-                    // This will exit
-                }
-                
-                // Maintain the approval status - if the object had been approved before
-                // it should still be kept as approved
-                if ($approval_status)
-                {
-                    $metadata =& midcom_helper_metadata::retrieve($topic);
-                    $metadata->approve();
-                }
-            }
-        }
-        
-        if (array_key_exists('midcom_admin_content_mixed_score', $_POST))
-        {
-            $count = count($_POST['midcom_admin_content_mixed_score']);
-            
-            foreach ($_POST['midcom_admin_content_mixed_score'] as $key => $id)
-            {
-                $type = explode('_', $id);
-                if ($type[2] === 'folder')
-                {
-                    $object = new midcom_db_topic($type[1]);
-                }
-                else
-                {
-                    $object = new midcom_db_article($type[1]);
-                }
-                
-                if (!is_object($object))
-                {
-                    debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add("Could not get the {$type[1]} with id '{$id}'. Reason: ". mgd_errstr(), MIDCOM_LOG_ERROR);
-                    debug_pop();
-                    
-                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Saving the order failed, see error level log for details');
-                }
-                
-                // Get the original approval status
-                $metadata =& midcom_helper_metadata::retrieve($object);
-                $approval_status = false;
-                
-                $object->metadata->score = (int) $count - $key;
-                
-                // Get the approval status if metadata object is available
-                if (   is_object($metadata)
-                    && $metadata->is_approved())
-                {
-                    $approval_status = true;
-                }
-                
-                $object->score = (int) $key;
-                
+                // Show an error message on an update failure
                 if (!$object->update())
                 {
-                    debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add("Updating the {$type[1]} with id '{$id}' failed. Reason: ". mgd_errstr(), MIDCOM_LOG_ERROR);
-                    debug_pop();
+                    // Some heuristics for the update logging
+                    if (   isset($object->title)
+                        && $object->title)
+                    {
+                        $title = $object->title;
+                    }
+                    elseif (isset($object->extra)
+                        && $object->extra)
+                    {
+                        $title = $object->extra;
+                    }
+                    elseif (isset($object->name)
+                        && $object->name)
+                    {
+                        $title = $object->name;
+                    }
+                    else
+                    {
+                        $title = sprintf("{$object->guid} %s", get_class($object));
+                    }
                     
-                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Saving the order failed, see error level log for details');
-                    // This will exit
+                    $_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.folder'), sprintf($this->_l10n->get('failed to update %s due to: %s'), $title, mgd_errstr()), 'error');
+                    $success = false;
+                    continue;
                 }
                 
-                // Maintain the approval status - if the object had been approved before
-                // it should still be kept as approved
-                if ($approval_status)
+                // Approve if possible
+                if (   $approval_status
+                    && $object->can_do('midgard:approve'))
                 {
-                    $metadata =& midcom_helper_metadata::retrieve($object);
+                    $metadata =& midcom_helper_metadata::retrieve($guid);
                     $metadata->approve();
                 }
             }
         }
         
-        return true;
+        if ($success)
+        {
+            $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midcom.admin.folder'), $_MIDCOM->i18n->get_string('order saved'));
+            $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($this->_topic->guid));
+            exit;
+            // This will exit
+        }
     }
     
     /**
@@ -192,10 +152,19 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
      */
     function _handler_order($handler_id, $args, &$data)
     {
-        // Include Scriptaculous JavaScript library to headers
-        // Scriptaculous/scriptaculous.js
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/Pearified/JavaScript/Prototype/prototype.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/Pearified/JavaScript/Scriptaculous/scriptaculous.js');
+        // Include Scriptaculous JavaScript libraries to headers
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/jQuery/jquery.dimensions-1.1.2.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/jQuery/jquery.form-1.0.3.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/jQuery/ui/ui.mouse.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/jQuery/ui/ui.draggable.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/jQuery/ui/ui.droppable.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/jQuery/ui/ui.sortable.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/midcom.admin.folder/jquery-postfix.js');
+        
+        // These pages need no caching
+        $_MIDCOM->cache->content->no_cache();
+        
+        // Custom styles
         $_MIDCOM->add_link_head
         (
             array
@@ -208,21 +177,8 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
         
         $this->_topic->require_do('midgard:update');
         
-        if (array_key_exists('f_cancel', $_REQUEST))
-        {
-            $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($this->_topic->guid));
-            // This will exit
-        }
-        
-        if (array_key_exists('f_submit', $_REQUEST))
-        {
-            if ($this->_process_order_form())
-            {
-                $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midcom.admin.folder'), $_MIDCOM->i18n->get_string('order saved'));
-                $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($this->_topic->guid));
-                // This will exit
-            }
-        }
+        // Process the form
+        $this->_process_order_form();
         
         // Add the view to breadcrumb trail
         $tmp = array();
@@ -248,6 +204,12 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('midcom.admin.folder');
         
+        // Skip the page style on AJAX form handling
+        if (isset($_GET['ajax']))
+        {
+            $_MIDCOM->skip_page_style = true;
+        }
+        
         return true;
     }
     
@@ -258,9 +220,11 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
      */
     function _show_order($handler_id, &$data)
     {
-        $this->_request_data['navorder'] = (int) $this->_topic->parameter('midcom.helper.nav', 'navorder');
+        $data['navigation'] = array();
+        $data['navorder'] = $this->_topic->get_parameter('midcom.helper.nav', 'nav_order');
         
-        $this->_request_data['navorder_list'] = array
+        // Navorder list for the selection
+        $data['navorder_list'] = array
         (
             MIDCOM_NAVORDER_DEFAULT => $_MIDCOM->i18n->get_string('default sort order', 'midcom.admin.folder'),
             MIDCOM_NAVORDER_TOPICSFIRST => $_MIDCOM->i18n->get_string('folders first', 'midcom.admin.folder'),
@@ -268,107 +232,108 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
             MIDCOM_NAVORDER_SCORE => $_MIDCOM->i18n->get_string('by score', 'midcom.admin.folder'),
         );
         
-        $this->_request_data['sort_order_header'] = $this->_request_data['navorder_list'][$this->_request_data['navorder']];
-
-        $qb = midcom_db_topic::new_query_builder();
-        $qb->add_constraint('up', '=', $this->_topic->id);
-        $qb->add_constraint('metadata.navnoentry', '=', 0);
-        $qb->add_order('metadata.score', 'DESC');
-        //$qb->add_order('name');
-        //$qb->add_order('extra');
-        
-        $this->_request_data['folders'] = $qb->execute();
-        
-        $qb = midcom_db_article::new_query_builder();
-        $qb->add_constraint('topic', '=', $this->_topic->id);
-        if (!$this->_config->get('indexinnav'))
+        if (!isset($_GET['ajax']))
         {
-            $qb->add_constraint('name', '<>', 'index');
+            midcom_show_style('midcom-admin-folder-order-start');
         }
-        $qb->add_constraint('up', '=', 0);
-        $qb->add_order('metadata.score', 'DESC');
-        //$qb->add_order('name');
-        //$qb->add_order('title');
         
-        $this->_request_data['pages'] = $qb->execute();
+        // Initialize the midcom_helper_nav or navigation access point
+        $nap = new midcom_helper_nav();
         
-        // Show the header element, which allows to change the sorting order
-        // and displays headers for the user
-        midcom_show_style('midcom-admin-show-order-header');
-        
-        switch ($this->_topic->parameter('midcom.helper.nav', 'navorder'))
+        switch ((int) $this->_topic->get_parameter('midcom.helper.nav', 'nav_order'))
         {
-            // If the sort order is 'Pages first'
-            case MIDCOM_NAVORDER_ARTICLESFIRST:
-                if (count($this->_request_data['pages']) > 1)
-                {
-                    midcom_show_style('midcom-admin-show-order-pages');
-                }
-                
-                if (count($this->_request_data['folders']) > 1)
-                {
-                    midcom_show_style('midcom-admin-show-order-folders');
-                }
-                break;
-            
-            // If the sort order is 'Folders first'
-            case MIDCOM_NAVORDER_TOPICSFIRST:
-                if (count($this->_request_data['folders']) > 1)
-                {
-                    midcom_show_style('midcom-admin-show-order-folders');
-                }
-                
-                if (count($this->_request_data['pages']) > 1)
-                {
-                    midcom_show_style('midcom-admin-show-order-pages');
-                }
-                break;
-            
-            // If the sort order is 'by score'
-            case MIDCOM_NAVORDER_SCORE:
-                $this->_request_data['mixed'] = array ();
-                
-                foreach ($this->_request_data['folders'] as $topic)
-                {
-                    $score = $this->_get_score($topic->score);
-                    $this->_request_data['mixed'][$score . '_' . $topic->id . '_folder'] = $topic->extra;
-                }
-                
-                foreach ($this->_request_data['pages'] as $article)
-                {
-                    $score = $this->_get_score($article->score);
-                    $this->_request_data['mixed'][$score . '_' . $article->id . '_page'] = $article->title;
-                }
-                
-                ksort($this->_request_data['mixed']);
-                
-                midcom_show_style('midcom-admin-show-order-mixed');
-                break;
-            
-            // If the sort order is 'Default component sort order'
             case MIDCOM_NAVORDER_DEFAULT:
-            default:
-                if (count($this->_request_data['folders']) > 1)
-                {
-                    midcom_show_style('midcom-admin-show-order-folders');
-                }
-                else
-                {
-                    midcom_show_style('midcom-admin-show-order-empty');
-                }
+                $data['navigation']['nodes'] = array();
+                $nodes = $nap->list_nodes($this->_topic->id);
                 
-                midcom_show_style('midcom-admin-show-order-default');
+                foreach ($nodes as $id => $node_id)
+                {
+                    $node = $nap->get_node($node_id);
+                    $node[MIDCOM_NAV_TYPE] = 'node';
+                    $data['navigation']['nodes'][$id] = $node;
+                }
                 break;
             
+            case MIDCOM_NAVORDER_TOPICSFIRST:
+                // Sort the array to have the nodes first
+                $data['navigation'] = array
+                (
+                    'nodes' => array(),
+                    'leaves' => array(),
+                );
+                // Fall through
+                
+            case MIDCOM_NAVORDER_ARTICLESFIRST:
+                // Sort the array to have the leaves first
+                
+                if (!isset($data['navigation']['leaves']))
+                {
+                    $data['navigation'] = array
+                    (
+                        'leaves' => array(),
+                        'nodes' => array(),
+                    );
+                }
+                
+                // Get the nodes
+                $nodes = $nap->list_nodes($this->_topic->id);
+                
+                foreach ($nodes as $id => $node_id)
+                {
+                    $node = $nap->get_node($node_id);
+                    $node[MIDCOM_NAV_TYPE] = 'node';
+                    $data['navigation']['nodes'][$id] = $node;
+                }
+                
+                // Get the leafs
+                $leaves = $nap->list_leaves($this->_topic->id);
+                
+                foreach ($leaves as $id => $leaf_id)
+                {
+                    $leaf = $nap->get_leaf($leaf_id);
+                    $leaf[MIDCOM_NAV_TYPE] = 'leaf';
+                    $data['navigation']['leaves'][$id] = $leaf;
+                }
+                break;
+            
+            case MIDCOM_NAVORDER_SCORE:
+            default:
+                $data['navigation']['mixed'] = array();
+                
+                // Get the navigation items
+                $items = $nap->list_child_elements($this->_topic->id);
+                
+                foreach ($items as $id => $item)
+                {
+                    if ($item[MIDCOM_NAV_TYPE] === 'node')
+                    {
+                        $element = $nap->get_node($item[MIDCOM_NAV_ID]);
+                    }
+                    else
+                    {
+                        $element = $nap->get_leaf($item[MIDCOM_NAV_ID]);
+                    }
+                    
+                    // Store the type information
+                    $element[MIDCOM_NAV_TYPE] = $item[MIDCOM_NAV_TYPE];
+                    
+                    $data['navigation']['mixed'][] = $element;
+                }
+                break;
         }
         
-        if (   count($this->_request_data['folders']) < 2
-            && count($this->_request_data['pages']) < 2)
+        // Loop through each navigation type (node, leaf and mixed)
+        foreach ($data['navigation'] as $key => $array)
         {
-            midcom_show_style('midcom-admin-show-order-empty');
+            $data['navigation_type'] = $key;
+            $data['navigation_items'] = $array;
+            midcom_show_style('midcom-admin-folder-order-type');
         }
         
-        midcom_show_style('midcom-admin-show-order-footer');
+        if (!isset($_GET['ajax']))
+        {
+            midcom_show_style('midcom-admin-folder-order-end');
+        }
     }
     
     /**
