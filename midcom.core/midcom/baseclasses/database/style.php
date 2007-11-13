@@ -29,31 +29,6 @@ class midcom_baseclasses_database_style extends __midcom_baseclasses_database_st
     {
         parent::__midcom_baseclasses_database_style($id);
     }
-
-    /**
-     * Returns the Parent of the Snippet.
-     *
-     * @return MidgardObject Parent object or NULL if there is none.
-     */
-    function get_parent_guid_uncached()
-    {
-        if ($this->up == 0)
-        {
-            return null;
-        }
-
-        $parent = new midcom_baseclasses_database_style($this->up);
-        if (! $parent)
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Could not load Style ID {$this->up} from the database, aborting.",
-                MIDCOM_LOG_INFO);
-            debug_pop();
-            return null;
-        }
-
-        return $parent->guid;
-    }
 }
 
 ?>
