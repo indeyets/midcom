@@ -511,7 +511,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             (
                 MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}__mfa/asgard/",
                 MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('midgard.admin.asgard', 'midgard.admin.asgard'),
-                MIDCOM_TOOLBAR_ICON => 'midgard.admin.asgard/asgard-16.png',
+                MIDCOM_TOOLBAR_ICON => 'midgard.admin.asgard/asgard2-16.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'a',
                 MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_user_do('midgard.admin.asgard:access', null, 'midgard_admin_asgard_plugin', 'midgard.admin.asgard'),
             )
@@ -519,16 +519,6 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
 
         if ($_MIDGARD['admin'] == true)
         {            
-            $toolbar->add_item
-            (
-                array
-                (
-                    MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}__ais/midcom-settings/edit.html",
-                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('host configuration', 'midcom.admin.settings'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/configuration.png',
-                )
-            );
-            
             $toolbar->add_item
             (
                 array

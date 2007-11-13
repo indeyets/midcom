@@ -567,7 +567,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             (
                 MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."__mfa/asgard/",
                 MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('asgard homepage', 'midgard.admin.asgard'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/start-here.png',
+                MIDCOM_TOOLBAR_ICON => 'midgard.admin.asgard/asgard2-16.png',
             )
         );
 
