@@ -279,6 +279,11 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         $data = Array();
         foreach ($this->attachments as $identifier => $attachment)
         {
+            if (!mgd_is_guid($attachment->guid))
+            {
+                continue;
+            }
+            
             $data[] = "{$identifier}:{$attachment->guid}";
         }
 
