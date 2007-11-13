@@ -48,6 +48,14 @@
         'midcom' => array (),
     ),
 ),
+'watches' => array
+(
+    array
+    (
+        'classes' => array('org_routamc_photostream_photo_dba'),
+        'operations' => MIDCOM_OPERATION_DBA_DELETE,
+    ),
+),
 'customdata' => array
 (
     'midcom.services.cron' => array

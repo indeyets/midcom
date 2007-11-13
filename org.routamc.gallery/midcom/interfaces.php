@@ -60,5 +60,47 @@ class org_routamc_gallery_interface extends midcom_baseclasses_components_interf
 
         return "photo/{$photo->guid}/";
     }
+
+    function _on_watched_operation($operation, &$object)
+    {
+        // In the future we might want to trap creates etc as well, thus we do this flexibly from the start
+        switch(true)
+        {
+            case (   $operation === MIDCOM_OPERATION_DBA_DELETE
+                  && is_a($object, 'org_routamc_photostream_photo_dba')):
+                $this->remove_photo_links($object->id);
+                break;
+            default:
+                return;
+        }
+    }
+
+    /**
+     * Removes photolink objects that link to given photo id
+     *
+     * @param int $photoid local id of photo object
+     */
+    function remove_photo_links($photoid)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Clearing photo links for photo #{$photoid}", MIDCOM_LOG_INFO);
+        $qb = org_routamc_gallery_photolink_dba::new_query_builder();
+        $qb->add_constraint('photo', '=', $photoid);
+        $links = $qb->execute();
+        if (empty($links))
+        {
+            debug_add('No links found');
+            debug_pop();
+            return;
+        }
+        foreach($links as $link)
+        {
+            debug_add("Removing link #{$link->id} (node #{$link->node})");
+            $link->delete();
+        }
+        $cnt = count($links);
+        debug_add("Removed {$cnt} links for photo #{$photoid}", MIDCOM_LOG_INFO);
+        debug_pop();
+    }
 }
 ?>
