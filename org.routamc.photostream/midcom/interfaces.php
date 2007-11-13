@@ -64,7 +64,7 @@ class org_routamc_photostream_interface extends midcom_baseclasses_components_in
         {
             debug_add("No photos to index in topic #{$topic->id}");
             debug_pop();
-            return;
+            return true;
         }
         debug_add('Reindexing ' . count($photos) . ' photos');
         $schemadb = midcom_helper_datamanager2_schema::load_database($config->get('schemadb'));
@@ -89,6 +89,7 @@ class org_routamc_photostream_interface extends midcom_baseclasses_components_in
         unset($photos);
         debug_add('Done');
         debug_pop();
+        return true;
     }
 }
 ?>
