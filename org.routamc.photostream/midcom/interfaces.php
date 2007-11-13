@@ -52,5 +52,43 @@ class org_routamc_photostream_interface extends midcom_baseclasses_components_in
 
         return "photo/{$photo->guid}/";
     }
+
+    function _on_reindex($topic, $config, &$indexer)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $qb = org_routamc_photostream_photo_dba::new_query_builder();
+        $qb->add_constraint('node', '=', $topic->id);
+        $photos = $qb->execute();
+        unset($qb);
+        if (empty($photos))
+        {
+            debug_add("No photos to index in topic #{$topic->id}");
+            debug_pop();
+            return;
+        }
+        debug_add('Reindexing ' . count($photos) . ' photos');
+        $schemadb = midcom_helper_datamanager2_schema::load_database($config->get('schemadb'));
+        $datamanager = new midcom_helper_datamanager2_datamanager($schemadb);
+        if (!$datamanager)
+        {
+            debug_add('Failed to create a datamanager instance with this schemapath:' . $config->get('schemadb'), MIDCOM_LOG_WARN);
+            debug_pop();
+            return;
+        }
+        foreach ($photos as $k => $photo)
+        {
+            if (!$datamanager->autoset_storage($photo))
+            {
+                unset($photos[$k]);
+                debug_add("Failed to initialize datamanager for photo {$photo->id}. Skipping it.", MIDCOM_LOG_WARN);
+                continue;
+            }
+            unset($photos[$k]);
+            org_routamc_photostream_viewer::index($datamanager, $indexer, $topic);
+        }
+        unset($photos);
+        debug_add('Done');
+        debug_pop();
+    }
 }
 ?>

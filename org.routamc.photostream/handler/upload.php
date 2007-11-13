@@ -110,7 +110,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
     /**
      * DM2 creation callback, binds to the current content topic.
      */
-    function & dm2_create_callback(&$controller)
+    function &dm2_create_callback(&$controller)
     {
         $this->_photo = new org_routamc_photostream_photo_dba();
         $this->_photo->node = $this->_topic->id;
@@ -297,6 +297,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
                         // Failed to set_image ? what to do ??
                     }
                     $this->_photo->update_attachment_links();
+                    $this->index_uploaded_photo();
                     break;
                 default:
                     debug_add("got unsupported result '{$result}' from this->_controller->process_form(), aborting", MIDCOM_LOG_ERROR);
@@ -348,6 +349,12 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
             }
             $files[] = $filepath;
         }
+    }
+
+    function index_uploaded_photo()
+    {
+        $indexer =& $_MIDCOM->get_service('indexer');
+        org_routamc_photostream_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
     }
 
     function _check_link_photo_gallery()
@@ -423,6 +430,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
                 $this->_photo->read_exif_data(true);
                 $this->_photo->update();
                 $gallery = $this->_check_link_photo_gallery();
+                $this->index_uploaded_photo();
                 if ($gallery)
                 {
                     $nap = new midcom_helper_nav();

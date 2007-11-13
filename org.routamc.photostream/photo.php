@@ -276,6 +276,8 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
             debug_add("setting this->thumb = {$atts_by_identifier['thumbnail']->id}");
             $this->thumb = $atts_by_identifier['thumbnail']->id;
         }
+        // Re-render this at this point, we might need it before the object is refreshed from DB
+        $this->_render_thumbnail_html();
         if (!$call_update)
         {
             // No need to even check if we should update

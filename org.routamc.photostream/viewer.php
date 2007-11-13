@@ -488,7 +488,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
     }
 
     /**
-     * Indexes an article.
+     * Indexes a photo object.
      *
      * This function is usually called statically from various handlers.
      *
@@ -522,7 +522,22 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
         $document->component = $topic->component;
         $document->topic_url = $node[MIDCOM_NAV_FULLURL];
         $document->read_metadata_from_object($dm->storage->object);
+        $photo =& $dm->storage->object;
+        // Get just the thumbnail img tag
+        $thumbnail_tag = preg_replace('%.*(<img.*?/>).*%msi', '\\1', $photo->thumbnail_html);
+        // Prepend that to first 200 chars of description
+        $desc_base = strip_tags($photo->description);
+        if (strlen($desc_base) > 200)
+        {
+            $abstract = substr($desc_base, 0, 200) . ' ...';
+        }
+        else
+        {
+            $abstract = $desc_base;
+        }
+        $document->abstract = "\n<div class='org_routamc_photostream_indexed_abstract'>\n    <div class='thumbnail_container'>\n        <a href='{$document->document_url}'>{$thumbnail_tag}</a>\n    </div>\n    {$abstract}\n</div>";
         $indexer->index($document);
+        //echo "DEBUG: \$document->abstract={$document->abstract}"; die();
     }
 
     /**

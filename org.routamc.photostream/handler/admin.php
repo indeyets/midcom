@@ -196,8 +196,8 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         {
             case 'save':
                 // Reindex the photo
-                //$indexer =& $_MIDCOM->get_service('indexer');
-                //org_routamc_photostream_viewer::index($this->_controller->datamanager, $indexer, $this->_content_topic);
+                $indexer =& $_MIDCOM->get_service('indexer');
+                org_routamc_photostream_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
 
                 // *** FALL-THROUGH ***
 
@@ -255,7 +255,8 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
 
             // Update the index
             $indexer =& $_MIDCOM->get_service('indexer');
-            $indexer->delete($this->_photo->guid);
+            // RIs now contain language identifier
+            $indexer->delete($this->_photo->guid . '_' . $_MIDCOM->i18n->get_content_language());
 
             // Delete ok, relocating to welcome.
             $_MIDCOM->relocate('');
@@ -374,6 +375,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         }
         echo "-->\n";
         flush();
+        $indexer =& $_MIDCOM->get_service('indexer');
         foreach ($data['process_photos'] as $photo)
         {
             // PHP5-TODO: (probably) Must be copy-by-value
@@ -396,6 +398,8 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
             $this->_request_data['photo'] =& $this->_photo;
             if ($stat)
             {
+                // reindex with new thumbnail
+                org_routamc_photostream_viewer::index($this->_datamanager, $indexer, $this->_topic);
                 midcom_show_style('admin_recreate_rowok');
             }
             else
