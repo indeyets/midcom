@@ -177,6 +177,7 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
 
     add_result: function(key, title)
     {
+        title = unescape(title);
         /* Render a result in the results list */
         jsCall = 'javascript:midcom_helper_datamanager2_widget_universalchooser_add_option(\'' + this.idsuffix.replace("'", "\\'") + '\', \'' + key.replace("'", "\\'") + '\', \'' + title.replace("'", "\\'") + '\');';
         result_li = this.create_element('li', null, false);
@@ -190,7 +191,7 @@ midcom_helper_datamanager2_widget_universalchooser_handler.prototype =
                             );
         result_li.appendChild(result_link);
         this.results_ul.appendChild(result_li);
-        new Insertion.Top(result_link, unescape(title));
+        new Insertion.Top(result_link, title);
     },
     
     input_exists: function(name)
