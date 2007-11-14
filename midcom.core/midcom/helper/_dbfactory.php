@@ -282,10 +282,10 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
             $parent_guid = $_MIDCOM->cache->memcache->lookup_parent_guid($object_guid);
         }
 
-        if ($parent_guid === false)
+        if (!$parent_guid)
         {
             // No cache hit, retvieve guid and update the cache
-            if ($class !== null)
+            if ($class)
             {
                 // Class defined, we can use the static method for fetching parent and avoiding full object instantiate
                 $parent_guid = call_user_func(array($class, 'get_parent_guid_uncached_static'), $object_guid);
