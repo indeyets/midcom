@@ -57,7 +57,7 @@ class midcom_helper_datamanager_datatype_collection extends midcom_helper_datama
         
         if (is_null ($this->_storage)) 
         {
-            debug_add("The storage object is null, can't do anything except adding an emtpy field.", MIDCOM_LOG_WARN);
+            debug_add("The storage object is null, can't do anything except adding an empty field.", MIDCOM_LOG_WARN);
         } 
         else 
         {

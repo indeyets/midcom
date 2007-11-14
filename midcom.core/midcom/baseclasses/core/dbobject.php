@@ -1435,7 +1435,7 @@ class midcom_baseclasses_core_dbobject
      * Delete a parameter of a given object to the value specified.
      *
      * Current implementation note: Deletion is not yet implemented in MgdSchema.
-     * Therefore we set the parameters to an emtpy string for now, which should
+     * Therefore we set the parameters to an empty string for now, which should
      * have almost the same effect for most cases and thus is good enough for now.
      * Note, that empty string parameters are filtered in the getter methods until
      * this matter is resolved.

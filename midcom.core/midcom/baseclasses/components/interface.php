@@ -786,7 +786,7 @@ class midcom_baseclasses_components_interface
      * MidCOM content tree (it is checked through NAP).
      *
      * If the guid could be successfully resolved, a URL local to the given topic without a
-     * leading slash must be returned (f.x. 'article.html'), emtpy strings ('') are allowed
+     * leading slash must be returned (f.x. 'article.html'), empty strings ('') are allowed
      * indicating root page access. If the GUID is invalid, null will be returned.
      *
      * This call is realyed to the component using the event handler _on_resolve_permalink().
@@ -1002,7 +1002,7 @@ class midcom_baseclasses_components_interface
      * MidCOM content tree (it is checked through NAP).
      *
      * If the guid could be successfully resolved, a URL local to the given topic without a
-     * leading slash must be returned (f.x. 'article.html'), emtpy strings ('') are allowed
+     * leading slash must be returned (f.x. 'article.html'), empty strings ('') are allowed
      * indicating root page access. If the GUID is invalid, null will be returned.
      *
      * This call is realyed to the component using the event handler _on_resolve_permalink().

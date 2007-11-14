@@ -112,7 +112,7 @@ class midcom_helper_datamanager_datatype_mailtemplate extends midcom_helper_data
         $this->_complete_data_keys();
     }
     
-    function is_emtpy() 
+    function is_empty() 
     {
         return (   strlen($this->_data["from"]) == 0
                 && strlen($this->_data["subject"]) == 0

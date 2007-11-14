@@ -92,7 +92,7 @@ class midcom_helper_datamanager_datatype_account extends midcom_helper_datamanag
                 debug_print_r("Storage object is: ", $this->_storage);
             }
             
-            if ($this->_password_was_emtpy && $this->_enable_crypt) 
+            if ($this->_password_was_empty && $this->_enable_crypt) 
             {
                 debug_add("Don't do anything, the password is empty and crypt was enabled, we cannot update the username this way. Failing gracefully.");
                 return MIDCOM_DATAMGR_SAVED;
