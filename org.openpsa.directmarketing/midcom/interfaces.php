@@ -241,7 +241,7 @@ class org_openpsa_directmarketing_interface extends midcom_baseclasses_component
             return false;
         }
 
-        // Find a o.o.directmarketing node for message composition
+        // Find an o.o.directmarketing node for message composition
         $directmarketing_node = midcom_helper_find_node_by_component('org.openpsa.directmarketing');
         if (!$directmarketing_node)
         {

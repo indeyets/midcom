@@ -110,7 +110,7 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
     }
 
     /**
-     * Simple lookup method which tries to map the guid to an post of out topic.
+     * Simple lookup method which tries to map the guid to a post of out topic.
      */
     function _on_resolve_permalink($topic, $config, $guid)
     {

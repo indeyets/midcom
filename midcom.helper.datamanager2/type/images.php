@@ -159,7 +159,7 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
     /**
      * Adds a new image to the list.
      *
-     * Unless specified, the function creates an unique image identifier based on the
+     * Unless specified, the function creates a unique image identifier based on the
      * hash of the current timestamp, the uploaded filename and the name of the temporary
      * upload file.
      *

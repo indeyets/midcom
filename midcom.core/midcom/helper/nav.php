@@ -301,7 +301,7 @@ class midcom_helper_nav
     }
 
     /**
-     * This function tries to resolve a guid into an NAP object.
+     * This function tries to resolve a guid into a NAP object.
      *
      * The code is optimized trying to avoid a full-scan if possible. To do this it
      * will treat topic and article guids specially: In both cases the system will
@@ -577,7 +577,7 @@ class midcom_helper_nav
      * - MIDCOM_NAV_TYPE One of 'node', 'leaf', 'custom' indicating what type of entry
      *   this is.
      * - MIDCOM_NAV_ID The Identifier of the structure used to build this entry, this is
-     *   either an NAP node/leaf ID or the list key set by the component for custom data.
+     *   either a NAP node/leaf ID or the list key set by the component for custom data.
      * - 'napobject' This contains the original NAP object retrieved by the function.
      *   Just in case you need more infromation then is available directly.
      *

@@ -142,7 +142,7 @@ class net_nehmer_jobmarket_handler_ticker extends midcom_baseclasses_components_
         if (! is_numeric($args[1]))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("The page number must be an number, got '{$args[1]}'", MIDCOM_LOG_INFO);
+            debug_add("The page number must be a number, got '{$args[1]}'", MIDCOM_LOG_INFO);
             debug_pop();
             return false;
         }

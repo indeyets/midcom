@@ -120,7 +120,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
      * data.
      *
      * If an event is not open for registration, a 404 is triggered. The same will be done
-     * if an user is already registered to the event.
+     * if a user is already registered to the event.
      */
     function _handler_register($handler_id, $args, &$data)
     {

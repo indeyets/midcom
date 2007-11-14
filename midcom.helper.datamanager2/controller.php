@@ -76,7 +76,7 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
     }
 
     /**
-     * Loads an schema definitino from disk and creates the corresponding schema
+     * Loads a schema definitino from disk and creates the corresponding schema
      * class instances.
      *
      * If you have an array of schema classes alredy, use set_schemadb() instead.

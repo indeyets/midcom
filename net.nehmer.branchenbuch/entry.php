@@ -243,7 +243,7 @@ class net_nehmer_branchenbuch_entry extends __net_nehmer_branchenbuch_entry
 
     /**
      * This is a helper function targeted for usage from the account component's
-     * account activation callback. It allows you to create an YP entry for a given
+     * account activation callback. It allows you to create a YP entry for a given
      * person in the system. The entry will have the default_entry flag set (see
      * below), which will in turn be invalidated after during successful formmanager
      * save operations in the regular edit cycle.

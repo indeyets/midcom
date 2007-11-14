@@ -70,7 +70,7 @@ class net_nehmer_publications_handler_view extends midcom_baseclasses_components
     }
 
     /**
-     * Looks up an publication to display. If the handler_id is 'index', the index publication is tried to be
+     * Looks up a publication to display. If the handler_id is 'index', the index publication is tried to be
      * looked up, otherwise the publication name is taken from args[0]. Triggered error messages are
      * generated accordingly. A missing index will trigger a forbidden error, a missing regular
      * publication a 404 (from can_handle).

@@ -300,7 +300,7 @@ else
         $overload = ini_get('mbstring.func_overload');
         if ($overload != '7')
         {
-        	println('Multi-Byte String functions', WARNING, 'The Multi-Byte String functions are available, but this is an UTF-8 site and Function overloading is disabled, this is not recommended since string operations are erronous then.');
+        	println('Multi-Byte String functions', WARNING, 'The Multi-Byte String functions are available, but this is a UTF-8 site and Function overloading is disabled, this is not recommended since string operations are erronous then.');
         }
         else
         {

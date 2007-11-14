@@ -180,7 +180,7 @@ class net_nemein_downloads_handler_admin extends midcom_baseclasses_components_h
 
 
     /**
-     * Displays an downloadpage edit view.
+     * Displays a downloadpage edit view.
      *
      * Note, that the downloadpage for non-index mode operation is automatically determined in the can_handle
      * phase.
@@ -235,7 +235,7 @@ class net_nemein_downloads_handler_admin extends midcom_baseclasses_components_h
     }
 
     /**
-     * Displays an downloadpage delete confirmation view.
+     * Displays a downloadpage delete confirmation view.
      *
      * Note, that the downloadpage for non-index mode operation is automatically determined in the can_handle
      * phase.

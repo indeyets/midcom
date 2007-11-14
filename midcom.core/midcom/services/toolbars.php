@@ -55,7 +55,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
 {
     /**
      * The toolbars currently available. This array is indexed by context id; each
-     * value consists of an flat array of two toolbars, the first object being the
+     * value consists of a flat array of two toolbars, the first object being the
      * Node toolbar, the second View toolbar. The toolbars are created on-demand.
      *
      * @var Array

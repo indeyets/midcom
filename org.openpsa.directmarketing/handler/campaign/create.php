@@ -137,7 +137,7 @@ class org_openpsa_directmarketing_handler_campaign_create extends midcom_basecla
     }
 
     /**
-     * Displays an campaign edit view.
+     * Displays a campaign edit view.
      *
      * Note, that the campaign for non-index mode operation is automatically determined in the can_handle
      * phase.

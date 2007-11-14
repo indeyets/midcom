@@ -85,7 +85,7 @@ class org_routamc_positioning_importer_html extends org_routamc_positioning_impo
     }
 
     /**
-     * Get plazes location for an user
+     * Get plazes location for a user
      *
      * @param midcom_db_person $user Person to fetch Plazes data for
      * @param boolean $cache Whether to cache the position to a log object

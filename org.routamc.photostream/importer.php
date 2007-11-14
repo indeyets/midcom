@@ -22,7 +22,7 @@ class org_routamc_photostream_importer extends midcom_baseclasses_components_pur
     var $message = null;
 
     /**
-     * Error code from trying to import. Either an mgd_errstr() or an additional error code from component
+     * Error code from trying to import. Either a mgd_errstr() or an additional error code from component
      *
      * @var string
      */

@@ -18,7 +18,7 @@
  * storage IO calls will not do much, except synchronizing data where neccessary.
  *
  * The type can manage an arbitrary number of attachments. Each attachment is identified
- * by an handle (not its name!). It provides management functions for existing attachments,
+ * by a handle (not its name!). It provides management functions for existing attachments,
  * which allow you to add, delete and update them in all variants. These functions
  * are executed immediately on the storage object, no undo is possible.
  *
@@ -60,7 +60,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
     /**
      * This member is populated and synchronized with all known changes to the
      * attachments listing. It contains a batch of metadata that makes presenting
-     * them easy. The information is kept in a array per attachment, again indexed
+     * them easy. The information is kept in an array per attachment, again indexed
      * by their identifiers. The following keys are defined:
      *
      * - filename: The name of the file (useful to produce nice links).

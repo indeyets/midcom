@@ -57,11 +57,11 @@ v1.7	07-18-04
 	added a switch to select an external stylesheet (thanks to Pascal Van Hecke)
 	changed default content-type to application/xml
 	added character encoding setting
-	fixed numerous smaller bugs (thanks to Sšren Fuhrmann of golem.de)
+	fixed numerous smaller bugs (thanks to Sï¿½ren Fuhrmann of golem.de)
 	improved changing ATOM versions handling (thanks to August Trometer)
-	improved the UniversalFeedCreator's useCached method (thanks to Sšren Fuhrmann of golem.de)
-	added charset output in HTTP headers (thanks to Sšren Fuhrmann of golem.de)
-	added Slashdot namespace to RSS 1.0 (thanks to Sšren Fuhrmann of golem.de)
+	improved the UniversalFeedCreator's useCached method (thanks to Sï¿½ren Fuhrmann of golem.de)
+	added charset output in HTTP headers (thanks to Sï¿½ren Fuhrmann of golem.de)
+	added Slashdot namespace to RSS 1.0 (thanks to Sï¿½ren Fuhrmann of golem.de)
 
 v1.6	05-10-04
 	added stylesheet to RSS 1.0 feeds
@@ -79,7 +79,7 @@ v1.6 beta	02-28-04
 	considered beta due to some internal changes
 
 v1.5.1	01-27-04
-	fixed some RSS 1.0 glitches (thanks to StŽphane Vanpoperynghe)
+	fixed some RSS 1.0 glitches (thanks to Stï¿½phane Vanpoperynghe)
 	fixed some inconsistencies between documentation and code (thanks to Timothy Martin)
 
 v1.5	01-06-04
@@ -245,7 +245,7 @@ class FeedItem extends HtmlDescribable {
 
 
 /**
- * An FeedImage may be added to a FeedCreator feed.
+ * A FeedImage may be added to a FeedCreator feed.
  * @author Kai Blankenhorn <kaib@bitfolge.de>
  * @since 1.3
  */
@@ -294,7 +294,7 @@ class HtmlDescribable {
 
 
 /**
- * An FeedHtmlField describes and generates
+ * A FeedHtmlField describes and generates
  * a feed, item or image html field (probably a description). Output is 
  * generated based on $truncSize, $syndicateHtml properties.
  * @author Pascal Van Hecke <feedcreator.class.php@vanhecke.info>
@@ -564,7 +564,7 @@ class FeedCreator extends HtmlDescribable {
    
     
 	/**
-	 * Adds an FeedItem to the feed.
+	 * Adds a FeedItem to the feed.
 	 *
 	 * @param object FeedItem $item The FeedItem to add to the feed.
 	 * @access public
@@ -1262,7 +1262,7 @@ xsi:schemaLocation=\"http://www.topografix.com/GPX/1/0 http://www.topografix.com
 
 
 /**
- * PHPCreator is a FeedCreator that implements a PHP output, suitable for a include
+ * PHPCreator is a FeedCreator that implements a PHP output, suitable for an include
  *
  * @since 1.7.3
  * @author Barry Hunter <geo@barryhunter.co.uk>
@@ -1971,7 +1971,7 @@ $rss->image = $image;
 //$res = mysql_query("SELECT * FROM news ORDER BY newsdate DESC"); 
 //while ($data = mysql_fetch_object($res)) { 
 	$item = new FeedItem(); 
-	$item->title = "This is an the test title of an item"; 
+	$item->title = "This is a the test title of an item"; 
 	$item->link = "http://localhost/item/"; 
 	$item->description = "<b>description in </b><br/>HTML"; 
 	

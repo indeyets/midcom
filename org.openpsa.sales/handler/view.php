@@ -77,7 +77,7 @@ class org_openpsa_sales_handler_view extends midcom_baseclasses_components_handl
     }
 
     /**
-     * Looks up an salesproject to display.
+     * Looks up a salesproject to display.
      */
     function _handler_view($handler_id, $args, &$data)
     {

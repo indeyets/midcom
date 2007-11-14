@@ -181,7 +181,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
     /**
      * This list is used when updating an existing attachment. It keeps track
      * of which attachments have been updated already when replacing an existing
-     * image. All attachments still listed here after an set_image call will
+     * image. All attachments still listed here after a set_image call will
      * be deleted. This keeps attachment GUIDs stable during updates but also
      * adds resilence against against changed type configuration.
      *

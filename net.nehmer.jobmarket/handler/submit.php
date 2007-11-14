@@ -352,7 +352,7 @@ class net_nehmer_jobmarket_handler_submit extends midcom_baseclasses_components_
      * reasons, as sensitive information could be included in the thank you page).
      *
      * The actual creation is handled under sudo privileges, consecutive operations only
-     * if we are working as an not authenticated user.
+     * if we are working as a not authenticated user.
      */
     function _create_entry()
     {

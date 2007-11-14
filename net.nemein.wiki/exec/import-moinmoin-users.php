@@ -73,7 +73,7 @@ if (array_key_exists('directory', $_POST))
         
         if (array_key_exists('email', $user))
         {
-            // We know the email so this is an user
+            // We know the email so this is a user
             $moinmoin_users[$user['email']] = $user['name'];
         }
     }        

@@ -169,7 +169,7 @@ class org_maemo_devcodes_handler_code_admin extends midcom_baseclasses_component
 
 
     /**
-     * Displays an code edit view.
+     * Displays a code edit view.
      *
      * Note, that the code for non-index mode operation is automatically determined in the can_handle
      * phase.
@@ -224,7 +224,7 @@ class org_maemo_devcodes_handler_code_admin extends midcom_baseclasses_component
     }
 
     /**
-     * Displays an code delete confirmation view.
+     * Displays a code delete confirmation view.
      *
      * Note, that the code for non-index mode operation is automatically determined in the can_handle
      * phase.

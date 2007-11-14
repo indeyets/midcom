@@ -107,7 +107,7 @@ class net_nemein_downloads_handler_view extends midcom_baseclasses_components_ha
 
 
     /**
-     * Looks up an downloadpage to display. If the handler_id is 'index', the index downloadpage is tried to be
+     * Looks up a downloadpage to display. If the handler_id is 'index', the index downloadpage is tried to be
      * looked up, otherwise the downloadpage name is taken from args[0]. Triggered error messages are
      * generated accordingly. A missing index will trigger a forbidden error, a missing regular
      * downloadpage a 404 (from can_handle).

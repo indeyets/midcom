@@ -205,7 +205,7 @@ class org_openpsa_projects_handler_task_admin extends midcom_baseclasses_compone
 
 
     /**
-     * Displays an task edit view.
+     * Displays a task edit view.
      *
      * Note, that the task for non-index mode operation is automatically determined in the can_handle
      * phase.
@@ -256,7 +256,7 @@ class org_openpsa_projects_handler_task_admin extends midcom_baseclasses_compone
     }
 
     /**
-     * Displays an task delete confirmation view.
+     * Displays a task delete confirmation view.
      *
      * Note, that the task for non-index mode operation is automatically determined in the can_handle
      * phase.

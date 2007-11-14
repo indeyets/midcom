@@ -138,7 +138,7 @@ class org_routamc_statusmessage_importer_jaiku extends org_routamc_statusmessage
     }
 
     /**
-     * Get plazes status for an user
+     * Get plazes status for a user
      *
      * @param midcom_db_person $user Person to fetch Plazes data for
      * @param boolean $cache Whether to cache the status to a status object

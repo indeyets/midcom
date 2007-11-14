@@ -29,7 +29,7 @@
  * undefined. To get around this problems, the sessioning system stores not the
  * actual data in the sessioning array, but a serialized string of the data, which
  * can always be deserialized on PHP sessioning startup (its a string after all).
- * This has a important implication though: The sessioning system always stores
+ * This has an important implication though: The sessioning system always stores
  * copies of the data, not references. So if you put something in to the session
  * store and modify it afterwards, this change will not be reflected in the
  * sessioning store.

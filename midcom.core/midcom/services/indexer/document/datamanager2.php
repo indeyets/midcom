@@ -16,7 +16,7 @@
  * <b>Basic indexing operation</b>
  *
  * This class uses a number of conventions, see below, to merge an existing,
- * datamanager2 driven document into a indexing capable document. It requires
+ * datamanager2 driven document into an indexing capable document. It requires
  * the callee to instantinate the datamanager2, as this class would have no
  * idea where to take the schema database from.
  *

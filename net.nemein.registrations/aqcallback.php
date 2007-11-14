@@ -35,7 +35,7 @@ class net_nemein_registrations_aqcallback extends midcom_baseclasses_components_
     var $_schemadb = null;
 
     /**
-     * The option listing consists of an schema name => title mapping.
+     * The option listing consists of a schema name => title mapping.
      *
      * var Array
      * @access private

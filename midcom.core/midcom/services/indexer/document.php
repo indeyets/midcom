@@ -125,7 +125,7 @@ class midcom_services_indexer_document
     var $document_url = '';
 
     /**
-     * The time of document creation, this is an UNIX timestamp.
+     * The time of document creation, this is a UNIX timestamp.
      *
      * This field is mandatory.
      *
@@ -134,7 +134,7 @@ class midcom_services_indexer_document
     var $created = 0;
 
     /**
-     * The time of the last document modification, this is an UNIX timestamp.
+     * The time of the last document modification, this is a UNIX timestamp.
      *
      * This field is mandatory.
      *

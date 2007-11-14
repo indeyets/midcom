@@ -68,7 +68,7 @@ class net_nehmer_mail_interface extends midcom_baseclasses_components_interface
     }    
 
     /**
-     * Simple lookup method which tries to map the guid to an mailbox or mail.
+     * Simple lookup method which tries to map the guid to a mailbox or mail.
      */
     function _on_resolve_permalink($topic, $config, $guid)
     {

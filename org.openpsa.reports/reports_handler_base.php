@@ -37,7 +37,7 @@ class org_openpsa_reports_handler_reports_base extends midcom_baseclasses_compon
             return false;
         }
 
-        // NOTE: This array must be an same format as we get from DM get_array() method
+        // NOTE: This array must be a same format as we get from DM get_array() method
         $this->_request_data['query_data'] = $_REQUEST['org_openpsa_reports_query_data'];
         $this->_request_data['filename'] = 'get';
 

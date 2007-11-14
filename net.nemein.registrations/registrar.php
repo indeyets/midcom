@@ -10,7 +10,7 @@
 /**
  * Event registration system: Registrar class
  *
- * This class encaspulates an registrar person.
+ * This class encaspulates a registrar person.
  *
  * TODO...
  *

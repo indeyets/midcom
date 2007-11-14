@@ -70,7 +70,7 @@ require_once('select.php');
  *   are stored in the storage location, using serialized storage. If you set this to
  *   null, <i>option_callback</i> has to be defined instead. You may not define both
  *   options.
- * - <i>string option_callback:</i> This must be the name of a available class which
+ * - <i>string option_callback:</i> This must be the name of an available class which
  *   handles the actual option listing. See below how such a class has to look like.
  *   If you set this to null, <i>options</i> has to be defined instead. You may not
  *   define both options.
@@ -232,7 +232,7 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
     }
 
     /**
-     * Loads all membership records from the database. May only be called if an storage object is
+     * Loads all membership records from the database. May only be called if a storage object is
      * defined.
      */
     function _load_membership_objects()

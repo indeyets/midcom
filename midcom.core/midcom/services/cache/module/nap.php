@@ -119,7 +119,7 @@ class midcom_services_cache_module_nap extends midcom_services_cache_module
      * will load the topic from the database and map all requests to a topic which is
      * of a midcom.admin.content type to the corresponding root content topic. Note, that
      * this is actually a bug in the core's context seapration, which I have not yet
-     * found. Normally, all instances of basicnav should work within a on-site-context
+     * found. Normally, all instances of basicnav should work within an on-site-context
      * and therefore this "fallback" should not be neccessary. Unfortunalety, sometimes
      * the context information seems to get mixed up, which results in AIS writing NAP
      * information to the wrong cache file.

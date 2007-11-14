@@ -51,7 +51,7 @@ define ('NET_NEMEIN_PAYMENT_ERROR', 3);
 
 /**
  * Payment return code for an accepted Payment which has not been executed yet.
- * This is the default return code for example for an pay-by-invoice handler.
+ * This is the default return code for example for a pay-by-invoice handler.
  */
 define ('NET_NEMEIN_PAYMENT_OK_BUT_PENDING', 4);
 

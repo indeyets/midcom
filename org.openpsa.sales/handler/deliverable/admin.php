@@ -205,7 +205,7 @@ class org_openpsa_sales_handler_deliverable_admin extends midcom_baseclasses_com
 
 
     /**
-     * Displays an deliverable edit view.
+     * Displays a deliverable edit view.
      *
      * Note, that the deliverable for non-index mode operation is automatically determined in the can_handle
      * phase.
@@ -256,7 +256,7 @@ class org_openpsa_sales_handler_deliverable_admin extends midcom_baseclasses_com
     }
 
     /**
-     * Displays an deliverable delete confirmation view.
+     * Displays a deliverable delete confirmation view.
      *
      * Note, that the deliverable for non-index mode operation is automatically determined in the can_handle
      * phase.

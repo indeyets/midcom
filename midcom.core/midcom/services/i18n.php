@@ -14,7 +14,7 @@
  *
  * The I18n service serves as a central access point for all aspects
  * around internationalization and localization. It provides auto-detection
- * of language data using HTTP Content-Negotiation along with an cookie-based
+ * of language data using HTTP Content-Negotiation along with a cookie-based
  * fallback.
  *
  * A good deal of major languages are predefined, see the snippet
@@ -404,7 +404,7 @@ class midcom_services_i18n
     }
 
     /**
-     * Returns an l10n class instance (see the snippet documentation at
+     * Returns a l10n class instance (see the snippet documentation at
      * /midcom/services/_i18n_l10n for details) which can be used to
      * access the localization data of the current component. Using the
      * special name "midcom" you will get the midcom core l10n library.

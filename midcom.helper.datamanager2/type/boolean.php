@@ -17,9 +17,9 @@
  * <b>Available configuration options:</b>
  *
  * - <i>string true_text:</i> The text displayed if the value of the type is true. This defaults
- *   to an graphic "checked" icon. Must be valid for usage in convert_to_html.
+ *   to a graphic "checked" icon. Must be valid for usage in convert_to_html.
  * - <i>string false_text:</i> The text displayed if the value of the type is false. This defaults
- *   to an graphic "not checked" icon. Must be valid for usage in convert_to_html.
+ *   to a graphic "not checked" icon. Must be valid for usage in convert_to_html.
  *
  * @package midcom.helper.datamanager2
  */
@@ -35,7 +35,7 @@ class midcom_helper_datamanager2_type_boolean extends midcom_helper_datamanager2
 
     /**
      * The text displayed if the value of the type is true. This defaults to
-     * an graphic "checked" icon. Must be valid for usage in convert_to_html.
+     * a graphic "checked" icon. Must be valid for usage in convert_to_html.
      *
      * @var string
      * @access public.
@@ -44,7 +44,7 @@ class midcom_helper_datamanager2_type_boolean extends midcom_helper_datamanager2
 
     /**
      * The text displayed if the value of the type is false. This defaults to
-     * an graphic "not checked" icon. Must be valid for usage in convert_to_html.
+     * a graphic "not checked" icon. Must be valid for usage in convert_to_html.
      *
      * @var string
      * @access public.

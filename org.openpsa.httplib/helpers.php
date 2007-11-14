@@ -134,7 +134,7 @@ class org_openpsa_httplib_helpers extends midcom_baseclasses_components_purecode
     }
 
     /**
-     * Get value(s) of a anchor tag(s) in HTML page.
+     * Get value(s) of an anchor tag(s) in HTML page.
      *
      * @param string $html HTML to parse
      * @param string $relation Relation (rel) of the anchor to fetch

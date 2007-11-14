@@ -246,7 +246,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
         }
         else if ($this->_page > $this->_last_page)
         {
-            // In case we have an page number which is too large, we relocate to the last known
+            // In case we have a page number which is too large, we relocate to the last known
             // good page.
 
             if ($this->_last_page == 1)

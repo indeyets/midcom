@@ -231,7 +231,7 @@ class installMidcomCore extends Task
         $this->exec_command($command, $debug);
     }
     /**
-     * returns a list of subdirectories and files as a assosiative 
+     * returns a list of subdirectories and files as an assosiative 
      * array
      * dirname => dirname 
      */

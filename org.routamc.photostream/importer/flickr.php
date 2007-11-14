@@ -149,7 +149,7 @@ class org_routamc_photostream_importer_flickr extends org_routamc_photostream_im
     }
 
     /**
-     * Get flickr photos for an user
+     * Get flickr photos for a user
      *
      * @param midcom_db_person $user Person to fetch Flickr data for
      * @param boolean $cache Whether to cache the photos to a photos object

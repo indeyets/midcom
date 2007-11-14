@@ -74,7 +74,7 @@ class org_openpsa_products_handler_product_edit extends midcom_baseclasses_compo
     }
 
     /**
-     * Looks up an product to display.
+     * Looks up a product to display.
      */
     function _handler_edit($handler_id, $args, &$data)
     {

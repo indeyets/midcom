@@ -174,7 +174,7 @@ class net_nehmer_publications_handler_admin extends midcom_baseclasses_component
 
 
     /**
-     * Displays an publication edit view.
+     * Displays a publication edit view.
      *
      * Note, that the publication for non-index mode operation is automatically determined in the can_handle
      * phase.
@@ -226,7 +226,7 @@ class net_nehmer_publications_handler_admin extends midcom_baseclasses_component
     }
 
     /**
-     * Displays an publication delete confirmation view.
+     * Displays a publication delete confirmation view.
      *
      * Note, that the publication for non-index mode operation is automatically determined in the can_handle
      * phase.

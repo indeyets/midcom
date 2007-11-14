@@ -20,7 +20,7 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
 {
     /**
      * The metadata currently available. This array is indexed by context id; each
-     * value consists of an flat array of two metadata objects, the first object being 
+     * value consists of a flat array of two metadata objects, the first object being 
      * the Node metadata, the second View metadata. The metadata objects are created 
      * on-demand.
      *

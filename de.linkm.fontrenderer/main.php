@@ -353,7 +353,7 @@ class de_linkm_fontrenderer {
         $info = getimagesize($filename);
         
         if ($info === false || $info[2] != 3) {
-            debug_add("This does not look like an PNG Image, getimagesize returned this:", $info, MIDCOM_LOG_ERROR);
+            debug_add("This does not look like a PNG Image, getimagesize returned this:", $info, MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }

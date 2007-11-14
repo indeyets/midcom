@@ -42,7 +42,7 @@ class org_openpsa_directmarketing_handler_message_list extends midcom_baseclasse
     }
 
     /**
-     * Looks up an message to display.
+     * Looks up a message to display.
      */
     function _handler_list ($handler_id, $args, &$data)
     {

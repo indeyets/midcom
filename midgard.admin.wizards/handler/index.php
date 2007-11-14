@@ -7,7 +7,7 @@
  */
 
 /**
- * This is an URL handler class for midgard.admin.wizards
+ * This is a URL handler class for midgard.admin.wizards
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
  * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html

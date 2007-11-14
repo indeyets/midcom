@@ -16,7 +16,7 @@
 class net_nehmer_buddylist_handler_welcome extends midcom_baseclasses_components_handler
 {
     /**
-     * Your buddy list in the form of an username => midcom_core_user listing.
+     * Your buddy list in the form of a username => midcom_core_user listing.
      *
      * @var Array
      * @access protected

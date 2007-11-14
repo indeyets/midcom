@@ -183,7 +183,7 @@ class net_nemein_reservations_handler_resource extends midcom_baseclasses_compon
     }
     
     /**
-     * Looks up an resource to display.
+     * Looks up a resource to display.
      */
     function _handler_view ($handler_id, $args, &$data)
     {

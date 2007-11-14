@@ -844,7 +844,7 @@ class midcom_helper_datamanager {
      * - <b>MIDCOM_DATAMGR_CREATING:</b> This is a variant of EDITING, the callee should show
      *   the edit form now. It is the first time, the edit interface is shown, no
      *   data has been stored yet.
-     * - <b>MIDCOM_DATAMGR_CANCELLED_NONECREATED:</b> The user aborted the creation of an new
+     * - <b>MIDCOM_DATAMGR_CANCELLED_NONECREATED:</b> The user aborted the creation of a new
      *   object before any new object could have been created. The application
      *   should revert to some welcome screen, nothing has to be deleted.
      *
@@ -1019,7 +1019,7 @@ class midcom_helper_datamanager {
                  * if the DM returns MIDCOM_DATAMGR_EDITING, you must honor this
                  * by no longer entering the creation mode, you'll have to fall
                  * back to the original bahvoir for future runs in that case.
-                 * See the data array for an guid/id off the content object.
+                 * See the data array for a guid/id off the content object.
                  */
             }
 
@@ -1155,7 +1155,7 @@ class midcom_helper_datamanager {
     /*** Data Output Functions ***/
 
     /**
-     * This function will display the current data of the object in an non-editable
+     * This function will display the current data of the object in a non-editable
      * way. It will not display edit/delete Links for the object. This view can
      * be customized by CSS commands, see below.
      *
@@ -1490,7 +1490,7 @@ class midcom_helper_datamanager {
      * This is a small version of the display_view method above for use outside of
      * the datamanager. It calls the draw_view method of the corresponding widget
      * which essentially renders the data in the datamanagers default view
-     * representation. It does not display an headings or the like, so it can be
+     * representation. It does not display a headings or the like, so it can be
      * easily used to created custom database applications without having to
      * reimplement the view logic for each datatype again and again.
      *

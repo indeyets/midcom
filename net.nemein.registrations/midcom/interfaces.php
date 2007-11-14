@@ -52,7 +52,7 @@
  * event members. Owners will <em>not</em> receive the manage privilege automatically, it has to
  * be granted manually.
  *
- * Upon approval of an registration, the system will revoke the ownership privilege of the
+ * Upon approval of a registration, the system will revoke the ownership privilege of the
  * registrar, replacing it by a simple read privilege. (Registrations, which are approved, should
  * no longer be changeable by the registrar). Thus, managers also need privilege management permissions
  * on the registration (they are part of midgard:owner).

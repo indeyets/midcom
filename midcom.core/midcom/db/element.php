@@ -18,7 +18,7 @@ require(MIDCOM_ROOT . '/midcom/baseclasses/database/element.php');
  *
  * <i>Preliminary Implementation:</i>
  *
- * Be aware that this implementation is incomplete, and grows on a is-needed basis.
+ * Be aware that this implementation is incomplete, and grows on an is-needed basis.
  *
  * @package midcom.db
  */

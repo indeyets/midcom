@@ -244,7 +244,7 @@ class net_nemein_reservations_handler_reservation_create extends midcom_baseclas
     }
 
     /**
-     * Displays an reservation edit view.
+     * Displays a reservation edit view.
      *
      * Note, that the reservation for non-index mode operation is automatically determined in the can_handle
      * phase.

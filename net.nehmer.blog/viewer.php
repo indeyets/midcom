@@ -439,7 +439,7 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
         if (is_null($guid))
         {
             // No symlink topic
-            // Workaround, we should talk to an DBA object automatically here in fact.
+            // Workaround, we should talk to a DBA object automatically here in fact.
             $this->_content_topic = new midcom_db_topic($this->_topic->id);
             debug_pop();
             return;

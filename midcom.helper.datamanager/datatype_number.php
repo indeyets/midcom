@@ -10,7 +10,7 @@
 /**
  * Number datatype.
  * 
- * This type will store floating point numbers with an specified precision. Values 
+ * This type will store floating point numbers with a specified precision. Values 
  * returned and stored will always be rounded to that precision. Background are the
  * floating point types of PHP, <i>not</i> an arbitrary precision system.
  * 

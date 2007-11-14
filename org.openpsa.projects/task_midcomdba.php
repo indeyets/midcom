@@ -248,7 +248,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
     }
 
     /**
-     * Generate an user-readable label for the task using the task/project hierarchy
+     * Generate a user-readable label for the task using the task/project hierarchy
      */
     function get_label()
     {

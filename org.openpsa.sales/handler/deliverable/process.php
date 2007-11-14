@@ -57,7 +57,7 @@ class org_openpsa_sales_handler_deliverable_process extends midcom_baseclasses_c
 
 
     /**
-     * Looks up an deliverable to display.
+     * Looks up a deliverable to display.
      */
     function _handler_process($handler_id, $args, &$data)
     {

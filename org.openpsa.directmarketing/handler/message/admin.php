@@ -200,7 +200,7 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
     }
 
     /**
-     * Displays an message edit view.
+     * Displays a message edit view.
      *
      * Note, that the message for non-index mode operation is automatically determined in the can_handle
      * phase.
@@ -256,7 +256,7 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
     }
 
     /**
-     * Displays an message delete confirmation view.
+     * Displays a message delete confirmation view.
      *
      * Note, that the message for non-index mode operation is automatically determined in the can_handle
      * phase.

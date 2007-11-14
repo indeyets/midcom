@@ -32,7 +32,7 @@
  * modify the permalink lookup rules, you have to invalidate all guids that affected by the
  * changes. MidCOM will assume that the resolution of Permalinks to real URLs is stable over
  * time otherwise. You can also set the no_cache flag during the resolver callback execution
- * if you discover that it is an URL you are responsible for but the result should not be 
+ * if you discover that it is a URL you are responsible for but the result should not be 
  * cached. See there for details. 
  *
  * @see midcom_baseclasses_components_interface::resolve_permalink()
@@ -69,7 +69,7 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
      */
     function resolve_permalink($guid)
     {
-        // resolves a guid into an fully qualified url, uses some heuristics for that, mainly replaces
+        // resolves a guid into a fully qualified url, uses some heuristics for that, mainly replaces
         // the nap permalink resolver, with the difference that it will be based on the 
         // components permalink interface code.
         

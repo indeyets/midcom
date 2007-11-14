@@ -135,7 +135,7 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
     var $field_order = Array();
 
     /**
-     * The operations to add to the form. This is an simple array of commands, valid entries
+     * The operations to add to the form. This is a simple array of commands, valid entries
      * are 'save', 'cancel', 'next' and 'previous', 'edit' is forbidden, other values are not
      * interpreted by the DM infrastructure.
      *
@@ -198,7 +198,7 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
 
     /**
      * This functnio loads the schema database into the class, either from a copy
-     * already in memory, or from an URL resolvable by midcom_get_snippet_content.
+     * already in memory, or from a URL resolvable by midcom_get_snippet_content.
      *
      * @param mixed $schemapath Either the path or the already loaded schema database
      *     to use.
@@ -535,7 +535,7 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
 
     /**
      * Helper function which transforms a raw schema database (either already parsed or
-     * based on an URL to a schemadb) into a list of schema class instances.
+     * based on a URL to a schemadb) into a list of schema class instances.
      *
      * This function may (and usually will) be called statically.
      *

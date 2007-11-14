@@ -16,7 +16,7 @@
  * Also, all QueryBuilder operations need to be done by the factory class
  * obtainable through the statically callable new_query_builder() DBA methods.
  *
- * This class uses a auto-generated base class provided by midcom_services_dbclassloader.
+ * This class uses an auto-generated base class provided by midcom_services_dbclassloader.
  *
  * @package midcom.baseclasses
  * @see midcom_services_dbclassloader

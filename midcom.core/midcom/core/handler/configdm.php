@@ -16,7 +16,7 @@
  * may contain the name of the schema to use, it defaults to 'config' if omitted.
  * Finally, 'disable_return_to_topic', if set to true, will hide the automatically
  * added "Return to topic" toolbar item. This is useful for components which have only
- * an configuration interface but nothing more, it defaults to false.
+ * a configuration interface but nothing more, it defaults to false.
  *
  * It uses the MidCOM l10n string 'close configuration screen' as title for the leaf-toolbar-item added
  * during the handle phase.

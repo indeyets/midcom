@@ -9,7 +9,7 @@
  */
 
 /**
- * Base class to encaspulate a admin request to the component, instantiated by the MidCOM
+ * Base class to encaspulate an admin request to the component, instantiated by the MidCOM
  * component interface.
  *
  * This is largely equivalent to the regular request base class midcom_baseclasses_components_request
@@ -26,7 +26,7 @@
  * may contain the name of the schema to use, it defaults to 'config' if omitted.
  * Finally, 'disable_return_to_topic', if set to true, will hide the automatically
  * added "Return to topic" toolbar item. This is useful for components which have only
- * an configuration interface but nothing more, it defaults to false.
+ * a configuration interface but nothing more, it defaults to false.
  *
  * It uses the MidCOM l10n string 'return to topic' as title for the leaf-toolbar-item added
  * during the handle phase.

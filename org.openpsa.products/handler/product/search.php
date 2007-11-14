@@ -715,7 +715,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
     }
 
     /**
-     * Looks up an product to display.
+     * Looks up a product to display.
      */
     function _handler_search($handler_id, $args, &$data)
     {

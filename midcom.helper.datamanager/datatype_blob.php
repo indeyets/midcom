@@ -228,7 +228,7 @@ class midcom_helper_datamanager_datatype_blob extends midcom_helper_datamanager_
         $url = $this->_value["url"];
         if (substr($url,0,1) == "/") 
         {
-            // We didn't have an configured anchor prefix, we default to the local host.
+            // We didn't have a configured anchor prefix, we default to the local host.
             $protocol = array_key_exists("SSL_PROTOCOL", $_SERVER) ? "https" : "http";
             
             $port = "";

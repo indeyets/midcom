@@ -168,7 +168,7 @@ class net_nemein_netmon_handler_hostgroup_admin extends midcom_baseclasses_compo
 
 
     /**
-     * Displays an hostgroup edit view.
+     * Displays a hostgroup edit view.
      *
      * Note, that the hostgroup for non-index mode operation is automatically determined in the can_handle
      * phase.
@@ -223,7 +223,7 @@ class net_nemein_netmon_handler_hostgroup_admin extends midcom_baseclasses_compo
     }
 
     /**
-     * Displays an hostgroup delete confirmation view.
+     * Displays a hostgroup delete confirmation view.
      *
      * Note, that the hostgroup for non-index mode operation is automatically determined in the can_handle
      * phase.

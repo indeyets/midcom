@@ -125,7 +125,7 @@ class cc_kaktus_exhibitions_handler_create extends midcom_baseclasses_components
                 // Check for unique name
                 $extra = '';
                 
-                // Do until an unique name in the root event has been found
+                // Do until a unique name in the root event has been found
                 do
                 {
                     $qb = midcom_db_event::new_query_builder();

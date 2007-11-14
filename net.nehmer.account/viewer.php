@@ -42,7 +42,7 @@
  *
  * To actually activate a plugin, a site mainatainer must register it in the components
  * plugin listing. There he must add two pieces of information: The main plugin class (which
- * is used to read the handler list) and an URL to the snippet/file that contains that class.
+ * is used to read the handler list) and a URL to the snippet/file that contains that class.
  * For example, written in the snippet /sitegroup-config/net.nehmer.account/config:
  *
  * <code>

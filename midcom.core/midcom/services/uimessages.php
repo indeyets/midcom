@@ -31,7 +31,7 @@
  * UI messages can be specified into the following types: <i>info</i>,
  * <i>ok</i>, <i>warning</i> and <i>error</i>.
  * 
- * To add an UI message, call the following:
+ * To add a UI message, call the following:
  *
  * <code>
  * $_MIDCOM->uimessages->add($title, $message, $type);

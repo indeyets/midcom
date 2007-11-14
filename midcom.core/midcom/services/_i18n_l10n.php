@@ -505,7 +505,7 @@ class midcom_services__i18n_l10n {
      * Checks wether the given string is available in either the current
      * or the fallback language. Use this to determine if an actually processed
      * result is returned by get. This is helpful especially if you want to
-     * "catch" cases where an string might translate to itself in some languages.
+     * "catch" cases where a string might translate to itself in some languages.
      * 
      * @param string $string The string-ID to search for
      * @return bool Indicating availability.

@@ -16,7 +16,7 @@
  * Also, all QueryBuilder operations need to be done by the factory class
  * obtainable through the statically callable new_query_builder() DBA methods.
  *
- * This class uses a auto-generated base class provided by midcom_services_dbclassloader.
+ * This class uses an auto-generated base class provided by midcom_services_dbclassloader.
  *
  * @package midcom.baseclasses
  * @see midcom_services_dbclassloader
@@ -30,7 +30,7 @@ class midcom_baseclasses_database_event extends __midcom_baseclasses_database_ev
 
     /**
      * Returns the Parent of the Event. This can either be another event if we have
-     * an reply event, or a topic otherwise.
+     * a reply event, or a topic otherwise.
      *
      * @return MidgardObject Parent object or NULL if there is none.
      */

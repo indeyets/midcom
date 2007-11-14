@@ -47,7 +47,7 @@ class org_openpsa_directmarketing_handler_campaign_campaign extends midcom_basec
     }
 
     /**
-     * Looks up an campaign to display.
+     * Looks up a campaign to display.
      */
     function _handler_view ($handler_id, $args, &$data)
     {

@@ -137,7 +137,7 @@ class org_openpsa_directmarketing_handler_message_create extends midcom_baseclas
     }
 
     /**
-     * Displays an message edit view.
+     * Displays a message edit view.
      *
      * Note, that the message for non-index mode operation is automatically determined in the can_handle
      * phase.

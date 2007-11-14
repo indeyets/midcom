@@ -458,7 +458,7 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
 
     /**
      * This internal helper function will put the storage representaiton of all information
-     * currently in place in the controller into an session based array. This can be used later
+     * currently in place in the controller into a session based array. This can be used later
      * using the _get_data_defaults_from_session to start up a null controller again.
      *
      * It will set the following session keys:
@@ -706,7 +706,7 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
     }
 
     /**
-     * Shows a all-ok page.
+     * Shows an all-ok page.
      */
     function _handler_thanks($handler_id, $args, &$data)
     {
@@ -744,7 +744,7 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
     }
 
     /**
-     * Shows a all-ok page.
+     * Shows an all-ok page.
      */
     function _show_thanks($handler_id, &$data)
     {

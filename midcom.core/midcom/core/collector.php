@@ -435,7 +435,7 @@ class midcom_core_collector
     }
 
     /**
-     * Add a ordering constraint to the collector.
+     * Add an ordering constraint to the collector.
      *
      * @param string $field The name of the MgdSchema property to query against.
      * @param string $ordering One of 'ASC' or 'DESC' indicating ascending or descending

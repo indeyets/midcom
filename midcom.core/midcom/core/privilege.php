@@ -505,7 +505,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * at a content object, identified by the combination of assingee and privilege
      * name.
      *
-     * This call will return a object even if the privilege is set to INHERITED at
+     * This call will return an object even if the privilege is set to INHERITED at
      * the given object (i.e. does not exist) for consistency reasons. Errors are
      * thrown for example on database inconsistencies.
      *
@@ -818,7 +818,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
     }
 
     /**
-     * Copy values of the midcom_core_privilege object to an Midgard-level object
+     * Copy values of the midcom_core_privilege object to a Midgard-level object
      */
     function _copy_to_object(&$object)
     {

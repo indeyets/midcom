@@ -201,7 +201,7 @@ class net_nemein_reservations_handler_admin extends midcom_baseclasses_component
 
 
     /**
-     * Displays an resource edit view.
+     * Displays a resource edit view.
      *
      * Note, that the resource for non-index mode operation is automatically determined in the can_handle
      * phase.
@@ -259,7 +259,7 @@ class net_nemein_reservations_handler_admin extends midcom_baseclasses_component
     }
 
     /**
-     * Displays an resource delete confirmation view.
+     * Displays a resource delete confirmation view.
      *
      * Note, that the resource for non-index mode operation is automatically determined in the can_handle
      * phase.

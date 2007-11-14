@@ -920,7 +920,7 @@ class midcom_helper__componentloader
                     // Only refresh when we haven't deleted the record.
                     if (! $object->refresh())
                     {
-                        debug_add('Failed to refresh a object before notification, skipping it. see the debug level log for a dump.', MIDCOM_LOG_WARN);
+                        debug_add('Failed to refresh an object before notification, skipping it. see the debug level log for a dump.', MIDCOM_LOG_WARN);
                         debug_print_r('Object dump:', $object);
                         continue;
                     }

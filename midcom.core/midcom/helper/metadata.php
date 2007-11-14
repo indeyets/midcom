@@ -436,7 +436,7 @@ class midcom_helper_metadata
                 $varname = "midcom.helper.metadata_{$key}";
                 if (! array_key_exists($varname, get_object_vars($this->object)))
                 {
-                    // Fall back to the parameter reader, this might be an MgdSchema object.
+                    // Fall back to the parameter reader, this might be a MgdSchema object.
                     $value = $this->object->get_parameter('midcom.helper.metadata', $key);
                 }
                 else

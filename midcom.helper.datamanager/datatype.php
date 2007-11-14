@@ -393,7 +393,7 @@ class midcom_helper_datamanager_datatype {
     }
     
     /**
-     * This should return the representation of the current datatype in an CSV
+     * This should return the representation of the current datatype in a CSV
      * environment, which essentialy must be some kind of string.
      * 
      * It is up to the

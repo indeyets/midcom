@@ -163,7 +163,7 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
     }
 
     /**
-     * Try to fetch an URL variable.
+     * Try to fetch a URL variable.
      *
      * Try to decode an <namespace>-<key>-<value> pair at the current URL
      * position. Namespace must be a valid MidCOM Path, Key must mach the RegEx

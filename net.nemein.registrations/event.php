@@ -452,7 +452,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      * 1. If we have an anonymous user, the registration link is available always. The final
      *    permission checks are done on the registration page, where registration will
      *    be allowed due to correct config/privileges, or, if denied, a login page will be shown.
-     * 2. If an use is authenticated, we first check wether we have sufficient privileges to
+     * 2. If a use is authenticated, we first check wether we have sufficient privileges to
      *    create a registration. If not, we return false.
      * 3. If the privileges are granted, we check if this event is open for registration and if
      *    we have not yet registered for it. If yes, the URL will be returned.

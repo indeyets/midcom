@@ -710,7 +710,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     }
 
     /**
-     * Add a ordering constraint to the query builder.
+     * Add an ordering constraint to the query builder.
      *
      * This function has extended functionality against the pure Midgard Query Builder:
      * It can deal with legacy Midgard 'reverse $field' style sorting orders. All calls

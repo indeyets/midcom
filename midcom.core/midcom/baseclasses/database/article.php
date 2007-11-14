@@ -16,7 +16,7 @@
  * Also, all QueryBuilder operations need to be done by the factory class
  * obtainable as midcom_application::dbfactory.
  *
- * This class uses a auto-generated base class provided by midcom_services_dbclassloader.
+ * This class uses an auto-generated base class provided by midcom_services_dbclassloader.
  *
  * <i>Automatic updaets:</i>
  *
@@ -42,7 +42,7 @@ class midcom_baseclasses_database_article extends __midcom_baseclasses_database_
      * If the author cannot be found, the current user is used instead.
      *
      * This has mainly been introduced to aid backwards compatibility with
-     * legacy Midgard code. If a author id is invalid, the mgd_list_* calls
+     * legacy Midgard code. If an author id is invalid, the mgd_list_* calls
      * will fail.
      */
     function _check_author()
@@ -94,7 +94,7 @@ class midcom_baseclasses_database_article extends __midcom_baseclasses_database_
 
     /**
      * Returns the Parent of the Article. This can either be another article if we have
-     * an reply article, or a topic otherwise.
+     * a reply article, or a topic otherwise.
      *
      * @return MidgardObject Parent Article or topic.
      */

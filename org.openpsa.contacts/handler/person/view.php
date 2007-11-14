@@ -204,7 +204,7 @@ class org_openpsa_contacts_handler_person_view extends midcom_baseclasses_compon
     }
 
     /**
-     * Looks up an contact to display.
+     * Looks up a contact to display.
      */
     function _handler_view($handler_id, $args, &$data)
     {

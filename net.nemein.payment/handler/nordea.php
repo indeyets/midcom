@@ -139,7 +139,7 @@ class net_nemein_payment_handler_nordea extends net_nemein_payment_handler
     var $_amount_string = '';
     
     /**
-     * The stamp identifying the request. This is an unique number which is used
+     * The stamp identifying the request. This is a unique number which is used
      * to prevent double processing on the server side. It is built using the
      * current timestamp and the order ID.
      * 

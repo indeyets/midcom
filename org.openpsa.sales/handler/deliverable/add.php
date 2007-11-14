@@ -101,7 +101,7 @@ class org_openpsa_sales_handler_deliverable_add extends midcom_baseclasses_compo
     }
 
     /**
-     * Looks up an deliverable to display.
+     * Looks up a deliverable to display.
      */
     function _handler_add($handler_id, $args, &$data)
     {

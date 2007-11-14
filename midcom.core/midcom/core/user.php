@@ -169,7 +169,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
      * The class is only intended to operate with users and groups, and should not be used
      * in normal operations regarding persons.
      *
-     * @param mixed $id This is either an Midgard Person ID or GUID, a midcom_user ID or an already instantiated midgard_person.
+     * @param mixed $id This is either a Midgard Person ID or GUID, a midcom_user ID or an already instantiated midgard_person.
      * @access protected
      */
     function midcom_core_user($id = null)
@@ -197,7 +197,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
      * Helper function that will look up a user in the Midgard Database and assign the object to the $storage
      * member.
      *
-     * @param mixed $id This is either an Midgard Person ID or GUID, a midcom_user ID or an already instantiated midgard_person.
+     * @param mixed $id This is either a Midgard Person ID or GUID, a midcom_user ID or an already instantiated midgard_person.
      * @return bool Indicating success.
      */
     function _load($id)

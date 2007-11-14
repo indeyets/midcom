@@ -169,7 +169,7 @@ class org_maemo_devcodes_handler_device_admin extends midcom_baseclasses_compone
 
 
     /**
-     * Displays an device edit view.
+     * Displays a device edit view.
      *
      * Note, that the device for non-index mode operation is automatically determined in the can_handle
      * phase.
@@ -225,7 +225,7 @@ class org_maemo_devcodes_handler_device_admin extends midcom_baseclasses_compone
     }
 
     /**
-     * Displays an device delete confirmation view.
+     * Displays a device delete confirmation view.
      *
      * Note, that the device for non-index mode operation is automatically determined in the can_handle
      * phase.

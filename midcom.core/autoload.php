@@ -321,7 +321,7 @@ else if (!function_exists('__autoload'))
 			}
 			
 			/* Generate php cache file */
-			$cache_content = "<?php\n\t// this is a automatically generated cache file.\n"
+			$cache_content = "<?php\n\t// this is an automatically generated cache file.\n"
 				."\t// it serves as 'class name' / 'class file' association index for the SmartLoader\n";
 			foreach($this->classIndex as $class_name => $class_file) {
 				$cache_content .= "\t\$classes['".$class_name."'] = '".$class_file."';\n";

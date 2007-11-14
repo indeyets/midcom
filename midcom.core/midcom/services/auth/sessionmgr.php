@@ -12,7 +12,7 @@
  * DB I/O.
  *
  * Normally, you should not have to work with this class unless you are either
- * writing a authentication front- or backends, or a component which includes online
+ * writing an authentication front- or backends, or a component which includes online
  * status notifications and the like.
  *
  * The single instance of this class can be accessed as

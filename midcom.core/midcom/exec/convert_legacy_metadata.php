@@ -78,7 +78,7 @@ function convert_article_approval($topic_id)
                 $person = mgd_get_person($article->approver);
                 if (! $person)
                 {
-                    status ("<span style='color:red;'>        Article {$article->id} had an broken approver id {$person->approver} (using current user as fallback): " . mgderrstr() . '</span>');
+                    status ("<span style='color:red;'>        Article {$article->id} had a broken approver id {$person->approver} (using current user as fallback): " . mgderrstr() . '</span>');
                     $person = mgd_get_person($midgard->user);
                 }
             }

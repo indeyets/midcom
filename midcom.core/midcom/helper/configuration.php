@@ -117,7 +117,7 @@ class midcom_helper_configuration
      * This function will update the config data cache array. If it stores global
      * configuration data it will automatically erase the local configuration data.
      *
-     * Any error such as invalid configuration data will trigger an MidCOM error.
+     * Any error such as invalid configuration data will trigger a MidCOM error.
      *
      * @param MidgardObject $object        The object from which to retrieve the configuration.
      * @param string        $path        The Parameter domain to query.
@@ -240,7 +240,7 @@ class midcom_helper_configuration
     /**
      * Import data from a Midgard object.
      *
-     * To import configuration data from an Midgard Object, use this method. As in the
+     * To import configuration data from a Midgard Object, use this method. As in the
      * respecitve constructor it will retrieve the configuration data in the parameter
      * domain $path of $object. Unlike the constructor this function will store the
      * data in the local configuration.

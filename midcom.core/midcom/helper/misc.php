@@ -50,7 +50,7 @@ function midcom_get_snippet_content_graceful($path)
  * Prefix the snippet Path with 'file:' for retrival of a file relative to
  * MIDCOM_ROOT; omit it to get the code field of a Snippet.
  *
- * Any error (files not found) will raise an MidCOM Error. If you want a more
+ * Any error (files not found) will raise a MidCOM Error. If you want a more
  * graceful behavoir, look for midcom_get_snippet_content_graceful
  *
  * @param string $path	The URL to the snippet.
@@ -172,7 +172,7 @@ function mgd_fetch_to_array($fetchable) {
 }
 
 /**
- * Transforms a membership fetchable to an Person-ID Array
+ * Transforms a membership fetchable to a Person-ID Array
  *
  * @param MidgardFetchable $fetchable	Any result traversable by fetch()
  * @return Arraay	An Array of all person id's in the fetchable.
@@ -187,7 +187,7 @@ function mgd_memberships_to_uid($fetchable) {
 }
 
 /**
- * Transforms a membership fetchable to an Group-ID Array
+ * Transforms a membership fetchable to a Group-ID Array
  *
  * @param MidgardFetchable $fetchable	Any result traversable by fetch()
  * @return Arraay	An Array of all group id's in the fetchable.
@@ -457,7 +457,7 @@ function mgd_sort_group_id_array(&$array, $element_type, $group_type, $elementso
 }
 
 /**
- * Save a variable as attachment to an Midgard object. Type is preserved
+ * Save a variable as attachment to a Midgard object. Type is preserved
  * through serialization.
  *
  * @param MidgardObject $object	The object at which to save the data.

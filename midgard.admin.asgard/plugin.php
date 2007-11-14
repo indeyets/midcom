@@ -39,7 +39,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 'variable_args' => 0,
             ),
             /**
-             * Front page of an MgdSchema
+             * Front page of a MgdSchema
              * 
              * Match /asgard/
              */

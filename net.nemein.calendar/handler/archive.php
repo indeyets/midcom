@@ -19,7 +19,7 @@ require_once('Calendar/Decorator/Textual.php');
 /**
  * Calendar Archive pages handler.
  *
- * Shows an monthly archive index using the between method to display the months. 
+ * Shows a monthly archive index using the between method to display the months. 
  * Note, that the code is optimized to not use any TREE methods when querying 
  * events (since there are plenty of queries run until the index is complete). Instead,
  * in case of a list_from_master topic, the immediate subevents of the master event 
@@ -61,7 +61,7 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
     }
 
     /**
-     * Returns an QB initialized to query all events matching the current topic 
+     * Returns a QB initialized to query all events matching the current topic 
      * constraints.
      * 
      * @return midcom_core_querybuilder The initialized QB instance.

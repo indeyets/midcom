@@ -167,7 +167,7 @@ class net_nehmer_publications_handler_create extends midcom_baseclasses_componen
     }
 
     /**
-     * Displays an publication edit view.
+     * Displays a publication edit view.
      *
      * Note, that the publication for non-index mode operation is automatically determined in the can_handle
      * phase.

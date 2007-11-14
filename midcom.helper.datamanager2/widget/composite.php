@@ -36,7 +36,7 @@ class midcom_helper_datamanager2_widget_composite extends midcom_helper_datamana
         if (! is_a($this->_type, 'midcom_helper_datamanager2_type_composite'))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Warning, the field {$this->name} is not an composite type or subclass thereof, you cannot use the composite widget with it.",
+            debug_add("Warning, the field {$this->name} is not a composite type or subclass thereof, you cannot use the composite widget with it.",
                 MIDCOM_LOG_WARN);
             debug_pop();
             return false;

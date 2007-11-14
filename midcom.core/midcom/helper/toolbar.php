@@ -10,7 +10,7 @@
 
 /**
  * This class is a generic toolbar class, that is used mainly within
- * AIS to render all toolbars in an uniform way. It supports enabling
+ * AIS to render all toolbars in a uniform way. It supports enabling
  * and disabling of buttons, icons and hover-helptexts (currently
  * rendered using TITLE tags).
  *
@@ -239,17 +239,17 @@ class midcom_helper_toolbar
      * This function will add an Item to the toolbar. Set before to the index
      * of the element before which you want to insert the item or use -1 if
      * you want to append an item. Alternativly, instead of specifying an
-     * index, you can specify an URL instead.
+     * index, you can specify a URL instead.
      *
      * This member will process the URL and append the anchor prefix in case
      * the URL is a relative one.
      *
-     * Invalid positions will result in an MidCOM Error.
+     * Invalid positions will result in a MidCOM Error.
      *
      * @param Array $item The item to add.
      * @param mixed $before The index before which the item should be inserted.
      * 					  Use -1 for appending at the end, use a string to insert
-     * 				      it before an URL, an integer will insert it before a
+     * 				      it before a URL, an integer will insert it before a
      * 					  given index.
      * @see midcom_helper_toolbar::get_index_from_url()
      * @see midcom_helper_toolbar::_check_index()
@@ -542,7 +542,7 @@ class midcom_helper_toolbar
     /**
      * Updates an items URL using the same rules as in add_item.
      *
-     * You should avoid updating an URL directly unless you are prepared to
+     * You should avoid updating a URL directly unless you are prepared to
      * check for the possibly neccessary anchor_prefix yourself.
      *
      * @param mixed $index The integer index or URL of the item to update.
@@ -561,7 +561,7 @@ class midcom_helper_toolbar
             && substr($url, 0, 1) != '/'
             && ! preg_match('|^https?://|', $url))
         {
-            debug_add("toolbar:update_item_url: We have an relative URL, transformig it...");
+            debug_add("toolbar:update_item_url: We have a relative URL, transformig it...");
             $this->items[$index][MIDCOM_TOOLBAR_URL] =
                   $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
                 . $url;

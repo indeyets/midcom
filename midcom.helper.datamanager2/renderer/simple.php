@@ -396,7 +396,7 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     } // end func renderElement
 
    /**
-    * Renders an hidden element
+    * Renders a hidden element
     * Called when visiting a hidden element
     *
     * @param object     An HTML_QuickForm_hidden object being visited

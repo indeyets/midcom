@@ -41,7 +41,7 @@ class midcom_services_indexer_filter_date extends midcom_services_indexer_filter
     /**
      * Create a new date filter.
      * 
-     * Only one of the filter bounds may be 0, indicating an no limit in that
+     * Only one of the filter bounds may be 0, indicating a no limit in that
      * direction.
      * 
      * @param string $field The name of the field that should be filtered.

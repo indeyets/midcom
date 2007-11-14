@@ -28,7 +28,7 @@
  * Privileges are represented by the class midcom_core_privilege and basically consist
  * of three parts: Name, Assignee and Value:
  *
- * The privilege name is an unique identifier for the privilege. The mRFC 15 defines the
+ * The privilege name is a unique identifier for the privilege. The mRFC 15 defines the
  * syntax to be $component:$name, where $component is either the name of the component
  * or one of 'midgard' or 'midcom' for core privileges. Valid privilege names are for
  * example 'net.nehmer.static:do_something' or 'midgard:update'.
@@ -507,7 +507,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * Internal startup helper, checks if the current authentication fronted has new credentials
      * ready. If yes, it processes the login accordingly.
      *
-     * @return bool Returns true, if an new login session was created, false if no credentials were found.
+     * @return bool Returns true, if a new login session was created, false if no credentials were found.
      * @access private
      */
     function _check_for_new_login_session()
@@ -711,7 +711,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * @param string $privilege The privilege to check for
      * @param MidgardObject $content_object A Midgard Content Object
      * @param midcom_core_user $user The user against which to check the privilege, defaults to the currently authenticated user.
-     *     You may specify "EVERYONE" instead of a object to check what an anonymous user can do.
+     *     You may specify "EVERYONE" instead of an object to check what an anonymous user can do.
      * @return bool True if the privilege has been grante, false otherwise.
      */
     function can_do($privilege, &$content_object, $user = null)
@@ -734,7 +734,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * @param string $object_guid A Midgard GUID pointing to an object
      * @param string $object_class Class of the object in question
      * @param midcom_core_user $user The user against which to check the privilege, defaults to the currently authenticated user.
-     *     You may specify "EVERYONE" instead of a object to check what an anonymous user can do.
+     *     You may specify "EVERYONE" instead of an object to check what an anonymous user can do.
      * @return bool True if the privilege has been grante, false otherwise.
      */
     function can_do_byguid($privilege, $object_guid, $object_class, $user = null)
@@ -985,7 +985,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      *
      * @param MidgardObject $content_object A Midgard Content Object
      * @param midcom_core_user $user The user against which to check the privilege, defaults to the currently authenticated user.
-     *     You may specify "EVERYONE" instead of a object to check what an anonymous user can do.
+     *     You may specify "EVERYONE" instead of an object to check what an anonymous user can do.
      * @return Array Accociative listing of all privileges and their value.
      */
     function get_privileges(&$content_object, $user = null)
@@ -1004,7 +1004,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * @param string $object_guid A Midgard GUID pointing to an object
      * @param string $object_class Class of the object in question
      * @param midcom_core_user $user The user against which to check the privilege, defaults to the currently authenticated user.
-     *     You may specify "EVERYONE" instead of a object to check what an anonymous user can do.
+     *     You may specify "EVERYONE" instead of an object to check what an anonymous user can do.
      * @return Array Accociative listing of all privileges and their value.
      */
     function get_privileges_byguid($object_guid, $object_class, $user = null)
@@ -1762,7 +1762,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         }
         else if (is_int($id))
         {
-            // Looks like a object ID, again we try the midgard group constructor.
+            // Looks like an object ID, again we try the midgard group constructor.
             $tmp = new midcom_core_group_midgard($id);
             if (! $tmp)
             {

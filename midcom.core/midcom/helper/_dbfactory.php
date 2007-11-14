@@ -107,7 +107,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
      * This function will determine the correct type of midgard_collector that
      * has to be created. It will also call the _on_prepare_new_collector event handler.
      *
-     * Since this is to be called statically, it will take a class name, not a instance
+     * Since this is to be called statically, it will take a class name, not an instance
      * as argument.
      *
      * @param string $classname The name of the class for which you want to create a collector.
@@ -127,7 +127,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
      * This function will determine the correct type of midgard_query_builder that
      * has to be created. It will also call the _on_prepare_new_query_builder event handler.
      *
-     * Since this is to be called statically, it will take a class name, not a instance
+     * Since this is to be called statically, it will take a class name, not an instance
      * as argument.
      *
      * @param string $classname The name of the class for which you want to create a query builder.

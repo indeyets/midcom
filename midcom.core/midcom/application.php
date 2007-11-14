@@ -21,7 +21,7 @@
  * - Evaluate the URL and activate the requiered components.
  * - Provide a mechanism to dynmaically load a second component during a page
  *   run.
- * - Provide an specialized mechanism to dynamically invocate a component's
+ * - Provide a specialized mechanism to dynamically invocate a component's
  *   Administration Interface.
  * - Provide a basic context mechanism that allows each independant component
  *   invocation to access its own context information.
@@ -535,7 +535,7 @@ class midcom_application
      * start_services - Starts all available services
      * code-init      - Handle the current request
      * content        - Show the current pages output
-     * dynamic_load   - Dynamically load and execute an URL
+     * dynamic_load   - Dynamically load and execute a URL
      * finish         - Cleanup Work
      */
 
@@ -626,7 +626,7 @@ class midcom_application
      *
      * - This function can (and usually will be) called during the content output phase
      *   of the system.
-     * - A call to generate_error will result in an regular error page output if
+     * - A call to generate_error will result in a regular error page output if
      *   we still are in the code-init phase.
      *
      * Example code, executed on a sites Homepage, it will load the news listing from
@@ -2037,7 +2037,7 @@ class midcom_application
      * Generic Helper Functions not directly related with MidCOM:
      *
      * generate_error     - Generate HTTP Error
-     * load_snippet       - Load an snippet with error-checking
+     * load_snippet       - Load a snippet with error-checking
      * serve_snippet      - Serves snippet including all neccessary headers
      * serve_attachment   - Serves attachment including all neccessary headers
      * get_midgard        - Returns mgd_get_midgard with updated "self" member
@@ -2538,7 +2538,7 @@ class midcom_application
                 return;
             }
         }
-        // Adds an URL for a <script type="text/javascript" src="tinymce.js"></script>
+        // Adds a URL for a <script type="text/javascript" src="tinymce.js"></script>
         // like call. $url is inserted into src. Duplicates are omitted.
         if (! in_array($url, $this->_jsfiles))
         {
@@ -2681,7 +2681,7 @@ class midcom_application
     /**
      * Register a linkelement to be placed in the pagehead.
      * This allows MidCom components to register extra css-links in the pagehead.
-     * Example to use this to include an css link:
+     * Example to use this to include a css link:
      * <pre>
      * $attributes = array ('rel' => 'stylesheet',
      *                      'type' => 'text/css',
@@ -2769,7 +2769,7 @@ class midcom_application
      */
     function add_jsonload($method)
     {
-        // Adds an method name for <body onload=".."> The string must not end with a ;, it is added automagically
+        // Adds a method name for <body onload=".."> The string must not end with a ;, it is added automagically
         $this->_jsonload[] = $method;
     }
 
@@ -2940,7 +2940,7 @@ class midcom_application
      * redirects. If you add an absolute URL starting with a "/", it will
      * automatically add an http[s]://$servername:$server_port in front of that URL;
      * note that the server_port is optional and only added if non-standard ports are
-     * used. If the url does not start with http[s], it is taken as an URL relative to
+     * used. If the url does not start with http[s], it is taken as a URL relative to
      * the current anchor prefix, which gets prepended automatically (no other characters
      * as the anchor prefix get inserted).
      *
@@ -2969,7 +2969,7 @@ class midcom_application
                     $prefix = $this->get_page_prefix();
                 }
                 $url =  "{$prefix}{$url}";
-                debug_add("This is an relative URL from the local MidCOM site, prepending anchor prefix: {$url}");
+                debug_add("This is a relative URL from the local MidCOM site, prepending anchor prefix: {$url}");
             }
             else
             {
@@ -3101,7 +3101,7 @@ class midcom_application
      *     to use the current context.
      * @return Array An array with the two keys 'lastmodified' and 'permalinkguid' containing the
      *     values set with the setter pendant. For ease of use, there is also a key 'permalink'
-     *     which contains an ready-made permalink.
+     *     which contains a ready-made permalink.
      * @see set_26_reqeust_metadata
      */
     function get_26_request_metadata($context = null)

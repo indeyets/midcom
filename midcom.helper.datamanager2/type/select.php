@@ -18,7 +18,7 @@
  *   are stored in the storage location, using serialized storage. If you set this to
  *   null, <i>option_callback</i> has to be defined instead. You may not define both
  *   options.
- * - <i>string option_callback:</i> This must be the name of a available class which
+ * - <i>string option_callback:</i> This must be the name of an available class which
  *   handles the actual option listing. See below how such a class has to look like.
  *   If you set this to null, <i>options</i> has to be defined instead. You may not
  *   define both options.

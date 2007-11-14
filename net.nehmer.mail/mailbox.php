@@ -184,7 +184,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
     /**
      * This function returns a new query builder instance which allows you to list mailboxes
      * by a given user. You may pass a midcom_core_user object, any midcom_person subclass,
-     * an ID or an GUID to this function.
+     * an ID or a GUID to this function.
      *
      * This function may be called statically.
      *

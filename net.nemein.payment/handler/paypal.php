@@ -11,7 +11,7 @@
  * PayPal Frontend for FORM based payments (does not use Web Services).
  *
  * Supports both encrypted and unencrypted payments, although the latter is only
- * recommended for testing purposes. Each transaction is using an payment authentication
+ * recommended for testing purposes. Each transaction is using a payment authentication
  * code in addition to the encryption which does its best to secure a payment against
  * fraud. Note, however, that this is no replacement for the security provided by
  * fully encrypted payments.
@@ -26,7 +26,7 @@
  * the current certificates from the PayPal Website and ensure their validity.
  *
  * To provide limited security even in unencrypted mode, the payment reference and the
- * amount are both secured using an MD5 Hash with a seed either auto-created based
+ * amount are both secured using a MD5 Hash with a seed either auto-created based
  * on the current install or set by the user in the configuration.
  *
  * <b>Required configuration directives:</b>
@@ -473,7 +473,7 @@ class net_nemein_payment_handler_paypal extends net_nemein_payment_handler
     /**
      * Verifies the response by using PayPals Payment Data Transfer (PDT) service.
      * Unfortunalety, I could so far not find any instructuions how the actual response
-     * could be verified directly, despite of the fact that there is an verify_sign
+     * could be verified directly, despite of the fact that there is a verify_sign
      * digital signature in the actual response. If anybody finds some docs about this, please
      * contact me.
      *
@@ -568,7 +568,7 @@ class net_nemein_payment_handler_paypal extends net_nemein_payment_handler
     }
 
     /**
-     * Executes an PDT request to the server determined by the _get_pdt_server helper.
+     * Executes a PDT request to the server determined by the _get_pdt_server helper.
      * The request is always made to /cgi-bin/webscr.
      *
      * The response array contains these fields:

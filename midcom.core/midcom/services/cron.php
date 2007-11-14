@@ -265,7 +265,7 @@ class midcom_services_cron extends midcom_baseclasses_core_object
     }
 
     /**
-     * This is an helper function used during validation. It ensures that handler class is
+     * This is a helper function used during validation. It ensures that handler class is
      * loaded. It has auto-class-loading support, which allows the component author to have
      * the cron classes only loaded on demand (see class introduction).
      *

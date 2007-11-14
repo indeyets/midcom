@@ -252,7 +252,7 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
     }
 
     /**
-     * Adds a item for an existing object
+     * Adds an item for an existing object
      */
     function add_object_item($identifier)
     {

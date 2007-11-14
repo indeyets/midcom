@@ -25,7 +25,7 @@ class midgard_admin_sitewizard_handler_sitegroup extends midcom_baseclasses_comp
     }
 
     /**
-     * Displays an comment edit view.
+     * Displays a comment edit view.
      */
     function _handler_select($handler_id, $args, &$data)
     {

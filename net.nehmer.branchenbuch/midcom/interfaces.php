@@ -45,7 +45,7 @@ class net_nehmer_branchenbuch_interface extends midcom_baseclasses_components_in
     {
         parent::midcom_baseclasses_components_interface();
 
-        // We avoid anything here that could be treated as a object identifier.
+        // We avoid anything here that could be treated as an object identifier.
         define ('NET_NEHMER_BRANCHENBUCH_LEAFID_ADDENTRY', 'leaf_addentry');
         define ('NET_NEHMER_BRANCHENBUCH_LEAFID_LISTSELF', 'leaf_listself');
 

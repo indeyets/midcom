@@ -181,7 +181,7 @@ class net_fernmark_pedigree_handler_result_admin extends midcom_baseclasses_comp
 
 
     /**
-     * Displays an result edit view.
+     * Displays a result edit view.
      *
      * Note, that the result for non-index mode operation is automatically determined in the can_handle
      * phase.
@@ -237,7 +237,7 @@ class net_fernmark_pedigree_handler_result_admin extends midcom_baseclasses_comp
     }
 
     /**
-     * Displays an result delete confirmation view.
+     * Displays a result delete confirmation view.
      *
      * Note, that the result for non-index mode operation is automatically determined in the can_handle
      * phase.

@@ -135,7 +135,7 @@ class net_nemein_payment_handler extends midcom_baseclasses_components_purecode
      * you store this information at the related order.
      * 
      * Storage handlers should not safe any confidential information (like credit
-     * card numbers) at this order. Storage should be in an longtext capable
+     * card numbers) at this order. Storage should be in a longtext capable
      * field.
      * 
      * The string should be plain-text, rendering should be done using nl2br.
@@ -154,7 +154,7 @@ class net_nemein_payment_handler extends midcom_baseclasses_components_purecode
      * neccessary to "reconstruct" the payment.
      * 
      * This information should be stored by the library client if any post-processing
-     * of the order might be added in the future. Storage should be in an longtext capable
+     * of the order might be added in the future. Storage should be in a longtext capable
      * field.
      * 
      * The array returned should be stored serialized, as usual with data like this. 

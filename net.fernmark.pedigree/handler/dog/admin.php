@@ -168,7 +168,7 @@ class net_fernmark_pedigree_handler_dog_admin extends midcom_baseclasses_compone
 
 
     /**
-     * Displays an dog edit view.
+     * Displays a dog edit view.
      *
      * Note, that the dog for non-index mode operation is automatically determined in the can_handle
      * phase.
@@ -223,7 +223,7 @@ class net_fernmark_pedigree_handler_dog_admin extends midcom_baseclasses_compone
     }
 
     /**
-     * Displays an dog delete confirmation view.
+     * Displays a dog delete confirmation view.
      *
      * Note, that the dog for non-index mode operation is automatically determined in the can_handle
      * phase.

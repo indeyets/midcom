@@ -199,7 +199,7 @@ define ('MIDCOM_TOOLBAR_SUBMENU', 8);
 define ('MIDCOM_TOOLBAR_POST', 9);
 
 /**
- * Optional arguments for an POST request.
+ * Optional arguments for a POST request.
  *
  * @see midcom_helper_toolbar
  */

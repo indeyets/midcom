@@ -785,7 +785,7 @@ class midcom_baseclasses_components_interface
      * accordingly. It can be safely assumed that the topic given is a valid topic in the
      * MidCOM content tree (it is checked through NAP).
      *
-     * If the guid could be successfully resolved, an URL local to the given topic without a
+     * If the guid could be successfully resolved, a URL local to the given topic without a
      * leading slash must be returned (f.x. 'article.html'), emtpy strings ('') are allowed
      * indicating root page access. If the GUID is invalid, null will be returned.
      *
@@ -1001,7 +1001,7 @@ class midcom_baseclasses_components_interface
      * accordingly. It can be safely assumed that the topic given is a valid topic in the
      * MidCOM content tree (it is checked through NAP).
      *
-     * If the guid could be successfully resolved, an URL local to the given topic without a
+     * If the guid could be successfully resolved, a URL local to the given topic without a
      * leading slash must be returned (f.x. 'article.html'), emtpy strings ('') are allowed
      * indicating root page access. If the GUID is invalid, null will be returned.
      *

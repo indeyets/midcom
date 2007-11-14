@@ -74,11 +74,11 @@ class midcom_service_session {
      * If passed an integer argument, it will use the context indicated by this 
      * parameter as a default domain.
      * 
-     * Finally, if passed an string argument, this value is used as a domain. This
+     * Finally, if passed a string argument, this value is used as a domain. This
      * is useful for components that need sessioning while under <i>dynamic_load</i> 
      * conditions or while used as a <i>library</i>.
      * 
-     * @param mixed $context	Either null or an context ID (uses the context's component) or an explicit domain.
+     * @param mixed $context	Either null or a context ID (uses the context's component) or an explicit domain.
      */
     function midcom_service_session($context = null) {
         if (is_null($context))

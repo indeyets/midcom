@@ -92,7 +92,7 @@
  *
  * This assumes, that object owners should get no specific treatment, e.g.
  * that the owner privilege set inherits its value from the content object
- * parent. In case you want to explicitly set an distinct value for an
+ * parent. In case you want to explicitly set a distinct value for an
  * object owner, you must pass an array to this function:
  *
  * <pre>
@@ -118,7 +118,7 @@
  * </pre>
  *
  * That way, object owners can read the object, even if the read access is
- * prohibited for an users group for example. Without the explicit
+ * prohibited for a users group for example. Without the explicit
  * user default specification it would get inherited from there.
  *
  * So, if you take the very first example from abvoe again (the one without

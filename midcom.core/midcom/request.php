@@ -199,7 +199,7 @@ class midcom_url_paramcollector {
 }
 
 /**
- * A parser for a part of an url
+ * A parser for a part of a url
  * THe parser will get in the url where its work starts and will work greedily on that
  * untill it gets nothing and returns.
  */

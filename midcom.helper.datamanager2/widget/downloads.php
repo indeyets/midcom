@@ -88,7 +88,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
         if (! is_a($this->_type, 'midcom_helper_datamanager2_type_blobs'))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Warning, the field {$this->name} is not an blobs type or subclass thereof, you cannot use the downloads widget with it.",
+            debug_add("Warning, the field {$this->name} is not a blobs type or subclass thereof, you cannot use the downloads widget with it.",
                 MIDCOM_LOG_WARN);
             debug_pop();
             return false;

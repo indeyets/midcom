@@ -448,7 +448,7 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
     }
 
     /**
-     * Displays an campaign edit view.
+     * Displays a campaign edit view.
      *
      * Note, that the campaign for non-index mode operation is automatically determined in the can_handle
      * phase.
@@ -610,7 +610,7 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
     }
     
     /**
-     * Displays an campaign edit view.
+     * Displays a campaign edit view.
      *
      * Note, that the campaign for non-index mode operation is automatically determined in the can_handle
      * phase.
@@ -713,7 +713,7 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
     }
 
     /**
-     * Displays an campaign edit view.
+     * Displays a campaign edit view.
      *
      * Note, that the campaign for non-index mode operation is automatically determined in the can_handle
      * phase.
@@ -766,7 +766,7 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
     }
 
     /**
-     * Displays an campaign delete confirmation view.
+     * Displays a campaign delete confirmation view.
      *
      * Note, that the campaign for non-index mode operation is automatically determined in the can_handle
      * phase.

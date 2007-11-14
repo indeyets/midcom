@@ -49,7 +49,7 @@
  *   handle the request. You have two options here. First you can refer to a method of this
  *   request handler class, in that case you just supply the name of the method. Alternativly,
  *   you can refer to an external class for request processing using an array syntax. The
- *   first array member must either contain the name of a existing class or a reference to
+ *   first array member must either contain the name of an existing class or a reference to
  *   an already instantiated class. This value has
  *   no default and must be set. The actual methods called will have either an _handle_ or _show_
  *   prefixed to the exec_handler value, respecitvly. See below for automatic handler instances,
@@ -176,7 +176,7 @@
  *
  * <b>Automatic handler class instantination</b>
  *
- * If you specify a class name instead of a class isntance as a exec handler, MidCOM will
+ * If you specify a class name instead of a class isntance as an exec handler, MidCOM will
  * automatically create an instance of that class type and initialize it. These
  * so-called handler classes must be a subclass of midcom_baseclasses_components_handler.
  *
@@ -733,7 +733,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
     }
 
     /**
-     * This is an helper function used during handler startup. It ensures that handler class is
+     * This is a helper function used during handler startup. It ensures that handler class is
      * loaded. It has auto-class-loading support, which allows the component author to have
      * the handler classes only loaded on demand (see class introduction).
      *

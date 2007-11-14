@@ -910,7 +910,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
      * account will be activated, and the user will be relocated to a success page.
      *
      * In case that the account is already activated, the success page will display
-     * an corresponding message.
+     * a corresponding message.
      */
     function _handler_activate($handler_id, $args, &$data)
     {

@@ -180,7 +180,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
     var $_meta_cache = null;
 
     /**
-     * An cache backend used to store the actual cached pages.
+     * A cache backend used to store the actual cached pages.
      *
      * @var midcom_services_cache_backend
      */

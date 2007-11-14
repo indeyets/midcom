@@ -956,7 +956,7 @@ EOF;
     }
 
     /**
-     * returns an unix timestamp for sorting relatedto arrays
+     * returns a unix timestamp for sorting relatedto arrays
      *
      * If components need to return very specific values here they should override
      * this method to add their own handling and if they do not know what to do call this

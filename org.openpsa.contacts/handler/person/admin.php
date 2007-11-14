@@ -223,7 +223,7 @@ class org_openpsa_contacts_handler_person_admin extends midcom_baseclasses_compo
 
 
     /**
-     * Displays an contact edit view.
+     * Displays a contact edit view.
      *
      * Note, that the contact for non-index mode operation is automatically determined in the can_handle
      * phase.
@@ -274,7 +274,7 @@ class org_openpsa_contacts_handler_person_admin extends midcom_baseclasses_compo
     }
 
     /**
-     * Displays an contact delete confirmation view.
+     * Displays a contact delete confirmation view.
      *
      * Note, that the contact for non-index mode operation is automatically determined in the can_handle
      * phase.

@@ -19,7 +19,7 @@
  *
  * Basicnav will give you a very abstract view of the content tree, modified
  * by the NAP classes of the components. You can retrieve a node/leaf tree
- * of the content, and for each element you can retrieve an URL name and a
+ * of the content, and for each element you can retrieve a URL name and a
  * long name for Navigation display.
  *
  * Leaves and Nodes are both indexed by Integer constants which are assigned

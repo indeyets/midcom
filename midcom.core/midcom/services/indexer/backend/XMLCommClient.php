@@ -242,7 +242,7 @@ require_once ('XML/Parser.php');
  * This class provides an interface to the MRFC 14 XML driven indexer
  * backends.
  * 
- * This class is responsible for parsing an Respons XML file. It uses the
+ * This class is responsible for parsing a Respons XML file. It uses the
  * PEAR XML_Parser base class.
  * 
  * Note, that Expat does currently *not* support Input DTD validation. We trust
@@ -266,7 +266,7 @@ class midcom_services_indexer_XMLComm_ResponseReader extends XML_Parser
     var $_current_data = '';
     
     /**
-     * An array of resultsets. An resultset is an array of documents.
+     * An array of resultsets. A resultset is an array of documents.
      * 
      * They are indexed by the request id.
      * 

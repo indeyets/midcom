@@ -197,7 +197,7 @@
  *   value, the full URL of the current host is prefixed to its value, so that this
  *   configuration key can be used for Location headers. You must not use a relative
  *   URL. This key will be completed by the MidCOM Application constructor, before
- *   that, it might contain an URL which is not suitable for relcoations.
+ *   that, it might contain a URL which is not suitable for relcoations.
  * - <b>string midcom_prefix:</b> Any prefix you might have on your site.
  *   Defaults to none.
  * - <b>GUID midcom_root_topic_guid:</b> This is the GUID of the topic we should handle.
@@ -211,7 +211,7 @@
  *   value, the full URL of the current host is prefixed to its value, so that this
  *   configuration key can be used for Location headers. You must not use a relative
  *   URL. This key will be completed by the MidCOM Application constructor, before
- *   that, it might contain an URL which is not suitable for relcoations.
+ *   that, it might contain a URL which is not suitable for relcoations.
  * - <b>string midcom_tempdir:</b> A temporary directory that can be used when components
  *   need to write out files. Defaluts to '/tmp'.
  * - <b>int midcom_temporary_resource_timeout:</b> Temporary resources will be deleted

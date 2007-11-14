@@ -360,7 +360,7 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
     }
     
     /**
-     * Displays an downloadpage delete confirmation view.
+     * Displays a downloadpage delete confirmation view.
      *
      * Note, that the downloadpage for non-index mode operation is automatically determined in the can_handle
      * phase.

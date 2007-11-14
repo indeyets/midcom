@@ -141,7 +141,7 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
     }
 
     /**
-     * Displays an config edit view.
+     * Displays a config edit view.
      *
      */
     function _handler_edit($handler_id, $args, &$data)

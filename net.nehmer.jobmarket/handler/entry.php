@@ -139,7 +139,7 @@ class net_nehmer_jobmarket_handler_entry extends midcom_baseclasses_components_h
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
     /**
-     * This is an helper interfacing with the search session. It will make a few
+     * This is a helper interfacing with the search session. It will make a few
      * URLs available like back to search result set, next/previous entry etc.
      */
     function _add_search_request_data()

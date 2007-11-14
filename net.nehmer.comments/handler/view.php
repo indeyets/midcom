@@ -413,7 +413,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
     }
 
     /**
-     * Checks if an button of the admin toolbar was pressed. Detected by looking for the
+     * Checks if a button of the admin toolbar was pressed. Detected by looking for the
      * net_nehmer_comment_adminsubmit value in the Request.
      *
      * As of this point, this tool assumes at least owner level privileges for all

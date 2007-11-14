@@ -168,7 +168,7 @@ class net_nemein_netmon_handler_host_admin extends midcom_baseclasses_components
 
 
     /**
-     * Displays an host edit view.
+     * Displays a host edit view.
      *
      * Note, that the host for non-index mode operation is automatically determined in the can_handle
      * phase.
@@ -223,7 +223,7 @@ class net_nemein_netmon_handler_host_admin extends midcom_baseclasses_components
     }
 
     /**
-     * Displays an host delete confirmation view.
+     * Displays a host delete confirmation view.
      *
      * Note, that the host for non-index mode operation is automatically determined in the can_handle
      * phase.
