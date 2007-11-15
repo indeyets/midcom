@@ -255,15 +255,15 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
             return;
         }
         
-        if (   $GLOBALS['midcom_config']['toolbars_enable_centralized']
-            && $_MIDCOM->auth->can_user_do('midcom:centralized_toolbar', null, 'midcom_services_toolbars'))
-        {
-            return;
-        }
 
         if (   $_MIDCOM->auth->user
             && $this->_account->guid == $_MIDCOM->auth->user->guid)
         {
+            if (   $GLOBALS['midcom_config']['toolbars_enable_centralized']
+                && $_MIDCOM->auth->can_user_do('midcom:centralized_toolbar', null, 'midcom_services_toolbars'))
+            {
+                return;
+            }
             $this->person_toolbar = new midcom_helper_toolbar();
             
             // Own profile page
@@ -361,10 +361,19 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
         else
         {
             // Someones profile page
+            if (   $GLOBALS['midcom_config']['toolbars_enable_centralized']
+                && $_MIDCOM->auth->can_user_do('midcom:centralized_toolbar', null, 'midcom_services_toolbars'))
+            {
+                $buddy_toolbar =& $_MIDCOM->services->toolbars->get_view_toolbar();
+            }
+            else
+            {
+                $this->person_toolbar = new midcom_helper_toolbar();
+                $buddy_toolbar =& $this->person_toolbar;
+            }
             
             if ($this->_config->get('net_nehmer_buddylist_integration'))
             {
-                $this->person_toolbar = new midcom_helper_toolbar();
                 
                 $buddylist_path = $this->_config->get('net_nehmer_buddylist_integration');
                 $current_prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
@@ -382,7 +391,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                 if (count($buddies) > 0)
                 {
                     // We're buddies, show remove button
-                    $this->person_toolbar->add_item
+                    $buddy_toolbar->add_item
                     (
                         array
                         (
@@ -404,7 +413,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                 else
                 {
                     // We're not buddies, show add button
-                    $this->person_toolbar->add_item
+                    $buddy_toolbar->add_item
                     (
                         array
                         (
