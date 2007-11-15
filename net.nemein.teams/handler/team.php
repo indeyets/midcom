@@ -680,6 +680,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         $qb = new org_openpsa_qbpager('net_nemein_teams_team_dba', 'net_nemein_teams_team');
         $qb->listen_parameter('net_nemein_teams_order', array('asc', 'desc'));
         $qb->listen_parameter('net_nemein_teams_order_by', array('name', 'metadata.published'));
+        
         $qb->results_per_page = $this->_config->get('display_teams_per_page');
         $qb->display_pages = $this->_config->get('display_pages');
 
@@ -687,6 +688,8 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
             && isset($_REQUEST['query'])
             && !empty($_REQUEST['query']))
         {
+            $qb->listen_parameter('search', $_REQUEST['query']);
+            
             $query = $_REQUEST['query'];
             $query = str_replace("*","%", $query);
             $query = preg_replace('/%+/', '%', $query);
