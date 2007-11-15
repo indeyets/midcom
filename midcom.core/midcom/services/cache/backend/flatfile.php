@@ -69,6 +69,10 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
      
     function _get($key)
     {
+        if (!$key)
+        {
+            return;
+        }
         if (! $this->exists($key))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -81,10 +85,14 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
     
     function _put($key, $data)
     {
+        if (!$key)
+        {
+            return;
+        }
         $filename = "{$this->_dirname}{$key}";
         if (file_exists($filename))
         {
-            unlink($filename);
+            @unlink($filename);
         } 
         $handle = @fopen($filename, 'x');
         if ($handle === false)
@@ -100,6 +108,10 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
     
     function _remove($key)
     {
+        if (!$key)
+        {
+            return;
+        }
         @unlink("{$this->_dirname}{$key}");
     }
     
@@ -139,6 +151,10 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
     
     function _exists($key)
     {
+        if (!$key)
+        {
+            return false;
+        }
         return file_exists("{$this->_dirname}{$key}");
     }
     
