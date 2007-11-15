@@ -249,8 +249,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
     
     function _populate_person_toolbar()
     {
-        if (   $_MIDCOM->auth->admin
-            || !$_MIDCOM->auth->user)
+        if (!$_MIDCOM->auth->user)
         {
             return;
         }
@@ -364,7 +363,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
             if (   $GLOBALS['midcom_config']['toolbars_enable_centralized']
                 && $_MIDCOM->auth->can_user_do('midcom:centralized_toolbar', null, 'midcom_services_toolbars'))
             {
-                $buddy_toolbar =& $_MIDCOM->services->toolbars->get_view_toolbar();
+                $buddy_toolbar =& $this->_view_toolbar;
             }
             else
             {
