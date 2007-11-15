@@ -46,9 +46,13 @@ if (! defined('MIDCOM_STATIC_URL'))
 {
     define('MIDCOM_STATIC_URL', '/midcom-static');
 }
-if (! defined('MIDCOM_CONFIG_FILE'))
+if (! defined('MIDCOM_CONFIG_FILE_BEFORE'))
 {
-    define('MIDCOM_CONFIG_FILE', '/etc/midgard/midcom.conf');
+    define('MIDCOM_CONFIG_FILE_BEFORE', '/etc/midgard/midcom.conf');
+}
+if (! defined('MIDCOM_CONFIG_FILE_AFTER'))
+{
+    define('MIDCOM_CONFIG_FILE_AFTER', '/etc/midgard/midcom-after.conf');
 }
 
 ///////////////////////////////////////
@@ -167,4 +171,9 @@ $_MIDCOM = new midcom_application();
 $_MIDCOM->auth = $auth;
 //$GLOBALS['midcom'] =& $_MIDCOM;
 $_MIDCOM->initialize();
+
+if (file_exists(MIDCOM_CONFIG_FILE_AFTER))
+{
+    include(MIDCOM_CONFIG_FILE_AFTER);
+}
 ?>

@@ -515,9 +515,9 @@ $GLOBALS['midcom_config_default']['auto_formatter'] = array();
 
 /* ----- Include the site config ----- */
 /* This should be replaced by $_MIDGARD constructs */
-if (file_exists(MIDCOM_CONFIG_FILE))
+if (file_exists(MIDCOM_CONFIG_FILE_BEFORE))
 {
-    include(MIDCOM_CONFIG_FILE);
+    include(MIDCOM_CONFIG_FILE_BEFORE);
 }
 
 /* ----- MERGE THE CONFIGURATION ----- */
