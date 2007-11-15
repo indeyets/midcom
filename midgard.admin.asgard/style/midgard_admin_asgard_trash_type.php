@@ -19,16 +19,16 @@ if ($data['trash'])
     echo "        </tr>\n";
     echo "    </thead>\n";
     echo "    <tbody>\n";
-    
+
     foreach ($data['trash'] as $object)
     {
         $revisor = $_MIDCOM->auth->get_user($object->metadata->revisor);
-        
+
         echo "        <tr>\n";
-        echo "            <td><input type=\"checkbox\" name=\"undelete[]\" value=\"{$object->guid}\" /></td>\n";
-        echo "            <td>{$object->$label}</td>\n";
+        echo "            <td><input type=\"checkbox\" name=\"undelete[]\" value=\"{$object->guid}\" id=\"{$object->guid}\" /></td>\n";
+        echo "            <td><label for=\"{$object->guid}\">{$object->$label}</label></td>\n";
         echo "            <td>" . strftime('%x %X', strtotime($object->metadata->revised)) . "</td>\n";
-        
+
         if ($revisor->guid)
         {
             echo "            <td><a href=\"{$prefix}__mfa/asgard/object/view/{$revisor->guid}/\">{$revisor->name}</a></td>\n";
@@ -40,7 +40,7 @@ if ($data['trash'])
         echo "            <td>" . midcom_helper_filesize_to_string($object->metadata->size) . "</td>\n";
         echo "        </tr>\n";
     }
-    
+
     echo "    </tbody>\n";
     echo "    <tfoot>\n";
     echo "        <tr>\n";
