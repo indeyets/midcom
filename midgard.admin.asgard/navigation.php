@@ -217,7 +217,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
                 && in_array('navigation', $methods)
                 && ($this->_request_data['plugin_name'] == "asgard_{$component}"))
             {
-                eval("{$class}::navigation();");
+                call_user_func(array($class,'navigation'));
             }
 
             midcom_show_style('midgard_admin_asgard_navigation_section_footer');
