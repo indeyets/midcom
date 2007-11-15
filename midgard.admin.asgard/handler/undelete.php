@@ -140,7 +140,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
 
             if ($att->purge())
             {
-                $this->_purged_size += $$att->metadata->size;
+                $this->_purged_size += $att->metadata->size;
                 $this->_purge_parameters($att->guid);
             }
             else
