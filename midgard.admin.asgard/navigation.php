@@ -149,7 +149,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
 					$label_mapping[$i] = htmlspecialchars($ref->get_object_label($child));
 					$i++;
                 }
-                sort($label_mapping);
+                asort($label_mapping);
 
 
                 foreach($label_mapping as $index => $label)
