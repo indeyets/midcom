@@ -48,16 +48,39 @@ class midcom_helper_hostconfig
     var $values_to_skip = array 
     (
         'midcom_path'           => true,
-        'enable_cache'          => true,
         'configuration_version' => true,
         'midcom_helper_datamanager2_save' => true,
     );
               
-    function midcom_helper_hostconfig($page) 
+    function midcom_helper_hostconfig(&$page) 
     {
         $this->page = $page;
+        $this->get_configuration();
     }
     
+    /**
+     * Read current configuration from roog page parameters
+     * 
+     */
+
+    function get_configuration()
+    {
+
+        $params = $this->page->listparameters($this->setting_parameter_domain);
+
+        if ($params)
+        {
+            $configuration_keys_handled = array();
+            while ($params->fetch())
+            {
+                $this->config[$params->name] = $params->value;
+                $configuration_keys_handled[$params->name] = true;
+            }
+
+        }
+
+    }
+
     /**
      * Cache the configuration to page parameters.
      * @return boolean Whether all parameters saved successfully
@@ -78,7 +101,7 @@ class midcom_helper_hostconfig
             return false; // I WANT EXCEPTIONS!!!    
         }
         
-        $status = true;    
+        $status = true;  
         foreach ($this->config as $key => $value)
         {
             // FIXME: For some reason there can be duplication here
@@ -87,6 +110,7 @@ class midcom_helper_hostconfig
                 if (method_exists($this->page, 'delete_parameter'))
                 {
                     // Empty config value, try deleting param just in case
+					debug_add("Empty config value, try deleting param just in case", MIDCOM_LOG_ERROR);
                     $this->page->delete_parameter($this->setting_parameter_domain, $key);
                 }
                 // And then skip
@@ -134,6 +158,7 @@ class midcom_helper_hostconfig
         $configuration = array();
         
         $params = $this->page->listparameters($this->setting_parameter_domain);
+
         if ($params)
         {
             $configuration_keys_handled = array();
@@ -154,7 +179,7 @@ class midcom_helper_hostconfig
                 $configuration_keys_handled[$params->name] = true;
             }
         }
-        
+
         // Start the code-init element with a warning
         $codeinit  = "<?php \n";
         $codeinit .= "/**\n";

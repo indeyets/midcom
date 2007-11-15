@@ -1,7 +1,7 @@
 'name' => 'midcom.admin.settings',
 'description' => 'This module handles MidCOM local configuration.',
 'purecode' => true,
-'version' => '0.1.5beta2',
+'version' => '0.2.0beta1',
 'state' => 'beta',
 'privileges' => array (),
 'class_definitions' => array (),

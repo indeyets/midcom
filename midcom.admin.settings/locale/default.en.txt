@@ -7,6 +7,10 @@
 Allowed components (leave empty to allow all)
 ---STRINGEND
 
+---STRING auth configuration
+Authentication configuration
+---STRINGEND
+
 ---STRING auth_allow_sudo
 Allow components to run in sudo mode
 ---STRINGEND
@@ -59,6 +63,10 @@ HTTP response code used in authentication forms
 Duration of authentication session (in seconds)
 ---STRINGEND
 
+---STRING auth_openid_enable
+Enable OpenID plugin
+---STRINGEND
+
 ---STRING auth_sitegroup_mode
 Authentication sitegroup mode
 ---STRINGEND
@@ -75,6 +83,10 @@ User must specify sitegroup
 Always in current sitegroup
 ---STRINGEND
 
+---STRING cache configuration
+Cache configuration
+---STRINGEND
+
 ---STRING cache_base_directory
 Directory for cache files
 ---STRINGEND
@@ -85,6 +97,14 @@ Default content lifetime
 
 ---STRING cache_module_content_headers_strategy
 Cache headers strategy
+---STRINGEND
+
+---STRING cache_module_content_uncached
+Turn content cacheing off
+---STRINGEND
+
+---STRING core configuration
+Core configuration
 ---STRINGEND
 
 ---STRING cron_day_hours
@@ -127,6 +147,10 @@ Excluded components (leave empty to allow all)
 Failed to save settings, reason %s
 ---STRINGEND
 
+---STRING host "%s" not found. try using menu.
+Host "%s" not found. Try using menu.
+---STRINGEND
+
 ---STRING host configuration
 Website configuration
 ---STRINGEND
@@ -137,6 +161,10 @@ Fallback language for missing localizations
 
 ---STRING i18n_multilang_strict
 Hide untranslated content
+---STRINGEND
+
+---STRING indexer configuration
+Indexer configuration
 ---STRINGEND
 
 ---STRING indexer_backend
@@ -173,6 +201,14 @@ Log level
 
 ---STRING log_tailurl_enable
 Allow reading system logs on-site
+---STRINGEND
+
+---STRING logging configuration
+Logging configuration
+---STRINGEND
+
+---STRING metadata configuration
+Metadata configuration
 ---STRINGEND
 
 ---STRING metadata_approval
@@ -243,6 +279,10 @@ Temporary directory used by MidCOM
 Time temporary files are kept (in seconds)
 ---STRINGEND
 
+---STRING nap settings
+NAP settings
+---STRINGEND
+
 ---STRING positioning_enable
 Enable geographical positioning of content
 ---STRINGEND
@@ -261,6 +301,10 @@ Show unapproved content
 
 ---STRING staging2live_staging
 This site is a staging site
+---STRINGEND
+
+---STRING utilities
+Utilities
 ---STRINGEND
 
 ---STRING utility_catdoc
@@ -315,7 +359,7 @@ Path to unrtf application
 Path to unzip application
 ---STRINGEND
 
----STRING host "%s" not found. try using menu.
-Host "%s" not found. Try using menu.
+---STRING failed to create settings
+Failed to create settings
 ---STRINGEND
 

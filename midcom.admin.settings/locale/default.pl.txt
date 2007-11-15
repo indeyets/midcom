@@ -7,6 +7,10 @@
 Dozwolone komponenty (pozostaw puste aby zezwolić na używanie wszystkich)
 ---STRINGEND
 
+---STRING auth configuration
+Konfiguracja autentykacji
+---STRINGEND
+
 ---STRING auth_allow_sudo
 Zezwalaj na uruchamianie modułów w trybie SUDO
 ---STRINGEND
@@ -59,6 +63,10 @@ Kod HTTP w formularzach autentykacji
 Czas trwania sesji autentykacji (sekundy)
 ---STRINGEND
 
+---STRING auth_openid_enable
+Włącz obsługę OpenID
+---STRINGEND
+
 ---STRING auth_sitegroup_mode
 Tryb autentykacji do SG
 ---STRINGEND
@@ -75,6 +83,10 @@ Użytkownik musi podać SG
 Tylko w bieżącej SG
 ---STRINGEND
 
+---STRING cache configuration
+Konfiguracja cache
+---STRINGEND
+
 ---STRING cache_base_directory
 Katalog cache
 ---STRINGEND
@@ -85,6 +97,14 @@ Domyślny czas aktualności treści
 
 ---STRING cache_module_content_headers_strategy
 Typ nagłówków "Cache"
+---STRINGEND
+
+---STRING cache_module_content_uncached
+Wyłącz cache treści
+---STRINGEND
+
+---STRING core configuration
+Konfiguracja Systemu
 ---STRINGEND
 
 ---STRING cron_day_hours
@@ -127,6 +147,10 @@ Zablokowane komponenty (pozostaw puste aby zezwolić na używanie wszystkich)
 Błąd zapisu konfiguracji: %s
 ---STRINGEND
 
+---STRING host "%s" not found. try using menu.
+Brak serwisu GUID: "%s". Użyj menu aby wybrać serwis.
+---STRINGEND
+
 ---STRING host configuration
 Konfiguracja serwisu.
 ---STRINGEND
@@ -137,6 +161,10 @@ Domyślny język
 
 ---STRING i18n_multilang_strict
 Ukryj zawartość nieprzetłumaczoną
+---STRINGEND
+
+---STRING indexer configuration
+Konfiguracja indeksera
 ---STRINGEND
 
 ---STRING indexer_backend
@@ -173,6 +201,14 @@ Poziom logowania
 
 ---STRING log_tailurl_enable
 Wyświetlaj log w serwisie
+---STRINGEND
+
+---STRING logging configuration
+Konfiguracja dziennika
+---STRINGEND
+
+---STRING metadata configuration
+Konfiguracja Metadanych
 ---STRINGEND
 
 ---STRING metadata_approval
@@ -243,6 +279,10 @@ Folder tymczasowy
 Czas przechowywania plików tymczasowych (sekundy)
 ---STRINGEND
 
+---STRING nap settings
+Konfiguracja NAP
+---STRINGEND
+
 ---STRING positioning_enable
 Włącz geopozycjonowanie treści
 ---STRINGEND
@@ -261,6 +301,10 @@ Pokaż niezatwierdzoną treść
 
 ---STRING staging2live_staging
 Serwis testowy
+---STRINGEND
+
+---STRING utilities
+Ustawienia pomocnicze
 ---STRINGEND
 
 ---STRING utility_catdoc
@@ -315,7 +359,7 @@ Plik polecenia unrtf
 Plik polecenia unzip
 ---STRINGEND
 
----STRING host "%s" not found. try using menu.
-Brak serwisu GUID: "%s". Użyj menu aby wybrać serwis.
+---STRING failed to create settings
+Błąd tworzenia ustawień
 ---STRINGEND
 
