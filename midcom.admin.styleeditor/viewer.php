@@ -107,5 +107,21 @@ class midcom_admin_styleeditor_viewer extends midcom_baseclasses_components_requ
             ),
         );
     }
+    function navigation()
+    {
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+
+        // Get list of style elements related to this component
+        $style_elements = $_MIDCOM->style->get_component_default_elements($this->_request_data['topic']->component);
+        ksort($style_elements);
+        echo "<ul class=\"midgard_admin_asgard_navigation\">";
+        foreach ($style_elements as $style_element => $filename)
+        {
+            echo "<li class='midcom_baseclasses_database_style'><a href=\"{$prefix}__mfa/asgard_midcom.admin.styleeditor/edit/{$style_element}/\">&lt;({$style_element})&gt;</a></li>";
+        }
+        echo "</ul>";
+
+    }
+
 }
 ?>

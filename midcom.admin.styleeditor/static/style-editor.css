@@ -92,6 +92,8 @@ form input.delete
     color: black;
 }
 
+
+
 #container a:hover,
 #container a:visited:hover
 {
@@ -283,4 +285,8 @@ div.file-manager div.main form.urlform a img
 #midcom_admin_styleeditor_style div.message
 {
   color: red;
+}
+#navigation div.section ul.midgard_admin_asgard_navigation a
+{
+    font-weight:normal;
 }
