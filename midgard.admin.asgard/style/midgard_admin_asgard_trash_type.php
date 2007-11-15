@@ -46,6 +46,7 @@ if ($data['trash'])
     echo "        <tr>\n";
     echo "            <td colspan=\"5\">\n";
     echo "                <input type=\"submit\" value=\"" . $_MIDCOM->i18n->get_string('undelete', 'midgard.admin.asgard') . "\" />\n";
+    echo "                <input type=\"submit\" name=\"purge\" value=\"" . $_MIDCOM->i18n->get_string('purge', 'midgard.admin.asgard') . "\" />\n";
     echo "            </td>\n";
     echo "        </tr>\n";
     echo "    </tfoot>\n";
