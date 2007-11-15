@@ -175,7 +175,7 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
 	function navigation()
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-        $languages = $this->_l10n->_language_db;
+        $languages = $_MIDCOM->i18n->_language_db;
         $curlang = $_MIDCOM->i18n->get_current_language();
 
         echo '<ul class="midgard_admin_asgard_navigation">';
