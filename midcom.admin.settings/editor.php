@@ -159,7 +159,6 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
     {
 
         $_MIDCOM->auth->require_admin_user();
-
         $data['hostname'] = $_SERVER['SERVER_NAME'];
 
         if ($args[0])
@@ -358,7 +357,10 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
 
         foreach ($rst as $host)
         {
+            if ($host->can_do("midgard::update"))
+            {
                 echo "            <li class=\"status\"><a href=\"{$prefix}__mfa/asgard_midcom.admin.settings/{$host->guid}.html\">{$host->name}{$host->prefix}/</a></li>";
+            }
         }
 
         echo '</ul>';
