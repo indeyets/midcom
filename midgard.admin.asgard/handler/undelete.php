@@ -284,20 +284,19 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
             {
                 $_MIDCOM->uimessages->add($this->_l10n->get('midgard.admin.asgard'), sprintf($this->_l10n->get('in total %s undeleted'), midcom_helper_filesize_to_string($this->_undeleted_size)), 'info');
             }
-//            $_MIDCOM->relocate("__mfa/asgard/trash/{$this->type}/");
+            $_MIDCOM->relocate("__mfa/asgard/trash/{$this->type}/");
         }
 
         if (   isset($_POST['purge'])
             && is_array($_POST['undelete']))
         {
-            $_MIDCOM->cache->content->no_cache();
             $this->_purge($_POST['undelete'], $this->type);
             
             if ($this->_purged_size > 0)
             {
                 $_MIDCOM->uimessages->add($this->_l10n->get('midgard.admin.asgard'), sprintf($this->_l10n->get('in total %s purged'), midcom_helper_filesize_to_string($this->_purged_size)), 'info');
             }
-//            $_MIDCOM->relocate("__mfa/asgard/trash/{$this->type}/");
+            $_MIDCOM->relocate("__mfa/asgard/trash/{$this->type}/");
         }
 
         $_MIDCOM->load_library('org.openpsa.qbpager');
