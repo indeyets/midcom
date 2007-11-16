@@ -672,10 +672,11 @@ class midcom_application
      * </code>
      *
      * @param string $url                The URL, relative to the Midgard Page, that is to be requested.
-     * @param Array $config                A key=>value array with any configuration overrides.
-     * @return int                        The ID of the newly created context.
+     * @param Array $config              A key=>value array with any configuration overrides.
+     * @param int $type                  Request type (by default MIDCOM_REQUEST_CONTENT)
+     * @return int                       The ID of the newly created context.
      */
-    public function dynamic_load($url, $config = array(), $type = MIDCOM_REQUEST_CONTENT)
+    public function dynamic_load($url, $config = array(), $type = MIDCOM_REQUEST_CONTENT, $pass_get = false)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
@@ -698,7 +699,16 @@ class midcom_application
         // Determine new Context ID and set $this->_currentcontext,
         // enter that context and prepare its data structure.
         $context = $this->_create_context(null, $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC));
-        $this->_set_context_data($url, $context, MIDCOM_CONTEXT_URI);
+        
+        if ($pass_get)
+        {
+            // Include GET parameters into cache URL
+            $this->_set_context_data($url . '?GET=' . serialize($_GET), $context, MIDCOM_CONTEXT_URI);
+        }
+        else
+        {
+            $this->_set_context_data($url, $context, MIDCOM_CONTEXT_URI);
+        }
 
         $oldcontext = $this->_currentcontext;
         $this->_currentcontext = $context;
