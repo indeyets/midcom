@@ -247,3 +247,7 @@ User preferences
 View on-site
 ---STRINGEND
 
+---STRING preferences saved
+Preferences saved
+---STRINGEND
+

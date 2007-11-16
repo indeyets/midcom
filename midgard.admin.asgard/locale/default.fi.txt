@@ -3,6 +3,18 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING 1 day
+1 päivä
+---STRINGEND
+
+---STRING 1 month
+1 kuukausi
+---STRINGEND
+
+---STRING 1 week
+1 viikko
+---STRINGEND
+
 ---STRING ANONYMOUS
 Tunnistamattomat käyttäjät
 ---STRINGEND
@@ -19,8 +31,16 @@ Kaikki tunnistautuneet käyttäjät
 Lisää ryhmä käyttöoikeuksia varten
 ---STRINGEND
 
+---STRING apply to selected
+Tee valituille
+---STRINGEND
+
 ---STRING asgard
 Asgard
+---STRINGEND
+
+---STRING asgard homepage
+Asgardin etusivu
 ---STRINGEND
 
 ---STRING asgard plugins
@@ -61,6 +81,10 @@ Poista %s %s
 
 ---STRING edit %s %s
 Muokkaa %s %s
+---STRINGEND
+
+---STRING filter
+Suodatin
 ---STRINGEND
 
 ---STRING folder
@@ -143,6 +167,26 @@ Luku
 Päivitys
 ---STRINGEND
 
+---STRING no title
+Ei otsikkoa
+---STRINGEND
+
+---STRING not approved
+Ei hyväksytty
+---STRINGEND
+
+---STRING object %s approved
+Kohde %s hyväksytty
+---STRINGEND
+
+---STRING object %s removed
+Kohde %s poistettu
+---STRINGEND
+
+---STRING objects revised within
+Kohteet muutettu aikavälillä
+---STRINGEND
+
 ---STRING owner
 Omistaja
 ---STRINGEND
@@ -199,51 +243,11 @@ Käytä TinyMCE-editoria sisällönmuokkaamiseen
 Käyttöasetukset
 ---STRINGEND
 
----STRING 1 day
-1 päivä
----STRINGEND
-
----STRING 1 month
-1 kuukausi
----STRINGEND
-
----STRING 1 week
-1 viikko
----STRINGEND
-
----STRING apply to selected
-Tee valituille
----STRINGEND
-
----STRING asgard homepage
-Asgardin etusivu
----STRINGEND
-
----STRING filter
-Suodatin
----STRINGEND
-
----STRING no title
-Ei otsikkoa
----STRINGEND
-
----STRING not approved
-Ei hyväksytty
----STRINGEND
-
----STRING object %s approved
-Kohde %s hyväksytty
----STRINGEND
-
----STRING object %s removed
-Kohde %s poistettu
----STRINGEND
-
----STRING objects revised within
-Kohteet muutettu aikavälillä
----STRINGEND
-
 ---STRING view on site
 Katso sivustolla
+---STRINGEND
+
+---STRING preferences saved
+Asetukset tallennettu
 ---STRINGEND
 
