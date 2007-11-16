@@ -16,7 +16,7 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
 
         return array
         (
-	       'select' => array
+           'select' => array
             (
                 'handler' => Array('midcom_admin_babel_handler_process', 'select'),
             ),
@@ -34,10 +34,10 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
             ),
             'save' => array
             (
-            	'handler' => Array('midcom_admin_babel_handler_process', 'save'),
-            	'fixed_args' => 'save',
+                'handler' => Array('midcom_admin_babel_handler_process', 'save'),
+                'fixed_args' => 'save',
                 'variable_args' => 2,
-    	    ),
+            ),
         );
     }
 
@@ -172,13 +172,13 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
         return false;
     }
 
-	function navigation()
+    function navigation()
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-        $languages = $_MIDCOM->i18n->_language_db;
+        $languages = $_MIDCOM->i18n->get_language_db();
         $curlang = $_MIDCOM->i18n->get_current_language();
 
-        echo '<ul class="midgard_admin_asgard_navigation">';
+        echo "<ul class=\"midgard_admin_asgard_navigation\">\n";
 
         foreach ($languages as $language => $language_info) 
         {
@@ -205,7 +205,7 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
             echo "            <li class=\"status\"><a href=\"{$prefix}__mfa/asgard_midcom.admin.babel/status/{$language}/\">{$language_name}</a></li>\n";
         }
 
-        echo "</ul>";
+        echo "</ul>\n";
 
     }
 
