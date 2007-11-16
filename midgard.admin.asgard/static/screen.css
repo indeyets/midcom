@@ -27,7 +27,7 @@ body
 
 #container
 {
-  padding: 1em 1em 58px;
+  padding: 10px 10px 58px;
 }
 
 #navigation,
@@ -39,7 +39,7 @@ body
 #navigation
 {
   background-color: #d3d7cf;
-  width: 16em;
+  width: 210px;
   float: left;
   padding: 1em;
   -moz-border-radius: 6px;
@@ -47,7 +47,7 @@ body
 
 #container > #navigation
 {
-  width: 14em;
+  width: 190px;
 }
 
 #navigation div.grouplogo h2
@@ -145,7 +145,7 @@ body
 #content
 {
   background-color: #d3d7cf;
-  margin-left: 17em;
+  margin-left: 230px;
   padding: 1em;
   -moz-border-radius: 6px;
 }
@@ -386,4 +386,23 @@ html > body #siteinfo
 #latest_objects table.results td.approved
 {
     text-align: center;
+}
+
+#midgard_admin_asgard_resizer
+{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 230px;
+  margin-left: -3px;
+  width: 10px;
+  cursor: w-resize;
+  cursor: col-resize;
+}
+
+#midgard_admin_asgard_resizer:hover,
+#midgard_admin_asgard_resizer.hover
+{
+  background-color: #eeeeef;
+  visibility: visible;
 }

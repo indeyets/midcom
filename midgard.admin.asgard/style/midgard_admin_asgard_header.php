@@ -1,5 +1,15 @@
 <?php
 echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+
+if (($width = midgard_admin_asgard_plugin::get_preference('offset')))
+{
+    $width -= 40;
+    $navigation_width = " style=\"width: {$width}px\"";
+}
+else
+{
+    $navigation_width = '';
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -15,4 +25,4 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
     <body class="asgard"<?php $_MIDCOM->print_jsonload(); ?>>
         <div id="container-wrapper">
             <div id="container">
-                <div id="navigation">
+                <div id="navigation"&(navigation_width:h);>

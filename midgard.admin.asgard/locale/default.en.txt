@@ -167,6 +167,10 @@ Read
 Update
 ---STRINGEND
 
+---STRING navigation width
+Navigation width
+---STRINGEND
+
 ---STRING no title
 No title
 ---STRINGEND
@@ -201,6 +205,10 @@ Parameters of %s %s
 
 ---STRING permissions for %s %s
 Permissions for %s %s
+---STRINGEND
+
+---STRING preferences saved
+Preferences saved
 ---STRINGEND
 
 ---STRING privilege reserve
@@ -247,7 +255,7 @@ User preferences
 View on-site
 ---STRINGEND
 
----STRING preferences saved
-Preferences saved
+---STRING navigation width (in pixels)
+Navigation width (in pixels)
 ---STRINGEND
 

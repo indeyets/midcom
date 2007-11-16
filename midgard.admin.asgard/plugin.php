@@ -26,11 +26,16 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         $_MIDCOM->auth->require_user_do('midgard.admin.asgard:access', null, 'midgard_admin_asgard_plugin');
         
         // Preferred language
-        $person = new midcom_db_person($_MIDCOM->auth->user->guid);
-        if (($language = $person->get_parameter('midgard.admin.asgard.preferences', 'interface_language')))
+        if (($language = midgard_admin_asgard_plugin::get_preference('interface_language')))
         {
             $_MIDCOM->i18n->set_language($language);
         }
+        
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.mouse.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.draggable.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midgard.admin.asgard/resize.js');
+        
+        $_MIDCOM->add_jscript("var MIDGARD_ROOT = '{$_MIDGARD['self']}';");
         
         return array
         (
@@ -54,6 +59,17 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             (
                 'handler' => array ('midgard_admin_asgard_handler_preferences', 'preferences'),
                 'fixed_args' => array('preferences'),
+                'variable_args' => 0,
+            ),
+            /**
+             * AJAX interface for remembering user preferences set on the fly
+             * 
+             * Match /preferences/ajax/
+             */
+            'preferences_ajax' => array
+            (
+                'handler' => array ('midgard_admin_asgard_handler_preferences', 'ajax'),
+                'fixed_args' => array('preferences', 'ajax'),
                 'variable_args' => 0,
             ),
             /**
@@ -234,6 +250,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         $_MIDCOM->auth->require_user_do('midgard.admin.asgard:access', null, 'midgard_admin_asgard_plugin');    
         $data['view_title'] = $title;
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
+        
         $_MIDCOM->skip_page_style = true;
         $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
         $_MIDCOM->style->prepend_component_styledir(str_replace('asgard_','',$data['plugin_name']));

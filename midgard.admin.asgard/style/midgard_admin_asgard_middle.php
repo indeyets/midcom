@@ -8,9 +8,19 @@
                         $navigation = new midgard_admin_asgard_navigation(null, &$data);
                     }
                     $navigation->draw();
+                    
+                    if (($width = midgard_admin_asgard_plugin::get_preference('offset')))
+                    {
+                        $width += 2;
+                        $content_offset = " style=\"margin-left: {$width}px\"";
+                    }
+                    else
+                    {
+                        $content_offset = '';
+                    }
                     ?>
                 </div>
-                <div id="content">
+                <div id="content"&(content_offset:h);>
                     <div class="page-title">
                         <?php
                         echo "<h1>";

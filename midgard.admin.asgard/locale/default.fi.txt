@@ -167,6 +167,10 @@ Luku
 Päivitys
 ---STRINGEND
 
+---STRING navigation width
+Navigaation leveys
+---STRINGEND
+
 ---STRING no title
 Ei otsikkoa
 ---STRINGEND
@@ -201,6 +205,10 @@ Parametri
 
 ---STRING permissions for %s %s
 Käyttöoikeudet %s-olioon %s
+---STRINGEND
+
+---STRING preferences saved
+Asetukset tallennettu
 ---STRINGEND
 
 ---STRING privilege reserve
@@ -247,7 +255,7 @@ Käyttöasetukset
 Katso sivustolla
 ---STRINGEND
 
----STRING preferences saved
-Asetukset tallennettu
+---STRING navigation width (in pixels)
+Navigaation leveys (pikseleinä)
 ---STRINGEND
 
