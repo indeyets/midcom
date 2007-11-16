@@ -21,6 +21,11 @@ else
         <?php
         $_MIDCOM->print_head_elements();
         ?>
+        <!--[if IE 6]>
+            <script type="text/javascript">
+                var ie6 = true;
+            </script>
+        <![endif]-->
     </head>
     <body class="asgard"<?php $_MIDCOM->print_jsonload(); ?>>
         <div id="container-wrapper">

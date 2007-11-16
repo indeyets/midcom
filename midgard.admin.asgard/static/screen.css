@@ -41,7 +41,7 @@ body
   background-color: #d3d7cf;
   width: 210px;
   float: left;
-  padding: 1em;
+  padding: 10px;
   -moz-border-radius: 6px;
 }
 
@@ -394,10 +394,20 @@ html > body #siteinfo
   top: 0;
   bottom: 0;
   left: 230px;
-  margin-left: -3px;
+  margin-left: -6px;
   width: 10px;
   cursor: w-resize;
   cursor: col-resize;
+}
+
+* html #midgard_admin_asgard_resizer
+{
+  position: absolute;
+  top: 0;
+  bottom: expression((document.body.clientHeight - 20) + 'px');
+  height: 100%;
+  margin-left: -23px;
+  width: 20px;
 }
 
 #midgard_admin_asgard_resizer:hover,
