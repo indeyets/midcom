@@ -217,6 +217,20 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         }
         else
         {
+            // Check against duplicate hits that may come from different feeds
+            if ($item['link'])
+            {
+                $qb = midcom_db_article::new_query_builder();
+                $qb->add_constraint('topic', '=', $this->_feed->node);
+                $qb->add_constraint('url', '=', $item['link']);
+                $hits = $qb->count();
+                if ($hits > 0)
+                {
+                    // Dupe, skip
+                    return false;
+                }
+            }
+        
             // This is a new item
             $article = new midcom_db_article();
         }
