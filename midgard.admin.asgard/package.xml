@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+				<package packagerversion="1.4.5" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+				http://pear.php.net/dtd/tasks-1.0.xsd
+				http://pear.php.net/dtd/package-2.0
+				http://pear.php.net/dtd/package-2.0.xsd">
+				    <name>midgard_admin_asgard</name>
+				    <channel>pear.midcom-project.org</channel>
+				    <summary>
+				        Next generation admin interface
+				    </summary>
+				    <description>
+				        Next generation admin interface
+				    </description>
+				    
+											    <lead>
+											        <name>Henri Bergius</name>    
+											        <user>bergie</user>
+											        <email>henri.bergius@iki.fi</email>
+											        <active>yes</active>
+											    </lead>
+								        		
+											    <lead>
+											        <name>Eero af Heurlin</name>    
+											        <user>rambo</user>
+											        <email>eero.afheurlin@iki.fi</email>
+											        <active>yes</active>
+											    </lead>
+								        		
+											    <lead>
+											        <name>Arttu Manninen</name>    
+											        <user>adrenalin</user>
+											        <email>arttu@kaktus.cc</email>
+											        <active>yes</active>
+											    </lead>
+								        		
+											    <developer>
+											        <name>Marcin Sołtysiak</name>    
+											        <user>solt</user>
+											        <email>olga@olga.pl</email>
+											        <active>yes</active>
+											    </developer>
+								        		
+											    <developer>
+											        <name>Jerry Jalava</name>    
+											        <user>w_i</user>
+											        <email>jerry.jalava@gmail.com</email>
+											        <active>yes</active>
+											    </developer>
+								        		
+				    <date>2007-11-06</date>
+				    <time>00:28:00</time>
+				    <version>
+				        <release>2.0.1beta1</release>
+				        <api>2.0.1beta1</api>
+				    </version>
+				    <stability>
+				        <release>devel</release>
+				        <api>devel</api>
+				    </stability>
+				    <license>LGPL</license>
+				    <notes>2.0.1beta1 devel</notes>        
+				    <contents>
+        <dir name="midgard.admin.asgard">
+            <dir name="config">
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="schemadb_parameters.inc" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="schemadb_default.inc" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="config.inc" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="schemadb_permissions.inc" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="manifest.inc" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="schemadb_config.inc" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="schemadb_parameter.inc" role="php" />
+            </dir>
+            <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="navigation.php" role="php" />
+            <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="reflector_tree.php" role="php" />
+            <dir name="exec">
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="test.php" role="php" />
+            </dir>
+            <dir name="handler">
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="undelete.php" role="php" />
+                <dir name="object">
+                    <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="metadata.php" role="php" />
+                    <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="permissions.php" role="php" />
+                    <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="manage.php" role="php" />
+                    <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="parameters.php" role="php" />
+                </dir>
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="welcome.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="type.php" role="php" />
+            </dir>
+            <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="reflector.php" role="php" />
+            <dir name="style">
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_object_metadata.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_footer.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="_dm2_composite_parameter_footer.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_object_permissions.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_object_view.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_object_delete.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_object_create.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_header.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_navigation_section_footer.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_popup_header.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="_dm2_composite_parameter_header.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_type.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_navigation_section_header.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="_dm2_composite_parameter_item.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_object_parameters.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_navigation_chapter.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_middle.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_trash_type.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_object_edit.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_popup_footer.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_welcome.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_navigation_section_item.php" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="midgard_admin_asgard_object_create_after.php" role="php" />
+            </dir>
+            <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="plugin.php" role="php" />
+            <dir name="documentation">
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="asgard_midgard_topic.en.txt" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="CHANGES" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="asgard_midgard_topic.pl.txt" role="php" />
+            </dir>
+            <dir name="midcom">
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="interfaces.php" role="php" />
+            </dir>
+            <dir name="locale">
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="default.en.txt" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="default.pl.txt" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="default.hu.txt" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="default.fi.txt" role="php" />
+                <file baseinstalldir="midcom/lib/midgard/admin/asgard" name="default.de.txt" role="php" />
+            </dir>
+            <dir name="static">
+                <file baseinstalldir="/midgard.admin.asgard" install-as="expanded_icon.gif" name="expanded_icon.gif" role="web" />
+                <file baseinstalldir="/midgard.admin.asgard" install-as="asgard-16.png" name="asgard-16.png" role="web" />
+                <file baseinstalldir="/midgard.admin.asgard" install-as="collapsed_icon.gif" name="collapsed_icon.gif" role="web" />
+                <file baseinstalldir="/midgard.admin.asgard" install-as="grid.png" name="grid.png" role="web" />
+                <file baseinstalldir="/midgard.admin.asgard" install-as="permissions-16.png" name="permissions-16.png" role="web" />
+                <file baseinstalldir="/midgard.admin.asgard" install-as="screen.css" name="screen.css" role="web" />
+                <file baseinstalldir="/midgard.admin.asgard" install-as="permissions-16.svg" name="permissions-16.svg" role="web" />
+            </dir>
+        </dir>
+    </contents>        
+				    <dependencies>
+				        <required>
+				            <php>
+				                <min>4.3.0</min>
+				            </php>
+				            <pearinstaller>
+				                <min>1.4.0</min>
+				            </pearinstaller>        
+				            
+										            <package>
+										                <name>midcom_helper_datamanager2</name>
+										                <channel>pear.midcom-project.org</channel>
+										                
+										            </package>            
+										          
+                            <extension>
+                                <name>midgard</name>
+                                <min>1.8.1</min>
+                            </extension>
+				        </required>
+				    </dependencies>
+				    <phprelease /> 
+				</package>
+				    
