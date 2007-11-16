@@ -32,7 +32,6 @@
     ),
     
     // DM2 schema
-    /*
     'schemadb' => array
     (
         'settings' => array
@@ -47,6 +46,7 @@
                     'type' => 'text',
                     'widget' => 'text',
                 ),
+                /*
                 'anonymous' => Array
                 (
                     'title' => 'Allow anonymous',
@@ -54,11 +54,10 @@
                     'type' => 'boolean',
                     'widget' => 'checkbox',
                 ),
+                */
             ),
         ),
     ),
-    */
-
     
     // Root node definition		
     'root' => array
@@ -67,6 +66,8 @@
         'title' => '__HOSTTITLE__',
         'component' => 'net.nehmer.static',
         'create_index' => true,
+        'use_inherited_style' => false,
+        'style_inherit' => true,
         'acl' => array
         (
             /*
@@ -78,6 +79,7 @@
         ),
         'parameters' => array
         (
+
         ),
         // Child node definitions
         'nodes' => array
@@ -93,6 +95,10 @@
                 ),
                 'parameters' => array
                 (
+                    'net.nehmer.static' => array
+                    (
+                        'schemadb' => '/sitegroup-config/net.nehmer.static/schemadb_frontpage_lab',
+                    ),
                 ),
                 'nodes' => array
                 (
@@ -102,6 +108,7 @@
                         'title' => 'Ajankohtaista',
                         'component' => 'net.nehmer.blog',
                         'symlink_source_id' => 'news_fi',
+                        'style' => '/template_laboratorio/sitemap',
                         'acl' => array
                         (
 
@@ -221,6 +228,52 @@
             
                         ),
                     ),
+                    'sivukartta' => array
+                    (
+                        'name' => 'sivukartta',
+                        'title' => 'Sivukartta',
+                        'component' => 'de.linkm.sitemap',
+                        'nav_noentry' => true,
+                        'style' => '/template_laboratorio/sitemap',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+            
+                        ),
+                    ),
+                    'hakemisto' => array
+                    (
+                        'name' => 'hakemisto',
+                        'title' => 'Hakemisto',
+                        'component' => 'net.nemein.alphabeticalindex',
+                        'nav_noentry' => true,
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+            
+                        ),
+                    ),
+                    'palaute' => array
+                    (
+                        'name' => 'palaute',
+                        'title' => 'Palaute',
+                        'component' => 'no.odindata.quickform',
+                        'nav_noentry' => true,
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+                            'no.odindata.quickform' => array
+                            (
+                                'mail_address_to' => '__SCHEMA_mailto',
+                            ),
+                        ),
+                    ),
                     'laitos' => array
                     (
                         'name' => 'laitos',
@@ -284,6 +337,10 @@
                 ),
                 'parameters' => array
                 (
+                    'net.nehmer.static' => array
+                    (
+                        'schemadb' => '/sitegroup-config/net.nehmer.static/schemadb_frontpage_lab',
+                    ),
                 ),         
                 // en nodes  
                 'nodes' => array
@@ -294,6 +351,7 @@
                         'title' => 'Current affairs',
                         'component' => 'net.nehmer.blog',
                         'symlink_target_id' => 'news_fi',
+                        'style' => '/template_laboratorio/sitemap',
                         'acl' => array
                         (
 
@@ -414,6 +472,52 @@
             
                         ),
                     ),
+                    'sitemap' => array
+                    (
+                        'name' => 'sitemap',
+                        'title' => 'Sitemap',
+                        'component' => 'de.linkm.sitemap',
+                        'nav_noentry' => true,
+                        'style' => '/template_laboratorio/sitemap',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+            
+                        ),
+                    ),
+                    'index' => array
+                    (
+                        'name' => 'index',
+                        'title' => 'Index',
+                        'component' => 'net.nemein.alphabeticalindex',
+                        'nav_noentry' => true,
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+            
+                        ),
+                    ),
+                    'feedback' => array
+                    (
+                        'name' => 'feedback',
+                        'title' => 'Feedback',
+                        'component' => 'no.odindata.quickform',
+                        'nav_noentry' => true,
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+                            'no.odindata.quickform' => array
+                            (
+                                'mail_address_to' => '__SCHEMA_mailto',
+                            ),
+                        ),
+                    ),
                     'departments' => array
                     (
                         'name' => 'departments',
@@ -477,6 +581,10 @@
                 ),
                 'parameters' => array
                 (
+                    'net.nehmer.static' => array
+                    (
+                        'schemadb' => '/sitegroup-config/net.nehmer.static/schemadb_frontpage_lab',
+                    ),
                 ),   
                 // sv nodes 
                 'nodes' => array
@@ -487,6 +595,7 @@
                         'title' => 'Aktuellt',
                         'component' => 'net.nehmer.blog',
                         'symlink_target_id' => 'news_fi',
+                        'style' => '/template_laboratorio/news',
                         'acl' => array
                         (
 
@@ -605,6 +714,52 @@
                         'parameters' => array
                         (
             
+                        ),
+                    ),
+                    'sidkart' => array
+                    (
+                        'name' => 'sidkart',
+                        'title' => 'Sidkart',
+                        'component' => 'de.linkm.sitemap',
+                        'nav_noentry' => true,
+                        'style' => '/template_laboratorio/sitemap',
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+            
+                        ),
+                    ),
+                    'index' => array
+                    (
+                        'name' => 'index',
+                        'title' => 'Index',
+                        'component' => 'net.nemein.alphabeticalindex',
+                        'nav_noentry' => true,
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+            
+                        ),
+                    ),
+                    'feedback' => array
+                    (
+                        'name' => 'feedback',
+                        'title' => 'Feedback',
+                        'component' => 'no.odindata.quickform',
+                        'nav_noentry' => true,
+                        'acl' => array
+                        (
+                        ),
+                        'parameters' => array
+                        (
+                            'no.odindata.quickform' => array
+                            (
+                                'mail_address_to' => '__SCHEMA_mailto',
+                            ),
                         ),
                     ),
                     'institutionen' => array

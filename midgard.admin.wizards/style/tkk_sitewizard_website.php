@@ -21,7 +21,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
      echo "</p>";
      echo "<p>";
      echo "<a href=\"http://" . $data['report']['hostname'] . $data['report']['prefix'] . "\">http://" 
-        . $data['report']['hostname'] . "</a>";
+        . $data['report']['hostname'] . $data['report']['prefix'] . "</a>";
      echo "</p>";
      echo "<p>";
      echo "<b>" . $data['l10n']->get('generated vhost') . ": </b>" . $data['report']['vhost_filename'] . "<br/>";

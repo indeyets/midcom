@@ -6,6 +6,10 @@
 Midgard Wizards
 ---STRINGEND
 
+---STRING prefix
+Prefix
+---STRINGEND
+
 ---STRING generated vhost
 Generated vhost
 ---STRINGEND

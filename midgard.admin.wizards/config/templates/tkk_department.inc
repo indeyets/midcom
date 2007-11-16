@@ -34,6 +34,7 @@
         'title' => '__HOSTTITLE__',
         'component' => 'net.nehmer.static',
         'create_index' => true,
+        'style_inherit' => true,
         'acl' => array
         (
             /*
@@ -197,7 +198,7 @@
                             'yritysyhteistyo' => array
                             (
                                 'name' => 'yritysyhteistyo',
-                                'title' => 'Yritysyhteisty�',
+                                'title' => 'Yritysyhteistyö',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -305,7 +306,7 @@
                             'luku_ja_tenttijarjestykset' => array
                             (
                                 'name' => 'luku_ja_tenttijarjestykset',
-                                'title' => 'Luku- ja tenttijarjestykset',
+                                'title' => 'Luku- ja tenttijärjestykset',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -384,7 +385,7 @@
                             'tutkimustoiminta_laboratorioittain' => array
                             (
                                 'name' => 'tutkimustoiminta_laboratorioittain',
-                                'title' => 'Tutkimustoiminta laboratorioittaint',
+                                'title' => 'Tutkimustoiminta laboratorioittain',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -399,7 +400,7 @@
                             'huippuyksikot_ryhmat_ja_palkitut' => array
                             (
                                 'name' => 'huippuyksikot_ryhmat_ja_palkitut',
-                                'title' => 'Huippuyksikot, -ryhmat ja palkitut',
+                                'title' => 'Huippuyksiköt, -ryhmät ja palkitut',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -477,7 +478,7 @@
                             'alaa_esitteleva_teksti' => array
                             (
                                 'name' => 'alaa_esitteleva_teksti',
-                                'title' => 'Alaa esitteleva teksti',
+                                'title' => 'Alaa esittelevä teksti',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -567,7 +568,7 @@
                             'taydennyskoulutus' => array
                             (
                                 'name' => 'taydennyskoulutus',
-                                'title' => 'Taydennyskoulutus',
+                                'title' => 'Täydennyskoulutus',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
@@ -1322,7 +1323,7 @@
                             'kontaktuppgifter_och_lage' => array
                             (
                                 'name' => 'kontaktuppgifter_och_lage',
-                                'title' => 'Kontaktuppgifter och låge',
+                                'title' => 'Kontaktuppgifter och läge',
                                 'component' => 'net.nehmer.static',
                                 'create_index' => true,
                                 'acl' => array
