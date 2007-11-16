@@ -26,6 +26,13 @@ class midcom_helper_datamanager2_type_php extends midcom_helper_datamanager2_typ
     var $code_valid = true;
     var $code_valid_errors = array();
 
+    function _on_initialize()
+    {
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/codepress/codepress.js');
+        $_MIDCOM->add_jsonload("{$this->name}.toggleReadOnly();");
+        return true;
+    }
+
     function convert_from_storage ($source)
     {
         $this->value = $source;
@@ -123,7 +130,10 @@ class midcom_helper_datamanager2_type_php extends midcom_helper_datamanager2_typ
 
     function convert_to_html()
     {
-        return highlight_string($this->value, true);
+        $html = "<textarea rows=\"30\" cols=\"100%\" class=\"codepress php\" id=\"{$this->name}\" name=\"{$this->name}\">{$this->value}</textarea>";
+
+        return $html;
+//        return highlight_string($this->value, true);
     }
 }
 
