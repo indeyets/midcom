@@ -236,11 +236,16 @@ class midgard_admin_asgard_handler_preferences extends midcom_baseclasses_compon
         
         foreach ($_POST as $key => $value)
         {
-            if (!$this->_person->set_parameter('midgard.admin.asgard.preferences', $key, $value))
-            {
-                $this->_status = false;
-                $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midgard.admin.asgard', 'midgard.admin.asgard'), sprintf($_MIDCOM->i18n->get_string('failed to save the preference for %s', 'midgard.admin.asgard'), $_MIDCOM->i18n->get_string($key, 'midgard.admin.asgard')));
-            }
+             if (is_array($value))
+             {
+                 $value = serialize($value);
+             }
+             
+             if (!$this->_person->set_parameter('midgard.admin.asgard.preferences', $key, $value))
+             {
+                 $this->_status = false;
+                 $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midgard.admin.asgard', 'midgard.admin.asgard'), sprintf($_MIDCOM->i18n->get_string('failed to save the preference for %s', 'midgard.admin.asgard'), $_MIDCOM->i18n->get_string($key, 'midgard.admin.asgard')));
+             }
         }
         
         $_MIDCOM->auth->drop_sudo();
