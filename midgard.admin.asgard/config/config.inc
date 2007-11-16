@@ -81,6 +81,9 @@
 'schemadb_parameters' => 'file:/midgard/admin/asgard/config/schemadb_parameters.inc',
 'schemadb_permissions' => 'file:/midgard/admin/asgard/config/schemadb_permissions.inc',
 
+// User preferences
+'schemadb_preferences' => 'file:/midgard/admin/asgard/config/schemadb_preferences.inc',
+
 /**
  * reflector configuration 
  *

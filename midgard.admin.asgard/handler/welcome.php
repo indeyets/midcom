@@ -25,12 +25,17 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
         parent::midcom_baseclasses_components_handler();
     }
     
+    /**
+     * Startup routines
+     * 
+     * @access public
+     */
     function _on_initialize()
     {
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
         $_MIDCOM->skip_page_style = true;
-                
+        
         $_MIDCOM->load_library('midcom.helper.datamanager2');
     }
 
@@ -111,12 +116,11 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
     function _handler_welcome($handler_id, $args, &$data)
     {
         $this->_prepare_request_data();
-
+        
         $data['view_title'] = $this->_l10n->get('asgard');
         $_MIDCOM->set_pagetitle($data['view_title']);
         
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
-
         if (isset($_POST['execute_mass_action']))
         {
             if (   isset($_POST['selections'])
@@ -140,6 +144,16 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
         // }
         
         midgard_admin_asgard_plugin::get_common_toolbar($data);
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => '__mfa/asgard/preferences/',
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('user preferences', 'midgard.admin.asgard'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/configuration.png',
+            )
+        );
+
         return true;
     }
     

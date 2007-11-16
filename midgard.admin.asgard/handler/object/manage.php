@@ -69,6 +69,14 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
      * @access private
      */
     var $_reflector = null;
+    
+    /**
+     * Authenticated person record
+     * 
+     * @var midcom_db_person
+     * @access private
+     */
+    var $_person;
 
     /**
      * Simple default constructor.
@@ -86,6 +94,9 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         $_MIDCOM->skip_page_style = true;
         
         $_MIDCOM->load_library('midcom.helper.datamanager2');
+        
+        // Get the authenticated person
+        $this->_person = new midcom_db_person($_MIDGARD['user']);
     }
 
     /**
@@ -392,7 +403,10 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                             $height = 30;
                             $output_mode = 'html';
                             
-                            if ($this->_config->get('tinymce_enabled'))
+                            // Check the user preference and configuration
+                            if (   midgard_admin_asgard_plugin::get_preference('tinymce_enabled')
+                                || (   midgard_admin_asgard_plugin::get_preference('tinymce_enabled') !== '0'
+                                    && $this->_config->get('tinymce_enabled')))
                             {
                                 $widget = 'tinymce';
                             }
@@ -409,7 +423,10 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                             $dm_type = 'php';
                             $output_mode = 'code';
                             
-                            if ($this->_config->get('codepress_enabled'))
+                            // Check the user preference and configuration
+                            if (   midgard_admin_asgard_plugin::get_preference('codepress_enabled')
+                                || (   midgard_admin_asgard_plugin::get_preference('codepress_enabled') !== '0'
+                                    && $this->_config->get('codepress_enabled')))
                             {
                                 $widget = 'codepress';
                             }

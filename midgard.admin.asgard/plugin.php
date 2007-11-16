@@ -25,6 +25,13 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         $_MIDCOM->load_library('midgard.admin.asgard');
         $_MIDCOM->auth->require_user_do('midgard.admin.asgard:access', null, 'midgard_admin_asgard_plugin');
         
+        // Preferred language
+        $person = new midcom_db_person($_MIDCOM->auth->user->guid);
+        if (($language = $person->get_parameter('midgard.admin.asgard.preferences', 'interface_language')))
+        {
+            $_MIDCOM->i18n->set_language($language);
+        }
+        
         return array
         (
             /**
@@ -37,6 +44,28 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 'handler' => array ('midgard_admin_asgard_handler_welcome', 'welcome'),
                 'fixed_args' => array(),
                 'variable_args' => 0,
+            ),
+            /**
+             * User preferences page
+             * 
+             * Match /preferences/
+             */
+            'preferences' => array
+            (
+                'handler' => array ('midgard_admin_asgard_handler_preferences', 'preferences'),
+                'fixed_args' => array('preferences'),
+                'variable_args' => 0,
+            ),
+            /**
+             * User preferences page for any person
+             * 
+             * Match /preferences/<person guid>/
+             */
+            'preferences_guid' => array
+            (
+                'handler' => array ('midgard_admin_asgard_handler_preferences', 'preferences'),
+                'fixed_args' => array('preferences'),
+                'variable_args' => 1,
             ),
             /**
              * Front page of a MgdSchema
@@ -591,6 +620,44 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/exit.png',
             )
         );
+    }
+    
+    /**
+     * Get a preference for the current user
+     * 
+     * @access static public
+     * @param string $preference    Name of the preference
+     */
+    function get_preference($preference)
+    {
+        $person = new midcom_db_person($_MIDCOM->auth->user->guid);
+        
+        return $person->get_parameter('midgard.admin.asgard.preferences', $preference);
+        
+        /** For some odd reason Midgard crashes here
+        $mc = midcom_baseclasses_database_parameter::new_collector('parentguid', $_MIDCOM->auth->user->guid);
+        $mc->add_value_property('value');
+        $mc->add_constraint('domain', '=', 'midgard.admin.asgard.preferences');
+        $mc->add_constraint('name', '=', $preference);
+        $mc->add_constraint('metadata.deleted', '=', 0);
+        $mc->set_limit(1);
+        
+        $mc->execute();
+        
+        if ($mc->count() === 0)
+        {
+            return null;
+        }
+        
+        $keys = $mc->list_keys();
+        
+        foreach ($keys as $guid => $array)
+        {
+            $value = $mc->get_subkey($guid, 'value');
+            
+            return $mc->get_subkey($guid, 'value');
+        }
+        */
     }
 }
 ?>

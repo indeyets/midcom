@@ -83,6 +83,14 @@ GUID-tunniste
 oletuskielellä
 ---STRINGEND
 
+---STRING info
+Info
+---STRINGEND
+
+---STRING interface language
+Käyttöliittymän kieli
+---STRINGEND
+
 ---STRING last edited by %s on %s (revision %s)
 Viimeksi muokannut %s %s (muutos %s)
 ---STRINGEND
@@ -179,7 +187,63 @@ Roskakori on tyhjä
 %s alla
 ---STRINGEND
 
----STRING info
-Info
+---STRING use codepress editor for editing code snippets
+Käytä CodePress-editoria koodin muokkaukseen
+---STRINGEND
+
+---STRING use tinymce editor for editing content
+Käytä TinyMCE-editoria sisällönmuokkaamiseen
+---STRINGEND
+
+---STRING user preferences
+Käyttöasetukset
+---STRINGEND
+
+---STRING 1 day
+1 päivä
+---STRINGEND
+
+---STRING 1 month
+1 kuukausi
+---STRINGEND
+
+---STRING 1 week
+1 viikko
+---STRINGEND
+
+---STRING apply to selected
+Tee valituille
+---STRINGEND
+
+---STRING asgard homepage
+Asgardin etusivu
+---STRINGEND
+
+---STRING filter
+Suodatin
+---STRINGEND
+
+---STRING no title
+Ei otsikkoa
+---STRINGEND
+
+---STRING not approved
+Ei hyväksytty
+---STRINGEND
+
+---STRING object %s approved
+Kohde %s hyväksytty
+---STRINGEND
+
+---STRING object %s removed
+Kohde %s poistettu
+---STRINGEND
+
+---STRING objects revised within
+Kohteet muutettu aikavälillä
+---STRINGEND
+
+---STRING view on site
+Katso sivustolla
 ---STRINGEND
 
