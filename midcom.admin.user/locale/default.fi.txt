@@ -7,6 +7,10 @@
 Lisää ryhmään
 ---STRINGEND
 
+---STRING amount
+Määrä
+---STRINGEND
+
 ---STRING apply to selected
 Tee valituille
 ---STRINGEND
@@ -67,6 +71,10 @@ Kansiot
 Ryhmän %s kansiot
 ---STRINGEND
 
+---STRING generate
+Tee
+---STRINGEND
+
 ---STRING go
 Hae
 ---STRINGEND
@@ -83,12 +91,20 @@ Ryhmät
 Sukunimi
 ---STRINGEND
 
+---STRING maximum %s
+Korkeintaan %s
+---STRINGEND
+
 ---STRING members
 Jäsenet
 ---STRINGEND
 
 ---STRING midcom.admin.user
 Käyttäjien hallinta
+---STRINGEND
+
+---STRING move %s
+Siirrä %s
 ---STRINGEND
 
 ---STRING move group
@@ -103,12 +119,28 @@ Virallinen nimi
 Omistajaryhmä
 ---STRINGEND
 
+---STRING password length
+Salasanan pituus
+---STRINGEND
+
+---STRING passwords
+Salasanat
+---STRINGEND
+
 ---STRING person %s saved
 Käyttäjä %s tallennettu
 ---STRINGEND
 
 ---STRING postcode
 Postinumero
+---STRINGEND
+
+---STRING prevent repeating character
+Estä samojen merkkien toistuminen
+---STRINGEND
+
+---STRING prevent similar characters
+Estä samanlaiset merkit
 ---STRINGEND
 
 ---STRING remove account
@@ -139,7 +171,7 @@ Käyttäjätunnus
 Työpuhelin
 ---STRINGEND
 
----STRING move %s
-Siirrä %s
+---STRING prevent repeating characters
+Estä samojen merkkien toistuminen
 ---STRINGEND
 

@@ -40,3 +40,20 @@ form.datamanager2 fieldset input
 {
     display: inline !important;
 }
+
+#midcom_admin_user_passwords
+{
+  float: right;
+  width: 25em;
+}
+
+#midcom_admin_user_passwords pre
+{
+  background-color: #eeeeef;
+  padding: 6px;
+}
+
+#midcom_admin_user_passwords label
+{
+  display: block;
+}

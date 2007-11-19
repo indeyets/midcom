@@ -7,6 +7,10 @@
 Add to group
 ---STRINGEND
 
+---STRING amount
+Amount
+---STRINGEND
+
 ---STRING apply to selected
 Apply to selected
 ---STRINGEND
@@ -67,6 +71,14 @@ Folders
 Folders of %s
 ---STRINGEND
 
+---STRING generate
+Generate
+---STRINGEND
+
+---STRING generate passwords
+Generate passwords
+---STRINGEND
+
 ---STRING go
 Go
 ---STRINGEND
@@ -83,12 +95,20 @@ Groups
 Lastname
 ---STRINGEND
 
+---STRING maximum %s
+Maximum %s
+---STRINGEND
+
 ---STRING members
 Members
 ---STRINGEND
 
 ---STRING midcom.admin.user
 User management
+---STRINGEND
+
+---STRING move %s
+Move %s
 ---STRINGEND
 
 ---STRING move group
@@ -103,12 +123,28 @@ Official name
 Owner group
 ---STRINGEND
 
+---STRING password length
+Password length
+---STRINGEND
+
+---STRING passwords
+Passwords
+---STRINGEND
+
 ---STRING person %s saved
 User %s saved
 ---STRINGEND
 
 ---STRING postcode
 Postcode
+---STRINGEND
+
+---STRING prevent repeating character
+Prevent repeating character
+---STRINGEND
+
+---STRING prevent similar characters
+Prevent similar characters
 ---STRINGEND
 
 ---STRING remove account
@@ -139,7 +175,7 @@ Username
 Work phone
 ---STRINGEND
 
----STRING move %s
-Move %s
+---STRING prevent repeating characters
+Prevent repeating characters
 ---STRINGEND
 

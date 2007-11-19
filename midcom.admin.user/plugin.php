@@ -65,6 +65,16 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
                 'variable_args' => 1,
             ),
             /**
+             * Generate random passwords
+             * 
+             * Match //user-editor/password/
+             */
+            'user_passwords' => array
+            (
+                'handler' => array ('midcom_admin_user_handler_user_edit', 'passwords'),
+                'fixed_args' => array ('password'),
+            ),
+            /**
              * Edit a user's password
              * 
              * Match /user-editor/edit/<guid>/

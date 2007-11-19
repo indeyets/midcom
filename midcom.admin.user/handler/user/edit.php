@@ -175,6 +175,9 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
         $this->_prepare_toolbar($data,$handler_id);
         $this->_update_breadcrumb($handler_id);
         
+        // Add jQuery Form handling for generating passwords with AJAX
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.form-1.0.3.pack.js');
+        
         return true;
     }
     
@@ -189,11 +192,40 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
     {
         midgard_admin_asgard_plugin::asgard_header();
 
+        $data['l10n'] =& $this->_l10n;
         $data['person'] =& $this->_person;
         $data['controller'] =& $this->_controller;
         midcom_show_style('midcom-admin-user-person-edit');
-
+        
+        if (isset($_GET['f_submit']))
+        {
+            midcom_show_style('midcom-admin-user-generate-passwords');
+        }
+        
         midgard_admin_asgard_plugin::asgard_footer();
+    }
+    
+    /**
+     * Auto-generate passwords on the fly
+     * 
+     * @access public
+     */
+    function _handler_passwords($handler_id, $args, &$data)
+    {
+        $_MIDCOM->skip_page_style = true;
+        return true;
+    }
+    
+    /**
+     * Auto-generate passwords on the fly
+     * 
+     * @access public
+     */
+    function _show_passwords($handler_id, &$data)
+    {
+        // Show passwords
+        $data['l10n'] =& $this->_l10n;
+        midcom_show_style('midcom-admin-user-generate-passwords');
     }
 }
 ?>
