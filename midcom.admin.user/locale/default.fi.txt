@@ -27,6 +27,10 @@ Luo ryhmä
 Luo käyttäjä
 ---STRINGEND
 
+---STRING edit %s
+Muokkaa kohdetta %s
+---STRINGEND
+
 ---STRING edit account
 Muokkaa käyttäjätunnusta
 ---STRINGEND
@@ -59,6 +63,10 @@ Etunimi
 Kansiot
 ---STRINGEND
 
+---STRING folders of %s
+Ryhmän %s kansiot
+---STRINGEND
+
 ---STRING go
 Hae
 ---STRINGEND
@@ -81,6 +89,10 @@ Jäsenet
 
 ---STRING midcom.admin.user
 Käyttäjien hallinta
+---STRINGEND
+
+---STRING move group
+Siirrä ryhmää
 ---STRINGEND
 
 ---STRING official
@@ -127,7 +139,7 @@ Käyttäjätunnus
 Työpuhelin
 ---STRINGEND
 
----STRING folders of %s
-Ryhmän %s kansiot
+---STRING move %s
+Siirrä %s
 ---STRINGEND
 

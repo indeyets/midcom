@@ -76,16 +76,37 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
                 'variable_args' => 1,
             ),
             /**
-    		 * Create new user
-    		 *
-    		 * Match /create/
-    		 *
-    		 */
-    		 'user_create' => array
-    		 (
-    		 	'handler' => array ('midcom_admin_user_handler_user_create','create'),
-    		 	'fixed_args' => array ('create'),
-    		 ),
+             * Create new user
+             *
+             * Match /create/
+             *
+             */
+             'user_create' => array
+             (
+                 'handler' => array ('midcom_admin_user_handler_user_create','create'),
+                 'fixed_args' => array ('create'),
+             ),
+            /**
+             * List groups
+             * 
+             * Match /user-editor/group/
+             */
+            'group_list' => array
+            (
+                'handler' => array('midcom_admin_user_handler_group_list', 'list'),
+                'fixed_args' => array('group'),
+            ),
+            /**
+             * Move a group
+             * 
+             * Match /user-editor/group/
+             */
+            'group_move' => array
+            (
+                'handler' => array('midcom_admin_user_handler_group_list', 'move'),
+                'fixed_args' => array('group', 'move'),
+                'variable_args' => 1,
+            ),
             /**
              * Edit a group
              * 
@@ -109,16 +130,16 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
                 'variable_args' => 1,
             ),
             /**
-    		 * Create new user
-    		 *
-    		 * Match /create/
-    		 *
-    		 */
-    		 'group_create' => array
-    		 (
-    		 	'handler' => array ('midcom_admin_user_handler_group_create','create'),
-    		 	'fixed_args' => array ('group', 'create'),
-    		 ),
+             * Create new user
+             *
+             * Match /create/
+             *
+             */
+             'group_create' => array
+             (
+                 'handler' => array ('midcom_admin_user_handler_group_create','create'),
+                 'fixed_args' => array ('group', 'create'),
+             ),
         );
     }
 }

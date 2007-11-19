@@ -8,7 +8,7 @@
  */
 
 /**
- * Style editor class for listing style elements
+ * Edit a group
  * 
  * @package midcom.admin.user
  */
@@ -62,6 +62,11 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
             );
             $grp = $grp->get_parent();
         }
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => '__mfa/asgard_midcom.admin.user/group',
+            MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('groups', 'midcom.admin.user'),
+        );
         $tmp[] = Array
         (
             MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.user/",
@@ -161,6 +166,16 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
             ),
             $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
         );
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.user/group/move/{$this->_group->guid}/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('move group', 'midcom.admin.user'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/save-as.png',
+            ),
+            $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
+        );
         
         return true;
     }
@@ -174,7 +189,7 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
      */
     function _show_edit($handler_id, &$data)
     {
-        midgard_admin_asgard_plugin::asgard_header();        
+        midgard_admin_asgard_plugin::asgard_header();
 
         $data['group'] =& $this->_group;
         $data['controller'] =& $this->_controller;

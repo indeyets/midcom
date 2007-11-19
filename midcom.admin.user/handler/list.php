@@ -68,6 +68,16 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
             (
                 MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.user/create/",
                 MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create user', 'midcom.admin.user'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_people.png',
+                MIDCOM_TOOLBAR_ENABLED => $this->_config->get('allow_manage_accounts'),
+            )
+        );
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.user/group/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('groups', 'midcom.admin.user'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_person-new.png',
                 MIDCOM_TOOLBAR_ENABLED => $this->_config->get('allow_manage_accounts'),
             )

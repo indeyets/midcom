@@ -91,6 +91,10 @@ Members
 User management
 ---STRINGEND
 
+---STRING move group
+Move group
+---STRINGEND
+
 ---STRING official
 Official name
 ---STRINGEND
@@ -133,5 +137,9 @@ Username
 
 ---STRING workphone
 Work phone
+---STRINGEND
+
+---STRING move %s
+Move %s
 ---STRINGEND
 
