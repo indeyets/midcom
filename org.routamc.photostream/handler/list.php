@@ -50,6 +50,10 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         $qb = new org_openpsa_qbpager('org_routamc_photostream_photo_dba', 'org_routamc_photostream_photo');
         $qb->results_per_page = $this->_config->get('photos_per_page');
         $qb->add_constraint('node', '=', $this->_topic->id);
+
+        $qb->listen_parameter('org_routamc_photostream_order', array('reversed'));
+        $qb->listen_parameter('org_routamc_photostream_order_by', '*');
+
         $this->_request_data['qb'] =& $qb;
         return $qb;
     }
@@ -106,8 +110,24 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
             $qb->add_constraint('photographer', '=', $data['user']->id);
             $data['url_suffix'] = "user/{$args[0]}/";
         }
+        
+        if (isset($_REQUEST['org_routamc_photostream_order_by']))
+        {
+            $order_by = $_REQUEST['org_routamc_photostream_order_by'];
+            
+            if (   isset($_REQUEST['org_routamc_photostream_order'])
+                && !empty($_REQUEST['org_routamc_photostream_order']))
+            {
+                $order = $_REQUEST['org_routamc_photostream_order'];
+            }
 
-        $qb->add_order('taken', 'DESC');
+            $qb->add_order($order_by, $order);
+        }
+        else
+        {
+            $qb->add_order('taken', 'DESC');
+        }
+
         $data['photos'] = $qb->execute();
 
         // Make photos AJAX-editable
@@ -492,17 +512,17 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
                 
                 $published = strftime('%x %X', $photo->taken);
                 
-                echo "<item>\n";
-                echo "    <id>{$photo->id}</id>\n";
-                echo "    <guid>{$photo->guid}</guid>\n";
-                echo "    <title><![CDATA[{$photo->title}]]></title>\n";
-                echo "    <duration><![CDATA[{$duration}]]></duration>\n";
-                echo "    <video_url><![CDATA[{$video_url}]]></video_url>\n";
-                echo "    <thumbnail_url><![CDATA[{$videothumbnail_url}]]></thumbnail_url>\n";
-                echo "    <data_url><![CDATA[{$data_url}]]></data_url>\n";
-                echo "    <author><![CDATA[{$author}]]></author>\n";
-                echo "    <added><![CDATA[{$published}]]></added>\n";
-                echo "</item>\n";
+                echo "    <item>\n";
+                echo "        <id>{$photo->id}</id>\n";
+                echo "        <guid>{$photo->guid}</guid>\n";
+                echo "        <title><![CDATA[{$photo->title}]]></title>\n";
+                echo "        <duration><![CDATA[{$duration}]]></duration>\n";
+                echo "        <video_url><![CDATA[{$video_url}]]></video_url>\n";
+                echo "        <thumbnail_url><![CDATA[{$videothumbnail_url}]]></thumbnail_url>\n";
+                echo "        <data_url><![CDATA[{$data_url}]]></data_url>\n";
+                echo "        <author><![CDATA[{$author}]]></author>\n";
+                echo "        <added><![CDATA[{$published}]]></added>\n";
+                echo "    </item>\n";
             }
             
             echo "</playlist>\n";         
