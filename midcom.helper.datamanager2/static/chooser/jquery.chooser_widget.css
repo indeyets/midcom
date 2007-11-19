@@ -5,15 +5,15 @@ input.chooser_widget_search_input
 
 .chooser_widget_headers
 {
-	border: 1px solid WindowFrame;
-	background-color: Window;
-	overflow: hidden;
-	clear: left;
-	width: 100%;
-	list-style-position: outside;
-	list-style: none;
-	padding: 0;
-	margin: 0;
+    border: 1px solid WindowFrame;
+    background-color: Window;
+    overflow: hidden;
+    clear: left;
+    width: 100%;
+    list-style-position: outside;
+    list-style: none;
+    padding: 0;
+    margin: 0;
     margin-top: 5px;
 }
 .chooser_widget_headers .chooser_widget_header_item
@@ -30,25 +30,26 @@ input.chooser_widget_search_input
 
 .chooser_widget_results
 {
-	border: 1px solid WindowFrame;
-	background-color: Window;
-	overflow: hidden;
-	clear: left;
-	width: 100%;
-	list-style-position: outside;
-	list-style: none;
-	padding: 0;
-	margin: 0;
+    border: 1px solid WindowFrame;
+    background-color: #ffffff;
+    color: #000000;
+    overflow: hidden;
+    clear: left;
+    width: 100%;
+    list-style-position: outside;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 .chooser_widget_results .chooser_widget_result_item
 {
-	margin: 0px;
-	cursor: default;
-	display: block;
-	width: 100%;
-	font: menu;
-	font-size: 12px;
-	overflow: hidden;
+    margin: 0px;
+    cursor: default;
+    display: block;
+    width: 100%;
+    font: menu;
+    font-size: 12px;
+    overflow: hidden;
     height: 22px;
     line-height: 22px;
 }
@@ -62,17 +63,17 @@ input.chooser_widget_search_input
 .chooser_widget_search_idle
 {
     padding-right: 20px;
-	background: url('searching.png') right center no-repeat;
+    background: url('searching.png') right center no-repeat;
 }
 .chooser_widget_search_loading
 {
     padding-right: 20px;
-	background: url('../ajax-loading-small.gif') right center no-repeat;
+    background: url('../ajax-loading-small.gif') right center no-repeat;
 }
 .chooser_widget_search_failed
 {
     padding-right: 20px;
-	background: url('failed.png') right center no-repeat;
+    background: url('failed.png') right center no-repeat;
 }
 
 .chooser_widget_create_button
@@ -96,8 +97,8 @@ input.chooser_widget_search_input
 * iframe.jqm
 {
     position:absolute;top:0;left:0;z-index:-1;
-	width: expression(this.parentNode.offsetWidth+'px');
-	height: expression(this.parentNode.offsetHeight+'px');
+    width: expression(this.parentNode.offsetWidth+'px');
+    height: expression(this.parentNode.offsetHeight+'px');
 }
 
 .chooser_widget_creation_dialog
@@ -142,12 +143,12 @@ input.chooser_widget_search_input
     text-align: center;
     float: right;
     margin-right: 3px;
-	background : url('../../stock-icons/16x16/approved_fade_50.png') center center no-repeat;
+    background : url('../../stock-icons/16x16/approved_fade_50.png') center center no-repeat;
 }
 .chooser_widget_result_item_active
 {
-/*  background-color: green;
-    color: #fff;*/
+    background-color: #eeeeef !important;
+    color: #000000 !important;
 }
 .chooser_widget_result_item_active #chooser_widget_item_part_status
 {
@@ -155,7 +156,7 @@ input.chooser_widget_search_input
     text-align: center;
     float: right;
     margin-right: 3px;
-	background : url('../../stock-icons/16x16/approved.png') center center no-repeat;
+    background : url('../../stock-icons/16x16/approved.png') center center no-repeat;
 }
 .chooser_widget_result_item_inactive
 {
@@ -166,7 +167,7 @@ input.chooser_widget_search_input
     text-align: center;
     float: right;
     margin-right: 3px;
-	background : none;
+    background : none;
 }
 .chooser_widget_result_item_deleted
 {
@@ -179,5 +180,5 @@ input.chooser_widget_search_input
     text-align: center;
     float: right;
     margin-right: 3px;
-	background : url('../../stock-icons/16x16/cancel.png') center center no-repeat;
+    background : url('../../stock-icons/16x16/cancel.png') center center no-repeat;
 }
