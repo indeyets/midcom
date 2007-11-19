@@ -90,7 +90,8 @@ class net_nemein_personnel_interface extends midcom_baseclasses_components_inter
     function _on_resolve_permalink($topic, $config, $guid)
     {    
         $person = $_MIDCOM->auth->get_user($guid);
-        if (!$person)
+        if (   !$person
+            || !$person->guid)
         {
             return null;
         }
