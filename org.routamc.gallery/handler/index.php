@@ -81,6 +81,9 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
         // Initialize QB Pager
         $qb = new org_openpsa_qbpager('org_routamc_gallery_photolink_dba', 'gallery_index');
         
+        $qb->listen_parameter('org_routamc_gallery_order', array('reversed'));
+        $qb->listen_parameter('org_routamc_gallery_order_by', '*');
+        
         // TODO: Something like this offset should be possible to be done in org.openpsa.qbpager,
         // but has to be done there first. This will push the result set backwards to include the
         // subgalleries in the result set, but not to overflow because of them!
@@ -117,7 +120,20 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
                 $this->_config->get('index_order'),
             );
         }
-        
+
+        if (isset($_REQUEST['org_routamc_gallery_order_by']))
+        {
+            $order_str = $_REQUEST['org_routamc_gallery_order_by'];
+            
+            if (   isset($_REQUEST['org_routamc_gallery_order'])
+                && $_REQUEST['org_routamc_gallery_order'] == 'DESC')
+            {
+                $order_str += " reversed";
+            }
+            
+            $order = array( $order_str );
+        }
+
         // Set the orders
         foreach ($order as $ordering)
         {
