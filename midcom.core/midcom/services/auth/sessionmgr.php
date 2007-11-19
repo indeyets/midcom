@@ -281,7 +281,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Failed to authenticate to the given username / password: " . mgd_errstr(),
-                MIDCOM_LOG_ERROR);
+                MIDCOM_LOG_INFO);
             debug_pop();
             return false;
         }
@@ -359,7 +359,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
             debug_pop();
             return false;
         }
-        if (function_exists($session, 'purge'))
+        if (method_exists($session, 'purge'))
         {
             $session->purge();
         }
