@@ -81,6 +81,21 @@ class net_nemein_wiki_wikipage extends midcom_db_article
         return true;
     }
     
+    function _on_updating()
+    {
+        if ($_MIDCOM->auth->user)
+        {
+            // Place current user in the page authors list            
+            $authors = explode('|', substr($this->metadata->authors, 1, -1));
+            if (!in_array($_MIDCOM->auth->user->guid, $authors))
+            {
+                $authors[] = $_MIDCOM->auth->user->guid;
+                $this->metadata->authors = '|' . implode('|', $authors) . '|';
+            }
+        }
+        return parent::_on_updating();
+    }
+    
     function _on_updated()
     {
         $stat = parent::_on_updated();

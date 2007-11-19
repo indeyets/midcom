@@ -286,7 +286,9 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         
-        $_MIDCOM->set_pagetitle($this->_page->title);        
+        $_MIDCOM->set_pagetitle($this->_page->title); 
+        
+        $_MIDCOM->set_26_request_metadata($this->_page->metadata->revised, $this->_page->guid);       
         return true;
     }
     
