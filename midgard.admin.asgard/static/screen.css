@@ -340,6 +340,7 @@ html > body #siteinfo
   font-size: 80%;
   margin-top: 2em;
   border-top: solid 1px black;
+  clear: right;
 }
 
 #latest_objects
