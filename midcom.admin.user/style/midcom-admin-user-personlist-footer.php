@@ -81,6 +81,7 @@ if (count($data['persons']) > 0)
                     });
                 }
             });
+            $j('#midcom_admin_user_batch_process table').tablesorter({sortList: [[2,0]]});
         // ]]>
     </script>
     <?php

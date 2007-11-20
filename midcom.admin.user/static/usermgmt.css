@@ -21,12 +21,31 @@ table.midcom_admin_user_search_results thead
     padding-top: 4px;
     padding-bottom: 4px;
 }
+
 table.midcom_admin_user_search_results thead th,
 table.midcom_admin_user_search_results tbody td
 {
     padding-left: 4px;
     padding-right: 2px;
     text-align: left;
+}
+
+table.midcom_admin_user_search_results thead th
+{
+  background-repeat: no-repeat;
+  background-position: right center;
+  padding-right: 20px;
+  cursor: pointer;
+}
+
+table.midcom_admin_user_search_results thead th.headerSortDown
+{
+  background-image: url('../stock-icons/16x16/down.png');
+}
+
+table.midcom_admin_user_search_results thead th.headerSortUp
+{
+  background-image: url('../stock-icons/16x16/up.png');
 }
 
 table.midcom_admin_user_search_results tr.even td

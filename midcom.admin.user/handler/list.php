@@ -42,6 +42,8 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
                 'href' => MIDCOM_STATIC_URL . '/midcom.admin.user/usermgmt.css',
             )
         );
+        
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.tablesorter.pack.js');
 
         midgard_admin_asgard_plugin::prepare_plugin($this->_l10n->get('midcom.admin.user'),$this->_request_data);
 
