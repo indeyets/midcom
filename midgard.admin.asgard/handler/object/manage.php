@@ -94,9 +94,6 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         $_MIDCOM->skip_page_style = true;
         
         $_MIDCOM->load_library('midcom.helper.datamanager2');
-        
-        // Get the authenticated person
-        $this->_person = new midcom_db_person($_MIDGARD['user']);
     }
 
     /**
