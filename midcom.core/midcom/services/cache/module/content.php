@@ -879,7 +879,8 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             // Construct cache identifiers
             $context = $_MIDCOM->get_current_context();
             $request_id = $this->generate_request_identifier($context);
-            $content_id = $this->generate_content_identifier($context);
+            //$content_id = $this->generate_content_identifier($context);
+            $content_id = 'C-' . $etag;
 
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Creating cache entry for {$content_id}", MIDCOM_LOG_INFO);

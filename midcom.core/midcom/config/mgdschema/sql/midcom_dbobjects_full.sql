@@ -15,10 +15,10 @@ CREATE TABLE midcom_group_virtual
 CREATE TABLE midcom_core_privilege
 (
     id INT(11) NOT NULL auto_increment,
-    objectguid VARCHAR(255) NOT NULL DEFAULT '',
+    objectguid TEXT NOT NULL DEFAULT '',
     name VARCHAR(255) NOT NULL DEFAULT '',
-    assignee VARCHAR(255) NOT NULL DEFAULT '',
-    classname VARCHAR(255) NOT NULL DEFAULT '',
+    assignee TEXT NOT NULL DEFAULT '',
+    classname TEXT NOT NULL DEFAULT '',
     value INT(1) NOT NULL DEFAULT 1,
     sitegroup INT(11) NOT NULL DEFAULT 0,
     metadata_size INT(11) NOT NULL DEFAULT '0',
