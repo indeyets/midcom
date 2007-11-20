@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING Your password has been changed. Your new password is __PASSWORD__
+Your password has been changed. Your new password is __PASSWORD__
+---STRINGEND
+
 ---STRING add to group
 Add to group
 ---STRINGEND
@@ -13,6 +17,14 @@ Amount
 
 ---STRING apply to selected
 Apply to selected
+---STRINGEND
+
+---STRING batch generate passwords
+Batch generate passwords
+---STRINGEND
+
+---STRING change passwords
+Change passwords
 ---STRINGEND
 
 ---STRING choose action
@@ -31,6 +43,10 @@ Create group
 Create user
 ---STRINGEND
 
+---STRING current time (%s)
+Current time (%s)
+---STRINGEND
+
 ---STRING edit %s
 Edit %s
 ---STRINGEND
@@ -41,6 +57,10 @@ Edit account
 
 ---STRING email
 Email
+---STRINGEND
+
+---STRING empty selection
+Empty selection
 ---STRINGEND
 
 ---STRING enable ajax in toolbar
@@ -59,6 +79,14 @@ Enable Asgard usage
 Enable centralized toolbar
 ---STRINGEND
 
+---STRING failed to send the message to %s
+Failed to send the message to %s
+---STRINGEND
+
+---STRING failed to update the password for %s
+Failed to update the password for %s
+---STRINGEND
+
 ---STRING firstname
 Firstname
 ---STRINGEND
@@ -73,6 +101,10 @@ Folders of %s
 
 ---STRING generate
 Generate
+---STRINGEND
+
+---STRING generate new passwords
+Generate new passwords
 ---STRINGEND
 
 ---STRING generate passwords
@@ -95,12 +127,24 @@ Groups
 Lastname
 ---STRINGEND
 
+---STRING long dateformat
+Long dateformat
+---STRINGEND
+
+---STRING long dateformat (%s)
+Long dateformat (%s)
+---STRINGEND
+
 ---STRING maximum %s
 Maximum %s
 ---STRINGEND
 
 ---STRING members
 Members
+---STRINGEND
+
+---STRING message
+Message
 ---STRINGEND
 
 ---STRING midcom.admin.user
@@ -115,12 +159,20 @@ Move %s
 Move group
 ---STRINGEND
 
+---STRING no email address defined for %s
+No email address defined for %s
+---STRINGEND
+
 ---STRING official
 Official name
 ---STRINGEND
 
 ---STRING owner group
 Owner group
+---STRINGEND
+
+---STRING password
+Password
 ---STRINGEND
 
 ---STRING password length
@@ -131,8 +183,16 @@ Password length
 Passwords
 ---STRINGEND
 
+---STRING passwords updated and mail sent
+Passwords updated and mail sent
+---STRINGEND
+
 ---STRING person %s saved
 User %s saved
+---STRINGEND
+
+---STRING personalized equal
+Personalized equal
 ---STRINGEND
 
 ---STRING postcode
@@ -141,6 +201,10 @@ Postcode
 
 ---STRING prevent repeating character
 Prevent repeating character
+---STRINGEND
+
+---STRING prevent repeating characters
+Prevent repeating characters
 ---STRINGEND
 
 ---STRING prevent similar characters
@@ -153,6 +217,22 @@ Remove account
 
 ---STRING search person
 Search users
+---STRINGEND
+
+---STRING sender
+Sender
+---STRINGEND
+
+---STRING short dateformat (%s)
+Short dateformat (%s)
+---STRINGEND
+
+---STRING string
+String
+---STRINGEND
+
+---STRING subject
+Subject
 ---STRINGEND
 
 ---STRING the following fields will be searched: %s
@@ -171,11 +251,23 @@ User account revoked for %s
 Username
 ---STRINGEND
 
+---STRING variable
+Variable
+---STRINGEND
+
 ---STRING workphone
 Work phone
 ---STRINGEND
 
----STRING prevent repeating characters
-Prevent repeating characters
+---STRING write the message that will be sent to the recipients
+Write the message that will be sent to the recipients
+---STRINGEND
+
+---STRING your password has been changed
+Your password has been changed
+---STRINGEND
+
+---STRING passwords will be sent to the following users
+Passwords will be sent to the following users
 ---STRINGEND
 

@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING Your password has been changed. Your new password is __PASSWORD__
+Salasanasi on vaihdettu. Uusi salasanasi on __PASSWORD__
+---STRINGEND
+
 ---STRING add to group
 Lisää ryhmään
 ---STRINGEND
@@ -13,6 +17,14 @@ Määrä
 
 ---STRING apply to selected
 Tee valituille
+---STRINGEND
+
+---STRING batch generate passwords
+Massamuutokset salasanoihin
+---STRINGEND
+
+---STRING change passwords
+Muuta salasanat
 ---STRINGEND
 
 ---STRING choose action
@@ -31,6 +43,10 @@ Luo ryhmä
 Luo käyttäjä
 ---STRINGEND
 
+---STRING current time (%s)
+Kellonaika (%s)
+---STRINGEND
+
 ---STRING edit %s
 Muokkaa kohdetta %s
 ---STRINGEND
@@ -41,6 +57,10 @@ Muokkaa käyttäjätunnusta
 
 ---STRING email
 Sähköposti
+---STRINGEND
+
+---STRING empty selection
+Tyhjä valinta
 ---STRINGEND
 
 ---STRING enable ajax in toolbar
@@ -59,6 +79,14 @@ Salli Asgardin käyttö
 Käytä keskitettyä työkalupalkkia
 ---STRINGEND
 
+---STRING failed to send the message to %s
+Viestin lähettäminen käyttäjälle %s epäonnistui
+---STRINGEND
+
+---STRING failed to update the password for %s
+Salasanan tallentaminen henkilölle %s epäonnistui
+---STRINGEND
+
 ---STRING firstname
 Etunimi
 ---STRINGEND
@@ -73,6 +101,14 @@ Ryhmän %s kansiot
 
 ---STRING generate
 Tee
+---STRINGEND
+
+---STRING generate new passwords
+Luo uudet salasanat
+---STRINGEND
+
+---STRING generate passwords
+Luo salasanoja
 ---STRINGEND
 
 ---STRING go
@@ -91,12 +127,24 @@ Ryhmät
 Sukunimi
 ---STRINGEND
 
+---STRING long dateformat
+Pitkä aikamuoto
+---STRINGEND
+
+---STRING long dateformat (%s)
+Pitkä aikamuoto (%s)
+---STRINGEND
+
 ---STRING maximum %s
 Korkeintaan %s
 ---STRINGEND
 
 ---STRING members
 Jäsenet
+---STRINGEND
+
+---STRING message
+Viesti
 ---STRINGEND
 
 ---STRING midcom.admin.user
@@ -111,12 +159,20 @@ Siirrä %s
 Siirrä ryhmää
 ---STRINGEND
 
+---STRING no email address defined for %s
+Sähköpostiosoitetta ei ole määritetty käyttäjälle %s
+---STRINGEND
+
 ---STRING official
 Virallinen nimi
 ---STRINGEND
 
 ---STRING owner group
 Omistajaryhmä
+---STRINGEND
+
+---STRING password
+Salasana
 ---STRINGEND
 
 ---STRING password length
@@ -127,8 +183,16 @@ Salasanan pituus
 Salasanat
 ---STRINGEND
 
+---STRING passwords updated and mail sent
+Salasanat on päivitetty ja posti lähetetty
+---STRINGEND
+
 ---STRING person %s saved
 Käyttäjä %s tallennettu
+---STRINGEND
+
+---STRING personalized equal
+Personoitu vastine
 ---STRINGEND
 
 ---STRING postcode
@@ -136,6 +200,10 @@ Postinumero
 ---STRINGEND
 
 ---STRING prevent repeating character
+Estä samojen merkkien toistuminen
+---STRINGEND
+
+---STRING prevent repeating characters
 Estä samojen merkkien toistuminen
 ---STRINGEND
 
@@ -149,6 +217,22 @@ Poista käyttäjätunnus
 
 ---STRING search person
 Hae käyttäjiä
+---STRINGEND
+
+---STRING sender
+Lähettäjä
+---STRINGEND
+
+---STRING short dateformat (%s)
+Lyhyt aikamuoto
+---STRINGEND
+
+---STRING string
+Merkkiketju
+---STRINGEND
+
+---STRING subject
+Otsikko
 ---STRINGEND
 
 ---STRING the following fields will be searched: %s
@@ -167,11 +251,23 @@ Käyttäjätunnus %s mitätöity
 Käyttäjätunnus
 ---STRINGEND
 
+---STRING variable
+Muuttuja
+---STRINGEND
+
 ---STRING workphone
 Työpuhelin
 ---STRINGEND
 
----STRING prevent repeating characters
-Estä samojen merkkien toistuminen
+---STRING write the message that will be sent to the recipients
+Kirjoita viesti, joka lähetetään vastaanottajille
+---STRINGEND
+
+---STRING your password has been changed
+Salasanasi on vaihdettu
+---STRINGEND
+
+---STRING passwords will be sent to the following users
+Salasanat lähetetään seuraaville käyttäjille
 ---STRINGEND
 

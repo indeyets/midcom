@@ -21,7 +21,7 @@ if (count($data['persons']) > 0)
 {
     $data['enabled'] = 0;
     ?>
-    <form method="post">
+    <form method="post" id="midcom_admin_user_batch_process" action="&(_MIDGARD['uri']);">
     <table class="midcom_admin_user_search_results">
         <thead>
             <tr>

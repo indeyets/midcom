@@ -67,12 +67,22 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
             /**
              * Generate random passwords
              * 
-             * Match //user-editor/password/
+             * Match /user-editor/password/
              */
             'user_passwords' => array
             (
                 'handler' => array ('midcom_admin_user_handler_user_edit', 'passwords'),
                 'fixed_args' => array ('password'),
+            ),
+            /**
+             * Generate random passwords
+             * 
+             * Match /user-editor/password/email/
+             */
+            'user_passwords_batch' => array
+            (
+                'handler' => array ('midcom_admin_user_handler_user_edit', 'batch'),
+                'fixed_args' => array ('password', 'batch'),
             ),
             /**
              * Edit a user's password
@@ -151,6 +161,45 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
                  'fixed_args' => array ('group', 'create'),
              ),
         );
+    }
+    
+    /**
+     * Static method for generating one password
+     * 
+     * @access static public
+     * @param int $length
+     */
+    function generate_password($length, $no_similars = true, $strong = true)
+    {
+        $similars = array
+        (
+            'I', 'l', '1', '0', 'O',
+        );
+        
+        $string = '';
+        for ($x = 0; $x < $length; $x++)
+        {
+            $rand = (int) rand(48, 122);
+            $char = chr($rand);
+            
+            $k = 0;
+            
+            while (   !ereg('[a-zA-Z0-9]', $char)
+                   || (   $strong
+                       && strlen($string) > 0
+                       && strstr($string, $char))
+                   || (   $no_similars
+                       && in_array($char, $similars)))
+            {
+                $rand = (int) rand(48, 122);
+                $char = chr($rand);
+                
+                $k++;
+            }
+            $string .= $char;
+        }
+        
+        return $string;
     }
 }
 ?>

@@ -5,11 +5,6 @@ $non_alphas = false;
 $max_amount = 100;
 $max_length = 16;
 
-$similars = array
-(
-    'I', 'l', '1', '0', 'O',
-);
-
 if (isset($_GET['f_submit']))
 {
     $strong = false;
@@ -39,7 +34,7 @@ if (!isset($_GET['ajax-form']))
             </label>
             <label for="similar_characters">
                 <input type="checkbox" id="similar_characters" name="no_similars" value="1" <?php if ($no_similars) { echo ' checked="checked"'; } ?> />
-                <span class="label"><?php echo $data['l10n']->get('prevent similar characters'); ?> (<em><?php echo implode(', ', $similars); ?></em>)</span>
+                <span class="label"><?php echo $data['l10n']->get('prevent similar characters'); ?> (<em>I, l, 1, 0, O</em>)</span>
             </label>
             <input type="submit" name="f_submit" value="<?php echo $data['l10n']->get('generate'); ?>" />
 <?php
@@ -72,32 +67,7 @@ else
 {
     for ($i = 0; $i < $n; $i++)
     {
-        $string = '';
-        for ($x = 0; $x < $length; $x++)
-        {
-            $rand = (int) rand(48, 122);
-            $char = chr($rand);
-            
-            $k = 0;
-            
-            while (   !ereg('[a-zA-Z0-9]', $char)
-                   || (   $strong
-                       && strlen($string) > 0
-                       && strstr($string, $char))
-                   || (   $no_similars
-                       && in_array($char, $similars)))
-            {
-                $rand = (int) rand(48, 122);
-                $char = chr($rand);
-                
-                $k++;
-    //            echo "[{$k}:{$char}]";
-            }
-            
-            echo $char;
-    //        echo " ({$rand}) ";
-            $string .= $char;
-        }
+        echo midcom_admin_user_plugin::generate_password($length, $no_similars, $strong);
         echo "\n";
     }
     

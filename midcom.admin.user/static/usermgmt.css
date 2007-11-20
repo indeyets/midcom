@@ -53,7 +53,21 @@ form.datamanager2 fieldset input
   padding: 6px;
 }
 
-#midcom_admin_user_passwords label
+#midcom_admin_user_passwords label,
+#midcom_admin_user_action_passwords label
 {
+  font-weight: bold;
   display: block;
+  margin-top: 1em;
+}
+
+#midcom_admin_user_action_passwords h1
+{
+  font-size: 120%;
+}
+
+#midcom_admin_user_email_body
+{
+  width: 20em;
+  height: 15em;
 }

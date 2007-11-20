@@ -29,7 +29,6 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
 
     function _on_initialize()
     {
-
         $this->_l10n = $_MIDCOM->i18n->get_l10n('midcom.admin.user');
         $this->_request_data['l10n'] = $this->_l10n;
 
@@ -44,7 +43,6 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
         );
 
         midgard_admin_asgard_plugin::prepare_plugin($this->_l10n->get('midcom.admin.user'),$this->_request_data);
-
     }
     
     function _update_breadcrumb($handler_id)
@@ -76,8 +74,20 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
 
     function _prepare_toolbar(&$data,$handler_id)
     {
-        if (   $handler_id != '____mfa-asgard_midcom.admin.user-user_edit_password'
-            && $this->_config->get('allow_manage_accounts'))
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.user/",
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('midcom.admin.user'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_person-new.png',
+            ),
+            $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
+        );
+        
+        if (   $handler_id !== '____mfa-asgard_midcom.admin.user-user_edit_password'
+            && $this->_config->get('allow_manage_accounts')
+            && $this->_person)
         {
             $data['asgard_toolbar']->add_item
             (
@@ -92,8 +102,6 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
         }
 
     }
-
-
 
     /**
      * Loads and prepares the schema database.
@@ -226,6 +234,232 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
         // Show passwords
         $data['l10n'] =& $this->_l10n;
         midcom_show_style('midcom-admin-user-generate-passwords');
+    }
+    
+    /** 
+     * Internal helper for processing the batch change of passwords
+     * 
+     * @access private
+     */
+    function _process_batch_change()
+    {
+        if (   !isset($_POST['midcom_admin_user'])
+            || count($_POST['midcom_admin_user']) === 0)
+        {
+            return;
+        }
+        
+        if (isset($_POST['f_cancel']))
+        {
+            $_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.user'), $_MIDCOM->i18n->get_string('cancelled', 'midcom'));
+            $_MIDCOM->relocate('__mfa/asgard_midcom.admin.user/');
+            // This will exit
+        }
+        
+        // Load the org.openpsa.mail class
+        $_MIDCOM->componentloader->load('org.openpsa.mail');
+        
+        // Set the mail commo parts
+        $mail = new org_openpsa_mail();
+        $mail->from = $this->_config->get('message_sender');
+        $mail->encoding = 'UTF-8';
+        
+        // Success switch
+        $success = true;
+        
+        // Get the context prefix
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        
+        // Change every user or continue to next on failure - failures will show UI messages
+        foreach ($_POST['midcom_admin_user'] as $id)
+        {
+            $person = new midcom_db_person($id);
+            
+            // Check integrity
+            if (   !$person
+                || !$person->guid)
+            {
+                $_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.user'), sprintf($this->_l10n->get('failed to get the user with id %s'), $id), 'error');
+                $success = false;
+                continue;
+            }
+            
+            // This shortcut is used in case of errors
+            $person_edit_url = "<a href=\"{$prefix}__mfa/asgard_midcom.admin.user/edit/{$person->guid}\">{$person->name}</a>";
+            
+            // Cannot send the email if address is not specified
+            if (!$person->email)
+            {
+                $_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.user'), sprintf($this->_l10n->get('no email address defined for %s'), $person_edit_url), 'error');
+                continue;
+            }
+            
+            // Recipient
+            $mail->to = $person->email;
+            
+            // Clean, unchanged message
+            $body = $_POST['body'];
+            $subject = $_POST['subject'];
+            
+            // Store the old password
+            $person->set_parameter('midcom.admin.user', 'old_password', $person->password);
+            
+            // Get a new password
+            $password = midcom_admin_user_plugin::generate_password(8);
+            
+            // Replace the variables
+            foreach ($this->_request_data['variables'] as $key => $value)
+            {
+                // Replace the variables with personalized values
+                switch ($key)
+                {
+                    case '__PASSWORD__':
+                        $subject = str_replace($key, $password, $subject);
+                        $body = str_replace($key, $password, $body);
+                        break;
+                    
+                    case '__FROM__':
+                        $subject = str_replace($key, $this->_config->get('message_sender'), $subject);
+                        $body = str_replace($key, $this->_config->get('message_sender'), $body);
+                        break;
+                    
+                    case '__LONGDATE__':
+                        $subject = str_replace($key, strftime('%c'), $subject);
+                        $body = str_replace($key, strftime('%c'), $body);
+                        break;
+                    
+                    case '__SHORTDATE__':
+                        $subject = str_replace($key, strftime('%x'), $subject);
+                        $body = str_replace($key, strftime('%x'), $body);
+                        break;
+                    
+                    case '__TIME__':
+                        $subject = str_replace($key, strftime('%X'), $subject);
+                        $body = str_replace($key, strftime('%X'), $body);
+                        break;
+                    
+                    default:
+                        if (!isset($person->$key))
+                        {
+                            continue;
+                        }
+                        $subject = str_replace($key, $person->$key, $subject);
+                        $body = str_replace($key, $person->$key, $body);
+                }
+            }
+            
+            // After the tedious replacing, strings are placed to the mailer
+            $mail->body = $body;
+            $mail->subject = $subject;
+            
+            // Send the message
+            if ($mail->send())
+            {
+                // Set the password
+                $person->password = "**{$password}";
+                
+                if (!$person->update())
+                {
+                    $_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.user'), sprintf($this->_l10n->get('failed to update the password for %s'), $person_edit_url));
+                    $success = false;
+                }
+            }
+            else
+            {
+//                $_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.user'), sprintf($this->_l10n->get('failed to send the message to %s'), $person_edit_url), 'error');
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to send the mail, SMTP returned error {$mail->get_error_message()}");
+                // This will exit
+            }
+        }
+        
+        // Show UI message on success
+        if ($success)
+        {
+            $_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.user'), $this->_l10n->get('passwords updated and mail sent'));
+        }
+        
+        // Relocate to the user administration front page
+        $_MIDCOM->relocate('__mfa/asgard_midcom.admin.user/');
+        // This will exit
+    }
+    
+    /**
+     * Batch process password change
+     * 
+     * @access public
+     */
+    function _handler_batch($handler_id, $args, &$data)
+    {
+        $_MIDCOM->auth->require_admin_user();
+        
+        // Set page title and default variables
+        $data['view_title'] = $this->_l10n->get('batch generate passwords');
+        $data['variables'] = array
+        (
+            '__FIRSTNAME__' => $this->_l10n->get('firstname'),
+            '__LASTNAME__' => $this->_l10n->get('lastname'),
+            '__USERNAME__' => $this->_l10n->get('username'),
+            '__EMAIL__' => $this->_l10n->get('email'),
+            '__PASSWORD__' => $this->_l10n->get('password'),
+            '__FROM__' => $this->_l10n->get('sender'),
+            '__LONGDATE__' => sprintf($this->_l10n->get('long dateformat (%s)'), strftime('%c')),
+            '__SHORTDATE__' => sprintf($this->_l10n->get('short dateformat (%s)'), strftime('%x')),
+            '__TIME__' => sprintf($this->_l10n->get('current time (%s)'), strftime('%X')),
+        );
+        
+        $this->_process_batch_change();
+        
+        
+        if(isset($_GET['ajax']))
+        {
+            return true;
+        }
+        
+        // Prepare the toolbar and breadcrumb
+        midgard_admin_asgard_plugin::get_common_toolbar($data);
+        $this->_prepare_toolbar(&$data, $handler_id);
+        
+        // Populate breadcrumb
+        $tmp = Array();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.user/",
+            MIDCOM_NAV_NAME => $this->_l10n->get('midcom.admin.user'),
+        );
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => '__mfa/asgard_midcom.admin.user/password/batch/',
+            MIDCOM_NAV_NAME => $this->_request_data['view_title'],
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        
+        
+        return true;
+    }
+    
+    /**
+     * Show the batch password change form
+     * 
+     * @access public
+     */
+    function _show_batch($handler_id, &$data)
+    {
+        if (!isset($_GET['ajax']))
+        {
+            midgard_admin_asgard_plugin::asgard_header();
+            midcom_show_style('midcom-admin-user-password-nonajax-header');
+        }
+        
+        $data['message_subject'] = $this->_l10n->get($this->_config->get('message_subject'));
+        $data['message_body'] = $this->_l10n->get($this->_config->get('message_body'));
+        
+        midcom_show_style('midcom-admin-user-password-email');
+        
+        if (!isset($_GET['ajax']))
+        {
+            midcom_show_style('midcom-admin-user-passwords-list');
+            midgard_admin_asgard_plugin::asgard_footer();
+        }
     }
 }
 ?>

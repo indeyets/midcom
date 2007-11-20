@@ -111,6 +111,24 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
         $data['search_fields'] = $this->_config->get('search_fields');
         $data['list_fields'] = $this->_config->get('list_fields');
         
+        // Set the passwords elsewhere, but check the request first
+        if (   isset($_POST['midcom_admin_user_action'])
+            && $_POST['midcom_admin_user_action'] === 'passwords')
+        {
+            if (   !isset($_POST['midcom_admin_user'])
+                || count($_POST['midcom_admin_user']) === 0)
+            {
+                $_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.user'), $this->_l10n->get('empty selection'));
+            }
+            else
+            {
+                $get = implode('&midcom_admin_user[]=', $_POST['midcom_admin_user']);
+                
+                $_MIDCOM->relocate("__mfa/asgard_midcom.admin.user/password/batch/?midcom_admin_user[]={$get}");
+                // This will exit
+            }
+        }
+        
         if (   isset($_POST['midcom_admin_user'])
             && is_array($_POST['midcom_admin_user'])
             && $_POST['midcom_admin_user_action'])
@@ -146,6 +164,7 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
                                 $_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.user'), sprintf($this->_l10n->get('user %s added to group'), $person->name));
                             }
                         }
+                        break;
                 }
             }
         }

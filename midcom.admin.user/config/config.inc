@@ -21,3 +21,10 @@
     'email',
     'city', 
 ),
+'message_subject' => 'your password has been changed',
+'message_body' => "Your password has been changed. Your new password is __PASSWORD__
+
+-- 
+__FROM__ - __LONGDATE__
+",
+'message_sender' => 'www-data@kaktus.cc',
