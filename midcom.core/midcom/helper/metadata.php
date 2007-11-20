@@ -535,12 +535,10 @@ class midcom_helper_metadata
         }
         else
         {
-            $person = $_MIDCOM->auth->user->get_storage();
-            $approver = $person->guid;
+            $approver = $_MIDCOM->auth->user->guid;
         }
-
-        $this->set('approved', time());
         $this->set('approver', $approver);
+        $this->set('approved', time());
     }
 
     /**
