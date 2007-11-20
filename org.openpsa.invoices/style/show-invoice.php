@@ -19,9 +19,9 @@ if (   array_key_exists('sorted_reports', $data)
     echo "<div style=\"clear: both;\" class=\"hours\">\n";
     echo "<h2>" . $data['l10n']->get('invoiced hour reports') . "</h2>\n";
     $total = 0;
-    foreach ($data['sorted_reports']['tasks'] as $task_id => $data)
+    foreach ($data['sorted_reports']['tasks'] as $task_id => $task_data)
     {
-        $hours =& $data['reports'];
+        $hours =& $task_data['reports'];
         $task = new org_openpsa_projects_task($task_id);
         // TODO: Link etc
         echo "<h3><a href=\"{$projects_node[MIDCOM_NAV_FULLURL]}task/{$task->guid}/\">{$task->title}</a></h3>\n";
