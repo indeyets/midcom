@@ -47,6 +47,10 @@ Asgardin etusivu
 Asgardin lisätoiminnot
 ---STRINGEND
 
+---STRING attachment %s undeleted
+Liitetiedosto %s palautettu
+---STRINGEND
+
 ---STRING back to site
 Takaisin sivustolle
 ---STRINGEND
@@ -91,6 +95,18 @@ Poistettu päivämäärällä
 Muokkaa %s %s
 ---STRINGEND
 
+---STRING failed purging attachment %s => %s, reason %s
+Liitetiedoston %s => %s tyhjentäminen epäonnistui, syy %s
+---STRINGEND
+
+---STRING failed undeleting %s, reason %s
+Kohteen %s palauttaminen epäonnistui, syy %s
+---STRINGEND
+
+---STRING failed undeleting attachment %s, reason %s
+Liitetiedoston %s palauttaminen epäonnistui, syy %s
+---STRINGEND
+
 ---STRING filter
 Suodatin
 ---STRINGEND
@@ -113,6 +129,14 @@ GUID-tunniste
 
 ---STRING in fallback language
 oletuskielellä
+---STRINGEND
+
+---STRING in total %s purged
+Yhteensä %s tyhjennetty
+---STRINGEND
+
+---STRING in total %s undeleted
+Yhteensä %s palautettu
 ---STRINGEND
 
 ---STRING info
@@ -231,6 +255,10 @@ Varaus
 Käyttöoikeudet
 ---STRINGEND
 
+---STRING purge
+Tyhjennä
+---STRINGEND
+
 ---STRING size
 Koko
 ---STRINGEND
@@ -275,7 +303,7 @@ Käyttöasetukset
 Katso sivustolla
 ---STRINGEND
 
----STRING purge
-Tyhjennä
+---STRING failed purging %s, reason %s
+Kohteen %s tyhjentäminen epäonnistui, syy %s
 ---STRINGEND
 

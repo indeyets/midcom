@@ -8,7 +8,7 @@
  */
 
 /**
- * Welcome interface
+ * Undelete/purge interface
  *
  * @package midgard.admin.asgard
  */
@@ -62,6 +62,11 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         return $objects[$guid];
     }
     
+    /**
+     * Recover the parameters related to a deleted object
+     * 
+     * @access private
+     */
     function _undelete_parameters($guid)
     {
         $qb = new midgard_query_builder('midgard_parameter');
@@ -78,6 +83,11 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         }
     }
     
+    /**
+     * Recover the attachments related to a deleted object
+     * 
+     * @access private
+     */
     function _undelete_attachments($guid)
     {
         $qb = new midgard_query_builder('midgard_attachment');
@@ -100,7 +110,11 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         }
     }
 
-
+    /**
+     * Purge the parameters related to a deleted object
+     * 
+     * @access private
+     */
     function _purge_parameters($guid)
     {
         $qb = new midgard_query_builder('midgard_parameter');
@@ -125,6 +139,11 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         }
     }
     
+    /**
+     * Purge the attachments related to a deleted object
+     * 
+     * @access private
+     */
     function _purge_attachments($guid)
     {
         $qb = new midgard_query_builder('midgard_attachment');
@@ -150,6 +169,13 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         }
     }
     
+    /**
+     * Helper method for undeleting objects
+     * 
+     * @access private
+     * @param Array $guids
+     * @param string $type
+     */
     function _undelete($guids, $type)
     {
         $ref = midgard_admin_asgard_reflector_tree::get($type);
@@ -194,7 +220,13 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         }
     }
 
-
+    /**
+     * Helper method for purging objects
+     * 
+     * @access private
+     * @param Array $guids
+     * @param string $type
+     */
     function _purge($guids, $type)
     {
         $ref = midgard_admin_asgard_reflector_tree::get($type);

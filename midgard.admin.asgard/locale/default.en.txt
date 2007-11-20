@@ -47,6 +47,10 @@ Asgard Home
 Asgard plugins
 ---STRINGEND
 
+---STRING attachment %s undeleted
+Attachment %s undeleted
+---STRINGEND
+
 ---STRING back to site
 Back to site
 ---STRINGEND
@@ -91,6 +95,18 @@ Deleted on
 Edit %s %s
 ---STRINGEND
 
+---STRING failed purging attachment %s => %s, reason %s
+Failed purging attachment %s => %s, reason %s
+---STRINGEND
+
+---STRING failed undeleting %s, reason %s
+Failed undeleting %s, reason %s
+---STRINGEND
+
+---STRING failed undeleting attachment %s, reason %s
+Failed undeleting attachment %s, reason %s
+---STRINGEND
+
 ---STRING filter
 Filter
 ---STRINGEND
@@ -113,6 +129,14 @@ in %s
 
 ---STRING in fallback language
 In fallback language
+---STRINGEND
+
+---STRING in total %s purged
+In total %s purged
+---STRINGEND
+
+---STRING in total %s undeleted
+In total %s undeleted
 ---STRINGEND
 
 ---STRING info
@@ -231,6 +255,10 @@ Reserve
 Permissions
 ---STRINGEND
 
+---STRING purge
+Purge
+---STRINGEND
+
 ---STRING size
 Size
 ---STRINGEND
@@ -275,7 +303,7 @@ User preferences
 View on-site
 ---STRINGEND
 
----STRING purge
-Purge
+---STRING failed purging %s, reason %s
+Failed purging %s, reason %s
 ---STRINGEND
 
