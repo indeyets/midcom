@@ -79,6 +79,14 @@ Default language
 Delete %s %s
 ---STRINGEND
 
+---STRING deleted by
+Deleted by
+---STRINGEND
+
+---STRING deleted on
+Deleted on
+---STRINGEND
+
 ---STRING edit %s %s
 Edit %s %s
 ---STRINGEND
@@ -171,6 +179,10 @@ Update
 Navigation width
 ---STRINGEND
 
+---STRING navigation width (in pixels)
+Navigation width (in pixels)
+---STRINGEND
+
 ---STRING no title
 No title
 ---STRINGEND
@@ -219,6 +231,10 @@ Reserve
 Permissions
 ---STRINGEND
 
+---STRING size
+Size
+---STRINGEND
+
 ---STRING this is a midgard core type
 This is a Midgard CMS core type.
 ---STRINGEND
@@ -233,6 +249,10 @@ Folder permissions
 
 ---STRING trash is empty
 Trash is empty
+---STRINGEND
+
+---STRING undelete
+Undelete
 ---STRINGEND
 
 ---STRING under %s
@@ -255,7 +275,7 @@ User preferences
 View on-site
 ---STRINGEND
 
----STRING navigation width (in pixels)
-Navigation width (in pixels)
+---STRING purge
+Purge
 ---STRINGEND
 

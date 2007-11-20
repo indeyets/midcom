@@ -79,6 +79,14 @@ Oletuskieli
 Poista %s %s
 ---STRINGEND
 
+---STRING deleted by
+Poistaja
+---STRINGEND
+
+---STRING deleted on
+Poistettu päivämäärällä
+---STRINGEND
+
 ---STRING edit %s %s
 Muokkaa %s %s
 ---STRINGEND
@@ -171,6 +179,10 @@ Päivitys
 Navigaation leveys
 ---STRINGEND
 
+---STRING navigation width (in pixels)
+Navigaation leveys (pikseleinä)
+---STRINGEND
+
 ---STRING no title
 Ei otsikkoa
 ---STRINGEND
@@ -219,6 +231,10 @@ Varaus
 Käyttöoikeudet
 ---STRINGEND
 
+---STRING size
+Koko
+---STRINGEND
+
 ---STRING this is a midgard core type
 Tämä tyyppi on osa Midgard-julkaisujärjestelmää.
 ---STRINGEND
@@ -233,6 +249,10 @@ Kansion käyttöoikeudet
 
 ---STRING trash is empty
 Roskakori on tyhjä
+---STRINGEND
+
+---STRING undelete
+Palauta
 ---STRINGEND
 
 ---STRING under %s
@@ -255,7 +275,7 @@ Käyttöasetukset
 Katso sivustolla
 ---STRINGEND
 
----STRING navigation width (in pixels)
-Navigaation leveys (pikseleinä)
+---STRING purge
+Tyhjennä
 ---STRINGEND
 
