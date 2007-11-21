@@ -407,17 +407,12 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                             {
                                 $widget = 'tinymce';
                             }
-                            else
-                            {
-                                $widget = 'textarea';
-                            }
                             
                             break;
                         case 'value':
                         case 'code':
                             // These are typical "large" fields
                             $height = 30;
-                            $dm_type = 'php';
                             $output_mode = 'code';
                             
                             // Check the user preference and configuration
@@ -425,11 +420,8 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                                 || (   midgard_admin_asgard_plugin::get_preference('codepress_enabled') !== '0'
                                     && $this->_config->get('codepress_enabled')))
                             {
+                                $dm_type = 'php';
                                 $widget = 'codepress';
-                            }
-                            else
-                            {
-                                $widget = 'textarea';
                             }
                             
                             break;
