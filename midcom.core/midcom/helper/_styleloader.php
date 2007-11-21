@@ -458,11 +458,11 @@ class midcom_helper__styleloader {
      * or the default style snippetdir) and displays/evaluates it.
      *
      * @param string $path	The style element to show.
+     * @param array $guids  List of GUIDs included in this element display, if set will enable caching
      * @return bool			True on success, false otherwise.
      */
-    function show($path)
+    function show($path, $guids = null)
     {
-
         if ($this->_context === array ())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -534,6 +534,19 @@ class midcom_helper__styleloader {
         {
             // This is a bit of a hack to allow &(); tags
             $data =& $_MIDCOM->get_custom_context_data('request_data');
+            $instance_id = false;
+            
+            if (   $guids
+                && in_array('style', $GLOBALS['midcom_config_default']['cache_module_memcache_data_groups']))
+            {
+                // Cache style elements
+                $instance_id = $path . '-' . md5(serialize($guids));
+
+                if ($_MIDCOM->cache->memcache->exists('style', $instance_id))
+                {
+                    echo $_MIDCOM->cache->memcache->get('style', $instance_id);
+                }
+            }
             
             if ($GLOBALS['midcom_config']['wrap_style_show_with_name'])
             {
@@ -541,7 +554,19 @@ class midcom_helper__styleloader {
                 $_style .= "\n<!-- End of style '{$path}' -->\n";                
             }
             
-            $result = eval('?>' . mgd_preparse($_style));
+            if ($instance_id)
+            {
+                // This element will be cached after display
+                ob_start();        
+                $result = eval('?>' . mgd_preparse($_style));
+                $contents = ob_get_contents();
+                $_MIDCOM->cache->memcache->put('style', $instance_id, $result);
+                ob_end_flush();
+            }
+            else
+            {
+                $result = eval('?>' . mgd_preparse($_style));
+            }
                         
             if ($result === false)
             {
@@ -832,8 +857,9 @@ class midcom_helper__styleloader {
  *
  * @see midcom_helper__styleloader::show()
  */
-function midcom_show_style($param) {
-    return $_MIDCOM->style->show($param);
+function midcom_show_style($param, $guids = null) 
+{
+    return $_MIDCOM->style->show($param, $guids);
 }
 
 ?>
