@@ -54,8 +54,7 @@ if (PEAR::isError($result))
 $image = $captcha->getCAPTCHA();
 if (! is_resource($image))
 {
-    $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-        'Failed to generate Captcha, captcha rendering failed.');
+    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to generate Captcha, captcha rendering failed. <br /><strong>Reason</strong>: '.$image->getMessage());
     // This will exit.
 }
 
