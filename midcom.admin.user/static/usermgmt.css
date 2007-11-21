@@ -12,6 +12,7 @@ form.midcom_admin_user_search
 table.midcom_admin_user_search_results
 {
     border-collapse: collapse;
+    border-spacing: 0;
 }
 
 table.midcom_admin_user_search_results thead
@@ -53,6 +54,24 @@ table.midcom_admin_user_search_results tr.even td
     background-color: #eeeeef;
 }
 
+table.midcom_admin_user_search_results tr.row_selected td
+{
+    background-color: #C0CEDE;
+    color: #000000;
+}
+
+table.midcom_admin_user_search_results tr.even.row_selected td
+{
+    background-color: #DFE6EE;
+}
+
+table.midcom_admin_user_search_results tr.row_selected td.first
+{
+}
+
+table.midcom_admin_user_search_results tr.row_selected td.last
+{
+}
 
 form.datamanager2 fieldset label,
 form.datamanager2 fieldset input
