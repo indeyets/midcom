@@ -72,7 +72,7 @@ class org_routamc_statusmessage_viewer extends midcom_baseclasses_components_req
             (
                 'latest',
             ),
-            'variable_args' => 1,
+            'variable_args' => 2,
         );
 
 
