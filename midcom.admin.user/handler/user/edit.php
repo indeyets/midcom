@@ -199,7 +199,8 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
     function _show_edit($handler_id, &$data)
     {
         midgard_admin_asgard_plugin::asgard_header();
-
+        
+        $data['handler_id'] = $handler_id;
         $data['l10n'] =& $this->_l10n;
         $data['person'] =& $this->_person;
         $data['controller'] =& $this->_controller;

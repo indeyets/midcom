@@ -2,10 +2,13 @@
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
 <h1><?php echo $data['view_title']; ?></h1>
+<?php
+if ($data['handler_id'] === '____mfa-asgard_midcom.admin.user-user_edit_password')
+{
+?>
 <div id="midcom_admin_user_passwords">
     <a href="&(prefix);__mfa/asgard_midcom.admin.user/password/" target="_blank"><?php echo $data['l10n']->get('generate passwords'); ?></a>
 </div>
-<?php $data['controller']->display_form(); ?>
 <script type="text/javascript">
     // <![CDATA[
         $j('#midcom_admin_user_passwords a')
@@ -17,3 +20,9 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             });
     // ]]>
 </script>
+
+<?php
+}
+
+$data['controller']->display_form();
+?>

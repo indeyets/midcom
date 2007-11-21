@@ -187,6 +187,10 @@ Passwords
 Passwords updated and mail sent
 ---STRINGEND
 
+---STRING passwords will be sent to the following users
+Passwords will be sent to the following users
+---STRINGEND
+
 ---STRING person %s saved
 User %s saved
 ---STRINGEND
@@ -217,6 +221,10 @@ Remove account
 
 ---STRING search person
 Search users
+---STRINGEND
+
+---STRING select all
+Select all
 ---STRINGEND
 
 ---STRING sender
@@ -267,7 +275,7 @@ Write the message that will be sent to the recipients
 Your password has been changed
 ---STRINGEND
 
----STRING passwords will be sent to the following users
-Passwords will be sent to the following users
+---STRING invert selection
+Invert selection
 ---STRINGEND
 

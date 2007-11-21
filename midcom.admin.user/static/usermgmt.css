@@ -23,7 +23,7 @@ table.midcom_admin_user_search_results thead
 }
 
 table.midcom_admin_user_search_results thead th,
-table.midcom_admin_user_search_results tbody td
+table.midcom_admin_user_search_results td
 {
     padding-left: 4px;
     padding-right: 2px;
@@ -64,11 +64,15 @@ form.datamanager2 fieldset input
 {
   float: right;
   width: 25em;
+  -moz-border-radius: 6px;
+  padding: 1em;
+  background-color: #eeeeef;
+  margin-bottom: 1em;
 }
 
 #midcom_admin_user_passwords pre
 {
-  background-color: #eeeeef;
+  background-color: #ffffff;
   padding: 6px;
 }
 

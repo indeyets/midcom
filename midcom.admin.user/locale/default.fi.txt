@@ -187,6 +187,10 @@ Salasanat
 Salasanat on päivitetty ja posti lähetetty
 ---STRINGEND
 
+---STRING passwords will be sent to the following users
+Salasanat lähetetään seuraaville käyttäjille
+---STRINGEND
+
 ---STRING person %s saved
 Käyttäjä %s tallennettu
 ---STRINGEND
@@ -217,6 +221,10 @@ Poista käyttäjätunnus
 
 ---STRING search person
 Hae käyttäjiä
+---STRINGEND
+
+---STRING select all
+Valitse kaikki
 ---STRINGEND
 
 ---STRING sender
@@ -267,7 +275,7 @@ Kirjoita viesti, joka lähetetään vastaanottajille
 Salasanasi on vaihdettu
 ---STRINGEND
 
----STRING passwords will be sent to the following users
-Salasanat lähetetään seuraaville käyttäjille
+---STRING invert selection
+Käännä valinnat päinvastaisiksi
 ---STRINGEND
 

@@ -15,6 +15,16 @@ if (count($data['persons']) > 0)
         </tbody>
         <tfoot>
             <tr>
+                <td colspan="<?php echo count($data['list_fields']) + 1; ?>">
+                    <label for="select_all">
+                        <input type="checkbox" name="select_all" id="select_all" value="" onclick="$j(this).check_all('#midcom_admin_user_batch_process table tbody');" /> <?php echo $_MIDCOM->i18n->get_string('select all', 'midcom.admin.user');; ?>
+                    </label>
+                    <label for="invert_selection">
+                        <input type="checkbox" name="invert_selection" id="invert_selection" value="" onclick="$j(this).invert_selection('#midcom_admin_user_batch_process table tbody');" /> <?php echo $_MIDCOM->i18n->get_string('invert selection', 'midcom.admin.user');; ?>
+                    </label>
+                </td>
+            </tr>
+            <tr>
                 <td>&nbsp;</td>
                 <td colspan="<?php echo count($data['list_fields']); ?>">
                     <select id="midcom_admin_user_action" name="midcom_admin_user_action"<?php echo $disabled; ?>>
@@ -81,7 +91,11 @@ if (count($data['persons']) > 0)
                     });
                 }
             });
-            $j('#midcom_admin_user_batch_process table').tablesorter({sortList: [[2,0]]});
+            $j('#midcom_admin_user_batch_process table').tablesorter(
+            {
+//                widgets: ['column_highlight'],
+                sortList: [[2,0]]
+            });
         // ]]>
     </script>
     <?php
