@@ -537,7 +537,7 @@ class midcom_helper__styleloader {
             $instance_id = false;
             
             if (   $guids
-                && in_array('style', $GLOBALS['midcom_config_default']['cache_module_memcache_data_groups']))
+                && in_array('style', $GLOBALS['midcom_config']['cache_module_memcache_data_groups']))
             {
                 // Cache style elements
                 $instance_id = $path . '-' . md5(serialize($guids));
