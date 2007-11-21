@@ -10,6 +10,10 @@
 // This form is usually handled by a remote transporter that Basic authenticates with some local user account
 $_MIDCOM->auth->require_valid_user('basic');
 
+// Disable limits as replication files may be large
+@ini_set('memory_limit', -1);
+@ini_set('max_execution_time', 0);
+
 if (isset($_POST['midcom_helper_replicator_import_xml']))
 {
     if (!isset($_POST['midcom_helper_replicator_use_force']))
