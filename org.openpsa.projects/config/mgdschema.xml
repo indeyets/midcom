@@ -19,7 +19,7 @@
         <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
         <!-- /required metadata -->
         <!-- /Copied from NewMidgardevent -->
-        <!-- in general we rely on ACL but untill it's in core level we might need this -->
+        <!-- in general we rely on ACL but until it's in core level we might need this -->
         <property name="owner" link="midgard_group:id" reverse="no" type="integer"/>
 
         <property name="affectsSaldo" type="boolean"/>

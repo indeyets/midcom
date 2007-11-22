@@ -187,7 +187,7 @@ class net_nehmer_jobmarket_handler_search extends midcom_baseclasses_components_
      * over session data. It will however try to pick up the selections of the last search
      * session as far as possible; current URL settings are not overridden however.
      *
-     * You can override this behavoir by setting the HTTP GET parameter reset_search_session,
+     * You can override this behavior by setting the HTTP GET parameter reset_search_session,
      * which forces the component to display a clean search form again.
      */
     function _handler_search($handler_id, $args, &$data)

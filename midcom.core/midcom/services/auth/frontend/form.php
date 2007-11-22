@@ -27,7 +27,7 @@ class midcom_services_auth_frontend_form extends midcom_services_auth_frontend
     }
 
     /**
-     * This call checks wether the two form fields we have created are present, if yes
+     * This call checks whether the two form fields we have created are present, if yes
      * it reads and returns their values.
      *
      * @return Array A simple accociative array with the two indexes 'username' and

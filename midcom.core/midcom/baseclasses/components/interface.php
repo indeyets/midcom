@@ -12,10 +12,10 @@
  *
  * The interface presented here supersedes all original component interface
  * classes (COMPONENT, CONTENTADMIN, MIDCOM and NAP). The class uses an event
- * based approache for subclasses to influence the default behavoir.
+ * based approache for subclasses to influence the default behavior.
  *
  * The actual implementation should be enough for most smaller components, as
- * the classes behavoir is widely configurable. You should not override any of
+ * the classes behavior is widely configurable. You should not override any of
  * the base classes interface methods if you can avoid it. If you find that an
  * event handler is missing, please contact the MidCOM development team for
  * some advise.
@@ -91,7 +91,7 @@
  * the component. Unless, of course, you have some special requirements.
  *
  * One thing, which I have seen quite often in components, is the initialize method loading
- * the default schema. While I actually do not endorse this behavoir, schemas should only
+ * the default schema. While I actually do not endorse this behavior, schemas should only
  * be loaded on demand during runtime (especially since they are configurable), you should
  * now add code like that to the _on_initialize() event handler, which will be exectued
  * at about the same time as the original implementation would have been.
@@ -516,7 +516,7 @@ class midcom_baseclasses_components_interface
      * defined keys are:
      *
      * - <i>config</i> holds the configuration for this context
-     * - <i>admin</i> A flag indicating wether we are in Admin mode or not (set during configure)
+     * - <i>admin</i> A flag indicating whether we are in Admin mode or not (set during configure)
      * - <i>handler</i> The class handling the request.
      */
     private $_context_data = Array();
@@ -528,7 +528,7 @@ class midcom_baseclasses_components_interface
      * @param mixed $configuration A configuration data list, suitable for merging with a
      *     midcom_helper_configuration object.
      * @param int $contextid The ID of the context we are associated with.
-     * @param bool $adminmode Flag, indicating wether we are on-site (false) or in AIS (true).
+     * @param bool $adminmode Flag, indicating whether we are on-site (false) or in AIS (true).
      * @return bool Indication success.
      */
     public function configure($configuration, $contextid)
@@ -621,7 +621,7 @@ class midcom_baseclasses_components_interface
     private $_nap_instance = null;
 
     /**
-     * Checks, wether an instance of the NAP interface class has already been created
+     * Checks, whether an instance of the NAP interface class has already been created
      * and creates it if not.
      *
      * This check is only done during the set_object calls, which will always be the
@@ -780,7 +780,7 @@ class midcom_baseclasses_components_interface
     }
 
     /**
-     * This interface function is used to check wether a component can handle a given GUID
+     * This interface function is used to check whether a component can handle a given GUID
      * or not <i>on site only.</i> A topic is provided which limits the "scope" of the search
      * accordingly. It can be safely assumed that the topic given is a valid topic in the
      * MidCOM content tree (it is checked through NAP).
@@ -934,7 +934,7 @@ class midcom_baseclasses_components_interface
      * Unless you need more functionality then snippet and library loading, configuration merging
      * and basic component data storage initialization, no further modification needs to be done.
      *
-     * @return bool Indicating wether the initialization has been successful.
+     * @return bool Indicating whether the initialization has been successful.
      */
     function _on_initialize()
     {
@@ -996,7 +996,7 @@ class midcom_baseclasses_components_interface
     }
 
     /**
-     * This interface function is used to check wether a component can handle a given GUID
+     * This interface function is used to check whether a component can handle a given GUID
      * or not <i>on site only.</i> A topic is provided which limits the "scope" of the search
      * accordingly. It can be safely assumed that the topic given is a valid topic in the
      * MidCOM content tree (it is checked through NAP).

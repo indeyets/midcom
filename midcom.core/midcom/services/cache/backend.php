@@ -104,7 +104,7 @@ class midcom_services_cache_backend
      * True, if the database has been opened for reading previously. This is also
      * true, if we are in read-write mode, naturally.
      * 
-     * Therefore, this flag is also used for checking wether the database is open
+     * Therefore, this flag is also used for checking whether the database is open
      * in general.
      * 
      * @var bool
@@ -264,7 +264,7 @@ class midcom_services_cache_backend
     function _get($key) { die ("The method " . __CLASS__ . "::" . __FUNCTION__ . " must be implemented."); }
     
     /**
-     * Checks, wether the given key exists in the Database.
+     * Checks, whether the given key exists in the Database.
      * 
      * The data store is opened either read-only or read-write when this
      * function executes.
@@ -326,10 +326,10 @@ class midcom_services_cache_backend
      */
     function open($write = false)
     {
-        // Check, wether the DB is already open.
+        // Check, whether the DB is already open.
         if ($this->_open_for_reading)
         {
-            // Check wether the access permissions are correct, if yes, we ignore the
+            // Check whether the access permissions are correct, if yes, we ignore the
             // open request, otherwise we close the db.
             if ($this->_open_for_writing == $write)
             {
@@ -368,7 +368,7 @@ class midcom_services_cache_backend
     }
     
     /**
-     * Checks, wether the given key exists in the Database. If the data store has not yet
+     * Checks, whether the given key exists in the Database. If the data store has not yet
      * been opened for reading, it will be opened automatically prior to the call,
      * and closed automatically again afterwards.
      * 

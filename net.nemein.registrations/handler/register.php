@@ -144,7 +144,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
             // This will exit.
         }
 
-        // Before we do anything, check wether there is a cancel button in the request.
+        // Before we do anything, check whether there is a cancel button in the request.
         // If yes, redirect back to the welcome page.
         // This will shortcut without creating any datamanager to avoid the possibly
         // expensive creation process.

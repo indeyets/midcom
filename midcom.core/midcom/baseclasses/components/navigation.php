@@ -174,7 +174,7 @@ class midcom_baseclasses_components_navigation
     /**
      * Return the node configuration. This defaults to use the topic the
      * NAP instance has been set to directly. You can usually fall back to this
-     * behavoir safely, adding a toolbar using the $toolbar parameter in child classes.
+     * behavior safely, adding a toolbar using the $toolbar parameter in child classes.
      *
      * So you'd probably do something like this:
      *

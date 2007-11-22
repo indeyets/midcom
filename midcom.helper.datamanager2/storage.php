@@ -232,7 +232,7 @@ class midcom_helper_datamanager2_storage extends midcom_baseclasses_components_p
     }
 
     /**
-     * Checks wether the current user has the given privilege on the storage backend.
+     * Checks whether the current user has the given privilege on the storage backend.
      * If there is no valid storage backend, a can_user_do is performed. Subclasses
      * may overwrite this method to incorporate for creation mode stuff.
      *

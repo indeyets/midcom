@@ -23,9 +23,9 @@
 
         <property name="location" type="string" />
         <property name="tentative" type="boolean" />
-        <!-- At least untill we have mRFC 0018 -->
+        <!-- At least until we have mRFC 0018 -->
         <property name="externalGuid" type="string" />
-        <!-- At least untill we can store arrays with DBA -->
+        <!-- At least until we can store arrays with DBA -->
         <property name="vCalSerialized"  type="text" />
 
         <!-- Common OpenPSA properties -->

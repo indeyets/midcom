@@ -87,7 +87,7 @@ class net_nehmer_branchenbuch_schemamgr extends midcom_baseclasses_components_pu
      *     in original ordering. Any unknown fields in this list will trigger a HTTP
      *     500 error.
      * - string default_view: One of 'alpha' or 'all', used only in the display code
-     *     deciding wether the alphabetical or full listing respectively should be
+     *     deciding whether the alphabetical or full listing respectively should be
      *     displayed by default.
      *
      * @param string $typename The name of the account type.
@@ -132,7 +132,7 @@ class net_nehmer_branchenbuch_schemamgr extends midcom_baseclasses_components_pu
 
     /**
      * Constructs a relative URL to display a given category based on its configuration
-     * settings. This lets you define via configuration wether you want the full listing
+     * settings. This lets you define via configuration whether you want the full listing
      * or the first alphabet letter listing automatically.
      *
      * @param string $name The name of the category to generate a relative URL for.

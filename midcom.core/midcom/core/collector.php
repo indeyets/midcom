@@ -490,7 +490,7 @@ class midcom_core_collector
      * Creates a new logical group within the query. They are set in parantheses in the final
      * SQL and will thus be evaluated with precedence over the normal out-of-group constraints.
      *
-     * While the call lets you decide wether all constraints within the group are AND'ed or OR'ed,
+     * While the call lets you decide whether all constraints within the group are AND'ed or OR'ed,
      * only OR constraints make logcially sense in this context, which is why this proxy function
      * sets 'OR' as the default operator.
      *

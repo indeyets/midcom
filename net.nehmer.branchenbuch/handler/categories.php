@@ -180,7 +180,7 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
      *
      * @param net_nehmer_branchenbuch_branche $category The category to add.
      * @param bool $listalpha Set this to true if you are in alphabetic category listing mode.
-     *     It will define wether the entry listings will set the return_url to the letter
+     *     It will define whether the entry listings will set the return_url to the letter
      *     filtered, alphabetic listing code or to the full category listing.
      * @param string $parent_prefix The string to use as prefix in front of the name to generate
      *     the full category name. This is faster then using the get_full_name function of the

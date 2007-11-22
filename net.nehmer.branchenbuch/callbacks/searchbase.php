@@ -13,7 +13,7 @@
  * This is the base class defining the custom search interfaces for any types using
  * the 'customsearch' mode as a default view.
  *
- * You can use the various event handlers, as usual, to customize behavoir:
+ * You can use the various event handlers, as usual, to customize behavior:
  *
  * - _on_initialize(): Custom startup code should go here.
  *

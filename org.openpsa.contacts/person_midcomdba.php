@@ -99,7 +99,7 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
         {
             /*
              It seems having nonprintable characters in the password breaks replication
-             Here we recreate salt and hash untill we have a combination where only
+             Here we recreate salt and hash until we have a combination where only
              printable characters exist
             */
             $crypted = false;

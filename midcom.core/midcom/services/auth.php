@@ -69,7 +69,7 @@
  * <i>Systemwide default privileges</i>
  *
  * This is analogous to the MidCOM default configuration, they are taken into account globally to each
- * and every check wether a privilege is granted. Whenever a privilege is defined, there is also a
+ * and every check whether a privilege is granted. Whenever a privilege is defined, there is also a
  * default value (either ALLOW or DENY) assigned to it. They serve as a basis for all privilege sets
  * and ensure, that there is a value set for all privileges.
  *
@@ -704,7 +704,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     }
 
     /**
-     * Checks wether a user has a certain privilege on the given content object.
+     * Checks whether a user has a certain privilege on the given content object.
      * Works on the currently authenticated user by default, but can take another
      * user as an optional argument.
      *
@@ -726,7 +726,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     }
 
     /**
-     * Checks wether a user has a certain privilege on the given (via guid and class) content object.
+     * Checks whether a user has a certain privilege on the given (via guid and class) content object.
      * Works on the currently authenticated user by default, but can take another
      * user as an optional argument.
      *
@@ -821,7 +821,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     }
 
     /**
-     * Checks, wether the given user have the privilege assigned to him in general.
+     * Checks, whether the given user have the privilege assigned to him in general.
      * Be aware, that this does not take any permissions overriden by content objects
      * into account. Whenever possible, you should user the can_do() variant of this
      * call therefore. can_user_do is only of interest in cases where you do not have
@@ -1187,7 +1187,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     }
 
     /**
-     * Check, wether a user is member of a given group. By default, the query is run
+     * Check, whether a user is member of a given group. By default, the query is run
      * against the currently authenticated user.
      *
      * It always returns TRUE for admistrative users.
@@ -1258,7 +1258,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     }
 
     /**
-     * Validates, wether the given user have the privilege assigned to him in general.
+     * Validates, whether the given user have the privilege assigned to him in general.
      * Be aware, that this does not take any permissions overriden by content objects
      * into account. Whenever possible, you should user the can_do() variant of this
      * call therefore. can_user_do is only of interest in cases where you do not have
@@ -1407,7 +1407,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         {
             if (!$this->sessionmgr->_do_midgard_auth($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']))
             {
-                // Wrong password: Recurse untill auth ok or user gives up
+                // Wrong password: Recurse until auth ok or user gives up
                 unset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
                 $this->_http_basic_auth();
             }
@@ -1867,7 +1867,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
         $this->require_user_do('midcom:vgroup_register', 'You need the privilege "midcom:vgroup_register" to register any virtual group.');
 
-        // Check wether we have a valid component URL here
+        // Check whether we have a valid component URL here
         // Note, just trigger loading it is not an option, as this function might be
         // called during component loading itself.
         if (! $_MIDCOM->componentloader->validate_url($component))

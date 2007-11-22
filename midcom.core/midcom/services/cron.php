@@ -20,7 +20,7 @@
  * - <i>string handler</i> holds the full class name which should handle the cron job invocation,
  *   it will be defined by the responsible component.
  * - <i>Array handler_config</i> is the handler specific configuration of the cron job. This is optional
- *   and can therefore be an empty array. It is used to customize cron job behavoir on a manifest
+ *   and can therefore be an empty array. It is used to customize cron job behavior on a manifest
  *   level only (use your component configuration for more specific settings.)
  * - <i>int recurrence</i> must be one of MIDCOM_CRON_* constants.
  * - <i>string component (INTERNAL)</i> holds the name of the component this Cron job is associated with.

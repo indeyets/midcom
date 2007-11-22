@@ -36,7 +36,7 @@
  * eliminates complicated parent calls.
  * </i>
  *
- * The default behavoir implemented in this class is sufficiant for data
+ * The default behavior implemented in this class is sufficiant for data
  * with a text-representation. It does not, however, implement the draw*
  * methods.
  *
@@ -170,7 +170,7 @@ class midcom_helper_datamanager_widget {
     /**
      * Reads the HTTP POST request data if available.
      *
-     * It checks the $_REQUEST array wether there is anything related to our
+     * It checks the $_REQUEST array whether there is anything related to our
      * widget. If yes, it will be read and stored in the widget.
      *
      * You should override this only if you cannot use the Request data

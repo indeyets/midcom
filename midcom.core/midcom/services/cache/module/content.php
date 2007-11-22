@@ -74,7 +74,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      */
 
     /**
-     * Flag, indicating wether the current page may be cached. If
+     * Flag, indicating whether the current page may be cached. If
      * false, the usual no-cache headers will be generated.
      *
      * @var bool
@@ -114,7 +114,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
     var $_content_type = 'text/html';
 
     /**
-     * Internal flag indicating wether the output buffering is active.
+     * Internal flag indicating whether the output buffering is active.
      *
      * @var bool
      */
@@ -375,7 +375,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
 
     /**
      * This function holds the cache hit check meachnism. It seraches the requested
-     * URL in the cache database. If found, it checks, wether the cache page has
+     * URL in the cache database. If found, it checks, whether the cache page has
      * expired. If not, the cached page is delivered to the client and processing
      * ends. In all other cases this method simply returns.
      *
@@ -738,7 +738,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
     }
 
     /**
-     * Checks, wether the browser supplied if-modified-since or if-none-match headers
+     * Checks, whether the browser supplied if-modified-since or if-none-match headers
      * match the passed etag/last modified timestamp. If yes, a 304 not modified header
      * is emitted and true is returned. Otherwise the function will return false
      * without modifications to the current runtime state.

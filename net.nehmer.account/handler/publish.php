@@ -453,7 +453,7 @@ class net_nehmer_account_handler_publish extends midcom_baseclasses_components_h
      * This helper uses the 'visible_mode' customdata member to compute actual visibility of a field.
      * Possible settings:
      *
-     * 'always' shows a field unconditionally, 'user' lets the user choose wether he
+     * 'always' shows a field unconditionally, 'user' lets the user choose whether he
      * wants it shown, 'never' hides the field unconditionally and 'link' links it to the
      * visibility state of another field. In the last case you need to set the 'visible_link'
      * customdata to the name of another field to make this work.

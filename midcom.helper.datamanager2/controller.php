@@ -219,7 +219,7 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
     }
 
     /**
-     * This function should process the form data sent to the server. Its behavoir is dependant
+     * This function should process the form data sent to the server. Its behavior is dependant
      * on the controller used, see the individual class documentations for details.
      *
      * @return string The exitcode of the form processing, ususually related to the formmanager

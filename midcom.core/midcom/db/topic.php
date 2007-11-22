@@ -50,7 +50,7 @@ class midcom_db_topic extends midcom_baseclasses_database_topic
 
     /**
      * Lists all articles in the corresponding topic. All reply articles are filtered
-     * by default to match original Midgard behavoir.
+     * by default to match original Midgard behavior.
      *
      * @param string $sort A legacy sorting order string.
      * @return Array A list of matching objects.

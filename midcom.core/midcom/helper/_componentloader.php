@@ -15,7 +15,7 @@
  *
  * Normally, two things are important when you deal with other components:
  *
- * First, if you want to list other components, or for example check wether they
+ * First, if you want to list other components, or for example check whether they
  * are available, you should use the component manifest listing, known as $manifests.
  * It gives you all meta-information about the components.
  *
@@ -802,7 +802,7 @@ class midcom_helper__componentloader
 
                 foreach ($this->_watches as $operation_id => $ignore)
                 {
-                    // Check wether the operations flag list from the component
+                    // Check whether the operations flag list from the component
                     // contains the operation_id we're checking a watch for.
                     if ($operations & $operation_id)
                     {

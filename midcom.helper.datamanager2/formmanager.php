@@ -439,7 +439,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
     }
 
     /**
-     * This helper function checks wether a given widget is visible.
+     * This helper function checks whether a given widget is visible.
      *
      * @param string $name The name of the widget.
      * @param Array $config Widget configuration.

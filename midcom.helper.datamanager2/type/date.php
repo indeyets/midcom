@@ -180,7 +180,7 @@ class midcom_helper_datamanager2_type_date extends midcom_helper_datamanager2_ty
     }
 
     /**
-     * Tries to detect wether the date value entered is empty in terms of the Midgard
+     * Tries to detect whether the date value entered is empty in terms of the Midgard
      * core. For this, all values are compared to zero, if all tests succeed, the date
      * is considered empty.
      *

@@ -342,7 +342,7 @@ function resolve_path_title($object_id, $title)
         $data = current($bc_data);
         $data[MIDCOM_NAV_NAME] = htmlspecialchars($data[MIDCOM_NAV_NAME]);
 
-        // Add the next element sensitive to the fact wether we are at the end or not.
+        // Add the next element sensitive to the fact whether we are at the end or not.
         if (next($bc_data) === false)
         {
             $result .= $data[MIDCOM_NAV_NAME];

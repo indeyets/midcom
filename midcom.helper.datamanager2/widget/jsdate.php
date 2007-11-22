@@ -39,7 +39,7 @@
 class midcom_helper_datamanager2_widget_jsdate extends midcom_helper_datamanager2_widget
 {
     /**
-     * Indicates wether the timestamp should be shown or not.
+     * Indicates whether the timestamp should be shown or not.
      *
      * @var bool
      */

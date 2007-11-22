@@ -390,7 +390,7 @@ class net_nemein_bookmarks_admin
             // This will exit.
         }
         
-        // Check wether we already have a content object, or not.
+        // Check whether we already have a content object, or not.
         // Depending on this we'll set up a datamanaer in either create
         // or standard-editing mode. 
         // The NAP active leaf will only be set if we already have a

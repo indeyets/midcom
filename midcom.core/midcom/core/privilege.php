@@ -170,7 +170,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
     }
 
     /**
-     * Checks wether the current assignee is a magic assignee or an object identifier.
+     * Checks whether the current assignee is a magic assignee or an object identifier.
      *
      * @return bool True, if it is a magic assingee, false otherwise.
      */
@@ -180,7 +180,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
     }
 
     /**
-     * Internal helper, encaspulating the check wether an assignee string is a known
+     * Internal helper, encaspulating the check whether an assignee string is a known
      * magic assignee.
      *
      * @return bool True, if it is a magic assingee, false otherwise.
@@ -723,7 +723,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
 
         foreach ($object_privileges as $privilege)
         {
-            // Check wether we need to take this privilege into account
+            // Check whether we need to take this privilege into account
             if (! midcom_core_privilege::_is_privilege_valid($privilege, $user))
             {
                 continue;
@@ -830,7 +830,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
     }
 
     /**
-     * Internal helper function, determines wether a given privilege applies for the given
+     * Internal helper function, determines whether a given privilege applies for the given
      * user in content mode. This means, that all SELF privileges are skipped at this point,
      * EVERYONE privileges apply always, and all other privileges are checked against the
      * user.

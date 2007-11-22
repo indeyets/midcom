@@ -33,7 +33,7 @@ fi
 # Make sure we only have one copy of the type running at a given time
 test -f $PIDFILE && exit 1
 echo $$ > $PIDFILE
-# Wait untill everymin script has completed if it's running
+# Wait until everymin script has completed if it's running
 if [ "$PIDFILE2" != "" ]; then
     if [ -f $PIDFILE2 ]; then
         while [ -f $PIDFILE2 ]; do

@@ -545,7 +545,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      *
      * @param int $argc The argument count
      * @param Array $argv The argument list
-     * @return bool Indicating wether the request can be handled by the class, or not.
+     * @return bool Indicating whether the request can be handled by the class, or not.
      */
     public function can_handle($argc, $argv)
     {
@@ -642,7 +642,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      *
      * @param int $argc The argument count
      * @param Array $argv The argument list
-     * @return bool Indicating wether the request was handled successfully.
+     * @return bool Indicating whether the request was handled successfully.
      * @see _on_handle();
      */
     public function handle($argc, $argv)
@@ -687,7 +687,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
             $this->errcode = MIDCOM_ERRCRIT;
         }
 
-        // Check wether this request should not be cached by default:
+        // Check whether this request should not be cached by default:
         if ($this->_handler['no_cache'] == true)
         {
             $_MIDCOM->cache->content->no_cache();
@@ -823,7 +823,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      *
      * You should not do anything else then general startup work, as this callback
      * executes <em>before</em> the can_handle phase. You don't know at this point
-     * wether you are even able to handle the request. Thus, anything that is specific
+     * whether you are even able to handle the request. Thus, anything that is specific
      * to your request (like HTML HEAD tag adds) must not be done here. Use _on_handle
      * instead.
      */
@@ -885,7 +885,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
     }
 
     /**
-     * Generic output initialization code. The return value lets you control wether the
+     * Generic output initialization code. The return value lets you control whether the
      * output method associated with the handler declaration is called, return false to
      * override this automatism, true, the default, will call the output handler normally.
      *

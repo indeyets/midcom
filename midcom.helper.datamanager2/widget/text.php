@@ -52,7 +52,7 @@ class midcom_helper_datamanager2_widget_text extends midcom_helper_datamanager2_
     var $size = 40;
 
     /**
-     * Wether the input should be shown in the widget, or not.
+     * whether the input should be shown in the widget, or not.
      *
      * @var bool
      * @access public

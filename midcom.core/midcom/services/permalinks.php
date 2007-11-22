@@ -54,12 +54,12 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
      * This function resolves any GUID into a fully qualified URL which can be reolocated
      * to. It operates in multiple phases:
      * 
-     * 1. Check, wether the GUID is already known by NAP. In case we have the corresponding
+     * 1. Check, whether the GUID is already known by NAP. In case we have the corresponding
      *    node/leaf loaded, use its linking infromation directly.
      * 2. Look if we have a topic, in that case, we get the corresponding NAP node and use
      *    it to resolve the permalink. If that object is not retrieveable, the lookup
      *    fails.
-     * 3. We check wether the object in question has a topic as one of its ancestors. If yes,
+     * 3. We check whether the object in question has a topic as one of its ancestors. If yes,
      *    that topic and its corresponding component is used to lookup the GUID, which might
      *    fail.
      * 4. As a last resort we have to iterate over all NAP topics to do the resolving.

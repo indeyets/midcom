@@ -454,7 +454,7 @@ class midcom_helper_metadata
     /* ------- CONVENIENCE METADATA INTERFACE --------- */
 
     /**
-     * Checks wether the article has been approved since its last editing.
+     * Checks whether the article has been approved since its last editing.
      *
      * @return bool Indicating approval state.
      */
@@ -498,10 +498,10 @@ class midcom_helper_metadata
     }
 
     /**
-     * This is a helper function which indicates wether a given object may be shown onsite
+     * This is a helper function which indicates whether a given object may be shown onsite
      * taking approval, scheduling and visibility settings into account. The important point
      * here is that it also checks the global configuration defaults, so that this is
-     * basically the same base on which NAP decides wether to show an item or not.
+     * basically the same base on which NAP decides whether to show an item or not.
      *
      * @return bool Indicating visibility.
      */

@@ -369,7 +369,7 @@ class net_nemein_personnel_handler_csv extends midcom_baseclasses_components_han
 
         /*
         // do this for now, we need to know why we can't resolve even existing persons
-        debug_add('Creation disabled untill I figure out why existing persons are not found', MIDCOM_LOG_ERROR);
+        debug_add('Creation disabled until I figure out why existing persons are not found', MIDCOM_LOG_ERROR);
         debug_pop();
         return false;
         */

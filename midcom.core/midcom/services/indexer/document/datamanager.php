@@ -250,7 +250,7 @@ class midcom_services_indexer_document_datamanager extends midcom_services_index
     /**
      * Returns a textual representation of the corresponding field.
      * 
-     * Actual behavoir is dependent on the datatype. Text fields are
+     * Actual behavior is dependent on the datatype. Text fields are
      * accessed directly, for other fields, the CSV representation is
      * used.
      * 

@@ -46,7 +46,7 @@
  * eliminates complicated parent calls.
  * </i>
  * 
- * The default behavoir implemented in this class is sufficiant for data
+ * The default behavior implemented in this class is sufficiant for data
  * with a text-representation. The derived datatype TEXT is more or less
  * exactly this class, apart from some additional defaults.
  * 
@@ -190,7 +190,7 @@ class midcom_helper_datamanager_datatype {
     /**
      * Loads the data from the object.
      * 
-     * The default behavoir is to simply load
+     * The default behavior is to simply load
      * the string stored in the field of the database and use it as value. It 
      * returns true, if the object was successfully loaded. If the field in the 
      * database is empty or not existant (in case of an attachment for example),
@@ -268,7 +268,7 @@ class midcom_helper_datamanager_datatype {
     /**
      * Saves the data of the datatype.
      * 
-     * The default behavoir is to simply store
+     * The default behavior is to simply store
      * the variable's string representation into the database. It returnes
      * one of the MIDCOM Datamanager's process_form() returncodes accordingly.
      * 
@@ -278,7 +278,7 @@ class midcom_helper_datamanager_datatype {
      * 
      * This member should make no changes to the storage object in memory that cannot
      * be synchronized to the database; therfore it is imperative to call the update
-     * method after changing the storage object itself to see wether the changes are
+     * method after changing the storage object itself to see whether the changes are
      * valid. if not, the in-memory object must be reverted.
      * 
      * @return int Any valid returncode from midcom_helper_datamanager::process_form().
@@ -379,7 +379,7 @@ class midcom_helper_datamanager_datatype {
      * Returns the Datatype's Value.
      * 
      * The exact representation of it depends on
-     * the Datatype. The default behavoir is to just pass the value of
+     * the Datatype. The default behavior is to just pass the value of
      * the member _value to through to the caller.
      * 
      * This member should be overwritten if no simple textual datatypes
@@ -444,7 +444,7 @@ class midcom_helper_datamanager_datatype {
      * Returns a reference of the Widget class associated to this datatype
      * instance. 
      * 
-     * The default behavoir should be fine in most cases, which returns the member
+     * The default behavior should be fine in most cases, which returns the member
      * _widget.
      * 
      * @return midcom_helper_datamanager_widget The widget associated with this type.
@@ -457,7 +457,7 @@ class midcom_helper_datamanager_datatype {
     /**
      * Synchronize the widget with the data in the datatype.
      * 
-     * The default behavoir will work with most simple types, as it just
+     * The default behavior will work with most simple types, as it just
      * passes the content of the member _value to the snippet's set_value method.
      */
     function sync_widget_with_data() 
@@ -471,7 +471,7 @@ class midcom_helper_datamanager_datatype {
     /**
      * Synchronize the data in the type with the widget.
      * 
-     * The default behavoir will work with most simple types, as it just
+     * The default behavior will work with most simple types, as it just
      * passes the content of the snippet as delivered by get_value to the
      * into the member _value.
      */

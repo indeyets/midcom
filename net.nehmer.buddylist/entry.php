@@ -365,7 +365,7 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
     }
 
     /**
-     * This call checks wether the given user is already on our buddy list. This is used
+     * This call checks whether the given user is already on our buddy list. This is used
      * in the pending listing to hide the approve & add button appropriately. Note that
      * even unapproved requests count here.
      *

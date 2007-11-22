@@ -1063,7 +1063,7 @@ EOF;
     /**
      * Returns a list of loaded classes that operate on the given table name. The
      * results are returned in the order the classes were registered, so it is rather
-     * arbitrary. The only behavoir that can usually be counted on is to get the
+     * arbitrary. The only behavior that can usually be counted on is to get the
      * MidCOM core baseclasses first, as they are already registered during framework
      * startup. Especially the wrappers for the legacy MidgardXXX Classes are the very
      * first classes registered.
@@ -1085,7 +1085,7 @@ EOF;
     }
 
     /**
-     * Simple helper to check wether we are dealing with a legacy midgard object
+     * Simple helper to check whether we are dealing with a legacy midgard object
      * or a subclass thereof.
      *
      * @param object $object The object to check
@@ -1142,7 +1142,7 @@ EOF;
     }
 
     /**
-     * Simple helper to check wether we are dealing with a MgdSchema object
+     * Simple helper to check whether we are dealing with a MgdSchema object
      * or a subclass thereof.
      *
      * @param object $object The object to check
@@ -1227,7 +1227,7 @@ EOF;
     }
 
     /**
-     * Simple helper to check wether we are dealing with a MidCOM Database object
+     * Simple helper to check whether we are dealing with a MidCOM Database object
      * or a subclass thereof.
      *
      * @param object $object The object to check

@@ -67,7 +67,7 @@
  *
  * <i>string name</i> should be clear, it is the full name of the component.
  *
- * <i>bool purecode</i> is equally easy, indicating wether this is a library or a full
+ * <i>bool purecode</i> is equally easy, indicating whether this is a library or a full
  * scale component.
  *
  * <i>int version</i> is the internal version number of the interface. This value is

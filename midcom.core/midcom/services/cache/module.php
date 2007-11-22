@@ -147,7 +147,7 @@ class midcom_services_cache_module
     /**
      * Invalidate the cache completely, dropping all entries. The default implementation will 
      * drop all entries from all registered cache backends using 
-     * midcom_services_cache_backend::remove_all(). Override this function, if this behavoir 
+     * midcom_services_cache_backend::remove_all(). Override this function, if this behavior 
      * doesn't suit your needs.
      */
     function invalidate_all() 

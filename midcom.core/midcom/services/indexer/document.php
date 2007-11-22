@@ -636,7 +636,7 @@ class midcom_services_indexer_document
      * Returns a textual representation of the specified datamanager
      * field.
      *
-     * Actual behavoir is dependent on the datatype. Text fields are
+     * Actual behavior is dependent on the datatype. Text fields are
      * accessed directly, for other fields, the CSV representation is
      * used.
      *
@@ -678,7 +678,7 @@ class midcom_services_indexer_document
      * Returns a textual representation of the specified datamanager2
      * field.
      *
-     * Actual behavoir is dependent on the datatype. The system uses
+     * Actual behavior is dependent on the datatype. The system uses
      * the type's built-in html conversion callbacks
      *
      * Text fields run through the html2text converter of the document
@@ -696,7 +696,7 @@ class midcom_services_indexer_document
     }
 
     /**
-     * Checks wether the given document is an instance of given document type.
+     * Checks whether the given document is an instance of given document type.
      *
      * This is equivalent to the is_a object hirarchy check, except that it
      * works with MidCOM documents.

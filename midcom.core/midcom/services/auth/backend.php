@@ -52,7 +52,7 @@ class midcom_services_auth_backend extends midcom_baseclasses_core_object
 
     /**
      * This function, always called first in the order of execution, should check
-     * wether we have a usable login session. It has to use the login session management
+     * whether we have a usable login session. It has to use the login session management
      * system To load a login session. At the end of the successful execution of this 
      * function, you have to populate the $session_id and $user members accordingly.
      * 

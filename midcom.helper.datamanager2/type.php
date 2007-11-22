@@ -268,7 +268,7 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
     }
 
     /**
-     * Checks wether the current user has the given privilege on the storage backend.
+     * Checks whether the current user has the given privilege on the storage backend.
      * The storage backend is resposible for the actual execution of this operation,
      * so this is merely a shortcut.
      *

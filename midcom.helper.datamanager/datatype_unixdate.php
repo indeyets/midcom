@@ -5,11 +5,11 @@ class midcom_helper_datamanager_datatype_unixdate extends midcom_helper_datamana
     var $_withtime;
     
     /**
-     * This is a MgdSchmea transition compatibility flag. It decides wether a 
+     * This is a MgdSchmea transition compatibility flag. It decides whether a 
      * given field is stored as a ISO Timestamp by MgdSchema, or not. This flag
      * is valid for all storage destinations.
      * 
-     * This is a hotfix, so its behavoir might change over time.
+     * This is a hotfix, so its behavior might change over time.
      * 
      * You can set it by adding the key 'unixdate_store_as_iso_timestamp'
      * to the fields' declaration.

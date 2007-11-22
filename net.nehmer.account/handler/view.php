@@ -25,7 +25,7 @@ require_once('Date.php');
  * - visible_data: The rendered data associated with the visible fields.
  * - schema: A reference to the schema in use.
  * - account: A reference to the account in use.
- * - view_self: A bool indicating wether we display our own account, or not.
+ * - view_self: A bool indicating whether we display our own account, or not.
  * - profile_url: Only applicable in the quick-view mode, it contains the URL
  *   to the full profile record.
  * - edit_url: Only applicable if in view-self mode, it contains the URL to the
@@ -729,7 +729,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
      * This helper uses the 'visible_mode' customdata member to compute actual visibility
      * of a field. Possible settings:
      *
-     * 'always' shows a field unconditionally, 'user' lets the user choose wether he
+     * 'always' shows a field unconditionally, 'user' lets the user choose whether he
      * wants it shown, 'never' hides the field unconditionally and 'link' links it to the
      * visibility state of another field. In the last case you need to set the 'visible_link'
      * customdata to the name of another field to make this work.

@@ -1967,7 +1967,7 @@ class midcom_baseclasses_core_dbobject
     }
 
     /**
-     * Checks, wether the person given to the function is an owner (read: has
+     * Checks, whether the person given to the function is an owner (read: has
      * write access) to the object in question.
      *
      * <i>Be aware that this is a temporary implementation only:</i> It tries to locate

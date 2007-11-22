@@ -302,7 +302,7 @@
  *
  * <b>Geopositioning settings</b>
  *
- * - <b>bool positioning_enable:</b> This flag indicates wether components should start
+ * - <b>bool positioning_enable:</b> This flag indicates whether components should start
  * tracking and displaying the geographical position where they were created.
  *
  * @package midcom

@@ -139,7 +139,7 @@ class midcom_services_cache_module_nap extends midcom_services_cache_module
                 die("Tried to load the topic {$guid} for NAP cache backend creation, which failed: " . mgd_errstr());
             }
             
-            // Check, wether we are talking to AIS
+            // Check, whether we are talking to AIS
             if ($topic->component == 'midcom.admin.content')
             {
                 $member = 'midcom.admin.content_root_topic';

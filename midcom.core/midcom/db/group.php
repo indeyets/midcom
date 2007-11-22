@@ -81,7 +81,7 @@ class midcom_db_group extends midcom_baseclasses_database_group
     }
 
     /**
-     * Checks wether the given user is a member of this group.
+     * Checks whether the given user is a member of this group.
      *
      * @param midcom_baseclasses_database_person The person to check.
      * @return bool Indicating membership.

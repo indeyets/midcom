@@ -51,7 +51,7 @@ function midcom_get_snippet_content_graceful($path)
  * MIDCOM_ROOT; omit it to get the code field of a Snippet.
  *
  * Any error (files not found) will raise a MidCOM Error. If you want a more
- * graceful behavoir, look for midcom_get_snippet_content_graceful
+ * graceful behavior, look for midcom_get_snippet_content_graceful
  *
  * @param string $path	The URL to the snippet.
  * @return string		The content of the snippet/file.
@@ -117,7 +117,7 @@ function midcom_update_nemein_rcs($object, $message = null) {
 }
 
 /**
- * Helper function to check wether a given group is a subgroup
+ * Helper function to check whether a given group is a subgroup
  * of another one.
  *
  * @param int $id		Group to query.
@@ -206,7 +206,7 @@ function mgd_memberships_to_gid ($fetchable) {
  *
  * This function will save
  * the Member-Variables specified in $array of the Midgard Object $object in
- * the Parameter Domain $domain. It will checkt wether all Fields are short enough
+ * the Parameter Domain $domain. It will checkt whether all Fields are short enough
  * (Margin: 255 characters) to fit into a parameter, if not, it will abort.
  * It will return TRUE if successful, FALSE on failure.
  *

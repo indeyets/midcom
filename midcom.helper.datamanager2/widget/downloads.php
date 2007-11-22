@@ -47,7 +47,7 @@
  *
  * The table gets the Name of the field as id and midcom_helper_datamanager2_widget_downloads
  * as class. Each column also gets its own CSS class: filename, title, file, upload and delete.
- * An additionalclass is assigned depending wether this is a row for an existing item (exist) or
+ * An additionalclass is assigned depending whether this is a row for an existing item (exist) or
  * a new one (new). So a full class for the new filename element would be "new filename". Note,
  * that the classes are assigned to both the td and input elements. The th elements do not have
  * any additional class

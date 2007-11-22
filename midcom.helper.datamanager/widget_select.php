@@ -28,7 +28,7 @@
  * the default 1 is used, which essentially makes it a dropdown instead of a list 
  * control.
  * 
- * <b>widget_select_display_key:</b> A boolean, that controls wether the key should be shown to the
+ * <b>widget_select_display_key:</b> A boolean, that controls whether the key should be shown to the
  * user, or not, which would be the default if ommited.
  * 
  * <b>Sample configuration</b>

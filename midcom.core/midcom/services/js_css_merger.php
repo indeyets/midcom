@@ -387,7 +387,7 @@ class midcom_services_js_css_merger extends midcom_baseclasses_core_object
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("called for path '{$path}'");
-        debug_add('disabled untill we figure out a way to rewrite include calls (which may contain variable parts...)');
+        debug_add('disabled until we figure out a way to rewrite include calls (which may contain variable parts...)');
         debug_pop();
         return false;
         if ($this->_jsheaders_printed)

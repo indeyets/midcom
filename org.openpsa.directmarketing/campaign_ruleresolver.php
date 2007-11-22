@@ -55,7 +55,7 @@
  * </code>
  *
  * NOTE: subgroups are processed before rules, subgroups must match class of parent group
- * untill midgard core has the new infinite JOINs system. The root level group array is
+ * until midgard core has the new infinite JOINs system. The root level group array is
  * named 'classes' because there should never be be two groups on this level using the same class
  * @package org.openpsa.directmarketing
  */

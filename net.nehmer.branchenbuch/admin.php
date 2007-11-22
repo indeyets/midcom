@@ -127,7 +127,7 @@ class net_nehmer_branchenbuch_admin extends midcom_baseclasses_components_reques
 
     /**
      * This function loads the account management interface class to determine the account
-     * types and check wether we have all required root categories.
+     * types and check whether we have all required root categories.
      */
     function _check_root_branchen()
     {

@@ -152,7 +152,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
     var $allow_other = false;
 
     /**
-     * This flag controls wether multiple selections are allowed, or not.
+     * This flag controls whether multiple selections are allowed, or not.
      *
      * @var bool
      * @access public

@@ -349,7 +349,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
         /* FIXME: It this the right way to do this? */
         $this->_request_data['search_qb'] =& $qb;
 
-        // Check schemas this way untill the core issue is fixed
+        // Check schemas this way until the core issue is fixed
         debug_push_class(__CLASS__, __FUNCTION__);
         foreach ($ret as $k => $product)
         {

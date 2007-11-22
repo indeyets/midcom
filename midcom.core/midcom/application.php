@@ -1184,7 +1184,7 @@ class midcom_application
     }
 
     /**
-     * Check, wether a given component is able to handle the current request.
+     * Check, whether a given component is able to handle the current request.
      *
      * Used by _process(), it checks if the component associated to $object is able
      * to handle the request. First it will load the component associated to $object.
@@ -1194,7 +1194,7 @@ class midcom_application
      * accordingly, both on the configure and on the can_handle run.
      *
      * @param MidgardTopic $object    The node that is currently being tested.
-     * @return bool                    Indication, wether a component can handle a request.
+     * @return bool                    Indication, whether a component can handle a request.
      * @access private
      */
     private function _can_handle($object)
@@ -2060,7 +2060,7 @@ class midcom_application
      * add_meta_head      - Add metatags to the page's head.
      * print_jscripts     - Print the queued-up JavaScript code (for inclusion in the HEAD section)
      * pirnt jsonload     - Prints the onload command if required (for inclusion as a BODY attribute)
-     * check_memberships  - Checks wether the user is in a given group
+     * check_memberships  - Checks whether the user is in a given group
      * relocate           - executes a HTTP relocation to the given URL
      * _showdebuglog      - internal helper for the debuglog URL method.
      */
@@ -2244,7 +2244,7 @@ class midcom_application
      * permissions done here, the callee has to ensure this. See the URL methods
      * servesnippet(guid) for details.
      *
-     * Two parameters can be used to influence the behavoir of this method:
+     * Two parameters can be used to influence the behavior of this method:
      * "midcom/content-type" will set the content-type header sent with the code
      * field's content. If this is not set, application/octet-stream is used as a
      * default. "midcom/expire" is a count of seconds used for content expiration,

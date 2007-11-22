@@ -386,7 +386,7 @@ class midcom_services__i18n_l10n {
     }
 
     /**
-     * Checks, wether the referenced language is already loaded. If not,
+     * Checks, whether the referenced language is already loaded. If not,
      * it is automatically made available. Any errors will trigger
      * generate_error.
      * 
@@ -502,7 +502,7 @@ class midcom_services__i18n_l10n {
     }
     
     /**
-     * Checks wether the given string is available in either the current
+     * Checks whether the given string is available in either the current
      * or the fallback language. Use this to determine if an actually processed
      * result is returned by get. This is helpful especially if you want to
      * "catch" cases where a string might translate to itself in some languages.

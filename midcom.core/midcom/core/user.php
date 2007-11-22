@@ -508,7 +508,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
     }
 
     /**
-     * Checks wether a user is a member of the given group.
+     * Checks whether a user is a member of the given group.
      *
      * The group argument may be one of the following (checked in this order of precedence):
      *
