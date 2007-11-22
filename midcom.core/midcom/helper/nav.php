@@ -616,13 +616,29 @@ class midcom_helper_nav
      * @todo Maybe cache this? I don't know how complex it really is, but DB accesses are
      *     already cached by the _basicnav core. So it is not that hard.
      */
-    function get_breadcrumb_data ()
+    function get_breadcrumb_data ($id = null)
     {
         $prefix = $_MIDCOM->get_context_data($this->_contextid, MIDCOM_CONTEXT_ANCHORPREFIX);
         $result = Array();
-
-        $curr_leaf = $this->get_current_leaf();
-        $curr_node = $this->get_current_node();
+        
+        if (!$id)
+        {
+            $curr_leaf = $this->get_current_leaf();
+            $curr_node = $this->get_current_node();
+        }
+        else
+        {
+            $curr_leaf = $this->get_leaf($id);
+            
+            if (!$curr_leaf)
+            {
+                $curr_node = $this->get_node($id);
+            }
+            else
+            {
+                $curr_node = $this->get_node($curr_leaf[MIDCOM_NAV_NODEID]);
+            }
+        }
         $root_node = $this->get_root_node();
 
         $node = $this->get_node($curr_node);
