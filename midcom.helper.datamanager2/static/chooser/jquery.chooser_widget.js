@@ -824,7 +824,10 @@ function midcom_helper_datamanager2_widget_chooser_format_item(item, options)
         
         item_content = jQuery("<div>")
         .addClass('chooser_widget_item_part')
-        .attr({ id: 'chooser_widget_item_part_'+n.name })
+        .attr({
+            id: 'chooser_widget_item_part_'+n.name,
+            title: midcom_helper_datamanager2_widget_chooser_format_value('html2text', value)
+        })
         .html( value )
         .appendTo(item_parts);
     });
@@ -845,6 +848,10 @@ function midcom_helper_datamanager2_widget_chooser_format_value(format, value)
     
     switch(format)
     {
+        case 'html2text':
+            formatted = value;
+            formatted = formatted.toString().replace(/(\&gt\;)/g, '/');
+            break;
         case 'unescape':
             formatted = unescape(value);
             break;
