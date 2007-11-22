@@ -37,3 +37,5 @@
 // Callback function will be called after creation e.g. to provide interface for page linking system
 // $callback_function($article, $topic)
 'callback_function' => null,
+
+'folder_in_title' => true,

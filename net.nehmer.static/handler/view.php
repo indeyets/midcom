@@ -232,7 +232,14 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
             $this->_component_data['active_leaf'] = $this->_article->id;
         }
 
-        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_article->title}");
+        if ($this->_config->get('folder_in_title'))
+        {
+            $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_article->title}");
+        }
+        else
+        {
+            $_MIDCOM->set_pagetitle($this->_article->title);
+        }
 
         return true;
     }
