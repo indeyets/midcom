@@ -235,7 +235,7 @@ class midcom_helper_datamanager2_type_video extends midcom_helper_datamanager2_t
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("image operations require imagefilter which requires ImageMagick, {$convert_cmd} 
-	    (part of ImageMagick suite) not found or executable", MIDCOM_LOG_ERROR);
+        (part of ImageMagick suite) not found or executable", MIDCOM_LOG_ERROR);
             debug_pop();
             $return = false;
             return $return;
@@ -626,7 +626,7 @@ class midcom_helper_datamanager2_type_video extends midcom_helper_datamanager2_t
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Failed to process the conversion batch 1 (save original & web conversion) for 
-	    the uploaded file {$filename} in {$tmpname}, aborting type processing.",
+        the uploaded file {$filename} in {$tmpname}, aborting type processing.",
                 MIDCOM_LOG_ERROR);
             debug_pop();
 
@@ -691,13 +691,13 @@ class midcom_helper_datamanager2_type_video extends midcom_helper_datamanager2_t
         $this->_filename_video = $filename;
         $this->_original_tmpname_video = $tmpname;
         $this->_original_mimetype_video = $this->_get_mimetype($this->_original_tmpname_video);
-        	
+            
         // 1st step: original image storage and auto-conversion..
         if (   ! $this->_save_original_video())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Failed to save original video {$filename} in" .
-	        "{$tmpname}, aborting.", MIDCOM_LOG_ERROR);
+            "{$tmpname}, aborting.", MIDCOM_LOG_ERROR);
             debug_pop();
 
             // Clean up
@@ -915,7 +915,7 @@ class midcom_helper_datamanager2_type_video extends midcom_helper_datamanager2_t
                                                    $this->_target_mimetype,
                                                    $this->_current_tmpname,
                                                    false);
-	    }
+        }
             else
             {
                 $this->delete_attachment($blob_identifier);
@@ -930,7 +930,7 @@ class midcom_helper_datamanager2_type_video extends midcom_helper_datamanager2_t
                                                 $this->_target_mimetype,
                                                 $this->_current_tmpname,
                                                 false);
-	    }
+            }
         }
         @unlink($this->_current_tmpname);
 
