@@ -123,6 +123,10 @@ Group %s saved
 Groups
 ---STRINGEND
 
+---STRING invert selection
+Invert selection
+---STRINGEND
+
 ---STRING lastname
 Lastname
 ---STRINGEND
@@ -275,7 +279,7 @@ Write the message that will be sent to the recipients
 Your password has been changed
 ---STRINGEND
 
----STRING invert selection
-Invert selection
+---STRING User Management
+User Management
 ---STRINGEND
 

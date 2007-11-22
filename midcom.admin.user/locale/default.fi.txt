@@ -123,6 +123,10 @@ Ryhmä %s tallennettu
 Ryhmät
 ---STRINGEND
 
+---STRING invert selection
+Käännä valinnat päinvastaisiksi
+---STRINGEND
+
 ---STRING lastname
 Sukunimi
 ---STRINGEND
@@ -275,7 +279,7 @@ Kirjoita viesti, joka lähetetään vastaanottajille
 Salasanasi on vaihdettu
 ---STRINGEND
 
----STRING invert selection
-Käännä valinnat päinvastaisiksi
+---STRING User Management
+Käyttäjien hallinta
 ---STRINGEND
 
