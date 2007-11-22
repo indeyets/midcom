@@ -56,13 +56,13 @@ class midcom_helper_datamanager2_widget_select extends midcom_helper_datamanager
      */
     var $_select_element = null;
 
-	/**
-	 * JS actions bound to widget
-	 *
-	 * @var array
-	 */
+    /**
+     * JS actions bound to widget
+     *
+     * @var array
+     */
 
-	var $jsevents = null;
+    var $jsevents = null;
 
     /**
      * The initialization event handler verifies the correct type.
