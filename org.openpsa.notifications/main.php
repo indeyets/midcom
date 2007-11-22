@@ -101,7 +101,8 @@ class org_openpsa_notifications extends midcom_baseclasses_components_purecode
         $preference = 'none';
         $recipient = new midcom_db_person($recipient);
 
-        if (!$recipient)
+        if (   !$recipient
+            || !$recipient->guid)
         {
             return $preference;
         }
