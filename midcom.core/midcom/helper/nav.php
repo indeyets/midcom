@@ -629,6 +629,7 @@ class midcom_helper_nav
         else
         {
             $curr_leaf = $this->get_leaf($id);
+            $curr_node = -1;
             
             if (! $curr_leaf)
             {
