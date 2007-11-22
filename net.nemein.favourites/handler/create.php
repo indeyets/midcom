@@ -82,6 +82,7 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
                 $_MIDCOM->relocate($_POST['net_nemein_favourites_referer']);
                 // This will exit
             }
+            $_MIDCOM->cache->invalidate($guid);
             
             // Redirecting back to the previous page
     	    $_MIDCOM->relocate($_POST['net_nemein_favourites_referer']);
@@ -171,6 +172,8 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
             // handle error
             $_MIDCOM->uimessages->add($this->_l10n->get('net.nemein.favourites'), sprintf($this->_l10n->get('deleting favourite %s failed: %s'), $favourite->objectTitle, mgd_errstr()), 'error');            
     	}
+
+        $_MIDCOM->cache->invalidate($favourite->objectGuid);
 
         return true;
     }
