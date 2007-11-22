@@ -466,6 +466,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             case 'save':
                 $this->_cache_ratings();
                 $this->_notify_authors();
+                $_MIDCOM->cache->invalidate($this->_objectguid);
                 // Fall-through intentional
                 
             case 'cancel':
