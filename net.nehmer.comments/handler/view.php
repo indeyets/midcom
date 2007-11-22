@@ -443,7 +443,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             }
             
             $this->_cache_ratings();
-
+            $_MIDCOM->cache->invalidate($comment->objectguid);
             $this->_relocate_to_self();
         }
     }
