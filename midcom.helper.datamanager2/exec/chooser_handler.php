@@ -36,6 +36,7 @@ if (! isset($_REQUEST["query"]))
 
 $query = $_REQUEST["query"];
 $query = str_replace("*","%", $query);
+$query = preg_replace('/%+/', '%', $query);
 
 $map = array
 (
@@ -218,6 +219,15 @@ else
     }
 }
 
+if (count($results) <= 0)
+{
+    echo "    <status>2</status>\n";
+    echo "    <errstr>No results found</errstr>\n";
+    echo "</response>\n";
+    $_MIDCOM->finish();
+    exit();
+}
+
 echo "    <status>1</status>\n";
 echo "    <errstr></errstr>\n";
 
@@ -282,6 +292,12 @@ foreach ($results as $object)
             $item_name = $header_item['name'];
             $value = @$object->$item_name;
 
+            if (   $class == 'midcom_db_topic'
+                && $item_name == 'extra' )
+            {
+                $value = resolve_path_title($object->id, $value);
+            }
+
             debug_add("adding header item: name={$item_name} value={$value}");
             echo "          <{$item_name}><![CDATA[{$value}]]></{$item_name}>\n";
         }    
@@ -297,5 +313,52 @@ debug_print_r('Got results',$results);
 
 debug_pop();
 $_MIDCOM->finish();
+
+function resolve_path_title($object_id, $title)
+{   
+    $result = '';    
+    $nav = new midcom_helper_nav();
+    
+    $bc_data = $nav->get_breadcrumb_data($object_id);    
+    reset($bc_data);
+    
+    // Detect real starting Node
+    if ($skip_levels > 0)
+    {
+        if ($skip_levels >= count($bc_data))
+        {
+            debug_add('We were asked to skip all (or even more) breadcrumb elements then there were present. Returning an empty breadcrumb line therefore.', MIDCOM_LOG_INFO);
+            debug_pop();
+            return $title;
+        }
+        for ($i = 0; $i < $skip_levels; $i++)
+        {
+            next($bc_data);
+        }
+    }
+    
+    while(current($bc_data) !== false)
+    {
+        $data = current($bc_data);
+        $data[MIDCOM_NAV_NAME] = htmlspecialchars($data[MIDCOM_NAV_NAME]);
+
+        // Add the next element sensitive to the fact wether we are at the end or not.
+        if (next($bc_data) === false)
+        {
+            $result .= $data[MIDCOM_NAV_NAME];
+        }
+        else
+        {
+            $result .= "{$data[MIDCOM_NAV_NAME]}  &gt; ";
+        }
+    }
+    
+    if (empty($result))
+    {
+        return $title;
+    }
+    
+    return $result;
+}
 
 ?>
