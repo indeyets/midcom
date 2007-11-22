@@ -111,19 +111,19 @@ class net_nemein_organizations_interface extends midcom_baseclasses_components_i
         if (   !$group
             || !$group->guid)
         {
-            return false;
+            return null;
         }
         
         $parent_group = new midcom_db_group($config->get('group'));
         if (   !$parent_group
             || !$parent_group->guid)
         {
-            return false;
+            return null;
         }
         
         if ($group->owner != $parent_group->id)
         {
-            return false;
+            return null;
         }
         
         return net_nemein_organizations_viewer::get_url($group);
