@@ -6,6 +6,8 @@
     <property name="title" type="string" />
     <property name="url" type="string" />
     <property name="objectGuid" type="string" />
+    <property name="cachedUrl" type="text" />
+    <property name="node" link="midgard_topic:id" reverse="no" type="integer" parentfield="node" />
   </type>
 
 </Schema>

@@ -101,6 +101,31 @@ class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_compo
         }
     
         $this->_schemadb =& $schemadb;
+        
+        if ($this->_type == 'internal')
+        {
+            $this->_schemadb['edit']->append_field('cachedUrl', Array
+                (
+                    'title' => 'Cached URL',
+                    'storage' => 'cachedUrl',
+                    'type' => 'text',
+                    'widget' => 'text',
+                    'hidden' => true,
+                )
+            );
+        }
+        else
+        {
+            $this->_schemadb['edit']->append_field('node', Array
+                (
+                    'title' => 'Current Node',
+                    'storage' => 'node',
+                    'type' => 'text',
+                    'widget' => 'text',
+                    'hidden' => true,                    
+                )
+            );            
+        }
     }
 
     /**
@@ -111,7 +136,7 @@ class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_compo
     function _load_controller($handler_id)
     {
         $this->_load_schemadb();
-                
+        
         $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
         $this->_controller->schemadb = array( 'edit' => $this->_schemadb['edit'] );
         $this->_controller->set_storage($this->_item);
@@ -136,11 +161,27 @@ class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_compo
         }
         
         $this->_item =& $results[0];
-
+        
+        
         $this->_type = 'external';
         if ($this->_item->internal)
         {
             $this->_type = 'internal';
+        }
+        
+        if ($this->_type == 'internal')
+        {
+            if (empty($this->_item->cachedUrl))
+            {
+                $this->_item->cachedUrl = $_MIDCOM->permalinks->resolve_permalink($this->_item->objectGuid);
+            }
+        }
+        else
+        {
+            if (empty($this->_item->node))
+            {
+                $this->_item->node = $this->_topic->id;
+            }            
         }
         
         $this->_load_controller($handler_id);

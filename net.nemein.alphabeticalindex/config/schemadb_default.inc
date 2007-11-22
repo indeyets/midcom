@@ -49,7 +49,7 @@
             'widget_config' => array
             (
                 'clever_class' => 'article',
-                'id_field' => 'guid'
+                'id_field' => 'guid',
             ),
             'required' => false,
         ),

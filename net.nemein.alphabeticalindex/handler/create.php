@@ -159,7 +159,8 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
             $this->_item = new net_nemein_alphabeticalindex_item();
             $this->_item->title = $_POST['title'];
             $this->_item->url = $_POST['url'];            
-
+            $this->_item->node = $this->_topic->id;
+            
             if (! $this->_item->create())
             {            
                 debug_push_class(__CLASS__, __FUNCTION__);
@@ -193,6 +194,8 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
                             $item->title = $object->title;
                             $item->url = "{$GLOBALS['midcom_config']['midcom_site_url']}midcom-permalink-{$object->guid}";
                             $item->objectGuid = $object->guid;            
+                            $item->cachedUrl = $_MIDCOM->permalinks->resolve_permalink($object->guid);
+                            
                             if ($item->create())
                             {
                                 $object->set_parameter('net.nemein.alphabeticalindex:show_in_list','status', true);
