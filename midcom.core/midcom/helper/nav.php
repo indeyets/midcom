@@ -621,7 +621,7 @@ class midcom_helper_nav
         $prefix = $_MIDCOM->get_context_data($this->_contextid, MIDCOM_CONTEXT_ANCHORPREFIX);
         $result = Array();
         
-        if (!$id)
+        if (! $id)
         {
             $curr_leaf = $this->get_current_leaf();
             $curr_node = $this->get_current_node();
@@ -630,9 +630,13 @@ class midcom_helper_nav
         {
             $curr_leaf = $this->get_leaf($id);
             
-            if (!$curr_leaf)
+            if (! $curr_leaf)
             {
-                $curr_node = $this->get_node($id);
+                $node = $this->get_node($id);
+                if ($node)
+                {
+                    $curr_node = $node[MIDCOM_NAV_ID];
+                }
             }
             else
             {
