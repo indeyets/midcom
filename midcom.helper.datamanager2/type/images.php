@@ -763,7 +763,7 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
         {
             // Set image
             $basename = basename($file);
-			$this->add_image($basename, $file, $basename);
+            $this->add_image($basename, $file, $basename);
         }
 
         $this->_batch_handler_cleanup($tmp_dir, $new_name);

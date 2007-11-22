@@ -303,14 +303,14 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
 
                 if (is_array($titlefield))
                 {
-                	foreach($titlefield as $field)
-                	{
-                		if ($object->$field)
-                		{
-                			$titlefield = $field;
-                			break;
-                		}
-                	}
+                    foreach($titlefield as $field)
+                    {
+                        if ($object->$field)
+                        {
+                            $titlefield = $field;
+                            break;
+                        }
+                    }
                 }
                 return $object->$titlefield;
             }
@@ -327,7 +327,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
     }
 
     /**
-     * Checks, wether the given key is known.
+     * Checks, whether the given key is known.
      *
      * @param string $key The key index to look up.
      * @return bool True if the key is known, false otherwise.
@@ -692,7 +692,5 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
         $values = $this->combine_values();
         return implode($values, ', ');
     }
-
 }
-
 ?>
