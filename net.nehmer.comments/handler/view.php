@@ -359,6 +359,8 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
         }
 
         $this->_objectguid = $args[0];
+        $_MIDCOM->cache->content->register($this->_objectguid);
+        
         if ($handler_id == 'view-comments-nonempty')
         {
             $this->_comments = net_nehmer_comments_comment::list_by_objectguid_filter_anonymous(
