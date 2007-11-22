@@ -57,7 +57,6 @@ if (! defined('MIDCOM_CONFIG_FILE_AFTER'))
 
 ///////////////////////////////////////
 //Constants, Globals and Configuration
-require('version.php');
 require('constants.php');
 require('globals.php');
 require('midcom/config/midcom_config.php');

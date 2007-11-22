@@ -5,6 +5,7 @@
     <property file="build.properties"  />
     <property name="absolute_basedir" value="" />
     <property name="phpdocdir" value="documentation/api" />
+    <property name="coreVersion" value="2.9.0beta16" />
     <resolvepath propertyName="absolute_basedir" file="${project.basedir}"/>
 
     <taskdef classname="build.installMidcomDir"
@@ -108,12 +109,41 @@
             package="midcom"
             template="${project.basedir}/midcom.core/package-template.xml"
             returnProperty="pear_name"
+            version="${coreVersion}"
         >
         </packageMidCOMcore>
+
+        <move file="${project.basedir}/midcom.core/midcom/config/midcom_config.php" 
+            tofile="${project.basedir}/midcom.core/midcom/config/midcom_config.php~"
+            overwrite="true"
+            />
+
+        <!-- insert midcom version into the correct file.
+        @todo: consider moving the original out of the package dir 
+        -->
+        <copy file="${project.basedir}/midcom.core/midcom/config/midcom_config.php~" 
+            tofile="${project.basedir}/midcom.core/midcom/config/midcom_config.php"
+            overwrite="true"
+            >
+            <filterchain>
+              <replacetokens begintoken="##" endtoken="##">
+                  <token key="MIDCOM_VERSION" value="${coreVersion}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+
+
         <pearPackagePackage 
             path="${project.basedir}/midcom.core"
             target_dir="${target_dir}"
             />
+
+        <copy file="${project.basedir}/midcom.core/midcom/config/midcom_config.php~" 
+            overwrite="true"
+            tofile="${project.basedir}/midcom.core/midcom/config/midcom_config.php" />
+
+
         <echo>Package ${pear_name} created in ${target_dir}</echo>
     </target>
 

@@ -318,7 +318,11 @@
  * @global Array $GLOBALS['midcom_config_default']
  */
 $GLOBALS['midcom_config_default'] = Array();
-
+/**
+ * MidCOM version
+ * @global string 
+ */
+$GLOBALS['midcom_version'] = '##MIDCOM_VERSION##';
 // Initialize Helpers
 $phpversion = phpversion();
 $host = new midgard_host();

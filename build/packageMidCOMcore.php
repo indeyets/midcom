@@ -39,6 +39,7 @@ class packageMidCOMcore extends Task
     protected $phpversion = '4.3.0'; // for 2.8
 
 	protected $returnProperty; // name of property to set to return value
+    protected $version;
 
 	/**
 	 * The root path to where the module is stored.
@@ -82,6 +83,10 @@ class packageMidCOMcore extends Task
     public function setStability($s) {
         $this->stability = $s;
     }
+    public function setVersion($s) {
+        $this->version = $s;
+    }
+
 
     // todo: add a setVersion from the commandline
     protected $copyfiles = array ();
@@ -126,6 +131,8 @@ class packageMidCOMcore extends Task
         $package->addRole('txt','php');
         $package->addRole('sql','midgardsql');
         $package->addRole('xml', 'mgdschema');
+
+        var_dump($this->version);
 
         $package->generateContents();
 
@@ -191,6 +198,7 @@ class packageMidCOMcore extends Task
         $package->setPackageType('php');
         $package->setAPIStability($this->stability);
         $package->setPhpDep($this->phpversion);
+        $package->setReleaseVersion($this->version);
         echo "Done with makeBase\n\n";
         return $package;
     }
