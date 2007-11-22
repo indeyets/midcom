@@ -454,7 +454,14 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
                 $handle_action = 'created';
                 break;
             default:
-                $handle_action = $unserialized_object->action;
+                if ($unserialized_object->action)
+                {
+                    $handle_action = $unserialized_object->action;
+                }
+                else
+                {
+                    $handle_action = 'updated';
+                }
                 break;
         }
 
