@@ -38,10 +38,14 @@ $options = Array
     'background_color' => '#000000',
 );
 
-// Generate a new Text_CAPTCHA object, Image driver
-$captcha = Text_CAPTCHA::factory('Image');
-//$result = $captcha->init($width, $height, $passphrase, $options);
-$result = $captcha->init($height, $width, $passphrase, $options);
+/* Generate a new Text_CAPTCHA object, Image driver
+ * This is working at least with Text_CAPTCHAS latest alpha version. Older versions
+ * give missing font error
+ */
+
+   $captcha = Text_CAPTCHA::factory('Image');
+   $result = $captcha->init($width, $height, $passphrase, $options);
+// $result = $captcha->init($height, $width, $passphrase, $options);
 
 if (PEAR::isError($result))
 {
