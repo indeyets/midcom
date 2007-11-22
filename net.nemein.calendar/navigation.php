@@ -95,16 +95,28 @@ class net_nemein_calendar_navigation extends midcom_baseclasses_components_navig
             $qb->add_order('start');
             $qb->set_limit(1);
             $result = $qb->execute_unchecked();
-            
             if (count($result) == 0)
             {
                 return $leaves;
             }
-            
             $first_year = (int) date('Y', strtotime($result[0]->start));
             $year = $first_year;
-            $this_year = (int) date('Y', time());
-            while ($year <= $this_year)
+            
+            $qb = net_nemein_calendar_event_dba::new_query_builder();    
+            $qb->add_constraint('node', '=', $this->_content_topic->id);
+            $qb->add_order('end', 'DESC');
+            $qb->set_limit(1);
+            $result = $qb->execute_unchecked();
+            if (count($result) == 0)
+            {
+                $last_year = (int) date('Y', time());
+            }
+            else
+            {
+                $last_year = (int) date('Y', strtotime($result[0]->end));
+            }   
+
+            while ($year <= $last_year)
             {
                 $next_year = $year + 1;
                 $leaves["{$this->_topic->id}_ARCHIVE_{$year}"] = array
