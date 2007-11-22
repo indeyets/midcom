@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING %s deleted items
+%s deleted items
+---STRINGEND
+
 ---STRING 1 day
 1 day
 ---STRINGEND
@@ -93,6 +97,10 @@ Deleted on
 
 ---STRING edit %s %s
 Edit %s %s
+---STRINGEND
+
+---STRING failed purging %s, reason %s
+Failed purging %s, reason %s
 ---STRINGEND
 
 ---STRING failed purging attachment %s => %s, reason %s
@@ -303,7 +311,7 @@ User preferences
 View on-site
 ---STRINGEND
 
----STRING failed purging %s, reason %s
-Failed purging %s, reason %s
+---STRING %s trash
+%s trash
 ---STRINGEND
 

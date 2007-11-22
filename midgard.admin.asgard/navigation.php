@@ -141,20 +141,20 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
             echo "{$prefix}<ul>\n";
             foreach ($siblings as $type => $children)
             {
-				$label_mapping = Array();
-				$i = 0;
+                $label_mapping = Array();
+                $i = 0;
                 foreach ($children as $child)
                 {
                     $ref =& $this->_get_reflector(&$child);
-					$label_mapping[$i] = htmlspecialchars($ref->get_object_label($child));
-					$i++;
+                    $label_mapping[$i] = htmlspecialchars($ref->get_object_label($child));
+                    $i++;
                 }
                 asort($label_mapping);
 
 
                 foreach($label_mapping as $index => $label)
                 {
-					$child =& $children[$index];
+                    $child =& $children[$index];
                     if (isset($this->shown_objects[$child->guid]))
                     {
                         continue;
@@ -267,17 +267,17 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
                 {
                     echo "<ul class=\"midgard_admin_asgard_navigation\">\n";
 
-					$object_label_mapping = Array();
+                    $object_label_mapping = Array();
 
-					$i = 0;
+                    $i = 0;
                     foreach ($root_objects as $object)
-			        {
-			            $object_label_mapping[$i] = $ref->get_object_label($object);
-						$i++;
-			        }
-        			asort($object_label_mapping);
+                    {
+                        $object_label_mapping[$i] = $ref->get_object_label($object);
+                        $i++;
+                    }
+                    asort($object_label_mapping);
 
-        			foreach ($object_label_mapping as $index => $label)
+                    foreach ($object_label_mapping as $index => $label)
                     {
                         $object =& $root_objects[$index];
                         $selected = false;
