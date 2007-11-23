@@ -6,6 +6,10 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2007-11-23 adrenalin
+  ! Corrected mispelled 'childs' to 'children', which might force someone to change the
+    CSS class names
+
 2007-06-12 adrenalin
   - Added (again) 'untranslated' to class name for multilang
 

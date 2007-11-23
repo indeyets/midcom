@@ -199,20 +199,20 @@ class fi_protie_navigation
     var $css_first_last = 'first_last';
     
     /**
-     * Check if item has childs and if so, add childs-class to list item ul class name
+     * Check if item has children and if so, add children-class to list item ul class name
      * 
      * @access public
      * @var boolean
      */
-    var $has_childs_to_class = false;
+    var $has_children_to_class = false;
     
     /**
-     * CSS class for has childs
+     * CSS class for has children
      * 
      * @access public
      * @var string
      */
-    var $css_has_childs = 'childs';
+    var $css_has_children = 'children';
     
     /**
      * CSS class for nodes
@@ -477,7 +477,7 @@ class fi_protie_navigation
             $component = '';
             $url_name_to_class = '';
             $first_last = '';
-            $has_childs = '';
+            $has_children = '';
             
             if($item_counter == 1 && $item_counter == $item_count)
             {
@@ -500,12 +500,12 @@ class fi_protie_navigation
                 $active = $this->css_active;
             }
             
-            if($this->has_childs_to_class)
+            if($this->has_children_to_class)
             {
-                $childs = $this->_nap->list_nodes($child[MIDCOM_NAV_ID]);
-                if(count($childs)>0)
+                $children = $this->_nap->list_nodes($child[MIDCOM_NAV_ID]);
+                if(count($children)>0)
                 {
-                    $has_childs = $this->css_has_childs;
+                    $has_children = $this->css_has_children;
                 }
             }
             
@@ -519,7 +519,7 @@ class fi_protie_navigation
                 $component = str_replace('.', '_', $item[MIDCOM_NAV_COMPONENT]);
             }
             
-            $this->_display_element($item, $indent, $active, $selected, $component, $url_name_to_class, $first_last, $has_childs);
+            $this->_display_element($item, $indent, $active, $selected, $component, $url_name_to_class, $first_last, $has_children);
         }
         echo "{$indent}</ul>\n";
     }
@@ -570,7 +570,7 @@ class fi_protie_navigation
             $component = '';
             $url_name_to_class = '';
             $first_last = '';
-            $has_childs = '';
+            $has_children = '';
             
             if($item_counter == 1 && $item_counter == $item_count)
             {
@@ -585,12 +585,12 @@ class fi_protie_navigation
                 $first_last = $this->css_last;
             }
             
-            if($this->has_childs_to_class)
+            if($this->has_children_to_class)
             {
-                $childs = $this->_nap->list_child_elements($child[MIDCOM_NAV_ID]);
-                if(is_array($childs) && count($childs)>0)
+                $children = $this->_nap->list_child_elements($child[MIDCOM_NAV_ID]);
+                if(is_array($children) && count($children)>0)
                 {
-                    $has_childs = $this->css_has_childs;
+                    $has_children = $this->css_has_children;
                 }
             }
 
@@ -632,13 +632,13 @@ class fi_protie_navigation
                 }
             }
             
-            $this->_display_element($item, $indent, $active, $selected, $component, $url_name_to_class, $first_last, $has_childs);
+            $this->_display_element($item, $indent, $active, $selected, $component, $url_name_to_class, $first_last, $has_children);
         }
         
         echo "{$indent}</ul>\n";
     }
     
-    function _display_element($item, $indent, $active, $selected, $component, $url_name_to_class, $first_last, $has_childs)
+    function _display_element($item, $indent, $active, $selected, $component, $url_name_to_class, $first_last, $has_children)
     {
         // Check if user has requested URL name to be included in class
         if ($this->url_name_to_class)
@@ -672,10 +672,10 @@ class fi_protie_navigation
             $css_class .= ' '.$first_last;
         }
         
-         // Check if the has childs is supposed to be drawn
-        if ($this->has_childs_to_class && $has_childs !== '')
+         // Check if the has children is supposed to be drawn
+        if ($this->has_children_to_class && $has_children !== '')
         {
-            $css_class .= ' '.$has_childs;
+            $css_class .= ' '.$has_children;
         }
         
         // Add information about the object's translation status 
