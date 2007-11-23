@@ -31,12 +31,6 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             $_MIDCOM->i18n->set_language($language);
         }
         
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.mouse.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.draggable.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midgard.admin.asgard/resize.js');
-        
-        $_MIDCOM->add_jscript("var MIDGARD_ROOT = '{$_MIDGARD['self']}';");
-        
         return array
         (
             /**

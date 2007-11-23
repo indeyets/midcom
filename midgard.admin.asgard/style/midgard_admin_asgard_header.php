@@ -10,6 +10,12 @@ else
 {
     $navigation_width = '';
 }
+
+// JavasScript libraries required by Asgard 
+$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.mouse.js');
+$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.draggable.js');
+$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midgard.admin.asgard/resize.js');
+$_MIDCOM->add_jscript("var MIDGARD_ROOT = '{$_MIDGARD['self']}';");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
