@@ -161,7 +161,7 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
             },
             success: function(data){
                 var parsed = parse_response(data);
-                update_widget_inputs(parsed[0], true);
+                update_widget_inputs(parsed[0], true, true);
                 handle_alternatives(parsed);
             }
         });
@@ -312,11 +312,15 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
         set_marker(label, info);
     }
     
-    function update_widget_inputs(location_data, skip_lat_lon)
+    function update_widget_inputs(location_data, skip_lat_lon, no_override)
     {
-        if (skip_lat_lon == undefined)
+        if (typeof skip_lat_lon == 'undefined')
         {
             var skip_lat_lon = false;
+        }
+        if (typeof no_override == 'undefined')
+        {
+            var no_override = false;
         }
         
         enable_tabs();
@@ -333,12 +337,46 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
                     if (   key != 'latitude'
                         && key != 'longitude')
                     {
-                        jQuery('#' + input_data[key]['id']).attr('value',value);                    
+                        if (   no_override
+                            && jQuery('#' + input_data[key]['id']).attr('value') == '')
+                        {
+                            jQuery('#' + input_data[key]['id']).attr('value',value);
+                        }
+                        else
+                        {
+                            if (value != '')
+                            {
+                                var parent = jQuery('#' + input_data[key]['id']).parent();
+                                jQuery("span.proposal",parent).html(' (' + value + ')');
+                            }
+                        }
+                        
+                        if (! no_override)
+                        {
+                            jQuery('#' + input_data[key]['id']).attr('value',value);
+                        }
                     }                    
                 }
                 else
                 {
-                    jQuery('#' + input_data[key]['id']).attr('value',value);
+                    if (   no_override
+                        && jQuery('#' + input_data[key]['id']).attr('value') == '')
+                    {
+                        jQuery('#' + input_data[key]['id']).attr('value',value);
+                    }
+                    else
+                    {
+                        if (value != '')
+                        {
+                            var parent = jQuery('#' + input_data[key]['id']).parent();
+                            jQuery("span.proposal",parent).html(' (' + value + ')');
+                        }
+                    }
+                    
+                    if (! no_override)
+                    {
+                        jQuery('#' + input_data[key]['id']).attr('value',value);
+                    }
                 }
             }
         });
