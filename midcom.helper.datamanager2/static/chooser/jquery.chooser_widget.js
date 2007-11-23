@@ -369,7 +369,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         selected_items = [],
         list_jq_items,
         active = -1,
-        data;
+        data,
+        block_width = 100;
 
     list.mouseover( function(event) {
         var jq_elem = jQuery(target(event)).addClass(CLASSES.HOVER);
@@ -403,13 +404,19 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
     
     function create_headers()
     {
+        if (options.result_headers.length > 1)
+        {
+            block_width = (100 / options.result_headers.length) - 1;
+        }
+        
         jQuery.each( options.result_headers, function(i,n) {
             var li_elem = jQuery("<li>")
                 .addClass('chooser_widget_header_item')
                 .css({
                     margin: 0,
                     padding: 0,
-                    background: 'none'
+                    background: 'none',
+                    width: block_width+'%'
                 })
                 .attr({ id: 'chooser_widget_header_item_'+n.name });
             var item_content = jQuery("<div>")
@@ -578,7 +585,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         }
         else
         {
-            var item_content = midcom_helper_datamanager2_widget_chooser_format_item(data,options)
+            var item_content = midcom_helper_datamanager2_widget_chooser_format_item(data,options,block_width)
             .appendTo(li_elem);
             var input_elem = jQuery("<input type=\"hidden\">")
             .attr({ name: input_elem_name, value: 0, id: options.widget_id + '_result_item_'+item_id+'_input' })
@@ -797,7 +804,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.MoveSelection = function(field,
     field.focus();
 };
 
-function midcom_helper_datamanager2_widget_chooser_format_item(item, options)
+function midcom_helper_datamanager2_widget_chooser_format_item(item, options, block_width)
 {
     var formatted = '';
 
@@ -827,6 +834,9 @@ function midcom_helper_datamanager2_widget_chooser_format_item(item, options)
         .attr({
             id: 'chooser_widget_item_part_'+n.name,
             title: midcom_helper_datamanager2_widget_chooser_format_value('html2text', value)
+        })
+        .css({
+            width: block_width+'%'
         })
         .html( value )
         .appendTo(item_parts);

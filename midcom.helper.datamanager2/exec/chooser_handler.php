@@ -10,7 +10,7 @@
  */
 
 debug_push_class('midcom_helper_datamanager2_widget_chooser_handler', 'initialize');
-// debug_print_r('_REQUEST',  $_REQUEST);
+//debug_print_r('_REQUEST',  $_REQUEST);
 
 // Common variables
 $encoding = 'UTF-8';
@@ -44,11 +44,12 @@ $map = array
     '_callback_class', '_callback_args',
     '_renderer_callback_class', '_renderer_callback_args',
     'constraints', 'searchfields', 'orders',
-    'result_headers',
+    'result_headers', 'generate_path_for',
     'auto_wildcards',
     'reflector_key'
 );
 $extra_params = unserialize(base64_decode($_REQUEST['extra_params']));
+debug_print_r('extra params', $extra_params);
 foreach ($map as $map_key)
 {
     // debug_add("map extras :: checking map_key {$map_key}");
@@ -292,10 +293,13 @@ foreach ($results as $object)
             $item_name = $header_item['name'];
             $value = @$object->$item_name;
 
-            if (   $class == 'midcom_db_topic'
-                && $item_name == 'extra' )
+            if (   $generate_path_for == $item_name
+                || (   $class == 'midcom_db_topic'
+                    && $item_name == 'extra')
+                || (   in_array($class, array('midcom_baseclasses_database_group', 'midcom_db_group'))
+                    && $item_name == 'name') )
             {
-                $value = resolve_path_title($object->id, $value);
+                $value = resolve_path($object->id, $class, $value);
             }
 
             debug_add("adding header item: name={$item_name} value={$value}");
@@ -314,51 +318,75 @@ debug_print_r('Got results',$results);
 debug_pop();
 $_MIDCOM->finish();
 
-function resolve_path_title($object_id, $title)
-{   
-    $result = '';    
-    $nav = new midcom_helper_nav();
+/**
+ * TODO: Reflectorize this
+ */
+function resolve_path($object_id, $class, $title)
+{
+    debug_add("resolve_path for {$object_id}, {$class}, {$title}");
     
-    $bc_data = $nav->get_breadcrumb_data($object_id);    
-    reset($bc_data);
+    $result_components = array();
     
-    // Detect real starting Node
-    if ($skip_levels > 0)
+    if ($class == 'midcom_db_topic')
     {
-        if ($skip_levels >= count($bc_data))
+        $id = $object_id;
+        while ($id != 0)
         {
-            debug_add('We were asked to skip all (or even more) breadcrumb elements then there were present. Returning an empty breadcrumb line therefore.', MIDCOM_LOG_INFO);
-            debug_pop();
-            return $title;
-        }
-        for ($i = 0; $i < $skip_levels; $i++)
-        {
-            next($bc_data);
-        }
-    }
-    
-    while(current($bc_data) !== false)
-    {
-        $data = current($bc_data);
-        $data[MIDCOM_NAV_NAME] = htmlspecialchars($data[MIDCOM_NAV_NAME]);
+            $mc = midcom_db_topic::new_collector('id', $id);
+            $mc->add_value_property('extra');
+            $mc->add_value_property('up');
+            $mc->execute();
+            $topics = $mc->list_keys();
 
-        // Add the next element sensitive to the fact whether we are at the end or not.
-        if (next($bc_data) === false)
+            if (! $topics)
+            {
+                $id = 0;
+                break;
+            }
+
+            foreach ($topics as $topic_guid => $value)
+            {
+                $result_components[] = $mc->get_subkey($topic_guid, 'extra');
+                $id = $mc->get_subkey($topic_guid, 'up');
+            }
+        }        
+    }
+    else if (   $class == 'midcom_db_group'
+             || $class == 'midcom_baseclasses_database_group')
+    {
+        $result_components[] = $title;
+        
+        $id = $object_id;
+        while ($id != 0)
         {
-            $result .= $data[MIDCOM_NAV_NAME];
-        }
-        else
-        {
-            $result .= "{$data[MIDCOM_NAV_NAME]}  &gt; ";
+            $mc = midcom_db_topic::new_collector('id', $id);
+            $mc->add_value_property('name');
+            $mc->add_value_property('owner');
+            $mc->execute();
+            $groups = $mc->list_keys();
+
+            if (! $groups)
+            {
+                $id = 0;
+                break;
+            }
+
+            foreach ($groups as $group_guid => $value)
+            {
+                $result_components[] = $mc->get_subkey($group_guid, 'name');
+                $id = $mc->get_subkey($group_guid, 'owner');
+            }
         }
     }
     
-    if (empty($result))
+    if (empty($result_components))
     {
         return $title;
     }
     
-    return $result;
+    $result_components = array_reverse($result_components);
+    
+    return implode(' &gt; ', $result_components);
 }
 
 ?>

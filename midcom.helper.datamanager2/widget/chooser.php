@@ -142,6 +142,16 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
      * @var array
      */
     var $result_headers = array();
+    
+    /**
+     * In search results replaces given field with full path to the object
+     *
+     * Example: (in topics)
+     *      'generate_path_for' => 'extra',
+     *
+     * @var array
+     */    
+    var $generate_path_for = null;
 
     /**
      * Fields/properties to search the keyword for, always OR and specified after the constaints above
@@ -618,6 +628,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                     array('extra' => 'ASC'), 
                     array('metadata.published' => 'ASC'),
                 ),
+                'generate_path_for' => 'extra',
             ),
             'group' => array
             (
@@ -641,6 +652,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 ),
                 'id_field' => 'id',
             ),
+            'generate_path_for' => 'name',
         );
         
         if (array_key_exists($this->clever_class,$clever_classes))
@@ -665,6 +677,11 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                     $header['name'] = $header_key;
                     $this->result_headers[] = $header;
                 }
+            }
+            if (   is_null($this->generate_path_for)
+                && isset($clever_classes[$this->clever_class]['generate_path_for']))
+            {
+                $this->generate_path_for = $clever_classes[$this->clever_class]['generate_path_for'];
             }
             if (empty($this->constraints))
             {
