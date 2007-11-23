@@ -33,6 +33,16 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
     {
         parent::midcom_baseclasses_components_handler();
     }
+    
+    /**
+     * Load the schemadb and other midcom.admin.folder specific stuff
+     * 
+     * @access public
+     */
+    function _on_initialize()
+    {
+        $this->_config =& $GLOBALS['midcom_component_data']['midcom.helper.imagepopup']['config'];
+    }
 
     function _prepare_request_data()
     {
@@ -44,6 +54,22 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
         $_MIDCOM->cache->content->no_cache();
         $_MIDCOM->auth->require_valid_user();
         $_MIDCOM->skip_page_style = true;
+
+        if (!$this->_config->get('enable_page'))
+        {
+            if ($handler_id == '____ais-imagepopup-list_object')
+            {
+                $_MIDCOM->relocate('__ais/imagepopup/folder/default/');
+            }
+            elseif ($handler_id =='____ais-imagepopup-list_folder')
+            {
+                $_MIDCOM->relocate('__ais/imagepopup/folder/default/');
+            }
+            elseif ($handler_id =='____ais-imagepopup-list_unified')
+            {
+                $_MIDCOM->relocate('__ais/imagepopup/unified/default/');
+            }
+        }
         
         $_MIDCOM->add_link_head
         (
@@ -212,13 +238,18 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
         
         $session =& $_MIDCOM->get_service('session');
         
-        if (!$session->exists('midcom.helper.datamanager2', $key))
+        if ($session->exists('midcom.helper.datamanager2', $key))
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Could not find datamanager2 schema session with key: {$key}.");
-            // this exits.
+            $schema = $session->get('midcom.helper.datamanager2', $key);
         }
-        
-        $schema = $session->get('midcom.helper.datamanager2', $key);
+        else
+        {
+            $schema = array
+            (
+                'description' => 'generated schema',
+                'fields' => array(),
+            );
+        }
 
         $imagetypes = array
         (

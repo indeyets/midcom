@@ -22,10 +22,10 @@ class midcom_helper_imagepopup_viewer extends midcom_baseclasses_components_requ
     
     function get_plugin_handlers()
     {
-    
-	// Dumb $this on PHP5 workaround
-	
-	$object =& $this;
+        $_MIDCOM->load_library('midcom.helper.imagepopup');
+            
+        // Dumb $this on PHP5 workaround
+        $object =& $this;
 	
         // Match /folder/<schema>/<object guid>
         $object->_request_switch['list_folder'] = Array (

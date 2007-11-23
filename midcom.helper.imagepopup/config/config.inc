@@ -1,8 +1,1 @@
-
-/* @TODO 
- * Have a table of allowed file types.
- * Max number of mb uploadable
-*/
-
-
-
+'enable_page' => true,
