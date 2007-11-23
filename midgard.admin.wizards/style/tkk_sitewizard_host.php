@@ -17,7 +17,7 @@
   
   <input type="text" name="tkk_sitewizard_host" value="<?php echo $data['current_host']->name; ?>"/><br/>
 
-  <?php echo $data['l10n']->get('prefix'); ?><br/>
+  <?php echo $data['l10n']->get('prefix'); ?> "/myprefix"<br/>
   <input type="text" name="tkk_sitewizard_prefix"/><br/>
   <!--
   port<input type="port" name="tkk_sitewizard_port"/><br/>

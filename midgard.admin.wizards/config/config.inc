@@ -37,7 +37,7 @@
                     'sitewizard_path' => '/usr/share/php/midcom/static/data/midgard_admin_sitewizard.php',
                     'default_sitegroup_id' => 1,
                     'copy_host_port' => 8001,
-                    'copy_host_prefix' => '/staging',
+                    'copy_host_name' => 'wwwcms.hut.fi',
                 ),            
             ),
             'select_tkk_style' => array

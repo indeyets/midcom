@@ -86,11 +86,20 @@ class create_tkk_host extends midcom_baseclasses_components_handler
                     $host_creator->set_copy_host_port(8001);
                 }
                 
-                if (    isset($this->_request_data['plugin_config']['copy_host_prefix'])
-                    &&  !empty($this->_request_data['plugin_config']['copy_host_prefix']))
+                if (    isset($_POST['tkk_sitewizard_prefix'])   
+                    &&  !empty($_POST['tkk_sitewizard_prefix']))
                 {
-                    $host_creator->set_copy_host_prefix($_POST['tkk_sitewizard_prefix'] 
-                        . $this->_request_data['plugin_config']['copy_host_prefix']);
+                    $host_creator->set_copy_host_prefix("/" . $_POST['tkk_sitewizard_host'] . $_POST['tkk_sitewizard_prefix']);
+                }
+                else
+                {
+                    $host_creator->set_copy_host_prefix("/" . $_POST['tkk_sitewizard_host']);
+                }
+                
+                if (    isset($this->_request_data['plugin_config']['copy_host_name'])
+                    &&  !empty($this->_request_data['plugin_config']['copy_host_name']))
+                {
+                    $host_creator->set_copy_host_url($this->_request_data['plugin_config']['copy_host_name']);
                 }
                 
                 
