@@ -330,24 +330,39 @@ function resolve_path($object_id, $class, $title)
     if ($class == 'midcom_db_topic')
     {
         $id = $object_id;
+        $last_name = '';
         while ($id != 0)
         {
             $mc = midcom_db_topic::new_collector('id', $id);
             $mc->add_value_property('extra');
             $mc->add_value_property('up');
+            $mc->add_value_property('name');
             $mc->execute();
             $topics = $mc->list_keys();
 
             if (! $topics)
             {
                 $id = 0;
+                $rc_count = count($result_components);
+                debug_add("rc_count: {$rc_count}, ".$result_components[$rc_count-1]);
+                $result_components[$rc_count-1] = $last_name;
                 break;
             }
 
             foreach ($topics as $topic_guid => $value)
             {
-                $result_components[] = $mc->get_subkey($topic_guid, 'extra');
+                debug_add("last_name: {$last_name}");
                 $id = $mc->get_subkey($topic_guid, 'up');
+                $last_name = $mc->get_subkey($topic_guid, 'name');
+                
+                if ($id == 0)
+                {
+                    $result_components[] = $last_name;
+                }
+                else
+                {
+                    $result_components[] = $mc->get_subkey($topic_guid, 'extra');
+                }
             }
         }        
     }
@@ -364,7 +379,7 @@ function resolve_path($object_id, $class, $title)
             $mc->add_value_property('owner');
             $mc->execute();
             $groups = $mc->list_keys();
-
+            
             if (! $groups)
             {
                 $id = 0;
