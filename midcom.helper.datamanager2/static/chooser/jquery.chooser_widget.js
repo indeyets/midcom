@@ -406,7 +406,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
     {
         if (options.result_headers.length > 1)
         {
-            block_width = (100 / options.result_headers.length) - 1;
+            block_width = (100 / options.result_headers.length) - options.result_headers.length - 2;
         }
         
         jQuery.each( options.result_headers, function(i,n) {
