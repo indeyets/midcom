@@ -117,7 +117,7 @@ class org_openpsa_products_handler_product_edit extends midcom_baseclasses_compo
         $this->_prepare_request_data();
         $this->_view_toolbar->bind_to($this->_product);
 
-        $_MIDCOM->set_26_request_metadata($this->_product->revised, $this->_product->guid);
+        $_MIDCOM->set_26_request_metadata($this->_product->metadata->revised, $this->_product->guid);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_product->title}");
 
         return true;

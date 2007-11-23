@@ -1096,7 +1096,8 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
                     $time = $meta['lastmodified'];
                 }
             }
-            if ($time == 0)
+            if (   $time == 0
+                || !is_numeric($time))
             {
                 $time = time();
             }
