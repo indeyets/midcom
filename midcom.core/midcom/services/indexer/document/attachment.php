@@ -186,6 +186,7 @@ class midcom_services_indexer_document_attachment extends midcom_services_indexe
         {
             debug_add('Could not find catdoc, indexing as binary.', MIDCOM_LOG_INFO);
             $this->_process_mime_binary();
+            return;
         }
         
         debug_push_class($this, __FUNCTION__);
@@ -198,6 +199,15 @@ class midcom_services_indexer_document_attachment extends midcom_services_indexe
         debug_add("Executing: {$command}");
         exec ($command, $result, $returncode);
         debug_print_r("Execution returned {$returncode}: ", $result);
+
+        unlink ($wordfile);
+
+        if (!file_exists($txtfile))
+        {
+            // We were unable to read the document into text
+            $this->_process_mime_binary();
+            return;
+        }
         
         $handle = fopen($txtfile, "r");
         $this->content = $this->_get_attachment_content($handle);
@@ -205,7 +215,6 @@ class midcom_services_indexer_document_attachment extends midcom_services_indexe
 		$this->content = str_replace("\x0C", '', $this->content);
         fclose($handle);
         
-        unlink ($wordfile);
         unlink ($txtfile);
         debug_pop();
     }
@@ -219,6 +228,7 @@ class midcom_services_indexer_document_attachment extends midcom_services_indexe
         {
             debug_add('Could not find pdftotext, indexing as binary.', MIDCOM_LOG_INFO);
             $this->_process_mime_binary();
+            return;
         }
         
         debug_push_class($this, __FUNCTION__);
@@ -231,12 +241,20 @@ class midcom_services_indexer_document_attachment extends midcom_services_indexe
         debug_add("Executing: {$command}");
         exec ($command, $result, $returncode);
         debug_print_r("Execution returned {$returncode}: ", $result);
+
+        unlink ($pdffile);
+        
+        if (!file_exists($txtfile))
+        {
+            // We were unable to read the document into text
+            $this->_process_mime_binary();
+            return;
+        }
         
         $handle = fopen($txtfile, 'r');
         $this->content = $this->_get_attachment_content($handle);
         fclose($handle);
         
-        unlink ($pdffile);
         unlink ($txtfile);
         debug_pop();
     }
@@ -250,6 +268,7 @@ class midcom_services_indexer_document_attachment extends midcom_services_indexe
         {
             debug_add('Could not find unrtf, indexing as binary.', MIDCOM_LOG_INFO);
             $this->_process_mime_binary();
+            return;
         }
         
         debug_push_class($this, __FUNCTION__);
@@ -263,12 +282,20 @@ class midcom_services_indexer_document_attachment extends midcom_services_indexe
         debug_add("Executing: {$command}");
         exec ($command, $result, $returncode);
         debug_print_r("Execution returned {$returncode}: ", $result);
+
+        unlink ($rtffile);
+
+        if (!file_exists($txtfile))
+        {
+            // We were unable to read the document into text
+            $this->_process_mime_binary();
+            return;
+        }
         
         $handle = fopen($txtfile, 'r');
         $this->content = $this->_i18n->convert_to_current_charset($this->_get_attachment_content($handle));
         fclose($handle);
         
-        unlink ($rtffile);
         unlink ($txtfile);
         debug_pop();
     }
