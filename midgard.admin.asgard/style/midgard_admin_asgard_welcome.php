@@ -25,7 +25,8 @@ $revised_after_choices[$date] = $_MIDCOM->i18n->get_string('1 month', 'midgard.a
                     foreach ($revised_after_choices as $value => $label)
                     {
                         $selected = '';
-                        if ($data['revised_after'] == date('Y-m-d H:i:s\Z', $value))
+                        if (   isset($data['revised_after'])
+                            && $data['revised_after'] == date('Y-m-d H:i:s\Z', $value))
                         {
                             $selected = ' selected="selected"';
                         }
