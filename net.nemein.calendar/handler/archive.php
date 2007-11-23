@@ -79,6 +79,12 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
             $qb->add_constraint('node', '=', $this->_request_data['content_topic']->id);
         }
         
+        $type_filter = $this->_config->get('type_filter_upcoming');
+        if (!is_null($type_filter))
+        {
+            $qb->add_constraint('type', '=', (int) $type_filter);
+        }
+        
         return $qb;
     }
 
