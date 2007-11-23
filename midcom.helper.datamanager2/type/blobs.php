@@ -237,7 +237,6 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
             && $parent[MIDCOM_NAV_TYPE] == 'node')
         {
             $info['url'] = "{$_MIDGARD['self']}{$parent[MIDCOM_NAV_RELATIVEURL]}{$name}";
-            echo $info['url'];
         }
         else
         {

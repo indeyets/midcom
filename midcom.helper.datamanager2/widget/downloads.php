@@ -191,7 +191,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
         // Filename column
         $html = "<tr class='midcom_helper_datamanager2_widget_downloads_download' title='{$info['guid']}'>\n" .
                 "<td class='exist filename' title='{$info['filename']}'>" .
-                "<a href='{$info['url']}'>{$info['filename']}</a>" .
+                "<a href='{$info['url']}' class='download'>{$info['filename']}</a>" .
                 "</td>\n";
         $this->_elements["s_exist_{$identifier}_filename"] =& HTML_QuickForm::createElement('static', "s_exist_{$identifier}_filename", '', $html);
 

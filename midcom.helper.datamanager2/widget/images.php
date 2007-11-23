@@ -311,7 +311,7 @@ END;
         {
             $url = $this->_type->images[$identifier]['thumbnail']['url'];
             $sizeline = $this->_type->images[$identifier]['thumbnail']['size_line'];
-            $preview = "<a href='{$info['url']}'><img src='{$url}' {$sizeline} /></a>";
+            $preview = "<a href='{$info['url']}' class='download'><img src='{$url}' {$sizeline} /></a>";
         }
         else
         {
@@ -337,7 +337,7 @@ END;
             }
 
             $size_line = "width='{$x}' height='{$y}'";
-            $preview = "<a href='{$url}'><img src='{$url}' {$size_line} /></a>";
+            $preview = "<a href='{$url}' class='download'><img src='{$url}' {$size_line} /></a>";
         }
 
 
