@@ -234,6 +234,8 @@ class midgard_admin_asgard_handler_preferences extends midcom_baseclasses_compon
         // Patch for Midgard ACL problem of setting person's own parameters
         $_MIDCOM->auth->request_sudo('midgard.admin.asgard');
         
+        debug_push_class(__CLASS__, __FUNCTION__);
+        
         foreach ($_POST as $key => $value)
         {
              if (is_array($value))
@@ -241,12 +243,16 @@ class midgard_admin_asgard_handler_preferences extends midcom_baseclasses_compon
                  $value = serialize($value);
              }
              
-             if (!$this->_person->set_parameter('midgard.admin.asgard.preferences', $key, $value))
+             if (!$this->_person->set_parameter('midgard.admin.asgard:preferences', $key, $value))
              {
                  $this->_status = false;
                  $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midgard.admin.asgard', 'midgard.admin.asgard'), sprintf($_MIDCOM->i18n->get_string('failed to save the preference for %s', 'midgard.admin.asgard'), $_MIDCOM->i18n->get_string($key, 'midgard.admin.asgard')));
              }
+             
+             debug_add("Added configuration key-value pair {$key} => {$value}", MIDCOM_LOG_DEBUG);
         }
+        
+        debug_pop();
         
         $_MIDCOM->auth->drop_sudo();
         

@@ -643,7 +643,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
     {
         $person = new midcom_db_person($_MIDCOM->auth->user->guid);
         
-        return $person->get_parameter('midgard.admin.asgard.preferences', $preference);
+        return $person->get_parameter('midgard.admin.asgard:preferences', $preference);
         
         /** For some odd reason Midgard crashes here
         $mc = midcom_baseclasses_database_parameter::new_collector('parentguid', $_MIDCOM->auth->user->guid);

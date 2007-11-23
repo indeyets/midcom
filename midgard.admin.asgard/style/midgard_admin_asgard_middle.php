@@ -1,24 +1,24 @@
-                    <?php
-                    if (isset($data['object']))
-                    {
-                        $navigation = new midgard_admin_asgard_navigation($data['object'], &$data);
-                    }
-                    else
-                    {
-                        $navigation = new midgard_admin_asgard_navigation(null, &$data);
-                    }
-                    $navigation->draw();
-                    
-                    if (($width = midgard_admin_asgard_plugin::get_preference('offset')))
-                    {
-                        $width += 2;
-                        $content_offset = " style=\"margin-left: {$width}px\"";
-                    }
-                    else
-                    {
-                        $content_offset = '';
-                    }
-                    ?>
+<?php
+if (isset($data['object']))
+{
+    $navigation = new midgard_admin_asgard_navigation($data['object'], &$data);
+}
+else
+{
+    $navigation = new midgard_admin_asgard_navigation(null, &$data);
+}
+$navigation->draw();
+
+if (($width = midgard_admin_asgard_plugin::get_preference('offset')))
+{
+    $width += 2;
+    $content_offset = " style=\"margin-left: {$width}px\"";
+}
+else
+{
+    $content_offset = '';
+}
+?>
                 </div>
                 <div id="content"&(content_offset:h);>
                     <div class="page-title">
@@ -43,6 +43,7 @@
                         }
                         
                         echo "{$data['view_title']}</h1>\n";
+                        
                         ?>
                     </div>
 
@@ -52,9 +53,47 @@
                         echo $nap->get_breadcrumb_line(" &gt; ", null, 1);
                         ?>
                     </div>
-                    <div id="toolbar">
-                        <?php
-                        echo $data['asgard_toolbar']->render();
-                        ?>
+<?php
+$toolbar_style = '';
+if (($position = midgard_admin_asgard_plugin::get_preference('toolbar_mode')))
+{
+    $toolbar_style = " style=\"position: {$position}\" class=\"{$position}\"";
+}
+?>
+                    <div id="toolbar"&(toolbar_style:h);>
+<?php
+echo $data['asgard_toolbar']->render();
+
+if ($position === 'absolute')
+{
+?>
+<script type="text/javascript">
+    // <![CDATA[
+        $j('#toolbar')
+            .draggable({
+                stop: function()
+                {
+                    var offset = $j('#toolbar').offset();
+                    jQuery.post(MIDCOM_PAGE_PREFIX + '__mfa/asgard/preferences/ajax/',
+                    {
+                        toolbar_x: offset.left,
+                        toolbar_y: offset.top
+                    });
+                }
+            })
+            .css({
+                position: 'fixed !important',
+                top: '<?php echo midgard_admin_asgard_plugin::get_preference('toolbar_y'); ?>px',
+                left: '<?php echo midgard_admin_asgard_plugin::get_preference('toolbar_x'); ?>px',
+                cursor: 'move'
+            })
+            .resizable();
+        
+    // ]]>
+</script>
+<?php
+}
+?>
+
                     </div>
                     <div id="content-text">

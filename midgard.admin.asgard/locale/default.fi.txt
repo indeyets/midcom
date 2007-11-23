@@ -7,6 +7,10 @@
 %s poistettua kohdetta
 ---STRINGEND
 
+---STRING %s trash
+Tyypin %s roskakori
+---STRINGEND
+
 ---STRING 1 day
 1 päivä
 ---STRINGEND
@@ -235,6 +239,10 @@ Kohde %s poistettu
 Kohteet muutettu aikavälillä
 ---STRINGEND
 
+---STRING on top of the content area
+Sisältöalueen yläreunassa
+---STRINGEND
+
 ---STRING owner
 Omistaja
 ---STRINGEND
@@ -279,6 +287,10 @@ Tämä tyyppi on osa Midgard-julkaisujärjestelmää.
 Tämä tyyppi on osa komponenttia %s.
 ---STRINGEND
 
+---STRING toolbar mode
+Työkalupalkin tila
+---STRINGEND
+
 ---STRING topic privileges
 Kansion käyttöoikeudet
 ---STRINGEND
@@ -311,7 +323,7 @@ Käyttöasetukset
 Katso sivustolla
 ---STRINGEND
 
----STRING %s trash
-Tyypin %s roskakori
+---STRING floating freely
+Vapaasti kelluva
 ---STRINGEND
 

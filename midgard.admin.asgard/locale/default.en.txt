@@ -7,6 +7,10 @@
 %s deleted items
 ---STRINGEND
 
+---STRING %s trash
+%s trash
+---STRINGEND
+
 ---STRING 1 day
 1 day
 ---STRINGEND
@@ -235,6 +239,10 @@ Object %s removed
 Objects changed within
 ---STRINGEND
 
+---STRING on top of the content area
+On top of the content area
+---STRINGEND
+
 ---STRING owner
 Owner
 ---STRINGEND
@@ -279,6 +287,10 @@ This is a Midgard CMS core type.
 This type belongs to %s component.
 ---STRINGEND
 
+---STRING toolbar mode
+Toolbar mode
+---STRINGEND
+
 ---STRING topic privileges
 Folder permissions
 ---STRINGEND
@@ -311,7 +323,7 @@ User preferences
 View on-site
 ---STRINGEND
 
----STRING %s trash
-%s trash
+---STRING floating freely
+Floating freely
 ---STRINGEND
 

@@ -106,6 +106,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         $this->_request_data['controller'] =& $this->_controller;
         $this->_request_data['schemadb'] =& $this->_schemadb;
         $this->_request_data['datamanager'] =& $this->_datamanager;
+        $this->_request_data['asgard_prefix'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . '__mfa/asgard/';
     }
     
     function sort_schema_fields($first, $second)
@@ -543,7 +544,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
     function _handler_view($handler_id, $args, &$data)
     {
         midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
-
+        
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
 
         if (! $this->_object)
@@ -723,9 +724,9 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
             $_MIDCOM->auth->require_user_do('midgard:create', null, $this->_new_type);
             
             $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('create %s', 'midcom'), midgard_admin_asgard_plugin::get_type_label($data['new_type_arg']));
+            
             $data['asgard_toolbar'] = new midcom_helper_toolbar();
             midgard_admin_asgard_plugin::get_common_toolbar($data);
-            $data['current_type'] = $args[0];
         }
         else
         {
@@ -973,6 +974,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
     {
         $data['view_object'] = $this->_datamanager->get_content_html();
         midcom_show_style('midgard_admin_asgard_header');
+        
         midcom_show_style('midgard_admin_asgard_middle');
         midcom_show_style('midgard_admin_asgard_object_delete');
         midcom_show_style('midgard_admin_asgard_footer');
