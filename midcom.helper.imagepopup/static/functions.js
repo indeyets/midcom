@@ -17,6 +17,17 @@ function imagePopupConvertImagesForAddition()
             imageGuid = imageRows[i].getAttribute('title');
             if (imageGuid)
             {
+                var links = imageRows[i].getElementsByTagName('a');
+                var imageUrl = '';
+                for (var li = 0; li < links.length; li++)
+                {
+                    if (   Element.hasClassName(links[li], 'download')
+                        && imageUrl == '')
+                    {
+                        imageUrl = links[li].getAttribute('href');
+                    }
+                }
+
                 image = new Array();
                 image['guid'] = imageGuid;
                 
@@ -57,6 +68,7 @@ function imagePopupConvertImagesForAddition()
                 imagepopup_images[imageGuid]['title'] = image['title'];
                 imagepopup_images[imageGuid]['name'] = image['name'];
                 imagepopup_images[imageGuid]['type'] = 'image';
+                imagepopup_images[imageGuid]['url'] = imageUrl;
             }
         }
     }
@@ -72,6 +84,17 @@ function imagePopupConvertFilesForAddition()
             imageGuid = imageRows[i].getAttribute('title');
             if (imageGuid)
             {
+                var links = imageRows[i].getElementsByTagName('a');
+                var imageUrl = '';
+                for (var li = 0; li < links.length; li++)
+                {
+                    if (   Element.hasClassName(links[li], 'download')
+                        && imageUrl == '')
+                    {
+                        imageUrl = links[li].getAttribute('href');
+                    }
+                }
+                
                 image = new Array();
                 image['guid'] = imageGuid;
                 
@@ -112,6 +135,7 @@ function imagePopupConvertFilesForAddition()
                 imagepopup_images[imageGuid]['title'] = image['title'];
                 imagepopup_images[imageGuid]['name'] = image['name'];
                 imagepopup_images[imageGuid]['type'] = 'attachment';
+                imagepopup_images[imageGuid]['url'] = imageUrl;
                 
             }
         }
@@ -159,7 +183,7 @@ function insertImage(objId)
     window.opener.tinyMCE.execCommand("mceInsertContent", true, imagehtml);
     
     // Close the popup
-	window.close();
+	//window.close();
 }
 
 /**
@@ -174,16 +198,13 @@ function makeHtmlForInsertion(objId)
 	{
 		
 		case "attachment":
-		html_code = '<a href="' + imagepopup_images['prefix'] + 
-					    objId +"/" + iminfo['name'] + '" >' + iminfo['title'] + '</a>';
+		html_code = '<a href="' + iminfo['url'] + '" >' + iminfo['title'] + '</a>';
 		
 		break;
 		
 		case "image":
 		default:
-		html_code = '<img src="' +
-					    imagepopup_images['prefix'] + 
-					    objId + '/' + iminfo['name'] + '" alt="' +
+		html_code = '<img src="' + iminfo['url'] + '" alt="' +
 					    iminfo['title'] + '" title="' +
 					    iminfo['title'] + '"/>';
 		break;
@@ -203,6 +224,17 @@ function imagePopupConvertResultsForAddition()
             itemType = resultRows[i].getAttribute('rel');
             if (itemGuid)
             {
+                var links = imageRows[i].getElementsByTagName('a');
+                var imageUrl = '';
+                for (var li = 0; li < links.length; li++)
+                {
+                    if (   Element.hasClassName(links[li], 'download')
+                        && imageUrl == '')
+                    {
+                        imageUrl = links[li].getAttribute('href');
+                    }
+                }
+                
                 item = new Array();
                 item['guid'] = itemGuid;
                 item['type'] = itemType;
@@ -234,6 +266,7 @@ function imagePopupConvertResultsForAddition()
                 imagepopup_images[itemGuid]['title'] = item['title'] == undefined ? item['name'] : item['title'];
                 imagepopup_images[itemGuid]['name'] = item['name'];
                 imagepopup_images[itemGuid]['type'] = itemType;
+                imagepopup_images[itemGuid]['url'] = imageUrl;
             }
         }
     }
