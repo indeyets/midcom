@@ -1,101 +1,101 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE pl
 
 ---STRING back to %s
-Back to page "%s"
+Idź do strony "%s"
 ---STRINGEND
 
 ---STRING changes done in revision %s to %s
-Changes done in revision %s to %s
+Zmiany z wersji %s do %s
 ---STRINGEND
 
 ---STRING changes from version %s
-Changes from version %s
+Zmiany z wersji %s
 ---STRINGEND
 
 ---STRING date
-Date
----STRINGEND
-
----STRING differences between %s and %s
-Differences between %s and %s
----STRINGEND
-
----STRING differences between versions %s and %s
-Differences between versions %s and %s
+Data
 ---STRINGEND
 
 ---STRING lines
-Lines
+Linie
 ---STRINGEND
 
 ---STRING message
-Message
----STRINGEND
-
----STRING no changes in content
-No changes in content
+Info
 ---STRINGEND
 
 ---STRING no.bergfald.rcs
-Revision control
+Kontrola wersji
 ---STRINGEND
 
 ---STRING restore this revision (%s)
-Restore to this revision (%s)
+Przywróć tą wersję (%s)
 ---STRINGEND
 
 ---STRING restore to version %s failed, reason %s
-Restore to version %s failed, reason %s
+Przywrócenie wersji %s nieudane: %s
 ---STRINGEND
 
 ---STRING restore to version %s successful
-Restore to version %s was successful
+Przywrócono wersję %s
 ---STRINGEND
 
 ---STRING revision
-Revision
+Wersja
 ---STRINGEND
 
 ---STRING revision history of %s
-Revision history of %s
----STRINGEND
-
----STRING show differences
-Show differences
+Historia wersji %s
 ---STRINGEND
 
 ---STRING show history
-Show revision history
----STRINGEND
-
----STRING title
-Title
+Pokaż historię
 ---STRINGEND
 
 ---STRING user
-User
+Użytkownik
 ---STRINGEND
 
 ---STRING version %s
-Version %s
+Wersja %s
 ---STRINGEND
 
 ---STRING view %s differences with next (%s)
-View differences of version %s with next (%s)
+Zobacz zmiany między %s a %s
 ---STRINGEND
 
 ---STRING view %s differences with previous (%s)
-View differences of version %s with previous (%s)
+Zobacz zmiany między %s a %s
 ---STRINGEND
 
 ---STRING view this revision (%s)
-View this revision (%s)
+Zobacz wersję %s
 ---STRINGEND
 
 ---STRING viewing version %s of %s
-Version %s of %s
+%s: wersja %s
+---STRINGEND
+
+---STRING differences between %s and %s
+Zmiany między wersją %s i %s
+---STRINGEND
+
+---STRING differences between versions %s and %s
+Zmiany między wersją %s i %s
+---STRINGEND
+
+---STRING no changes in content
+Brak zmian w treści
+---STRINGEND
+
+---STRING show differences
+Pokaż zmiany
+---STRINGEND
+
+---STRING title
+Tytuł
 ---STRINGEND
 
