@@ -2,9 +2,9 @@ org.openpsa.helpers Changelog
                    ------------------------------
 Legend:
 - All items marked with "!" represent a major API-Change that is
-  not guranteed to be backwards compatible to previous versions
+  not guaranteed to be backwards compatible to previous versions
   which might even break existing functionality.
-- All items marked with "+" represent completly new features.
+- All items marked with "+" represent completely new features.
 
 2006-09-15 rambo
   + moved the array2code helper from directmarketing smart campaigns here

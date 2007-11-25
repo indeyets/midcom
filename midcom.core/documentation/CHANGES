@@ -258,7 +258,7 @@ MidCOM Version 2.4.0, 2005-06-08
     in no_cache mode. Both Etag (If-None-Match) and Last-Modified (If-
     Modified-Since) Headers are supported, if both are present, of course
     both must match.
-  ! Completly rebuilt the caching infrastructure into an extensible backend/
+  ! Completely rebuilt the caching infrastructure into an extensible backend/
     module based solution. This is the basic building stone for the NAP/
     Metadata cache. Be aware of the new configuration option naming in
     midcom_config.php (you should be fine with most defaults though). The old

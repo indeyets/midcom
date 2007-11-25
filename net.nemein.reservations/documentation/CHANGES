@@ -4,7 +4,7 @@ Legend:
 - All items marked with "!" represent a major API-Change that is
   not guaranteed to be backwards compatible to previous versions
   which might even break existing functionality.
-- All items marked with "+" represent completly new features.
+- All items marked with "+" represent completely new features.
 
 2007-05-31 adrenalin
   - Multiple calendar views are now maintained after changing the month in calendar view

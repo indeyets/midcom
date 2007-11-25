@@ -981,7 +981,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      *
      * The information is cached per object-guid during runtime, so that repeated checks
      * to the same object do not cause repeateing checks. Be aware that this means, that
-     * new privileges set are not guranteed to take effect until the next request.
+     * new privileges set are not guaranteed to take effect until the next request.
      *
      * @param MidgardObject $content_object A Midgard Content Object
      * @param midcom_core_user $user The user against which to check the privilege, defaults to the currently authenticated user.
@@ -999,7 +999,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      *
      * The information is cached per object-guid during runtime, so that repeated checks
      * to the same object do not cause repeateing checks. Be aware that this means, that
-     * new privileges set are not guranteed to take effect until the next request.
+     * new privileges set are not guaranteed to take effect until the next request.
      *
      * @param string $object_guid A Midgard GUID pointing to an object
      * @param string $object_class Class of the object in question

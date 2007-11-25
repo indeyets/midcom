@@ -4,7 +4,7 @@ Legend:
 - All items marked with "!" represent a major API-Change that is
   not guaranteed to be backwards compatible to previous versions
   which might even break existing functionality.
-- All items marked with "+" represent completly new features.
+- All items marked with "+" represent completely new features.
 
 2007-07-04 adrenalin
   - Fixed some minor inconsistencies in breadcrumb
@@ -58,7 +58,7 @@ Legend:
     person listings.
 
 2006-06-07 torben
-  ! Completly refactored the component to use 2.6/1.8 technology. Be aware, that
+  ! Completely refactored the component to use 2.6/1.8 technology. Be aware, that
     these are hard requirements!
   ! Use DM2 instead of DM1. This drops data compatibility in case of BLOB types
     being used.
