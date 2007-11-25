@@ -419,7 +419,7 @@ class net_nehmer_publications_query extends midcom_baseclasses_components_pureco
     }
 
     /**
-     * Helper function, used to compute the neccessary filter listing for the current
+     * Helper function, used to compute the necessary filter listing for the current
      * configuration which is taken from the request context.
      *
      * @param midcom_helper_configuration $config The configuration to use. Defaults to the

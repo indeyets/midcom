@@ -67,7 +67,7 @@
 
         <!-- Used for backgrounding the actual sending -->
         <property name="sendStarted" type="integer" />
-        <!-- To avoid unneccessary checks against the receipt list and
+        <!-- To avoid unnecessary checks against the receipt list and
              more importantly old spam for new campaign members -->
         <property name="sendCompleted" type="integer" />
 

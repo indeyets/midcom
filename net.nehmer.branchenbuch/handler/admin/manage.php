@@ -138,7 +138,7 @@ class net_nehmer_branchenbuch_handler_admin_manage extends midcom_baseclasses_co
         $this->_controller->set_storage($this->_branche, 'editbranche');
         $this->_controller->initialize();
 
-        // Process the form and update the owner if neccessary
+        // Process the form and update the owner if necessary
         switch ($this->_controller->process_form())
         {
             case 'save':
@@ -179,7 +179,7 @@ class net_nehmer_branchenbuch_handler_admin_manage extends midcom_baseclasses_co
         $this->_controller->schemaname = 'createbranche';
         $this->_controller->initialize();
 
-        // Process the form and update the owner if neccessary
+        // Process the form and update the owner if necessary
         switch ($this->_controller->process_form())
         {
             case 'save':

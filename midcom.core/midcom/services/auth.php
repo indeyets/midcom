@@ -12,7 +12,7 @@
  * users and to check for permissions.
  *
  * Unless further qualified, "Midgard Content Objects" can be either pre-mgdschema
- * or mgdschema objects. The only neccessary constraint is that a MidCOM base class
+ * or mgdschema objects. The only necessary constraint is that a MidCOM base class
  * (midgard_baseclasses_database_*) must be available.
  *
  * This implementation is based on the general idea outlined in mRFC 15
@@ -483,7 +483,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * - Load the core privileges.
      * - Initialize to the Midgard Authentication, then synchronize with the auth
      *   drivers' currently authenticated user overriding the Midgard Auth if
-     *   neccessary.
+     *   necessary.
      */
     function initialize()
     {
@@ -945,7 +945,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             }
         }
 
-        // Remeber to synchronize this merging chain with the one in get_privileges();
+        // Remember to synchronize this merging chain with the one in get_privileges();
         $full_privileges = array_merge
         (
             $this->_default_privileges,

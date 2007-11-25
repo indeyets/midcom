@@ -64,7 +64,7 @@
         <property name="costCache" type="float"/>
         <property name="priceCache" type="float"/>
 
-        <!-- Are all of these really neccessary ?
+        <!-- Are all of these really necessary ?
         <property name="customerProjectCode" type="string" />
         <property name="customerOrderCode" type="string" />
         <property name="customerReference" type="string" />
@@ -145,7 +145,7 @@
 
         <property name="date" type="integer"/>
 
-        <!-- Is this property actually neccessary to be a link, couldn't we
+        <!-- Is this property actually necessary to be a link, couldn't we
              just use a string pull-down defined in MidCOM schema ?
         <property name="reportType" link="org_openpsa_reporttype:id" type="integer" />
         -->
@@ -193,7 +193,7 @@
         <property name="date" type="integer"/>
 
         <property name="description" type="text"/>
-        <!-- Is this property actually neccessary to be a link, couldn't we
+        <!-- Is this property actually necessary to be a link, couldn't we
              just use a string pull-down defined in MidCOM schema ?
         <property name="reportType" link="org_openpsa_reporttype" type="integer" />
         -->

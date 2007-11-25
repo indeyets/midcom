@@ -285,7 +285,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
      * statically callable method to get the parent object of given object
      *
      * Tries to utilize MidCOM DBA features first but can fallback on pure MgdSchema
-     * as neccessary
+     * as necessary
      *
      * NOTE: since this might fall back to pure MgdSchema never trust that MidCOM DBA features 
      * are available, check for is_callable/method_exists first !

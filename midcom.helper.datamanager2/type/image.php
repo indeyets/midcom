@@ -786,7 +786,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
 
         $result = true;
 
-        // Filter if neccessary.
+        // Filter if necessary.
         if (   $this->filter_chain
             && ! $this->_filter->process_chain($this->filter_chain))
         {
@@ -897,7 +897,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
     /**
      * Automatically convert the uploaded file to a web-compatible type. Uses
      * only the first image of multi-page uploads (like PDFs) and populates the
-     * _target_mimetype member accordingly. The orignal_tmpname file is manipulated
+     * _target_mimetype member accordingly. The original_tmpname file is manipulated
      * directly.
      *
      * Uploaded GIF, PNG and JPEG files are left untouched.

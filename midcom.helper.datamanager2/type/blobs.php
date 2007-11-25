@@ -15,7 +15,7 @@
  * The storage location provided by the schema is unused at this time, as attachment
  * operations cannot be undone. Instead, the direct parameter calls are used to manage
  * the list of attachments in a parameter associated to the domain of the type. The
- * storage IO calls will not do much, except synchronizing data where neccessary.
+ * storage IO calls will not do much, except synchronizing data where necessary.
  *
  * The type can manage an arbitrary number of attachments. Each attachment is identified
  * by a handle (not its name!). It provides management functions for existing attachments,
@@ -463,7 +463,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         // PONDER: make use of this configurable in type-config ??
         $filename = midcom_helper_datamanager2_type_blobs::safe_filename($filename, false);
 
-        // Obtain a temporary object if neccessary. This is the only place where this needs to be
+        // Obtain a temporary object if necessary. This is the only place where this needs to be
         // done (all other I/O ops are logically behind the add operation).
         if (! $this->storage->object)
         {

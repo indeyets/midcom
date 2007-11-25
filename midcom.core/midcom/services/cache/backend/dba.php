@@ -12,7 +12,7 @@
  * 
  * Uses DBA database locking for synchronization.
  * 
- * <b>Confiugration options:</b>
+ * <b>Configuration options:</b>
  * 
  * - <i>string handler</i> Defines the DBA handler to use. If omitted, autodetection
  *   is attempted.
@@ -175,7 +175,7 @@ class midcom_services_cache_backend_dba extends midcom_services_cache_backend
         $result = @dba_fetch($key, $this->_handle);
         if ($result === false)
         {
-            // Note: Appearantly not php error here, so no php_errormsg as well.
+            // Note: Apparently not php error here, so no php_errormsg as well.
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "dba cache handler: Failed to read key {$key} from the database {$this->_filename}: {$php_errormsg}");
             // This will exit.

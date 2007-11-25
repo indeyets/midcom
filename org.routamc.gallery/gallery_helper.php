@@ -173,7 +173,7 @@ class org_routamc_gallery_helper
     }
 
     /**
-     * Synchronizes $this->photos with DB, adding/removing links as neccessary
+     * Synchronizes $this->photos with DB, adding/removing links as necessary
      */
     function _sync_photos()
     {

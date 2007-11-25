@@ -203,7 +203,7 @@ class net_nehmer_mail_handler_mailbox_admin extends midcom_baseclasses_component
         // If the save is successful, we adjust the privileges.
         $oldowner = $this->_mailbox->owner;
         
-        // Process the form and update the owner if neccessary
+        // Process the form and update the owner if necessary
         switch ($this->_controller->process_form())
         {
             case 'save':

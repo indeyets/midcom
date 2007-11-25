@@ -107,7 +107,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
     }
 
     /**
-     * Creates a Mail_mime instance and adds parts to it as neccessary
+     * Creates a Mail_mime instance and adds parts to it as necessary
      */
     function initMail_mime()
     {
@@ -238,7 +238,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             reset($this->__mime->_html_images);
             foreach($this->__mime->_html_images as $image)
             {
-                $regex = "#url\s*\(([\"'«])?" . preg_quote($image['name'], '#') . "\\1?\)#i";
+                $regex = "#url\s*\(([\"'ï¿½])?" . preg_quote($image['name'], '#') . "\\1?\)#i";
                 //debug_add("regex={$regex}");
                 $rep = 'url(\1cid:' . $image['cid'] .'\1)';
                 //debug_add("rep={$rep}");
@@ -669,7 +669,7 @@ EOF;
     }
 
     /**
-     * Quoted-Printable encoding for message subject if neccessary
+     * Quoted-Printable encoding for message subject if necessary
      */
     function encode_subject()
     {
@@ -704,7 +704,7 @@ EOF;
      /**
       * Prepares message for sending
       *
-      * Calls MIME etc encodings as neccessary.
+      * Calls MIME etc encodings as necessary.
       */
      function prepare()
      {
@@ -721,7 +721,7 @@ EOF;
            $this->body = $this->html2text($this->html_body);
         }
 
-        //Check whether it's neccessary to initialize MIME
+        //Check whether it's necessary to initialize MIME
         if (    (
                     (   is_array($this->embeds)
                      && (count($this->embeds)>0)
@@ -755,7 +755,7 @@ EOF;
             debug_add("Headers after multiline fix\n===\n" . sprint_r($this->headers) . "===\n");
         }
 
-        // Encode subject (if neccessary) and set Content-Type (if not set already)
+        // Encode subject (if necessary) and set Content-Type (if not set already)
         $this->encode_subject();
         if (   !isset($this->headers['Content-Type'])
             || $this->headers['Content-Type'] == null)
@@ -803,7 +803,7 @@ EOF;
             }
         }
 
-        //TODO: Encode from, cc and to if neccessary
+        //TODO: Encode from, cc and to if necessary
 
         debug_pop();
         return true;
@@ -1127,7 +1127,7 @@ EOF;
         }
 
         //Anything with SRC = "" something in it (images etc)
-        $regExp_src = "/(src|background)=([\"'«])(((https?|ftp):\/\/)?(.*?))\\2/i";
+        $regExp_src = "/(src|background)=([\"'ï¿½])(((https?|ftp):\/\/)?(.*?))\\2/i";
         preg_match_all($regExp_src, $html, $matches_src);
         debug_add("matches_src:\n===\n" . sprint_r($matches_src) . "===\n");
         $tmpArr = array();
@@ -1142,7 +1142,7 @@ EOF;
         if ($this->embed_css_url)
         {
             //Anything with url() something in it (images etc)
-            $regExp_url = "/url\s*\(([\"'«])?(((https?|ftp):\/\/)?(.*?))\\1?\)/i";
+            $regExp_url = "/url\s*\(([\"'ï¿½])?(((https?|ftp):\/\/)?(.*?))\\1?\)/i";
             preg_match_all($regExp_url, $html, $matches_url);
             debug_add("matches_url:\n===\n" . sprint_r($matches_url) . "===\n");
             $tmpArr = array();

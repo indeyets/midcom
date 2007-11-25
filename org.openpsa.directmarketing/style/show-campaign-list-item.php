@@ -10,7 +10,7 @@ if (array_key_exists('membership', $data))
             $class = 'unsubscribed';
             $unsubscribe_code = false;
             break;
-        //This is unneccessary for now as we filter testers out earlier but in the future it might be needed
+        //This is unnecessary for now as we filter testers out earlier but in the future it might be needed
         case ORG_OPENPSA_OBTYPE_CAMPAIGN_TESTER:
             $class = 'tester';
             $unsubscribe_code = false;

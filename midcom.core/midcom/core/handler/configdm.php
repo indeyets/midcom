@@ -109,7 +109,7 @@ class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
 
         if ($data['datamanager'] == false)
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to instantinate configuration datamanager.');
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to instantiate configuration datamanager.');
             // This will exit.
         }
 
@@ -130,7 +130,7 @@ class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
 
     /**
      * Event handler, called after the configuration datamanager instance has been created but not yet
-     * initialized. Use this hook to modify the schema where neccessary.
+     * initialized. Use this hook to modify the schema where necessary.
      *
      * @param midcom_helper_datamanager $datamanager A reference(!) to the datamanager handling the request.
      * @access protected
@@ -170,7 +170,7 @@ class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
 
         $this->_handler_configdm_prepare($handler_id, $data);
 
-        // Add the toolbar items, if neccessary
+        // Add the toolbar items, if necessary
         $this->_view_toolbar->add_item
         (
             array

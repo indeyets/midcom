@@ -41,7 +41,7 @@ class midcom_baseclasses_database_topic extends __midcom_baseclasses_database_to
     /**
      * Statically callable method to get parent guid when object guid is given
      * 
-     * Uses midgard_collector to avoid unneccessary full object loads
+     * Uses midgard_collector to avoid unnecessary full object loads
      *
      * @todo when 1.8.1 is released convert to use single collector with linked guid property
      * @param guid $guid guid of topic to get the parent for

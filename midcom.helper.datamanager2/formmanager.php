@@ -137,7 +137,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
 
     /**
      * This function will create all widget objects for the current schema. It will load class
-     * files where neccessary (using require_once), and then create a set of instances
+     * files where necessary (using require_once), and then create a set of instances
      * based on the schema.
      *
      * @param string $name The name of the field for which we should load the widget.
@@ -743,7 +743,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
                 'href' => MIDCOM_STATIC_URL . "/midcom.helper.datamanager2/legacy.css",
             )
         );
-        /* breaks caching on pages that DL simple forms, and with new invalidation shouldn't be neccessary
+        /* breaks caching on pages that DL simple forms, and with new invalidation shouldn't be necessary
         $_MIDCOM->cache->content->no_cache();
         */
         $results = $this->form->getSubmitValues(true);

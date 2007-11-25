@@ -104,7 +104,7 @@ class net_nemein_tag_dba extends __net_nemein_tag_dba
     /**
      * By default all authenticated users should be able to do
      * whatever they wish with tag objects, later we can add
-     * restrictions on object level as neccessary.
+     * restrictions on object level as necessary.
      */
     function get_class_magic_default_privileges()
     {

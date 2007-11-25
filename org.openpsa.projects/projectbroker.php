@@ -66,7 +66,7 @@ class org_openpsa_projects_projectbroker
         {
             return false;
         }
-        // Normalize to contacts person class if neccessary
+        // Normalize to contacts person class if necessary
         foreach ($persons as $obj)
         {
             switch (true)

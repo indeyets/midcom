@@ -36,7 +36,7 @@ class midcom_helper_datamanager2_storage extends midcom_baseclasses_components_p
      * It can be safely considered that a MidCOM DBA object is available here if the
      * reference is non-null.
      *
-     * Since this member is not neccessarily populated in all cases, the base API
+     * Since this member is not necessarily populated in all cases, the base API
      * provides callers with a create_temporary_object helper function: It will put
      * a temporary object into $object, so that attachment operations can still
      * be done. The storage object user must take care of the information stored

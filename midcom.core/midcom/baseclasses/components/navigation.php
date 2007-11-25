@@ -8,7 +8,7 @@
  */
 
 /**
- * Base class to encaspulate a NAP interface. Does all the neccessary work for
+ * Base class to encaspulate a NAP interface. Does all the necessary work for
  * setting the object to the right topic. you just have to fill the gaps for
  * getting the leaves and node data.
  *

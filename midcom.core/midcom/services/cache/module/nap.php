@@ -120,7 +120,7 @@ class midcom_services_cache_module_nap extends midcom_services_cache_module
      * of a midcom.admin.content type to the corresponding root content topic. Note, that
      * this is actually a bug in the core's context seapration, which I have not yet
      * found. Normally, all instances of basicnav should work within an on-site-context
-     * and therefore this "fallback" should not be neccessary. Unfortunalety, sometimes
+     * and therefore this "fallback" should not be necessary. Unfortunately, sometimes
      * the context information seems to get mixed up, which results in AIS writing NAP
      * information to the wrong cache file.
      * 
@@ -187,7 +187,7 @@ class midcom_services_cache_module_nap extends midcom_services_cache_module
      * See the automatic index invalidation code of the Datamanager for additional details.
      * 
      * @todo Find a way to propagate leaf additions/deletions to to topic which must be invalidated in all
-     * places neccessary, or MIDCOM_NAV_LEAVES will be broken.
+     * places necessary, or MIDCOM_NAV_LEAVES will be broken.
      * 
      * @param string $guid The GUID to invalidate.
      */
@@ -202,7 +202,7 @@ class midcom_services_cache_module_nap extends midcom_services_cache_module
         {
             // Ignoring this should be safe, see the method documentation for details.
             
-            debug_add("We failed to resolve the GUID {$guid} with NAP, appearantly it is not cached or no valid NAP node, skipping it therefore.",
+            debug_add("We failed to resolve the GUID {$guid} with NAP, apparently it is not cached or no valid NAP node, skipping it therefore.",
                 MIDCOM_LOG_INFO);
             debug_pop();
             return;    

@@ -269,7 +269,7 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
             $call_update = true;
         }
 
-        // Update post if neccessary after the doublechecks
+        // Update post if necessary after the doublechecks
         if ($call_update)
         {
             $post->update();

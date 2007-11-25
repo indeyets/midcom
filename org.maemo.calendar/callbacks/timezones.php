@@ -31,7 +31,7 @@ class org_maemo_calendar_callbacks_timezones extends midcom_baseclasses_componen
     var $_callback = null;
 
     /**
-     * Initializes the class to the category listing in the configuration. It does the neccessary
+     * Initializes the class to the category listing in the configuration. It does the necessary
      * postprocessing to move the configuration syntax to the rendering one.
      *
      */

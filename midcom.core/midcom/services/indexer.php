@@ -32,7 +32,7 @@ require('indexer/document/attachment.php');
  *
  * It allows you to maintain and query the MidCOM document index.
  *
- * Do not instantinate this class directly. Instead use the get_service
+ * Do not instantiate this class directly. Instead use the get_service
  * method on midcom_application using the service name 'indexer' to obtain
  * a running instance. You <i>must</i> honor the reference of that call.
  *
@@ -71,7 +71,7 @@ class midcom_services_indexer
      *
      * The constructor will initialize the indexer backend using the MidCOM
      * configuration by default. If you need a different indexer backend, you
-     * can always explicitly instantinate a backend and pass it ot the
+     * can always explicitly instantiate a backend and pass it ot the
      * constructor. In that case you have to load the corresponding PHP file
      * manually.
      *
@@ -164,7 +164,7 @@ class midcom_services_indexer
 
     /**
      * Automatic helper which transforms a reference-passed object into an indexable document.
-     * Where neccessary (f.x. with the DM instances) automatic indexing of subclasses is done.
+     * Where necessary (f.x. with the DM instances) automatic indexing of subclasses is done.
      *
      * Currently supported arguments:
      *
@@ -246,7 +246,7 @@ class midcom_services_indexer
      *
      * @param string $query The query, which must suite the backends query syntax. It is assumed to be in the site charset.
      * @param midcom_services_indexer_filter $filter An optional filter used to restrict the query.
-     * @return Array An arary of documents matching the query, or false on a failure.
+     * @return Array An array of documents matching the query, or false on a failure.
      * @todo Refactor into multiple methods
      */
     function query ($query, $filter = null)
@@ -284,7 +284,7 @@ class midcom_services_indexer
             $topic = new midcom_db_topic($document->topic_guid);
             if (! $topic)
             {
-                // Skip document, the obhect is hidden.
+                // Skip document, the object is hidden.
                 debug_add("Skipping the generic document {$document->title}, its topic seems to be invisible, we cannot proceed.");
                 continue;
             }
@@ -297,7 +297,7 @@ class midcom_services_indexer
                 $object = $_MIDCOM->dbfactory->get_object_by_guid(preg_replace('/^([0-9a-f]{32,80})_[a-z]{2}$/', '\\1', $document->RI));
                 if (! $object)
                 {
-                    // Skip document, the obhect is hidden.
+                    // Skip document, the object is hidden.
                     debug_add("Skipping the MidCOM document {$document->title}, it seems to be invisible");
                     continue;
                 }
@@ -308,11 +308,11 @@ class midcom_services_indexer
     }
 
     /**
-     * This function tries to instantinate the most specific document class
+     * This function tries to instantiate the most specific document class
      * for the object given in the parameter.
      *
      * This class will not return empty document base class instances if nothing
-     * specific can be found. If you are in this situation, you need to instantinate
+     * specific can be found. If you are in this situation, you need to instantiate
      * an appropriate document manually and populate it.
      *
      * The checking sequence is like this right now:

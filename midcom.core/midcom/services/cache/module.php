@@ -89,7 +89,7 @@ class midcom_services_cache_module
      * 
      * All backends will be collected in the $_backends array, indexed by their name.
      * 
-     * Any duplicate instantination will be intercepted, throwing a critical error.
+     * Any duplicate instantiation will be intercepted, throwing a critical error.
      * 
      * @param string $name The name of the backend, must be unique throughout the system.
      * @param Array $config The configuration of the backend to create. It must contain

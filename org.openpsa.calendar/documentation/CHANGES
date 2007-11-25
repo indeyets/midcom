@@ -61,7 +61,7 @@ Legend:
 
 2006-05-09 rambo
   + added url_append argument to calendar_newevent_js interface method
-    also added false returns to end of the onclicks there (avoid unneccessary anchor seek)
+    also added false returns to end of the onclicks there (avoid unnecessary anchor seek)
   + salesproject resource handler to new event (add all contacts from
     salesproject to participants list)
   + added relatedto GET linking handling to _creation_dm_callback

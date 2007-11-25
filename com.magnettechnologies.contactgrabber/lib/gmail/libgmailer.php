@@ -4423,7 +4423,7 @@ class GMailSnapshot {
                     $this->contacts, 
                     array("id"   => "error",
                          "name"  => "libgmailer Error",
-                         "email" => "libgmailer@error.nonexistant",
+                         "email" => "libgmailer@error.nonexistent",
                          "is_group" => 0,
                          "notes" => "libgmailer could not find the Contacts information "
                             . "due to a change in the email service (again!).  Please contact " 

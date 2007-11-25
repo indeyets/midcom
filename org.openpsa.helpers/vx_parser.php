@@ -362,7 +362,7 @@ class org_openpsa_helpers_vxparser
         }
         if ($this->_check_folding())
         {
-            // "Fold" data if neccessary/allowed to do so
+            // "Fold" data if necessary/allowed to do so
             org_openpsa_helpers_vxparser::_vx_encode_fold($str, $nl);
         }
         return $str;
@@ -377,7 +377,7 @@ class org_openpsa_helpers_vxparser
         $str=base64_encode($str);
         if ($this->_check_folding())
         {
-            // "Fold" data if neccessary/allowed to do so
+            // "Fold" data if necessary/allowed to do so
             org_openpsa_helpers_vxparser::_vx_encode_fold($str, $nl);
         }
         return $str;
@@ -392,7 +392,7 @@ class org_openpsa_helpers_vxparser
         $str = preg_replace("/\r\n|\n\r|\r|\n/", '\n', $str);
         if ($this->_check_folding())
         {
-            // "Fold" data if neccessary/allowed to do so
+            // "Fold" data if necessary/allowed to do so
             org_openpsa_helpers_vxparser::_vx_encode_fold($str, $nl);
         }
         return $str;
@@ -406,7 +406,7 @@ class org_openpsa_helpers_vxparser
     }
 
     /**
-     * Check if value needs encoding, encode as neccessary
+     * Check if value needs encoding, encode as necessary
      */
     function vx_encode($str, &$params, $nl="\r\n")
     {
@@ -503,7 +503,7 @@ class org_openpsa_helpers_vxparser
                    $data=preg_replace("/\r\n|\n\r|\r/", "\n", $data); //Convert different CR/LF sequences to newlines
 
                    if (!isset($param['CHARSET'])) $param['CHARSET']=$this->compatibility['data']['suppose_charset'];
-                   //Convert characters if neccessary
+                   //Convert characters if necessary
                    //if ($this->__iconv && isset($param['CHARSET']) && $param['CHARSET'] && strtolower($param['CHARSET'])!=strtolower($this->charset) && function_exists('iconv')) {
                    if (isset($param['CHARSET']) && $param['CHARSET'] && strtolower($param['CHARSET'])!=strtolower($this->charset) && function_exists('iconv')) {
                       //echo "DEBUG: calling iconv(".$param['CHARSET'].", ".$this->charset.", $data)\n";
@@ -514,7 +514,7 @@ class org_openpsa_helpers_vxparser
                          unset($param['CHARSET']);
                       }
                    } else if (isset($param['CHARSET']) && strtolower($param['CHARSET'])==strtolower($this->charset)) {
-                      //We already have data correct charset, let's remove the parameter as unneccessary.
+                      //We already have data correct charset, let's remove the parameter as unnecessary.
                       unset($param['CHARSET']);
                    }
                }

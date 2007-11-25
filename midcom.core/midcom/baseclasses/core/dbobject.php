@@ -379,7 +379,7 @@ class midcom_baseclasses_core_dbobject
         }
         // END WORKAROUND
 
-        // Now assign all midgard privileges to the creator, this is neccessary to get
+        // Now assign all midgard privileges to the creator, this is necessary to get
         // an owner like scheme to work by default.
         // TODO: Check if there is a better solution like this.
         midcom_baseclasses_core_dbobject::_set_owner_privileges($object);
@@ -1271,7 +1271,7 @@ class midcom_baseclasses_core_dbobject
      *
      * No event handlers are called here yet.
      *
-     * In case of a complete query, the result will be an acciociative array indexed
+     * In case of a complete query, the result will be an associative array indexed
      * by the domain name and containing another array with parameter name/value pairs.
      * For example:
      *

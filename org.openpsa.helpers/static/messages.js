@@ -39,7 +39,7 @@ function ooDisplayMessage(messageText, messageClass)
         messageClass='normal';
     }
 
-    //Make display area invisible (force reflow), should not be neccessary
+    //Make display area invisible (force reflow), should not be necessary
     //areaDiv.style.display = 'none';
 
     //Create and append a child node to messagearea.

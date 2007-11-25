@@ -67,7 +67,7 @@ class net_nemein_registrations_registrar extends midcom_db_person
     function net_nemein_registrations_registrar($id = null)
     {
         parent::midcom_db_person($id);
-        // Intercept failed class instantinations.
+        // Intercept failed class instantiations.
         if ($this)
         {
             $this->_bind_to_request_data();

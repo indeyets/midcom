@@ -38,7 +38,7 @@ class midcom_helper_datamanager2_formmanager_ajax extends midcom_helper_datamana
 
     /**
      * This function will create all widget objects for the current schema. It will load class
-     * files where neccessary (using require_once), and then create a set of instances
+     * files where necessary (using require_once), and then create a set of instances
      * based on the schema.
      *
      * @param string $name The name of the field for which we should load the widget.

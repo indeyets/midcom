@@ -70,7 +70,7 @@ $new_name = midcom_generate_urlname_from_string("{{$_SERVER['SERVER_NAME']}}{$_M
 // Use this call to be future-proof in case format changes/becomes selectable
 $mimetype = `file -b -i '$filepath'`;
 
-// Neccessary headers
+// necessary headers
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // some day in the past
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
 header("Content-type: {$mimetype}");

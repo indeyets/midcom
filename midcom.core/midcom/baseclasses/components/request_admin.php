@@ -168,7 +168,7 @@ class midcom_baseclasses_components_request_admin extends midcom_baseclasses_com
 
         if ($data['datamanager'] == false)
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to instantinate configuration datamanager.');
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to instantiate configuration datamanager.');
             // This will exit.
         }
 
@@ -189,7 +189,7 @@ class midcom_baseclasses_components_request_admin extends midcom_baseclasses_com
 
     /**
      * Event handler, called after the configuration datamanager instance has been created but not yet
-     * initialized. Use this hook to modify the schema where neccessary.
+     * initialized. Use this hook to modify the schema where necessary.
      *
      * @param midcom_helper_datamanager $datamanager A reference(!) to the datamanager handling the request.
      * @access protected
@@ -231,7 +231,7 @@ class midcom_baseclasses_components_request_admin extends midcom_baseclasses_com
 
         if (! $this->_handler['disable_return_to_topic'])
         {
-            /* Add the toolbar items, if neccessary */
+            /* Add the toolbar items, if necessary */
             $this->_local_toolbar->add_item(Array(
                 MIDCOM_TOOLBAR_URL => '',
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('back to index'),

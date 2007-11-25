@@ -63,7 +63,7 @@ MidCOM Version 2.6.0, 2006-10-27
     global variable due to some PHP limitations. Rewrite constructs like
     $this->_midcom =& $GLOBALS['midcom']; to use the $_MIDCOM autoglobal
     instead.
-  + Added support for automatically instantinated classes to the request base
+  + Added support for automatically instantiated classes to the request base
     classes. This introduced a new base class as well.
   + Added support for skipping the page style during the handle phase, mainly
     targeted for RSS feed and the like. Set $GLOBALS['midcom']->skip_page_style
@@ -166,7 +166,7 @@ MidCOM Version 2.4.2, 2005-07-06
     meta and topic toolbars.
 
 - Datamanager
-  - Activated ENT_QUOTES mode for htmlspecialchars where neccessary.
+  - Activated ENT_QUOTES mode for htmlspecialchars where necessary.
   - Fixed several typos for the smiley configuration of the
     communityhtml datatype
 
@@ -190,7 +190,7 @@ MidCOM Version 2.4.1, 2005-06-22
 
 - Core
   + Added support for the can_handle phase to the request base class.
-  + Added support for dynamically instantinated handler classes to the
+  + Added support for dynamically instantiated handler classes to the
     request base class.
 
 - Datamanager
@@ -644,7 +644,7 @@ MidCOM Version 1.4.0, 2004-11-28
     string in an arbitary data field. It has crypt support, but
     see the datatype's documentation for details.
   + Added a Mailtemplate datatype and widget. They store all
-    information neccessary to dynamically build an E-Mail.
+    information necessary to dynamically build an E-Mail.
     See the datatype_mailtemplate for details. There is no
     configurability whatsoever, so datatype=>"mailtemplate" should
     usually suffice. Poweruser see more fields, than normal
@@ -917,7 +917,7 @@ MidCOM Version 1.3.0, 2004-05-13:
   - Adapted the date Widget to use the JavaScript hooks in the core and
     changed the inline JavaScript code to serve-snippet calls.
   - Image Datatype now removes any ICC color profile in any generated
-    files (thumbs and, where neccessary, fullscale images), as they can
+    files (thumbs and, where necessary, fullscale images), as they can
     get quite big if they are present.
   - Fixed a bug in the image datatype not honoring the jpeg thumbnail
     quality configuration parameter.
@@ -954,7 +954,7 @@ MidCOM Version 1.2.0, 2004-03-19:
   - Fixed Bug #459, bad anchor_prefix in component contexts
   - Fixed Bug #292, missing global declaration of $midcom_errstr.
   - Core now checks for missing root content topic upon
-    instantination of midcom_application. This fixes bug #227.
+    instantiation of midcom_application. This fixes bug #227.
   - Caching engine can be disabled now by setting the global variable
     midcom_helper__cache_disable to true prior MidCOM initialization.
     This solves Feature Request #490
@@ -1076,7 +1076,7 @@ MidCOM Version 1.2.0, 2004-03-19:
   - Included the name of the currently active output schema in the
     $view-Array at the index "_schema". This solves feature request
     #463.
-  - BLOB-Datatype: Supressed error messages from getimagesize call
+  - BLOB-Datatype: Suppressed error messages from getimagesize call
     as this is handled by MidCOM properly.
   ! BLOB-Datatype: Moved all parameters to the same domain. Everything
     now is unter midcom.helper.datamanager.datatype.blob. This ensures
@@ -1134,7 +1134,7 @@ MidCOM Version 1.2.0, 2004-03-19:
       can set the css class used for the generated A-tags.
     + show_simple_nav is a method that allows you to build a
       complete navigation system from scratch, using a simple
-      config array. It will create you everything neccessary, and
+      config array. It will create you everything necessary, and
       also features a negative indenting to support multiline
       navigation entries. See the snippet documentation of
       /midcom/helper/nav for details.

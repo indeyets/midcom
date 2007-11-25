@@ -442,7 +442,7 @@
 					dynamicExp += "else { ";
 				}
 				
-				// if value is the same keep orignal order	
+				// if value is the same keep original order	
 				var orgOrderCol = cache.normalized[0].length - 1;
 				dynamicExp += "return a[" + orgOrderCol + "]-b[" + orgOrderCol + "];";
 						
@@ -548,7 +548,7 @@
 							
 							// multi column sorting	
 							} else {
-								// the user has clicked on an all ready sortet column.
+								// the user has clicked on an all ready sorted column.
 								if(isValueInArray(i,config.sortList)) {	 
 									
 									// revers the sorting direction for all tables.

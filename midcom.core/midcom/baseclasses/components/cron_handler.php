@@ -60,7 +60,7 @@ class midcom_baseclasses_components_cron_handler
     var $_component = null;
 
     /**
-     * This is a reference to the Component Interface class. It is loaded during class instantination
+     * This is a reference to the Component Interface class. It is loaded during class instantiation
      * and only available for baseclass driven component interfaces, not for legacy classes.
      *
      * Not available for midcom core cron jobs.

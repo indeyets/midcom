@@ -163,7 +163,7 @@ require('midcom/services/rcs.php');
 
 //mgd_debug_start();
 /////////////////////////////////////
-// Instantinate the MidCOM main class
+// Instantiate the MidCOM main class
 require('midcom/application.php');
 
 $_MIDCOM = new midcom_application();

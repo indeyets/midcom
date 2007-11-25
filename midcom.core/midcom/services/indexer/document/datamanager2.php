@@ -17,7 +17,7 @@
  *
  * This class uses a number of conventions, see below, to merge an existing,
  * datamanager2 driven document into an indexing capable document. It requires
- * the callee to instantinate the datamanager2, as this class would have no
+ * the callee to instantiate the datamanager2, as this class would have no
  * idea where to take the schema database from.
  *
  * Additional information is taken out of the Metadata record and the NAP
@@ -141,7 +141,7 @@ class midcom_services_indexer_document_datamanager2 extends midcom_services_inde
     /**
      * Completes all fields which are not yet complete:
      *
-     * content is completed with author, title and, if neccessary, abstract.
+     * content is completed with author, title and, if necessary, abstract.
      *
      * The title is set to the documents' URL in case that no title is set yet. The title
      * is not added to the content field in that case.

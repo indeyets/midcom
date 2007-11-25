@@ -17,7 +17,7 @@
  * 
  * This class uses a number of conventions, see below, to merge an existing,
  * datamanager driven document into an indexing capable document. It requires
- * the callee to instantinate the datamanager, as this class would have no
+ * the callee to instantiate the datamanager, as this class would have no
  * idea where to take the schema database from.
  * 
  * Additional information is taken out of the Metadata record and the NAP 
@@ -338,7 +338,7 @@ class midcom_services_indexer_document_datamanager extends midcom_services_index
     
         
     /**
-     * If neccessary, process the available NAP information to fill in the
+     * If necessary, process the available NAP information to fill in the
      * title field.
      * 
      * In case the NAP information cannot be retrieved, it uses the URL of the

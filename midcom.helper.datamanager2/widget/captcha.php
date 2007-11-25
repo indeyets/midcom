@@ -100,7 +100,7 @@ class midcom_helper_datamanager2_widget_captcha extends midcom_helper_datamanage
     var $_session_domain = 'midcom_helper_datamanager2_widget_captcha';
 
     /**
-     * The initialization event handler creates the captcha passphrase (if neccessary).
+     * The initialization event handler creates the captcha passphrase (if necessary).
      *
      * @return bool Indicating Success
      */

@@ -14,7 +14,7 @@
  * All functions must be implemented, see their individual documentation about 
  * what exactly they should do.
  * 
- * Configuration, if neccessary, should be done using the MidCOM configuration
+ * Configuration, if necessary, should be done using the MidCOM configuration
  * system, prefixing all values with 'auth_frontend_$name_', e.g. 
  * 'auth_frontend_form_cssclass'.
  * 

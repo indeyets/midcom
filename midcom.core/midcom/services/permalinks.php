@@ -113,7 +113,7 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
             return $napobj[MIDCOM_NAV_FULLURL];
         }
         
-        // Ok, unfortunalety, this is not an immediate topic. We try to traverse
+        // Ok, unfortunately, this is not an immediate topic. We try to traverse
         // upwards in the object chain to find a topic.
         $topic = null;
 

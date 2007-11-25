@@ -192,7 +192,7 @@ class midcom_helper_datamanager_widget_contactchooser extends midcom_helper_data
                     echo "<li><input type='checkbox' checked='checked' name='{$this->_fieldname}[{$key}]' id='widget_contactchooser_{$this->_fieldname}_{$key}' />";
                     echo "<label for=\"widget_contactchooser_{$this->_fieldname}_{$key}\">{$person->rname}</label></li>\n";
                     */
-                    //This way seems to be neccessary due to IE stupidness, though the one above is cleaner
+                    //This way seems to be necessary due to IE stupidness, though the one above is cleaner
                     echo "<li><label for=\"widget_contactchooser_{$this->_fieldname}_{$key}\">";
                     echo "<input type='checkbox' {$checked} name='{$this->_fieldname}[{$key}]' id='widget_contactchooser_{$this->_fieldname}_{$key}' />";
                     echo "{$person->rname}</label></li>\n";
@@ -205,7 +205,7 @@ class midcom_helper_datamanager_widget_contactchooser extends midcom_helper_data
                 echo "<li><input type='checkbox' checked='checked' name='{$this->_fieldname}[{$this->_value}]' id='widget_contactchooser_{$this->_fieldname}' />";
                 echo "<label for=\"widget_contactchooser_{$this->_fieldname}\">{$person->rname}</label></li>\n";
                 */
-                //This way seems to be neccessary due to IE stupidness, though the one above is cleaner
+                //This way seems to be necessary due to IE stupidness, though the one above is cleaner
                 echo "<li><label for=\"widget_contactchooser_{$this->_fieldname}\">";
                 echo "<input type='checkbox' checked='checked' name='{$this->_fieldname}[{$this->_value}]' id='widget_contactchooser_{$this->_fieldname}' />";
                 echo "{$person->rname}</label></li>\n";

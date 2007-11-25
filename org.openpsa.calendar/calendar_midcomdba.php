@@ -435,7 +435,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
     }
 
     /**
-     * Check if we have neccessary classes available to do relatedto suspects
+     * Check if we have necessary classes available to do relatedto suspects
      *
      * @return bool
      */

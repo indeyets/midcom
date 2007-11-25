@@ -10,7 +10,7 @@
 /**
  * Datamanager 2 CSV Export helper class.
  *
- * It brings all neccessary tools together to convert a series of DM2 instances to
+ * It brings all necessary tools together to convert a series of DM2 instances to
  * a CSV listing. It uses a datamanager instance set to a given schema as base to
  * work on and provides convenience methods of converting full QB resultsets to CSV.
  *

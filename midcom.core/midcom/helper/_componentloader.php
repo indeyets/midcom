@@ -225,7 +225,7 @@ class midcom_helper__componentloader
 
     /**
      * This function will invoke _load directly. If the loading process
-     * is unsucessful, it will call generate_error.
+     * is unsuccessful, it will call generate_error.
      *
      * @param string $path	The component to load explicitly.
      */
@@ -239,7 +239,7 @@ class midcom_helper__componentloader
 
     /**
     * This function will invoke _load directly. If the loading process
-    * is unsucessful, false is returned.
+    * is unsuccessful, false is returned.
     *
     * @param string $path	The component to load explicitly.
     * @return bool Indicating success.
@@ -495,7 +495,7 @@ class midcom_helper__componentloader
     /**
      * Returns a property value for the component identified by the
      * MidCOM Path $path and the property key $key. It will return NULL
-     * if the property key is unknown. Remeber to make a type sensitive
+     * if the property key is unknown. Remember to make a type sensitive
      * comparison here. If the component is not loaded, the framework
      * tries to load it, see _componentloader::load for further details.
      *
@@ -625,7 +625,7 @@ class midcom_helper__componentloader
 
     /**
      * Retrieve a list of all loaded components. The Array will contain an
-     * unsortet collection of MidCOM Paths.
+     * unsorted collection of MidCOM Paths.
      *
      * @return Array	List of loaded components
      */
@@ -647,8 +647,8 @@ class midcom_helper__componentloader
      * MidCOM tree.
      *
      * <b>Important note:</b> With the introduction of the component manifest system,
-     * calling load_all should no longer be neccessary, as (as far as I think) all
-     * issues which orignally required load_all can be resolved using the manifest.
+     * calling load_all should no longer be necessary, as (as far as I think) all
+     * issues which originally required load_all can be resolved using the manifest.
      * If you think you have found a case where this is not true, please contact
      * the developers on the MidCOM list.
      *
@@ -714,7 +714,7 @@ class midcom_helper__componentloader
      * This function is called from the class manifest loader in case of a cache
      * miss.
      *
-     * @param string $cache_identifier The cache indentifier to use to cache the mainfest
+     * @param string $cache_identifier The cache identifier to use to cache the manifest
      *     loading queue.
      * @todo investigate if we should unset the package.xml part of the arrays and serialize them
      */
@@ -755,7 +755,7 @@ class midcom_helper__componentloader
     /**
      * Load a manifest from the disk and add it to the $manifests list.
      *
-     * It already does all neccessary registration work:
+     * It already does all necessary registration work:
      *
      * - All default privileges are made known
      * - All defined DBA class sets are loaded. If an error occurs here,

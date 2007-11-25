@@ -55,7 +55,7 @@ Legend:
 
 2005-09-01 rambo
   - moved org.openpsa.projects component load to projects_handler
-    (so in future other handlers do not load it unneccessarily)
+    (so in future other handlers do not load it unnecessarily)
   + filtering by hour_report->reportType
   + display report type in basic report if it's defined in schema
 

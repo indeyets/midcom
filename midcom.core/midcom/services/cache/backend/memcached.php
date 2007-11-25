@@ -12,7 +12,7 @@
  *
  * Requires the memcache PECL extension to work, uses persistent connections.
  *
- * <b>Confiugration options:</b>
+ * <b>Configuration options:</b>
  *
  * - <i>string host</i> The host to connect to, defaults to localhost.
  * - <i>int port</i> The port to connect to, defaults to the default port 11211.
@@ -25,7 +25,7 @@
  *   memcache extension does this automatically.
  * - Since this is about performance, (and memcached doesn't allow it in any other way),
  *   the get and exist calls are merged. Get will return false in case that the required
- *   key was not found. This effectivily means that you cannot store "false" as a value.
+ *   key was not found. This effectively means that you cannot store "false" as a value.
  * - The class will automatically add the name of the cache instance to the cache keys.
  *
  * @package midcom.services

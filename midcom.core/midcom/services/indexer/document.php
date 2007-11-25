@@ -48,7 +48,7 @@
 class midcom_services_indexer_document
 {
     /**
-     * An acciociative array containing all fields of the current document.
+     * An associative array containing all fields of the current document.
      *
      * Each field is indexed by its name (a string). The value is another
      * array containing the fields "name", type" and "content".

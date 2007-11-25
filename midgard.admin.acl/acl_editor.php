@@ -374,7 +374,7 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
         }
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
 
-        // Add the toolbar items, if neccessary
+        // Add the toolbar items, if necessary
         $this->_view_toolbar->add_help_item('edit', 'midgard.admin.acl');
 
         // Figure out label for the object's class

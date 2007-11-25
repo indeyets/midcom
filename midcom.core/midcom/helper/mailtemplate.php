@@ -30,7 +30,7 @@
  * They are identified by "__KEY__" and are inserted directly. There is no line
  * wrapping.
  * 
- * 2. Acciociative arrays
+ * 2. Associative arrays
  * 
  * If you want to pass an array as parameter, ensure, that both key and value are
  * convertible to a string by PHP implicitly. Ideally, you have only strings, of
@@ -233,7 +233,7 @@ class midcom_helper_mailtemplate {
      * @param Array $template	The value of a Datamanager mailtemplate type
      */
     function midcom_helper_mailtemplate ($template) {
-        /* First, we include all neccessary PEAR classes */
+        /* First, we include all necessary PEAR classes */
         debug_add('Mailtemplate::c\'tor: loading PEAR package Mail (if not already required)...');
         require_once("Mail.php");
         debug_add('Mailtemplate::c\'tor: loading PEAR package Mail_Mime (if not already required)...');
@@ -293,7 +293,7 @@ class midcom_helper_mailtemplate {
     function parse () {
         debug_push("Mailtemplate::parse");
         /* For each parameter, add values to the preg search and
-         * replace arrays, and, where neccessary, do some charset
+         * replace arrays, and, where necessary, do some charset
          * conversions.
          */
         

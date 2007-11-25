@@ -14,7 +14,7 @@
  * and disabling of buttons, icons and hover-helptexts (currently
  * rendered using TITLE tags).
  *
- * A single button in the toolbar is represented using an acciociative
+ * A single button in the toolbar is represented using an associative
  * array with the following elements:
  *
  * <code>
@@ -40,18 +40,18 @@
  * is used as-is. Note, that the Anchor-Prefix is appended immediately
  * when the item is added, not when the toolbar is rendered.
  *
- * The orignal URL (before prepending anything) is stored internally;
+ * The original URL (before prepending anything) is stored internally;
  * so in all places where you reference an element by-URL, you can use
  * the original URL if you wish (actually, both URLs are recognized
  * during the translation into an id).
  *
  * The label is the text shown as the button, the helptext is used as
  * TITLE value to the anchor, and will be shown when hovering over the
- * link therefore. Set it to null, to supress this feature (this is the
+ * link therefore. Set it to null, to suppress this feature (this is the
  * default).
  *
  * The icon is a relative URL within the static MidCOM tree, for example
- * 'stock-icons/16x16/attach.png'. Set it to null, to supress the display
+ * 'stock-icons/16x16/attach.png'. Set it to null, to suppress the display
  * of an icon (this is the default)
  *
  * By default, as shown below, the toolbar system renders a standard Hyperlink.
@@ -65,7 +65,7 @@
  * be rendered, POST versions will only be used if explicitly requested.
  *
  * Note, that while this should prevent link prefetching on the POST entries,
- * this is a big should. Due to its lack of standarization, it is strongly
+ * this is a big should. Due to its lack of standardization, it is strongly
  * recommended to check for a POST request when processing such toolbar
  * targets, using something like this:
  *
@@ -238,7 +238,7 @@ class midcom_helper_toolbar
     /**
      * This function will add an Item to the toolbar. Set before to the index
      * of the element before which you want to insert the item or use -1 if
-     * you want to append an item. Alternativly, instead of specifying an
+     * you want to append an item. Alternatively, instead of specifying an
      * index, you can specify a URL instead.
      *
      * This member will process the URL and append the anchor prefix in case
@@ -543,7 +543,7 @@ class midcom_helper_toolbar
      * Updates an items URL using the same rules as in add_item.
      *
      * You should avoid updating a URL directly unless you are prepared to
-     * check for the possibly neccessary anchor_prefix yourself.
+     * check for the possibly necessary anchor_prefix yourself.
      *
      * @param mixed $index The integer index or URL of the item to update.
      * @param string $url The new URL to set.

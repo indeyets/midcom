@@ -24,7 +24,7 @@
  * - MIDCOM_LOG_ERROR
  * - MIDCOM_LOG_CRIT
  *
- * This snippet does automatically instantinate $midcom_debugger, and it declares
+ * This snippet does automatically instantiate $midcom_debugger, and it declares
  * shortcuts called debug_add, debug_push and debug_pop (see below).
  *
  * <b>Note:</b> The Debugger is disabled per default to save performance. You have to explicitly

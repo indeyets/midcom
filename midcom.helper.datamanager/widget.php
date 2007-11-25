@@ -17,11 +17,11 @@
  * the forms and the PHP-representation of the data.
  *
  * A important point is that this is a base class for a class hierarchy
- * of datatypes. To make creating child classes a littlebit easier and
+ * of datatypes. To make creating child classes a little bit easier and
  * less error_prone, the classes constructor has been moved to the
  * method _constructor, which can be overwritten by clients. The advantage
  * of this is that you can just call parent:: on this and don't need to
- * remeber the name of the parent class to call its constructor. As PHP
+ * remember the name of the parent class to call its constructor. As PHP
  * automatically uses the parent classes constructor if non is defined,
  * it is enough to define the _constructor method in the subclasses.
  *
@@ -36,7 +36,7 @@
  * eliminates complicated parent calls.
  * </i>
  *
- * The default behavior implemented in this class is sufficiant for data
+ * The default behavior implemented in this class is sufficient for data
  * with a text-representation. It does not, however, implement the draw*
  * methods.
  *
@@ -174,7 +174,7 @@ class midcom_helper_datamanager_widget {
      * widget. If yes, it will be read and stored in the widget.
      *
      * You should override this only if you cannot use the Request data
-     * directly, as the default bevavoir is to copy it to the _value member.
+     * directly, as the default behavior is to copy it to the _value member.
      *
      * @access protected
      */
@@ -213,7 +213,7 @@ class midcom_helper_datamanager_widget {
     }
 
     /**
-     * Wenn called, this method should display the current data without any
+     * When called, this method should display the current data without any
      * editing widget.
      *
      * You must override this member.

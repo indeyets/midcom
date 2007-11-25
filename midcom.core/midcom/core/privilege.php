@@ -445,7 +445,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * This is an internal helper function, which may only be called statically.
      *
      * It is used by get_all_privileges in case that there is no cache hit. It will query the
-     * database and construct all neccessary objects out of it.
+     * database and construct all necessary objects out of it.
      *
      * @access protected
      * @param string $guid The GUID of the object for which to query ACL data.

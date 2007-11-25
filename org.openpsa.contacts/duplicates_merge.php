@@ -249,7 +249,7 @@ class org_openpsa_contacts_duplicates_merge
                     $changed = true;
                 }
             }
-            // Avoid unneccessary updates (thought the QB should only feed us objects that need updating it's good to make sure)
+            // Avoid unnecessary updates (thought the QB should only feed us objects that need updating it's good to make sure)
             if (!$changed)
             {
                 continue;

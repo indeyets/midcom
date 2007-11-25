@@ -57,7 +57,7 @@ class org_openpsa_helpers_uimessages extends midcom_baseclasses_components_purec
     }
 
     /**
-     * Adds neccessary JavaScript calls to populate the messagearea based on the queue
+     * Adds necessary JavaScript calls to populate the messagearea based on the queue
      */
     function html_add_php_messages()
     {

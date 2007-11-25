@@ -140,7 +140,7 @@ class midcom_helper_replicator_exporter_fulldump extends midcom_helper_replicato
                 continue;
             }
             
-            /* PONDER: use the serialize_object method ?? (would help with ordering dependencies but causes unneccessary recursion)
+            /* PONDER: use the serialize_object method ?? (would help with ordering dependencies but causes unnecessary recursion)
             $items = $this->serialize_object($object, true);
             if ($items === false)
             {

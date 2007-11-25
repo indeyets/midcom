@@ -82,7 +82,7 @@
  * You can safely assume that get_name_for_key receives only valid keys.
  *
  * The class is loaded using require_once by translating it to a path relative to midcom_root
- * prior to instantination. If the class cannot be loaded from the filesystem but from a
+ * prior to instantiation. If the class cannot be loaded from the filesystem but from a
  * snippet, you need to include that snippet previously, an auto-load from there is not
  * yet possible.
  *
@@ -161,7 +161,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
     
     /**
      * Set this to false to use with universalchooser, this skips making sure the key exists in option list
-     * Mainly used to avoid unneccessary seeks to load all a ton of objects to the options list.
+     * Mainly used to avoid unnecessary seeks to load all a ton of objects to the options list.
      *
      * @var bool
      * @access public
@@ -197,7 +197,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
     var $multiple_storagemode = 'serialized';
 
     /**
-     * Initialize the class, if neccessary, create a callback instance, otherwise
+     * Initialize the class, if necessary, create a callback instance, otherwise
      * validate that an option array is present.
      */
     function _on_initialize()

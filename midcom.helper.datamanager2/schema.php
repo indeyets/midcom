@@ -233,7 +233,7 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
 
     /**
      * This function parses the schema and populates all members with the corresponding
-     * information, completing defaults where neccessary.
+     * information, completing defaults where necessary.
      *
      * It will automatically translate all descriptive fields according to the rules
      * outlined in the translate_schema_field() helper function.

@@ -74,7 +74,7 @@ class midcom_service__sessioning
 
         /* Cache disabling made conditional based on domain/key existence */
 
-        // Check for session data and load or initialize it, if neccessary
+        // Check for session data and load or initialize it, if necessary
         if (! array_key_exists("midcom_session_data", $_SESSION))
         {
             $_SESSION["midcom_session_data"] = Array();
@@ -89,7 +89,7 @@ class midcom_service__sessioning
      *
      * @param string $domain	The domain in which to search for the key.
      * @param mixed $key		The key to query.
-     * @return bool				Indicating availabiliity.
+     * @return bool				Indicating availability.
      */
     function exists ($domain, $key)
     {
@@ -129,7 +129,7 @@ class midcom_service__sessioning
      * Returns a value from the session.
      *
      * Returns null if the key
-     * is non-existant. Note, that this is not neccessarily a valid non-existance
+     * is non-existent. Note, that this is not necessarily a valid non-existance
      * check, as the sessioning system does allow null values. Use the exists function
      * if unsure.
      *
@@ -158,8 +158,8 @@ class midcom_service__sessioning
 
     /**
      * Removes the value associated with the specified key. Returns null if the key
-     * is non-existant or the value of the key just removed otherwise. Note, that
-     * this is not neccessarily a valid non-existance check, as the sessioning
+     * is non-existent or the value of the key just removed otherwise. Note, that
+     * this is not necessarily a valid non-existance check, as the sessioning
      * system does allow null values. Use the exists function if unsure.
      *
      * @param string $domain	The domain in which to search for the key.

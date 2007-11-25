@@ -68,7 +68,7 @@ class net_nehmer_publications_callbacks_categorylister extends midcom_baseclasse
     var $_group_prefix_length = null;
 
     /**
-     * Initializes the class to the category listing in the configuration. It does the neccessary
+     * Initializes the class to the category listing in the configuration. It does the necessary
      * postprocessing to move the configuration syntax to the rendering one.
      *
      * If $sitelisting is true, the component is requesting the listing for the site category 

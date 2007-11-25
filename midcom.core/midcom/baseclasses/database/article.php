@@ -111,7 +111,7 @@ class midcom_baseclasses_database_article extends __midcom_baseclasses_database_
     /**
      * Statically callable method to get parent guid when object guid is given
      * 
-     * Uses midgard_collector to avoid unneccessary full object loads
+     * Uses midgard_collector to avoid unnecessary full object loads
      *
      * @param guid $guid guid of topic to get the parent for
      */

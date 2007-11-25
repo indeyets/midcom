@@ -19,7 +19,7 @@
  *     types, or redirects to the approriate page if only one account type is set
  *     in the schema.
  *
- * register/$type.html: The actual registration code, using DM2 to input all neccessary
+ * register/$type.html: The actual registration code, using DM2 to input all necessary
  *     information.
  *
  * If you want the system to relocate to a specific page after account activation, you
@@ -140,7 +140,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
     {
         $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_account_creation'));
 
-        // Prepare the request information, filter down to allowed types if neccessary
+        // Prepare the request information, filter down to allowed types if necessary
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         $this->_request_data['types'] = Array();
         $open_types = $this->_config->get('register_allow_types');

@@ -34,7 +34,7 @@ class org_maemo_calendar_callbacks_personstags extends midcom_baseclasses_compon
     var $_additional_user = null;
 
     /**
-     * Initializes the class to the category listing in the configuration. It does the neccessary
+     * Initializes the class to the category listing in the configuration. It does the necessary
      * postprocessing to move the configuration syntax to the rendering one.
      *
      * @param int $user The user who's tags to show.

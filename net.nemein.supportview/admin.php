@@ -196,9 +196,9 @@ class net_nemein_supportview_admin {
         $this->_config_dm = new midcom_helper_datamanager("file:/net/nemein/supportview/config/schemadb_config.inc");
         
         if ($this->_config_dm == false) {
-            debug_add("Failed to instantinate configuration datamanager.", MIDCOM_LOG_CRIT);
+            debug_add("Failed to instantiate configuration datamanager.", MIDCOM_LOG_CRIT);
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 
-                                               "Failed to instantinate configuration datamanager.");
+                                               "Failed to instantiate configuration datamanager.");
         }
         
         $midgard = mgd_get_midgard();

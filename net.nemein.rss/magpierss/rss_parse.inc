@@ -342,7 +342,7 @@ class MagpieRSS {
         }
 
         // balance tags properly
-        // note:  i don't think this is actually neccessary
+        // note:  i don't think this is actually necessary
         if ($opener != $closer) {
             array_push($this->incontent, $opener);
             $this->append_content("<$el />");

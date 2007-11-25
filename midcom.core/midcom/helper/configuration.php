@@ -14,7 +14,7 @@
  * supports key/value pairs of data, which can be retrieved out of Midgard
  * Parameters. In this case it would make the key/values a string/string pair with
  * a length limit of 255 characters. Since the current implementation only supports
- * read-access to the configuration data, this is a neglible fact, in reality it
+ * read-access to the configuration data, this is a negligible fact, in reality it
  * supports all valid PHP data types as key or data values, as long it is allowed
  * to use the keys as array index elements.
  *
@@ -25,14 +25,14 @@
  *
  * The global configuration must include all possible configuration parameters with
  * their default values. These data is fixed and cannot be changed after object
- * instantination. Aimed specifically at MidCOM is the second set of configuration
+ * instantiation. Aimed specifically at MidCOM is the second set of configuration
  * data, the "local" parameters. It gives you a way of explicitly overwrite a part
  * of the configuration data with localized values. This customization data can be
- * overwritten at wish by deliberatly resetting it to the defaults or by importing
+ * overwritten at wish by deliberately resetting it to the defaults or by importing
  * a new one over the existing local configuration.
  *
  * Configuration data can be delivered in two ways: The easiest way is using a
- * acciociative array that will be used as configuration. Alternativly you can
+ * associative array that will be used as configuration. Alternatively you can
  * specify both a MidgardObject and a MidCOM Path which is used to fetch
  * configuration data.
  *
@@ -78,7 +78,7 @@ class midcom_helper_configuration
      * First, if passed a single associative array to the constructor,
      * it will use its contents as global configuration.
      *
-     * Alternativly you can specify any Midgard object and a parameter
+     * Alternatively you can specify any Midgard object and a parameter
      * domain. It will then use the contents of this domain as global
      * configuration.
      *

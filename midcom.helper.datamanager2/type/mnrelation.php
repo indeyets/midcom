@@ -163,7 +163,7 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
     var $_membership_objects = null;
 
     /**
-     * Initialize the class, if neccessary, create a callback instance, otherwise
+     * Initialize the class, if necessary, create a callback instance, otherwise
      * validate that an option array is present.
      */
     function _on_initialize()

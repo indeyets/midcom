@@ -18,10 +18,10 @@
  *   content. They will activate the framework.
  * - Provide some very basic Helper Functions for snippet loading and error-page
  *   generation
- * - Evaluate the URL and activate the requiered components.
- * - Provide a mechanism to dynmaically load a second component during a page
+ * - Evaluate the URL and activate the required components.
+ * - Provide a mechanism to dynamically load a second component during a page
  *   run.
- * - Provide a specialized mechanism to dynamically invocate a component's
+ * - Provide a specialized mechanism to dynamically invoke a component's
  *   Administration Interface.
  * - Provide a basic context mechanism that allows each independant component
  *   invocation to access its own context information.
@@ -722,7 +722,7 @@ class midcom_application
             return $context;
         }
 
-        // Parser Init: Generate arguments and instantinate it.
+        // Parser Init: Generate arguments and instantiate it.
         $this->_parser = $this->serviceloader->load('midcom_core_service_urlparser');
         $argv = $this->_parser->tokenize($url);
         $this->_parser->parse($argv);
@@ -783,7 +783,7 @@ class midcom_application
     /**
      * Exit from the framework, execute after all output has been made.
      *
-     * Does all neccessary clean-up work. Must be called after output is completed as
+     * Does all necessary clean-up work. Must be called after output is completed as
      * the last call of any MidCOM Page. Best Practice: call it at the end of the ROOT
      * style element.
      *
@@ -830,7 +830,7 @@ class midcom_application
      *
      * Details: The logic will traverse the node tree and for each node it will load
      * the component that is responsible for it. This component gets the chance to
-     * acceppt the request (this is encaspulated in the _can_handle call), which is
+     * accept the request (this is encaspulated in the _can_handle call), which is
      * basically a call to can_handle. If the component declares to be able to handle
      * the call, its handle function is executed. Depending if the handle was successful
      * or not, it will either display an HTTP error page or prepares the content handler
@@ -1091,7 +1091,7 @@ class midcom_application
         }
         else
         {
-            debug_add("_process finished sucessfully", MIDCOM_LOG_DEBUG);
+            debug_add("_process finished successfully", MIDCOM_LOG_DEBUG);
             $this->_status = MIDCOM_STATUS_CONTENT;
             debug_pop();
         }
@@ -1387,7 +1387,7 @@ class midcom_application
 
     /**
      * Return the prefix required to build relative links on the current site.
-     * This includes the http[s] prefix, the hosts port (if neccessary) and the
+     * This includes the http[s] prefix, the hosts port (if necessary) and the
      * base url of the Midgard Page. Be aware, that this does *not* point to the
      * base host of the site, which is an important distinction for example in AIS.
      *
@@ -1408,8 +1408,8 @@ class midcom_application
 
     /**
      * Return the prefix required to build relative links on the current site.
-     * This includes the http[s] prefix, the hosts port (if neccessary) and the
-     * base url of the main host. This is not neccessarily the currently active
+     * This includes the http[s] prefix, the hosts port (if necessary) and the
+     * base url of the main host. This is not necessarily the currently active
      * MidCOM Page however, use the get_page_prefix() function for that.
      *
      * e.g. something like http[s]://www.domain.com[:8080]/host_prefix/
@@ -1460,7 +1460,7 @@ class midcom_application
      * This function maintains one NAP Class per concept. Usually this is enough,
      * since you mostly will access it in context 0, the default. Only the AIS
      * currently uses different context IDs. The problem is, that this is not 100%
-     * efficient: If you instantinate two different NAP Classes in different contexts
+     * efficient: If you instantiate two different NAP Classes in different contexts
      * both referring to the same root node, you will get two different instances.
      *
      * If the system has not completed the can_handle phase, this method fails and
@@ -2048,8 +2048,8 @@ class midcom_application
      *
      * generate_error     - Generate HTTP Error
      * load_snippet       - Load a snippet with error-checking
-     * serve_snippet      - Serves snippet including all neccessary headers
-     * serve_attachment   - Serves attachment including all neccessary headers
+     * serve_snippet      - Serves snippet including all necessary headers
+     * serve_attachment   - Serves attachment including all necessary headers
      * get_midgard        - Returns mgd_get_midgard with updated "self" member
      * _l10n_edit_wrapper - Invoces the l10n string editor
      * add_jsfile         - Add a JavaScript URL to the load queue
@@ -2280,7 +2280,7 @@ class midcom_application
         {
             $expire = (int) $expire;
         }
-        // This is neccessary, as the internal date representation is not HTTP
+        // This is necessary, as the internal date representation is not HTTP
         // standard compilant. :-(
         $lastmod = strtotime($snippet->revised);
 
@@ -2354,7 +2354,7 @@ class midcom_application
 
         $etag = md5("{$last_modified}{$attachment->name}{$attachment->mimetype}{$attachment->guid}");
 
-        // Check etag and return 304 if neccessary
+        // Check etag and return 304 if necessary
         if (   $expires <> 0
             && $this->cache->content->_check_not_modified($last_modified, $etag))
         {

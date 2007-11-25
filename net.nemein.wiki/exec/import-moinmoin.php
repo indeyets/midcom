@@ -608,7 +608,7 @@ class net_nemein_wiki_moinmoin_importer
                 }
                 else
                 {
-                    // Not in any other namespace, so do not clutter the link with the unneccessary slash
+                    // Not in any other namespace, so do not clutter the link with the unnecessary slash
                     $replace = "{$camel_matches[1][$k]}[{$word}]{$camel_matches[3][$k]}";
                 }
                 if (!isset($global_search[$search]))

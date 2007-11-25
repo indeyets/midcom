@@ -109,7 +109,7 @@ class midcom_services_indexer_backend_xmlshell extends midcom_services_indexer_b
      * 
      * @param string $query The query, which must suite the backends query syntax.
      * @param midcom_services_indexer_filter $filter An optional filter used to restrict the query. This may be null indicating no filter.
-     * @return Array An arary of documents matching the query, or false on a failure.
+     * @return Array An array of documents matching the query, or false on a failure.
      */
     function query ($query, $filter)
     {

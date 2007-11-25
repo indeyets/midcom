@@ -77,7 +77,7 @@ class midcom_org_openpsa_relatedto extends __midcom_org_openpsa_relatedto
     /**
      * By default all authenticated users should be able to do
      * whatever they wish with relatedto objects, later we can add
-     * restrictions on object level as neccessary.
+     * restrictions on object level as necessary.
      */
     function get_class_magic_default_privileges()
     {

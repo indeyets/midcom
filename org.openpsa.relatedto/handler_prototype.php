@@ -263,7 +263,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
     }
 
     /**
-     * Renders (if neccessary) controls for confirming/deleting link object
+     * Renders (if necessary) controls for confirming/deleting link object
      */
     function _show_render_line_controls()
     {
@@ -571,7 +571,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             echo "                <div id=\"org_openpsa_relatedto_details_url_{$event->guid}\" style=\"display: none;\" title=\"{$cal_node[MIDCOM_NAV_FULLURL]}event/raw/{$event->guid}/\"></div>\n";
             echo "                <div id=\"org_openpsa_relatedto_details_{$event->guid}\" class=\"details hidden\" style=\"display: none;\">\n";
             echo "                </div>\n";
-            //TODO: neccessary JS stuff to load details (which should in turn include the events own relatedtos) via AHAH
+            //TODO: necessary JS stuff to load details (which should in turn include the events own relatedtos) via AHAH
         }
         else
         {
@@ -580,7 +580,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             echo "                <div id=\"org_openpsa_relatedto_details_{$event->guid}\" class=\"details hidden\" style=\"display: none;\">\n";
             echo $event->details_text(false, false, "<br>\n");
             echo "                </div>\n";
-            //TODO: neccessary JS stuff to display/hide the div here
+            //TODO: necessary JS stuff to display/hide the div here
         }
 
         $this->_show_render_line_controls();
@@ -636,7 +636,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             echo "                </ul>\n";
             echo "                <div id=\"org_openpsa_relatedto_details_{$task->guid}\" class=\"details hidden\" style=\"display: none;\">\n";
             echo "                </div>\n";
-            //TODO: neccessary JS stuff to load details (which should in turn include the tasks own relatedtos) via AHAH
+            //TODO: necessary JS stuff to load details (which should in turn include the tasks own relatedtos) via AHAH
         }
         else
         {
@@ -644,7 +644,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             echo "                <div id=\"org_openpsa_relatedto_details_{$task->guid}\" class=\"details hidden\" style=\"display: none;\">\n";
             //TODO: Output some details ?
             echo "                </div>\n";
-            //TODO: neccessary JS stuff to display/hide the div here
+            //TODO: necessary JS stuff to display/hide the div here
         }
 
         $this->_show_render_line_controls();
@@ -704,7 +704,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             echo "                </ul>\n";
             echo "                <div id=\"org_openpsa_relatedto_details_{$salesproject->guid}\" class=\"details hidden\" style=\"display: none;\">\n";
             echo "                </div>\n";
-            //TODO: neccessary JS stuff to load details (which should in turn include the tasks own relatedtos) via AHAH
+            //TODO: necessary JS stuff to load details (which should in turn include the tasks own relatedtos) via AHAH
         }
         else
         {
@@ -712,7 +712,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             echo "                <div id=\"org_openpsa_relatedto_details_{$salesproject->guid}\" class=\"details hidden\" style=\"display: none;\">\n";
             //TODO: Output some details ?
             echo "                </div>\n";
-            //TODO: neccessary JS stuff to display/hide the div here
+            //TODO: necessary JS stuff to display/hide the div here
         }
 
         $this->_show_render_line_controls();
@@ -783,7 +783,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             echo "                </ul>\n";
             echo "                <div id=\"org_openpsa_relatedto_details_{$invoice->guid}\" class=\"details hidden\" style=\"display: none;\">\n";
             echo "                </div>\n";
-            //TODO: neccessary JS stuff to load details (which should in turn include the tasks own relatedtos) via AHAH
+            //TODO: necessary JS stuff to load details (which should in turn include the tasks own relatedtos) via AHAH
         }
         else
         {
@@ -791,7 +791,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             echo "                <div id=\"org_openpsa_relatedto_details_{$invoice->guid}\" class=\"details hidden\" style=\"display: none;\">\n";
             //TODO: Output some details ?
             echo "                </div>\n";
-            //TODO: neccessary JS stuff to display/hide the div here
+            //TODO: necessary JS stuff to display/hide the div here
         }
 
         $this->_show_render_line_controls();

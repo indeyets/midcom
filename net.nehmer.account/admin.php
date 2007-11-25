@@ -149,7 +149,7 @@ class net_nehmer_account_admin extends midcom_baseclasses_components_request_adm
     }
 
     /**
-     * Prepares the actual plugin by adding all neccessary information to the request
+     * Prepares the actual plugin by adding all necessary information to the request
      * switch.
      *
      * @param string $name The plugin name as registered in the plugins configuration
@@ -188,7 +188,7 @@ class net_nehmer_account_admin extends midcom_baseclasses_components_request_adm
     }
 
     /**
-     * Loads the file/snippet neccessary for a given plugin, according to its configuration.
+     * Loads the file/snippet necessary for a given plugin, according to its configuration.
      *
      * @param string $name The plugin name as registered in the plugins configuration
      *     option.

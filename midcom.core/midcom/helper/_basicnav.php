@@ -27,7 +27,7 @@
  * The root node and the "current" node. The current node defined through
  * the topic of the component that declared to be able to handle the request.
  *
- * The class will load the neccessary information on demand to minimize
+ * The class will load the necessary information on demand to minimize
  * database traffic.
  *
  * The interface functions should enable you to build any navigation tree you
@@ -538,7 +538,7 @@ class midcom_helper__basicnav
 
         if (is_null($leaves))
         {
-            // Appearantly, the leaves have not yet been loaded for this topic, so we have to do this now.
+            // Apparently, the leaves have not yet been loaded for this topic, so we have to do this now.
             // Afterwards we update the cache.
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('The leaves have not yet been loaded from the database, we do this now.');
@@ -754,7 +754,7 @@ class midcom_helper__basicnav
                 $leaf[MIDCOM_NAV_SITE][MIDCOM_NAV_NAME] = $leaf[MIDCOM_NAV_NAME];
             }
 
-            // complete NAV_NAMES where neccessary
+            // complete NAV_NAMES where necessary
             if (   ! is_null($leaf[MIDCOM_NAV_SITE])
                 && trim($leaf[MIDCOM_NAV_SITE][MIDCOM_NAV_NAME]) == '')
             {
@@ -796,7 +796,7 @@ class midcom_helper__basicnav
      * runtime environment. It will work with both nodes and leaves.
      * This includes checks for:
      *
-     * - Nonexistant NAP information (null values)
+     * - Nonexistent NAP information (null values)
      * - Viewergroups
      * - Scheduling/Hiding (only on-site)
      * - Approval (only on-site)
@@ -959,7 +959,7 @@ class midcom_helper__basicnav
      * is able to load the navigation data of any topic within MidCOMs topic
      * tree into memory. Any uplink nodes that are not loaded into memory will
      * be loaded until any other known topic is encountered. After the
-     * neccessary data has been loaded with calls to _loadNodeData.
+     * necessary data has been loaded with calls to _loadNodeData.
      *
      * If all load calls were successful, MIDCOM_ERROK is returned. Any error
      * will be indicated with a corresponding return value and an error message
@@ -1070,7 +1070,7 @@ class midcom_helper__basicnav
     /**
      * Retrieve the ID of the currently displayed leaf. This is a leaf that is
      * displayed by the handling topic. If no leaf is active, this function
-     * returns FALSE. (Remeber to make a type sensitve check, e.g.
+     * returns FALSE. (Remember to make a type sensitve check, e.g.
      * nav::get_current_leaf() !== false to distinguish "0" and "false".)
      *
      * @return int	The ID of the leaf in question or false on failure.
@@ -1244,7 +1244,7 @@ class midcom_helper__basicnav
 
     /**
      * Verifies the existence of a given leaf. Call this before getting a leaf from the
-     * $_leaves cache. It will load all neccessary nodes/leaves as neccessary.
+     * $_leaves cache. It will load all necessary nodes/leaves as necessary.
      *
      * @param string $leaf_id A valid NAP leaf id ($nodeid-$leafid pattern).
      * @return bool true if the leaf exists, false otherwise.

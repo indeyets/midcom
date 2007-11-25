@@ -70,7 +70,7 @@ class net_nemein_registrations_registration extends midcom_db_eventmember
     function net_nemein_registrations_registration($id = null)
     {
         parent::midcom_db_eventmember($id);
-        // Intercept failed class instantinations.
+        // Intercept failed class instantiations.
         if ($this)
         {
             $this->_bind_to_request_data();

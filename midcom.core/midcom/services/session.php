@@ -30,7 +30,7 @@
  * You should keep in mind, that the isolation level by default is per-component,
  * not per-request. If you, for example, have the same component active twice 
  * (through dynamic_load) you have to manually ensure, that each request is 
- * treated separatly. Unfortunalety MidCOM cannot help you here.
+ * treated separately. Unfortunately MidCOM cannot help you here.
  * 
  * <b>Implementation Notes:</b>
  * 
@@ -94,7 +94,7 @@ class midcom_service_session {
      * Returns a value from the session.
      * 
      * Returns null if the key
-     * is non-existant. Note, that this is not neccessarily a valid non-existance 
+     * is non-existent. Note, that this is not necessarily a valid non-existance 
      * check, as the sessioning system does allow null values. Use the exists function
      * if unsure.
      * 
@@ -126,7 +126,7 @@ class midcom_service_session {
      * This is often used in conjunction with get to verify a keys existence.
      * 
      * @param mixed $key	The key to query.
-     * @return bool			Indicating availabiliity.
+     * @return bool			Indicating availability.
      */
     function exists ($key) {
         return $this->_sessioning->exists($this->_domain, $key);
@@ -134,8 +134,8 @@ class midcom_service_session {
     
     /**
      * Removes the value associated with the specified key. Returns null if the key
-     * is non-existant or the value of the key just removed otherwise. Note, that 
-     * this is not neccessarily a valid non-existance check, as the sessioning 
+     * is non-existent or the value of the key just removed otherwise. Note, that 
+     * this is not necessarily a valid non-existance check, as the sessioning 
      * system does allow null values. Use the exists function if unsure.
 	 * 
      * @param mixed $key	The key to remove.

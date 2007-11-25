@@ -96,7 +96,7 @@ class midcom_helper_datamanager2_type_privilege extends midcom_helper_datamanage
     /**
      * Sets the privileges value. If the privilege record has not yet been created,
      * it creates a new one (getting a temporary object from the DM core if 
-     * neccessary).
+     * necessary).
      * 
      * @param int $value The new value of the privilege.
      */

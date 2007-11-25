@@ -73,7 +73,7 @@ class midcom_helper_metadata
 {
     /**
      * Object to which we are attached to. This object can be accessed from
-     * the outside, where neccessary.
+     * the outside, where necessary.
      *
      * @var MidgardObject
      */
@@ -317,7 +317,7 @@ class midcom_helper_metadata
     /* ------- METADATA I/O INTERFACE -------- */
 
     /**
-     * Retrieves a given metadata key, postprocesses it where neccessary
+     * Retrieves a given metadata key, postprocesses it where necessary
      * and stores it into the local cache.
      *
      * - Person references (both guid and id) get resolved into the corresponding
@@ -330,7 +330,7 @@ class midcom_helper_metadata
      *   values as well. (Implementation note: Variable variables have to be
      *   used for this, as we have dots in the member name.)
      *
-     * Note, that we hide any errors from not existant properties explicitly,
+     * Note, that we hide any errors from not existent properties explicitly,
      * as a few of the MidCOM objects do not support all of the predefined meta
      * data fields, PHP will default to "0" in these cases. For Person IDs, this
      * "0" is rewritten to "1" to use the MidgardAdministrator account instead.

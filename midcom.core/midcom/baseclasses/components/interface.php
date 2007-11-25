@@ -523,7 +523,7 @@ class midcom_baseclasses_components_interface
 
     /**
      * Configures the component for usage. The configuration is merged, and,
-     * if neccessary, an existing handler object is purged.
+     * if necessary, an existing handler object is purged.
      *
      * @param mixed $configuration A configuration data list, suitable for merging with a
      *     midcom_helper_configuration object.
@@ -929,7 +929,7 @@ class midcom_baseclasses_components_interface
     /**
      * This is an event handler, called after the basic component initialization has been done
      * just before the initialize call will return to MidCOM.
-     * It should prepare all neccessary information to start processing requests.
+     * It should prepare all necessary information to start processing requests.
      *
      * Unless you need more functionality then snippet and library loading, configuration merging
      * and basic component data storage initialization, no further modification needs to be done.

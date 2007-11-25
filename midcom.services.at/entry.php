@@ -155,7 +155,7 @@ class midcom_midcom_services_at_entry_db extends __midcom_midcom_services_at_ent
     /**
      * By default all authenticated users should be able to do
      * whatever they wish with entry objects, later we can add
-     * restrictions on object level as neccessary.
+     * restrictions on object level as necessary.
      *
      * @return array MidCOM privileges
      */

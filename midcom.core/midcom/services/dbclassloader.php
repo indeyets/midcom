@@ -50,7 +50,7 @@
  *
  * <i>table</i> denotes the database table that is use to store
  * this class. This is a compatibility value that will be deprecated on the long run but is
- * neccessary for now to get a clean transition between legacy Midgard and MgdSchema. The
+ * necessary for now to get a clean transition between legacy Midgard and MgdSchema. The
  * argument is checked for basic sanity (basically, only alphanumeric characters, underscores
  * and dashes are allowed).
  *
@@ -1185,7 +1185,7 @@ EOF;
      * outside of it.
      *
      * Its purpose is to ensure that the component providing a certain DBA class instance is
-     * actually loaded. This is neccessary, as the intermediate classes along with the class
+     * actually loaded. This is necessary, as the intermediate classes along with the class
      * descriptions are loaded during system startup now, but the full-blown DBA class
      * is not available at that point (for performance reasons). It will load the components
      * in question when requested by any operation in the system that might have to convert

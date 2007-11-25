@@ -78,7 +78,7 @@ class midcom_helper_nav
     /**
      * Retrieve the ID of the currently displayed leaf. This is a leaf that is
      * displayed by the handling topic. If no leaf is active, this function
-     * returns FALSE. (Remeber to make a type sensitve check, e.g.
+     * returns FALSE. (Remember to make a type sensitve check, e.g.
      * nav::get_current_leaf() !== false to distinguish '0' and 'false'.)
      *
      * @return int	The ID of the leaf in question or false on failure.
@@ -394,7 +394,7 @@ class midcom_helper_nav
             return false;
         }
 
-        // this is the rest of the lot, we need to traverse everything, unfortunalety.
+        // this is the rest of the lot, we need to traverse everything, unfortunately.
         // First, we traverse a list of nodes to be checked on by one, avoiding a recursive
         // function call.
 

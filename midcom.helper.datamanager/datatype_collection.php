@@ -42,7 +42,7 @@ class midcom_helper_datamanager_datatype_collection extends midcom_helper_datama
         } 
         
         $classname = "midcom_helper_datamanager_widget_{$this->_field['widget']}";
-        debug_add("We have to instantinate a widget of type {$classname} for field {$this->_field['name']}."); 
+        debug_add("We have to instantiate a widget of type {$classname} for field {$this->_field['name']}."); 
         $this->_widget = new $classname($this->_datamanager, $this->_field, $this->_get_widget_default_value());
                 
         debug_pop();

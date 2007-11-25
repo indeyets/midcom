@@ -615,7 +615,7 @@ if (!function_exists('mgd_get_snippet_by_path'))
 
 /**
  * PHP-level implementation of the Midgard Preparser language
- * construct mgd_include_snippet. Same semantics, but probably a littlebit
+ * construct mgd_include_snippet. Same semantics, but probably a little bit
  * slower.
  *
  * @param string $path	The path of the snippet that should be included.

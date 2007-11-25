@@ -116,7 +116,7 @@ Legend:
 2005-12-20 rambo
   - better workgroup filter check in QB
   - qb null constraint extra checks to interfaces
-  - show-project-list-status-header opened unneccessary <div class="main">,
+  - show-project-list-status-header opened unnecessary <div class="main">,
     removed that and the closing </div> from -footer.
 
 2005-10-26 rambo

@@ -25,7 +25,7 @@
  * controlled by the <i>cache_module_memcache_backend</i> configuration option, 
  * which defaults to null. If it is set to the name of a caching module (normally
  * memcached) it will actually start caching. Otherwise it will silently ignore
- * put requests, and reports all keys as not existant.
+ * put requests, and reports all keys as not existent.
  * 
  * Number Three, as at least memcached does not provide key_exists check, key
  * values of false are forbidden, as they are used to check a keys existence
@@ -117,7 +117,7 @@ class midcom_services_cache_module_memcache extends midcom_services_cache_module
     }
 
     /**
-     * Looks up a value in the cache and returns it. Not existant
+     * Looks up a value in the cache and returns it. Not existent
      * keys are caught in this call as well, so you do not need
      * to call exists first.
      * 

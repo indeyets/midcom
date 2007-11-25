@@ -406,7 +406,7 @@ class org_openpsa_contacts_person_handler
                 }
 
                 // Set the contacts root group into ACL
-                /* The persons are not neccessarily under the root group
+                /* The persons are not necessarily under the root group
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['contact_creation']['privilege_object'] = $GLOBALS['midcom_component_data']['org.openpsa.contacts']['contacts_root_group'];
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['contact_editing']['privilege_object'] = $GLOBALS['midcom_component_data']['org.openpsa.contacts']['contacts_root_group'];
                 */

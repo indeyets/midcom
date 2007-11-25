@@ -362,7 +362,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $link_prefix =  $this->_config->get('link_prefix');
-        $regex = "/(href)=([\"'«])(.*?)\\2/i";
+        $regex = "/(href)=([\"'ï¿½])(.*?)\\2/i";
         debug_add("searching links links with regex: {$regex}");
         if (!preg_match_all($regex, $this->_object_html, $matches))
         {
@@ -383,7 +383,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
             }
             if (array_key_exists($url, $seen_urls))
             {
-                // Avoid unneccessary str_replaces and attachment dumps (expensive)
+                // Avoid unnecessary str_replaces and attachment dumps (expensive)
                 continue;
             }
             $seen_urls[$url] = true;
@@ -543,7 +543,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
     function _dump_find_attachments()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $regex = "/(src|href)=([\"'«])(.*?\/midcom-serveattachmentguid-([a-f0-9-]+)\/(.*?))\\2/i";
+        $regex = "/(src|href)=([\"'ï¿½])(.*?\/midcom-serveattachmentguid-([a-f0-9-]+)\/(.*?))\\2/i";
         debug_add("searching attachment links with regex: {$regex}");
         if (!preg_match_all($regex, $this->_object_html, $matches))
         {
@@ -564,7 +564,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
             $guid = $matches[4][$k];
             if (array_key_exists($url, $seen_urls))
             {
-                // Avoid unneccessary str_replaces and attachment dumps (expensive)
+                // Avoid unnecessary str_replaces and attachment dumps (expensive)
                 continue;
             }
             $seen_urls[$url] = true;

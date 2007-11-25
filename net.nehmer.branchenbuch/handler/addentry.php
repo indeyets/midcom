@@ -30,7 +30,7 @@
  *
  * This class makes quite heavy use of sessioning to interconnect the various requests.
  * Step 2 is responsible for pre-initializing the session to a known, empty state. This is
- * doen in 1 not 2 to allow for deep-links directly to the category listing. Unfortunalety,
+ * doen in 1 not 2 to allow for deep-links directly to the category listing. Unfortunately,
  * the class is not yet capable of catching deep-links to step three, which would be
  * possible in theory. (Note, that as of 2006-03-02 the auth system will drop any remaining
  * session data during logout, so the chance for side-effects will be lower in general.)
@@ -441,7 +441,7 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
     /**
      * This function processes the details form, and redirects accordingly either to the
      * next/previous step or cancels the entry registration entirely. When moving on to
-     * the next step, the submitted data is kept in the session, along with all neccessary
+     * the next step, the submitted data is kept in the session, along with all necessary
      * controlling information.
      */
     function _process_details_form()
@@ -589,7 +589,7 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
     /**
      * This function processes the details form, and redirects accordingly either to the
      * next/previous step or cancels the entry registration entirely. When moving on to
-     * the next step, the submitted data is kept in the session, along with all neccessary
+     * the next step, the submitted data is kept in the session, along with all necessary
      * controlling information.
      */
     function _process_confirm_form()

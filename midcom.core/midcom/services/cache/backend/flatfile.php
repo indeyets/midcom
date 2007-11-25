@@ -12,7 +12,7 @@
  * 
  * No locking is done within this backend yet.
  * 
- * <b>Confiugration options:</b>
+ * <b>Configuration options:</b>
  *
  * None
  * 

@@ -12,7 +12,7 @@ class midcom_org_openpsa_query extends __midcom_org_openpsa_query
     /**
      * By default all authenticated users should be able to do
      * whatever they wish with query objects, later we can add
-     * restrictions on object level as neccessary.
+     * restrictions on object level as necessary.
      */
     function get_class_magic_default_privileges()
     {

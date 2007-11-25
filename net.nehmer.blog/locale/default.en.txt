@@ -224,7 +224,7 @@ Public posting ("Guestbook style")
 ---STRINGEND
 
 ---STRING public posting password
-Midgard Password to use for public posting (only neccessary if an username has been entered)
+Midgard Password to use for public posting (only necessary if an username has been entered)
 ---STRINGEND
 
 ---STRING public posting schema

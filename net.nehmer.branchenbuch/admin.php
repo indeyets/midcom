@@ -88,7 +88,7 @@ class net_nehmer_branchenbuch_admin extends midcom_baseclasses_components_reques
     }
 
     /**
-     * This function checks and, if neccessary, auto-populates the account_topic setting.
+     * This function checks and, if necessary, auto-populates the account_topic setting.
      */
     function _check_account_topic()
     {

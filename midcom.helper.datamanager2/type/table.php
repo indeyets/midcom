@@ -72,7 +72,7 @@ class midcom_helper_datamanager2_type_table extends midcom_helper_datamanager2_t
 
 
     /**
-     * Initialize the class, if neccessary, create a callback instance, otherwise
+     * Initialize the class, if necessary, create a callback instance, otherwise
      * validate that an option array is present.
      */
     function _on_initialize()

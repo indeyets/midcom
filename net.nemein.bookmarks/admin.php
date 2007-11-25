@@ -985,9 +985,9 @@ class net_nemein_bookmarks_admin
         
         if ($this->_config_dm == false) 
         {
-            debug_add("Failed to instantinate configuration datamanager.", MIDCOM_LOG_CRIT);
+            debug_add("Failed to instantiate configuration datamanager.", MIDCOM_LOG_CRIT);
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 
-                "Failed to instantinate configuration datamanager.");
+                "Failed to instantiate configuration datamanager.");
         }
         
         $person = mgd_get_person($_MIDGARD['user']);

@@ -144,7 +144,7 @@ class org_openpsa_directmarketing_campaign_ruleresolver
             }
             else
             {
-                //Standard midgard QB, silence due to unneccessary notice
+                //Standard midgard QB, silence due to unnecessary notice
                 $this->_results[$class] = @$qb->execute();
             }
             //mgd_debug_stop();

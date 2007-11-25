@@ -118,7 +118,7 @@ class org_maemo_calendar_handler_profile_publish extends net_nehmer_account_hand
         if (array_key_exists('net_nehmer_account_publish_delete_avatar', $_REQUEST))
         {
             // We ignore errors at this point. Access control has been verified, if
-            // we delete non existant attachments, we're fine as well.
+            // we delete non existent attachments, we're fine as well.
             $this->_account->delete_attachment('avatar');
             $this->_account->delete_attachment('avatar_thumbnail');
             $this->_avatar = null;

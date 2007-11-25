@@ -81,7 +81,7 @@ function ooAjaxContactsWidget_addSelected(guid, element)
     personItem.appendChild(personLabel);
     personLabel.appendChild(document.createTextNode(lname + ', ' + fname))
     */
-    //This way seems to be neccessary due to IE stupidness, though the one above is cleaner    
+    //This way seems to be necessary due to IE stupidness, though the one above is cleaner    
     personLabel.appendChild(personInput);
     personLabel.appendChild(document.createTextNode(lname + ', ' + fname))
     personItem.appendChild(personLabel);

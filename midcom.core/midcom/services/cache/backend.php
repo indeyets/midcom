@@ -26,7 +26,7 @@
  * 
  * <b>Resource handles:</b>
  * 
- * Resource handles (for example for DBA access) should be closed if neccessary if they
+ * Resource handles (for example for DBA access) should be closed if necessary if they
  * would block other processes. It is unknown to me if such handles would be safe to use 
  * over several requests. 
  * 
@@ -131,7 +131,7 @@ class midcom_services_cache_backend
     }
     
     /**
-     * Initializes the backend by acquiring all neccessary information required for
+     * Initializes the backend by acquiring all necessary information required for
      * runtime. 
      * 
      * After base class initialization, the event handler _on_initialize is called,
@@ -293,7 +293,7 @@ class midcom_services_cache_backend
      * 
      * The data store is opened in read-write mode when this function executes.
      * 
-     * Deleting non existant keys
+     * Deleting non existent keys
      * should fail silently. All other error conditions should call 
      * midcom_application::generate_error() and must close the data store before doing so.
      * 
@@ -472,7 +472,7 @@ class midcom_services_cache_backend
     }
     
     /**
-     * Delete the data with the given key from the database. Deleting non existant keys
+     * Delete the data with the given key from the database. Deleting non existent keys
      * should fail silently. If the data store has not yet been 
      * opened for writing, it will be opened automatically prior to the call,
      * and closed automatically again afterwards. 

@@ -103,7 +103,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
     function net_nemein_registrations_event($id = null)
     {
         parent::net_nemein_calendar_event($id);
-        // Intercept failed class instantinations.
+        // Intercept failed class instantiations.
         if ($this)
         {
             $this->_bind_to_request_data();
@@ -559,7 +559,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
     /**
      * Returns a list of all events open for registration.
      *
-     * Implementation note: Unfortunalety, open registration processing must still be done using
+     * Implementation note: nfortunately, open registration processing must still be done using
      * the PHP level, as the open/close timestamps are contained in parameters.
      *
      * This is built on the list_all function for now, see there for further comments about
@@ -876,7 +876,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      * Internal helper, converts a DM2 instance to a string based representation suitable
      * for mailing.
      *
-     * TODO: This is a littlebit of a hack, as it is currently difficult to
+     * TODO: This is a little bit of a hack, as it is currently difficult to
      * get a plaint-text representation of a given datatype explicitly,
      * so this interface is used for a start (avoids arrays). Same is
      * true for the datamanager-completed field-definitions.

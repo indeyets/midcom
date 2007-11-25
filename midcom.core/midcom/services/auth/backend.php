@@ -15,7 +15,7 @@
  * All functions except authenticate() must be implemented, see their individual 
  * documentation about what exactly they should do.
  * 
- * Configuration, if neccessary, should be done using the MidCOM configuration
+ * Configuration, if necessary, should be done using the MidCOM configuration
  * system, prefixing all values with 'auth_backend_$name_', e.g. 
  * 'auth_backend_cookie_timeout'.
  * 

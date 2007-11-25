@@ -29,7 +29,7 @@
  *
  * Be aware that the basic creation / reading rules are computed inside the component for
  * entire type trees, they do not use MidCOM ACL. The main reason for this is that there
- * is no common parent object which could be used to hold the neccessary privileges. Instead
+ * is no common parent object which could be used to hold the necessary privileges. Instead
  * creation is always done using sudo restricted by the rules set in the type_config
  * configuration option.
  *

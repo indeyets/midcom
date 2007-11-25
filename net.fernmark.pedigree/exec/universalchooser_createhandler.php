@@ -35,7 +35,7 @@ while ($parent !== false);
 switch($baseclass)
 {
     case 'net_fernmark_pedigree_dog':
-/* REMINDER: JS to call (on correct window, so add parents as neccessary) when person is finally done
+/* REMINDER: JS to call (on correct window, so add parents as necessary) when person is finally done
 echo "midcom_helper_datamanager2_widget_universalchooser_add_option('{$idsuffix}', '{$dog->$idfield}', '{$dog->$titlefield}');
 */
 ?>

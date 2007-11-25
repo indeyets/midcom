@@ -21,8 +21,8 @@
  * is just there for basic payment.
  *
  * Important note: This handler does <i>not</i> provide any PayPal certificates within
- * its distribution. You could never be sure if this certifciate would be entirely
- * valid or if you would be suspectible to a man-in-the-middle attack. Always get
+ * its distribution. You could never be sure if this certificate would be entirely
+ * valid or if you would be susceptible to a man-in-the-middle attack. Always get
  * the current certificates from the PayPal Website and ensure their validity.
  *
  * To provide limited security even in unencrypted mode, the payment reference and the
@@ -161,7 +161,7 @@ class net_nemein_payment_handler_paypal extends net_nemein_payment_handler
     var $_local_key = null;
 
     /**
-     * The Certificate ID assigend by PayPal when uploading the certificate.
+     * The Certificate ID assigned by PayPal when uploading the certificate.
      *
      * @var string
      * @access private
@@ -472,7 +472,7 @@ class net_nemein_payment_handler_paypal extends net_nemein_payment_handler
 
     /**
      * Verifies the response by using PayPals Payment Data Transfer (PDT) service.
-     * Unfortunalety, I could so far not find any instructuions how the actual response
+     * Unfortunately, I could so far not find any instructions how the actual response
      * could be verified directly, despite of the fact that there is a verify_sign
      * digital signature in the actual response. If anybody finds some docs about this, please
      * contact me.
@@ -488,7 +488,7 @@ class net_nemein_payment_handler_paypal extends net_nemein_payment_handler
 
     /**
      * This function validates the current response data using the PDT service of PayPal.
-     * Appearantly, there is no way to really authenticate an incoming payment request
+     * Apparently, there is no way to really authenticate an incoming payment request
      * short of this full blown solution.
      *
      * Requires _read_response to be called before it.

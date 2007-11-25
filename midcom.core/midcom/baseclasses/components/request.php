@@ -47,7 +47,7 @@
  *   be passed to the caching engine, indicating the expiration time in seconds.
  * - <b>mixed handler:</b> This is a definition of what method should be invoked to
  *   handle the request. You have two options here. First you can refer to a method of this
- *   request handler class, in that case you just supply the name of the method. Alternativly,
+ *   request handler class, in that case you just supply the name of the method. Alternatively,
  *   you can refer to an external class for request processing using an array syntax. The
  *   first array member must either contain the name of an existing class or a reference to
  *   an already instantiated class. This value has
@@ -67,7 +67,7 @@
  *     'expires' => -1,
  *     'handler' => 'view_registration'
  *     //
- *     // Alternative, use a class with automatic instantination:
+ *     // Alternative, use a class with automatic instantiation:
  *     // 'handler' => Array('net_nemein_registrations_regadmin', 'view')
  *     //
  *     // Alternative, use existing class (first parameter must be a reference):
@@ -160,7 +160,7 @@
  * </code>
  *
  * The data array can also be accessed by using the $_request_data member of this class,
- * which is the orignal data storage location for the request data.
+ * which is the original data storage location for the request data.
  *
  * Note, that the request data, for ease of use, already contains references to the L10n
  * Databases of the Component and MidCOM itself located in this class. They are stored
@@ -174,7 +174,7 @@
  * dynamically loaded component.
  *
  *
- * <b>Automatic handler class instantination</b>
+ * <b>Automatic handler class instantiation</b>
  *
  * If you specify a class name instead of a class isntance as an exec handler, MidCOM will
  * automatically create an instance of that class type and initialize it. These
@@ -467,7 +467,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
 
     /**
      * Initializes the request handler class, called by the component interface after
-     * instantination. Required to allow safe $this references during startup.
+     * instantiation. Required to allow safe $this references during startup.
      *
      * @param string $component The name of the component.
      */
@@ -868,7 +868,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * This is run before the actual evaluation of the request switch. Components can use
      * this phase to load plugins that need registering in the request switch on demand.
      *
-     * The advantage of this is that it is not neccessary, to load all plugins completely,
+     * The advantage of this is that it is not necessary, to load all plugins completely,
      * you just have to know the "root" URL space (f.x. "/plugins/$name/").
      *
      * If you discover that you cannot handle the request already at this stage, return false
@@ -979,7 +979,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
     }
 
     /**
-     * Loads the file/snippet neccessary for a given plugin, according to its configuration.
+     * Loads the file/snippet necessary for a given plugin, according to its configuration.
      *
      * @param string $namespace The plugin namespace to use.
      * @param string $plugin The plugin to load from the namespace.
@@ -1040,7 +1040,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
     }
 
     /**
-     * Prepares the actual plugin by adding all neccessary information to the request
+     * Prepares the actual plugin by adding all necessary information to the request
      * switch.
      *
      * @param string $namespace The plugin namespace to use.

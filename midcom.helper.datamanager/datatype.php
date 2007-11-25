@@ -17,21 +17,21 @@
  * 
  * - Load and store the data
  * - Present the data in a usable way to the client (get_value)
- * - Widget instantination
+ * - Widget instantiation
  * - Provide a mechanism to synchronize the data with the widget class
  * - Provide good configuration defaults.
  *  
  * This is the cornerstone of the Datamanager Design. Though the 
  * Datamanager knows how to use Widgets, the DATATYPE is the instance 
- * actually responsible for createion, configuration of and 
+ * actually responsible for creation, configuration of and 
  * data synchronization with the widget.
  * 
  * A important point is that this is a base class for a class hierarchy 
- * of datatypes. To make creating child classes a littlebit easier and
+ * of datatypes. To make creating child classes a little bit easier and
  * less error_prone, the classes constructor has been moved to the 
  * method _constructor, which can be overwritten by clients. The advantage
  * of this is that you can just call parent:: on this and don't need to
- * remeber the name of the parent class to call its constructor. As PHP
+ * remember the name of the parent class to call its constructor. As PHP
  * automatically uses the parent classes constructor if non is defined,
  * it is enough to define the _constructor method in the subclasses.
  * 
@@ -46,7 +46,7 @@
  * eliminates complicated parent calls.
  * </i>
  * 
- * The default behavior implemented in this class is sufficiant for data
+ * The default behavior implemented in this class is sufficient for data
  * with a text-representation. The derived datatype TEXT is more or less
  * exactly this class, apart from some additional defaults.
  * 
@@ -111,7 +111,7 @@ class midcom_helper_datamanager_datatype {
      * 
      * <i>Important Note:</i> You should not access this member directly, instead use the
      * get_widget() call even in subclasses (hence the declaration as private). This is 
-     * in place in case widget instantination will be made dynamic in the future.
+     * in place in case widget instantiation will be made dynamic in the future.
      * 
      * @var midcom_helper_datamanager_widget
      * @see get_widget()
@@ -183,7 +183,7 @@ class midcom_helper_datamanager_datatype {
         } 
         
         $classname = "midcom_helper_datamanager_widget_{$this->_field['widget']}";
-        debug_add("We have to instantinate a widget of type {$classname} for field {$this->_field['name']}."); 
+        debug_add("We have to instantiate a widget of type {$classname} for field {$this->_field['name']}."); 
         $this->_widget = new $classname($this->_datamanager, $this->_field, $this->_get_widget_default_value());
     }
     
@@ -193,7 +193,7 @@ class midcom_helper_datamanager_datatype {
      * The default behavior is to simply load
      * the string stored in the field of the database and use it as value. It 
      * returns true, if the object was successfully loaded. If the field in the 
-     * database is empty or not existant (in case of an attachment for example),
+     * database is empty or not existent (in case of an attachment for example),
      * the field's default value is used instead (see _get_default_value()).
      * 
      * It will only load the data into the datatype. Synchronization with the
@@ -274,7 +274,7 @@ class midcom_helper_datamanager_datatype {
      * 
      * It will not synchronize the datatype's data with the widget. This has
      * to be done manually using sync_data_with_widget, which is what the
-     * Datamanager core does when neccessary.
+     * Datamanager core does when necessary.
      * 
      * This member should make no changes to the storage object in memory that cannot
      * be synchronized to the database; therfore it is imperative to call the update
@@ -394,7 +394,7 @@ class midcom_helper_datamanager_datatype {
     
     /**
      * This should return the representation of the current datatype in a CSV
-     * environment, which essentialy must be some kind of string.
+     * environment, which essentially must be some kind of string.
      * 
      * It is up to the
      * datatypes what part of their internal representation they return here. It is
@@ -487,7 +487,7 @@ class midcom_helper_datamanager_datatype {
      * Checks whether the widget is currently empty or not. 
      * 
      * This is used primarily 
-     * during the required field check. The base class implementation is sufficiant
+     * during the required field check. The base class implementation is sufficient
      * for all text-based datatypes, as it checks against an empty string.
      * 
      * You should override this member everywhere you have non-textual datatypes or

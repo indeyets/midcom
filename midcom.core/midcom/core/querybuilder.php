@@ -867,7 +867,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      * fast impression of how many objects are available in a given query. It should always
      * be kept in mind that this is a preliminary number, not a final one.
      *
-     * Use this function with care. The information you obtain in general is neglible, but a creative
+     * Use this function with care. The information you obtain in general is negligible, but a creative
      * mind might nevertheless be able to take advantage of it.
      *
      * @return int The number of records matching the constraints without taking access control or visibility into account.

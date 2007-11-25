@@ -32,7 +32,7 @@ class net_nemein_wiki_notes extends midcom_baseclasses_components_purecode
         $this->target = $_MIDCOM->dbfactory->get_object_by_guid($target_object);
         if (!$this->target)
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Could not instantinate object for wiki note lookup.');
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Could not instantiate object for wiki note lookup.');
             // This will exit.
         }
         

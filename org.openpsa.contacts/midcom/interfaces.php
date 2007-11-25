@@ -285,7 +285,7 @@ class org_openpsa_contacts_interface extends midcom_baseclasses_components_inter
             $person1->$property = $value;
             $changed = true;
         }
-        // Avoid unneccessary updates
+        // Avoid unnecessary updates
         if ($changed)
         {
             if (!$person1->update())

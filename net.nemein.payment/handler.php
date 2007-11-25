@@ -151,7 +151,7 @@ class net_nemein_payment_handler extends midcom_baseclasses_components_purecode
      * Right now, further usage of this data is not implemented, but stuff like refunding
      * will depend on this data, which is why it is already in place for future
      * usage. For future usage like this, this data should contain all information 
-     * neccessary to "reconstruct" the payment.
+     * necessary to "reconstruct" the payment.
      * 
      * This information should be stored by the library client if any post-processing
      * of the order might be added in the future. Storage should be in a longtext capable

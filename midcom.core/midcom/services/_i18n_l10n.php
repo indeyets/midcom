@@ -572,7 +572,7 @@ class midcom_services__i18n_l10n {
      * Creates a new entry in the localization library. For the string $string in
      * the language $language the translation $translation will be added. The 
      * function assumes that $translation is in UTF-8. It will create a language
-     * subdir if neccessary. Returns true on success, false on failure.
+     * subdir if necessary. Returns true on success, false on failure.
      *
      * @param string $string		The string-ID to edit.
      * @param string $laguage		The language to edit.
@@ -605,7 +605,7 @@ class midcom_services__i18n_l10n {
      * @param string $laguage		The language to edit.
      */
     function delete ($string, $language) {
-        // This is error-resilent, deleting a non-existant string will
+        // This is error-resilent, deleting a non-existent string will
         // just do nothing.
         if ($this->string_exists($string, $language)) 
         {

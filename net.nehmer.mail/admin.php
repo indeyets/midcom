@@ -217,7 +217,7 @@ class net_nehmer_mail_admin extends midcom_baseclasses_components_request_admin
 	        // If the save is successful, we adjust the privileges.
 	        $oldowner = $data['mailbox']->owner;
             
-            // Process the form and update the owner if neccessary
+            // Process the form and update the owner if necessary
             switch ($data['controller']->process_form())
             {
                 case 'save':

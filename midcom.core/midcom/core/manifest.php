@@ -13,7 +13,7 @@
  *
  * <b>The Component Manifest</b>
  *
- * The Manifest contains all neccessary information to deal with a component without
+ * The Manifest contains all necessary information to deal with a component without
  * actually having to load them. Originally, all of this information has been included
  * in the component interface class itself, but this provides to be a rather slow
  * alternative. See the <i>History</i> Section below for further information about this
@@ -157,7 +157,7 @@
  * <b>Loading a Component Manifest based on a file on disk</b>
  *
  * The class is always intialized using a component name. It will load the components'
- * manifest from disk, executing any post-processing neccessary at that point (like
+ * manifest from disk, executing any post-processing necessary at that point (like
  * the completion of the privilege names).
  *
  * Usually you should not have to bother with this, as it is managed by the component
@@ -178,7 +178,7 @@
  *
  * <b>History</b>
  *
- * Originally, MidCOM did retrieve all neccessary information about a component by using
+ * Originally, MidCOM did retrieve all necessary information about a component by using
  * the main Component Interface Class, nowadays this is usually a subclass of
  * midcom_baseclasses_components_interface. While this was certainly an easy solution,
  * especially in the beginning where not much information was related to the component,
@@ -186,7 +186,7 @@
  *
  * By the time of the implementation of this manifest, many places of the system (particular
  * DBA and ACL) requires all components to be loaded to have access to class names,
- * defined ACL privileges and similar things. This was rather time consuming and unneccessary.
+ * defined ACL privileges and similar things. This was rather time consuming and unnecessary.
  * Hence the Manifest was introduced to be able to handle components without actually loading
  * their interfaces.
  *
@@ -203,7 +203,7 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
     var $_raw_data = null;
 
     /**#@+
-     * Component meta-information, read and post-processed from the mainfest
+     * Component meta-information, read and post-processed from the manifest
      * file.
      *
      * @access public
@@ -288,7 +288,7 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
      * If it is a relative path, it is evaluated against MIDCOM_ROOT. Otherwise,
      * the file is accessed directly.
      *
-     * @param string $filename The name of the mainfest file to load.
+     * @param string $filename The name of the manifest file to load.
      * @param array $values the values the manifest uses.
      */
     function midcom_core_manifest($filename,$values)
@@ -302,7 +302,7 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
     /**
      * This internal helper loads and evaluates the given manifest file.
      *
-     * @param string $filename The name of the mainfest file to load.
+     * @param string $filename The name of the manifest file to load.
      * @return bool True if the manifest was successfully loaded, false otherwise.
      * @access protected
      * @todo: move this into the constructor, use isset.

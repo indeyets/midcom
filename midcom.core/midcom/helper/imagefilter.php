@@ -490,7 +490,7 @@ class midcom_helper_imagefilter
         }
         if ($exif["Orientation"] == 1)
         {   
-            debug_add("No rotation neccessary.");
+            debug_add("No rotation necessary.");
             debug_pop();
             return true;
         }
@@ -646,7 +646,7 @@ class midcom_helper_imagefilter
     }
 
     /**
-     * Image Resize: This will resize the orignal image.
+     * Image Resize: This will resize the original image.
      *
      * Filter Syntax: resize ($x, $y)
      *

@@ -174,7 +174,7 @@ $.blockUI.defaults = {
     displayBoxCSS: { width: '400px', height: '400px', top:'50%', left:'50%' },
     // allow body element to be stetched in ie6
     ie6Stretch: 1,
-    // supress tab nav from leaving blocking content?
+    // suppress tab nav from leaving blocking content?
     allowTabToLeave: 0,
     // Title attribute for overlay when using displayBox
     closeMessage: 'Click to close'

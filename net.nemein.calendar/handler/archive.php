@@ -92,7 +92,7 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
      * Shows the archive welcome page: A listing of years/months along with total post counts
      * and similar stuff.
      *
-     * The handler computes all neccessary data and populates the request array accordingly.
+     * The handler computes all necessary data and populates the request array accordingly.
      */
     function _handler_welcome ($handler_id, $args, &$data)
     {

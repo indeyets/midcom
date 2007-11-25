@@ -648,7 +648,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
                 }
             }
 
-            // Finish the table if neccessary
+            // Finish the table if necessary
             if ($current_col > 0)
             {
                 for (; $current_col < $max_cols; $current_col++)

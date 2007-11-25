@@ -209,7 +209,7 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     }
 
     /**
-     * This call, which must be overridden by subclasses, adds the neccessary form elements
+     * This call, which must be overridden by subclasses, adds the necessary form elements
      * to the form passed by reference.
      *
      * This must be overridden in subclasses (honor the reference!).

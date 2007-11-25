@@ -142,7 +142,7 @@ class midcom_baseclasses_components_handler
 
     /**
      * Initializes the request handler class, called by the component interface after
-     * instantination. Required to allow safe $this references during startup.
+     * instantiation. Required to allow safe $this references during startup.
      *
      * Be aware that it is possible that a handler can come from a different component
      * (or library) then the master class. Take this into account when getting the

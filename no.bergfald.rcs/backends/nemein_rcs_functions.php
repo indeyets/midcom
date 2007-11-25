@@ -7,7 +7,7 @@
  * This set uses the same XML format as NAdmin RCS, if you do not intend to
  * use NAdmin I suggest you use the simpler function set. Also unless you
  * absolutely need it I suggest you keep the $links2guids_default zero,
- * it causes major overhead and is not normally neccessary.
+ * it causes major overhead and is not normally necessary.
  *
  * By reading the comments for the main functions and checking the
  * variables they take as parameters one should be able to use the

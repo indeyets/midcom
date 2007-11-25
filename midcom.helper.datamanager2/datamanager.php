@@ -193,7 +193,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
 
     /**
      * This function will create all type objects for the current schema. It will load class
-     * files where neccessary (using require_once), and then create a set of instances
+     * files where necessary (using require_once), and then create a set of instances
      * based on the schema.
      *
      * @return bool Indicating success

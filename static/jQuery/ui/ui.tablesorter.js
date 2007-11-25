@@ -519,7 +519,7 @@
 							
 							// multi column sorting	
 							} else {
-								// the user has clicked on an all ready sortet column.
+								// the user has clicked on an all ready sorted column.
 								if(isValueInArray(i,config.sortList)) {	 
 									
 									// revers the sorting direction for all tables.

@@ -84,7 +84,7 @@
  * If the value l10n_db is set, it overrides the default l10n database, possible
  * values are all valid component names, as the default component l10n DB is always
  * used (see below for details). Due to the current schema specification, it is
- * neccessary to specify this on a per-schema level. Per-schema-db configuration is
+ * necessary to specify this on a per-schema level. Per-schema-db configuration is
  * not supported at this time.
  *
  * The save_text and cancel_text values will be used as labels for the save and cancel
@@ -140,7 +140,7 @@
  * only have the field definition available, as for example the Datatypes or
  * Widgets do.
  *
- * The special fields hidden and readonly affect the bevahoir of the form and view
+ * The special fields hidden and readonly affect the behavior of the form and view
  * generators. Hidden fields are ignored completely, nothing will be displayed
  * either in view- or in form-mode. Readonly fields are displayed in both views,
  * but instead of drawing the widget in form-mode, the datamanager draws the
@@ -315,7 +315,7 @@ class midcom_helper_datamanager {
     var $_datatypes;
 
     /**
-     * This one holds the status of the process_form run. It is neccessary to avoid
+     * This one holds the status of the process_form run. It is necessary to avoid
      * multiple invocations of this method, like it is sometimes done by not ideally
      * designed components. It is null if process_form wasn't called yet.
      *
@@ -625,7 +625,7 @@ class midcom_helper_datamanager {
     {
         if (! $_MIDCOM->dbclassloader->is_midcom_db_object($storage))
         {
-            // Propagate the new object back to the calle (HACKY!)
+            // Propagate the new object back to the called (HACKY!)
             $storage = $_MIDCOM->dbfactory->convert_midgard_to_midcom($storage);
         }
         $this->_storage =& $storage;
@@ -794,7 +794,7 @@ class midcom_helper_datamanager {
             $this->_destroy_types();
         }
 
-        // Instantinate all Datatype Concepts
+        // Instantiate all Datatype Concepts
         $this->_datatypes = Array();
 
         foreach ($this->_fields as $name => $field)
@@ -803,7 +803,7 @@ class midcom_helper_datamanager {
             $this->_datatypes[$name] =& new $classname ($this, $this->_storage, $field);
             if (! $this->_datatypes[$name])
             {
-                $GLOBALS["midcom_errstr"] = "Could not instantinate {$name} Datatype Class.";
+                $GLOBALS["midcom_errstr"] = "Could not instantiate {$name} Datatype Class.";
                 debug_add($GLOBALS["midcom_errstr"], MIDCOM_LOG_ERROR);
                 debug_print_r('Field was:', $field);
                 debug_pop();
@@ -905,7 +905,7 @@ class midcom_helper_datamanager {
                 debug_add("DATAMANAGER: Clear lock request due to user override, trying...");
 
                 if (! is_array($this->_lock)) {
-                    debug_add("Tried to clear a nonexistant lock. Ignoring and redirecting to the edit page.");
+                    debug_add("Tried to clear a nonexistent lock. Ignoring and redirecting to the edit page.");
                     $this->_processing_result = MIDCOM_DATAMGR_EDITING;
                     debug_pop();
                     return $this->_processing_result;
@@ -979,7 +979,7 @@ class midcom_helper_datamanager {
 
                 if (! $_MIDCOM->dbclassloader->is_midcom_db_object($result['storage']))
                 {
-                    // Propagate the new object back to the calle (HACKY!)
+                    // Propagate the new object back to the called (HACKY!)
                     $result['storage'] = $_MIDCOM->dbfactory->convert_midgard_to_midcom($result['storage']);
                 }
                 $this->_storage =& $result['storage'];

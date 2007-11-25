@@ -186,7 +186,7 @@ class net_nehmer_branchenbuch_callbacks_searchbase extends midcom_baseclasses_co
     }
 
     /**
-     * Static helper method for search class instantination. Called by the entries
+     * Static helper method for search class instantiation. Called by the entries
      * and categories handlers.
      *
      * @param Array $config The customsearch handler configuration (the 'custom_search'

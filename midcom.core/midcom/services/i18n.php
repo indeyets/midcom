@@ -65,7 +65,7 @@ class midcom_services_i18n
     var $_http_charset;
 
     /**
-     * Stores the acciociative array stored in the cookie
+     * Stores the associative array stored in the cookie
      * "midcom_services_i18n" which contains the keys "language" and
      * "charset" or null if the cookie was not set.
      *
