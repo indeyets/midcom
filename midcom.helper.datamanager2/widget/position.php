@@ -262,7 +262,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
             $country = $_REQUEST["{$this->_element_id}_input_place_country"];
         }
         
-        $html .= $this->_render_country_list($this->_type->location->country);
+        $html .= $this->_render_country_list($country);
 
         $city_name = '';
         $city_id = $this->_type->location->city;
@@ -270,13 +270,20 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         if (   !$city_id
             && isset($_REQUEST["{$this->_element_id}_input_place_city"]))
         {
-            $city_id = $_REQUEST["{$this->_element_id}_input_place_city"];
+            $city_id = $this->_get_city_by_name($_REQUEST["{$this->_element_id}_input_place_city"]);
+            if (! $city_id)
+            {
+                $city_name = $results["{$this->_element_id}_input_place_city"];
+            }
         }
         
-        $city = new org_routamc_positioning_city_dba($city_id);
-        if ($city)
+        if ($city_id)
         {
-            $city_name = $city->city;
+            $city = new org_routamc_positioning_city_dba($city_id);
+            if ($city)
+            {
+                $city_name = $city->city;
+            }            
         }
 
         $html .= "<label for='{$this->_element_id}_input_place_city' id='{$this->_element_id}_input_place_city_label'>";
@@ -529,9 +536,22 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
             $city_name = $city->city;
         }
         
-        //$script = "dm2_pw_init_current_pos('{$this->_element_id}',{$this->_type->location->latitude},{$this->_type->location->longitude});\n";
-        $lat = str_replace(",", ".", $this->_type->location->latitude);
-        $lon = str_replace(",", ".", $this->_type->location->longitude);
+        $lat = $this->_type->location->latitude;
+        if (   !$lat
+            && isset($_REQUEST["{$this->_element_id}_input_coordinates_latitude"]))
+        {
+            $lat = $_REQUEST["{$this->_element_id}_input_coordinates_latitude"];
+        }
+        $lon = $this->_type->location->longitude;
+        if (   !$lon
+            && isset($_REQUEST["{$this->_element_id}_input_coordinates_longitude"]))
+        {
+            $lon = $_REQUEST["{$this->_element_id}_input_coordinates_longitude"];
+        }
+
+        $lat = str_replace(",", ".", $lat);
+        $lon = str_replace(",", ".", $lon);
+        
         $script = "jQuery('#{$this->_element_id}').dm2_pw_init_current_pos({$lat},{$lon});";
         $_MIDCOM->add_jquery_state_script($script);
         
@@ -546,6 +566,47 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         );
     }
 
+    function _get_city_by_name($city_name, $results = array())
+    {
+        $city_id = 0;
+        $city = org_routamc_positioning_city_dba::get_by_name($city_name);
+        if (   $city
+            && $city->id)
+        {
+            $city_id = $city->id;
+        }
+        else if (! empty($results))
+        {
+            $city = new org_routamc_positioning_city_dba();
+            $city->city = $city_name;
+            $city->country = $results["{$this->_element_id}_input_place_country"];
+            if (isset($results["{$this->_element_id}_input_place_region"]))
+            {
+                $city->region = $results["{$this->_element_id}_input_place_region"];
+            }
+            if (   isset($results["{$this->_element_id}_input_coordinates_latitude"])
+                && $results["{$this->_element_id}_input_coordinates_latitude"] != '')
+            {
+                $city->latitude = $results["{$this->_element_id}_input_coordinates_latitude"];
+            }
+            if (   isset($results["{$this->_element_id}_input_coordinates_longitude"])
+                && $results["{$this->_element_id}_input_coordinates_longitude"] != '')
+            {
+                $city->longitude = $results["{$this->_element_id}_input_coordinates_longitude"];
+            }
+            if (! $city->create())
+            {
+                debug_push_class(__CLASS__,__FUNCTION__);
+                debug_add("Cannot save new city '{$city_name}'");
+                debug_pop();                    
+            }
+            
+            $city_id =& $city->id;
+        }
+        
+        return $city_id;
+    }
+
     function sync_type_with_widget($results)
     {
         if (isset($results["{$this->_element_id}_input_place_country"]))
@@ -554,41 +615,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         }
         if (isset($results["{$this->_element_id}_input_place_city"]))
         {
-            $city_id = 0;
-            $city = org_routamc_positioning_city_dba::get_by_name($results["{$this->_element_id}_input_place_city"]);
-            if (   $city
-                && $city->id)
-            {
-                $city_id = $city->id;
-            }
-            else
-            {
-                $city = new org_routamc_positioning_city_dba();
-                $city->city = $results["{$this->_element_id}_input_place_city"];
-                $city->country = $results["{$this->_element_id}_input_place_country"];
-                if (isset($results["{$this->_element_id}_input_place_region"]))
-                {
-                    $city->region = $results["{$this->_element_id}_input_place_region"];
-                }
-                if (   isset($results["{$this->_element_id}_input_coordinates_latitude"])
-                    && $results["{$this->_element_id}_input_coordinates_latitude"] != '')
-                {
-                    $city->latitude = $results["{$this->_element_id}_input_coordinates_latitude"];
-                }
-                if (   isset($results["{$this->_element_id}_input_coordinates_longitude"])
-                    && $results["{$this->_element_id}_input_coordinates_longitude"] != '')
-                {
-                    $city->longitude = $results["{$this->_element_id}_input_coordinates_longitude"];
-                }
-                if (! $city->create())
-                {
-                    debug_push_class(__CLASS__,__FUNCTION__);
-                    debug_add("Cannot save new city '" . $results["{$this->_element_id}_input_place_city"] . "'");
-                    debug_pop();                    
-                }
-                
-                $city_id =& $city->id;
-            }
+            $city_id = $this->_get_city_by_name($results["{$this->_element_id}_input_place_city"], $results);
             $this->_type->location->city = $city_id;
         }
         if (isset($results["{$this->_element_id}_input_place_street"]))
