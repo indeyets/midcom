@@ -2,7 +2,7 @@
   'name' => 'midcom.helper.imagepopup',
   'description' => 'Image upload and insertion tool',
   'purecode' => true,
-  'version' => '0.1.6beta1',
+  'version' => '0.1.6beta2',
   'state' => 'beta',
   'privileges' => 
   array (
