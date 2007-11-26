@@ -27,4 +27,4 @@
 -- 
 __FROM__ - __LONGDATE__
 ",
-'message_sender' => 'www-data@kaktus.cc',
+'message_sender' => 'www-data@localhost',
