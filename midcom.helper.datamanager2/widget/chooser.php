@@ -373,7 +373,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         
         if ($this->creation_mode_enabled)
         {
-            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/chooser/jquery.jqModal.pack.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/chooser/jquery.jqModal.js');
             
             $script = "
                 jQuery('#{$this->_element_id}_creation_dialog').jqm({
@@ -383,7 +383,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 });
             ";
             
-            $_MIDCOM->add_jquery_state_script($script);
+            //$_MIDCOM->add_jquery_state_script($script);
         }
     }
     
@@ -1031,7 +1031,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             $dialog_id = $this->_element_id . '_creation_dialog';
             
             $dialog_js = '<script type="text/javascript">';
-            $dialog_js .= "function close_dialog(){jQuery('#{$dialog_id}').jqmHide();};";
+            $dialog_js .= "function close_dialog(){jQuery('#{$dialog_id}').hide();};";
             $dialog_js .= "function add_item(data){jQuery('#{$this->_element_id}_search_input').midcom_helper_datamanager2_widget_chooser_add_result_item(data);};";
             $dialog_js .= '</script>';
             

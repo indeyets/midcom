@@ -344,14 +344,12 @@ function resolve_path($object_id, $class, $title)
             {
                 $id = 0;
                 $rc_count = count($result_components);
-                debug_add("rc_count: {$rc_count}, ".$result_components[$rc_count-1]);
                 $result_components[$rc_count-1] = $last_name;
                 break;
             }
 
             foreach ($topics as $topic_guid => $value)
             {
-                debug_add("last_name: {$last_name}");
                 $id = $mc->get_subkey($topic_guid, 'up');
                 $last_name = $mc->get_subkey($topic_guid, 'name');
                 

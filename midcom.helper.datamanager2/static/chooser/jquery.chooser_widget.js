@@ -328,7 +328,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
             var iframe_html = iframe.join(' ');
             jQuery('.chooser_widget_creation_dialog_content_holder', creation_dialog).html(iframe_html);
             
-            jQuery('#' + options.widget_id + '_creation_dialog').jqmShow();
+            //jQuery('#' + options.widget_id + '_creation_dialog').jqmShow();
+            jQuery('#' + options.widget_id + '_creation_dialog').show();
         });
     }
 };
