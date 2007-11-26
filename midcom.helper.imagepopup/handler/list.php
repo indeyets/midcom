@@ -132,15 +132,9 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
 				$this->_run_search($data);
 			}
 		}
-
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Prototype/prototype.js");
+        
+        $_MIDCOM->enable_jquery();
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/midcom.helper.imagepopup/functions.js");
-        
-        $image_info = "var imagepopup_images = new Array();\n";
-        $image_info .= "imagepopup_images['prefix'] = \"{$_MIDGARD['self']}midcom-serveattachmentguid-\";\n"; 
-        $_MIDCOM->add_jscript($image_info);
-        
-        //$_MIDCOM->add_jsonload("tinyMCEPopup.executeOnLoad('tinyMCEPopup.resizeToContent()');");
         
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('midcom.helper.imagepopup');
@@ -172,8 +166,9 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
                 $_MIDCOM->add_jsonload("window.close();");
                 break;
         }
-
-        $_MIDCOM->add_jsonload("imagePopupConvertImagesForAddition();imagePopupConvertFilesForAddition();");
+        
+        $_MIDCOM->add_jsonload("jQuery('.midcom_helper_datamanager2_widget_images_image').dm2ImagePopupConvert();");
+        $_MIDCOM->add_jsonload("jQuery('.midcom_helper_datamanager2_widget_downloads_download').dm2ImagePopupConvert();");
     }
 
 	function _run_search(&$data)
@@ -188,7 +183,7 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
 
 		$this->_search_results = $qb->execute();
 		
-		$_MIDCOM->add_jsonload("imagePopupConvertResultsForAddition();");
+		$_MIDCOM->add_jsonload("jQuery('.midcom_helper_imagepopup_search_result_item').dm2ImagePopupConvert();");
 	}
     
     function _show_list() 
