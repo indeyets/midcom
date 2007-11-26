@@ -99,6 +99,10 @@ Deleted by
 Deleted on
 ---STRINGEND
 
+---STRING dropdown list
+Dropdown list
+---STRINGEND
+
 ---STRING edit %s %s
 Edit %s %s
 ---STRINGEND
@@ -121,6 +125,10 @@ Failed undeleting attachment %s, reason %s
 
 ---STRING filter
 Filter
+---STRINGEND
+
+---STRING floating freely
+Floating freely
 ---STRINGEND
 
 ---STRING folder
@@ -209,6 +217,10 @@ Read
 
 ---STRING midgard:update
 Update
+---STRINGEND
+
+---STRING navigation type
+Navigation type
 ---STRINGEND
 
 ---STRING navigation width
@@ -323,7 +335,7 @@ User preferences
 View on-site
 ---STRINGEND
 
----STRING floating freely
-Floating freely
+---STRING expanded list
+Expanded list
 ---STRINGEND
 

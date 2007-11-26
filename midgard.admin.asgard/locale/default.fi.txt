@@ -99,6 +99,10 @@ Poistaja
 Poistettu päivämäärällä
 ---STRINGEND
 
+---STRING dropdown list
+Pudotusvalikko
+---STRINGEND
+
 ---STRING edit %s %s
 Muokkaa %s %s
 ---STRINGEND
@@ -121,6 +125,10 @@ Liitetiedoston %s palauttaminen epäonnistui, syy %s
 
 ---STRING filter
 Suodatin
+---STRINGEND
+
+---STRING floating freely
+Vapaasti kelluva
 ---STRINGEND
 
 ---STRING folder
@@ -209,6 +217,10 @@ Luku
 
 ---STRING midgard:update
 Päivitys
+---STRINGEND
+
+---STRING navigation type
+Navigaation tyyppi
 ---STRINGEND
 
 ---STRING navigation width
@@ -323,7 +335,7 @@ Käyttöasetukset
 Katso sivustolla
 ---STRINGEND
 
----STRING floating freely
-Vapaasti kelluva
+---STRING expanded list
+Laajennettu lista
 ---STRINGEND
 
