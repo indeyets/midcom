@@ -24,6 +24,15 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
      */
     function _on_initialize()
     {
+
+        // Match /config/
+        $this->_request_switch['config'] = array
+        (
+            'handler' => array('midcom_core_handler_configdm', 'configdm'),
+            'schemadb' => 'file:/net/nemein/personnel/config/schemadb_config.inc',
+            'schema' => 'config',
+            'fixed_args' => array('config'),
+        );
         // Show list of the persons
         $this->_request_switch['view-index'] = array
         (
@@ -183,14 +192,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             'fixed_args' => array('search'),
         );
         
-        // Match /config/
-        $this->_request_switch['config'] = array
-        (
-            'handler' => array('midcom_core_handler_configdm', 'configdm'),
-            'schemadb' => 'file:/net/nemein/personnel/config/schemadb_config.inc',
-            'schema' => 'config',
-            'fixed_args' => array('config'),
-        );
+
     }
 
     /**
