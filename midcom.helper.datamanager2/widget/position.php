@@ -255,10 +255,25 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         // $html .= "</select>";
         // $html .= "</div>";
         
+        $country = $this->_type->location->country;
+        if (   !$country
+            && isset($_REQUEST["{$this->_element_id}_input_place_country"]))
+        {
+            $country = $_REQUEST["{$this->_element_id}_input_place_country"];
+        }
+        
         $html .= $this->_render_country_list($this->_type->location->country);
 
         $city_name = '';
-        $city = new org_routamc_positioning_city_dba($this->_type->location->city);
+        $city_id = $this->_type->location->city;
+        
+        if (   !$city_id
+            && isset($_REQUEST["{$this->_element_id}_input_place_city"]))
+        {
+            $city_id = $_REQUEST["{$this->_element_id}_input_place_city"];
+        }
+        
+        $city = new org_routamc_positioning_city_dba($city_id);
         if ($city)
         {
             $city_name = $city->city;
@@ -269,32 +284,61 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_city\" id=\"{$this->_element_id}_input_place_city\" name=\"{$this->_element_id}_input_place_city\" type=\"text\" value=\"{$city_name}\" />";
         $html .= "</label>";
         
+        $region = $this->_type->location->region;
+        if (   !$region
+            && isset($_REQUEST["{$this->_element_id}_input_place_region"]))
+        {
+            $region = $_REQUEST["{$this->_element_id}_input_place_region"];
+        }
+        
         $html .= "<label for='{$this->_element_id}_input_place_region' id='{$this->_element_id}_input_place_region_label'>";
         $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('region', 'org.routamc.positioning') . "</span><span class=\"proposal\"></span>";        
-        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_region\" id=\"{$this->_element_id}_input_place_region\" name=\"{$this->_element_id}_input_place_region\" type=\"text\" value=\"{$this->_type->location->region}\" />";
+        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_region\" id=\"{$this->_element_id}_input_place_region\" name=\"{$this->_element_id}_input_place_region\" type=\"text\" value=\"{$region}\" />";
         $html .= "</label>";
+
+        $street = $this->_type->location->street;
+        if (   !$street
+            && isset($_REQUEST["{$this->_element_id}_input_place_street"]))
+        {
+            $street = $_REQUEST["{$this->_element_id}_input_place_street"];
+        }
         
         $html .= "<label for='{$this->_element_id}_input_place_street' id='{$this->_element_id}_input_place_street_label'>";
         $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('street', 'org.routamc.positioning') . "</span><span class=\"proposal\"></span>";        
-        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_street\" id=\"{$this->_element_id}_input_place_street\" name=\"{$this->_element_id}_input_place_street\" type=\"text\" value=\"{$this->_type->location->street}\" />";
+        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_street\" id=\"{$this->_element_id}_input_place_street\" name=\"{$this->_element_id}_input_place_street\" type=\"text\" value=\"{$street}\" />";
         $html .= "</label>";
+
+        $postalcode = $this->_type->location->postalcode;
+        if (   !$postalcode
+            && isset($_REQUEST["{$this->_element_id}_input_place_postalcode"]))
+        {
+            $postalcode = $_REQUEST["{$this->_element_id}_input_place_postalcode"];
+        }
         
         $html .= "<label for='{$this->_element_id}_input_place_postalcode' id='{$this->_element_id}_input_place_postalcode_label'>";
         $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('postalcode', 'org.routamc.positioning') . "</span><span class=\"proposal\"></span>";        
-        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_postalcode\" id=\"{$this->_element_id}_input_place_postalcode\" name=\"{$this->_element_id}_input_place_postalcode\" type=\"text\" value=\"{$this->_type->location->postalcode}\" />";
+        $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_postalcode\" id=\"{$this->_element_id}_input_place_postalcode\" name=\"{$this->_element_id}_input_place_postalcode\" type=\"text\" value=\"{$postalcode}\" />";
         $html .= "</label>";
         
         $inserted_xep_keys = array();
         foreach ($this->_other_xep_keys as $xep_key)
         {
-            if (   $this->_type->location->$xep_key != ''
+            if (   isset($this->_type->location->$xep_key)
+                && $this->_type->location->$xep_key != ''
                 && !in_array($xep_key, $inserted_xep_keys))
             {
                 $inserted_xep_keys[] = $xep_key;
                 
+                $xep_value = $this->_type->location->$xep_key;
+                if (   !$xep_value
+                    && isset($_REQUEST["{$this->_element_id}_input_place_{$xep_key}"]))
+                {
+                    $xep_value = $_REQUEST["{$this->_element_id}_input_place_{$xep_key}"];
+                }
+
                 $html .= "<label for='{$this->_element_id}_input_place_{$xep_key}' id='{$this->_element_id}_input_place_{$xep_key}_label'>";
                 $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string($xep_key, 'org.routamc.positioning') . "</span><span class=\"proposal\"></span>";        
-                $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_{$xep_key}\" id=\"{$this->_element_id}_input_place_{$xep_key}\" name=\"{$this->_element_id}_input_place_{$xep_key}\" type=\"text\" value=\"{$this->_type->location->$xep_key}\" />";
+                $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_{$xep_key}\" id=\"{$this->_element_id}_input_place_{$xep_key}\" name=\"{$this->_element_id}_input_place_{$xep_key}\" type=\"text\" value=\"{$xep_value}\" />";
                 $html .= "</label>";                
             }
         }
@@ -314,13 +358,13 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
     
     function _add_map_method_elements()
     {
-        $html = "\n<div id=\"{$this->_element_id}_tab_content_map\" class=\"position_widget_tab_content position_widget_tab_content_map\"><!-- tab_content_map starts -->\n";        
+        $html = "\n<div id=\"{$this->_element_id}_tab_content_map\" class=\"position_widget_tab_content position_widget_tab_content_map\"><!-- tab_content_map starts -->\n";
         
         $html .= "\n<div class=\"position_widget_actions\">\n";
         $html .= "\n<div id=\"{$this->_element_id}_position_widget_action_cam\">[ Clear alternatives ]</div> \n";
         $html .= "\n</div>\n";
         
-        $orp_map = new org_routamc_positioning_map("{$this->_element_id}_map"/*, 'google'*/);
+        $orp_map = new org_routamc_positioning_map("{$this->_element_id}_map");
         $html .= $orp_map->show(420,300,false);
 
         $html .= "\n</div><!-- tab_content_map ends -->\n";
@@ -345,8 +389,21 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         $html .= "<div class=\"geodata_btn\" id='{$this->_element_id}_revgeodata_btn'></div>";
         $html .= "<div class=\"indicator\" id='{$this->_element_id}_revindicator' style=\"display: none;\"></div>";
         
-        $lat = str_replace(",", ".", $this->_type->location->latitude);
-        $lon = str_replace(",", ".", $this->_type->location->longitude);
+        $lat = $this->_type->location->latitude;
+        if (   !$lat
+            && isset($_REQUEST["{$this->_element_id}_input_coordinates_latitude"]))
+        {
+            $lat = $_REQUEST["{$this->_element_id}_input_coordinates_latitude"];
+        }
+        $lon = $this->_type->location->longitude;
+        if (   !$lon
+            && isset($_REQUEST["{$this->_element_id}_input_coordinates_longitude"]))
+        {
+            $lon = $_REQUEST["{$this->_element_id}_input_coordinates_longitude"];
+        }
+
+        $lat = str_replace(",", ".", $lat);
+        $lon = str_replace(",", ".", $lon);
                 
         $html .= "<label for='{$this->_element_id}_input_coordinates_latitude' id='{$this->_element_id}_input_coordinates_latitude_label'>";
         $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('latitude', 'org.routamc.positioning') . "</span>";        
