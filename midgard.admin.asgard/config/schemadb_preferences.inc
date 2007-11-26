@@ -62,6 +62,27 @@
             ),
             'widget' => 'select',
         ),
+        'navigation_type' => array
+        (
+            'title' => 'navigation type',
+            'storage' => array
+            (
+                'location' => 'parameter',
+                'domain' => 'midgard.admin.asgard:preferences',
+                'name' => 'navigation_type',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    'dropdown' => 'dropdown list',
+                    'expanded' => 'expanded list',
+                ),
+            ),
+            'widget' => 'select',
+        ),
         'offset' => array
         (
             'title' => 'navigation width (in pixels)',
