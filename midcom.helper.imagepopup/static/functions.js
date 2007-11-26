@@ -31,7 +31,7 @@
             return;
         }
         
-        converted_object.url = $('a.download:eq(0)', jq_item).attr('href');
+        converted_object.url = $('a:eq(0)', jq_item).attr('href');
         converted_object.name = $('td.filename', jq_item).attr('title');
         converted_object.title = $('td.title', jq_item).attr('title');
         
