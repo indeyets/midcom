@@ -99,6 +99,16 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
                 ),
                 $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
             );
+            $data['asgard_toolbar']->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/preferences/{$this->_person->guid}/",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('user preferences', 'midgard.admin.asgard'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/configuration.png',
+                ),
+                $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
+            );
         }
 
     }

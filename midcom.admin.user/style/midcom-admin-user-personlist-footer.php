@@ -114,7 +114,8 @@ if (count($data['persons']) > 0)
             });
             $j('#midcom_admin_user_batch_process table').tablesorter(
             {
-//                widgets: ['column_highlight'],
+                headers: {0: {sorter: false}},
+                widgets: ['column_highlight'],
                 sortList: [[2,0]]
             });
         // ]]>
