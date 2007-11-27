@@ -91,8 +91,20 @@ Korvaa tiedosto
 Korvaa kuva
 ---STRINGEND
 
+---STRING rotate left
+Kierrä vasemmalle
+---STRINGEND
+
+---STRING rotate right
+Kierrä oikealle
+---STRINGEND
+
 ---STRING type blobs: file size
 Tiedoston koko
+---STRINGEND
+
+---STRING type image: actions
+Kuvan toiminnot
 ---STRINGEND
 
 ---STRING type image: available sizes
@@ -191,15 +203,11 @@ Ei asetettu (peritty)
 Muu
 ---STRINGEND
 
----STRING rotate left
-Kierrä vasemmalle
+---STRING write the order, lower numbers are placed first
+Kirjoita järjestys, pienet numerot näytetään ensimmäisenä
 ---STRINGEND
 
----STRING rotate right
-Kierrä oikealle
----STRINGEND
-
----STRING type image: actions
-Kuvan toiminnot
+---STRING drag and drop to sort
+Järjestele hiirellä raahaamalla
 ---STRINGEND
 

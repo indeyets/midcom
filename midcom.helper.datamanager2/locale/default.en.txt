@@ -204,3 +204,11 @@ Not set (inherited)
 Other
 ---STRINGEND
 
+---STRING write the order, lower numbers are placed first
+Write the order, lower numbers are placed first
+---STRINGEND
+
+---STRING drag and drop to sort
+Drag and drop to sort
+---STRINGEND
+

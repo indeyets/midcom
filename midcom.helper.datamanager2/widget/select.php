@@ -48,7 +48,7 @@ class midcom_helper_datamanager2_widget_select extends midcom_helper_datamanager
     var $_all_elements = null;
 
     /**
-     * The select element in use. This need spearate tracking due to the potential
+     * The select element in use. This need separate tracking due to the potential
      * group code. This makes tracking of empty return values much easier. It is
      * populated during add_elements_to_form().
      *
@@ -254,7 +254,5 @@ class midcom_helper_datamanager2_widget_select extends midcom_helper_datamanager
         }
 
     }
-
 }
-
 ?>
