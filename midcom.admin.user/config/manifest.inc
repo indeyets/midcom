@@ -24,7 +24,7 @@
     ),
     'dependencies' => array
     (
-        'midcom.admin.help',
+        'midcom.admin.help' => array(),
         'midcom' => array (),
     ),
 ),
