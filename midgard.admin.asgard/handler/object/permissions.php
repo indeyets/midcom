@@ -128,6 +128,22 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
                 'href' => MIDCOM_STATIC_URL . '/midgard.admin.asgard/permissions/layout.css'
             )
         );
+        $_MIDCOM->add_link_head(
+            array(
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . '/midgard.admin.asgard/permissions/layout_ie.css',
+                'condition' => 'lte IE 7'
+            )
+        );
+        $_MIDCOM->add_link_head(
+            array(
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . '/midgard.admin.asgard/permissions/layout_ie7.css',
+                'condition' => 'IE 7'
+            )
+        );
         
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.dimensions-1.1.2.js');
         // $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.mouse.js');
@@ -760,10 +776,9 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
                 $this->_rendered_row_actions[$key] = true;
                 
                 $actions = "<div class=\"actions\" id=\"privilege_row_actions_{$key}\">";
-                $actions .= "<script type=\"text/javascript\">";
-                $actions .= "jQuery('#privilege_row_{$key}').privilege_actions('{$key}');";
-                $actions .= "</script>";
                 $actions .= "</div>";
+                
+                $_MIDCOM->add_jquery_state_script("jQuery('#privilege_row_{$key}').privilege_actions('{$key}');");
                 
                 $html = "      <div class=\"row_value row_actions\">{$actions}</div>\n";
                 
