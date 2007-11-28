@@ -77,6 +77,14 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
      * @access private
      */
     var $_rendered_row_labels = array();
+    
+    /**
+     * Rendered row actions
+     *
+     * @var Array
+     * @access private
+     */
+    var $_rendered_row_actions = array();
 
     /**
      * Simple default constructor.
@@ -110,8 +118,22 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
         }
         
         $_MIDCOM->enable_jquery();
-        $script = "function submit_privileges(form){jQuery('#submit_action',form).attr({name: 'midcom_helper_datamanager2_save', value: 'Save'});form.submit();};";
+        $script = "function submit_privileges(form){jQuery('#submit_action',form).attr({name: 'midcom_helper_datamanager2_add', value: 'add'});form.submit();};function applyRowClasses(){jQuery('.maa_permissions_rows ul li:odd').addClass('odd');jQuery('.maa_permissions_rows ul li:even').addClass('even');};";
         $_MIDCOM->add_jscript($script);
+        
+        $_MIDCOM->add_link_head(
+            array(
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . '/midgard.admin.asgard/permissions/layout.css'
+            )
+        );
+        
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.dimensions-1.1.2.js');
+        // $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.mouse.js');
+        // $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.draggable.js');
+        // $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.droppable.js');
+        // $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.sortable.js');
     }
 
     /**
@@ -233,7 +255,11 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
         
         // Populate all resources having existing privileges
         $existing_privileges = $this->_object->get_privileges();
-
+        
+        // echo "post:\n";
+        // var_dump($_POST);
+        // echo "existing:\n";
+        // var_dump($existing_privileges);
         foreach ($existing_privileges as $privilege)
         {
         
@@ -264,13 +290,13 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
 
         // Add the "Add assignees" choices to schema
         $this->_schemadb['privileges']->fields['add_assignee']['type_config']['options'] = $additional_assignees;
-                
-        $header = "<table width=\"100%\" border=\"0\">\n";
-        $header_start = "<tr>\n";
-        $header_end = "</tr>\n";
+        
+        $header = "  <div class=\"maa_permissions_rows_header\">\n";
+        $header_start = "";
+        $header_end = "";
         $header_items = array();
         
-        $header .= $header_start;
+        //$header .= $header_start;
         
         foreach ($assignees as $assignee => $label)
         {
@@ -293,7 +319,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
                 
                 if (! isset($header_items[$privilege_label]))
                 {
-                    $header_items[$privilege_label] = "<th scope=\"col\">" . $_MIDCOM->i18n->get_string($privilege_label, 'midgard.admin.acl') . "</th>\n";
+                    $header_items[$privilege_label] = "    <div class=\"{$privilege_components[1]}\"><span>" . str_replace(" ","\n", $_MIDCOM->i18n->get_string($privilege_label, 'midgard.admin.acl')) . "</span></div>\n";
                 }
                 
                 $this->_schemadb['privileges']->append_field(str_replace(':', '_', $assignee) . '_' . str_replace(':', '_', str_replace('.', '_', $privilege)), Array
@@ -312,12 +338,14 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
                 );
             }
         }
-        $header .= "<th align=\"left\" scope=\"col\">&nbsp;</th>\n";
+        $header .= "    <div class=\"assignee_name\"><span>&nbsp;</span></div>\n";
         foreach ($header_items as $key => $item)
         {
             $header .= $item;
         }
-        $header .= $header_end;
+        $header .= "    <div class=\"row_actions\"><span>&nbsp;</span></div>\n";
+        
+        $header .= "</div>\n";
         $this->_header = $header;
     }
 
@@ -344,6 +372,10 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
      */
     function _handler_edit($handler_id, $args, &$data)
     {
+        // debug_push_class(__CLASS__, __FUNCTION__);
+        // debug_print_r("POST: ", $_POST);
+        // debug_pop();
+                
         midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
         
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
@@ -353,11 +385,97 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
         }
         $this->_object->require_do('midgard:privileges');
 
+        $script = "
+            applyRowClasses();
+        ";
+        
+        // jQuery('.maa_permissions_rows ul').sortable({
+        //     handle: 'div.draghandle',
+        //     start: function(e, ui) {
+        //         console.log(e);
+        //     },
+        //     stop: function(e, ui) {
+        //         applyRowClasses();
+        //     }
+        // });
+
+        // var clear_storage = jQuery('#maa_permissions_clear_storage');
+        // 
+        // if (clear_storage.attr('class') != 'done') {
+        //     clear_storage.attr('class','done');
+        //     var data = {
+        //         midcom_helper_datamanager2_save: 'Save',
+        //         _qf__net_nehmer_static: ''
+        //     };
+        //     jQuery('ul.items li').each(function(i,n){                            
+        //         jQuery(this).find('select').each(function(i,n){
+        //             data[jQuery(n).attr('name')] = '" . MIDCOM_PRIVILEGE_INHERIT . "';
+        //             //jQuery('<input type=\"hidden\" name=\"'+jQuery(n).attr('name')+'\" value=\"'+jQuery(n).val()+'\" />').appendTo(clear_storage);
+        //         });                            
+        //     });
+        //     console.log(data);
+        //     //jQuery.post('/__mfa/asgard/object/permissions/{$this->_object->guid}/', data, function(){jQuery.get('/__mfa/asgard/object/permissions/{$this->_object->guid}/');});
+        // }
+
+        $_MIDCOM->add_jquery_state_script($script);
+
         // Load possible additional component privileges
         $this->_load_component_privileges();
         
         // Load the datamanager controller
         $this->_load_controller();
+        
+        if (   isset($_POST['midcom_helper_datamanager2_add'])
+            && isset($_POST['add_assignee'])
+            && $_POST['add_assignee'])
+        {
+            $this->_object->set_privilege('midgard:read', $_POST['add_assignee']);
+            $_MIDCOM->relocate("__mfa/asgard/object/permissions/{$this->_object->guid}");
+        }
+
+        // Unset privileges so rearrangements work
+        if (   isset($_POST['midcom_helper_datamanager2_save'])
+            && $_POST['midcom_helper_datamanager2_save'])
+        {
+            $privs = $this->_object->get_privileges();
+            // echo "bef drop:\n";
+            // var_dump($privs);
+            foreach ($privs as $priv)
+            {
+                $priv->drop();
+                $this->_object->unset_privilege($priv->name, $priv->assignee);
+            }
+            // echo "aft drop:\n";
+            // var_dump($this->_object->get_privileges());
+            
+            // Reread privilege types
+            foreach ($this->_controller->datamanager->types as $field => $type)
+            {
+                if ($field != 'add_assignee')
+                {
+                    $this->_controller->datamanager->types[$field]->convert_from_storage('');                    
+                }
+            }
+
+            // Reorder schema fields according to the POST vars
+            $tmp_fields = array();
+            //$_POST = array_reverse($_POST, true);
+            foreach ($_POST as $key => $value)
+            {
+                if (! in_array($key, array('_qf__net_nehmer_static', 'midcom_helper_datamanager2_save')))
+                {
+                    if (isset($this->_controller->datamanager->storage->_schema->fields[$key]))
+                    {
+                        $tmp_fields[$key] = $this->_controller->datamanager->storage->_schema->fields[$key];
+                    }
+                }
+            }
+            if (!empty($tmp_fields))
+            {
+                $this->_controller->datamanager->storage->_schema->fields = $tmp_fields;
+                $this->_controller->datamanager->schema->fields = $tmp_fields;
+            }
+        }
         
         switch ($this->_controller->process_form())
         {
@@ -419,7 +537,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
     function _generate_editor($data)
     {
         $editor = "";
-        $data['editor_rows'] = "";
+        $data['editor_rows'] = "  <ul class=\"items\">\n";
         
         $form_start = "<form ";
         foreach ($this->_controller->formmanager->form->_attributes as $key => $value)
@@ -430,14 +548,15 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
         $header = $form_start;
         
         
-        $header .= "<table width=\"100%\" border=\"0\" id=\"midgard_admin_acl\">\n";
+        //$header .= "<table width=\"100%\" border=\"0\" id=\"midgard_admin_acl\">\n";
         
         $data['editor_header'] = $header;
         
         $priv_item_cnt = count($this->_privileges);
-        
+
+        $s = 0;
         foreach ($this->_controller->formmanager->form->_elements as $i => $row)
-        {
+        {            
             if (is_a($row, 'HTML_QuickForm_hidden'))
             {
                 $html = "<input type=\"hidden\" ";
@@ -452,39 +571,41 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
             
             if (is_a($row, 'HTML_QuickForm_select'))
             {
-                $html = "<tr><td>\n";
-                $html .= "<label for=\"{$row->_attributes['id']}\">\n<span class=\"field_text\">{$row->_label}</span>\n";
+                $html = "<div class=\"maa_permissions_header\">\n";
+                $html .= "  <div class=\"assignees\">\n";
+                $html .= "    <label for=\"{$row->_attributes['id']}\">\n<span class=\"field_text\">{$row->_label}</span>\n";
                 $html .= $this->_render_select($row);
-                $html .= "</label>\n";
-                $html .= "</td></tr>\n";
+                $html .= "    </label>\n";
+                $html .= "  </div>\n";
+                $html .= "</div>\n";
                 
+                $html .= "\n<div id=\"maa_permissions_clear_storage\"></div>\n\n";
+                
+                $html .= "<div class=\"maa_permissions_rows\">\n";
                 $data['editor_header'] .= $html;
 
-                $this->_render_table_header();
+                $this->_render_header();
+                $html = '';
             }
             
             if (is_a($row, 'HTML_QuickForm_group'))
             {
-                $html = '';
-                
                 if ($row->_name == 'form_toolbar')
                 {
-                    $html .= "<tr><td class=\"privilege_row\">\n";
+                    $form_toolbar_html = "  <div class=\"actions\">\n";
                     foreach ($row->_elements as $k => $element)
                     {
                         if (is_a($element, 'HTML_QuickForm_submit'))
                         {
-                            $html .= $this->_render_button($element);
+                            $form_toolbar_html .= $this->_render_button($element);
                         }
-                        $html .= $row->_separator;
+                        //$form_toolbar_html .= $row->_separator;
                     }
-                    $html .= "</td></tr>\n";
-
-                    $data['editor_rows'] .= $html;                    
+                    $form_toolbar_html .= "  </div>\n";
                     continue;                    
                 }
                 
-                $html .= $this->_render_row_label($row->_name);
+                $html = $this->_render_row_label($row->_name);
                 
                 foreach ($row->_elements as $k => $element)
                 {
@@ -496,29 +617,38 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
                     {
                         if (strpos($element->_attributes['name'], 'holder_start') !== false)
                         {
-                            $html .= '<td align="center">';
+                            $priv_class = $this->_get_row_value_class($row->_name);
+                            $html .= "      <div class=\"row_value {$priv_class}\">\n";
                         }
                         
                         $html .= $this->_render_static($element);
                         if (strpos($element->_attributes['name'], 'initscripts') !== false)
                         {
-                            $html .= '</td>';
+                            $html .= "      </div>\n";
                         }
-                    }
-                    
+                    }            
                 }
+
+                $s++;
                 
-                if ($i == $priv_item_cnt+1)
+                if ($s == $priv_item_cnt)
                 {
-                    $html .= "</tr>\n";                    
+                    $s = 0;
+                    $html .= $this->_render_row_actions($row->_name);
+                    $html .= "</div></li>\n";                    
                 }
                 
                 $data['editor_rows'] .= $html;
             }
         }
-
-        $footer = "</table>\n";
-        $footer .= "<input type=\"hidden\" name=\"\" value=\"\" id=\"submit_action\"/>\n";        
+        
+        $data['editor_rows'] .= "  </ul>\n";
+        
+        $footer = "</div>\n";
+        $footer .= "<div class=\"maa_permissions_footer\">\n";
+        $footer .= "  <input type=\"hidden\" name=\"\" value=\"\" id=\"submit_action\"/>\n";
+        $footer .= $form_toolbar_html;
+        $footer .= "</div>\n";
         $footer .= "</form>\n";
         
         $data['editor_footer'] = $footer;
@@ -571,7 +701,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
 
     function _render_button($object)
     {
-        $html = "<input type=\"$object->_type\" ";
+        $html = "    <input type=\"$object->_type\" ";
         foreach ($object->_attributes as $key => $value)
         {
             $html .= "{$key}=\"{$value}\" ";
@@ -592,7 +722,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
         return $html;
     }
     
-    function _render_table_header()
+    function _render_header()
     {
         if ($this->_header != '')
         {
@@ -610,17 +740,57 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
             {
                 $this->_rendered_row_labels[$key] = true;
                 
+                $html = "    <li id=\"privilege_row_{$key}\"><div class=\"maa_permissions_rows_row\">\n";
+                $html .= "      <div class=\"row_value assignee_name\">\n"; //<div class=\"draghandle\"></div>
+                $html .= "<span>{$label}</span></div>\n";
+                
+                return $html;
+            }
+        }
+        
+        return '';     
+    }
+    
+    function _render_row_actions($row_name)
+    {
+        foreach ($this->_row_labels as $key => $label)
+        {
+            if (strpos($row_name, $key) !== false)
+            {
+                $this->_rendered_row_actions[$key] = true;
+                
                 $actions = "<div class=\"actions\" id=\"privilege_row_actions_{$key}\">";
                 $actions .= "<script type=\"text/javascript\">";
                 $actions .= "jQuery('#privilege_row_{$key}').privilege_actions('{$key}');";
                 $actions .= "</script>";
                 $actions .= "</div>";
                 
-                return "<tr id=\"privilege_row_{$key}\">\n<td align=\"left\">{$actions}{$label}</td>\n";
+                $html = "      <div class=\"row_value row_actions\">{$actions}</div>\n";
+                
+                return $html;
             }
         }
         
         return '';     
+    }
+    
+    function _get_row_value_class($row_name)
+    {
+        foreach ($this->_row_labels as $key => $label)
+        {
+            if (strpos($row_name, $key) !== false)
+            {
+                $tmp_priv = str_replace($key."_", "", $row_name);
+                $tmp_priv_arr = explode('_', $tmp_priv);
+                $priv_class = "{$tmp_priv_arr[1]}";
+                if (count($tmp_priv_arr) > 2)
+                {
+                    $priv_class = "{$tmp_priv_arr[1]}_{$tmp_priv_arr[2]}";
+                }
+                return $priv_class;
+            }
+        }
+        return '';
     }
 }
 ?>
