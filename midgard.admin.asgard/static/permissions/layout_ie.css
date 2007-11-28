@@ -9,3 +9,8 @@ div.admin_folder
 {
     width: 10%; 
 }
+.maa_permissions_rows_header div.assignee_name,
+.maa_permissions_rows_row div.assignee_name
+{
+    width: 130px;
+}
