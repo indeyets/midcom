@@ -51,7 +51,7 @@ class net_nehmer_account_handler_list extends midcom_baseclasses_components_hand
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         $this->_view_toolbar->hide_item('list/');
                 
-        $_MIDCOM->set_pagetitle($this->_l10n->get('user listd'));
+        $_MIDCOM->set_pagetitle($this->_l10n->get('user list'));
 
         return true;
     }
