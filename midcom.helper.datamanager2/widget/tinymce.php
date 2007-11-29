@@ -138,7 +138,7 @@ class midcom_helper_datamanager2_widget_tinymce extends midcom_helper_datamanage
         }
         else
         {
-	        $_MIDCOM->add_jsfile("{$prefix}/tiny_mce.js", true);
+            $_MIDCOM->add_jsfile("{$prefix}/tiny_mce.js", true);
         }
     }
 
@@ -153,12 +153,14 @@ class midcom_helper_datamanager2_widget_tinymce extends midcom_helper_datamanage
         if (! $config)
         {
             $config = $this->_get_configuration();
-        } else {
-        	$popup = $this->_get_imagepopup_jsstring();
-        	$config = str_replace('{$popup}', $popup, $config);
         }
-		
-		
+        else
+        {
+            $popup = $this->_get_imagepopup_jsstring();
+            $config = str_replace('{$popup}', $popup, $config);
+        }
+        
+        
         $language = $_MIDCOM->i18n->get_current_language();
         // fix to use the correct langcode for norwegian.
         if ($language == 'no')
@@ -218,18 +220,19 @@ EOT;
 
         $_MIDCOM->add_jscript($script);
     }
-	/**
-	 * Returns the string ,imagepopup that is added if we are editing a 
-	 * saved object (and thus can add attachments)
-	 * @return string empty or containing ",imagepopup"
-	 */
-	function _get_imagepopup_jsstring() {
+    /**
+     * Returns the string ,imagepopup that is added if we are editing a 
+     * saved object (and thus can add attachments)
+     * @return string empty or containing ",imagepopup"
+     */
+    function _get_imagepopup_jsstring()
+    {
         if ($this->_type->storage !== null)
         {
             return ",imagepopup";
         }
         return "";
-	}
+    }
     /**
      * Returns the configuration theme based on the local_config_theme.
      * @return string
@@ -249,7 +252,7 @@ EOT;
         }
         if ($this->mcs_config_snippet != '') 
         {
-        	return $this->mcs_config_snippet;
+            return $this->mcs_config_snippet;
         }
         
         return $this->_get_advanced_configuration();
@@ -273,14 +276,14 @@ EOT;
      */
     function _get_simple_configuration()
     {
-		$popup = $this->_get_imagepopup_jsstring();    
+        $popup = $this->_get_imagepopup_jsstring();    
         return <<<EOT
 theme : "advanced",
 button_title_map : false,
 apply_source_formatting : true,
 plugins : "table,contextmenu,advimage,advlink,paste,fullscreen$popup",
 theme_advanced_buttons1 : "cut,copy,paste,separator,undo,redo,separator,justifyleft,justifycenter,justifyright,separator,outdent,indent,separator,code,fullscreen",
-theme_advanced_buttons2 : "formatselect,separator,bold,italic,,separator,bullist,numlist,separator,link,imagepopup",
+theme_advanced_buttons2 : "formatselect,separator,bold,italic,separator,bullist,numlist,separator,link,imagepopup",
 theme_advanced_buttons3 : "",
 theme_advanced_toolbar_align : "left",
 theme_advanced_toolbar_location : "top",
@@ -292,13 +295,13 @@ EOT;
      */
     function _get_advanced_configuration ()
     {
-    	$popup = $this->_get_imagepopup_jsstring();	
+        $popup = $this->_get_imagepopup_jsstring();    
         return <<<EOT
 apply_source_formatting : true,
 theme : "advanced",
 plugins : "table,save,advhr,advimage,advlink,iespell,insertdatetime,preview,zoom,flash,searchreplace,print,contextmenu,fullscreen{$popup}",
 theme_advanced_buttons1 : "cut,copy,paste,separator,undo,redo,separator,replace,separator,justifyleft,justifycenter,justifyright,separator,outdent,indent",
-theme_advanced_buttons2 : "formatselect,separator,bold,italic,strikethrough,sub,sup,separator,bullist,numlist,separator,link,imagepopup",
+theme_advanced_buttons2 : "formatselect,separator,bold,italic,strikethrough,sub,sup,separator,bullist,numlist,separator,imagepopup",
 theme_advanced_buttons3 : "tablecontrols,separator,cleanup,code,removeformat,visualaid,iespell,separator,fullscreen",
 theme_advanced_toolbar_location : "top",
 theme_advanced_toolbar_align : "left",
