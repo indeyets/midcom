@@ -198,7 +198,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
      * @param boolean $deleted whether to get (only) deleted or not-deleted objects
      * @return array of objects or false on failure
      */
-    function get_root_objects($deleted = false)
+    function get_root_objects($deleted = false, $all = false)
     {
         // Check against static calling
         if (   !isset($this->_mgdschema_class)
@@ -227,6 +227,12 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
             debug_pop();
             return false;
         }
+        
+        /*if (   !$all
+            && $qb->count() > 25)
+        {
+            $qb->set_limit(25);
+        }*/
 
         $objects = $qb->execute();
 

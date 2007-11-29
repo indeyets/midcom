@@ -1,24 +1,29 @@
-<?php
-if (isset($data['object']))
-{
-    $navigation = new midgard_admin_asgard_navigation($data['object'], &$data);
-}
-else
-{
-    $navigation = new midgard_admin_asgard_navigation(null, &$data);
-}
-$navigation->draw();
-
-if (($width = midgard_admin_asgard_plugin::get_preference('offset')))
-{
-    $width += 2;
-    $content_offset = " style=\"margin-left: {$width}px\"";
-}
-else
-{
-    $content_offset = '';
-}
-?>
+                    <?php
+                    $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+                    echo "<a href=\"{$prefix}__mfa/asgard/\">";
+                    echo "<img src=\"" . MIDCOM_STATIC_URL . "/midgard.admin.asgard/asgard2.png\" id=\"asgard_logo\" title=\"Asgard\" alt=\"Asgard\" />";
+                    echo "</a>\n";
+                    
+                    if (isset($data['object']))
+                    {
+                        $navigation = new midgard_admin_asgard_navigation($data['object'], &$data);
+                    }
+                    else
+                    {
+                        $navigation = new midgard_admin_asgard_navigation(null, &$data);
+                    }
+                    $navigation->draw();
+                    
+                    if (($width = midgard_admin_asgard_plugin::get_preference('offset')))
+                    {
+                        $width += 2;
+                        $content_offset = " style=\"margin-left: {$width}px\"";
+                    }
+                    else
+                    {
+                        $content_offset = '';
+                    }
+                    ?>
                 </div>
                 <div id="content"&(content_offset:h);>
                     <div class="page-title">
