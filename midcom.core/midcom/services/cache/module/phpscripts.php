@@ -116,7 +116,7 @@ class midcom_services_cache_module_phpscripts extends midcom_services_cache_modu
         
         if ($compare_stamp > $file_stamp)
         {
-            unlink($filename);
+            @unlink($filename);
             return false;
         }
         
