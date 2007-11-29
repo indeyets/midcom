@@ -53,9 +53,15 @@ class midcom_helper_datamanager2_type_position extends midcom_helper_datamanager
     }
 
     function convert_to_storage()
-    {                
+    {
+        if (!$this->storage->object)
+        {
+            return '';
+        }
+    
         $this->location->relation = $this->relation;
-        if ($this->location->guid)
+        if (   isset($this->location->guid)
+            && $this->location->guid)
         {
             $this->location->update();
         }
