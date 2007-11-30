@@ -161,7 +161,8 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
         $_MIDCOM->auth->require_admin_user();
         $data['hostname'] = $_SERVER['SERVER_NAME'];
 
-        if ($args[0])
+        if (   isset($args[0])
+            && $args[0])
         {
             $host = new midcom_db_host($args[0]);
             if ($host->root)
