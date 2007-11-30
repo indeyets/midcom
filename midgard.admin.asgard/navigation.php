@@ -395,7 +395,8 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         $this->_request_data['section_url'] = "{$_MIDGARD['self']}__mfa/asgard/{$this->_request_data['navigation_type']}";
         $this->_request_data['section_name'] = $ref->get_class_label();
         
-        if (count($root_objects) > 0)
+        if (   is_array($root_objects)
+            && count($root_objects) > 0)
         {
             midcom_show_style('midgard_admin_asgard_navigation_section_header');
             echo "<ul class=\"midgard_admin_asgard_navigation\">\n";
