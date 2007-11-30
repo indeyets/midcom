@@ -7,6 +7,10 @@
 Sallitut komponentit (jätä tyhjäksi salliaksesi kaikki)
 ---STRINGEND
 
+---STRING auth configuration
+Kirjautumis asetukset
+---STRINGEND
+
 ---STRING auth_allow_sudo
 Salli komponenttien ajo sudo-tilassa
 ---STRINGEND
@@ -59,6 +63,10 @@ Kirjautumislomakkeissa käytettävä HTTP-vastauskoodi
 Kirjautumissession kesto (sekunneissa)
 ---STRINGEND
 
+---STRING auth_openid_enable
+Ota OpenID tuki käyttöön
+---STRINGEND
+
 ---STRING auth_sitegroup_mode
 Kirjautumisen sitegroup-asetus
 ---STRINGEND
@@ -75,6 +83,10 @@ Käyttäjän täytyy valita sitegroup
 Aina nykyisessä sitegroupissa
 ---STRINGEND
 
+---STRING cache configuration
+Välimuisti asetukset
+---STRINGEND
+
 ---STRING cache_base_directory
 Välimuistille käytettävä hakemisto
 ---STRINGEND
@@ -85,6 +97,14 @@ Välimuistiin tallennetun sisällön säilytysaika
 
 ---STRING cache_module_content_headers_strategy
 Välimuistinhallinnan strategia
+---STRINGEND
+
+---STRING cache_module_content_uncached
+Aseta sisältö valimuisti pois päältä
+---STRINGEND
+
+---STRING core configuration
+Ytimen asetukset
 ---STRINGEND
 
 ---STRING cron_day_hours
@@ -123,6 +143,10 @@ Oletus (%s)
 Asetusten tallennus epäonnistui. Syy: %s
 ---STRINGEND
 
+---STRING host "%s" not found. try using menu.
+Sivustoa "%s" ei löytynyt. Yritä etsiä se valikosta.
+---STRINGEND
+
 ---STRING host configuration
 Sivuston asetukset
 ---STRINGEND
@@ -133,6 +157,10 @@ Oletuskieli käännösten puuttuessa
 
 ---STRING i18n_multilang_strict
 Piilota kääntämätön sisältö
+---STRINGEND
+
+---STRING indexer configuration
+Indeksoijan asetukset
 ---STRINGEND
 
 ---STRING indexer_backend
@@ -169,6 +197,14 @@ Käytettävä lokitaso
 
 ---STRING log_tailurl_enable
 Salli lokien lukeminen sivustolla
+---STRINGEND
+
+---STRING logging configuration
+Lokien asetukset
+---STRINGEND
+
+---STRING metadata configuration
+Metatietojen asetukset
 ---STRINGEND
 
 ---STRING metadata_approval
@@ -239,6 +275,10 @@ MidCOMin käyttämä väliaikaiskansio
 Väliaikaistiedostojen säilytysaika (sekunneissa)
 ---STRINGEND
 
+---STRING nap settings
+Navigaatiotieto asetukset
+---STRINGEND
+
 ---STRING positioning_enable
 Salli sisällön maantieteellinen paikantaminen
 ---STRINGEND
@@ -257,6 +297,10 @@ Näytä hyväksymätön sisältö
 
 ---STRING staging2live_staging
 Tämä on sisällön valmistelupalvelin
+---STRINGEND
+
+---STRING utilities
+Työkalut
 ---STRINGEND
 
 ---STRING utility_catdoc
@@ -313,5 +357,9 @@ unzip-ohjelman polku
 
 ---STRING excluded components (leave empty to allow all)
 Pois jätettävät komponentit (jätä tyhjäksi salliaksesi kaikki)
+---STRINGEND
+
+---STRING failed to create settings
+Asetuksien luonti epäonnistui
 ---STRINGEND
 
