@@ -747,3 +747,6 @@ Kyllä
 Parametrit
 ---STRINGEND
 
+---STRING country
+Maa
+---STRINGEND

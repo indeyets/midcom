@@ -68,7 +68,7 @@ all
 ---STRINGEND
 
 ---STRING and
-und
+and
 ---STRINGEND
 
 ---STRING anonymous
@@ -743,3 +743,6 @@ Write mail
 Yes
 ---STRINGEND
 
+---STRING country
+Country
+---STRINGEND
