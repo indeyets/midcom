@@ -215,9 +215,18 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
             return;
         }
 
-        // FIXME: use metadata service (?)
-        if ($object->metadata->revised > $object->metadata->approved)
+        if (   is_a($object, 'midgard_article')
+            && $object->up)
         {
+            // Child articles don't currently have any approval UI, skip approval
+            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, 'Child article, no approval checks to be made');
+            $this->exportability[$object->guid] = true;
+            debug_pop();
+            return;
+        }
+        elseif ($object->metadata->revised > $object->metadata->approved)
+        {
+            // FIXME: use metadata service (?)
             // Not approved since last update
             $GLOBALS['midcom_helper_replicator_logger']->log_object($object, 'Not approved, skipping');
             $this->exportability[$object->guid] = false;
