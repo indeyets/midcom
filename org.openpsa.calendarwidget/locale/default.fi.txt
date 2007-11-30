@@ -7,3 +7,7 @@
 Viikko
 ---STRINGEND
 
+---STRING time
+Kellonaika
+---STRINGEND
+
