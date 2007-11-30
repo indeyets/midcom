@@ -277,14 +277,64 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         }
     }
 
+    /**
+     * Trash view
+     */
+    function _handler_trash($handler_id, $args, &$data)
+    {
+        $_MIDCOM->auth->require_admin_user();
+        $_MIDCOM->cache->content->no_cache();
     
+        $data['view_title'] = $this->_l10n->get('trash');
+        $_MIDCOM->set_pagetitle($data['view_title']);
+        
+        $data['asgard_toolbar'] = new midcom_helper_toolbar();
+        midgard_admin_asgard_plugin::get_common_toolbar($data);
+
+        $data['types'] = array();
+        foreach ($_MIDGARD['schema']['types'] as $type => $int)
+        {
+            $qb = new midgard_query_builder($type);
+            $qb->include_deleted();
+            $qb->add_constraint('metadata.deleted', '=', true);
+            $data['types'][$type] = $qb->count();
+        }
+
+        // Set the breadcrumb data
+        $tmp = array();
+        $tmp[] = array
+        (
+            MIDCOM_NAV_URL => '__mfa/asgard/',
+            MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('midgard.admin.asgard', 'midgard.admin.asgard'),
+        );
+        $tmp[] = array
+        (
+            MIDCOM_NAV_URL => '__mfa/asgard/trash/',
+            MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('trash', 'midgard.admin.asgard'),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+
+        return true;
+    }
+
+    /**
+     * Shows the loaded object in editor.
+     */
+    function _show_trash($handler_id, &$data)
+    {
+        midcom_show_style('midgard_admin_asgard_header');
+        midcom_show_style('midgard_admin_asgard_middle');
+        midcom_show_style('midgard_admin_asgard_trash');
+        midcom_show_style('midgard_admin_asgard_footer');
+    }
+  
     /**
      * Trash view
      */
     function _handler_trash_type($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_admin_user();
-            $_MIDCOM->cache->content->no_cache();
+        $_MIDCOM->cache->content->no_cache();
     
         $this->type = $args[0];
         $root_types = midgard_admin_asgard_reflector_tree::get_root_classes();

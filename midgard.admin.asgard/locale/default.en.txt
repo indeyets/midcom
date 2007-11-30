@@ -107,6 +107,10 @@ Dropdown list
 Edit %s %s
 ---STRINGEND
 
+---STRING expanded list
+Expanded list
+---STRINGEND
+
 ---STRING failed purging %s, reason %s
 Failed purging %s, reason %s
 ---STRINGEND
@@ -307,8 +311,16 @@ Toolbar mode
 Folder permissions
 ---STRINGEND
 
+---STRING trash
+Trash
+---STRINGEND
+
 ---STRING trash is empty
 Trash is empty
+---STRINGEND
+
+---STRING type
+Type
 ---STRINGEND
 
 ---STRING undelete
@@ -335,7 +347,7 @@ User preferences
 View on-site
 ---STRINGEND
 
----STRING expanded list
-Expanded list
+---STRING items in trash
+Items in trash
 ---STRINGEND
 

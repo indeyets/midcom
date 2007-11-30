@@ -107,6 +107,10 @@ Pudotusvalikko
 Muokkaa %s %s
 ---STRINGEND
 
+---STRING expanded list
+Laajennettu lista
+---STRINGEND
+
 ---STRING failed purging %s, reason %s
 Kohteen %s tyhjentäminen epäonnistui, syy %s
 ---STRINGEND
@@ -307,8 +311,16 @@ Työkalupalkin tila
 Kansion käyttöoikeudet
 ---STRINGEND
 
+---STRING trash
+Roskakori
+---STRINGEND
+
 ---STRING trash is empty
 Roskakori on tyhjä
+---STRINGEND
+
+---STRING type
+Tyyppi
 ---STRINGEND
 
 ---STRING undelete
@@ -335,7 +347,7 @@ Käyttöasetukset
 Katso sivustolla
 ---STRINGEND
 
----STRING expanded list
-Laajennettu lista
+---STRING items in trash
+Kohteita roskakorissa
 ---STRINGEND
 

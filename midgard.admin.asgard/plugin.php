@@ -45,6 +45,16 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 'variable_args' => 0,
             ),
             /**
+             * Trashed items of MgdSchema
+             * 
+             * Match /asgard/
+             */
+            'trash' => array
+            (
+                'handler' => array ('midgard_admin_asgard_handler_undelete', 'trash'),
+                'fixed_args' => array('trash'),
+            ),
+            /**
              * User preferences page
              * 
              * Match /preferences/

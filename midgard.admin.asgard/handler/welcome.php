@@ -153,6 +153,16 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/configuration.png',
             )
         );
+        
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => '__mfa/asgard/trash/',
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('trash', 'midgard.admin.asgard'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash-full.png',
+            )
+        );
 
         // Add link to site
         $data['asgard_toolbar']->add_item
