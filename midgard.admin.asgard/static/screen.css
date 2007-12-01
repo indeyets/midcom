@@ -121,7 +121,9 @@ body
 }
 #navigation div.section ul.midgard_admin_asgard_navigation li a
 {
-    display: block;
+    display: block !important;
+    display: inline-block;
+    width: 100%;
 }
 #navigation div.section ul.midgard_admin_asgard_navigation li a:hover
 {
@@ -262,7 +264,6 @@ body
   padding: 4px;
   margin-right: 2px;
   -moz-border-radius: 6px;
-  white-space: nowrap;
 }
 
 #container #toolbar ul li a
