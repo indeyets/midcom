@@ -3,12 +3,76 @@
 ---CVS $Id$
 ---LANGUAGE de
 
+---STRING %s deleted items
+%s gelöschte Objekte
+---STRINGEND
+
+---STRING %s trash
+%s-Papierkorb
+---STRINGEND
+
+---STRING 1 day
+1 Tag
+---STRINGEND
+
+---STRING 1 month
+1 Monat
+---STRINGEND
+
+---STRING 1 week
+1 Woche
+---STRINGEND
+
+---STRING ANONYMOUS
+Anonyme Benutzer
+---STRINGEND
+
+---STRING EVERYONE
+Jeder
+---STRINGEND
+
+---STRING USERS
+Alle angemeldeten Benutzer
+---STRINGEND
+
+---STRING add assignee
+Gruppe zur Rechtevergabe hinzufügen
+---STRINGEND
+
+---STRING apply to selected
+Auf ausgewählte anwenden
+---STRINGEND
+
 ---STRING asgard
 Asgard
 ---STRINGEND
 
+---STRING asgard homepage
+Asgard-Startseite
+---STRINGEND
+
+---STRING asgard plugins
+Asgard-Plugins
+---STRINGEND
+
+---STRING attachment %s undeleted
+Attachment %s wiederhergestellt
+---STRINGEND
+
 ---STRING back to site
 zurück zur Website
+---STRINGEND
+
+---STRING content
+Inhalt
+---STRINGEND
+
+---STRING contentchanged
+Inhalt verändert
+---STRINGEND
+
+---STRING contentowner
+Inhalts-Besitzer
 ---STRINGEND
 
 ---STRING create %s under %s
@@ -27,64 +91,48 @@ Standardsprache
 %s %s löschen
 ---STRINGEND
 
+---STRING deleted by
+Gelöscht von
+---STRINGEND
+
+---STRING deleted on
+Gelöscht am
+---STRINGEND
+
 ---STRING edit %s %s
 %s %s bearbeiten
 ---STRINGEND
 
----STRING in %s
-in %s
+---STRING expanded list
+Aufgeklappte Liste
 ---STRINGEND
 
----STRING in fallback language
-in Fallback-Sprache
+---STRING %s purged
+%s entfernt
 ---STRINGEND
 
----STRING last edited by %s on %s (revision %s)
-Zuletzt bearbeitet von %s am %s (Revision %s)
+---STRING failed purging %s, reason %s
+%s konnte nicht entfernt werden, Grund: %s
 ---STRINGEND
 
----STRING metadata of %s %s
-Metadaten von %s %s
+---STRING failed purging attachment %s => %s, reason %s
+Attachment %s => %s konnte nicht entfernt werden, Grund: %s
 ---STRINGEND
 
----STRING midgard.admin.asgard
-Midgard-Administrationsoberfläche
+---STRING failed undeleting %s, reason %s
+%s konnte nicht wiederhergestellt werden, Grund: %s
 ---STRINGEND
 
----STRING parameter
-Parameter
+---STRING failed undeleting attachment %s, reason %s
+Attachment %s konnte nicht wiederhergestellt werden, Grund: %s
 ---STRINGEND
 
----STRING parameters of %s %s
-Parameter von %s %s
+---STRING filter
+Filtern
 ---STRINGEND
 
----STRING this is a midgard core type
-Dies ist ein Midgard CMS Core-Typ.
----STRINGEND
-
----STRING under %s
-Unter %s
----STRINGEND
-
----STRING this type belongs to %s component
-Dieser Typ gehört zur %s-Komponente.
----STRINGEND
-
----STRING ANONYMOUS
-Anonyme Benutzer
----STRINGEND
-
----STRING EVERYONE
-Alle
----STRINGEND
-
----STRING USERS
-Alle Benutzer
----STRINGEND
-
----STRING add assignee
-Gruppe zur Rechtevergabe auswählen
+---STRING floating freely
+Freischwebend
 ---STRINGEND
 
 ---STRING folder
@@ -95,16 +143,64 @@ Ordner
 Gruppe %s
 ---STRINGEND
 
+---STRING guid
+Eindeutiger Bezeichner
+---STRINGEND
+
+---STRING in %s
+in %s
+---STRINGEND
+
+---STRING in fallback language
+in Fallback-Sprache
+---STRINGEND
+
+---STRING in total %s purged
+Insgesamt %s entfernt
+---STRINGEND
+
+---STRING in total %s undeleted
+Insgesamt %s wiederhergestellt
+---STRINGEND
+
+---STRING info
+Information
+---STRINGEND
+
+---STRING interface language
+Interface-Sprache
+---STRINGEND
+
+---STRING last edited by %s on %s (revision %s)
+Zuletzt bearbeitet von %s am %s (Revision %s)
+---STRINGEND
+
+---STRING manage object
+Objekt-Verwaltung
+---STRINGEND
+
+---STRING metadata of %s %s
+Metadaten von %s %s
+---STRINGEND
+
 ---STRING midcom:approve
 Freigeben
 ---STRINGEND
 
 ---STRING midcom:component_config
-Konfiguration ändern
+Konfiguration
+---STRINGEND
+
+---STRING midgard objects
+Midgard-Objekte
 ---STRINGEND
 
 ---STRING midgard.admin.acl
 Editor für Zugriffsrechte
+---STRINGEND
+
+---STRING midgard.admin.asgard
+Midgard-Administrationsoberfläche
 ---STRINGEND
 
 ---STRING midgard:create
@@ -116,7 +212,7 @@ Löschen
 ---STRINGEND
 
 ---STRING midgard:owner
-Eigentümer
+Besitzer
 ---STRINGEND
 
 ---STRING midgard:read
@@ -127,19 +223,134 @@ Lesen
 Bearbeiten
 ---STRINGEND
 
+---STRING navigation type
+Art der Navigation
+---STRINGEND
+
+---STRING navigation width
+Navigationsbreite
+---STRINGEND
+
+---STRING navigation width (in pixels)
+Navigationsbreite (in Pixeln)
+---STRINGEND
+
+---STRING no title
+Kein Titel
+---STRINGEND
+
+---STRING not approved
+Freigegeben
+---STRINGEND
+
+---STRING not approved
+Nicht freigegeben
+---STRINGEND
+
+---STRING object %s approved
+Objekt %s freigegeben
+---STRINGEND
+
+---STRING object %s removed
+Objekt %s gelöscht
+---STRINGEND
+
+---STRING objects revised within
+Objekte mit Änderungen seit 
+---STRINGEND
+
+---STRING on top of the content area
+Am Kopfende des Inhaltsbereichs
+---STRINGEND
+
+---STRING owner
+Besitzer
+---STRINGEND
+
+---STRING parameter
+Parameter
+---STRINGEND
+
+---STRING parameters of %s %s
+Parameter von %s %s
+---STRINGEND
+
 ---STRING permissions for %s %s
 Berechtigungen für %s %s
 ---STRINGEND
 
+---STRING preferences saved
+Benutzereinstellungen gespeichert
+---STRINGEND
+
 ---STRING privilege reserve
-Reserve
+Reservieren
 ---STRINGEND
 
 ---STRING privileges
-Zugriffsrechte
+Berechtigungen
+---STRINGEND
+
+---STRING purge
+Entfernen
+---STRINGEND
+
+---STRING size
+Größe
+---STRINGEND
+
+---STRING this is a midgard core type
+Dies ist ein Midgard CMS Core-Typ.
+---STRINGEND
+
+---STRING this type belongs to %s component
+Dieser Typ gehört zur Komponente %s
+---STRINGEND
+
+---STRING toolbar mode
+Toolbar-Modus
 ---STRINGEND
 
 ---STRING topic privileges
 Ordner-Zugriffsrechte
 ---STRINGEND
 
+---STRING trash
+Papierkorb
+---STRINGEND
+
+---STRING trash is empty
+Der Papierkorb ist leer
+---STRINGEND
+
+---STRING type
+Typ
+---STRINGEND
+
+---STRING undelete
+Wiederherstellen
+---STRINGEND
+
+---STRING under %s
+Unter %s
+---STRINGEND
+
+---STRING use codepress editor for editing code snippets
+CodePress-Editor zum Bearbeiten von Quellcode verwenden
+---STRINGEND
+
+---STRING use tinymce editor for editing content
+TinyMCE-Editor zum Bearbeiten von Inhalten verwenden
+---STRINGEND
+
+---STRING user preferences
+Benutzer-Einstellungen
+---STRINGEND
+
+---STRING view on site
+Auf der Site anzeigen
+---STRINGEND
+
+---STRING items in trash
+Objekte im Papierkorb
+---STRINGEND

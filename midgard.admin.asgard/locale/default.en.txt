@@ -111,6 +111,10 @@ Edit %s %s
 Expanded list
 ---STRINGEND
 
+---STRING %s purged
+%s purged
+---STRINGEND
+
 ---STRING failed purging %s, reason %s
 Failed purging %s, reason %s
 ---STRINGEND
@@ -237,6 +241,10 @@ Navigation width (in pixels)
 
 ---STRING no title
 No title
+---STRINGEND
+
+---STRING not approved
+Not approved
 ---STRINGEND
 
 ---STRING not approved
