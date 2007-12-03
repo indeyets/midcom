@@ -248,9 +248,9 @@ class midcom_helper_toolbar
      *
      * @param Array $item The item to add.
      * @param mixed $before The index before which the item should be inserted.
-     * 					  Use -1 for appending at the end, use a string to insert
-     * 				      it before a URL, an integer will insert it before a
-     * 					  given index.
+     *     Use -1 for appending at the end, use a string to insert
+     *     it before a URL, an integer will insert it before a
+     *     given index.
      * @see midcom_helper_toolbar::get_index_from_url()
      * @see midcom_helper_toolbar::_check_index()
      * @see midcom_helper_toolbar::clean_item()
