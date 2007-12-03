@@ -30,3 +30,7 @@
 
 // Navigation
 'display_navigation' => true,
+
+// Use custom rss feeds
+'custom_rss_feeds' => false, // array('title' => 'http://example.com')
+

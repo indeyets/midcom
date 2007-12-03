@@ -168,8 +168,15 @@ class org_openpsa_products_handler_product_latest extends midcom_baseclasses_com
         $_MIDCOM->cache->content->content_type("text/xml");
         $_MIDCOM->header("Content-type: text/xml; charset=UTF-8");        
         $_MIDCOM->skip_page_style = true;
-    
-        $this->_list_products($this->_config->get('show_items_in_feed'));
+
+        if ($handler_id == 'updated_products_feed_intree')
+        {
+            $this->_list_products($this->_config->get('show_items_in_feed'),$args[0]);
+        }
+        else
+        {
+            $this->_list_products($this->_config->get('show_items_in_feed'));
+        }
 
         // Prepare datamanager
         $data['datamanager_product'] = new midcom_helper_datamanager2_datamanager($data['schemadb_product']);

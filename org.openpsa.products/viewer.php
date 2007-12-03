@@ -59,7 +59,7 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
 
-	// Handle /groupsblock/<productgroup>/
+        // Handle /groupsblock/<productgroup>/
         $this->_request_switch['groupsblock'] = Array
         (
             'handler' => Array('org_openpsa_products_handler_group_groupsblock', 'groupsblock'),
@@ -200,21 +200,29 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('bestrated'),
             'variable_args' => 2,
         );
-        
+
         // Handle /rss.xml
         $this->_request_switch['updated_products_feed'] = Array
         (
             'handler' => Array('org_openpsa_products_handler_product_latest', 'feed'),
             'fixed_args' => Array('rss.xml'),
         );
- 
+
+        // Handle /rss/<productgroup>/rss.xml
+        $this->_request_switch['updated_products_feed_intree'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_product_latest', 'feed'),
+            'fixed_args' => Array('rss'),
+            'variable_args' => 2,
+        );
+
         // Handle /businessarea/
         $this->_request_switch['index_businessarea'] = Array
         (
             'handler' => Array('org_openpsa_products_handler_businessarea_list', 'list'),
             'fixed_args' => Array('businessarea'),
         );
-               
+
         // Handle /businessarea/<businessarea guid>
         $this->_request_switch['list_businessarea'] = Array
         (
@@ -222,7 +230,7 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('businessarea'),
             'variable_args' => 1,
         );
-        
+
         // Handle /product/create/<group id>/<schema name>
         $this->_request_switch['create_businessarea'] = Array
         (
@@ -321,7 +329,7 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'handler' => Array('org_openpsa_products_handler_group_list', 'list'),
             'variable_args' => 2,
         );
-	
+    
     }
     
     /**
@@ -474,16 +482,40 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
 
         $this->_populate_node_toolbar();
 
-        $_MIDCOM->add_link_head
-        (
-            array
+        if ($this->_config->get('custom_rss_feeds'))
+        {
+            $feeds = $this->_config->get('custom_rss_feeds');
+            if (   $feeds !== false
+                && count($feeds) > 0)
+            {
+                foreach ($feeds as $title => $url)
+                {
+                    $_MIDCOM->add_link_head
+                    (
+                        array
+                        (
+                            'rel'   => 'alternate',
+                            'type'  => 'application/rss+xml',
+                            'title' => $this->_l10n->get($title),
+                            'href'  => $url,
+                        )
+                    );
+                }
+            }
+        }
+        else
+        {
+            $_MIDCOM->add_link_head
             (
-                'rel'   => 'alternate',
-                'type'  => 'application/rss+xml',
-                'title' => $this->_l10n->get('updated products'),
-                'href'  => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'rss.xml',
-            )
-        );
+                array
+                (
+                    'rel'   => 'alternate',
+                    'type'  => 'application/rss+xml',
+                    'title' => $this->_l10n->get('updated products'),
+                    'href'  => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'rss.xml',
+                )
+            );
+        }
 
         return true;
     }
@@ -499,47 +531,62 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
         $tmp = Array();
         while ($object)
         {
-	    $parent = $object->get_parent();
+            $parent = $object->get_parent();
 
             if (get_class($object) == 'org_openpsa_products_product_dba')
             {
-                $tmp[] = array
-                (
-                    MIDCOM_NAV_URL => "product/{$object->guid}/",
-                    MIDCOM_NAV_NAME => $object->title,
-                );
+                if (isset($object->productGroup)){
+                    $group = new org_openpsa_products_product_group_dba($object->productGroup);
+                    if ($group->up !== 0)
+                    {
+                        $parent_group = new org_openpsa_products_product_group_dba($group->up);
+                        $tmp[] = array
+                        (
+                            MIDCOM_NAV_URL => "product/{$parent_group->code}/{$object->code}",
+                            MIDCOM_NAV_NAME => $object->title,
+                        );
+                    }
+                }
+                else
+                {
+                    $tmp[] = array
+                    (
+                        MIDCOM_NAV_URL => "product/{$object->code}/",
+                        MIDCOM_NAV_NAME => $object->title,
+                    );
+                }
             }
             else
             {
-		if (isset($object->up)){
-		    $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
-		    $parentgroup_qb->add_constraint('id', '=', $object->up);
-		    $group = $parentgroup_qb->execute();
-		    if (count($group) > 0)
-		    {						
-            		$tmp[] = array
-        		(
-                	    MIDCOM_NAV_URL => "{$group[0]->code}/{$object->code}",
-                	    MIDCOM_NAV_NAME => $object->title,
-            		);
-		    }
-		} 
-		else if ($parent != NULL)
-		{
-            	    $tmp[] = array
-        	    (
-                	MIDCOM_NAV_URL => "{$parent->code}/{$object->code}",
-                	MIDCOM_NAV_NAME => $object->title,
-            	    );
-		}
-		else
-		{
-            	    $tmp[] = array
-        	    (
-                	MIDCOM_NAV_URL => "{$object->code}",
-                	MIDCOM_NAV_NAME => $object->title,
-            	    );
-		}
+                if (isset($object->up)){
+                    $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
+                    $parentgroup_qb->add_constraint('id', '=', $object->up);
+                    $group = $parentgroup_qb->execute();
+                    if (count($group) > 0)
+                    {                        
+                        $tmp[] = array
+                        (
+                            MIDCOM_NAV_URL => "{$group[0]->code}/{$object->code}",
+                            MIDCOM_NAV_NAME => $object->title,
+                        );
+                    }
+                } 
+                else if ($parent != NULL)
+                {
+                    $tmp[] = array
+                    (
+                        MIDCOM_NAV_URL => "{$parent->code}/{$object->code}",
+                        MIDCOM_NAV_NAME => $object->title,
+                    );
+                }
+                else
+                {
+                    $tmp[] = array
+                    (
+                        MIDCOM_NAV_URL => "{$object->code}",
+                        MIDCOM_NAV_NAME => $object->title,
+                    );
+                }
             }
             $object = $parent;
         }
