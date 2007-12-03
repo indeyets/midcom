@@ -76,7 +76,22 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         $params = $qb->execute();
         foreach ($params as $param)
         {
-            if (midgard_parameter::undelete($param->guid))
+            $undeleted = false;
+            if (version_compare(phpversion(), '5.0.0', '<'))
+            {
+                if (call_user_func(array('midgard_parameter', 'undelete'),$param->guid))
+                {
+                    $undeleted = true;
+                }
+            }
+            else
+            {
+                if ($param->undelete())
+                {
+                    $undeleted = true;
+                }
+            }
+            if ($undeleted)
             {
                 $this->_undeleted_size += $param->metadata->size;
             }
@@ -97,7 +112,22 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         $atts = $qb->execute();
         foreach ($atts as $att)
         {
-            if (!midgard_attachment::undelete($att->guid))
+            $undeleted = false;
+            if (version_compare(phpversion(), '5.0.0', '<'))
+            {
+                if (call_user_func(array('midgard_attachment', 'undelete'),$att->guid))
+                {
+                    $undeleted = true;
+                }
+            }
+            else
+            {
+                if ($att->undelete())
+                {
+                    $undeleted = true;
+                }
+            }
+            if (!$undeleted)
             {
                 $_MIDCOM->uimessages->add($this->_l10n->get('midgard.admin.asgard'), sprintf($this->_l10n->get('failed undeleting attachment %s, reason %s'), $att->name, mgd_errstr()), 'error');
             }
@@ -189,7 +219,23 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
             }
             $label = $ref->get_label_property();
             
-            if (!call_user_func(array($type,'undelete'),$guid))
+            $undeleted = false;
+            if (version_compare(phpversion(), '5.0.0', '<'))
+            {
+                if (call_user_func(array($type, 'undelete'), $guid))
+                {
+                    $undeleted = true;
+                }
+            }
+            else
+            {
+                if ($object->undelete($guid))
+                {
+                    $undeleted = true;
+                }
+            }
+                        
+            if (!$undeleted)
             {
                 $_MIDCOM->uimessages->add($this->_l10n->get('midgard.admin.asgard'), sprintf($this->_l10n->get('failed undeleting %s, reason %s'), "{$type} {$object->$label}", mgd_errstr()), 'error');
             }
