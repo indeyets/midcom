@@ -599,7 +599,13 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         {
             $this->_year = (int) gmdate('Y');
             $this->_month = (int) gmdate('m');
-            return true;
+        }
+        else
+        {
+            $this->_year = $args[0];
+            $this->_month = $args[1];
+            $this->_calendar->set_year($this->_year, false);
+            $this->_calendar->set_month($this->_month);
         }
         
         // Prevent the robots from ending in an "endless" parsing cycle
@@ -612,8 +618,37 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             )
         );
         
-        $this->_year = $args[0];
-        $this->_month = $args[1];
+        // Initialize org.openpsa.calendarwidget.month to show the calendar
+        $this->_calendar = new org_openpsa_calendarwidget_styled_month();
+        
+        // Point to the request data
+        $this->_calendar->_request_data =& $data;
+        
+        // Schemadb for the events
+        $this->_calendar->schemadb =& $this->_request_data['schemadb'];
+        
+        // Disable caching for a while
+        $_MIDCOM->cache->content->no_cache();
+        
+        if (!$this->_calendar)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'This feature requires the component org.openpsa.calendarwidget to be installed');
+            // This will exit
+        }
+        
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        
+        
+        // Write month navigation with path instead of GET parameters
+        $this->_calendar->path_mode = true;
+        $this->_calendar->path = $prefix . 'calendar/';
+        
+        // Should we use JavaScript to emulate hovering effect?
+        $this->_calendar->use_javascript = $this->_config->get('javascript_hover');
+        
+        // Get the events
+        $this->_add_calendar_events();
+        
         return true;
     }
     
@@ -650,28 +685,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
     function _show_calendar($handler_id, &$data)
     {
         $this->_request_data['page_title'] = $data['content_topic']->extra;
-        midcom_show_style('show_calendar_header');
-        
-        // Initialize org.openpsa.calendarwidget.month to show the calendar
-        $this->_calendar = new org_openpsa_calendarwidget_month();
-        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-        
-        $this->_calendar->set_year($this->_year, false);
-        $this->_calendar->set_month($this->_month);
-        
-        // Write month navigation with path instead of GET parameters
-        $this->_calendar->path_mode = true;
-        $this->_calendar->path = $prefix . 'calendar/';
-        
-        // Should we use JavaScript to emulate hovering effect?
-        $this->_calendar->use_javascript = $this->_config->get('javascript_hover');
-        
-        // Get the events
-        $this->_add_calendar_events();
-        
-        // Show the calendar
         $this->_calendar->show();
     }
 }
-
 ?>
