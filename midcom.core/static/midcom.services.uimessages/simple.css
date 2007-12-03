@@ -6,7 +6,7 @@ div.midcom_services_uimessages_holder
 {
     margin: 15px;
     padding: 5px;
-    font-color: #000;
+    color: #000000;
 }
 
 div.midcom_services_uimessages_message
@@ -15,23 +15,23 @@ div.midcom_services_uimessages_message
 }
 div.msu_info
 {
-    border: 1px solid green;
+    border: 1px solid #008000;
 }
 div.msu_ok
 {
-    border: 1px solid green;
+    border: 1px solid #008000;
 }
 div.msu_warning
 {
-    border: 1px solid red;
+    border: 1px solid #ff0000;
 }
 div.msu_error
 {
-    border: 1px solid red;
+    border: 1px solid #ff0000;
 }
 div.msu_debug
 {
-    border: 1px solid yellow;
+    border: 1px solid #ffff00;
 }
 
 div.midcom_services_uimessages_message_type
