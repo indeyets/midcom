@@ -242,37 +242,34 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
         $view_metadata =& $this->get_view_metadata();
         if ($view_metadata)
         {
+            foreach ($GLOBALS['midcom_config']['metadata_head_elements'] as $property => $metatag)
+            {
+                $content = $view_metadata->get($property);
+                if ($content)
+                {
+                    // Handle date fields
+                    switch ($property)
+                    {
+                        case 'published':
+                        case 'created':
+                        case 'revised':
+                        case 'approved':
+                        case 'locked':
+                            $content = gmdate('Y-m-d', (int) $content);
+                            break;
+                    }
+                    
+                    $_MIDCOM->add_meta_head
+                    (
+                        array
+                        (
+                            'name' => $metatag,
+                            'content' => $content,
+                        )
+                    );
+                }
+            }
             // TODO: Add support for tags here
-            $keywords = $view_metadata->get('keywords');
-            if ($keywords != '')
-            {
-                $_MIDCOM->add_meta_head(
-                    array(
-                        'name' => 'keywords',
-                        'content' => $keywords
-                    )
-                );
-            }
-            
-            // Description
-            $description = $view_metadata->get('description');
-            if ($description != '')
-            {
-                $_MIDCOM->add_meta_head(
-                    array(
-                        'name' => 'dc.description',
-                        'content' => $description
-                    )
-                );
-            }
-            
-            // Creation date
-            $_MIDCOM->add_meta_head(
-                array(
-                    'name' => 'dc.date',
-                    'content' => gmdate('Y-m-d', (int) $view_metadata->get('published'))
-                )
-            );
             
             if ($GLOBALS['midcom_config']['positioning_enable'])
             {

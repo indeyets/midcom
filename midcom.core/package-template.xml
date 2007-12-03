@@ -111,6 +111,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
                 <channel>pear.midcom-project.org</channel>
             </package>
             <package>
+                <name>net_nemein_tag</name>
+                <channel>pear.midcom-project.org</channel>
+            </package>
+            <package>
                 <name>no_bergfald_rcs</name>
                 <channel>pear.midcom-project.org</channel>
             </package>

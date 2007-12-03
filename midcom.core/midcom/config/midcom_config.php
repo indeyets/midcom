@@ -492,6 +492,14 @@ $GLOBALS['midcom_config_default']['staging2live_staging'] = false;
 // Set the DM2 schema used by the Metadata Service
 $GLOBALS['midcom_config_default']['metadata_schema'] = 'file:/midcom/config/metadata_default.inc';
 
+// Map MidCOM metadata properties to HTML meta tags
+$GLOBALS['midcom_config_default']['metadata_head_elements'] = array
+(
+    'description' => 'DC.description',
+    'keywords'    => 'DC.keywords',
+    'published'   => 'DC.date',
+);
+
 // Component system
 // Show only these components when creating or editing
 $GLOBALS['midcom_config_default']['component_listing_allowed'] = null;
