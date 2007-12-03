@@ -10,6 +10,73 @@
 /**
  * ActiveCalendar-like month display widget
  *
+ * # Usage
+ * 
+ * 1. Initialize the calendar
+ * 2. Set the calendar time
+ * 3. Add the events
+ * 4. Draw the calendar
+ * 
+ * Example:
+ * 
+ *     <?php
+ *     // Initialize the calendar
+ *     $calendar = new org_openpsa_calendarwidget_month();
+ *     
+ *     // Set the date. Skip any of these if you are showing the current year, month or day
+ *     $calendar->set_year(2007);
+ *     $calendar->set_month(12);
+ *     $calendar->set_day(3);
+ *     
+ *     // Add the events
+ *     $event = new midgard_event(123);
+ *     $calendar->add_event($event);
+ *     
+ *     // Show the calendar
+ *     $calendar->draw();
+ *     ?>
+ *     
+ * 
+ * ## Properties
+ * 
+ * There are numerous properties that can be used to tweak the calendar
+ * 
+ * ### Navigation
+ * 
+ * @property string previous  For displaying the link to the previous month
+ * @property string next      For displaying the link to the next month
+ * 
+ * ### Accessibility
+ * 
+ * @property boolean week_numbers         Switch for determining if the weeknumbers should be shown
+ * @property string week_text             Name for the table header for week numbers column, if set to empty value localized from 'week'
+ * @property boolean link_to_pages        Switch for the links. This will determine whether the links should open in a remote page.
+ * @property string link_to_pages_uri     Location of the remote page
+ * @property string suffix                Extra query suffix
+ * @property boolean month_navigation     Switch to determine whether month navigation is enabled.
+ * @property boolean details_box          Switch to determine if details box should appear
+ * @property boolean use_javascript       Switch to define if JavaScript should be used to display the details box
+ * @property boolean days_outside_month   Switch to determine if the days outside the month scope but inside the viewed weeks should be shown.
+ * @property boolean short_day_names      Switch to determine whether we should use short or long day names for the table headers
+ * @property boolean path_mode            Switch to determine whether month navigation should be handled with changing the path instead of GET parameters
+ * @property string path                  Root URL for the calendar widget
+ * 
+ * ## Setting the date
+ * 
+ * Set the date with corresponding methods
+ * 
+ * @method void set_year($year, [$recalculate]);
+ * @method void set_month($month, [$recalculate]);
+ * @method void set_day($day, [$recalculate]);
+ * 
+ * ## Adding events
+ * 
+ * Add midgard_events or midcom_db_events with them with
+ * 
+ *     <?php
+ *     $calendar->add_event($event);
+ *     ?>
+ * 
  * @package org.openpsa.calendarwidget
  */
 class org_openpsa_calendarwidget_month

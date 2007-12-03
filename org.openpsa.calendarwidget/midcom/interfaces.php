@@ -24,6 +24,7 @@ class org_openpsa_calendarwidget_interface extends midcom_baseclasses_components
             'main.php',
             'month.php',
             'event.php',
+            'styled_month.php',
         );
     }
 

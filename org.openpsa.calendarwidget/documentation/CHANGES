@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2007-12-03 adrenalin
+  + Added an extended class, which uses style elements instead of plain echo based output
+
 2007-05-31 adrenalin
   - added support for entering custom GET parameters
 
