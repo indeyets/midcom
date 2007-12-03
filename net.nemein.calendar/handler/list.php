@@ -595,6 +595,9 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.openpsa.calendarwidget/hover.js');
         }
         
+        // Initialize org.openpsa.calendarwidget.month to show the calendar
+        $this->_calendar = new org_openpsa_calendarwidget_styled_month();
+        
         if (!array_key_exists(0, $args))
         {
             $this->_year = (int) gmdate('Y');
@@ -618,17 +621,11 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             )
         );
         
-        // Initialize org.openpsa.calendarwidget.month to show the calendar
-        $this->_calendar = new org_openpsa_calendarwidget_styled_month();
-        
         // Point to the request data
         $this->_calendar->_request_data =& $data;
         
         // Schemadb for the events
         $this->_calendar->schemadb =& $this->_request_data['schemadb'];
-        
-        // Disable caching for a while
-        $_MIDCOM->cache->content->no_cache();
         
         if (!$this->_calendar)
         {
