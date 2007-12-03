@@ -9,6 +9,20 @@
 'tinymce_use_compressor' => false,
 //'tinymce_default_config_snippet' => "{$GLOBALS['midcom_config']['midcom_sgconfig_basedir']}/midcom.helper.datamanager2/tinymce",
 
+'html_purify' => true,
+'html_purify_config' => array
+(
+    'HTML' => array
+    (
+        'Doctype' => 'XHTML 1.0 Strict',
+        'TidyLevel' => 'light',
+    ),
+    'Cache' => array
+    (
+        'SerializerPath' => '__PREFIX__/var/cache/midgard/midcom/htmlpurifier',
+    ),
+),
+
 'include_metadata_required' => false,
 
 /* This is passed to sprintf, use %s where file name should be */

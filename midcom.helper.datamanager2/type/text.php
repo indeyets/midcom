@@ -67,35 +67,15 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
     /**
      * Configuration values for HTML Purifier
      */
-    var $purify_config = array
-    (
-        'HTML' => array
-        (
-            'Doctype' => 'XHTML 1.0 Strict',
-            'TidyLevel' => 'light',
-        ),
-        'Cache' => array
-        (
-            'SerializerPath' => '__PREFIX__/var/cache/midgard/midcom/htmlpurifier',
-        ),
-    );
+    var $purify_config = array();
 
     /**
      * Compatibility handler for the deprecated is_html configuration option.
      */
     function _on_configuring($config)
     {
-        if (array_key_exists('is_html', $config))
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('The configuration option "is_html" is deprecated, use "output_mode" instead.', MIDCOM_LOG_ERROR);
-            if ($config['is_html'])
-            {
-                debug_add('Output mode config option set to "html" by the "is_html" compatibility mode.');
-                $config['output_mode'] = 'html';
-            }
-            debug_pop();
-        }
+        $this->purify = $this->_config->get('html_purify');
+        $this->purify_config = $this->_config->get('html_purify_config');
     }
 
 
