@@ -146,8 +146,10 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
         {
 	    	return true;
         }
-
-        if ($this->_get_account($args[0]))
+        
+        if (   isset($args[0])
+            && $args[0] != ''
+            && $this->_get_account($args[0]))
         {
             return true;
         }
@@ -875,7 +877,66 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                 );
             }
         }
-        elseif ($_MIDCOM->auth->admin)
+        else
+        {
+            // Someone elses profile
+            
+            if ($this->_config->get('net_nehmer_buddylist_integration'))
+            {                
+                $buddylist_path = $this->_config->get('net_nehmer_buddylist_integration');
+                $current_prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+                $view_url = $this->_get_view_url();
+                
+                $_MIDCOM->componentloader->load_graceful('net.nehmer.buddylist');
+                
+                $qb = net_nehmer_buddylist_entry::new_query_builder();
+                $user = $_MIDCOM->auth->user->get_storage();
+                $qb->add_constraint('account', '=', $user->guid);
+                $qb->add_constraint('buddy', '=', $this->_account->guid);
+                $qb->add_constraint('blacklisted', '=', false);
+                $buddies = $qb->execute();
+                
+                if (count($buddies) > 0)
+                {
+                    // We're buddies, show remove button
+                    $this->_view_toolbar->add_item
+                    (
+                        array
+                        (
+                            MIDCOM_TOOLBAR_URL => "{$buddylist_path}delete",
+                            MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('remove buddy'),
+                            MIDCOM_TOOLBAR_HELPTEXT => null,
+                            MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                            MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_do('midgard:delete', $buddies[0]),
+                            MIDCOM_TOOLBAR_POST => true,
+                            MIDCOM_TOOLBAR_POST_HIDDENARGS => array
+                            (
+                                'net_nehmer_buddylist_delete' => '1',
+                                "account_{$this->_account->guid}" => '1',
+                                'relocate_to' => $view_url,
+                            )
+                        )
+                    );
+                }
+                else
+                {
+                    // We're not buddies, show add button
+                    $this->_view_toolbar->add_item
+                    (
+                        array
+                        (
+                            MIDCOM_TOOLBAR_URL => "{$buddylist_path}request/{$this->_account->guid}?relocate_to={$view_url}",
+                            MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('add buddy'),
+                            MIDCOM_TOOLBAR_HELPTEXT => null,
+                            MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_person.png',
+                            MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_do('midgard:create', $user),
+                        )
+                    );
+                }                
+            }
+        }
+                
+        if ($_MIDCOM->auth->admin)
         {
             // Admin viewing another profile
             $this->_view_toolbar->add_item
@@ -889,6 +950,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                 )
             );
         }
+        
     }
 
 }
