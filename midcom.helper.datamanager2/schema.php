@@ -392,6 +392,11 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
             $config['required'] = false;
         }
 
+        if (! array_key_exists('default', $config))
+        {
+            $config['default'] = null;
+        }
+
         if (! array_key_exists('storage', $config))
         {
             $config['storage'] = Array

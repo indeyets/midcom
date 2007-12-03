@@ -241,7 +241,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
                 if (is_object($field_default))
                 {
                     debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add("An object has been passed as default argument for {$name}, this is not allowed, skipping default.",
+                    debug_add("An object has been passed as widget default value for {$name}, this is not allowed, skipping default.",
                         MIDCOM_LOG_WARN);
                     debug_print_r('Passed object was:', $field_default);
                     debug_pop();
@@ -253,6 +253,27 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
                 else
                 {
                     $defaults[$name] = $field_default;
+                }
+            }
+            
+            if (!is_null($config['default']))
+            {
+                $schema_default = $config['default'];
+                if (is_object($schema_default))
+                {
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("An object has been passed as schema's default value for {$name}, this is not allowed, skipping default.",
+                        MIDCOM_LOG_WARN);
+                    debug_print_r('Passed object was:', $schema_default);
+                    debug_pop();
+                }
+                else if (is_array($schema_default))
+                {
+                    $defaults = array_merge($defaults, $schema_default);
+                }
+                else
+                {
+                    $defaults[$name] = $schema_default;
                 }
             }
 
