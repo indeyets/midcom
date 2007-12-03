@@ -31,7 +31,7 @@
         'net.nemein.repeathandler' => array (),
         'org.openpsa.calendarwidget' => array
         (
-            'min' => '2.1.5',
+            'min' => '2.1.6',
         ),
         'org.routamc.positioning' => array (),
         'de.bitfolge.feedcreator'    => array(),
