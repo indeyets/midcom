@@ -1,5 +1,6 @@
 // FI lang variables by Urho Konttori from Absolutions
 // Updated by Tuomo Aura, Ateco.fi
+// Updated by Jerry Jalava, Nemein.com
 
 tinyMCE.addToLang('',{
 bold_desc : 'Lihavoi (Ctrl+B)',
@@ -23,8 +24,8 @@ cleanup_desc : 'Siisti koodi',
 focus_alert : 'Teksink&auml;sittelyalue t&auml;ytyy olla valittuna ennen t&auml;m&auml;n komennon suorittamista.',
 edit_confirm : 'Haluatko k&auml;ytt&auml;&auml; WYSIWYG-tilaa t&auml;h&auml;n tekstialueeseen?',
 insert_link_title : 'Lis&auml;&auml;/muokkaa linkki&auml;',
-insert : 'Lis‰‰',
-update : 'P‰ivit‰',
+insert : 'Lis√§√§',
+update : 'P&auml;ivit&auml;',
 cancel : 'Peruuta',
 insert_link_url : 'Linkin URL',
 insert_link_target : 'Kohde',
