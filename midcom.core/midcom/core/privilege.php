@@ -850,6 +850,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
     function _is_privilege_valid($privilege, $user)
     {
         if (   is_null($user)
+            || !$user
             || $user == 'EVERYONE')
         {
             if (   $privilege->assignee != 'EVERYONE'
