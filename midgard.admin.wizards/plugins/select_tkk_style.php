@@ -111,6 +111,26 @@ class select_tkk_style extends midcom_baseclasses_components_handler
                 $this->_request_data['templates'] = $templates;
             }
         }
+        
+        // If other than template_ styles need to be used
+        if (count($this->_request_data['plugin_config']['show_additional_styles']) > 0)
+        {
+            $qb = midcom_db_style::new_query_builder();
+            $qb->add_constraint('up', '=', 0);
+            // TODO: Check for sitegroups?
+            $templates = $qb->execute();
+            
+            foreach($templates as $template)
+            {
+                foreach($this->_request_data['plugin_config']['show_additional_styles'] as $show)
+                {
+                    if ($template->name == $show)
+                    {
+                        $this->_request_data['templates'][] = $template;
+                    }
+                }
+            }
+        }
                 
         return true;
     }
