@@ -807,7 +807,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
                     $cached_privileges["{$cache_key}-{$priv}"] = false;
                 }
             }
-
             if (! array_key_exists($privilege, $full_privileges))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
@@ -1099,6 +1098,14 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             $dummy_object->guid = $object_guid;
 
             // Remember to sync this merging chain with can_user_do.
+            if ($cache_user_id == 'EVERYONE')
+            {
+                $collect_user = $cache_user_id;
+            }
+            else
+            {
+                $collect_user = false;
+            }
             $full_privileges = array_merge
             (
                 $this->_default_privileges,
@@ -1110,7 +1117,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
                 ),
                 $user_privileges,
                 $user_per_class_privileges,
-                midcom_core_privilege::collect_content_privileges($dummy_object)
+                midcom_core_privilege::collect_content_privileges($dummy_object, $collect_user)
             );
 
             $this->_privileges_cache[$cache_id] = $full_privileges;

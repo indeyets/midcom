@@ -444,6 +444,11 @@ $GLOBALS['midcom_config_default']['toolbars_enable_centralized'] = true;
 $GLOBALS['midcom_config_default']['service_midcom_core_service_urlparser'] = 'midcom_core_service_implementation_urlparsertopic';
 $GLOBALS['midcom_config_default']['service_midcom_core_service_urlgenerator'] = 'midcom_core_service_implementation_urlgeneratori18n';
 
+// Public attachment caching directives
+$GLOBALS['midcom_config_default']['attachment_cache_enabled'] = false;
+$GLOBALS['midcom_config_default']['attachment_cache_root'] = '/var/lib/midgard/vhosts/example.net/80/midcom-static/blobs';
+$GLOBALS['midcom_config_default']['attachment_cache_url'] = '/midcom-static/blobs';
+
 // Utilities
 $GLOBALS['midcom_config_default']['utility_imagemagick_base'] = '';
 $GLOBALS['midcom_config_default']['utility_jpegtran'] = 'jpegtran';

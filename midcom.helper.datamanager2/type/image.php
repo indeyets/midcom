@@ -330,13 +330,15 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
         if (array_key_exists('original', $this->attachments))
         {
             // Copy original as original
-            $src = mgd_open_attachment($this->attachments['original']->id, 'r');
+            $att = $this->attachments['original'];  
         }
         else
         {
             // Copy main as original
-            $src = mgd_open_attachment($this->attachments['main']->id, 'r');
+            $att = $this->attachments['main']->id;
         }
+        $src = $att->open('r');
+        
         // Create tmp file and copy by handles
         $this->_original_tmpname = tempnam($GLOBALS['midcom_config']['midcom_tempdir'], "midcom_helper_datamanager2_type_image");
         $dst = fopen($this->_original_tmpname, 'w+');
@@ -351,7 +353,8 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
             $buffer = fread($src, 131072); /* 128 kB */
             fwrite($dst, $buffer, 131072);
         }
-        fclose($src);
+        $att->close();
+        
         fclose($dst);
         $this->title = $this->attachments['main']->title;
         $this->_filename = $this->attachments['main']->name;

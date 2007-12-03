@@ -607,6 +607,11 @@ class midcom_core_privilege extends midcom_core_privilege_db
         {
             $user = $_MIDCOM->auth->user;
         }
+        
+        /*if ($user == 'EVERYONE')
+        {
+            $user = null;
+        }*/
 
         if (mgd_is_guid($arg))
         {
@@ -685,10 +690,10 @@ class midcom_core_privilege extends midcom_core_privilege_db
             }
         }
         else
-        {
+        {        
             $base_privileges = Array();
         }
-
+        
         // We need to be careful here again in case we have non-persistant objects.
         // This case is a bit different then the above one, though. Non-Persistant
         // objects can't have any privileges assinged whatsoever, so we skip the call
@@ -844,7 +849,8 @@ class midcom_core_privilege extends midcom_core_privilege_db
      */
     function _is_privilege_valid($privilege, $user)
     {
-        if (is_null($user))
+        if (   is_null($user)
+            || $user == 'EVERYONE')
         {
             if (   $privilege->assignee != 'EVERYONE'
                 && $privilege->assignee != 'ANONYMOUS')

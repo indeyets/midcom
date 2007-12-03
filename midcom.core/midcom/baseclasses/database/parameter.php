@@ -35,24 +35,21 @@ class midcom_baseclasses_database_parameter extends __midcom_baseclasses_databas
      *
      * @return MidgardObject Parent object or NULL if there is none.
      */
-    function get_parent_guid_uncached()
+    function get_parent_guid_uncached_static()
     {
-        if (!$this->parentguid)
+        $mc = new midgard_collector('midgard_parameter', 'guid', $guid);
+        $mc->set_key_property('parentguid');
+        $mc->execute();
+        $link_values = $mc->list_keys();
+        if (!$link_values)
         {
             return null;
         }
-
-        $parent = $_MIDCOM->dbfactory->get_object_by_guid($this->parentguid);
-        if (! $parent)
+        
+        foreach ($link_values as $key => $value)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Could not load Parameter ID {$this->up} from the database, aborting.",
-                MIDCOM_LOG_INFO);
-            debug_pop();
-            return null;
+            return $key;
         }
-
-        return $parent->guid;
     }
 }
 

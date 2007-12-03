@@ -2336,6 +2336,15 @@ class midcom_application
      */
     function serve_attachment(& $attachment, $expires = -1)
     {
+        if ($GLOBALS['midcom_config']['attachment_cache_enabled'])
+        {
+            $subdir = substr($attachment->guid, 0, 1);
+            if (file_exists("{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}/{$attachment->guid}_{$attachment->name}"))
+            {
+                $this->relocate("{$GLOBALS['midcom_config']['attachment_cache_url']}/{$subdir}/{$attachment->guid}_{$attachment->name}", 301);
+            }
+        }
+    
         debug_push("midcom_application::serve_attachment");
 
         // Sanity check expires

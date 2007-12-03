@@ -51,32 +51,21 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
      * @todo Not yet implemented.
      * @return MidgardObject Parent object.
      */
-    function get_parent_guid_uncached()
+    function get_parent_guid_uncached_static($guid)
     {
-        $possible_parent_classes = $_MIDCOM->dbclassloader->get_classes_for_table($this->ptable);
-        if (count($possible_parent_classes) == 0)
+        $mc = new midgard_collector('midgard_attachment', 'guid', $guid);
+        $mc->set_key_property('parentguid');
+        $mc->execute();
+        $link_values = $mc->list_keys();
+        if (!$link_values)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Failed to retrieve the parent object for Attachment {$this->id}, parent table {$this->ptable} is unknown to the class loader.", MIDCOM_LOG_WARN);
-            debug_pop();
             return null;
         }
-
-        $classname = $possible_parent_classes[0]['midcom_class_name'];
-        $_MIDCOM->dbclassloader->load_mgdschema_class_handler($classname);
-        $parent = new $classname($this->pid);
-
-        if (   ! $parent
-            || $parent->id != $this->pid)
+        
+        foreach ($link_values as $key => $value)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Failed to retrieve the parent object for Attachment {$this->id}, could not retrieve parent object.", MIDCOM_LOG_WARN);
-            debug_print_r('Retrieved object was:', $parent);
-            debug_pop();
-            return null;
+            return $key;
         }
-
-        return $parent->guid;
     }
 
     /**
@@ -195,6 +184,34 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
             {
                 $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);
             }
+            
+            // Check if the attachment can be read anonymously
+            if (   $GLOBALS['midcom_config']['attachment_cache_enabled']
+                && $this->can_do('midgard:read', 'EVERYONE'))
+            {
+                // Copy the file to the static directory
+                if (!file_exists($GLOBALS['midcom_config']['attachment_cache_root']))
+                {
+                    mkdir($GLOBALS['midcom_config']['attachment_cache_root']);
+                }
+                
+                $subdir = substr($this->guid, 0, 1);
+                if (!file_exists("{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}"))
+                {
+                    mkdir("{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}");
+                }
+                
+                $filename = "{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}/{$this->guid}_{$this->name}";
+                
+                $fh = $this->open('r');
+                $data = '';
+                while (!feof($fh))
+                {
+                    $data .= fgets($fh);
+                }
+                
+                file_put_contents($filename, $data);
+            }
         }
     }
 
@@ -274,7 +291,7 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
                 // Add this one if and only if we are persistent already.
                 $qb->add_constraint('guid', '<>', $this->guid);
             }
-            $result = $qb->count();
+            $result = $qb->count_unchecked();
 
             if ($result == 0)
             {
@@ -320,6 +337,22 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
             $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);
         }
     }
+    
+    function update_cache()
+    {
+        // Check if the attachment can be read anonymously
+        if (   $GLOBALS['midcom_config']['attachment_cache_enabled']
+            && !$this->can_do('midgard:read', 'EVERYONE'))
+        {
+            // Not public file, ensure it is removed
+            $subdir = substr($this->guid, 0, 1);
+            $filename = "{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}/{$this->guid}_{$this->name}";
+            if (file_exists($filename))
+            {
+                @unlink($filename);
+            }
+        }
+    }
 
     /**
      * Updated callback, triggers watches on the parent(!) object.
@@ -327,6 +360,7 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
     function _on_updated()
     {
         parent::_on_updated();
+        $this->update_cache();
         $object = $this->get_parent();
         if ($object !== null)
         {
@@ -340,6 +374,18 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
     function _on_deleted()
     {
         parent::_on_deleted();
+
+        if ($GLOBALS['midcom_config']['attachment_cache_enabled'])
+        {
+            // Remove attachment cache
+            $subdir = substr($this->guid, 0, 1);
+            $filename = "{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}/{$this->guid}_{$this->name}";
+            if (file_exists($filename))
+            {
+                @unlink($filename);
+            }
+        }
+
         $object = $this->get_parent();
         if ($object !== null)
         {

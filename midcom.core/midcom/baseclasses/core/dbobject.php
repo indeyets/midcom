@@ -118,6 +118,16 @@ class midcom_baseclasses_core_dbobject
         $object->_on_updated();
         
         $_MIDCOM->cache->invalidate($object->guid);
+        
+        if ($GLOBALS['midcom_config']['attachment_cache_enabled'])
+        {
+            $atts = $object->list_attachments();
+            foreach ($atts as $att)
+            {
+                $_MIDCOM->cache->invalidate($att->guid);
+                $att->update_cache();
+            }
+        }
 
         // Invalidate Midgard pagecache if we touched style/page element
         if (   function_exists('mgd_cache_invalidate')

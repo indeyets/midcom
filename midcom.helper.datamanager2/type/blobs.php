@@ -231,17 +231,39 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         $info['mimetype'] = $att->mimetype;
         $name = urlencode($att->name);
 
-        $nap = new midcom_helper_nav();
-        $parent = $nap->resolve_guid($att->parentguid);
-        if (   is_array($parent)
-            && $parent[MIDCOM_NAV_TYPE] == 'node')
+        if ($GLOBALS['midcom_config']['attachment_cache_enabled'])
         {
-            $info['url'] = "{$_MIDGARD['self']}{$parent[MIDCOM_NAV_RELATIVEURL]}{$name}";
+            $subdir = substr($att->guid, 0, 1);
+            if (file_exists("{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}/{$att->guid}_{$att->name}"))
+            {
+                // Attachment coming from the cache URL
+                $info['url'] = "{$GLOBALS['midcom_config']['attachment_cache_url']}/{$subdir}/{$att->guid}_{$att->name}";
+            }
         }
-        else
+
+        if (!isset($info['url']))
         {
+            // Uncached attachment served straight out of MidCOM
+            // FIXME: ptable is a deprecated property
+            if ($att->ptable == 'topic')
+            {
+                // Topic attachment, try to generate "clean" URL
+                $nap = new midcom_helper_nav();
+                $parent = $nap->resolve_guid($att->parentguid);
+                if (   is_array($parent)
+                    && $parent[MIDCOM_NAV_TYPE] == 'node')
+                {
+                    $info['url'] = "{$_MIDGARD['self']}{$parent[MIDCOM_NAV_RELATIVEURL]}{$name}";
+                }
+            }
+        }
+        
+        if (!isset($info['url']))
+        {
+            // Use regular MidCOM attachment server
             $info['url'] = "{$this->attachment_server_url}{$att->guid}/{$name}";
         }
+        
         $info['id'] = $att->id;
         $info['guid'] = $att->guid;
 
@@ -844,7 +866,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
     function create_tmp_copy($att)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $src = mgd_open_attachment($att->id,'r');
+        $src = $att->open('r');
         if (!$src)
         {
             debug_add("Could not open attachment #{$att->id} for reading", MIDCOM_LOG_ERROR);
@@ -865,7 +887,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
             $buffer = fread($src, 131072); /* 128 kB */
             fwrite($dst, $buffer, 131072);
         }
-        fclose($src);
+        $att->close();
         fclose($dst);
         debug_pop();
         return $tmpname;
