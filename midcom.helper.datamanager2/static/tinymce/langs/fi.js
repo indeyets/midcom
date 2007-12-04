@@ -38,6 +38,6 @@ help_desc : 'Apua',
 bold_img : "bold.gif",
 italic_img : "italic.gif",
 underline_img : "underline.gif",
-clipboard_msg : 'Leikkaus/Kopiointi/Liit&auml;minen ei onnistu Mozilla eik&auml; Firefox -selaimilla tietoturvasta johtuen. \n Haluatko lis&auml;tietoa aiheesta?',
-popup_blocked : 'Koneellasi oleva popup-ikkunoiden esto-ohjelma est&auml;&auml; tarvittavan ikkunan avaamisen. Sinun pit&auml;&auml; sallia popup-ikkunoiden n&auml;ytt&auml;minen t&auml;ll&auml; sivustolla ohjelman asetuksista.'
+clipboard_msg : 'Leikkaus/Kopiointi/Liitäminen ei onnistu Mozilla eikä Firefox -selaimilla tietoturvasta johtuen. \n Haluatko lisätietoa aiheesta?',
+popup_blocked : 'Koneellasi oleva popup-ikkunoiden esto-ohjelma estää tarvittavan ikkunan avaamisen. Sinun pitää sallia popup-ikkunoiden näyttäminen tällä sivustolla ohjelman asetuksista.'
 });
