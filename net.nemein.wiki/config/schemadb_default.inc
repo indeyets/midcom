@@ -41,6 +41,13 @@
             'type' => 'tags',
             'widget' => 'text',
         ),
+        'show_in_navigation' => array
+        (
+            'title' => 'show in navigation',
+            'storage' => 'view',
+            'type' => 'boolean',
+            'widget' => 'checkbox',
+        ),
     )
 ),
 'redirect' => array

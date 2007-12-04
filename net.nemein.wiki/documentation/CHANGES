@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2007-12-03 adrenalin
+  + Added support for showing wikipages in navigation on request
+
 2007-07-09 bergie
   + Added "Preview" mode for forms-based editing
   + Added support for user-provided change messages
