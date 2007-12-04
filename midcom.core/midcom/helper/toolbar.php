@@ -261,7 +261,7 @@ class midcom_helper_toolbar
 
         if ($before != -1)
         {
-            $before = $this->_check_index($before);
+            $before = $this->_check_index($before, false);
         }
         $item = $this->clean_item($item);
 
