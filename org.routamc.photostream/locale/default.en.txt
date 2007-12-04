@@ -7,6 +7,10 @@
 <span>%d photos tagged with </span>%s
 ---STRINGEND
 
+---STRING all
+All
+---STRINGEND
+
 ---STRING all photos
 All photos
 ---STRINGEND
@@ -36,15 +40,19 @@ Email API default tags to apply to photos
 ---STRINGEND
 
 ---STRING email API enable
-Email API enabled
+Enable email API
 ---STRINGEND
 
 ---STRING email API schema
-Email API schema
+Schema for the email API
 ---STRINGEND
 
 ---STRING enable AJAX editing
 Enable AJAX editing
+---STRINGEND
+
+---STRING entry page operating model
+Entry page operating model
 ---STRINGEND
 
 ---STRING flickr_username
@@ -135,6 +143,10 @@ Rating
 Recreate derived images
 ---STRINGEND
 
+---STRING select the user or tags
+Select the user or tags
+---STRINGEND
+
 ---STRING start
 Start
 ---STRINGEND
@@ -175,7 +187,7 @@ Upload to gallery
 User interface settings
 ---STRINGEND
 
----STRING all
-All
+---STRING go straight to the all photos view
+Go straight to the all photos view
 ---STRINGEND
 

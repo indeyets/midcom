@@ -31,17 +31,8 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
         // Handle /config
         $this->_request_switch['config'] = array
         (
-            'handler' => array
-            (
-                'midcom_core_handler_configdm',
-                'configdm'
-            ),
-            'schemadb' => 'file:/org/routamc/photostream/config/schemadb_config.inc',
-            'schema' => 'config',
-            'fixed_args' => array
-            (
-                'config'
-            ),
+            'handler' => array ('midcom_helper_dm2config_config', 'config'),
+            'fixed_args' => array ('config'),
         );
 
         // Handle /upload
@@ -210,7 +201,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             ),
             'variable_args' => 2,
         );
-
+        
         // Handle /list/all
         $this->_request_switch['photostream_list_all'] = array
         (
@@ -341,16 +332,32 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             'fixed_args' => Array('api', 'metaweblog'),
         );
         */
-
-        // Handle /
-        $this->_request_switch['index'] = array
-        (
-            'handler' => array
+        
+        if ($this->_config->get('entry_page') === 'straight')
+        {
+            // Handle /
+            $this->_request_switch['photostream_list_all_frontpage'] = array
             (
-                'org_routamc_photostream_handler_index',
-                'index'
-            ),
-        );
+                'handler' => array
+                (
+                    'org_routamc_photostream_handler_list',
+                    'photostream_list'
+                ),
+                'fixed_args' => Array(),
+            );
+        }
+        else
+        {
+            // Handle /
+            $this->_request_switch['index'] = array
+            (
+                'handler' => array
+                (
+                    'org_routamc_photostream_handler_index',
+                    'index'
+                ),
+            );
+        }
 
         $this->_register_feed_handlers();
     }
@@ -404,7 +411,8 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             $this->_request_switch[$new_id] = $new_switch;
 
             // If we were not forced to use the feed url space earlier add it anyway so we have at least one consistent interface
-            if ($new_switch['fixed_args'][0] !== 'feed')
+            if (   isset($new_switch['fixed_args'][0])
+                && $new_switch['fixed_args'][0] !== 'feed')
             {
                 array_unshift($new_switch['fixed_args'], 'feed');
                 $new_id = "feed2:{$handler_id}";

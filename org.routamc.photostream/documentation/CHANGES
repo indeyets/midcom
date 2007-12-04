@@ -7,6 +7,10 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2007-12-04 adrenalin
+  ! Changed to use midcom.helper.dm2config for component configuration
+  + Added support for showing the photostream contents immediately on the welcome page
+
 2007-10-23 adrenalin
   - Fixed the EXIF data reading: updating will read EXIF and overwrite it, if it isn't properly set
 

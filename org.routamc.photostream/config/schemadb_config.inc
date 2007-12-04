@@ -12,11 +12,15 @@
     (
         'schemadb' => array
         (
-            'description' => 'schema database',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'org.routamc.photostream',
-            'config_key' => 'schemadb',
+            'title' => 'schema database',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'schemadb',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
             'start_fieldgroup' => array
             ( 
                 'title' => 'advanced schema and data settings',
@@ -25,53 +29,92 @@
         ),
         'enable_ajax_editing' => array
         (
-            'description' => 'enable AJAX editing',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'org.routamc.photostream',
-            'config_key' => 'enable_ajax_editing',
-            'widget' => 'config_radiobox',
-            'widget_radiobox_choices' => Array
+            'title' => 'enable AJAX editing',
+            'storage' => array
             (
-                '' => 'default setting',
-                '1' => 'yes',
-                '0' => 'no',
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'enable_ajax_editing',
             ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
             'start_fieldgroup' => array
             ( 
                 'title' => 'user interface settings',
             ),
         ),
+        'entry_page' => array
+        (
+            'title' => 'entry page operating model',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'entry_page',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    'lists' => 'select the user or tags',
+                    'straight' => 'go straight to the all photos view',
+                ),
+            ),
+            'widget' => 'select',
+        ),
         'navigate_with_context' => array
         (
-            'description' => 'navigate with sticky context (e.g. tags, timespan or photographer)',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'org.routamc.photostream',
-            'config_key' => 'navigate_with_context',
-            'widget' => 'config_radiobox',
-            'widget_radiobox_choices' => Array
+            'title' => 'navigate with sticky context (e.g. tags, timespan or photographer)',
+            'storage' => array
             (
-                '' => 'default setting',
-                '1' => 'yes',
-                '0' => 'no',
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'navigate_with_context',
             ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
             'end_fieldgroup' => '',
         ),
         'api_email_enable' => array
         (
-            'description' => 'email API enable',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'org.routamc.photostream',
-            'config_key' => 'api_email_enable',
-            'widget' => 'config_radiobox',
-            'widget_radiobox_choices' => Array
+            'title' => 'email API enable',
+            'storage' => array
             (
-                '' => 'default setting',
-                '1' => 'yes',
-                '0' => 'no',
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'api_email_enable',
             ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
             'start_fieldgroup' => array
             ( 
                 'title' => 'API settings',
@@ -79,43 +122,61 @@
         ),
         'api_email_schema' => array
         (
-            'description' => 'email API schema',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'org.routamc.photostream',
-            'config_key' => 'api_email_schema',
+            'title' => 'email API schema',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'api_email_schema',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
         ),
         'api_email_default_tags' => array
         (
-            'description' => 'email API default tags to apply to photos',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'org.routamc.photostream',
-            'config_key' => 'api_email_default_tags',
+            'title' => 'email API default tags to apply to photos',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'api_email_default_tags',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
         ),
         /* not implemented yet
         'api_metaweblog_enable' => array
         (
-            'description' => 'metaweblog API enable',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'org.routamc.photostream',
-            'config_key' => 'api_metaweblog_enable',
-            'widget' => 'config_radiobox',
-            'widget_radiobox_choices' => Array
+            'title' => 'metaweblog API enable',
+            'storage' => array
             (
-                '' => 'default setting',
-                '1' => 'yes',
-                '0' => 'no',
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'api_metaweblog_enable',
             ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
         ),
         'api_metaweblog_schema' => array
         (
-            'description' => 'metaweblog API schema',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'org.routamc.photostream',
-            'config_key' => 'api_metaweblog_schema',
+            'title' => 'metaweblog API schema',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'api_metaweblog_schema',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
             'end_fieldgroup' => '',
         ),
         */

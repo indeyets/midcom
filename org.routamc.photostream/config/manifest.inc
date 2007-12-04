@@ -35,6 +35,7 @@
     'dependencies' => array
     (
         'midcom.helper.datamanager2' => array (),
+        'midcom.helper.dm2config' => array (),
         'net.nemein.tag' => array (),
         'org.openpsa.qbpager' => array (),
         'net.nehmer.buddylist' => array (),

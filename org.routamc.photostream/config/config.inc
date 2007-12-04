@@ -1,6 +1,9 @@
 'schemadb' => 'file:/org/routamc/photostream/config/schemadb_default.inc',
 'photos_per_page' => 20,
 
+// Entry page
+'entry_page' => 'lists',
+
 // Email API settings
 'api_email_enable' => false,
 'api_email_schema' => 'photo',
@@ -20,3 +23,6 @@
 
 // Stick to the context in photo navigation (e.g. show the next and previous only from the selected user or tag group)
 'navigate_with_context' => true,
+
+// Configuration schema
+'schemadb_config' => 'file:/org/routamc/photostream/config/schemadb_config.inc',

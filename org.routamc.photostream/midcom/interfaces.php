@@ -28,6 +28,7 @@ class org_routamc_photostream_interface extends midcom_baseclasses_components_in
         $this->_autoload_libraries = array
         (
             'midcom.helper.datamanager2',
+            'midcom.helper.dm2config',
             'org.openpsa.qbpager',
             'net.nemein.tag',
         );
