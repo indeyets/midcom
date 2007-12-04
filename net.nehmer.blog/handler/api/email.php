@@ -244,6 +244,12 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
         // Index the article
         $indexer =& $_MIDCOM->get_service('indexer');
         net_nehmer_blog_viewer::index($this->_datamanager, $indexer, $this->_content_topic);
+
+        if ($this->_config->get('api_email_autoapprove'))
+        {
+            $metadata = $this->_article->get_metadata();
+            $metadata->approve();
+        }
         
         $_MIDCOM->auth->drop_sudo();
         debug_pop();

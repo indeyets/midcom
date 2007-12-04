@@ -51,6 +51,7 @@
 
 'api_email_enable' => false,
 'api_email_schema' => 'default',
+'api_email_autoapprove' => false,
 
 'api_metaweblog_enable' => true,
 'api_metaweblog_schema' => 'default',
