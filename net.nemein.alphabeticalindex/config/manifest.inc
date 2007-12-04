@@ -3,8 +3,8 @@
  * to create direct webpages.*/ 
 'purecode' => false,
 /* when using pear packaging, versions > 1 are stable */
-'version' => '0.0.1',
-'state' => 'devel',
+'version' => '1.0.3',
+'state' => 'stable',
 /* use this to set default privileges */
 'privileges' => array(),
 /* use this to initialize your own MgdSchema classes */

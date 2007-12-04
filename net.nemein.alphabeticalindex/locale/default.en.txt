@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING net.nemein.alphabeticalindex
+Alphabetical index
+---STRINGEND
+
 ---STRING external item
 External item
 ---STRINGEND
@@ -11,11 +15,11 @@ External item
 Internal items
 ---STRINGEND
 
----STRING net.nemein.alphabeticalindex
-Alphabetical index
----STRINGEND
-
 ---STRING to top
 To top
+---STRINGEND
+
+---STRING Show in index
+Show in index
 ---STRINGEND
 

@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING net.nemein.alphabeticalindex
+Aakkosellinen hakemisto
+---STRINGEND
+
 ---STRING external item
 Ulkoinen tietue
 ---STRINGEND
@@ -11,11 +15,10 @@ Ulkoinen tietue
 Sisäisiä tietueita
 ---STRINGEND
 
----STRING net.nemein.alphabeticalindex
-Aakkosellinen hakemisto
----STRINGEND
-
 ---STRING to top
 Takaisin ylös
 ---STRINGEND
 
+---STRING Show in index
+Näytä hakemistossa
+---STRINGEND
