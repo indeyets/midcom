@@ -6,3 +6,9 @@ Simple steps how to make email-api working.
      fetchmail -s -m "$PATH_TO_FILE/mda_posturl $URL_TO_PHOTOSTREAM/api/email" -u usename -a your.mailserver.com
 4. Ensure that the person that is the sender of the mail has been created to your system. Email receiver checks that the email - address is in the system
 5. Start sending mails with attached images to your mailbox that you descrived above.
+
+To skip password queries when running this from cron you can set up a .fetchmailrc file in your home directory:
+
+    poll your.mailserver.com
+        user username
+        password yourpassword
