@@ -70,6 +70,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         // FIXME: Use Midgard_Collector here once it supports metadata properties as value properties
         $articles_scores = array();
         $articles_by_guid = array();
+        $articles_by_url = array();
         $qb = midcom_db_article::new_query_builder();
         $cutoff_date = gmdate('Y-m-d H:i:s', mktime(0, 0, 0, date('m'), date('d') - $this->_config->get('frontpage_limit_days'), date('Y')));
         $qb->add_constraint('metadata.published', '>', $cutoff_date);
@@ -82,7 +83,22 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             {
                 continue;
             }
-            $articles_by_guid[$article->guid] = $article;
+            
+            // Ensure all items have links
+            if (empty($article->url))
+            {
+                // Local item
+                $article->url = $_MIDCOM->permalinks->create_permalink($article->guid);
+            }
+            
+            if (isset($articles_by_url[$article->url]))
+            {
+                // We already have item with this URL, skip
+                continue;
+            }
+            
+            $articles_by_url[$article->url] = $article->guid;
+            $articles_by_guid[$article->guid] = $article;            
             $this->articles_scores[$article->guid] = $this->count_age($initial_score, $article->metadata->published);
         }
         
@@ -95,6 +111,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             {
                 break;
             }
+            
             
             $this->articles[$guid] = $articles_by_guid[$guid];
             $found++;
@@ -179,12 +196,6 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             else
             {
                 $article->abstract = $this->generate_caption($article->abstract, $this->_config->get('frontpage_show_abstract_length'));
-            }
-            
-            if (empty($article->url))
-            {
-                // Local item
-                $article->url = $_MIDCOM->permalinks->create_permalink($article->guid);
             }
             
             $this->articles[$guid] = $article;
