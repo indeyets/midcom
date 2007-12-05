@@ -40,5 +40,5 @@ Näytettävien tasojen määrä
 ---STRINGEND
 
 ---STRING skip topics
-Valitse sivukartasta piiloitettavat kansiot
+Valitse sivukartasta piilotettavat kansiot
 ---STRINGEND
