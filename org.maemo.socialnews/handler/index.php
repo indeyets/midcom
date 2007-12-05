@@ -219,6 +219,25 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         
         $_MIDCOM->componentloader->load_graceful('net.nemein.favourites');
 
+        $data['node_title'] = $this->_config->get('socialnews_title');
+        if (empty($data['node_title']))
+        {
+            $data['node_title'] = $this->_topic->extra;
+        }
+        
+        if ($handler_id == 'rss20_items')
+        {
+            $_MIDCOM->load_library('de.bitfolge.feedcreator');
+            $_MIDCOM->cache->content->content_type('text/xml');
+            $_MIDCOM->header('Content-type: text/xml; charset=UTF-8');
+            $_MIDCOM->skip_page_style = true;
+            $data['feedcreator'] = new UniversalFeedCreator();
+            $data['feedcreator']->title = $data['node_title'];
+            $data['feedcreator']->link = substr($_MIDCOM->get_host_prefix(), 0, -1) . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+            $data['feedcreator']->cssStyleSheet = false;
+            $data['feedcreator']->syndicationURL = "{$data['feedcreator']->link}rss.xml";
+        }
+
         return true;
     }
     
@@ -228,12 +247,11 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
      */
     function _show_index($handler_id, &$data)
     {
-        $data['node_title'] = $this->_config->get('socialnews_title');
-        if (empty($data['node_title']))
+        if ($handler_id == 'rss20_items')
         {
-            $data['node_title'] = $this->_topic->extra;
-        }    
-
+            $this->_show_rss_items($handler_id, &$data);
+            return;
+        }
         midcom_show_style('index_header');
         
         $main_items = array_slice($this->articles, 0, (int) $this->_config->get('frontpage_show_main_items'));
@@ -263,6 +281,22 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         }
         midcom_show_style('index_footer');
     }
-    
+
+    /**
+     * Displays the feed
+     */
+    function _show_rss_items($handler_id, &$data)
+    {   
+        // Add each article now.
+        if ($this->articles)
+        {
+            foreach ($this->articles as $article)
+            {
+                $data['article'] =& $article;
+                midcom_show_style('feed-item');
+            }
+        }
+        echo $data['feedcreator']->createFeed('RSS2.0');
+    }   
 }
 ?>
