@@ -54,7 +54,7 @@ while($i <= $max_levels)
 ?>
 </select>
 </div>
-<input style="float:left; margin-left:10px; margin-top:15px;" type="submit" value="<?php echo $data['l10n']->get('Submit');?>">
+<input style="float:left; margin-left:10px; margin-top:15px;" type="submit" value="<?php echo $data['l10n']->get('show');?>">
 </form>
 </div>
 <div style="clear:both"></div>

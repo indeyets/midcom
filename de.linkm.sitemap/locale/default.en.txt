@@ -3,11 +3,11 @@
 ---CVS $Id$
 ---LANGUAGE en
 
----STRING Select root to show
+---STRING select root to show
 Select root to show
 ---STRINGEND
 
----STRING Show levels
+---STRING show levels
 Show levels
 ---STRINGEND
 
@@ -41,5 +41,9 @@ Select topics to skip in sitemapview
 
 ---STRING use google sitemap mode
 Use Google Sitemap mode to output the site structure in XML
+---STRINGEND
+
+---STRING show
+Show
 ---STRINGEND
 

@@ -31,11 +31,11 @@ Käytä Google Sitemap -tilaa näyttääksesi sivuston rakenteen XML-muodossa
 Juuritaso
 ---STRINGEND
 
----STRING Select root to show
+---STRING select root to show
 Valitse näytettävä juuritaso
 ---STRINGEND
 
----STRING Show levels
+---STRING show levels
 Näytettävien tasojen määrä
 ---STRINGEND
 

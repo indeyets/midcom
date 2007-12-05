@@ -7,11 +7,11 @@
 Mapa serwisu
 ---STRINGEND
 
----STRING Select root to show
+---STRING select root to show
 Wybierz początek mapy
 ---STRINGEND
 
----STRING Show levels
+---STRING show levels
 Pokaż poziomy
 ---STRINGEND
 

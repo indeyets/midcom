@@ -10,7 +10,7 @@
             'datatype'      => 'text',
             'location'      => 'config',
             'config_domain' => 'de.linkm.sitemap',
-            "config_key"    => 'display_root',
+            'config_key'    => 'display_root',
             'widget'        => 'config_radiobox',
             'widget_radiobox_choices' => array 
             (
@@ -26,7 +26,7 @@
             'datatype'      => 'text',
             'location'      => 'config',
             'config_domain' => 'de.linkm.sitemap',
-            "config_key"    => 'hide_leaves',
+            'config_key'    => 'hide_leaves',
             'widget'        => 'config_radiobox',
             'widget_radiobox_choices' => array 
             (
@@ -42,7 +42,7 @@
             'datatype'      => 'text',
             'location'      => 'config',
             'config_domain' => 'de.linkm.sitemap',
-            "config_key"    => 'leaves_first',
+            'config_key'    => 'leaves_first',
             'widget'        => 'config_radiobox',
             'widget_radiobox_choices' => array 
             (
@@ -58,7 +58,7 @@
             'datatype'      => 'text',
             'location'      => 'config',
             'config_domain' => 'de.linkm.sitemap',
-            "config_key"    => 'root_topic',
+            'config_key'    => 'root_topic',
             'widget'        => 'select',
             'widget_select_choices' => de_linkm_sitemap_viewer::list_root_nodes(),
         ),
@@ -68,18 +68,18 @@
             'datatype'      => 'multiselect',
             'location'      => 'config',
             'config_domain' => 'de.linkm.sitemap',
-            "config_key"    => 'skip_topics',
+            'config_key'    => 'skip_topics',
             'widget'        => 'multiselect',
-            "widget_select_size" => 10,
+            'widget_select_size' => 10,
             'multiselect_selection_list' => de_linkm_sitemap_viewer::list_root_nodes(),
         ),
         'show_levels' => array 
         (
-            'description'   => 'Show levels',
+            'description'   => 'show levels',
             'datatype'      => 'text',
             'location'      => 'config',
             'config_domain' => 'de.linkm.sitemap',
-            "config_key"    => 'show_levels',
+            'config_key'    => 'show_levels',
         ),
         'google_sitemap_mode' => array
         (
