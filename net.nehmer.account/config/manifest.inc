@@ -1,5 +1,5 @@
 'name' => 'net.nehmer.account',
-'version' => '1.1.0beta2',
+'version' => '1.1.0beta3',
 'state' => 'beta',
 'class_definitions' => array
 (

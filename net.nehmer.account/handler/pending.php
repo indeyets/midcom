@@ -29,7 +29,8 @@ class net_nehmer_account_handler_pending extends midcom_baseclasses_components_h
         $this->_component_data['active_leaf'] = NET_NEHMER_ACCOUNT_LEAFID_PENDING;
         
         // Add table sorder
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/net.nehmer.account/sortable.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.tablesorter.pack.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/net.nehmer.account/jquery.tablesorter.widget.column_highlight.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/net.nehmer.account/twisty.js');
         $_MIDCOM->add_link_head
         (

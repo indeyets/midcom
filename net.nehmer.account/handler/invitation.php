@@ -1,5 +1,19 @@
 <?php
+/**
+ * @package net.nehmer.account
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @version $Id: edit.php 11550 2007-08-10 10:30:32Z adrenalin $
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
+/**
+ * Account Management handler class: Invitation
+ *
+ * This class allows you to invite people.
+ *
+ * @package net.nehmer.account
+ */
 class net_nehmer_account_handler_invitation extends midcom_baseclasses_components_handler
 {
     var $_mail = null;
@@ -32,19 +46,19 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
     function _is_person_registered($email)
     {
         $qb = midcom_db_person::new_query_builder();
-    	$qb->add_constraint('sitegroup', '=', $this->_topic->sitegroup);
-    	$qb->add_constraint('email', '=', $email);
-
-    	$persons = $qb->execute();
-
-    	if (count($persons) > 0)
-    	{
-    	    return $persons;
-    	}
-    	else
-    	{
+       	$qb->add_constraint('sitegroup', '=', $this->_topic->sitegroup);
+       	$qb->add_constraint('email', '=', $email);
+   
+       	$persons = $qb->execute();
+   
+       	if (count($persons) > 0)
+       	{
+       	    return $persons;
+       	}
+       	else
+       	{
             return false;
-    	}
+       	}
     }
 
     /**
@@ -160,6 +174,9 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
         return true;
     }
     
+    /**
+     * This method is never called, as the handler method will always relocate
+     */
     function _show_delete_invite($handler_id, &$data)
     {
 
@@ -187,35 +204,34 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
                 }
 
                 if (   isset($_POST["net_nehmer_accounts_invitation_invitee_name_{$i}"])
-	                && isset($_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"])
-	                && !empty($_POST["net_nehmer_accounts_invitation_invitee_name_{$i}"])
-	                && !empty($_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"])
-	                )
-	            {
+                    && isset($_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"])
+                    && !empty($_POST["net_nehmer_accounts_invitation_invitee_name_{$i}"])
+                    && !empty($_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"])
+                    )
+                {
                     if (   isset($_POST['net_nehmer_accounts_invitation_email_message']) 
-		                && !empty($_POST['net_nehmer_accounts_invitation_email_message']))
+                        && !empty($_POST['net_nehmer_accounts_invitation_email_message']))
                     {
                         $this->_user_defined_message = $_POST['net_nehmer_accounts_invitation_email_message'];
-		            }
+                    }
 
-	        /**
-		     * Saving the invite object
-		     */
+                   /**
+                    * Saving the invite object
+                    */
                     $this->_invite = new net_nehmer_accounts_invites_invite_dba();
-                    $this->_invite->hash = md5($_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"] 
-		        . "_{$_MIDCOM->auth->user->guid}");
-		    $this->_invite->email = $_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"];
-		    $this->_invite->buddy = $_MIDCOM->auth->user->guid;
+                    $this->_invite->hash = md5($_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"] . "_{$_MIDCOM->auth->user->guid}");
+                    $this->_invite->email = $_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"];
+                    $this->_invite->buddy = $_MIDCOM->auth->user->guid;
                     
                     debug_print_r("Creating invite: ",$this->_invite);
                     
-                    $allready_registered = $this->_is_person_registered($_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"]);
+                    $already_registered = $this->_is_person_registered($_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"]);
                     
-                    debug_print_r("persons with email ".$_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"].":",$allready_registered);
+                    debug_print_r("persons with email ".$_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"].":",$already_registered);
                     
-                    if ($allready_registered)
-		            {
-		                foreach ($allready_registered as $person)
+                    if ($already_registered)
+                    {
+                        foreach ($already_registered as $person)
                         {
                             $this->_add_as_buddy($person->guid);
                         }
@@ -239,19 +255,19 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
                         $_POST["net_nehmer_accounts_invitation_invitee_name_{$i}"]
                     );
                 }
-	   
+       
             }
             debug_pop();
             $_MIDCOM->relocate('sent_invites');
-	    }
-	    
-	    $step_overrides = $this->_config->get('override_registration_steps');
-	    if (array_key_exists('invite', $step_overrides))
-	    {
-	        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-	        $this->_request_data['skip_url'] = "{$prefix}{$step_overrides['invite']}";
-	    }
-	    
+        }
+        
+        $step_overrides = $this->_config->get('override_registration_steps');
+        if (array_key_exists('invite', $step_overrides))
+        {
+            $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+            $this->_request_data['skip_url'] = "{$prefix}{$step_overrides['invite']}";
+        }
+        
         $_MIDCOM->set_pagetitle($this->_l10n->get('import contacts'));
         $tmp = Array();
         $tmp[] = Array
@@ -261,7 +277,7 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
         );
 
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
-        	    
+                
         return true;
     }
 

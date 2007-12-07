@@ -12,6 +12,6 @@
                     <?php echo $data['person']->email; ?>
                 </td>
                 <td>
-                    <?php echo strftime('%c', $data['person']->metadata->created); ?>
+                    <?php echo strftime('%x %H:%M', $data['person']->metadata->created); ?>
                 </td>
             </tr>

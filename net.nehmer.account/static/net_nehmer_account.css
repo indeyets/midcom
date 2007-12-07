@@ -121,3 +121,23 @@ div.vcard dt
     margin-right: 10px;
     font-weight: bold;
 }
+
+#net_nehmer_account_pending table thead th
+{
+  background-position: right center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  text-align: left;
+  padding-right: 16px;
+}
+
+#net_nehmer_account_pending table thead th.headerSortUp
+{
+  background-image: url('arrow-up.gif');
+}
+
+#net_nehmer_account_pending table thead th.headerSortDown
+{
+  background-image: url('arrow-down.gif');
+}
+
