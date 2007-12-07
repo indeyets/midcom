@@ -1,7 +1,7 @@
 'name' => 'midcom.admin.user',
 'description' => 'User management tool',
 'purecode' => true,
-'version' => '0.0.2alpha',
+'version' => '1.0.0beta4',
 'privileges' => array (),
 'class_definitions' => array (),
 'package.xml' => array
