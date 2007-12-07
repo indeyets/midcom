@@ -47,7 +47,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
 
         // Define the URL space
 
-        // /upcoming/N shows next N events
+        // /open/N shows N events that have a configured type
         $this->_request_switch['open'] = Array
         (
             'handler' => Array('net_nemein_calendar_handler_list', 'open'),
@@ -74,6 +74,21 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nemein_calendar_handler_list', 'upcoming'),
             'fixed_args' => Array('upcoming'),
             'variable_args' => 1,
+        );
+
+        // /past/N shows previous N events
+        $this->_request_switch['past'] = Array
+        (
+            'handler' => Array('net_nemein_calendar_handler_list', 'past'),
+            'fixed_args' => Array('past'),
+            'variable_args' => 1,
+        );
+
+        // /past/N shows previous N events
+        $this->_request_switch['past-count'] = Array
+        (
+            'handler' => Array('net_nemein_calendar_handler_list', 'past'),
+            'fixed_args' => Array('past'),
         );
 
         // /rootevent creates root event for the calendar

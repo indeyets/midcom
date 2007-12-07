@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2007-12-07 adrenalin
+  + Added a new request switch for showing only past events
+
 2007-12-03 adrenalin
   ! Changed org.openpsa.calendarwidget to use the version with style elements instead of plain echo based output
 

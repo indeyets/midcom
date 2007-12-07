@@ -45,6 +45,14 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
     var $_calendar;
     
     /**
+     * Switch to determine if past elements should be shown
+     * 
+     * @var boolean
+     * @access private
+     */
+    var $_past = false;
+    
+    /**
      * Simple default constructor.
      */
     function net_nemein_calendar_handler_view()
@@ -135,6 +143,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
     {
         $this->_load_datamanager();
         $this->_request_data['archive_mode'] = false;
+        $this->_past = true;
         
         if (count($args) > 0)
         {
@@ -156,6 +165,36 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
     }
 
     function _show_upcoming($handler_id, &$data)
+    {
+        $this->_show_event_listing($handler_id);
+    }
+
+    function _handler_past($handler_id, $args, &$data)
+    {
+        $this->_load_datamanager();
+        $this->_request_data['archive_mode'] = false;
+        
+        if (count($args) > 0)
+        {
+            $this->_request_data['index_count'] = $args[0];
+        }
+        else
+        {
+            $this->_request_data['index_count'] = $this->_config->get('index_count');
+        }     
+        
+        $this->_request_data['events'] = array();
+        
+        $this->_past = true;
+        $this->_load_filters();
+
+        // Get the events
+        $this->_get_event_listing(time(), null);
+
+        return true;
+    }
+
+    function _show_past($handler_id, &$data)
     {
         $this->_show_event_listing($handler_id);
     }
@@ -359,50 +398,56 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         }
 
         // Find all events that occur during [$from, $end]
-        $qb->begin_group('OR');
-            // The event begins during [$from, $to]
-            $qb->begin_group('AND');
-                $qb->add_constraint('start', '>=', gmdate('Y-m-d H:i:s', $from));
-                if (!is_null($to))
+        if ($this->_past === false)
+        {
+            $qb->begin_group('OR');
+                // The event begins during [$from, $to]
+                $qb->begin_group('AND');
+                    $qb->add_constraint('start', '>=', gmdate('Y-m-d H:i:s', $from));
+                    if (!is_null($to))
+                    {
+                        $qb->add_constraint('start', '<=', gmdate('Y-m-d H:i:s', $to));
+                    }
+                $qb->end_group();
+                if ($this->_config->get('list_started'))
                 {
-                    $qb->add_constraint('start', '<=', gmdate('Y-m-d H:i:s', $to));
+                    // The event begins before and ends after [$from, $to]
+                    $qb->begin_group('AND');
+                        $qb->add_constraint('start', '<=', gmdate('Y-m-d H:i:s', $from));
+                        if (!is_null($to))
+                        {
+                            $qb->add_constraint('end', '>=', gmdate('Y-m-d H:i:s', $to));
+                        }
+                        else
+                        {
+                            $qb->add_constraint('end', '>=', gmdate('Y-m-d H:i:s', $from));
+                        }
+                    $qb->end_group();
+                     // The event ends during [$from, $to]
+                    $qb->begin_group('AND');
+                        $qb->add_constraint('end', '>=', gmdate('Y-m-d H:i:s', $from));
+                        if (!is_null($to))
+                        {
+                            $qb->add_constraint('end', '<=', gmdate('Y-m-d H:i:s', $to));
+                        }
+                    $qb->end_group();
                 }
             $qb->end_group();
-            if ($this->_config->get('list_started'))
-            {
-                // The event begins before and ends after [$from, $to]
-                $qb->begin_group('AND');
-                    $qb->add_constraint('start', '<=', gmdate('Y-m-d H:i:s', $from));
-                    if (!is_null($to))
-                    {
-                        $qb->add_constraint('end', '>=', gmdate('Y-m-d H:i:s', $to));
-                    }
-                    else
-                    {
-                        $qb->add_constraint('end', '>=', gmdate('Y-m-d H:i:s', $from));
-                    }
-                $qb->end_group();
-                 // The event ends during [$from, $to]
-                $qb->begin_group('AND');
-                    $qb->add_constraint('end', '>=', gmdate('Y-m-d H:i:s', $from));
-                    if (!is_null($to))
-                    {
-                        $qb->add_constraint('end', '<=', gmdate('Y-m-d H:i:s', $to));
-                    }
-                $qb->end_group();
-            }
-        $qb->end_group();
+            $qb->add_order('start');
+        }
+        else
+        {
+            $qb->add_constraint('start', '>', '0000-00-00 00:00:00');
+            $qb->add_constraint('end', '<', gmdate('Y-m-d H:i:s', time()));
+            $qb->add_order('end', 'DESC');
+        }
 
         if (!$list_all)
         {
             $qb->set_limit($this->_request_data['index_count']);
         }
         
-        $qb->add_order('start');
-        
-        mgd_debug_start();
         $this->_request_data['events'] = $qb->execute();
-        mgd_debug_stop();
     }
 
     /**
