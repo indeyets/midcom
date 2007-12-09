@@ -468,8 +468,8 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
 
         $this->_prepare_request_data($handler_id);
 
-        if (   !empty($this->_campaign->rules)
-            && !array_key_exists('generated_from',  $_campaign->rules)
+        if (   !is_array($this->_campaign->rules)
+            && !array_key_exists('generated_from',  $this->_campaign->rules)
             && !array_key_exists('switch_to_generator',  $this->_campaign->rules)
             )
         {
@@ -648,7 +648,7 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
             {
                 //Rule code empty
                 $_MIDCOM->uimessages->add('org.openpsa.directmarketing', $this->_request_data['l10n']->get('no rule given'), 'error');
-                break;
+                return;
             }
             $eval = '$tmp_array = ' . $_POST['midcom_helper_datamanager_dummy_field_rules'] . ';';
             //$eval_ret = eval($eval);
@@ -658,13 +658,13 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
             {
                 //Rule could not be parsed
                 $_MIDCOM->uimessages->add('org.openpsa.directmarketing', $this->_request_data['l10n']->get('given rule could not be parsed'), 'error');
-                break;
+                return;
             }
             if (count($tmp_array) == 0)
             {
                 // Rule array is empty
                 $_MIDCOM->uimessages->add('org.openpsa.directmarketing', $this->_request_data['l10n']->get('given rule is empty'), 'error');
-                break;
+                return;
             }
             if (array_key_exists('generated_from',  $tmp_array))
             {
@@ -673,7 +673,7 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
                 // PONDER: return to editor or save anyway ? now we overwrite the value with the modified rule and return to editor.
                 $_MIDCOM->uimessages->add('org.openpsa.directmarketing', $this->_request_data['l10n']->get('longtext:generated_from_found_in_adv_rule'), 'error');
                 $_POST['midcom_helper_datamanager_dummy_field_rules'] = array2code($tmp_array);
-                break;
+                return;
                 //$_MIDCOM->uimessages->add('org.openpsa.directmarketing', $this->_request_data['l10n']->get('"generated_from" found in advanced rule, it has been automatically removed.'), 'warning');
             }
             $this->_request_data['campaign']->rules = $tmp_array;
