@@ -539,6 +539,9 @@ class org_openpsa_directmarketing_handler_import extends midcom_baseclasses_comp
                 case 'N':
                     $this->_request_data['separator'] = "\n";
                     break;
+                case ';':
+                    $this->_request_data['separator'] = ";";
+                    break;
                 case ',':
                 default:
                     $this->_request_data['separator'] = ",";

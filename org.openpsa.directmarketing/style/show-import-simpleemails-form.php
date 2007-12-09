@@ -19,6 +19,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             <select class="dropdown" name="org_openpsa_directmarketing_import_separator" id="org_openpsa_directmarketing_import_separator">
                 <option value="N">\n (<?php echo $data['l10n']->get('newline'); ?>)</option>
                 <option value=",">, (<?php echo $data['l10n']->get('comma'); ?>)</option>
+                <option value=";">; (<?php echo $data['l10n']->get('semicolon'); ?>)</option>
             </select>
         </label>
         <div class="form_toolbar">

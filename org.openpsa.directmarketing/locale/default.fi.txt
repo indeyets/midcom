@@ -15,12 +15,16 @@
 %d jäsentä
 ---STRINGEND
 
----STRING , (comma)
-, (pilkku)
+---STRING comma
+pilkku
 ---STRINGEND
 
----STRING \n (newline)
-\n (rivinvaihto)
+---STRING newline
+rivinvaihto
+---STRINGEND
+
+---STRING semicolon
+puolipiste
 ---STRINGEND
 
 ---STRING add

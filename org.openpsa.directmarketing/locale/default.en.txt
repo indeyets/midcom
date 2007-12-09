@@ -15,12 +15,16 @@
 %d members
 ---STRINGEND
 
----STRING , (comma)
-, (comma)
+---STRING comma
+comma
 ---STRINGEND
 
----STRING \n (newline)
-\n (newline)
+---STRING newline
+newline
+---STRINGEND
+
+---STRING semicolon
+semicolon
 ---STRINGEND
 
 ---STRING add
