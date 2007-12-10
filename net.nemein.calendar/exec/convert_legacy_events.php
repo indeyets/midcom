@@ -25,6 +25,16 @@ foreach ($topics as $topic)
     $events = $qb->execute();
     foreach ($events as $event)
     {
+        $qb2 = net_nemein_calendar_event_dba::new_query_builder();
+        $qb2->add_constraint('parameter.domain', '=', 'net.nemein.calendar');
+        $qb2->add_constraint('parameter.name', '=', 'old_event');
+        $qb2->add_constraint('parameter.value', '=', $event->guid);
+        $already_converted = $qb2->execute();
+        if (!empty($already_converted))
+        {
+            continue;
+        }
+        
         $newevent = new net_nemein_calendar_event_dba();
         $newevent->name = $event->extra;
         $newevent->title = $event->title;
@@ -58,7 +68,9 @@ foreach ($topics as $topic)
         $newevent->parameter('net.nemein.calendar', 'old_event', $event->guid);
         
         // TODO: Copy atts?
-        // TODO: Delete old event?
+        // Delete old event?, NOPE
+        
+        echo "Event '{$event->title}' copied\n";
     }
 }
 ?>
