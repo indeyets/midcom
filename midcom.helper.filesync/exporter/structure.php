@@ -83,25 +83,33 @@ class midcom_helper_filesync_exporter_structure extends midcom_helper_filesync_e
         $data = '';
         foreach ($array as $key => $val)
         {
+            $data .= $prefix;
+            if (!is_numeric($key))
+            {
+                $data .= "'{$key}' => ";
+            }
+            
             switch(gettype($val))
             {
                 case 'boolean':
-                    $data .= ($val)?"{$prefix}'{$key}' => true,\n":"{$prefix}'{$key}' => false,\n";
+                    $data .= ($val)?'true':'false';
                     break;
                 case 'array':
-                    $data .= "{$prefix}'{$key}' => array\n{$prefix}(\n" . $this->_draw_array($val, "{$prefix}    ") . "\n{$prefix}),\n";
+                    $data .= "array\n{$prefix}(\n" . $this->_draw_array($val, "{$prefix}    ") . "{$prefix})";
                     break;
 
                 default:
                     if (is_numeric($val))
                     {
-                        $data .= "{$prefix}'{$key}' => {$val},\n";
+                        $data .= $val;
                     }
                     else
                     {
-                        $data .= "{$prefix}'{$key}' => '{$val}',\n";
+                        $data .= "'{$val}'";
                     }
             }
+            
+            $data .= ",\n";
 
         }
         return $data;
@@ -109,9 +117,7 @@ class midcom_helper_filesync_exporter_structure extends midcom_helper_filesync_e
     
     function export()
     {
-        echo "<pre>\n";
         echo $this->_draw_array($this->read_structure());
-        echo "</pre>\n";
     }
 }
 ?>
