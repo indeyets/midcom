@@ -1,5 +1,8 @@
 <?php
 $_MIDCOM->auth->require_admin_user();
+ini_set('max_execution_time', 0);
+ini_set('memory_limit', -1);
+while(@ob_end_flush());
 
 $topic_qb = midcom_db_topic::new_query_builder();
 $topic_qb->add_constraint('component', '=', 'net.nemein.calendar');
@@ -32,6 +35,7 @@ foreach ($topics as $topic)
         $already_converted = $qb2->execute();
         if (!empty($already_converted))
         {
+            echo "Event '{$event->title}' ALREADY copied, skipping<br>\n"; flush();
             continue;
         }
         
@@ -50,7 +54,8 @@ foreach ($topics as $topic)
         //mgd_debug_start();
         if (!$newevent->create())
         {
-            echo "Failed copying event {$event->title}: " . mgd_errstr() . "\n";
+            echo "Failed copying event {$event->title}: " . mgd_errstr() . "<br>\n"; flush();
+            continue; 
         }
         //mgd_debug_stop();
         
@@ -70,7 +75,8 @@ foreach ($topics as $topic)
         // TODO: Copy atts?
         // Delete old event?, NOPE
         
-        echo "Event '{$event->title}' copied\n";
+        echo "Event '{$event->title}' copied<br>\n"; flush();
     }
 }
+ob_start();
 ?>
