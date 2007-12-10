@@ -14,7 +14,7 @@ class midcom_admin_libconfig_interface extends midcom_baseclasses_components_int
     function midcom_admin_libconfig_interface()
     {
         parent::midcom_baseclasses_components_interface();
-        $this->_component = 'midcom.helper.libconfig';
+        $this->_component = 'midcom.admin.libconfig';
         $this->_purecode = true;
     }
 }

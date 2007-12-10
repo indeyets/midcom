@@ -115,12 +115,10 @@ class midcom_admin_libconfig_handler_edit extends midcom_baseclasses_components_
         }
 
         //schemadb
-        $schema = $this->_libconfig->_global['schemadb_config'];
-
-        if ($schema)
+        if (isset($this->_libconfig->_global['schemadb_config']))
         {
             // We rely on config schema. Hope that schema covers all fields
-            $schemadb = midcom_helper_datamanager2_schema::load_database($schema);
+            $schemadb = midcom_helper_datamanager2_schema::load_database($this->_libconfig->_global['schemadb_config']);
         }
         else
         {
@@ -144,7 +142,8 @@ class midcom_admin_libconfig_handler_edit extends midcom_baseclasses_components_
             }
 
 
-            if (!$this->_libconfig->_local[$key])
+            if (   !isset($this->_libconfig->_local[$key])
+                || !$this->_libconfig->_local[$key])
             {
                 $schemadb['default']->fields[$key]['static_prepend'] = "<div class='global'><span>Global value</span>";
                 $schemadb['default']->fields[$key]['static_append'] = "</div>";
@@ -356,6 +355,7 @@ class midcom_admin_libconfig_handler_edit extends midcom_baseclasses_components_
                     break;
 
                 default:
+                    $data = '';
                     if (is_numeric($val))
                     {
                         $data .= "    '{$key}' => {$val},\n";

@@ -459,7 +459,7 @@ class midcom_baseclasses_components_interface
      * @return Array The read data or false on failure.
      * @see read_array_from_snippet()
      */
-    private function read_array_from_file ($filename)
+    public function read_array_from_file ($filename)
     {
         $data = @file_get_contents($filename);
         if ($data === false)
@@ -488,7 +488,7 @@ class midcom_baseclasses_components_interface
      * @return Array The read data or false on failure.
      * @see read_array_from_file()
      */
-    private function read_array_from_snippet ($snippetpath)
+    public function read_array_from_snippet ($snippetpath)
     {
         $snippet = new midcom_baseclasses_database_snippet();
         $snippet->get_by_path($snippetpath);

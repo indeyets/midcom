@@ -26,9 +26,6 @@ class midcom_helper_schemaapi_interface extends midcom_baseclasses_components_in
         // Load all mandatory class files of the component here
         $this->_autoload_files = array
         (
-            'viewer.php', 
-            'admin.php', 
-            'navigation.php'
         );
         
         // Load all libraries used by component here

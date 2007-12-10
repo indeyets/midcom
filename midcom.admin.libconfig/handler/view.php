@@ -148,7 +148,15 @@ class midcom_admin_libconfig_handler_view extends midcom_baseclasses_components_
         {
             $data['key'] = $_MIDCOM->i18n->get_string($key,$data['name']);
             $data['global'] = $this->_detect($data['config']->_global[$key]);
-            $data['local'] = $this->_detect($data['config']->_local[$key]);;
+            
+            if (isset($data['config']->_local[$key]))
+            {
+                $data['local'] = $this->_detect($data['config']->_local[$key]);
+            }
+            else
+            {
+                $data['local'] = $this->_detect(null);
+            }
 
             midcom_show_style('midcom-admin-libs-view-item');
             if (!$data['even'])
@@ -186,7 +194,7 @@ class midcom_admin_libconfig_handler_view extends midcom_baseclasses_components_
 
                 break;
             case "array":
-                
+                $content = '';
                 foreach ($value as $key => $val)
                 {
                     $content .= "<li>{$key} => ".$this->_detect($val).",</li>";

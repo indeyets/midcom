@@ -19,7 +19,7 @@ class no_bergfald_rcs_interface extends midcom_baseclasses_components_interface
             'rcs.php',
             'handler.php',
             'backends/aegirrcs.php',
-            'aegir_handler.php'
+            /*'aegir_handler.php'*/
         );
         $this->_autoload_libraries = array(
             'midcom.helper.xml',
