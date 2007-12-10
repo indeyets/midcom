@@ -48,8 +48,15 @@ class midcom_db_host extends midcom_baseclasses_database_host
         return $_MIDCOM->dbfactory->new_query_builder(__CLASS__);
     }
 
-
-
+    function get_label()
+    {
+        if (   $this->port == 0
+            || $this->port == 80)
+        {
+            return "{$this->name}{$this->prefix}";
+        }
+        return "{$this->name}:{$this->port}{$this->prefix}";
+    }
 
 }
 
