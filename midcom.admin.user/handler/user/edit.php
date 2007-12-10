@@ -378,7 +378,7 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
             else
             {
 //                $_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.user'), sprintf($this->_l10n->get('failed to send the message to %s'), $person_edit_url), 'error');
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to send the mail, SMTP returned error {$mail->get_error_message()}");
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to send the mail, SMTP returned error " . $mail->get_error_message());
                 // This will exit
             }
         }
