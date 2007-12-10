@@ -95,7 +95,14 @@ class midcom_helper_filesync_exporter_structure extends midcom_helper_filesync_e
                     $data .= ($val)?'true':'false';
                     break;
                 case 'array':
-                    $data .= "array\n{$prefix}(\n" . $this->_draw_array($val, "{$prefix}    ") . "{$prefix})";
+                    if (empty($val))
+                    {
+                        $data .= 'array()';
+                    }
+                    else
+                    {
+                        $data .= "array\n{$prefix}(\n" . $this->_draw_array($val, "{$prefix}    ") . "{$prefix})";
+                    }
                     break;
 
                 default:

@@ -6,6 +6,8 @@
     <property name="absolute_basedir" value="" />
     <property name="phpdocdir" value="documentation/api" />
     <property name="coreVersion" value="2.9.0beta16" />
+    <property name="version" value="" />
+    <property name="state" value="" />
     <resolvepath propertyName="absolute_basedir" file="${project.basedir}"/>
 
     <taskdef classname="build.installMidcomDir"
@@ -174,6 +176,8 @@
         <packageMidCOM
             path="${project.basedir}"
             package="${module}"
+            version="${version}"
+            state="${state}"
             target_dir="${target_dir}"
             returnProperty="pear_name"
         >

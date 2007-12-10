@@ -1,6 +1,6 @@
 'name' => 'midcom.helper.filesync',
 'purecode' => true,
-'version' => '0.0.1',
+'version' => '0.0.2',
 'state' => 'devel',
 'privileges' => array(),
 'class_definitions' => array(),
@@ -18,5 +18,3 @@
         ),
     ),
 ),
-
-
