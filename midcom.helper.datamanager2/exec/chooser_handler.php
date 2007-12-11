@@ -372,7 +372,7 @@ function resolve_path($object_id, $class, $title)
         $id = $object_id;
         while ($id != 0)
         {
-            $mc = midcom_db_topic::new_collector('id', $id);
+            $mc = midcom_db_group::new_collector('id', $id);
             $mc->add_value_property('name');
             $mc->add_value_property('owner');
             $mc->execute();
@@ -386,7 +386,10 @@ function resolve_path($object_id, $class, $title)
 
             foreach ($groups as $group_guid => $value)
             {
-                $result_components[] = $mc->get_subkey($group_guid, 'name');
+                if ($object_id != $id)
+                    {
+                        $result_components[] = $mc->get_subkey($group_guid, 'name');
+                    }
                 $id = $mc->get_subkey($group_guid, 'owner');
             }
         }
