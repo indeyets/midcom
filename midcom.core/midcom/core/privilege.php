@@ -851,7 +851,8 @@ class midcom_core_privilege extends midcom_core_privilege_db
     {
         if (   is_null($user)
             || !$user
-            || $user == 'EVERYONE')
+            || (   is_string($user)
+                && $user == 'EVERYONE'))
         {
             if (   $privilege->assignee != 'EVERYONE'
                 && $privilege->assignee != 'ANONYMOUS')
