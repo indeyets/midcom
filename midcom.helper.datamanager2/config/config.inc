@@ -19,7 +19,7 @@
     ),
     'Cache' => array
     (
-        'SerializerPath' => '__PREFIX__/var/cache/midgard/midcom/htmlpurifier',
+        'SerializerPath' => $GLOBALS['midcom_config']['cache_base_directory'] . 'htmlpurifier',
     ),
 ),
 

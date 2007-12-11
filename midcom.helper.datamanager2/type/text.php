@@ -92,21 +92,10 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
         if (   $this->purify
             && $this->output_mode == 'html')
         {
-            if (isset($this->purify_config['Cache']['SerializerPath']))
+            if (isset($this->purify_config['Cache']['SerializerPath']) 
+            	&& !file_exists($this->purify_config['Cache']['SerializerPath']))
             {
-                if ($_MIDGARD['config']['prefix'] == '/usr')
-                {
-                    $this->purify_config['Cache']['SerializerPath'] = str_replace('__PREFIX__', '', $this->purify_config['Cache']['SerializerPath']);
-                }
-                else
-                {
-                    $this->purify_config['Cache']['SerializerPath'] = str_replace('__PREFIX__', $_MIDGARD['config']['prefix'], $this->purify_config['Cache']['SerializerPath']);
-                }
-                                
-                if (!file_exists($this->purify_config['Cache']['SerializerPath']))
-                {
-                    mkdir($this->purify_config['Cache']['SerializerPath']);
-                }
+                mkdir($this->purify_config['Cache']['SerializerPath']);
             }
         
             require_once('HTMLPurifier.php');
