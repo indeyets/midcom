@@ -1,16 +1,14 @@
-.maa_permissions_header
+.maa_permissions_assignees
 {
     margin: 10px 0 5px 0;
     padding: 5px;
-    border: 1px solid #000;
     width: 900px;
 }
 
-.maa_permissions_rows
+.maa_permissions_items_row
 {
     margin: 10px 0 5px 0;
-    padding: 5px;
-    border: 1px solid #000;
+    padding: 5px;    
     width: 100%;
     overflow-x: scroll;
 }
@@ -19,106 +17,73 @@
 {
     margin: 10px 0 5px 0;
     padding: 5px;
-    border: 1px solid #000;
 }
 
-.maa_permissions_rows ul.items
+.maa_permissions_items thead tr
 {
-    display: block;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+    margin-bottom: 5px;
+    height: 30px;
     width: 1000px;
 }
-.maa_permissions_rows li
+.maa_permissions_items tbody tr
 {
-    display: block;
     height: 20px;
     margin: 0;
     padding: 0;
     clear: left;
 }
-.maa_permissions_rows li.odd
+.maa_permissions_items tr.odd
 {
     background-color: #ddd;
 }
-.maa_permissions_rows li.even
+.maa_permissions_items tr.even
 {
     background-color: #eee;
 }
 
-.maa_permissions_rows_header
-{
-    margin-bottom: 5px;
-    height: 60px;
-    clear: right;
-}
-
-.maa_permissions_rows_header div,
-.maa_permissions_rows_row div.row_value
+.maa_permissions_items td.row_value
 {   
     height: 20px;
     line-height: 20px;
-    display: block;
-    float: left;
     min-width: 8%;
     text-align: center;
 }
-div.topic_management,
-div.template_management,
-div.component_config,
-div.admin_folder
+
+th.topic_management,
+th.template_management,
+th.component_config,
+th.admin_folder,
+td.topic_management,
+td.template_management,
+td.component_config,
+td.admin_folder
 {
     width: 102px;
 }
 
-.maa_permissions_rows_header div
+.maa_permissions_rows_header th
 {
+    font-weight: bold;
     height: auto;
 }
-.maa_permissions_rows_header div
-{
-    font-weight: bold;   
-}
-.maa_permissions_rows_header div span
+.maa_permissions_rows_header th span
 {
     padding: 0 5px 0 5px;
     vertical-align: top;
 }
 
-.maa_permissions_rows_header div.assignee_name,
-.maa_permissions_rows_row div.assignee_name
+.maa_permissions_rows_header th.assignee_name,
+.maa_permissions_rows_row td.assignee_name
 {
     text-align: left;
     width: 180px;
     overflow: hidden;
 }
-.maa_permissions_rows_header div.row_actions,
-.maa_permissions_rows_row div.row_actions
+.maa_permissions_rows_header th.row_actions,
+.maa_permissions_rows_row td.row_actions
 {
     text-align: center;
     width: 40px;
-}
-.maa_permissions_rows_header div.assignee_name span,
-.maa_permissions_rows_row div.assignee_name span
-{
-    margin-left: 10px;
-}
-.maa_permissions_rows_row div span
-{
-    white-space: nowrap;
-}
-
-.draghandle
-{
-    background: url('drag-grid.gif') repeat top left;
-    width: 15px;
-    height: 18px;
-    cursor: move;
-    background-color: gray;
-    float: left;
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #000;
 }
 
 div.privilege_actions,

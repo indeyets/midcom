@@ -118,7 +118,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
         }
         
         $_MIDCOM->enable_jquery();
-        $script = "function submit_privileges(form){jQuery('#submit_action',form).attr({name: 'midcom_helper_datamanager2_add', value: 'add'});form.submit();};function applyRowClasses(){jQuery('.maa_permissions_rows ul li:odd').addClass('odd');jQuery('.maa_permissions_rows ul li:even').addClass('even');};";
+        $script = "function submit_privileges(form){jQuery('#submit_action',form).attr({name: 'midcom_helper_datamanager2_add', value: 'add'});form.submit();};function applyRowClasses(){jQuery('.maa_permissions_items tr.maa_permissions_rows_row:odd').addClass('odd');jQuery('.maa_permissions_items tr.maa_permissions_rows_row:even').addClass('even');};";
         $_MIDCOM->add_jscript($script);
         
         $_MIDCOM->add_link_head(
@@ -126,22 +126,6 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
                 'href' => MIDCOM_STATIC_URL . '/midgard.admin.asgard/permissions/layout.css'
-            )
-        );
-        $_MIDCOM->add_link_head(
-            array(
-                'rel' => 'stylesheet',
-                'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL . '/midgard.admin.asgard/permissions/layout_ie.css',
-                'condition' => 'lte IE 7'
-            )
-        );
-        $_MIDCOM->add_link_head(
-            array(
-                'rel' => 'stylesheet',
-                'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL . '/midgard.admin.asgard/permissions/layout_ie7.css',
-                'condition' => 'IE 7'
             )
         );
         
@@ -277,8 +261,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
         // echo "existing:\n";
         // var_dump($existing_privileges);
         foreach ($existing_privileges as $privilege)
-        {
-        
+        {        
             $assignee = $_MIDCOM->auth->get_assignee($privilege->assignee);
             if (!$assignee)
             {
@@ -307,19 +290,16 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
         // Add the "Add assignees" choices to schema
         $this->_schemadb['privileges']->fields['add_assignee']['type_config']['options'] = $additional_assignees;
         
-        $header = "  <div class=\"maa_permissions_rows_header\">\n";
+        $header = "";
+        
         $header_start = "";
         $header_end = "";
         $header_items = array();
         
-        //$header .= $header_start;
-        
         foreach ($assignees as $assignee => $label)
         {
-            
             foreach ($this->_privileges as $privilege)
             {
-                
                 $privilege_components = explode(':', $privilege);
                 if (   $privilege_components[0] == 'midcom'
                     || $privilege_components[0] == 'midgard')
@@ -334,8 +314,8 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
                 }
                 
                 if (! isset($header_items[$privilege_label]))
-                {
-                    $header_items[$privilege_label] = "    <div class=\"{$privilege_components[1]}\"><span>" . str_replace(" ","\n", $_MIDCOM->i18n->get_string($privilege_label, 'midgard.admin.acl')) . "</span></div>\n";
+                {                    
+                    $header_items[$privilege_label] = "        <th scope=\"col\" class=\"{$privilege_components[1]}\"><span>" . str_replace(" ","\n", $_MIDCOM->i18n->get_string($privilege_label, 'midgard.admin.acl')) . "</span></th>\n";
                 }
                 
                 $this->_schemadb['privileges']->append_field(str_replace(':', '_', $assignee) . '_' . str_replace(':', '_', str_replace('.', '_', $privilege)), Array
@@ -354,14 +334,14 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
                 );
             }
         }
-        $header .= "    <div class=\"assignee_name\"><span>&nbsp;</span></div>\n";
+        
+        $header .= "        <th align=\"left\" scope=\"col\" class=\"assignee_name\"><span>&nbsp;</span></th>\n";
         foreach ($header_items as $key => $item)
         {
             $header .= $item;
         }
-        $header .= "    <div class=\"row_actions\"><span>&nbsp;</span></div>\n";
+        $header .= "        <th scope=\"col\" class=\"row_actions\"><span>&nbsp;</span></th>\n";
         
-        $header .= "</div>\n";
         $this->_header = $header;
     }
 
@@ -536,15 +516,12 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
      * Shows the loaded object in editor.
      */
     function _show_edit($handler_id, &$data)
-    {        
-        //$editor_html = 
+    {
         $this->_generate_editor(&$data);
-        
-        //$data['permissions_editor'] =& $editor_html;
         
         midcom_show_style('midgard_admin_asgard_header');
         midcom_show_style('midgard_admin_asgard_middle');
-        
+
         midcom_show_style('midgard_admin_asgard_object_permissions');
         
         midcom_show_style('midgard_admin_asgard_footer');
@@ -552,8 +529,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
     
     function _generate_editor($data)
     {
-        $editor = "";
-        $data['editor_rows'] = "  <ul class=\"items\">\n";
+        $data['editor_rows'] = "";
         
         $form_start = "<form ";
         foreach ($this->_controller->formmanager->form->_attributes as $key => $value)
@@ -561,12 +537,13 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
             $form_start .= "{$key}=\"{$value}\" ";
         }
         $form_start .= "/>\n";
-        $header = $form_start;
         
+        $data['editor_header_form_start'] = $form_start;
+        $data['editor_header_form_end'] = "</form>\n";
         
-        //$header .= "<table width=\"100%\" border=\"0\" id=\"midgard_admin_acl\">\n";
-        
-        $data['editor_header'] = $header;
+        $data['editor_header_titles'] = $this->_header;
+
+        $data['editor_header'] = '';
         
         $priv_item_cnt = count($this->_privileges);
 
@@ -582,25 +559,19 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
                 }
                 $html .= "/>\n";
 
-                $data['editor_header'] .= $html;
+                $data['editor_header_form_start'] .= $html;
             }
             
             if (is_a($row, 'HTML_QuickForm_select'))
             {
-                $html = "<div class=\"maa_permissions_header\">\n";
-                $html .= "  <div class=\"assignees\">\n";
+                $html = "  <div class=\"assignees\">\n";
                 $html .= "    <label for=\"{$row->_attributes['id']}\">\n<span class=\"field_text\">{$row->_label}</span>\n";
                 $html .= $this->_render_select($row);
                 $html .= "    </label>\n";
                 $html .= "  </div>\n";
-                $html .= "</div>\n";
                 
-                $html .= "\n<div id=\"maa_permissions_clear_storage\"></div>\n\n";
-                
-                $html .= "<div class=\"maa_permissions_rows\">\n";
-                $data['editor_header'] .= $html;
+                $data['editor_header_assignees'] = $html;
 
-                $this->_render_header();
                 $html = '';
             }
             
@@ -615,7 +586,6 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
                         {
                             $form_toolbar_html .= $this->_render_button($element);
                         }
-                        //$form_toolbar_html .= $row->_separator;
                     }
                     $form_toolbar_html .= "  </div>\n";
                     continue;                    
@@ -634,13 +604,13 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
                         if (strpos($element->_attributes['name'], 'holder_start') !== false)
                         {
                             $priv_class = $this->_get_row_value_class($row->_name);
-                            $html .= "      <div class=\"row_value {$priv_class}\">\n";
+                            $html .= "      <td class=\"row_value {$priv_class}\">\n";
                         }
                         
                         $html .= $this->_render_static($element);
                         if (strpos($element->_attributes['name'], 'initscripts') !== false)
                         {
-                            $html .= "      </div>\n";
+                            $html .= "      </td>\n";
                         }
                     }            
                 }
@@ -651,25 +621,19 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
                 {
                     $s = 0;
                     $html .= $this->_render_row_actions($row->_name);
-                    $html .= "</div></li>\n";                    
+                    $html .= "    </tr>\n";
                 }
                 
                 $data['editor_rows'] .= $html;
             }
         }
-        
-        $data['editor_rows'] .= "  </ul>\n";
-        
-        $footer = "</div>\n";
-        $footer .= "<div class=\"maa_permissions_footer\">\n";
-        $footer .= "  <input type=\"hidden\" name=\"\" value=\"\" id=\"submit_action\"/>\n";
+
+        $footer = "  <input type=\"hidden\" name=\"\" value=\"\" id=\"submit_action\"/>\n";
         $footer .= $form_toolbar_html;
-        $footer .= "</div>\n";
-        $footer .= "</form>\n";
         
         $data['editor_footer'] = $footer;
         
-        return $editor;
+        return true;
     }
     
     function _render_select($object)
@@ -738,15 +702,6 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
         return $html;
     }
     
-    function _render_header()
-    {
-        if ($this->_header != '')
-        {
-            $this->_request_data['editor_header'] .= $this->_header;
-            $this->_header = '';
-        }
-    }
-    
     function _render_row_label($row_name)
     {
         foreach ($this->_row_labels as $key => $label)
@@ -756,9 +711,8 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
             {
                 $this->_rendered_row_labels[$key] = true;
                 
-                $html = "    <li id=\"privilege_row_{$key}\"><div class=\"maa_permissions_rows_row\">\n";
-                $html .= "      <div class=\"row_value assignee_name\">\n"; //<div class=\"draghandle\"></div>
-                $html .= "<span>{$label}</span></div>\n";
+                $html = "    <tr id=\"privilege_row_{$key}\" class=\"maa_permissions_rows_row\">\n";
+                $html .= "      <td class=\"row_value assignee_name\"><span>{$label}</span></td>\n"; //<div class=\"draghandle\"></div>
                 
                 return $html;
             }
@@ -780,7 +734,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
                 
                 $_MIDCOM->add_jquery_state_script("jQuery('#privilege_row_{$key}').privilege_actions('{$key}');");
                 
-                $html = "      <div class=\"row_value row_actions\">{$actions}</div>\n";
+                $html = "      <td class=\"row_value row_actions\">{$actions}</td>\n";
                 
                 return $html;
             }
