@@ -399,13 +399,13 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                         case 'content':
                         case 'description':
                             $height = 30;
-                            $output_mode = 'html';
                             
                             // Check the user preference and configuration
                             if (   midgard_admin_asgard_plugin::get_preference('tinymce_enabled')
                                 || (   midgard_admin_asgard_plugin::get_preference('tinymce_enabled') !== '0'
                                     && $this->_config->get('tinymce_enabled')))
                             {
+                                $output_mode = 'html';
                                 $widget = 'tinymce';
                             }
                             
@@ -414,13 +414,13 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                         case 'code':
                             // These are typical "large" fields
                             $height = 30;
-                            $output_mode = 'code';
                             
                             // Check the user preference and configuration
                             if (   midgard_admin_asgard_plugin::get_preference('codepress_enabled')
                                 || (   midgard_admin_asgard_plugin::get_preference('codepress_enabled') !== '0'
                                     && $this->_config->get('codepress_enabled')))
                             {
+                                $output_mode = 'code';
                                 $dm_type = 'php';
                                 $widget = 'codepress';
                             }
