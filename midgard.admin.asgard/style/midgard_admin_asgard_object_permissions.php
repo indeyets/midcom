@@ -1,9 +1,3 @@
-<?php
-//echo $data['editor_header'];
-// echo $data['editor_rows'];
-// echo $data['editor_footer'];
-?>
-
 <?php echo $data['editor_header_form_start'];?>
 <table width="100%" border="0">
     <tr class="maa_permissions_assignees">
