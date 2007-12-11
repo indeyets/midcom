@@ -54,7 +54,8 @@ class midcom_helper_datamanager2_type_position extends midcom_helper_datamanager
 
     function convert_to_storage()
     {
-        if (!$this->storage->object)
+        if (   !$this->storage
+            || !$this->storage->object)
         {
             return '';
         }

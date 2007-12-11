@@ -395,6 +395,10 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
         $result = Array();
         foreach ($this->schema->field_order as $name)
         {
+            if (!isset($this->types[$name]))
+            {
+                continue;
+            }        
             $result[$name] = $this->types[$name]->convert_to_storage();
         }
         return $result;
