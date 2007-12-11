@@ -795,9 +795,10 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Cache {$privilege_key} miss, fetching privileges for {$object_guid}");
             debug_pop();
-            $full_privileges = $this->get_privileges_byguid($object_guid, $object_class, $user);
+            $full_privileges = $this->get_privileges_byguid($object_guid, $object_class, $for_user);
             foreach ($full_privileges as $priv => $value)
             {
+                //echo "{$object_class} {$object_guid} {$priv} {$value}<br />\n";
                 if ($value == MIDCOM_PRIVILEGE_ALLOW)
                 {
                     $cached_privileges["{$cache_key}-{$priv}"] = true;
@@ -1104,7 +1105,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             }
             else
             {
-                $collect_user = false;
+                $collect_user = null;
             }
             $full_privileges = array_merge
             (
