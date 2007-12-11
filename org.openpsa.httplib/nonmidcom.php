@@ -140,5 +140,8 @@ require_once('helpers.php');
 require_once('main.php');
 require_once('Snoopy.php');
 
+$tmpconfig = new midcom_helper_configuration();
+$GLOBALS['midcom_component_data'] = array('org.openpsa.httplib' => array('config' => $tmpconfig));
+
 
 ?>
