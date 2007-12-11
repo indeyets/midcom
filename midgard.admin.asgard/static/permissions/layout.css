@@ -3,6 +3,7 @@
     margin: 10px 0 5px 0;
     padding: 5px;
     border: 1px solid #000;
+    width: 900px;
 }
 
 .maa_permissions_rows
@@ -10,6 +11,8 @@
     margin: 10px 0 5px 0;
     padding: 5px;
     border: 1px solid #000;
+    width: 100%;
+    overflow-x: scroll;
 }
 
 .maa_permissions_footer
@@ -22,10 +25,10 @@
 .maa_permissions_rows ul.items
 {
     display: block;
-    width: 100%;
     list-style-type: none;
     margin: 0;
     padding: 0;
+    width: 1000px;
 }
 .maa_permissions_rows li
 {
@@ -33,6 +36,7 @@
     height: 20px;
     margin: 0;
     padding: 0;
+    clear: left;
 }
 .maa_permissions_rows li.odd
 {
