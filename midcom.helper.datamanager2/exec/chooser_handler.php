@@ -387,9 +387,9 @@ function resolve_path($object_id, $class, $title)
             foreach ($groups as $group_guid => $value)
             {
                 if ($object_id != $id)
-                    {
-                        $result_components[] = $mc->get_subkey($group_guid, 'name');
-                    }
+                {
+                    $result_components[] = $mc->get_subkey($group_guid, 'name');
+                }
                 $id = $mc->get_subkey($group_guid, 'owner');
             }
         }
