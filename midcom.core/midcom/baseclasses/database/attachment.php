@@ -42,6 +42,11 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
         parent::__midcom_baseclasses_database_attachment($id);
     }
 
+    function get_parent_guid_uncached()
+    {
+        return $this->parentguid;
+    }
+
     /**
      * Returns the Parent of the Attachment, which is identified by the table/id combination
      * in the attachment record. The table in question is used to identify the object to
