@@ -78,6 +78,28 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
         $this->purify_config = $this->_config->get('html_purify_config');
     }
 
+    function purify_content()
+    {
+        if (isset($this->purify_config['Cache']['SerializerPath']) 
+            && !file_exists($this->purify_config['Cache']['SerializerPath']))
+        {
+            mkdir($this->purify_config['Cache']['SerializerPath']);
+        }
+    
+        require_once('HTMLPurifier.php');
+
+        $purifier = new HTMLPurifier();
+        
+        foreach ($this->purify_config as $domain => $config)
+        {
+            foreach ($config as $key => $val)
+            {
+                $purifier->config->set($domain, $key, $val);
+            }
+        }
+        
+        $this->value = $purifier->purify($this->value);
+    }
 
     function convert_from_storage ($source)
     {
@@ -89,28 +111,15 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
         // Normalize line breaks to the UNIX format
         $this->value = preg_replace("/\n\r|\r\n|\r/", "\n", $this->value);
                 
-        if (   $this->purify
-            && $this->output_mode == 'html')
+        if ($this->purify)
         {
-            if (isset($this->purify_config['Cache']['SerializerPath']) 
-            	&& !file_exists($this->purify_config['Cache']['SerializerPath']))
+            switch ($this->output_mode)
             {
-                mkdir($this->purify_config['Cache']['SerializerPath']);
+                case 'html':
+                case 'markdown':
+                    $this->purify_content();
+                    break;
             }
-        
-            require_once('HTMLPurifier.php');
-    
-            $purifier = new HTMLPurifier();
-            
-            foreach ($this->purify_config as $domain => $config)
-            {
-                foreach ($config as $key => $val)
-                {
-                    $purifier->config->set($domain, $key, $val);
-                }
-            }
-            
-            $this->value = $purifier->purify($this->value);
         }
         
         return $this->value;
