@@ -1,7 +1,7 @@
 'config' => array
 (
     'name'        => 'config',
-    'description' => 'Default Configuration Schema', /* This is a topic */
+    'description' =>  'Default Configuration Schema', /* This is a topic */
     'locktimeout' => 0, /* Don't lock this, we display the edit view always */
     'fields'      => array
     (
@@ -9,11 +9,15 @@
         /**** Display settings ****/
         'index_count' => array
         (
-            'description' => 'index count',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nemein.calendar',
-            'config_key' => 'index_count',
+            'title' =>  'index count',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nemein.calendar',
+                'name' => 'index_count',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
             'start_fieldgroup' => array
             (
                 'title' => 'display settings',
@@ -22,86 +26,200 @@
         
         'categories' => array
         (
-            'description' => 'categories',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nemein.calendar',
-            'config_key' => 'categories',
+            'title' =>  'categories',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nemein.calendar',
+                'name' => 'categories',
+            ),
+            'type' => 'text',
             'widget' => 'text',
         ),
 
         
         'type_filter_upcoming' => array
         (
-            'description' => 'type filter for upcoming',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nemein.calendar',
-            'config_key' => 'type_filter_upcoming',
+            'title' =>  'type filter for upcoming',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nemein.calendar',
+                'name' => 'type_filter_upcoming',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
         ),
 
         'enable_filters' => array
         (
-            'description' => 'enable GET filters',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nemein.calendar',
-            'config_key' => 'enable_filters',
-            'widget' => 'config_radiobox',
-            'widget_radiobox_choices' => array
+            'title' =>  'enable get filters',
+            'storage' => array
             (
-                '' => 'default setting',
-                '1' => 'yes',
-                '0' => 'no',
+                'location' => 'configuration',
+                'domain' => 'net.nemein.calendar',
+                'name' => 'enable_filters',
             ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
         ),
   
         'list_from_master' => array
         (
-            'description' => 'list events from master event',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nemein.calendar',
-            'config_key' => 'list_from_master',
-            'widget' => 'config_radiobox',
-            'widget_radiobox_choices' => array
+            'title' =>  'list events from master event',
+            'storage' => array
             (
-                '' => 'default setting',
-                '1' => 'yes',
-                '0' => 'no',
+                'location' => 'configuration',
+                'domain' => 'net.nemein.calendar',
+                'name' => 'list_from_master',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+        ),
+        'list_from_folders' => array
+        (
+            'title' => 'list events from folders',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nemein.calendar',
+                'name' => 'list_from_folders',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'require_corresponding_option' => false,
+                'allow_multiple' => true,
+                'options' => array (),
+                'multiple_storagemode' => 'imploded_wrapped',
+            ),
+            'widget' => 'chooser',
+            'widget_config' => array
+            (
+                'class'       => 'midcom_db_topic',
+                'component'   => 'net.nemein.calendar',
+                'titlefield'  => 'extra',
+                'idfield'     => 'guid',
+                'searchfields' => array
+                (
+                    array
+                    (
+                        'title' => 'ASC',
+                    ),
+                    array
+                    (
+                        'extra' => 'ASC',
+                    ),
+                    array
+                    (
+                        'component' => 'ASC',
+                    ),
+                    array
+                    (
+                        'name' => 'ASC',
+                    ),
+                ),
+                'constraints' => array
+                (
+                    array
+                    (
+                        'field' => 'extra',
+                        'op' => '<>',
+                        'value' => '',
+                    ),
+                    array
+                    (
+                        'field' => 'component',
+                        'op' => '=',
+                        'value' => 'net.nemein.calendar',
+                    ),
+                ),
+                'result_headers' => array
+                (
+                    array
+                    (
+                        'name' => 'extra',
+                        'title' => 'name',
+                    ),
+                ),
+                'orders' => array
+                (
+                    array
+                    (
+                        'title' => 'ASC',
+                    ),
+                    array
+                    (
+                        'extra' => 'ASC',
+                    ),
+                    array
+                    (
+                        'name' => 'ASC',
+                    ),
+                ),
             ),
         ),
 
         'show_events_locally' => array
         (
-            'description' => 'show events locally',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nemein.calendar',
-            'config_key' => 'show_events_locally',
-            'widget' => 'config_radiobox',
-            'widget_radiobox_choices' => array
+            'title' =>  'show events locally',
+            'storage' => array
             (
-                '' => 'default setting',
-                '1' => 'yes',
-                '0' => 'no',
+                'location' => 'configuration',
+                'domain' => 'net.nemein.calendar',
+                'name' => 'show_events_locally',
             ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
         ),
 
         'archive_year_order' => array
         (
-            'description' => 'archive year order',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nemein.calendar',
-            'config_key' => 'archive_year_order',
-            'widget' => 'config_radiobox',
-            'widget_radiobox_choices' => array
+            'title' =>  'archive year order',
+            'storage' => array
             (
-                '' => 'default setting',
-                'DESC' => 'DESC',
-                'ASC' => 'ASC',
+                'location' => 'configuration',
+                'domain' => 'net.nemein.calendar',
+                'name' => 'archive_year_order',
             ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    'DESC' => 'DESC',
+                    'ASC' => 'ASC',
+                ),
+            ),
+            'widget' => 'select',
             'end_fieldgroup' => '',
         ),
         
@@ -111,45 +229,61 @@
             (
                 'title' => 'calendar widget',
             ),
-            'description' => 'use javascript to emulate hovering effect',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nemein.calendar',
-            'config_key' => 'javascript_hover',
-            'widget'   => 'config_radiobox',
-            'widget_radiobox_choices' => array
+            'title' =>  'use javascript to emulate hovering effect',
+            'storage' => array
             (
-                '' => 'default setting',
-                '1' => 'yes',
-                '0' => 'no',
+                'location' => 'configuration',
+                'domain' => 'net.nemein.calendar',
+                'name' => 'javascript_hover',
             ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
             'end_fieldgroup' => '',
         ),
         
         'rss_subscription_enable' => array
         (
-            'description' => 'rss_subscription_enable',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nemein.calendar',
-            'config_key' => 'rss_subscription_enable',
-            'widget' => 'config_radiobox',
-            'widget_radiobox_choices' => array
+            'title' =>  'enable rss subscription',
+            'storage' => array
             (
-                '' => 'default setting',
-                '1' => 'yes',
-                '0' => 'no',
+                'location' => 'configuration',
+                'domain' => 'net.nemein.calendar',
+                'name' => 'rss_subscription_enable',
             ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
         ),
         
          /**** Schema settings ****/
         'schemadb' => array
         (
-            'description' => 'schema database',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nemein.calendar',
-            'config_key' => 'schemadb',
+            'title' =>  'schema database',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nemein.calendar',
+                'name' => 'schemadb',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
             'start_fieldgroup' => array
             (
                 'title' => 'advanced schema and data settings'
@@ -158,20 +292,28 @@
         
         'root_event' => array
         (
-            'description' => 'root event guid',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nemein.calendar',
-            'config_key' => 'root_event',
+            'title' =>  'root event guid',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nemein.calendar',
+                'name' => 'root_event',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
         ),
         
         'master_event' => array
         (
-            'description' => 'master event guid',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nemein.calendar',
-            'config_key' => 'master_event',
+            'title' =>  'master event guid',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nemein.calendar',
+                'name' => 'master_event',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
             'end_fieldgroup' => '',
         ),
     ),

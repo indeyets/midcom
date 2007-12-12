@@ -34,7 +34,8 @@
             'min' => '2.1.6',
         ),
         'org.routamc.positioning' => array (),
-        'de.bitfolge.feedcreator'    => array(),
+        'de.bitfolge.feedcreator' => array(),
+        'midcom.helper.dm2config' => array (),
         'Calendar' => array
         (
             'channel' => 'pear.php.net',

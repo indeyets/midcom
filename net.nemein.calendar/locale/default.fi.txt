@@ -3,6 +3,22 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING archive
+Arkisto
+---STRINGEND
+
+---STRING archive year order
+Arkiston vuosien järjestys
+---STRINGEND
+
+---STRING back to archive.
+Takaisin arkistoon.
+---STRINGEND
+
+---STRING categories
+Kategoriat
+---STRINGEND
+
 ---STRING create event
 Luo tapahtuma
 ---STRINGEND
@@ -27,7 +43,7 @@ Näyttöasetukset
 Muokkaa tapahtumaa
 ---STRINGEND
 
----STRING enable GET filters
+---STRING enable get filters
 Salli kenttien perusteella suodattaminen
 ---STRINGEND
 
@@ -37,6 +53,10 @@ Päättymisaika
 
 ---STRING event
 Tapahtuma
+---STRINGEND
+
+---STRING first event started on %s.
+Ensimmäinen tapahtuma oli %s.
 ---STRINGEND
 
 ---STRING from date
@@ -57,6 +77,10 @@ Toiston väli
 
 ---STRING list events from master event
 Listaa kaikki päätapahtuman alla olevat tapahtumat
+---STRINGEND
+
+---STRING list events from folders
+Listaa tapahtumat kansioista
 ---STRINGEND
 
 ---STRING location
@@ -83,8 +107,16 @@ Ryhmäkalenteri
 <strong>NemeinCalendar</strong>-kirjasto puuttu palvelimelta. Asenna joko <a href="http://www.openpsa.org/">OpenPSA</a> tai <a href="http://www.midgard-project.org/projects/townportal/">TownPortal</a> saadaksesi tarvittavat kirjastot.
 ---STRINGEND
 
+---STRING net.nemein.calendar
+Tapahtumakalenteri
+---STRINGEND
+
 ---STRING no participants
 Ei osallistujia
+---STRINGEND
+
+---STRING numbers in parantheses show ongoing events.
+Numerot sulkeissa näyttävät tällä hetkellä käynnissä olevia tapahtumia.
 ---STRINGEND
 
 ---STRING participants
@@ -139,6 +171,10 @@ Varaamasi tapahtuma - Klikkaa poistaaksesi varaus
 Näytettävissä muualla
 ---STRINGEND
 
+---STRING there is a total of %d events.
+Yhteensä %d tapahtumaa.
+---STRINGEND
+
 ---STRING title
 Nimi
 ---STRINGEND
@@ -159,35 +195,11 @@ Varaamaton tapahtuma - Klikkaa varataksesi
 Päivämäärään asti
 ---STRINGEND
 
----STRING weekly
-Viikottain
----STRINGEND
-
 ---STRING week %1$s of year %2$s
 Viikko %1$s vuonna %2$s
 ---STRINGEND
 
----STRING archive
-Arkisto
----STRINGEND
-
----STRING back to archive.
-Takaisin arkistoon.
----STRINGEND
-
----STRING first event started on %s.
-Ensimmäinen tapahtuma oli %s.
----STRINGEND
-
----STRING net.nemein.calendar
-Tapahtumakalenteri
----STRINGEND
-
----STRING numbers in parantheses show ongoing events.
-Numerot sulkeissa näyttävät tällä hetkellä käynnissä olevia tapahtumia.
----STRINGEND
-
----STRING there is a total of %d events.
-Yhteensä %d tapahtumaa.
+---STRING weekly
+Viikottain
 ---STRINGEND
 

@@ -7,8 +7,16 @@
 Archive
 ---STRINGEND
 
+---STRING archive year order
+Archive year order
+---STRINGEND
+
 ---STRING back to archive.
 Back to the archive.
+---STRINGEND
+
+---STRING categories
+Categories
 ---STRINGEND
 
 ---STRING create event
@@ -35,7 +43,7 @@ Display settings
 Edit event
 ---STRINGEND
 
----STRING enable GET filters
+---STRING enable get filters
 Enable field filters
 ---STRINGEND
 
@@ -69,6 +77,10 @@ Interval
 
 ---STRING list events from master event
 List all events under the master event folder
+---STRINGEND
+
+---STRING list events from folders
+List events from folders
 ---STRINGEND
 
 ---STRING location
@@ -189,5 +201,9 @@ Week %1$s of year %2$s
 
 ---STRING weekly
 Weekly
+---STRINGEND
+
+---STRING use javascript to emulate hovering effect
+Use JavaScript to emulate hovering effect
 ---STRINGEND
 

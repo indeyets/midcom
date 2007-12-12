@@ -28,14 +28,17 @@ class net_nemein_calendar_interface extends midcom_baseclasses_components_interf
         $this->_on_initialize();
 
         $this->_component = 'net.nemein.calendar';
-        $this->_autoload_files = Array(
+        $this->_autoload_files = array
+        (
             'viewer.php',
             'navigation.php',
             'event.php',
             'functions.php',
         );
-        $this->_autoload_libraries = Array(
+        $this->_autoload_libraries = array
+        (
             'midcom.helper.datamanager2',
+            'midcom.helper.dm2config',
             'net.nemein.repeathandler',
             'org.openpsa.calendarwidget',
         );

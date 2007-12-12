@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2007-12-12 adrenalin
+  + Added a configuration option for selecting the calendars displayed in the content topic
+
 2007-12-07 adrenalin
   + Added a new request switch for showing only past events
 

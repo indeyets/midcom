@@ -143,7 +143,6 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
     {
         $this->_load_datamanager();
         $this->_request_data['archive_mode'] = false;
-        $this->_past = true;
         
         if (count($args) > 0)
         {
@@ -360,6 +359,8 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         $type_filter = $this->_config->get('type_filter_upcoming');
         
         $qb = net_nemein_calendar_event_dba::new_query_builder();
+        
+        $qb->begin_group('OR');
 
         // Add root event constraints
         if ($this->_config->get('list_from_master'))
@@ -371,7 +372,26 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             $qb->add_constraint('node', '=', $this->_request_data['content_topic']->id);
         }
         
-        // Add filtering constraints
+        // Add all the folders that are configured
+        if ($this->_config->get('list_from_folders'))
+        {
+            $guids = explode('|', $this->_config->get('list_from_folders'));
+            foreach ($guids as $guid)
+            {
+                // Skip empty and broken guids
+                if (   !$guid
+                    || !mgd_is_guid($guid))
+                {
+                    continue;
+                }
+                
+                $qb->add_constraint('node.guid', '=', $guid);
+            }
+        }
+        
+        $qb->end_group();
+        
+         // Add filtering constraints
         if (!is_null($type_filter))
         {
             $qb->add_constraint('type', '=', (int) $type_filter);
@@ -727,7 +747,9 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
     function _show_calendar($handler_id, &$data)
     {
         $this->_request_data['page_title'] = $data['content_topic']->extra;
+        midcom_show_style('show_calendar_header');
         $this->_calendar->show();
+        midcom_show_style('show_calendar_footer');
     }
 }
 ?>

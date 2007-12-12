@@ -1,11 +1,13 @@
 'master_event'         => null,   // Event under which all root events are placed
 'symlink_topic'        => null,
 'schemadb'             => 'file:/net/nemein/calendar/config/schemadb_default.inc',
+'schemadb_config'      => 'file:/net/nemein/calendar/config/schemadb_config.inc',
 
 'index_count'          => 10,      // How many upcoming events to display on index
 'rss_count'            => 10,      // How many upcoming events to display on index
 'type_filter_upcoming' => null,   // What type (int) to filter welcome page items with
 'list_from_master'     => false,  // Whether to list events from subdirectories of the master event. Disables creation
+'list_from_topics'     => null,   // List of the event topics displayed in this topic
 'enable_filters'       => false,  // Whether to enable GET filters
 'show_events_locally'  => true,   // Whether to show events locally instead of via permalink
 'list_started'         => true,   // Whether to list events that have already started

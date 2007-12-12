@@ -143,7 +143,7 @@ Ustawienia wyświetlania
 Edytuj wydarzenie
 ---STRINGEND
 
----STRING enable GET filters
+---STRING enable get filters
 Włącz filtry
 ---STRINGEND
 
