@@ -1523,9 +1523,9 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         // TODO: handle UID smarter
         $vcal_keys['UID'] = "{$this->guid}-midgardGuid";
 
-        $vcal_keys['LAST-MODIFIED'] = $encoder->vcal_stamp($this->revised, array('TZID' => 'UTC')) . 'Z';
+        $vcal_keys['LAST-MODIFIED'] = $encoder->vcal_stamp($this->metadata->revised, array('TZID' => 'UTC')) . 'Z';
         // Difference between these two is very fuzzy
-        $vcal_keys['DTSTAMP'] = $encoder->vcal_stamp($this->created, array('TZID' => 'UTC')) . 'Z';
+        $vcal_keys['DTSTAMP'] = $encoder->vcal_stamp($this->metadata->created, array('TZID' => 'UTC')) . 'Z';
         $vcal_keys['CREATED'] =& $vcal_keys['DTSTAMP'];
         // Type handling
         switch ($this->orgOpenpsaAccesstype)
