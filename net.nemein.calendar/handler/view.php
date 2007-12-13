@@ -71,7 +71,28 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
         }
         
         $qb = net_nemein_calendar_event_dba::new_query_builder();
+        
+        $qb->begin_group();
         $qb->add_constraint('node', '=', $this->_request_data['content_topic']->id);
+        
+        // Add all the folders that are configured
+        if ($this->_config->get('list_from_folders'))
+        {
+            $guids = explode('|', $this->_config->get('list_from_folders'));
+            foreach ($guids as $guid)
+            {
+                // Skip empty and broken guids
+                if (   !$guid
+                    || !mgd_is_guid($guid))
+                {
+                    continue;
+                }
+                
+                $qb->add_constraint('node.guid', '=', $guid);
+            }
+        }
+        $qb->end_group();
+        
         $qb->add_constraint('name', '=', $args[0]);
         
         if ($qb->count() === 0)
