@@ -155,6 +155,10 @@ Ladda ner %s
 Ändra
 ---STRINGEND
 
+---STRING edit %s
+Ändra %s
+---STRINGEND
+
 ---STRING edit design
 Ändra design
 ---STRINGEND

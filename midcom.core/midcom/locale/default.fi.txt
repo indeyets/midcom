@@ -223,6 +223,10 @@ Lataa %s
 Muokkaa
 ---STRINGEND
 
+---STRING edit %s
+Muokkaa %s
+---STRINGEND
+
 ---STRING edit design
 Muokkaa ulkoasua
 ---STRINGEND

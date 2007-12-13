@@ -219,6 +219,10 @@ Download %s
 Edit
 ---STRINGEND
 
+---STRING edit %s
+Edit %s
+---STRINGEND
+
 ---STRING edit design
 Edig design
 ---STRINGEND
