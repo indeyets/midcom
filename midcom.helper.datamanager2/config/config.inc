@@ -14,12 +14,58 @@
 (
     'HTML' => array
     (
-        'Doctype' => 'XHTML 1.0 Strict',
+        /**
+         * These two must be changed to something unique to your situation 
+         * if you change any of the html_purify_xx configs
+         *
+         * DEVELOPERS: If you change these defaults remember to bump DefinitionRev
+         */ 
+        'DefinitionID' => 'DM2 Default definition set', 
+        'DefinitionRev' => 1,
+        /* NOTE: You must use transitional doctype if you want to use <a name> (see html_purify_HTMLDefinition below) */
+        'Doctype' => 'XHTML 1.0 Transitional',
         'TidyLevel' => 'light',
+        'EnableAttrID' => true,
+    ),
+    'Attr' => array
+    (
+        'IDPrefix' => 'user_',
+        'AllowedFrameTargets' => array
+        (
+            '_blank',
+            '_self',
+            '_top',
+        ),
     ),
     'Cache' => array
     (
         'SerializerPath' => $GLOBALS['midcom_config']['cache_base_directory'] . 'htmlpurifier',
+    ),
+    /* do not cache definitions while testing
+    'Core' => array
+    (
+        'DefinitionCache' => null,
+    ),
+    */
+),
+'html_purify_HTMLDefinition' => array
+(
+    /**
+     * each value passed in order with call_user_func_array to $def->addAttribute()
+     *
+     * See http://htmlpurifier.org/docs/enduser-customize.html
+     */
+    'addAttribute' => array
+    (
+        array('a', 'name', 'Text'),
+    ),
+    /**
+     * each value passed in order with call_user_func_array to $def->addElement()
+     *
+     * See http://htmlpurifier.org/docs/enduser-customize.html
+     */
+    'addElement' => array
+    (
     ),
 ),
 

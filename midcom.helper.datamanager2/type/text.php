@@ -74,8 +74,26 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
      */
     function _on_configuring($config)
     {
+        if (array_key_exists('is_html', $config))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('The configuration option "is_html" is deprecated, use "output_mode" instead.', MIDCOM_LOG_ERROR);
+            if ($config['is_html'])
+            {
+                debug_add('Output mode config option set to "html" by the "is_html" compatibility mode.');
+                $config['output_mode'] = 'html';
+            }
+            debug_pop();
+        }
+        
         $this->purify = $this->_config->get('html_purify');
         $this->purify_config = $this->_config->get('html_purify_config');
+    }
+
+
+    function convert_from_storage ($source)
+    {
+        $this->value = $source;
     }
 
     function purify_content()
@@ -87,23 +105,62 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
         }
     
         require_once('HTMLPurifier.php');
+        // For some reason we lose this along the way!
+        error_reporting(E_ALL);
 
-        $purifier = new HTMLPurifier();
+        $purifier = new HTMLPurifier($this->purify_config);
         
-        foreach ($this->purify_config as $domain => $config)
+        // Set local IDPrefix to field name...
+        $purifier->config->set('Attr', 'IDPrefixLocal', "{$this->name}_");
+
+        // Load custom element/attribute definitions
+        $config_defs = $this->_config->get('html_purify_HTMLDefinition');
+        if (   is_array($config_defs)
+            && !empty($config_defs))
         {
-            foreach ($config as $key => $val)
+            $def =& $purifier->config->getHTMLDefinition(true);
+            if (   isset($config_defs['addAttribute'])
+                && is_array($config_defs['addAttribute'])
+                && !empty($config_defs['addAttribute']))
             {
-                $purifier->config->set($domain, $key, $val);
+                foreach ($config_defs['addAttribute'] as $attrdef)
+                {
+                    if (!is_array($attrdef))
+                    {
+                        continue;
+                    }
+                    call_user_func_array(array($def, 'addAttribute'), $attrdef);
+                }
+            }
+            if (   isset($config_defs['addElement'])
+                && is_array($config_defs['addElement'])
+                && !empty($config_defs['addElement']))
+            {
+                foreach ($config_defs['addElement'] as $elemdef)
+                {
+                    if (!is_array($elemdef))
+                    {
+                        continue;
+                    }
+                    call_user_func_array(array($def, 'addElement'), $elemdef);
+                }
             }
         }
-        
-        $this->value = $purifier->purify($this->value);
-    }
 
-    function convert_from_storage ($source)
-    {
-        $this->value = $source;
+        /*
+        echo "DEBUG: value before\n<pre>\n";
+        echo htmlentities($this->value);
+        echo "\n</pre>\n";
+        */
+
+        $this->value = $purifier->purify($this->value);
+
+        /*
+        echo "DEBUG: value after\n<pre>\n";
+        echo htmlentities($this->value);
+        echo "\n</pre>\n";
+        die('Testing');
+        */
     }
 
     function convert_to_storage()
