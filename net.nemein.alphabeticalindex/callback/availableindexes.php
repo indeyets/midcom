@@ -59,8 +59,57 @@ class net_nemein_alphabeticalindex_callback_availableindexes extends midcom_base
     {
         foreach ($indexes as $index)
         {
-            $this->_data[$index->id] = $index->extra;
+            $this->_data[$index->id] = $this->_resolve_path($index->id, $index->extra);
         }
+    }
+    
+    function _resolve_path($object_id, $title)
+    {
+        $result_components = array();
+
+        $id = $object_id;
+        $last_name = '';
+        while ($id != 0)
+        {
+            $mc = midcom_db_topic::new_collector('id', $id);
+            $mc->add_value_property('extra');
+            $mc->add_value_property('up');
+            $mc->add_value_property('name');
+            $mc->execute();
+            $topics = $mc->list_keys();
+            
+            if (! $topics)
+            {
+                $id = 0;
+                $rc_count = count($result_components);
+                $result_components[$rc_count-1] = $last_name;
+                break;
+            }
+
+            foreach ($topics as $topic_guid => $value)
+            {
+                $id = $mc->get_subkey($topic_guid, 'up');
+                $last_name = $mc->get_subkey($topic_guid, 'name');
+
+                if ($id == 0)
+                {
+                    $result_components[] = $last_name;
+                }
+                else
+                {
+                    $result_components[] = $mc->get_subkey($topic_guid, 'extra');
+                }
+            }
+        }
+
+        if (empty($result_components))
+        {
+            return $title;
+        }
+
+        $result_components = array_reverse($result_components);
+
+        return implode(' > ', $result_components);
     }
     
     function get_name_for_key($key)
