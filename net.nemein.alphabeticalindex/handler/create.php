@@ -188,6 +188,8 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
 
                         $qb = net_nemein_alphabeticalindex_item::new_query_builder();
                         $qb->add_constraint('objectGuid', '=', $object->guid);
+                        $qb->add_constraint('node.id', '=', $this->_topic->id);
+                        
                         if ($qb->count_unchecked() == 0)
                         {
                             $item = new net_nemein_alphabeticalindex_item();            
@@ -195,11 +197,10 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
                             $item->url = "{$GLOBALS['midcom_config']['midcom_site_url']}midcom-permalink-{$object->guid}";
                             $item->objectGuid = $object->guid;            
                             $item->cachedUrl = $_MIDCOM->permalinks->resolve_permalink($object->guid);
+                            $item->node = $this->_topic->id;
                             
                             if ($item->create())
-                            {
-                                $object->set_parameter('net.nemein.alphabeticalindex:show_in_list','status', true);
-                                
+                            {                                
                                 $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.alphabeticalindex', 'net.nemein.alphabeticalindex'), sprintf($_MIDCOM->i18n->get_string('item %s has been added to alphabetical index', 'net.nemein.alphabeticalindex'), $item->title), 'ok');
                             }
                             
@@ -219,16 +220,18 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
 
                         $qb = net_nemein_alphabeticalindex_item::new_query_builder();
                         $qb->add_constraint('objectGuid', '=', $object->guid);
+                        $qb->add_constraint('node.id', '=', $this->_topic->id);
                         if ($qb->count() == 0)
                         {
                             $item = new net_nemein_alphabeticalindex_item();            
                             $item->title = $object->extra;
                             $item->url = "{$GLOBALS['midcom_config']['midcom_site_url']}midcom-permalink-{$object->guid}";
                             $item->objectGuid = $object->guid;            
+                            $item->cachedUrl = $_MIDCOM->permalinks->resolve_permalink($object->guid);
+                            $item->node = $this->_topic->id;
+                            
                             if ($item->create())
-                            {
-                                $object->set_parameter('net.nemein.alphabeticalindex:show_in_list','status', true);
-                                
+                            {                                
                                 $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.alphabeticalindex', 'net.nemein.alphabeticalindex'), sprintf($_MIDCOM->i18n->get_string('item %s has been added to alphabetical index', 'net.nemein.alphabeticalindex'), $item->title), 'ok');
                             }
                             
