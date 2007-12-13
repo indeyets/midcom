@@ -3,7 +3,7 @@
  * to create direct webpages.*/ 
 'purecode' => false,
 /* when using pear packaging, versions > 1 are stable */
-'version' => '1.0.5',
+'version' => '1.0.6',
 'state' => 'stable',
 /* use this to set default privileges */
 'privileges' => array(),
