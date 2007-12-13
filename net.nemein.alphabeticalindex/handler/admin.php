@@ -58,6 +58,51 @@ class net_nemein_alphabeticalindex_handler_admin extends midcom_baseclasses_comp
         foreach ($results as $item)
         {
             $title = $item->title;
+
+            if ($item->delete())
+            {                
+                if ($item->objectGuid != '')
+                {
+                    $object = $_MIDCOM->dbfactory->get_object_by_guid($item->objectGuid);
+                    if ($object)
+                    {
+                        $list_id_string = $object->get_parameter('net.nemein.alphabeticalindex:show_in_list','status');
+                        $list_id_string = str_replace("{$item->node}|", "", $list_id_string);
+                        $object->set_parameter('net.nemein.alphabeticalindex:show_in_list','status', $list_id_string);
+                    }
+                }
+
+                $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.alphabeticalindex', 'net.nemein.alphabeticalindex'), sprintf($_MIDCOM->i18n->get_string('item %s has been deleted from alphabetical index', 'net.nemein.alphabeticalindex'), $title), 'ok');
+            }
+            else
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Couldn't delete index item '{$item->id}'.");
+                debug_pop();
+            }
+        }
+        
+        return true;
+    }
+    
+    function _handler_clearindex($handler_id, $args, &$data)
+    {
+        $this->_topic->require_do('midgard:delete');
+        
+        $qb = net_nemein_alphabeticalindex_item::new_query_builder();
+        $qb->add_constraint('node', '=', $this->_topic->id);
+        $results = $qb->execute();
+        
+        if (count($results) == 0)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("No items found in index.");
+            debug_pop();
+            return true;
+        }
+        
+        foreach ($results as $item)
+        {            
             if ($item->delete())
             {
                 if ($item->objectGuid != '')
@@ -65,18 +110,32 @@ class net_nemein_alphabeticalindex_handler_admin extends midcom_baseclasses_comp
                     $object = $_MIDCOM->dbfactory->get_object_by_guid($item->objectGuid);
                     if ($object)
                     {
-                        $object->set_parameter('net.nemein.alphabeticalindex:show_in_list','status', false);                        
+                        $list_id_string = $object->get_parameter('net.nemein.alphabeticalindex:show_in_list','status');
+                        $list_id_string = str_replace("{$item->node}|", "", $list_id_string);
+                        $object->set_parameter('net.nemein.alphabeticalindex:show_in_list','status', $list_id_string);
                     }
                 }
-                
-                $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.alphabeticalindex', 'net.nemein.alphabeticalindex'), sprintf($_MIDCOM->i18n->get_string('item %s has been deleted from alphabetical index', 'net.nemein.alphabeticalindex'), $title), 'ok');
+            }
+            else
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Couldn't delete index item '{$item->id}'.");
+                debug_pop();
             }
         }
+        
+        $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.alphabeticalindex', 'net.nemein.alphabeticalindex'), $_MIDCOM->i18n->get_string('Alphabetical index has been cleared', 'net.nemein.alphabeticalindex'), 'ok');
         
         return true;
     }
     
+    
     function _show_delete($handler_id, &$data)
+    {
+        $_MIDCOM->relocate("");
+    }
+    
+    function _show_clearindex($handler_id, &$data)
     {
         $_MIDCOM->relocate("");
     }

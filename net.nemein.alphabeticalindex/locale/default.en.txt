@@ -23,3 +23,10 @@ To top
 Show in index
 ---STRINGEND
 
+---STRING Alphabetical index has been cleared
+Alphabetical index has been cleared
+---STRINGEND
+
+---STRING Clear index
+Clear index
+---STRINGEND

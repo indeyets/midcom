@@ -22,3 +22,11 @@ Takaisin ylös
 ---STRING Show in index
 Näytä hakemistossa
 ---STRINGEND
+
+---STRING Alphabetical index has been cleared
+Hakemisto tyhjennetty
+---STRINGEND
+
+---STRING Clear index
+Tyhjennä hakemisto
+---STRINGEND

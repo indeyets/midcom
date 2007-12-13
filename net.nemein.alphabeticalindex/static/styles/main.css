@@ -1,21 +1,21 @@
 #net_nemein_alphabeticalindex_navigation
 {
-    height: 33px;
-    /*width: 693px;*/
+    height: 22px;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 #net_nemein_alphabeticalindex_navigation ul
 {
     list-style-type: none;
+    padding: 0px;
+    margin: 0px;
 }
 #net_nemein_alphabeticalindex_navigation ul li
 {
-    height: 33px;
-    line-height: 33px;
+    height: 22px;
+    line-height: 22px;
     margin: 0;
     padding: 0;
-    background: url('../images/navigation_bg.gif') left top repeat-x;
     float: left;
     text-align: center;
     cursor: pointer;
@@ -23,16 +23,13 @@
 #net_nemein_alphabeticalindex_navigation ul li.separator
 {
     width: 1px;
-    background: url('../images/navigation_separator_bg.gif') left top no-repeat;
     cursor: default;
 }
 #net_nemein_alphabeticalindex_navigation ul li.selected
 {
-    background: url('../images/navigation_selected_bg.gif') left top repeat-x;
 }
 #net_nemein_alphabeticalindex_navigation ul li.hover
 {
-    background: url('../images/navigation_hover_bg.gif') left top repeat-x;
 }
 #net_nemein_alphabeticalindex_navigation ul li.disabled
 {
@@ -45,8 +42,8 @@
 #net_nemein_alphabeticalindex_navigation ul li a:link,
 #net_nemein_alphabeticalindex_navigation ul li a:visited
 {
-    height: 33px;
-    line-height: 33px;
+    height: 22px;
+    line-height: 22px;
     margin: 0;
     padding: 0;
     float: left;
@@ -55,8 +52,8 @@
     background: transparent;
     color: #474747;
     font-weight: normal;
-    margin-left: 8px;
-    margin-right: 8px;
+    margin-left: 6px;
+    margin-right: 6px;
 }
 #net_nemein_alphabeticalindex_navigation ul li.selected a,
 #net_nemein_alphabeticalindex_navigation ul li a:active
@@ -69,7 +66,7 @@
 #net_nemein_alphabeticalindex_navigation ul li a:hover,
 #net_nemein_alphabeticalindex_navigation ul li a:visited:hover
 {
-    color: #fff;
+    color: #8f8f8f;
     font-weight: normal;
     text-decoration: none;
 }
@@ -121,4 +118,9 @@
 #net_nemein_alphabeticalindex_items ul li div.actions img
 {
     border: 0;
+}
+#net_nemein_alphabeticalindex_items ul li div.link_description
+{
+    margin-left: 5px;
+    margin-bottom: 5px;
 }

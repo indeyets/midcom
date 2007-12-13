@@ -64,7 +64,13 @@ echo $data['alphabets_nav'];
                 {
                     echo "</div>";
                 }
-                                
+
+                if ($item->description != '') {
+                    echo "<div class=\"link_description\">\n";
+                    echo nl2br($item->description);
+                    echo "</div>\n";
+                }
+
                 echo "</li>\n";
             }
             echo "</ul>\n";

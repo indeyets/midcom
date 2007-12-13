@@ -20,7 +20,15 @@
             'required' => true,
             'widget' => 'text',
         ),
-        
+
+        'description' => Array
+        (
+            'title' => 'description',
+            'storage' => 'description',
+            'type' => 'text',
+            'widget' => 'textarea',
+        ),
+
         /* End of component required fields */
         
     )
@@ -93,6 +101,14 @@
             'storage'    => 'title', 
             'required' => true,
             'widget' => 'text',
+        ),
+        
+        'description' => Array
+        (
+            'title' => 'description',
+            'storage' => 'description',
+            'type' => 'text',
+            'widget' => 'textarea',
         ),
         
         /* End of component required fields */

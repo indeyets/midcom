@@ -171,6 +171,7 @@ class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_compo
         
         if ($this->_type == 'internal')
         {
+            $this->_item->modified = true;
             if (empty($this->_item->cachedUrl))
             {
                 $this->_item->cachedUrl = $_MIDCOM->permalinks->resolve_permalink($this->_item->objectGuid);

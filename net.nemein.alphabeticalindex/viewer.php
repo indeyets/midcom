@@ -54,6 +54,14 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
             'variable_args' => 1
         );
         
+        // Handle /edit/[guid]
+        $this->_request_switch['edit'] = array
+        (
+            'handler' => Array('net_nemein_alphabeticalindex_handler_edit', 'edit'),
+            'fixed_args' => Array('edit'),
+            'variable_args' => 1
+        );
+        
         // Handle /delete/[guid]
         $this->_request_switch['delete'] = array
         (
@@ -62,12 +70,11 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
             'variable_args' => 1
         );
         
-        // Handle /edit/[guid]
-        $this->_request_switch['edit'] = array
+        // Handle /clear_index/
+        $this->_request_switch['clear_index'] = array
         (
-            'handler' => Array('net_nemein_alphabeticalindex_handler_edit', 'edit'),
-            'fixed_args' => Array('edit'),
-            'variable_args' => 1
+            'handler' => Array('net_nemein_alphabeticalindex_handler_admin', 'clearindex'),
+            'fixed_args' => Array('clear_index')
         );
         
         $_MIDCOM->add_link_head
@@ -150,7 +157,7 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
         if ($this->_topic->can_do('midgard:create'))
         {
             $this->_node_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "create/external.html",
+                MIDCOM_TOOLBAR_URL => "create/external/",
                 MIDCOM_TOOLBAR_LABEL => sprintf
                 (
                     $this->_l10n_midcom->get('create %s'),
@@ -160,7 +167,7 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
                 MIDCOM_TOOLBAR_ACCESSKEY => 'n',
             ));
             $this->_node_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "create/internal.html",
+                MIDCOM_TOOLBAR_URL => "create/internal/",
                 MIDCOM_TOOLBAR_LABEL => sprintf
                 (
                     $this->_l10n_midcom->get('create %s'),
@@ -168,6 +175,16 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
                 ),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'n',
+            ));
+        }
+        
+        if ($this->_topic->can_do('midgard:delete'))
+        {
+            $this->_node_toolbar->add_item(Array(
+                MIDCOM_TOOLBAR_URL => "clear_index/",
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('Clear index'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                MIDCOM_TOOLBAR_ACCESSKEY => 't',
             ));
         }
                 

@@ -73,6 +73,7 @@ class net_nemein_alphabeticalindex_handler_index extends midcom_baseclasses_comp
         $qb->begin_group('AND');
         $qb->add_constraint('title', '<>', '');
         $qb->add_constraint('url', '<>', '');
+        $qb->add_constraint('node', '=', $this->_topic->id);
         $qb->end_group();
         $qb->add_order('title', 'ASC');
         
