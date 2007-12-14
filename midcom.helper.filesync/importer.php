@@ -10,21 +10,21 @@
 /**
  * @package midcom.helper.filesync
  */
-class midcom_helper_filesync_exporter extends midcom_baseclasses_components_purecode
+class midcom_helper_filesync_importer extends midcom_baseclasses_components_purecode
 {
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      *
      * @param midcom_helper_replication_type_dba $type type
      */
-    function midcom_helper_filesync_exporter()
+    function midcom_helper_filesync_importer()
     {
          $this->_component = 'midcom.helper.filesync';
          parent::midcom_baseclasses_components_purecode();
     }
     
     /**
-     * This is a static factory method which lets you dynamically create exporter instances.
+     * This is a static factory method which lets you dynamically create importer instances.
      * It takes care of loading the required class files. The returned instances will be created
      * but not initialized.
      *
@@ -33,23 +33,23 @@ class midcom_helper_filesync_exporter extends midcom_baseclasses_components_pure
      * <b>This function must be called statically.</b>
      *
      * @param string $type type
-     * @return midcom_helper_filesync_exporter A reference to the newly created exporter instance.
+     * @return midcom_helper_filesync_importer A reference to the newly created importer instance.
      */
     function & create($type)
     {
-        $filename = MIDCOM_ROOT . "/midcom/helper/filesync/exporter/{$type}.php";
+        $filename = MIDCOM_ROOT . "/midcom/helper/filesync/importer/{$type}.php";
         
         if (!file_exists($filename))
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Requested exporter file {$type} is not installed.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Requested importer file {$type} is not installed.");
             // This will exit.
         }
         require_once($filename);
 
-        $classname = "midcom_helper_filesync_exporter_{$type}";        
+        $classname = "midcom_helper_filesync_importer_{$type}";        
         if (!class_exists($classname))
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Requested exporter class {$type} is not installed.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Requested importer class {$type} is not installed.");
             // This will exit.
         }
         

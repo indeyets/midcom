@@ -27,6 +27,7 @@ class midcom_helper_filesync_interface extends midcom_baseclasses_components_int
         $this->_autoload_files = array
         (
             'exporter.php',
+            'importer.php',
         );
         
         // Load all libraries used by component here
