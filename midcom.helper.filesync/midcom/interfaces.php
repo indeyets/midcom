@@ -33,5 +33,26 @@ class midcom_helper_filesync_interface extends midcom_baseclasses_components_int
         $this->_autoload_libraries = array();
     }
 
+    function prepare_dir($prefix)
+    {
+        $path = $this->_config->get('filesync_path');
+        if (!file_exists($path))
+        {
+            mkdir($path);
+        }
+        
+        if (substr($path, -1) != '/')
+        {
+            $path .= '/';
+        }
+        
+        $module_dir = "{$path}snippets";
+        if (!file_exists($module_dir))
+        {
+            mkdir($module_dir);
+        }
+        
+        return "{$module_dir}/";
+    }
 }
 ?>
