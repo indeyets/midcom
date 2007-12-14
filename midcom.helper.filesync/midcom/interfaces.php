@@ -46,7 +46,7 @@ class midcom_helper_filesync_interface extends midcom_baseclasses_components_int
             $path .= '/';
         }
         
-        $module_dir = "{$path}snippets";
+        $module_dir = "{$path}{$prefix}";
         if (!file_exists($module_dir))
         {
             mkdir($module_dir);
