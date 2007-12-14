@@ -3,7 +3,7 @@
 ---LANGUAGE fi
 
 ---STRING net.nemein.feedcollector
-Uutislistauskokelma
+Uutislistauskokoelma
 ---STRINGEND
 
 ---STRING manage
