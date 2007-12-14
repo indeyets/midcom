@@ -20,6 +20,8 @@ class midcom_helper_filesync_exporter_structure extends midcom_helper_filesync_e
     function midcom_helper_filesync_exporter_structure()
     {
         parent::midcom_helper_filesync_exporter();
+        
+        $this->root_dir = midcom_helper_filesync_interface::prepare_dir('structure');
     }
     
     function read_node($node)
@@ -75,7 +77,7 @@ class midcom_helper_filesync_exporter_structure extends midcom_helper_filesync_e
         $root_node = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
         $structure[$structure_name]['root'] = $this->read_node($root_node);
         
-        return $structure;
+        file_put_contents("{$this->root_dir}{$structure_name}.inc", $this->_draw_array($structure));
     }
     
     function _draw_array($array, $prefix = '')
@@ -124,7 +126,7 @@ class midcom_helper_filesync_exporter_structure extends midcom_helper_filesync_e
     
     function export()
     {
-        echo $this->_draw_array($this->read_structure());
+        $this->read_structure();
     }
 }
 ?>
