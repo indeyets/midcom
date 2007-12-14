@@ -188,7 +188,7 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
 
                         $qb = net_nemein_alphabeticalindex_item::new_query_builder();
                         $qb->add_constraint('objectGuid', '=', $object->guid);
-                        $qb->add_constraint('node.id', '=', $this->_topic->id);
+                        $qb->add_constraint('node', '=', $this->_topic->id);
                         
                         if ($qb->count_unchecked() == 0)
                         {

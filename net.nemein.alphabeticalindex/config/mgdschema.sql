@@ -10,7 +10,8 @@ CREATE TABLE net_nemein_alphabeticalindex_item_db
     modified tinyint(1) NOT NULL default 0,
         
     PRIMARY KEY (id),
-    UNIQUE INDEX net_nemein_alphabeticalindex_item_db_idx(title, url),
+    
+    UNIQUE INDEX net_nemein_alphabeticalindex_item_db_idx(guid, node),
     INDEX net_nemein_alphabeticalindex_item_object_idx(objectGuid),
-    INDEX net_nemein_alphabeticalindex_item_node_idx (node)
+    INDEX net_nemein_alphabeticalindex_item_node_idx(node)
 );

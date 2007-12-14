@@ -67,6 +67,7 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
         // debug_push_class(__CLASS__, __FUNCTION__);
         // debug_print_r("object: ",$object);
 
+        $title = net_nemein_alphabeticalindex_interface::_resolve_object_title($object);
         $show_in_list = $object->get_parameter('net.nemein.alphabeticalindex:show_in_list','status');
         
         if (!is_string($show_in_list))
@@ -95,8 +96,9 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
         {
             foreach ($lists as $list_id)
             {
+                $list_id = (int) $list_id;
                 $item = new net_nemein_alphabeticalindex_item();            
-                $item->title = net_nemein_alphabeticalindex_interface::_resolve_object_title($object);
+                $item->title = $title;
                 $item->url = "{$GLOBALS['midcom_config']['midcom_site_url']}midcom-permalink-{$object->guid}";
                 $item->objectGuid = $object->guid;
                 $item->node = $list_id;
@@ -115,6 +117,7 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
         // debug_push_class(__CLASS__, __FUNCTION__);
         // debug_print_r("object: ",$object);
         
+        $title = net_nemein_alphabeticalindex_interface::_resolve_object_title($object);
         $show_in_list = $object->get_parameter('net.nemein.alphabeticalindex:show_in_list','status');
         // debug_print_r("show_in_list: ",$show_in_list);
 
@@ -142,6 +145,7 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
             
             foreach ($lists as $list_id)
             {
+                $list_id = (int) $list_id;
                 $qb = net_nemein_alphabeticalindex_item::new_query_builder();
                 $qb->add_constraint('objectGuid', '=', $object->guid);
                 $qb->add_constraint('node.id', '=', $list_id);
@@ -152,7 +156,7 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
                     $item = $results[0];
                     if (! $item->modified)
                     {
-                        $item->title = net_nemein_alphabeticalindex_interface::_resolve_object_title($object);
+                        $item->title = $title;
                     }
                     $item->node = $list_id;
                     $item->update();
@@ -232,6 +236,7 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
         {
             foreach ($lists as $list_id)
             {
+                $list_id = (int) $list_id;
                 $qb = net_nemein_alphabeticalindex_item::new_query_builder();
                 $qb->add_constraint('objectGuid', '=', $object->guid);
                 if (! $skip_status)
