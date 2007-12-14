@@ -108,6 +108,25 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
         {
             $qb = midcom_db_article::new_query_builder();    
             $qb->add_constraint('topic', '=', $this->_content_topic->id);
+            
+            // Hide the articles that have the publish time in the future and if
+            // the user is not administrator
+            if (   $this->_config->get('enable_scheduled_publishing')
+                && !$_MIDCOM->auth->admin)
+            {
+                // Show the article only if the publishing time has passed or the viewer
+                // is the author
+                $qb->begin_group('OR');
+                    $qb->add_constraint('metadata.published', '<', date('Y-m-d h:i:s'));
+                    
+                    if (   $_MIDCOM->auth->user
+                        && isset($_MIDCOM->auth->user->guid))
+                    {
+                        $qb->add_constraint('metadata.owners', 'LIKE', '|' . $_MIDCOM->auth->user->guid . '|');
+                    }
+                $qb->end_group();
+            }
+            
             $qb->add_order('metadata.published');
             $qb->set_limit(1);
             $result = $qb->execute_unchecked();
@@ -148,6 +167,24 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
         
         // Get the latest content topic articles
         $qb = midcom_db_article::new_query_builder();
+        
+        // Hide the articles that have the publish time in the future and if
+        // the user is not administrator
+        if (   $this->_config->get('enable_scheduled_publishing')
+            && !$_MIDCOM->auth->admin)
+        {
+            // Show the article only if the publishing time has passed or the viewer
+            // is the author
+            $qb->begin_group('OR');
+                $qb->add_constraint('metadata.published', '<', date('Y-m-d h:i:s'));
+                
+                if (   $_MIDCOM->auth->user
+                    && isset($_MIDCOM->auth->user->guid))
+                {
+                    $qb->add_constraint('metadata.owners', 'LIKE', '|' . $_MIDCOM->auth->user->guid . '|');
+                }
+            $qb->end_group();
+        }
         
         if (!$this->_config->get('enable_article_links'))
         {

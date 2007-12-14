@@ -8,6 +8,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2007-12-14 adrenalin
+  - Enabled scheduled publishing that takes the metadata published of the article into account
+
 2007-10-08 adrenalin
   - Deletes now all the links pointing to article, which is being deleted
 

@@ -78,13 +78,30 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
         $qb = new org_openpsa_qbpager('midcom_db_article', 'net_nehmer_blog_index');
         $data['qb'] =& $qb;
         
+        // Hide the articles that have the publish time in the future and if
+        // the user is not administrator
+        if (   $this->_config->get('enable_scheduled_publishing')
+            && !$_MIDCOM->auth->admin)
+        {
+            // Show the article only if the publishing time has passed or the viewer
+            // is the author
+            $qb->begin_group('OR');
+                $qb->add_constraint('metadata.published', '<', date('Y-m-d h:i:s'));
+                
+                if (   $_MIDCOM->auth->user
+                    && isset($_MIDCOM->auth->user->guid))
+                {
+                    $qb->add_constraint('metadata.owners', 'LIKE', '|' . $_MIDCOM->auth->user->guid . '|');
+                }
+            $qb->end_group();
+        }
+        
         // Include the article links to the indexes if enabled
         if ($this->_config->get('enable_article_links'))
         {
             $mc = net_nehmer_blog_link_dba::new_collector('topic', $this->_content_topic->id);
             $mc->add_value_property('article');
             $mc->add_constraint('topic', '=', $this->_content_topic->id);
-            $mc->add_order('metadata.published', 'DESC');
             
             // Use sophisticated guess to limit the amount: there shouldn't be more than
             // the required amount of links that is needed. Even if some links would fall

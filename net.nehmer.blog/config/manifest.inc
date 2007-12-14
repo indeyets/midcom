@@ -1,5 +1,5 @@
 'name' => 'net.nehmer.blog',
-'version' => '1.5.0beta1',
+'version' => '1.5.0beta4',
 'state' => 'beta',
 'class_definitions' => array
 (

@@ -355,3 +355,10 @@ Jos haluat poistaa alkuperäisen artikkelin, <a href="%s">klikkaa tästä</a>.
 Tämä blogiartikkeli on linkitetty kansiosta <a href="%s">%s</a> ja vahvistaminen poistaa vain linkin.
 ---STRINGEND
 
+---STRING language
+Kieli
+---STRINGEND
+
+---STRING enable scheduled publishing
+Käytä ajastettua julkaisua
+---STRINGEND

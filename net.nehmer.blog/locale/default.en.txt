@@ -355,3 +355,10 @@ Use 'view' prefix in url
 Should the topic be visible
 ---STRINGEND
 
+---STRING language
+Language
+---STRINGEND
+
+---STRING enable scheduled publishing
+Enable scheduled publishing
+---STRINGEND

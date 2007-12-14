@@ -26,6 +26,31 @@
             'config_domain' => 'net.nehmer.blog',
             'config_key' => 'categories',
             'widget' => 'text',
+        ),
+        'enable_scheduled_publishing' => array
+        (
+            'description' => 'enable scheduled publishing',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nehmer.blog',
+            'config_key' => 'enable_scheduled_publishing',
+            'widget' => 'config_radiobox',
+            'widget_radiobox_choices' => array
+            (
+                '' => 'default setting',
+                '1' => 'yes',
+                '0' => 'no',
+            ),
+        ),
+        'language' => array
+        (
+            'description' => 'language',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nehmer.blog',
+            'config_key' => 'language',
+            'widget' => 'select',
+            'widget_select_choices' => array_merge(array('' => 'default setting'), $_MIDCOM->i18n->list_languages()),
             'end_fieldgroup' => '',
         ),
         'schemadb' => array

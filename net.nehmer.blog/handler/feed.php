@@ -82,6 +82,24 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
         // Get the articles,
         $qb = midcom_db_article::new_query_builder();
         
+        // Hide the articles that have the publish time in the future and if
+        // the user is not administrator
+        if (   $this->_config->get('enable_scheduled_publishing')
+            && !$_MIDCOM->auth->admin)
+        {
+            // Show the article only if the publishing time has passed or the viewer
+            // is the author
+            $qb->begin_group('OR');
+                $qb->add_constraint('metadata.published', '<', date('Y-m-d h:i:s'));
+                
+                if (   $_MIDCOM->auth->user
+                    && isset($_MIDCOM->auth->user->guid))
+                {
+                    $qb->add_constraint('metadata.owners', 'LIKE', '|' . $_MIDCOM->auth->user->guid . '|');
+                }
+            $qb->end_group();
+        }
+        
         // Include the article links to the indexes if enabled
         if ($this->_config->get('enable_article_links'))
         {

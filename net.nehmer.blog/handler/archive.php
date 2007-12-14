@@ -157,6 +157,25 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
 
         $qb->add_constraint('metadata.published', '>=', $start->getDate());
         $qb->add_constraint('metadata.published', '<', $end->getDate());
+        
+        // Hide the articles that have the publish time in the future and if
+        // the user is not administrator
+        if (   $this->_config->get('enable_scheduled_publishing')
+            && !$_MIDCOM->auth->admin)
+        {
+            // Show the article only if the publishing time has passed or the viewer
+            // is the author
+            $qb->begin_group('OR');
+                $qb->add_constraint('metadata.published', '<', date('Y-m-d h:i:s'));
+                
+                if (   $_MIDCOM->auth->user
+                    && isset($_MIDCOM->auth->user->guid))
+                {
+                    $qb->add_constraint('metadata.owners', 'LIKE', '|' . $_MIDCOM->auth->user->guid . '|');
+                }
+            $qb->end_group();
+        }
+        
         return $qb->count_unchecked();
     }
 
@@ -317,6 +336,24 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_content_topic->id);
 
+        // Hide the articles that have the publish time in the future and if
+        // the user is not administrator
+        if (   $this->_config->get('enable_scheduled_publishing')
+            && !$_MIDCOM->auth->admin)
+        {
+            // Show the article only if the publishing time has passed or the viewer
+            // is the author
+            $qb->begin_group('OR');
+                $qb->add_constraint('metadata.published', '<', date('Y-m-d h:i:s'));
+                
+                if (   $_MIDCOM->auth->user
+                    && isset($_MIDCOM->auth->user->guid))
+                {
+                    $qb->add_constraint('metadata.owners', 'LIKE', '|' . $_MIDCOM->auth->user->guid . '|');
+                }
+            $qb->end_group();
+        }
+        
         // Use helper functions to determine start/end
         switch ($handler_id)
         {
