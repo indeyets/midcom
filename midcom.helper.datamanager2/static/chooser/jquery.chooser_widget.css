@@ -58,6 +58,7 @@ input.chooser_widget_search_input
     width: 20%;
     float: left;
     padding-left: 3px;
+    overflow: hidden;
 }
 
 .chooser_widget_search_idle
