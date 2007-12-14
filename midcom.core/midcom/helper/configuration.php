@@ -92,7 +92,7 @@ class midcom_helper_configuration
             $object = &$param1;
             $path = &$param2;
             $this->_local = array();
-            $this->_store_from_object ($object, $path, true);
+            $this->_store_from_object($object, $path, true);
         }
         else if (! is_null($param1))
         {

@@ -1221,7 +1221,7 @@ class midcom_application
         }
 
         // Load configuration
-        $config_obj =& $this->_loadconfig($object);
+        $config_obj =& $this->_loadconfig($this->_currentcontext, $object);
         $config = ($config_obj == false) ? array() : $config_obj->get_all();
         if (! $component_interface->configure($config, $this->_currentcontext))
         {
@@ -1254,11 +1254,21 @@ class midcom_application
      * @return midcom_helper_configuration    Reference to the newly constructed configuration object.
      * @access private
      */
-    private function & _loadconfig($object)
+    private function & _loadconfig($context_id, $object)
     {
-        $path = $this->get_context_data(MIDCOM_CONTEXT_COMPONENT);
-        $result = new midcom_helper_configuration($object, $path);
-        return $result;
+        static $configs = array();
+        if (!isset($configs[$context_id]))
+        {
+            $configs[$context_id] = array();
+        }
+
+        $path = $this->get_context_data(MIDCOM_CONTEXT_COMPONENT);        
+        if (!isset($configs[$context_id][$object->guid]))
+        {
+            $configs[$context_id][$object->guid] = new midcom_helper_configuration($object, $path);
+        }
+        
+        return $configs[$context_id][$object->guid];
     }
 
     /**

@@ -545,7 +545,7 @@ class midcom_baseclasses_components_interface
 
         if (is_null($this->_data['config']))
         {
-            $data['config'] = new midcom_helper_configuration();
+            $data['config'] = new midcom_helper_configuration($this->_component);
         }
         else
         {
