@@ -651,8 +651,33 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                     array('metadata.published' => 'ASC'),
                 ),
                 'id_field' => 'id',
+                'generate_path_for' => 'name',
             ),
-            'generate_path_for' => 'name',
+            'event' => array
+            (
+                'class' => 'net_nemein_calendar_event',
+                'component' => 'net.nemein.calendar',
+                'headers' => array
+                (
+                    'title',
+                    'start',
+                    'end',
+                    'location',
+                ),
+                'constraints' => array(),
+                'searchfields' => array
+                (
+                    'title',
+                    'location',
+                ),
+                'orders' => array
+                (
+                    array('title' => 'ASC'), 
+                    array('start' => 'ASC'), 
+                    array('metadata.published' => 'ASC'),
+                ),
+                'creation_default_key' => 'title',
+            ),
         );
         
         if (array_key_exists($this->clever_class,$clever_classes))
@@ -673,7 +698,14 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 foreach ($clever_classes[$this->clever_class]['headers'] as $header_key)
                 {
                     $header = array();
-                    $header['title'] = $this->_l10n_midcom->get($header_key);
+                    if ($this->component)
+                    {
+                        $header['title'] = $_MIDCOM->i18n->get_string($header_key, $this->component);
+                    }
+                    else
+                    {
+                        $header['title'] = $this->_l10n_midcom->get($header_key);
+                    }
                     $header['name'] = $header_key;
                     $this->result_headers[] = $header;
                 }
