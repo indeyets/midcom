@@ -89,10 +89,6 @@ class midcom_helper_filesync_importer_snippet extends midcom_helper_filesync_imp
             $encoding = mb_detect_encoding($file_contents);
             if ($encoding != 'UTF-8')
             {
-                if ($encoding == 'ASCII')
-                {
-                    $encoding = 'ISO-8859-1';
-                }
                 $file_contents = @iconv($encoding, 'UTF-8', $file_contents);
             }
             

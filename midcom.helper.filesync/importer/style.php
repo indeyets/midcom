@@ -63,17 +63,43 @@ class midcom_helper_filesync_importer_style extends midcom_helper_filesync_impor
             }
             
             // Deal with element
-            $element_contents = file_get_contents("{$path}/{$entry}");
+            
+            // Check file type
+            $filename_parts = explode('.', $entry);
+            if (count($filename_parts) < 2)
+            {
+                continue;
+            }
+            $element_name = $filename_parts[0];
+            $field = false;
+            switch($filename_parts[count($filename_parts) - 1])
+            {
+                case 'php':
+                    $field = 'value';
+                    break;
+            }
+            if (!$field)
+            {
+                continue;
+            }
+            
+            $file_contents = file_get_contents("{$path}/{$entry}");
+            $encoding = mb_detect_encoding($file_contents);
+            if ($encoding != 'UTF-8')
+            {
+                $file_contents = @iconv($encoding, 'UTF-8', $file_contents);
+            }
+            
             $qb = midcom_db_element::new_query_builder();
             $qb->add_constraint('style', '=', $style->id);
-            $qb->add_constraint('name', '=', $entry);
+            $qb->add_constraint('name', '=', $element_name);
             if ($qb->count() == 0)
             {
                 // New element
                 $element = new midcom_db_element();
                 $element->style = $style->id;
-                $element->name = $entry;
-                $element->value = $element_contents;
+                $element->name = $element_name;
+                $element->$field = $file_contents;
                 $element->create();
                 continue;
             }
@@ -82,9 +108,9 @@ class midcom_helper_filesync_importer_style extends midcom_helper_filesync_impor
             $element = $elements[0];
             
             // Update existing elements only if they have actually changed
-            if ($element->value != $element_contents)
+            if ($element->$field != $file_contents)
             {
-                $element->value = $element_contents;
+                $element->$field = $file_contents;
                 $element->update();
             }
         }
