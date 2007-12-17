@@ -1,6 +1,11 @@
 <?php
 $_MIDCOM->auth->require_admin_user();
 
+//Disable limits
+// TODO: Could this be done more safely somehow
+@ini_set('memory_limit', -1);
+@ini_set('max_execution_time', 0);
+
 if (array_key_exists('approve', $_POST))
 {
     $meta =& midcom_helper_metadata::retrieve($_POST['approve']);
