@@ -30,9 +30,22 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         {
             return null;
         }
-    
-        $filename = $this->config->get_rcs_root() . "/{$object->guid}";
-        
+
+        // Keep files organized to subfolders to keep filesystem sane
+        $dirpath = $this->config->get_rcs_root() . "/{$object->guid[0]}/{$object->guid[1]}";
+        if (!file_exists($dirpath))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Directory {$dirpath} does not exist, attempting to create", MIDCOM_LOG_WARN);
+            debug_pop();
+            if (!file_exists($this->config->get_rcs_root() . "/{$object->guid[0]}"))
+            {
+                mkdir($this->config->get_rcs_root() . "/{$object->guid[0]}");
+            }
+            mkdir($dirpath);
+        }
+        $filename = "{$dirpath}/{$object->guid}";
+
         if (   isset($object->lang)
             && $object->lang != 0)
         {
@@ -76,6 +89,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         
         $result = $this->rcs_update(&$object, $update_string);
         
+        // The methods return basically what the RCS unix level command returns, so nonzero value is error and zero is ok...
         if ($result > 0 ) 
         { 
             return false;
@@ -99,9 +113,9 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
     function rcs_update ($object, $message)
     {  
         $status = null;
-     
+
         $guid = $object->guid;
-    
+
         if (!($guid <> "")) 
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -109,35 +123,32 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
             debug_pop();
             return 3;
         }
-     
+
         $filename = $this->_generate_rcs_filename($object);
         if (is_null($filename))
         {
             return 0;
         }
-        
+
         $rcsfilename =  "{$filename},v";
-     
+
         if (!file_exists($rcsfilename))
         {
-            if (!$this->rcs_create($object, $message)) 
-            {
-                return 0;
-            } 
-            return 2;
+            // The methods return basically what the RCS unix level command returns, so nonzero value is error and zero is ok...
+            return $this->rcs_create($object, $message);
         }
-        
-        $command = "co -l {$filename} 2>&1";
+
+        $command = 'co -q -f -l ' . escapeshellarg($filename);
         $status = $this->exec($command);
-        
+
         $data = $this->rcs_object2data($object);
-        
-     
+
         $this->rcs_writefile($guid, $data);
-        $command = "ci -m'" . $message . "' {$filename} 2>&1";
+        $command = 'ci -q -m' . escapeshellarg($message) . " {$filename}";
         $status = $this->exec($command);
-    
+
         chmod ($rcsfilename, 0770);
+
         return $status;
     }
 
@@ -164,7 +175,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         // this seems to cause problems:
         //settype ($revision, "float");
         
-        $command = "co -r" . trim($revision) .  " " . $filepath . " 2>/dev/null";
+        $command = 'co -q -f -r' . escapeshellarg(trim($revision)) .  " {$filepath} 2>/dev/null";
         $output = null;
         $status = null;
         unset($output);
@@ -175,7 +186,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         
         $revision = $this->rcs_data2object($data);
        
-        $command = "rm -f " . $filepath;
+        $command = "rm -f {$filepath}";
         $output = null;
         $status = null;
         exec ($command, $output, $status);
@@ -509,8 +520,8 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         {
             return 3;
         }
-        
-        $command = sprintf("ci -i -t-'%s' %s 2>&1", $description, $filepath);
+
+        $command = 'ci -q -i -t-' . escapeshellarg($description) . " {$filepath}";
         $status = $this->exec($command);
         
         $filename = $filepath . ",v";
@@ -527,12 +538,36 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         $status = null;
         $output = null;
 
+        // Always append stderr redirect
+        $command .= ' 2>&1';
+
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("Executing '{$command}'");
         debug_pop();
-        
+
         @exec($command, $output, $status);                
-        return $status;   
+
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Got return status {$status}");
+        debug_print_r('Got output: ', $output);
+        debug_pop();
+
+        if ($status === 0)
+        {
+            // Unix exit code 0 means all ok...
+            /* seems like everything here is wired to work with the unix exit codes afterall
+            return true;
+            */
+            return $status;
+        }
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Command '{$command}' returned with status {$status}, see debug log for output", MIDCOM_LOG_WARN);
+        debug_pop();
+        // any other exit codes means some sort of error
+        /* seems like everything here is wired to work with the unix exit codes afterall
+        return false;
+        */
+        return $status;
     }
 
     /**
@@ -610,7 +645,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
                 elseif (!is_null($GLOBALS['midcom_config']['utility_diff']))
                 {
                     /* this doesnt work */
-                    $command = $GLOBALS['midcom_config']['utility_diff'] . " -u <(echo \"$oldest_value\") <(echo \"{$newest[$attribute]}\")";
+                    $command = $GLOBALS['midcom_config']['utility_diff'] . " -u <(echo \"{$oldest_value}\") <(echo \"{$newest[$attribute]}\")";
                     
                     $output = array();
                     $result = shell_exec($command);
