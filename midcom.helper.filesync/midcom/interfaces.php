@@ -41,7 +41,7 @@ class midcom_helper_filesync_interface extends midcom_baseclasses_components_int
         {
 	        if (! mkdir($path))
 	        {
-	            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed create directory {$path}. Reason: " . $php_errormsg);
+	            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create directory {$path}. Reason: " . $php_errormsg);
 	            // This will exit.
 	        }
         }
@@ -56,7 +56,7 @@ class midcom_helper_filesync_interface extends midcom_baseclasses_components_int
         {
  	        if (! mkdir($module_dir))
 	        {
-	            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed create directory {$module_dir}. Reason: " . $php_errormsg);
+	            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create directory {$module_dir}. Reason: " . $php_errormsg);
 	            // This will exit.
 	        }
         }
