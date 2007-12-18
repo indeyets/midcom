@@ -7,14 +7,14 @@
 
 form.datamanager2 label
 {
-  display: block;
-  padding: 3px 0 3px 0;
-  font-weight: bold;
+    display: block;
+    padding: 3px 0 3px 0;
+    font-weight: bold;
 }
 
 form.datamanager2 fieldset
 {
-  border: solid 1px black !important;
+    border: solid 1px black;
 }
 
 form.datamanager2 fieldset.radio label
@@ -36,12 +36,12 @@ form.datamanager2 fieldset.radio label span
 }
 
 form.datamanager2 label input.shorttext,
-  form.datamanager2 label textarea.longtext,
-  form.datamanager2 label select.list,
-  form.datamanager2 label select.dropdown
+    form.datamanager2 label textarea.longtext,
+    form.datamanager2 label select.list,
+    form.datamanager2 label select.dropdown
 {
-  margin: 0.5ex 0 0 0;
-  display: block;
+    margin: 0.5ex 0 0 0;
+    display: block;
 }
 
 form.datamanager2 label input.radiobutton
@@ -51,20 +51,20 @@ form.datamanager2 label input.radiobutton
 
 form.datamanager2 fieldset
 {
-  margin: 1ex 0 1ex 0;
-  padding: 3px 10px;
+    margin: 1ex 0 1ex 0;
+    padding: 3px 10px;
 }
 
 form.datamanager2 fieldset legend
 {
-  font-weight: bold;
-  /* border: 1px solid black; */
-  padding: 1px 3px;
+    font-weight: bold;
+    /* border: 1px solid black; */
+    padding: 1px 3px;
 }
 
 form.datamanager2 label.required
 {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 /*form.datamanager2 label.required span.field_text:after
@@ -83,14 +83,14 @@ form.datamanager2 label.missing
 }
 
 form.datamanager2 fieldset.account legend,
-  form.datamanager2 fieldset.blob legend,
-  form.datamanager2 fieldset.image legend,
-  form.datamanager2 fieldset.collection legend,
-  form.datamanager2 fieldset.radiobox legend,
-  form.datamanager2 fieldset.date legend,
-  form.datamanager2 fieldset.mailtemplate legend
+    form.datamanager2 fieldset.blob legend,
+    form.datamanager2 fieldset.image legend,
+    form.datamanager2 fieldset.collection legend,
+    form.datamanager2 fieldset.radiobox legend,
+    form.datamanager2 fieldset.date legend,
+    form.datamanager2 fieldset.mailtemplate legend
 {
-       font-weight: normal;
+    font-weight: normal;
 }
 
 form.datamanager2 fieldset.radiobox label
@@ -132,7 +132,7 @@ form.datamanager2 fieldset.date button.date
 }
 
 form.datamanager2 div.blob_preview,
-  form.datamanager2 div.image_preview
+    form.datamanager2 div.image_preview
 {
     float: right;
     width: 180px;
@@ -250,7 +250,7 @@ form.datamanager2 table.datamanager_table td input.shorttext
 {
     border:none;
     background-color: #EAE8E3;
-       text-align: left;
+    text-align: left;
 }
 
 form.datamanager2 img.captcha
