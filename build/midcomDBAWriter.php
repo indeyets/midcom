@@ -34,7 +34,7 @@ class MidcomDBAWriter {
                     echo "Warning: midcomdba.inc definition for type exists, will not overwrite.\n";
                     return;
 
-                   // throw new Exception( "Class {$this->type} allready exists in midcomdba.inc!" );
+                   // throw new Exception( "Class {$this->type} already exists in midcomdba.inc!" );
                 }
             }
         } else {

@@ -568,7 +568,7 @@ No segment
 ---STRINGEND
 
 ---STRING already_subscribed
-Allready subscribed
+Already subscribed
 ---STRINGEND
 
 ---STRING subscribed_new

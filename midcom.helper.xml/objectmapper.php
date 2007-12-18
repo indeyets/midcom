@@ -142,7 +142,7 @@ class midcom_helper_xml_objectmapper
             return false;
         }
         /* the xml is prefixed with either the old midcom class or the new one. We solve this
-         * by just jumping over it as we allready got the object.
+         * by just jumping over it as we already got the object.
          */
         $this->classname = key($array);
 

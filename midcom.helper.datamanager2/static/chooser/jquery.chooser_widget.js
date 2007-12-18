@@ -578,7 +578,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
             //TODO: Implement
             // PONDER:  How should we handle the renderer_callback rendering?
             //          We could use custom javascript function, or require the data
-            //          object to contain a content field which is allready formatted html...
+            //          object to contain a content field which is already formatted html...
             var item_content = jQuery("<div>")
             // .attr({ id: options.widget_id + '_result_item_'+data.id })
             // .html( midcom_helper_datamanager2_widget_chooser_format_item(data, options) )

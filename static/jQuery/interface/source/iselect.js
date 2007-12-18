@@ -172,7 +172,7 @@ jQuery.selectcheckApply = function(e)
 					) {
 				// Reselect the item if:
 				// - we ARE multiselecting,
-				// - dragged over an allready selected object (so it got unselected)
+				// - dragged over an already selected object (so it got unselected)
 				// - But then dragged the selection out of it again.
 				this.s = true;
 				jQuery(this).addClass(jQuery.selectdrug.f.sc);

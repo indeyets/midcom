@@ -164,7 +164,7 @@ class midgard_admin_sitegroup_creation_config_host extends midgard_admin_sitegro
     var $extend_style = 'none';
     
     /**
-     * Use an allready created rootpage that has the guid set below.
+     * Use an already created rootpage that has the guid set below.
      * @todo not implemented
      */
     var $root_page = null;
