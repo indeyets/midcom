@@ -107,18 +107,23 @@ class org_routamc_gallery_viewer extends midcom_baseclasses_components_request
      */
     function _populate_node_toolbar()
     {
-        $this->_node_toolbar->add_item
-        (
-            array
+        if (   $this->_topic->get_parameter('org.routamc.gallery', 'gallery_type') == ORG_ROUTAMC_GALLERY_TYPE_HANDPICKED
+            && $this->_request_data['photostream'])
+        {
+            // Upload photos to this gallery
+            $this->_node_toolbar->add_item
             (
-                MIDCOM_TOOLBAR_URL => "{$this->_request_data['photostream'][MIDCOM_NAV_FULLURL]}upload.html?to_gallery={$this->_topic->id}",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('upload photos', 'org.routamc.photostream'),
-                MIDCOM_TOOLBAR_HELPTEXT => null,
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/images.png',
-                MIDCOM_TOOLBAR_ENABLED => $this->_request_data['photostream'][MIDCOM_NAV_OBJECT]->can_do('midgard:create'),
-                MIDCOM_TOOLBAR_ACCESSKEY => 'n',
-            )
-        );
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "{$this->_request_data['photostream'][MIDCOM_NAV_FULLURL]}upload.html?to_gallery={$this->_topic->id}",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('upload photos', 'org.routamc.photostream'),
+                    MIDCOM_TOOLBAR_HELPTEXT => null,
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/images.png',
+                    MIDCOM_TOOLBAR_ENABLED => $this->_request_data['photostream'][MIDCOM_NAV_OBJECT]->can_do('midgard:create'),
+                    MIDCOM_TOOLBAR_ACCESSKEY => 'n',
+                )
+            );
+        }
 
         $this->_node_toolbar->add_item
         (
@@ -154,9 +159,14 @@ class org_routamc_gallery_viewer extends midcom_baseclasses_components_request
     function _on_handle($handler, $args)
     {
         $this->_request_data['photostream'] = $this->_seek_photostream();
-        if (!is_array($this->_request_data['photostream']))
+
+        if (   $handler === 'index'
+            && !is_array($this->_request_data['photostream'])
+            && $_MIDCOM->auth->user)
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'No photostream found for this gallery. Please create a new org.routamc.photostream folder for uploading photos.');
+            $_MIDCOM->uimessages->add($this->_l10n->get('org.routamc.gallery'), $this->_l10n->get('photostream node not found, please make sure it is accessible'));
+            // Bad practise, gallery should be accessible e.g. if the photostream page is hidden from navigation.
+            // $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'No photostream found for this gallery. Please create a new org.routamc.photostream folder for uploading photos.');
             // This will exit.
         }
 
