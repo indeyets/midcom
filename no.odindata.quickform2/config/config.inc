@@ -1,5 +1,5 @@
-
 'schemadb' => 'file:/no/odindata/quickform2/config/schemadb_default.inc',
+'schemadb_config' => 'file:/no/odindata/quickform2/config/schemadb_config.inc',
 
 'breadcrumb' => '',
 

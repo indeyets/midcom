@@ -32,9 +32,7 @@ class no_odindata_quickform2_viewer extends midcom_baseclasses_components_reques
         // Handle /config
         $this->_request_switch['config'] = array
         (
-            'handler' => Array('midcom_core_handler_configdm', 'configdm'),
-            'schemadb' => 'file:/no/odindata/quickform2/config/schemadb_config.inc',
-            'schema' => 'config',
+            'handler' => Array('midcom_helper_dm2config_config', 'config'),
             'fixed_args' => Array('config'),
         );
 
@@ -92,8 +90,8 @@ class no_odindata_quickform2_viewer extends midcom_baseclasses_components_reques
         $document = $indexer->new_document($dm);
         $document->topic_guid = $topic->guid;
         $document->topic_url = $node[MIDCOM_NAV_FULLURL];
-        $document->read_metadata_from_object($dm->storage->object);
         $document->component = $topic->component;
+        $document->read_metadata_from_object($dm->storage->object);
         $indexer->index($document);
     }
 
@@ -150,7 +148,5 @@ class no_odindata_quickform2_viewer extends midcom_baseclasses_components_reques
 
         return true;
     }
-
 }
-
 ?>

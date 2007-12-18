@@ -37,9 +37,9 @@ class no_odindata_quickform2_interface extends midcom_baseclasses_components_int
         $this->_autoload_libraries = array
         (
             'midcom.helper.datamanager2',
-            'org.openpsa.mail'
+            'midcom.helper.dm2config',
+            'org.openpsa.mail',
         );
     }
-
 }
 ?>

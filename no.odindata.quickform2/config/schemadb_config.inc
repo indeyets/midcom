@@ -2,88 +2,120 @@
 (
     'name'        => 'config',
     'description' => 'Default Configuration Schema', /* This is a topic */
-    'locktimeout' => 0, /* Don't lock this, we display the edit view always */
-    'fields'      => array (
+    'l10n'        => 'no.odindata.quickform2',
+    'fields'      => array
+    (
         /* for the day when qform may also save the values ...  */
         'breadcrumb' => array
         (
-            'description' => 'Breadcrumb text',
-            'datatype' => 'text',
+            'title' => 'breadcrumb text',
+            'type' => 'text',
             'helptext' => 'Set the breadcrumb to this text',
             'hidden'   => false,
-            'location' => 'config',
-            'config_key' => 'breadcrumb',
-            'config_domain' => 'no.odindata.quickform2',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'no.odindata.quickform2',
+                'name' => 'breadcrumb',
+            ),
+            'widget' => 'text',
             'default'  => "",
         ),
         'mail_address_to' => array
         (
-            'description'   => 'email address to send the submitted form to',
-            'datatype'      => 'text',
+            'title' => 'email address to send the submitted form to',
+            'type' => 'text',
             'helptext'      => 'email address where the form will be sent',
-            'location'      => 'config',
             'required'      => true,
-            'config_key'    => 'mail_address_to',
-            'config_domain' => 'no.odindata.quickform2',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'no.odindata.quickform2',
+                'name' => 'mail_address_to',
+            ),
+            'widget' => 'text',
             'start_fieldgroup' => array
             (
-                'title' => 'form email settings'
+                'title' => 'form email settings',
+                'description' => 'this information will be used for handling the email form',
+                'css_group' => 'test_group',
             ),
         ),
         'mail_subject' => array
         (
-            'description' => 'mail subject',
-            'datatype' => 'text',
-            'location'    => 'config',
-            'config_key'  => 'mail_subject',
-            'config_domain' => 'no.odindata.quickform2',
+            'title' => 'mail subject',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'no.odindata.quickform2',
+                'name' => 'mail_subject',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
         ),
         'mail_subject_reciept' => array
         (
-            'description' => 'Subject in mail to the form committer',
-            'datatype' => 'text',
-            'location'    => 'config',
-            'config_key'  => 'mail_subject_reciept',
-            'config_domain' => 'no.odindata.quickform2',
+            'title' => 'subject in mail to the form committer',
+            'type' => 'text',
+            'widget' => 'text',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'no.odindata.quickform2',
+                'name' => 'mail_subject_reciept',
+            ),
         ),
 
 
         'mail_address_from' => array
         (
-            'description' => 'from address of the email',
-            'datatype' => 'text',
-            'location'    => 'config',
-            'config_key'  => 'mail_address_from',
-            'config_domain' => 'no.odindata.quickform2',
+            'title' => 'from address of the email',
+            'type' => 'text',
+            'widget' => 'text',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'no.odindata.quickform2',
+                'name' => 'mail_address_from',
+            ),
         ),
         'mail_reciept' => array
         (
-            'description' => 'should a copy of the email be sent to the submitter of the form',
-            'datatype'    => 'boolean',
-            'location'    => 'config',
-            'config_key'  => 'mail_reciept',
-            'config_domain' => 'no.odindata.quickform2',
+            'title' => 'should a copy of the email be sent to the submitter of the form',
+            'type' => 'boolean',
+            'widget' => 'checkbox',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'no.odindata.quickform2',
+                'name' => 'mail_reciept',
+            ),
         ),
 
         'mail_reciept_message' => array 
         (
-            'description' => 'message of the mail sent to user',
-            'datatype'  => 'text',
-            'widget'    => 'text',
-            'location' => 'config',
-            'config_key'  => 'mail_reciept_message',
-            'config_domain' => 'no.odindata.quickform2',
-            'widget_text_height' => '4em',
-            'widget_text_inputstyle' => 'longtext',
+            'title' => 'message of the mail sent to user',
+            'type' => 'text',
+            'widget'    => 'textarea',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'no.odindata.quickform2',
+                'name' => 'mail_reciept_message',
+            ),
             'helptext' => 'this message is appended on top of the email sent to user',
         ),
         'mail_reciept_data' => array
         (
-            'description' => 'include submitted data in the message sent to user',
-            'datatype'    => 'boolean',
-            'location'    => 'config',
-            'config_key'  => 'mail_reciept_data',
-            'config_domain' => 'no.odindata.quickform2',
+            'title' => 'include submitted data in the message sent to user',
+            'type' => 'boolean',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'no.odindata.quickform2',
+                'name' => 'mail_reciept_data',
+            ),
+            'widget' => 'checkbox',
             'helptext'    => '',
             'end_fieldgroup' => '',
         ),
@@ -91,12 +123,15 @@
 
         'topic_introduction' => array
         (
-            'description' => 'text to place over the form',
-            'datatype' => 'text',
-            'location' => 'config',
-            'widget' => 'html',
-            'config_key' => 'form_description',
-            'config_domain' => 'no.odindata.quickform2',
+            'title' => 'text to place over the form',
+            'type' => 'text',
+            'widget' => 'tinymce',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'no.odindata.quickform2',
+                'name' => 'form_description',
+            ),
             'widget_text_height' => '4em',
             'helptext'  => 'use this field to add a simple text above the form to help the user fill in the form',
             'start_fieldgroup' => Array
@@ -107,24 +142,31 @@
 
         'end_message' => array
         (
-            'description' => 'message to show user after the form has been submitted',
-            'datatype' => 'text',
-            'location' => 'config',
-            'widget' => 'html',
-            'config_key' => 'end_message',
-            'config_domain' => 'no.odindata.quickform2',
+            'title' => 'message to show user after the form has been submitted',
+            'type' => 'text',
+            'widget' => 'tinymce',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'no.odindata.quickform2',
+                'name' => 'end_message',
+            ),
             'widget_text_height' => '4em',
             'default' => '',
             'helptext'  => 'this message is displayed after the user has submitted the form',
         ),
         'schemadb' => array
         (
-            'description' => 'Schema database',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'no.odindata.quickform2',
+            'title' => 'schema database',
+            'type' => 'text',
+            'widget' => 'text',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'no.odindata.quickform2',
+                'name' => 'schemadb',
+            ),
             'hidden'   => false,
-            'config_key' => 'schemadb',
             'helptext' => 'Path to schemadefinition', 
             'end_fieldgroup' => '',
         ),
@@ -132,11 +174,15 @@
         
         'email_class' => array
         (
-            'description' => 'The class to use for formating the email to send.',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'no.odindata.quickform2',
-            'config_key' => 'email_class',
+            'title' => 'the class to use for formatting the email to send',
+            'type' => 'text',
+            'widget' => 'text',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'no.odindata.quickform2',
+                'name' => 'email_class',
+            ),
             'hidden' => true,
         ),
     ),

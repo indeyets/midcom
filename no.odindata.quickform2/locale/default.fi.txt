@@ -1,65 +1,65 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE fi
 
 ---STRING This is the index
-This is the index
+Tämä on luettelo
 ---STRINGEND
 
 ---STRING You can change this to something else :-)
-You can change this to something else :-)
+Voit muuttaa tämän joksikin muuksi :-)
 ---STRINGEND
 
 ---STRING breadcrumb text
-Breadcrumb text
+Leivänmurupolun teksti
 ---STRINGEND
 
 ---STRING email address to send the submitted form to
-Email address to send the submitted form to
+Sähköpostiosoite, johon viesti lähetetään
 ---STRINGEND
 
 ---STRING from address of the email
-'From' address of the email
+Sähköpostiviestin lähettäjän osoite
 ---STRINGEND
 
 ---STRING include submitted data in the message sent to user
-Include submitted data in the message sent to user
+Sisällytä lähetetyt tiedot lomakkeen lähettäjälle lähetettävään sähköpostiviestiin
 ---STRINGEND
 
 ---STRING mail subject
-Mail subject
+Viestin aihe
 ---STRINGEND
 
 ---STRING message of the mail sent to user
-Message of the mail sent to user
+Käyttäjälle lähetettävä sähköpostiviesti
 ---STRINGEND
 
 ---STRING message to show user after the form has been submitted
-Message to show user after the form has been submitted
+Viesti, joka näytetään lomakkeen lähettämisen jälkeen
 ---STRINGEND
 
 ---STRING no.odindata.quickform2
-Email form v2
+Sähköpostilomake v2
 ---STRINGEND
 
 ---STRING should a copy of the email be sent to the submitter of the form
-Should a copy of the email be sent to the submitter of the form
+Lähetetäänkö kopio viestistä lomakkeen lähettäjälle
 ---STRINGEND
 
 ---STRING subject in mail to the form committer
-Subject in mail to the form committer
+Aihe viestille, joka lähetetään lomakkeen lähettäjälle
 ---STRINGEND
 
 ---STRING text to place over the form
-Text to place over the form
+Teksti, joka näytetään lomakkeen yläpuolella
 ---STRINGEND
 
 ---STRING the class to use for formatting the email to send
-The class to use for formatting the email to send
+Luokka, jota käytetään lähetettävän viestin muotoilussa
 ---STRINGEND
 
 ---STRING form email settings
-Form email settings
+Lomakkeen sähköpostiasetukset
 ---STRINGEND
 
