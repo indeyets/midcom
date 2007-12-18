@@ -39,9 +39,9 @@ class no_odindata_quickform2_factory {
     /**
      * Display the form
      */
-    function display_form(  ) 
+    function display_form() 
     {
-        $this->_controller->display_form(  );
+        $this->_controller->display_form();
     }
     /**
      * Set the value of a formelement. 
@@ -56,7 +56,7 @@ class no_odindata_quickform2_factory {
     /**
      * Returns the values from a submitted form
      **/
-    function values(  ) 
+    function values() 
     {
         return $this->_controller->datamanager->types;
     }
@@ -64,7 +64,7 @@ class no_odindata_quickform2_factory {
     /**
      * Returns the form schema
      */
-    function get_schema(  ) 
+    function get_schema() 
     {
         return $this->schema[$this->schema_name];
     }
@@ -72,46 +72,47 @@ class no_odindata_quickform2_factory {
      * Not strictly formfactory related.
      * @return string the form description
      */
-    function description(  ) 
+    function description() 
     {
         return $this->config->get( 'form_description');
     }
 
-    function error (  ) 
+    function error () 
     {
         return ""; 
     }
 
-    function process_form(  ) {
+    function process_form()
+    {
         debug_push( __CLASS__, __FUNCTION__ );
-        $this->_load_controller(  );
+        $this->_load_controller();
 
-        $res =$this->_controller->process_form();
+        $res = $this->_controller->process_form();
         debug_add( "Process_form: $res", MIDCOM_LOG_INFO );
         switch ($res)
         {
             case 'save':
-                $this->_save( );
+                $this->_save();
 
             case 'cancel':
-                $this->_cancel( );
+                $this->_cancel();
         }
 
-        debug_pop(  );
+        debug_pop();
     }
     /**
      * function to run the emailhandler
      * @access private
      *
      */
-    function _save(  ) 
+    function _save() 
     {
-        $this->email->execute(  );
+        $this->email->execute();
     }
     /**
      * Cancelling function
      */
-    function _cancel(  )
+    function _cancel()
     {
         $_MIDCOM->relocate( 'submitok.html' );
     }

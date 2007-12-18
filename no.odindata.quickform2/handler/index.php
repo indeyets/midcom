@@ -52,13 +52,8 @@ class no_odindata_quickform2_handler_index  extends midcom_baseclasses_component
      */
     function _handler_index ($handler_id, $args, &$data)
     {
-        $GLOBALS['midcom_debugger']->setLogLevel( 5 );
-
-        /**
-         * change the pagetitle. (must be supported in the style)
-         */
         $title = $this->_l10n_midcom->get( $this->_config->get( 'breadcrumb' ) );
-        $_MIDCOM->set_pagetitle(":: {$title}");
+        $_MIDCOM->set_pagetitle("{$title}");
 
         if ( $this->_config->get( 'breadcrumb' ) != '' ) 
         {
@@ -66,7 +61,7 @@ class no_odindata_quickform2_handler_index  extends midcom_baseclasses_component
         }
 
         $this->_request_data['form']  = new no_odindata_quickform2_factory( $this->_schemadb, $this->_config );
-        $this->_request_data['form']->process_form(  );
+        $this->_request_data['form']->process_form();
 
        return true;
     }

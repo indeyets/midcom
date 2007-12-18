@@ -14,13 +14,13 @@ class no_odindata_quickform2_email
      * @var $config midcom_helper_config handler configuration
      * @var $factory no_odindata_quickform2_factory
      */
-    function no_odindata_quickform2_email ( $config, $factory )
+    function no_odindata_quickform2_email ($config, $factory)
     {
         $this->_config = $config;
         $this->_factory = $factory;
     }
 
-    function execute ( ) 
+    function execute () 
     {
         debug_push( __CLASS__, __FUNCTION__ );
         $GLOBALS['midcom_debugger']->setLogLevel( 5 );       
@@ -35,21 +35,16 @@ class no_odindata_quickform2_email
                 );
 
         $email->set_to( $this->_config->get('mail_address_to'));
-        $email->set_values( $this->_factory->values(  ) );
-        $email->set_schema( $this->_factory->get_schema( ) );
+        $email->set_values( $this->_factory->values() );
+        $email->set_schema( $this->_factory->get_schema() );
         $email->set_from(  $this->_config->get('mail_address_from'));
         $email->set_reply_to( $this->_config->get('mail_reply_to')) ;
         $email->set_reciept_message(  $this->_config->get('mail_reciept_message') );
         $email->set_add_reciept_data(  $this->_config->get('mail_reciept_data'));
         $email->set_send_reciept( $this->_config->get( 'mail_reciept' ) );
 
-
-
-        debug_add( "Sending Email-------------" );
-        $email->execute(  );
-        $email->send(  );
-
-        debug_pop(  );
+        $email->execute();
+        $email->send();
         return;
 
     }
