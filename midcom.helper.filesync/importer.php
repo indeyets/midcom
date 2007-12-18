@@ -20,9 +20,10 @@ class midcom_helper_filesync_importer extends midcom_baseclasses_components_pure
     function midcom_helper_filesync_importer()
     {
          $this->_component = 'midcom.helper.filesync';
+         $this->config =& $this->_config;
          parent::midcom_baseclasses_components_purecode();
     }
-    
+
     /**
      * This is a static factory method which lets you dynamically create importer instances.
      * It takes care of loading the required class files. The returned instances will be created
@@ -38,7 +39,7 @@ class midcom_helper_filesync_importer extends midcom_baseclasses_components_pure
     function & create($type)
     {
         $filename = MIDCOM_ROOT . "/midcom/helper/filesync/importer/{$type}.php";
-        
+
         if (!file_exists($filename))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Requested importer file {$type} is not installed.");
@@ -46,13 +47,13 @@ class midcom_helper_filesync_importer extends midcom_baseclasses_components_pure
         }
         require_once($filename);
 
-        $classname = "midcom_helper_filesync_importer_{$type}";        
+        $classname = "midcom_helper_filesync_importer_{$type}";
         if (!class_exists($classname))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Requested importer class {$type} is not installed.");
             // This will exit.
         }
-        
+
         /**
          * Php 4.4.1 does not allow you to return a reference to an expression.
          * http://www.php.net/release_4_4_0.php
