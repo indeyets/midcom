@@ -80,7 +80,7 @@ MidCOM Version 2.6.0, 2006-10-27
   ! The component loader now depends on a component manifest which provides
     metadata about the component itself. This will allow the processing of
     Privileges, Classes etc. without loading the full component.
-  + Introduced a temporary system to accociate a permalink and a last modified
+  + Introduced a temporary system to associate a permalink and a last modified
     timestamp with a context. This will be superseeded with a full request
     rewrite after the release of MidCOM 2.6
   - Live mode output (for example in the midcom-exec handlers) now allows for
@@ -227,7 +227,7 @@ MidCOM Version 2.4.0, 2005-06-08
     component baseclasses. A compatibility-layer for old-style components is
     in place, but it will be deprecated in 2.6. Components not using the
     new interface base class will then cease to work.
-  + Added a Metadata interface that is independant of the actual object.
+  + Added a Metadata interface that is independent of the actual object.
     It uses GUIDs to link to the conent objects, which can be retrieved
     using NAP. This is finally a single way to set and retrieve metadata
     for content objects. See the class midcom_helper_metadata.
@@ -699,7 +699,7 @@ MidCOM Version 1.4.0, 2004-11-28
   + Added a special radiobox widget variant, which does only a
     strcmp instead of a "==". This is geared for configuration UIs
     which need a strict difference between "" (parameter unset) and
-    "0" (mostly false), which is impossible to distinguish safly in an
+    "0" (mostly false), which is impossible to distinguish safely in an
     PHP-supported auto-typecasted way.
   + Added mgd_update_article_created() support to the unixdate datatype.
     This works if the created field of an article is set to editable
@@ -790,7 +790,7 @@ MidCOM Version 1.3.1, 2004-06-27
     some htmlentities calls have also been removed, fixes #52.
   - The datamanager now visually distinguishes required fields
     and missing required fields from regular ones. There are
-    two CSS classes to faciliate this.
+    two CSS classes to facilitate this.
   - Fix for #58 (errors during upload of a PDF file)
 
 - NAP

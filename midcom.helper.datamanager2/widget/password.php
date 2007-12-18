@@ -16,7 +16,7 @@
  * value member, but initialization is always with an empty string, as this widget cannot
  * (and should not) display an existing password. The rule is, that as long as the value
  * is empty, no password change will be given to the caller during the synchronization
- * (effectivly skipping the operation).
+ * (effectively skipping the operation).
  *
  * <b>Available configuration options:</b>
  *

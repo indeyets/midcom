@@ -269,7 +269,7 @@ class midcom_helper_datamanager_datatype {
      * Saves the data of the datatype.
      * 
      * The default behavior is to simply store
-     * the variable's string representation into the database. It returnes
+     * the variable's string representation into the database. It returns
      * one of the MIDCOM Datamanager's process_form() returncodes accordingly.
      * 
      * It will not synchronize the datatype's data with the widget. This has

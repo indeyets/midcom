@@ -13,7 +13,7 @@
  * Image Filter Class, used to post process all images, check the documentation
  * of the individual methods.
  *
- * This clas always works on existing files at this time. It supports scripting
+ * This class always works on existing files at this time. It supports scripting
  * support by using the process_chain / process_command helper functions, which
  * allow the application to let the user specifiy a list of filters that should
  * be applied during upload.

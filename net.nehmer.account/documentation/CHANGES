@@ -46,7 +46,7 @@ Legend:
     where they accessed the account registration.)
   + The config option register_allow_types can now be used to
     limit the account types that are open for registration. This
-    is independant of the account definitons.
+    is independent of the account definitons.
 
 2006-04-06 (1.0.1) torben
   - Moved username regex checks to the handler classes, so that

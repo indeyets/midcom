@@ -23,7 +23,7 @@
  *   run.
  * - Provide a specialized mechanism to dynamically invoke a component's
  *   Administration Interface.
- * - Provide a basic context mechanism that allows each independant component
+ * - Provide a basic context mechanism that allows each independent component
  *   invocation to access its own context information.
  *
  * <b>URL METHODS TO THE MIDCOM ROOT PAGE</b>
@@ -108,7 +108,7 @@ class midcom_application
 {
     /**
      * Holds the component context information. This is an array of arrays, the outer
-     * one indexed by context IDs, thie inner one indexed by context keys. Only valid
+     * one indexed by context IDs, the inner one indexed by context keys. Only valid
      * of the system has left the code-init phase.
      *
      * @var Array
@@ -650,13 +650,13 @@ class midcom_application
      * <?php
      * global $view;
      * $_MIDCOM->dynamic_load($view['url1']);
-     * // You will most probably fail, could even loop infinitly!
+     * // You will most probably fail, could even loop infinitely!
      * $_MIDCOM->dynamic_load($view['url2']);
      * ?>
      * </code>
      *
      * The reason why this usually fails is, that the $view you have been using during
-     * the first call was overwritten by the othter component during it, $view['url2']
+     * the first call was overwritten by the other component during it, $view['url2']
      * is now empty. If you are now on the homepage, the homepage would start loading
      * itself again and again.
      *
@@ -699,7 +699,7 @@ class midcom_application
         // Determine new Context ID and set $this->_currentcontext,
         // enter that context and prepare its data structure.
         $context = $this->_create_context(null, $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC));
-        
+
         if ($pass_get)
         {
             // Include GET parameters into cache URL
@@ -713,7 +713,7 @@ class midcom_application
         $oldcontext = $this->_currentcontext;
         $this->_currentcontext = $context;
 
-        /* "content-cache" for DLs, check_hit */ 
+        /* "content-cache" for DLs, check_hit */
         if ($this->cache->content->check_dl_hit($context, $config))
         {
             // The check_hit method serves cached content on hit
@@ -744,7 +744,7 @@ class midcom_application
 
             // Leave Context
             $this->_currentcontext = $oldcontext;
-            
+
             return;
         }
 
@@ -996,7 +996,7 @@ class midcom_application
         do
         {
             $object = $this->_parser->get_current_object();
-            if (   !is_object($object) 
+            if (   !is_object($object)
                 || !$object->guid )
             {
                 debug_add("Root node missing.", MIDCOM_LOG_ERROR);
@@ -1036,7 +1036,7 @@ class midcom_application
 
                 //$this->_handle($path);
                 $this->_handle( $this->get_context_data( MIDCOM_CONTEXT_COMPONENT ) );
-                
+
                 $success = true;
                 break;
             }
@@ -1106,7 +1106,7 @@ class midcom_application
      * optional and reserved for future usage. It will fetch the required COMPONENT class
      *
      * from the Component Loader and instruct it to handle a request. If the handler
-     * hook returnes false (i.e. handling failed), it will produce an Errorpage
+     * hook returns false (i.e. handling failed), it will produce an Errorpage
      * according to the error code and -string of the component in question.
      *
      * @access private
@@ -1188,7 +1188,7 @@ class midcom_application
      *
      * Used by _process(), it checks if the component associated to $object is able
      * to handle the request. First it will load the component associated to $object.
-     * Then it will fetch the COMPONENT class accoicated to the MidCOM. After the
+     * Then it will fetch the COMPONENT class associated to the MidCOM. After the
      * local configuration is retrieved from the object in question the component will
      * be asked, if it can handle the request. TRUE or FALSE will be returned
      * accordingly, both on the configure and on the can_handle run.
@@ -1247,7 +1247,7 @@ class midcom_application
      * Load the configuration for a given object.
      *
      * This is a small wrapper function that retrieves all local configuration data
-     * attachted to $object. The assigned component is used to determine which
+     * attached to $object. The assigned component is used to determine which
      * parameter domain has to be used.
      *
      * @param MidgardObject $object    The node from which to load the configuration.
@@ -1262,12 +1262,12 @@ class midcom_application
             $configs[$context_id] = array();
         }
 
-        $path = $this->get_context_data(MIDCOM_CONTEXT_COMPONENT);        
+        $path = $this->get_context_data(MIDCOM_CONTEXT_COMPONENT);
         if (!isset($configs[$context_id][$object->guid]))
         {
             $configs[$context_id][$object->guid] = new midcom_helper_configuration($object, $path);
         }
-        
+
         return $configs[$context_id][$object->guid];
     }
 
@@ -1505,7 +1505,7 @@ class midcom_application
      * Access the MidCOM component context
      *
      * Returns Component Context Information associated to the component with the
-     * context ID $contextid idetentified by $key. Omitting $contextid will yield
+     * context ID $contextid identified by $key. Omitting $contextid will yield
      * the variable from the current context.
      *
      * If the context ID is invalid, false is returned and $midcom_errstr will be set
@@ -1590,16 +1590,16 @@ class midcom_application
      * Store arbitrary, component-specific information in the component context
      *
      * This method allows you to get custom data to a given context.
-     * The system will automatically accociate this data with the component from the
+     * The system will automatically associate this data with the component from the
      * currently active context. You cannot access the custom data of any other
      * component this way, it is private to the context. You may attach information
      * to other contexts, which will be associated with the current component, so
-     * you have a clean namespace independantly from which component or context you
+     * you have a clean namespace independently from which component or context you
      * are operating of. All calls honor references of passed data, so you can use
      * this for central controlling objects.
      *
      * Note, that if you are working from a library like the datamanager is, you
-     * cannot override the component accociation done by the system. Instead you
+     * cannot override the component association done by the system. Instead you
      * should add your libraries name (like midcom.helper.datamanager) as a prefix,
      * separated by a dot. I know, that this is not really an elegant solution and
      * that it actually breaks with the encaspulation I want, but I don't have a
@@ -1626,10 +1626,10 @@ class midcom_application
      * ?>
      * </code>
      *
-     * A very important cavet of PHP references can be seen here: You must never give
-     * a reference to $this outside of a clas within a constructor. class_one uses an
+     * A very important caveat of PHP references can be seen here: You must never give
+     * a reference to $this outside of a class within a constructor. class_one uses an
      * init function therefore. See the PHP documentation for a few more details on
-     * all this. Component authors can usually safly set this up at the beginning of the
+     * all this. Component authors can usually safely set this up at the beginning of the
      * can_handle() and/or handle() calls.
      *
      * Also, be careful with the references you use here, things like this can easily
@@ -1654,7 +1654,7 @@ class midcom_application
      * with get_context_data.
      *
      * Note, that if you are working from a library like the datamanager is, you
-     * cannot override the component accociation done by the system. Instead you
+     * cannot override the component association done by the system. Instead you
      * should add your libraries name (like midcom.helper.datamanager) as a prefix,
      * separated by a dot. I know, that this is not really an elegant solution and
      * that it actually breaks with the encaspulation I want, but I don't have a
@@ -1723,9 +1723,9 @@ class midcom_application
     /**
      * Appends a substyle after the currently selected component style.
      *
-     * Appends a substyle after the currently selected component style, effectivly
+     * Appends a substyle after the currently selected component style, effectively
      * enabling a depth of more then one style during substyle selection. This is only
-     * effecitve if done during the handle phase of the component and allows the
+     * effective if done during the handle phase of the component and allows the
      * component. The currently selected substyle therefore is now searched one level
      * deeper below "subStyle".
      *
@@ -1757,9 +1757,9 @@ class midcom_application
     /**
      * Prepends a substyle before the currently selected component style.
      *
-     * Prepends a substyle before the currently selected component style, effectivly
+     * Prepends a substyle before the currently selected component style, effectively
      * enabling a depth of more then one style during substyle selection. This is only
-     * effecitve if done during the handle phase of the component and allows the
+     * effective if done during the handle phase of the component and allows the
      * component. The currently selected substyle therefore is now searched one level
      * deeper below "subStyle".
      *
@@ -1890,7 +1890,7 @@ class midcom_application
 
     /**
      * Returns the Client Status Array which gives you all available information about
-     * the client accessing us.Currently incorprated is a recognition of client OS
+     * the client accessing us.Currently incorporated is a recognition of client OS
      * and client browser.
      *
      * <b>NOTE:</b> Be carful if you rely on this information, the system does not check
@@ -2061,7 +2061,7 @@ class midcom_application
      * serve_snippet      - Serves snippet including all necessary headers
      * serve_attachment   - Serves attachment including all necessary headers
      * get_midgard        - Returns mgd_get_midgard with updated "self" member
-     * _l10n_edit_wrapper - Invoces the l10n string editor
+     * _l10n_edit_wrapper - Invokes the l10n string editor
      * add_jsfile         - Add a JavaScript URL to the load queue
      * add_jscript        - Add JavaScript code to the load queue
      * add_jsonload       - Add a JavaScript method call to the bodies onload tag
@@ -2069,7 +2069,7 @@ class midcom_application
      * add_style_head     - Add style  tags to the page's head.
      * add_meta_head      - Add metatags to the page's head.
      * print_jscripts     - Print the queued-up JavaScript code (for inclusion in the HEAD section)
-     * pirnt jsonload     - Prints the onload command if required (for inclusion as a BODY attribute)
+     * print jsonload     - Prints the onload command if required (for inclusion as a BODY attribute)
      * check_memberships  - Checks whether the user is in a given group
      * relocate           - executes a HTTP relocation to the given URL
      * _showdebuglog      - internal helper for the debuglog URL method.
@@ -2354,7 +2354,7 @@ class midcom_application
                 $this->relocate("{$GLOBALS['midcom_config']['attachment_cache_url']}/{$subdir}/{$attachment->guid}_{$attachment->name}", 301);
             }
         }
-    
+
         debug_push("midcom_application::serve_attachment");
 
         // Sanity check expires
@@ -2447,7 +2447,7 @@ class midcom_application
      * Any error calls generate_error.
      *
      * The script file is executed in the cache's live mode to allow for long running
-     * scripts (just produce any output regularily, or Apache will kill you after ~ 2 mins.).
+     * scripts (just produce any output regularly, or Apache will kill you after ~ 2 mins.).
      *
      * The remaining arguments will be placed into the globals $argc/argv.
      *
@@ -2803,7 +2803,7 @@ class midcom_application
     }
 
     /**
-     * Echo the registred javascript code.
+     * Echo the registered javascript code.
      *
      * This allows MidCOM components to register JavaScript code
      * during page processing. The site style code can then query this queued-up code
@@ -2964,7 +2964,7 @@ class midcom_application
     /**
      * Relocate to another URL.
      *
-     * Helper function to faciliate HTTP relocation (Location: ...) headers. The helper
+     * Helper function to facilitate HTTP relocation (Location: ...) headers. The helper
      * actually can distinguish between site-local, absolute redirects and external
      * redirects. If you add an absolute URL starting with a "/", it will
      * automatically add an http[s]://$servername:$server_port in front of that URL;
@@ -3093,11 +3093,11 @@ class midcom_application
     }
 
     /**
-     * This is a temporary tranisition function used to set the currently known and required
+     * This is a temporary transition function used to set the currently known and required
      * Request Metadata: The last modified timestamp and the permalink GUID.
      *
      * <i>Author's note:</i> This function is a temporary solution which is used until the
-     * Request handling code of MidCOM has been rewritten. Hence the _26_ secition in its name.
+     * Request handling code of MidCOM has been rewritten. Hence the _26_ section in its name.
      * I have decided to put them into their own function instead of letting you access the
      * corresponding context keys directly. Thus, there is also corresponding getter-function,
      * which return you the set information here. Just don't worry where it is stored and use
@@ -3116,11 +3116,11 @@ class midcom_application
     }
 
     /**
-     * This is a temporary tranisition function used to get the currently known and required
+     * This is a temporary transition function used to get the currently known and required
      * Request Metadata: The last modified timestamp and the permalink GUID.
      *
      * <i>Author's note:</i> This function is a temporary solution which is used until the
-     * Request handling code of MidCOM has been rewritten. Hence the _26_ secition in its name.
+     * Request handling code of MidCOM has been rewritten. Hence the _26_ section in its name.
      * I have decided to put them into their own function instead of letting you access the
      * corresponding context keys directly. Thus, there is also corresponding setter-function,
      * which set the information returned here. Just don't worry where it is stored and use

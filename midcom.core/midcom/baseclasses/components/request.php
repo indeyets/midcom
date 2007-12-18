@@ -225,7 +225,7 @@
  * It must define an additional function, called get_plugin_handlers(). It has to return
  * an array of standard request handler declarations. Both handler identifiers and
  * argument lists are <em>relative</em> to the base URL of the plugin (see below),
- * not to the component running the problem. You are thus completely location independant.
+ * not to the component running the problem. You are thus completely location independent.
  * The handler callback must be statically callable.
  *
  * <em>Example: Plugin handler callback</em>

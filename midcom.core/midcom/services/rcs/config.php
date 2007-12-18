@@ -11,7 +11,7 @@
  */
  
 /**
- * The clas containing the configurationoptions for RCS.
+ * The class containing the configurationoptions for RCS.
  * @see midcom_services_rcs for an overview of the options
  */
  class midcom_services_rcs_config 

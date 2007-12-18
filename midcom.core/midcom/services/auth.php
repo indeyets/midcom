@@ -296,7 +296,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * Admin user level state. This is true if the currently authenticated user is an
      * Midgard Administrator, false otherwise.
      *
-     * This effectivly maps to $_MIDGARD['admin']; but it is suggested to use the auth class
+     * This effectively maps to $_MIDGARD['admin']; but it is suggested to use the auth class
      * for consistency reasons nevertheless.
      *
      * @var bool

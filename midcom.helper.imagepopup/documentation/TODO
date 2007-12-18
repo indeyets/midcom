@@ -37,7 +37,7 @@ TODO :
 17:26 < torben> what you could do is just use DM2 for it
 17:26 < torben> creat a simple dm2 schema with a single images type in it
 17:27 < torben> create a datamanager instance and use the setimage calls of the type to add images to it (you don't need the formmanager / widget here obviously)
-17:27 < torben> cavets:
+17:27 < torben> caveats:
 17:27 < torben> attachment deletion needs very careful treatment
 17:27 < torben> many attachments are grouped together, as you already discovered yourself
 17:28 < torben> tarjei: something else

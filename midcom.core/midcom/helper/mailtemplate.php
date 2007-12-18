@@ -66,7 +66,7 @@
  * Again, this is to be used like an Array value, supporting both "__KEY__" and
  * "__KEY_SUBKEY__". This mode will use the CSV (string-only) representation of
  * the various datatypes as a replacement value. This way even BLOB-Types and
- * the like can be safly put into an E-Mail.
+ * the like can be safely put into an E-Mail.
  * 
  * The dump syntax will omit all values tagged as "hidden" or "aisonly", they
  * are accessible through the element indexers though.

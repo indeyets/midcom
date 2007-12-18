@@ -80,7 +80,7 @@ Legend:
   - OpenPSA Parameter support bugfix
 
 2004-06-14 torben
-  - Moved the event management to faciliate the datamanager.
+  - Moved the event management to facilitate the datamanager.
     Event creation/deletion is currently missing, as is a code
     cleanup. A example schema with its requirements in the docs
     has been added. All configuration has been moved into the

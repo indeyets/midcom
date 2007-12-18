@@ -28,7 +28,7 @@ class midcom_helper_datamanager_datatype_boolean extends midcom_helper_datamanag
     
     function save_to_storage() 
     {
-        /* Transform value to string, so that it works safly even with parameters */
+        /* Transform value to string, so that it works safely even with parameters */
         $oldvalue = $this->_value;
         if ($this->_value)
         {

@@ -29,7 +29,7 @@ require_once('cache/module.php');
  * Check the documentation of the cache modules to learn how to take advantage of the cache
  * services available (as a component/core author).
  *
- * The cache service is independant from the MidCOM Core, as it has to be started up at the
+ * The cache service is independent from the MidCOM Core, as it has to be started up at the
  * beginning of the request. Cache modules are loaded on-demand.
  *
  * This class will be available throught he midcom service getter under the handle cache.

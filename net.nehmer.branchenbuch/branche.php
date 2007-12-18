@@ -297,7 +297,7 @@ class net_nehmer_branchenbuch_branche extends __net_nehmer_branchenbuch_branche
      *
      * Basically, the system runs two queries, one for the main categories, another for the
      * subcategories. The lists are merged on the PHP level afterwards. This should be faster
-     * as having independant queries for the subcategories for each category.
+     * as having independent queries for the subcategories for each category.
      *
      * The logic should take over the sorting from the SQL resultset, so no explicit sort()
      * is required.

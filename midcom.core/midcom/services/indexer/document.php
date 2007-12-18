@@ -220,12 +220,12 @@ class midcom_services_indexer_document
 
     /**
      * The full path to the topic that houses the document. For external resources,
-     * this should be either a MidCOM topic, to which this resource is accociated or
+     * this should be either a MidCOM topic, to which this resource is associated or
      * some "directory" after which you could filter. You may also leave
      * it empty prohibiting it to appear on any topic-specific search.
      *
      * The value should be fully qualified, as returned by MIDCOM_NAV_FULLURL, including
-     * a trailing slahs, f.x. https://host/path/to/topic/
+     * a trailing slash, f.x. https://host/path/to/topic/
      *
      * This is optional.
      *

@@ -117,7 +117,7 @@
 
 'person' => Array
 (
-    'description' => 'Registred Person Record',
+    'description' => 'Registered Person Record',
     'fields' => Array
     (
         'p_firstname' => Array

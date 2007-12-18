@@ -20,7 +20,7 @@
  * A good deal of major languages are predefined, see the snippet
  * /lib/midcom/services/_i18n_language-db.dat for details.
  *
- * This class is able to run independantly from midcom_application
+ * This class is able to run independently from midcom_application
  * due to the fact that it is used in the cache_hit code.
  *
  * Use this class to set the language preferences (charset and locale) and to gain

@@ -31,7 +31,7 @@
  * 
  * <b>widget_schemaselect_linkto:</b> Contains the name of the field from the current
  * schema which will contain the path of the schema database. As usual, you 
- * can either directly write the path to a snippet or use thie file: prefix to refer
+ * can either directly write the path to a snippet or use the file: prefix to refer
  * to a MidCOM library file. This field is mandatory.
  * 
  * <b>widget_schemselect_default_schemapath:</b> This is the path to the schema 

@@ -709,7 +709,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
     {
         if ($this->_view_quick)
         {
-            // This will effectivly hide all user-defined fields.
+            // This will effectively hide all user-defined fields.
             $this->_visible_fields_user_selection = Array();
         }
         else

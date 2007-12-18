@@ -217,7 +217,7 @@ class net_nemein_payment_handler_nordea extends net_nemein_payment_handler
     }
 
     /**
-     * Renders the payment link, preparation in thie order:
+     * Renders the payment link, preparation in this order:
      * 
      * 1. Format the amount string
      * 2. Comput the payment reference with its check digit

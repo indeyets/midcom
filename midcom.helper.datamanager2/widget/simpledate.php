@@ -10,7 +10,7 @@
 /**
  * Datamanager 2 simple date widget
  *
- * This widget is built around the PEAR QuickForm Date widget, which effectivly
+ * This widget is built around the PEAR QuickForm Date widget, which effectively
  * consists of a set of input fields for each part of the date/time. It is limited
  * to seconds precision therefore. Currently unsupported are the Day options (selects
  * Monday through Sunday) and 12-Hour Time formats (AM/PM time).
