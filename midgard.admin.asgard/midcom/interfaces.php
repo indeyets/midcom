@@ -52,6 +52,14 @@ class midgard_admin_asgard_interface extends midcom_baseclasses_components_inter
         // Enable jQuery
         $_MIDCOM->enable_jquery();
 
+        // Check the user preference and configuration
+        $config =& $GLOBALS['midcom_component_data']['midgard.admin.asgard']['config'];
+        if (   midgard_admin_asgard_plugin::get_preference('escape_frameset')
+            || (   midgard_admin_asgard_plugin::get_preference('escape_frameset') !== '0'
+                && $config->get('escape_frameset')))
+        {
+			$_MIDCOM->add_jsonload('if(top.frames.length != 0){top.location.href=this.location.href}');
+        }
         // Disable content caching
         $_MIDCOM->cache->content->no_cache();
         return true;

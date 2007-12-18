@@ -85,14 +85,14 @@
 'schemadb_preferences' => 'file:/midgard/admin/asgard/config/schemadb_preferences.inc',
 
 /**
- * reflector configuration 
+ * reflector configuration
  *
  * All classes must be defined as MgdSchema level names
  */
 /*
  Used to replace one classname with another, for example org_openpsa_event
  extends midgard_event, so we wish to display only the more complete type.
- 
+
  Keyed by the type we wish to replace, value is the type we wish to replace to
 */
 'class_extends' => array
@@ -147,6 +147,7 @@
 // User interface
 'tinymce_enabled' => true,
 'codepress_enabled' => true,
+'escape_frameset' => true,
 
 // Welcome page
 // List of types we don't list on latest objects

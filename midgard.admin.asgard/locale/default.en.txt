@@ -315,6 +315,10 @@ This type belongs to %s component.
 Toolbar mode
 ---STRINGEND
 
+---STRING always display in top frame
+Always display in top frame
+---STRINGEND
+
 ---STRING topic privileges
 Folder permissions
 ---STRINGEND

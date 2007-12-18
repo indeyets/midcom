@@ -311,6 +311,10 @@ Dieser Typ gehört zur Komponente %s
 Toolbar-Modus
 ---STRINGEND
 
+---STRING always display in top frame
+Immer im obersten Frame anzeigen
+---STRINGEND
+
 ---STRING topic privileges
 Ordner-Zugriffsrechte
 ---STRINGEND

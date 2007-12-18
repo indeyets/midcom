@@ -142,5 +142,26 @@
             'widget' => 'text',
             'hidden' => (midgard_admin_asgard_plugin::get_preference('toolbar_mode') === 'absolute') ? false : true,
         ),
+        'escape_frameset' => array
+        (
+            'title' => 'always display in top frame',
+            'storage' => array
+            (
+                'location' => 'parameter',
+                'domain' => 'midgard.admin.asgard:preferences',
+                'name' => 'escape_frameset',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+        ),
     ),
 ),
