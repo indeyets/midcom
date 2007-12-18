@@ -567,3 +567,23 @@ Sinun täytyy valita "%s" tai "%s" täsmäykseksi
 Ei segmenttiä
 ---STRINGEND
 
+---STRING already_subscribed
+Ennestään kampanjassa
+---STRINGEND
+
+---STRING subscribed_new
+Uusis tilauksia
+---STRINGEND
+
+---STRING subscribed_existing
+Ennestään tilauksia, liitetty kampanjaan
+---STRINGEND
+
+---STRING failed_create
+Luonti epäonnistunut
+---STRINGEND
+
+---STRING failed_add
+Kampanjaan liittäminen epäonnistui
+---STRINGEND
+

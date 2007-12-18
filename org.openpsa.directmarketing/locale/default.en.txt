@@ -567,3 +567,23 @@ You must select "%s" or "%s" for matching
 No segment
 ---STRINGEND
 
+---STRING already_subscribed
+Allready subscribed
+---STRINGEND
+
+---STRING subscribed_new
+Subscribed new
+---STRINGEND
+
+---STRING subscribed_existing
+Subscribed existing
+---STRINGEND
+
+---STRING failed_create
+Failed to create
+---STRINGEND
+
+---STRING failed_add
+Failed to add
+---STRINGEND
+
