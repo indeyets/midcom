@@ -7,6 +7,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2007-12-18 adrenalin
+  + Added static methods for getting the surrounding photos in the photostream
+
 2007-12-04 adrenalin
   ! Changed to use midcom.helper.dm2config for component configuration
   + Added support for showing the photostream contents immediately on the welcome page

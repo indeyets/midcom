@@ -565,5 +565,243 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
     {
         // TBD: Check if we need to add this photo to any dynamic galleries
     }
+    
+    /**
+     * Shorthand for getting the next photo
+     * 
+     * @access static public
+     * @param mixed $photo        Either id or GUID of the photo or the org_routamc_photostream_photo_dba object itself
+     * @param string $direction   < or >, depending on the wished direction
+     * @param array $limiters     Array of limiters (keys type, tags, user, start and end)
+     * @param array $tags_shared  Shared tags, pass by reference
+     */
+    function get_next($photo, $limiters = false, &$tags = false)
+    {
+        $guids = org_routamc_photostream_photo_dba::get_surrounding_photos($photo, '>', $limiters, &$tags);
+        
+        if (   $guids
+            && isset($guids[0]))
+        {
+            return $guids[0];
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Shorthand for getting the previous photo
+     * 
+     * @access static public
+     * @param mixed $photo        Either id or GUID of the photo or the org_routamc_photostream_photo_dba object itself
+     * @param string $direction   < or >, depending on the wished direction
+     * @param array $limiters     Array of limiters (keys type, tags, user, start and end)
+     * @param array $tags_shared  Shared tags, pass by reference
+     */
+    function get_previous($photo, $limiters = false, &$tags = false)
+    {
+        $guids = org_routamc_photostream_photo_dba::get_surrounding_photos($photo, '<', $limiters, &$tags);
+        
+        if (   $guids
+            && isset($guids[0]))
+        {
+            return $guids[0];
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Get the next and previous photo guids
+     * 
+     * @access static public
+     * @param mixed $photo        Either id or GUID of the photo or the org_routamc_photostream_photo_dba object itself
+     * @param string $direction   < or >, depending on the wished direction
+     * @param array $limiters     Array of limiters (keys type, tags, user, start and end)
+     * @param array $tags_shared  Shared tags, pass by reference since it can be used more often than once
+     */
+    function get_surrounding_photos($photo, $direction, $limiters_temp = false, &$tags_shared = false)
+    {
+        if (mgd_is_guid($photo))
+        {
+            $photo = new org_routamc_photostream_photo_dba($photo);
+        }
+        
+        if (   !isset($photo->guid)
+            || !$photo->guid)
+        {
+            return false;
+        }
+        
+        if (!$tags_shared)
+        {
+            $tags_shared = array();
+        }
+        
+        // Initialize the filters
+        $limiters = array
+        (
+            'type' => '',
+            'tags' => '',
+            'user' => '',
+            'start' => '',
+            'end' => '',
+            'limit' => 1,
+        );
+        
+        // Get the filters
+        foreach ($limiters_temp as $key => $value)
+        {
+            $limiters[$key] = $value;
+        }
+        
+        $data['suffix'] = '';
+        $guids = array();
+        
+        // Initialize the collector
+        // Patch to the collector bug of forced second parameter
+        $mc = org_routamc_photostream_photo_dba::new_collector('sitegroup', $_MIDGARD['sitegroup']);
+        
+        // Add first the common constraints
+        $mc->add_value_property('title');
+        
+        if ($direction === '<')
+        {
+            $mc->add_constraint('taken', '<', $photo->taken);
+            $mc->add_order('taken', 'DESC');
+        }
+        else
+        {
+            $mc->add_constraint('taken', '>', $photo->taken);
+            $mc->add_order('taken');
+        }
+        
+        $mc->set_limit($limiters['limit']);
+        
+        // Check the corresponding limiter actions
+        if ($limiters['type'])
+        {
+            switch ($limiters['type'])
+            {
+                case 'tag':
+                    // Get a list of guids that share the requested tag
+                    $mc_tag = net_nemein_tag_link_dba::new_collector('fromClass', 'org_routamc_photostream_photo_dba');
+                    $mc_tag->add_value_property('fromGuid');
+                    $mc_tag->add_constraint('tag.tag', '=', $limiters['tag']);
+                    $mc_tag->add_constraint('fromGuid', '<>', $photo->guid);
+                    $mc_tag->execute();
+                    
+                    $tags = $mc_tag->list_keys();
+                    
+                    // Initialize the array
+                    $tags_shared = array();
+                    
+                    // Store the object guids for later use
+                    foreach ($tags as $guid => $array)
+                    {
+                        $tags_shared[] = $mc_tag->get_subkey($guid, 'fromGuid');
+                    }
+                    
+                    // Fall through
+                    
+                case 'user':
+                    if ($limiters['user'] !== 'all')
+                    {
+                        $mc_person = midcom_db_person::new_collector('username', $limiters['user']);
+                        $mc_person->add_value_property('id');
+                        $mc_person->add_constraint('username', '=', $limiters['user']);
+                        $mc_person->set_limit(1);
+                        $mc_person->execute();
+                        
+                        $persons = $mc_person->list_keys();
+                        
+                        foreach ($persons as $guid => $array)
+                        {
+                            $id = $mc_person->get_subkey($guid, 'id');
+                            $mc->add_constraint('photographer', '=', $id);
+                            break;
+                        }
+                    }
+                    break;
+                
+                case 'between':
+                    $start = @strtotime($limiters['start']);
+                    $end = @strtotime($limiters['end']);
+                    
+                    if ($limiters['user'])
+                    {
+                        // Add the person delimiter
+                        $mc_person = midcom_db_person::new_collector('username', $limiters['user']);
+                        $mc_person->add_value_property('id');
+                        $mc_person->add_constraint('username', '=', $limiters['user']);
+                        $mc_person->set_limit(1);
+                        $mc_person->execute();
+                        
+                        $persons = $mc_person->list_keys();
+                        
+                        foreach ($persons as $guid => $array)
+                        {
+                            $id = $mc_person->get_subkey($guid, 'id');
+                            break;
+                        }
+                        
+                        $mc->add_constraint('photographer', '=', $id);
+                    }
+                    
+                    if (   !$start
+                        || !$end)
+                    {
+                        return false;
+                    }
+                    
+                    $mc->add_constraint('taken', '>=', $start);
+                    $mc->add_constraint('taken', '<=', $end);
+                    
+                    break;
+                
+                case 'all':
+                default:
+                    // TODO - anything needed?
+            }
+        }
+        
+        // Include the tag constraints
+        if (count($tags_shared) > 0)
+        {
+            if (count($tags_shared) > 0)
+            {
+                $mc->begin_group('OR');
+                foreach ($tags_shared as $guid)
+                {
+                    $mc->add_constraint('guid', '=', $guid);
+                }
+                $mc->end_group();
+                $link = $mc->list_keys();
+            }
+            else
+            {
+                $link = array();
+            }
+        }
+        else
+        {
+            $mc->execute();
+            $link = $mc->list_keys();
+        }
+        
+        // Initialize the array for returning
+        $guids = array ();
+        
+        foreach ($link as $guid => $array)
+        {
+            $guids[] = $guid;
+        }
+        
+        if (count($guids) > 0)
+        {
+            return $guids;
+        }
+        
+        return false;
+    }
 }
 ?>

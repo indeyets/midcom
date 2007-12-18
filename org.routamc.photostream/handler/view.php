@@ -143,9 +143,37 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
             $_MIDCOM->skip_page_style = true;
         }
         
+        $limiters = array();
+        if (isset($args[1]))
+        {
+            $limiters['type'] = $args[1];
+            
+            switch ($limiters['type'])
+            {
+                case 'tag':
+                    $limiters['tag'] = $args[3];
+                    break;
+                case 'user':
+                    $limiters['user'] = $args[2];
+                    break;
+                case 'between':
+                    if (isset($args[4]))
+                    {
+                        $limiters['user'] = $args[2];
+                        $limiters['start'] = $args[3];
+                        $limiters['end'] = $args[4];
+                    }
+                    else
+                    {
+                        $limiters['start'] = $args[2];
+                        $limiters['end'] = $args[3];
+                    }
+            }
+        }
+        
         // Get the next and previous
-        $data['previous_guid'] = $this->_get_surrounding_photo('<', $args, $data['photo']);
-        $data['next_guid'] = $this->_get_surrounding_photo('>', $args, $data['photo']);
+        $data['previous_guid'] = org_routamc_photostream_photo_dba::get_previous($data['photo'], $limiters, $this->_tags_shared);
+        $data['next_guid'] = org_routamc_photostream_photo_dba::get_next($data['photo'], $limiters, $this->_tags_shared);
         
         // Create the link suffix
         $data['suffix'] = '';
@@ -194,166 +222,6 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
         {
             midcom_show_style('show_photo');
         }
-    }
-    
-    /**
-     * Get the next and previous photo guids
-     * 
-     * @access private
-     */
-    function _get_surrounding_photo($direction, $args, $photo)
-    {
-        $data['suffix'] = '';
-        $guids = array();
-        
-        // Initialize the collector
-        // Patch to the collector bug of forced second parameter
-        $mc = org_routamc_photostream_photo_dba::new_collector('sitegroup', $_MIDGARD['sitegroup']);
-        
-        // Add first the common constraints
-        $mc->add_value_property('title');
-        
-        if ($direction === '<')
-        {
-            $mc->add_constraint('taken', '<', $photo->taken);
-            $mc->add_order('taken', 'DESC');
-        }
-        else
-        {
-            $mc->add_constraint('taken', '>', $photo->taken);
-            $mc->add_order('taken');
-        }
-        
-        $mc->set_limit(1);
-        
-        // Check the corresponding limiter actions
-        if (isset($args[1]))
-        {
-            switch ($args[1])
-            {
-                case 'tag':
-                    // Get the list of tags only once
-                    if ($this->_tags_shared)
-                    {
-                        break;
-                    }
-                    
-                    // Get a list of guids that share the requested tag
-                    $mc_tag = net_nemein_tag_link_dba::new_collector('fromClass', 'org_routamc_photostream_photo_dba');
-                    $mc_tag->add_value_property('fromGuid');
-                    $mc_tag->add_constraint('tag.tag', '=', $args[3]);
-                    $mc_tag->add_constraint('fromGuid', '<>', $photo->guid);
-                    $mc_tag->execute();
-                    
-                    $tags = $mc_tag->list_keys();
-                    
-                    // Initialize the array
-                    $this->_tags_shared = array();
-                    
-                    // Store the object guids for later use
-                    foreach ($tags as $guid => $array)
-                    {
-                        $this->_tags_shared[] = $mc_tag->get_subkey($guid, 'fromGuid');
-                    }
-                    
-                    // Fall through
-                    
-                case 'user':
-                    if ($args[2] !== 'all')
-                    {
-                        $mc_person = midcom_db_person::new_collector('username', $args[2]);
-                        $mc_person->add_value_property('id');
-                        $mc_person->add_constraint('username', '=', $args[2]);
-                        $mc_person->set_limit(1);
-                        $mc_person->execute();
-                        
-                        $persons = $mc_person->list_keys();
-                        
-                        foreach ($persons as $guid => $array)
-                        {
-                            $id = $mc_person->get_subkey($guid, 'id');
-                            $mc->add_constraint('photographer', '=', $id);
-                            break;
-                        }
-                    }
-                    break;
-                
-                case 'between':
-                    if (!isset($args[4]))
-                    {
-                        $start = @strtotime($args[2]);
-                        $end = @strtotime($args[3]);
-                    }
-                    else
-                    {
-                        // Add the person delimiter
-                        $mc_person = midcom_db_person::new_collector('username', $args[2]);
-                        $mc_person->add_value_property('id');
-                        $mc_person->add_constraint('username', '=', $args[2]);
-                        $mc_person->set_limit(1);
-                        $mc_person->execute();
-                        
-                        $persons = $mc_person->list_keys();
-                        
-                        foreach ($persons as $guid => $array)
-                        {
-                            $id = $mc_person->get_subkey($guid, 'id');
-                            break;
-                        }
-                        
-                        $mc->add_constraint('photographer', '=', $id);
-                        
-                        $start = @strtotime($args[3]);
-                        $end = @strtotime($args[4]);
-                    }
-                    
-                    if (   !$start
-                        || !$end)
-                    {
-                        return false;
-                    }
-                    
-                    $mc->add_constraint('taken', '>=', $start);
-                    $mc->add_constraint('taken', '<=', $end);
-                    
-                    break;
-                
-                case 'all':
-                default:
-                    // TODO - anything needed?
-            }
-        }
-        
-        // Include the tag constraints
-        if (!is_null($this->_tags_shared))
-        {
-            if (count($this->_tags_shared) > 0)
-            {
-                $mc->begin_group('OR');
-                foreach ($this->_tags_shared as $guid)
-                {
-                    $mc->add_constraint('guid', '=', $guid);
-                }
-                $mc->end_group();
-                $link = $mc->list_keys();
-            }
-            else
-            {
-                $link = array();
-            }
-        }
-        else
-        {
-            $mc->execute();
-            $link = $mc->list_keys();
-        }
-        
-        foreach ($link as $guid => $array)
-        {
-            return $guid;
-        }
-        
-        return false;
     }
 
     /**
