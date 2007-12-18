@@ -39,6 +39,7 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
 
     function midcom_baseclasses_database_attachment($id = null)
     {
+        $this->_use_rcs = false;
         parent::__midcom_baseclasses_database_attachment($id);
     }
 

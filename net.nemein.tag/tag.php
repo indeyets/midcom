@@ -6,6 +6,7 @@ class net_nemein_tag_dba extends __net_nemein_tag_dba
 {
     function net_nemein_tag_dba($id = null)
     {
+        $this->_use_rcs = false;    
         return parent::__net_nemein_tag_dba($id);
     }
 
