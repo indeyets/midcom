@@ -14,6 +14,12 @@
  */
 class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components_handler
 {
+    /**
+     * Reflectors
+     * 
+     * @access private
+     * @var Array
+     */
     var $_reflectors = array();
 
     /**
