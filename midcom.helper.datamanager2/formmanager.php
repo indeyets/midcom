@@ -304,7 +304,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
         // Close the fieldsets left open
         if ($this->_fieldsets > 0)
         {
-            $this->_end_fieldset('', array('end_fieldsets' => $this->_fieldsets));
+            $this->_end_fieldset('', array('end_fieldset' => $this->_fieldsets));
         }
 
 
@@ -541,22 +541,28 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
         
         $html = '';
         
-        // Interface for 
+        // Interface for closing the fieldsets
         if (is_numeric($config['end_fieldset']))
         {
             for ($i = 0; $i < $config['end_fieldset']; $i++)
             {
                 $html .= "</fieldset>\n";
+                $this->_fieldsets--;
+                
+                if ($this->_fieldsets <= 0)
+                {
+                    break;
+                }
             }
         }
         else
         {
             $html .= "</fieldset>\n";
+            $this->_fieldsets--;
         }
         
         $set =& HTML_QuickForm::createElement('static', "__fieldset_end_{$name}", $html);
         $this->form->addElement($set);
-        $this->_fieldsets--;
     }
 
     /**
