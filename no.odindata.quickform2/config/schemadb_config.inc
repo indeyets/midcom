@@ -37,8 +37,6 @@
             'start_fieldgroup' => array
             (
                 'title' => 'form email settings',
-                'description' => 'this information will be used for handling the email form',
-                'css_group' => 'test_group',
             ),
         ),
         'mail_subject' => array

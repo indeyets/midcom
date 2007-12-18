@@ -19,6 +19,10 @@ Leivänmurupolun teksti
 Sähköpostiosoite, johon viesti lähetetään
 ---STRINGEND
 
+---STRING form email settings
+Lomakkeen sähköpostiasetukset
+---STRINGEND
+
 ---STRING from address of the email
 Sähköpostiviestin lähettäjän osoite
 ---STRINGEND
@@ -59,7 +63,7 @@ Teksti, joka näytetään lomakkeen yläpuolella
 Luokka, jota käytetään lähetettävän viestin muotoilussa
 ---STRINGEND
 
----STRING form email settings
-Lomakkeen sähköpostiasetukset
+---STRING form settings
+Lomakkeen asetukset
 ---STRINGEND
 
