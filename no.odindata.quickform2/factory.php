@@ -1,6 +1,6 @@
-<?
-
-class no_odindata_quickform2_factory {
+<?php
+class no_odindata_quickform2_factory
+{
 
     /**
      * The schema to use. Public until the controller is loaded.
@@ -8,20 +8,24 @@ class no_odindata_quickform2_factory {
      * @access public
      **/
     var $schema = null;
+    
     /**
      * @var object midcom_helper_config 
      */
     var $config = null;
+    
     /**
      * @var no_odindata_quickform2_email
      * @access public
      */
     var $email;
+    
     /**
      * Datamanager controller
      * @var object midcom.helper.datamanager2 
      */
     var $_controller;
+    
     /**
      * Schema name. for now hardcoded to 'default'
      * @var string
@@ -132,6 +136,5 @@ class no_odindata_quickform2_factory {
             // This will exit.
         }
     }
-
 }
 ?>
