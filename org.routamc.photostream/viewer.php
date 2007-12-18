@@ -364,25 +364,19 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
 
     function _register_feed_handlers()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_print_r('$this->_request_switch is now: ', $this->_request_switch);
-        debug_add('Start');
         foreach ($this->_request_switch as $handler_id => $switch_data)
         {
-            debug_add("Checking id '{$handler_id}', it has handler class '{$switch_data['handler'][0]}'");
             if ($switch_data['handler'][0] !== 'org_routamc_photostream_handler_list')
             {
-                debug_add('Not interested, next!');
                 // We only care about the list views
                 continue;
             }
             $new_id = "feed:{$handler_id}";
             if (isset($this->_request_switch[$new_id]))
             {
-                debug_add("Not reating new switch '{$new_id}', it already exists", MIDCOM_LOG_INFO);
                 continue;
             }
-            debug_add("Creating new switch with id '{$new_id}'");
+            
             // PHP5-TODO: Must be copy-by-value
             $new_switch = $switch_data;
             // switch handler to the feed dispatcher
@@ -397,17 +391,18 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             if (!$this->_sanity_check_switch($new_switch))
             {
                 // ULR-space clash, prepend /feed/ to list fixed args
-                debug_add("Prepending 'feed' to fixed_args");
                 array_unshift($new_switch['fixed_args'], 'feed');
             }
             if (!$this->_sanity_check_switch($new_switch))
             {
                 // URL-space still clashes
-                debug_add("New switch '{$new_id}' would never be match    ed, not adding", MIDCOM_LOG_WARN);
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("New switch '{$new_id}' would never be matched, not adding", MIDCOM_LOG_WARN);
+                debug_pop();
                 continue;
             }
+            
             // Add the new switch
-            debug_print_r("Setting \$this->_request_switch['{$new_id}'] to: ", $new_switch);
             $this->_request_switch[$new_id] = $new_switch;
 
             // If we were not forced to use the feed url space earlier add it anyway so we have at least one consistent interface
@@ -416,15 +411,11 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             {
                 array_unshift($new_switch['fixed_args'], 'feed');
                 $new_id = "feed2:{$handler_id}";
-                debug_print_r("Setting \$this->_request_switch['{$new_id}'] to: ", $new_switch);
                 $this->_request_switch[$new_id] = $new_switch;
             }
 
             unset($new_id, $new_switch);
         }
-        debug_add('Done.');
-        debug_print_r('$this->_request_switch is now: ', $this->_request_switch);
-        debug_pop();
     }
 
     function _sanity_check_switch(&$new_switch)
@@ -545,7 +536,6 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
         }
         $document->abstract = "\n<div class='org_routamc_photostream_indexed_abstract'>\n    <div class='thumbnail_container'>\n        <a href='{$document->document_url}'>{$thumbnail_tag}</a>\n    </div>\n    {$abstract}\n</div>";
         $indexer->index($document);
-        //echo "DEBUG: \$document->abstract={$document->abstract}"; die();
     }
 
     /**
