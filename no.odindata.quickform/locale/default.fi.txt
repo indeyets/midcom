@@ -1,118 +1,22 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.fi.txt 5970 2007-05-10 15:47:50Z netblade $
+---CVS $Id$
 ---LANGUAGE fi
-
----STRING email
-Sähköpostiosoite
----STRINGEND
-
----STRING end_message
-Viesti, joka näytetään lomakkeen lähettämisen jälkeen.
----STRINGEND
-
----STRING this message is displayed after the user has submitted the form
-Tämä viesti näytetään lomakkeen lähettämisen jälkeen.
----STRINGEND
-
----STRING form settings
-Lomakkeen asetukset
----STRINGEND
-
----STRING this message is appended on top of the email sent to user
-Tämä viesti lisätään käyttäjälle lähetetyn sähköpostiviestin yläosaan, jos asetus 'lähetä kopio käyttäjälle' on käytössä.
----STRINGEND
-
----STRING from address of the email
-Sähköpostiviestin lähettäjän osoite
----STRINGEND
-
----STRING email address to send the submitted form to
-Osoite, johon sähköpostiviesti lähetetään
----STRINGEND
-
----STRING email address where the form will be sent
-Kun lomake lähetetään, se lähetetään tähän osoitteeseen.
----STRINGEND
-
----STRING form email settings
-Lomakkeen sähköpostiasetukset
----STRINGEND
-
----STRING send an email to someone for each new item
-Lähetä sähköposti jollekin jokaisesta uudesta kohteesta?
----STRINGEND
-
----STRING should a copy of the email be sent to the submitter of the form
-Lähetetäänkö kopio viestistä lomakkeen kirjoittajalle?
----STRINGEND
-
----STRING include submitted data in the message sent to user
-Sisällytetäänkö lähetetty data käyttäjälle lähetettyyn viestiin?
----STRINGEND
-
----STRING message of the mail sent to user
-Viesti, joka liitetään käyttäjälle lähetetyn viestin yläosaan
----STRINGEND
-
----STRING mail subject
-Sähköpostiviestin otsikko
----STRINGEND
-
----STRING message
-Viesti
----STRINGEND
-
----STRING no.odindata.quickform
-Sähköpostilomake
----STRINGEND
-
----STRING send
-Lähetä
----STRINGEND
-
----STRING text to place over the form
-Teksti, joka liitetään lomakkeen yläpuolelle
----STRINGEND
-
----STRING use this field to add a simple text above the form to help the user fill in the form
-Käytä tätä kenttään lisätäksesi yksinkertainen teksti lomakkeen yläpuolelle esimerkiksi ohjeeksi lomakkeen täyttöä varten.
----STRINGEND
-
----STRING message to send to user
-Viesti, joka lähetetään käyttäjälle
----STRINGEND
-
----STRING Send mail to submitter
-Lähetä viesti lomakkeen täyttäjälle
----STRINGEND
 
 ---STRING A simple email form generator
 Yksinkertainen sähköpostilomakegeneraattori
----STRINGEND
-
----STRING Time submitted
-Palaute annettu
----STRINGEND
-
----STRING Submit
-Hyväksy
----STRINGEND
-
----STRING Reports
-Raportit
 ---STRINGEND
 
 ---STRING Article count
 Palautteiden määrä
 ---STRINGEND
 
----STRING List all
-Listaa kaikki
+---STRING Count
+Määrä
 ---STRINGEND
 
----STRING Select column to sort with
-Valitse järjestelysarake
+---STRING List all
+Listaa kaikki
 ---STRINGEND
 
 ---STRING List by key
@@ -123,18 +27,131 @@ Järjestele sarakkeen mukaan
 Listaa sarakkeiden mukaan
 ---STRINGEND
 
----STRING Show on screen
-Näytä ruudulla
+---STRING Reports
+Raportit
+---STRINGEND
+
+---STRING Select column to sort with
+Valitse järjestelysarake
+---STRINGEND
+
+---STRING Send mail to submitter
+Lähetä viesti lomakkeen täyttäjälle
 ---STRINGEND
 
 ---STRING Show in excel
 Näytä excelissä
 ---STRINGEND
 
----STRING Count
-Määrä
+---STRING Show on screen
+Näytä ruudulla
+---STRINGEND
+
+---STRING Submit
+Hyväksy
 ---STRINGEND
 
 ---STRING Time
 Aika
 ---STRINGEND
+
+---STRING Time submitted
+Palaute annettu
+---STRINGEND
+
+---STRING email
+Sähköpostiosoite
+---STRINGEND
+
+---STRING email address to send the submitted form to
+Osoite, johon sähköpostiviesti lähetetään
+---STRINGEND
+
+---STRING email address where the form will be sent
+Kun lomake lähetetään, se lähetetään tähän osoitteeseen.
+---STRINGEND
+
+---STRING end_message
+Viesti, joka näytetään lomakkeen lähettämisen jälkeen.
+---STRINGEND
+
+---STRING form email settings
+Lomakkeen sähköpostiasetukset
+---STRINGEND
+
+---STRING form settings
+Lomakkeen asetukset
+---STRINGEND
+
+---STRING from address of the email
+Sähköpostiviestin lähettäjän osoite
+---STRINGEND
+
+---STRING include submitted data in the message sent to user
+Sisällytetäänkö lähetetty data käyttäjälle lähetettyyn viestiin?
+---STRINGEND
+
+---STRING mail subject
+Sähköpostiviestin otsikko
+---STRINGEND
+
+---STRING message
+Viesti
+---STRINGEND
+
+---STRING message of the mail sent to user
+Viesti, joka liitetään käyttäjälle lähetetyn viestin yläosaan
+---STRINGEND
+
+---STRING message to send to user
+Viesti, joka lähetetään käyttäjälle
+---STRINGEND
+
+---STRING no.odindata.quickform
+Sähköpostilomake
+---STRINGEND
+
+---STRING send
+Lähetä
+---STRINGEND
+
+---STRING send an email to someone for each new item
+Lähetä sähköposti jollekin jokaisesta uudesta kohteesta?
+---STRINGEND
+
+---STRING should a copy of the email be sent to the submitter of the form
+Lähetetäänkö kopio viestistä lomakkeen kirjoittajalle?
+---STRINGEND
+
+---STRING text to place over the form
+Teksti, joka liitetään lomakkeen yläpuolelle
+---STRINGEND
+
+---STRING this message is appended on top of the email sent to user
+Tämä viesti lisätään käyttäjälle lähetetyn sähköpostiviestin yläosaan, jos asetus 'lähetä kopio käyttäjälle' on käytössä.
+---STRINGEND
+
+---STRING this message is displayed after the user has submitted the form
+Tämä viesti näytetään lomakkeen lähettämisen jälkeen.
+---STRINGEND
+
+---STRING use this field to add a simple text above the form to help the user fill in the form
+Käytä tätä kenttään lisätäksesi yksinkertainen teksti lomakkeen yläpuolelle esimerkiksi ohjeeksi lomakkeen täyttöä varten.
+---STRINGEND
+
+---STRING Message to send to user
+Käyttäjälle lähetettävä viesti
+---STRINGEND
+
+---STRING message to show user after the form has been submitted
+Lähetyksen jälkeen käyttäjälle näytettävä viesti
+---STRINGEND
+
+---STRING sending the message failed
+Lähetys epäonnistui
+---STRINGEND
+
+---STRING there was an error while sending the message
+Virhe lähetyksessä. Ole hyvä ja yritä myöhemmin uudestaan.
+---STRINGEND
+

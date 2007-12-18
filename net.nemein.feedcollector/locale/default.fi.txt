@@ -1,9 +1,42 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
+---CVS $Id$
 ---LANGUAGE fi
 
----STRING net.nemein.feedcollector
-Uutislistauskokoelma
+---STRING articles count index
+Haettavien artikkelien määrä per uutiskansio
+---STRINGEND
+
+---STRING articles count latest default
+Artikkelien määrä viimeisimmät-sivulla
+---STRINGEND
+
+---STRING categories
+Kategoriat
+---STRINGEND
+
+---STRING create
+Luo uusi
+---STRINGEND
+
+---STRING create helptext
+Luo uusi uutislistaus kansio haettavaksi
+---STRINGEND
+
+---STRING display settings
+Näyttöasetukset
+---STRINGEND
+
+---STRING edit
+Muokkaa
+---STRINGEND
+
+---STRING edit metadata
+Muokkaa metatietoja
+---STRINGEND
+
+---STRING latest
+Viimeisimmät
 ---STRINGEND
 
 ---STRING manage
@@ -18,58 +51,27 @@ Hallinnointi
 Täältä voit hallinnoida tämän kansion uutislistoja
 ---STRINGEND
 
----STRING create
-Luo uusi
+---STRING net.nemein.feedcollector
+Uutislistauskokoelma
 ---STRINGEND
 
----STRING create helptext
-Luo uusi uutislistaus kansio haettavaksi
----STRINGEND
-
----STRING latest
-Viimeisimmät
----STRINGEND
-
----STRING categories
-Kategoriat
+---STRING no items
+Ei näytettäviä kansioita
 ---STRINGEND
 
 ---STRING remove
 Poista
 ---STRINGEND
 
----STRING edit
-Muokkaa
----STRINGEND
-
----STRING edit metadata
-Muokkaa metatietoja
----STRINGEND
-
----STRING articles count index
-Haettavien artikkelien määrä per uutiskansio
----STRINGEND
-
----STRING articles count latest default
-Artikkelien määrä viimeisimmät-sivulla
+---STRING text to place over the content
+Teksti ennen uutislistoja
 ---STRINGEND
 
 ---STRING this text comes to the top of your content
 Tämä teksti tulee sivun yläosaan ennen uutislistoja
 ---STRINGEND
 
----STRING text to place over the content
-Teksti ennen uutislistoja
+---STRING no topics
+Ei kansioita
 ---STRINGEND
 
----STRING display settings
-Näyttöasetukset
----STRINGEND
-
----STRING no items
-Ei näytettäviä kohteita
----STRINGEND
-
----STRING no items
-Ei näytettäviä kansioita
----STRINGEND
