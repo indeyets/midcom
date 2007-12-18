@@ -1,4 +1,12 @@
 <?php
+// Check the user preference and configuration
+$config =& $GLOBALS['midcom_component_data']['midgard.admin.asgard']['config'];
+if (   midgard_admin_asgard_plugin::get_preference('escape_frameset')
+    || (   midgard_admin_asgard_plugin::get_preference('escape_frameset') !== '0'
+        && $config->get('escape_frameset')))
+{
+	$_MIDCOM->add_jsonload('if(top.frames.length != 0 && top.location.href != this.location.href){top.location.href = this.location.href}');
+}
 echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 
 if (($width = midgard_admin_asgard_plugin::get_preference('offset')))
@@ -11,7 +19,7 @@ else
     $navigation_width = '';
 }
 
-// JavasScript libraries required by Asgard 
+// JavasScript libraries required by Asgard
 $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.mouse.js');
 $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.draggable.js');
 $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midgard.admin.asgard/resize.js');
