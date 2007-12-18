@@ -10,7 +10,7 @@ if(strlen($data['item']->url) > 0)
 }
 else
 {
-    $url = $_MIDCOM->permalinks->create_permalink($view->guid);
+    $url = $data['permalinks']->create_permalink($view->guid);
 }
 ?>
 <div class="hentry" style="clear: left;">

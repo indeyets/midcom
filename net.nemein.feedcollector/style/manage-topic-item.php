@@ -29,7 +29,7 @@ if($data['topic']->categories != '||' && $data['topic']->categories != '')
 }
 
 $topic = new midcom_db_topic($feedtopic);
-$url = $_MIDCOM->permalinks->create_permalink($topic->guid);
+$url = $data['permalinks']->create_permalink($topic->guid);
 $static_url = MIDCOM_STATIC_URL;
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>

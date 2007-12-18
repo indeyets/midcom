@@ -12,7 +12,7 @@
 */  
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
 $topic = $data['feedtopic'];
-$url = $_MIDCOM->permalinks->create_permalink($data['topic']->guid);
+$url = $data['permalinks']->create_permalink($data['topic']->guid);
 // counter for topic
 $topic_counter = $data['counters']['topic'];
 ?>

@@ -43,6 +43,7 @@ class net_nemein_feedcollector_handler_index  extends midcom_baseclasses_compone
     {
 
         $this->_request_data['name']  = "net.nemein.feedcollector";
+        $this->_request_data['permalinks'] = new midcom_services_permalinks();
         $this->_request_data['topic_introduction'] = $this->_config->get('topic_introduction');
         $this->_update_breadcrumb_line($handler_id);
         $_MIDCOM->set_pagetitle($this->_content_topic->extra);

@@ -4,7 +4,7 @@
 $published = sprintf($data['l10n']->get('posted on %s.'), "<abbr title=\"" . strftime('%Y-%m-%dT%H:%M:%S%z', $data['item']->metadata->published) . "\">" . strftime('%x %X', $data['item']->metadata->published) . "</abbr>");
 $view = $data['item'];
 $title = $data['item']->title;
-$url = $_MIDCOM->permalinks->create_permalink($view->guid);
+$url = $data['permalinks']->create_permalink($view->guid);
 $topic_counter = $data['counters']['topic'];
 $item_counter = $data['counters']['topic_item'];
 $items_counter = $data['counters']['items'];
