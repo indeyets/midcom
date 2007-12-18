@@ -187,6 +187,39 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 'variable_args' => 1,
             ),
             /**
+             * Create a new file
+             * 
+             * Match /files/
+             */
+            'object_attachments' => array
+            (
+                'handler' => array ('midgard_admin_asgard_handler_object_attachments', 'create'),
+                'fixed_args' => array ('object', 'attachments'),
+                'variable_args' => 1,
+            ),
+            /**
+             * Edit a file
+             * 
+             * Match /files/<filename>
+             */
+            'object_attachments_edit' => array
+            (
+                'handler' => array ('midgard_admin_asgard_handler_object_attachments', 'edit'),
+                'fixed_args' => array ('object', 'attachments'),
+                'variable_args' => 2,
+            ),
+            /**
+             * Delete a file
+             * 
+             * Match /files/<filename>/delete/
+             */
+            'object_attachments_delete' => array
+            (
+                'handler' => array ('midgard_admin_asgard_handler_object_attachments', 'delete'),
+                'fixed_args' => array ('object', 'attachments', 'delete'),
+                'variable_args' => 2,
+            ),
+            /**
              * Create a toplevel object with chooser
              * 
              * Match /asgard/object/create/type/<parent guid>/
@@ -328,6 +361,11 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             case '____mfa-asgard-object_metadata':
                 $title_string = $_MIDCOM->i18n->get_string('metadata of %s %s', 'midgard.admin.asgard');
                 break;
+            case '____mfa-asgard-object_attachments':
+            case '____mfa-asgard-object_attachments_edit':
+            case '____mfa-asgard-object_attachments_delete':            
+                $title_string = $_MIDCOM->i18n->get_string('attachments of %s %s', 'midgard.admin.asgard');
+                break;
             case '____mfa-asgard-object_parameters':
                 $title_string = $_MIDCOM->i18n->get_string('parameters of %s %s', 'midgard.admin.asgard');
                 break;
@@ -411,6 +449,16 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/metadata/{$object->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('metadata', 'midcom'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/metadata.png',
+                )
+            );
+            
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/attachments/{$object->guid}/",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('attachments', 'midcom'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
                 )
             );
             
@@ -547,6 +595,16 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('metadata', 'midcom'),
                 );
                 $toolbar->disable_item("__mfa/asgard/object/metadata/{$object->guid}/");
+                break;
+            case '____mfa-asgard-object_attachments':
+            case '____mfa-asgard-object_attachments_edit':
+            case '____mfa-asgard-object_attachments_delete':
+                $breadcrumb[] = array
+                (
+                    MIDCOM_NAV_URL => "__mfa/asgard/object/attachments/{$object->guid}/",
+                    MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('attachments', 'midcom'),
+                );
+                $toolbar->disable_item("__mfa/asgard/object/attachments/{$object->guid}/");
                 break;
             case '____mfa-asgard-object_parameters':
                 $breadcrumb[] = array

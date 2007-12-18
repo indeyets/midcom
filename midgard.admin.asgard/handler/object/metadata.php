@@ -159,10 +159,9 @@ class midgard_admin_asgard_handler_object_metadata extends midcom_baseclasses_co
      */
     function _show_edit($handler_id, &$data)
     {
-        midcom_show_style('midgard_admin_asgard_header');
-        midcom_show_style('midgard_admin_asgard_middle');
+        midgard_admin_asgard_plugin::asgard_header();
         midcom_show_style('midgard_admin_asgard_object_metadata');
-        midcom_show_style('midgard_admin_asgard_footer');
+        midgard_admin_asgard_plugin::asgard_footer();
     }
     
 }
