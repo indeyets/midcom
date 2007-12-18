@@ -14,7 +14,7 @@ form.datamanager2 label
 
 form.datamanager2 fieldset
 {
-    border: none;
+  border: solid 1px black !important;
 }
 
 form.datamanager2 fieldset.radio label
