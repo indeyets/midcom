@@ -75,12 +75,12 @@ How many events to show in the main page
 Interval
 ---STRINGEND
 
----STRING list events from master event
-List all events under the master event folder
----STRINGEND
-
 ---STRING list events from folders
 List events from folders
+---STRINGEND
+
+---STRING list events from master event
+List all events under the master event folder
 ---STRINGEND
 
 ---STRING location
@@ -195,15 +195,15 @@ Unsubscribed event - Click to subscribe
 Until date
 ---STRINGEND
 
+---STRING use javascript to emulate hovering effect
+Use JavaScript to emulate hovering effect
+---STRINGEND
+
 ---STRING week %1$s of year %2$s
 Week %1$s of year %2$s
 ---STRINGEND
 
 ---STRING weekly
 Weekly
----STRINGEND
-
----STRING use javascript to emulate hovering effect
-Use JavaScript to emulate hovering effect
 ---STRINGEND
 

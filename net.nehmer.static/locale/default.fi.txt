@@ -23,6 +23,14 @@ Hyväksy
 Artikkeli
 ---STRINGEND
 
+---STRING article %s deleted
+Artikkeli %s poistettu
+---STRINGEND
+
+---STRING article link deleted
+Artikkelilinkki poistettu
+---STRINGEND
+
 ---STRING auto_approved
 Hyväksy uudet artikkelit oletuksena
 ---STRINGEND
@@ -51,6 +59,22 @@ Oletus-tietokantakuvaus uusille artikkeleille
 Poista artikkeli
 ---STRINGEND
 
+---STRING delete article link
+Poista artikkelilinkki
+---STRINGEND
+
+---STRING delete cancelled
+Poistaminen peruutettu
+---STRINGEND
+
+---STRING delete link
+Poista linkki
+---STRINGEND
+
+---STRING delete_link
+Poista linkki
+---STRINGEND
+
 ---STRING directory index for %s
 Kansion %s sisällysluettelo
 ---STRINGEND
@@ -61,6 +85,10 @@ Artikkelien näkyvyysasetukset
 
 ---STRING edit article
 Muokkaa artikkelia
+---STRINGEND
+
+---STRING failed to delete the article link, contact the site administrator
+Artikkelilinkin poistaminen epäonnistui, ota yhteys sivuston ylläpitäjään.
 ---STRINGEND
 
 ---STRING file lastmodified
@@ -81,6 +109,10 @@ Koko
 
 ---STRING filetype
 Tyyppi
+---STRINGEND
+
+---STRING if you want to delete the original article, <a href="%s">click here</a>
+Jos haluat poistaa alkuperäisen artikkelin, <a href="%s">klikkaa tästä</a>.
 ---STRINGEND
 
 ---STRING indexinnav
@@ -119,6 +151,14 @@ Valitse tyyppi
 Asetukset
 ---STRINGEND
 
+---STRING show blobs in autoindex
+Näytä liitetiedostot automaattisessa sisällysluettelossa
+---STRINGEND
+
+---STRING simple_name_handling
+Luodaanko artikkelin URL-nimi automaattisesti?
+---STRINGEND
+
 ---STRING symlink_topic
 Hae sisällöt toisesta kansiosta ("symlink")
 ---STRINGEND
@@ -129,6 +169,10 @@ Ei kansiota
 
 ---STRING taviewer
 Staattinen sisältö
+---STRINGEND
+
+---STRING this article has been linked from <a href="%s">%s</a> and confirming will delete only the link
+Tämä artikkeli on linkitetty osoitteesta <a href="%s">%s</a> ja vahvistaminen poistaa vain linkin.
 ---STRINGEND
 
 ---STRING unapprove
@@ -143,50 +187,7 @@ Näytä artikkeli
 Onko kansio näkyvissä
 ---STRINGEND
 
----STRING simple_name_handling
-Luodaanko artikkelin URL-nimi automaattisesti?
+---STRING from
+Kansiosta
 ---STRINGEND
 
----STRING failed to delete the article link, contact the site administrator
-Artikkelilinkin poistaminen epäonnistui, ota yhteys sivuston ylläpitäjään.
----STRINGEND
-
----STRING delete cancelled
-Poistaminen peruutettu
----STRINGEND
-
----STRING article link deleted
-Artikkelilinkki poistettu
----STRINGEND
-
----STRING article %s deleted
-Artikkeli %s poistettu
----STRINGEND
-
----STRING delete link
-Poista linkki
----STRINGEND
-
----STRING delete article link
-Poista artikkelilinkki
----STRINGEND
-
----STRING this article has been linked from <a href="%s">%s</a> and confirming will delete only the link
-Tämä artikkeli on linkitetty osoitteesta <a href="%s">%s</a> ja vahvistaminen poistaa vain linkin.
----STRINGEND
-
----STRING if you want to delete the original article, <a href="%s">click here</a>
-Jos haluat poistaa alkuperäisen artikkelin, <a href="%s">klikkaa tästä</a>.
----STRINGEND
-
----STRING delete article link
-Poista artikkelilinkki
----STRINGEND
-
----STRING delete_link
-Poista linkki
----STRINGEND
-
----STRING show blobs in autoindex
-Näytä liitetiedostot automaattisessa sisällysluettelossa
----STRINGEND

@@ -7,6 +7,10 @@
 %s poistettua kohdetta
 ---STRINGEND
 
+---STRING %s purged
+%s poistettu lopullisesti
+---STRINGEND
+
 ---STRING %s trash
 Tyypin %s roskakori
 ---STRINGEND
@@ -39,6 +43,10 @@ Kaikki tunnistautuneet käyttäjät
 Lisää ryhmä käyttöoikeuksia varten
 ---STRINGEND
 
+---STRING always display in top frame
+Näytä aina yläpalkissa
+---STRINGEND
+
 ---STRING apply to selected
 Tee valituille
 ---STRINGEND
@@ -57,6 +65,10 @@ Asgardin lisätoiminnot
 
 ---STRING attachment %s undeleted
 Liitetiedosto %s palautettu
+---STRINGEND
+
+---STRING attachments of %s %s
+%s %s liitteet
 ---STRINGEND
 
 ---STRING back to site
@@ -169,6 +181,10 @@ Info
 
 ---STRING interface language
 Käyttöliittymän kieli
+---STRINGEND
+
+---STRING items in trash
+Kohteita roskakorissa
 ---STRINGEND
 
 ---STRING last edited by %s on %s (revision %s)
@@ -288,7 +304,7 @@ Käyttöoikeudet
 ---STRINGEND
 
 ---STRING purge
-Tyhjennä
+Poista lopullisesti
 ---STRINGEND
 
 ---STRING size
@@ -347,7 +363,7 @@ Käyttöasetukset
 Katso sivustolla
 ---STRINGEND
 
----STRING items in trash
-Kohteita roskakorissa
+---STRING attachments
+Liitteet
 ---STRINGEND
 

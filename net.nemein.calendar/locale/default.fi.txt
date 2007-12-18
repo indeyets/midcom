@@ -75,12 +75,12 @@ Kuinka monta tapahtumaa näytetään pääsivulla
 Toiston väli
 ---STRINGEND
 
----STRING list events from master event
-Listaa kaikki päätapahtuman alla olevat tapahtumat
----STRINGEND
-
 ---STRING list events from folders
 Listaa tapahtumat kansioista
+---STRINGEND
+
+---STRING list events from master event
+Listaa kaikki päätapahtuman alla olevat tapahtumat
 ---STRINGEND
 
 ---STRING location
@@ -201,5 +201,9 @@ Viikko %1$s vuonna %2$s
 
 ---STRING weekly
 Viikottain
+---STRINGEND
+
+---STRING use javascript to emulate hovering effect
+Tuota hover-efekti Javascriptillä
 ---STRINGEND
 

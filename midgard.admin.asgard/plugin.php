@@ -457,7 +457,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 array
                 (
                     MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/attachments/{$object->guid}/",
-                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('attachments', 'midcom'),
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('attachments', 'midgard.admin.asgard'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
                 )
             );
@@ -602,7 +602,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 $breadcrumb[] = array
                 (
                     MIDCOM_NAV_URL => "__mfa/asgard/object/attachments/{$object->guid}/",
-                    MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('attachments', 'midcom'),
+                    MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('attachments', 'midgard.admin.asgard'),
                 );
                 $toolbar->disable_item("__mfa/asgard/object/attachments/{$object->guid}/");
                 break;

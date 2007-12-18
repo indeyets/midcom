@@ -7,6 +7,10 @@
 %s deleted items
 ---STRINGEND
 
+---STRING %s purged
+%s purged
+---STRINGEND
+
 ---STRING %s trash
 %s trash
 ---STRINGEND
@@ -39,6 +43,10 @@ All users
 Add group for privilege assignment
 ---STRINGEND
 
+---STRING always display in top frame
+Always display in top frame
+---STRINGEND
+
 ---STRING apply to selected
 Apply to selected
 ---STRINGEND
@@ -57,6 +65,10 @@ Asgard plugins
 
 ---STRING attachment %s undeleted
 Attachment %s undeleted
+---STRINGEND
+
+---STRING attachments of %s %s
+Attachments of %s %s
 ---STRINGEND
 
 ---STRING back to site
@@ -109,10 +121,6 @@ Edit %s %s
 
 ---STRING expanded list
 Expanded list
----STRINGEND
-
----STRING %s purged
-%s purged
 ---STRINGEND
 
 ---STRING failed purging %s, reason %s
@@ -173,6 +181,10 @@ Info
 
 ---STRING interface language
 Interface language
+---STRINGEND
+
+---STRING items in trash
+Items in trash
 ---STRINGEND
 
 ---STRING last edited by %s on %s (revision %s)
@@ -247,10 +259,6 @@ No title
 Not approved
 ---STRINGEND
 
----STRING not approved
-Not approved
----STRINGEND
-
 ---STRING object %s approved
 Object %s approved
 ---STRINGEND
@@ -315,10 +323,6 @@ This type belongs to %s component.
 Toolbar mode
 ---STRINGEND
 
----STRING always display in top frame
-Always display in top frame
----STRINGEND
-
 ---STRING topic privileges
 Folder permissions
 ---STRINGEND
@@ -359,7 +363,7 @@ User preferences
 View on-site
 ---STRINGEND
 
----STRING items in trash
-Items in trash
+---STRING attachments
+Attachments
 ---STRINGEND
 

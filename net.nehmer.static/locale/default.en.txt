@@ -155,6 +155,10 @@ Select Schema
 Settings
 ---STRINGEND
 
+---STRING show blobs in autoindex
+Show blobs in autoindex
+---STRINGEND
+
 ---STRING simple_name_handling
 Should the article's URL be generated automatically?
 ---STRINGEND
@@ -187,6 +191,3 @@ View Article
 Should the topic be visible
 ---STRINGEND
 
----STRING show blobs in autoindex
-Show blobs in autoindex
----STRINGEND

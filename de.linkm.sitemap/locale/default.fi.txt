@@ -1,6 +1,6 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.fi.txt 3907 2006-08-29 14:49:39Z bergie $
+---CVS $Id$
 ---LANGUAGE fi
 
 ---STRING de.linkm.sitemap
@@ -19,16 +19,12 @@ Näytä päätason kansio
 Piilota sivut
 ---STRINGEND
 
----STRING root topic to use
-Käytettävä päätason kansio
----STRINGEND
-
----STRING use google sitemap mode
-Käytä Google Sitemap -tilaa näyttääksesi sivuston rakenteen XML-muodossa
----STRINGEND
-
 ---STRING root topic
 Juuritaso
+---STRINGEND
+
+---STRING root topic to use
+Käytettävä päätason kansio
 ---STRINGEND
 
 ---STRING select root to show
@@ -42,3 +38,12 @@ Näytettävien tasojen määrä
 ---STRING skip topics
 Valitse sivukartasta piilotettavat kansiot
 ---STRINGEND
+
+---STRING use google sitemap mode
+Käytä Google Sitemap -tilaa näyttääksesi sivuston rakenteen XML-muodossa
+---STRINGEND
+
+---STRING show
+Näytä
+---STRINGEND
+
