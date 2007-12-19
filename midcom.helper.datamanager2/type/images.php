@@ -85,6 +85,7 @@ require_once('image.php');
  *   "thumbnail". This image will be constructed after constructing all explicitly
  *   defined derived images. This option may be null (the default) indicating no
  *   thumbnail.
+ * - integer max_count Maximum number of images allowed for a field. Set this 
  *
  * <b>Implementation note:</b>
  *
@@ -100,7 +101,6 @@ require_once('image.php');
  */
 class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_type_image
 {
-
     /**
      * The list of images. This is essentially a reordered version of the
      * $attachments_info member: It is multi-dimensional, mapping the image identifier
@@ -154,7 +154,21 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
      */
     var $_title = null;
 
+    /**
+     * Output mode
+     * 
+     * @access public
+     * @var string
+     */
     var $output_mode = 'html';
+
+    /**
+     * Maximum amount of images allowed to be stored in the same field
+     * 
+     * @access public
+     * @var integer
+     */
+    var $max_count = 0;
 
     /**
      * Adds a new image to the list.

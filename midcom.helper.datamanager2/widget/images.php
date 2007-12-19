@@ -27,6 +27,7 @@
  *
  * - set_name_and_title_on_upload use this if you want the user to be able to set the 
  *   filename and title when uploading a form. 
+ * - integer max_count Maximum number of images allowed for a field. Set this 
  *
  * <b>Implementation notes:</b>
  *
@@ -45,7 +46,7 @@
  *
  * The table gets the Name of the field as id and midcom_helper_datamanager2_widget_images
  * as class. Each column also gets its own CSS class: filename, title, file, upload and delete.
- * An additionalclass is assigned depending whether this is a row for an existing item (exist) or
+ * An additional class is assigned depending whether this is a row for an existing item (exist) or
  * a new one (new). So a full class for the new filename element would be "new filename". Note,
  * that the classes are assigned to both the td and input elements. The th elements do not have
  * any additional class
@@ -105,7 +106,12 @@ class midcom_helper_datamanager2_widget_images extends midcom_helper_datamanager
             return false;
         }
 
-        
+        // Reflect the type config setting for maximum count
+        if (   isset($this->_type->max_count)
+            && !$this->max_count)
+        {
+            $this->max_count = $this->_type->max_count;
+        }
 
         $_MIDCOM->add_jscript($this->_get_filename_validation_script());
 

@@ -88,6 +88,14 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
     var $attachments_info = Array();
 
     /**
+     * Maximum amount of blobs allowed to be stored in the same field
+     * 
+     * @access public
+     * @var integer
+     */
+    var $max_count = 0;
+
+    /**
      * Set the base URL accordingly (this requires midcom_config access and is thus
      * not possible using class member initializers.
      */

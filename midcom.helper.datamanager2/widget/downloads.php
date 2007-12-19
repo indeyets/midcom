@@ -13,7 +13,7 @@
  * As with all subclasses, the actual initialization is done in the initialize() function,
  * not in the constructor, to allow for error handling.
  *
- * This widget supports the blobs type or any subtype thereof.
+ * This widget supports the blobs type or any subtype thereoff.
  *
  * All processing is done during the on_submit handlers, enforcing immediate update of the
  * associated storage objects. No other solition is possible, since we need to transfer
@@ -32,7 +32,7 @@
  *
  * <b>Implementation notes:</b>
  *
- * The construnciton of the widget is relatively complex, it relies on a combination of
+ * The construction of the widget is relatively complex, it relies on a combination of
  * static and input elements to do its work. It should be fairly customizable using CSS.
  *
  * 1. Quickform Element Naming
@@ -47,7 +47,7 @@
  *
  * The table gets the Name of the field as id and midcom_helper_datamanager2_widget_downloads
  * as class. Each column also gets its own CSS class: filename, title, file, upload and delete.
- * An additionalclass is assigned depending whether this is a row for an existing item (exist) or
+ * An additional class is assigned depending whether this is a row for an existing item (exist) or
  * a new one (new). So a full class for the new filename element would be "new filename". Note,
  * that the classes are assigned to both the td and input elements. The th elements do not have
  * any additional class
@@ -79,6 +79,14 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
     var $_elements = null;
 
     /**
+     * Maximum amount of blobs allowed to be stored in the same field
+     * 
+     * @access public
+     * @var integer
+     */
+    var $max_count = 0;
+
+    /**
      * The initialization event handler post-processes the maxlength setting.
      *
      * @return bool Indicating Success
@@ -88,10 +96,17 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
         if (! is_a($this->_type, 'midcom_helper_datamanager2_type_blobs'))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Warning, the field {$this->name} is not a blobs type or subclass thereof, you cannot use the downloads widget with it.",
+            debug_add("Warning, the field {$this->name} is not a blobs type or subclass thereoff, you cannot use the downloads widget with it.",
                 MIDCOM_LOG_WARN);
             debug_pop();
             return false;
+        }
+        
+        // Reflect the type config setting for maximum count
+        if (   isset($this->_type->max_count)
+            && !$this->max_count)
+        {
+            $this->max_count = $this->_type->max_count;
         }
 
         return true;
@@ -133,6 +148,13 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
      */
     function _add_new_upload_row($frozen)
     {
+        // Show only a configured amount of new image rows
+        if (   $this->max_count
+            && count($this->_type->attachments_info) >= $this->max_count)
+        {
+            return;
+        }
+        
         // Filename column
         $html = "<tr>\n" .
                 "<td class='new filename'>";
