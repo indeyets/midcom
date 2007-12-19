@@ -228,14 +228,11 @@ class midcom_services_i18n
         
         $this->_current_charset = $this->_language_db[$lang]['encoding'];
 
-        if (is_array($this->_language_db[$lang]['locale']))
-        {
-            setlocale (LC_ALL, $this->_language_db[$lang]['locale'][0]);
-        }
-        else
-        {
-            setlocale (LC_ALL, $this->_language_db[$lang]['locale']);
-        }
+        /** 
+         * NOTE: setlocale can take an array of locales as value, it will use 
+         * the first name valid for the system
+         */
+        setlocale (LC_ALL, $this->_language_db[$lang]['locale']);
 
         foreach ($this->_obj_l10n as $name => $object)
         {
