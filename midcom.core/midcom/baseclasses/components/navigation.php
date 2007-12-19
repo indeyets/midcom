@@ -202,6 +202,11 @@ class midcom_baseclasses_components_navigation
      */
     public function get_node($toolbar = null)
     {
+        if (!$this->_topic->metadata)
+        {
+            return null;
+        }
+            
         return array (
             MIDCOM_NAV_URL => '',
             MIDCOM_NAV_NAME => $this->_topic->extra,

@@ -76,7 +76,6 @@ function net_nehmer_blog_symlink_topic_list()
         {
             $path_components[] = (string) $node[MIDCOM_NAV_NAME];
         }
-        $topic = new midcom_db_topic($id);
 
         $breadcrumb = implode(' > ', $path_components);
         $newstopics[$topic_guid] = $breadcrumb;

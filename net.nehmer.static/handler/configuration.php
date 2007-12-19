@@ -55,78 +55,32 @@ class net_nehmer_static_handler_configuration extends midcom_core_handler_config
  */
 function net_nehmer_static_symlink_topic_list()
 {
-    $midgard = mgd_get_midgard();
-    $sg = $midgard->sitegroup;
-
-    $param = Array
+    $statictopics = array
     (
-        "result" => Array("" => $_MIDCOM->i18n->get_string('symlink_topic disabled')),
-        "stack" => Array(),
-        "last_level" => 0,
-        "last_topic" => null,
-        "glue" => " > ",
-        "sg" => $sg,
+        '' => '',
     );
-
-    mgd_walk_topic_tree("net_nehmer_static_symlink_topic_list_loop", 0, 99, &$param, true, "name");
-
-    return $param["result"];
-}
-
-function net_nehmer_static_symlink_topic_list_loop ($topicid, $level, &$param)
-{
-    if ($topicid == 0)
+    
+    $nav = new midcom_helper_nav();
+    $mc = midcom_db_topic::new_collector('component', 'net.nehmer.static');
+    $mc->add_value_property('id');
+    $mc->execute();
+    $topics = $mc->list_keys();
+    foreach ($topics as $topic_guid => $value)
     {
-        // debug_add("Topic ID is 0, skipping this one, it is the lists root.");
-        return;
-    }
-    $topic = new midcom_db_topic($topicid);
-    if ($param["sg"] != 0 && $topic->sitegroup != $param["sg"])
-    {
-        return;
-    }
+        $id = $mc->get_subkey($topic_guid, 'id');
+        $nav = new midcom_helper_nav();
+        $path = $nav->get_breadcrumb_data($id);
 
-    if ($level > $param["last_level"])
-    {
-        if ($param["last_level"] != 0)
+        $path_components = array();
+        foreach ($path as $node)
         {
-            array_push($param["stack"], $param["last_topic"]);
+            $path_components[] = (string) $node[MIDCOM_NAV_NAME];
         }
-        $param["last_level"] = $level;
+        $breadcrumb = implode(' > ', $path_components);
+        $statictopics[$topic_guid] = $breadcrumb;
     }
-    else if ($level < $param["last_level"])
-    {
-        for ($i = $param["last_level"]; $i > $level; $i--)
-        {
-            array_pop($param["stack"]);
-        }
-        $param["last_level"] = $level;
-    }
-
-    $guid = $topic->guid();
-    if ($topic->extra != "")
-    {
-        $topicname = substr($topic->extra, 0, 30);
-    }
-    else
-    {
-        $topicname = substr($topic->name, 0, 30);
-    }
-    $param["last_topic"] = $topicname;
-
-    if ($topic->parameter("midcom", "component") != "net.nehmer.static")
-    {
-        return;
-    }
-
-    if ($level > 1)
-    {
-        $param["result"][$guid] = implode($param["glue"], $param["stack"]) . $param["glue"] . $topicname;
-    }
-    else
-    {
-        $param["result"][$guid] = $topicname;
-    }
+    
+    return $statictopics;
 }
 
 ?>
