@@ -389,7 +389,7 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
      * - int count (Number of events in that year)
      * - array month_data (the monthly data)
      *
-     * month_data will contain an accociative array containing the following array of data
+     * month_data will contain an associative array containing the following array of data
      * indexed by month number (1-12):
      *
      * - string 'url' => The URL to the month.

@@ -150,7 +150,7 @@ class org_openpsa_contacts_duplicates_merge
     {
         if (!$this->merge($obj1, $obj2, 'all'))
         {
-            // Some error occured during merges, abort
+            // Some error occurred during merges, abort
             return false;
         }
         $stat = $obj2->delete();

@@ -569,7 +569,7 @@ class midcom_helper_nav
      *
      * <b>Return Value</b>
      *
-     * The breadcrumb data will be returned as a list of accociative arrays each
+     * The breadcrumb data will be returned as a list of associative arrays each
      * containing these keys:
      *
      * - MIDCOM_NAV_URL The fully qualified URL to the node.

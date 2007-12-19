@@ -57,7 +57,7 @@
 class midcom_helper_datamanager_widget_select extends midcom_helper_datamanager_widget {
 
     /**
-     * The accociative array with the choices available.
+     * The associative array with the choices available.
      * 
      * @var Array
      * @access protected

@@ -46,7 +46,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
      * @var string schema_name
      */
     var $schema_name = '';
-    
+
     /**
      * This is the storage implementation which is used for operation on the types. It encaspulates
      * the storage target.
@@ -66,7 +66,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
     var $types = null;
 
     /**
-     * This variable contains an Array of all validation errors that have occured
+     * This variable contains an Array of all validation errors that have occurred
      * during saving. As outlined in the type, these messages my have inline-html
      * in it and it is assumed to be localized.
      *
@@ -76,15 +76,15 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
      * @see midcom_helper_datamanager2_type::validation_error
      */
     var $validation_errors = Array();
-    
+
     /**
      * Reference to the form manager instance which is currently in use. Usually, it is created and referenced here by the controller
      * class during initialization.
      *
      * @var midcom_helper_datamanager2_formmanager
-     */    
+     */
     var $formmanager = null;
-    
+
     /**
      * The constructor loads the schema database to use but does nothing else
      * so far.
@@ -177,7 +177,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
         {
             $this->storage =& $object;
         }
-        
+
         // For reasons I do not completely comprehend, PHP drops the storage references into the types
         // in the lines above. Right now the only solution (except debugging this 5 hours long line
         // by line) I see is explicitly setting the storage references in the types.
@@ -324,7 +324,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
     }
 
     /**
-     * Little helper function returning an accociative array of all field values converted to HTML
+     * Little helper function returning an associative array of all field values converted to HTML
      * using their default convert_to_html option.
      *
      * @return Array All field values in their HTML representation indexed by their name.
@@ -340,7 +340,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
     }
 
     /**
-     * Little helper function returning an accociative array of all field values converted to XML
+     * Little helper function returning an associative array of all field values converted to XML
      * using their default convert_to_csv or convert_to_raw options.
      *
      * @return Array All field values in their XML representation indexed by their name.
@@ -369,7 +369,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
     }
 
     /**
-     * Little helper function returning an accociative array of all field values converted to CSV
+     * Little helper function returning an associative array of all field values converted to CSV
      * using their default convert_to_csv option.
      *
      * @return Array All field values in their CSV representation indexed by their name.
@@ -385,7 +385,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
     }
 
     /**
-     * Little helper function returning an accociative array of all field values converted to
+     * Little helper function returning an associative array of all field values converted to
      * their raw storage representation..
      *
      * @return Array All field values in their raw storage representation indexed by their name.
@@ -398,7 +398,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
             if (!isset($this->types[$name]))
             {
                 continue;
-            }        
+            }
             $result[$name] = $this->types[$name]->convert_to_storage();
         }
         return $result;
@@ -421,18 +421,18 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
             echo "<div class=\"field\">\n";
             echo '<div class="title" style="font-weight: bold;">' . $this->schema->translate_schema_string($this->schema->fields[$name]['title']) . "</div>\n";
             echo '<div class="value" style="margin-left: 5em; min-height: 1em;">';
-            
+
             if ($config['widget'] == 'chooser')
-            {                
+            {
                 $this->formmanager =& new midcom_helper_datamanager2_formmanager($this->schema, $this->types);
                 $this->formmanager->initialize();
                 $this->formmanager->widgets[$name]->render_content();
             }
             else
             {
-                echo $this->types[$name]->convert_to_html();                
+                echo $this->types[$name]->convert_to_html();
             }
-            
+
             echo "</div>\n";
             echo "</div>\n";
         }

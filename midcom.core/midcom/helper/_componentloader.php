@@ -839,8 +839,8 @@ class midcom_helper__componentloader
      * So, two instances are equal <i>if and only if</i> they are of the same class and
      * have the same $guid property value.
      *
-     * @param int $operation The operation that has occured.
-     * @param mixed $object The object on which the operation occured. The system will
+     * @param int $operation The operation that has occurred.
+     * @param mixed $object The object on which the operation occurred. The system will
      *     do is_a checks against any registered class restriction on the watch. The object
      *     is not taken by-reference but refreshed before actually executing the hook at the
      *     end of the request.

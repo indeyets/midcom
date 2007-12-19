@@ -15,7 +15,7 @@
  *
  * <b>Cron Job configuration</b>
  *
- * Each cron job is defined by an accociative array containing the following keys:
+ * Each cron job is defined by an associative array containing the following keys:
  *
  * - <i>string handler</i> holds the full class name which should handle the cron job invocation,
  *   it will be defined by the responsible component.

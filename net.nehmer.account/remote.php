@@ -109,7 +109,7 @@ class net_nehmer_account_remote extends midcom_baseclasses_components_purecode
     }
 
     /**
-     * This helper lists an accociative array with account types and their titles.
+     * This helper lists an associative array with account types and their titles.
      *
      * @return Array Account name => Description listing.
      */

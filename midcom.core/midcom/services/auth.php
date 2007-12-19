@@ -390,7 +390,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
     /**
      * Internal cache of the effective privileges of users on content objects, this is
-     * an accociative array using a combination of the user identifier and the objects'
+     * an associative array using a combination of the user identifier and the objects'
      * guid as index. The privileges for the anonymous user use the magic
      * EVERYONE as user identifier.
      *
@@ -1436,7 +1436,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * values (type array of integers) is set, the first privilege value is used for
      * default, the second one for the owner privilege set.
      *
-     * @param Array $privileges An accociative privilege_name => default_values listing.
+     * @param Array $privileges An associative privilege_name => default_values listing.
      */
     function register_default_privileges ($privileges)
     {
@@ -1464,7 +1464,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     /**
      * Returns a listing of all known(!) virtual groups.
      *
-     * @result An accociative vgroup_id (including the vgroup: prefix) => vgroup_name listing.
+     * @result An associative vgroup_id (including the vgroup: prefix) => vgroup_name listing.
      */
     function get_all_vgroups()
     {

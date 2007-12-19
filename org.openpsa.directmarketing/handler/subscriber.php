@@ -265,7 +265,7 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
         $memberships = $qb->execute();
         if ($memberships === false)
         {
-            //Some error occured with QB
+            //Some error occurred with QB
             $_MIDCOM->auth->drop_sudo();
             debug_pop();
             return false;

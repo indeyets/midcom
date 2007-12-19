@@ -259,7 +259,7 @@
 
             // switch a tab
             function switchTab(clicked, $hide, $show) {
-                /*if (o.bookmarkable && trueClick) { // add to history only if true click occured, not a triggered click
+                /*if (o.bookmarkable && trueClick) { // add to history only if true click occurred, not a triggered click
                     $.ajaxHistory.update(clicked.hash);
                 }*/
                 $(clicked).parents('li:eq(0)').addClass(o.selectedClass)
@@ -270,7 +270,7 @@
             // tab click handler
             function tabClick(e) {
 
-                //var trueClick = e.clientX; // add to history only if true click occured, not a triggered click
+                //var trueClick = e.clientX; // add to history only if true click occurred, not a triggered click
                 var $li = $(this).parents('li:eq(0)'),
                     $hide = self.$containers.filter(':visible'),
                     $show = $(this.hash);

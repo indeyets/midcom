@@ -19,7 +19,7 @@
  * alternative. See the <i>History</i> Section below for further information about this
  * background.
  *
- * The component manifest on-disk actually consists of a relatively simple accociative
+ * The component manifest on-disk actually consists of a relatively simple associative
  * array which describes the component. The following example shows an average manifest
  * using all available options and should serve us as an example:
  *
@@ -79,7 +79,7 @@
  * You have to add only the local keys, the component prefix is
  * added automatically when the information is registered.
  *
- * This array is an accociative one, indexing permission names and their
+ * This array is an associative one, indexing permission names and their
  * default values. Simple string values are required for the permission
  * names, they must validate against the regular expression <i>/[a-z0-9]+/</i>.
  *

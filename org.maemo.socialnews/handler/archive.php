@@ -169,7 +169,7 @@ class org_maemo_socialnews_handler_archive extends midcom_baseclasses_components
             $month_data = Array();
 
             // Loop over the months, start month is either first posting month
-            // or January in all other cases. End months are treated similarily,
+            // or January in all other cases. End months are treated similarly,
             // being december by default unless for the current year.
             if ($year == $first_year)
             {
@@ -255,7 +255,7 @@ class org_maemo_socialnews_handler_archive extends midcom_baseclasses_components
      * - int count (Number of postings in that year)
      * - array month_data (the monthly data)
      *
-     * month_data will contain an accociative array containing the following array of data
+     * month_data will contain an associative array containing the following array of data
      * indexed by month number (1-12):
      *
      * - string 'url' => The URL to the month.

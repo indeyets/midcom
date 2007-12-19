@@ -35,7 +35,7 @@ class midcom_services_auth_frontend extends midcom_baseclasses_core_object
      * the username / password pair that should be tried to authentication
      * or null for anonymous access.
      * 
-     * @return Array A simple accociative array with the two indexes 'username' and
+     * @return Array A simple associative array with the two indexes 'username' and
      *     'password' holding the information read by the driver or NULL if no 
      *     information could be read.
      */

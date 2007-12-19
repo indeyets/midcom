@@ -442,7 +442,7 @@ $.fn.tabs = function(initial, settings) {
         // attach click event
         tabs.bind('click', function(e) {
 
-            var trueClick = e.clientX; // add to history only if true click occured, not a triggered click
+            var trueClick = e.clientX; // add to history only if true click occurred, not a triggered click
             var clicked = this, li = $(this).parents('li:eq(0)'), toShow = $(this.hash), toHide = containers.filter(':visible');
 
             // if animation is still running, tab is selected or disabled or onClick callback returns false stop here
@@ -473,7 +473,7 @@ $.fn.tabs = function(initial, settings) {
                 
                 // switch tab, animation prevents browser scrolling to the fragment
                 function switchTab() {
-                    if (settings.bookmarkable && trueClick) { // add to history only if true click occured, not a triggered click
+                    if (settings.bookmarkable && trueClick) { // add to history only if true click occurred, not a triggered click
                         $.ajaxHistory.update(clicked.hash);
                     }
                     toHide.animate(hideAnim, hideSpeed, function() { //

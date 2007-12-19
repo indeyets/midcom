@@ -833,8 +833,8 @@ class midcom_baseclasses_components_interface
      * generic operations. After that, the individual watches are called, to allow
      * for more specific processing.
      *
-     * @param int $operation The operation that has occured.
-     * @param mixed $object The object on which the operation occured. The system will
+     * @param int $operation The operation that has occurred.
+     * @param mixed $object The object on which the operation occurred. The system will
      *     do is_a checks against any registered class restriction on the watch.
      */
     public function trigger_watch($operation, $object)
@@ -880,7 +880,7 @@ class midcom_baseclasses_components_interface
      *
      * @param int $operation The operation identifier (one of the MIDCOM_OPERATION constants)
      *     which applies.
-     * @param obect $object The object on which the operation has occured.
+     * @param obect $object The object on which the operation has occurred.
      */
     function _on_watched_operation($operation, $object) {}
 
@@ -894,7 +894,7 @@ class midcom_baseclasses_components_interface
      *
      * It is called after the generic _on_watched_operation event handler.
      *
-     * @param obect $object The object on which the operation has occured.
+     * @param obect $object The object on which the operation has occurred.
      */
     function _on_watched_dba_create($object) {}
 
@@ -908,7 +908,7 @@ class midcom_baseclasses_components_interface
      *
      * It is called after the generic _on_watched_operation event handler.
      *
-     * @param obect $object The object on which the operation has occured.
+     * @param obect $object The object on which the operation has occurred.
      */
     function _on_watched_dba_update($object) {}
 
@@ -922,7 +922,7 @@ class midcom_baseclasses_components_interface
      *
      * It is called after the generic _on_watched_operation event handler.
      *
-     * @param obect $object The object on which the operation has occured.
+     * @param obect $object The object on which the operation has occurred.
      */
     function _on_watched_dba_delete($object) {}
 

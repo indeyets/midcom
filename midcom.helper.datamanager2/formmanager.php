@@ -69,7 +69,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
      * <em>It is set using the set_renderer() or create_renderer calls.</em>
      *
      * If the configuration option 'default_renderer' (and possibly 'default_renderer_src')
-     * are set, the class will create instances of these renderes during startup, so that
+     * are set, the class will create instances of these renderers during startup, so that
      * site users can directly use these defaults without further work. The following
      * rules are used when determining which renderer to use:
      *
@@ -107,7 +107,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
      * @access public
      */
     var $namespace = '';
-    
+
     /**
      * Number of open fieldsets. This will be used to close the same amount to prevent open fieldset tags
      *
@@ -233,10 +233,10 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
             {
                 continue;
             }
-            
+
             // Start the fieldsets if required
             $this->_start_fieldset($name, $config);
-            
+
             if ($config['static_prepend'] !== null)
             {
                 $static_name = "__static_prepend_{$name}";
@@ -266,7 +266,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
                     $defaults[$name] = $field_default;
                 }
             }
-            
+
             if (!is_null($config['default']))
             {
                 $schema_default = $config['default'];
@@ -293,14 +293,14 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
                 $static_name = "__static_append_{$name}";
                 $this->form->addElement('static', $static_name, '', $config['static_append']);
             }
-            
+
             // End the fieldsets if required
             $this->_end_fieldset($name, $config);
         }
 
         // Set the collected defaults.
         $this->form->setDefaults($defaults);
-        
+
         // Close the fieldsets left open
         if ($this->_fieldsets > 0)
         {
@@ -439,12 +439,12 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
 
         return true;
     }
-    
+
     /**
      * Start a fieldset and set the styles accordingly. Fieldsets can be initialized either
      * by key `start_fieldset` or `start_fieldgroup` to provide backwards compatibility to
      * @see midcom_helper_datamanager_schema
-     * 
+     *
      * @access private
      * @param string $name
      * @param Array $config
@@ -457,13 +457,13 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
         {
             $config['start_fieldset'] = $config['start_fieldgroup'];
         }
-        
+
         // Return if fieldsets are not requested
         if (!isset($config['start_fieldset']))
         {
             return;
         }
-        
+
         // Enable multiple fieldset starts in the same schema field
         $fieldsets = array();
         if (isset($config['start_fieldset']['title']))
@@ -474,7 +474,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
         {
             $fieldsets = $config['start_fieldset'];
         }
-        
+
         // Output the fieldsets
         foreach ($fieldsets as $key => $fieldset)
         {
@@ -486,9 +486,9 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
             {
                 $class = $name;
             }
-            
+
             $html = "<fieldset class=\"{$class}\">\n";
-            
+
             if (isset($fieldset['title']))
             {
                 if (isset($fieldset['css_title']))
@@ -499,27 +499,27 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
                 {
                     $class = " class=\"{$name}\"";
                 }
-                
+
                 $html .= "    <legend{$class}>\n";
                 $html .= "        ". $this->_translate($fieldset['title']) ."\n";
                 $html .= "    </legend>\n";
             }
-            
+
             if (isset($fieldset['description']))
             {
                 $html .= "<p>". $this->_translate($fieldset['description']) . "</p>\n";
             }
-            
+
             $set =& HTML_QuickForm::createElement('static', "__fieldset_start_{$name}_{$key}", $html);
             $this->form->addElement($set);
             $this->_fieldsets++;
         }
     }
-    
+
     /**
      * End a fieldset. Ends the requested amount of fieldsets when 'end_fieldset' key is
      * defined in the schema field or at least once when the key exists in the field.
-     * 
+     *
      * @access private
      * @param string $name
      * @param Array $config
@@ -532,15 +532,15 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
         {
             $config['end_fieldset'] = $config['end_fieldgroup'];
         }
-        
+
         if (   !isset($config['end_fieldset'])
             || $this->_fieldsets <= 0)
         {
             return;
         }
-        
+
         $html = '';
-        
+
         // Interface for closing the fieldsets
         if (is_numeric($config['end_fieldset']))
         {
@@ -548,7 +548,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
             {
                 $html .= "</fieldset>\n";
                 $this->_fieldsets--;
-                
+
                 if ($this->_fieldsets <= 0)
                 {
                     break;
@@ -560,7 +560,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
             $html .= "</fieldset>\n";
             $this->_fieldsets--;
         }
-        
+
         $set =& HTML_QuickForm::createElement('static', "__fieldset_end_{$name}", $html);
         $this->form->addElement($set);
     }
@@ -764,7 +764,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
     }
 
     /**
-     * Set the value of a formelement. 
+     * Set the value of a formelement.
      * @var $key the form field name
      * @var $value the new value to set
      */
@@ -818,7 +818,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
     function display_form()
     {
         if (   ! $this->renderer
-            ||  ( is_string($this->renderer) && $this->renderer == 'none')) 
+            ||  ( is_string($this->renderer) && $this->renderer == 'none'))
         {
             echo $this->form->toHtml();
         }
@@ -883,7 +883,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
      * @return array the submitted values.
      *
      */
-    function get_submit_values(  ) 
+    function get_submit_values(  )
     {
         return $this->form->getSubmitValues( true );
     }

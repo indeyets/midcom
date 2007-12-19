@@ -349,7 +349,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
     /**
      * Returns the full listing of all available key/value pairs.
      *
-     * @return Array Listing of all keys, as an accociative array.
+     * @return Array Listing of all keys, as an associative array.
      */
     function list_all()
     {

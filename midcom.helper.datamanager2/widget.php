@@ -96,7 +96,7 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     var $_namespace = null;
 
     /**
-     * Whether widget should always load its dependencies on initialization, or only during 
+     * Whether widget should always load its dependencies on initialization, or only during
      * add_elements_to_form call.
      *
      * @var boolean

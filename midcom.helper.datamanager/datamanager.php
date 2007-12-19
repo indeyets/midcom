@@ -826,7 +826,7 @@ class midcom_helper_datamanager {
      * must call this method during your handle phase and act according to the
      * constant returned:
      *
-     * - <b>MIDCOM_DATAMGR_FAILED:</b> Something critical occured, processing failed.
+     * - <b>MIDCOM_DATAMGR_FAILED:</b> Something critical occurred, processing failed.
      * - <b>MIDCOM_DATAMGR_CANCELLED:</b> Editing has been cancelled by the user, you
      *   should return to view-mode, no changes made. In case of a creation loop,
      *   the actual record has already been created and must be deleted by the

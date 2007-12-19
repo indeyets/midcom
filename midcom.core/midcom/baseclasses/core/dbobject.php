@@ -1303,7 +1303,7 @@ class midcom_baseclasses_core_dbobject
      * )
      * </pre>
      *
-     * If you query only a single domain, the result will be a single accociative
+     * If you query only a single domain, the result will be a single associative
      * array containing the parameter name/value pairs. For example:
      *
      * <pre>

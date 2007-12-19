@@ -168,7 +168,7 @@ class net_nemein_payment_handler extends midcom_baseclasses_components_purecode
     /**
      * Initializes the class, populates the config member variable.
      * 
-     * @param Array $config The accociative configuration array for this handler.
+     * @param Array $config The associative configuration array for this handler.
      */
     function net_nemein_payment_handler ($config)
     {

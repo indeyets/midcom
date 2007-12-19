@@ -262,7 +262,7 @@ class de_linkm_sitemap_handler_sitemap extends midcom_baseclasses_components_han
         {
             if (!$this->_show_node($this->_root_node_id, $data))
             {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "An error occured: de_linkm_sitemap_viewer::_show_node({$this->_root_node_id}) returned false. Aborting.");
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "An error occurred: de_linkm_sitemap_viewer::_show_node({$this->_root_node_id}) returned false. Aborting.");
             }
         } 
         else
@@ -270,14 +270,14 @@ class de_linkm_sitemap_handler_sitemap extends midcom_baseclasses_components_han
             $subnodes = $this->_nap->list_nodes($this->_root_node_id);
             if ($subnodes === false)
             {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'An error occured: de_linkm_sitemap_viewer::show: Could not list root\'s subnodes');
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'An error occurred: de_linkm_sitemap_viewer::show: Could not list root\'s subnodes');
             }
             
             foreach ($subnodes as $id)
             {
                 if (!$this->_show_node($id, $data))
                 {
-                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "An error occured: de_linkm_sitemap_viewer::_show_node({$id}) returned false. Aborting.");
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "An error occurred: de_linkm_sitemap_viewer::_show_node({$id}) returned false. Aborting.");
                 }
             }
             

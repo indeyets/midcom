@@ -157,7 +157,7 @@ class midcom_helper__basicnav
 
     /**
      * This is the leaf cache. It is an array which contains elements indexed by
-     * their leaf ID. The data is again stored in an accociative array:
+     * their leaf ID. The data is again stored in an associative array:
      *
      * - MIDCOM_NAV_NODEID => ID of the parent node (int)
      * - MIDCOM_NAV_URL => URL name of the leaf (string)
@@ -174,7 +174,7 @@ class midcom_helper__basicnav
 
     /**
      * This is the node cache. It is an array which contains elements indexed by
-     * their node ID. The data is again stored in an accociative array:
+     * their node ID. The data is again stored in an associative array:
      *
      * - MIDCOM_NAV_NODEID => ID of the parent node (-1 for the root node) (int)
      * - MIDCOM_NAV_URL => URL name of the leaf (string)

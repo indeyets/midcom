@@ -276,7 +276,7 @@ class export_style {
         $files = $this->find_file_references($element->value);
         if ($files === false)
         {
-            // error occured, what to do ??
+            // error occurred, what to do ??
         }
         if (is_array($files))
         {
