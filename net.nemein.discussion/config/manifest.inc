@@ -1,7 +1,7 @@
 
   'name' => 'net.nemein.discussion',
   'purecode' => false,
-  'version' => '2.0.3beta1',
+  'version' => '2.0.3beta2',
   'state' => 'beta',
   'privileges' => 
   array (

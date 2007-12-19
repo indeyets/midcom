@@ -283,6 +283,15 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
             $indexer =& $_MIDCOM->get_service('indexer');
             net_nemein_discussion_viewer::index($this->_controller->datamanager, $indexer, $this->midcom_topic);
         }
+        
+        if ($this->_config->get('autoapprove'))
+        {
+            $meta = $post->get_metadata();
+            $meta->approve();
+            
+            $meta = $thread->get_metadata();
+            $meta->approve();
+        }
 
         $this->_imported = $post;
         debug_pop();

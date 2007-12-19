@@ -47,3 +47,4 @@
 
 'auto_quote_on_reply' => false,
 
+'autoapprove' => false,
