@@ -132,7 +132,7 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
                 if (   $_MIDCOM->auth->user
                     && isset($_MIDCOM->auth->user->guid))
                 {
-                    $qb->add_constraint('metadata.owners', 'LIKE', '|' . $_MIDCOM->auth->user->guid . '|');
+                    $qb->add_constraint('metadata.authors', 'LIKE', '|' . $_MIDCOM->auth->user->guid . '|');
                 }
             $qb->end_group();
         }

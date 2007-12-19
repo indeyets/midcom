@@ -122,7 +122,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
                     if (   $_MIDCOM->auth->user
                         && isset($_MIDCOM->auth->user->guid))
                     {
-                        $qb->add_constraint('metadata.owners', 'LIKE', '|' . $_MIDCOM->auth->user->guid . '|');
+                        $qb->add_constraint('metadata.authors', 'LIKE', '|' . $_MIDCOM->auth->user->guid . '|');
                     }
                 $qb->end_group();
             }
@@ -181,7 +181,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
                 if (   $_MIDCOM->auth->user
                     && isset($_MIDCOM->auth->user->guid))
                 {
-                    $qb->add_constraint('metadata.owners', 'LIKE', '|' . $_MIDCOM->auth->user->guid . '|');
+                    $qb->add_constraint('metadata.authors', 'LIKE', '|' . $_MIDCOM->auth->user->guid . '|');
                 }
             $qb->end_group();
         }

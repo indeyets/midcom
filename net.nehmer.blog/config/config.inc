@@ -11,7 +11,7 @@
 'symlink_topic' => null,
 
 'view_in_url' => true,
-'enable_scheduled_publishing' => true,
+'enable_scheduled_publishing' => false,
 
 // Specifies how many entries should be shown in the index page.
 'index_entries' => 8,
