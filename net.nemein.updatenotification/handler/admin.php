@@ -87,7 +87,7 @@ class net_nemein_updatenotification_handler_admin  extends midcom_baseclasses_co
     }
         
     /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
      */

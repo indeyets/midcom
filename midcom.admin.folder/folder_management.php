@@ -1,27 +1,27 @@
 <?php
 /**
  * @package midcom.admin.folder
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: viewer.php 3975 2006-09-06 17:36:03Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
 /**
- * Folder managemement class.
- * 
+ * Folder management class.
+ *
  * @package midcom.admin.folder
  */
 class midcom_admin_folder_folder_management extends midcom_baseclasses_components_handler
 {
     /**
      * Anchor prefix stores the link back to the edited content topic
-     * 
+     *
      * @access private
      * @var string
      */
     var $_anchor_prefix = null;
-    
+
     /**
      * Simple constructor, which only initializes the parent constructor.
      */
@@ -29,10 +29,10 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Get the object title of the content topic.
-     * 
+     *
      * @return string containing the content topic title
      */
     function _get_object_title($object)
@@ -52,14 +52,14 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
         }
         else
         {
-            $title = get_class($object) . " GUID {$object->guid}"; 
+            $title = get_class($object) . " GUID {$object->guid}";
         }
         return $title;
     }
-    
+
     /**
      * Initializes the context data and toolbar objects
-     * 
+     *
      * @access private
      */
     function _on_initialize()
@@ -73,22 +73,22 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
             }
         }
         $this->_anchor_prefix = $this->_request_data['plugin_anchorprefix'];
-        
+
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('midcom.admin.folder');
-        
+
         $this->_request_data['folder'] = $this->_topic;
-        
+
         if (!array_key_exists($this->_topic->component, $_MIDCOM->componentloader->manifests))
         {
             $this->_topic->component = 'midcom.core.nullcomponent';
         }
     }
-    
+
     /**
      * Get the plugin handlers, which act alike with Request Switches of MidCOM
      * Baseclasses Components (midcom.baseclasses.components.request)
-     * 
+     *
      * @access public
      * @return mixed Array of the plugin handlers
      */
@@ -103,7 +103,7 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
              */
             /**
              * Create a new topic
-             * 
+             *
              * Match /create/
              */
             'create' => array
@@ -111,10 +111,10 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
                 'handler' => array('midcom_admin_folder_handler_edit', 'edit'),
                 'fixed_args' => array ('create'),
             ),
-            
+
             /**
              * Edit a topic
-             * 
+             *
              * Match /edit/
              */
             'edit' => array
@@ -122,10 +122,10 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
                 'handler' => array('midcom_admin_folder_handler_edit', 'edit'),
                 'fixed_args' => array ('edit'),
             ),
-            
+
             /**
              * Delete a topic
-             * 
+             *
              * Match /delete/
              */
             'delete' => array
@@ -133,14 +133,14 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
                 'handler' => array('midcom_admin_folder_handler_delete', 'delete'),
                 'fixed_args' => array ('delete'),
             ),
-            
+
             /**
              * Approval pseudo locations, which redirect back to the original page
              * after saving the new status.
              */
             /**
              * Approve a topic object
-             * 
+             *
              * Match /metadata/approve/
              */
             'approve' => array
@@ -148,10 +148,10 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
                 'handler' => array('midcom_admin_folder_handler_approvals', 'approval'),
                 'fixed_args' => array ('approve'),
             ),
-            
+
             /**
              * Unapprove a topic object
-             * 
+             *
              * Match /metadata/unapprove/
              */
             'unapprove' => array
@@ -159,13 +159,13 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
                 'handler' => array('midcom_admin_folder_handler_approvals', 'approval'),
                 'fixed_args' => array ('unapprove'),
             ),
-            
+
             /**
              * Miscellaneous other functionalities
              */
             /**
              * Metadata editing
-             * 
+             *
              * Match /metadata/<object guid>/
              */
             'metadata' => array
@@ -177,7 +177,7 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
 
             /**
              * Object moving
-             * 
+             *
              * Match /move/<object guid>/
              */
             'move' => array
@@ -186,7 +186,7 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
                 'fixed_args' => array ('move'),
                 'variable_args' => 1,
             ),
-            
+
             // Match /order/
             'order' => array
             (
@@ -195,10 +195,10 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
             ),
         );
     }
-    
+
     /**
      * Static method to list names of the non-purecore components
-     * 
+     *
      * @access public
      * @param string $parent_component  Name of the parent component, which will pop the item first on the list
      * @return mixed Array containing names of the components
@@ -206,7 +206,7 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
     function get_component_list($parent_component = '')
     {
         $components = array ();
-        
+
         // Loop through the list of components of component loader
         foreach ($_MIDCOM->componentloader->manifests as $manifest)
         {
@@ -215,21 +215,21 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
             {
                 continue;
             }
-            
+
             // Skip components beginning with midcom or midgard
             if (   ereg('^(midcom|midgard)\.', $manifest->name)
                 && $manifest->name != 'midcom.helper.search')
             {
                 continue;
             }
-            
+
             // Skip components not ported to 2.6
             if (   !is_array($manifest->_raw_data)
                 || !array_key_exists('package.xml', $manifest->_raw_data))
             {
                 continue;
             }
-            
+
             if (array_key_exists('description', $manifest->_raw_data['package.xml']))
             {
                 $description = $_MIDCOM->i18n->get_string($manifest->_raw_data['package.xml']['description'], $manifest->name);
@@ -247,10 +247,10 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
                 'version'     => $manifest->version,
             );
         }
-        
+
         // Sort the components in alphabetical order (by key i.e. component class name)
         asort($components);
-        
+
         // Set the parent component to be the first if applicable
         if (   $parent_component !== ''
             && array_key_exists($parent_component, $components))
@@ -258,23 +258,23 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
             $temp = array();
             $temp[$parent_component] = $components[$parent_component];
             unset($components[$parent_component]);
-            
+
             $components = array_merge($temp, $components);
         }
-        
+
         return $components;
     }
-    
+
     /**
      * Static method for populating user interface for editing and creating topics
-     * 
+     *
      * @access static public
      * @return Array Containing a list of components
      */
     function list_components($parent_component = '', $all = false)
     {
         $list = array();
-        
+
         foreach (midcom_admin_folder_folder_management::get_component_list() as $component => $details)
         {
             // TODO: configuration options for either excluding or including components to the list
@@ -286,7 +286,7 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
             {
                 continue;
             }
-            
+
             if (   isset($GLOBALS['midcom_config']['component_listing_excluded'])
                 && is_array($GLOBALS['midcom_config']['component_listing_excluded'])
                 && in_array($component, $GLOBALS['midcom_config']['component_listing_excluded'])
@@ -295,45 +295,45 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
             {
                 continue;
             }
-            
+
             $list[$component] = "{$details['name']} ({$component} {$details['version']})";
         }
-        
+
         return $list;
     }
-    
+
     /**
      * Static method for listing available style templates
-     * 
+     *
      * @access public
      */
     function list_styles($up = 0, $prefix = '/', $spacer = '')
     {
         static $style_array = array();
-        
+
         $style_array[''] = $_MIDCOM->i18n->get_string('default', 'midcom.admin.folder');
-        
+
         // Give an option for creating a new layout template
         $style_array['__create'] = $_MIDCOM->i18n->get_string('new layout template', 'midcom.admin.folder');
-        
+
         $qb = midcom_db_style::new_query_builder();
         $qb->add_constraint('up', '=', $up);
         $styles = $qb->execute();
-        
+
         foreach ($styles as $style)
         {
             $style_string = "{$prefix}{$style->name}";
-            
+
             // Hide common unwanted material with heuristics
             if (preg_match('/(asgard|aegir|empty|spider|admin site)/i', $style_string))
             {
                 continue;
             }
-            
+
             $style_array[$style_string] = "{$spacer}{$style->name}";
             midcom_admin_folder_folder_management::list_styles($style->id, $style_string . '/', $spacer . '&nbsp;&nbsp;');
         }
-        
+
         if ($prefix === '/')
         {
             return $style_array;

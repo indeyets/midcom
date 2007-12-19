@@ -476,7 +476,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
     
     
     /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
      */

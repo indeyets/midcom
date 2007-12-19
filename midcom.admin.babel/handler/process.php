@@ -62,7 +62,7 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
     }
 
     /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
      */

@@ -518,7 +518,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
     {
         if (!is_dir($dir))
         {
-            // Directoty does not exist
+            // Directory does not exist
             return true;
         }
         $dp = opendir($dir);

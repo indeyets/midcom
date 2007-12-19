@@ -239,7 +239,7 @@ class net_nehmer_static_handler_create extends midcom_baseclasses_components_han
     }
 
     /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
      */

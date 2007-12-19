@@ -206,7 +206,7 @@ class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_compo
     }
     
     /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
      */

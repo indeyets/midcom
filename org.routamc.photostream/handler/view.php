@@ -225,7 +225,7 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
     }
 
     /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
      */

@@ -61,7 +61,7 @@
  */
 class org_openpsa_directmarketing_campaign_ruleresolver
 {
-    var $_qbs = array(); //QB instaces used by class
+    var $_qbs = array(); //QB instances used by class
     var $_results =  array(); //Resultsets from said QBs
     var $_rules = null; //Copy of rules as received
     var $_seek =  array(); //index for quickly finding out which persons are found via which classes
@@ -78,7 +78,7 @@ class org_openpsa_directmarketing_campaign_ruleresolver
     }
 
     /**
-     * Recurses trough the rules array and creates QB instaces & constraints as needed
+     * Recurses trough the rules array and creates QB instances & constraints as needed
      * @param array $rules rules array
      * @ret bool indicating success/failure
      */

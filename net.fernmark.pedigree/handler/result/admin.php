@@ -150,7 +150,7 @@ class net_fernmark_pedigree_handler_result_admin extends midcom_baseclasses_comp
     }
 
     /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
      * @param string $handler_id

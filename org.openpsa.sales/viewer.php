@@ -165,7 +165,7 @@ class org_openpsa_sales_viewer extends midcom_baseclasses_components_request
     }
 
     /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
      * @param org_openpsa_projects_object

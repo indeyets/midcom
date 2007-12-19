@@ -9,7 +9,7 @@ class org_openpsa_contacts_duplicates_merge
     var $_errstr = false;
 
     /**
-     * Constructor, the parameter governs which objects the instace works on
+     * Constructor, the parameter governs which objects the instance works on
      * @param string mode, currently valid modes are 'person' and 'group'
      */
     function org_openpsa_contacts_duplicates_merge($mode)
@@ -28,7 +28,7 @@ class org_openpsa_contacts_duplicates_merge
     /**
      * Merges given objects
      *
-     * Depending on modes either all or only future depencies, this method
+     * Depending on modes either all or only future dependencies, this method
      * will go trough all components' interface classes and call a merge method there
      *
      * @param object Object that data will be merged to

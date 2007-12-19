@@ -109,7 +109,7 @@ class net_nehmer_marketplace_handler_entry extends midcom_baseclasses_components
     }
 
     /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
      * @param string $view Mode in which we are operating, one of 'view', 'edit' and 'delete'.

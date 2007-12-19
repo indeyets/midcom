@@ -173,7 +173,7 @@ class org_openpsa_sales_handler_deliverable_admin extends midcom_baseclasses_com
     }
 
     /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
      * @param string $handler_id

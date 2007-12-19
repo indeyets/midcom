@@ -182,7 +182,7 @@ class net_nehmer_marketplace_handler_category extends midcom_baseclasses_compone
     }
 
     /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      */
     function _update_breadcrumb_line()

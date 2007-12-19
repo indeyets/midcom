@@ -168,7 +168,7 @@ class org_maemo_devcodes_handler_code_create extends midcom_baseclasses_componen
     }
 
     /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
      */

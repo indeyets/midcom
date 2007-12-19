@@ -370,7 +370,7 @@ class net_nemein_reservations_handler_reservation_create extends midcom_baseclas
     }
 
     /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
      */

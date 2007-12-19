@@ -383,7 +383,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
     }
 
     /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
      * @param string $mode The view mode of a single entry, one of 'edit', 'delete'.

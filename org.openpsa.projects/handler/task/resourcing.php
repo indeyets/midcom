@@ -138,7 +138,7 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
     }
 
     /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
      * @param string $handler_id

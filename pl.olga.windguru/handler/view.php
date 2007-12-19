@@ -202,7 +202,7 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
 
 
     /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
      */

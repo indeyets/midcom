@@ -15,11 +15,11 @@ class midcom_request {
      * @param $var the name of the variable requested
      * @param $default the default value if the variable doesn't exist.
      */
-    public function get($var, $default = false) 
+    public function get($var, $default = false)
     {
         if (isset($this->vars[$var])) {
             return $this->vars[$var];
-        } 
+        }
         return $default;
     }
 
@@ -28,7 +28,7 @@ class midcom_request {
      * @param $name name of variable
      * @param $value value to set
      */
-    public function set($name, $value) 
+    public function set($name, $value)
     {
         $this->vars[$name] = $value;
     }
@@ -38,7 +38,7 @@ class midcom_request {
      *  @param $name the variable name
      *  @param $deafult what to return if the variable does not exist.
      */
-    public function getTrim($name, $default = "") 
+    public function getTrim($name, $default = "")
     {
         return trim($this->get($name, $default));
     }
@@ -51,13 +51,13 @@ class midcom_request {
 class midcom_url_notfound_exception extends Exception {    }
 
 /*
- * this class is responsible for building the urlparser filters that will handle the 
- * different parts of the parsing process. 
+ * this class is responsible for building the urlparser filters that will handle the
+ * different parts of the parsing process.
  *
  *
  * */
 class midcom_urlparserfactory {
-   
+
     /*
      * Builds the list of filters that should be applied. Note that the filters are
      * applied in sequence and that the next filter will get information from the one
@@ -72,7 +72,7 @@ class midcom_urlparserfactory {
      * which command to run.
      *
      * While most frameworks these days link parts of the urls directly to the
-     * command name, we let the midcom be linked to the database instead. This makes 
+     * command name, we let the midcom be linked to the database instead. This makes
      * it easier for others to build the site without worrying about how to configure the command
      * interprenter.
      * @return midcom_url_paramcollector
@@ -91,31 +91,31 @@ class midcom_urlparserfactory {
 /**
  * Implements a simple representation of the url as a stack
  */
-class midcom_url_urlstack 
+class midcom_url_urlstack
 {
     protected $argv;
-    public function __construct($argv) 
+    public function __construct($argv)
     {
         $this->argv = $argv;
     }
 
-    public function done() 
+    public function done()
     {
         return empty($this->argv);
     }
 
-    public function get() 
+    public function get()
     {
         return $this->argv[0];
     }
 
-    public function pop() 
+    public function pop()
     {
         array_shift($this->argv);
     }
-} 
+}
 /**
- * This class is used to collect information to be used when executing the 
+ * This class is used to collect information to be used when executing the
  * request
  */
 class midcom_url_paramcollector {
@@ -135,7 +135,7 @@ class midcom_url_paramcollector {
      * A general container to pass configuration into
      */
     public $config = array();
-    
+
     /**
      * An array of midcom_url_containers
      */
@@ -145,14 +145,14 @@ class midcom_url_paramcollector {
      * Gets the _MIDCOM application object.
      * @todo: remove.
      */
-    public function get_midcom() 
+    public function get_midcom()
     {
         return $this->midcom;
     }
     /**
      * Sets the current style of the execution environement.
      */
-    public function set_style($style) 
+    public function set_style($style)
     {
         if ($this->style_can_override)
         {
@@ -182,15 +182,15 @@ class midcom_url_paramcollector {
      * @param $name name of option
      * @param $value value of option
      */
-    public function add_config($name, $value) 
+    public function add_config($name, $value)
     {
         $this->config[$name] = $value;
     }
-    
+
     /**
      * Getter for config options
      * @param $name name of option
-     * @deafult default value of option, 
+     * @deafult default value of option,
      **/
     public function get_config($name, $default = false)
     {
@@ -208,7 +208,7 @@ abstract class midcom_url_parser {
      * @var object midcom_url_paramcollector
      */
     public $param_collector = null;
-    public function __construct($urlstack, $parser) 
+    public function __construct($urlstack, $parser)
     {
         $this->param_collector = $parser->param_collector;
     }
@@ -218,7 +218,7 @@ abstract class midcom_url_parser {
     }
 
     public function get_param_collector() {
-        if ($this->param_collector == null) 
+        if ($this->param_collector == null)
         {
             $this->param_collector= new midcom_url_paramcollector();
         }
@@ -228,7 +228,7 @@ abstract class midcom_url_parser {
 /**
  * This class does not parse anything and used as a placeholder for the last_parser
  * variable above.
- * 
+ *
  */
 class midcom_url_nullparser  extends midcom_url_parser
 {
@@ -244,7 +244,7 @@ class midcom_url_topicgetter {
 /**
  * This class parses any part of the url that is deemed to be related to topics
  */
-class midcom_url_topic extends midcom_url_parser 
+class midcom_url_topic extends midcom_url_parser
 {
     public $topics = array();
     public function __construct($urlstack, $parser) {
@@ -252,17 +252,17 @@ class midcom_url_topic extends midcom_url_parser
         $this->db = $db ? $db : new midcom_url_topicgetter();
         $topic = true;
         // continue while we got words and they mean something.
-        while (($next_word = $urlstack->get()) !== FALSE && $topic ) 
+        while (($next_word = $urlstack->get()) !== FALSE && $topic )
         {
             $topic = $this->check_next_word($next_word);
             $this->topics[] = $topic;
         }
         $this->get_param_collector()->set_content_topic($this->topics[-1]);
         $this->get_param_collector()->set_command($this->topics[-1]);
-        
+
     }
 
-    
+
 
     public function check_next_word($word) {
         $up = ($this->topics !== array()) ? $this->topics[-1] : 0;
@@ -274,19 +274,19 @@ class midcom_url_topic extends midcom_url_parser
         return $topic;
     }
 
-    
+
 
 
 
 }
 /**
  * This class parses prefixes like
- * /serveattachment 
+ * /serveattachment
  * /midcom-substyle
  * etc
  */
 class midcom_url_midcom extends midcom_url_parser {
-    
+
     public function __construct($urlstack, $parser) {
         if (substr($urlstack->get(), 0,7) == 'midcom-') {
             $this->parse_variable($urlstack->get());

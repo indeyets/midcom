@@ -43,7 +43,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
 
 
     /**
-     * Creates a QB instace for get_root_objects and count_root_objects
+     * Creates a QB instance for get_root_objects and count_root_objects
      *
      * @access private
      */
@@ -458,7 +458,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
     }
 
     /**
-     * Creates a QB instace for _get_child_objects_type and _count_child_objects_type
+     * Creates a QB instance for _get_child_objects_type and _count_child_objects_type
      *
      * @access private
      */

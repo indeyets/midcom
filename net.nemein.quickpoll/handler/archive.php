@@ -144,7 +144,7 @@ class net_nemein_quickpoll_handler_archive extends midcom_baseclasses_components
     }
 
     /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
      * @param string $handler_id

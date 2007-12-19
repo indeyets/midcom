@@ -163,7 +163,7 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
     }
 
     /**
-     * Helper, updates the context so that we get a complete breadcrum line towards the current
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
      * @param string $handler_id
