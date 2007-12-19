@@ -211,7 +211,17 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         
         if ($this->_multilang)
         {
-            $i18n = new midcom_services_i18n();
+            if (   !isset($_MIDCOM)
+                || !is_object($_MIDCOM)
+                || !isset($_MIDCOM->i18n)
+                || !is_a($_MIDCOM->i18n, 'midcom_services_i18n'))
+            {
+                $i18n = new midcom_services_i18n();
+            }
+            else
+            {
+                $i18n =& $_MIDCOM->i18n;
+            }
             $identifier_source .= 'LANG=' . $i18n->get_current_language();
         }
         else
