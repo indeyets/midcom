@@ -111,6 +111,76 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
         return $config;
     }
     
+    function _load_schemadb($component)
+    {
+        // Load SchemaDb
+        $schemadb_config_path = $_MIDCOM->componentloader->path_to_snippetpath($component) . '/config/schemadb_config.inc';
+        $schemadb = null;
+        $schema = 'default';
+        /*
+        FIXME: Enable this again once config schemas stop using functions and other stuff causing fatal errors
+        if (file_exists(MIDCOM_ROOT . $schemadb_config_path))
+        {
+            // Check that the schema is valid DM2 schema
+            $schema_array = midcom_baseclasses_components_interface::read_array_from_file(MIDCOM_ROOT . $schemadb_config_path);
+            if (isset($schema_array['config']))
+            {
+                $schema = 'config';
+            }
+            
+            if (!isset($schema_array[$schema]['name']))
+            {
+                // This looks like DM2 schema
+                $schemadb = midcom_helper_datamanager2_schema::load_database("file:/{$schemadb_config_path}");
+            }
+            
+            // TODO: Log error on deprecated config schema?
+        }*/
+        
+        if (!$schemadb)
+        {
+            // Create dummy schema. Naughty component would not provide config schema.
+            $schemadb = midcom_helper_datamanager2_schema::load_database("file:/midcom/admin/libconfig/config/schemadb_template.inc");
+        }
+        $schemadb[$schema]->l10n_schema = $component;
+
+        foreach($this->_request_data['config']->_global as $key => $value)
+        {
+            // try to sniff what fields are missing in schema
+            if (!array_key_exists($key, $schemadb[$schema]->fields))
+            {
+                $schemadb[$schema]->append_field
+                (
+                    $key,
+                    $this->_detect_schema($key,$value)
+                );
+            }
+
+            if (   !isset($this->_request_data['config']->_local[$key])
+                || !$this->_request_data['config']->_local[$key])
+            {
+                // No local configuration setting, note to user that this is the global value
+                $schemadb[$schema]->fields[$key]['static_prepend'] = "<div class='global'><span>" . $_MIDCOM->i18n->get_string('global value', 'midgard.admin.asgard') ."</span>";
+                $schemadb[$schema]->fields[$key]['static_append'] = "</div>";
+            }
+        }
+
+        // Prepare defaults
+        foreach($this->_request_data['config']->_merged as $key => $value)
+        {
+            if (is_array($value))
+            {
+                $schemadb[$schema]->fields[$key]['default'] = "array(\n" . $this->_draw_array($value, '    ') . ")";
+            }
+            else
+            {
+                $schemadb[$schema]->fields[$key]['default'] = $value;
+            }
+        }
+        
+        return $schemadb;
+    }
+    
     function _handler_view($handler_id, $args, &$data)
     {   
         $data['name'] = $args[0];
@@ -142,10 +212,10 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
         midgard_admin_asgard_plugin::asgard_header();
         
         midcom_show_style('midgard_admin_asgard_component_configuration_header');
-        $data['even'] = false;
+
         foreach($data['config']->_global as $key => $value)
         {
-            $data['key'] = $_MIDCOM->i18n->get_string($key,$data['name']);
+            $data['key'] = $_MIDCOM->i18n->get_string($key, $data['name']);
             $data['global'] = $this->_detect($data['config']->_global[$key]);
             
             if (isset($data['config']->_local[$key]))
@@ -156,17 +226,18 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
             {
                 $data['local'] = $this->_detect(null);
             }
-
-            midcom_show_style('midgard_admin_asgard_component_configuration_item');
-            if (!$data['even'])
-            {
-                $data['even'] = true;
-            }
-            else
+            
+            if (   !isset($data['even'])
+                || $data['even'])
             {
                 $data['even'] = false;
             }
+            else
+            {
+                $data['even'] = true;
+            }
 
+            midcom_show_style('midgard_admin_asgard_component_configuration_item');
         }
         midcom_show_style('midgard_admin_asgard_component_configuration_footer');
         midgard_admin_asgard_plugin::asgard_footer();
@@ -218,6 +289,72 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
 
     }
 
+    function _save_snippet($config)
+    {
+        $sg_snippetdir = new midcom_baseclasses_database_snippetdir();
+        $sg_snippetdir->get_by_path($GLOBALS['midcom_config']['midcom_sgconfig_basedir']);
+        if (!$sg_snippetdir->guid)
+        {
+            // Create SG config snippetdir
+            $sd = new midcom_baseclasses_database_snippetdir();
+            $sd->up = 0;
+            $sd->name = $GLOBALS['midcom_config']['midcom_sgconfig_basedir'];
+            if (!$sd->create())
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create snippetdir {$GLOBALS['midcom_config']['midcom_sgconfig_basedir']}: " . mgd_errstr());
+            }
+            $sg_snippetdir = new midcom_baseclasses_database_snippetdir($sd->guid);
+        }
+
+        $lib_snippetdir = new midcom_baseclasses_database_snippetdir();
+        $lib_snippetdir->get_by_path("{$GLOBALS['midcom_config']['midcom_sgconfig_basedir']}/{$this->_request_data['name']}");
+        if (!$lib_snippetdir->guid)
+        {
+            $sd = new midcom_baseclasses_database_snippetdir();
+            $sd->up = $sg_snippetdir->id;
+            $sd->name = $this->_request_data['name'];
+            if (!$sd->create())
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,"Failed to create snippetdir {$GLOBALS['midcom_config']['midcom_sgconfig_basedir']}/{$data['name']}: " . mgd_errstr());
+            }
+            $lib_snippetdir = new midcom_baseclasses_database_snippetdir($sd->guid);
+        }
+
+        $snippet = new midcom_baseclasses_database_snippet();
+        $snippet->get_by_path("{$GLOBALS['midcom_config']['midcom_sgconfig_basedir']}/{$this->_request_data['name']}/config");
+        if ($snippet->id == false )
+        {
+            $sn = new midcom_baseclasses_database_snippet();
+            $sn->up = $lib_snippetdir->id;
+            $sn->name = 'config';
+            $sn->code = $config;
+            return $sn->create();
+        }
+
+        $snippet->code = $config;
+        return $snippet->update();
+    }
+    
+    function _get_config_from_controller()
+    {
+        $post = $this->_controller->formmanager->form->_submitValues;
+        $config_array = array();
+        foreach ($this->_request_data['config']->_global as $key => $val)
+        {
+            if (!isset($post[$key]))
+            {
+                continue;
+            }
+            $newval = $post[$key];
+            
+            if ($newval != $val)
+            {
+                $config_array[$key] = $newval;
+            }
+        }
+
+        return $config_array;
+    }
    
     function _handler_edit($handler_id, $args, &$data)
     {   
@@ -230,75 +367,10 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
 
         $data['config'] = $this->_load_configs($data['name']);
 
-        // Load SchemaDb
-        $schemadb_config_path = $_MIDCOM->componentloader->path_to_snippetpath($data['name']) . '/config/schemadb_config.inc';
-        $schemadb = null;
-        $schema = 'default';
-        /*
-        FIXME: Enable this again once config schemas stop using functions and other stuff causing fatal errors
-        if (file_exists(MIDCOM_ROOT . $schemadb_config_path))
-        {
-            // Check that the schema is valid DM2 schema
-            $schema_array = midcom_baseclasses_components_interface::read_array_from_file(MIDCOM_ROOT . $schemadb_config_path);
-            if (isset($schema_array['config']))
-            {
-                $schema = 'config';
-            }
-            
-            if (!isset($schema_array[$schema]['name']))
-            {
-                // This looks like DM2 schema
-                $schemadb = midcom_helper_datamanager2_schema::load_database("file:/{$schemadb_config_path}");
-            }
-            
-            // TODO: Log error on deprecated config schema?
-        }*/
-        
-        if (!$schemadb)
-        {
-            // Create dummy schema. Naughty component would not provide config schema.
-            $schemadb = midcom_helper_datamanager2_schema::load_database("file:/midcom/admin/libconfig/config/schemadb_template.inc");
-        }
-        $schemadb[$schema]->l10n_schema = $data['name'];
-
-        foreach($data['config']->_global as $key => $value)
-        {
-            // try to sniff what fields are missing in schema
-            if (!array_key_exists($key,$schemadb['default']->fields))
-            {
-                $schemadb['default']->append_field
-                (
-                    $key,
-                    $this->_detect_schema($key,$value)
-                );
-
-            }
-
-            if (   !isset($data['config']->_local[$key])
-                || !$data['config']->_local[$key])
-            {
-                $schemadb['default']->fields[$key]['static_prepend'] = "<div class='global'><span>Global value</span>";
-                $schemadb['default']->fields[$key]['static_append'] = "</div>";
-
-            }
-        }
-
-        //prepare values
-        foreach($data['config']->_merged as $key => $value)
-        {
-            if (is_array($value))
-            {
-                $defaults[$key] = $this->_draw_array($value);
-            }
-            else
-            {
-                $defaults[$key] = $value;
-            }
-        }
+        $data['schemadb'] = $this->_load_schemadb($data['name']);
 
         $this->_controller =& midcom_helper_datamanager2_controller::create('nullstorage');
-        $this->_controller->schemadb =& $schemadb;
-        $this->_controller->defaults = $defaults;
+        $this->_controller->schemadb =& $data['schemadb'];
         if (! $this->_controller->initialize())
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 controller instance for configuration.");
@@ -308,75 +380,25 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
         switch ($this->_controller->process_form())
         {
             case 'save':
-                $sg_snippetdir = new midcom_baseclasses_database_snippetdir();
-                $sg_snippetdir->get_by_path($GLOBALS['midcom_config']['midcom_sgconfig_basedir']);
-                if ($sg_snippetdir->id == false )
+                $config_array = $this->_get_config_from_controller($this->_controller);
+                $config = $this->_draw_array($config_array, '', $data['config']->_global);
+                if ($this->_save_snippet($config))
                 {
-                    $sd = new midcom_baseclasses_database_snippetdir();
-                    $sd->up = 0;
-                    $sd->name = $GLOBALS['midcom_config']['midcom_sgconfig_basedir'];
-                    if (!$sd->create())
-                    {
-                        $_MIDCOM->generate_error(MIDCOM_ERRCRIT,"Failed to create {$GLOBALS['midcom_config']['midcom_sgconfig_basedir']}".mgd_errstr());
-                    }
-                    $sg_snippetdir = new midcom_baseclasses_database_snippetdir($sd->guid);
-                    unset($sd);
-                }
-
-                $lib_snippetdir = new midcom_baseclasses_database_snippetdir();
-                $lib_snippetdir->get_by_path($GLOBALS['midcom_config']['midcom_sgconfig_basedir']."/".$data['name']);
-                if ($lib_snippetdir->id == false )
-                {
-                    $sd = new midcom_baseclasses_database_snippetdir();
-                    $sd->up = $sg_snippetdir->id;
-                    $sd->name = $data['name'];
-                    if (!$sd->create())
-                    {
-                        $_MIDCOM->generate_error(MIDCOM_ERRCRIT,"Failed to create {$data['name']}".mgd_errstr());
-                    }
-                    $lib_snippetdir = new midcom_baseclasses_database_snippetdir($sd->guid);
-                    unset($sd);
-                }
-
-                $snippet = new midcom_baseclasses_database_snippet();
-                $snippet->get_by_path($GLOBALS['midcom_config']['midcom_sgconfig_basedir']."/".$data['name']."/config");
-                if ($snippet->id == false )
-                {
-                    $sn = new midcom_baseclasses_database_snippet();
-                    $sn->up = $lib_snippetdir->id;
-                    $sn->name = "config";
-                    if (!$sn->create())
-                    {
-                        $_MIDCOM->generate_error(MIDCOM_ERRCRIT,"Failed to create config snippet".mgd_errstr());
-                    }
-                    $snippet = new midcom_baseclasses_database_snippet($sn->id);
-                }
-
-                $snippet->code = $this->_get_config($this->_controller);
-
-                if (   $snippet->code == ''
-                    || !$snippet->code)
-                {
-                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                        "code-init content generation failed.");
-                    // This will exit.
-                }
-
-                $rst = $snippet->update();
-
-                if ($rst)
-                {
-                    mgd_cache_invalidate();
-                    $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('host configuration', 'midcom.admin.settings'),
-                    $_MIDCOM->i18n->get_string('settings saved successfully', 'midcom.admin.settings')
-                    . $this->_codeinit->id,
-                                                'ok');
+                    $_MIDCOM->uimessages->add
+                    (
+                        $_MIDCOM->i18n->get_string('component configuration', 'midcom'),
+                        $_MIDCOM->i18n->get_string('configuration saved successfully', 'midgard.admin.asgard'),
+                        'ok'
+                    );
                 }
                 else
                 {
-                    $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('host configuration', 'midcom.admin.settings'),
-                      sprintf($_MIDCOM->i18n->get_string('failed to save settings, reason %s', 'midc')),
-                                                'error');
+                    $_MIDCOM->uimessages->add
+                    (
+                        $_MIDCOM->i18n->get_string('component configuration', 'midcom'),
+                        sprintf($_MIDCOM->i18n->get_string('configuration save failed: %s', 'midgard.admin.asgard'), mgd_errstr()),
+                        'error'
+                    );
                 }
                 // *** FALL-THROUGH ***
 
@@ -409,33 +431,6 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
         midcom_show_style('midgard_admin_asgard_component_configuration_edit');
         midgard_admin_asgard_plugin::asgard_footer();
     }
-    
-
-    function _get_config()
-    {
-        $post = $this->_controller->formmanager->form->_submitValues;
-        foreach ($this->_request_data['config']->_global as $key => $val)
-        {
-
-            $newval = $post[$key];
-
-            switch(gettype($this->_request_data['config']->_global[$key]))
-            {
-                case "boolean":
-                    $data .= ($newval)?"'{$key}' => true,\n":"'{$key}' => false,\n";
-                    break;
-                case "array":
-                    break;
-                default:
-                    if ($newval)
-                    {
-                        $data .= "'{$key}' => '{$newval}',\n";
-                    }
-            }
-        }
-
-        return $data;
-    }
 
     function _detect_schema($key,$value)
     {
@@ -466,39 +461,68 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
 
         }
 
-
         return $result;
 
     }
 
-    function _draw_array($array)
+    function _draw_array($array, $prefix = '', $type_array = null)
     {
+        $data = '';
         foreach ($array as $key => $val)
         {
-            switch(gettype($val))
+            $data .= $prefix;
+            if (!is_numeric($key))
             {
-                case "boolean":
-                    $data .= ($val)?"    '{$key}' => true,\n":"'{$key}' => false,\n";
-                    break;
-                case "array":
-                    $data .= $this->_draw_array($val);
-                    break;
+                $data .= "'{$key}' => ";
+            }
 
-                default:
-                    $data = '';
-                    if (is_numeric($val))
+            $type = gettype($val);            
+            if (   $type_array
+                && isset($type_array[$key]))
+            {
+                $type = gettype($type_array[$key]);
+            }
+            
+            switch($type)
+            {
+                case 'boolean':
+                    $data .= ($val)?'true':'false';
+                    break;
+                case 'array':
+                    if (empty($val))
                     {
-                        $data .= "    '{$key}' => {$val},\n";
+                        $data .= 'array()';
                     }
                     else
                     {
-                        $data .= "    '{$key}' => '{$val}',\n";
+                        if (is_string($val))
+                        {
+                            $res = eval("\$val = $val;");
+                            /*if (!$res)
+                            {
+                                $data .= 'array()';
+                                break;
+                            }*/
+                        }
+                        $data .= "array\n{$prefix}(\n" . $this->_draw_array($val, "{$prefix}    ") . "{$prefix})";
+                    }
+                    break;
+
+                default:
+                    if (is_numeric($val))
+                    {
+                        $data .= $val;
+                    }
+                    else
+                    {
+                        $data .= "'{$val}'";
                     }
             }
+            
+            $data .= ",\n";
 
         }
-        $result = "array(\n{$data}),\n";
-        return $result;
+        return $data;
     }
 
 }
