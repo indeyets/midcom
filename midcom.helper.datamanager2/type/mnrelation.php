@@ -21,7 +21,7 @@ require_once('select.php');
  * The member objects used to construct this mapping must be fully
  * qualified DBA objects where the user owning the master object has full control So
  * that the objects can be updated accordingly. It is recommended to make the member
- * objects childs of the master objects. In addition, edit, delete and create rights
+ * objects children of the master objects. In addition, edit, delete and create rights
  * shoudl always go together.
  *
  * To work properly, this class needs various information: First, there is the name of the

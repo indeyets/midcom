@@ -195,7 +195,7 @@
  *   the object before updating it, it is granted by default only for owners.
  * - <i>midgard:delete</i> controls deletion of objects. Be aware, that you need to be able to read
  *   the object before updating it, it is granted by default only for owners.
- * - <i>midgard:create</i> allows you to create new content objects as childs on whatever content
+ * - <i>midgard:create</i> allows you to create new content objects as children on whatever content
  *   object that you have the create privilege for. This means, you can create an article if and only
  *   if you have create permission for either the parent article (if you create a so-called 'reply
  *   article') or the parent topic, it is granted by default only for owners.

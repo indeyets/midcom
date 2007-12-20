@@ -15,7 +15,7 @@
  * <b>Required privileges:</b>
  *
  * Each user which is allowed to do registrations must have midgard:create privileges on the root
- * event. This implies create privileges for event members, as these are childs of the actual
+ * event. This implies create privileges for event members, as these are children of the actual
  * events.
  *
  * In addition, registered users should have update privileges to their own person record. If these

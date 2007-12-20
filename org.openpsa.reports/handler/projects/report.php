@@ -80,7 +80,7 @@ class org_openpsa_reports_handler_projects_report extends org_openpsa_reports_ha
 
         //Get list of children and recurse
         //We pop already here due to recursion
-        debug_add('Checking for childs & recursing them');
+        debug_add('Checking for children & recursing them');
         debug_pop();
         $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task');
         $qb->add_constraint('up', '=', $task->id);

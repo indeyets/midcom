@@ -135,7 +135,7 @@ class net_nehmer_branchenbuch_branche extends __net_nehmer_branchenbuch_branche
 
 
     /**
-     * Helper function which lists the childs of the current category.
+     * Helper function which lists the children of the current category.
      *
      * @return Array A listing of subcategory class instances. This is a regular QB resultset.
      */
@@ -146,7 +146,7 @@ class net_nehmer_branchenbuch_branche extends __net_nehmer_branchenbuch_branche
     }
 
     /**
-     * Returns a QB which is prepared to list all childs of the object using default sorting.
+     * Returns a QB which is prepared to list all children of the object using default sorting.
      *
      * @return midcom_core_querybuilder A prepared query builder.
      */
