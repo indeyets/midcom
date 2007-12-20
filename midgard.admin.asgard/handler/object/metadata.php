@@ -102,7 +102,7 @@ class midgard_admin_asgard_handler_object_metadata extends midcom_baseclasses_co
      */
     function _handler_edit($handler_id, $args, &$data)
     {
-        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);    
+        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
         if (! $this->_object)
         {  

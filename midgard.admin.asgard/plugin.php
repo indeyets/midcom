@@ -78,6 +78,17 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 'variable_args' => 1,
             ),
             /**
+             * Component configuration editor
+             * 
+             * Match /components/configuration/edit/<component>
+             */
+            'components_configuration_edit_folder' => array
+            (
+                'handler' => array ('midgard_admin_asgard_handler_component_configuration', 'edit'),
+                'fixed_args' => array('components', 'configuration', 'edit'),
+                'variable_args' => 2,
+            ),
+            /**
              * Trashed items of MgdSchema
              * 
              * Match /asgard/
@@ -512,6 +523,21 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 )
             );
             
+            if (   is_a($object, 'midgard_topic')
+                && $object->component
+                && $object->can_do('midcom:component_config'))
+            {
+                $toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "__mfa/asgard/components/configuration/edit/{$object->component}/{$object->guid}/",
+                        MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('component configuration', 'midcom'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+                    )
+                );
+            }
+            
             $toolbar->add_item
             (
                 array
@@ -688,6 +714,14 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('edit', 'midcom'),
                 );
                 $toolbar->disable_item("__mfa/asgard/object/edit/{$object->guid}/{$data['language_code']}");
+                break;
+            case '____mfa-asgard-components_configuration_edit_folder':
+                $breadcrumb[] = array
+                (
+                    MIDCOM_NAV_URL => "__mfa/asgard/components/configuration/edit/{$object->component}/{$object->guid}/",
+                    MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('component configuration', 'midcom'),
+                );
+                $toolbar->disable_item("__mfa/asgard/components/configuration/edit/{$object->component}/{$object->guid}/");
                 break;
             case '____mfa-asgard-object_metadata':
                 $breadcrumb[] = array

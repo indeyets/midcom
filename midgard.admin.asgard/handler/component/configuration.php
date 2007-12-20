@@ -79,7 +79,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
         midgard_admin_asgard_plugin::get_common_toolbar($this->_request_data);
     }
     
-    function _load_configs($component)
+    function _load_configs($component, $object = null)
     {
         $lib = $_MIDCOM->componentloader->manifests[$component];
         $componentpath = MIDCOM_ROOT . $_MIDCOM->componentloader->path_to_snippetpath($component);
@@ -91,8 +91,14 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
             // hmmm... that should never happen
             $cfg = array();
         }
+        
+        $config = new midcom_helper_configuration($cfg);        
 
-        $config = new midcom_helper_configuration($cfg);
+        if ($object)
+        {
+            $topic_config = new midcom_helper_configuration($object, $component);
+            $config->store($topic_config->_local);
+        }
 
         // Go for the sitewide default
         $cfg = midcom_baseclasses_components_interface::read_array_from_file("/etc/midgard/midcom/{$component}/config.inc");
@@ -250,35 +256,30 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
 
         switch ($type)
         {
-            case "boolean":
-
+            case 'boolean':
                 $src = MIDCOM_STATIC_URL . '/stock-icons/16x16/cancel.png';
                 $result = "<img src='{$src}'/>";
 
                 if ($value === true)
                 {
-                    $src = MIDCOM_STATIC_URL . '/stock-icons/16x16/stock_mark.png';
-                    $result = "<img src='{$src}'/>";
+                    $result = "<img src='" . MIDCOM_STATIC_URL . "/stock-icons/16x16/stock_mark.png'/>";;
                 }
 
                 break;
-            case "array":
+            case 'array':
                 $content = '';
                 foreach ($value as $key => $val)
                 {
                     $content .= "<li>{$key} => ".$this->_detect($val).",</li>";
                 }
                 $result = "<ul>array<br />(<br />{$content}),</ul>";
-
-
                 break;
-            case "object":
-                $result = "<strong>Object</strong>";
+            case 'object':
+                $result = '<strong>Object</strong>';
                 break;
-            case "NULL":
-                $src = MIDCOM_STATIC_URL . '/stock-icons/16x16/cancel.png';
-                $result = "<img src='{$src}'/>";
-                $result = "<strong>N/A</strong>";
+            case 'NULL':
+                $result = "<img src='" . MIDCOM_STATIC_URL . "/stock-icons/16x16/cancel.png'/>";
+                $result = '<strong>N/A</strong>';
                 break;
             default:
                 $result = $value;
@@ -335,6 +336,36 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
         return $snippet->update();
     }
     
+    function _save_topic($topic, $config)
+    {
+        foreach ($this->_request_data['config']->_global as $global_key => $global_val)
+        {
+            if (isset($config[$global_key]))
+            {
+                continue;
+                // Skip the ones we will set next
+            }
+            
+            // Clear unset params
+            if ($topic->get_parameter($this->_request_data['name'], $global_key))
+            {
+                $topic->set_parameter($this->_request_data['name'], $global_key, '');
+            }
+        }
+
+        foreach ($config as $key => $value)
+        {
+            if (is_array($value))
+            {
+                $topic->set_parameter($this->_request_data['name'], $key, "array(\n" . $this->_draw_array($value, '    ') . ")");
+            }
+            else
+            {
+                $topic->set_parameter($this->_request_data['name'], $key, $value);
+            }
+        }
+    }
+    
     function _get_config_from_controller()
     {
         $post = $this->_controller->formmanager->form->_submitValues;
@@ -365,7 +396,24 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
             // This will exit
         }
 
-        $data['config'] = $this->_load_configs($data['name']);
+        if ($handler_id == '____mfa-asgard-components_configuration_edit_folder')
+        {
+            midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
+            $data['folder'] = new midcom_db_topic($args[1]);
+            if (   !$data['folder']->guid
+                || !is_a($data['folder'], 'midgard_topic')
+                || $data['folder']->component != $data['name'])
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Folder {$args[1]} not found for configuration.");
+                // This will exit
+            }
+            
+            $data['config'] = $this->_load_configs($data['name'], $data['folder']);
+        }
+        else
+        {
+            $data['config'] = $this->_load_configs($data['name']);
+        }
 
         $data['schemadb'] = $this->_load_schemadb($data['name']);
 
@@ -381,6 +429,21 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
         {
             case 'save':
                 $config_array = $this->_get_config_from_controller($this->_controller);
+                
+                if ($handler_id == '____mfa-asgard-components_configuration_edit_folder')
+                {
+                    $this->_save_topic($data['folder'], $config_array);
+                    
+                    $_MIDCOM->uimessages->add
+                    (
+                        $_MIDCOM->i18n->get_string('component configuration', 'midcom'),
+                        $_MIDCOM->i18n->get_string('configuration saved successfully', 'midgard.admin.asgard'),
+                        'ok'
+                    );
+                    
+                    $_MIDCOM->relocate("__mfa/asgard/object/view/{$data['folder']->guid}/");
+                }
+                    
                 $config = $this->_draw_array($config_array, '', $data['config']->_global);
                 if ($this->_save_snippet($config))
                 {
@@ -410,8 +473,18 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
 
         $data['controller'] =& $this->_controller;
 
-        $this->_prepare_toolbar($handler_id);
-        $data['view_title'] = sprintf($this->_l10n->get('edit configuration for %s'), $data['name']);
+        if ($handler_id == '____mfa-asgard-components_configuration_edit_folder')
+        {
+            midgard_admin_asgard_plugin::bind_to_object($data['folder'], $handler_id, &$data);
+            midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
+            $data['view_title'] = sprintf($this->_l10n->get('edit configuration for %s folder %s'), $data['name'], $data['folder']->extra);
+        }
+        else
+        {
+            $this->_prepare_toolbar($handler_id);
+            $data['view_title'] = sprintf($this->_l10n->get('edit configuration for %s'), $data['name']);
+        }
+        
         $_MIDCOM->set_pagetitle($data['view_title']);        
 
         return true;
