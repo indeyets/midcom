@@ -120,11 +120,11 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
     function _load_schemadb($component)
     {
         // Load SchemaDb
-        $schemadb_config_path = $_MIDCOM->componentloader->path_to_snippetpath($component) . '/config/schemadb_config.inc';
+        $schemadb_config_path = $_MIDCOM->componentloader->path_to_snippetpath($component) . '/config/config_schemadb.inc';
         $schemadb = null;
         $schema = 'default';
-        /*
-        FIXME: Enable this again once config schemas stop using functions and other stuff causing fatal errors
+
+
         if (file_exists(MIDCOM_ROOT . $schemadb_config_path))
         {
             // Check that the schema is valid DM2 schema
@@ -141,7 +141,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
             }
             
             // TODO: Log error on deprecated config schema?
-        }*/
+        }
         
         if (!$schemadb)
         {
@@ -158,7 +158,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
                 $schemadb[$schema]->append_field
                 (
                     $key,
-                    $this->_detect_schema($key,$value)
+                    $this->_detect_schema($key, $value)
                 );
             }
 
@@ -166,14 +166,20 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
                 || !$this->_request_data['config']->_local[$key])
             {
                 // No local configuration setting, note to user that this is the global value
-                $schemadb[$schema]->fields[$key]['static_prepend'] = "<div class='global'><span>" . $_MIDCOM->i18n->get_string('global value', 'midgard.admin.asgard') ."</span>";
-                $schemadb[$schema]->fields[$key]['static_append'] = "</div>";
+                $schemadb[$schema]->fields[$key]['title'] = $_MIDCOM->i18n->get_string($schemadb[$schema]->fields[$key]['title'], $schemadb[$schema]->l10n_schema);
+                $schemadb[$schema]->fields[$key]['title'] .= " <span class=\"global\">(" . $_MIDCOM->i18n->get_string('global value', 'midgard.admin.asgard') .")</span>";
             }
         }
 
         // Prepare defaults
         foreach($this->_request_data['config']->_merged as $key => $value)
         {
+            if (!isset($schemadb[$schema]->fields[$key]))
+            {
+                // Skip
+                continue;
+            }
+            
             if (is_array($value))
             {
                 $schemadb[$schema]->fields[$key]['default'] = "array(\n" . $this->_draw_array($value, '    ') . ")";
@@ -441,7 +447,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
                         'ok'
                     );
                     
-                    $_MIDCOM->relocate("__mfa/asgard/object/view/{$data['folder']->guid}/");
+                    $_MIDCOM->relocate("__mfa/asgard/components/configuration/edit/{$data['name']}/{$data['folder']->guid}/");
                 }
                     
                 $config = $this->_draw_array($config_array, '', $data['config']->_global);
@@ -466,7 +472,14 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
                 // *** FALL-THROUGH ***
 
             case 'cancel':
-                $_MIDCOM->relocate("__mfa/asgard/components/configuration/{$data['name']}");
+                if ($handler_id == '____mfa-asgard-components_configuration_edit_folder')
+                {
+                    $_MIDCOM->relocate("__mfa/asgard/object/view/{$data['folder']->guid}");
+                }
+                else
+                {
+                    $_MIDCOM->relocate("__mfa/asgard/components/configuration/edit/{$data['name']}");
+                }
                 // This will exit.
         }
 
@@ -476,6 +489,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
         if ($handler_id == '____mfa-asgard-components_configuration_edit_folder')
         {
             midgard_admin_asgard_plugin::bind_to_object($data['folder'], $handler_id, &$data);
+            $data['object'] =& $data['folder'];
             midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
             $data['view_title'] = sprintf($this->_l10n->get('edit configuration for %s folder %s'), $data['name'], $data['folder']->extra);
         }
@@ -485,7 +499,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
             $data['view_title'] = sprintf($this->_l10n->get('edit configuration for %s'), $data['name']);
         }
         
-        $_MIDCOM->set_pagetitle($data['view_title']);        
+        $_MIDCOM->set_pagetitle($data['view_title']);
 
         return true;
     }
@@ -505,7 +519,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
         midgard_admin_asgard_plugin::asgard_footer();
     }
 
-    function _detect_schema($key,$value)
+    function _detect_schema($key, $value)
     {
         $result = array
         (
@@ -515,13 +529,11 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
         );
 
         $type = gettype($value);
-
         switch ($type)
         {
             case "boolean":
                 $result['type'] = 'boolean';
                 $result['widget'] = 'checkbox';
-
                 break;
             case "array":
                 $result['widget'] = 'textarea';
@@ -531,9 +543,8 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
                 {
                     $result['widget'] = 'textarea';
                 }
-
         }
-
+        
         return $result;
 
     }

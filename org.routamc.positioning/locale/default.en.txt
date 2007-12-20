@@ -43,6 +43,14 @@ manually inputted
 Map
 ---STRINGEND
 
+---STRING map_api_key
+Map API key
+---STRINGEND
+
+---STRING map_provider
+Map provider
+---STRINGEND
+
 ---STRING org.routamc.positioning
 Geospatial toolkit
 ---STRINGEND
@@ -53,6 +61,10 @@ Place
 
 ---STRING plazes
 Plazes network position
+---STRINGEND
+
+---STRING plazes_developer_key
+Plazes.com developer key
 ---STRINGEND
 
 ---STRING plazes_password
@@ -71,11 +83,23 @@ Postal code
 Region
 ---STRINGEND
 
+---STRING sms_import_enable
+Enable SMS import
+---STRINGEND
+
+---STRING sms_import_ip
+Allowed IP for SMS import
+---STRINGEND
+
 ---STRING source %s
 source: %s
 ---STRINGEND
 
 ---STRING street
 Street address
+---STRINGEND
+
+---STRING yahoo_application_key
+Yahoo! application key
 ---STRINGEND
 

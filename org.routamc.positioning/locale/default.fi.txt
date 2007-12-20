@@ -43,6 +43,14 @@ käsin syötetty
 Kartta
 ---STRINGEND
 
+---STRING map_api_key
+Kartan kehittäjäavain
+---STRINGEND
+
+---STRING map_provider
+Karttapalvelu
+---STRINGEND
+
 ---STRING org.routamc.org
 Paikkatiedon käsittelykirjasto
 ---STRINGEND
@@ -59,6 +67,10 @@ Paikka
 Plazes-verkko
 ---STRINGEND
 
+---STRING plazes_developer_key
+Plazes.com -palvelun kehittäjäavain
+---STRINGEND
+
 ---STRING plazes_password
 Plazes salasana
 ---STRINGEND
@@ -71,6 +83,18 @@ Plazes käyttäjätunnus
 Postinumero
 ---STRINGEND
 
+---STRING region
+Alue
+---STRINGEND
+
+---STRING sms_import_enable
+Salli tekstiviestin sisäänluku
+---STRINGEND
+
+---STRING sms_import_ip
+Tekstiviestin sisäälukuun sallittu IP-osoite
+---STRINGEND
+
 ---STRING source %s
 lähde: %s
 ---STRINGEND
@@ -79,7 +103,7 @@ lähde: %s
 Katuosoite
 ---STRINGEND
 
----STRING region
-Alue
+---STRING yahoo_application_key
+Yahoo!:n kehittäjäavain
 ---STRINGEND
 
