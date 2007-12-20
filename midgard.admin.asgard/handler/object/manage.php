@@ -374,6 +374,40 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
             switch ($field_type)
             {
                 case MGD_TYPE_STRING:
+                    if (   $key == 'component'
+                        && is_a($this->_object, 'midgard_topic'))
+                    {
+                        // Component pulldown for topics
+                        $components = array();
+                        foreach ($_MIDCOM->componentloader->manifests as $manifest)
+                        {
+                            // Skip purecode components
+                            if ($manifest->purecode)
+                            {
+                                continue;
+                            }
+                            
+                            $components[$manifest->name] = $_MIDCOM->i18n->get_string($manifest->name, $manifest->name) . " ({$manifest->name})";
+                        }
+                        
+                        $this->_schemadb['object']->append_field
+                        (
+                            $key,
+                            array
+                            (
+                                'title'       => $key,
+                                'storage'     => $key,
+                                'type'        => 'select',
+                                'type_config' => array
+                                (
+                                    'options' => $components,
+                                    'allow_other' => true,
+                                ),
+                                'widget'      => 'select',
+                            )
+                        );
+                        break;
+                    }
                     $this->_schemadb['object']->append_field
                     (
                         $key,
