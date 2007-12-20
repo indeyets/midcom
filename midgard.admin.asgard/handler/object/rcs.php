@@ -213,17 +213,32 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
         debug_pop();
     }
     
-    function _prepare_breadcrumb()
+    function _prepare_request_data($handler_id)
     {
-        $tmp = Array();
-        if (!is_a($this->_object, 'midcom_baseclasses_database_topic'))
-        {
-            $tmp[] = Array
+        midgard_admin_asgard_plugin::init_language($handler_id, $this->_args, &$this->_request_data);
+        
+        $this->_request_data['asgard_toolbar'] = new midcom_helper_toolbar();
+        midgard_admin_asgard_plugin::bind_to_object($this->_object, 'rcs', &$this->_request_data);
+        midgard_admin_asgard_plugin::get_common_toolbar($this->_request_data);
+        
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        $this->_request_data['asgard_toolbar']->add_item
+        (
+            array
             (
-                MIDCOM_NAV_URL => $_MIDCOM->permalinks->create_permalink($this->_object->guid),
-                MIDCOM_NAV_NAME => $this->_resolve_object_title(),
-            );
-        }
+                MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard/object/rcs/{$this->_object->guid}/",
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('show history'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/history.png',
+                MIDCOM_TOOLBAR_ENABLED => false,
+            )
+        );
+        
+        $tmp = Array();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => $_MIDCOM->permalinks->create_permalink($this->_object->guid),
+            MIDCOM_NAV_NAME => $this->_resolve_object_title(),
+        );
         $tmp[] = Array
         (
             MIDCOM_NAV_URL => "__mfa/asgard/object/rcs/{$this->_object->guid}/",
@@ -304,6 +319,17 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
                 $current = $this->_args[1];
                 $next = $this->_backend->get_next_version($this->_args[1]);
             }
+            
+            $this->_request_data['rcs_toolbar']->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard/object/rcs/preview/{$current}/{$current}/",
+                    MIDCOM_TOOLBAR_LABEL => $current,
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/document.png',
+                    MIDCOM_TOOLBAR_ENABLED => false,
+                )
+            );
             
             $this->_request_data['rcs_toolbar']->add_item
             (
@@ -466,7 +492,7 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
         // Disable the "Show history" button when we're at its view
         $this->_view_toolbar->hide_item("__mfa/asgard/object/rcs/{$this->_guid}/");
         
-        $tmp = $this->_prepare_breadcrumb();
+        $tmp = $this->_prepare_request_data($handler_id);
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         
         $this->_request_data['view_title'] = sprintf($this->_l10n->get('revision history of %s'), $this->_resolve_object_title());
@@ -474,7 +500,6 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
         
         // Load the toolbars
         $this->_rcs_toolbar();
-        $data['asgard_toolbar'] = new midcom_helper_toolbar();
         midgard_admin_asgard_plugin::get_common_toolbar($data);
         
         midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
@@ -567,7 +592,7 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
         $this->_request_data['view_title'] = sprintf($this->_l10n->get('changes done in revision %s to %s'), $this->_request_data['latest_revision'], $this->_resolve_object_title());
         $_MIDCOM->set_pagetitle($this->_request_data['view_title']);
         
-        $tmp = $this->_prepare_breadcrumb();
+        $tmp = $this->_prepare_request_data($handler_id);
         $tmp[] = Array
         (
             MIDCOM_NAV_URL => "__mfa/asgard/object/rcs/preview/{$this->_guid}/{$data['latest_revision']}.html",
@@ -582,8 +607,6 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
         
         // Load the toolbars
         $this->_rcs_toolbar();
-        $data['asgard_toolbar'] = new midcom_helper_toolbar();
-        midgard_admin_asgard_plugin::get_common_toolbar($data);
         return true;
         
     }
@@ -627,7 +650,7 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
         $this->_request_data['view_title'] = sprintf($this->_l10n->get('viewing version %s of %s'), $revision, $this->_resolve_object_title());
         $_MIDCOM->set_pagetitle($this->_request_data['view_title']);     
         
-        $tmp = $this->_prepare_breadcrumb();
+        $tmp = $this->_prepare_request_data($handler_id);
         $tmp[] = Array
         (
             MIDCOM_NAV_URL => "__mfa/asgard/object/rcs/preview/{$this->_guid}/{$revision}.html",
@@ -643,8 +666,6 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
         
         // Load the toolbars
         $this->_rcs_toolbar();
-        $data['asgard_toolbar'] = new midcom_helper_toolbar();
-        midgard_admin_asgard_plugin::get_common_toolbar($data);
         
         return true;
     }
@@ -687,8 +708,6 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
         
         // Load the toolbars
         $this->_rcs_toolbar();
-        $data['asgard_toolbar'] = new midcom_helper_toolbar();
-        midgard_admin_asgard_plugin::get_common_toolbar($data);
     } 
 }
 ?>

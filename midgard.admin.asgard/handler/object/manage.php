@@ -576,6 +576,18 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
 
         midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
 
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        midgard_admin_asgard_plugin::get_common_toolbar($data);
+        
+        $this->_request_data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard/object/rcs/{$this->_object->guid}/",
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('versions'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/history.png',
+            )
+        );
         return true;
     }
 
