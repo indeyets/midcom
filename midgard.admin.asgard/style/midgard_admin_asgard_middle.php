@@ -26,6 +26,16 @@
                     ?>
                 </div>
                 <div id="content"&(content_offset:h);>
+                    <div class="quicklinks">
+                        <ul>
+                            <li>
+                                <a href="&(prefix);" title="<?php echo $_MIDCOM->i18n->get_string('user preferences', 'midgard.admin.asgard'); ?>"><img src="<?php echo MIDCOM_STATIC_URL; ?>/stock-icons/16x16/configuration.png" alt="<?php echo $_MIDCOM->i18n->get_string('user preferences', 'midgard.admin.asgard'); ?>" /></a>
+                            </li>
+                            <li>
+                                <a href="&(prefix);" title="<?php echo $_MIDCOM->i18n->get_string('back to site', 'midgard.admin.asgard'); ?>"><img src="<?php echo MIDCOM_STATIC_URL; ?>/stock-icons/16x16/gohome.png" alt="<?php echo $_MIDCOM->i18n->get_string('back to site', 'midgard.admin.asgard'); ?>" /></a>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="page-title">
                         <?php
                         echo "<h1>";

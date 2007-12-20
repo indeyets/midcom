@@ -450,3 +450,26 @@ html > body #siteinfo
   background-color: #eeeeef;
   visibility: visible;
 }
+
+#container #content div.quicklinks
+{
+  float: right;
+}
+
+#container #content div.quicklinks ul
+{
+  margin: 0;
+  padding: 0;
+  display: block;
+  list-style: none;
+}
+
+#container #content div.quicklinks ul li
+{
+  display: inline;
+}
+
+#container #content div.quicklinks a img
+{
+  border: none;
+}
