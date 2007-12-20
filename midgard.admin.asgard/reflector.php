@@ -356,6 +356,12 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             case 'org_openpsa_campaign':
                 $icon = 'stock_people-new.png';
                 break;
+            case 'midgard_person':
+            case 'org_openpsa_person':
+            case 'midgard_member':
+            case 'midgard_eventmember':
+                $icon = 'stock_person-new.png';
+                break;
             case 'midgard_event':
             case 'org_openpsa_event':
             case 'net_nemein_calendar_event';
