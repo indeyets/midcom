@@ -24,6 +24,10 @@
                 ),
             ),
             'widget' => 'select',
+            'start_fieldset' => array
+            (
+                'title' => 'editor options',
+            ),
         ),
         'codepress_enabled' => array
         (
@@ -45,6 +49,7 @@
                 ),
             ),
             'widget' => 'select',
+            'end_fieldset' => '',
         ),
         'interface_language' => array
         (
@@ -61,6 +66,11 @@
                 'options' => midgard_admin_asgard_handler_preferences::get_languages(),
             ),
             'widget' => 'select',
+            'start_fieldset' => array
+            (
+                'title' => 'localisation settings',
+            ),
+            'end_fieldset' => '',
         ),
         'navigation_type' => array
         (
@@ -82,6 +92,10 @@
                 ),
             ),
             'widget' => 'select',
+            'start_fieldset' => array
+            (
+                'title' => 'navigation options',
+            ),
         ),
         'offset' => array
         (
@@ -142,6 +156,27 @@
             'widget' => 'text',
             'hidden' => (midgard_admin_asgard_plugin::get_preference('toolbar_mode') === 'absolute') ? false : true,
         ),
+        'enable_quicklinks' => array
+        (
+            'title' => 'enable quicklinks',
+            'storage' => array
+            (
+                'location' => 'parameter',
+                'domain' => 'midgard.admin.asgard:preferences',
+                'name' => 'enable_quicklinks',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    'dropdown' => 'yes',
+                    'expanded' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+        ),
         'escape_frameset' => array
         (
             'title' => 'always display in top frame',
@@ -162,6 +197,7 @@
                 ),
             ),
             'widget' => 'select',
+            'end_fieldset' => '',
         ),
     ),
 ),

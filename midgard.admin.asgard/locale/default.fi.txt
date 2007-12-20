@@ -67,6 +67,10 @@ Asgardin lisätoiminnot
 Liitetiedosto %s palautettu
 ---STRINGEND
 
+---STRING attachments
+Liitteet
+---STRINGEND
+
 ---STRING attachments of %s %s
 %s %s liitteet
 ---STRINGEND
@@ -117,6 +121,10 @@ Pudotusvalikko
 
 ---STRING edit %s %s
 Muokkaa %s %s
+---STRINGEND
+
+---STRING editor options
+Tekstieditorien ominaisuudet
 ---STRINGEND
 
 ---STRING expanded list
@@ -191,6 +199,10 @@ Kohteita roskakorissa
 Viimeksi muokannut %s %s (muutos %s)
 ---STRINGEND
 
+---STRING localisation settings
+Kieliasetukset
+---STRINGEND
+
 ---STRING manage object
 Hallinnointi
 ---STRINGEND
@@ -237,6 +249,10 @@ Luku
 
 ---STRING midgard:update
 Päivitys
+---STRINGEND
+
+---STRING navigation options
+Navigaatio-ominaisuudet
 ---STRINGEND
 
 ---STRING navigation type
@@ -363,7 +379,7 @@ Käyttöasetukset
 Katso sivustolla
 ---STRINGEND
 
----STRING attachments
-Liitteet
+---STRING enable quicklinks
+Käytä pikalinkkejä
 ---STRINGEND
 

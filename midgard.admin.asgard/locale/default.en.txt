@@ -67,6 +67,10 @@ Asgard plugins
 Attachment %s undeleted
 ---STRINGEND
 
+---STRING attachments
+Attachments
+---STRINGEND
+
 ---STRING attachments of %s %s
 Attachments of %s %s
 ---STRINGEND
@@ -117,6 +121,10 @@ Dropdown list
 
 ---STRING edit %s %s
 Edit %s %s
+---STRINGEND
+
+---STRING editor options
+Editor options
 ---STRINGEND
 
 ---STRING expanded list
@@ -191,6 +199,10 @@ Items in trash
 Last edited by %s on %s (revision %s)
 ---STRINGEND
 
+---STRING localisation settings
+Localisation settings
+---STRINGEND
+
 ---STRING manage object
 Manage object
 ---STRINGEND
@@ -237,6 +249,10 @@ Read
 
 ---STRING midgard:update
 Update
+---STRINGEND
+
+---STRING navigation options
+Navigation options
 ---STRINGEND
 
 ---STRING navigation type
@@ -363,7 +379,7 @@ User preferences
 View on-site
 ---STRINGEND
 
----STRING attachments
-Attachments
+---STRING enable quicklinks
+Enable quicklinks
 ---STRINGEND
 
