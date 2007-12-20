@@ -53,6 +53,7 @@
             'type' => 'number',
             'widget' => 'text',
             'hidden' => version_compare(mgd_version(), '1.8.3', '<'),
+            'end_fieldgroup' => '',
         ),
         'hidden' => array
         (
@@ -74,6 +75,10 @@
             ),
             'type' => 'text',
             'widget' => 'textarea',
+            'start_fieldgroup' => array
+            (
+                'title' => 'metadata',
+            ),
         ),
         'keywords' => array
         (
@@ -113,27 +118,33 @@
             'type_config' => array
             (
                 'require_corresponding_option' => false,
-                'options' => array (),
+                'options' => array(),
+                'allow_other' => true,
                 'allow_multiple' => true,
                 'multiple_storagemode' => 'imploded_wrapped',
-                'allow_other' => true,
             ),
-            'widget' => 'universalchooser',
+            'widget' => 'chooser',
             'widget_config' => array
             (
                 'class' => 'midcom_db_person',
-                'component' => 'net.nemein.personnel',
+                'component' => 'midgard.admin.asgard',
                 'titlefield' => 'name',
-                'idfield' => 'guid',
-                'constraints' => array
-                (
-                ),
+                'id_field' => 'guid',
                 'searchfields' => array
                 (
                     'firstname',
                     'lastname',
+                    'username',
                 ),
-                'orders' => array(array('lastname', 'ASC')),
+                'result_headers' => array
+                (
+                    array('name' => 'name', 'title' => 'title'),
+                    array('name' => 'email', 'title' => 'email'),
+                ),
+                'orders' => array(),
+                'creation_mode_enabled' => true,
+                'creation_handler' => "{$_MIDGARD['self']}__mfa/asgard/object/create/chooser/midgard_person/",
+                'creation_default_key' => 'lastname',
             ),
         ),
         'owner' => array
@@ -144,26 +155,33 @@
             'type_config' => array
             (
                 'require_corresponding_option' => false,
-                'options' => array (),
+                'options' => array(),
                 'allow_other' => true,
+                'allow_multiple' => false,
             ),
-            'widget' => 'universalchooser',
+            'widget' => 'chooser',
             'widget_config' => array
             (
                 'class' => 'midcom_db_group',
-                'component' => 'net.nemein.personnel',
-                'titlefield' => 'official',
-                'idfield' => 'guid',
-                'constraints' => array
-                (
-                ),
+                'component' => 'midgard.admin.asgard',
+                'titlefield' => 'name',
+                'id_field' => 'guid',
                 'searchfields' => array
                 (
-                    'official',
                     'name',
+                    'official',
                 ),
-                'orders' => array(array('official', 'ASC')),
+                'result_headers' => array
+                (
+                    array('name' => 'name', 'title' => 'name'),
+                    array('name' => 'official', 'title' => 'title'),
+                ),
+                'orders' => array(),
+                'creation_mode_enabled' => true,
+                'creation_handler' => "{$_MIDGARD['self']}__mfa/asgard/object/create/chooser/midgard_group/",
+                'creation_default_key' => 'official',
             ),
+            'end_fieldgroup' => '',
         ),
         'created' => array
         (
@@ -174,6 +192,10 @@
             (
                 // MidCOM DBA converts dates to/from unixtimes to MgdSchema's ISO format
                 'storage_type' => 'UNIXTIME',
+            ),
+            'start_fieldgroup' => array
+            (
+                'title' => 'internal metadata',
             ),
             'widget' => 'jsdate',
             'readonly' => true,
@@ -363,19 +385,15 @@
             ),
             'readonly' => true,
             'hidden' => true,
-            'end_fieldgroup' => '',
         ),
         'size' => array
         (
-            'start_fieldgroup' => array
-            (
-                'title' => 'internal metadata',
-            ),
             'title' => 'size',
             'storage' => 'metadata',
             'type' => 'number',
             'widget' => 'text',
             'readonly' => true,
+            'end_fieldgroup' => '',
         ),
     ),
 ),
