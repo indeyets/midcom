@@ -75,8 +75,20 @@ Liitteet
 %s %s liitteet
 ---STRINGEND
 
+---STRING back to %s
+Takaisin sivulle "%s"
+---STRINGEND
+
 ---STRING back to site
 Takaisin sivustolle
+---STRINGEND
+
+---STRING changes done in revision %s to %s
+Version %s muutokset tietueeseen %s
+---STRINGEND
+
+---STRING changes from version %s
+Muutokset versiosta %s
 ---STRINGEND
 
 ---STRING content
@@ -99,6 +111,10 @@ Luo %s %s:n alle
 Luonut %s %s
 ---STRINGEND
 
+---STRING date
+Päivämäärä
+---STRINGEND
+
 ---STRING default language
 Oletuskieli
 ---STRINGEND
@@ -115,6 +131,14 @@ Poistaja
 Poistettu päivämäärällä
 ---STRINGEND
 
+---STRING differences between %s and %s
+Versioiden %s ja %s väliset erot
+---STRINGEND
+
+---STRING differences between versions %s and %s
+Versioiden %s ja %s väliset erot
+---STRINGEND
+
 ---STRING dropdown list
 Pudotusvalikko
 ---STRINGEND
@@ -125,6 +149,10 @@ Muokkaa %s %s
 
 ---STRING editor options
 Tekstieditorien ominaisuudet
+---STRINGEND
+
+---STRING enable quicklinks
+Käytä pikalinkkejä
 ---STRINGEND
 
 ---STRING expanded list
@@ -199,12 +227,20 @@ Kohteita roskakorissa
 Viimeksi muokannut %s %s (muutos %s)
 ---STRINGEND
 
+---STRING lines
+Rivit
+---STRINGEND
+
 ---STRING localisation settings
 Kieliasetukset
 ---STRINGEND
 
 ---STRING manage object
 Hallinnointi
+---STRINGEND
+
+---STRING message
+Viesti
 ---STRINGEND
 
 ---STRING metadata of %s %s
@@ -267,8 +303,16 @@ Navigaation leveys
 Navigaation leveys (pikseleinä)
 ---STRINGEND
 
+---STRING no changes in content
+Sisällössä ei muutoksia
+---STRINGEND
+
 ---STRING no title
 Ei otsikkoa
+---STRINGEND
+
+---STRING no.bergfald.rcs
+Versionhallinta
 ---STRINGEND
 
 ---STRING not approved
@@ -323,6 +367,38 @@ Käyttöoikeudet
 Poista lopullisesti
 ---STRINGEND
 
+---STRING restore this revision (%s)
+Palauta tähän versioon (%s)
+---STRINGEND
+
+---STRING restore to version %s failed, reason %s
+Palautus versioon %s epäonnistui, syy %s
+---STRINGEND
+
+---STRING restore to version %s successful
+Palautus versioon %s onnistui
+---STRINGEND
+
+---STRING revision
+Versio
+---STRINGEND
+
+---STRING revision history of %s
+Muutoshistoria tietueelle %s
+---STRINGEND
+
+---STRING select exactly two choices
+Valitse täsmälleen kaksi vaihtoehtoa
+---STRINGEND
+
+---STRING show differences
+Näytä erot
+---STRINGEND
+
+---STRING show history
+Näytä versiohistoria
+---STRINGEND
+
 ---STRING size
 Koko
 ---STRINGEND
@@ -333,6 +409,10 @@ Tämä tyyppi on osa Midgard-julkaisujärjestelmää.
 
 ---STRING this type belongs to %s component
 Tämä tyyppi on osa komponenttia %s.
+---STRINGEND
+
+---STRING title
+Otsikko
 ---STRINGEND
 
 ---STRING toolbar mode
@@ -371,88 +451,12 @@ Käytä CodePress-editoria koodin muokkaukseen
 Käytä TinyMCE-editoria sisällönmuokkaamiseen
 ---STRINGEND
 
----STRING user preferences
-Käyttöasetukset
----STRINGEND
-
----STRING view on site
-Katso sivustolla
----STRINGEND
-
----STRING enable quicklinks
-Käytä pikalinkkejä
----STRINGEND
-
----STRING back to %s
-Takaisin sivulle "%s"
----STRINGEND
-
----STRING changes done in revision %s to %s
-Version %s muutokset tietueeseen %s
----STRINGEND
-
----STRING changes from version %s
-Muutokset versiosta %s
----STRINGEND
-
----STRING date
-Päivämäärä
----STRINGEND
-
----STRING differences between %s and %s
-Versioiden %s ja %s väliset erot
----STRINGEND
-
----STRING differences between versions %s and %s
-Versioiden %s ja %s väliset erot
----STRINGEND
-
----STRING lines
-Rivit
----STRINGEND
-
----STRING message
-Viesti
----STRINGEND
-
----STRING no changes in content
-Sisällössä ei muutoksia
----STRINGEND
-
----STRING no.bergfald.rcs
-Versionhallinta
----STRINGEND
-
----STRING restore this revision (%s)
-Palauta tähän versioon (%s)
----STRINGEND
-
----STRING restore to version %s failed, reason %s
-Palautus versioon %s epäonnistui, syy %s
----STRINGEND
-
----STRING restore to version %s successful
-Palautus versioon %s onnistui
----STRINGEND
-
----STRING revision
-Versio
----STRINGEND
-
----STRING revision history of %s
-Muutoshistoria tietueelle %s
----STRINGEND
-
----STRING show history
-Näytä versiohistoria
----STRINGEND
-
----STRING title
-Otsikko
----STRINGEND
-
 ---STRING user
 Käyttäjä
+---STRINGEND
+
+---STRING user preferences
+Käyttöasetukset
 ---STRINGEND
 
 ---STRING version %s
@@ -467,6 +471,10 @@ Näytä version %s erot seuraavaan (%s)
 Näytä version %s erot edelliseen (%s)
 ---STRINGEND
 
+---STRING view on site
+Katso sivustolla
+---STRINGEND
+
 ---STRING view this revision (%s)
 Näytä tämä versio (%s)
 ---STRINGEND
@@ -475,7 +483,7 @@ Näytä tämä versio (%s)
 Versio %s tietueesta %s
 ---STRINGEND
 
----STRING show differences
-Näytä erot
+---STRING compare
+Vertaa
 ---STRINGEND
 

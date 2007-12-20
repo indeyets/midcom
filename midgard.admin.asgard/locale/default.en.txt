@@ -75,8 +75,20 @@ Attachments
 Attachments of %s %s
 ---STRINGEND
 
+---STRING back to %s
+Back to page "%s"
+---STRINGEND
+
 ---STRING back to site
 Back to site
+---STRINGEND
+
+---STRING changes done in revision %s to %s
+Changes done in revision %s to %s
+---STRINGEND
+
+---STRING changes from version %s
+Changes from version %s
 ---STRINGEND
 
 ---STRING content
@@ -99,6 +111,10 @@ Create %s under %s
 Created by %s on %s
 ---STRINGEND
 
+---STRING date
+Date
+---STRINGEND
+
 ---STRING default language
 Default language
 ---STRINGEND
@@ -115,6 +131,14 @@ Deleted by
 Deleted on
 ---STRINGEND
 
+---STRING differences between %s and %s
+Differences between %s and %s
+---STRINGEND
+
+---STRING differences between versions %s and %s
+Differences between versions %s and %s
+---STRINGEND
+
 ---STRING dropdown list
 Dropdown list
 ---STRINGEND
@@ -125,6 +149,10 @@ Edit %s %s
 
 ---STRING editor options
 Editor options
+---STRINGEND
+
+---STRING enable quicklinks
+Enable quicklinks
 ---STRINGEND
 
 ---STRING expanded list
@@ -199,12 +227,20 @@ Items in trash
 Last edited by %s on %s (revision %s)
 ---STRINGEND
 
+---STRING lines
+Lines
+---STRINGEND
+
 ---STRING localisation settings
 Localisation settings
 ---STRINGEND
 
 ---STRING manage object
 Manage object
+---STRINGEND
+
+---STRING message
+Message
 ---STRINGEND
 
 ---STRING metadata of %s %s
@@ -267,8 +303,16 @@ Navigation width
 Navigation width (in pixels)
 ---STRINGEND
 
+---STRING no changes in content
+No changes in content
+---STRINGEND
+
 ---STRING no title
 No title
+---STRINGEND
+
+---STRING no.bergfald.rcs
+Revision control
 ---STRINGEND
 
 ---STRING not approved
@@ -323,6 +367,38 @@ Permissions
 Purge
 ---STRINGEND
 
+---STRING restore this revision (%s)
+Restore to this revision (%s)
+---STRINGEND
+
+---STRING restore to version %s failed, reason %s
+Restore to version %s failed, reason %s
+---STRINGEND
+
+---STRING restore to version %s successful
+Restore to version %s was successful
+---STRINGEND
+
+---STRING revision
+Revision
+---STRINGEND
+
+---STRING revision history of %s
+Revision history of %s
+---STRINGEND
+
+---STRING select exactly two choices
+Select exactly two choices
+---STRINGEND
+
+---STRING show differences
+Show differences
+---STRINGEND
+
+---STRING show history
+Show revision history
+---STRINGEND
+
 ---STRING size
 Size
 ---STRINGEND
@@ -333,6 +409,10 @@ This is a Midgard CMS core type.
 
 ---STRING this type belongs to %s component
 This type belongs to %s component.
+---STRINGEND
+
+---STRING title
+Title
 ---STRINGEND
 
 ---STRING toolbar mode
@@ -371,92 +451,12 @@ Use CodePress editor for editing code snippets
 Use TinyMCE editor for editing content
 ---STRINGEND
 
----STRING user preferences
-User preferences
----STRINGEND
-
----STRING view on site
-View on-site
----STRINGEND
-
----STRING enable quicklinks
-Enable quicklinks
----STRINGEND
-
----STRING back to %s
-Back to page "%s"
----STRINGEND
-
----STRING changes done in revision %s to %s
-Changes done in revision %s to %s
----STRINGEND
-
----STRING changes from version %s
-Changes from version %s
----STRINGEND
-
----STRING date
-Date
----STRINGEND
-
----STRING differences between %s and %s
-Differences between %s and %s
----STRINGEND
-
----STRING differences between versions %s and %s
-Differences between versions %s and %s
----STRINGEND
-
----STRING lines
-Lines
----STRINGEND
-
----STRING message
-Message
----STRINGEND
-
----STRING no changes in content
-No changes in content
----STRINGEND
-
----STRING no.bergfald.rcs
-Revision control
----STRINGEND
-
----STRING restore this revision (%s)
-Restore to this revision (%s)
----STRINGEND
-
----STRING restore to version %s failed, reason %s
-Restore to version %s failed, reason %s
----STRINGEND
-
----STRING restore to version %s successful
-Restore to version %s was successful
----STRINGEND
-
----STRING revision
-Revision
----STRINGEND
-
----STRING revision history of %s
-Revision history of %s
----STRINGEND
-
----STRING show differences
-Show differences
----STRINGEND
-
----STRING show history
-Show revision history
----STRINGEND
-
----STRING title
-Title
----STRINGEND
-
 ---STRING user
 User
+---STRINGEND
+
+---STRING user preferences
+User preferences
 ---STRINGEND
 
 ---STRING version %s
@@ -471,11 +471,19 @@ View differences of version %s with next (%s)
 View differences of version %s with previous (%s)
 ---STRINGEND
 
+---STRING view on site
+View on-site
+---STRINGEND
+
 ---STRING view this revision (%s)
 View this revision (%s)
 ---STRINGEND
 
 ---STRING viewing version %s of %s
 Version %s of %s
+---STRINGEND
+
+---STRING compare
+Compare
 ---STRINGEND
 

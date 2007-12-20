@@ -8,11 +8,9 @@ $history = $data['history'];
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 $guid = $data['guid'];
 
-echo "<h1>{$data['view_title']}</h1>\n";
-
 if (count($history) == 0) 
 {
-   echo $data['l10n']->get('No revisions exist.');
+   echo $data['l10n']->get('no revisions exist');
    return;
 } 
 ?>
@@ -21,7 +19,7 @@ if (count($history) == 0)
 echo $data['rcs_toolbar']->render();
 ?>
 </div>
-<form method="get" action="&(_MIDGARD['uri']);">
+<form method="get" action="&(_MIDGARD['uri']);" id="midgard_admin_asgard_rcs_version_compare">
     <div>
         <table>
             <thead>
@@ -32,17 +30,19 @@ echo $data['rcs_toolbar']->render();
                     <th><?php echo $data['l10n']->get('user'); ?></th>
                     <th><?php echo $data['l10n']->get('lines'); ?></th>
                     <th><?php echo $data['l10n']->get('message'); ?></th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
             <?php
+            $i = 0;
+            
             foreach ($history as $rev => $history) 
             {
-                echo "                <tr>\n";
-                echo "                    <td><input type=\"checkbox\" name=\"compare[]\" value=\"{$rev}\" />\n";
-                echo "                    <td><a href='{$prefix}__mfa/asgard/object/rcs/preview/$guid/$rev'>{$rev}</a></td>\n";
-                echo "                    <td>".strftime('%x %X Z', $history['date'])."</td>\n";
+                $i++;
+                echo "                <tr id=\"midgard_admin_asgard_rcs_version_compare_{$i}_row\">\n";
+                echo "                    <td><input id=\"midgard_admin_asgard_rcs_version_compare_{$i}\" type=\"checkbox\" name=\"compare[]\" value=\"{$rev}\" />\n";
+                echo "                    <td><span style=\"display: none;\">". substr($rev, 2) ."</span><a href='{$prefix}__mfa/asgard/object/rcs/preview/$guid/$rev'>{$rev}</a></td>\n";
+                echo "                    <td><span style=\"display: none;\">{$history['date']}</span>".strftime('%x %X Z', $history['date'])."</td>\n";
                 
                 if ($history['user'])
                 {
@@ -80,7 +80,6 @@ echo $data['rcs_toolbar']->render();
                 }
                 echo "                    <td>{$history['lines']}</td>\n";                       
                 echo "                    <td>{$history['message']}</td>\n";
-                echo "                    <td></td>\n";
                 echo "                </tr>\n";
             }
             ?>
@@ -89,3 +88,6 @@ echo $data['rcs_toolbar']->render();
         <input type="submit" name="f_compare" value="<?php echo $data['l10n']->get('compare'); ?>" />
     </div>
 </form>
+<script type="text/javascript">
+    var _l10n_select_two = '<?php echo $data['l10n']->get('select exactly two choices'); ?>';
+</script>

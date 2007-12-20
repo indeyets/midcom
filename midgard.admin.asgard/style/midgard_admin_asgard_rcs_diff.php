@@ -5,7 +5,6 @@ $latest = $data['latest_revision'];
 $comment= $data['comment'];
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
-<h1>&(data['view_title']);</h1>
 <div class="rcs_navigation">
 <?php
 echo $data['rcs_toolbar']->render();
