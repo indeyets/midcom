@@ -447,24 +447,26 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
             if (!$mail->send())
             {
                 debug_add("Mail to recipient {$mail->to} failed, error message: " . $mail->get_error_message(), MIDCOM_LOG_ERROR);
+                /*
                 ob_start();
                 print_r($mail);
                 $mail_r = ob_get_contents();
                 ob_end_clean();
                 debug_add("Mail object dump:\n===\n{$mail_r}===\n");
+                */
                 debug_pop();
                 return false;
             }
             else
             {
-                debug_add("Mail to recipient sent with command: mail({$data['email']} {$subject} {$smessage} {$mail->headers})", MIDCOM_LOG_INFO);
                 debug_add("Mail sent to '{$mail->to}' with subject '{$mail->subject}'", MIDCOM_LOG_INFO);
+                /*
                 ob_start();
                 print_r($mail);
                 $mail_r = ob_get_contents();
                 ob_end_clean();
                 debug_add("Mail object dump:\n===\n{$mail_r}===\n");
-                debug_pop();
+                */
             }
         }
         else
@@ -488,11 +490,13 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         if (!$mail->send())
         {
             debug_add("Mail to recipient {$mail->to} failed, error message: " . $mail->get_error_message(), MIDCOM_LOG_ERROR);
+            /*
             ob_start();
             print_r($mail);
             $mail_r = ob_get_contents();
             ob_end_clean();
             debug_add("Mail object dump:\n===\n{$mail_r}===\n");
+            */
             debug_pop();
             return false;
         }
