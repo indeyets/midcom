@@ -489,7 +489,6 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
         if ($handler_id == '____mfa-asgard-components_configuration_edit_folder')
         {
             midgard_admin_asgard_plugin::bind_to_object($data['folder'], $handler_id, &$data);
-            $data['object'] =& $data['folder'];
             midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
             $data['view_title'] = sprintf($this->_l10n->get('edit configuration for %s folder %s'), $data['name'], $data['folder']->extra);
         }

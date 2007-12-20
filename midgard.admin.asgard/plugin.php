@@ -427,6 +427,8 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         $data['object_reflector'] = midgard_admin_asgard_reflector::get($object);
         $data['tree_reflector'] = midgard_admin_asgard_reflector_tree::get($object);
         
+        $data['object'] =& $object;
+        
         // Populate toolbar
         $data['asgard_toolbar'] = midgard_admin_asgard_plugin::get_object_toolbar($object, $handler_id, &$data);
         midgard_admin_asgard_plugin::get_common_toolbar($data);
