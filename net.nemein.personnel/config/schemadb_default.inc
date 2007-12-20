@@ -153,5 +153,39 @@
             'widget'      => 'tinymce',
             'storage'     => 'extra',
         ),
+        'members' => array
+        (
+            'title' => 'members',
+            'storage' => null,
+            'type' => 'mnrelation',
+            'type_config' => array
+            (
+                'mapping_class_name' => 'midcom_db_member',
+                'master_fieldname' => 'gid',
+                'member_fieldname' => 'uid',
+                'master_is_id' => true,
+                'option_callback' => 'midcom_helper_datamanager2_callback_select_personlister',
+                'option_callback_arg' => array
+                (
+                    'key_field' => 'id'
+                ),
+            ),
+            'widget' => 'chooser',
+            'widget_config' => array
+            (
+                'id_field' => 'id',
+                'result_headers' => array
+                (
+                    array(
+                        'name' => 'name',
+                        'title' => 'Name',
+                    ),
+                    array(
+                        'name' => 'email',
+                        'title' => 'Email',
+                    ),
+                ),
+            ),
+        ),
     ),
 ),

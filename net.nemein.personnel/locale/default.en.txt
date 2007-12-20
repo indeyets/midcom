@@ -3,6 +3,26 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING accessibility
+Accessibility
+---STRINGEND
+
+---STRING alphabetic
+Alphabetic
+---STRINGEND
+
+---STRING amount
+Amount
+---STRINGEND
+
+---STRING city
+City
+---STRINGEND
+
+---STRING create a new group
+Create a new group
+---STRINGEND
+
 ---STRING create person
 Create person
 ---STRINGEND
@@ -15,20 +35,88 @@ Delete person
 Are you sure that you want to delete this person?
 ---STRINGEND
 
+---STRING display in navigation
+Display in navigation
+---STRINGEND
+
+---STRING display nothing
+Display nothing
+---STRINGEND
+
+---STRING double click to edit
+Double click to edit.
+---STRINGEND
+
+---STRING drag and drop to sort
+Drag and drop to sort.
+---STRINGEND
+
+---STRING edit group
+Edit group
+---STRINGEND
+
+---STRING edit group %s
+Edit group "%s"
+---STRINGEND
+
 ---STRING edit person
 Edit person
+---STRINGEND
+
+---STRING edit user account
+Edit user account
 ---STRINGEND
 
 ---STRING email
 Email
 ---STRINGEND
 
+---STRING email sent
+Email sent
+---STRINGEND
+
+---STRING enable alphabetical ordering
+Enable alphabetical ordering
+---STRINGEND
+
+---STRING enter the same password twice
+Enter the same password twice
+---STRINGEND
+
 ---STRING firstname
 First name
 ---STRINGEND
 
----STRING username
-Username
+---STRING generate
+Generate
+---STRINGEND
+
+---STRING generate random passwords
+Generate random passwords
+---STRINGEND
+
+---STRING group
+Group to display
+---STRINGEND
+
+---STRING group %s saved
+Group '%s' saved
+---STRINGEND
+
+---STRING groups
+Groups
+---STRINGEND
+
+---STRING how many persons should be displayed in a row
+How many persons should be displayed in a row
+---STRINGEND
+
+---STRING illegal characters
+Illegal characters
+---STRINGEND
+
+---STRING invalid email address
+Invalid email address
 ---STRINGEND
 
 ---STRING job title
@@ -43,12 +131,28 @@ Last name
 List settings
 ---STRINGEND
 
+---STRING manually sorted
+Manually sorted
+---STRINGEND
+
+---STRING manually sorted and grouped
+Manually sorted and grouped
+---STRINGEND
+
+---STRING maximum %s
+Maximum %s
+---STRINGEND
+
 ---STRING net.nemein.personnel
 Personnel
 ---STRINGEND
 
 ---STRING no permissions for
 No permissions for
+---STRINGEND
+
+---STRING no persons found
+No persons were found from the group!
 ---STRINGEND
 
 ---STRING no persons found.
@@ -59,12 +163,68 @@ There are no persons in this group.
 None
 ---STRINGEND
 
+---STRING opens in a new window
+Opens in a new window
+---STRINGEND
+
+---STRING order saved
+Order saved!
+---STRINGEND
+
+---STRING overrides alphabetical order
+Overrides alphabetical order
+---STRINGEND
+
+---STRING password
+Password
+---STRINGEND
+
+---STRING password length
+Password length
+---STRINGEND
+
+---STRING password sent by email to the user
+Password sent by email to the user
+---STRINGEND
+
+---STRING passwords did not match
+Passwords did not match
+---STRINGEND
+
+---STRING person %s created
+Person '%s' created
+---STRINGEND
+
+---STRING person %s saved
+Person '%s' saved
+---STRINGEND
+
 ---STRING personnel
 Personnel
 ---STRINGEND
 
 ---STRING personnel folder
 Personnel folder
+---STRINGEND
+
+---STRING postal code
+Postal code
+---STRINGEND
+
+---STRING preferred person
+Preferred person
+---STRINGEND
+
+---STRING prevent repeating characters
+Prevent repeating characters
+---STRINGEND
+
+---STRING prevent similar characters
+Prevent similar characters
+---STRINGEND
+
+---STRING retype password
+Retype password
 ---STRINGEND
 
 ---STRING select
@@ -79,6 +239,58 @@ Select group to display
 Select member to display first
 ---STRINGEND
 
+---STRING send password by email to
+Send password by email to
+---STRINGEND
+
+---STRING sending of the email failed
+Sending of the email failed
+---STRINGEND
+
+---STRING sort personnel into sub groups
+Sort personnel into sub groups
+---STRINGEND
+
+---STRING sort personnel manually
+Sort personnel manually
+---STRINGEND
+
+---STRING sorting order
+Sorting order
+---STRINGEND
+
+---STRING street address
+Street address
+---STRINGEND
+
+---STRING this person will be displayed first
+This person will be displayed first
+---STRINGEND
+
+---STRING unsorted
+Unsorted
+---STRINGEND
+
+---STRING use only characters
+Use only characters
+---STRINGEND
+
+---STRING user account
+User account
+---STRINGEND
+
+---STRING user account updated successfully
+User account updated successfully
+---STRINGEND
+
+---STRING username
+Username
+---STRINGEND
+
+---STRING username contains illegal characters
+Username contains illegal characters
+---STRINGEND
+
 ---STRING view person
 View person
 ---STRINGEND
@@ -91,231 +303,7 @@ Work phone
 Your account has insufficient permissions to access details of this person
 ---STRINGEND
 
----STRING group
-Group to display
----STRINGEND
-
----STRING sort personnel manually
-Sort personnel manually
----STRINGEND
-
----STRING sorting order
-Sorting order
----STRINGEND
-
----STRING overrides alphabetical order
-Overrides alphabetical order
----STRINGEND
-
----STRING enable alphabetical ordering
-Enable alphabetical ordering
----STRINGEND
-
----STRING accessibility
-Accessibility
----STRINGEND
-
----STRING how many persons should be displayed in a row
-How many persons should be displayed in a row
----STRINGEND
-
----STRING preferred person
-Preferred person
----STRINGEND
-
----STRING this person will be displayed first
-This person will be displayed first
----STRINGEND
-
----STRING double click to edit
-Double click to edit.
----STRINGEND
-
----STRING no persons found
-No persons were found from the group!
----STRINGEND
-
----STRING sort personnel into sub groups
-Sort personnel into sub groups
----STRINGEND
-
----STRING drag and drop to sort
-Drag and drop to sort.
----STRINGEND
-
----STRING create a new group
-Create a new group
----STRINGEND
-
----STRING unsorted
-Unsorted
----STRINGEND
-
----STRING alphabetic
-Alphabetic
----STRINGEND
-
----STRING manually sorted and grouped
-Manually sorted and grouped
----STRINGEND
-
----STRING manually sorted
-Manually sorted
----STRINGEND
-
----STRING display in navigation
-Display in navigation
----STRINGEND
-
----STRING display nothing
-Display nothing
----STRINGEND
-
----STRING personnel
-Personnel
----STRINGEND
-
----STRING groups
-Groups
----STRINGEND
-
----STRING edit group
-Edit group
----STRINGEND
-
----STRING edit group %s
-Edit group "%s"
----STRINGEND
-
----STRING street address
-Street address
----STRINGEND
-
----STRING postal code
-Postal code
----STRINGEND
-
----STRING city
-City
----STRINGEND
-
----STRING amount
-Amount
----STRINGEND
-
----STRING user account
-User account
----STRINGEND
-
----STRING edit user account
-Edit user account
----STRINGEND
-
----STRING password
-Password
----STRINGEND
-
----STRING retype password
-Retype password
----STRINGEND
-
----STRING generate random passwords
-Generate random passwords
----STRINGEND
-
----STRING opens in a new window
-Opens in a new window
----STRINGEND
-
----STRING amount
-Amount
----STRINGEND
-
----STRING maximum %s
-Maximum %s
----STRINGEND
-
----STRING password length
-Password length
----STRINGEND
-
----STRING prevent repeating characters
-Prevent repeating characters
----STRINGEND
-
----STRING prevent similar characters
-Prevent similar characters
----STRINGEND
-
----STRING generate
-Generate
----STRINGEND
-
----STRING passwords did not match
-Passwords did not match
----STRINGEND
-
----STRING illegal characters
-Illegal characters
----STRINGEND
-
----STRING use only characters
-Use only characters
----STRINGEND
-
----STRING username contains illegal characters
-Username contains illegal characters
----STRINGEND
-
----STRING enter the same password twice
-Enter the same password twice
----STRINGEND
-
----STRING passwords did not match
-Passwords did not match
----STRINGEND
-
----STRING user account updated successfully
-User account updated successfully
----STRINGEND
-
----STRING send password by email to
-Send password by email to
----STRINGEND
-
----STRING invalid email address
-Invalid email address
----STRINGEND
-
----STRING sending of the email failed
-Sending of the email failed
----STRINGEND
-
----STRING email sent
-Email sent
----STRINGEND
-
----STRING order saved
-Order saved!
----STRINGEND
-
----STRING person %s saved
-Person '%s' saved
----STRINGEND
-
----STRING person %s created
-Person '%s' created
----STRINGEND
-
----STRING password sent by email to the user
-Password sent by email to the user
----STRINGEND
-
----STRING group %s saved
-Group '%s' saved
----STRINGEND
-
----STRING user account updated successfully
-User account updated successfully
+---STRING members
+Members
 ---STRINGEND
 
