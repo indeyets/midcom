@@ -167,6 +167,10 @@ class midcom_helper_datamanager2_widget_tinymce extends midcom_helper_datamanage
         {
              $language = 'nb';
         }
+        if ($language == 'sv')
+        {
+             $language = 'sv_utf8';
+        }
 
         $imagepopup_url = '';
         if ($this->use_imagepopup)
