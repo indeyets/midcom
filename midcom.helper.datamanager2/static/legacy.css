@@ -14,6 +14,11 @@ form.datamanager2 label
 
 form.datamanager2 fieldset
 {
+    border: none;
+}
+
+form.datamanager2 fieldset.fieldset
+{
     border: solid 1px black;
 }
 
