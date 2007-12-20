@@ -7,6 +7,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2007-12-20 adrenalin
+  - Fixed inconsistent ACL check
+
 2007-12-18 adrenalin
   - Gallery is now accessible even if the photostream folder is not visible in navigation
   - Fixed straight uploading to a gallery by changing the parameter from GUID to ID

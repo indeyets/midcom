@@ -133,7 +133,7 @@ class org_routamc_gallery_viewer extends midcom_baseclasses_components_request
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('sort photos'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/topic-score.png',
-                MIDCOM_TOOLBAR_ENABLED => $this->_request_data['photostream'][MIDCOM_NAV_OBJECT]->can_do('midgard:update'),
+                MIDCOM_TOOLBAR_ENABLED => $this->_topic->can_do('midgard:update'),
             )
         );
         
