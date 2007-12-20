@@ -104,7 +104,7 @@
  * </pre>
  *
  * In this case the definition grants object owners the defined privilege. The
- * only way this can be overriden now is having the privilege denied to the
+ * only way this can be overridden now is having the privilege denied to the
  * accessing user directly (e.g. a person privilege).
  *
  * Note, that it is often sensible to do something like this:

@@ -682,7 +682,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * sudo mode, as outlined in the corresponding variable.
      *
      * @param string $privilege The privilege to check for
-     * @return bool True if the privilege has been grante, false otherwise.
+     * @return bool True if the privilege has been granted, false otherwise.
      * @access private
      * @see $_internal_sudo
      */
@@ -712,7 +712,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * @param MidgardObject $content_object A Midgard Content Object
      * @param midcom_core_user $user The user against which to check the privilege, defaults to the currently authenticated user.
      *     You may specify "EVERYONE" instead of an object to check what an anonymous user can do.
-     * @return bool True if the privilege has been grante, false otherwise.
+     * @return bool True if the privilege has been granted, false otherwise.
      */
     function can_do($privilege, &$content_object, $user = null)
     {
@@ -735,7 +735,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * @param string $object_class Class of the object in question
      * @param midcom_core_user $user The user against which to check the privilege, defaults to the currently authenticated user.
      *     You may specify "EVERYONE" instead of an object to check what an anonymous user can do.
-     * @return bool True if the privilege has been grante, false otherwise.
+     * @return bool True if the privilege has been granted, false otherwise.
      */
     function can_do_byguid($privilege, $object_guid, $object_class, $user = null)
     {
@@ -822,7 +822,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
     /**
      * Checks, whether the given user have the privilege assigned to him in general.
-     * Be aware, that this does not take any permissions overriden by content objects
+     * Be aware, that this does not take any permissions overridden by content objects
      * into account. Whenever possible, you should user the can_do() variant of this
      * call therefore. can_user_do is only of interest in cases where you do not have
      * any content object available, for example when creating root topics.
@@ -832,7 +832,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      *     you may specify 'EVERYONE' here to check what an anonymous user can do.
      * @param string $class Optional parameter to set if the check should take type specific permissions into account. The class must be default constructible.
      * @param string $component Component providing the class
-     * @return bool True if the privilege has been grante, false otherwise.
+     * @return bool True if the privilege has been granted, false otherwise.
      */
     function can_user_do($privilege, $user = null, $class = null, $component = null)
     {
@@ -980,13 +980,13 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * combination.
      *
      * The information is cached per object-guid during runtime, so that repeated checks
-     * to the same object do not cause repeateing checks. Be aware that this means, that
+     * to the same object do not cause repeating checks. Be aware that this means, that
      * new privileges set are not guaranteed to take effect until the next request.
      *
      * @param MidgardObject $content_object A Midgard Content Object
      * @param midcom_core_user $user The user against which to check the privilege, defaults to the currently authenticated user.
      *     You may specify "EVERYONE" instead of an object to check what an anonymous user can do.
-     * @return Array Accociative listing of all privileges and their value.
+     * @return Array Associative listing of all privileges and their value.
      */
     function get_privileges(&$content_object, $user = null)
     {
@@ -995,17 +995,17 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
     /**
      * Returns a full listing of all currently known privileges for a certain object/user
-     * combination (object is speificied by guid/class combination)
+     * combination (object is specified by guid/class combination)
      *
      * The information is cached per object-guid during runtime, so that repeated checks
-     * to the same object do not cause repeateing checks. Be aware that this means, that
+     * to the same object do not cause repeating checks. Be aware that this means, that
      * new privileges set are not guaranteed to take effect until the next request.
      *
      * @param string $object_guid A Midgard GUID pointing to an object
      * @param string $object_class Class of the object in question
      * @param midcom_core_user $user The user against which to check the privilege, defaults to the currently authenticated user.
      *     You may specify "EVERYONE" instead of an object to check what an anonymous user can do.
-     * @return Array Accociative listing of all privileges and their value.
+     * @return Array Associative listing of all privileges and their value.
      */
     function get_privileges_byguid($object_guid, $object_class, $user = null)
     {
@@ -1173,7 +1173,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     }
 
     /**
-     * Drops previously aquired superuser privileges.
+     * Drops previously acquired superuser privileges.
      *
      * @see request_sudo()
      */
@@ -1198,7 +1198,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * Check, whether a user is member of a given group. By default, the query is run
      * against the currently authenticated user.
      *
-     * It always returns TRUE for admistrative users.
+     * It always returns TRUE for administrative users.
      *
      * @param mixed $group Group to check against, this can be either a midcom_core_group object or a group string identifier.
      * @param midcom_core_user The user which should be checked, defaults to the current user.
@@ -1240,7 +1240,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * Validates that the current user has the given privilege granted on the
      * content object passed to the function.
      *
-     * If this is not the case, an Access Denied error is genereted, the message
+     * If this is not the case, an Access Denied error is generated, the message
      * defaulting to the string 'access denied: privilege %s not granted' of the
      * MidCOM main L10n table.
      *
@@ -1267,12 +1267,12 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
     /**
      * Validates, whether the given user have the privilege assigned to him in general.
-     * Be aware, that this does not take any permissions overriden by content objects
+     * Be aware, that this does not take any permissions overridden by content objects
      * into account. Whenever possible, you should user the can_do() variant of this
      * call therefore. can_user_do is only of interest in cases where you do not have
      * any content object available, for example when creating root topics.
      *
-     * If this is not the case, an Access Denied error is genereted, the message
+     * If this is not the case, an Access Denied error is generated, the message
      * defaulting to the string 'access denied: privilege %s not granted' of the
      * MidCOM main L10n table.
      *
@@ -1301,7 +1301,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     /**
      * Validates that the current user is a member of the given group.
      *
-     * If this is not the case, an Access Denied error is genereted, the message
+     * If this is not the case, an Access Denied error is generated, the message
      * defaulting to the string 'access denied: user is not member of the group %s' of the
      * MidCOM main L10n table.
      *
@@ -2017,7 +2017,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * - If an authentication attempt was done but failed, an appropriated wrong user/password
      *   message is shown.
      * - If the user is authenticated, a note that he might have to switch to a user with more
-     *   privieleges is shown.
+     *   privileges is shown.
      * - Otherwise, no message is shown.
      *
      * This function will exit() unconditionally.

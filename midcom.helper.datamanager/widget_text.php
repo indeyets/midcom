@@ -259,7 +259,7 @@ class midcom_helper_datamanager_widget_text extends midcom_helper_datamanager_wi
     }
     
     /**
-     * Overriden to handle the password style widget. It mustn't 
+     * Overridden to handle the password style widget. It mustn't 
      * update in certain cases.
      */
     function _read_formdata () {

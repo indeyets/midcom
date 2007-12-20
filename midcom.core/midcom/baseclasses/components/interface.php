@@ -740,7 +740,7 @@ class midcom_baseclasses_components_interface
      * Executio0n is relayed to the corresponding event handler.
      *
      * @param string $groupname The local groupname (that is, without the component prefix) of the virtual group to query.
-     * @return Array Accociative user->id => user_object listing of all member users or null on failure.
+     * @return Array Associative user->id => user_object listing of all member users or null on failure.
      */
     public function retrieve_vgroup_members ($groupname)
     {

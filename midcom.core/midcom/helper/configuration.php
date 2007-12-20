@@ -55,7 +55,7 @@ class midcom_helper_configuration
     var $_global;
 
     /**
-     * Locally overriden configuration data.
+     * Locally overridden configuration data.
      *
      * @var Array
      * @access private
