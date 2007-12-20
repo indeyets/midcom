@@ -214,34 +214,72 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
     function get_prev_version($version) 
     {
         $versions = $this->list_history_numeric();
-        for ($i = 0; $i < count($versions); $i++) {
-            if ($versions[$i] == $version)  {
-                if ($i < count($versions)-1) {
-                    return $versions[$i+1];
-                } else {
-                    return "";
-                }
+        
+        if (   !in_array($version, $versions)
+            || $version === end($versions))
+        {
+            return '';
+        }
+        
+        $mode = end($versions);
+        
+        while( $mode
+            && $mode !== $version)
+        {
+            $mode = prev($versions);
+            
+            if ($mode === $version)
+            {
+                return next($versions);
             }
         }
-        return "";
+        
+        return '';
     }
+    
     /**
-     * Get the next id
+     * Mirror method for get_prev_version()
+     * 
+     * @access public
+     * @param string $version
+     * @return mixed
+     */
+    function get_previous_version($version)
+    {
+        return $this->get_prev_version($version);
+    }
+
+    /** 
+     * Get the previous versionID
+     * @param string verison
+     * @return string versionid before this one or empty string.
      */
     function get_next_version($version) 
     {
         $versions = $this->list_history_numeric();
-        for ($i = 0; $i < count($versions); $i++) {
-            if ($versions[$i] == $version)  {
-                if ($i > 0) {
-                    return $versions[$i-1];
-                } else {
-                    return "";
-                }
+        
+        if (   !in_array($version, $versions)
+            || $version === current($versions))
+        {
+            return '';
+        }
+        
+        $mode = current($versions);
+        
+        while( $mode
+            && $mode !== $version)
+        {
+            $mode = next($versions);
+            
+            if ($mode === $version)
+            {
+                return prev($versions);
             }
         }
-        return "";
+        
+        return '';
     }
+    
     /**
      * This function returns a list of the revisions as a 
      * key => value par where the key is the index of thhe revision
@@ -276,9 +314,6 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
             return array();
         }
         
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Returning history for $filepath");
-        debug_pop();
         return $this->rcs_gethistory($filepath);
     }
     
