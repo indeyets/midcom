@@ -344,7 +344,7 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
             $this->_request_data['original_language'] = $_MIDGARD['lang'];
             
             $language = $_MIDCOM->i18n->code_to_id($lang);
-            if ($language)
+            if ($language && $language != $_MIDGARD['lang'])
             {
                 mgd_set_lang($language);
             }
@@ -366,6 +366,17 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
      * - Add the LINK HTML HEAD elements
      * - Populate the Node Toolbar
      */
+    function _on_can_handle($handler, $args)
+    {
+        $this->_enter_language();
+        return true;
+    }
+
+    function _on_can_handled($handler, $args)
+    {
+        $this->_exit_language();
+    }
+
     function _on_handle($handler, $args)
     {
         $this->_request_data['schemadb'] =
