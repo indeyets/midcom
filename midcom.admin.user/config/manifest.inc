@@ -25,6 +25,7 @@
     'dependencies' => array
     (
         'midcom.admin.help' => array(),
+        'midcom.helper.datamanager2' => array(),
         'midcom' => array (),
     ),
 ),
