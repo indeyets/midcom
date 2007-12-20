@@ -676,6 +676,21 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             );
         }
 
+        if ($object->can_do('midgard:update'))
+        {
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/rcs/{$this->_object->guid}/",
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('show history'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/history.png',
+                    MIDCOM_TOOLBAR_ENABLED => (substr($handler_id, 0, 25) === '____mfa-asgard-object_rcs') ? false : true,
+                )
+            );
+        }
+        $tmp = array();
+        
         $breadcrumb = array();
         $label = $data['object_reflector']->get_object_label($object);
         $breadcrumb[] = array
@@ -783,6 +798,41 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('replication information', 'midcom.helper.replicator'),
                 );
                 $toolbar->disable_item("__mfa/asgard_midcom.helper.replicator/object/{$object->guid}/");
+                break;
+            case '____mfa-asgard-object_rcs_diff':
+                $tmp[] = Array
+                (
+                    MIDCOM_NAV_URL => "__mfa/asgard/object/rcs/preview/{$this->_object->guid}/{$data['args'][1]}/{$data['args'][2]}",
+                    MIDCOM_NAV_NAME => sprintf($this->_l10n->get('differences between %s and %s'), $data['args'][1], $data['args'][2]),
+                );
+                
+            case '____mfa-asgard-object_rcs_preview':
+                if (isset($data['args'][2]))
+                {
+                    $current = $data['args'][2];
+                }
+                else
+                {
+                    $current = $data['args'][1];
+                }
+                
+                $tmp[] = Array
+                (
+                    MIDCOM_NAV_URL => "__mfa/asgard/object/rcs/preview/{$this->_object->guid}/{$current}/",
+                    MIDCOM_NAV_NAME => sprintf($this->_l10n->get('version %s'), $current),
+                );
+                
+            case '____mfa-asgard-object_rcs_history':
+                $tmp[] = Array
+                (
+                    MIDCOM_NAV_URL => "__mfa/asgard/object/rcs/{$this->_object->guid}/",
+                    MIDCOM_NAV_NAME => $this->_l10n->get('show history'),
+                );
+                
+                $tmp = array_reverse($tmp);
+                
+                $breadcrumb = array_merge($breadcrumb, $tmp);
+                
                 break;
         }
         
