@@ -44,20 +44,39 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
         $_MIDCOM->skip_page_style = true;
     }
 
-    function _prepare_toolbar(&$data)
+    function _prepare_toolbar($handler_id)
     {
-        $data['asgard_toolbar'] = new midcom_helper_toolbar();
-        $data['asgard_toolbar']->add_item
+        $this->_request_data['asgard_toolbar'] = new midcom_helper_toolbar();
+        $this->_request_data['asgard_toolbar']->add_item
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "__mfa/asgard/components/configuration/edit/{$data['name']}",
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard/components/configuration/{$this->_request_data['name']}",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('view', 'midcom'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/view.png',
+            )
+        );
+        $this->_request_data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard/components/configuration/edit/{$this->_request_data['name']}",
                 MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit', 'midcom'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
             )
         );
+        
+        switch ($handler_id)
+        {
+            case '____mfa-asgard-components_configuration_edit':
+                $this->_request_data['asgard_toolbar']->disable_item("__mfa/asgard/components/configuration/edit/{$this->_request_data['name']}");
+                break;
+            case '____mfa-asgard-components_configuration':
+                $this->_request_data['asgard_toolbar']->disable_item("__mfa/asgard/components/configuration/{$this->_request_data['name']}");
+                break;
+        }
 
-        midgard_admin_asgard_plugin::get_common_toolbar($data);
+        midgard_admin_asgard_plugin::get_common_toolbar($this->_request_data);
     }
     
     function _load_configs($component)
@@ -104,7 +123,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
         $data['config'] = $this->_load_configs($data['name']);
 
         $data['view_title'] = sprintf($this->_l10n->get('configuration for %s'), $data['name']);
-        $this->_prepare_toolbar($data);
+        $this->_prepare_toolbar($handler_id);
         $_MIDCOM->set_pagetitle($data['view_title']);        
 
         return true;
@@ -369,7 +388,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
 
         $data['controller'] =& $this->_controller;
 
-        $this->_prepare_toolbar($data);
+        $this->_prepare_toolbar($handler_id);
         $data['view_title'] = sprintf($this->_l10n->get('edit configuration for %s'), $data['name']);
         $_MIDCOM->set_pagetitle($data['view_title']);        
 

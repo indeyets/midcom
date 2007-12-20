@@ -32,11 +32,11 @@
   'state' => 'alpha',
   'customdata' => array
   (
-      'asgard_plugin' => array
+      /*'asgard_plugin' => array
       (
           'class' => 'midcom_admin_libconfig_plugin',
           'src' => 'file:/midcom/admin/libconfig/plugin.php',
           'name' => 'midcom.admin.libconfig',
           'config' => null,
-      ),
+      ),*/
   ),
