@@ -1,0 +1,40 @@
+dl.midgard_admin_asgard_rcs_diff dt
+{
+    font-weight: bold;
+}
+dl.midgard_admin_asgard_rcs_diff span.deleted
+{
+    color: #cc0000;
+    text-decoration: line-through;
+}
+dl.midgard_admin_asgard_rcs_diff span.inserted
+{
+    background-color: #e0ffa0;
+    color: #000000;
+}
+
+div.rcs_navigation
+{
+  text-align: center;
+}
+
+div.rcs_navigation ul
+{
+  margin: 0;
+  list-style: none;
+}
+
+div.rcs_navigation ul li
+{
+  display: inline;
+  padding: 0 0.5em;
+  border-style: none solid;
+  border-width: 1px;
+  border-color: #000000;
+}
+
+div.rcs_navigation ul li img,
+div.rcs_navigation ul li a img
+{
+  border: none;
+}
