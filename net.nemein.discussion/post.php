@@ -16,7 +16,7 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
     {
         return parent::__net_nemein_discussion_post_dba($id);
     }
-    
+        
     function get_label()
     {
         return $this->subject;

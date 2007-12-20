@@ -506,31 +506,62 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             $child_types = $data['tree_reflector']->get_child_classes();
             foreach ($child_types as $type)
             {
-                if ($type == 'midgard_topic')
+                $display_button = true;
+                if (is_a($object, 'midgard_topic'))
                 {
-                   $toolbar->add_item
-                    (
-                        array
-                        (
-                            MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/create/{$type}/{$object->guid}/",
-                            MIDCOM_TOOLBAR_LABEL => sprintf($_MIDCOM->i18n->get_string('create %s', 'midcom'), midgard_admin_asgard_plugin::get_type_label($type)),
-                            MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-dir.png',
-                            MIDCOM_TOOLBAR_ENABLED => $object->can_do('midcom.admin.folder:topic_management'),
-                        )
-                    );
+                    // With topics we should check for component before populating create buttons as so many types can be children of topics
+                    switch ($type)
+                    {
+                        case 'midgard_topic':
+                        case 'midgard_article':
+                            // Articles and topics can always be created
+                            break;
+                        default:
+                            $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_legacy_midgard_class($type);
+                            $component = $_MIDCOM->dbclassloader->_mgdschema_class_handler[$midcom_dba_classname];
+                            if ($component != $object->component)
+                            {
+                                $display_button = false;
+                            }
+                            break;
+                    }
                 }
-                else
+                elseif (   is_a($object, 'midgard_article')
+                        && $object->topic)
                 {
-                    $toolbar->add_item
-                    (
-                        array
-                        (
-                            MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/create/{$type}/{$object->guid}/",
-                            MIDCOM_TOOLBAR_LABEL => sprintf($_MIDCOM->i18n->get_string('create %s', 'midcom'), midgard_admin_asgard_plugin::get_type_label($type)),
-                            MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
-                        )
-                    );
+                    $topic = new midcom_db_topic($object->topic);
+                    // With articles we should check for topic component before populating create buttons as so many types can be children of topics
+                    switch ($type)
+                    {
+                        case 'midgard_article':
+                            // Articles can always be created
+                            break;
+                        default:
+                            $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_legacy_midgard_class($type);
+                            $component = $_MIDCOM->dbclassloader->_mgdschema_class_handler[$midcom_dba_classname];
+                            if ($component != $topic->component)
+                            {
+                                $display_button = false;
+                            }
+                            break;
+                    }
                 }
+                
+                if (!$display_button)
+                {
+                    // Skip this type
+                    continue;
+                }
+                
+                $toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/create/{$type}/{$object->guid}/",
+                        MIDCOM_TOOLBAR_LABEL => sprintf($_MIDCOM->i18n->get_string('create %s', 'midcom'), midgard_admin_asgard_plugin::get_type_label($type)),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/' . $data['tree_reflector']->get_create_icon($type),
+                    )
+                );
             }
         }
 

@@ -69,7 +69,7 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
                 (
                     MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/create/{$this->type}/",
                     MIDCOM_TOOLBAR_LABEL => sprintf($_MIDCOM->i18n->get_string('create %s', 'midcom'), midgard_admin_asgard_plugin::get_type_label($this->type)),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/' . midgard_admin_asgard_reflector_tree::get_create_icon($this->type),
                 )
             );
         }

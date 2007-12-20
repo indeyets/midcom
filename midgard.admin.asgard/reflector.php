@@ -340,6 +340,34 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         return $label;
     }
 
+    function get_create_icon($type)
+    {
+        switch ($type)
+        {
+            case 'midgard_topic':
+            case 'midgard_page':
+            case 'midgard_snippetdir':
+            case 'midgard_style':
+            case 'net_nemein_discussion_thread':
+                $icon = 'new-dir.png';
+                break;
+            case 'midgard_group':
+            case 'org_openpsa_organization':
+            case 'org_openpsa_campaign':
+                $icon = 'stock_people-new.png';
+                break;
+            case 'midgard_event':
+            case 'org_openpsa_event':
+            case 'net_nemein_calendar_event';
+                $icon = 'stock_event_new.png';
+                break;
+            default:
+                $icon = 'new-text.png';
+                break;
+        }
+        return $icon;
+    }
+
     function get_object_icon(&$obj)
     {
         // Check against static calling
