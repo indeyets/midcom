@@ -296,10 +296,12 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
             
             if (isset($this->_args[2]))
             {
+                $current = $this->_args[2];
                 $next = $this->_backend->get_next_version($this->_args[2]);
             }
             else
             {
+                $current = $this->_args[1];
                 $next = $this->_backend->get_next_version($this->_args[1]);
             }
             
@@ -307,10 +309,10 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard/object/rcs/diff/{$this->_guid}/{$this->_args[1]}/{$next}/",
+                    MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard/object/rcs/diff/{$this->_guid}/{$current}/{$next}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('show differences'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/diff-next.png',
-                    MIDCOM_TOOLBAR_ENABLED => ($this->_args[2] !== $last) ? true : false,
+                    MIDCOM_TOOLBAR_ENABLED => ($next !== $last) ? true : false,
                 )
             );
             

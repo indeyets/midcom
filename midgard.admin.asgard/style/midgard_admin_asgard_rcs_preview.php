@@ -9,30 +9,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 echo $data['rcs_toolbar']->render();
 ?>
 </div>
-<div class="rcs_navigation">
-<?php
-if ($data['previous_revision'])
-{
-    echo "&lt;&lt;\n";
-    echo "<a href=\"{$prefix}__mfa/asgard/object/rcs/preview/{$data['guid']}/{$data['previous_revision']}\">". sprintf($data['l10n']->get('version %s'), $data['previous_revision']) ."</a>\n";
-    echo "(<em><a href=\"{$prefix}__mfa/asgard/object/rcs/diff/{$data['guid']}/{$data['previous_revision']}/{$data['latest_revision']}/\">{$data['l10n']->get('show differences')}</a></em>)\n";
-}
-
-if (   $data['previous_revision']
-    && $data['next_revision'])
-{
-    echo " | ";
-}
-
-if ($data['next_revision'])
-{
-    echo "<a href=\"{$prefix}__mfa/asgard/object/rcs/preview/{$data['guid']}/{$data['latest_revision']}\">". sprintf($data['l10n']->get('version %s'), $data['latest_revision']) ."</a>\n";
-    echo "(<em><a href=\"{$prefix}__mfa/asgard/object/rcs/diff/{$data['guid']}/{$data['latest_revision']}/{$data['next_revision']}/\">{$data['l10n']->get('show differences')}</a></em>)\n";
-    echo "&gt;&gt;\n";
-}
-?>
-</div>
-<dl>
+<dl class="midgard_admin_asgard_rcs_diff">
 <?php
 foreach ($preview as $attribute => $value) 
 {
