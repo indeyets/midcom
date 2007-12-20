@@ -35,6 +35,10 @@ Dodaj grupę
 Asgard
 ---STRINGEND
 
+---STRING asgard homepage
+Asgard Home
+---STRINGEND
+
 ---STRING asgard plugins
 Narzędzia
 ---STRINGEND
@@ -223,7 +227,159 @@ W %s
 Pokaż w serwisie
 ---STRINGEND
 
----STRING asgard homepage
-Asgard Home
+---STRING %s deleted items
+%s usuniętych elementów
+---STRINGEND
+
+---STRING %s purged
+% wyczyszczono
+---STRINGEND
+
+---STRING %s trash
+Kosz: %s
+---STRINGEND
+
+---STRING always display in top frame
+Zawsze pokazuj w najwyższej ramce
+---STRINGEND
+
+---STRING apply to selected
+Zastosuj do zaznaczonych
+---STRINGEND
+
+---STRING attachment %s undeleted
+Załącznik %s odzyskano
+---STRINGEND
+
+---STRING attachments
+Załączniki
+---STRINGEND
+
+---STRING attachments of %s %s
+Załączniki: %s: %s
+---STRINGEND
+
+---STRING deleted by
+Usunięty przez
+---STRINGEND
+
+---STRING deleted on
+Data
+---STRINGEND
+
+---STRING dropdown list
+Lista rozwijana
+---STRINGEND
+
+---STRING editor options
+Opcje edycji
+---STRINGEND
+
+---STRING enable quicklinks
+Włącz skróty
+---STRINGEND
+
+---STRING expanded list
+Lista pełna
+---STRINGEND
+
+---STRING failed purging %s, reason %s
+Błąd czyszczenia %s: %s
+---STRINGEND
+
+---STRING failed purging attachment %s => %s, reason %s
+Błąd czyszczenia załącznika %s => %s: %s
+---STRINGEND
+
+---STRING failed undeleting %s, reason %s
+Błąd odzyskiwania %s: %s
+---STRINGEND
+
+---STRING failed undeleting attachment %s, reason %s
+Błąd odzyskiwania załącznika %s => %s: %s
+---STRINGEND
+
+---STRING floating freely
+Pływający
+---STRINGEND
+
+---STRING in total %s purged
+Razem %s wyszyszczonych
+---STRINGEND
+
+---STRING in total %s undeleted
+Razem %s odzyskanych
+---STRINGEND
+
+---STRING interface language
+Język interfejsu
+---STRINGEND
+
+---STRING items in trash
+Obiekty w Koszu
+---STRINGEND
+
+---STRING localisation settings
+Ustawienia językowe
+---STRINGEND
+
+---STRING navigation options
+Opcje nawigacji
+---STRINGEND
+
+---STRING navigation type
+Typ nawigacji
+---STRINGEND
+
+---STRING navigation width
+Szerokość paska nawigacji
+---STRINGEND
+
+---STRING navigation width (in pixels)
+Szerokość paska nawigacji (px)
+---STRINGEND
+
+---STRING on top of the content area
+W obszarze zawartości
+---STRINGEND
+
+---STRING preferences saved
+Ustawienia zapisano
+---STRINGEND
+
+---STRING purge
+Wyczyść
+---STRINGEND
+
+---STRING size
+Rozmiar
+---STRINGEND
+
+---STRING toolbar mode
+Tryb toolbara
+---STRINGEND
+
+---STRING trash
+Kosz
+---STRINGEND
+
+---STRING type
+Typ
+---STRINGEND
+
+---STRING undelete
+Odzyskaj
+---STRINGEND
+
+---STRING use codepress editor for editing code snippets
+Włącz CodePress
+---STRINGEND
+
+---STRING use tinymce editor for editing content
+Włącz TinyMce
+---STRINGEND
+
+---STRING user preferences
+Preferencje
 ---STRINGEND
 

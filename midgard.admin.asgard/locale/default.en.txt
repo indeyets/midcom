@@ -127,6 +127,10 @@ Edit %s %s
 Editor options
 ---STRINGEND
 
+---STRING enable quicklinks
+Enable quicklinks
+---STRINGEND
+
 ---STRING expanded list
 Expanded list
 ---STRINGEND
@@ -200,7 +204,7 @@ Last edited by %s on %s (revision %s)
 ---STRINGEND
 
 ---STRING localisation settings
-Localisation settings
+Localization settings
 ---STRINGEND
 
 ---STRING manage object
@@ -377,9 +381,5 @@ User preferences
 
 ---STRING view on site
 View on-site
----STRINGEND
-
----STRING enable quicklinks
-Enable quicklinks
 ---STRINGEND
 
