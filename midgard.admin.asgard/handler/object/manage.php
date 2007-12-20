@@ -339,7 +339,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                             (
                                 'title'       => $field_label,
                                 'storage'     => $key,
-                                'type' => 'select',
+                                'type'        => 'select',
                                 'type_config' => array
                                 (
                                     'require_corresponding_option' => false,
@@ -394,12 +394,12 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                     $dm_type = 'text';
 
                     // Workaround for the content field of pages
-					$adjusted_key = $key;
-					if ($type == 'midcom_baseclasses_database_page'
-						&& $key == 'content')
-					{
-					    $adjusted_key = 'code';
-					}
+                    $adjusted_key = $key;
+                    if (   $type == 'midcom_baseclasses_database_page'
+                        && $key == 'content')
+                    {
+                        $adjusted_key = 'code';
+                    }
 
                     switch ($adjusted_key)
                     {
@@ -412,9 +412,9 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                                 || (   midgard_admin_asgard_plugin::get_preference('tinymce_enabled') !== '0'
                                     && $this->_config->get('tinymce_enabled')))
                             {
-                                $output_mode = 'html';
                                 $widget = 'tinymce';
                             }
+                            $output_mode = 'html';
 
                             break;
                         case 'value':
@@ -427,11 +427,12 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                                 || (   midgard_admin_asgard_plugin::get_preference('codepress_enabled') !== '0'
                                     && $this->_config->get('codepress_enabled')))
                             {
-                                $output_mode = 'code';
-                                $dm_type = 'php';
                                 $widget = 'codepress';
                             }
 
+                            $dm_type = 'php';
+                            $output_mode = 'code';
+                            
                             break;
 
                         default:

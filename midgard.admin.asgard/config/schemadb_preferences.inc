@@ -109,6 +109,50 @@
             'type' => 'text',
             'widget' => 'text',
         ),
+        'enable_quicklinks' => array
+        (
+            'title' => 'enable quicklinks',
+            'storage' => array
+            (
+                'location' => 'parameter',
+                'domain' => 'midgard.admin.asgard:preferences',
+                'name' => 'enable_quicklinks',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    'yes' => 'yes',
+                    'no' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+        ),
+        // Not yet implemented
+        /*
+        'disabled_quicklinks' => array
+        (
+            'title' => 'disable quicklinks',
+            'storage' => array
+            (
+                'location' => 'parameter',
+                'domain' => 'midgard.admin.asgard:preferences',
+                'name' => 'disabled_quicklinks',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                     // TODO: List here the options
+                ),
+            ),
+            'widget' => 'select',
+            'hidden' => (midgard_admin_asgard_plugin::get_preference('enable_quicklinks') === 'no') ? true : false,
+        ),
+        */
         'toolbar_mode' => array
         (
             'title' => 'toolbar mode',
@@ -156,50 +200,6 @@
             'widget' => 'text',
             'hidden' => (midgard_admin_asgard_plugin::get_preference('toolbar_mode') === 'absolute') ? false : true,
         ),
-        'enable_quicklinks' => array
-        (
-            'title' => 'enable quicklinks',
-            'storage' => array
-            (
-                'location' => 'parameter',
-                'domain' => 'midgard.admin.asgard:preferences',
-                'name' => 'enable_quicklinks',
-            ),
-            'type' => 'select',
-            'type_config' => array
-            (
-                'options' => array
-                (
-                    '' => 'default setting',
-                    'yes' => 'yes',
-                    'no' => 'no',
-                ),
-            ),
-            'widget' => 'select',
-        ),
-        // Not yet implemented
-        /*
-        'disabled_quicklinks' => array
-        (
-            'title' => 'disable quicklinks',
-            'storage' => array
-            (
-                'location' => 'parameter',
-                'domain' => 'midgard.admin.asgard:preferences',
-                'name' => 'disabled_quicklinks',
-            ),
-            'type' => 'select',
-            'type_config' => array
-            (
-                'options' => array
-                (
-                     // TODO: List here the options
-                ),
-            ),
-            'widget' => 'select',
-            'hidden' => (midgard_admin_asgard_plugin::get_preference('enable_quicklinks') === 'no') ? true : false,
-        ),
-        */
         'escape_frameset' => array
         (
             'title' => 'always display in top frame',
