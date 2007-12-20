@@ -1,4 +1,5 @@
 'name' => 'net.nemein.openid',
+'icon' => 'net.nemein.openid/openid.gif',
 'purecode' => true,
 'version' => '0.0.1',
 'state' => 'devel',

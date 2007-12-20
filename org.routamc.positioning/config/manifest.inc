@@ -1,5 +1,6 @@
 
   'name' => 'org.routamc.positioning',
+  'icon' => 'stock-icons/16x16/geoclue.png',
   'purecode' => true,
   'privileges' => 
   array (

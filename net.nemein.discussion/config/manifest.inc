@@ -1,5 +1,6 @@
 
   'name' => 'net.nemein.discussion',
+  'icon' => 'stock-icons/16x16/stock-discussion.png',
   'purecode' => false,
   'version' => '2.0.3beta2',
   'state' => 'beta',

@@ -56,6 +56,15 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
             $component_array['name'] = $name;
             $component_array['title'] = $_MIDCOM->i18n->get_string($name, $name);
             
+            if (isset($manifest->_raw_data['icon']))
+            {
+                $component_array['icon'] = $manifest->_raw_data['icon'];
+            }
+            else
+            {
+                $component_array['icon'] = 'stock-icons/16x16/package.png';
+            }
+            
             if (isset($manifest->_raw_data['package.xml']['description']))
             {
                 $component_array['description'] = $manifest->_raw_data['package.xml']['description'];
@@ -76,7 +85,7 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
                 )
             );
-            $component_array['toolbar']->add_item
+            /*$component_array['toolbar']->add_item
             (
                 array
                 (
@@ -84,7 +93,7 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('localization', 'midcom'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/locale.png',
                 )
-            );
+            );*/
             
             $this->_request_data[$type][$name] = $component_array;
         }

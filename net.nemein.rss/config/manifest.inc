@@ -1,5 +1,6 @@
 
   'name' => 'net.nemein.rss',
+  'icon' => 'net.nemein.rss/rss-16.png',
   'purecode' => true,
   'version' => '2.1.0beta1',
   'state' => 'beta',

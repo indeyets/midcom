@@ -1,4 +1,5 @@
 'name' => 'org.routamc.photostream',
+'icon' => 'stock-icons/16x16/camera.png',
 'purecode' => false,
 'version' => '1.1.0beta1',
 'state' => 'beta',
