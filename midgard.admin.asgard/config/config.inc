@@ -148,6 +148,7 @@
 'tinymce_enabled' => true,
 'codepress_enabled' => true,
 'escape_frameset' => true,
+'enable_quicklinks' => true,
 
 // Welcome page
 // List of types we don't list on latest objects

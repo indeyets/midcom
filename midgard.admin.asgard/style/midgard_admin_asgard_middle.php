@@ -27,7 +27,7 @@
                 </div>
                 <div id="content"&(content_offset:h);>
 <?php
-if (midgard_admin_asgard_plugin::get_preference('enable_quicklinks'))
+if (midgard_admin_asgard_plugin::get_preference('enable_quicklinks') !== 'no')
 {
 ?>
                     <div class="quicklinks">

@@ -171,12 +171,35 @@
                 'options' => array
                 (
                     '' => 'default setting',
-                    'dropdown' => 'yes',
-                    'expanded' => 'no',
+                    'yes' => 'yes',
+                    'no' => 'no',
                 ),
             ),
             'widget' => 'select',
         ),
+        // Not yet implemented
+        /*
+        'disabled_quicklinks' => array
+        (
+            'title' => 'disable quicklinks',
+            'storage' => array
+            (
+                'location' => 'parameter',
+                'domain' => 'midgard.admin.asgard:preferences',
+                'name' => 'disabled_quicklinks',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                     // TODO: List here the options
+                ),
+            ),
+            'widget' => 'select',
+            'hidden' => (midgard_admin_asgard_plugin::get_preference('enable_quicklinks') === 'no') ? true : false,
+        ),
+        */
         'escape_frameset' => array
         (
             'title' => 'always display in top frame',
