@@ -762,7 +762,7 @@ class midcom_helper_toolbar
         }
 
         $label = $this->_generate_item_label($item);
-        $output .= "&nbsp;{$label}\n";
+        $output .= "&nbsp;<span class=\"toolbar_label\">{$label}</span>\n";
 
         if ($item[MIDCOM_TOOLBAR_ENABLED])
         {
