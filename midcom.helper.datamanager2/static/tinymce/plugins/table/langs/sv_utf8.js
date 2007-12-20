@@ -75,5 +75,6 @@ colgroup : 'Kolumngrupp',
 col_limit : 'Du har angivit fler kolumner än vad som är tillåtet. Max är: {$cols}.',
 row_limit : 'Du har angivit fler rader än vad som är tillåtet. Max är: {$rows}.',
 cell_limit : 'Du har angivit fler celler än vad som är tillåtet. Max är: {$cells}.',
-missing_scope: 'Är du säker på att du vill fortsätta utan att ange en omfattning, utan denna kan det bli svårt för handikappade att förstå tabellen.'
+missing_scope: 'Är du säker på att du vill fortsätta utan att ange en omfattning, utan denna kan det bli svårt för handikappade att förstå tabellen.',
+caption : 'Table caption'
 });
