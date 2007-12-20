@@ -325,7 +325,7 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
                 array
                 (
                     MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard/object/rcs/preview/{$current}/{$current}/",
-                    MIDCOM_TOOLBAR_LABEL => $current,
+                    MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n->get('version %s'), $current),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/document.png',
                     MIDCOM_TOOLBAR_ENABLED => false,
                 )
