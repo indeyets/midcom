@@ -35,10 +35,6 @@ Dodaj grupę
 Asgard
 ---STRINGEND
 
----STRING asgard homepage
-Asgard Home
----STRINGEND
-
 ---STRING asgard plugins
 Narzędzia
 ---STRINGEND
@@ -227,159 +223,103 @@ W %s
 Pokaż w serwisie
 ---STRINGEND
 
----STRING %s deleted items
-%s usuniętych elementów
+---STRING asgard homepage
+Asgard Home
 ---STRINGEND
 
----STRING %s purged
-% wyczyszczono
+---STRING back to %s
+Idź do strony "%s"
 ---STRINGEND
 
----STRING %s trash
-Kosz: %s
+---STRING changes done in revision %s to %s
+Zmiany z wersji %s do %s
 ---STRINGEND
 
----STRING always display in top frame
-Zawsze pokazuj w najwyższej ramce
+---STRING changes from version %s
+Zmiany z wersji %s
 ---STRINGEND
 
----STRING apply to selected
-Zastosuj do zaznaczonych
----STRINGEND
-
----STRING attachment %s undeleted
-Załącznik %s odzyskano
----STRINGEND
-
----STRING attachments
-Załączniki
----STRINGEND
-
----STRING attachments of %s %s
-Załączniki: %s: %s
----STRINGEND
-
----STRING deleted by
-Usunięty przez
----STRINGEND
-
----STRING deleted on
+---STRING date
 Data
 ---STRINGEND
 
----STRING dropdown list
-Lista rozwijana
+---STRING lines
+Linie
 ---STRINGEND
 
----STRING editor options
-Opcje edycji
+---STRING message
+Info
 ---STRINGEND
 
----STRING enable quicklinks
-Włącz skróty
+---STRING no.bergfald.rcs
+Kontrola wersji
 ---STRINGEND
 
----STRING expanded list
-Lista pełna
+---STRING restore this revision (%s)
+Przywróć tą wersję (%s)
 ---STRINGEND
 
----STRING failed purging %s, reason %s
-Błąd czyszczenia %s: %s
+---STRING restore to version %s failed, reason %s
+Przywrócenie wersji %s nieudane: %s
 ---STRINGEND
 
----STRING failed purging attachment %s => %s, reason %s
-Błąd czyszczenia załącznika %s => %s: %s
+---STRING restore to version %s successful
+Przywrócono wersję %s
 ---STRINGEND
 
----STRING failed undeleting %s, reason %s
-Błąd odzyskiwania %s: %s
+---STRING revision
+Wersja
 ---STRINGEND
 
----STRING failed undeleting attachment %s, reason %s
-Błąd odzyskiwania załącznika %s => %s: %s
+---STRING revision history of %s
+Historia wersji %s
 ---STRINGEND
 
----STRING floating freely
-Pływający
+---STRING show history
+Pokaż historię
 ---STRINGEND
 
----STRING in total %s purged
-Razem %s wyszyszczonych
+---STRING user
+Użytkownik
 ---STRINGEND
 
----STRING in total %s undeleted
-Razem %s odzyskanych
+---STRING version %s
+Wersja %s
 ---STRINGEND
 
----STRING interface language
-Język interfejsu
+---STRING view %s differences with next (%s)
+Zobacz zmiany między %s a %s
 ---STRINGEND
 
----STRING items in trash
-Obiekty w Koszu
+---STRING view %s differences with previous (%s)
+Zobacz zmiany między %s a %s
 ---STRINGEND
 
----STRING localisation settings
-Ustawienia językowe
+---STRING view this revision (%s)
+Zobacz wersję %s
 ---STRINGEND
 
----STRING navigation options
-Opcje nawigacji
+---STRING viewing version %s of %s
+%s: wersja %s
 ---STRINGEND
 
----STRING navigation type
-Typ nawigacji
+---STRING differences between %s and %s
+Zmiany między wersją %s i %s
 ---STRINGEND
 
----STRING navigation width
-Szerokość paska nawigacji
+---STRING differences between versions %s and %s
+Zmiany między wersją %s i %s
 ---STRINGEND
 
----STRING navigation width (in pixels)
-Szerokość paska nawigacji (px)
+---STRING no changes in content
+Brak zmian w treści
 ---STRINGEND
 
----STRING on top of the content area
-W obszarze zawartości
+---STRING show differences
+Pokaż zmiany
 ---STRINGEND
 
----STRING preferences saved
-Ustawienia zapisano
----STRINGEND
-
----STRING purge
-Wyczyść
----STRINGEND
-
----STRING size
-Rozmiar
----STRINGEND
-
----STRING toolbar mode
-Tryb toolbara
----STRINGEND
-
----STRING trash
-Kosz
----STRINGEND
-
----STRING type
-Typ
----STRINGEND
-
----STRING undelete
-Odzyskaj
----STRINGEND
-
----STRING use codepress editor for editing code snippets
-Włącz CodePress
----STRINGEND
-
----STRING use tinymce editor for editing content
-Włącz TinyMce
----STRINGEND
-
----STRING user preferences
-Preferencje
+---STRING title
+Tytuł
 ---STRINGEND
 

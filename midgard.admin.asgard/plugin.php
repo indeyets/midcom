@@ -309,6 +309,43 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 'fixed_args' => array ('object', 'delete'),
                 'variable_args' => 2,
             ),
+            /**
+             * Revision control system of an object.
+             */
+            /**
+             * RCS history
+             * 
+             * Match /asgard/object/rcs/<guid>
+             */
+            'object_rcs_history' => array
+            (
+                'handler' => array('midgard_admin_asgard_handler_object_rcs','history'),
+                'fixed_args' => array ('object', 'rcs'),
+                'variable_args' => 1,
+            ),
+            /**
+             * RCS history
+             * 
+             * Match /asgard/object/rcs/<guid>
+             */
+            'object_rcs_preview' => array
+            (
+                'handler' => array('midgard_admin_asgard_handler_object_rcs','preview'),
+                'fixed_args' => array('object', 'rcs', 'preview'),
+                'variable_args' => 2,
+            ),
+            'object_rcs_diff' => array
+            (
+                'handler' => array('midgard_admin_asgard_handler_object_rcs','diff'),
+                'fixed_args' => array('object', 'rcs', 'diff'),
+                'variable_args' => 3,
+            ),
+            'object_rcs_restore' => array
+            (
+                'handler' => array('midgard_admin_asgard_handler_object_rcs','restore'),
+                'fixed_args' => array('object', 'rcs', 'restore'),
+                'variable_args' => 2,
+            ),
         );
     }
     

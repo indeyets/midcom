@@ -8,6 +8,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2007-12-20 adrenalin
+  ! Moved Revision Control System to Asgard
+
 2007-11-16 adrenalin
   ! Added user preferences page for customizing Asgard view
 
