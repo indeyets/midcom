@@ -473,3 +473,9 @@ html > body #siteinfo
 {
   border: none;
 }
+
+#content form.datamanager2 span.field_text span.global
+{
+  font-size: smaller;
+  color: red;
+}
