@@ -71,7 +71,7 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => 'tmp',
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/components/configuration/{$name}",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('component configuration', 'midcom'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
                 )
