@@ -163,6 +163,10 @@ Click this menu to configure the component settings specific to this folder.
 Copy
 ---STRINGEND
 
+---STRING country
+Country
+---STRINGEND
+
 ---STRING create
 Create
 ---STRINGEND
@@ -747,6 +751,3 @@ Write mail
 Yes
 ---STRINGEND
 
----STRING country
-Country
----STRINGEND

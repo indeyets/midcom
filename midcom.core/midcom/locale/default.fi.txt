@@ -167,6 +167,10 @@ Klikkaa valikkoa muokataksesi komponentin tämän kansion kohtaisia asetuksia.
 Kopioi
 ---STRINGEND
 
+---STRING country
+Maa
+---STRINGEND
+
 ---STRING create
 Luo
 ---STRINGEND
@@ -415,6 +419,10 @@ Sivu
 Sivu %s/%s
 ---STRINGEND
 
+---STRING parameters
+Parametrit
+---STRINGEND
+
 ---STRING password
 Salasana
 ---STRINGEND
@@ -612,7 +620,7 @@ Säilytä komponentin oletusjärjestys
 ---STRINGEND
 
 ---STRING sort_order
-Kuinka sivut pitäis järjestellä?
+Kuinka sivut pitäisi järjestellä?
 ---STRINGEND
 
 ---STRING sorting position
@@ -747,10 +755,3 @@ Kirjoita sähköposti
 Kyllä
 ---STRINGEND
 
----STRING parameters
-Parametrit
----STRINGEND
-
----STRING country
-Maa
----STRINGEND
