@@ -91,7 +91,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
                 (
                     MIDCOM_NAV_SITE => Array
                     (
-                        MIDCOM_NAV_URL => "category/{$category}",
+                        MIDCOM_NAV_URL => "category/{$category}/",
                         MIDCOM_NAV_NAME => $category,
                     ),
                     MIDCOM_NAV_ADMIN => null,
@@ -145,7 +145,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
                 (
                     MIDCOM_NAV_SITE => Array
                     (
-                        MIDCOM_NAV_URL => "archive/year/{$year}",
+                        MIDCOM_NAV_URL => "archive/year/{$year}/",
                         MIDCOM_NAV_NAME => $year,
                     ),
                     MIDCOM_NAV_ADMIN => null,

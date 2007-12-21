@@ -515,7 +515,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             }
             else
             {
-                $event_url = "{$prefix}{$event->name}";
+                $event_url = "{$prefix}{$event->name}/";
             }
         }
         else

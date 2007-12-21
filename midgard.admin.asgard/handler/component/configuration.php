@@ -160,13 +160,13 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
                     $key,
                     $this->_detect_schema($key, $value)
                 );
+                $schemadb[$schema]->fields[$key]['title'] = $_MIDCOM->i18n->get_string($schemadb[$schema]->fields[$key]['title'], $schemadb[$schema]->l10n_schema);
             }
 
             if (   !isset($this->_request_data['config']->_local[$key])
                 || !$this->_request_data['config']->_local[$key])
             {
                 // No local configuration setting, note to user that this is the global value
-                $schemadb[$schema]->fields[$key]['title'] = $_MIDCOM->i18n->get_string($schemadb[$schema]->fields[$key]['title'], $schemadb[$schema]->l10n_schema);
                 $schemadb[$schema]->fields[$key]['title'] .= " <span class=\"global\">(" . $_MIDCOM->i18n->get_string('global value', 'midgard.admin.asgard') .")</span>";
             }
         }
