@@ -5,3 +5,7 @@
 ---STRING midcom.core.nullcomponent
 Fallback component
 ---STRINGEND
+
+---STRING enable_folder_code_execution
+Enable execution of folder's code
+---STRINGEND

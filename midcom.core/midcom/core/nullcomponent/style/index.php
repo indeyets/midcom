@@ -6,8 +6,7 @@ $node = $data['node'];
 &(node.description:h);
 
 <?php
-if (   $data['config']->get('enable_folder_code_execution')
-    && $node->code)
+if ($data['config']->get('enable_folder_code_execution'))
 {
     // Run code in folder's code field
     ?>
