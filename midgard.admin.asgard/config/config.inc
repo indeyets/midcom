@@ -9,7 +9,6 @@
     'lastname',
     'prefix',
     'port',
-    'code',
     'domain',
 ),
 'object_timerange_fields' => array

@@ -43,10 +43,11 @@ form.datamanager2 fieldset.radio label span
 form.datamanager2 label input.shorttext,
     form.datamanager2 label textarea.longtext,
     form.datamanager2 label select.list,
-    form.datamanager2 label select.dropdown
+    form.datamanager2 label select.dropdown,
+    form.datamanager2 label iframe
 {
     margin: 0.5ex 0 0 0;
-    display: block;
+    display: block !important;
 }
 
 form.datamanager2 label input.radiobutton
