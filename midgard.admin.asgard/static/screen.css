@@ -480,16 +480,30 @@ html > body #siteinfo
   color: red;
 }
 
+#content div.components h2
+{
+    font-size: 1.2em;
+    margin-bottom: 0px;
+    background-color: #eeeeef;
+    padding: 0.4em 1em;
+    line-height: 22px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+}
+
 #content div.components hr
 {
     margin-top: 10px;
     clear: left;
+    background-color: transparent;
+    border: none;
 }
 
 #content div.components ul
 {
     list-style: none;
     margin: 0px;
+    margin-left: 8px;
     padding: 0px;
 }
 
@@ -511,6 +525,10 @@ html > body #siteinfo
     white-space: nowrap;
 }
 
+#content div.components ul.midcom_toolbar
+{
+    margin-left: 0px;
+}
 #content div.components ul.midcom_toolbar li
 {
     width: 100%;
