@@ -97,6 +97,10 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
             foreach ($lists as $list_id)
             {
                 $list_id = (int) $list_id;
+       	       	if ($list_id == 0) {
+       	       	    continue;
+       	       	}
+       	       	
                 $item = new net_nemein_alphabeticalindex_item();            
                 $item->title = $title;
                 $item->url = "{$GLOBALS['midcom_config']['midcom_site_url']}midcom-permalink-{$object->guid}";
@@ -146,6 +150,10 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
             foreach ($lists as $list_id)
             {
                 $list_id = (int) $list_id;
+       	       	if ($list_id == 0) {
+       	       	    continue;
+       	       	}
+       	       	
                 $qb = net_nemein_alphabeticalindex_item::new_query_builder();
                 $qb->add_constraint('objectGuid', '=', $object->guid);
                 $qb->add_constraint('node.id', '=', $list_id);
