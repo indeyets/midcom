@@ -10,8 +10,14 @@ CREATE TABLE net_nemein_alphabeticalindex_item_db
     modified tinyint(1) NOT NULL default 0,
         
     PRIMARY KEY (id),
-    
-    UNIQUE INDEX net_nemein_alphabeticalindex_item_db_idx(guid, node),
     INDEX net_nemein_alphabeticalindex_item_object_idx(objectGuid),
     INDEX net_nemein_alphabeticalindex_item_node_idx(node)
 );
+
+ALTER TABLE net_nemein_alphabeticalindex_item_db DROP INDEX net_nemein_alphabeticalindex_item_db_idx;
+ALTER TABLE net_nemein_alphabeticalindex_item_db DROP INDEX net_nemein_alphabeticalindex_item_object_idx;
+ALTER TABLE net_nemein_alphabeticalindex_item_db DROP INDEX net_nemein_alphabeticalindex_item_node_idx;
+
+ALTER TABLE net_nemein_alphabeticalindex_item_db ADD INDEX net_nemein_alphabeticalindex_item_object_idx(objectGuid);
+ALTER TABLE net_nemein_alphabeticalindex_item_db ADD INDEX net_nemein_alphabeticalindex_item_node_idx(node);
+ALTER TABLE net_nemein_alphabeticalindex_item_db ADD INDEX net_nemein_alphabeticalindex_item_title_idx(title);
