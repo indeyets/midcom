@@ -1,6 +1,12 @@
 <?php
+/**
+ * @package midcom.helper.schemaapi
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
-class midcom_helper_schemaapi_field 
+class midcom_helper_schemaapi_field
 {
     protected $name;
     protected $storage;
@@ -8,14 +14,14 @@ class midcom_helper_schemaapi_field
     protected $widget;
     protected $type;
 
-    public function __construct ( $name, $storage, $title ) 
+    public function __construct ( $name, $storage, $title )
     {
         $this->name = $name;
         $this->storage = $storage;
         $this->title = $title;
     }
 
-   
+
     public function set_type ( $type ) {
 
         $this->type = $type;
@@ -27,7 +33,7 @@ class midcom_helper_schemaapi_field
 
     public function asArray(  ) {
         $ret = array(  );
-        $ret[$this->name] = array( 
+        $ret[$this->name] = array(
                 'title' => $this->title,
                 'storage' => $this->storage,
                 'type' => $this->type->get_name(  ),
@@ -35,11 +41,11 @@ class midcom_helper_schemaapi_field
                 'widget' => $this->widget->get_name(  ),
                 //'widget_config' => $this->widget->get_config( ) ,
                 );
-        if ( count ( $this->widget->get_config(  ) ) > 0  ) 
+        if ( count ( $this->widget->get_config(  ) ) > 0  )
         {
             $ret[$this->name]['widget_config'] = $this->widget->get_config(  );
         }
-        if ( count ( $this->type->get_config(  ) ) ) 
+        if ( count ( $this->type->get_config(  ) ) )
         {
             $ret[$this->name]['type_config'] = $this->type->get_config(  );
         }
