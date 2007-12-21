@@ -11,7 +11,7 @@
  * This helper function searche for a snippet either in the Filesystem
  * or in the database and returns its content or code-field, respecitvly.
  *
- * Prefix the snippet Path with 'file:' for retrival of a file relative to
+ * Prefix the snippet Path with 'file:' for retrieval of a file relative to
  * MIDCOM_ROOT; omit it to get the code field of a Snippet.
  *
  * Any error (files not found) will return null. If you want to trigger an error,
@@ -47,7 +47,7 @@ function midcom_get_snippet_content_graceful($path)
  * This helper function searche for a snippet either in the Filesystem
  * or in the database and returns its content or code-field, respecitvly.
  *
- * Prefix the snippet Path with 'file:' for retrival of a file relative to
+ * Prefix the snippet Path with 'file:' for retrieval of a file relative to
  * MIDCOM_ROOT; omit it to get the code field of a Snippet.
  *
  * Any error (files not found) will raise a MidCOM Error. If you want a more
@@ -533,7 +533,7 @@ function mgd_load_var_from_attachment($object, $name) {
     if ($result === false)
     {
         debug_add("Possible Failure to unserialize the attachment {$name}, unserialize returned false.", MIDCOM_LOG_INFO);
-        debug_add("PHP Eror Message was: {$php_errormsg}", MIDCOM_LOG_INFO);
+        debug_add("PHP Error Message was: {$php_errormsg}", MIDCOM_LOG_INFO);
         debug_print_r("Content Object:", $object);
         debug_print_r("Attachment {$name}:", $att);
         debug_print_r("First 1.000 Bytes of the content:", substr($content, 0, 1000));

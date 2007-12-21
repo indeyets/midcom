@@ -22,7 +22,7 @@
  * <b>Configuration options:</b>
  *
  * - <i>string key_field:</i> The field used as key. Valid options are id, guid
- *   midcomid and name. Defaults to guid. 'midcomid' is a person:$identifer combination
+ *   midcomid and name. Defaults to guid. 'midcomid' is a person:$identifier combination
  *   suitable for usage in the MidCOM ACL system.
  * - <i>string value_field:</i> The field used as value. Valid is any field available
  *   in the midcom_db_person type, defaults to name.

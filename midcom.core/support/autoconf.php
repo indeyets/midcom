@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Autoconf Script which scans the system for all required utilities and prerequisits.
+ * Autoconf Script which scans the system for all required utilities and prerequisites.
  * Prints all related <i>/etc/midgard/midcom.conf</i> lines for the autodetected information.
  * 
  * Requires the which-Utility for proper operation, it is used to detect the installed utility
  * programs. This also means (obviously), that only utility programs available in $PATH will
  * be found.
  * 
- * If no argument is present, the detmined configuration is only written to stdout after the
+ * If no argument is present, the determined configuration is only written to stdout after the
  * debugging messages. Otherwise, the filename specified on the command line will be replaced
  * with the autodetected configuration. 
  * 

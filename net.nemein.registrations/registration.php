@@ -129,7 +129,7 @@ class net_nemein_registrations_registration extends midcom_db_eventmember
     }
 
     /**
-     * Retrive the registrar object associated with this registration.
+     * Retrieve the registrar object associated with this registration.
      *
      * @return net_nemein_registrations_registrar The registrar.
      */
@@ -140,7 +140,7 @@ class net_nemein_registrations_registration extends midcom_db_eventmember
 
 
     /**
-     * Retrive the event object associated with this registration.
+     * Retrieve the event object associated with this registration.
      *
      * @return net_nemein_registrations_event The event.
      */

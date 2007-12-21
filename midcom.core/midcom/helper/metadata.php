@@ -42,7 +42,7 @@
  * - <b>timestamp approved:</b> The time of approval of the object, or 0 if not approved. Set automatically through approve/unapprove.
  * - <b>MidgardPerson approver:</b> The person that approved/unapproved the object. Set automatically through approve/unapprove.
  *
- * <b>Example Usage, Metadata Retrival</b>
+ * <b>Example Usage, Metadata Retrieval</b>
  *
  * <code>
  * <?php
@@ -335,7 +335,7 @@ class midcom_helper_metadata
      * data fields, PHP will default to "0" in these cases. For Person IDs, this
      * "0" is rewritten to "1" to use the MidgardAdministrator account instead.
      *
-     * @param string $key The key to retrive.
+     * @param string $key The key to retrieve.
      * @access private
      */
     function _retrieve_value($key)

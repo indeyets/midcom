@@ -19,7 +19,7 @@ require_once('cache/module.php');
  *
  * The system is two fold:
  *
- * There are cache backends, which are responsible for the actual storage and retrival of
+ * There are cache backends, which are responsible for the actual storage and retrieval of
  * cache information, and cache modules, which provide caching services to the application
  * developer.
  *

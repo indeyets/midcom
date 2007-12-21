@@ -35,7 +35,7 @@
             'validation' => array (
                 'email' => 
                 array(
-                    'message' => 'You have to use a valid email adress',
+                    'message' => 'You have to use a valid email address',
                 )
             )
         ) , 

@@ -23,7 +23,7 @@ class midcom_core_group_midgard extends midcom_core_group
     var $_cached_parent_group = null;
 
     /**
-     * The constructor retrieves the group indentified by its name from the database and
+     * The constructor retrieves the group identified by its name from the database and
      * prepares the object for operation.
      *
      * The class relies on the Midgard Framework to ensure the uniqueness of a group name.
@@ -61,7 +61,7 @@ class midcom_core_group_midgard extends midcom_core_group
             if (! $this->_storage->get_by_guid($id))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to retreive the group GUID {$id}: " . mgd_errstr(), MIDCOM_LOG_INFO);
+                debug_add("Failed to retrieve the group GUID {$id}: " . mgd_errstr(), MIDCOM_LOG_INFO);
                 debug_pop();
                 return false;
             }
@@ -72,7 +72,7 @@ class midcom_core_group_midgard extends midcom_core_group
             if (! $this->_storage->get_by_guid($id))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to retreive the group GUID {$id}: " . mgd_errstr(), MIDCOM_LOG_INFO);
+                debug_add("Failed to retrieve the group GUID {$id}: " . mgd_errstr(), MIDCOM_LOG_INFO);
                 debug_pop();
                 return false;
             }
@@ -83,7 +83,7 @@ class midcom_core_group_midgard extends midcom_core_group
             if (! $this->_storage->get_by_id($id))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to retreive the group ID {$id}: " . mgd_errstr(), MIDCOM_LOG_INFO);
+                debug_add("Failed to retrieve the group ID {$id}: " . mgd_errstr(), MIDCOM_LOG_INFO);
                 debug_pop();
                 return false;
             }

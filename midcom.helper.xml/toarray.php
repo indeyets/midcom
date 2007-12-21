@@ -151,7 +151,7 @@ class midcom_helper_xml_toarray
      * tag.
      * @param resource parser
      * @param string name of the xml tag
-     * @param array attrs the attribtues found in the tag.
+     * @param array attrs the attributes found in the tag.
      * @access private
      */
 

@@ -12,7 +12,7 @@
  * mailtemplate datamanager field, fills it in with the parameters that have been
  * set and sends it using the PEAR Mail classes.
  * 
- * <b>Prerequisits</b>
+ * <b>Prerequisites</b>
  * 
  * - PEAR Package: Mail
  * - PEAR Package: Mail_mime
@@ -38,7 +38,7 @@
  * the parameter array, and "SUBKEY" refers to the key of a value within the 
  * actual array.
  * 
- * Again, you can acccess the (whole) array using "__KEY__". In that case you will
+ * Again, you can access the (whole) array using "__KEY__". In that case you will
  * get a formatted output of all keys and values, consisting of "SUBKEY: VALUE" 
  * entries. The value gets word-wrapped and indented automatically at about 76
  * chars to keep the output easily readable.

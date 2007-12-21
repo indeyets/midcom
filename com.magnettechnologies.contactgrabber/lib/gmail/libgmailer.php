@@ -4146,7 +4146,7 @@ class GMailSnapshot {
                 // $raw["cs"][11-$less_cs]      // may be 9 what is this?? repeat of id 1?
                 // $raw["cs"][12-$less_cs]      // may be 10 what is this?? array
                 // $raw["cs"][13-$less_cs]      // may be 11 what is this?? integer/bool?
-                // $raw["cs"][14-$less_cs]      // alwasy one less than 8 (one less than total messages in conv)
+                // $raw["cs"][14-$less_cs]      // always one less than 8 (one less than total messages in conv)
 
                 $this->conv_labels = array ();
                 $this->conv_starred = false;

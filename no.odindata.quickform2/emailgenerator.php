@@ -33,7 +33,7 @@ class no_odindata_quickform2_emailgenerator
     var $schema;
 
     /**
-     * The from adress set in the config as sender adress
+     * The from adress set in the config as sender address
      * @var string
      */
     var $from;
@@ -42,7 +42,7 @@ class no_odindata_quickform2_emailgenerator
      */
     var $encoding;
     /**
-     *  the reciept message
+     *  the receipt message
      * @var string
      */
     var $reciept_msg = "";
@@ -153,7 +153,7 @@ class no_odindata_quickform2_emailgenerator
     }
 
     /**
-     * Add the reciept data
+     * Add the receipt data
      * @param $add boolean
      */
     function set_add_reciept_data ( $add )
@@ -176,7 +176,7 @@ class no_odindata_quickform2_emailgenerator
         debug_pop(  );
     }
     /**
-     * Set to true if the submiter should get a reciept of the
+     * Set to true if the submitter should get a receipt of the
      * email
      * @param $send boolean true if mail should be sent
      */
@@ -186,7 +186,7 @@ class no_odindata_quickform2_emailgenerator
     }
 
     /**
-     * Sets the reciept message
+     * Sets the receipt message
      * @param $msg string
      */
     function set_reciept_message( $msg )
@@ -194,7 +194,7 @@ class no_odindata_quickform2_emailgenerator
        $this->reciept_msg = $msg . "\n";
     }
     /**
-     * The fromadress
+     * The fromaddress
      * @var $from string
      */
     function set_from( $from )
@@ -208,7 +208,7 @@ class no_odindata_quickform2_emailgenerator
 
     }
     /**
-     * Sets the reply_to adress
+     * Sets the reply_to address
      * @param $to string
      */
     function set_reply_to ( $to )
@@ -257,9 +257,9 @@ class no_odindata_quickform2_emailgenerator
         $this->reciept->headers['Subject'] = $subject_reciept;
     }
     /**
-     * This function sets the emailadress that the submitted form will
+     * This function sets the emailaddress that the submitted form will
      * be sent to.
-     * @param $to string the mailadress set in the configuration
+     * @param $to string the mailaddress set in the configuration
      */
     function set_to ( $to )
     {

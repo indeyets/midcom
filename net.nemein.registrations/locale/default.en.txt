@@ -167,7 +167,7 @@ delete the registration
 edit the registration
 ---STRINGEND
 
----STRING email adress invalid
+---STRING email address invalid
 Please enter a valid E-Mail address.
 ---STRINGEND
 
@@ -175,7 +175,7 @@ Please enter a valid E-Mail address.
 An E-Mail containing your password has been sent to %s.<br>Please enter this password below to activate your account.
 ---STRINGEND
 
----STRING emailadress
+---STRING emailaddress
 E-Mail address
 ---STRINGEND
 
@@ -439,7 +439,7 @@ Subject for account creation E-Mails
 Subject for registration notification E-Mails
 ---STRINGEND
 
----STRING this email adress is already registered
+---STRING this email address is already registered
 An account has already been created using this E-Mail address.
 ---STRINGEND
 

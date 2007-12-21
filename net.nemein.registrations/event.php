@@ -657,7 +657,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
         $_MIDCOM->auth->require_do('midgard:update', $registration);
         $_MIDCOM->auth->require_do('midgard:parameters', $registration);
 
-        // Check registrar privileges (for OpenPSA 1 compatiblity)
+        // Check registrar privileges (for OpenPSA 1 compatibility)
         $_MIDCOM->auth->require_do('midgard:update', $registrar_object);
         $_MIDCOM->auth->require_do('midgard:parameters', $registrar_object);
 

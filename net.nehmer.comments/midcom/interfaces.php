@@ -17,7 +17,7 @@
  * shows the configuration interface, commenting the comments topic is prohibited as well.
  *
  * The component stores the data in its own table, indexed by the object guid they are
- * bound to. There is no threading support, comments are orderd by creation date.
+ * bound to. There is no threading support, comments are ordered by creation date.
  *
  * Commenting is currently only allowed for registered users for security reasons.
  * The user's name and E-Mail will be stored along with the created information in the

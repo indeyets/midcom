@@ -6,7 +6,7 @@
 
 // the mail to send to the contact-recepient
 $mail =&  $_MIDCOM->get_custom_context_data('mail');
-// the reciept mail 
+// the receipt mail 
 $reciept =&  $_MIDCOM->get_custom_context_data('reciept');
 $form  =&  $_MIDCOM->get_custom_context_data('form');
 var_dump( array_keys( $form->values(  )));

@@ -115,10 +115,10 @@ class midcom_services_cache_module_nap extends midcom_services_cache_module
      * Internal helper, which ensures that the cache databases for root topic guid
      * passed to the function are loaded.
      *
-     * For compatiblity with separated AIS/on-site Page MidCOM installations, the method
+     * For compatibility with separated AIS/on-site Page MidCOM installations, the method
      * will load the topic from the database and map all requests to a topic which is
      * of a midcom.admin.content type to the corresponding root content topic. Note, that
-     * this is actually a bug in the core's context seapration, which I have not yet
+     * this is actually a bug in the core's context separation, which I have not yet
      * found. Normally, all instances of basicnav should work within an on-site-context
      * and therefore this "fallback" should not be necessary. Unfortunately, sometimes
      * the context information seems to get mixed up, which results in AIS writing NAP

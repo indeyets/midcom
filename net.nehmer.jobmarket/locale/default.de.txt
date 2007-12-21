@@ -27,7 +27,7 @@ Ansprechpartner
 Stellenbeschreibung
 ---STRINGEND
 
----STRING edit applicaiton
+---STRING edit application
 Gesuch bearbeiten
 ---STRINGEND
 

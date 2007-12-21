@@ -167,7 +167,7 @@ poista ilmoittautuminen
 muokkaa ilmoittautumista
 ---STRINGEND
 
----STRING email adress invalid
+---STRING email address invalid
 Ole hyvä ja syötä oikea sähköpostiosoite.
 ---STRINGEND
 
@@ -175,7 +175,7 @@ Ole hyvä ja syötä oikea sähköpostiosoite.
 Salasanan sisältävä sähköpostiosoite on lähetetty osoitteeseen %s.<br /> Ole hyvä ja syötä salasana alle aktivoidaksesi käyttäjätunnuksesi.
 ---STRINGEND
 
----STRING emailadress
+---STRING emailaddress
 Sähköposti
 ---STRINGEND
 
@@ -439,7 +439,7 @@ Otsikko käyttäjätunnusten luonti-ilmoituksiin
 Otsikko ilmoittautumisviesteihin
 ---STRINGEND
 
----STRING this email adress is already registered
+---STRING this email address is already registered
 Tällä sähköpostiosoitteella on jo avattu käyttäjätunnus.
 ---STRINGEND
 

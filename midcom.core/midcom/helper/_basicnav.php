@@ -500,7 +500,7 @@ class midcom_helper__basicnav
         
         $nodedata[MIDCOM_NAV_OBJECT] = $topic;
 
-        // Temporary compatiblity value
+        // Temporary compatibility value
         $nodedata[MIDCOM_NAV_VISIBLE] = true;
 
         return $nodedata;

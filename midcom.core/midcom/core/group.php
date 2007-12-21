@@ -65,7 +65,7 @@ class midcom_core_group extends midcom_baseclasses_core_object
     var $scope = MIDCOM_PRIVILEGE_SCOPE_ROOTGROUP;
 
     /**
-     * The constructor retrieves the group indentified by its name from the database and
+     * The constructor retrieves the group identified by its name from the database and
      * prepares the object for operation.
      *
      * This default constructor will call the _load method to actually retrieve anything,
@@ -182,7 +182,7 @@ class midcom_core_group extends midcom_baseclasses_core_object
 
     /**
      * This function will return a MidCOM DBA level storage object for the current group. Be aware,
-     * that depending on ACL information, the retrival of the user may fail.
+     * that depending on ACL information, the retrieval of the user may fail.
      *
      * Also, as outlined in the member $_storage, not all groups may have a DBA object associated
      * with them, therefore this call may return null.

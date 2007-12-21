@@ -11,7 +11,7 @@
  * System user, basically encaspulates a MidgardPerson. It does not provide a way to
  * manipulate accounts, instead, this is an abstraction used in the ACL system.
  *
- * You must not create these objectes directly. Instead, use the factory method
+ * You must not create these objects directly. Instead, use the factory method
  * $_MIDCOM->auth->get_user($id), where $id is any valid constructor argument
  * for a midcom_baseclasses_database_person.
  *
@@ -46,7 +46,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
      * considered read-only.
      *
      * @var string
-     * @acccess public
+     * @access public
      */
     var $name = null;
 
@@ -56,7 +56,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
      * considered read-only.
      *
      * @var string
-     * @acccess public
+     * @access public
      */
     var $rname = null;
 
@@ -90,8 +90,8 @@ class midcom_core_user extends midcom_baseclasses_core_object
     var $_direct_groups = null;
 
     /**
-     * This array lists all groups the user is a member in orderd by their inheritance
-     * chain. The first element in the array is alwas the top-level group, while the last
+     * This array lists all groups the user is a member in ordered by their inheritance
+     * chain. The first element in the array is always the top-level group, while the last
      * one is always a member of $_direct_groups. This is therefore a multilevel array and is
      * indexed by the direct group id's (midcom_core_group id's, not Midgard IDs!) of the
      * direct groups. The values are group identifiers as well, which can be resolved by either
@@ -161,7 +161,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
     var $scope = MIDCOM_PRIVILEGE_SCOPE_USER;
 
     /**
-     * The constructor retrieves the user indentified by its name from the database and
+     * The constructor retrieves the user identified by its name from the database and
      * prepares the object for operation.
      *
      * The class relies on the Midgard Framework to ensure the uniqueness of a user.
@@ -210,7 +210,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
             if (! $this->_storage->get_by_guid($id))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to retreive the person GUID {$id}: " . mgd_errstr(), MIDCOM_LOG_INFO);
+                debug_add("Failed to retrieve the person GUID {$id}: " . mgd_errstr(), MIDCOM_LOG_INFO);
                 debug_pop();
                 return false;
             }
@@ -221,7 +221,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
             if (! $this->_storage->get_by_guid($id))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to retreive the person GUID {$id}: " . mgd_errstr(), MIDCOM_LOG_INFO);
+                debug_add("Failed to retrieve the person GUID {$id}: " . mgd_errstr(), MIDCOM_LOG_INFO);
                 debug_pop();
                 return false;
             }
@@ -232,7 +232,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
             if (! $this->_storage->get_by_id($id))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to retreive the person ID {$id}: " . mgd_errstr(), MIDCOM_LOG_INFO);
+                debug_add("Failed to retrieve the person ID {$id}: " . mgd_errstr(), MIDCOM_LOG_INFO);
                 debug_pop();
                 return false;
             }
@@ -351,7 +351,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
     }
 
     /**
-     * Loads all groups the user is a direct member and assignes them to the _direct_groups member.
+     * Loads all groups the user is a direct member and assigns them to the _direct_groups member.
      *
      * @access protected
      */
@@ -513,7 +513,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
      * The group argument may be one of the following (checked in this order of precedence):
      *
      * 1. A valid group object (subclass of midcom_core_group)
-     * 2. A group or vgroup string identifer, matching the regex ^v?group:
+     * 2. A group or vgroup string identifier, matching the regex ^v?group:
      * 3. A valid midcom group name
      *
      * @param mixed $group Group to check against, this can be either a midcom_core_group object or a group string identifier.
@@ -553,7 +553,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
 
     /**
      * This function will return a MidCOM DBA level storage object for the current user. Be aware,
-     * that depending on ACL information, the retrival of the user may fail.
+     * that depending on ACL information, the retrieval of the user may fail.
      *
      * @return midcom_db_person The user which is associated with this record or false if the object cannot be accessed.
      */

@@ -27,7 +27,7 @@ Contact person
 Job description
 ---STRINGEND
 
----STRING edit applicaiton
+---STRING edit application
 Edit application
 ---STRINGEND
 

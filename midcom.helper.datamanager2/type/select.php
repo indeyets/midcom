@@ -28,7 +28,7 @@
  *   values not in the option list. All unknown values will be merged into a single
  *   comma separated listing of unknown options during loading, which will be kept in
  *   that simple string representation. Otherwise, unknown keys will be forbidden, on
- *   validations they cause a validation eror, on loading they are dropped silently.
+ *   validations they cause a validation error, on loading they are dropped silently.
  *   This option is set to false by default.
  * - <i>bool allow_multiple:</i> If this flag is set, you may select more then one
  *   option. This is disabled by default. If this feature is disabled, the loader

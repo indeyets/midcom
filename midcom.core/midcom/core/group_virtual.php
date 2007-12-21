@@ -42,7 +42,7 @@ class midcom_core_group_virtual extends midcom_core_group
     var $_localname = '';
 
     /**
-     * The constructor retrieves the virtual group indentified by its identifier by loading
+     * The constructor retrieves the virtual group identified by its identifier by loading
      * the corresponding component.
      *
      * The object constructor should only be used by the framework itself, when components
@@ -173,7 +173,7 @@ class midcom_core_group_virtual extends midcom_core_group
             $members = $vgroup->list_members();
             if (! $members)
             {
-                // Silently ignore failed membership retrivals, they were already logged.
+                // Silently ignore failed membership retrievals, they were already logged.
                 continue;
             }
             if (array_key_exists($user->id, $members))

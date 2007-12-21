@@ -15,7 +15,7 @@
 $GLOBALS['midcom_errstr'] = '';
 
 /**
- * The main MidCOM applicaiton class.
+ * The main MidCOM application class.
  *
  * @global midcom_application $GLOBALS['midcom']
  */

@@ -85,7 +85,7 @@ class midcom_helper_datamanager_datatype_communityhtml extends midcom_helper_dat
         $result = str_replace("\n", "<br />\n", $result);
 
         $href_search = Array (
-            "/([^\@]+)\@([\w-]+(\.[\w-]+){1,})/", /* E-Mail Adresse */
+            "/([^\@]+)\@([\w-]+(\.[\w-]+){1,})/", /* E-Mail addresse */
             "|(https?://[\w/.:%-]*)|i", /* URL */
         );
         $href_replace = Array (

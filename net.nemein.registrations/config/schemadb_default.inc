@@ -139,7 +139,7 @@
         'p_email' => Array
         (
             // COMPONENT-REQUIRED
-            'title' => 'emailadress',
+            'title' => 'emailaddress',
             'storage' => 'email',
             'required' => true,
             'type' => 'text',

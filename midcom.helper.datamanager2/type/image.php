@@ -508,7 +508,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
     /**
      * Overwrites image content from file, recalculates size etc
      *
-     * @param $identifer image identifier to update
+     * @param $identifier image identifier to update
      * @param $file file to use
      * @return boolean indicating success/failure
      */

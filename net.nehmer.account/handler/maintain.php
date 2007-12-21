@@ -706,7 +706,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
      * username to a randomly generated one.
      *
      * We assume that the username has been validated by the QuickForm already,
-     * in case we cannot retreive the record, we just trigger a generate_error.
+     * in case we cannot retrieve the record, we just trigger a generate_error.
      *
      * @param string $username The name of the user who wants his password reset.
      */

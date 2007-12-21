@@ -530,7 +530,7 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
     /**
      * Abstract out the object creation as it differs in 1.7 and 1.8.
      * @param string classname
-     * @param array ( attributename => value ) attribtues to be created
+     * @param array ( attributename => value ) attributes to be created
      * @param string name of the attribute to save the storage in .
      * @param int the sitegroup the object should have
      * @return int id of object or 0 if not created.
@@ -649,7 +649,7 @@ class midgard_admin_sitegroup_creation_host_17 extends midgard_admin_sitegroup_c
 {
     /**
      * @param string tablename
-     * @param array ( attributename => value ) attribtues to be created
+     * @param array ( attributename => value ) attributes to be created
      * @param string name of the attribute to save the storage in .
      * @param int the sitegroup the object should have
      * @return int id of object or 0 if not created.
@@ -756,7 +756,7 @@ class midgard_admin_sitegroup_creation_host_18 extends midgard_admin_sitegroup_c
     /**
      *
      * @param string tablename
-     * @param array ( attributename => value ) attribtues to be created
+     * @param array ( attributename => value ) attributes to be created
      * @param string name of the attribute to save the storage in .
      * @param int the sitegroup the object should have
      * @return int id of object or 0 if not created.
