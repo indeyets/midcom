@@ -7,7 +7,7 @@
 Sivun päivitys
 ---STRINGEND
 
----STRING allow anonymous posting
+---STRING allow_anonymous
 Salli julkinen muokkaaminen
 ---STRINGEND
 
@@ -31,7 +31,7 @@ Julkisen käyttäjän käyttäjätunnus
 Kirjoittaja
 ---STRINGEND
 
----STRING autogenerate table of contents
+---STRING autogenerate_toc
 Luo automaattinen sisällysluettelo sivuille
 ---STRINGEND
 
@@ -75,12 +75,12 @@ Luo wiki-sivu "%s"
 Sivujen oletustyyppi
 ---STRINGEND
 
----STRING display related to items in page
-Näytä sivuun liittyvät toiset sivut sisällössä
----STRINGEND
-
 ---STRING display settings
 Näyttöasetukset
+---STRINGEND
+
+---STRING display_related_to
+Näytä sivuun liittyvät toiset sivut sisällössä
 ---STRINGEND
 
 ---STRING edit %s
@@ -159,6 +159,10 @@ Muutokset sivuun
 Sivulle "%s" viittaavat sivut
 ---STRINGEND
 
+---STRING preview
+Esikatselu
+---STRINGEND
+
 ---STRING really delete page
 Haluatko varmasti poistaa sivun?
 ---STRINGEND
@@ -235,7 +239,11 @@ Lisätietoja linkittämisestä löytyy [wikin käyttöohjeista][3].
 [3]: http://www.midgard-project.org/midcom-permalink-7276f817dcdefcf40d30a9ec69a7241f
 ---STRINGEND
 
----STRING preview
-Esikatselu
+---STRING wikilink_regexp
+Wikilinkkien regexp
+---STRINGEND
+
+---STRING rss_count
+Kuinka monta sivua näytetään RSS-syötteessä
 ---STRINGEND
 

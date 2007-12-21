@@ -3,7 +3,7 @@
 ---CVS $Id$
 ---LANGUAGE sv
 
----STRING allow anonymous posting
+---STRING allow_anonymous
 Tillåt anonyma onlägg
 ---STRINGEND
 

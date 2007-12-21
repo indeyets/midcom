@@ -7,7 +7,7 @@
 Page updated
 ---STRINGEND
 
----STRING allow anonymous posting
+---STRING allow_anonymous
 Allow anonymous posting
 ---STRINGEND
 
@@ -31,7 +31,7 @@ Anonymous user's username
 Author
 ---STRINGEND
 
----STRING autogenerate table of contents
+---STRING autogenerate_toc
 Autogenerate table of contents for pages
 ---STRINGEND
 
@@ -75,12 +75,12 @@ Create wiki page "%s"
 Default page schema
 ---STRINGEND
 
----STRING display related to items in page
-Display related to items in page
----STRINGEND
-
 ---STRING display settings
 Display settings
+---STRINGEND
+
+---STRING display_related_to
+Display related to items in page
 ---STRINGEND
 
 ---STRING edit %s
@@ -159,6 +159,10 @@ Modifications to the page
 Wiki pages linking to %s
 ---STRINGEND
 
+---STRING preview
+Preview
+---STRINGEND
+
 ---STRING really delete page
 Really delete page?
 ---STRINGEND
@@ -235,7 +239,11 @@ Please read the [linking instructions][3] for more information.
 [3]: http://www.midgard-project.org/midcom-permalink-7276f817dcdefcf40d30a9ec69a7241f
 ---STRINGEND
 
----STRING preview
-Preview
+---STRING wikilink_regexp
+Wiki linking regular expression
+---STRINGEND
+
+---STRING rss_count
+How many items to include to RSS feed
 ---STRINGEND
 
