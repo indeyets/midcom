@@ -91,6 +91,34 @@ Changes done in revision %s to %s
 Changes from version %s
 ---STRINGEND
 
+---STRING code
+Code
+---STRINGEND
+
+---STRING compare
+Compare
+---STRINGEND
+
+---STRING component
+Component
+---STRINGEND
+
+---STRING components
+Components
+---STRINGEND
+
+---STRING configuration for %s
+Configuration for component %s
+---STRINGEND
+
+---STRING configuration save failed: %s
+Configuration save failed: %s
+---STRINGEND
+
+---STRING configuration saved successfully
+Configuration saved successfully
+---STRINGEND
+
 ---STRING content
 Content
 ---STRINGEND
@@ -145,6 +173,10 @@ Dropdown list
 
 ---STRING edit %s %s
 Edit %s %s
+---STRINGEND
+
+---STRING edit configuration for %s folder %s
+Edit configuration for component %s folder %s
 ---STRINGEND
 
 ---STRING editor options
@@ -225,6 +257,10 @@ Items in trash
 
 ---STRING last edited by %s on %s (revision %s)
 Last edited by %s on %s (revision %s)
+---STRINGEND
+
+---STRING libraries
+Libraries
 ---STRINGEND
 
 ---STRING lines
@@ -403,6 +439,10 @@ Show revision history
 Size
 ---STRINGEND
 
+---STRING style
+Style
+---STRINGEND
+
 ---STRING this is a midgard core type
 This is a Midgard CMS core type.
 ---STRINGEND
@@ -483,7 +523,7 @@ View this revision (%s)
 Version %s of %s
 ---STRINGEND
 
----STRING compare
-Compare
+---STRING edit configuration for %s
+Edit configuration for component %s
 ---STRINGEND
 

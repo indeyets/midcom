@@ -242,15 +242,19 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
         }
         
         $this->_request_data['rcs_toolbar'] = new midcom_helper_toolbar();
-        $this->_request_data['rcs_toolbar']->add_item
-        (
-            array
+        
+        if (isset($first))
+        {
+            $this->_request_data['rcs_toolbar']->add_item
             (
-                MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard/object/rcs/preview/{$this->_guid}/{$first}",
-                MIDCOM_TOOLBAR_LABEL => $first,
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/start.png',
-            )
-        );
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard/object/rcs/preview/{$this->_guid}/{$first}",
+                    MIDCOM_TOOLBAR_LABEL => $first,
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/start.png',
+                )
+            );
+        }
         
         if (isset($this->_request_data['args'][1]))
         {
@@ -339,15 +343,19 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
                 )
             );
         }
-        $this->_request_data['rcs_toolbar']->add_item
-        (
-            array
+        
+        if (isset($last))
+        {
+            $this->_request_data['rcs_toolbar']->add_item
             (
-                MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard/object/rcs/preview/{$this->_guid}/{$last}",
-                MIDCOM_TOOLBAR_LABEL => $last,
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/finish.png',
-            )
-        );
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard/object/rcs/preview/{$this->_guid}/{$last}",
+                    MIDCOM_TOOLBAR_LABEL => $last,
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/finish.png',
+                )
+            );
+        }
     }
     
     /**

@@ -682,7 +682,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/rcs/{$this->_object->guid}/",
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/rcs/{$object->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('show history'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/history.png',
                     MIDCOM_TOOLBAR_ENABLED => (substr($handler_id, 0, 25) === '____mfa-asgard-object_rcs') ? false : true,

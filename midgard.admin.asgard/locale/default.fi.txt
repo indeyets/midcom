@@ -91,6 +91,34 @@ Version %s muutokset tietueeseen %s
 Muutokset versiosta %s
 ---STRINGEND
 
+---STRING code
+Koodi
+---STRINGEND
+
+---STRING compare
+Vertaa
+---STRINGEND
+
+---STRING component
+Komponentti
+---STRINGEND
+
+---STRING components
+Komponentit
+---STRINGEND
+
+---STRING configuration for %s
+Komponentin %s asetukset
+---STRINGEND
+
+---STRING configuration save failed: %s
+Asetusten tallennus epäonnistui: %s
+---STRINGEND
+
+---STRING configuration saved successfully
+Asetukset tallennettu
+---STRINGEND
+
 ---STRING content
 Sisältö
 ---STRINGEND
@@ -145,6 +173,10 @@ Pudotusvalikko
 
 ---STRING edit %s %s
 Muokkaa %s %s
+---STRINGEND
+
+---STRING edit configuration for %s folder %s
+Muokkaa komponentin %s asetuksia kansiossa %s
 ---STRINGEND
 
 ---STRING editor options
@@ -225,6 +257,10 @@ Kohteita roskakorissa
 
 ---STRING last edited by %s on %s (revision %s)
 Viimeksi muokannut %s %s (muutos %s)
+---STRINGEND
+
+---STRING libraries
+Kirjastot
 ---STRINGEND
 
 ---STRING lines
@@ -403,6 +439,10 @@ Näytä versiohistoria
 Koko
 ---STRINGEND
 
+---STRING style
+Ulkoasu
+---STRINGEND
+
 ---STRING this is a midgard core type
 Tämä tyyppi on osa Midgard-julkaisujärjestelmää.
 ---STRINGEND
@@ -483,7 +523,7 @@ Näytä tämä versio (%s)
 Versio %s tietueesta %s
 ---STRINGEND
 
----STRING compare
-Vertaa
+---STRING edit configuration for %s
+Muokkaa komponentin %s asetuksia
 ---STRINGEND
 
