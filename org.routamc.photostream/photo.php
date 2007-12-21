@@ -23,10 +23,10 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
      * Raw read EXIF data
      */
     var $raw_exif = false;
-    
+
     /**
      * Force the reading of EXIF data on updating
-     * 
+     *
      * @var boolean force_exif
      */
     var $force_exif = false;
@@ -40,7 +40,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
     {
         return parent::__org_routamc_photostream_photo_dba($id);
     }
-    
+
     function get_parent_guid_uncached()
     {
         if ($this->node != 0)
@@ -63,7 +63,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
         {
             $this->photographer =  $_MIDGARD['user'];
         }
-        
+
         return true;
     }
 
@@ -108,9 +108,9 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
         {
             $this->taken = time();
         }
-        
+
         $this->metadata->published = $this->taken;
-        
+
         return true;
     }
 
@@ -403,7 +403,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
             debug_pop();
             return false;
         }
-        
+
         // Read photo taken time
         $this->_read_exif_data_taken($data, $overwrite);
 
@@ -445,7 +445,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
             default:
                 $taken = false;
         }
-        
+
         if (   $taken > 7200
             && (   !$this->taken
                 || $overwrite))
@@ -565,11 +565,12 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
     {
         // TBD: Check if we need to add this photo to any dynamic galleries
     }
-    
+
     /**
      * Shorthand for getting the next photo
-     * 
-     * @access static public
+     *
+     * @access public
+     * @static
      * @param mixed $photo        Either id or GUID of the photo or the org_routamc_photostream_photo_dba object itself
      * @param string $direction   < or >, depending on the wished direction
      * @param array $limiters     Array of limiters (keys type, tags, user, start and end)
@@ -578,20 +579,21 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
     function get_next($photo, $limiters = false, &$tags = false)
     {
         $guids = org_routamc_photostream_photo_dba::get_surrounding_photos($photo, '>', $limiters, &$tags);
-        
+
         if (   $guids
             && isset($guids[0]))
         {
             return $guids[0];
         }
-        
+
         return false;
     }
-    
+
     /**
      * Shorthand for getting the previous photo
-     * 
-     * @access static public
+     *
+     * @access public
+     * @static
      * @param mixed $photo        Either id or GUID of the photo or the org_routamc_photostream_photo_dba object itself
      * @param string $direction   < or >, depending on the wished direction
      * @param array $limiters     Array of limiters (keys type, tags, user, start and end)
@@ -600,20 +602,21 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
     function get_previous($photo, $limiters = false, &$tags = false)
     {
         $guids = org_routamc_photostream_photo_dba::get_surrounding_photos($photo, '<', $limiters, &$tags);
-        
+
         if (   $guids
             && isset($guids[0]))
         {
             return $guids[0];
         }
-        
+
         return false;
     }
-    
+
     /**
      * Get the next and previous photo guids
-     * 
-     * @access static public
+     *
+     * @access public
+     * @static
      * @param mixed $photo        Either id or GUID of the photo or the org_routamc_photostream_photo_dba object itself
      * @param string $direction   < or >, depending on the wished direction
      * @param array $limiters     Array of limiters (keys type, tags, user, start and end)
@@ -625,18 +628,18 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
         {
             $photo = new org_routamc_photostream_photo_dba($photo);
         }
-        
+
         if (   !isset($photo->guid)
             || !$photo->guid)
         {
             return false;
         }
-        
+
         if (!$tags_shared)
         {
             $tags_shared = array();
         }
-        
+
         // Initialize the filters
         $limiters = array
         (
@@ -647,23 +650,23 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
             'end' => '',
             'limit' => 1,
         );
-        
+
         // Get the filters
         foreach ($limiters_temp as $key => $value)
         {
             $limiters[$key] = $value;
         }
-        
+
         $data['suffix'] = '';
         $guids = array();
-        
+
         // Initialize the collector
         // Patch to the collector bug of forced second parameter
         $mc = org_routamc_photostream_photo_dba::new_collector('sitegroup', $_MIDGARD['sitegroup']);
-        
+
         // Add first the common constraints
         $mc->add_value_property('title');
-        
+
         if ($direction === '<')
         {
             $mc->add_constraint('taken', '<', $photo->taken);
@@ -674,9 +677,9 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
             $mc->add_constraint('taken', '>', $photo->taken);
             $mc->add_order('taken');
         }
-        
+
         $mc->set_limit($limiters['limit']);
-        
+
         // Check the corresponding limiter actions
         if ($limiters['type'])
         {
@@ -689,20 +692,20 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
                     $mc_tag->add_constraint('tag.tag', '=', $limiters['tag']);
                     $mc_tag->add_constraint('fromGuid', '<>', $photo->guid);
                     $mc_tag->execute();
-                    
+
                     $tags = $mc_tag->list_keys();
-                    
+
                     // Initialize the array
                     $tags_shared = array();
-                    
+
                     // Store the object guids for later use
                     foreach ($tags as $guid => $array)
                     {
                         $tags_shared[] = $mc_tag->get_subkey($guid, 'fromGuid');
                     }
-                    
+
                     // Fall through
-                    
+
                 case 'user':
                     if ($limiters['user'] !== 'all')
                     {
@@ -711,9 +714,9 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
                         $mc_person->add_constraint('username', '=', $limiters['user']);
                         $mc_person->set_limit(1);
                         $mc_person->execute();
-                        
+
                         $persons = $mc_person->list_keys();
-                        
+
                         foreach ($persons as $guid => $array)
                         {
                             $id = $mc_person->get_subkey($guid, 'id');
@@ -722,11 +725,11 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
                         }
                     }
                     break;
-                
+
                 case 'between':
                     $start = @strtotime($limiters['start']);
                     $end = @strtotime($limiters['end']);
-                    
+
                     if ($limiters['user'])
                     {
                         // Add the person delimiter
@@ -735,35 +738,35 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
                         $mc_person->add_constraint('username', '=', $limiters['user']);
                         $mc_person->set_limit(1);
                         $mc_person->execute();
-                        
+
                         $persons = $mc_person->list_keys();
-                        
+
                         foreach ($persons as $guid => $array)
                         {
                             $id = $mc_person->get_subkey($guid, 'id');
                             break;
                         }
-                        
+
                         $mc->add_constraint('photographer', '=', $id);
                     }
-                    
+
                     if (   !$start
                         || !$end)
                     {
                         return false;
                     }
-                    
+
                     $mc->add_constraint('taken', '>=', $start);
                     $mc->add_constraint('taken', '<=', $end);
-                    
+
                     break;
-                
+
                 case 'all':
                 default:
                     // TODO - anything needed?
             }
         }
-        
+
         // Include the tag constraints
         if (count($tags_shared) > 0)
         {
@@ -787,20 +790,20 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
             $mc->execute();
             $link = $mc->list_keys();
         }
-        
+
         // Initialize the array for returning
         $guids = array ();
-        
+
         foreach ($link as $guid => $array)
         {
             $guids[] = $guid;
         }
-        
+
         if (count($guids) > 0)
         {
             return $guids;
         }
-        
+
         return false;
     }
 }

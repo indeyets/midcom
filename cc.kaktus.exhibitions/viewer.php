@@ -21,10 +21,10 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
     {
         parent::midcom_baseclasses_components_request($topic, $config);
     }
-    
+
     /**
      * Set the accepted request switches
-     * 
+     *
      * @access public
      * @return void
      */
@@ -36,7 +36,7 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
         (
             'handler' => array ('cc_kaktus_exhibitions_handler_list', 'years'),
         );
-        
+
         // Exhibition editing
         // Match /edit/<event guid>/
         $this->_request_switch['edit'] = array
@@ -45,7 +45,7 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
             'fixed_args' => array ('edit'),
             'variable_args' => 1,
         );
-        
+
         // Delete an exhibition
         // Match /delete/<event guid>/
         $this->_request_switch['delete'] = array
@@ -54,7 +54,7 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
             'fixed_args' => array ('delete'),
             'variable_args' => 1,
         );
-        
+
         // Create an exhibition
         // Match /create/<schema layout>/
         $this->_request_switch['create'] = array
@@ -63,7 +63,7 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
             'fixed_args' => array ('create'),
             'variable_args' => 1,
         );
-        
+
         // Create a subevent for an exhibition
         // Match /create/<schema layout>/<event guid>/
         $this->_request_switch['create_subevent'] = array
@@ -72,7 +72,7 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
             'fixed_args' => array ('create'),
             'variable_args' => 2,
         );
-        
+
         // Delete an event
         // Match /delete/<event guid>/
         $this->_request_switch['delete'] = array
@@ -81,7 +81,7 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
             'fixed_args' => array ('delete'),
             'variable_args' => 1,
         );
-        
+
         // Show attachments and subpages of an exhibition
         // Match /list/<type>/<event guid>/
         $this->_request_switch['list_leaves'] = array
@@ -90,7 +90,7 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
             'fixed_args' => array ('list'),
             'variable_args' => 2,
         );
-        
+
         // Show the ongoing exhibition page
         // Match /current/
         $this->_request_switch['current'] = array
@@ -106,21 +106,21 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
             'handler' => array ('cc_kaktus_exhibitions_handler_list', 'list'),
             'fixed_args' => array ('future'),
         );
-        
+
         // Match /past/
         $this->_request_switch['past'] = array
         (
             'handler' => array ('cc_kaktus_exhibitions_handler_list', 'list'),
             'fixed_args' => array ('past'),
         );
-        
+
         // Match /config/
         $this->_request_switch['config'] = array
         (
             'handler' => array ('midcom_helper_dm2config_config', 'config'),
             'fixed_args' => array ('config'),
         );
-        
+
         // Show listing for requested year
         // Match /<year>/
         $this->_request_switch['list_year'] = array
@@ -128,7 +128,7 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
             'handler' => array ('cc_kaktus_exhibitions_handler_list', 'list'),
             'variable_args' => 1,
         );
-        
+
         // Show an event
         // Match /<year>/<event name>/
         $this->_request_switch['view_exhibition'] = array
@@ -136,7 +136,7 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
             'handler' => array ('cc_kaktus_exhibitions_handler_view', 'view'),
             'variable_args' => 2,
         );
-        
+
         // Show event details if applicable
         // Match /<year>/<event extra>/<subpage extra>/
         $this->_request_switch['view_subpage'] = array
@@ -145,10 +145,10 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
             'variable_args' => 3,
         );
     }
-    
+
     /**
      * Load the master event for exhibition listing
-     * 
+     *
      * @access private
      * @return boolean Indicating success
      */
@@ -164,25 +164,25 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
             $this->_request_data['master_event']->description = "Master event for cc.kaktus.exhibitions for host ({$_MIDGARD['host']})";
             $this->_request_data['master_event']->start = 0;
             $this->_request_data['master_event']->end = 0;
-            
+
             // Show an error page on creation failure
             if (!$this->_request_data['master_event']->create())
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create the master event to initialize the component");
                 // This will exit
             }
-            
+
             $this->_topic->set_parameter('cc.kaktus.exhibitions', 'master_event', $this->_request_data['master_event']->guid);
             return true;
         }
-        
+
         $this->_request_data['master_event'] = new midcom_db_event($this->_config->get('master_event'));
         return true;
     }
-    
+
     /**
      * Set the common items for toolbar
-     * 
+     *
      * @access private
      */
     private function _populate_toolbar()
@@ -202,7 +202,7 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
                 )
             );
         }
-        
+
         // Component configuration
         if (   $this->_topic->can_do('midgard:update')
             && $this->_topic->can_do('midcom:component_config'))
@@ -219,10 +219,10 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
             );
         }
     }
-    
+
     /**
      * Load the schemadb and populate common toolbar items
-     * 
+     *
      * @access public
      * @return boolean Indicating success
      */
@@ -230,57 +230,59 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
     {
         // Load schema database
         $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
-        
+
         // Populate the toolbar
         $this->_populate_toolbar();
-        
+
         return true;
     }
-    
+
     /**
      * Determine the return page after editing
-     * 
-     * @access static public
+     *
+     * @access public
+     * @static
      */
     static public function determine_return_page($guid, $layout = null)
     {
         $event = new midcom_db_event($guid);
-        
+
         if (is_null($layout))
         {
             $layout = $event->get_parameter('midcom.helper.datamanager2', 'schema_name');
         }
-        
+
         switch ($layout)
         {
             case 'subpage':
                 $parent = new midcom_db_event($event->up);
                 return date('Y', $parent->start) . "/{$parent->extra}/{$event->extra}/";
-            
+
             case 'attachment':
                 $parent = new midcom_db_event($event->up);
                 return date('Y', $parent->start) . "/{$parent->extra}/";
-                
+
             case 'exhibition':
                 return date('Y', $event->start) . "/{$event->extra}/";
-                
+
             default:
                 return '';
         }
-        
+
         return '';
     }
-    
+
     /**
      * Generate a URL name
-     * 
-     * @access static public
+     *
+     * @access public
+     * @static
      * @return String
      */
     static public function generate_name($title)
     {
         $title = utf8_decode($title);
-        
+
         // Hand set the accent characters
         $accents = array
         (
@@ -332,21 +334,21 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
             'Ý' => 'y',
             'ÿ' => 'y',
         );
-        
+
         foreach ($accents as $accent => $ascii)
         {
             $title = str_replace($accent, $ascii, $title);
         }
-        
+
         $title = strtolower($title);
-        
+
         $string = '';
-        
+
         // Check each character for non-allowed characters
         for ($i = 0; $i < strlen($title); $i++)
         {
             $char = substr($title, $i, 1);
-            
+
             if (!ereg('[a-zA-Z0-9\-_]', $char))
             {
                 $string .= '-';
@@ -356,14 +358,14 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
                 $string .= $char;
             }
         }
-        
+
         return $string;
     }
-    
+
     static public function get_image_size($string)
     {
         $attachment = null;
-        
+
         if (mgd_is_guid($string))
         {
             $attachment = new midcom_baseclasses_database_attachment($string);
@@ -376,7 +378,7 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
         {
             $attachment = new midcom_baseclasses_database_attachment($regs[1]);
         }
-        
+
         if (   !$attachment
             || !isset($attachment->guid)
             || !$attachment->guid)
@@ -387,11 +389,11 @@ class cc_kaktus_exhibitions_viewer extends midcom_baseclasses_components_request
                 'y' => 0,
             );
         }
-        
+
         $size = array ();
         $size['x'] = $attachment->get_parameter('midcom.helper.datamanager2.type.blobs', 'size_x');
         $size['y'] = $attachment->get_parameter('midcom.helper.datamanager2.type.blobs', 'size_y');
-        
+
         return $size;
     }
 }

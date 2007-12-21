@@ -21,18 +21,17 @@
  *   other form element. They are usually displayed in the same line. The value is passed
  *   through the standard schema localization chain.
  *
- * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_widget_sortable extends midcom_helper_datamanager2_widget_select
 {
     /**
      * Sortable elements
-     * 
+     *
      * @access private
      * @var Array
      */
     var $_elements = array();
-    
+
     /**
      * Select automatically every object. This is for using the widget only to sort, not to select what
      * has been sorted.
@@ -41,7 +40,7 @@ class midcom_helper_datamanager2_widget_sortable extends midcom_helper_datamanag
      * @var boolean
      */
     var $select_all = false;
-    
+
     /**
      * The initialization event handler post-processes the maxlength setting.
      *
@@ -54,10 +53,10 @@ class midcom_helper_datamanager2_widget_sortable extends midcom_helper_datamanag
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.droppable.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.sortable.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/jquery.widget_sortable.js');
-        
+
         return parent::_on_initialize();
     }
-    
+
     /**
      * Adds a (multi)select widget to the form, depending on the base type config.
      */
@@ -85,22 +84,22 @@ class midcom_helper_datamanager2_widget_sortable extends midcom_helper_datamanag
             'class' => ($this->_type->allow_multiple) ? 'list' : 'sortable',
             'id'    => "{$this->_namespace}{$this->name}",
         );
-        
+
         // Create the sorting elements
         $this->_create_select_element();
-        
+
         $this->_form->addGroup($this->_elements, $this->name, $this->_translate($this->_field['title']), ' ', false);
     }
-    
+
     /**
      * Create a sortable list
-     * 
+     *
      * @access private
      */
     function _create_select_element()
     {
         $readonly = $this->_field['readonly'];
-        
+
         if ($readonly)
         {
             $lock['text'] = ' readonly="readonly"';
@@ -111,7 +110,7 @@ class midcom_helper_datamanager2_widget_sortable extends midcom_helper_datamanag
             $lock['text'] = '';
             $lock['input'] = '';
         }
-        
+
         if ($this->_type->allow_multiple)
         {
             $input_type = 'checkbox';
@@ -122,28 +121,28 @@ class midcom_helper_datamanager2_widget_sortable extends midcom_helper_datamanag
             $input_type = 'radio';
             $name_suffix = '';
         }
-        
+
         // Show the help text
         // jQuery help text, hide for now
         $html  = "<p style=\"display: none;\" class=\"sortable-help-jquery\">\n";
         $html .= $this->_l10n->get('drag and drop to sort') . '.';
         $html .= "</p>\n";
-        
+
         // Non-jQuery help, show on default, but hide with jQuery
         $html  .= "<p class=\"sortable-help\">\n";
         $html .= $this->_l10n->get('write the order, lower numbers are placed first') . '.';
         $html .= "</p>\n";
         $html .= "<ul id=\"{$this->name}_sortable\" class=\"midcom_helper_datamanager2_widget_sortable\">\n";
-        
+
         $this->_elements['s_header'] =& HTML_QuickForm::createElement('static', 's_header', '', $html);
-        
+
         $i = 1;
-        
+
         // Temporary array for the selection set
         $temp = array();
-        
+
         $all = $this->_type->list_all();
-        
+
         foreach ($this->_type->selection as $key => $value)
         {
             if (isset($all[$value]))
@@ -155,20 +154,20 @@ class midcom_helper_datamanager2_widget_sortable extends midcom_helper_datamanag
                 $temp[$value] = $value;
             }
         }
-        
+
         foreach ($this->_type->list_all() as $key => $value)
         {
             if (array_key_exists($key, $temp))
             {
                 continue;
             }
-            
+
             $temp[$key] = $value;
         }
-        
+
         // Reset the form data
         $html = '';
-        
+
         foreach ($temp as $key => $value)
         {
             if (   array_key_exists($key, $this->_type->selection)
@@ -180,9 +179,9 @@ class midcom_helper_datamanager2_widget_sortable extends midcom_helper_datamanag
             {
                 $checked = '';
             }
-            
+
             $html .= "    <li>\n";
-            
+
             if ($this->select_all)
             {
                 $html .= "            <input type=\"{$input_type}\" name=\"{$this->name}{$name_suffix}\" id=\"midcom_helper_datamanager2_widget_sortable_{$this->name}_{$i}\" value=\"{$key}\" checked=\"checked\" style=\"display: none !important;\" />\n";
@@ -192,10 +191,10 @@ class midcom_helper_datamanager2_widget_sortable extends midcom_helper_datamanag
                 $html .= "        <label for=\"midcom_helper_datamanager2_widget_sortable_{$this->name}_{$i}\">\n";
                 $html .= "            <input type=\"{$input_type}\" name=\"{$this->name}{$name_suffix}\" id=\"midcom_helper_datamanager2_widget_sortable_{$this->name}_{$i}\" value=\"{$key}\"{$checked} />\n";
             }
-            
+
             $html .= "            <input type=\"text\" name=\"{$this->name}_order[{$key}]\" value=\"{$i}\" />\n";
             $html .= "            {$this->_translate($value)}\n";
-            
+
             if (!$this->select_all)
             {
                 $html .= "         </label>\n";
@@ -203,12 +202,12 @@ class midcom_helper_datamanager2_widget_sortable extends midcom_helper_datamanag
             $html .= "    </li>\n";
             $i++;
         }
-        
+
         // Add the element HTML to the form
         $this->_elements['s_body'] =& HTML_QuickForm::createElement('static', 's_body', '', $html);
-        
+
         $this->_elements['s_footer'] =& HTML_QuickForm::createElement('static', 's_footer', '', "</ul>\n");
-        
+
         if (!$readonly)
         {
             $html = "<script type=\"text/javascript\">\n";
@@ -216,22 +215,22 @@ class midcom_helper_datamanager2_widget_sortable extends midcom_helper_datamanag
             $html .= "        \$j('#{$this->name}_sortable').create_sortable();\n";
             $html .= "    // ]]>\n";
             $html .= "</script>\n";
-            
+
             // Add the JavaScript HTML to the form
             $this->_elements['s_javascript'] =& HTML_QuickForm::createElement('static', 's_body', '', $html);
         }
     }
-    
+
     /**
      * Synchronize the results with the type
      */
     function sync_type_with_widget($results)
     {
         $temp = array();
-        
+
         asort($results["{$this->name}_order"]);
         $name = $this->name;
-        
+
         foreach ($results["{$this->name}_order"] as $key => $value)
         {
             if (   !isset($results[$this->name])
@@ -239,10 +238,10 @@ class midcom_helper_datamanager2_widget_sortable extends midcom_helper_datamanag
             {
                 continue;
             }
-            
+
             $temp[] = $key;
         }
-        
+
         $this->_type->selection = $temp;
     }
 }

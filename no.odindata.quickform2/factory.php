@@ -1,4 +1,11 @@
 <?php
+/**
+ * @package no.odindata.quickform2
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
 class no_odindata_quickform2_factory
 {
 
@@ -8,24 +15,24 @@ class no_odindata_quickform2_factory
      * @access public
      **/
     var $schema = null;
-    
+
     /**
-     * @var object midcom_helper_config 
+     * @var object midcom_helper_config
      */
     var $config = null;
-    
+
     /**
      * @var no_odindata_quickform2_email
      * @access public
      */
     var $email;
-    
+
     /**
      * Datamanager controller
-     * @var object midcom.helper.datamanager2 
+     * @var object midcom.helper.datamanager2
      */
     var $_controller;
-    
+
     /**
      * Schema name. for now hardcoded to 'default'
      * @var string
@@ -43,14 +50,14 @@ class no_odindata_quickform2_factory
     /**
      * Display the form
      */
-    function display_form() 
+    function display_form()
     {
         $this->_controller->display_form();
     }
     /**
-     * Set the value of a formelement. 
-     * @var $key the form field name
-     * @var $value the new value to set
+     * Set the value of a formelement.
+     * @param $key the form field name
+     * @param $value the new value to set
      */
     function set_value( $key, $value )
     {
@@ -60,7 +67,7 @@ class no_odindata_quickform2_factory
     /**
      * Returns the values from a submitted form
      **/
-    function values() 
+    function values()
     {
         return $this->_controller->datamanager->types;
     }
@@ -68,7 +75,7 @@ class no_odindata_quickform2_factory
     /**
      * Returns the form schema
      */
-    function get_schema() 
+    function get_schema()
     {
         return $this->schema[$this->schema_name];
     }
@@ -76,14 +83,14 @@ class no_odindata_quickform2_factory
      * Not strictly formfactory related.
      * @return string the form description
      */
-    function description() 
+    function description()
     {
         return $this->config->get( 'form_description');
     }
 
-    function error () 
+    function error ()
     {
-        return ""; 
+        return "";
     }
 
     function process_form()
@@ -109,7 +116,7 @@ class no_odindata_quickform2_factory
      * @access private
      *
      */
-    function _save() 
+    function _save()
     {
         $this->email->execute();
     }

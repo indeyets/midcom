@@ -38,7 +38,7 @@ class midcom_helper_datamanager2_type_boolean extends midcom_helper_datamanager2
      * a graphic "checked" icon. Must be valid for usage in convert_to_html.
      *
      * @var string
-     * @access public.
+     * @access public
      */
     var $true_text = null;
 
@@ -47,7 +47,7 @@ class midcom_helper_datamanager2_type_boolean extends midcom_helper_datamanager2
      * a graphic "not checked" icon. Must be valid for usage in convert_to_html.
      *
      * @var string
-     * @access public.
+     * @access public
      */
     var $false_text = null;
 

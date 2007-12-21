@@ -1,5 +1,11 @@
 <?php
 /**
+ * @package org.openpsa.calendar
+ * @author Nemein Oy, http://www.nemein.com/
+ * @copyright Nemein Oy, http://www.nemein.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+/**
  * Midcom wants this class present and QB etc use this, so keep logic here
  */
 class midcom_org_openpsa_eventmember extends __midcom_org_openpsa_eventmember
@@ -425,7 +431,7 @@ class org_openpsa_calendar_eventparticipant extends org_openpsa_calendar_eventme
             case 'add':
                 $action = 'org.openpsa.calendar:event_add';
                 $message['title'] = sprintf($l10n->get('you have been added to event "%s"'), $event->title);
-                $message['abstract'] = sprintf($l10n->get('you have been added to event "%s" (%s)'), $event->title, $event->format_timeframe());                
+                $message['abstract'] = sprintf($l10n->get('you have been added to event "%s" (%s)'), $event->title, $event->format_timeframe());
                 $message['content'] = sprintf($l10n->get('you have been added to event "%s" participants list, event information below.') . "{$nl}{$nl}", $event->title);
                 $message['content'] .= $event->details_text(false, $this, $nl);
             break;

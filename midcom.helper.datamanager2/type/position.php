@@ -12,7 +12,6 @@
  *
  * This type allows you to position objects in the Midgard database geographically.
  *
- * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_type_position extends midcom_helper_datamanager2_type
 {
@@ -23,7 +22,7 @@ class midcom_helper_datamanager2_type_position extends midcom_helper_datamanager
     function _on_initialize()
     {
         return $_MIDCOM->load_library('org.routamc.positioning');
-    }    
+    }
 
     /**
      * This function loads all known attachments from the storage object. It
@@ -37,14 +36,14 @@ class midcom_helper_datamanager2_type_position extends midcom_helper_datamanager
             $this->location = new org_routamc_positioning_location_dba();
             return;
         }
-        
+
         debug_push_class(__CLASS__,__FUNCTION__);
         debug_print_r("this->storage->object",$this->storage->object);
         debug_print_r("this->location",$this->location);
         debug_pop();
-        
+
         $this->object = new org_routamc_positioning_object($this->storage->object);
-        
+
         $this->location = $this->object->seek_location_object();
         if (is_null($this->location))
         {
@@ -59,7 +58,7 @@ class midcom_helper_datamanager2_type_position extends midcom_helper_datamanager
         {
             return '';
         }
-    
+
         $this->location->relation = $this->relation;
         if (   isset($this->location->guid)
             && $this->location->guid)
@@ -70,7 +69,7 @@ class midcom_helper_datamanager2_type_position extends midcom_helper_datamanager
         {
             $this->location->parent = $this->storage->object->guid;
             $this->location->parentclass = $this->storage->object->__midcom_class_name__;
-            
+
             $this->location->create();
         }
 
@@ -91,7 +90,7 @@ class midcom_helper_datamanager2_type_position extends midcom_helper_datamanager
     function convert_to_html()
     {
         $result = '';
-    
+
         $adr_properties = array();
         if ($this->location->description)
         {
@@ -122,30 +121,30 @@ class midcom_helper_datamanager2_type_position extends midcom_helper_datamanager
         {
             $adr_properties[] = "<span class=\"country-name\">{$this->location->country}</span>";
         }
-        
+
         if (count($adr_properties) > 0)
         {
             $result .= '<span class="adr">' . implode(', ', $adr_properties) . "</span>\n";
         }
-            
+
         $latitude_string = org_routamc_positioning_utils::pretty_print_coordinate($this->location->latitude);
         $latitude_string .= ($this->location->latitude > 0) ? " N" : " S";
         $longitude_string = org_routamc_positioning_utils::pretty_print_coordinate($this->location->longitude);
         $longitude_string .= ($this->location->longitude > 0) ? " E" : " W";
-        
+
         $style = '';
         if (!empty($result))
         {
             $style = ' style="display: none;"';
         }
-        
+
         $result .= "<span class=\"geo\"{$style}>\n";
         $result .= "    <abbr class=\"latitude\" title=\"{$this->location->latitude}\">{$latitude_string}</abbr>\n";
         $result .= "    <abbr class=\"longitude\" title=\"{$this->location->longitude}\">{$longitude_string}</abbr>\n";
         $result .= "</span>\n";
-        
+
         // TODO: Add Microformat for civic location
-        
+
         return $result;
     }
 }

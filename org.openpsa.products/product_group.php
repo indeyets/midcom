@@ -33,7 +33,7 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
     function _on_updating()
     {
         if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
-        {    
+        {
             if ($this->_check_duplicates($this->code))
             {
                 mgd_set_errno(MGD_ERR_OBJECT_NAME_EXISTS);
@@ -75,7 +75,8 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
     /**
      *
      *
-     * @access static public
+     * @access public
+     * @static
      * @param mixed $up            Either the ID or GUID of the product group
      * @param string $prefix       Prefix for the code
      * @param string $keyproperty
@@ -83,7 +84,7 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
     function list_groups($up = 0, $prefix = '', $keyproperty = 'id', $order_by_score = false)
     {
         static $group_list = array();
-        
+
         if (!array_key_exists($keyproperty, $group_list))
         {
             $group_list[$keyproperty] = array();
@@ -100,31 +101,31 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
                 $group_list[$keyproperty][''] = $_MIDCOM->i18n->get_string('toplevel', 'org.openpsa.products');
             }
         }
-        
+
         // Check for the request and change GUID to int if required
         if (mgd_is_guid($up))
         {
             $group = new org_openpsa_products_product_group_dba($up);
-            
+
             // Error message on failure
             if (empty($group))
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to get the configured product root group');
                 // This will exit
             }
-            
+
             $up = $group->id;
         }
 
         $qb = org_openpsa_products_product_group_dba::new_query_builder();
         $qb->add_constraint('up', '=', $up);
-        
+
         // Order by score if required
         if ($order_by_score)
         {
             $qb->add_order('metadata.score', 'DESC');
         }
-        
+
         $qb->add_order('code');
         $qb->add_order('title');
         $groups = $qb->execute();
@@ -146,7 +147,7 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
 		$up_code = 0 ;
 
 		//FIXME: Maemo specific hack
-		if (isset($_MIDGARD["argv"][3]) 
+		if (isset($_MIDGARD["argv"][3])
 			&& isset($_MIDGARD["argv"][2])
 			&& ($_MIDGARD["argv"][2] == "create"))
 		{
@@ -167,7 +168,7 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
 			$qb2->add_constraint('id', '=', $up_code);
         	$qb2->add_order('id');
         	$up_group = $qb2->execute();
-			if (isset($up_group[0]) 
+			if (isset($up_group[0])
 				&& isset($up_group[0]->up))
 			{
 				$up = $up_group[0]->up;
@@ -179,13 +180,13 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
 			$qb2->add_constraint('code', '=', $up_code);
         	$qb2->add_order('code');
         	$up_group = $qb2->execute();
-			if (isset($up_group[0]) 
+			if (isset($up_group[0])
 				&& isset($up_group[0]->id))
 			{
 				$up = $up_group[0]->id;
 			}
 		}
-		
+
 		// END Maemo specific hack
 
         $qb = org_openpsa_products_product_group_dba::new_query_builder();
@@ -210,7 +211,7 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
 		$up_code = 0;
 
 		//FIXME: Maemo specific hack
-		if (isset($_MIDGARD["argv"][3]) 
+		if (isset($_MIDGARD["argv"][3])
 			&& isset($_MIDGARD["argv"][2])
 			&& ($_MIDGARD["argv"][2] == "create"))
 		{
@@ -231,7 +232,7 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
 			$qb2->add_constraint('id', '=', $up_code);
         	$qb2->add_order('id');
         	$up_group = $qb2->execute();
-			if (isset($up_group[0]) 
+			if (isset($up_group[0])
 				&& isset($up_group[0]->up))
 			{
 				$up = $up_group[0]->up;
@@ -247,13 +248,13 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
 			$qb2->add_constraint('code', '=', $up_code);
         	$qb2->add_order('code');
         	$up_group = $qb2->execute();
-			if (isset($up_group[0]) 
+			if (isset($up_group[0])
 				&& isset($up_group[0]->id))
 			{
 				$up = $up_group[0]->id;
 			}
 		}
-		
+
 		// END Maemo specific hack
 
         $qb = org_openpsa_products_product_group_dba::new_query_builder();

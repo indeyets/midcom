@@ -13,8 +13,6 @@
  * This class uses special operations to allow for paged forms.
  *
  * The form rendering is done using the widgets and is based on HTML_QuickForm.
- *
- * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_formmanager_paged extends midcom_helper_datamanager2_formmanager
 {

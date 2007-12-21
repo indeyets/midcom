@@ -34,7 +34,6 @@
  * All three input fields use the class input.shorttext. The fieldset
  * is set to fieldset.account.
  *
- * @package midcom.helper.datamanager
  */
 
 class midcom_helper_datamanager_widget_account extends midcom_helper_datamanager_widget {

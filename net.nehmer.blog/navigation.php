@@ -44,9 +44,9 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
         {
             $this->_determine_content_topic();
         }
-        
+
         $leaves = array();
-        
+
         if (   $this->_config->get('archive_enable')
             && $this->_config->get('archive_in_navigation')
             && $this->_config->get('show_navigation_pseudo_leaves'))
@@ -102,13 +102,13 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
                 );
             }
         }
-        
+
         if (   $this->_config->get('show_navigation_pseudo_leaves')
             && $this->_config->get('archive_years_in_navigation'))
         {
-            $qb = midcom_db_article::new_query_builder();    
+            $qb = midcom_db_article::new_query_builder();
             $qb->add_constraint('topic', '=', $this->_content_topic->id);
-            
+
             // Hide the articles that have the publish time in the future and if
             // the user is not administrator
             if (   $this->_config->get('enable_scheduled_publishing')
@@ -118,7 +118,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
                 // is the author
                 $qb->begin_group('OR');
                     $qb->add_constraint('metadata.published', '<', date('Y-m-d h:i:s'));
-                    
+
                     if (   $_MIDCOM->auth->user
                         && isset($_MIDCOM->auth->user->guid))
                     {
@@ -126,16 +126,16 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
                     }
                 $qb->end_group();
             }
-            
+
             $qb->add_order('metadata.published');
             $qb->set_limit(1);
             $result = $qb->execute_unchecked();
-            
+
             if (count($result) == 0)
             {
                 return $leaves;
             }
-            
+
             $first_year = (int) date('Y', $result[0]->metadata->published);
             $year = $first_year;
             $this_year = (int) date('Y', time());
@@ -158,16 +158,16 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
             }
             $leaves = array_reverse($leaves);
         }
-        
+
         // Return the request here if latest items aren't requested to be shown in navigation
         if (!$this->_config->get('show_latest_in_navigation'))
         {
             return $leaves;
         }
-        
+
         // Get the latest content topic articles
         $qb = midcom_db_article::new_query_builder();
-        
+
         // Hide the articles that have the publish time in the future and if
         // the user is not administrator
         if (   $this->_config->get('enable_scheduled_publishing')
@@ -177,7 +177,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
             // is the author
             $qb->begin_group('OR');
                 $qb->add_constraint('metadata.published', '<', date('Y-m-d h:i:s'));
-                
+
                 if (   $_MIDCOM->auth->user
                     && isset($_MIDCOM->auth->user->guid))
                 {
@@ -185,28 +185,28 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
                 }
             $qb->end_group();
         }
-        
+
         if (!$this->_config->get('enable_article_links'))
         {
             $qb->add_constraint('topic', '=', $this->_content_topic->id);
             $qb->add_constraint('up', '=', 0);
-            
+
             $qb->add_order('metadata.published', 'DESC');
             $qb->set_limit((int) $this->_config->get('index_entries'));
-            
+
             $results = $qb->execute_unchecked();
         }
         else
         {
             // Amount of articles needed
             $limit = (int) $this->_config->get('index_entries');
-            
+
             $results = array();
             $offset = 0;
-            
+
             net_nehmer_blog_navigation::get_articles($this->_content_topic->id, $offset, $limit, &$results);
         }
-        
+
         // Checkup for the url prefix
         if ($this->_config->get('view_in_url'))
         {
@@ -216,7 +216,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
         {
             $prefix = '';
         }
-        
+
         foreach ($results as $article)
         {
             $leaves[$article->id] = array
@@ -234,16 +234,17 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
 
         return $leaves;
     }
-    
+
     /**
      * Helper for fetching enough of articles
-     * 
+     *
      * @param int $topic_id     ID of the content topic
      * @param int $offset       Offset for the query
      * @param int $limit        How many results should be returned
      * @param array $results    Result set
      * @return Array            Containing results
-     * @access static public
+     * @access public
+     * @static
      */
     function get_articles($topic_id, $offset, $limit, &$results)
     {
@@ -252,58 +253,58 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
         $mc->add_constraint('topic', '=', $topic_id);
         $mc->add_order('metadata.published', 'DESC');
         $mc->set_offset($offset);
-        
+
         // Double the limit, a sophisticated guess that there might be missing articles
         // and this should include enough of articles for us
         $mc->set_limit($limit * 2);
-        
+
         // Get the results
         $mc->execute();
-        
+
         $links = $mc->list_keys();
-        
+
         // Return the empty result set
         if (   !is_array($links)
             || count($links) === 0)
         {
             return $results;
         }
-        
+
         $i = 0;
-        
+
         foreach ($links as $guid => $link)
         {
             $id = $mc->get_subkey($guid, 'article');
-            
+
             $article = new midcom_db_article($id);
-            
-            // If the article was not found, it is probably due to 
+
+            // If the article was not found, it is probably due to
             if (   !isset($article)
                 || !isset($article->guid)
                 || !$article->guid)
             {
                 continue;
             }
-            
+
             $results[$id] = $article;
             $i++;
-            
+
             // Break when we have enough of articles
             if ($i >= $limit)
             {
                 break;
             }
         }
-        
+
         // Quit the function if there is no possibility for more matches
         if (count($links) < $limit)
         {
             return $results;
         }
-        
+
         // Push the offset
         $offset = $offset + $limit;
-        
+
         net_nehmer_blog_navigation::get_articles($topic_id, $offset, $limit, &$results);
     }
 

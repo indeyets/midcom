@@ -86,8 +86,6 @@
  * snippet, you need to include that snippet previously, an auto-load from there is not
  * yet possible.
  *
- *
- * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_type
 {
@@ -158,7 +156,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
      * @access public
      */
     var $allow_multiple = false;
-    
+
     /**
      * Set this to false to use with universalchooser, this skips making sure the key exists in option list
      * Mainly used to avoid unnecessary seeks to load all a ton of objects to the options list.
@@ -372,7 +370,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
     {
         $this->selection = Array();
         $this->others = Array();
-        
+
         if (   $source === false
             || $source === null)
         {
@@ -490,14 +488,14 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
 
             case 'imploded':
                 if (!is_string($source))
-                {   
+                {
                     return array();
                 }
                 return explode($glue, $source);
 
             case 'imploded_wrapped':
                 if (!is_string($source))
-                {   
+                {
                     return array();
                 }
                 return explode($glue, substr($source, 1, -1));
@@ -520,7 +518,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
         {
             case 'array':
                 return $this->selection;
-                
+
             case 'serialized':
                 if ($this->others)
                 {
@@ -560,7 +558,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
         if ($this->others)
         {
             if (is_string($this->others))
-            {                
+            {
                 $this->others = array
                 (
                     $this->others => $this->others,
@@ -661,7 +659,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
 
         return true;
     }
-    
+
     function combine_values()
     {
         $selection = Array();

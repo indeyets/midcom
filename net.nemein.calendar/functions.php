@@ -1,7 +1,7 @@
 <?php
 /**
  * @package net.nemein.calendar
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id$
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,14 +9,14 @@
 
 /**
  * Calendar DayLabel function
- * @var $label string 'start' if it's the startdate or 'end' if it's the end date.
- * @var $start unixtimestamp
- * @var $end unix timestamp 
- * @var $add_time boolean true if you want to add hour:minute to the date
+ * @param $label string 'start' if it's the startdate or 'end' if it's the end date.
+ * @param $start unixtimestamp
+ * @param $end unix timestamp
+ * @param $add_time boolean true if you want to add hour:minute to the date
  */
 function net_nemein_calendar_functions_daylabel($label='start', $start, $end , $add_time = true, $add_year = false)
 {
-    /** 
+    /**
      * If mucking about with locales at least have the courtesy to return
      * the value to what it used to be, here we read the current value,
      * see the end of function for restoring it
@@ -45,13 +45,13 @@ function net_nemein_calendar_functions_daylabel($label='start', $start, $end , $
     {
         // We want to output the label for start time
         $daylabel .= strftime('%A %d. %B ', $start);
-        
+
         if (date('Y', $start) != date('Y', $end))
         {
             $daylabel .= date('Y ', $start);
         }
-        
-        if ($add_time) 
+
+        if ($add_time)
         {
             $daylabel .= date('H:i', $start);
         }
@@ -69,12 +69,12 @@ function net_nemein_calendar_functions_daylabel($label='start', $start, $end , $
         }
         elseif (date('d', $start) != date('d', $end))
         {
-            $daylabel .= strftime('%A %d. %B ', $end);        
+            $daylabel .= strftime('%A %d. %B ', $end);
         }
-        
-        if ($add_time) 
+
+        if ($add_time)
         {
-            $daylabel .= date('H:i', $end);        
+            $daylabel .= date('H:i', $end);
         }
     }
     /**
@@ -87,7 +87,7 @@ function net_nemein_calendar_functions_daylabel($label='start', $start, $end , $
 /**
  * Transforms an event object into a valid MidCOM Indexer
  * Document, using the midcom document base class.
- * 
+ *
  * @param NemeinCalendar_event $event The event to transform.
  * @return midcom_services_indexer_document_midcom Transformed Event or false on failure.
  */
@@ -98,7 +98,7 @@ function net_nemein_calendar_event2document($event)
     $event->revised = 0;
     $event->revisor = 1;
     $event->created = 0;
-    
+
     $document = new midcom_services_indexer_document_midcom($event);
     $document->content = "{$event->description} {$event->title}";
     $document->title = $event->title;

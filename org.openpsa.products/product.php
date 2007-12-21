@@ -1,5 +1,12 @@
 <?php
 /**
+ * @package org.openpsa.products
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
  * MidCOM wrapped class for access to stored queries
  */
 
@@ -55,12 +62,12 @@ class org_openpsa_products_product_dba extends __org_openpsa_products_product_db
     function validate_code($code)
     {
         $quickform_mode = false;
-        
+
         if ($code == '')
         {
             return true;
         }
-        
+
         if (is_array($code))
         {
             // This validation call was made by QuickForm

@@ -1,12 +1,17 @@
 <?php
+/**
+ * @package midcom
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
 if (!function_exists('midcom_helper_formatters_links'))
-{    
+{
     function midcom_helper_formatters_links($content,$echo_results=true)
-    {   
+    {
         // echo $content;
         // echo "\n<br />---------<br />\n";
-        
+
         $length = strlen($content);
         $start = 0;
         $end = $length;
@@ -18,33 +23,33 @@ if (!function_exists('midcom_helper_formatters_links'))
             {
                 continue;
             }
-            
+
             $start = strpos($content, $block, $start);
-                        
+
             if (eregi('(([[:alpha:]]+://)|^(www\.))+[^<>[:space:]]+[[:alnum:]/]',$block))
             {
                 if (! eregi('([[:alpha:]]+=")+[^<>[:space:]]+[[:alnum:]/]',$block))
-                {                    
+                {
                     $end = strpos($content, $block, $start);
                     $end += strlen($block);
-                    
+
                     while ( ereg("[,\.]$", $block) )
                     {
                         $block = substr( $block, 0, -1 );
                         $end--;
                     }
-                    
+
                     $new_block = $block;
                     //$new_block = ereg_replace("[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]","<a href=\"\\0\">\\0</a>", $new_block);
-                    
+
                     $new_block = eregi_replace('(((f|ht){1}tp://)[-a-zA-Z0-9@:%_\+.~#?&//=]+)', '<a href="\\1">\\1</a>', $new_block);
                     if ($new_block == $block)
                     {
                         $new_block = eregi_replace('(www.[-a-zA-Z0-9@:%_\+.~#?&//=]+)', '<a href="http://\\1">\\1</a>', $new_block);
                     }
-                    
+
                     _midcom_helper_formatters_replace_content($content, $new_block, $start, $end);
-                    
+
                     $start += strlen($new_block);
                 }
             }
@@ -52,13 +57,13 @@ if (!function_exists('midcom_helper_formatters_links'))
             {
                 $end = strpos($content, $block, $start);
             }
-            
+
             $start += 1;
         }
 
         if ($echo_results)
         {
-            echo $content;            
+            echo $content;
         }
         else
         {
@@ -76,34 +81,34 @@ if (!function_exists('midcom_helper_formatters_maillinks'))
         $start = 0;
         $end = $length;
         $blocks = explode(" ",$content);
-        
+
         foreach ($blocks as $block)
         {
             if (empty($block))
             {
                 continue;
             }
-            
+
             $start = strpos($content, $block, $start);
-            
+
             if (eregi('([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})',$block))
             {
                 if (! eregi('([[:alpha:]]+="mailto:)',$block))
                 {
                     $end = strpos($content, $block, $start);
                     $end += strlen($block);
-                    
+
                     while ( ereg("[,\.]$", $block) )
                     {
                         $block = substr( $block, 0, -1 );
                         $end--;
                     }
-                    
-                    $new_block = $block;                    
+
+                    $new_block = $block;
                     $new_block = eregi_replace('([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})', '<a href="mailto:\\1">\\1</a>', $new_block);
-                    
+
                     _midcom_helper_formatters_replace_content($content, $new_block, $start, $end);
-                    
+
                     $start += strlen($new_block);
                 }
             }
@@ -111,13 +116,13 @@ if (!function_exists('midcom_helper_formatters_maillinks'))
             {
                 $end = strpos($content, $block, $start);
             }
-            
+
             $start += 1;
         }
-        
+
         if ($echo_results)
         {
-            echo $content;            
+            echo $content;
         }
         else
         {
@@ -132,12 +137,12 @@ if (!function_exists('midcom_helper_formatters_obfmaillinks'))
     function midcom_helper_formatters_obfmaillinks($content, $echo_results=true)
     {
         $content = midcom_helper_formatters_maillinks($content,false);
-        
+
         $content = preg_replace('/<a [^>]*href="mailto:([^"]+)"[^>]*>(.*?)<\/a>/ie', '_midcom_helper_formatters_obfuscate_email_link("\\1",false)', $content);
-        
+
         if ($echo_results)
         {
-            echo $content;            
+            echo $content;
         }
         else
         {
@@ -145,17 +150,17 @@ if (!function_exists('midcom_helper_formatters_obfmaillinks'))
         }
     }
     _midcom_helper_formatters_register_filter('obfmaillinks');
-    
+
     function _midcom_helper_formatters_obfuscate_email($email,$echo_results=true)
     {
         $obfuscated = '';
-        
+
         $len = strlen($email);
         for ($i=0;$i<$len;$i++)
         {
             $obfuscated .= "&#" . ord($email[$i]);
         }
-        
+
         if ($echo_results)
         {
             echo $obfuscated;
@@ -166,13 +171,13 @@ if (!function_exists('midcom_helper_formatters_obfmaillinks'))
         }
     }
     _midcom_helper_formatters_register_filter('obfmail','_midcom_helper_formatters_obfuscate_email');
-    
+
     function _midcom_helper_formatters_obfuscate_email_link($email,$echo_results=true)
     {
         $obfuscated = _midcom_helper_formatters_obfuscate_email($email,false);
-        
+
         $link = "<a href=\"mailto:{$obfuscated}\">{$obfuscated}</a>";
-        
+
         if ($echo_results)
         {
             echo $link;
@@ -186,12 +191,12 @@ if (!function_exists('midcom_helper_formatters_obfmaillinks'))
 }
 
 if (!function_exists('midcom_helper_formatters_plaintext'))
-{    
+{
     function midcom_helper_formatters_plaintext($content)
     {
         // echo $content;
         // echo "\n<br />---------<br />\n";
-        
+
         $search = array
         (
             "/\r/",                                  // Non-legal carriage return
@@ -234,7 +239,7 @@ if (!function_exists('midcom_helper_formatters_plaintext'))
             '/&[^&;]+;/i',                           // Unknown/unhandled entities
             '/[ ]{2,}/'                              // Runs of spaces, post-handling
         );
-        
+
         $replace = array
         (
             '',                                     // Non-legal carriage return
@@ -277,11 +282,11 @@ if (!function_exists('midcom_helper_formatters_plaintext'))
             '',                                     // Unknown/unhandled entities
             ' '                                     // Runs of spaces, post-handling
         );
-        
+
         $formatted = trim(stripslashes($content));
         $formatted = preg_replace($search, $replace, $formatted);
         $formatted = strip_tags($formatted);
-        
+
         $formatted = preg_replace("/\n\s+\n/", "\n\n", $formatted);
         $formatted = preg_replace("/[\n]{3,}/", "\n\n", $formatted);
 
@@ -296,18 +301,18 @@ if (!function_exists('midcom_helper_formatters_noimages'))
     {
         // echo "{$content}";
         // echo "<br/>------<br/>";
-        
+
         $search = array
         (
             '/<img [^>]*src="([^"]+)"[^>]*alt="([^"]+)"[^>]*>/is',
             '/<img [^>]*src="([^"]+)"[^>]*[^>]*>/is',
         );
-        
+
         foreach ($search as $re)
         {
-            $content = preg_replace_callback($re, "_midcom_helper_formatters_noimages_link", $content);            
+            $content = preg_replace_callback($re, "_midcom_helper_formatters_noimages_link", $content);
         }
-        
+
         if ($echo_results)
         {
             echo $content;
@@ -318,7 +323,7 @@ if (!function_exists('midcom_helper_formatters_noimages'))
         }
     }
     _midcom_helper_formatters_register_filter('noimages');
-    
+
     function _midcom_helper_formatters_noimages_link($matches)
     {
         $url = $matches[1];
@@ -327,7 +332,7 @@ if (!function_exists('midcom_helper_formatters_noimages'))
         {
             $title = $matches[2];
         }
-        
+
         $link = '';
         if (empty($url))
         {
@@ -340,10 +345,10 @@ if (!function_exists('midcom_helper_formatters_noimages'))
             $url_parts = explode('/',$url);
             $title = $url_parts[(count($url_parts)-1)];
         }
-        
+
         $title_prefix = $_MIDCOM->i18n->get_string('image','midcom');
         $link = "<a href=\"{$url}\" title=\"{$title}\">[{$title_prefix}:{$title}]</a>";
-        
+
         return $link;
     }
 }
@@ -356,7 +361,7 @@ function midcom_helper_formatters_links_and_obfmaillinks($content)
 {
     $content = midcom_helper_formatters_obfmaillinks($content, false);
     $content = midcom_helper_formatters_links($content, false);
-    
+
     echo $content;
 }
 _midcom_helper_formatters_register_filter('linksobfmails','midcom_helper_formatters_links_and_obfmaillinks');
@@ -365,7 +370,7 @@ function midcom_helper_formatters_links_and_maillinks($content)
 {
     $content = midcom_helper_formatters_maillinks($content, false);//mgd_format($content, 'xmaillink');
     $content = midcom_helper_formatters_links($content, false);//mgd_format($content, 'xlinks');
-    
+
     echo $content;
 }
 _midcom_helper_formatters_register_filter('linksmails','midcom_helper_formatters_links_and_maillinks');
@@ -402,7 +407,7 @@ function _midcom_helper_formatters_register_filter($name, $method=null)
     {
         $method = "midcom_helper_formatters_{$name}";
     }
-    
+
     mgd_register_filter($name, $method);
 }
 

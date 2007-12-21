@@ -7,8 +7,8 @@
  */
 
 /**
- * This is the class that defines which URLs should be handled by this module. 
- * 
+ * This is the class that defines which URLs should be handled by this module.
+ *
  * @package net.nemein.updatenotification
  */
 class net_nemein_updatenotification_viewer extends midcom_baseclasses_components_request
@@ -28,7 +28,7 @@ class net_nemein_updatenotification_viewer extends midcom_baseclasses_components
         /**
          * Prepare the request switch, which contains URL handlers for the component
          */
-        
+
         // Handle /config
         $this->_request_switch['config'] = array
         (
@@ -95,7 +95,7 @@ class net_nemein_updatenotification_viewer extends midcom_baseclasses_components
      * @access protected
      */
     function _populate_node_toolbar()
-    {   
+    {
         if (   $this->_topic->can_do('midgard:update')
             && $this->_topic->can_do('midcom:component_config'))
         {
@@ -110,7 +110,7 @@ class net_nemein_updatenotification_viewer extends midcom_baseclasses_components
                 )
             );
         }
-        
+
     }
 
     /**
@@ -128,27 +128,28 @@ class net_nemein_updatenotification_viewer extends midcom_baseclasses_components
     }
     /**
      * Get the list of root nodes
-     * 
-     * @access static public
+     *
+     * @access public
+     * @static
      */
     function list_root_nodes()
     {
         $nap = new midcom_helper_nav();
-        
+
         $root_nodes = array();
         $root_nodes[''] = '';
-        
+
         $qb = midcom_db_topic::new_query_builder();
         $qb->add_constraint('up', '=', $nap->get_root_node());
         $qb->add_order('score');
         $qb->add_order('name');
         $nodes = $qb->execute();
-        
+
         foreach ($nodes as $node)
         {
             $root_nodes[$node->guid] = $node->extra;
         }
-        
+
         return $root_nodes;
     }
 }

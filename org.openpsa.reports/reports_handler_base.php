@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package org.openpsa.projects
  * @author The Midgard Project, http://www.midgard-project.org

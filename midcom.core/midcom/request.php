@@ -1,5 +1,12 @@
 <?php
 /**
+ * @package midcom
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
  * This class wraps the _POST and _REQUEST and argv arrays and should be used
  * to fetch variables.
  */

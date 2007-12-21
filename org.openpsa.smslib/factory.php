@@ -1,5 +1,8 @@
 <?php
 /**
+ * @package org.openpsa.smslib
+ */
+/**
  * Loader for the supported SMS interfaces
  */
 class org_openpsa_smslib extends midcom_baseclasses_components_purecode

@@ -1,5 +1,8 @@
 <?php
 /**
+ * @package org.openpsa.qbpager
+ */
+/**
  * Pages QB resultsets
  */
 class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
@@ -19,23 +22,23 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
 
     /**
      * parameter listening enabled
-     * 
+     *
      * @access private
      * @var boolean
      */
     var $_listen_params = false;
-    
+
     /**
      * Registered get -parameters for listening
-     * 
+     *
      * @access private
      * @var array
      */
     var $_get_params = array();
-    
+
     /**
      * Cache for parameters to be listened
-     * 
+     *
      * @access private
      * @var string
      */
@@ -66,17 +69,17 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
         {
             return;
         }
-        
+
         if (   isset($this->_get_params[$name])
             && $this->_get_params[$name] == $value)
         {
             return;
         }
         $this->_get_params[$name] = $value;
-        
+
         $this->_listen_params = true;
     }
-    
+
     function _collect_parameters()
     {
         if (empty($this->_get_params))
@@ -84,10 +87,10 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
             $this->_params_cache = '';
             return;
         }
-        
+
         $_prefix = '&';
         $this->_params_cache = '';
-        
+
         foreach ($this->_get_params as $key => $value)
         {
             if (isset($_GET[$key]))
@@ -120,19 +123,19 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
             }
         }
     }
-    
+
     function _get_parameter_string()
     {
         if (! $this->_listen_params)
         {
             return '';
         }
-        
+
         if (! $this->_params_cache)
         {
             $this->_collect_parameters();
         }
-        
+
         return $this->_params_cache;
     }
 
@@ -182,7 +185,7 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
         debug_pop();
         return;
     }
-    
+
     /**
      * Get the current page number
      */
@@ -192,7 +195,7 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
     }
 
 
-    /** 
+    /**
      * Fetch all $_GET variables, but leave out the page number
      *
      */
@@ -201,16 +204,16 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
 	$query_string = '';
         foreach(explode('&',$_SERVER["QUERY_STRING"]) as $key)
         {
-    	    if( !preg_match('/org_openpsa_qbpager/', $key) 
+    	    if( !preg_match('/org_openpsa_qbpager/', $key)
 		&& $key != '')
     	    {
 		$query_string .= '&amp;'.$key;
             }
         }
         return $query_string;
-    } 
-    
-    
+    }
+
+
     /**
      * Displays previous/next selector
      */
@@ -333,14 +336,14 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
 
         return;
     }
-    
+
     /**
      * Displays page selector as list
      */
     function show_pages_as_list($acl_checks=false)
     {
         $link_suffix = $this->_get_parameter_string();
-        
+
         $this->_request_data['prefix'] = $this->_prefix;
         $this->_request_data['current_page'] = $this->_current_page;
         $this->_request_data['page_count'] = $this->count_pages($acl_checks);
@@ -374,7 +377,7 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
         {
             $display_end = $data['page_count'];
         }
-        
+
         if ($data['current_page'] > 1)
         {
             $previous = $data['current_page'] - 1;
@@ -412,14 +415,14 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
             if ($page < $data['page_count'])
             {
                 echo "\n<li class=\"page\" onclick=\"window.location='?{$page_var}={$page}{$link_suffix}';\">{$page}</li>";
-                echo "\n<li class=\"separator\"></li>";                
+                echo "\n<li class=\"separator\"></li>";
             }
         }
 
         if ($data['current_page'] < $data['page_count'])
         {
             $next = $data['current_page'] + 1;
-            
+
             if ($next != $data['page_count'])
             {
                 // echo "\n<li class=\"separator\"></li>";
@@ -428,8 +431,8 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
                 echo "\n<li class=\"separator\"></li>";
                 echo "\n<li class=\"page last\" onclick=\"window.location='?{$page_var}={$data['page_count']}{$link_suffix}';\">{$data['page_count']}</li>";
             }
-            
-            
+
+
             echo "\n<li class=\"next\" onclick=\"window.location='?{$page_var}={$next}{$link_suffix}';\"></li>";
         }
 
@@ -562,7 +565,7 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
         $this->_midcom_qb_count->end_group();
         return $this->_midcom_qb->end_group();
     }
-    
+
     function include_deleted()
     {
         $this->_midcom_qb_count->include_deleted();

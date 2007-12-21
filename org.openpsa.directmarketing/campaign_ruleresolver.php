@@ -1,5 +1,12 @@
 <?php
 /**
+ * @package org.openpsa.directmarketing
+ * @author Nemein Oy http://www.nemein.com/
+ * @copyright Nemein Oy http://www.nemein.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
+/**
  * Resolves smart-campaign rules array to one or more QB instances
  * with correct constraints, and merges the results.
  *

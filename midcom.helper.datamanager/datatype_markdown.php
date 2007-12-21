@@ -20,7 +20,6 @@
  * - <i>Location</i>: attachment
  * - <i>widget</i>: text
  *
- * @package midcom.helper.datamanager
  */
 
 

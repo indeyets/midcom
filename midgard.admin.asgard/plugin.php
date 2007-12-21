@@ -1,7 +1,7 @@
 <?php
 /**
  * @package midgard.admin.asgard
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: acl_editor.php 5538 2007-03-20 13:22:41Z rambo $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -16,7 +16,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
     /**
      * Get the plugin handlers, which act alike with Request Switches of MidCOM
      * Baseclasses Components (midcom.baseclasses.components.request)
-     * 
+     *
      * @access public
      * @return mixed Array of the plugin handlers
      */
@@ -24,18 +24,18 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
     {
         $_MIDCOM->load_library('midgard.admin.asgard');
         $_MIDCOM->auth->require_user_do('midgard.admin.asgard:access', null, 'midgard_admin_asgard_plugin');
-        
+
         // Preferred language
         if (($language = midgard_admin_asgard_plugin::get_preference('interface_language')))
         {
             $_MIDCOM->i18n->set_language($language);
         }
-        
+
         return array
         (
             /**
              * Asgard "welcome page"
-             * 
+             *
              * Match /asgard/
              */
             'welcome' => array
@@ -46,7 +46,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Component listing page
-             * 
+             *
              * Match /components/
              */
             'components' => array
@@ -57,7 +57,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Component configuration view
-             * 
+             *
              * Match /components/configuration/<component>
              */
             'components_configuration' => array
@@ -68,7 +68,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Component configuration editor
-             * 
+             *
              * Match /components/configuration/edit/<component>
              */
             'components_configuration_edit' => array
@@ -79,7 +79,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Component configuration editor
-             * 
+             *
              * Match /components/configuration/edit/<component>
              */
             'components_configuration_edit_folder' => array
@@ -90,7 +90,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Trashed items of MgdSchema
-             * 
+             *
              * Match /asgard/
              */
             'trash' => array
@@ -100,7 +100,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * User preferences page
-             * 
+             *
              * Match /preferences/
              */
             'preferences' => array
@@ -111,7 +111,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * AJAX interface for remembering user preferences set on the fly
-             * 
+             *
              * Match /preferences/ajax/
              */
             'preferences_ajax' => array
@@ -122,7 +122,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * User preferences page for any person
-             * 
+             *
              * Match /preferences/<person guid>/
              */
             'preferences_guid' => array
@@ -133,7 +133,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Front page of a MgdSchema
-             * 
+             *
              * Match /asgard/
              */
             'type' => array
@@ -144,7 +144,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Trashed items of MgdSchema
-             * 
+             *
              * Match /asgard/
              */
             'trash_type' => array
@@ -155,7 +155,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * View an object
-             * 
+             *
              * Match /asgard/object/view/<guid>/
              */
             'object_view' => array
@@ -166,7 +166,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * View an object in another language
-             * 
+             *
              * Match /asgard/object/view/<guid>/<lang>
              */
             'object_view_lang' => array
@@ -177,7 +177,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Edit an object
-             * 
+             *
              * Match /asgard/object/edit/<guid>/
              */
             'object_edit' => array
@@ -188,7 +188,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Edit an object
-             * 
+             *
              * Match /asgard/object/edit/<guid>/<lang>
              */
             'object_edit_lang' => array
@@ -199,7 +199,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Edit object metadata
-             * 
+             *
              * Match /asgard/object/metadata/<guid>/
              */
             'object_metadata' => array
@@ -210,7 +210,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Edit object parameters
-             * 
+             *
              * Match /asgard/object/parameters/<guid>/
              */
             'object_parameters' => array
@@ -221,7 +221,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Edit object permissions
-             * 
+             *
              * Match /asgard/object/permissions/<guid>/
              */
             'object_permissions' => array
@@ -232,7 +232,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Create a new file
-             * 
+             *
              * Match /files/
              */
             'object_attachments' => array
@@ -243,7 +243,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Edit a file
-             * 
+             *
              * Match /files/<filename>
              */
             'object_attachments_edit' => array
@@ -254,7 +254,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Delete a file
-             * 
+             *
              * Match /files/<filename>/delete/
              */
             'object_attachments_delete' => array
@@ -265,7 +265,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Create a toplevel object with chooser
-             * 
+             *
              * Match /asgard/object/create/type/<parent guid>/
              */
             'object_create_chooser' => array
@@ -276,7 +276,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Create an object
-             * 
+             *
              * Match /asgard/object/create/type/<parent guid>/
              */
             'object_create' => array
@@ -288,7 +288,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
 
             /**
              * Create a toplevel object
-             * 
+             *
              * Match /asgard/object/create/type/<parent guid>/
              */
             'object_create_toplevel' => array
@@ -297,10 +297,10 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 'fixed_args' => array ('object', 'create'),
                 'variable_args' => 1,
             ),
-        
+
             /**
              * Delete an object
-             * 
+             *
              * Match /asgard/object/delete/<guid>/
              */
             'object_delete' => array
@@ -311,7 +311,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Delete an object in language
-             * 
+             *
              * Match /asgard/object/delete/<guid>/<lang>
              */
             'object_delete_lang' => array
@@ -325,7 +325,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
              */
             /**
              * RCS history
-             * 
+             *
              * Match /asgard/object/rcs/<guid>
              */
             'object_rcs_history' => array
@@ -336,7 +336,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * RCS history
-             * 
+             *
              * Match /asgard/object/rcs/<guid>
              */
             'object_rcs_preview' => array
@@ -359,21 +359,21 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
         );
     }
-    
+
     /**
      * Static method other plugins may use
      */
     function prepare_plugin($title, &$data)
     {
-        $_MIDCOM->auth->require_user_do('midgard.admin.asgard:access', null, 'midgard_admin_asgard_plugin');    
+        $_MIDCOM->auth->require_user_do('midgard.admin.asgard:access', null, 'midgard_admin_asgard_plugin');
         $data['view_title'] = $title;
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
-        
+
         $_MIDCOM->skip_page_style = true;
         $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
         $_MIDCOM->style->prepend_component_styledir(str_replace('asgard_','',$data['plugin_name']));
     }
-    
+
     function get_type_label($type)
     {
         $ref = midgard_admin_asgard_reflector_tree::get($type);
@@ -401,9 +401,9 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 break;
             default:
                 $data['language_code'] = '';
-        }    
+        }
     }
-    
+
     function finish_language($handler_id, &$data)
     {
         switch ($handler_id)
@@ -413,7 +413,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             case '____mfa-asgard-object_delete_lang':
                 mgd_set_lang($data['original_language']);
                 break;
-        }    
+        }
     }
 
     /**
@@ -426,19 +426,19 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         $_MIDCOM->set_26_request_metadata($object->metadata->revised, $object->guid);
         $data['object_reflector'] = midgard_admin_asgard_reflector::get($object);
         $data['tree_reflector'] = midgard_admin_asgard_reflector_tree::get($object);
-        
+
         $data['object'] =& $object;
-        
+
         // Populate toolbar
         $data['asgard_toolbar'] = midgard_admin_asgard_plugin::get_object_toolbar($object, $handler_id, &$data);
         midgard_admin_asgard_plugin::get_common_toolbar($data);
 
-        
+
         // Figure out correct title and language handling
         switch ($handler_id)
         {
             case '____mfa-asgard-object_edit':
-            case '____mfa-asgard-object_edit_lang':            
+            case '____mfa-asgard-object_edit_lang':
                 $title_string = $_MIDCOM->i18n->get_string('edit %s %s', 'midgard.admin.asgard');
                 break;
             case '____mfa-asgard-object_metadata':
@@ -446,7 +446,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 break;
             case '____mfa-asgard-object_attachments':
             case '____mfa-asgard-object_attachments_edit':
-            case '____mfa-asgard-object_attachments_delete':            
+            case '____mfa-asgard-object_attachments_delete':
                 $title_string = $_MIDCOM->i18n->get_string('attachments of %s %s', 'midgard.admin.asgard');
                 break;
             case '____mfa-asgard-object_parameters':
@@ -469,7 +469,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 $title_string = sprintf($_MIDCOM->i18n->get_string('create %s under %s', 'midgard.admin.asgard'), midgard_admin_asgard_plugin::get_type_label($data['new_type_arg']), '%s %s');
                 break;
             case '____mfa-asgard-object_delete':
-            case '____mfa-asgard-object_delete_lang':            
+            case '____mfa-asgard-object_delete_lang':
                 $title_string = $_MIDCOM->i18n->get_string('delete %s %s', 'midgard.admin.asgard');
                 break;
             default:
@@ -498,7 +498,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/view.png',
             )
         );
-        
+
         $link = $_MIDCOM->permalinks->resolve_permalink($object->guid);
         if ($link)
         {
@@ -512,7 +512,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 )
             );
         }
-            
+
         if ($object->can_do('midgard:update'))
         {
             $toolbar->add_item
@@ -524,7 +524,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                 )
             );
-            
+
             if (   is_a($object, 'midgard_topic')
                 && $object->component
                 && $object->can_do('midcom:component_config'))
@@ -539,7 +539,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     )
                 );
             }
-            
+
             $toolbar->add_item
             (
                 array
@@ -549,7 +549,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/metadata.png',
                 )
             );
-            
+
             $toolbar->add_item
             (
                 array
@@ -559,7 +559,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
                 )
             );
-            
+
             $toolbar->add_item
             (
                 array
@@ -570,7 +570,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     MIDCOM_TOOLBAR_ENABLED => $object->can_do('midgard:parameters'),
                 )
             );
-            
+
             $toolbar->add_item
             (
                 array
@@ -581,7 +581,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     MIDCOM_TOOLBAR_ENABLED => $object->can_do('midgard:privileges'),
                 )
             );
-            
+
 
             if (   array_key_exists('midcom.helper.replicator', $_MIDCOM->componentloader->manifests)
                 && $_MIDCOM->auth->admin)
@@ -597,7 +597,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 );
             }
         }
-        
+
         if ($object->can_do('midgard:create'))
         {
             // Find out what types of children the object can have and show create buttons for them
@@ -644,13 +644,13 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                             break;
                     }
                 }
-                
+
                 if (!$display_button)
                 {
                     // Skip this type
                     continue;
                 }
-                
+
                 $toolbar->add_item
                 (
                     array
@@ -690,7 +690,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             );
         }
         $tmp = array();
-        
+
         $breadcrumb = array();
         $label = $data['object_reflector']->get_object_label($object);
         $breadcrumb[] = array
@@ -698,7 +698,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             MIDCOM_NAV_URL => "__mfa/asgard/object/view/{$object->guid}/{$data['language_code']}",
             MIDCOM_NAV_NAME => $label,
         );
-                
+
         $parent = $object->get_parent();
         $i = 0;
         while (   is_object($parent)
@@ -805,7 +805,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     MIDCOM_NAV_URL => "__mfa/asgard/object/rcs/preview/{$this->_object->guid}/{$data['args'][1]}/{$data['args'][2]}",
                     MIDCOM_NAV_NAME => sprintf($this->_l10n->get('differences between %s and %s'), $data['args'][1], $data['args'][2]),
                 );
-                
+
             case '____mfa-asgard-object_rcs_preview':
                 if (isset($data['args'][2]))
                 {
@@ -815,36 +815,36 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 {
                     $current = $data['args'][1];
                 }
-                
+
                 $tmp[] = Array
                 (
                     MIDCOM_NAV_URL => "__mfa/asgard/object/rcs/preview/{$this->_object->guid}/{$current}/",
                     MIDCOM_NAV_NAME => sprintf($this->_l10n->get('version %s'), $current),
                 );
-                
+
             case '____mfa-asgard-object_rcs_history':
                 $tmp[] = Array
                 (
                     MIDCOM_NAV_URL => "__mfa/asgard/object/rcs/{$this->_object->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n->get('show history'),
                 );
-                
+
                 $tmp = array_reverse($tmp);
-                
+
                 $breadcrumb = array_merge($breadcrumb, $tmp);
-                
+
                 break;
         }
-        
+
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
-        
+
         return $toolbar;
     }
 
     // Add Asgard styling for plugins
 
     function asgard_header()
-    {  
+    {
         midcom_show_style('midgard_admin_asgard_header');
         midcom_show_style('midgard_admin_asgard_middle');
     }
@@ -857,19 +857,20 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
     function get_common_toolbar(&$data)
     {
     }
-    
+
     /**
      * Get a preference for the current user
-     * 
-     * @access static public
+     *
+     * @access public
+     * @static
      * @param string $preference    Name of the preference
      */
     function get_preference($preference)
     {
         $person = new midcom_db_person($_MIDCOM->auth->user->guid);
-        
+
         return $person->get_parameter('midgard.admin.asgard:preferences', $preference);
-        
+
         /** For some odd reason Midgard crashes here
         $mc = midcom_baseclasses_database_parameter::new_collector('parentguid', $_MIDCOM->auth->user->guid);
         $mc->add_value_property('value');
@@ -877,20 +878,20 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         $mc->add_constraint('name', '=', $preference);
         $mc->add_constraint('metadata.deleted', '=', 0);
         $mc->set_limit(1);
-        
+
         $mc->execute();
-        
+
         if ($mc->count() === 0)
         {
             return null;
         }
-        
+
         $keys = $mc->list_keys();
-        
+
         foreach ($keys as $guid => $array)
         {
             $value = $mc->get_subkey($guid, 'value');
-            
+
             return $mc->get_subkey($guid, 'value');
         }
         */

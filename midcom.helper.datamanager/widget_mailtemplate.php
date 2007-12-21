@@ -32,7 +32,6 @@
  * All input fields use the class input.shorttext or textarea.longtext respectively.
  * The fieldset is set to fieldset.mailtemplate.
  *
- * @package midcom.helper.datamanager
  */
 
 class midcom_helper_datamanager_widget_mailtemplate extends midcom_helper_datamanager_widget {

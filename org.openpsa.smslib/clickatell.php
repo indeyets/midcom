@@ -1,6 +1,9 @@
 <?php
 /**
- * Intarface to Clickatell API
+ * @package org.openpsa.smslib
+ */
+/**
+ * Interface to Clickatell API
  *
  * TODO: Implement other methods than send_sms.
  */

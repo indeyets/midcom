@@ -1,5 +1,12 @@
 <?php
 /**
+ * @package org.openpsa.products
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
  * MidCOM wrapped class for access to stored queries
  */
 
@@ -59,12 +66,12 @@ class org_openpsa_products_businessarea_dba extends __org_openpsa_products_busin
         // Check for duplicates
         $qb = org_openpsa_products_businessarea_dba::new_query_builder();
         $qb->add_constraint('code', '=', $code);
-        
+
         if ($this->id)
         {
             $qb->add_constraint('id', '<>', $this->id);
         }
-        
+
         $result = $qb->execute_unchecked();
         if (count($result) > 0)
         {

@@ -5,38 +5,38 @@
  * @package midcom.helper.xml
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
- * 
+ *
  */
 
 /**
  * A simple XML to array parser using expat.
- * 
- * This class is based on some of the comments found on the 
+ *
+ * This class is based on some of the comments found on the
  * php.net manual pages, especially
  * bbellwfu at gmail dot com
- * 
- * The parser works using a stack to add tads so it knows 
+ *
+ * The parser works using a stack to add tads so it knows
  * where it is in the taglist.
- * 
- * Usage: 
+ *
+ * Usage:
  * $data = '<person><name>Jacop</name><id>7</id></person>';
- * 
+ *
  * $array = midcom_helper_xml_toarray::parse($data);
- * 
- * 
- * var_dump($data); 
+ *
+ *
+ * var_dump($data);
  * array
- * 'person' => 
+ * 'person' =>
  *   array
- *     'name' => 
+ *     'name' =>
  *       array
  *         '_content' => 'Jacop'
- *     'id' => 
+ *     'id' =>
  *       array
  *         '_content' => '7'
- * 
+ *
  * Please note that the '_content' key is always set.
- * 
+ *
  *
  */
 class midcom_helper_xml_toarray
@@ -45,7 +45,7 @@ class midcom_helper_xml_toarray
     /**
      * An instance of the Expat parser
      * @access private
-     * @var resource 
+     * @var resource
      */
     var $_parser;
 
@@ -130,7 +130,7 @@ class midcom_helper_xml_toarray
             return false;
         }
         xml_parser_free($this->_parser);
-        
+
         // Restore newlines from XML parsing
         foreach ($this->_output as $type => $fields)
         {
@@ -143,7 +143,7 @@ class midcom_helper_xml_toarray
                 }
             }
         }
-        
+
         return $this->_output;
     }
     /**
@@ -152,7 +152,7 @@ class midcom_helper_xml_toarray
      * @param resource parser
      * @param string name of the xml tag
      * @param array attrs the attribtues found in the tag.
-     * @access private 
+     * @access private
      */
 
     function _tag_open($parser, $name, $attrs = array ())
@@ -172,7 +172,7 @@ class midcom_helper_xml_toarray
                 $this->_stack_ref[$name][$cnt]['attributes'] = $attrs;
             }
             $this->_stack_ref[$name][$cnt]['_content'] ="";
-            
+
             $this->_push_pos(& $this->_stack_ref[$name][$cnt]);
         }
         else
@@ -187,7 +187,7 @@ class midcom_helper_xml_toarray
     }
     /**
      * This function handles the data that is within
-     * an xml tag. 
+     * an xml tag.
      * @param resource parser
      * @param string the data.
      * @access private

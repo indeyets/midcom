@@ -1,5 +1,8 @@
 <?php
 /**
+ * @package org.openpsa.qbpager
+ */
+/**
  * Pages QB resultsets (uses midgard QB directly)
  */
 class org_openpsa_qbpager_direct extends org_openpsa_qbpager

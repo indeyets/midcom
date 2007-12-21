@@ -110,14 +110,14 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             'handler' => array('net_nehmer_account_handler_configuration', 'configuration'),
             'fixed_args' => array('config'),
         );
-        
+
         // INVITATION
         $this->_request_switch['sent_invites'] = Array
         (
             'handler' => Array('net_nehmer_account_handler_invitation', 'sent_invites'),
             'fixed_args' => Array('sent_invites'),
         );
-        
+
         $this->_request_switch['invite'] = Array
         (
             'handler' => Array('net_nehmer_account_handler_invitation', 'invite'),
@@ -170,7 +170,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nehmer_account_handler_edit', 'edit'),
             'fixed_args' => Array('edit'),
         );
-        
+
         if ($this->_config->get('allow_socialweb'))
         {
             $this->_request_switch['socialweb'] = Array
@@ -179,7 +179,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
                 'fixed_args' => Array('socialweb'),
             );
         }
-        
+
         if ($this->_config->get('allow_publish'))
         {
             $this->_request_switch['publish'] = Array
@@ -264,7 +264,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('register_invitation'),
             'variable_args' => 1,
         );
-    
+
         // Pending registrations
         if ($this->_config->get('require_activation'))
         {
@@ -274,7 +274,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
                 'handler' => array('net_nehmer_account_handler_pending', 'list'),
                 'fixed_args' => array('pending'),
             );
-            
+
             // Pending registrations
             // Match register/pending/<user guid>/
             $this->_request_switch['reqister_edit_pending'] = array
@@ -330,7 +330,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
 
         return true;
     }
-    
+
     /**
      * Generic request startup work:
      *
@@ -341,9 +341,9 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
     function _on_handle($handler, $args)
     {
         $this->_handler_id = $handler;
-        
+
         $this->_populate_toolbar();
-        
+
         return true;
     }
 
@@ -481,7 +481,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
 
         return true;
     }
-    
+
     /**
      * Populates the toolbars depending on the users rights.
      *
@@ -501,22 +501,22 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
                 )
             );
         }
-        
+
         if ($this->_handler_id === 'config')
         {
             return;
         }
-        
+
         if ($_MIDCOM->auth->admin)
         {
             $qb = midcom_db_person::new_query_builder();
-            
+
             $qb->begin_group('AND');
                 $qb->add_constraint('parameter.domain', '=', 'net.nehmer.account');
                 $qb->add_constraint('parameter.name', '=', 'require_approval');
                 $qb->add_constraint('parameter.value', '=', 'require_approval');
             $qb->end_group();
-            
+
             // Let the admin user know, if there are pending approvals
             if ($qb->count() > 0)
             {
@@ -532,21 +532,21 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             }
         }
     }
-        
+
     function verify_person_privileges($person)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $person_user = $_MIDCOM->auth->get_user($person->id);
-        
+
         if (!is_a($person, 'midcom_db_person'))
         {
             $_MIDCOM->auth->request_sudo();
             $person = new midcom_db_person($person->id);
             $_MIDCOM->auth->drop_sudo();
         }
-        
+
         debug_add("Checking privilege midgard:owner for person #{$person->id}");
-        
+
         if (!$_MIDCOM->auth->can_do('midgard:owner', $person, $person_user))
         {
             debug_add("Person #{$person->id} lacks privilege midgard:owner, adding");
@@ -559,10 +559,10 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             {
                 debug_add("Added privilege 'midgard:owner' for person #{$person->id}", MIDCOM_LOG_INFO);
             }
-            
+
             $_MIDCOM->auth->drop_sudo();
         }
-        
+
         debug_pop();
     }
 
@@ -573,7 +573,8 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      * @param midcom_db_person $person  The newly created person account.
      * @param string $password          Password to be included in the message
      * @param activation_link
-     * @access static public
+     * @access public
+     * @static
      * @todo Make this configurable.
      */
     function send_registration_mail(&$person, $password, $activation_link, $config)
@@ -583,7 +584,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
         {
             $from = $person->email;
         }
-        
+
         $template = array
         (
             'from' => $from,
@@ -598,10 +599,10 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
         );
 
         $mail = new midcom_helper_mailtemplate($template);
-        
+
         // Get the commonly used parameters
         $parameters = net_nehmer_account_viewer::get_mail_parameters($person);
-        
+
         // Extra parameters
         $parameters['USERNAME'] = $person->username;
         if (isset($person->name))
@@ -610,16 +611,16 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
         }
         if (isset($person->firstname))
         {
-            $parameters['FIRSTNAME'] = $person->firstname;            
+            $parameters['FIRSTNAME'] = $person->firstname;
         }
         if (isset($person->lastname))
         {
-            $parameters['LASTNAME'] = $person->lastname;            
+            $parameters['LASTNAME'] = $person->lastname;
         }
-        
+
         $parameters['PASSWORD'] = $password;
         $parameters['ACTIVATIONLINK'] = $activation_link;
-        
+
         // Set the parameters and parse the message
         $mail->set_parameters($parameters);
         $mail->parse();
@@ -631,7 +632,8 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      *
      * @param midcom_db_person $person Person account.
      * @param $link for resetting password
-     * @access static public
+     * @access public
+     * @static
      */
     function send_password_reset_mail($person, $link, &$config)
     {
@@ -655,13 +657,13 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
         );
 
         $mail = new midcom_helper_mailtemplate($template);
-        
+
         $prefix = substr($_MIDCOM->get_host_prefix(), 0, -1) . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-        
+
         // Get the commonly used parameters
         $parameters = net_nehmer_account_viewer::get_mail_parameters($person);
         $parameters['CURRENTADDRESS'] = "{$prefix}lostpassword/reset/";
-        
+
         // Extra parameters
         $parameters['USERNAME'] = $person->username;
         if (isset($person->name))
@@ -682,15 +684,16 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
         // Set the parameters and parse the message
         $mail->set_parameters($parameters);
         $mail->parse();
-        
+
         return $mail->send($person->email);
     }
 
-    
+
     /**
      * Generate the commonly used parameters used in messages sent to the user.
-     * 
-     * @access static public
+     *
+     * @access public
+     * @static
      * @param midcom_db_person $person      Person object
      * @return Array                        Parameters for the message
      */
@@ -698,7 +701,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
     {
         // Prefix
         $prefix = substr($_MIDCOM->get_host_prefix(), 0, -1) . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-        
+
         // Set the variable parameters
         $parameters = array
         (
@@ -707,7 +710,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             'CURRENTADDRESS' => "{$prefix}register/account/",
             'APPROVALURI' => "{$prefix}pending/{$person->guid}/",
         );
-        
+
         return $parameters;
     }
 }

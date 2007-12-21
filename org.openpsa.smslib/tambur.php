@@ -1,6 +1,9 @@
 <?php
 /**
- * Intarface to Tambur API for sending SMS, MMS, Wap-push etc
+ * @package org.openpsa.smslib
+ */
+/**
+ * Intearface to Tambur API for sending SMS, MMS, Wap-push etc
  *
  * TODO: Implement other methods than send_sms.
  */

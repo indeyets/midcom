@@ -16,7 +16,7 @@ class midcom_admin_folder_handler_delete extends midcom_baseclasses_components_h
 {
     /**
      * Constructor metdot
-     * 
+     *
      * @access public
      */
     function midcom_admin_folder_handler_delete ()
@@ -26,7 +26,7 @@ class midcom_admin_folder_handler_delete extends midcom_baseclasses_components_h
 
     /**
      * Handler for folder deletion.
-     * 
+     *
      * @access private
      * @return boolean Indicating success
      */
@@ -34,7 +34,7 @@ class midcom_admin_folder_handler_delete extends midcom_baseclasses_components_h
     {
         $this->_topic->require_do('midgard:delete');
         $this->_topic->require_do('midcom.admin.folder:topic_management');
-        
+
         if (array_key_exists('f_cancel', $_REQUEST))
         {
             $_MIDCOM->relocate('');
@@ -51,9 +51,9 @@ class midcom_admin_folder_handler_delete extends midcom_baseclasses_components_h
                 // This will exit.
             }
         }
-        
+
         $this->_request_data['topic'] = $this->_topic;
-        
+
         // Add the view to breadcrumb trail
         $tmp = array();
         $tmp[] = array
@@ -62,20 +62,20 @@ class midcom_admin_folder_handler_delete extends midcom_baseclasses_components_h
             MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('delete folder', 'midcom.admin.folder'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
-        
+
         // Hide the button in toolbar
         $this->_node_toolbar->hide_item('__ais/folder/delete.html');
 
         // Set page title
         $data['title'] = sprintf($_MIDCOM->i18n->get_string('delete folder %s', 'midcom.admin.folder'), $data['topic']->extra);
         $_MIDCOM->set_pagetitle($data['title']);
-        
+
         // Set the help object in the toolbar
         $this->_view_toolbar->add_help_item('delete_folder', 'midcom.admin.folder');
 
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('midcom.admin.folder');
-        
+
         // Add style sheet
         $_MIDCOM->add_link_head
         (
@@ -86,13 +86,13 @@ class midcom_admin_folder_handler_delete extends midcom_baseclasses_components_h
                 'href' => MIDCOM_STATIC_URL . '/midcom.admin.folder/folder.css',
             )
         );
-        
+
         return true;
     }
-    
+
     /**
      * Removes the folder from indexer if applicable.
-     * 
+     *
      * @access private
      */
     function _delete_topic_update_index()
@@ -171,10 +171,10 @@ class midcom_admin_folder_handler_delete extends midcom_baseclasses_components_h
 
         debug_pop();
     }
-    
+
     /**
      * Deletes the folder and _midcom_db_article_ objects stored in it.
-     * 
+     *
      * @access private
      */
     function _process_delete_form()
@@ -215,10 +215,10 @@ class midcom_admin_folder_handler_delete extends midcom_baseclasses_components_h
         debug_pop();
         return true;
     }
-    
+
     /**
      * Shows the _Delete folder_ form.
-     * 
+     *
      * @access private
      */
     function _show_delete($handler_id, &$data)
@@ -226,47 +226,48 @@ class midcom_admin_folder_handler_delete extends midcom_baseclasses_components_h
         $data['folder'] =& $this->_topic;
         midcom_show_style('midcom-admin-show-delete-folder');
     }
-    
+
     /**
      * List topic contents
-     * 
-     * @access static public
+     *
+     * @access public
+     * @static
      * @param int $id Topic ID
      */
     function list_children($id)
     {
         $qb_topic = midcom_db_topic::new_query_builder();
         $qb_topic->add_constraint('up', '=', $id);
-        
+
         $qb_article = midcom_db_article::new_query_builder();
         $qb_article->add_constraint('topic', '=', $id);
-        
+
         if (   $qb_topic->count() === 0
             && $qb_article->count() === 0)
         {
             return false;
         }
-        
+
         echo "<ul class=\"folder_list\">\n";
         foreach ($qb_topic->execute_unchecked() as $topic)
         {
             echo "    <li class=\"node\">\n";
             echo "        <img src=\"".MIDCOM_STATIC_URL."/stock-icons/16x16/stock_folder.png\" alt=\"\" /> {$topic->extra}\n";
-            
+
             midcom_admin_folder_handler_delete::list_children($topic->id);
-            
+
             echo "    </li>\n";
         }
-        
+
         foreach ($qb_article->execute_unchecked() as $article)
         {
             echo "    <li class=\"leaf\">\n";
             echo "        <img src=\"".MIDCOM_STATIC_URL."/stock-icons/16x16/new-text.png\" alt=\"\" /> {$article->title}\n";
-            
+
             // Check for the reply articles
             $qb = midcom_db_article::new_query_builder();
             $qb->add_constraint('up', '=', $article->id);
-            
+
             if ($qb->count() > 0)
             {
                 echo "        <ul>\n";
@@ -276,7 +277,7 @@ class midcom_admin_folder_handler_delete extends midcom_baseclasses_components_h
                 }
                 echo "        </ul>\n";
             }
-            
+
             echo "    </li>\n";
         }
         echo "</ul>\n";

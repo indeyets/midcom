@@ -1,12 +1,19 @@
-<?
+<?php
+/**
+ * @package no.odindata.quickform2
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
 /**
  * This is a factory class that creates the emailclass
- * 
+ *
  * handles the sending of the emails
  *
  * It uses net_nemein_email
  */
-class no_odindata_quickform2_email 
+class no_odindata_quickform2_email
 {
     var $_factory;
     var $_config;
@@ -20,11 +27,11 @@ class no_odindata_quickform2_email
         $this->_factory = $factory;
     }
 
-    function execute () 
+    function execute ()
     {
         debug_push( __CLASS__, __FUNCTION__ );
-        $GLOBALS['midcom_debugger']->setLogLevel( 5 );       
-        
+        $GLOBALS['midcom_debugger']->setLogLevel( 5 );
+
         $email_gen_class = $this->_config->get( 'mail_class' );
 
         $email = new $email_gen_class( new org_openpsa_mail, new org_openpsa_mail  );

@@ -21,7 +21,6 @@ die('The class midcom_helper_datamanager2_widget_table has been disabled, it' .
  * values. Atm that is only the parameters type.
  *
  *
- * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_widget_table extends midcom_helper_datamanager2_widget
 {

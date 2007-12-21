@@ -13,8 +13,6 @@
  * This class uses special operations to allow for ajax forms.
  *
  * The form rendering is done using the widgets and is based on HTML_QuickForm.
- *
- * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_formmanager_ajax extends midcom_helper_datamanager2_formmanager
 {
@@ -22,7 +20,7 @@ class midcom_helper_datamanager2_formmanager_ajax extends midcom_helper_datamana
      * Latest exit code
      */
     var $_exitcode = null;
-     
+
     /**
      * Initializes the Form manager with a list of types for a given schema.
      *
@@ -100,17 +98,17 @@ class midcom_helper_datamanager2_formmanager_ajax extends midcom_helper_datamana
         {
             $exitcode = " exitcode=\"{$this->_exitcode}\"";
         }
-                
-        echo "<form id=\"{$form_identifier}\"{$exitcode} editable=\"true\">\n";    
-        
+
+        echo "<form id=\"{$form_identifier}\"{$exitcode} editable=\"true\">\n";
+
         if (count($this->form->_errors) > 0)
         {
             foreach ($this->form->_errors as $field => $error)
             {
                 echo "<error field=\"{$field}\">{$error}</error>\n";
             }
-        }    
-        
+        }
+
         foreach ($this->widgets as $name => $copy)
         {
             // TODO: Add support for other datatypes as we go
@@ -126,7 +124,7 @@ class midcom_helper_datamanager2_formmanager_ajax extends midcom_helper_datamana
                     if (method_exists($element, 'toHtml'))
                     {
                         echo "<field name=\"{$name}\"><![CDATA[\n";
-                        echo $element->toHtml();                        
+                        echo $element->toHtml();
                         echo "]]></field>\n";
                     }
                     break;
@@ -137,35 +135,35 @@ class midcom_helper_datamanager2_formmanager_ajax extends midcom_helper_datamana
 
     /**
      * This call will render the contents in AJAX-readable fashion
-     */    
+     */
     function display_view($form_identifier = 'ajax', $new_form_identifier = null)
     {
         $_MIDCOM->cache->content->content_type('text/xml');
         $_MIDCOM->header('Content-type: text/xml; charset=utf-8');
         echo '<?xml version="1.0" encoding="utf-8" standalone="yes"?>' . "\n";
-        
+
         $exitcode = '';
         if (!is_null($this->_exitcode))
         {
             $exitcode = " exitcode=\"{$this->_exitcode}\"";
         }
-        
+
         $new_identifier = '';
         if (!is_null($new_form_identifier))
         {
             $new_identifier = " new_identifier=\"{$new_form_identifier}\"";
         }
-                
-        echo "<form id=\"{$form_identifier}\"{$exitcode}{$new_identifier}>\n";    
-        
+
+        echo "<form id=\"{$form_identifier}\"{$exitcode}{$new_identifier}>\n";
+
         if (count($this->form->_errors) > 0)
         {
             foreach ($this->form->_errors as $field => $error)
             {
                 echo "<error field=\"{$field}\">{$error}</error>\n";
             }
-        }        
-        
+        }
+
         foreach ($this->widgets as $name => $widget)
         {
 
@@ -177,14 +175,14 @@ class midcom_helper_datamanager2_formmanager_ajax extends midcom_helper_datamana
                 case 'midcom_helper_datamanager2_type_date':
                 case 'midcom_helper_datamanager2_type_number':
                 case 'midcom_helper_datamanager2_type_boolean':
-                case 'midcom_helper_datamanager2_type_tags':                
+                case 'midcom_helper_datamanager2_type_tags':
                     echo "<field name=\"{$name}\"><![CDATA[\n";
                     echo $widget->render_content();
                     echo "]]></field>\n";
                     break;
             }
         }
-        echo "</form>\n";    
+        echo "</form>\n";
     }
 
     /**

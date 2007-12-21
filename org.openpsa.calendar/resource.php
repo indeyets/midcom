@@ -1,5 +1,12 @@
 <?php
 /**
+ * @package org.openpsa.calendar
+ * @author Nemein Oy, http://www.nemein.com/
+ * @copyright Nemein Oy, http://www.nemein.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
+/**
  * MidCOM wrapped class for access to stored queries
  */
 
@@ -53,12 +60,12 @@ class org_openpsa_calendar_resource_dba extends __org_openpsa_calendar_resource_
         // Check for duplicates
         $qb = org_openpsa_calendar_resource_dba::new_query_builder();
         $qb->add_constraint('name', '=', $name);
-        
+
         if ($this->id)
         {
             $qb->add_constraint('id', '<>', $this->id);
         }
-        
+
         $result = $qb->execute();
         if (count($result) > 0)
         {
@@ -66,7 +73,7 @@ class org_openpsa_calendar_resource_dba extends __org_openpsa_calendar_resource_
         }
         return false;
     }
-    
+
     function get_reservations($from, $to)
     {
         $qb = org_openpsa_calendar_event_resource_dba::new_query_builder();
@@ -96,7 +103,7 @@ class org_openpsa_calendar_resource_dba extends __org_openpsa_calendar_resource_
         {
             $qb->add_order('event.start');
         }
-        
+
         return $qb->execute();
     }
 }

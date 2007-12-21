@@ -1,55 +1,62 @@
 <?php
+/**
+* @package cc.kaktus.todo
+* @author The Midgard Project, http://www.midgard-project.org
+* @copyright The Midgard Project, http://www.midgard-project.org
+* @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+*/
+
 class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
 {
     /**
      * TODO list item
-     * 
+     *
      * @access private
      * @var cc_kaktus_todo_item
      */
     var $_todo = null;
-    
+
     /**
      * DM2 instance for a TODO item
-     * 
+     *
      * @access private
      */
     var $_datamanager = null;
-    
+
     /**
      * Parent ID of the requested TODO branch
-     * 
+     *
      * @access private
      * @var integer
      */
     var $_parent_id = null;
-    
+
     /**
      * ID of the filtering person
-     * 
+     *
      * @access private
      * @var integer
      */
     var $_person_id = null;
-    
+
     /**
      * Type for filtering the results
-     * 
+     *
      * @access private
      * @var string
      */
     var $_type = '';
-    
+
     /**
      * Simple constructor. Connect to the parent class.
-     * 
+     *
      * @access public
      */
     function cc_kaktus_todo_handler_list()
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      *
      *
@@ -60,17 +67,17 @@ class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/cc.kaktus.todo/toggle.js');
         $this->_schemadb =& $this->_request_data['schemadb'];
     }
-    
+
     /**
      * Loads the DM instance for a TODO list item
-     * 
+     *
      * @access private
      */
     function _load_datamanager()
     {
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_schemadb);
         $this->_request_data['datamanager'] =& $this->_datamanager();
-        
+
         if (   !$this->_datamanager
             || !$this->_datamanager->autoset_storage($this->_team))
         {
@@ -78,16 +85,16 @@ class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
             // This will exit
         }
     }
-    
+
     /**
      * Get the filtering options for the query builder
-     * 
+     *
      * @access private
      */
     function _get_filters()
     {
         $filters = array ();
-        
+
         // Filtering by group
         if ($this->_config->get('group'))
         {
@@ -97,7 +104,7 @@ class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
                 'value' => $this->_config->get('group'),
             );
         }
-        
+
         if (array_key_exists('group', $_GET))
         {
             $filters['gid'] = array
@@ -106,7 +113,7 @@ class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
                 'value' => $_GET['group'],
             );
         }
-        
+
         // Filtering by person
         if ($this->_config->get('person'))
         {
@@ -116,7 +123,7 @@ class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
                 'value' => $this->_config->get('person'),
             );
         }
-        
+
         if (array_key_exists('person', $_GET))
         {
             $filters['pid'] = array
@@ -125,7 +132,7 @@ class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
                 'value' => $_GET['person'],
             );
         }
-        
+
         if ($this->_type === 'overtime')
         {
             $filters['deadline'] = array
@@ -133,14 +140,14 @@ class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
                 'type' => '<',
                 'value' => date('Y-m-d'),
             );
-            
+
             $filters['flag'] = array
             (
                 'type' => '<>',
                 'value' => CC_KAKTUS_TODO_TIME_FINISHED,
             );
         }
-        
+
         if ($this->_type === 'finished')
         {
             $filters['flag'] = array
@@ -149,20 +156,20 @@ class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
                 'value' => CC_KAKTUS_TODO_TIME_FINISHED,
             );
         }
-        
+
         return $filters;
     }
-    
+
     /**
      * Loads a list of items
-     * 
+     *
      * @access private
      * @var integer Describing the owner item
      */
     function _load_items($id = null)
     {
         $qb = cc_kaktus_todo_item_dba::new_query_builder();
-        
+
         if (!is_null($id))
         {
             $qb->add_constraint('up', '=', $id);
@@ -171,53 +178,53 @@ class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
         {
             $qb->add_constraint('up', '=', 0);
         }
-        
+
         if ($this->_config->get('person'))
         {
             $qb->add_constraint('pid', '=', $this->_config->get('person'));
         }
-        
+
         foreach ($this->_get_filters() as $key => $array)
         {
             $qb->add_constraint($key, $array['type'], $array['value']);
         }
-        
+
         return @$qb->execute_unchecked();
     }
-    
+
     /**
      * List items
-     * 
+     *
      * @access private
      */
     function _handler_list($handler_id, $args, &$data)
     {
         return true;
     }
-    
+
     /**
      * Show TODO items
-     * 
+     *
      * @access private
      */
     function _show_list($handler_id, &$data)
     {
         midcom_show_style('todo_list_header');
         $this->_items = $this->_load_items($this->_parent_id);
-        
+
         foreach ($this->_items as $item)
         {
             $this->_request_data['item'] =& $item;
             $this->_load_datamanager();
             midcom_show_style('todo_list_item');
         }
-        
+
         midcom_show_style('todo_list_footer');
     }
-    
+
     /**
      * List items that should have already been ready
-     * 
+     *
      * @access private
      */
     function _handler_overtime($handler_id, $args, &$data)
@@ -225,10 +232,10 @@ class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
         $this->_type = 'overtime';
         return true;
     }
-    
+
     /**
      * Show TODO items
-     * 
+     *
      * @access private
      */
     function _show_overtime($handler_id, &$data)
@@ -237,10 +244,10 @@ class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
         $this->_items = $this->_load_items($this->_parent_id);
         midcom_show_style('todo_list_footer');
     }
-    
+
     /**
      * List items that should have already been ready
-     * 
+     *
      * @access private
      */
     function _handler_finished($handler_id, $args, &$data)
@@ -248,10 +255,10 @@ class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
         $this->_type = 'finished';
         return true;
     }
-    
+
     /**
      * Show TODO items
-     * 
+     *
      * @access private
      */
     function _show_finished($handler_id, &$data)

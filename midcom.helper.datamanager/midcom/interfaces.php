@@ -1,12 +1,18 @@
 <?php
+/**
+ * @package midcom.helper.datamanager
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
 class midcom_helper_datamanager_midcom {
 
     function initialize() {
         $prefix = MIDCOM_ROOT . "/midcom/helper/datamanager";
-        
+
         require("{$prefix}/datamanager.php");
-        
+
         require("{$prefix}/datatype.php");
         require("{$prefix}/datatype_text.php");
         require("{$prefix}/datatype_blob.php");
@@ -19,7 +25,7 @@ class midcom_helper_datamanager_midcom {
         require("{$prefix}/datatype_account.php");
         require("{$prefix}/datatype_mailtemplate.php");
         require("{$prefix}/datatype_number.php");
-        require("{$prefix}/datatype_integer.php");        
+        require("{$prefix}/datatype_integer.php");
         require("{$prefix}/datatype_markdown.php");
         require("{$prefix}/datatype_array.php");
         require("{$prefix}/datatype_privilege.php");
@@ -43,9 +49,9 @@ class midcom_helper_datamanager_midcom {
         require("{$prefix}/widget_config_radiobox.php");
         require("{$prefix}/widget_tinymce.php");
         require("{$prefix}/widget_contactchooser.php");
-        
+
         require_once("{$prefix}/helpers_select_lists.php");
-        
+
         return true;
     }
 

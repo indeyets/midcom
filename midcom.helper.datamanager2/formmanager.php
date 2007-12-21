@@ -765,8 +765,8 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
 
     /**
      * Set the value of a formelement.
-     * @var $key the form field name
-     * @var $value the new value to set
+     * @param $key the form field name
+     * @param $value the new value to set
      */
     function set_value( $key, $value )
     {

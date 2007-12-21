@@ -50,7 +50,7 @@ class midcom_helper_datamanager2_controller_create extends midcom_helper_dataman
      * The name of the hidden field used to remember the temporary object id.
      *
      * @var string
-     * @access private.
+     * @access private
      */
     var $_tmpid_fieldname = '__midcom_helper_datamanager2_controller_create_tmpid';
 

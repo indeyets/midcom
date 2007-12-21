@@ -268,7 +268,8 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
     /**
      * Static method for populating user interface for editing and creating topics
      *
-     * @access static public
+     * @access public
+     * @static
      * @return Array Containing a list of components
      */
     function list_components($parent_component = '', $all = false)

@@ -11,7 +11,7 @@
 
 /**
  * Calendar repeating event handler
- * 
+ *
  * @package net.nemein.repeathandler
  */
 class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
@@ -45,13 +45,13 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
         {
             return new org_openpsa_calendar_event();
         }
-        
+
         return new org_openpsa_calendar_event($guid);
     }
 
     /**
      * Delete all old repeating instances of the event
-     * 
+     *
      * @return void
      * @param string $guid  GUID of the master event
      */
@@ -63,7 +63,7 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
             $qb->add_constraint('parameter.domain', '=', 'net.nemein.repeathandler');
             $qb->add_constraint('parameter.name', '=', 'master_guid');
             $qb->add_constraint('parameter.value', '=', $guid);
-            
+
             $results = $qb->execute_unchecked();
         }
         else
@@ -73,15 +73,15 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
             $qb->add_constraint('name', '=', 'master_guid');
             $qb->add_constraint('value', '=', $guid);
             $qb->add_constraint('tablename', '=', 'event');
-            
+
             $results = array ();
-            
+
             foreach (@$qb->execute() as $parameter)
             {
                 $results[] = new org_openpsa_calendar_event($parameter->oid);
             }
         }
-        
+
         foreach ($results as $event)
         {
             // Don't purge the master event object
@@ -89,7 +89,7 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
             {
                 continue;
             }
-            
+
             midcom_helper_purge_object($event->guid);
         }
     }
@@ -102,14 +102,14 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
     function create_event_from_instance($instance, $previous_guid = '')
     {
         $event = new org_openpsa_calendar_event();
-        
+
         $event->start = $instance['start'];
         $event->end = $instance['end'];
         $event->up = $this->master_event->up;
         $event->title = $this->master_event->title;
         $event->description = $this->master_event->description;
         $event->type = $this->master_event->type;
-        
+
         if ($event->create())
         {
             // Store order in the repeating situation
@@ -127,7 +127,7 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
                 $event->set_parameter('net.nemein.repeathandler', 'previous_guid', $previous_guid);
                 $previous_event = &$this->master_event;
             }
-            
+
             $previous_event->parameter('net.nemein.repeathandler', 'next_guid', $event->guid);
 
             /* TODO: NemeinCal compatibility, remove
@@ -199,27 +199,27 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
                 $target->$property = $this->master_event->$property;
             }
         }
-        
+
         foreach ($this->master_event->list_parameters() as $domain => $array)
         {
             if ($domain !== 'net.nemein.repeathandler')
             {
                 continue;
             }
-            
+
             foreach ($array as $name => $value)
             {
                 $target->set_parameter($domain, $name, $value);
             }
         }
-        
+
         // Update the target object
         return $target->update();
     }
 
     /**
      * Prepare an event for deletion
-     * 
+     *
      * @return boolean
      */
     function prepare_deletion()
@@ -238,7 +238,7 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
             $previous_event->set_parameter('net.nemein.repeathandler', 'next_guid', $next_event_guid);
             return true;
         }
-        
+
         if ($next_event_guid)
         {
             // Remove "previous event" connection
@@ -246,7 +246,7 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
             $next_event->set_parameter('net.nemein.repeathandler', 'previous_guid', '');
             return true;
         }
-        
+
         if ($previous_event_guid)
         {
             // Remove "previous event" connection
@@ -254,7 +254,7 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
             $previous_event->set_parameter('net.nemein.repeathandler', 'next_guid', '');
             return true;
         }
-        
+
         return false;
     }
 
@@ -300,24 +300,25 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
 
         return true;
     }
-    
+
     /**
      * Get the repeat rules from an event
-     * 
-     * @access static public
+     *
+     * @access public
+     * @static
      */
     function get_repeat_rules($guid)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         $event = new org_openpsa_calendar_event($guid);
-        
+
         if (   !$event
             || !$event->guid)
         {
             return false;
         }
-        
+
         // Initialize the rules set
         $rules = array
         (
@@ -329,59 +330,59 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
             'end_type' => null,
             'days' => array (),
         );
-        
+
         // Get the repeat rule type
         // Available options are 'daily', 'weekly', 'weekly_by_day', 'monthly_by_dom'
         $type = $event->get_parameter('net.nemein.repeathandler', 'rule.type');
-        
+
         if ($event->get_parameter('net.nemein.repeathandler', 'rule.interval'))
         {
             $rules['interval'] = $event->get_parameter('net.nemein.repeathandler', 'rule.interval');
         }
-        
+
         $master_guid = $event->get_parameter('net.nemein.repeathandler', 'master_guid');
-        
+
         if (!$master_guid)
         {
             debug_add('GUID of the master event not set!', MIDCOM_LOG_ERROR);
             debug_pop();
             return $rules;
         }
-        
+
         $master = new org_openpsa_calendar_event($master_guid);
-        
+
         if (!$type)
         {
             debug_add('No rules found, return an empty set');
             debug_pop();
             return array ();
         }
-        
+
         $rules['type'] = $type;
-        
+
         if (   !$master
             || !$master->guid)
         {
             debug_add('Master event probably deleted, cannot continue!', MIDCOM_LOG_ERROR);
             debug_pop();
-            
+
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Could not get the master event for the repeat rule');
             // This will exit
         }
-        
+
         $rules['from'] = date('Y-m-d', net_nemein_repeathandler::get_repeat_start($master_guid));
         $rules['to'] = date('Y-m-d', net_nemein_repeathandler::get_repeat_end($master_guid));
-        
+
         if ($type === 'weekly_by_day')
         {
             $rules['days'] = unserialize($master->get_parameter('net.nemein.repeathandler', 'rule.days'));
         }
-        
+
         if ($master->get_parameter('net.nemein.repeathandler', 'rule.num'))
         {
             $rules['end_type'] = 'num';
         }
-        
+
         if (version_compare(mgd_version(), '1.8', '>='))
         {
             $qb = org_openpsa_calendar_event::new_query_builder();
@@ -399,14 +400,15 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
             $qb->add_constraint('tablename', '=', 'event');
             $rules['num'] = $qb->count();
         }
-        
+
         return $rules;
     }
-    
+
     /**
      * Get repeat rule start time
-     * 
-     * @access static public
+     *
+     * @access public
+     * @static
      */
     function get_repeat_start($master_guid)
     {
@@ -419,7 +421,7 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
             $qb->add_constraint('parameter.value', '=', $master_guid);
             $qb->add_order('start');
             $qb->set_limit(1);
-            
+
             foreach ($qb->execute_unchecked() as $event)
             {
                 $start = $event->start;
@@ -432,13 +434,13 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
             $qb->add_constraint('name', '=', 'master_guid');
             $qb->add_constraint('value', '=', $master_guid);
             $qb->add_constraint('tablename', '=', 'event');
-            
+
             $results = array ();
-            
+
             foreach (@$qb->execute() as $parameter)
             {
                 $event = new org_openpsa_calendar_event($parameter->oid);
-                
+
                 if (   !isset($start)
                     || $start > $event->start)
                 {
@@ -446,14 +448,15 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
                 }
             }
         }
-        
+
         return $start;
     }
-    
+
     /**
      * Get repeat rule end time
-     * 
-     * @access static public
+     *
+     * @access public
+     * @static
      */
     function get_repeat_end($master_guid)
     {
@@ -465,9 +468,9 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
             $qb->add_constraint('parameter.value', '=', $master_guid);
             $qb->add_order('end', 'DESC');
             $qb->set_limit(1);
-            
+
             $end = 0;
-            
+
             foreach ($qb->execute_unchecked() as $event)
             {
                 $end = $event->end;
@@ -480,13 +483,13 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
             $qb->add_constraint('name', '=', 'master_guid');
             $qb->add_constraint('value', '=', $master_guid);
             $qb->add_constraint('tablename', '=', 'event');
-            
+
             $results = array ();
-            
+
             foreach (@$qb->execute() as $parameter)
             {
                 $event = new org_openpsa_calendar_event($parameter->oid);
-                
+
                 if (   !isset($end)
                     || $end < $event->end)
                 {
@@ -494,7 +497,7 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
                 }
             }
         }
-        
+
         return $end;
     }
 }

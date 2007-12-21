@@ -1,7 +1,7 @@
 <?php
 /**
  * @package midcom.admin.user
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id$
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -10,25 +10,25 @@
 /**
  * user editor interface for on-site editing of user elements, CSS and JavaScript
  * files and pictures
- * 
+ *
  * @package midcom.admin.user
  */
 class midcom_admin_user_plugin extends midcom_baseclasses_components_request
 {
     /**
      * Constructor. This probably isn't called in normal plugin users.
-     * 
+     *
      * @access public
      */
     function midcom_admin_user_plugin()
     {
         parent::midcom_baseclasses_components_request();
     }
-    
+
     /**
      * Get the plugin handlers, which act alike with Request Switches of MidCOM
      * Baseclasses Components (midcom.baseclasses.components.request)
-     * 
+     *
      * @access public
      * @return mixed Array of the plugin handlers
      */
@@ -36,9 +36,9 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
     {
         $_MIDCOM->load_library('midgard.admin.asgard');
         $_MIDCOM->load_library('midcom.admin.user');
-        
+
         $_MIDCOM->auth->require_valid_user();
-        
+
         return array
         (
             /**
@@ -46,7 +46,7 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
              */
             /**
              * List users
-             * 
+             *
              * Match /user-editor/
              */
             'user_list' => array
@@ -55,7 +55,7 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
             ),
             /**
              * Edit a user
-             * 
+             *
              * Match /user-editor/edit/<guid>/
              */
             'user_edit' => array
@@ -66,7 +66,7 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
             ),
             /**
              * Generate random passwords
-             * 
+             *
              * Match /user-editor/password/
              */
             'user_passwords' => array
@@ -76,7 +76,7 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
             ),
             /**
              * Generate random passwords
-             * 
+             *
              * Match /user-editor/password/email/
              */
             'user_passwords_batch' => array
@@ -86,7 +86,7 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
             ),
             /**
              * Edit a user's password
-             * 
+             *
              * Match /user-editor/edit/<guid>/
              */
             'user_edit_password' => array
@@ -108,7 +108,7 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
              ),
             /**
              * List groups
-             * 
+             *
              * Match /user-editor/group/
              */
             'group_list' => array
@@ -118,7 +118,7 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
             ),
             /**
              * Move a group
-             * 
+             *
              * Match /user-editor/group/
              */
             'group_move' => array
@@ -129,7 +129,7 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
             ),
             /**
              * Edit a group
-             * 
+             *
              * Match /user-editor/group/edit/<guid>/
              */
             'group_edit' => array
@@ -140,7 +140,7 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
             ),
             /**
              * List folders group has privileges to
-             * 
+             *
              * Match /user-editor/group/folders/<guid>/
              */
             'group_folders' => array
@@ -162,11 +162,12 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
              ),
         );
     }
-    
+
     /**
      * Static method for generating one password
-     * 
-     * @access static public
+     *
+     * @access public
+     * @static
      * @param int $length
      */
     function generate_password($length, $no_similars = true, $strong = true)
@@ -175,15 +176,15 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
         (
             'I', 'l', '1', '0', 'O',
         );
-        
+
         $string = '';
         for ($x = 0; $x < $length; $x++)
         {
             $rand = (int) rand(48, 122);
             $char = chr($rand);
-            
+
             $k = 0;
-            
+
             while (   !ereg('[a-zA-Z0-9]', $char)
                    || (   $strong
                        && strlen($string) > 0
@@ -193,12 +194,12 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
             {
                 $rand = (int) rand(48, 122);
                 $char = chr($rand);
-                
+
                 $k++;
             }
             $string .= $char;
         }
-        
+
         return $string;
     }
 }

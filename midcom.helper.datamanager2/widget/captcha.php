@@ -34,17 +34,17 @@ require_once('Text/Password.php');
  * - <i>int length</i> sets the length of the Captcha passphrase, defaults to 6.
  *
  * <b>Implementation Limitation:</b>
- * 
+ *
  * Due to the nature of the way how the captcha passphrase is passed to the captcha
  * image server, it is currently not possible to have more then one captcha per
  * unique REQUEST_URI whithin the users PHP Session space.
  *
  * <b>Integration Guide:</b>
- * 
+ *
  * Integrating Captcha support does not need any changes to your components, you just
  * have to add a new field into your DM2 schema using the captcha type/widget with NULL
  * storage:
- * 
+ *
  * <code>
  * 'captcha' => Array
  * (
@@ -56,7 +56,6 @@ require_once('Text/Password.php');
  * </code>
  *
  * @todo Enable multiple captchas per page.
- * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_widget_captcha extends midcom_helper_datamanager2_widget
 {
@@ -85,15 +84,15 @@ class midcom_helper_datamanager2_widget_captcha extends midcom_helper_datamanage
 
     /**
      * The input textbox used which needs to be frozen when operating on the captcha.
-     * 
+     *
      * @var HTML_QuickForm_Element
      * @access private
      */
     var $_element = null;
-    
+
     /**
      * The session namespace to use.
-     * 
+     *
      * @var string
      * @access private
      */
@@ -201,7 +200,7 @@ class midcom_helper_datamanager2_widget_captcha extends midcom_helper_datamanage
     {
         $this->_element->freeze();
     }
-    
+
     /**
      * Unfreezes the Input Element
      */
@@ -217,7 +216,7 @@ class midcom_helper_datamanager2_widget_captcha extends midcom_helper_datamanage
     {
         return $this->_element->isFrozen();
     }
-    
+
 }
 
 ?>

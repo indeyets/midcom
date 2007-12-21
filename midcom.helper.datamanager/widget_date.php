@@ -51,7 +51,6 @@
  * This script is distributed under the GNU Lesser General Public License.
  * Read the entire license text here: http://www.gnu.org/licenses/lgpl.html
  *
- * @package midcom.helper.datamanager
  */
 
 class midcom_helper_datamanager_widget_date extends midcom_helper_datamanager_widget {

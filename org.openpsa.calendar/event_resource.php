@@ -1,5 +1,12 @@
 <?php
 /**
+ * @package org.openpsa.calendar
+ * @author Nemein Oy, http://www.nemein.com/
+ * @copyright Nemein Oy, http://www.nemein.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
+/**
  * MidCOM wrapped class for access to stored queries
  */
 
@@ -9,7 +16,7 @@ class org_openpsa_calendar_event_resource_dba extends __org_openpsa_calendar_eve
     {
         return parent::__org_openpsa_calendar_event_resource_dba($id);
     }
-    
+
     /**
      * Human-readable label for cases like Asgard navigation
      */
@@ -87,7 +94,7 @@ class org_openpsa_calendar_event_resource_dba extends __org_openpsa_calendar_eve
             return null;
         }
     }
-    
+
     /**
      * TODO: Send notification to resource owner
      */

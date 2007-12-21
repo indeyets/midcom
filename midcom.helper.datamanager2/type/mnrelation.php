@@ -214,7 +214,7 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
     /**
      * Synchronizes the member list regex with the given LIKE query.
      *
-     * @access private.
+     * @access private
      */
     function _update_member_limit_regex()
     {

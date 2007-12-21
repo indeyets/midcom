@@ -32,7 +32,7 @@
     * @version 1.2
     * @created 05/22/2006
     * @updated 08/07/2006
-    * @author Ehsan Haque 
+    * @author Ehsan Haque
     */
 
 class yahoo
@@ -42,29 +42,29 @@ class yahoo
         -------------------------------------------------------*/
     /**
         * Service name (1. addressbook, 2. messenger, 3. newmail)
-        * @public
+        * @access public
         * @var string
         */
     var $service            = "";
 
     /**
         * Yahoo! Account Username
-        * @public
+        * @access public
         * @var string
         */
     var $login              = "";
 
     /**
         * Yahoo! Account Password
-        * @public
+        * @access public
         * @var string
-        */  
+        */
     var $password           = "";
 
     /**
         * Abosolute path to save the cookie
         * Default value is DOCUMENT_ROOT
-        * @public
+        * @access public
         * @var string
         */
     var $cookieJarPath      = "";
@@ -73,9 +73,9 @@ class yahoo
         * Abosulte path to the CA Bundle file
         * SSL Certificate required to verify CA cert
         * Usually required when script ran on Localhost
-        * Remote servers may not require 
+        * Remote servers may not require
         * Default value is false
-        * @public
+        * @access public
         * @var string
         */
     var $caBundleFile       = "";
@@ -83,23 +83,23 @@ class yahoo
     /**
         * Specifies if Proxy server required as Gateaway
         * Default value is false
-        * @public
+        * @access public
         * @var boolean
-        */  
+        */
     var $isUsingProxy       = false;
 
-    /**                     
-        * Proxy host name       
-        * @public               
-        * @var string          
-        */                      
+    /**
+        * Proxy host name
+        * @access public
+        * @var string
+        */
     var $proxyHost          = "";
 
-    /**                     
-        * Proxy port number     
-        * @public               
-        * @var int             
-        */                      
+    /**
+        * Proxy port number
+        * @access public
+        * @var int
+        */
     var $proxyPort          = 0;
 
     /*-------------------------------------------------------
@@ -107,129 +107,129 @@ class yahoo
         -------------------------------------------------------*/
     /**
         * URL to Authenticate user on Yahoo!
-        * @private
+        * @access private
         * @var string
         */
     var $authUrl            = "http://login.yahoo.com/config/login?";
 
     /**
         * URL for the desired Service
-        * @private
+        * @access private
         * @var string
-        */                          
+        */
     var $serviceUrl         = "";
 
     /**
         * URL to be used by cURL
-        * @private
+        * @access private
         * @var string
-        */                          
+        */
     var $url                = "";
 
     /**
         * User agent (used to trick --  Add a normal cURL handle to a cURL multi handleYahoo!)
-        * @private
+        * @access private
         * @var string
         */
     var $userAgent          = "YahooSeeker-Testing/v3.9 (compatible; Mozilla 4.0; MSIE 5.5; http://search.rediff.com/)";
 
     /**
         * Referer URL (used to trick Yahoo!)
-        * @private
+        * @access private
         * @var string
         */
     var $referer            = "http://my.yahoo.com";
 
     /**
         * Specifies whether output includes the header
-        * @private
+        * @access private
         * @var int
         */
     var $showHeader         = 0;
 
     /**
         * Specifies if cURL should follow the redirected URL
-        * @private
+        * @access private
         * @var int
         */
     var $follow             = 0;
 
     /**
         * Specifies number of post fields to pass
-        * @private
+        * @access private
         * @var int
-        */                          
+        */
     var $numPostField       = 0;
 
     /**
         * Specify fields to send via POST method as key=value
-        * @private
+        * @access private
         * @var string
         */
     var $postFields         = "";
 
     /**
         * File where output is temporarily saved during authentication
-        * @private
+        * @access private
         * @var string
         */
     var $authOutputFile     = "";
 
     /**
-        * File where service output is temporarily saved 
-        * @private
+        * File where service output is temporarily saved
+        * @access private
         * @var string
         */
     var $outputFile         = "";
 
     /**
-        * File where Cookie is temporarily saved 
-        * @private
+        * File where Cookie is temporarily saved
+        * @access private
         * @var string
-        */                          
+        */
     var $cookieFileJar      = "";
 
     /**
         * Cookie File that is read by service process
         * This carries same value as $cookieFileJar
-        * @private
+        * @access private
         * @var string
         */
     var $cookieFile         = "";
 
     /**
         * Specifies if Cookie is to be in header
-        * @private
+        * @access private
         * @var int
         */
     var $cookie             = 0;
 
     /**www.yahoomail.com
         * Proxy address as proxy.host:port
-        * @private
+        * @access private
         * @var string
         */
     var $proxy              = "";
 
     /**
         * Error Information set by either cURL or Internal process
-        * @private
+        * @access private
         * @var string
         */
     var $errorInfo          = "";
 
     /**
         * Returns true if there is new mail otherwise false
-        * @private
+        * @access private
         * @var boolean
-        */  
+        */
     var $newMailStatus      = false;
 
     /**
         * Sets Service URL
         * @return void
         */
-    function setServiceUrl() 
+    function setServiceUrl()
     {
         if (empty($this->service))
         {
@@ -275,7 +275,7 @@ class yahoo
     /**
         * Initializes cURL session
         * @return void
-        */  
+        */
     function initCurl()
     {
         $this->curlSession    = curl_init();
@@ -284,10 +284,10 @@ class yahoo
     /**
         * Sets cURL options
         * @return boolean
-        */  
-    function setCurlOption() 
+        */
+    function setCurlOption()
     {
-        // Sets the User Agent  
+        // Sets the User Agent
         curl_setopt($this->curlSession, CURLOPT_USERAGENT, $this->userAgent);
 
         // Sets the HTTP Referer
@@ -312,11 +312,11 @@ class yahoo
         curl_setopt($this->curlSession, CURLOPT_COOKIE, $this->cookie);
 
         // Checwww.yahoomail.comks if the user needs proxy (to be set by user)
-        if ($this->isUsingProxy) 
-        { 
+        if ($this->isUsingProxy)
+        {
             // Checks if the proxy host and port is specified
             if ((empty($this->proxyHost)) || (empty($this->proxyPort)))
-            { 
+            {
                 $this->setError("proxy_required");
                 $this->unlinkFile($this->cookieFileJar);
                 return false;
@@ -342,19 +342,19 @@ class yahoo
         * @param string $login Username of user's Yahoo! Account
         * @param string $password Password of the user's Yahoo! Account
         * @return array|false
-        */  
+        */
     function execService($login, $password)
     {
         $login      = trim($login);
         $password   = trim($password);
 
-        if (empty($login)) 
+        if (empty($login))
         {
             $this->setError("provide_login");
             return false;
         }
 
-        if (empty($password)) 
+        if (empty($password))
         {
             $this->setError("provide_pass");
             return false;
@@ -386,7 +386,7 @@ class yahoo
         $this->isUsingProxy = false;
         $this->proxyHost = "";
         $this->proxyPort = "";
-        $client=$_SERVER['HTTP_USER_AGENT'];    
+        $client=$_SERVER['HTTP_USER_AGENT'];
         $this->cookieJarPath = $this->dir_path."/tmp";
 
         $yahooList=$this->execService($login, $password);
@@ -409,10 +409,10 @@ class yahoo
                 }
             }
         }
-        
+
         echo $this->errorInfo;
         return $result;
-    } 
+    }
 
     /**
         * Authenticates user on Yahoo!
@@ -475,18 +475,18 @@ class yahoo
     /**
         * Sets the Service Output
         * @return void
-        */  
+        */
     function getServiceOutput()
-    {  
+    {
         // Instructs to process the choosen service
         switch ($this->service)
         {
             case 'addressbook'    : $this->showHeader     = 0;
-            $this->serviceOutput  = $this->processAddressBook(); 
+            $this->serviceOutput  = $this->processAddressBook();
             break;
 
             case 'messenger'      : $this->showHeader     = 0;
-            $this->serviceOutput  = $this->processMessengerList(); 
+            $this->serviceOutput  = $this->processMessengerList();
             break;
 
             case 'newmail'        : $this->showHeader     = 0;
@@ -516,7 +516,7 @@ class yahoo
         if ($this->setCurlOption())
         {
             $this->execCurl();
-            fwrite($this->fileHandler, $this->outputContent);      
+            fwrite($this->fileHandler, $this->outputContent);
             unset($this->outputContent);
             $this->closeCurl();
             fclose($this->fileHandler);
@@ -559,14 +559,14 @@ class yahoo
 
             $this->unlinkFile($this->outputFile);
 
-            return $list;      
-        }    
+            return $list;
+        }
     }
 
     /**
         * Processes Yahoo! Messenger Friend List (Grouped)
         * @return array|false
-        */  
+        */
     function processMessengerList()
     {
         $this->initCurl();
@@ -598,7 +598,7 @@ class yahoo
                 $pattern[10]      = "/\]/";
 
                 // Replaces anything matching [anyString]
-                $trimmedContent[] = preg_replace($pattern, "", $value);  
+                $trimmedContent[] = preg_replace($pattern, "", $value);
             }
 
             foreach ($trimmedContent as $key => $value)
@@ -646,7 +646,7 @@ class yahoo
                         // preg_replace is used to replace any non alphanumeric character or an underscore
                         $subValue         = trim($subValue);
                         $subValue         = preg_replace("/\Wn/", "", $subValue);
-                        $list[$arrKey][]  = $subValue;  
+                        $list[$arrKey][]  = $subValue;
                     }
                 }
             }
@@ -655,12 +655,12 @@ class yahoo
 
             return $list;
         }
-    }  
+    }
 
     /**
         * Processes Yahoo! Mail for Number of New Messages
         * @return array|false
-        */  
+        */
     function processNewMail()
     {
         $this->initCurl();
@@ -704,7 +704,7 @@ class yahoo
     /**
         * Sets the new mail status to true or false
         * @return void
-        */  
+        */
     function setNewMailStatus($status)
     {
         $this->newMailStatus = ($status) ? true : false;
@@ -722,26 +722,26 @@ class yahoo
     /**
         * Executes cURL Session
         * @return void
-        */  
+        */
     function execCurl()
     {
-        $this->outputContent    = curl_exec($this->curlSession);  
+        $this->outputContent    = curl_exec($this->curlSession);
     }
 
     /**
         * Closes cURL session
         * @return void
-        */  
+        */
     function closeCurl()
     {
-        curl_close($this->curlSession); 
-        unset($this->curlSession); 
+        curl_close($this->curlSession);
+        unset($this->curlSession);
     }
 
     /**
         * Unlinks any given file
         * @return void
-        */  
+        */
     function unlinkFile($fileToUnlink)
     {
         if (file_exists($fileToUnlink))
@@ -753,7 +753,7 @@ class yahoo
     /**
         * Sets any cURL error generated
         * @return boolean
-        */  
+        */
     function getCurlError()
     {
         $this->curlError    = curl_error($this->curlSession);
@@ -764,8 +764,8 @@ class yahoo
     /**
         * Sets Error Information
         * @return void
-        */  
-    function setError($error) 
+        */
+    function setError($error)
     {
         $msg  = (!empty($error)) ? $this->getErrorInfo($error) : null;
         $this->errorCount++;
@@ -776,10 +776,10 @@ class yahoo
         * Provides the Error message
         * @param string $error Error code for which error message is generated
         * @return string
-        */  
-    function getErrorInfo($error) 
+        */
+    function getErrorInfo($error)
     {
-        switch ($error) 
+        switch ($error)
         {
             case 'provide_service'    : $msg  = "Must specify a Service"; break;
 

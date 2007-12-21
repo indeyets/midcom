@@ -49,7 +49,6 @@
  * The preview link is a nested div: div.image_preview surrounds the entire preview area,
  * div.image_frame surrounds any displayed image.
  *
- * @package midcom.helper.datamanager
  */
 class midcom_helper_datamanager_widget_collection extends midcom_helper_datamanager_widget {
 

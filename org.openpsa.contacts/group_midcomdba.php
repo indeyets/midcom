@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * @package org.openpsa.contacts
+ * @author Nemein Oy http://www.nemein.com/
+ * @copyright Nemein Oy http://www.nemein.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
 // TODO Hotfix
 class midcom_org_openpsa_organization extends __midcom_org_openpsa_organization
 {
@@ -7,7 +12,7 @@ class midcom_org_openpsa_organization extends __midcom_org_openpsa_organization
     {
         return parent::__midcom_org_openpsa_organization($id);
     }
-    
+
     function get_label()
     {
     	if ($this->official)
@@ -18,10 +23,10 @@ class midcom_org_openpsa_organization extends __midcom_org_openpsa_organization
     	{
     		$label = $this->name;
     	}
-    	
+
     	return $label;
     }
-    
+
     function get_label_property()
     {
     	if ($this->official)
@@ -32,7 +37,7 @@ class midcom_org_openpsa_organization extends __midcom_org_openpsa_organization
     	{
     		$property = 'name';
     	}
-    	
+
     	return $property;
     }
 }

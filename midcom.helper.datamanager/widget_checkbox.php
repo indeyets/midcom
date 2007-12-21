@@ -32,7 +32,6 @@
  *
  * The checkbox is of the type input.checkbox.
  *
- * @package midcom.helper.datamanager
  */
 
 class midcom_helper_datamanager_widget_checkbox extends midcom_helper_datamanager_widget {

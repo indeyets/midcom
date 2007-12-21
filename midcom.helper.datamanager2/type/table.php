@@ -8,24 +8,22 @@
  */
 
 /**
- * Datamanager 2 table type. 
- * 
+ * Datamanager 2 table type.
+ *
  * <b>Configuration options:</b>
  * <i>callback_name - name of the class to be used for populating the rows and colums.</i>
- * 
+ *
  * The callback class must support the following methods:
- * 
+ *
  * <code>
  * class table_callback {
- * array get_headers () ; 
+ * array get_headers () ;
  * array get_rows() ; //Returns an array containing the values for each row.
  * boolean set_rows($values);
  * void set_type(&$midcom_helper_datamanager2_type_table ) ;
- * 
- * Array with headernames in the same order as the row colums.
- *  
  *
- * @package midcom.helper.datamanager2
+ * Array with headernames in the same order as the row colums.
+ *
  */
 class midcom_helper_datamanager2_type_table extends midcom_helper_datamanager2_type
 {
@@ -35,9 +33,9 @@ class midcom_helper_datamanager2_type_table extends midcom_helper_datamanager2_t
      * @var string
      * @access private
      */
-    var $callback = null; 
+    var $callback = null;
 
-    
+
     /**
      * A list of rows for the table
      */
@@ -48,7 +46,7 @@ class midcom_helper_datamanager2_type_table extends midcom_helper_datamanager2_t
      * @access public
      */
     var $headers = array('domain', 'name', 'value', 'delete');
-    
+
        /**
      * Set this to true if you want the keys to be exported to the csv dump instead of the
      * values. Note, that this does not affect import, which is only available with keys, not
@@ -77,8 +75,8 @@ class midcom_helper_datamanager2_type_table extends midcom_helper_datamanager2_t
      */
     function _on_initialize()
     {
-        
-        if (is_string($this->callback)) 
+
+        if (is_string($this->callback))
         {
             $classname = $this->callback;
 
@@ -101,13 +99,13 @@ class midcom_helper_datamanager2_type_table extends midcom_helper_datamanager2_t
             }
             $this->_callback = new $classname($this->option_callback_arg);
             $this->_callback->set_type(&$this);
-            
-            return true;   
-        } 
-        elseif (is_object($this->callback)) 
+
+            return true;
+        }
+        elseif (is_object($this->callback))
         {
             $this->_callback = &$this->callback;
-            
+
             return true;
         }
         // todo check the headers and rows
@@ -121,7 +119,7 @@ class midcom_helper_datamanager2_type_table extends midcom_helper_datamanager2_t
      */
     function convert_from_storage ($source)
     {
-        
+
         // reset the rows.
         $this->rows = $this->_callback->get_rows();
     }
@@ -136,9 +134,9 @@ class midcom_helper_datamanager2_type_table extends midcom_helper_datamanager2_t
         $this->rows = array();
         $this->_callback->set_rows($this->rows);
         $this->rows = $this->_callback->get_rows();
-        
+
         return;
-        
+
     }
 
     /**
@@ -173,21 +171,21 @@ class midcom_helper_datamanager2_type_table extends midcom_helper_datamanager2_t
     function convert_to_html()
     {
         $table = "<table border='0' cellspacing='0' ><tr>";
-        foreach ($this->headers as $header ) 
+        foreach ($this->headers as $header )
         {
             $table .= "<td>{$header}</td>\n";
         }
         $table .= "</tr>\n";
-        foreach ($this->rows as $key => $row) 
+        foreach ($this->rows as $key => $row)
         {
             $table .= "<tr>\n";
-            foreach ($row as $row_key => $value ) 
+            foreach ($row as $row_key => $value )
             {
                 $table .= "<td>{$value}</td>\n";
             }
         }
-        $table .= "</tr>\n";    
-        
+        $table .= "</tr>\n";
+
         return $table;
     }
 

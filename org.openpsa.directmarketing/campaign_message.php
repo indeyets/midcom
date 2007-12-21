@@ -1,5 +1,12 @@
 <?php
 /**
+ * @package org.openpsa.directmarketing
+ * @author Nemein Oy http://www.nemein.com/
+ * @copyright Nemein Oy http://www.nemein.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
+/**
  * Message class, handles storage of various messages and sending them out.
  */
 class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_message
@@ -86,7 +93,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         }
         return $campaign_guid;
         */
-        
+
         $mc = org_openpsa_directmarketing_campaign_message::new_collector('guid', $guid);
         $mc->add_value_property('campaign');
         $stat = $mc->execute();

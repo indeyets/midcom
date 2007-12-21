@@ -1,40 +1,42 @@
 <?php
-
-require_once 'HTTP/Request.php';
 /**
  * @package midcom.services
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id:xmltcp.php 3765 2006-07-31 08:51:39 +0000 (Mon, 31 Jul 2006) tarjei $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/**
+ * @ignore
+ */
+require_once 'HTTP/Request.php';
 
 /**
  * Solr implementation of the indexer backend. This works by communicating with solr
  * over http requests. It uses the same tcphost and tcpport settings as the old TCP indexer used.
- * 
+ *
  * @package midcom.services
  * @see midcom_services_indexer
  * @see midcom_services_indexer_backend
  * @see midcom_services_indexer_XMLComm_RequestWriter
  * @see midcom_services_indexer_XMLComm_ResponseParser
- * 
+ *
  */
 
 class midcom_services_indexer_backend_solr extends midcom_services_indexer_backend
 {
-   
+
     /**
      * The xml factory class
      * @var object midcom_services_indexer_solrDocumentFactory
      */
     private $factory = null;
     /**
-     * The http_request wrapper 
+     * The http_request wrapper
      * @var object midcom_services_indexer_solrRequest
      */
-    private $request = null; 
+    private $request = null;
     /**
      * Constructor is empty at this time.
      */
@@ -46,37 +48,37 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
         $this->factory = new midcom_services_indexer_solrDocumentFactory;
         $this->request = new midcom_services_indexer_solrRequest($this->factory);
     }
-    
+
     /**
      * Adds a document to the index.
-     * 
+     *
      * Any warning will be treated as error.
-     * 
+     *
      * Note, that $document may also be an array of documents without further
      * changes to this backend.
-     * 
+     *
      * @param Array $documents A list of midcom_services_indexer_document objects.
      * @return bool Indicating success.
-     */   
+     */
     function index ($documents)
     {
         $this->factory->reset();
-        if (!is_array($documents)) 
+        if (!is_array($documents))
         {
             $documents = array( $documents );
         }
 
-        foreach ($documents as $document ) 
+        foreach ($documents as $document )
         {
             $this->factory->add($document);
         }
-        
+
         return $this->request->execute();
     }
-    
+
     /**
      * Removes the document with the given resource identifier from the index.
-     * 
+     *
      * @param string $RI The resource identifier of the document that should be deleted.
      * @return bool Indicating success.
      */
@@ -86,7 +88,7 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
         return $this->request->execute();
 
     }
-    
+
     /**
      * Clear the index completely.
      * This will drop the current index.
@@ -98,7 +100,7 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
         $this->factory->delete_all();
         return $this->request->execute();
     }
-    
+
     /**
      * Query the index and, if set, restrict the query by a given filter.
      * @param string $query The query, which must suite the backends query syntax.
@@ -108,14 +110,14 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
     function query ($query, $filter)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        if ($filter !== null) 
+        if ($filter !== null)
         {
-            if ($filter->type == 'datefilter') 
+            if ($filter->type == 'datefilter')
             {
                 $format = "Y-m-dTH:i:s"  ; //1995-12-31T23:59:59Z
-                $query .= sprintf(" AND %s:[%s TO %s]", 
-                                    $filter->get_field(), 
-                                    gmdate($format, $filter->get_start()) . "Z", 
+                $query .= sprintf(" AND %s:[%s TO %s]",
+                                    $filter->get_field(),
+                                    gmdate($format, $filter->get_start()) . "Z",
                                     gmdate($format, ($filter->get_end() == 0 ) ? time() : $filter->get_end()) . "Z");
             }
         }
@@ -142,7 +144,7 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
         $this->code = $request->getResponseCode();
         if ($this->code != 200 || PEAR :: isError($err)) {
             $msg = (is_object($err)) ? $err->getMessage() : "";
-            debug_add("Failed to execute Request {$url}:{$this->code} {$msg}", MIDCOM_LOG_WARN); 
+            debug_add("Failed to execute Request {$url}:{$this->code} {$msg}", MIDCOM_LOG_WARN);
             debug_pop();
             return false;
         }
@@ -162,7 +164,7 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
     	    $doc = new midcom_services_indexer_document();
             foreach ($res->childNodes as $str) {
                 $name = $str->getAttribute('name');
-                
+
                 $doc->add_result($name,($str->tagName == 'float') ? (float) $str->nodeValue : (string) $str->nodeValue  ) ;
                 if ($name == 'RI') {
                     $doc->add_result('__RI', $str->nodeValue);
@@ -170,7 +172,7 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
                 if ($name == 'score' && $filter == null) {
                     $doc->score = (float) $str->nodeValue;
                 }
-                
+
             }
             $result[] = $doc;
         }
@@ -181,7 +183,7 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
 }
 
 /**
- * This class provides methods to make XML for the different solr xml requests. 
+ * This class provides methods to make XML for the different solr xml requests.
  * @package midcom.services
  * @see midcom_services_indexer
  */
@@ -204,9 +206,9 @@ class midcom_services_indexer_solrDocumentFactory {
     }
 
     /**
-     * Adds a document to the index. 
-     */ 
-    public function add($document) 
+     * Adds a document to the index.
+     */
+    public function add($document)
     {
 
         $root = $this->xml->createElement('add');
@@ -217,7 +219,7 @@ class midcom_services_indexer_solrDocumentFactory {
         $field->setAttribute('name','RI');
         $field->nodeValue = $document->RI;
         $element->appendChild($field);
- 
+
         foreach ($document->list_fields() as $field_name)  {
             $field_record = $document->get_field_record($field_name);
             $field = $this->xml->createElement('field');
@@ -232,7 +234,7 @@ class midcom_services_indexer_solrDocumentFactory {
      * Deletes one element
      * @param $id the element id
      */
-    public function delete($id) 
+    public function delete($id)
     {
         $this->reset();
         $root = $this->xml->createElement('delete');
@@ -247,7 +249,7 @@ class midcom_services_indexer_solrDocumentFactory {
      * Deletes all elements with the id defined
      * (this should be all midgard documents)
      */
-    public function delete_all() 
+    public function delete_all()
     {
         $this->reset();
         $root = $this->xml->createElement('delete');
@@ -262,9 +264,9 @@ class midcom_services_indexer_solrDocumentFactory {
     /**
      * Returns the generated XML
      */
-    public function to_xml() 
+    public function to_xml()
     {
-        if (isset($_REQUEST['debug'])) 
+        if (isset($_REQUEST['debug']))
         {
             echo $this->xml->saveXML();
             die();
@@ -276,7 +278,7 @@ class midcom_services_indexer_solrDocumentFactory {
 
 
 /**
- * This class handles the posting to the server. 
+ * This class handles the posting to the server.
  * It's a simple wrapper around the HTTP_request library.
  */
 
@@ -309,7 +311,7 @@ class midcom_services_indexer_solrRequest {
         $options = array();
         $options['method'] = HTTP_REQUEST_METHOD_POST ;
         //$url = $GLOBALS['midcom_config']['indexer_solr_url'];
-        $url = "http://" . $GLOBALS['midcom_config']['indexer_xmltcp_host'] . 
+        $url = "http://" . $GLOBALS['midcom_config']['indexer_xmltcp_host'] .
             ":" . $GLOBALS['midcom_config']['indexer_xmltcp_port'] . "/solr/update";
         $this->request = new HTTP_Request($url, $options);
 
@@ -330,7 +332,7 @@ class midcom_services_indexer_solrRequest {
             {
                 $errstr = $err->getMessage();
             }
-            debug_add("Failed to execute Request {$url}:{$this->code} {$errstr}", MIDCOM_LOG_WARN); 
+            debug_add("Failed to execute Request {$url}:{$this->code} {$errstr}", MIDCOM_LOG_WARN);
             debug_add("Request content: \n$xml", MIDCOM_LOG_DEBUG);
             debug_pop();
             return false;
@@ -342,8 +344,8 @@ class midcom_services_indexer_solrRequest {
 
         if ($this->request->getResponseCode() != 200 || PEAR :: isError($err))
         {
-            debug_add("Failed to execute Request {$url}: {$err->getMessage()}", MIDCOM_LOG_WARN); 
-            debug_add("Request content: \n$xml", MIDCOM_LOG_INFO); 
+            debug_add("Failed to execute Request {$url}: {$err->getMessage()}", MIDCOM_LOG_WARN);
+            debug_add("Request content: \n$xml", MIDCOM_LOG_INFO);
             debug_pop();
             return false;
         }
@@ -351,8 +353,8 @@ class midcom_services_indexer_solrRequest {
         debug_pop();
         return true;
 
-    }        
-       
+    }
+
 }
 
 ?>

@@ -1,17 +1,23 @@
 <?php
+/**
+ * @package midcom.helper.datamanager
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
-class midcom_helper_datamanager_datatype_privilege extends midcom_helper_datamanager_datatype 
+class midcom_helper_datamanager_datatype_privilege extends midcom_helper_datamanager_datatype
 {
-    
+
     var $_object = null;
     var $_privilege = 'midgard:read';
     var $_assignee = null;
     var $_classname = null;
-    var $_privilege_object = null;    
-    
-    function midcom_helper_datamanager_datatype_privilege (&$datamanager, &$storage, $field) 
+    var $_privilege_object = null;
+
+    function midcom_helper_datamanager_datatype_privilege (&$datamanager, &$storage, $field)
     {
-        debug_push_class(__CLASS__, __FUNCTION__); 
+        debug_push_class(__CLASS__, __FUNCTION__);
         if (!array_key_exists('privilege_object', $field))
         {
             $field['privilege_object'] = $this->_object;
@@ -20,7 +26,7 @@ class midcom_helper_datamanager_datatype_privilege extends midcom_helper_dataman
         {
             $this->_object = $field['privilege_object'];
         }
-        
+
         if (!array_key_exists('privilege', $field))
         {
             $field['privilege'] = $this->_privilege;
@@ -29,16 +35,16 @@ class midcom_helper_datamanager_datatype_privilege extends midcom_helper_dataman
         {
             $this->_privilege = $field['privilege'];
         }
-                
+
         if (!array_key_exists('privilege_assignee', $field))
         {
             $field['privilege_assignee'] = $this->_assignee;
-        }        
+        }
         else
         {
             $this->_assignee = $field['privilege_assignee'];
         }
-        
+
         if (!array_key_exists('privilege_classname', $field))
         {
             $field['privilege_classname'] = $this->_classname;
@@ -47,14 +53,14 @@ class midcom_helper_datamanager_datatype_privilege extends midcom_helper_dataman
         {
             $this->_classname = $field['privilege_classname'];
         }
-        
+
         // Require privilege editing from current user
         // TODO: Would it be better to just hide this particular DM field if the user is not allowed to set the priv?
         $_MIDCOM->auth->require_do('midgard:privileges', $this->_object);
-        
+
         $field['widget'] = 'config_radiobox';
-        
-        
+
+
         // Can_do works only for users, not groups
         $inherit_label = 'Inherit';
         if ($this->_assignee)
@@ -63,9 +69,9 @@ class midcom_helper_datamanager_datatype_privilege extends midcom_helper_dataman
             $assignee_object = $_MIDCOM->auth->get_assignee($this->_assignee);
             if (is_a($assignee_object, 'midcom_core_user'))
             {
-                // Check if we have some value set  
+                // Check if we have some value set
                 $this->load_from_storage();
-                                
+
                 if (   $this->_value == ''
                     || $this->_value == MIDCOM_PRIVILEGE_INHERIT)
                 {
@@ -77,7 +83,7 @@ class midcom_helper_datamanager_datatype_privilege extends midcom_helper_dataman
                     }
                     else
                     {
-                        $inherit_label = 'Inherited (Deny)';                
+                        $inherit_label = 'Inherited (Deny)';
                     }
                 }
             }
@@ -87,9 +93,9 @@ class midcom_helper_datamanager_datatype_privilege extends midcom_helper_dataman
                 && class_exists($this->_classname))
         {
             debug_add("This privilege is a class-based privilege");
-            // Check if we have some value set   
+            // Check if we have some value set
             $this->load_from_storage();
-            
+
             if (   $this->_value == ''
                 || $this->_value == MIDCOM_PRIVILEGE_INHERIT)
             {
@@ -103,11 +109,11 @@ class midcom_helper_datamanager_datatype_privilege extends midcom_helper_dataman
                 }
                 else
                 {
-                    $inherit_label = 'Inherited (Deny)';                
+                    $inherit_label = 'Inherited (Deny)';
                 }
-            }        
+            }
         }
-        
+
         // TODO: display the inherited value
         $field['widget_radiobox_choices'] = array(
             '' => $inherit_label,
@@ -117,10 +123,10 @@ class midcom_helper_datamanager_datatype_privilege extends midcom_helper_dataman
         parent::_constructor($datamanager, $storage, $field);
         debug_pop();
     }
-    
-    function load_from_storage() 
+
+    function load_from_storage()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);    
+        debug_push_class(__CLASS__, __FUNCTION__);
         if (   is_object($this->_object)
             && method_exists($this->_object, 'get_privileges'))
         {
@@ -131,7 +137,7 @@ class midcom_helper_datamanager_datatype_privilege extends midcom_helper_dataman
                 foreach ($privileges as $privilege)
                 {
                     if (   $privilege->name == $this->_privilege
-                        && $this->_assignee 
+                        && $this->_assignee
                         && $privilege->assignee == $this->_assignee)
                     {
                         debug_add("Privilege was set to this assignee: {$privilege->assignee}");
@@ -141,7 +147,7 @@ class midcom_helper_datamanager_datatype_privilege extends midcom_helper_dataman
                         return true;
                     }
                     elseif (   $privilege->name == $this->_privilege
-                        && $this->_classname 
+                        && $this->_classname
                         && $privilege->classname == $this->_classname)
                     {
                         debug_add("Class-type privilege was set to this class name: {$privilege->classname}");
@@ -152,7 +158,7 @@ class midcom_helper_datamanager_datatype_privilege extends midcom_helper_dataman
                     }
                 }
             }
-            
+
             debug_add("Privilege not found from target object, resorting to empty value");
             debug_pop();
             $this->_value = $this->_get_default_value();
@@ -165,22 +171,22 @@ class midcom_helper_datamanager_datatype_privilege extends midcom_helper_dataman
             return false;
         }
     }
-    
-    function save_to_storage() 
+
+    function save_to_storage()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);    
+        debug_push_class(__CLASS__, __FUNCTION__);
         if ($this->_value != '')
         {
             if ($this->_classname)
             {
                 debug_add("calling this->_object->set_privilege({$this->_privilege}, 'SELF', {$this->_value}, {$this->_classname})");
                 $this->_object->set_privilege($this->_privilege, 'SELF', $this->_value, $this->_classname);
-            }        
+            }
             elseif ($this->_assignee)
             {
                 debug_add("calling this->_object->set_privilege({$this->_privilege}, {$this->_assignee}, {$this->_value})");
                 $this->_object->set_privilege($this->_privilege, $this->_assignee, $this->_value);
-            }    
+            }
         }
         else
         {
@@ -189,7 +195,7 @@ class midcom_helper_datamanager_datatype_privilege extends midcom_helper_dataman
             {
                 debug_add("calling this->_object->unset_privilege({$this->_privilege}, 'SELF', {$this->_classname})");
                 $this->_object->unset_privilege($this->_privilege, 'SELF', $this->_classname);
-            }        
+            }
             elseif ($this->_assignee)
             {
                 debug_add("calling this->_object->unset_privilege({$this->_privilege}, {$this->_assignee})");
@@ -200,7 +206,7 @@ class midcom_helper_datamanager_datatype_privilege extends midcom_helper_dataman
         debug_pop();
         return true;
     }
-    
+
     function _get_default_value()
     {
         // TODO: The parent fails for some reason

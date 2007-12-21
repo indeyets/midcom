@@ -1,5 +1,8 @@
 <?php
 /**
+ * @package org.openpsa.queries
+ */
+/**
  * MidCOM wrapped class for access to stored queries
  */
 class midcom_org_openpsa_query extends __midcom_org_openpsa_query

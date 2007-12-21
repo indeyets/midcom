@@ -1,5 +1,12 @@
 <?php
 /**
+ * @package org.openpsa.projects
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
  * MidCOM wrapped class for access to stored queries
  */
 class org_openpsa_reports_query extends org_openpsa_queries_query

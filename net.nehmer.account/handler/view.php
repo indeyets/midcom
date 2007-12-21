@@ -7,7 +7,9 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
-/** We need the PEAR Date class. See http://pear.php.net/package/Date/docs/latest/ */
+/** We need the PEAR Date class. See http://pear.php.net/package/Date/docs/latest/
+ * @ignore
+ */
 require_once('Date.php');
 
 /**
@@ -31,11 +33,11 @@ require_once('Date.php');
  * - edit_url: Only applicable if in view-self mode, it contains the URL to the
  *   edit record screen.
  *
- * This class listens to the handlers IDs 'self', 'self_quick', 'other', 'other_direct' and 
- * 'other_quick', invoking the appropriate view code. The 'other_direct' ID will only be 
+ * This class listens to the handlers IDs 'self', 'self_quick', 'other', 'other_direct' and
+ * 'other_quick', invoking the appropriate view code. The 'other_direct' ID will only be
  * used when 'allow_by_username_only' => true. Unknown handler IDs will be rejected
  * with generate_error. It expects the following URL structures, relative to ANCHOR_PREFIX:
- * 
+ *
  *
  * - 'self': /
  * - 'self_quick': /quick/
@@ -138,7 +140,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
 
     /**
      * Can-Handle check against account name.
-     * 
+     *
      */
     function _can_handle_view($handler_id, $args, &$data)
     {
@@ -146,7 +148,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
         {
 	    	return true;
         }
-        
+
         if (   isset($args[0])
             && $args[0] != ''
             && $this->_get_account($args[0]))
@@ -234,7 +236,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
         $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name);
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
         $_MIDCOM->set_pagetitle($this->_user->name);
-        
+
         if (   $handler_id == 'other'
             || $handler_id == 'other_quick')
         {
@@ -248,14 +250,14 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
 
         return true;
     }
-    
+
     function _populate_person_toolbar()
     {
         if (!$_MIDCOM->auth->user)
         {
             return;
         }
-        
+
 
         if (   $_MIDCOM->auth->user
             && $this->_account->guid == $_MIDCOM->auth->user->guid)
@@ -266,9 +268,9 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                 return;
             }
             $this->person_toolbar = new midcom_helper_toolbar();
-            
+
             // Own profile page
-            
+
             $this->person_toolbar->add_item
             (
                 array
@@ -279,7 +281,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                     MIDCOM_TOOLBAR_ACCESSKEY => 'e',
                 )
             );
-        
+
             if ($this->_config->get('allow_publish'))
             {
                 $this->person_toolbar->add_item
@@ -305,7 +307,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                     )
                 );
             }
-        
+
             if ($this->_config->get('allow_socialweb'))
             {
                 $this->person_toolbar->add_item
@@ -331,7 +333,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                     )
                 );
             }
-        
+
             if ($this->_config->get('allow_change_username'))
             {
                 $this->person_toolbar->add_item
@@ -339,13 +341,13 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                     array
                     (
                         MIDCOM_TOOLBAR_URL => "username/",
-                        MIDCOM_TOOLBAR_LABEL => $this->_config->get('username_is_email') ? 
+                        MIDCOM_TOOLBAR_LABEL => $this->_config->get('username_is_email') ?
                             $this->_l10n->get('change email') : $this->_l10n->get('change username'),
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
                     )
                 );
             }
-        
+
             if ($this->_config->get('allow_cancel_membership'))
             {
                 $this->person_toolbar->add_item
@@ -372,23 +374,23 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                 $this->person_toolbar = new midcom_helper_toolbar();
                 $buddy_toolbar =& $this->person_toolbar;
             }
-            
+
             if ($this->_config->get('net_nehmer_buddylist_integration'))
             {
-                
+
                 $buddylist_path = $this->_config->get('net_nehmer_buddylist_integration');
                 $current_prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 $view_url = $this->_get_view_url();
-                
+
                 $_MIDCOM->componentloader->load_graceful('net.nehmer.buddylist');
-                
+
                 $qb = net_nehmer_buddylist_entry::new_query_builder();
                 $user = $_MIDCOM->auth->user->get_storage();
                 $qb->add_constraint('account', '=', $user->guid);
                 $qb->add_constraint('buddy', '=', $this->_account->guid);
                 $qb->add_constraint('blacklisted', '=', false);
                 $buddies = $qb->execute();
-                
+
                 if (count($buddies) > 0)
                 {
                     // We're buddies, show remove button
@@ -425,20 +427,20 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                             MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_do('midgard:create', $user),
                         )
                     );
-                }                
+                }
             }
         }
 
         $this->_render_person_toolbar();
     }
-    
+
     function _render_person_toolbar()
     {
         if (! $this->person_toolbar)
         {
             return false;
         }
-        
+
         $output = '<ul';
         if (! is_null($this->person_toolbar->class_style))
         {
@@ -449,11 +451,11 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
             $output .= " id='{$this->person_toolbar->id_style}'";
         }
         $output .= ">\n";
-        
+
         foreach ($this->person_toolbar->items as $item)
         {
             $label = $item[MIDCOM_TOOLBAR_LABEL];
-            
+
             if (   $item[MIDCOM_TOOLBAR_HIDDEN]
                 || !$item[MIDCOM_TOOLBAR_ENABLED])
             {
@@ -461,7 +463,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
             }
 
             $output .= "  <li>";
-            
+
             if ($item[MIDCOM_TOOLBAR_POST])
             {
                 $output .= "<form method=\"post\" action=\"{$item[MIDCOM_TOOLBAR_URL]}\">";
@@ -479,12 +481,12 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                     $output .= " class=\"accesskey\" accesskey=\"{$item[MIDCOM_TOOLBAR_ACCESSKEY]}\" ";
                 }
                 $output .= " title=\"${label}\">";
-                
+
                 $url = MIDCOM_STATIC_URL . "/{$item[MIDCOM_TOOLBAR_ICON]}";
                 $output .= "<img src='{$url}' alt='{$label}' />";
-                
+
                 $output .= "</button>";
-                
+
                 if ($item[MIDCOM_TOOLBAR_POST_HIDDENARGS])
                 {
                     foreach ($item[MIDCOM_TOOLBAR_POST_HIDDENARGS] as $key => $value)
@@ -517,21 +519,21 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                 $url = MIDCOM_STATIC_URL . "/{$item[MIDCOM_TOOLBAR_ICON]}";
                 $output .= "<img src='{$url}' alt='{$label}' />";
 
-                $output .= "</a>";                
+                $output .= "</a>";
             }
 
             $output .= "</li>\n";
         }
 
         $output .= '</ul>';
-        
-        $this->person_toolbar_html = $output;        
+
+        $this->person_toolbar_html = $output;
     }
-    
+
     function _get_view_url()
     {
         $url = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'view/';
-        
+
         if (!$this->_config->get('allow_view_by_username'))
         {
             return "{$url}{$this->_account->guid}";
@@ -620,7 +622,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
         $this->_request_data['view_self'] = $this->_view_self;
         $this->_request_data['person_toolbar'] =& $this->person_toolbar;
         $this->_request_data['person_toolbar_html'] =& $this->person_toolbar_html;
-                
+
         if ($this->_view_quick)
         {
             if ($this->_view_self)
@@ -789,14 +791,14 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
             midcom_show_style('show-full-account');
         }
     }
-    
+
     function _populate_toolbar()
     {
         if ($_MIDCOM->auth->user == null)
         {
             return;
         }
-        
+
         if ($this->_account->guid == $_MIDCOM->auth->user->guid)
         {
             // Own profile page
@@ -810,7 +812,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                     MIDCOM_TOOLBAR_ACCESSKEY => 'e',
                 )
             );
-            
+
             if ($this->_config->get('allow_publish'))
             {
                 $this->_view_toolbar->add_item
@@ -823,7 +825,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                     )
                 );
             }
-            
+
             if ($this->_config->get('allow_socialweb'))
             {
                 $this->_view_toolbar->add_item
@@ -849,7 +851,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                     )
                 );
             }
-            
+
             if ($this->_config->get('allow_change_username'))
             {
                 $this->_view_toolbar->add_item
@@ -857,13 +859,13 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                     array
                     (
                         MIDCOM_TOOLBAR_URL => "username/",
-                        MIDCOM_TOOLBAR_LABEL => $this->_config->get('username_is_email') ? 
+                        MIDCOM_TOOLBAR_LABEL => $this->_config->get('username_is_email') ?
                             $this->_l10n->get('change email') : $this->_l10n->get('change username'),
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
                     )
                 );
             }
-            
+
             if ($this->_config->get('allow_cancel_membership'))
             {
                 $this->_view_toolbar->add_item
@@ -880,22 +882,22 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
         else
         {
             // Someone elses profile
-            
+
             if ($this->_config->get('net_nehmer_buddylist_integration'))
-            {                
+            {
                 $buddylist_path = $this->_config->get('net_nehmer_buddylist_integration');
                 $current_prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 $view_url = $this->_get_view_url();
-                
+
                 $_MIDCOM->componentloader->load_graceful('net.nehmer.buddylist');
-                
+
                 $qb = net_nehmer_buddylist_entry::new_query_builder();
                 $user = $_MIDCOM->auth->user->get_storage();
                 $qb->add_constraint('account', '=', $user->guid);
                 $qb->add_constraint('buddy', '=', $this->_account->guid);
                 $qb->add_constraint('blacklisted', '=', false);
                 $buddies = $qb->execute();
-                
+
                 if (count($buddies) > 0)
                 {
                     // We're buddies, show remove button
@@ -932,10 +934,10 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                             MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_do('midgard:create', $user),
                         )
                     );
-                }                
+                }
             }
         }
-                
+
         if ($_MIDCOM->auth->admin)
         {
             // Admin viewing another profile
@@ -950,7 +952,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
                 )
             );
         }
-        
+
     }
 
 }
