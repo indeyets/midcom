@@ -1,4 +1,5 @@
   'name' => 'midcom.admin.babel',
+  'icon' => 'stock-icons/16x16/locale.png',
   'description' => 'MidCOM localization utility',
   'purecode' => true,
   'version' => '0.2.0beta1',

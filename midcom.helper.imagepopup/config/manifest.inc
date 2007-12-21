@@ -1,5 +1,6 @@
 
   'name' => 'midcom.helper.imagepopup',
+  'icon' => 'stock-icons/16x16/attach.png',
   'description' => 'Image upload and insertion tool',
   'purecode' => true,
   'version' => '0.1.6beta3',

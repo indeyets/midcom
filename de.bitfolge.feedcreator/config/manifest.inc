@@ -1,5 +1,6 @@
 
   'name' => 'de.bitfolge.feedcreator',
+  'icon' => 'net.nemein.rss/rss-16.png',
   'purecode' => true,
   'version' => '1.7.11beta1',
   'state' => 'beta',

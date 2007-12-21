@@ -1,5 +1,6 @@
 
   'name' => 'midcom.admin.help',
+  'icon' => 'stock-icons/16x16/stock_help-agent.png',
   'description' => 'On-site help displayer',
   'purecode' => true,
   'version' => '1.0.2beta2',

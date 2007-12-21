@@ -1,4 +1,5 @@
 'name'              => 'net.nemein.favourites',
+'icon'              => 'net.nemein.favourites/favorite.png',
 'purecode'          => false,
 'version'           => '0.0.1',
 'state'             => 'beta',

@@ -1,4 +1,5 @@
   'name' => 'midcom.helper.search',
+  'icon' => 'stock-icons/16x16/search.png',
   'version' => '1.0.4beta1',
   'state' => 'beta',
   'purecode' => false,
