@@ -1008,12 +1008,11 @@ class midcom_application
                 $this->serve_attachment($object);
             }
             $path = $object->component;
-
             if (!$path)
             {
+                $path = 'midcom.core.nullcomponent';        
                 debug_add("No component defined for this node.", MIDCOM_LOG_ERROR);
                 debug_print_r("Root node:",$object,MIDCOM_LOG_DEBUG);
-                $this->generate_error(MIDCOM_ERRCRIT, "No component defined for this node.");
             }
 
             $this->_set_context_data($path,MIDCOM_CONTEXT_COMPONENT);

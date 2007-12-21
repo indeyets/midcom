@@ -1,13 +1,17 @@
 <?php
-/**
- * This is the styleelement I use to show the index
- * Use this to get variables etc from the handler:
- */
-//$data =& $_MIDCOM->get_custom_context_data('request_data');
+$node = $data['node'];
 ?>
-<h1><?php echo $data['l10n']->get('This is the index'); ?></h1>
-<p>
-    <?php echo $data['l10n']->get('You can change this to something else :-)'); ?>
-    
-</p>
-<p>Sortorder: &(data['sort_order']);
+<h1>&(node.extra:h);</h1>
+
+&(node.description:h);
+
+<?php
+if (   $data['config']->get('enable_folder_code_execution')
+    && $node->code)
+{
+    // Run code in folder's code field
+    ?>
+    &(node.code:p);
+    <?php
+}
+?>

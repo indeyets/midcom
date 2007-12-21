@@ -127,7 +127,7 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
         $qb = midcom_db_topic::new_query_builder();
         $qb->add_constraint('name', '=', $this->argv[0]);
         $qb->add_constraint('up', '=', $this->current_object->id);
-        $qb->add_constraint('component', '<>', '');
+        //$qb->add_constraint('component', '<>', '');
 
         if ($qb->count() == 0)
         {
