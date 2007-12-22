@@ -1,5 +1,14 @@
 <?php
+/**
+ * @package midgard.webdav.styles
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
+/**
+ * @package midgard.webdav.styles
+ */
 class midgard_webdav_styles_dav_style_index extends midgard_webdav_styles_dav_style {
     function get_virtual_directories() {
         return array(  $this->get_virtual_directory_info( 'midcoms' ),
@@ -10,6 +19,10 @@ class midgard_webdav_styles_dav_style_index extends midgard_webdav_styles_dav_st
 
 
 }
+
+/**
+ * @package midgard.webdav.styles
+ */
 class midgard_webdav_styles_dav_style extends midgard_webdav_styles_dav {
 
     function PROPFIND (&$param, &$files) {
@@ -19,14 +32,14 @@ class midgard_webdav_styles_dav_style extends midgard_webdav_styles_dav {
 		{
 			$files['files'] = array();
 		}
-        if ( $param['depth'] == 0 ) 
+        if ( $param['depth'] == 0 )
         {
            $files['files'][0] = $this->get_style_info( $this->style );
            $files['files'][0]['path'] = $param['path'];
            $this->log( __CLASS__ . ": Returning simple collection" );
            return true;
         }
-       
+
         $files["files"] = array_merge( $files["files"], $this->get_virtual_directories( ));
         $files["files"] = array_merge( $files["files"], $this->get_substyles( ) );
         $files["files"] = array_merge( $files["files"], $this->get_style_elements(  )  );
@@ -58,7 +71,7 @@ class midgard_webdav_styles_dav_style extends midgard_webdav_styles_dav {
      */
     function get_style_elements(  ) {
 		$this->log(__CLASS__ . "::get_style_elements for id " . $this->style->id);
-        if ( $this->style->id == 0 ) 
+        if ( $this->style->id == 0 )
         {
             return array(  );
         }
@@ -81,7 +94,7 @@ class midgard_webdav_styles_dav_style extends midgard_webdav_styles_dav {
 
     function PUT(&$param) { $this->log("\nINDEX::PUT\n");  }
     function MKCOL($options) { $this->log("MKCOL\n");}
-    
+
     function LOCK( &$options ) {
         return parent::LOCK( $options );
     }
@@ -94,7 +107,7 @@ class midgard_webdav_styles_dav_style extends midgard_webdav_styles_dav {
         $this->log("GET: " . $options['path'] . "\n");
         //$this->log($options);
         $style = new midcom_db_style($_MIDGARD['style']);
-        if (!$style->id) 
+        if (!$style->id)
         {
         	return false;
         }

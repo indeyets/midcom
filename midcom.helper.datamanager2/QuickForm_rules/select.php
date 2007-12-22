@@ -7,6 +7,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/** @ignore */
 if (!class_exists('HTML_QuickForm_Rule'))
 {
     require_once('HTML/QuickForm/Rule.php');

@@ -18,7 +18,7 @@
  * selection list. The keys of the arrays are stored into the field, while the
  * value is shown to the user in the forms.
  *
- * Note, that the various select helper frunctions from helper_select_lists.php can
+ * Note, that the various select helper functions from helper_select_lists.php can
  * be used here.
  *
  * <b>widget_select_size:</b> This is the height of the widget, in lines. If omitted,
@@ -42,8 +42,8 @@
  *
  * The select widget will be both of select.list and select.multiple.
  *
+ * @package midcom.helper.datamanager
  */
-
 class midcom_helper_datamanager_widget_multiselect extends midcom_helper_datamanager_widget {
 
     /**

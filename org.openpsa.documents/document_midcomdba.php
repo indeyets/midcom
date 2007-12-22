@@ -1,4 +1,10 @@
 <?php
+/**
+ * @package org.openpsa.documents
+ * @author Nemein Oy http://www.nemein.com/
+ * @copyright Nemein Oy http://www.nemein.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
 
 //TODO: This is a hotfix.
 class midcom_org_openpsa_document extends __midcom_org_openpsa_document
@@ -13,6 +19,9 @@ class midcom_org_openpsa_document extends __midcom_org_openpsa_document
  * Wrapper for org_openpsa_document
  *
  * Implements parameter and attchment methods for DM compatibility
+ *
+ * @package org.openpsa.documents
+ *
  */
 class org_openpsa_documents_document extends midcom_org_openpsa_document
 {

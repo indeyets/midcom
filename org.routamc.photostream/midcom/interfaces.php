@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package org.routamc.photostream
  * @author The Midgard Project, http://www.midgard-project.org
@@ -41,7 +40,7 @@ class org_routamc_photostream_interface extends midcom_baseclasses_components_in
 
         return true;
     }
-    
+
     function _on_resolve_permalink($topic, $config, $guid)
     {
         $photo = new org_routamc_photostream_photo_dba($guid);

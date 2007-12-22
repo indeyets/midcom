@@ -135,7 +135,7 @@ class midcom_helper_configuration
         }
 
         $array = $object->list_parameters($path);
-        
+
         /*
         if ($params) {
             while ($params->fetch())
@@ -172,7 +172,7 @@ class midcom_helper_configuration
             foreach ($this->_local as $key => $value)
             {
                 $this->_merged[$key] = $value;
-            }            
+            }
         }
     }
 
@@ -201,7 +201,7 @@ class midcom_helper_configuration
                     debug_add("The key {$key} is not present in the global configuration array.", MIDCOM_LOG_INFO);
                     debug_pop();
                 }
-            }            
+            }
         }
     }
 

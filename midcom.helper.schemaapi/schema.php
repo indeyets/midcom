@@ -6,8 +6,13 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/** @ignore */
 require_once 'field.php';
 require_once 'supertype.php';
+
+/**
+ * @package midcom.helper.schemaapi
+ */
 class midcom_helper_schemaapi_schema
 {
 

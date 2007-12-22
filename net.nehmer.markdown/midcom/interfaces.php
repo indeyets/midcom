@@ -12,7 +12,7 @@
 /**
  * Markdown library, based on lib_markdown.
  *
- * Original Markdown code is under a BSD-style licence, as described on
+ * Original Markdown code is under a BSD-style license, as described on
  * http://www.michelf.com/projects/php-markdown/license/
  *
  * Copyright (c) 2004 John Gruber http://daringfireball.net/projects/markdown/

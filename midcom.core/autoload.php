@@ -2,22 +2,22 @@
 /**
  * This File is part of the SmartLoader
  *
-* 
+*
 * @author Maarten Manders (mandersm@student.ethz.ch)
 * Adapted to MidCOM by Tarjei Huse
 * @copyright Copyright 2005, Maarten Manders
 * @link http://www.maartenmanders.org
 * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
-* @package midcom 
+* @package midcom
 */
 
 	/**
 	* PHP Autoload Hook
-	* 
+	*
 	* Gets called, when an undefined class is being instanciated
 	*
-	* @package midcom 
-	* @param_string string class name
+	* @package midcom
+	* @param string string class name
 	*/
 	function __autoload($class_name) {
         $ldr = SmartLoader::instance();
@@ -31,7 +31,7 @@
 			$ldr->setIgnoreHiddenFiles(true);
 			$ldr->setIgnoreSVN(true);
 		}
-		
+
 		/* load the class or trigger some fatal error on failure */
 		if(!$ldr->loadClass($class_name)) {
 			trigger_error("SmartLoader: Cannot load class '".$class_name."'", E_USER_ERROR);
@@ -59,7 +59,7 @@ else if (!function_exists('__autoload'))
 			$ldr->setIgnoreSVN(true);
             $ldr->createCache();
 		}
-	
+
 
 	/**
 	* SmartLoader Class
@@ -77,59 +77,59 @@ else if (!function_exists('__autoload'))
 	{
 		/**
 		* Class Directories
-		* 
+		*
 		* Holds the directories SmartLoader scans for class/interface definitions
-		* 
+		*
 		* @var array
 		* @access private
 		*/
 		private $classDirectories = array();
-		
+
 		/**
 		* Cache File Path
-		* 
+		*
 		* Holds the filename of the generated cache file.
-		* 
+		*
 		* @var string
 		* @access private
 		*/
 		private $cacheFilename = 'smartloader_cache.php';
-		
+
 		/**
 		* Class Index
-		* 
+		*
 		* Holds an associative array (class name => class file) when scanning.
-		* 
+		*
 		* @var array
 		* @access private
 		*/
 		private $classIndex = array();
-		
+
 		/**
 		* Class File Endings
-		* 
+		*
 		* Files with these endings will be parsed by the class/interface scanner.
-		* 
+		*
 		* @var array
 		* @access private
 		*/
 		private $classFileEndings = array();
-		
+
 		/**
 		* Follow SymLinks
-		* 
+		*
 		* Should SmartLoader follow SymLinks when searching class dirs?
-		* 
+		*
 		* @var boolean
 		* @access private
 		*/
 		private $followSymlinks = true;
-		
+
 		/**
 		* Ignore hidden files
-		* 
+		*
 		* Should SmartLoader ignore hidden files?
-		* 
+		*
 		* @access private
 		*/
 		private $ignoreHiddenFiles = false;
@@ -150,10 +150,10 @@ else if (!function_exists('__autoload'))
          * The cache of classnames
          */
         public $classes = FALSE;
-        
+
 		/**
 		* Constructor
-		* 
+		*
 		* Initialize SmartLoader
 		*
 		* @access public
@@ -163,23 +163,23 @@ else if (!function_exists('__autoload'))
 		}
         /**
          * Singleton factory
-         * Remember: Singletons are hidden GLOBALS! 
-         * @todo: register autoloader instead
+         * Remember: Singletons are hidden GLOBALS!
+         * @todo register autoloader instead
          */
-        public static function instance() 
+        public static function instance()
         {
-            if ( ! self::$soleInstance ) 
+            if ( ! self::$soleInstance )
             {
                 $class = __CLASS__;
                 self::$soleInstance = new $class;
             }
             return self::$soleInstance;
         }
-        
-		
+
+
 		/**
 		* Set Cache File Path
-		* 
+		*
 		* Define a path to store the cache file. Make sure PHP has permission read/write on it.
 		*
 		* @access public
@@ -188,10 +188,10 @@ else if (!function_exists('__autoload'))
 		public function setCacheFilename($cacheFilename) {
 			$this->cacheFilename = $cacheFilename;
 		}
-		
+
 		/**
 		* Set Class File Endings
-		* 
+		*
 		* Define which file endings will be considered by the class/interface scanner
 		* An empty array will let the scanner parse any file type.
 		*
@@ -201,10 +201,10 @@ else if (!function_exists('__autoload'))
 		public function setClassFileEndings($classFileEndings) {
 			$this->classFileEndings = $classFileEndings;
 		}
-		
+
 		/**
 		* Set Follow Symlinks Flag
-		* 
+		*
 		* Define whether SmartLoader should follow symlinks in when searching the class directory
 		*
 		* @access public
@@ -213,10 +213,10 @@ else if (!function_exists('__autoload'))
 		public function setfollowSymlinks($value) {
 			$this->followSymlinks = $value;
 		}
-		
+
 		/**
 		* Set ignore hidden files
-		* 
+		*
 		* Define whether SmartLoader should ignore hidden files
 		*
 		* @access public
@@ -230,11 +230,11 @@ else if (!function_exists('__autoload'))
          * @param boolean true is SVN dirs should be ignored
          */
         public function setIgnoreSVN($value) {
-            $this->ignoreSvnDirectories = $value; 
+            $this->ignoreSvnDirectories = $value;
         }
 		/**
 		* Add a directory to retrieve classes/interfaces from
-		* 
+		*
 		* This function adds a directory to retrieve class/interface definitions from.
 		*
 		* @access public
@@ -249,10 +249,10 @@ else if (!function_exists('__autoload'))
 				$this->classDirectories[] = $directory_path;
 			}
 		}
-		
+
 		/**
 		* Load a Class
-		* 
+		*
 		* Loads a class by its name
 		* - If the matching class definition file can't be found in the cache,
 		* 	it will try once again with $retry = true.
@@ -268,27 +268,27 @@ else if (!function_exists('__autoload'))
 			if(class_exists($class_name)) {
 				return true;
 			}
-			
+
 			/* Is our cache outdated or not available? Recreate it! */
 			if($retry || !is_readable($this->cacheFilename)) {
                 var_dump($this->cacheFilename);
 				$this->createCache();
 			}
-			
+
 			/* Include the cache file or raise error if something's wrong with the cache */
             $this->classes = include($this->cacheFilename);
             var_dump($this->classes);
 			if(!$this->classes) {
 				trigger_error("SmartLoader: Cannot include cache file from '".$this->cacheFilename."'", E_USER_ERROR);
 			}
-			
+
 			/* Include requested file. Return on success */
 			if(isset($this->classes[$class_name]) && is_readable($this->classes[$class_name])) {
 				if(include($this->classes[$class_name])) {
 					return true;
 				}
-			} 
-			
+			}
+
 			/* On failure retry recursively, but only once. */
 			if($retry) {
 				return false;
@@ -300,15 +300,15 @@ else if (!function_exists('__autoload'))
          * Checks if a class exists in the class cache
          */
         public function classExists($class_name) {
-            
+
             return isset($this->classes[$class_name]);
         }
-		
+
 		/**
 		* Create Cache
-		* 
-		* - Scans the class dirs for class/interface definitions and 
-		* 	creates an associative array (class name => class file) 
+		*
+		* - Scans the class dirs for class/interface definitions and
+		* 	creates an associative array (class name => class file)
 		* - Generates the array in PHP code and saves it as cache file
 		*
 		* @access private
@@ -319,7 +319,7 @@ else if (!function_exists('__autoload'))
 			foreach($this->classDirectories as $dir) {
 				$this->parseDir($dir);
 			}
-			
+
 			/* Generate php cache file */
 			$cache_content = "<?php\n\t// this is an automatically generated cache file.\n"
 				."\t// it serves as 'class name' / 'class file' association index for the SmartLoader\n";
@@ -333,10 +333,10 @@ else if (!function_exists('__autoload'))
 				@chmod($this->cacheFilename, 0664);
 			}
 		}
-		
+
 		/**
 		* Parse Directory
-		* 
+		*
 		* Parses a directory for class/interface definitions. Saves found definitions
 		* in $classIndex. Needless to say: Mind recursion cycles when using symlinks.
 		* TODO: Clean up this method; use SPL, if suitable.
@@ -355,7 +355,7 @@ else if (!function_exists('__autoload'))
 							{
 								case 'dir':
                                     if($file != "." && $file != ".." ) {
-                                        if  ($this->ignoreSvnDirectories && $file == '.svn') 
+                                        if  ($this->ignoreSvnDirectories && $file == '.svn')
                                         {
                                             break;
                                         }
@@ -377,7 +377,7 @@ else if (!function_exists('__autoload'))
                                             $size = filesize($file_path);
 											if($size > 0 && $buf = fread($php_file, $size)) {
                                                 $result = array();
-                                                if(($res = preg_match_all( $this->classRegularExpression, $buf, $result )) != FALSE ) 
+                                                if(($res = preg_match_all( $this->classRegularExpression, $buf, $result )) != FALSE )
                                                     {
                                                     if (!isset ($result[2]) || !is_array($result[2])) {
                                                         echo $file_path . " didn't contain any classes?!'<br/>";

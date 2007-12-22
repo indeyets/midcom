@@ -473,7 +473,7 @@ class midcom_application
     /**
      * Load all services MidCOM needs to keep always available
      *
-     * @todo: move those that aren't always needed behind serviceloader
+     * @todo move those that aren't always needed behind serviceloader
      */
     private function _load_core_services()
     {
@@ -498,7 +498,7 @@ class midcom_application
     /**
      * Load core DBA classes
      *
-     * @todo: move behind autoload
+     * @todo move behind autoload
      */
     private function _load_core_dba_classes()
     {
@@ -1069,7 +1069,7 @@ class midcom_application
         if (   $this->_currentcontext == 0
             && $this->skip_page_style == true)
         {
-            debug_add('We are in skip_page_style mode and context 0 is active. Executing the output handler and exitting afterwards.');
+            debug_add('We are in skip_page_style mode and context 0 is active. Executing the output handler and exiting afterwards.');
             $this->_status = MIDCOM_STATUS_CONTENT;
 
             // Enter Context
@@ -2218,7 +2218,7 @@ class midcom_application
 </html>
 <?php
         }
-        debug_add("Error Page output finished, exitting now", MIDCOM_LOG_DEBUG);
+        debug_add("Error Page output finished, exiting now", MIDCOM_LOG_DEBUG);
         debug_pop();
         $this->cache->content->no_cache();
         $this->finish();

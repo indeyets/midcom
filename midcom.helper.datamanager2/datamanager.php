@@ -10,7 +10,7 @@
 /**
  * Datamanager 2 Data Manager core class.
  *
- * This class controls all type I/O operations, including entering and exitting
+ * This class controls all type I/O operations, including entering and exiting
  * editing operations and creation support. It brings Types, Schemas and Storage objects
  * together.
  *

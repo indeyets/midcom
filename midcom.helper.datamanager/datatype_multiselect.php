@@ -6,6 +6,9 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/**
+ * @package midcom.helper.datamanager
+ */
 class midcom_helper_datamanager_datatype_multiselect extends midcom_helper_datamanager_datatype
 {
 

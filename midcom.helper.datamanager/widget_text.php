@@ -53,15 +53,15 @@
  * <b>CSS Styles in use by the Widget</b>
  *
  * The input fields have one of these CSS classes assigned to them in respect to the
- * selected inputstyle:
+ * selected input style:
  *
  * - input.shorttext
  * - textarea.longtext
  * - textarea.longtext_preformatted
  * - input.password
  *
+ * @package midcom.helper.datamanager
  */
-
 class midcom_helper_datamanager_widget_text extends midcom_helper_datamanager_widget {
 
     /**

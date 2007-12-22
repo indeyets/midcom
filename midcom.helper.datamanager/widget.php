@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package midcom.helper.datamanager
  * @author The Midgard Project, http://www.midgard-project.org
@@ -41,8 +40,9 @@
  * methods.
  *
  * @abstract Widget base class
+ *
+ * @package midcom.helper.datamanager
  */
-
 class midcom_helper_datamanager_widget {
 
     /**

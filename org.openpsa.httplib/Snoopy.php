@@ -1,4 +1,11 @@
 <?php
+/**
+ * @package org.openpsa.httplib
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
 /*************************************************
 
 Snoopy - the PHP net client
@@ -113,7 +120,7 @@ class Snoopy
 
     var $_isproxy        =    false;                // set if using a proxy server
     var $_fp_timeout    =    30;                    // timeout for socket connection
-    
+
     function Snoopy()
     {
         $this->proxy_host = $GLOBALS['midcom_component_data']['org.openpsa.httplib']['config']->get('proxy_host');

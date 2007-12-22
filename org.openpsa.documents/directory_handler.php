@@ -9,6 +9,9 @@
 
 /**
  * org.openpsa.documents metadata handler and viewer class.
+ *
+ * @package org.openpsa.documents
+ *
  */
 class org_openpsa_documents_directory_handler
 {

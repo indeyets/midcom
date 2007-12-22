@@ -15,6 +15,6 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
   &(event.description:h);
 </p>
 
-<p><?php $data['l10n']->show('registration is beeing processed, you will get a mail');?></p>
+<p><?php $data['l10n']->show('registration is being processed, you will get a mail');?></p>
 
 <p><a href="&(prefix);"><?php $data['l10n_midcom']->show('back'); ?></a></p>

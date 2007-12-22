@@ -8,6 +8,9 @@
  *
  */
 
+/**
+ * @package org.openpsa.products
+ */
 class org_openpsa_products_handler_product_bestrated extends midcom_baseclasses_components_handler
 {
     /*
@@ -22,7 +25,7 @@ class org_openpsa_products_handler_product_bestrated extends midcom_baseclasses_
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     function _list_products($limit = 5, $product_group = '')
     {
         $product_qb = org_openpsa_products_product_dba::new_query_builder();
@@ -68,7 +71,7 @@ class org_openpsa_products_handler_product_bestrated extends midcom_baseclasses_
 	    }
 
 	}
-    
+
         $product_qb->add_constraint('start', '<=', time());
         $product_qb->begin_group('OR');
             /*
@@ -86,7 +89,7 @@ class org_openpsa_products_handler_product_bestrated extends midcom_baseclasses_
         $this->_request_data['products'] = $product_qb->execute();
         $this->_request_data['product_group'] = $product_group;
     }
-    
+
     /**
      * The handler for the group_list article.
      * @param mixed $handler_id the array key from the requestarray
@@ -109,7 +112,7 @@ class org_openpsa_products_handler_product_bestrated extends midcom_baseclasses_
 
         // Prepare datamanager
         $data['datamanager_product'] = new midcom_helper_datamanager2_datamanager($data['schemadb_product']);
-        
+
         /**
          * change the pagetitle. (must be supported in the style)
          */
@@ -166,7 +169,7 @@ class org_openpsa_products_handler_product_bestrated extends midcom_baseclasses_
 
         midcom_show_style('group_footer');
     }
-    
+
     /**
      * The handler for the group_list article.
      * @param mixed $handler_id the array key from the requestarray
@@ -174,16 +177,16 @@ class org_openpsa_products_handler_product_bestrated extends midcom_baseclasses_
      *
      */
     function _handler_feed($handler_id, $args, &$data)
-    {   
+    {
         $_MIDCOM->cache->content->content_type("text/xml");
-        $_MIDCOM->header("Content-type: text/xml; charset=UTF-8");        
+        $_MIDCOM->header("Content-type: text/xml; charset=UTF-8");
         $_MIDCOM->skip_page_style = true;
-    
+
         $this->_list_products($this->_config->get('show_items_in_feed'));
 
         // Prepare datamanager
         $data['datamanager_product'] = new midcom_helper_datamanager2_datamanager($data['schemadb_product']);
-        
+
         /**
          * change the pagetitle. (must be supported in the style)
          */
@@ -232,7 +235,7 @@ class org_openpsa_products_handler_product_bestrated extends midcom_baseclasses_
                 midcom_show_style('feed_products_item');
             }
         }
-        
+
         $data['rss'] = $data['rss_creator']->createFeed('RSS2.0');
         echo $data['rss'];
 

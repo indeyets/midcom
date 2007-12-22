@@ -10,7 +10,6 @@
  * Dummy class stub. The admin class is rarely used these days.
  * @package midgard.webdav.styles
  */
-
 class midgard_webdav_styles_admin extends midcom_baseclasses_components_request_admin
 {
 }

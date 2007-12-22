@@ -1,11 +1,17 @@
 <?php
 /**
- * Created on 2006-Oct-Thu
  * @package pl.olga.windguru
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  *
  */
+
+ /**
+  * Created on 2006-Oct-Thu
+  *
+  * @package pl.olga.windguru
+  *
+  */
 class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handler
 {
     /**
@@ -114,7 +120,7 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
 			midcom_show_style("spot-index-start");
 			foreach ($this->_list as $spot)
 			{
-            
+
                 if (! $this->_datamanager->autoset_storage($spot))
                 {
                     debug_push_class(__CLASS__, __FUNCTION__);
@@ -180,7 +186,7 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
         $this->_request_data['controller']->schemadb =& $this->_request_data['schemadb'];
         $this->_request_data['controller']->set_storage($this->_article);
         $this->_request_data['controller']->process_ajax();
-        
+
 
         $this->_prepare_request_data();
         $_MIDCOM->set_26_request_metadata($this->_article->metadata->revised, $this->_article->guid);

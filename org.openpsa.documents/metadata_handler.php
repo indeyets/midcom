@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package org.openpsa.documents
  * @author Nemein Oy http://www.nemein.com/
@@ -10,6 +9,9 @@
 
 /**
  * org.openpsa.documents metadata handler and viewer class.
+ *
+ * @package org.openpsa.documents
+ *
  */
 class org_openpsa_documents_metadata_handler
 {

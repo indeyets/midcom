@@ -12,14 +12,17 @@
  * handles the sending of the emails
  *
  * It uses net_nemein_email
+ *
+ * @package no.odindata.quickform2
+ *
  */
 class no_odindata_quickform2_email
 {
     var $_factory;
     var $_config;
     /**
-     * @var $config midcom_helper_config handler configuration
-     * @var $factory no_odindata_quickform2_factory
+     * @param $config midcom_helper_config handler configuration
+     * @param $factory no_odindata_quickform2_factory
      */
     function no_odindata_quickform2_email ($config, $factory)
     {

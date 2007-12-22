@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This is a plugin for creatin a sitegroup
+ * This is a plugin for creating a sitegroup
  */
 class create_tkk_host extends midcom_baseclasses_components_handler
 {

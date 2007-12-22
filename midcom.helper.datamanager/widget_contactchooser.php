@@ -11,8 +11,9 @@
  * This is a widget to choose persons from org.openpsa.contacts
  *
  * TODO: Values display
+ *
+ * @package midcom.helper.datamanager
  */
-
 class midcom_helper_datamanager_widget_contactchooser extends midcom_helper_datamanager_widget {
 
     /**

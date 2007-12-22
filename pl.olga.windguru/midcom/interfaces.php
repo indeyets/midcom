@@ -1,6 +1,6 @@
 <?php
 /**
- * @package pl.olga.windguru 
+ * @package pl.olga.windguru
  * @author The Midgard Project, http://www.midgard-project.org
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -8,10 +8,11 @@
 
 /**
  * This is the interface class for pl.olga.windguru
- * 
+ *
  * @package pl.olga.windguru
  */
 
+/** @ ignore */
 define('WG_STATUS_NONE',100);
 define('WG_STATUS_GFS',3);
 define('WG_STATUS_NWW3',10);
@@ -31,12 +32,12 @@ class pl_olga_windguru_interface extends midcom_baseclasses_components_interface
         // Load all mandatory class files of the component here
         $this->_autoload_files = array
         (
-            'viewer.php', 
+            'viewer.php',
             'navigation.php',
 			'windguru.php',
 			'dba.php',
         );
-        
+
         // Load all libraries used by component here
         $this->_autoload_libraries = array
         (

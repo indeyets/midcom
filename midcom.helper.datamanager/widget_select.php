@@ -29,7 +29,7 @@
  * control.
  *
  * <b>widget_select_display_key:</b> A boolean, that controls whether the key should be shown to the
- * user, or not, which would be the default if ommited.
+ * user, or not, which would be the default if omitted.
  *
  * <b>Sample configuration</b>
  *
@@ -51,8 +51,8 @@
  * The select widget will be either of select.dropdown or select.list depending on the
  * height configured for the widget.
  *
+ * @package midcom.helper.datamanager
  */
-
 class midcom_helper_datamanager_widget_select extends midcom_helper_datamanager_widget {
 
     /**

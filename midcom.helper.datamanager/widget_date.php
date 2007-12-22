@@ -44,15 +44,15 @@
  * The fieldset will be of fieldset.date, the input within it is input.date and
  * the button that invokes the JS code is button.date.
  *
- * <b>JScript Calendar licence information</b>
+ * <b>JScript Calendar license information</b>
  *
  * The DHTML Calendar, details and latest version at: http://dynarch.com/mishoo/calendar.epl
  *
  * This script is distributed under the GNU Lesser General Public License.
  * Read the entire license text here: http://www.gnu.org/licenses/lgpl.html
  *
+ * @package midcom.helper.datamanager
  */
-
 class midcom_helper_datamanager_widget_date extends midcom_helper_datamanager_widget {
 
     var $_initfuncname;

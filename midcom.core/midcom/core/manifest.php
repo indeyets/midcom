@@ -305,7 +305,7 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
      * @param string $filename The name of the manifest file to load.
      * @return bool True if the manifest was successfully loaded, false otherwise.
      * @access protected
-     * @todo: move this into the constructor, use isset.
+     * @todo move this into the constructor, use isset.
      */
     function _load_manifest($values )
     {

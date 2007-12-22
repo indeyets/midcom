@@ -57,6 +57,7 @@
  *
  * None, except those of widget_select.
  *
+ * @package midcom.helper.datamanager
  */
 class midcom_helper_datamanager_widget_schemaselect extends midcom_helper_datamanager_widget_select
 {

@@ -367,7 +367,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
         debug_push_class(__CLASS__, __FUNCTION__);
         if (!function_exists('read_exif_data'))
         {
-            // TODO: Use some CLI tool if availbale
+            // TODO: Use some CLI tool if available
             debug_add("'read_exif_data()' not available, aborting", MIDCOM_LOG_ERROR);
             debug_pop();
             return false;

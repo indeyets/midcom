@@ -13,6 +13,9 @@
  * This class uses special operations to allow for ajax forms.
  *
  * The form rendering is done using the widgets and is based on HTML_QuickForm.
+ *
+ * @package midcom.helper.datamanager2
+ *
  */
 class midcom_helper_datamanager2_formmanager_ajax extends midcom_helper_datamanager2_formmanager
 {

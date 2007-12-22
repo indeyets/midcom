@@ -12,7 +12,6 @@
  *
  * @package pl.olga.windguru
  */
-
 class pl_olga_windguru_handler_create extends midcom_baseclasses_components_handler
 {
 
@@ -109,7 +108,7 @@ class pl_olga_windguru_handler_create extends midcom_baseclasses_components_hand
     {
         $this->_article = new midcom_db_article();
         $this->_article->topic = $this->_topic->id;
-        
+
         if (! $this->_article->create())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -150,7 +149,7 @@ class pl_olga_windguru_handler_create extends midcom_baseclasses_components_hand
                 {
                     $this->_article->name = $this->_article->title;
                 }
-                            
+
                 $_MIDCOM->relocate("{$this->_article->name}.html");
                 // This will exit.
 

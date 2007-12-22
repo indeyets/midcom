@@ -570,7 +570,7 @@ class midcom_helper__styleloader {
                         
             if ($result === false)
             {
-                // Note that src detection will be semi-reliable, as it depends on all errors beeing
+                // Note that src detection will be semi-reliable, as it depends on all errors being
                 // found before caching kicks in.
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     "Failed to parse style element '{$path}', content was loaded from '{$src}', see above for PHP errors.");

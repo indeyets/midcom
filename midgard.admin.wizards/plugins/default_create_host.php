@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This is a plugin for creatin a host
+ * This is a plugin for creating a host
  */
 class default_create_host extends midcom_baseclasses_components_handler
 {

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This is a plugin for creatin a sitegroup
+ * This is a plugin for creating a sitegroup
  */
 class default_select_style extends midcom_baseclasses_components_handler
 {

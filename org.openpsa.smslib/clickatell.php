@@ -6,6 +6,7 @@
  * Interface to Clickatell API
  *
  * TODO: Implement other methods than send_sms.
+ * @package org.openpsa.smslib
  */
 class org_openpsa_smslib_clickatell extends org_openpsa_smslib
 {

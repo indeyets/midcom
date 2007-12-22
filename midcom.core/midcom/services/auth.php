@@ -1464,7 +1464,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     /**
      * Returns a listing of all known(!) virtual groups.
      *
-     * @result An associative vgroup_id (including the vgroup: prefix) => vgroup_name listing.
+     * @return An associative vgroup_id (including the vgroup: prefix) => vgroup_name listing.
      */
     function get_all_vgroups()
     {
@@ -2064,7 +2064,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             debug_add('Cannot render an access denied page, page output has already started. Aborting directly.', MIDCOM_LOG_INFO);
             echo "<br />{$title}: {$login_warning}";
             $_MIDCOM->finish();
-            debug_add("Emergency Error Message output finished, exitting now", MIDCOM_LOG_DEBUG);
+            debug_add("Emergency Error Message output finished, exiting now", MIDCOM_LOG_DEBUG);
             exit();
         }
 
@@ -2144,7 +2144,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             <?php
         }
         $_MIDCOM->finish();
-        debug_add("Error Page output finished, exitting now", MIDCOM_LOG_DEBUG);
+        debug_add("Error Page output finished, exiting now", MIDCOM_LOG_DEBUG);
         exit();
     }
 

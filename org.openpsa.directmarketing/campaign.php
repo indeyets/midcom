@@ -1,5 +1,12 @@
 <?php
 /**
+ * @package org.openpsa.directmarketing
+ * @author Nemein Oy http://www.nemein.com/
+ * @copyright Nemein Oy http://www.nemein.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
+/**
  * MidCOM DBA wrapped access to org_openpsa_campaign object, with some utility methods
  */
 class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
@@ -18,7 +25,7 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
         }
         return $stat;
     }
-    
+
     function _sync_to_dm2()
     {
         foreach ($this->testers as $tester => $selected)
@@ -175,14 +182,14 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
      */
     function _get_tester_by_personid($id)
     {
-        
+
         //Find the correct campaign tester by person ID
         $qb = org_openpsa_directmarketing_campaign_member::new_query_builder();
         $qb->add_constraint('campaign', '=', $this->id);
         $qb->add_constraint('person', '=', $id);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_CAMPAIGN_TESTER);
         $result = $qb->execute();
-        
+
         if (!empty($result))
         {
             return $result[0];
@@ -233,7 +240,7 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
     /**
      * Creates/Removes members for this smart campaign based on the rules array
      * NOTE: This is highly resource intensive for large campaigns
-     * @ret bool indicating success/failure
+     * @return bool indicating success/failure
      */
     function update_smart_campaign_members()
     {

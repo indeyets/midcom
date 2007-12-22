@@ -1,10 +1,15 @@
 <?php
 /**
- * Q'n'D wrappers to make the httplib somewhat usable without midcom
- *
  * @package org.openpsa.httplib
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/**
+ * Q'n'D wrappers to make the httplib somewhat usable without midcom
+ *
+ */
 if (!defined('MIDCOM_ROOT'))
 {
     $try = array('/usr/share/pear', '/usr/share/php4', '/usr/share/php');

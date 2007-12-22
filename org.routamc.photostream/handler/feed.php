@@ -1,11 +1,16 @@
 <?php
 /**
- * Created on 2006-Oct-Thu
  * @package org.routamc.photostream
+ * @author The Midgard Project, http://www.midgard-project.org
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
- *
  */
+
+/**
+ * Created on 2006-Oct-Thu
+ * @package org.routamc.photostream
+ */
+ /** @ignore */
 require('list.php');
 class org_routamc_photostream_handler_feed extends org_routamc_photostream_handler_list
 {
@@ -79,7 +84,7 @@ class org_routamc_photostream_handler_feed extends org_routamc_photostream_handl
         // This will also do some validations
         $this->_normalize_feed_type($feed_type_arg);
         $this->_resolve_feed_urls($args);
-        
+
         debug_add("Calling \$this->{$parent_method}('{$data['parent_handler_id']}', \$args, \$data)");
         if (!$this->$parent_method($data['parent_handler_id'], $args, $data))
         {

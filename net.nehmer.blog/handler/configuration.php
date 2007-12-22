@@ -59,7 +59,7 @@ function net_nehmer_blog_symlink_topic_list()
     (
         '' => '',
     );
-    
+
     $nav = new midcom_helper_nav();
     $mc = midcom_db_topic::new_collector('component', 'net.nehmer.blog');
     $mc->add_value_property('id');
@@ -80,7 +80,7 @@ function net_nehmer_blog_symlink_topic_list()
         $breadcrumb = implode(' > ', $path_components);
         $newstopics[$topic_guid] = $breadcrumb;
     }
-    
+
     return $newstopics;
 }
 

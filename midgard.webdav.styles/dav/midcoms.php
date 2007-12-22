@@ -1,12 +1,20 @@
 <?php
+/**
+ * @package midgard.webdav.styles
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
-
+/**
+ * @package midgard.webdav.styles
+ */
 class midgard_webdav_styles_handler_midcoms_webdav extends midgard_webdav_styles_dav {
 
     function PROPFIND (&$param, &$files) {
         $this->log( __CLASS__ . '::PROPFIND' );
         foreach ($_MIDCOM->componentloader->manifests as $manifest) {
-            if ($manifest->purecode) 
+            if ($manifest->purecode)
             {
                 continue;
             }
@@ -16,13 +24,13 @@ class midgard_webdav_styles_handler_midcoms_webdav extends midgard_webdav_styles
     }
 
 
-    function PUT(&$param) { 
-        return "501 not implemented"; 
-    }
-    function MKCOL($options) { 
+    function PUT(&$param) {
         return "501 not implemented";
     }
-    
+    function MKCOL($options) {
+        return "501 not implemented";
+    }
+
     function LOCK( &$options ) {
         return parent::LOCK( $options );
     }
@@ -46,7 +54,7 @@ class midgard_webdav_styles_handler_midcoms_webdav extends midgard_webdav_styles
 
 }
 
-class midgard_webdav_styles_handler_midcoms_element extends 
+class midgard_webdav_styles_handler_midcoms_element extends
 midgard_webdav_styles_handler_midcoms_files
 {
     var $element;
@@ -56,8 +64,8 @@ midgard_webdav_styles_handler_midcoms_files
     }
 
     function GET ( &$options ) {
-        $fspath = MIDCOM_ROOT .  str_replace( '.' , '/', $this->midcom ) . "/style/" . $this->element; 
-        if (!file_exists($fspath)) 
+        $fspath = MIDCOM_ROOT .  str_replace( '.' , '/', $this->midcom ) . "/style/" . $this->element;
+        if (!file_exists($fspath))
         {
             return false;
         }
@@ -109,10 +117,10 @@ class midgard_webdav_styles_handler_midcoms_files extends midgard_webdav_styles_
         //  if (is_readable($fspath)) {
         $info["props"][] = $this->mkprop("getcontenttype", 'text/plain');
         $info["props"][] = $this->mkprop("resourcetype", "collection");
-        $info["props"][] = $this->mkprop("getcontenttype", "httpd/unix-directory"); 
+        $info["props"][] = $this->mkprop("getcontenttype", "httpd/unix-directory");
         //$files['files'][] = $info;
-         
-        foreach ( $midcoms as $key => $element ) {      
+
+        foreach ( $midcoms as $key => $element ) {
             $files['files'][] = $this->get_midcom_styleelement_info( $element );
         }
         return true;
@@ -130,7 +138,7 @@ class midgard_webdav_styles_handler_midcoms_files extends midgard_webdav_styles_
         $info["props"][] = $this->mkprop("creationdate",filectime($path));
         $info["props"][] = $this->mkprop("getlastmodified", filemtime($path));
         $info["props"][] = $this->mkprop("resourcetype", "");
-        $info["props"][] = $this->mkprop("getcontenttype", "text/html"); 
+        $info["props"][] = $this->mkprop("getcontenttype", "text/html");
         $info["props"][] = $this->mkprop("getcontentlength", filesize($path));
         return $info;
 
@@ -139,7 +147,7 @@ class midgard_webdav_styles_handler_midcoms_files extends midgard_webdav_styles_
         $path = MIDCOM_ROOT .  str_replace( '.' , '/', $midcom ) . "/style";
         $this->log("path:" . $path);
         $ret = array(  );
-        if ( !file_exists( $path ) ) 
+        if ( !file_exists( $path ) )
         {
             $this->log("Path $path does not exist");
             return false;
@@ -148,7 +156,7 @@ class midgard_webdav_styles_handler_midcoms_files extends midgard_webdav_styles_
         $files = dir ( $path);
 
         while ( false !== ( $file = $files->read( )  ) ) {
-            if (substr($file,0,1) == '.') 
+            if (substr($file,0,1) == '.')
             {
             	continue;
             }

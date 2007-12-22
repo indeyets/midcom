@@ -16,26 +16,26 @@ class cc_kaktus_todo_viewer extends midcom_baseclasses_components_request
 {
     /**
      * Constructor for the class
-     * 
+     *
      * @access public
      */
     function cc_kaktus_todo_viewer($topic, $config)
     {
         parent::midcom_baseclasses_components_request($topic, $config);
-        
+
         // Match /
         $this->_request_switch['list_all'] = array
         (
             'handler'       => array ('cc_kaktus_todo_handler_list', 'list'),
         );
-        
+
         // Match /create/
         $this->_request_switch['create_root_level'] = array
         (
             'handler'       => array ('cc_kaktus_todo_handler_new', 'new'),
             'fixed_args'    => array ('create'),
         );
-        
+
         // Match /create/<item id>
         $this->_request_switch['create_sub_item'] = array
         (
@@ -43,21 +43,21 @@ class cc_kaktus_todo_viewer extends midcom_baseclasses_components_request
             'fixed_args'    => array ('create'),
             'variable_args' => 1,
         );
-        
+
         // Match /finished/
         $this->_request_switch['finished'] = array
         (
             'handler'       => array ('cc_kaktus_todo_handler_list', 'finished'),
             'fixed_args'    => array ('finished'),
         );
-        
+
         // Match /overtime/
         $this->_request_switch['overtime'] = array
         (
             'handler'       => array ('cc_kaktus_todo_handler_list', 'overtime'),
             'fixed_args'    => array ('overtime'),
         );
-        
+
         // Match /config/
         $this->_request_switch['config'] = array
         (
@@ -67,16 +67,16 @@ class cc_kaktus_todo_viewer extends midcom_baseclasses_components_request
             'fixed_args'    => array('config'),
         );
     }
-    
+
     /**
      * Populate the elements
-     * 
+     *
      * @access private
      */
     function _on_handle($handler, $args)
     {
         $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
-        
+
         // Link to a new root level item creation
         if ($this->_topic->can_do('midgard:create'))
         {
@@ -90,7 +90,7 @@ class cc_kaktus_todo_viewer extends midcom_baseclasses_components_request
                 )
             );
         }
-        
+
         return true;
     }
 }

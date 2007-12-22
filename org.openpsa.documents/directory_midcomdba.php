@@ -1,6 +1,16 @@
 <?php
 /**
+ * @package org.openpsa.documents
+ * @author Nemein Oy http://www.nemein.com/
+ * @copyright Nemein Oy http://www.nemein.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
+/**
  * Wrapper for midcom_baseclasses_database_topic
+ *
+ * @package org.openpsa.documents
+ *
  */
 class org_openpsa_documents_directory extends midcom_baseclasses_database_topic
 {

@@ -18,8 +18,8 @@
  * allow the application to let the user specifiy a list of filters that should
  * be applied during upload.
  *
- * @todo: Image type automatic best-web-format conversion
- * @todo: Add support for working on attachments
+ * @todo Image type automatic best-web-format conversion
+ * @todo Add support for working on attachments
  *
  * This class is originally known as net_siriux_photos_filter.
  *

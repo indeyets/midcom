@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @package midcom.admin.settings
+ */
 
 class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
 {
@@ -35,7 +37,7 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
      * @access private
      */
     var $_schemadb = null;
-    
+
     /**
      * Defaults for the schema database
      *
@@ -128,8 +130,8 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
         {
            $this->_defaults[$key] = $value;
         }
-    
-        $this->_schemadb = midcom_helper_datamanager2_schema::load_database('file:/midcom/admin/settings/config/schemadb_config.inc');        
+
+        $this->_schemadb = midcom_helper_datamanager2_schema::load_database('file:/midcom/admin/settings/config/schemadb_config.inc');
     }
 
     /**
@@ -215,30 +217,30 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
                 }
 
                 $rst = ($this->_codeinit->id)?$this->_codeinit->update():$this->_codeinit->create();
-                
+
                 if ($rst)
                 {
                     mgd_cache_invalidate();
-                    $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('host configuration', 'midcom.admin.settings'), 
-                    $_MIDCOM->i18n->get_string('settings saved successfully', 'midcom.admin.settings'), 
+                    $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('host configuration', 'midcom.admin.settings'),
+                    $_MIDCOM->i18n->get_string('settings saved successfully', 'midcom.admin.settings'),
                                                 'ok');
                 }
                 else
                 {
-                    $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('host configuration', 'midcom.admin.settings'), 
-                                                sprintf($_MIDCOM->i18n->get_string('failed to save settings, reason %s', 'midcom.admin.settings'), mgd_errstr()), 
+                    $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('host configuration', 'midcom.admin.settings'),
+                                                sprintf($_MIDCOM->i18n->get_string('failed to save settings, reason %s', 'midcom.admin.settings'), mgd_errstr()),
                                                 'error');
                 }
-                
+
                 $_MIDCOM->relocate('__mfa/asgard_midcom.admin.settings/'.$host->guid.'.html');
 
             case 'cancel':
                 $_MIDCOM->relocate('__mfa/asgard_midcom.admin.settings/'.$host->guid.'.html');
                 // This will exit.
         }
-        
+
         $this->_prepare_request_data($data);
-        
+
         // Add the view to breadcrumb trail
         $tmp = Array();
         $tmp[] = Array
@@ -253,7 +255,7 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
         );
 
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
-        
+
         // Set page title
         $_MIDCOM->set_pagetitle($this->_l10n->get('host configuration')." : ".$data['hostname']);
 
@@ -278,22 +280,22 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
         midgard_admin_asgard_plugin::asgard_footer();
     }
 
-    function _get_code_init() 
+    function _get_code_init()
     {
         $this->errors = "";
-               
+
         foreach ($this->_controller->formmanager->form->_submitValues as $key => $val)
         {
-            if ( array_key_exists($key, $GLOBALS['midcom_config'])) 
+            if ( array_key_exists($key, $GLOBALS['midcom_config']))
             {
-                if ($GLOBALS['midcom_config'][$key] != $val) 
+                if ($GLOBALS['midcom_config'][$key] != $val)
                 {
                     $this->hostconfig->set($key, $val);
                 }
-            
+
             } else {
             //$this->errors .=" Could not ser: $key, $val<br/>";
-            } 
+            }
         }
 
         return $this->hostconfig->get_code_init('midcom.admin.settings');
@@ -313,7 +315,7 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
         }
         return $hours;
     }
-    
+
     /**
      * Static helper for listing minutes of hour for purposes of pulldowns in the schema
      */

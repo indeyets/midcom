@@ -387,7 +387,7 @@ Tapahtuman rekisteröintien asetukset
 Ilmoittautuminen tapahtumaan %s
 ---STRINGEND
 
----STRING registration is beeing processed, you will get a mail
+---STRING registration is being processed, you will get a mail
 Sinun ilmoittautumistasi käsitellään. Tulet saamaan varmistusviestin sähköpostitse.
 ---STRINGEND
 

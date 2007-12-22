@@ -27,6 +27,7 @@
  * - <i>widget</i>: text
  * - <i>precision</i>: -1
  *
+ * @package midcom.helper.datamanager
  */
 class midcom_helper_datamanager_datatype_number extends midcom_helper_datamanager_datatype
 {

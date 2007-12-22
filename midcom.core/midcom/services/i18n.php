@@ -39,7 +39,7 @@ class midcom_services_i18n
 {
 
     /**
-     * The language database, loaded from /midcom/config/language_db.inc 
+     * The language database, loaded from /midcom/config/language_db.inc
      *
      * @var Array
      * @access private
@@ -98,7 +98,7 @@ class midcom_services_i18n
      * @access private
      */
     var $_current_language;
-    
+
     /**
      * Current language for content. May be different than the UI language
      *
@@ -106,14 +106,14 @@ class midcom_services_i18n
      * @access private
      */
     var $_current_content_language;
-    
+
     /**
      * Current Midgard language ID for content. May be different than the UI language
      *
      * @var string
      * @access private
      */
-    var $_current_content_language_midgard;   
+    var $_current_content_language_midgard;
 
     /**
      * Current character set
@@ -122,7 +122,7 @@ class midcom_services_i18n
      * @access private
      */
     var $_current_charset;
-    
+
     /**
      * List of different language versions of the site in the format
      * of an array indexed by language ID and containing midgard_host
@@ -132,7 +132,7 @@ class midcom_services_i18n
      * @access private
      */
     var $_language_hosts = array();
-    
+
     /**
      * This method initializes the available i18n framework by determining
      * the desired language  from these different sources: HTTP Content
@@ -198,7 +198,7 @@ class midcom_services_i18n
      * have to override it manually using midcom_services_i18n::set_charset()
      * after calling this method.
      *
-     * If <em>$switch_content_lang</em> is set, this call will also synchronize 
+     * If <em>$switch_content_lang</em> is set, this call will also synchronize
      * the Midgard content language with the MidCOM language.
      *
      * @param string $lang	Language ISO 639-1 code
@@ -214,9 +214,9 @@ class midcom_services_i18n
             debug_pop();
             return false;
         }
-        
+
         $this->_current_language = $lang;
-        
+
         if ($switch_content_lang)
         {
             // In the future we may allow changing UI language without changing content language
@@ -225,11 +225,11 @@ class midcom_services_i18n
             // TODO: With 1.8 we can finally start using Midgard MultiLang feature here
             $this->_synchronize_language_to_midgard();
         }
-        
+
         $this->_current_charset = $this->_language_db[$lang]['encoding'];
 
-        /** 
-         * NOTE: setlocale can take an array of locales as value, it will use 
+        /**
+         * NOTE: setlocale can take an array of locales as value, it will use
          * the first name valid for the system
          */
         setlocale (LC_ALL, $this->_language_db[$lang]['locale']);
@@ -239,7 +239,7 @@ class midcom_services_i18n
             $this->_obj_l10n[$name]->set_language($lang);
         }
     }
-    
+
     /**
      * Set the MidCOM language to the one defined by Midgard.
      *
@@ -251,7 +251,7 @@ class midcom_services_i18n
         {
             return false;
         }
-        
+
         $lang = new midgard_language();
         $lang->get_by_id($_MIDGARD['lang']);
 
@@ -259,12 +259,12 @@ class midcom_services_i18n
         {
             return false;
         }
-        
+
         $this->_current_content_language = $lang->code;
-        
+
         return $this->_current_content_language;
     }
-    
+
     function code_to_id($code)
     {
         $qb = new MidgardQueryBuilder('midgard_language');
@@ -305,7 +305,7 @@ class midcom_services_i18n
             }
             else
             {
-                mgd_set_lang($lang); 
+                mgd_set_lang($lang);
             }
         }
         debug_pop();
@@ -356,7 +356,7 @@ class midcom_services_i18n
         {
             return $this->get_current_language();
         }
-        
+
         return $this->_current_content_language;
     }
 
@@ -389,18 +389,18 @@ class midcom_services_i18n
     {
         return $this->_current_charset;
     }
-    
+
     function get_language_hosts()
     {
         if (count($this->_language_hosts) == 0)
         {
             $qb = new midgard_query_builder('midgard_host');
             $qb->add_constraint('root', '=', $_MIDGARD['page']);
-            
+
             // TODO: Check online status?
-            
+
             $hosts = $qb->execute();
-            
+
             foreach ($hosts as $host)
             {
                 $this->_language_hosts[$host->lang] = $host;
@@ -519,7 +519,7 @@ class midcom_services_i18n
      * suitable default language. Cookies have priority here.
      */
     function _set_startup_langs()
-    {        
+    {
         $this->_current_content_language_midgard = $_MIDGARD['lang'];
 
         $this->_read_cookie();
@@ -532,7 +532,7 @@ class midcom_services_i18n
             debug_pop();
             return;
         }
-        
+
         // TODO: Make a pref for this
         $content_language = $this->_synchronize_language_from_midgard();
         if ($content_language)
@@ -541,7 +541,7 @@ class midcom_services_i18n
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Set current language to {$this->_current_language} (source: Midgard host language)", MIDCOM_LOG_INFO);
             debug_pop();
-            return;  
+            return;
         }
 
         $this->_read_http_negotiation();
@@ -580,10 +580,10 @@ class midcom_services_i18n
         $rawdata = base64_decode($_COOKIE['midcom_services_i18n']);
         $array = unserialize($rawdata);
 
-        if (   ! array_key_exists('language', $array) 
+        if (   ! array_key_exists('language', $array)
             || ! array_key_exists('charset', $array))
         {
-            debug_push_class(__CLASS__, __FUNCTION__);        
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Rejecting cookie, it seems invalid.", MIDCOM_LOG_DEBUG);
             debug_pop();
             return;
@@ -610,14 +610,14 @@ class midcom_services_i18n
             {
                 $params = explode(";",$data);
                 $lang = array_shift($params);
-                
+
                 //Fix for Safari
-                if (isset($_SERVER['HTTP_USER_AGENT']) 
+                if (isset($_SERVER['HTTP_USER_AGENT'])
 	                && strstr($_SERVER['HTTP_USER_AGENT'], 'Safari'))
                 {
 	                $lang = array_shift(explode("-",$lang));
                 }
-                
+
                 $q = 1.0;
                 $option = array_shift($params);
                 while (! is_null($option))
@@ -704,7 +704,7 @@ class midcom_services_i18n
 
         return true;
     }
-    
+
     /**
      * Lists languages as identifier -> name pairs
      * @return Array

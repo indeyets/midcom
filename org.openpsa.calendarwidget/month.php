@@ -77,6 +77,8 @@
  *     $calendar->add_event($event);
  *     ?>
  *
+ * @package org.openpsa.calendarwidget
+ *
  */
 class org_openpsa_calendarwidget_month
 {

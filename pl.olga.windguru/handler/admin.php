@@ -12,7 +12,6 @@
  *
  * @package pl.olga.windguru
  */
-
 class pl_olga_windguru_handler_admin extends midcom_baseclasses_components_handler
 {
     /**
@@ -189,7 +188,7 @@ class pl_olga_windguru_handler_admin extends midcom_baseclasses_components_handl
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The article {$args[0]} was not found.");
             // This will exit.
         }
-        
+
         $this->_article->require_do('midgard:update');
 
         $this->_load_controller();

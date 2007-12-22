@@ -21,6 +21,8 @@
  *   other form element. They are usually displayed in the same line. The value is passed
  *   through the standard schema localization chain.
  *
+ * @package midcom.helper.datamanager2
+ *
  */
 class midcom_helper_datamanager2_widget_sortable extends midcom_helper_datamanager2_widget_select
 {

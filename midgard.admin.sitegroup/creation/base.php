@@ -2,56 +2,56 @@
 /**
  * Created on Feb 26, 2006
  * @author tarjei huse
- * @package midcom.admin.aegir
+ * @package midgard.admin.sitegroup
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
- * 
+ *
  */
- 
+
 /**
  * Abstract creation class , defines the interface and common code.
- * 
+ *
  * @abstract
- * 
+ * @package midgard.admin.sitegroup
  */
-class midgard_admin_sitegroup_creation_base 
+class midgard_admin_sitegroup_creation_base
 {
-    
+
     /**
      * The object containing the values that should be used
      * to create the object
      * @var object midgard.admin.sitegroup_creation_values
      */
     var $config = null;
-    
+
     var $verbose = false;
 
-    function midgard_admin_sitegroup_creation_base($config) 
+    function midgard_admin_sitegroup_creation_base($config)
     {
         $this->config = $config;
         $this->verbose = $config->get_value('verbose');
     }
-    
+
     /**
      * The run method executes the core to create what should be created
      * @return boolean true on success.
      * @abstract
-     *  
+     *
      */
-    function run () 
+    function run ()
     {
         return false;
-    } 
-    
+    }
+
     /**
      * All classes should have a validator method that must return true
      * for the class to run.
-     * @return boolean 
+     * @return boolean
      * @access public
      * @abstract
-     * 
+     *
      */
-    function validate () 
+    function validate ()
     {
         return false;
     }
@@ -61,7 +61,7 @@ class midgard_admin_sitegroup_creation_base
      * @access protected
      */
     function validate_configuration_variables() {
-        
+
         foreach (get_object_vars($this->config) as $name => $val)
         {
             if ($this->config->get_value($name) == null) {

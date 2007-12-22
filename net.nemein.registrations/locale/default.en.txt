@@ -387,7 +387,7 @@ Registration-Configuration for the event
 Registration for %s
 ---STRINGEND
 
----STRING registration is beeing processed, you will get a mail
+---STRING registration is being processed, you will get a mail
 Your registration is being processed, you will receive a confirmation via E-Mail shortly.
 ---STRINGEND
 

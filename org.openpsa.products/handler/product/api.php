@@ -1,7 +1,7 @@
 <?php
 /**
- * @package net.nehmer.blog
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @package @package org.openpsa.products
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: products.php 3991 2006-09-07 11:28:16Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,8 +9,8 @@
 
 /**
  * MetaWeblog API handler for the blog component
- * 
- * @package net.nehmer.blog
+ *
+ * @package org.openpsa.products
  */
 class org_openpsa_products_handler_product_api extends midcom_baseclasses_components_handler
 {
@@ -36,19 +36,19 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
         {
             return false;
         }
-        
+
         //$_MIDCOM->auth->require_valid_user('basic');
-        
+
         //Content-Type
         $_MIDCOM->skip_page_style = true;
         $_MIDCOM->cache->content->no_cache();
-        
+
         $this->_load_datamanager();
         $_MIDCOM->load_library('midcom.helper.xml');
-        
+
         return true;
     }
-    
+
     /**
      * Internal helper, loads the datamanager for the current product. Any error triggers a 500.
      *
@@ -63,17 +63,17 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a DM2 instance.");
             // This will exit.
         }
-    } 
+    }
 
     /**
      * DM2 creation callback, binds to the current content topic.
      */
     function _create_product($title, $productgroup)
-    {    
+    {
         $product = new org_openpsa_products_product_dba();
         $product->productGroup = $productgroup;
         $product->title = $title;
-        
+
         if (! $product->create())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -100,7 +100,7 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
                 $tries++;
             }
         }
-        
+
         $product->parameter('midcom.helper.datamanager2', 'schema_name', $this->_config->get('api_products_schema'));
 
         return $product;
@@ -108,15 +108,15 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
 
     /*
     // products.list_product_groups
-    function list_product_groups($message) 
+    function list_product_groups($message)
     {
         $args = $this->_params_to_args($message);
-        
+
         if (!mgd_auth_midgard($args[1], $args[2]))
         {
             return new XML_RPC_Response(0, mgd_errno(), 'Authentication failed.');
         }
-        $_MIDCOM->auth->initialize();        
+        $_MIDCOM->auth->initialize();
         if ($args[0] == 0)
         {
             $product_group_id = 0;
@@ -132,23 +132,23 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
             $product_group_id = $product_group->id;
             $product_group_label = $product_group->code;
         }
-        
+
         $response = array();
-        
+
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
         $qb = org_openpsa_products_product_group_dba::new_query_builder();
         $qb->add_constraint('up', '=', $product_group_id);
         $qb->add_order('code');
         $qb->add_order('title');
-        
-        $product_groups = $qb->execute();        
+
+        $product_groups = $qb->execute();
         foreach ($product_groups as $product_group)
         {
-        
+
             $arg = $product_group->code ? $product_group->code : $product_group->guid;
             $link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$arg}/";
-        
+
             $response_array = array
             (
                 'guid'        => new XML_RPC_Value($product_group->guid, 'string'),
@@ -159,29 +159,29 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
                 'published'   => new XML_RPC_Value(gmdate("Ymd\TH:i:s\Z", $product_group->metadata->published), 'dateTime.iso8601'),
                 'productGroup' => new XML_RPC_Value($product_group_label, 'string'),
             );
-            
+
             $response[$category] = new XML_RPC_Value($response_array, 'struct');
         }
-        
+
         return new XML_RPC_Response(new XML_RPC_Value($response, 'struct'));
     }
 
     // products.add_file
-    function add_file($message) 
+    function add_file($message)
     {
         $args = $this->_params_to_args($message);
-        
+
         if ($args[0] != $this->_content_topic->guid)
         {
             return new XML_RPC_Response(0, mgd_errno(), 'Blog ID does not match this folder.');
         }
-        
+
         if (!mgd_auth_midgard($args[1], $args[2]))
         {
             return new XML_RPC_Response(0, mgd_errno(), 'Authentication failed.');
         }
         $_MIDCOM->auth->initialize();
-        
+
         if (count($args) < 3)
         {
             return new XML_RPC_Response(0, mgd_errno(), 'Invalid file data.');
@@ -191,27 +191,27 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
         {
             return new XML_RPC_Response(0, mgd_errno(), 'No filename given.');
         }
-        
+
         // Clean up possible path information
         $attachment_name = basename($args[3]['name']);
-        
+
         $attachment = $this->_content_topic->get_attachment($attachment_name);
         if (!$attachment)
         {
             // Create new attachment
             $attachment = $this->_content_topic->create_attachment($attachment_name, $args[3]['name'], $args[3]['type']);
-            
+
             if (!$attachment)
             {
                 return new XML_RPC_Response(0, mgd_errno(), 'Failed to create attachment: ' . mgd_errstr());
             }
         }
-        
+
         if (!$attachment->copy_from_memory($args[3]['bits']))
         {
             return new XML_RPC_Response(0, mgd_errno(), 'Failed to store contents to attachment: ' . mgd_errstr());
         }
-        
+
         $attachment_array = array
         (
             'url'  => new XML_RPC_Value("{$GLOBALS['midcom_config']['midcom_site_url']}midcom-serveattachmentguid-{$attachment->guid}/{$attachment->name}", 'string'),
@@ -220,24 +220,24 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
         return new XML_RPC_Response(new XML_RPC_Value($attachment_array, 'struct'));
     }
     */
-    
+
     function _handler_product_get($handler_id, $args, &$data)
-    {   
+    {
         $this->_product = new org_openpsa_products_product_dba($args[0]);
         if (!$this->_product)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Product {$args[0]} could not be found.");
             // This will exit
         }
-        
+
         if (!$this->_datamanager->autoset_storage($this->_product))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Product {$args[0]} could not be loaded with Datamanager.");
             // This will exit
         }
-        
-        $_MIDCOM->cache->content->content_type('text/xml');        
-        
+
+        $_MIDCOM->cache->content->content_type('text/xml');
+
         return true;
     }
 
@@ -250,14 +250,14 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
     }
 
     function _handler_product_list($handler_id, $args, &$data)
-    {   
+    {
         $data['products'] = array();
 
         $qb = org_openpsa_products_product_dba::new_query_builder();
-        
+
         @ini_set('memory_limit', -1);
         @ini_set('max_execution_time', 0);
-        
+
         if ($handler_id != 'api_product_list_all')
         {
             if ($args[0] == 0)
@@ -273,22 +273,22 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
                 {
                     $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Product group {$args[0]} could not be found.");
                     // This will exit
-                } 
-                
+                }
+
                 $qb->add_constraint('productGroup', '=', $product_group->id);
             }
         }
         $_MIDCOM->cache->content->content_type('text/xml');
-                
+
         $qb->add_order('code');
         $qb->add_order('title');
-        
+
         $products = $qb->execute();
         foreach ($products as $product)
         {
             $data['products'][] = $product;
         }
-        
+
         return true;
     }
 
@@ -305,7 +305,7 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
             $data['datamanager'] =& $this->_datamanager;
             $data['view_product'] = $this->_datamanager->get_content_html();
             $data['product'] =& $product;
-            
+
             midcom_show_style('api_product_list_item');
         }
         midcom_show_style('api_product_list_footer');
@@ -314,19 +314,19 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
     function _handler_product_create($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user('basic');
- 
+
          if (!isset($_REQUEST['title']))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Missing argument: string title');
             // This will exit
         }
-        
+
         if (!isset($_REQUEST['productgroup']))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Missing argument: int productgroup');
             // This will exit
         }
-            
+
         $this->_product = $this->_create_product($_REQUEST['title'], (int) $_REQUEST['productgroup']);
         if (   !$this->_product
             || !$this->_product->guid)
@@ -334,15 +334,15 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create product: ' . mgd_errstr());
             // This will exit
         }
-                
+
         if (!$this->_datamanager->autoset_storage($this->_product))
         {
             $errstr = mgd_errstr();
-            $this->_product->delete();        
+            $this->_product->delete();
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize DM2 for product: {$errstr}");
             // This will exit
         }
-        
+
         foreach($this->_datamanager->types as $key => $type)
         {
             if (isset($_REQUEST[$key]))
@@ -350,7 +350,7 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
                 $this->_datamanager->types[$key]->value = $_REQUEST[$key];
             }
         }
-        
+
         if (!$this->_datamanager->save())
         {
             $errstr = mgd_errstr();
@@ -358,7 +358,7 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create product: {$errstr}");
             // This will exit
         }
-        
+
         $_MIDCOM->generate_error(MIDCOM_ERROK, 'Product created: ' . mgd_errstr());
         // This will exit
     }
@@ -366,20 +366,20 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
     function _handler_product_update($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user('basic');
-            
+
         $this->_product = new org_openpsa_products_product_dba($args[0]);
         if (!$this->_product)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Product {$args[0]} could not be found.");
             // This will exit
         }
-                
+
         if (!$this->_datamanager->autoset_storage($this->_product))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to initialize DM2 for product: ' . mgd_errstr());
             // This will exit
         }
-        
+
         foreach($this->_datamanager->types as $key => $type)
         {
             if (isset($_POST[$key]))
@@ -387,13 +387,13 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
                 $this->_datamanager->types[$key]->value = $_POST[$key];
             }
         }
-        
+
         if (!$this->_datamanager->save())
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to update product: ' . mgd_errstr());
             // This will exit
         }
-        
+
         $_MIDCOM->generate_error(MIDCOM_ERROK, 'Product updated: ' . mgd_errstr());
         // This will exit
     }
@@ -401,24 +401,24 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
     function _handler_product_delete($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user('basic');
-            
+
         $this->_product = new org_openpsa_products_product_dba($args[0]);
         if (!$this->_product)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Product {$args[0]} could not be found.");
             // This will exit
         }
-                
+
         if (!$this->_product->delete())
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to delete product: ' . mgd_errstr());
             // This will exit
         }
-        
+
         // Update the index
         $indexer =& $_MIDCOM->get_service('indexer');
         $indexer->delete($this->_product->guid);
-        
+
         $_MIDCOM->generate_error(MIDCOM_ERROK, 'Product deleted: ' . mgd_errstr());
         // This will exit
     }

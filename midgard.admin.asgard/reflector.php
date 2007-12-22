@@ -1,7 +1,7 @@
 <?php
 /**
  * @package midgard.admin.asgard
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: acl_editor.php 5538 2007-03-20 13:22:41Z rambo $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -98,7 +98,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
     }
 
     /**
-     * Gets a midcom_helper_l10n instance for component governing the type 
+     * Gets a midcom_helper_l10n instance for component governing the type
      *
      */
     function &get_component_l10n()
@@ -217,10 +217,10 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             return false;
         }
 
-        // TODO: less trivial implementation        
+        // TODO: less trivial implementation
         switch(true)
         {
-        
+
         	case (method_exists($obj,'get_label_property')):
         		$label = $obj->get_label();
         		break;
@@ -284,7 +284,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
                 	$label = $obj->username;
                 }
                 break;
-        		
+
             case (is_a($obj, 'midgard_topic')):
                 if ($obj->extra)
                 {
@@ -317,7 +317,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
                 $label = sprintf($_MIDCOM->i18n->get_string('%s in %s', 'midcom'), $person->name, $grp->official);
                 break;
             case (is_a($obj, 'midgard_host')):
-                if (   $obj->port 
+                if (   $obj->port
                     && $obj->port != '80')
                 {
                 	$label = "{$obj->name}:{$obj->port}{$obj->prefix}";
@@ -404,7 +404,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             case (is_a($obj, 'org_openpsa_person')):
                 $icon = 'stock_person.png';
                 break;
-        		
+
             case (is_a($obj, 'midgard_topic')):
             case (is_a($obj, 'midgard_snippetdir'));
             case (is_a($obj, 'midgard_style')):
@@ -463,7 +463,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         debug_pop();
         return $icon;
     }
-    
+
     /**
      * Get headers to be used with chooser
      */
@@ -503,7 +503,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         static $cache = array();
         if (isset($cache[$this->_mgdschema_class]))
         {
-            return $cache[$this->_mgdschema_class]; 
+            return $cache[$this->_mgdschema_class];
         }
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("Starting analysis for class {$this->_mgdschema_class}");
@@ -590,7 +590,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             }
             unset($search_properties[$key]);
         }
-        
+
         debug_print_r("Search properties for {$this->_mgdschema_class}: ", $search_properties);
         debug_pop();
         $cache[$this->_mgdschema_class] = $search_properties;
@@ -625,7 +625,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         static $cache = array();
         if (isset($cache[$this->_mgdschema_class]))
         {
-            return $cache[$this->_mgdschema_class]; 
+            return $cache[$this->_mgdschema_class];
         }
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("Starting analysis for class {$this->_mgdschema_class}");

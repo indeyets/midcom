@@ -6,6 +6,8 @@
 * @copyright The Midgard Project, http://www.midgard-project.org
 * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
 */
+
+/** @ignore */
 if (!class_exists('midcom_helper_replicator_exporter_mirror'))
 {
     require_once('mirror.php');
@@ -116,7 +118,7 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
         if ($scheduleend_unixtime > 0)
         {
             // Object has expiry information
-            
+
             if ($scheduleend_unixtime <= time())
             {
                 // Regardless of exportability, if object's schedule has passed we mark it deleted and export
@@ -310,7 +312,7 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
             unset($dependency_serializations);
 
             /* FIXME: This contradicts general tree logic where children *must not* be exported if parent
-               is not approved 
+               is not approved
             // We should export child articles and topics as they may have been approved
             // even while their parent topic wasn't
             $qb = midcom_db_article::new_query_builder();
@@ -322,7 +324,7 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
                 $serializations = array_merge($serializations, $child_serializations);
                 unset($child_serializations);
             }
-            
+
             $qb = midcom_db_topic::new_query_builder();
             $qb->add_constraint('up', '=', $object->id);
             $topics = $qb->execute();
@@ -334,7 +336,7 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
             }
             */
         }
-        
+
         return $serializations;
     }
 }

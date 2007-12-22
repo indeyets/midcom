@@ -6,6 +6,8 @@
 * @copyright The Midgard Project, http://www.midgard-project.org
 * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
 */
+
+/** ignore */
 if (!class_exists('midcom_helper_replicator_transporter_archive'))
 {
     require('archive.php');

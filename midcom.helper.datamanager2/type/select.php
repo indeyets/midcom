@@ -86,6 +86,8 @@
  * snippet, you need to include that snippet previously, an auto-load from there is not
  * yet possible.
  *
+ * @package midcom.helper.datamanager2
+ *
  */
 class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_type
 {
@@ -113,7 +115,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
     var $others = Array();
 
     /**
-     * The options available to the client. You should not acecss this variable directly,
+     * The options available to the client. You should not access this variable directly,
      * as this information may be loaded on demand, depending on the types configuration.
      *
      * @see get_all_options();

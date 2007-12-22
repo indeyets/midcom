@@ -57,8 +57,9 @@
  *
  * @todo Documentation and links how to configure TinyMCE
  * @abstract WYSIWYG HTML Widget (TinyMCE)
+ *
+ * @package midcom.helper.datamanager
  */
-
 class midcom_helper_datamanager_widget_tinymce extends midcom_helper_datamanager_widget {
 
     /**

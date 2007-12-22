@@ -834,7 +834,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
      * which can be formatted using CSS.
      *
      * TODO: Make this better customizable
-     * @todo: Factor this out into a separate class This function should be deprecated.
+     * @todo Factor this out into a separate class This function should be deprecated.
      */
     function display_view()
     {

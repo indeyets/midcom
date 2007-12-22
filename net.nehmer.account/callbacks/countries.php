@@ -31,7 +31,7 @@ class net_nehmer_account_callbacks_countries extends midcom_baseclasses_componen
      * @access private
      */
     var $_data = null;
-    
+
     /**
      * The callback class instance, a callback matching the signature required for the DM2 select
      * type callbacks.
@@ -40,17 +40,17 @@ class net_nehmer_account_callbacks_countries extends midcom_baseclasses_componen
      * @access private
      */
     var $_callback = null;
-    
+
     function net_nehmer_account_callbacks_countries($args)
     {
         $this->_component = 'net.nehmer.account';
         parent::midcom_baseclasses_components_purecode();
-        
+
         $this->_data = array
         (
             '' => $this->_l10n_midcom->get('select your country'),
         );
-        
+
         $qb = org_routamc_positioning_country_dba::new_query_builder();
         $qb->add_constraint('code', '<>', '');
         $qb->add_order('name', 'ASC');
@@ -62,10 +62,10 @@ class net_nehmer_account_callbacks_countries extends midcom_baseclasses_componen
             debug_add('No countries found. You have to use org.routamc.positioning to import countries to database.');
             debug_pop();
         }
-        
+
         $this->_populate_data($countries);
     }
-    
+
     function _populate_data(&$countries)
     {
         foreach ($countries as $country)
@@ -73,17 +73,17 @@ class net_nehmer_account_callbacks_countries extends midcom_baseclasses_componen
             $this->_data[$country->code] = $country->name;
         }
     }
-    
+
     function get_name_for_key($key)
     {
         return $this->_data[$key];
     }
-    
+
     function key_exists($key)
-    {   
+    {
         return array_key_exists($key, $this->_data);
     }
-    
+
     function list_all()
     {
         return $this->_data;
@@ -91,7 +91,7 @@ class net_nehmer_account_callbacks_countries extends midcom_baseclasses_componen
 
     /** Ignored. */
     function set_type(&$type) {}
-    
+
 }
 
 ?>

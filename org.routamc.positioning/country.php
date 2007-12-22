@@ -18,7 +18,7 @@ class org_routamc_positioning_country_dba extends __org_routamc_positioning_coun
     {
         return parent::__org_routamc_positioning_country_dba($id);
     }
-    
+
     /**
      * Human-readable label for cases like Asgard navigation
      */
@@ -26,7 +26,7 @@ class org_routamc_positioning_country_dba extends __org_routamc_positioning_coun
     {
         return $this->name;
     }
-    
+
     /**
      * Don't save country if another country with name exists
      */

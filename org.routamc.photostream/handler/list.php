@@ -1,9 +1,15 @@
 <?php
 /**
- * Created on 2006-Oct-Thu
  * @package org.routamc.photostream
+ * @author The Midgard Project, http://www.midgard-project.org
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
+ * Created on 2006-Oct-Thu
+ *
+ * @package org.routamc.photostream
  *
  */
 class org_routamc_photostream_handler_list extends midcom_baseclasses_components_handler
@@ -83,7 +89,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
             $_MIDCOM->skip_page_style = true;
             $data['output_for_nnf_playlist'] = true;
         }
-        
+
         if ($handler_id == 'photostream_list')
         {
             $data['user'] = $this->_resolve_user($args[0]);
@@ -110,11 +116,11 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
             $qb->add_constraint('photographer', '=', $data['user']->id);
             $data['url_suffix'] = "user/{$args[0]}/";
         }
-        
+
         if (isset($_REQUEST['org_routamc_photostream_order_by']))
         {
             $order_by = $_REQUEST['org_routamc_photostream_order_by'];
-            
+
             if (   isset($_REQUEST['org_routamc_photostream_order'])
                 && !empty($_REQUEST['org_routamc_photostream_order']))
             {
@@ -143,7 +149,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
     {
         $this->_show_photostream($handler_id, &$data);
     }
-    
+
     /**
      * The handler for displaying a photographer's photostream
      * @param mixed $handler_id the array key from the requestarray
@@ -182,7 +188,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
 
         $qb->add_order('taken', 'DESC');
         $qb->set_limit($data['limit']);
-        
+
         $data['photos'] = $qb->execute();
 
         // Make photos AJAX-editable
@@ -206,7 +212,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _handler_photostream_between($handler_id, $args, &$data)
     {
-        // TODO: Check format as YYYY-MM-DD via regexp    
+        // TODO: Check format as YYYY-MM-DD via regexp
         $data['from_time'] = @strtotime($args[0]);
         $data['to_time'] = @strtotime($args[1]);
         if (   !$data['from_time']
@@ -214,7 +220,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         {
             return false;
         }
-    
+
         $data['view_title'] = sprintf($this->_l10n->get('photos from %s - %s'), strftime('%x', $data['from_time']), strftime('%x', $data['to_time']));
         $qb =& $this->_prepare_photo_qb();
         $qb->add_constraint('taken', '>=', $data['from_time']);
@@ -223,10 +229,10 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
 
         // Make photos AJAX-editable
         $this->_prepare_ajax_controllers();
-        
+
         // Add URL suffix
         $data['url_suffix'] = "between/" . implode('/', $args) . '/';
-        
+
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");
         $this->_update_breadcrumb_line($handler_id);
 
@@ -301,7 +307,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
 
             $data['view_title'] = sprintf($this->_l10n->get('photo tags of %s'), $data['user']->name);
             $data['user_url'] = $args[0];
-            
+
             $data['tags'] = net_nemein_tag_handler::get_tags_by_class('org_routamc_photostream_photo_dba', $data['user']);
         }
         else
@@ -313,10 +319,10 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
 
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");
         $this->_update_breadcrumb_line($handler_id);
-        
+
         return true;
     }
-    
+
     function _show_photostream_tags($handler_id, &$data)
     {
         midcom_show_style('show_photostream_tags');
@@ -354,15 +360,15 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         // TODO: Use MidgardCollector for this
         $mc = net_nemein_tag_link_dba::new_collector('sitegroup', $_MIDGARD['sitegroup']);
         $mc->add_value_property('fromGuid');
-        
+
         $mc->begin_group('OR');
             $mc->add_constraint('fromClass', '=', 'org_routamc_photostream_photo_dba');
             $mc->add_constraint('fromClass', '=', 'org_routamc_photostream_photo');
         $mc->end_group();
-        
+
         $mc->add_constraint('tag.tag', '=', $data['tag']);
         $mc->execute();
-        
+
         $tags = $mc->list_keys();
 
         if (count($tags) > 0)
@@ -472,19 +478,19 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
             && $data['output_for_nnf_playlist'])
         {
             $encoding = 'UTF-8';
-            
+
             $_MIDCOM->cache->content->content_type('text/xml');
             $_MIDCOM->header('Content-type: text/xml; charset=' . $encoding);
             echo '<?xml version="1.0" encoding="' . $encoding . '" standalone="yes"?>' . "\n";
             echo "<playlist>\n";
-            
+
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-            
+
             foreach ($data['photos'] as $photo)
             {
                 $view = $data['controllers'][$photo->id]->get_content_html();
                 $data['datamanager'] =& $data['controllers'][$photo->id]->datamanager;
-                
+
                 $videothumbnail = $data['datamanager']->types['photo']->attachments_info['view'];
                 if (isset($data['datamanager']->types['photo']->attachments_info['main_video']))
                 {
@@ -494,24 +500,24 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
                 {
                     $video = $data['datamanager']->types['photo']->attachments_info['view'];
                 }
-                
-                
+
+
                 $duration = 0;
                 if (isset($view['duration']))
                 {
                     $duration = $view['duration'];
                 }
-                
+
                 $user = $_MIDCOM->auth->get_user($photo->photographer);
                 $user =& $user->get_storage();
                 $author = $user->name;
-                
+
                 $video_url = "{$video['url']}";
                 $videothumbnail_url = "{$videothumbnail['url']}";
                 $data_url = "{$prefix}photo/{$photo->guid}/";
-                
+
                 $published = strftime('%x %X', $photo->taken);
-                
+
                 echo "    <item>\n";
                 echo "        <id>{$photo->id}</id>\n";
                 echo "        <guid>{$photo->guid}</guid>\n";
@@ -524,8 +530,8 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
                 echo "        <added><![CDATA[{$published}]]></added>\n";
                 echo "    </item>\n";
             }
-            
-            echo "</playlist>\n";         
+
+            echo "</playlist>\n";
         }
         else
         {
@@ -538,7 +544,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
             {
                 $data['suffix'] = '';
             }
-            
+
             midcom_show_style('show_photostream_header');
 
             foreach ($data['photos'] as $photo)
@@ -551,7 +557,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
                 midcom_show_style('show_photostream_item');
             }
 
-            midcom_show_style('show_photostream_footer');            
+            midcom_show_style('show_photostream_footer');
         }
     }
 

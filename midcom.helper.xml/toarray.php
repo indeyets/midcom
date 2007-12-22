@@ -57,7 +57,7 @@ class midcom_helper_xml_toarray
     var $errstr = "";
 
     /**
-     * The stack of tags currently beeing processed
+     * The stack of tags currently being processed
      * @access private
      * @var array
      */

@@ -1,5 +1,12 @@
 <?php
 /**
+ * @package org.openpsa.mail
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
  * Q'n'D wrappers to make the mail somewhat usable without midcom
  *
  * @package org.openpsa.mail

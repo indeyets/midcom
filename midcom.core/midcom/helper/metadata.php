@@ -27,7 +27,7 @@
  *
  * - <b>timestamp schedule_start:</b> The time upon which the object should be made visible. 0 for no restriction.
  * - <b>timestamp schedule_end:</b> The time upon which the object should be made invisible. 0 for no restriction.
- * - <b>bool nav_noentry:</b> Set this to true if you do not want this object to appear in the navigation without it beeing completely hidden.
+ * - <b>bool nav_noentry:</b> Set this to true if you do not want this object to appear in the navigation without it being completely hidden.
  * - <b>bool hide:</b> Set this to true to hide the object on-site, overriding scheduling.
  * - <b>string keywords:</b> The keywords for this object, should be used for META HTML headers.
  * - <b>string description:</b> A short description for this object, should be used for META HTML headers.

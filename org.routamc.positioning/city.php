@@ -18,7 +18,7 @@ class org_routamc_positioning_city_dba extends __org_routamc_positioning_city_db
     {
         return parent::__org_routamc_positioning_city_dba($id);
     }
-    
+
     /**
      * Human-readable label for cases like Asgard navigation
      */
@@ -68,7 +68,7 @@ class org_routamc_positioning_city_dba extends __org_routamc_positioning_city_db
         }
         return parent::_on_creating();
     }
-    
+
     function get_by_name($name)
     {
         $qb = org_routamc_positioning_city_dba::new_query_builder();
@@ -76,15 +76,15 @@ class org_routamc_positioning_city_dba extends __org_routamc_positioning_city_db
         $qb->add_constraint('city', '=', $name);
         $qb->add_constraint('alternatenames', 'LIKE', "%{$name}%");
         $qb->end_group();
-        
+
         $qb->set_limit(1);
-        
+
         $matches = $qb->execute_unchecked();
         if (count($matches) > 0)
         {
             return $matches[0];
         }
-        
+
         return false;
     }
 }

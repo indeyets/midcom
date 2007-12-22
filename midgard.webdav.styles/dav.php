@@ -5,17 +5,23 @@
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
+
 /**
  * Base davclass. Provides logging for all functions so I can see what is needed.
+ *
+ * @package midgard.webdav.styles
+ *
  */
- require 'HTTP/WebDAV/Server.php';
+
+/** @ignore */
+require 'HTTP/WebDAV/Server.php';
 
 class midgard_webdav_styles_dav extends HTTP_WebDAV_Server {
 
     var $style;
     function log($obj) {
         ob_start();
-        echo "\n" . date("H:i:s" ) ." - "; 
+        echo "\n" . date("H:i:s" ) ." - ";
         print_r($obj);
         $end = ob_get_contents();
         ob_end_clean();
@@ -28,10 +34,10 @@ class midgard_webdav_styles_dav extends HTTP_WebDAV_Server {
     }
 
     function set_style( $style ) {
-		$this->log(__CLASS__ . ": setting style " . $style->id); 
+		$this->log(__CLASS__ . ": setting style " . $style->id);
         $this->style = $style;
     }
-	
+
     function PROPFIND (&$param, &$files) {
         $this->log ( __CLASS__ . "::PROPFIND (files, param)" );
         $this->log($files);
@@ -40,12 +46,12 @@ class midgard_webdav_styles_dav extends HTTP_WebDAV_Server {
     }
 
 
-    function PUT(&$param) { 
-        $this->log(__CLASS__ . "::PUT\n"); 
+    function PUT(&$param) {
+        $this->log(__CLASS__ . "::PUT\n");
         $this->log( $param );
         return true;
     }
-    function MKCOL($options) { 
+    function MKCOL($options) {
         $this->log( __CLASS__ . "MKCOL\n");
         $this->log( $options );
         return true;
@@ -83,7 +89,7 @@ class midgard_webdav_styles_dav extends HTTP_WebDAV_Server {
 	        $info["props"][] = $this->mkprop("getlastmodified", strtotime($style->metadata->revised) );
 	    }
         $info["props"][] = $this->mkprop("resourcetype", "collection");
-        $info["props"][] = $this->mkprop("getcontenttype", "httpd/unix-directory"); 
+        $info["props"][] = $this->mkprop("getcontenttype", "httpd/unix-directory");
         return $info;
     }
 
@@ -102,7 +108,7 @@ class midgard_webdav_styles_dav extends HTTP_WebDAV_Server {
 			$info["props"][] = $this->mkprop("getlastmodified", strtotime($this->style->metadata->revised) );
 		}
         $info["props"][] = $this->mkprop("resourcetype", "collection");
-        $info["props"][] = $this->mkprop("getcontenttype", "httpd/unix-directory"); 
+        $info["props"][] = $this->mkprop("getcontenttype", "httpd/unix-directory");
         return $info;
 
     }
@@ -110,7 +116,7 @@ class midgard_webdav_styles_dav extends HTTP_WebDAV_Server {
      * Gets an element by name.
      */
     function get_element_by_name($name, $style ) {
-		
+
 		$this->log(__CLASS__ . ": get element " . $name . " from style " .$style->id);
         $qb = midcom_db_element::new_query_builder( ) ;
         $qb->add_constraint( 'name' , '=', str_replace( '.php', '' ,$name ));
@@ -118,7 +124,7 @@ class midgard_webdav_styles_dav extends HTTP_WebDAV_Server {
         $res = $qb->execute( );
         //$this->log($res);
         $this->log(__CLASS__ . ": element name from DB: " . $res[0]->name);
-        if ( !$res ) 
+        if ( !$res )
         {
             return false;
         }
@@ -151,7 +157,7 @@ class midgard_webdav_styles_dav extends HTTP_WebDAV_Server {
 
        //         } else {
        //             $info["props"][] = $this->mkprop("getcontenttype", "application/x-non-readable");
-       //         }               
+       //         }
         $info["props"][] = $this->mkprop("getcontentlength", $element->metadata->size);
         return $info;
     }

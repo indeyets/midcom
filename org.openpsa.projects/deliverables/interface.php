@@ -12,6 +12,9 @@
  *
  * This allows us to change the ways the plugins work and are loaded at a later
  * time (in case we wish to move them to the actual target components)
+ *
+ * @package org.openpsa.projects
+ *
  */
 class org_openpsa_projects_deliverables_interface
 {

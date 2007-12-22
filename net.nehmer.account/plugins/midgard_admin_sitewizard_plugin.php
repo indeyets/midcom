@@ -1,8 +1,13 @@
 <?php
-
+/**
+ * @package net.nehmer.account
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
 /**
- * This is a plugin for creatin user home topic
+ * This is a plugin for creating user home topic
  */
 class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_handler
 {
@@ -25,7 +30,7 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
     function midgard_admin_sitewizard_plugin()
     {
 	    parent::midcom_baseclasses_components_handler();
-	
+
     }
 
     function _on_initialize()
@@ -49,23 +54,23 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
             $this->_verbose = $this->_request_data['plugin_config']['verbose'];
 	    }
 
-	    if (isset($this->_request_data['plugin_config']['creation_root_topic_parent_guid']) 
+	    if (isset($this->_request_data['plugin_config']['creation_root_topic_parent_guid'])
 	        && !empty($this->_request_data['plugin_config']['creation_root_topic_parent_guid']))
 	    {
             $this->_creation_root_topic_parent_guid = $this->_request_data['plugin_config']['creation_root_topic_parent_guid'];
 	    }
-	    else if (isset($this->_request_data['plugin_config']['creation_root_topic_guid']) 
+	    else if (isset($this->_request_data['plugin_config']['creation_root_topic_guid'])
 	        && !empty($this->_request_data['plugin_config']['creation_root_topic_guid']))
 	    {
             $this->_creation_root_topic_guid = $this->_request_data['plugin_config']['creation_root_topic_guid'];
 	    }
 
-	if (isset($this->_request_data['plugin_config']['creation_root_group_parent_guid']) 
+	if (isset($this->_request_data['plugin_config']['creation_root_group_parent_guid'])
 	    && !empty($this->_request_data['plugin_config']['creation_root_group_parent_guid']))
 	{
             $this->_creation_root_group_parent_guid = $this->_request_data['plugin_config']['creation_root_group_parent_guid'];
 	}
-	else if (isset($this->_request_data['plugin_config']['creation_root_group_guid']) 
+	else if (isset($this->_request_data['plugin_config']['creation_root_group_guid'])
 	    && !empty($this->_request_data['plugin_config']['creation_root_group_guid']))
 	{
             $this->_creation_root_group_guid = $this->_request_data['plugin_config']['creation_root_group_guid'];
@@ -85,8 +90,8 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
 
     function _handler_create_user_home()
     {
-        $user = $_MIDCOM->auth->user;   
- 
+        $user = $_MIDCOM->auth->user;
+
         $this->_home_name = $user->username;
         $this->_home_title = $user->name;
 
@@ -110,23 +115,23 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
             }
 	        elseif ($this->_creation_root_topic_parent_guid != '')
 	        {
-	            $structure_creator->create_creation_root_topic($this->_creation_root_topic_parent_guid, 
-		        $this->_home_name, $this->_home_title, $this->_creation_root_topic_component, 
+	            $structure_creator->create_creation_root_topic($this->_creation_root_topic_parent_guid,
+		        $this->_home_name, $this->_home_title, $this->_creation_root_topic_component,
 		        $this->_creation_root_topic_parameters, $this->_creation_root_topic_style, true);
 	        }
 
             if ($this->_creation_root_group_guid != '')
 	        {
-	            $structure_creator->set_creation_root_group($this->_creation_root_group_guid); 
+	            $structure_creator->set_creation_root_group($this->_creation_root_group_guid);
             }
 	        elseif ($this->_cretion_root_group_parent_guid != '')
 	        {
-	            $structure_creator->create_creation_root_group($this->_creation_root_group_guid, 
+	            $structure_creator->create_creation_root_group($this->_creation_root_group_guid,
 	            $this->_creation_root_group_name);
 	        }
-	    
+
 	        $guid = $structure_creator->execute();
-            
+
             if (! empty($this->_redirect_after_done))
             {
                 $_MIDCOM->relocate($this->_redirect_after_done);

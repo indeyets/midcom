@@ -53,7 +53,7 @@
  *   anonymous access to the system without having to store a user account everywhere.
  * - <b>int auth_backend:</b> The authentication backend to use, the "simple"
  *   backend is used as a default.
- * - <b>bool auth_check_client_ip:</b> Controlw whether to check the client IP address
+ * - <b>bool auth_check_client_ip:</b> Control whether to check the client IP address
  *   on each subsequent request when authentication a user. This is enabled by default
  *   as it will make session hijacking much harder. You should not turn it off unless
  *   you have very good reasons to do.
@@ -139,7 +139,7 @@
  * - <b>Array cache_module_memcache_backend_config:</b> The backend configuration to use if a backend
  *   was specified. See the individual backend documentations for more information about the allowed
  *   option set. This defaults to an empty array.
- * - <b>Array cache_module_memcache_data_groups:</b> The data groups avaialable for the memcache module.
+ * - <b>Array cache_module_memcache_data_groups:</b> The data groups available for the memcache module.
  *   You should normally not have to touch this, see the memcache module documentation for details.
  *   This defaults to Array('ACL', 'PARENT').
  * - <b>string cache_module_phpscripts_directory:</b> The directory used for systemwide caching
@@ -197,7 +197,7 @@
  *   value, the full URL of the current host is prefixed to its value, so that this
  *   configuration key can be used for Location headers. You must not use a relative
  *   URL. This key will be completed by the MidCOM Application constructor, before
- *   that, it might contain a URL which is not suitable for relcoations.
+ *   that, it might contain a URL which is not suitable for relocations.
  * - <b>string midcom_prefix:</b> Any prefix you might have on your site.
  *   Defaults to none.
  * - <b>GUID midcom_root_topic_guid:</b> This is the GUID of the topic we should handle.
@@ -211,9 +211,9 @@
  *   value, the full URL of the current host is prefixed to its value, so that this
  *   configuration key can be used for Location headers. You must not use a relative
  *   URL. This key will be completed by the MidCOM Application constructor, before
- *   that, it might contain a URL which is not suitable for relcoations.
+ *   that, it might contain a URL which is not suitable for relocations.
  * - <b>string midcom_tempdir:</b> A temporary directory that can be used when components
- *   need to write out files. Defaluts to '/tmp'.
+ *   need to write out files. Defaults to '/tmp'.
  * - <b>int midcom_temporary_resource_timeout:</b> Temporary resources will be deleted
  *   after the amount of seconds set in this options. It defaults to 86400 = 1 day.
  *   The corresponding cron-job is run on hourly.
@@ -320,7 +320,7 @@
 $GLOBALS['midcom_config_default'] = Array();
 /**
  * MidCOM version
- * @global string 
+ * @global string
  */
 $GLOBALS['midcom_version'] = '##MIDCOM_VERSION##';
 // Initialize Helpers

@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * @package pl.olga.windguru
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
 /*
 this is the function clients will use
@@ -9,10 +14,13 @@ function windguru_forecast($id_spot,$code,$lang="") {
 	echo $wgf->show();
 }
 
+/**
+ * @package pl.olga.windguru
+ */
 class WindguruFcst {
-	
+
 	var $config, $id_spot, $code, $id_model, $db, $status, $html, $data, $lang, $version, $encoding;
-	
+
 	function WindguruFcst($id_spot,$code,$lang='',&$config) {
 
 		$this->config = $config;
@@ -30,14 +38,14 @@ class WindguruFcst {
 		$this->encoding = "";
  		$this->version = "1.5 beta";
 	}
-	
+
 	/*
 	prints the forecast if available
 	takes care of updating from windguru.cz, caching the forecast, reading data status from windguru.cz etc...
 	*/
 	function show()
-	{ 
-		if (!$this->id_spot || !$this->code) 
+	{
+		if (!$this->id_spot || !$this->code)
 		{
 			debug_add("Missing Sopt ID and/or Spot Key",MIDCOM_LOG_ERROR);
 			debug_pop();
@@ -53,34 +61,34 @@ class WindguruFcst {
 
 		$this->updateStatus(); // try to update data status from windguru.cz when it's time
 
-		$this->readCache(); 
+		$this->readCache();
 
-	
+
 		if (!$this->html
-			|| ($this->data[$this->id_model] != $this->status[$this->id_model])) 
+			|| ($this->data[$this->id_model] != $this->status[$this->id_model]))
 		{
-			$this->updateCache(); 
+			$this->updateCache();
 		}
 
 		if (!$this->html
-			|| ($this->data[$this->id_model] > $this->status[$this->id_model])) 
+			|| ($this->data[$this->id_model] > $this->status[$this->id_model]))
 		{
-				$this->updateStatus(1); 
+				$this->updateStatus(1);
 		}
 
-		if (!$this->html) 
+		if (!$this->html)
 		{
 			debug_add("Windguru data is missing",MIDCOM_LOG_ERROR);
 			debug_pop();
 			return false;
 		}
-		else 
+		else
 		{
 			return str_replace("wg_images/","/midcom-static/pl.olga.windguru/images/",$this->html);
 		}
 	}
-	
-	function readCache() 
+
+	function readCache()
 	{
 
 		$qb = pl_olga_windguru_cache_dba::new_query_builder();
@@ -107,8 +115,8 @@ class WindguruFcst {
 		if($str=='nww3') return WG_STATUS_NWW3;
 		return WG_STATUS_NONE;
 	}
-	
-	function updateCache() 
+
+	function updateCache()
 	{
 		$this->getForecast();
 		$_MIDCOM->auth->request_sudo();
@@ -192,7 +200,7 @@ class WindguruFcst {
 		return true;
 	}
 
-// updates data status from windguru.cz, if reload==1 then it updates immediatelly otherwise it will not 
+// updates data status from windguru.cz, if reload==1 then it updates immediatelly otherwise it will not
 // update if last update was less then 10 minutes ago
 
 	function updateStatus($reload = 0)
@@ -207,9 +215,9 @@ class WindguruFcst {
 
 		$delay = 10 * 60; // 10 minutes
 
-		if(!$reload) 
+		if(!$reload)
 			{
-			if ((time() - $this->last_status_check) < $delay) 
+			if ((time() - $this->last_status_check) < $delay)
 			{
 				return true; // if we checked recently do not check again
 			}
@@ -222,7 +230,7 @@ class WindguruFcst {
 			return false;
 		}
 
-		$this->status = array(); 
+		$this->status = array();
 		$this->status[WG_STATUS_GFS] = $status['gfs'];
 		$this->status[WG_STATUS_NWW3] = $status['nww3'];
 		$this->status[WG_STATUS_NONE] = time();
@@ -251,26 +259,26 @@ class WindguruFcst {
 
 		return true;
 	}
-	
-	function getDataStatus($url = "http://www.windguru.cz/data_status.php") 
+
+	function getDataStatus($url = "http://www.windguru.cz/data_status.php")
 	{
 		$file = @file($url);
 		$status = array();
 
-		if (!is_array($file)) 
+		if (!is_array($file))
 		{
 			return $status;
 		}
 
-		if (!count($file)) 
+		if (!count($file))
 		{
 			return $status;
 		}
 
-		foreach ($file as $row) 
+		foreach ($file as $row)
 		{
 			$tmp = explode(";",trim($row));
-			if (count($tmp)==3) 
+			if (count($tmp)==3)
 			{
 				if($tmp[0])
 				{
@@ -282,7 +290,7 @@ class WindguruFcst {
 		return $status;
 	}
 
-	function getForecast($lang="") 
+	function getForecast($lang="")
 	{
 
 
@@ -299,25 +307,25 @@ class WindguruFcst {
 		end($fcst);
 		$last = trim(prev($fcst));
 
-		if (substr($last,0,9)!='<!--MDATA') 
+		if (substr($last,0,9)!='<!--MDATA')
         {
             return false;
         }
 
 		$last = substr($last,10,-3);
-		if($last) 
+		if($last)
         {
 			$tmp = explode(",",$last);
-			foreach($tmp as $row) 
+			foreach($tmp as $row)
             {
 				$arr = explode(";",$row);
-				if(count($arr)==2) 
+				if(count($arr)==2)
                 {
                     $this->data[$this->idMod($arr[0])] = substr($arr[1],0,4)."-".substr($arr[1],4,2)."-".substr($arr[1],6,2)." ".substr($arr[1],8,2).":00:00";
                 }
 			}
 		}
-		else 
+		else
         {
 			return false;
 		}
@@ -325,13 +333,13 @@ class WindguruFcst {
 		$this->html = implode("",$fcst);
 		if($this->html) return true; // reading was succesful
 	}
-	
+
 	function setLang($lang="") {
-		if ($lang) 
+		if ($lang)
 		{
 			$this->lang = $lang;
 		}
-		elseif($this->config->get('lang')) 
+		elseif($this->config->get('lang'))
 		{
 			$this->lang = $this->config->get('lang');
 		}
@@ -340,7 +348,7 @@ class WindguruFcst {
 			$this->lang = 'en';
 		}
 	}
-	
+
 }
 
 

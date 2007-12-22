@@ -150,7 +150,7 @@ class midcom_url_paramcollector {
 
     /**
      * Gets the _MIDCOM application object.
-     * @todo: remove.
+     * @todo remove.
      */
     public function get_midcom()
     {

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @package cc.kaktus_pearserver
+ * @package cc.kaktus.pearserver
  * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: interfaces.php 5041 2007-01-20 16:42:27Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org
@@ -11,7 +11,7 @@
 /**
  * PEAR server MidCOM interface class.
  *
- * @package cc.kaktus_pearserver
+ * @package cc.kaktus.pearserver
  */
 class cc_kaktus_pearserver_interface extends midcom_baseclasses_components_interface
 {
@@ -28,26 +28,26 @@ class cc_kaktus_pearserver_interface extends midcom_baseclasses_components_inter
             'viewer.php',
             'navigation.php'
         );
-        
+
         $this->_autoload_libraries = Array
         (
             'midcom.helper.datamanager2',
         );
     }
-    
+
 
     function _on_initialize()
     {
         // We need the contacts organization class available.
         $_MIDCOM->componentloader->load('org.openpsa.products');
-        
+
         return true;
     }
-    
+
     /**
      * Simple lookup method which tries to map a release
-     * 
-     * @TODO: write this to track down
+     *
+     * @todo write this to track down
      * @return string    Link under the current topic or null if not found
      */
     function _on_resolve_permalink($topic, $config, $guid)

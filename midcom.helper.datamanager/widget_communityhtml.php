@@ -34,8 +34,8 @@
  *
  * The input field is of textarea.communityhtml.
  *
+ * @package midcom.helper.datamanager
  */
-
 class midcom_helper_datamanager_widget_communityhtml extends midcom_helper_datamanager_widget {
 
     /**

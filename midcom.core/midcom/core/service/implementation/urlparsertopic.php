@@ -72,7 +72,7 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
     /**
      * Check topic style inheritance rules for style loader
      *
-     * @todo: refactor style loader so this isn't needed
+     * @todo refactor style loader so this isn't needed
      */
     private function check_style_inheritance($topic)
     {

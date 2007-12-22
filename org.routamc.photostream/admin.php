@@ -10,7 +10,6 @@
  * Dummy class stub. The admin class is rarely used these days.
  * @package org.routamc.photostream
  */
-
 class org_routamc_photostream_admin extends midcom_baseclasses_components_request_admin
 {
 }

@@ -1,29 +1,34 @@
 <?php
 /**
- * Created on 2006-Oct-Thu
- * @author tarjei huse
  * @package org.routamc.photostream
+ * @author tarjei huse
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
+ * Created on 2006-Oct-Thu
+ *
+ * @package org.routamc.photostream
  *
  */
 class org_routamc_photostream_handler_view extends midcom_baseclasses_components_handler
 {
     /**
      * Datamanager2 instance for AJAX editing of a photo
-     * 
+     *
      * @access private
      * @var midcom_helper_datamanager2_controller $_controller
      */
     var $_controller;
-    
+
     /**
      * GUIDs of the photos that share the requested tag
-     * 
+     *
      * @access private
      */
     var $_tags_shared = null;
-    
+
     /**
      * Simple default constructor.
      */
@@ -53,7 +58,7 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "DM2 could not set storage");
             // This will exit
         }
-        
+
         // Enable AJAX editing
         if ($this->_config->get('enable_ajax_editing'))
         {
@@ -62,7 +67,7 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
             $this->_controller->set_storage($data['photo']);
             $this->_controller->process_ajax();
         }
-        
+
         return true;
     }
 
@@ -75,7 +80,7 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
     function _handler_view($handler_id, $args, &$data)
     {
         $data =& $this->_request_data;
-        
+
         // Prepare object and DM2
         if (!$this->_load_photo($args[0]))
         {
@@ -142,12 +147,12 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
         {
             $_MIDCOM->skip_page_style = true;
         }
-        
+
         $limiters = array();
         if (isset($args[1]))
         {
             $limiters['type'] = $args[1];
-            
+
             switch ($limiters['type'])
             {
                 case 'tag':
@@ -170,11 +175,11 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
                     }
             }
         }
-        
+
         // Get the next and previous
         $data['previous_guid'] = org_routamc_photostream_photo_dba::get_previous($data['photo'], $limiters, $this->_tags_shared);
         $data['next_guid'] = org_routamc_photostream_photo_dba::get_next($data['photo'], $limiters, $this->_tags_shared);
-        
+
         // Create the link suffix
         $data['suffix'] = '';
         if (   $this->_config->get('navigate_with_context')
@@ -187,7 +192,7 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
                 {
                     continue;
                 }
-                
+
                 $data['suffix'] .= "{$arg}/";
             }
         }
@@ -213,7 +218,7 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
         {
             $data['photo_view'] = $data['datamanager']->get_content_html();
         }
-        
+
         if ($handler_id == 'photo_raw')
         {
             midcom_show_style('show_photo_raw');
@@ -243,7 +248,7 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
                 MIDCOM_NAV_NAME => $this->_request_data['gallery_node'][MIDCOM_NAV_NAME],
             );
         }
-        
+
         // Add special limits
         if (preg_match('/photo_args_/', $handler_id))
         {
@@ -263,7 +268,7 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
                             MIDCOM_NAV_NAME => sprintf($this->_l10n->get('tagged %s'), $args[3]),
                         );
                         break;
-                    
+
                     case 'between':
                         if (isset($args[4]))
                         {
@@ -281,7 +286,7 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
                             $raw_start = $args[2];
                             $raw_end = $args[3];
                         }
-                        
+
                         $tmp[] = array
                         (
                             MIDCOM_NAV_URL => "between/{$user}{$raw_start}/{$raw_end}/",

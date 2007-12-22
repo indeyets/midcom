@@ -1,8 +1,11 @@
 <?php
+/**
+ * @package midcom.admin.babel
+ */
 class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
 {
 
-    function midcom_admin_babel_plugin() 
+    function midcom_admin_babel_plugin()
     {
         parent::midcom_baseclasses_components_request();
     }
@@ -64,19 +67,19 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
                 'translated' => 0,
             )
         );
-        
+
         $components = array('midcom');
-        
+
         // Load translation status of each component
         foreach ($_MIDCOM->componentloader->manifests as $manifest)
         {
             $components[] = $manifest->name;
         }
-        
+
         foreach ($components as $component)
         {
             $component_l10n = $_MIDCOM->i18n->get_l10n($component);
-            
+
             if (midcom_admin_babel_plugin::is_core_component($component))
             {
                 $string_array = 'components_core';
@@ -84,15 +87,15 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
             else
             {
                 $string_array = 'components_other';
-            }       
-            
+            }
+
             $status[$string_array][$component] = array();
 
             $string_ids = array_unique($component_l10n->get_all_string_ids());
-            
+
             $status[$string_array][$component]['total'] = count($string_ids);
             $status['strings_all']['total'] += $status[$string_array][$component]['total'];
-            
+
             if ($string_array == 'components_core')
             {
                 $status['strings_core']['total'] += $status[$string_array][$component]['total'];
@@ -101,16 +104,16 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
             {
                 $status['strings_other']['total'] += $status[$string_array][$component]['total'];
             }
-            
+
             $status[$string_array][$component]['translated'] = 0;
-            
-            foreach ($string_ids as $id) 
+
+            foreach ($string_ids as $id)
             {
                 if ($component_l10n->string_exists($id, $lang))
                 {
                     $status[$string_array][$component]['translated']++;
                     $status['strings_all']['translated']++;
-                    
+
                     if (midcom_admin_babel_plugin::is_core_component($component))
                     {
                         $status['strings_core']['translated']++;
@@ -120,12 +123,12 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
                         $status['strings_other']['translated']++;
                     }
                 }
-            }         
+            }
         }
-        
+
         return $status;
     }
-    
+
     /**
      * Checks if component is a part of the default MidCOM distribution
      * or an external component
@@ -139,7 +142,7 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
         (
             'midcom',
             // From midcom dependencies
-            'midcom.admin.babel',            
+            'midcom.admin.babel',
             'midcom.admin.folder',
             'midcom.admin.help',
             'midcom.admin.settings',
@@ -164,7 +167,7 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
             'net.nemein.rss',
             'org.openpsa.calendarwidget',
         );
-        
+
         if (in_array($component, $core_components))
         {
             return true;
@@ -180,12 +183,12 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
 
         echo "<ul class=\"midgard_admin_asgard_navigation\">\n";
 
-        foreach ($languages as $language => $language_info) 
+        foreach ($languages as $language => $language_info)
         {
             $language_name = $language_info['enname'];
 
             // Calculate status
-            $state = midcom_admin_babel_plugin::calculate_language_status($language);  
+            $state = midcom_admin_babel_plugin::calculate_language_status($language);
             $percentage = round(100 / $state['strings_core']['total'] * $state['strings_core']['translated']);
             $percentage_other = round(100 / $state['strings_other']['total'] * $state['strings_other']['translated']);
 
@@ -200,8 +203,8 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
             else
             {
                 $status = 'bad';
-            }        
-            
+            }
+
             echo "            <li class=\"status\"><a href=\"{$prefix}__mfa/asgard_midcom.admin.babel/status/{$language}/\">{$language_name}</a></li>\n";
         }
 

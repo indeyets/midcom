@@ -19,8 +19,8 @@
  * 
  * <i>Handle with care!</i> This handler unconditionally indexes all attachments 
  * found and not filtered along the above conditions. This might lead to attachments
- * beeing indexed accidentially or, which is even worse, already indexed attachments
- * beeing overwritten, loosing additional information that might be present.
+ * being indexed accidentially or, which is even worse, already indexed attachments
+ * being overwritten, loosing additional information that might be present.
  * 
  * @package midcom
  * @author The Midgard Project, http://www.midgard-project.org 

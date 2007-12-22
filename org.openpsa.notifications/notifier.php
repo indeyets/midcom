@@ -86,7 +86,7 @@ class org_openpsa_notifications_notifier extends midcom_baseclasses_components_p
         }
 
         $sender = null;
-        
+
         if (   array_key_exists('from', $message)
             && !empty($message['from']))
         {
@@ -144,7 +144,7 @@ class org_openpsa_notifications_notifier extends midcom_baseclasses_components_p
                 $mail->body .= "{$key}: {$value}\n";
             }
         }
-        
+
         $ret = $mail->send();
         if (!$ret)
         {
@@ -183,7 +183,7 @@ class org_openpsa_notifications_notifier extends midcom_baseclasses_components_p
         // TODO: Implement
         return false;
     }
-    
+
     /**
      * Sends the 'abstract' version of the message as a message to the Nabaztag configured for the system
      */

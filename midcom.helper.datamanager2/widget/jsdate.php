@@ -27,7 +27,7 @@
  * If unspecified, it defaults to the 0-9999 range *unless* the base date type uses
  * the UNIXDATE storage mode, in which case 1970-2030 will be used instead.
  *
- * <b>JScript Calendar licence information</b>
+ * <b>JScript Calendar license information</b>
  *
  * The DHTML Calendar, details and latest version at: http://dynarch.com/mishoo/calendar.epl
  *

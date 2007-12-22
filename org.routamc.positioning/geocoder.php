@@ -8,7 +8,7 @@
  */
 
 /**
- * Position geocodeing factory class. All geocoders inherit from this.
+ * Position geocoding factory class. All geocoders inherit from this.
  *
  * @package org.routamc.positioning
  */
@@ -61,7 +61,7 @@ class org_routamc_positioning_geocoder extends midcom_baseclasses_components_pur
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Geocoder {$type} not available.");
             // This will exit.
         }
-        
+
         $classname = "org_routamc_positioning_geocoder_{$type}";
         require_once($filename);
         /**

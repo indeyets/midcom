@@ -2,7 +2,7 @@
 
 
 /**
- * This is a plugin for creatin user home topic
+ * This is a plugin for creating user home topic
  */
 class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_handler
 {

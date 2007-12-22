@@ -1,13 +1,22 @@
 <?php
+/**
+ * @package pl.olga.windguru
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
+/**
+ * @package pl.olga.windguru
+ */
 class pl_olga_windguru_status_dba extends __pl_olga_windguru_status_dba
 {
     function pl_olga_windguru_status_dba($id = null)
     {
         return parent::__pl_olga_windguru_status_dba($id);
     }
-    
-   
+
+
     /**
      * Human-readable label for cases like Asgard navigation
      */
@@ -25,6 +34,9 @@ class pl_olga_windguru_status_dba extends __pl_olga_windguru_status_dba
     }
 }
 
+/**
+ * @package pl.olga.windguru
+ */
 class pl_olga_windguru_cache_dba extends __pl_olga_windguru_cache_dba
 {
     function pl_olga_windguru_cache_dba($id = null)

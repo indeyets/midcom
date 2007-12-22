@@ -87,7 +87,7 @@ class org_openpsa_directmarketing_campaign_ruleresolver
     /**
      * Recurses trough the rules array and creates QB instances & constraints as needed
      * @param array $rules rules array
-     * @ret bool indicating success/failure
+     * @return bool indicating success/failure
      */
     function resolve($rules)
     {
@@ -304,7 +304,7 @@ class org_openpsa_directmarketing_campaign_ruleresolver
      * Resolves the rules in a single rule group
      * @param array $group single group from rules array
      * @param object $qb related QB object
-     * @ret bool indicating success/failure
+     * @return bool indicating success/failure
      */
     function _resolve_rule_group($group, $match_class = false)
     {
@@ -385,7 +385,7 @@ class org_openpsa_directmarketing_campaign_ruleresolver
      * Parses a rule definition array, and adds QB constraints accordingly
      * @param array $rule rule definition array
      * @param object $qb reference to groups QB instance
-     * @ret bool indicating success/failure
+     * @return bool indicating success/failure
      */
     function _parse_rule($rule, &$qb)
     {

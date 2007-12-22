@@ -1,6 +1,6 @@
 <?php
 /**
- * @package cc.kaktus_pearserver
+ * @package cc.kaktus.pearserver
  * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: navigation.php 4198 2006-09-25 14:20:07Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org
@@ -10,7 +10,7 @@
 /**
  * PEAR server NAP interface class
  *
- * @package cc.kaktus_pearserver
+ * @package cc.kaktus.pearserver
  */
 class cc_kaktus_pearserver_navigation extends midcom_baseclasses_components_navigation
 {
@@ -24,14 +24,14 @@ class cc_kaktus_pearserver_navigation extends midcom_baseclasses_components_navi
 
     /**
      * Returns all leaves for the current content topic.
-     * 
-     * @TODO: This needs to be written to show the pseudo leaves
+     *
+     * @todo This needs to be written to show the pseudo leaves
      */
     function get_leaves()
     {
         // Prepare everything
         $leaves = array ();
-        
+
         $leaves["{$this->_topic->id}_upload"] = array
         (
             MIDCOM_NAV_SITE => array
@@ -47,7 +47,7 @@ class cc_kaktus_pearserver_navigation extends midcom_baseclasses_components_navi
             MIDCOM_META_CREATED => $this->_topic->metadata->created,
             MIDCOM_META_EDITED => $this->_topic->metadata->revised,
         );
-        
+
         return $leaves;
     }
 }

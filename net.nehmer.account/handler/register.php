@@ -193,7 +193,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
     }
     
     /**
-     * @todo: Please comment *at least* on a method scope what these are doing!
+     * @todo Please comment *at least* on a method scope what these are doing!
      */
     function _handler_register_invitation($handler_id, $args, &$data)
     {
@@ -254,7 +254,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
 
     
     /**
-     * @todo: Please comment *at least* on a method scope what these are doing!
+     * @todo Please comment *at least* on a method scope what these are doing!
      */
     function _show_register_invitation($handler_id, &$data)
     {
@@ -820,7 +820,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
      * 
      * @access private
      * @param midcom_db_person $this->_person  The newly created person account
-     * @todo: Make this configurable (as well as method $this->_send_registration_mail)
+     * @todo Make this configurable (as well as method $this->_send_registration_mail)
      */
     function _send_activation_pending_mail()
     {

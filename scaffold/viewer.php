@@ -28,7 +28,7 @@ class ${module_class}_viewer extends midcom_baseclasses_components_request
         /**
          * Prepare the request switch, which contains URL handlers for the component
          */
-         
+
         // Handle /config
         $this->_request_switch['config'] = array
         (
@@ -90,7 +90,7 @@ class ${module_class}_viewer extends midcom_baseclasses_components_request
      * @access protected
      */
     function _populate_node_toolbar()
-    {   
+    {
         /*
         if ($this->_content_topic->can_do('midgard:create'))
         {
@@ -122,7 +122,7 @@ class ${module_class}_viewer extends midcom_baseclasses_components_request
                 )
             );
         }
-        
+
     }
 
     /**

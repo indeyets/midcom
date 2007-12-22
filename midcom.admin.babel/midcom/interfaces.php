@@ -1,10 +1,10 @@
 <?php
 /**
- * @package midcom.admin.settings
+ * @package midcom.admin.babel
  */
-class midcom_admin_babel_interface extends midcom_baseclasses_components_interface 
+class midcom_admin_babel_interface extends midcom_baseclasses_components_interface
 {
-    function midcom_admin_babel_interface () 
+    function midcom_admin_babel_interface ()
     {
         parent::midcom_baseclasses_components_interface();
 

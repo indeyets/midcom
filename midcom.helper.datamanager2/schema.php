@@ -287,7 +287,7 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
             $data['name'] = $name;
             $this->append_field($name, $data);
         }
-        
+
         if (   $this->_config->get('include_metadata_required')
             && $this->_schemadb_path
             && $this->_schemadb_path != $GLOBALS['midcom_config']['metadata_schema'])
@@ -303,7 +303,7 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
                     if ($field['required'])
                     {
                         if (!$prepended)
-                        {   
+                        {
                             $field['static_prepend'] = "<h3 style='clear: left;'>" . $_MIDCOM->i18n->get_string('metadata', 'midcom') . "</h3>\n" . $field['static_prepend'];
                             $prepended = true;
                         }
@@ -417,7 +417,7 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
                 {
                     $config['storage']['domain'] = 'midcom.helper.datamanager2';
                 }
-                
+
                 if (! array_key_exists('multilang', $config['storage']))
                 {
                     $config['storage']['multilang'] = false;

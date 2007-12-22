@@ -28,7 +28,7 @@ class org_routamc_statusmessage_viewer extends midcom_baseclasses_components_req
         /**
          * Prepare the request switch, which contains URL handlers for the component
          */
-         
+
         // Handle /config
         $this->_request_switch['config'] = array
         (
@@ -89,7 +89,7 @@ class org_routamc_statusmessage_viewer extends midcom_baseclasses_components_req
      * @access protected
      */
     function _populate_node_toolbar()
-    {   
+    {
         if ($this->_topic->can_do('midgard:create'))
         {
             foreach (array_keys($this->_request_data['schemadb']) as $name)
@@ -124,7 +124,7 @@ class org_routamc_statusmessage_viewer extends midcom_baseclasses_components_req
                 )
             );
         }
-        
+
     }
 
     /**

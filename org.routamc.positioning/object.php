@@ -106,7 +106,7 @@ class org_routamc_positioning_object extends midcom_baseclasses_components_purec
         {
             $time = $this->_object->metadata->published;
         }
-        
+
         $person = new midcom_db_person($person_guid);
 
         $qb = org_routamc_positioning_log_dba::new_query_builder();
@@ -115,7 +115,7 @@ class org_routamc_positioning_object extends midcom_baseclasses_components_purec
         $qb->add_order('date', 'DESC');
         $qb->set_limit(1);
         $matches = $qb->execute_unchecked();
-        
+
         if (count($matches) > 0)
         {
             return $matches[0];

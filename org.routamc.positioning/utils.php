@@ -188,7 +188,7 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
         }
         return $city_string;
     }
-    
+
     /**
      * Pretty print a position mapping Microformatted city name or other label
      *
@@ -207,38 +207,38 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
         $latitude_string .= ($latitude > 0) ? " N" : " S";
         $longitude_string = org_routamc_positioning_utils::pretty_print_coordinate($longitude);
         $longitude_string .= ($longitude > 0) ? " E" : " W";
-                
+
         if (count($closest) == 0)
         {
             // No city found, generate only geo microformat
-                    
+
             $coordinates_string  = "<span class=\"geo\">";
             $coordinates_string .= "<abbr class=\"latitude\" title=\"{$latitude}\">{$latitude_string}</abbr> ";
             $coordinates_string .= "<abbr class=\"longitude\" title=\"{$longitude}\">{$longitude_string}</abbr>";
             $coordinates_string .= "</span>";
-            
+
             return $coordinates_string;
         }
 
         foreach ($closest as $city)
         {
             // City found, combine it and geo
-            
+
             $city_string  = "<span class=\"geo adr\">";
             $city_string .= "<abbr class=\"latitude\" title=\"{$latitude}\">{$latitude_string}</abbr> ";
             $city_string .= "<abbr class=\"longitude\" title=\"{$longitude}\">{$longitude_string}</abbr> ";
-            
+
             $city_coordinates = array
             (
                 'latitude'  => $city->latitude,
                 'longitude' => $city->longitude,
             );
-            
+
             $city_distance = round(org_routamc_positioning_utils::get_distance($coordinates, $city_coordinates));
-            
+
             $city_label  = "<span class=\"locality\">{$city->city}</span>, ";
             $city_label .= "<span class=\"country-name\">{$city->country}</span>";
-                        
+
             if ($city_distance <= 4)
             {
                 $city_string .= $city_label;
@@ -248,7 +248,7 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
                 $bearing = org_routamc_positioning_utils::get_bearing($city_coordinates, $coordinates);
                 $city_string .= sprintf($_MIDCOM->i18n->get_string('%skm %s of %s', 'org.routamc.positioning'), $city_distance, $bearing, $city_label);
             }
-            
+
             $city_string .= "</span>";
         }
         return $city_string;

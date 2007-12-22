@@ -9,6 +9,9 @@
 
 /**
  * Baseclass for deliverables plugins
+ *
+ * @package org.openpsa.projects
+ *
  */
 class org_openpsa_projects_deliverables_interface_plugin_noop extends org_openpsa_projects_deliverables_interface_plugin
 {

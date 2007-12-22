@@ -2,10 +2,12 @@
 /**
  * @package org.openpsa.smslib
  */
+
 /**
- * Intearface to Tambur API for sending SMS, MMS, Wap-push etc
+ * Interface to Tambur API for sending SMS, MMS, Wap-push etc
  *
  * TODO: Implement other methods than send_sms.
+ * @package org.openpsa.smslib
  */
 class org_openpsa_smslib_tambur extends org_openpsa_smslib
 {

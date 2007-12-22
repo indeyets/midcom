@@ -1,12 +1,13 @@
 <?php
 /**
  * @package midgard.admin.asgard
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: acl_editor.php 5538 2007-03-20 13:22:41Z rambo $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/** @ ignore */
 if (!class_exists('midgard_admin_asgard_reflector'))
 {
     require_once('reflector.php');
@@ -59,7 +60,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
             $x = false;
             return $x;
         }
-        
+
         if ($deleted)
         {
             $qb = new midgard_query_builder($schema_type);
@@ -112,7 +113,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
             $qb->include_deleted();
             $qb->add_constraint('metadata.deleted', '<>', 0);
         }
-        
+
         if ($_MIDGARD['sitegroup'])
         {
             $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
@@ -227,7 +228,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
             debug_pop();
             return false;
         }
-        
+
         /*if (   !$all
             && $qb->count() > 25)
         {
@@ -293,7 +294,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
      * Tries to utilize MidCOM DBA features first but can fallback on pure MgdSchema
      * as necessary
      *
-     * NOTE: since this might fall back to pure MgdSchema never trust that MidCOM DBA features 
+     * NOTE: since this might fall back to pure MgdSchema never trust that MidCOM DBA features
      * are available, check for is_callable/method_exists first !
      *
      * @param midgard_object $object the object to get parent for
@@ -315,7 +316,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         {
             return $parent_object;
         }
-        
+
         // Reflection magick
         $resolver = new midgard_admin_asgard_reflector_tree($object);
         $ref =& $resolver->_mgd_reflector;
@@ -581,7 +582,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         }
         $qb->end_group();
         // TODO: /Review this code
-        
+
         return $qb;
     }
 
@@ -682,9 +683,9 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
             }
             $child_classes[] = $schema_type;
         }
-        
+
         // TODO: handle exceptions
-        
+
         return $child_classes;
     }
 
@@ -779,15 +780,15 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
              *
              * class pl_olga_test_dba extends __pl_olga_test_dba
              * {
-             * 
+             *
              *     var $noasgard = true;
-             * 
+             *
              *     function pl_olga_test_dba($id = null)    {
              *         return parent::__pl_olga_test_dba($id);
              *     }
-             * 
+             *
              * }
-             * 
+             *
              */
 
             if (class_exists("{$schema_type}_dba"))

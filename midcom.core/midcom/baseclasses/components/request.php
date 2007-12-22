@@ -164,7 +164,7 @@
  *
  * Note, that the request data, for ease of use, already contains references to the L10n
  * Databases of the Component and MidCOM itself located in this class. They are stored
- * as 'l10n' and 'l10n_midcom'. Also availbale as 'config' is the current component
+ * as 'l10n' and 'l10n_midcom'. Also available as 'config' is the current component
  * configuratio and 'topic' will hold the current conten topic.
  *
  * For those asking about "avoiding the problems of the view_* globals", this basically breaks

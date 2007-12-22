@@ -1,5 +1,11 @@
 <?php
 /**
+ * @package org.openpsa.mail
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+/**
  * Class for handling email encode/decode and sending
  *
  * Gracefully degrades in functionality if certain PEAR libraries are

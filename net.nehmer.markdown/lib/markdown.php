@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package net.nehmer.markdown
  * @author The Midgard Project, http://www.midgard-project.org
@@ -7,7 +6,7 @@
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @copyright (c) 2004-2005 Michel Fortin, http://www.michelf.com/projects/php-markdown/
  * @copyright (c) 2004-2005 John Gruber, http://daringfireball.net/projects/markdown/
- * @licence BSD-Style, see http://www.michelf.com/projects/php-markdown/license/
+ * @license BSD-Style, see http://www.michelf.com/projects/php-markdown/license/
  */
 
 #
@@ -1195,7 +1194,7 @@ function _DoTable_callback($matches) {
         foreach ($row_cells as $n => $cell)
         {
             if (isset($attr[$n]))
-            {        
+            {
                 $text .= "  <td$attr[$n]>"._RunSpanGamut(trim($cell))."</td>\n";
             }
         }

@@ -34,7 +34,7 @@
  *
  * <b>CSS Styles in use by the Widget</b>
  *
- * The fieldset is set to fieldset.image. The inputfields are input.shorttext for all
+ * The fieldset is set to fieldset.image. The input fields are input.shorttext for all
  * text fields and input.fileupload for the actual upload field. The deletion checkbox
  * is of the class input.checkbox.
  *
@@ -49,6 +49,7 @@
  * The preview link is a nested div: div.image_preview surrounds the entire preview area,
  * div.image_frame surrounds any displayed image.
  *
+ * @package midcom.helper.datamanager
  */
 class midcom_helper_datamanager_widget_collection extends midcom_helper_datamanager_widget {
 

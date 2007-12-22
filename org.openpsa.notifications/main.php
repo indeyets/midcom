@@ -55,10 +55,10 @@ class org_openpsa_notifications extends midcom_baseclasses_components_purecode
         {
             return false;
         }
-        
+
         $component = $action_parts[0];
-        $action = $action_parts[1];    
-        
+        $action = $action_parts[1];
+
         // Find in which ways to notify the user
         $notification_type = org_openpsa_notifications::merge_notification_prefences($component, $action, $recipient);
         if ($notification_type == 'none')
@@ -78,7 +78,7 @@ class org_openpsa_notifications extends midcom_baseclasses_components_purecode
         // Send the type requested by user
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("Notifying {$recipient} with type {$notification_type}", MIDCOM_LOG_DEBUG);
-        debug_pop();        
+        debug_pop();
         $method = "send_{$notification_type}";
         if (!method_exists($notifier, $method))
         {
@@ -106,7 +106,7 @@ class org_openpsa_notifications extends midcom_baseclasses_components_purecode
         {
             return $preference;
         }
-        
+
         // If user has preference for this message, we use that
         $personal_preferences = $recipient->list_parameters('org.openpsa.notifications');
         if (   count($personal_preferences) > 0
@@ -115,7 +115,7 @@ class org_openpsa_notifications extends midcom_baseclasses_components_purecode
             $preference = $personal_preferences[$action];
             return $preference;
         }
-        
+
         // Fall back to component defaults
         $customdata = $_MIDCOM->componentloader->get_all_manifest_customdata('org.openpsa.notifications');
         if (array_key_exists($component, $customdata))

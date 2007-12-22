@@ -39,10 +39,10 @@
  *
  * <b>CSS Styles in use by the Widget</b>
  *
- * The fieldset is set to fieldset.radiobox. The inputfields are input.radiobutton.
+ * The fieldset is set to fieldset.radiobox. The input fields are input.radiobutton.
  *
+ * @package midcom.helper.datamanager
  */
-
 class midcom_helper_datamanager_widget_radiobox extends midcom_helper_datamanager_widget {
 
     /**

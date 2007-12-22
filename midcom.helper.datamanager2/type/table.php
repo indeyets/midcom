@@ -11,7 +11,7 @@
  * Datamanager 2 table type.
  *
  * <b>Configuration options:</b>
- * <i>callback_name - name of the class to be used for populating the rows and colums.</i>
+ * <i>callback_name - name of the class to be used for populating the rows and columns.</i>
  *
  * The callback class must support the following methods:
  *
@@ -22,7 +22,9 @@
  * boolean set_rows($values);
  * void set_type(&$midcom_helper_datamanager2_type_table ) ;
  *
- * Array with headernames in the same order as the row colums.
+ * Array with headernames in the same order as the row columns.
+ *
+ * @package midcom.helper.datamanager2
  *
  */
 class midcom_helper_datamanager2_type_table extends midcom_helper_datamanager2_type

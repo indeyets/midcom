@@ -7,6 +7,11 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
 
+/**
+ *
+ * @package org.openpsa.projects
+ *
+ */
 class midcom_org_openpsa_deliverable extends __midcom_org_openpsa_deliverable
 {
     function midcom_org_openpsa_deliverable($id = null)
@@ -15,6 +20,11 @@ class midcom_org_openpsa_deliverable extends __midcom_org_openpsa_deliverable
     }
 }
 
+/**
+ *
+ * @package org.openpsa.projects
+ *
+ */
 class org_openpsa_projects_deliverable extends midcom_org_openpsa_deliverable
 {
 

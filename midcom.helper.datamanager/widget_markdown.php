@@ -10,8 +10,9 @@
 /**
  * This is a widget for editing Markdown content. It is mostly the same as the
  * regular text widget
+ *
+ * @package midcom.helper.datamanager
  */
-
 class midcom_helper_datamanager_widget_markdown extends midcom_helper_datamanager_widget_text {
 
     // Documented in base class, nothing special here.

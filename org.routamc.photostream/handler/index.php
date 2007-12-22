@@ -6,6 +6,12 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  *
  */
+
+/**
+ *
+ * @package org.routamc.photostream
+ *
+ */
 class org_routamc_photostream_handler_index extends midcom_baseclasses_components_handler
 {
     /**
@@ -35,7 +41,7 @@ class org_routamc_photostream_handler_index extends midcom_baseclasses_component
                 'url' => "list/{$user->username}/",
                 'title' => $this->_l10n->get('my photos'),
             );
-            
+
             $data['photostreams'][] = array
             (
                 'url' => "tag/{$user->username}/",
@@ -49,7 +55,7 @@ class org_routamc_photostream_handler_index extends midcom_baseclasses_component
             'url' => 'list/all/',
             'title' => $this->_l10n->get('all photos'),
         );
-        
+
         $data['photostreams'][] = array
         (
             'url' => 'tag/all/',

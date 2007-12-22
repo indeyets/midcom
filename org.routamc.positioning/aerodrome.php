@@ -18,7 +18,7 @@ class org_routamc_positioning_aerodrome_dba extends __org_routamc_positioning_ae
     {
         return parent::__org_routamc_positioning_aerodrome_dba($id);
     }
-    
+
     /**
      * @return org_routamc_positioning_city_dba City the airport caters for
      */
@@ -52,7 +52,7 @@ class org_routamc_positioning_aerodrome_dba extends __org_routamc_positioning_ae
         }
         return $this->icao;
     }
-    
+
     /**
      * Don't save aerodrome if another aerodrome is in same place or exists with same ICAO
      */
@@ -72,7 +72,7 @@ class org_routamc_positioning_aerodrome_dba extends __org_routamc_positioning_ae
                 return false;
             }
         }
-        
+
         $qb = org_routamc_positioning_aerodrome_dba::new_query_builder();
         $qb->add_constraint('icao', '=', $this->icao);
         $qb->set_limit(1);

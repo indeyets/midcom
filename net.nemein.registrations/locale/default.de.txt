@@ -355,7 +355,7 @@ Konfiguration für den Termin
 Anmeldung für %s
 ---STRINGEND
 
----STRING registration is beeing processed, you will get a mail
+---STRING registration is being processed, you will get a mail
 Ihre Anmeldung wird bearbeitet, Sie werden in Kürze eine Bestätigung per E-Mail erhalten.
 ---STRINGEND
 

@@ -13,7 +13,7 @@
  * 
  * <b>Configuration options:</b>
  * <i>headers</i>
- * Array with headernames in the same order as the row colums.
+ * Array with headernames in the same order as the row columns.
  *  
  *
  * @package midcom.helper.datamanager2

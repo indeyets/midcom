@@ -17,7 +17,6 @@
  *
  * @package net.nehmer.account
  */
-
 class net_nehmer_account_callbacks_validation extends midcom_baseclasses_components_purecode
 {
     function net_nehmer_account_callbacks_validation()
@@ -73,7 +72,7 @@ class net_nehmer_account_callbacks_validation extends midcom_baseclasses_compone
             return true;
         }
     }
-    
+
     /**
      * This function checks an email against the database for existence.
      *

@@ -19,6 +19,7 @@
  * - <i>Location</i>: attachment
  * - <i>widget</i>: text
  *
+ * @package midcom.helper.datamanager
  */
 
 class midcom_helper_datamanager_datatype_text extends midcom_helper_datamanager_datatype

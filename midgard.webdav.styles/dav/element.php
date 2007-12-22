@@ -1,6 +1,14 @@
 <?php
+/**
+ * @package midgard.webdav.styles
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
-
+/**
+ * @package midgard.webdav.styles
+ */
 class midgard_webdav_styles_dav_element extends midgard_webdav_styles_dav {
     var $element ;
     var $style;
@@ -8,13 +16,13 @@ class midgard_webdav_styles_dav_element extends midgard_webdav_styles_dav {
         $this->element = $element;
         $this->log( __CLASS__  .": set_element_name: " . $element);
     }
-    
+
 
     function GET (&$options ) {
         $this->log( __CLASS__  .": GET: " . $options['path']);
 
         $this->log( __CLASS__ . ": GET: this->element = " .  $this->element );
-        
+
         $element = $this->get_element_by_name( $this->element , $this->style);
         //$options['mimetype'] = $this->mkprop("getcontenttype", "text/plain");
         $options['mimetype'] = 'text/php';
@@ -40,28 +48,28 @@ class midgard_webdav_styles_dav_element extends midgard_webdav_styles_dav {
         $this->log( "this->style->name: " . $this->style->name );
         $this->log( "element" . $element);
         // new element
-        if ( !$element ) 
+        if ( !$element )
         {
             $this->log( "Creating new element " . $this->element );
             $element = new midcom_db_element;
             $element->name = str_replace( '.php', '', $this->element );
             $element->style = $this->style->id;
-            if ( !$element->create()) 
+            if ( !$element->create())
             {
                 $this->log( "403 Forbidden\n" );
                 return "403 Forbidden";
             }
         }
 		//element exists, but we don't want to duplicate the content
-		else 
+		else
 		{
-			$element->value = "";	
+			$element->value = "";
 		}
 
         while (!feof($options["stream"])) {
           $element->value .= fread($options["stream"], 4096);
         }
-        if ( !$element->update() ) 
+        if ( !$element->update() )
         {
             $this->log( "403 Forbidden - \n" );
             return "403 Forbidden";

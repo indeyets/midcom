@@ -11,7 +11,6 @@
  *
  * @package org.routamc.photostream
  */
-
 class org_routamc_photostream_viewer extends midcom_baseclasses_components_request
 {
     function org_routamc_photostream_viewer($topic, $config)
@@ -141,7 +140,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             ),
             'variable_args' => 2,
         );
-        
+
         // Handle /tag/all/
         $this->_request_switch['photostream_tags_all'] = array
         (
@@ -201,7 +200,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             ),
             'variable_args' => 2,
         );
-        
+
         // Handle /list/all
         $this->_request_switch['photostream_list_all'] = array
         (
@@ -254,7 +253,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             'fixed_args' => Array('photo'),
             'variable_args' => 1,
         );
-        
+
         // Handler /photo/<guid>/<limiter>/<limit>
         $this->_request_switch['photo_args_3'] = Array
         (
@@ -324,7 +323,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             'handler' => Array('org_routamc_photostream_handler_api_email', 'import'),
             'fixed_args' => Array('api', 'email'),
         );
-        
+
         /* not implemented yet
         $this->_request_switch['api-metaweblog'] = Array
         (
@@ -332,7 +331,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             'fixed_args' => Array('api', 'metaweblog'),
         );
         */
-        
+
         if ($this->_config->get('entry_page') === 'straight')
         {
             // Handle /
@@ -376,7 +375,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             {
                 continue;
             }
-            
+
             // PHP5-TODO: Must be copy-by-value
             $new_switch = $switch_data;
             // switch handler to the feed dispatcher
@@ -387,7 +386,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
                 $new_switch['variable_args'] = 0;
             }
             $new_switch['variable_args']++;
-            
+
             if (!$this->_sanity_check_switch($new_switch))
             {
                 // ULR-space clash, prepend /feed/ to list fixed args
@@ -401,7 +400,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
                 debug_pop();
                 continue;
             }
-            
+
             // Add the new switch
             $this->_request_switch[$new_id] = $new_switch;
 
@@ -483,7 +482,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             return false;
         }
         debug_pop();
-        return true;       
+        return true;
     }
 
     /**
@@ -610,7 +609,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
 
         // the feed dispatcher needs this information, it might be available otherwise but I couldn't find it
         $this->_request_data['request_switch'] =& $this->_request_switch;
-        
+
         return true;
     }
 }

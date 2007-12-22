@@ -59,7 +59,7 @@ function net_nehmer_static_symlink_topic_list()
     (
         '' => '',
     );
-    
+
     $nav = new midcom_helper_nav();
     $mc = midcom_db_topic::new_collector('component', 'net.nehmer.static');
     $mc->add_value_property('id');
@@ -79,7 +79,7 @@ function net_nehmer_static_symlink_topic_list()
         $breadcrumb = implode(' > ', $path_components);
         $statictopics[$topic_guid] = $breadcrumb;
     }
-    
+
     return $statictopics;
 }
 

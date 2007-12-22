@@ -15,7 +15,7 @@
  * basis of form/datamanager classes. The controllers are intended to ease the integration work
  * and provide more advanced frameworks for example for multi-page forms or AJAX callbacks.
  *
- * The base class implements only a framwork for controllers, along with a factory methods for
+ * The base class implements only a framework for controllers, along with a factory methods for
  * getting real instances which you need to initialize. For all instances, you have to set
  * the schema database using the load_schemadb() helper.
  *

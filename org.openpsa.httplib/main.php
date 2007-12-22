@@ -72,7 +72,7 @@ class org_openpsa_httplib extends midcom_baseclasses_components_purecode
         {
             $client->rawheaders = $headers;
         }
-        
+
         if (!is_null($username))
         {
             $client->user = $username;
@@ -116,7 +116,7 @@ class org_openpsa_httplib extends midcom_baseclasses_components_purecode
         $c =& $this->_client;
         $c->setMethod(HTTP_REQUEST_METHOD_POST);
         $c->addHeader('User-Agent', $this->_user_agent());
-        
+
         // Handle basic auth
         if (   isset($this->basicauth['user'])
             && $this->basicauth['user'] !== false
@@ -126,7 +126,7 @@ class org_openpsa_httplib extends midcom_baseclasses_components_purecode
             // Set basic auth
             $c->setBasicAuth($this->basicauth['user'], $this->basicauth['password']);
         }
-        
+
         // Handle the variables to POST
         if (   !is_array($variables)
             || empty($variables))

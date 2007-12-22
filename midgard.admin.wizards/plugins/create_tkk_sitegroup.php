@@ -2,7 +2,7 @@
 
 
 /**
- * This is a plugin for creatin a sitegroup
+ * This is a plugin for creating a sitegroup
  */
 class create_tkk_sitegroup extends midcom_baseclasses_components_handler
 {
@@ -66,7 +66,7 @@ class create_tkk_sitegroup extends midcom_baseclasses_components_handler
                 $sitewizard = new midgard_admin_sitewizard();
                 $sitewizard->set_verbose(true);
                 
-                // EI N€IN
+                // EI Nï¿½IN
                 $_MIDCOM->relocate($prefix . "tkk_sitewizard/create_tkk_host/");
             }
             catch (midgard_admin_sitewizard_exception $e)

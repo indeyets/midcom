@@ -1,4 +1,9 @@
 <?php
+/**
+ *
+ * @package se.anykey.mmslib
+ */
+
 /****************************************************************************
  *  mmslib - a PHP library for encoding and decoding MMS
  *
@@ -77,46 +82,46 @@ $content_types = array( "*/*", "text/*", "text/html", "text/plain",
 			"application/x-x509-ca-cert",
 			"application/x-x509-user-cert",
 			"image/*", "image/gif", "image/jpeg", "image/tiff",
-			"image/png", "image/vnd.wap.wbmp", 
-			"application/vnd.wap.multipart.*", 
-			"application/vnd.wap.multipart.mixed", 
-			"application/vnd.wap.multipart.form-data", 
-			"application/vnd.wap.multipart.byteranges", 
-			"application/vnd.wap.multipart.alternative", 
-			"application/xml", "text/xml", 
-			"application/vnd.wap.wbxml", 
-			"application/x-x968-cross-cert", 
-			"application/x-x968-ca-cert", 
-			"application/x-x968-user-cert", 
-			"text/vnd.wap.si", 
-			"application/vnd.wap.sic", 
-			"text/vnd.wap.sl", 
-			"application/vnd.wap.slc", 
-			"text/vnd.wap.co", 
-			"application/vnd.wap.coc", 
+			"image/png", "image/vnd.wap.wbmp",
+			"application/vnd.wap.multipart.*",
+			"application/vnd.wap.multipart.mixed",
+			"application/vnd.wap.multipart.form-data",
+			"application/vnd.wap.multipart.byteranges",
+			"application/vnd.wap.multipart.alternative",
+			"application/xml", "text/xml",
+			"application/vnd.wap.wbxml",
+			"application/x-x968-cross-cert",
+			"application/x-x968-ca-cert",
+			"application/x-x968-user-cert",
+			"text/vnd.wap.si",
+			"application/vnd.wap.sic",
+			"text/vnd.wap.sl",
+			"application/vnd.wap.slc",
+			"text/vnd.wap.co",
+			"application/vnd.wap.coc",
 			"application/vnd.wap.multipart.related",
-			"application/vnd.wap.sia", 
-			"text/vnd.wap.connectivity-xml", 
-			"application/vnd.wap.connectivity-wbxml", 
-			"application/pkcs7-mime", 
-			"application/vnd.wap.hashed-certificate", 
-			"application/vnd.wap.signed-certificate", 
+			"application/vnd.wap.sia",
+			"text/vnd.wap.connectivity-xml",
+			"application/vnd.wap.connectivity-wbxml",
+			"application/pkcs7-mime",
+			"application/vnd.wap.hashed-certificate",
+			"application/vnd.wap.signed-certificate",
 			"application/vnd.wap.cert-response",
 			"application/xhtml+xml",
 			"application/wml+xml",
-			"text/css", 
+			"text/css",
 			"application/vnd.wap.mms-message",
-			"application/vnd.wap.rollover-certificate", 
-			"application/vnd.wap.locc+wbxml", 
-			"application/vnd.wap.loc+xml", 
-			"application/vnd.syncml.dm+wbxml", 
-			"application/vnd.syncml.dm+xml", 
-			"application/vnd.syncml.notification", 
-			"application/vnd.wap.xhtml+xml", 
-			"application/vnd.wv.csp.cir", 
-			"application/vnd.oma.dd+xml", 
-			"application/vnd.oma.drm.message", 
-			"application/vnd.oma.drm.content", 
+			"application/vnd.wap.rollover-certificate",
+			"application/vnd.wap.locc+wbxml",
+			"application/vnd.wap.loc+xml",
+			"application/vnd.syncml.dm+wbxml",
+			"application/vnd.syncml.dm+xml",
+			"application/vnd.syncml.notification",
+			"application/vnd.wap.xhtml+xml",
+			"application/vnd.wv.csp.cir",
+			"application/vnd.oma.dd+xml",
+			"application/vnd.oma.drm.message",
+			"application/vnd.oma.drm.content",
 			"application/vnd.oma.drm.rights+xml",
 			"application/vnd.oma.drm.rights+wbxml" );
 
@@ -143,7 +148,7 @@ function messageTypeToString( $messageType )
 {
 	switch ( $messageType )
 	{
-		case 128: return "m-send-req"; 
+		case 128: return "m-send-req";
 		case 129: return "m-send-conf";
 		case 130: return "m-notification-ind";
 		case 131: return "m-notifyresp-ind";
@@ -176,7 +181,7 @@ function mmsVersionToString( $version )
 
 function dateToString( $date )
 {
-	return date( "Y-m-d H:i:s", $date ); 
+	return date( "Y-m-d H:i:s", $date );
 }
 
 function messageClassToString( $messageClass )
@@ -200,7 +205,7 @@ function priorityToString( $priority )
 		case 130: return "High";
 		default: "Unknown priority";
 	}
-}		
+}
 
 function senderVisibilityToString( $vis )
 {
@@ -210,7 +215,7 @@ function senderVisibilityToString( $vis )
 		case 129: return "Show";
 		default: "Unknown sender visibility";
 	}
-}		
+}
 
 function deliveryReportToString( $dr )
 {
@@ -220,7 +225,7 @@ function deliveryReportToString( $dr )
 		case 129: return "No";
 		default: "Unknown delivery report";
 	}
-}		
+}
 
 
 function readReplyToString( $readReply )
@@ -240,9 +245,9 @@ function contentTypeToString( $contentType )
 
 /*
  * Part class
- * 
+ *
  * The Part class is just a container for various attachments of different content types.
- * The data itself is not stored though, it merely contains a reference to the file      
+ * The data itself is not stored though, it merely contains a reference to the file
  */
 
 class Part
@@ -308,11 +313,11 @@ function writeTopage()
 
 /*
  * MMSDecoder class
- * 
+ *
  * The MMSDecoder class decodes binary MMS chunks so that you can extract its parts
- * 
+ *
  * Limitations: The parsing of Content-type for parts is not complete so you won't get
- *              the filename for instance.  
+ *              the filename for instance.
  */
 
 class MMSDecoder
@@ -390,7 +395,7 @@ function confirm($TRANSACTIONID,$cislo) {
 		while ( $this->parseHeader() );
 
 		$this->bodyStartsAt = $this->curp;
-	
+
 		if ( $this->contentType == MULTIPART_MIXED ||
 		     $this->contentType == MULTIPART_RELATED )
 		{
@@ -421,7 +426,7 @@ function confirm($TRANSACTIONID,$cislo) {
 		if ( $this->data[$this->curp] <= 31 ||
 		     $this->isSeparator( $this->data[$this->curp] ) )
 			return 0;
-		while ( $this->data[$this->curp] > 31 && 
+		while ( $this->data[$this->curp] > 31 &&
 		        !$this->isSeparator( $this->data[$this->curp] ) )
 		{
 			$token .= chr( $this->data[$this->curp] );
@@ -432,10 +437,10 @@ function confirm($TRANSACTIONID,$cislo) {
 
 	function isSeparator( $ch )
 	{
-		return $ch == 40 || $ch == 41 || $ch == 60 || $ch == 62 || 
-		       $ch == 64 || $ch == 44 || $ch == 58 || $ch == 59 || 
-		       $ch == 92 || $ch == 47 || $ch == 123 || $ch == 125 || 
-                       $ch == 91 || $ch == 93 || $ch == 63 || $ch == 61 || 
+		return $ch == 40 || $ch == 41 || $ch == 60 || $ch == 62 ||
+		       $ch == 64 || $ch == 44 || $ch == 58 || $ch == 59 ||
+		       $ch == 92 || $ch == 47 || $ch == 123 || $ch == 125 ||
+                       $ch == 91 || $ch == 93 || $ch == 63 || $ch == 61 ||
                        $ch == 32 || $ch == 11;
 	}
 
@@ -445,57 +450,57 @@ function confirm($TRANSACTIONID,$cislo) {
 		{
 			return 0;
 		}
-		
+
 		switch ( $mmsFieldName )
 		{
-			case BCC: 
+			case BCC:
 				$this->parseBcc(); break;
-			case CC:  
+			case CC:
 				$this->parseCc(); break;
 			case CONTENT_LOCATION:
 				$this->parseContentLocation(); break;
 			case CONTENT_TYPE:
 				$this->parseContentType( $this->contentType );
 				break;
-			case DATE: 
+			case DATE:
 				$this->parseDate( $this->date ); break;
-			case DELIVERY_REPORT: 
+			case DELIVERY_REPORT:
 				$this->parseDeliveryReport(); break;
-			case DELIVERY_TIME: 
+			case DELIVERY_TIME:
 				$this->parseDeliveryTime(); break;
-			case EXPIRY: 
+			case EXPIRY:
 				$this->parseExpiry(); break;
-			case FROM: 
+			case FROM:
 				$this->parseFrom(); break;
-			case MESSAGE_CLASS: 
+			case MESSAGE_CLASS:
 				$this->parseMessageClass(); break;
-			case MESSAGE_ID: 
+			case MESSAGE_ID:
 				$this->parseMessageId(); break;
-			case MESSAGE_TYPE: 
+			case MESSAGE_TYPE:
 				$this->parseMessageType(); break;
-			case MMS_VERSION: 
+			case MMS_VERSION:
 				$this->parseMmsVersion(); break;
-			case MESSAGE_SIZE: 
+			case MESSAGE_SIZE:
 				$this->parseMessageSize(); break;
-			case PRIORITY: 
+			case PRIORITY:
 				$this->parsePriority(); break;
-			case READ_REPLY: 
+			case READ_REPLY:
 				$this->parseReadReply(); break;
-			case REPORT_ALLOWED: 
+			case REPORT_ALLOWED:
 				$this->parseReportAllowed(); break;
 			case RESPONSE_STATUS:
 				$this->parseResponseStatus(); break;
-			case SENDER_VISIBILITY: 
+			case SENDER_VISIBILITY:
 				$this->parseSenderVisibility(); break;
-			case STATUS: 
+			case STATUS:
 				$this->parseStatus(); break;
-			case SUBJECT: 
+			case SUBJECT:
 				$this->parseSubject(); break;
-			case TO: 
+			case TO:
 				$this->parseTo(); break;
-			case TRANSACTION_ID: 
+			case TRANSACTION_ID:
 				$this->parseTransactionId(); break;
-			default: 
+			default:
 				if ( DEBUG )
 				{
 					printf( "Unknown message field (" );
@@ -511,9 +516,9 @@ function confirm($TRANSACTIONID,$cislo) {
 		$this->status = $this->data[$this->curp++];
 		if ( DEBUG )
 		{
-			print( "X-Mms-Status: " . 
-			  statusToString($this->status) . 
-			  "\n" );		
+			print( "X-Mms-Status: " .
+			  statusToString($this->status) .
+			  "\n" );
 		}
 
 	}
@@ -536,20 +541,20 @@ function confirm($TRANSACTIONID,$cislo) {
 
 		if ( DEBUG )
 		{
-			print( "X-Mms-Message-Type: " . 
+			print( "X-Mms-Message-Type: " .
 				messageTypeToString( $this->messageType ) .
 				"\n" );
 		}
-		return 1;		
+		return 1;
 	}
 
 
 	function parseTransactionId()
-	{	
+	{
 		$this->parseTextString( $this->transactionId );
 		if ( DEBUG )
 		{
-			print( "X-Mms-Transaction-ID: " . 
+			print( "X-Mms-Transaction-ID: " .
 				$this->transactionId . "\n" );
 		}
 	}
@@ -559,12 +564,12 @@ function confirm($TRANSACTIONID,$cislo) {
 		$this->parseValueLength($length);
 		switch ( $this->data[$this->curp] )
 		{
-			case 128: 
-				$this->curp++; 
-				$this->parseDate( $this->expiryDate ); 
+			case 128:
+				$this->curp++;
+				$this->parseDate( $this->expiryDate );
 				break;
 			case 129:
-				$this->curp++; 
+				$this->curp++;
 				$this->parseDeltaSeconds( $this->expiryDeltaSeconds );
 				break;
 			default:
@@ -594,8 +599,8 @@ function confirm($TRANSACTIONID,$cislo) {
 		$this->parseShortInteger( $this->mmsVersion );
 		if ( DEBUG )
 		{
-			print( "X-Mms-MMS-Version: " . 
-				mmsVersionToString( $this->mmsVersion ) . 
+			print( "X-Mms-MMS-Version: " .
+				mmsVersionToString( $this->mmsVersion ) .
 				"\n" );
 		}
 	}
@@ -606,7 +611,7 @@ function confirm($TRANSACTIONID,$cislo) {
 		$this->parseLongInteger( $date );
 		if ( DEBUG )
 		{
-			print( "Date: " . dateToString( $date ) . 
+			print( "Date: " . dateToString( $date ) .
 				"\n" );
 		}
 	}
@@ -648,12 +653,12 @@ function confirm($TRANSACTIONID,$cislo) {
 			$this->curp++;
 			$this->parseEncodedString( $this->from );
 		}
-		else 
+		else
 		{
 			$this->from = "Anonymous";
 			$this->curp++;
 		}
-		
+
 		if ( DEBUG )
 			print( "From: " . $this->from . "\n" );
 	}
@@ -679,7 +684,7 @@ function confirm($TRANSACTIONID,$cislo) {
 				$this->curp++;
 				$this->parseUintvar( $length );
 				return 1;
-			}	
+			}
 		}
 		return $lengthFound;
 	}
@@ -718,7 +723,7 @@ function confirm($TRANSACTIONID,$cislo) {
 		if ( DEBUG )
 			print( "Cc: " . $this->cc . "\n" );
 	}
-		
+
 
 	function parseSubject()
 	{
@@ -738,7 +743,7 @@ function confirm($TRANSACTIONID,$cislo) {
 
 		if ( DEBUG )
 		{
-			print( "X-Mms-Message-Class: " . 
+			print( "X-Mms-Message-Class: " .
 				messageClassToString($this->messageClass) .
 				"\n" );
 		}
@@ -750,8 +755,8 @@ function confirm($TRANSACTIONID,$cislo) {
 		$this->priority = $this->data[$this->curp++];
 		if ( DEBUG )
 		{
-			print( "X-Mms-Priority: " . 
-				priorityToString( $this->priority ) . 
+			print( "X-Mms-Priority: " .
+				priorityToString( $this->priority ) .
 				"\n" );
 		}
 	}
@@ -762,9 +767,9 @@ function confirm($TRANSACTIONID,$cislo) {
 		$this->senderVisibility = $this->data[$this->curp++];
 		if ( DEBUG )
 		{
-			print( "X-Mms-Sender-Visibility: " . 
-			  senderVisibilityToString($this->senderVisibility) . 
-			  "\n" );		
+			print( "X-Mms-Sender-Visibility: " .
+			  senderVisibilityToString($this->senderVisibility) .
+			  "\n" );
 		}
 	}
 
@@ -774,9 +779,9 @@ function confirm($TRANSACTIONID,$cislo) {
 		$this->deliveryReport = $this->data[$this->curp++];
 		if ( DEBUG  )
 		{
-			print( "X-Mms-Delivery-Report: " . 
-			   deliveryReportToString($this->deliveryReport) . 
-			   "\n" );		
+			print( "X-Mms-Delivery-Report: " .
+			   deliveryReportToString($this->deliveryReport) .
+			   "\n" );
 		}
 	}
 
@@ -786,11 +791,11 @@ function confirm($TRANSACTIONID,$cislo) {
 		$this->readReply = $this->data[$this->curp++];
 		if ( DEBUG )
 		{
-			print( "X-Mms-Read-Reply: " . 
-				readReplyToString($this->readReply) . 
-				"\n" );		
+			print( "X-Mms-Read-Reply: " .
+				readReplyToString($this->readReply) .
+				"\n" );
 		}
-	}	
+	}
 
 
 	function parseContentType( &$contentType)
@@ -798,10 +803,10 @@ function confirm($TRANSACTIONID,$cislo) {
 		$typeFound = $this->parseConstrainedMedia( $contentType );
 		if ( !$typeFound )
 		{
-			$this->parseContentGeneralForm($contentType);	
+			$this->parseContentGeneralForm($contentType);
 			$typeFound = 1;
 		}
-		
+
 		if ( DEBUG )
 		{
 			printf( "Content-type: " .
@@ -894,7 +899,7 @@ function confirm($TRANSACTIONID,$cislo) {
 
 		/* Skip headers for now */
 		$this->curp = $tmp + $headersLen;
-		
+
 		/* Store data */
 		for ( $j = 0; $j < $dataLen; $j++)
 		{
@@ -910,15 +915,15 @@ function confirm($TRANSACTIONID,$cislo) {
 
 /*
  * MMSEncoder class
- * 
- * The class that does the encoding of the mms message and writes it to a file. 
+ *
+ * The class that does the encoding of the mms message and writes it to a file.
  * Use addPart to add parts to the encoder and then use the writeToFile function
  * to write the mms to the file system
- * 
+ *
  * Limitations: The encoding of headers for parts are incomplete so you would not be
  *              able to add a SMIL part and reference parts in the message from the SMIL
- *              content. The only header currently supported for parts is the simple 
- *              Content-type header. So currently this can only be used to deliver 
+ *              content. The only header currently supported for parts is the simple
+ *              Content-type header. So currently this can only be used to deliver
  *              chunks of content collections - no complete presentations
  */
 
@@ -927,7 +932,7 @@ class MMSEncoder
 	/* Body variables */
 	var $nparts;
 	var $parts;
-	
+
 
 	function MMSEncoder()
 	{
@@ -1018,7 +1023,7 @@ class MMSEncoder
 				fwrite( $fp, chr( $header[$j] ), 1 );
 
 		//<<<<<<<<---  by hatak
-	
+
 	}
 
 	function writePartsToFp( $fp )
@@ -1042,7 +1047,7 @@ class MMSEncoder
 
 			// Write size of header
 			for ( $j = 0; $j < sizeof( $headerLen ); $j++ )
-				fwrite( $fp, chr( $headerLen[$j] ), 1 );		
+				fwrite( $fp, chr( $headerLen[$j] ), 1 );
 
 			// Write length of data
 			for ( $j = 0; $j < sizeof( $dataLen ); $j++ )
@@ -1098,11 +1103,11 @@ class MMSEncoder
 			$data = $data >> 8;
 			$len++;
 		}
-	
+
 		$longInt[0] = $len; /* Set short-length */
 
 		/* tmp is the reverse of what we want so we reverse it */
-		for ( $i = 0; $i < $len; $i++ )  
+		for ( $i = 0; $i < $len; $i++ )
 			$longInt[$i+1] = $tmp[ $len - $i - 1 ];
 
 	}
@@ -1152,13 +1157,13 @@ class MMSEncoder
 				return $i;
 		return -1;
 	}
-	
+
 }
 
 
 /*
  * MMSNotifyer class
- * 
+ *
  * This class is used to send out the notification that will point the phone to the
  * MMS that is located at a certain URL. The SMS service is your simple web interface
  * using HTTP 1.1 GET. Change this to fit your system and your way of SMS sending
@@ -1168,13 +1173,13 @@ class MMSNotifyer
 	var $sms_host;
 	var $sms_port;
 	var $headers;
-	
+
 	function MMSNotifyer( $sms_host, $sms_port )
 	{
 		$this->sms_host = $sms_host;
 		$this->sms_port = $sms_port;
-		$this->headers = "E9";    
-		$this->headers .= "06";   
+		$this->headers = "E9";
+		$this->headers .= "06";
 		$this->headers .= "22";
 		$this->headers .= "6170706C69636174"; // 'application/vnd.wap.mms-message' ...
 		$this->headers .= "696F6E2F766E642E"; // hex ...
@@ -1209,26 +1214,26 @@ class MMSNotifyer
 
 		//---------- X-MMS-Content-Location ----------
 		$message .= "83" . $this->hex_encode($mms_url) . "00";
-		
+
 		print( "SMS size is: " . strlen( $this->headers . $message ) . "\n" );
 		print( "And the data part is: " . $this->headers . $message . "\n" );
-		$this->httpSend( "/mmstry/sendmms1.html?phone=$to&UDH=0605040B8423F0&Data=" . 
+		$this->httpSend( "/mmstry/sendmms1.html?phone=$to&UDH=0605040B8423F0&Data=" .
 				  $this->headers . $message );
 	}
 
 	function httpSend( $path )
 	{
- 		$connection = fsockopen( $this->sms_host, 
-					 $this->sms_port, 
-					 &$errno, 
-					 &$errdesc, 
+ 		$connection = fsockopen( $this->sms_host,
+					 $this->sms_port,
+					 &$errno,
+					 &$errdesc,
 					 60 );
 
-  		fputs( $connection, 
-		       "GET $path HTTP/1.1\r\nHost: " . $this->sms_host . 
+  		fputs( $connection,
+		       "GET $path HTTP/1.1\r\nHost: " . $this->sms_host .
 	       	       "\r\n\r\n");
 
-  		while (!feof($connection)) 
+  		while (!feof($connection))
 		{
    			$myline = fgets($connection, 128);
 			// possibly do something here to check reply
@@ -1237,7 +1242,7 @@ class MMSNotifyer
  		fclose ($connection);
 	}
 
-	function hex_encode($text)    
+	function hex_encode($text)
 	{
        		$encoded = strtoupper(bin2hex($text));
        		return $encoded;

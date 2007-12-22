@@ -1,6 +1,6 @@
 <?php
 /**
- * @package cc.kaktus_pearserver
+ * @package cc.kaktus.pearserver
  * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: admin.php 3145 2006-03-22 18:52:19Z torben $
  * @copyright The Midgard Project, http://www.midgard-project.org

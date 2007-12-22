@@ -11,7 +11,7 @@
  * Memcached decorator around the querybuilder object
  * 
  * Use this class to connect to Memcached for selects
- * @todo: go through a defined api on the memcached module instead of the private object
+ * @todo go through a defined api on the memcached module instead of the private object
  */
 
 class midcom_core_querybuilder_cached

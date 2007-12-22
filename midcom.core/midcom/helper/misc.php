@@ -1100,7 +1100,7 @@ if (!function_exists('midcom_helper_toc_formatter'))
 
 if (! function_exists('mgd_show_element'))
 {
-    /** @ignore, backup implementation */
+    /** @ignore backup implementation */
     function mgd_show_element($name)
     {
         eval('?>' . mgd_preparse(mgd_template($name)));

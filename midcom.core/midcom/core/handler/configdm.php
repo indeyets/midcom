@@ -83,7 +83,7 @@ class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     function _on_initialize()
     {
         $_MIDCOM->load_library('midcom.helper.datamanager');
@@ -202,7 +202,7 @@ class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
                 debug_pop();
                 return false;
         }
-        
+
         $_MIDCOM->add_link_head(
             array
             (
@@ -210,8 +210,8 @@ class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
                 'type' => 'text/css',
                 'href' => MIDCOM_STATIC_URL."/midcom.helper.datamanager/datamanager.css",
             )
-        ); 
-        
+        );
+
         // Add the view to breadcrumb trail
         $tmp = Array();
         $tmp[] = Array
@@ -219,7 +219,7 @@ class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
             MIDCOM_NAV_URL => 'config.html',
             MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('component configuration', 'midcom'),
         );
-        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);   
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
 
         // Hide the button in toolbar
         // TODO: Figure out the real URL of the config editor
