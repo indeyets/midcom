@@ -11,6 +11,8 @@
  * org.openpsa.jabber site interface class.
  *
  * Instant Messaging powered by JabberApplet
+ *
+ * @package org.openpsa.jabber
  */
 class org_openpsa_jabber_viewer extends midcom_baseclasses_components_request
 {

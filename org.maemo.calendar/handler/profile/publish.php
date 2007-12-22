@@ -7,6 +7,7 @@
  * @license http://www.gnu.net/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/** @ ignore */
 require_once(MIDCOM_ROOT . '/net/nehmer/account/handler/publish.php');
 
 /**
@@ -22,14 +23,14 @@ class org_maemo_calendar_handler_profile_publish extends net_nehmer_account_hand
      * @access private
      */
     var $_schemadb = null;
-    
+
     /**
      * The schema (taken from the config)
      *
      * @var Array
      * @access private
      */
-    var $_schema = null;    
+    var $_schema = null;
 
     /**
      * The Datamanager of the person to display.
@@ -48,13 +49,13 @@ class org_maemo_calendar_handler_profile_publish extends net_nehmer_account_hand
     {
         parent::net_nehmer_account_handler_publish();
     }
-    
+
     function _prepare_request_data()
     {
         $this->_request_data['submitted'] = $this->_form_submitted;
         parent::_prepare_request_data();
     }
-    
+
     /**
      * Internal helper function, prepares a datamanager based on the current account.
      */
@@ -72,37 +73,37 @@ class org_maemo_calendar_handler_profile_publish extends net_nehmer_account_hand
                 $this->_datamanager->schema->fields[$name]['customdata']['visible_mode'] = 'user';
             }
         }
-    }    
-    
+    }
+
     function _handler_publish($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         if ($handler_id == 'ajax-profile-publish')
         {
             $_MIDCOM->skip_page_style = true;
-        }        
-        
+        }
+
         parent::_handler_publish($handler_id, $args, &$data);
-        
+
         debug_pop();
         return true;
     }
-    
+
     function _handler_publish_ok($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         if ($handler_id == 'ajax-profile-publish-ok')
         {
             $_MIDCOM->skip_page_style = true;
-        }        
-        
+        }
+
         parent::_handler_publish_ok($handler_id, $args, &$data);
-        
+
         debug_pop();
         return true;
-    }    
+    }
 
     /**
      * This function processes the form, computing the visible field list for the current
@@ -112,9 +113,9 @@ class org_maemo_calendar_handler_profile_publish extends net_nehmer_account_hand
      * Default is not to show online state when publishing, in case the field is missing.
      */
     function _process_form()
-    {   
+    {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         if (array_key_exists('net_nehmer_account_publish_delete_avatar', $_REQUEST))
         {
             // We ignore errors at this point. Access control has been verified, if
@@ -123,9 +124,9 @@ class org_maemo_calendar_handler_profile_publish extends net_nehmer_account_hand
             $this->_account->delete_attachment('avatar_thumbnail');
             $this->_avatar = null;
             $this->_avatar_thumbnail = null;
-            
+
             $this->_form_submitted = true;
-            
+
             debug_pop();
             return;
         }
@@ -137,9 +138,9 @@ class org_maemo_calendar_handler_profile_publish extends net_nehmer_account_hand
         }
 
         $this->_form_submitted = true;
-        
+
         $this->_process_image_upload();
-        
+
         $published_fields = Array();
         foreach ($this->_datamanager->schema->fields as $name => $field)
         {
@@ -165,20 +166,20 @@ class org_maemo_calendar_handler_profile_publish extends net_nehmer_account_hand
         $this->_account->set_parameter('net.nehmer.account', 'revised', time());
         $this->_account->set_parameter('net.nehmer.account', 'published', time());
         $this->_account->delete_parameter('net.nehmer.account', 'auto_published');
-        
+
         debug_pop();
         $_MIDCOM->relocate('ajax/profile/publish/ok/');
     }
-    
+
     function _show_publish($handler_id, &$data)
     {
         $style_type = '';
-        
+
         if ($handler_id == 'ajax-profile-publish')
         {
             $style_type = '-ajax';
         }
-        
+
         midcom_show_style("profile-publish{$style_type}-start");
         foreach($this->_fields as $name => $field)
         {
@@ -223,8 +224,8 @@ class org_maemo_calendar_handler_profile_publish extends net_nehmer_account_hand
         }
         else
         {
-            midcom_show_style('profile-publish-ok');            
-        }    
+            midcom_show_style('profile-publish-ok');
+        }
     }
 
 }

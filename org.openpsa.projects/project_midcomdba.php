@@ -1,5 +1,12 @@
 <?php
 /**
+ * @package org.openpsa.projects
+ * @author Nemein Oy http://www.nemein.com/
+ * @copyright Nemein Oy http://www.nemein.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
+/**
  * special case 'project' of class org_openpsa_projects_task
  * @package org.openpsa.projects
  */

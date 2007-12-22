@@ -11,6 +11,8 @@
  * org.openpsa.reports site interface class.
  *
  * Reporting interfaces to various org.openpsa components
+ *
+ * @package org.openpsa.reports
  */
 class org_openpsa_reports_viewer extends midcom_baseclasses_components_request
 {

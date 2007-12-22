@@ -1,5 +1,12 @@
 <?php
+/**
+ * @package org.maemo.calendar
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
+/** @ignore */
 $_MIDCOM->componentloader->load('org.openpsa.calendar');
 
 /**
@@ -30,7 +37,7 @@ class midcom_org_maemo_event extends midcom_org_openpsa_event
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("Starting maemo preparations, this:\n---\n".sprint_r($this)."---", MIDCOM_LOG_DEBUG);
-        
+
         if (! is_array($this->participants))
         {
             $this->participants = unserialize($this->participants);
@@ -38,7 +45,7 @@ class midcom_org_maemo_event extends midcom_org_openpsa_event
             {
                 $this->participants = array();
             }
-            
+
             $participants = array();
             foreach ($this->participants as $k => $person_id)
             {
@@ -46,18 +53,18 @@ class midcom_org_maemo_event extends midcom_org_openpsa_event
             }
             $this->participants = $participants;
         }
-        
+
         debug_add("Maemo preparations done, this:\n---\n".sprint_r($this)."---", MIDCOM_LOG_DEBUG);
 
         debug_pop();
         return parent::_prepare_save($ignorebusy_em, $rob_tentantive, $repeat_handler);
     }
-    
+
     function return_as_dm2_hacked()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("Starting dm2 hacking, this:\n---\n".sprint_r($this)."---", MIDCOM_LOG_DEBUG);
-        
+
         if (is_array($this->participants))
         {
             $participants = array();
@@ -70,10 +77,10 @@ class midcom_org_maemo_event extends midcom_org_openpsa_event
 
         debug_add("DM2 hacking done, this:\n---\n".sprint_r($this)."---", MIDCOM_LOG_DEBUG);
         debug_pop();
-        
+
         return $this;
     }
-    
+
     function is_public()
     {
         return $this->orgOpenpsaAccesstype == ORG_OPENPSA_ACCESSTYPE_PUBLIC;

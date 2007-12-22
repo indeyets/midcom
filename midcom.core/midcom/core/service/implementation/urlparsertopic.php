@@ -6,9 +6,11 @@
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
- 
+
 /**
  * URL name parser that uses the MidCOM 2.8+ topic structure
+ *
+ * @package midcom
  */
 class midcom_core_service_implementation_urlparsertopic implements midcom_core_service_urlparser
 {
@@ -25,11 +27,11 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
     {
         $this->root_topic = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
         $this->current_object = $this->root_topic;
-        
+
         // TODO: Remove
         $this->check_style_inheritance($this->root_topic);
     }
-    
+
     public function tokenize($url)
     {
         if (strlen($_MIDGARD['prefix']) > 1)
@@ -54,7 +56,7 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
 
             $argv_tmp = explode ("/", $url);
         }
-        
+
         $argv = array();
         foreach ($argv_tmp as $arg)
         {
@@ -62,13 +64,13 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
             {
                 continue;
             }
-            
+
             $argv[] = $arg;
         }
-        
+
         return $argv;
     }
-    
+
     /**
      * Check topic style inheritance rules for style loader
      *
@@ -77,19 +79,19 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
     private function check_style_inheritance($topic)
     {
         // style inheritance
-        if (!$topic->styleInherit) 
+        if (!$topic->styleInherit)
         {
             return;
         }
-        
+
         if (!$topic->style)
         {
             return;
         }
-        
+
         $GLOBALS['midcom_style_inherited'] = $topic->style;
     }
-    
+
     /**
      * Set the URL path to be parsed
      */
@@ -99,7 +101,7 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
         $this->argc = count($argv);
         $this->argv = $argv;
         $this->argv_original = $argv;
-        
+
         $this->current_object = $this->root_topic;
         $this->url = '';
     }
@@ -120,7 +122,7 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
         if ($this->argc == 0)
         {
             // No arguments left
-            
+
             return false;
         }
 
@@ -145,15 +147,15 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
             $this->current_object = $atts[0];
             return $this->current_object;
         }
-        
+
         $topics = $qb->execute();
-        
+
         // Set to current topic
         $this->current_object = $topics[0];
-        
+
         // TODO: Remove
         $this->check_style_inheritance($this->current_object);
-        
+
         // Remove this component from path
         $this->argc -= 1;
         array_shift ($this->argv);
@@ -186,7 +188,7 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
             return false;
         }
 
-        if (strpos($this->argv[0], $namespace . '-') !== 0) 
+        if (strpos($this->argv[0], $namespace . '-') !== 0)
         {
             return false;
         }
@@ -206,7 +208,7 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
             $key => $value,
         );
     }
-    
+
     /**
      * Return full URL that was given to the parser
      */

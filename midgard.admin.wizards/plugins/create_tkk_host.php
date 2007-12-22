@@ -1,7 +1,15 @@
 <?php
+/**
+ * @package midgard.admin.wizards
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
 /**
  * This is a plugin for creating a sitegroup
+ *
+ * @package midgard.admin.wizards
  */
 class create_tkk_host extends midcom_baseclasses_components_handler
 {
@@ -32,7 +40,7 @@ class create_tkk_host extends midcom_baseclasses_components_handler
         }
 
         parent::_on_initialize();
-        
+
         $this->_sitegroup_id = $this->_request_data['plugin_config']['default_sitegroup_id'];
       }
 
@@ -46,36 +54,36 @@ class create_tkk_host extends midcom_baseclasses_components_handler
 	        ),
 	    );
     }
-    
+
     function _handler_create_host()
     {
         $title = $this->_l10n->get('host creation');
         $_MIDCOM->set_pagetitle($title);
-        
-        if (   isset($_POST['tkk_sitewizard_sitename'])   
+
+        if (   isset($_POST['tkk_sitewizard_sitename'])
             && !empty($_POST['tkk_sitewizard_sitename'])
-            && isset($_POST['tkk_sitewizard_host'])  
+            && isset($_POST['tkk_sitewizard_host'])
             && !empty($_POST['tkk_sitewizard_host']))
-        {      
+        {
             try
             {
                 $sitewizard = new midgard_admin_sitewizard();
-                
+
                 $host_creator = $sitewizard->initialize_host_creation($this->_sitegroup_id);
                 $host_creator->set_page_title($_POST['tkk_sitewizard_sitename']);
                 $host_creator->set_host_url($_POST['tkk_sitewizard_host']);
-                
-                if (    isset($_POST['tkk_sitewizard_prefix'])   
+
+                if (    isset($_POST['tkk_sitewizard_prefix'])
                     &&  !empty($_POST['tkk_sitewizard_prefix']))
                 {
                     $host_creator->set_host_prefix($_POST['tkk_sitewizard_prefix']);
                 }
-                
+
                 $host_creator->set_host_port(80);
-                
+
                 $host_creator->set_make_host_copy(true);
                 $host_creator->set_copy_host_url($_POST['tkk_sitewizard_host']);
-                
+
                 if (    isset($this->_request_data['plugin_config']['copy_host_port'])
                     &&  !empty($this->_request_data['plugin_config']['copy_host_port']))
                 {
@@ -85,8 +93,8 @@ class create_tkk_host extends midcom_baseclasses_components_handler
                 {
                     $host_creator->set_copy_host_port(8001);
                 }
-                
-                if (    isset($_POST['tkk_sitewizard_prefix'])   
+
+                if (    isset($_POST['tkk_sitewizard_prefix'])
                     &&  !empty($_POST['tkk_sitewizard_prefix']))
                 {
                     $host_creator->set_copy_host_prefix("/" . $_POST['tkk_sitewizard_host'] . $_POST['tkk_sitewizard_prefix']);
@@ -95,17 +103,17 @@ class create_tkk_host extends midcom_baseclasses_components_handler
                 {
                     $host_creator->set_copy_host_prefix("/" . $_POST['tkk_sitewizard_host']);
                 }
-                
+
                 if (    isset($this->_request_data['plugin_config']['copy_host_name'])
                     &&  !empty($this->_request_data['plugin_config']['copy_host_name']))
                 {
                     $host_creator->set_copy_host_url($this->_request_data['plugin_config']['copy_host_name']);
                 }
-                
-                
+
+
                 $session = new midcom_service_session();
                 $session->set("midgard_admin_wizards_{$this->_request_data['session_id']}", $host_creator);
-                
+
                 $_MIDCOM->relocate($this->_request_data['next_plugin_full_path']);
             }
             catch (midgard_admin_sitewizard_exception $e)
@@ -114,7 +122,7 @@ class create_tkk_host extends midcom_baseclasses_components_handler
                 echo "WE SHOULD HANDLE THIS \n";
             }
         }
-        elseif (   isset($_POST['tkk_sitewizard_host_submit'])  
+        elseif (   isset($_POST['tkk_sitewizard_host_submit'])
                 && !empty($_POST['tkk_sitewizard_host_submit']))
         {
             $_MIDCOM->uimessages->add(
@@ -122,16 +130,16 @@ class create_tkk_host extends midcom_baseclasses_components_handler
                 $this->_l10n->get('you need to fill in both fields')
             );
         }
-        
+
         $this->_request_data['current_host'] = new midcom_db_host($_MIDGARD['host']);
-        
+
         return true;
     }
-    
+
     function _show_create_host()
-    {        
+    {
         midcom_show_style('tkk_sitewizard_host');
-    }    
+    }
 }
 
 ?>

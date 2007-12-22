@@ -11,6 +11,8 @@
  * org.openpsa.documents site interface class.
  *
  * Document management and WebDAV file share
+ *
+ * @package org.openpsa.documents
  */
 class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
 {

@@ -396,7 +396,7 @@ class de_linkm_sitemap_handler_sitemap extends midcom_baseclasses_components_han
     {
         if (count($subnodes) > 0) 
         {
-            // First we have to decend a level for the subnode-listing 
+            // First we have to descend a level for the subnode-listing 
             $data['depth']++;
             if($this->_show_levels > $data['depth'])
             {

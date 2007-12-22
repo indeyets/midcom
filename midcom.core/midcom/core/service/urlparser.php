@@ -6,9 +6,11 @@
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
- 
+
 /**
  * URL name parsing interface class
+ *
+ * @package midcom
  */
 interface midcom_core_service_urlparser
 {
@@ -17,12 +19,12 @@ interface midcom_core_service_urlparser
     protected $argv;
     */
     public function __construct();
-    
+
     /**
      * Tokenize URL path to an argument vector array
      */
     public function tokenize($url);
-    
+
     /**
      * Set the argument vector array to be parsed
      */
@@ -42,7 +44,7 @@ interface midcom_core_service_urlparser
      * Return array of found URL-based variables (of format namespace-key-value)
      */
     public function get_variable($namespace);
-    
+
     /**
      * Return full URL that was given to the parser
      */

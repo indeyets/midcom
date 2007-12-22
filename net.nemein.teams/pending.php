@@ -1,5 +1,14 @@
 <?php
+/**
+ * @package net.nemein.teams
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
+/**
+ * @package net.nemein.teams
+ */
 class net_nemein_teams_pending_dba extends __net_nemein_teams_pending_dba
 {
 
@@ -7,7 +16,7 @@ class net_nemein_teams_pending_dba extends __net_nemein_teams_pending_dba
     {
         parent::__net_nemein_teams_pending_dba($src);
     }
-    
+
     /**
      * DBA magic defaults which assign write privileges for all USERS, so that they can freely
      * create mails without the need to sudo of the component. Also, we deny read unconditionally,

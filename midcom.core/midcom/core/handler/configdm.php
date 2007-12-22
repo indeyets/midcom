@@ -26,7 +26,7 @@
  *
  * <i>Important Note:</i> The schema you supply for configuration is always treated as having
  * a zero lock timeout, this parameter is enforced after initializing the datamanager. It is
- * important, as the config handler stays in the edit loop indefinitly.
+ * important, as the config handler stays in the edit loop indefinitely.
  *
  * You may of course change both the request switch key and the URL to the handler.
  *
@@ -75,7 +75,7 @@
  * to "configdm" for uniformity reasons. If you move event handler code to a new subclass
  * of this handler, you need to rename the callbacks accordingly.
  *
- * @package midcom.baseclasses
+ * @package midcom.core.handler
  */
 class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
 {

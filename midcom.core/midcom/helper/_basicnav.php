@@ -247,7 +247,7 @@ class midcom_helper__basicnav
      * Current-Topic and all cache arrays. The function will load all nodes
      * between root and current node.
      *
-     * If the current node is behind an invisible or undecendable node, the last
+     * If the current node is behind an invisible or undescendable node, the last
      * known good node will be used instead for the current node.
      *
      * The constructor retrievs all initialisation data from the component context.

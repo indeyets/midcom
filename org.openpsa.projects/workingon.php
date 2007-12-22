@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package org.openpsa.projects
  * @author Nemein Oy http://www.nemein.com/
@@ -42,7 +41,7 @@ class org_openpsa_projects_workingon
     /**
      * Constructor.
      *
-     *Ê@param midcom_db_person $person Person to handle "now working on" for. By default current user
+     *ï¿½@param midcom_db_person $person Person to handle "now working on" for. By default current user
      */
     function org_openpsa_projects_workingon($person = null)
     {

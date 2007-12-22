@@ -9,11 +9,12 @@
 
 /**
  * Memcached decorator around the querybuilder object
- * 
+ *
  * Use this class to connect to Memcached for selects
  * @todo go through a defined api on the memcached module instead of the private object
+ *
+ * @package midcom
  */
-
 class midcom_core_querybuilder_cached
 {
     /**
@@ -50,9 +51,9 @@ class midcom_core_querybuilder_cached
      * */
     function __call($name, $args)
     {
-        if ($this->qb == NULL) 
+        if ($this->qb == NULL)
         {
-            throw new Exception("Querybuilder not set!"); 
+            throw new Exception("Querybuilder not set!");
         }
         $this->new_key = "";
         array_walk_recursive($args, array($this, 'rec_implode'));
@@ -73,7 +74,7 @@ class midcom_core_querybuilder_cached
         $return = $this->cache->get($key);
         if ($return)
         {
-            return $return; 
+            return $return;
         }
         $return = $this->qb->execute();
         $this->cache->put('MISC', $key, $return, $this->timeout);
@@ -190,9 +191,9 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      * Keep track of GUIDs seen to avoid workaround ML bug
      */
     var $_seen_guids = array();
-    
+
     var $_qb_error_result = 'UNDEFINED';
-    
+
     /**
      * When determining window sizes for offset/limit queries use this as minimum size
      */
@@ -361,7 +362,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      */
     function _reset()
     {
-        $this->_seen_guids = array(); 
+        $this->_seen_guids = array();
         $this->_qb_error_result = 'UNDEFINED';
         $this->count = -1;
         $this->denied = 0;
@@ -386,7 +387,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     function execute_windowed()
     {
         $this->_reset();
-        
+
         if (! call_user_func_array(array($this->_real_class, '_on_prepare_exec_query_builder'), array(&$this)))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -422,7 +423,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
             $offset = $this->_offset;
             $i = 0;
             $this->_set_limit_offset_window($i);
-            
+
             while (($resultset = $this->_execute_and_check_privileges(true)) !== false)
             {
                 //debug_add("Iteration loop #{$i}");
@@ -833,7 +834,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         $this->_reset();
         $this->_qb->set_lang($language);
     }
-    
+
     /**
      * Include deleted objects (metadata.deleted is TRUE) in query results.
      *

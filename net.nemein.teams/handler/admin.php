@@ -1,23 +1,23 @@
 <?php
 /**
- * @package net.nemein.team
+ * @package net.nemein.teams
  * @author The Midgard Project, http://www.midgard-project.org
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
 /**
- * This is a URL handler class for net.nemein.team
+ * This is a URL handler class for net.nemein.teams
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
  * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
- * 
+ *
  * @package net.nemein.teams
  */
-class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_handler 
+class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_handler
 {
     var $_teams_list = null;
-    
+
     var $_logger = null;
 
 
@@ -28,9 +28,9 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
-     * _on_initialize is called by midcom on creation of the handler. 
+     * _on_initialize is called by midcom on creation of the handler.
      */
     function _on_initialize()
     {
@@ -41,7 +41,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
     {
         $title = $this->_l10n_midcom->get('index');
         $_MIDCOM->set_pagetitle(":: {$title}");
-        
+
 	    return true;
     }
 
@@ -59,18 +59,18 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
 	    $logs = $qb->execute();
 
 	    $this->_request_data['logs'] = $logs;
- 
+
 
 	    return true;
     }
-    
+
     function _handler_manage ($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_admin_user();
-                
+
         $qb = net_nemein_teams_team_dba::new_query_builder();
         $this->_teams_list = $qb->execute();
-    
+
         $data['title'] = $this->_l10n->get('manage teams');
         $tmp = Array();
         $tmp[] = Array
@@ -80,12 +80,12 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         $_MIDCOM->set_pagetitle($data['title']);
-    
+
         return true;
     }
-    
+
     function _handler_manage_delete($handler_id, $args, &$data)
-    {    
+    {
         $_MIDCOM->auth->require_admin_user();
         $data['team'] = new net_nemein_teams_team_dba($args[0]);
 
@@ -93,33 +93,33 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         {
             $team_group = new midcom_db_group($data['team']->groupguid);
             $team_topic = new midcom_db_topic($data['team']->topicguid);
-        
+
             $qb = midcom_db_member::new_query_builder();
             $qb->add_constraint('gid', '=', $team_group->id);
-        
+
             $members = $qb->execute();
-        
+
             foreach ($members as $member)
             {
                 $member->delete();
             }
-        
+
             $data['team']->delete();
 
             $team_group->delete();
 
             $team_topic->delete();
-            
+
             $this->_logger->log("Team (" . $team_group->name . ") was deleted by "
                 . $_MIDCOM->auth->user->_storage->username, $team->guid);
-        
+
             $_MIDCOM->relocate('manage');
         }
         elseif (isset($_POST['cancel']))
         {
             $_MIDCOM->relocate('manage');
         }
-        
+
         $data['title'] = sprintf($this->_l10n->get('delete team %s'), $data['team']->name);
         $tmp = Array();
         $tmp[] = Array
@@ -135,54 +135,54 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         $_MIDCOM->set_pagetitle($data['title']);
 
-        return true;    
+        return true;
     }
-    
+
     function _handler_manage_team($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_admin_user();
-    
+
         $qb = net_nemein_teams_team_dba::new_query_builder();
         $qb->add_constraint('groupguid', '=', $args[0]);
-        
+
         $teams = $qb->execute();
-        
+
         if (count($teams) > 0)
         {
             $this->_request_data['team_guid'] = $teams[0]->groupguid;
         }
-    
+
         return true;
     }
-    
+
     /*
     function _handler_manage_system($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_admin_user();
-    
+
         return true;
     }
-    
+
     function _show_manage_system($handler_id, &$data)
     {
         midcom_show_style('manage_system');
     }
     */
-    
+
     function _show_manage_delete($handler_id, &$data)
     {
         midcom_show_style('manage_team_delete');
     }
-    
+
     function _show_manage_team($handler_id, &$data)
     {
         midcom_show_style('manage_team');
-    }    
-    
+    }
+
     function _show_manage($handler_id, &$data)
     {
         midcom_show_style('manage_teams_start');
-        
+
         foreach($this->_teams_list as $team)
         {
             $this->_request_data['team'] = $team;
@@ -191,10 +191,10 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
 
             midcom_show_style('manage_teams_item');
         }
-        
+
         midcom_show_style('manage_teams_end');
-    } 
-    
+    }
+
     function _show_admin($handler_id, &$data)
     {
         midcom_show_style('index');

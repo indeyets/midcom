@@ -11,6 +11,8 @@
  * org.openpsa.imp site interface class.
  *
  * "SSO" to Horde/Imp
+ *
+ * @package org.openpsa.imp
  */
 class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
 {

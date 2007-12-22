@@ -1,4 +1,10 @@
 <?php
+/**
+ * @package midgard.admin.wizards
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
 $vhost_config = "
 <VirtualHost *:__HOST_PORT__>
@@ -62,8 +68,8 @@ php_flag register_globals On
 
 AddDefaultCharset utf-8
 
-# Uncomment if you want to redirect all midcom-admin requests to 
-# secured host. Keep in mind that mod_rewrite module is mandatory 
+# Uncomment if you want to redirect all midcom-admin requests to
+# secured host. Keep in mind that mod_rewrite module is mandatory
 # and should be loaded in Apache configuration.
 # More docs about configuration may be found at:
 # http://www.midgard-project.org/midcom-permalink-ebfd755b5fc58087bc4f5771585c63eb

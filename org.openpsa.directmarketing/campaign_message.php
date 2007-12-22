@@ -1240,6 +1240,8 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
 
 /**
  * Another wrap level, this is the class actually used, but qb etc return the one above so magick is done there
+ *
+ * @package org.openpsa.directmarketing
  */
 class org_openpsa_directmarketing_campaign_message extends midcom_org_openpsa_campaign_message
 {

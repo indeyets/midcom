@@ -221,6 +221,9 @@ class midcom_org_openpsa_campaign_member extends __midcom_org_openpsa_campaign_m
     }
 }
 
+/**
+ * @package org.openpsa.directmarketing
+ */
 class org_openpsa_directmarketing_campaign_member extends midcom_org_openpsa_campaign_member
 {
     function org_openpsa_directmarketing_campaign_member($id = null)

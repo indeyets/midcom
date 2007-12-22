@@ -1,14 +1,16 @@
 <?php
-
 /**
  * @package net.nemein.bookmarks
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id$
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
-class net_nemein_bookmarks_viewer 
+/**
+ * @package net.nemein.bookmarks
+ */
+class net_nemein_bookmarks_viewer
 {
     var $_debug_prefix;
     var $_config;           // Configuration object
@@ -22,8 +24,8 @@ class net_nemein_bookmarks_viewer
     var $errstr;
     var $_bookmarks;        // List of bookmarks matching URL criteria
     var $_bookmark;         // Selected single bookmark
-    
-    function net_nemein_bookmarks_viewer($topic, $config) 
+
+    function net_nemein_bookmarks_viewer($topic, $config)
     {
         $this->_debug_prefix = "bookmarks viewer::";
         $this->_config = $config;
@@ -43,31 +45,31 @@ class net_nemein_bookmarks_viewer
         $guid = null;
         if (is_null($guid)) {
             /* No Symlink Topic set */
-            $this->_topic = $this->_config_topic;        
+            $this->_topic = $this->_config_topic;
             return;
         }
         /*
         $object = mgd_get_object_by_guid($guid);
         if (!$object || $object->__table__ != "topic") {
-            debug_add("Failed to open symlink content topic, (might also be an invalid object) last Midgard Error: " 
+            debug_add("Failed to open symlink content topic, (might also be an invalid object) last Midgard Error: "
                 . mgd_errstr(), MIDCOM_LOG_ERROR);
             debug_print_r("Retrieved object was:", $object, MIDCOM_LOG_INFO);
             $_MIDCOM->generate_error(1, "Failed to open symlink content topic.");
         }
-        
+
         // Check topic validity
         $root = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
-        if ($object->parameter("midcom", "component") != "net.nemein.bookmarks") 
+        if ($object->parameter("midcom", "component") != "net.nemein.bookmarks")
         {
             debug_add("Content Topic is invalid, see LOG_INFO object dump", MIDCOM_LOG_ERROR);
             debug_print_r("Retrieved object was:", $object, MIDCOM_LOG_INFO);
             $_MIDCOM->generate_error("Failed to open symlink content topic.");
         }
-        
+
         $this->_topic = $object;
         */
     }
-    
+
     function can_handle($argc, $argv) {
         global $net_nemein_bookmarks_layouts;
         debug_push ($this->_debug_prefix . "can_handle");
@@ -83,27 +85,27 @@ class net_nemein_bookmarks_viewer
             debug_pop();
             return false;
         }
-        
+
         $_MIDCOM->add_link_head(array(
             'rel' => 'stylesheet',
             'type' => 'text/css',
             'href' => MIDCOM_STATIC_URL."/net.nemein.bookmarks/bookmarks.css",
         ));
-        
+
         debug_pop();
         return true;
     }
 
-    function _getView($argc, $argv) 
+    function _getView($argc, $argv)
     {
         debug_push ($this->_debug_prefix . "_getView");
-        if ($argc == 0) 
+        if ($argc == 0)
         {
             // index, so no need for getting something...
             debug_pop();
             return true;
-        } 
-        elseif ($argc == 1) 
+        }
+        elseif ($argc == 1)
         {
             // Bookmark submission form
             if ($argv[0] == "submitbookmark")
@@ -124,8 +126,8 @@ class net_nemein_bookmarks_viewer
                 // No bookmarks for the given tag, give 404
                 return false;
             }
-        } 
-        else 
+        }
+        else
         {   // argc > 3 => can't handle
             debug_add("too many parameters", MIDCOM_LOG_DEBUG);
             debug_pop();
@@ -133,14 +135,14 @@ class net_nemein_bookmarks_viewer
         }
     }
 
-    function _getArticlePath($topic_id, $path) 
+    function _getArticlePath($topic_id, $path)
     {
         // Find Article's path
         if ($topic_id == $this->_topic->id)
         {
             return $path;
         }
-        else 
+        else
         {
             $topic = mgd_get_topic($topic_id);
             $path = $topic->name . "/" . $path;
@@ -148,26 +150,26 @@ class net_nemein_bookmarks_viewer
         }
     }
 
-    function handle($argc, $argv) 
+    function handle($argc, $argv)
     {
         debug_push ($this->_debug_prefix . "handle");
         if ($this->_location == "submitbookmark")
         {
-            
+
             // Start with empty bookmark
             $GLOBALS["net_nemein_bookmarks_bookmark"]["url"] = "";
             $GLOBALS["net_nemein_bookmarks_bookmark"]["title"] = "";
             $GLOBALS["net_nemein_bookmarks_bookmark"]["extended"] = "";
             $GLOBALS["net_nemein_bookmarks_bookmark"]["tags"] = "";
-            
+
             // Check if the URL has already been bookmarked
             if ($_REQUEST["url"])
-            {   
-                
+            {
+
                 // Populate URL and title as given by the bookmarklet
                 $GLOBALS["net_nemein_bookmarks_bookmark"]["url"] = $_REQUEST["url"];
                 $GLOBALS["net_nemein_bookmarks_bookmark"]["title"] = $_REQUEST["title"];
-                
+
                 $articles = mgd_list_topic_articles($this->_topic->id);
                 if ($articles)
                 {
@@ -182,9 +184,9 @@ class net_nemein_bookmarks_viewer
                             $GLOBALS["net_nemein_bookmarks_bookmark"]["tags"] = $this->_bookmark->content;
                         }
                     }
-                }     
+                }
             }
-            
+
             if (isset($_POST["net_nemein_bookmarks_add_submit"]))
             {
                 // Save the bookmark
@@ -195,13 +197,13 @@ class net_nemein_bookmarks_viewer
                                              $_POST['net_nemein_bookmarks_password'],
                                              0);
         			   $midgard = mgd_get_midgard();
-                       
+
                     if (!$auth)
                     {
                         $GLOBALS["net_nemein_bookmarks_processing_message"] = "Login failed";
                     }
                 }
-                
+
                 if ($_MIDGARD['user'])
                 {
                         $new_bookmark = false;
@@ -214,12 +216,12 @@ class net_nemein_bookmarks_viewer
                             $this->_bookmark->name = time();
                             $new_bookmark = true;
                         }
-                        
+
     				       $this->_bookmark->title = $_POST['net_nemein_bookmarks_add_title'];
     				       $this->_bookmark->url = $_POST['net_nemein_bookmarks_add_url'];
     				       $this->_bookmark->abstract = $_POST['net_nemein_bookmarks_add_extended'];
     				       $this->_bookmark->content = $_POST['net_nemein_bookmarks_add_tags'];
-    				       
+
                         if ($new_bookmark)
                         {
                             // Create the new bookmark
@@ -230,20 +232,20 @@ class net_nemein_bookmarks_viewer
                         {
                             $stat = $this->_bookmark->update();
                         }
-                        
+
                         if ($stat)
                         {
                             // Invalidate the cache
                             $_MIDCOM->cache->invalidate_all();
-                     
+
                             // Update the Index
                             $datamanager = new midcom_helper_datamanager($this->_config->get('schemadb'));
                             if (! $datamanager)
                             {
                                 debug_add('Warning, failed to create a datamanager instance with this schemapath:' . $this->_config->get('schemadb'),
                                           MIDCOM_LOG_WARN);
-                            } 
-                            else 
+                            }
+                            else
                             {
                                 if (! $datamanager->init($this->_bookmark))
                                 {
@@ -256,27 +258,27 @@ class net_nemein_bookmarks_viewer
                                     $indexer->index($datamanager);
                                 }
                             }
-                     
+
                             // Redirect browser and exit
                             $_MIDCOM->relocate($this->_bookmark->url);
                         }
                         $GLOBALS["net_nemein_bookmarks_processing_message"] = "Trying to save bookmark... ".mgd_errstr();
-                    
+
                 }
-                
+
             }
         }
-        $_MIDCOM->set_pagetitle($this->_config_topic->extra);               
+        $_MIDCOM->set_pagetitle($this->_config_topic->extra);
         debug_pop();
         return true;
     }
-        
-    function show() 
+
+    function show()
     {
         $GLOBALS["view_config"] = $this->_config;
         $GLOBALS["view_config_topic"] = $this->_config_topic;
         debug_push ($this->_debug_prefix . "show");
-        
+
         // get l10n libraries
         $i18n =& $_MIDCOM->get_service("i18n");
         $GLOBALS["view_l10n"] = $i18n->get_l10n("net.nemein.bookmarks");
@@ -287,33 +289,33 @@ class net_nemein_bookmarks_viewer
             $this->_show_submit();
         }
         elseif ($this->_location)
-        { 
+        {
             $this->_show_list();
         }
         else
-        { 
+        {
             $this->_show_index();
         }
         debug_pop();
         return true;
     }
-    
+
     function _show_submit()
     {
         $GLOBALS["view_bookmark"] = $this->_bookmark;
         midcom_show_style("show-submit-form");
     }
-        
+
     function _show_list()
     {
         global $view;
         global $view_tag;
         $view_tag = $this->_location;
         global $view_date;
-        
+
         midcom_show_style("show-list-header");
-        
-        if ($this->_bookmarks) 
+
+        if ($this->_bookmarks)
         {
             // Get the datamanager
             $layout = new midcom_helper_datamanager($GLOBALS["net_nemein_bookmarks_layouts"]);
@@ -321,7 +323,7 @@ class net_nemein_bookmarks_viewer
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Layout class could not be instantiated.");
             }
-             
+
             foreach($this->_bookmarks as $bookmark_article)
             {
                 // Load the bookmarks via datamanager
@@ -330,22 +332,22 @@ class net_nemein_bookmarks_viewer
                     $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Layout class could not be initialized.");
                 }
                 $view = $layout->get_array();
-                 
+
                 // List the tags
                 global $view_tags;
                 $view_tags = net_nemein_bookmarks_helper_list_tags_of_bookmark($view);
-                 
+
                 $view_date = $bookmark_article->created;
                 midcom_show_style("show-list-item");
-            }        
-        } 
+            }
+        }
         else
         {
             midcom_show_style("show-list-empty");
         	}
     }
-        
-    function _show_index() 
+
+    function _show_index()
     {
         global $view;
         global $view_date;
@@ -355,24 +357,24 @@ class net_nemein_bookmarks_viewer
         midcom_show_style("show-index-header");
 
         $articles = net_nemein_bookmarks__list_articles($this->_topic->id, $this->_config->get("sort_order"));
-        if ($articles) 
+        if ($articles)
         {
             $layout = new midcom_helper_datamanager($GLOBALS["net_nemein_bookmarks_layouts"]);
             if (! $layout)
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Layout class could not be instantiated.");
             }
-            
+
             $count = $this->_config->get("count");
 
             if ($count < 0)
             {
                 $count = 999; // you don't wanna show more than 1000...
             }
-            foreach ($articles as $id) 
+            foreach ($articles as $id)
             {
                 if ($count <= 0)
-                { 
+                {
                     break;
                 }
                 $article = mgd_get_article($id);
@@ -381,16 +383,16 @@ class net_nemein_bookmarks_viewer
                     $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Layout class could not be initialized.");
                 }
                 $view = $layout->get_array();
-                
+
                 $view_date = $article->created;
-                
+
                 global $view_tags;
                 $view_tags = net_nemein_bookmarks_helper_list_tags_of_bookmark($view);
                 midcom_show_style("show-index-item");
 
                 $count--;
             }
-        } 
+        }
         else
         {
             midcom_show_style("show-index-empty");
@@ -398,9 +400,9 @@ class net_nemein_bookmarks_viewer
         midcom_show_style("show-index-footer");
     }
 
-    function get_metadata() 
+    function get_metadata()
     {
-        if ($this->_article) 
+        if ($this->_article)
         {
             return array (
                 MIDCOM_META_CREATOR => $this->_article->creator,

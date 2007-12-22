@@ -27,7 +27,7 @@
 'display_in_navigation' => 'empty',
 
 // Index view ordering sequence. This is a list of midcom_core_querybuilder::add_order
-// compatible field names. Use the "reverse" prefix for decending order.
+// compatible field names. Use the "reverse" prefix for descending order.
 // Note, that these orders are relative to the *membership* table, not to the *person*
 // table.
 'index_order' => array('uid.lastname', 'uid.firstname'),

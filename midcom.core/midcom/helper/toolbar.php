@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package midcom
  * @author The Midgard Project, http://www.midgard-project.org
@@ -119,7 +118,7 @@
  *
  * Both class and id can be null, indicating no style should be selected.
  * By default, the class will use "midcom_toolbar" and no id style, which
- * will yield a traditional MidCOM toolabr. Of course, the MidCOM AIS
+ * will yield a traditional MidCOM toolbar. Of course, the MidCOM AIS
  * style sheet must be loaded to support this. Note, that this style assumes
  * 16x16 height icons in its toolbar rendering. Larger or smaller icons
  * will look ugly in the layout.
@@ -211,12 +210,12 @@ class midcom_helper_toolbar
         {
             $uri = "__ais/help/{$component}/{$help_id}.html";
         }
-        
+
         if (is_null($label))
         {
             $label = $_MIDCOM->i18n->get_string('help', 'midcom.admin.help');
         }
-        
+
         $this->add_item
         (
             array
@@ -322,7 +321,7 @@ class midcom_helper_toolbar
     function clean_item($item)
     {
         static $used_access_keys = array();
-    
+
         $item[MIDCOM_TOOLBAR__ORIGINAL_URL] = $item[MIDCOM_TOOLBAR_URL];
         if (! array_key_exists(MIDCOM_TOOLBAR_OPTIONS, $item))
         {
@@ -373,7 +372,7 @@ class midcom_helper_toolbar
                 // Windows and Linux clients
                 $hotkey = 'Alt-' . strtoupper($item[MIDCOM_TOOLBAR_ACCESSKEY]);
             }
-            
+
             if ($item[MIDCOM_TOOLBAR_HELPTEXT] == '')
             {
                 $item[MIDCOM_TOOLBAR_HELPTEXT] = $hotkey;
@@ -502,12 +501,12 @@ class midcom_helper_toolbar
     function disable_item($index)
     {
         $index = $this->_check_index($index, false);
-        
+
         if (is_null($index))
         {
             return false;
         }
-        
+
         $this->items[$index][MIDCOM_TOOLBAR_ENABLED] = false;
     }
 
@@ -519,12 +518,12 @@ class midcom_helper_toolbar
     function hide_item($index)
     {
         $index = $this->_check_index($index, false);
-        
+
         if (is_null($index))
         {
             return false;
         }
-        
+
         $this->items[$index][MIDCOM_TOOLBAR_HIDDEN] = true;
     }
 
@@ -602,7 +601,7 @@ class midcom_helper_toolbar
         // List items
         $i = 0;
         $last = 0;
-        
+
         // Get count of visible items
         foreach ($this->items as $item)
         {
@@ -619,7 +618,7 @@ class midcom_helper_toolbar
             {
                 continue;
             }
-            
+
             $i++;
 
             $output .= '  <li class=\'';
@@ -674,7 +673,7 @@ class midcom_helper_toolbar
     {
         $label = $item[MIDCOM_TOOLBAR_LABEL];
         $label = htmlentities($label,ENT_COMPAT,"UTF-8");
-        
+
         if (!is_null($item[MIDCOM_TOOLBAR_ACCESSKEY]))
         {
             // Try finding uppercase version of the accesskey first
@@ -769,7 +768,7 @@ class midcom_helper_toolbar
             $output .= "    </a>\n";
         }
         else
-        { 
+        {
             if (! is_null($item[MIDCOM_TOOLBAR_HELPTEXT]))
             {
                 $output .= "    </abbr>\n";
@@ -914,7 +913,7 @@ class midcom_helper_toolbar
             {
                 debug_add("Invalid URL '{$url}', URL not found.", MIDCOM_LOG_ERROR);
                 debug_pop();
-                
+
                 if ($raise_error)
                 {
                     $_MIDCOM->generate_error(MIDCOM_ERRCRIT,

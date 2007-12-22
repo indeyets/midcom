@@ -116,7 +116,7 @@
  * there are again restricting privileges set to content objects.
  *
  * To be more flexible in the control over the top level objects, you may add a classname which restricts
- * the validity of the privilege to a class and all of its decendants.
+ * the validity of the privilege to a class and all of its descendants.
  *
  * <i>Content object privileges</i>
  *
@@ -126,7 +126,7 @@
  *
  * The basic idea is, that you can assign privileges based on the combination of users/groups and
  * content objects. In other words, you can say the user x has the privilege midgard:update for
- * this object (and its decendants) only. This works with (virtual) groups as well.
+ * this object (and its descendants) only. This works with (virtual) groups as well.
  *
  * The possible assignees here are either a user, a group or one of the magic assignees EVERYONE,
  * USERS or ANONYMOuS, as outlined above.

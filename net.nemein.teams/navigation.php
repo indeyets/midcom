@@ -1,6 +1,6 @@
 <?php
 /**
- * @package net.nemein.team 
+ * @package net.nemein.teams
  * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: navigation.php 4392 2006-10-22 08:39:17Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org

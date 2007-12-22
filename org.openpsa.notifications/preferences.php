@@ -9,6 +9,8 @@
 
 /**
  * org.openpsa.notifications preference handler class
+ *
+ * @package org.openpsa.notifications
  */
 class org_openpsa_notifications_preferences extends midcom_baseclasses_components_handler
 {
@@ -40,7 +42,7 @@ class org_openpsa_notifications_preferences extends midcom_baseclasses_component
             ),
         );
     }
-    
+
     function _list_notifiers()
     {
         // TODO: Figure out which notifiers are possible
@@ -50,39 +52,39 @@ class org_openpsa_notifications_preferences extends midcom_baseclasses_component
             'none'     => 'none',
             'email'    => 'email',
         );
-        
+
         if (   $this->_config->get('nabaztag_serial_number')
             && $this->_config->get('nabaztag_api_token'))
         {
             $notifiers['nabaztag'] = 'nabaztag';
         }
-        
+
         return $notifiers;
     }
-    
+
     function _populate_schema()
     {
         $notifiers = $this->_list_notifiers();
-        
+
         // Load actions of various components
         $customdata = $_MIDCOM->componentloader->get_all_manifest_customdata('org.openpsa.notifications');
         foreach ($customdata as $component => $actions)
         {
             $prepended = false;
-            
+
             foreach ($actions as $action => $settings)
             {
                 $prepend = '';
                 if (!$prepended)
-                {   
+                {
                     $prepend = "<h3 style='clear: left;'>" . $_MIDCOM->i18n->get_string($component, $component) . "</h3>\n";
                     $prepended = true;
                 }
-                            
+
                 $action_key = "{$component}:{$action}";
                 $this->_schemadb['notifications']->append_field
                 (
-                    str_replace(':', '_', str_replace('.', '_', $action_key)), 
+                    str_replace(':', '_', str_replace('.', '_', $action_key)),
                     array
                     (
                         'title'   => $_MIDCOM->i18n->get_string("action {$action}", $component),
@@ -94,11 +96,11 @@ class org_openpsa_notifications_preferences extends midcom_baseclasses_component
                         ),
                         'type'    => 'select',
                         'widget'  => 'select',
-                        'type_config' => array 
-                        ( 
+                        'type_config' => array
+                        (
                             'options' => $notifiers,
                         ),
-                        'static_prepend' => $prepend,  
+                        'static_prepend' => $prepend,
                     )
                 );
             }
@@ -112,10 +114,10 @@ class org_openpsa_notifications_preferences extends midcom_baseclasses_component
         $_MIDCOM->load_library('midcom.helper.datamanager2');
 
         $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
-        
+
         $this->_populate_schema();
     }
-    
+
     /**
      * Internal helper, loads the controller for the current task. Any error triggers a 500.
      *
@@ -133,7 +135,7 @@ class org_openpsa_notifications_preferences extends midcom_baseclasses_component
             // This will exit.
         }
     }
-    
+
     /**
      * Handles the notification preferences edit form
      *
@@ -153,7 +155,7 @@ class org_openpsa_notifications_preferences extends midcom_baseclasses_component
 
             case 'cancel':
                 // This will exit.
-        }        
+        }
 
         return true;
     }

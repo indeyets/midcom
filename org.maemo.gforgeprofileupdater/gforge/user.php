@@ -1,5 +1,10 @@
 <?php
 /**
+ * @package org.maemo.gforgeprofileupdater
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
  * SOAP User Include - this file contains wrapper functions for the SOAP interface
  *
  * Copyright 2004 (c) GForge, LLC
@@ -22,6 +27,7 @@
  * You should have received a copy of the GNU General Public License
  * along with GForge; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  US
+ *
  */
 
 require_once('common/include/Error.class');
@@ -49,8 +55,8 @@ $server->wsdl->addComplexType(
 	'status' => array('name'=>'status', 'type' => 'xsd:string'),
 	'timezone' => array('name'=>'timezone', 'type' => 'xsd:string'),
 	'country_code' => array('name'=>'country_code', 'type' => 'xsd:string'),
-	'add_date' => array('name'=>'add_date', 'type' => 'xsd:int'), 
-	'language_id' => array('name'=>'language_id', 'type' => 'xsd:int') 
+	'add_date' => array('name'=>'add_date', 'type' => 'xsd:int'),
+	'language_id' => array('name'=>'language_id', 'type' => 'xsd:int')
 	) );
 
 // Array of users
@@ -136,7 +142,7 @@ function &users_to_soap($usrs) {
 		} else {
 			//build an array of just the fields we want
 			$return[] = array(
-			'user_id'=>$usrs[$i]->data_array['user_id'], 
+			'user_id'=>$usrs[$i]->data_array['user_id'],
 			'user_name'=>$usrs[$i]->data_array['user_name'],
 			'title'=>$usrs[$i]->data_array['title'],
 			'firstname'=>$usrs[$i]->data_array['firstname'],
@@ -217,7 +223,7 @@ function &updateUser($session_ser, $userdata)
         return new soap_fault ('3997','user',"Could not find user #{$userdata['user_id']}","Could not find user #{$userdata['user_id']}");
     }
 
-    /* These won't work for some reason, 
+    /* These won't work for some reason,
     if ($user->getEmail() != $userdata['email'])
     {
         // Email has changed, update (for weirdest reason can't be handled by the update() -method)

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package org.openpsa.projects
  * @author Nemein Oy http://www.nemein.com/
@@ -10,6 +9,8 @@
 
 /**
  * org.openpsa.projects site interface class.
+ *
+ * @package org.openpsa.projects
  */
 class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
 {

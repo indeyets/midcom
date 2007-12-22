@@ -54,6 +54,9 @@ class midgard_webdav_styles_handler_midcoms_webdav extends midgard_webdav_styles
 
 }
 
+/**
+ * @package midgard.webdav.styles
+ */
 class midgard_webdav_styles_handler_midcoms_element extends
 midgard_webdav_styles_handler_midcoms_files
 {
@@ -83,6 +86,9 @@ midgard_webdav_styles_handler_midcoms_files
 
 }
 
+/**
+ * @package midgard.webdav.styles
+ */
 class midgard_webdav_styles_handler_midcoms_files extends midgard_webdav_styles_dav {
     var $midcom ;
     var $style;

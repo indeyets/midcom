@@ -7,6 +7,7 @@
  * @license http://www.gnu.net/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/** @ignore */
 require_once(MIDCOM_ROOT . '/net/nehmer/account/handler/view.php');
 
 /**
@@ -22,14 +23,14 @@ class org_maemo_calendar_handler_profile_view extends net_nehmer_account_handler
      * @access private
      */
     var $_schemadb = null;
-    
+
     /**
      * The schema (taken from the config)
      *
      * @var Array
      * @access private
      */
-    var $_schema = null;    
+    var $_schema = null;
 
     /**
      * The Datamanager of the person to display.
@@ -53,23 +54,23 @@ class org_maemo_calendar_handler_profile_view extends net_nehmer_account_handler
     function _on_initialize()
     {
     }
-    
+
     /**
      * Internal helper function, prepares a datamanager based on the current account.
      */
     function _prepare_datamanager()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         debug_add("inside _prepare_datamanager");
-        
+
         $this->_schemadb = midcom_helper_datamanager2_schema::load_database( $this->_config->get('profile_schemadb') );
         $this->_schema = $this->_config->get('profile_schema');
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_schemadb);
         //$this->_datamanager->autoset_storage($this->_account);
         $this->_datamanager->set_schema($this->_schema);
         $this->_datamanager->set_storage($this->_account);
-        
+
         foreach ($this->_datamanager->schema->field_order as $name)
         {
             if (! array_key_exists('visible_mode', $this->_datamanager->schema->fields[$name]['customdata']))
@@ -77,20 +78,20 @@ class org_maemo_calendar_handler_profile_view extends net_nehmer_account_handler
                 $this->_datamanager->schema->fields[$name]['customdata']['visible_mode'] = 'user';
             }
         }
-        
+
         debug_pop();
     }
 
     function _handler_view($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         if (   $handler_id == 'ajax-profile-view'
             || $handler_id == 'ajax-profile-view-other')
         {
             $_MIDCOM->skip_page_style = true;
         }
-        
+
         switch($handler_id)
         {
             case 'ajax-profile-view-other':
@@ -101,7 +102,7 @@ class org_maemo_calendar_handler_profile_view extends net_nehmer_account_handler
                 break;
         }
         parent::_handler_view($parent_handler_id, $args, &$data);
-                
+
         // switch ($handler_id)
         // {
         //     case 'ajax-profile-view':
@@ -117,7 +118,7 @@ class org_maemo_calendar_handler_profile_view extends net_nehmer_account_handler
         //         $this->_view_quick = false;
         //         break;
         // }
-        
+
         // if (! $this->_account)
         // {
         //     $this->errcode = MIDCOM_ERRNOTFOUND;
@@ -127,21 +128,21 @@ class org_maemo_calendar_handler_profile_view extends net_nehmer_account_handler
         // $this->_user =& $_MIDCOM->auth->get_user($this->_account);
         // $this->_avatar = $this->_account->get_attachment('avatar');
         // $this->_avatar_thumbnail = $this->_account->get_attachment('avatar_thumbnail');
-        // 
+        //
         // // This is temporary stuff until we get a preferences mechanism up and running.
         // $data['communitymotto'] = $this->_account->get_parameter('midcom.helper.datamanager2', 'communitymotto');
         // $data['communityactive'] = (bool) $this->_account->get_parameter('midcom.helper.datamanager2', 'communityactive');
         // // End temporary Stuff
-        // 
+        //
         // $this->_prepare_datamanager();
         // $this->_compute_visible_fields();
         // $this->_prepare_request_data();
         // $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name);
-        
+
         debug_pop();
         return true;
     }
-    
+
     function _show_view($handler_id, &$data)
     {
         if (   $handler_id == 'ajax-profile-view'
@@ -151,10 +152,10 @@ class org_maemo_calendar_handler_profile_view extends net_nehmer_account_handler
         }
         else
         {
-            midcom_show_style('profile-view');            
-        }        
-    }    
-        
+            midcom_show_style('profile-view');
+        }
+    }
+
 }
 
 ?>

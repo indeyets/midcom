@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package org.openpsa.projects
  * @author Nemein Oy http://www.nemein.com/
@@ -10,6 +9,8 @@
 
 /**
  * org.openpsa.projects task handler and viewer class.
+ *
+ * @package org.openpsa.projects
  */
 class org_openpsa_projects_workflow_handler
 {

@@ -7,6 +7,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/** @ignore */
 require_once MIDCOM_ROOT . '/midcom/helper/datamanager2/widget/simpleposition.php';
 
 /**
@@ -34,7 +35,6 @@ require_once MIDCOM_ROOT . '/midcom/helper/datamanager2/widget/simpleposition.ph
  * @package midcom.helper.datamanager2
  *
  */
-
 class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanager2_widget
 {
     /**

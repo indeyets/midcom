@@ -8,6 +8,8 @@
 
 /**
  * Types and widgets use the same overarching interface so no need for different classes there.
+ *
+ * @package midcom.helper.schemaapi
  */
 class midcom_helper_schemaapi_supertype {
 

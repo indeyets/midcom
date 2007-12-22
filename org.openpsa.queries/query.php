@@ -4,6 +4,8 @@
  */
 /**
  * MidCOM wrapped class for access to stored queries
+ *
+ * @package org.openpsa.queries
  */
 class midcom_org_openpsa_query extends __midcom_org_openpsa_query
 {
@@ -45,6 +47,9 @@ class midcom_org_openpsa_query extends __midcom_org_openpsa_query
     }
 }
 
+/**
+ * @package org.openpsa.queries
+ */
 class org_openpsa_queries_query extends midcom_org_openpsa_query
 {
     function org_openpsa_queries_query($id = null)

@@ -53,6 +53,8 @@ class midcom_org_openpsa_campaign_message_receipt extends __midcom_org_openpsa_c
 
 /**
  * Another wrap level
+ *
+ * @package org.openpsa.directmarketing
  */
 class org_openpsa_directmarketing_campaign_message_receipt extends midcom_org_openpsa_campaign_message_receipt
 {

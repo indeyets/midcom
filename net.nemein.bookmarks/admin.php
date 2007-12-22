@@ -6,6 +6,9 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/**
+ * @package net.nemein.bookmarks
+ */
 class net_nemein_bookmarks_admin
 {
     var $_debug_prefix;

@@ -7,12 +7,13 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
-/**
- * @package org.maemo.calendar
- */
+/** @ignore */
 
 require_once(MIDCOM_ROOT . '/org/maemo/calendar/common.php');
 
+/**
+ * @package org.maemo.calendar
+ */
 class org_maemo_calendar_callbacks_personstags extends midcom_baseclasses_components_purecode
 {
     /**
@@ -30,7 +31,7 @@ class org_maemo_calendar_callbacks_personstags extends midcom_baseclasses_compon
      * @access private
      */
     var $_user = null;
-    
+
     var $_additional_user = null;
 
     /**
@@ -45,40 +46,40 @@ class org_maemo_calendar_callbacks_personstags extends midcom_baseclasses_compon
 
         $this->_component = 'org.maemo.calendar';
         parent::midcom_baseclasses_components_purecode();
-        
+
         $_MIDCOM->auth->require_valid_user();
-        
+
         $this->_data = array();
         $this->_user =& $_MIDCOM->auth->user;
 
         $this->_process_options($options);
-        
+
         debug_print_r("using user {$options['person_guid']}",$this->_user);
-        
+
         $only_public = false;
 
         // if ($this->_user->guid != $_MIDCOM->auth->user->guid)
         // {
         //     $only_public = true;
         // }
-        
+
         $tags = org_maemo_calendar_common::fetch_available_user_tags($this->_user->guid);
-        
+
         if ($this->_additional_user !== null)
         {
             $tags = org_maemo_calendar_common::fetch_available_user_tags($this->_additional_user->guid);
         }
-        
+
         foreach ($tags as $i => $tag)
         {
             $this->_data[$tag['id']] = $tag;
         }
-        
+
         debug_print_r('_data: ',$this->_data);
-        
+
         debug_pop();
     }
-    
+
     /**
      * Reads and validates the configuration options. Invalid options are logged
      * and ignored.
@@ -86,18 +87,18 @@ class org_maemo_calendar_callbacks_personstags extends midcom_baseclasses_compon
     function _process_options($options)
     {
         debug_print_r("got options:",$options);
-        
+
         if (   !is_array($options)
             || empty($options))
         {
             return;
         }
-        
+
         if (array_key_exists('person_guid', $options))
         {
             $this->_additional_user =& new midcom_db_person($options['person_guid']);
         }
-    }    
+    }
 
     /** Ignored. */
     function set_type(&$type) {}
@@ -108,16 +109,16 @@ class org_maemo_calendar_callbacks_personstags extends midcom_baseclasses_compon
         {
             return false;
         }
-        
+
         $name = $this->_data[$key]['name'];
         return $name;
     }
-    
+
     function get_data_for_key($key)
     {
         $data = $this->_data[$key];
         return $data;
-    }    
+    }
 
     function key_exists($key,$match_names_also=false)
     {
@@ -127,7 +128,7 @@ class org_maemo_calendar_callbacks_personstags extends midcom_baseclasses_compon
             {
                 return true;
             }
-            
+
             foreach ($this->_data as $tag_id => $data)
             {
                 if ($key == $data['name'])
@@ -143,12 +144,12 @@ class org_maemo_calendar_callbacks_personstags extends midcom_baseclasses_compon
     {
         return $this->_data;
     }
-    
+
     function save_values($tags)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_print_r('got tags',$tags);
-        
+
         foreach ($tags as $tag)
         {
             $data = $this->get_data_for_key($key);
@@ -157,10 +158,10 @@ class org_maemo_calendar_callbacks_personstags extends midcom_baseclasses_compon
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Saving of tag {$tag} failed! See debug log for more details.",
                     MIDCOM_LOG_INFO);
-                debug_pop();            
+                debug_pop();
             }
         }
-        
+
         debug_pop();
         return true;
     }

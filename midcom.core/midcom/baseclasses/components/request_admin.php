@@ -36,7 +36,7 @@
  *
  * <i>Important Note:</i> The schema you supply for configuration is always treated as having
  * a zero lock timeout, this parameter is enforced after initializing the datamanager. It is
- * important, as the config handler stays in the edit loop indefinitly.
+ * important, as the config handler stays in the edit loop indefinitely.
  *
  * Full configuration example:
  *

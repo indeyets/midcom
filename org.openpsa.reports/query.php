@@ -8,6 +8,8 @@
 
 /**
  * MidCOM wrapped class for access to stored queries
+ *
+ * @package org.openpsa.reports
  */
 class org_openpsa_reports_query extends org_openpsa_queries_query
 {

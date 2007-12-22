@@ -29,7 +29,6 @@
  *
  * @package net.nehmer.account
  */
-
 class net_nehmer_account_handler_publish extends midcom_baseclasses_components_handler
 {
     function net_nehmer_account_handler_publish()
@@ -128,9 +127,9 @@ class net_nehmer_account_handler_publish extends midcom_baseclasses_components_h
         // This might relocate to the ok screen.
         $this->_compute_fields();
         $this->_prepare_request_data();
-        
+
         $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name);
-        
+
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
 
         $tmp[] = Array

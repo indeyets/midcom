@@ -1,14 +1,14 @@
 <?php
 /**
- * @package net.nemein.team
+ * @package net.nemein.teams
  * @author The Midgard Project, http://www.midgard-project.org
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
 /**
- * This is the class that defines which URLs should be handled by this module. 
- * 
+ * This is the class that defines which URLs should be handled by this module.
+ *
  * @package net.nemein.teams
  */
 class net_nemein_teams_viewer extends midcom_baseclasses_components_request
@@ -18,7 +18,7 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
     function net_nemein_teams_viewer($topic, $config)
     {
         parent::midcom_baseclasses_components_request($topic, $config);
-    
+
         $this->_content_topic = $topic;
     }
 
@@ -34,7 +34,7 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         /**
          * Prepare the request switch, which contains URL handlers for the component
          */
-         
+
         // Handle /config
         $this->_request_switch['config'] = array
         (
@@ -49,7 +49,7 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         (
             'handler' => Array('net_nemein_teams_handler_team', 'index'),
         );
-        
+
         // Matches rootgroup
         $this->_request_switch['create-rootgroup'] = array
         (
@@ -85,30 +85,30 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nemein_teams_handler_admin', 'log'),
 	        'fixed_args' => Array('log'),
         );
-        
+
         /*
         // Manage / System
         $this->_request_switch['manage_system'] = array
         (
             'handler' => Array('net_nemein_teams_handler_admin', 'manage_system'),
 	        'fixed_args' => Array('manage_system'),
-        ); 
-        
+        );
+
         // Manage / lockdown
         $this->_request_switch['manage_lockdown'] = array
         (
             'handler' => Array('net_nemein_teams_handler_admin', 'manage_'),
 	        'fixed_args' => Array('manage_system'),
-        ); 
-         */     
-        
+        );
+         */
+
         // Manage /
         $this->_request_switch['manage'] = array
         (
             'handler' => Array('net_nemein_teams_handler_admin', 'manage'),
 	        'fixed_args' => Array('manage'),
         );
-        
+
         // Manage / Delete
         $this->_request_switch['manage_delete'] = array
         (
@@ -116,14 +116,14 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
 	        'fixed_args' => Array('manage', 'delete'),
 	        'variable_args' => 1,
         );
-        
+
         // Manage / Team
         $this->_request_switch['manage_team'] = array
         (
             'handler' => Array('net_nemein_teams_handler_admin', 'manage_team'),
 	        'fixed_args' => Array('manage', 'team'),
 	        'variable_args' => 1,
-        );        
+        );
 
         // Handle / Team list
         $this->_request_switch['list'] = array
@@ -151,8 +151,8 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         (
             'handler' => Array('net_nemein_teams_handler_team', 'quit'),
 	        'fixed_args' => Array('quit'),
-        );        
-        
+        );
+
         // Quit / Confirm
         $this->_request_switch['quit_confirm'] = array
         (
@@ -166,7 +166,7 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nemein_teams_handler_team', 'lockdown'),
 	        'fixed_args' => Array('lockdown'),
         );
-        
+
         // $this->_request_switch['action'] = array
         // (
         //     'handler' => Array('net_nemein_teams_handler_team', 'action'),
@@ -364,7 +364,7 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
      * @access protected
      */
     function _populate_node_toolbar()
-    {   
+    {
     /*
         if ($this->_content_topic->can_do('midgard:create'))
         {
@@ -382,7 +382,7 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
             }
         }
         */
-        
+
         if ($_MIDCOM->auth->admin)
         {
             $this->_node_toolbar->add_item
@@ -405,10 +405,10 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
                     MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('manage system'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
                 )
-            );   
-            */     
+            );
+            */
         }
-        
+
         if (   $this->_topic->can_do('midgard:update')
             && $this->_topic->can_do('midcom:component_config'))
         {
@@ -422,7 +422,7 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
                 )
             );
-        }        
+        }
     }
 
     /**
@@ -441,14 +441,14 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         {
             $nap = new midcom_helper_nav();
             $node = $nap->get_node($this->_topic->id);
-                
+
             $_MIDCOM->relocate("{$node[MIDCOM_NAV_FULLURL]}rootgroup/");
             // This will exit
         }
 
         return true;
     }
-    
+
     /**
      * This event hook will load any on-site plugin that has been recognized in the configuration.
      * Regardless of success, we always return true; the plugin simply won't start up if, for example,

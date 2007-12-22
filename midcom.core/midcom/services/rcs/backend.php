@@ -83,6 +83,9 @@ class midcom_services_rcs_backend
     }
 }
 
+/**
+ * @package midcom.services.rcs
+ */
 class midcom_services_rcs_backend_null extends midcom_services_rcs_backend
 {
 

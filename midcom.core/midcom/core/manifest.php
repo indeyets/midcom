@@ -59,7 +59,7 @@
  * </code>
  *
  * As you can see, most of these settings mainly match the configuration options you
- * alredy know from the component interface base class. The information located in this
+ * already know from the component interface base class. The information located in this
  * manifest is now used to configure those interface classes automatically, you do not
  * have to manage this information twice.
  *
@@ -86,22 +86,26 @@
  * So, if you want to add {$component}:read with a default value of
  * MIDCOM_PRIVILEGE_ALLOW you would do something like this:
  *
- * <pre>
+ * <code>
+ * <?php
  * $this->_acl_privileges['read'] => MIDCOM_PRIVILEGE_ALLOW;
- * </pre>
+ * ?>
+ * </code>
  *
  * This assumes, that object owners should get no specific treatment, e.g.
  * that the owner privilege set inherits its value from the content object
  * parent. In case you want to explicitly set a distinct value for an
  * object owner, you must pass an array to this function:
  *
- * <pre>
+ * <code>
+ * <?php
  * $this->_acl_privileges['write'] => Array
  * (
  *     MIDCOM_PRIVILEGE_DENY, // default privilege value
  *     MIDCOM_PRIVILEGE_ALLOW // owner default privilege value
  * )
- * </pre>
+ * ?>
+ * </code>
  *
  * In this case the definition grants object owners the defined privilege. The
  * only way this can be overridden now is having the privilege denied to the
@@ -109,28 +113,32 @@
  *
  * Note, that it is often sensible to do something like this:
  *
- * <pre>
+ * <code>
+ * <?php
  * $this->_acl_privileges['read'] => Array
  * (
  *     MIDCOM_PRIVILEGE_ALLOW, // default privilege value
  *     MIDCOM_PRIVILEGE_ALLOW // owner default privilege value
  * )
- * </pre>
+ * ?>
+ * </code>
  *
  * That way, object owners can read the object, even if the read access is
  * prohibited for a users group for example. Without the explicit
  * user default specification it would get inherited from there.
  *
- * So, if you take the very first example from abvoe again (the one without
+ * So, if you take the very first example from above again (the one without
  * the Array), it is read by MidCOM as if you would have specified this:
  *
- * <pre>
+ * <code>
+ * <?php
  * $this->_acl_privileges['read'] => Array
  * (
  *     MIDCOM_PRIVILEGE_ALLOW, // default privilege value
  *     MIDCOM_PRIVILEGE_INHERIT // owner default privilege value
  * )
- * </pre>
+ * ?>
+ * </code>
  *
  * Note, that INHERIT does not INHERIT from the system default privilege but
  * from the <i>immediate parent</i>.
@@ -138,12 +146,12 @@
  * <i>Array class_definitions</i> contains a list of class definition files of the classes
  * the component makes available to the framework. Their intermediate classes are loaded
  * during startup, and the component is loaded dynamically whenever the final DBA
- * implemetation is needed.
+ * implementation is needed.
  *
  * <i>Array watches</i> is a special thing. It allows your component to specify that
  * it wants to "observe" all operations of a certain type on DBA objects. Such a watch
  * declaration consists of two keys, <i>classes</i> and <i>operation</i>. Classes defines
- * for which DBA types (you need to specify the direct DBA types here, not any decendants)
+ * for which DBA types (you need to specify the direct DBA types here, not any descendants)
  * you want to watch operations, null indicates an unlimited watch. The operation key
  * then, obviously, specifies the operation(s) you want to watch, which is a bitfield
  * consisting of MIDCOM_OPERATION_xxx flags.
@@ -156,7 +164,7 @@
  *
  * <b>Loading a Component Manifest based on a file on disk</b>
  *
- * The class is always intialized using a component name. It will load the components'
+ * The class is always initialized using a component name. It will load the components'
  * manifest from disk, executing any post-processing necessary at that point (like
  * the completion of the privilege names).
  *
@@ -296,7 +304,7 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
         //parent::midcom_baseclasses_core_object();
         $this->filename = $filename;
         $this->_load_manifest($values);
-        
+
     }
 
     /**
