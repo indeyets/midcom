@@ -9,6 +9,8 @@
 
 /**
  * org.openpsa.projects hour report editor widget
+ *
+ * @package org.openpsa.projects
  */
 class org_openpsa_projects_hours_widget
 {

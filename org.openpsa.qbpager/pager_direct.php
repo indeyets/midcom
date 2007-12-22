@@ -4,6 +4,8 @@
  */
 /**
  * Pages QB resultsets (uses midgard QB directly)
+ *
+ * @package org.openpsa.qbpager
  */
 class org_openpsa_qbpager_direct extends org_openpsa_qbpager
 {

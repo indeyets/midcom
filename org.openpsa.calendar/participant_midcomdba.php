@@ -5,8 +5,10 @@
  * @copyright Nemein Oy, http://www.nemein.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
+
 /**
  * Midcom wants this class present and QB etc use this, so keep logic here
+ * @package org.openpsa.calendar
  */
 class midcom_org_openpsa_eventmember extends __midcom_org_openpsa_eventmember
 {
@@ -338,6 +340,8 @@ class midcom_org_openpsa_eventmember extends __midcom_org_openpsa_eventmember
 
 /**
  * Wrap level to get component namespaced class name
+ *
+ * @package org.openpsa.calendar
  */
 class org_openpsa_calendar_eventmember extends midcom_org_openpsa_eventmember
 {
@@ -356,6 +360,8 @@ class org_openpsa_calendar_eventmember extends midcom_org_openpsa_eventmember
 
 /**
  * Wrapping for special case participant
+ *
+ * @package org.openpsa.calendar
  */
 class org_openpsa_calendar_eventparticipant extends org_openpsa_calendar_eventmember
 {

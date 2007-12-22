@@ -1,6 +1,10 @@
 <?php
 /**
- * Class for handling banned words 
+ * @package net.nemein.bannedwords
+ */
+
+/**
+ * Class for handling banned words
  *
  * @package net.nemein.bannedwords
  */
@@ -94,9 +98,9 @@ class net_nemein_bannedwords_handler extends midcom_baseclasses_components_purec
 	        $censored .= $this->_l10n->get($censored_word_id);
 	    }
 	    $censored .= "{$censored_end}</span>";
-	    
+
             $processed_content = eregi_replace($regexp, $censored, $content);
-        
+
 	    return $processed_content;
 	}
 	else
@@ -197,7 +201,7 @@ class net_nemein_bannedwords_handler extends midcom_baseclasses_components_purec
 	{
             return false;
         }
- 
+
         return true;
     }
 }

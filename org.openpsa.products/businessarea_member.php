@@ -8,8 +8,9 @@
 
 /**
  * MidCOM wrapped class for access to stored queries
+ *
+ * @package org.openpsa.products
  */
-
 class org_openpsa_products_businessarea_member_dba extends __org_openpsa_products_businessarea_member_dba
 {
     function org_openpsa_products_businessarea_member_dba($id = null)

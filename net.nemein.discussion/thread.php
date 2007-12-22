@@ -1,7 +1,7 @@
 <?php
 /**
  * @package net.nemein.discussion
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id$
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,6 +9,8 @@
 
 /**
  * MidCOM DBA access to threads
+ *
+ * @package net.nemein.discussion
  */
  class net_nemein_discussion_thread_dba extends __net_nemein_discussion_thread_dba
 {
@@ -16,7 +18,7 @@
     {
         return parent::__net_nemein_discussion_thread_dba($id);
     }
-    
+
     function _on_updating()
     {
         $qb = net_nemein_discussion_thread_dba::new_query_builder();
@@ -30,8 +32,8 @@
             // There is already a thread with this URL name
             return false;
         }
-        
+
         return true;
-    }  
+    }
 }
 ?>

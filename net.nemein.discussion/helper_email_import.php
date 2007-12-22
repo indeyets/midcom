@@ -1,11 +1,14 @@
 <?php
-
 /**
  * @package net.nemein.discussion
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: admin.php 4051 2006-09-12 07:32:51Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
+ * @package net.nemein.discussion
  */
 class net_nemein_discussion_email_importer extends midcom_baseclasses_components_purecode
 {
@@ -107,7 +110,7 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
             debug_add("Set \$post->metadata->published to {$post->metadata->published} (" . strtotime($post->metadata->published) . ")");
         }
 
-        // Fetch in-reply-to message if set 
+        // Fetch in-reply-to message if set
         if (isset($mail->headers['In-Reply-To']))
         {
             $parent = $this->get_post_by_message_id($mail->headers['In-Reply-To']);
@@ -274,7 +277,7 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
         {
             $post->update();
         }
-        
+
         // Index the post ??
         if (   $this->controller
             && $this->midcom_topic
@@ -283,12 +286,12 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
             $indexer =& $_MIDCOM->get_service('indexer');
             net_nemein_discussion_viewer::index($this->_controller->datamanager, $indexer, $this->midcom_topic);
         }
-        
+
         if ($this->_config->get('autoapprove'))
         {
             $meta = $post->get_metadata();
             $meta->approve();
-            
+
             $meta = $thread->get_metadata();
             $meta->approve();
         }
@@ -469,7 +472,7 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
         }
         return $results[0];
     }
-    
+
     /**
      * Rewrites org_openpsa_mail object properties according to configuration
      *

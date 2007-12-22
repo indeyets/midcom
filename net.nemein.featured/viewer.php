@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package net.nemein.featured
+ */
 
 /**
  * Featured
@@ -82,9 +85,9 @@ class net_nemein_featured_viewer extends midcom_baseclasses_components_request
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "manage", 
-                        MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n->get('manage'), 
-                        $this->_l10n->get($this->_request_data['schemadb']['default']->description)),       
+                        MIDCOM_TOOLBAR_URL => "manage",
+                        MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n->get('manage'),
+                        $this->_l10n->get($this->_request_data['schemadb']['default']->description)),
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
                         MIDCOM_TOOLBAR_ACCESSKEY => 'n',
                     )
@@ -161,7 +164,7 @@ class net_nemein_featured_viewer extends midcom_baseclasses_components_request
 
         $url = $node[MIDCOM_NAV_FULLURL];
 
-        echo "<span class=\"net_nemein_featured\">" . "<a href=\"{$url}manage/?featured_path={$path}&type={$objectType}\" 
+        echo "<span class=\"net_nemein_featured\">" . "<a href=\"{$url}manage/?featured_path={$path}&type={$objectType}\"
             class=\"net_nemein_featured_manage\">ADD</a></span>";
 
         return true;
@@ -179,7 +182,7 @@ class net_nemein_featured_viewer extends midcom_baseclasses_components_request
 
         $featured_objects = $qb->execute();
 
-        return $featured_objects; 
+        return $featured_objects;
     }
 
     function show_featured_items($topic_guid, $group_name = '', $substyle = array())
@@ -192,7 +195,7 @@ class net_nemein_featured_viewer extends midcom_baseclasses_components_request
 
             //print_r($target_object);
             /*
-                // TODO: 
+                // TODO:
             if (array_key_exists($target_object->type, $substyle)
             {
 

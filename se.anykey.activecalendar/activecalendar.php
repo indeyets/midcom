@@ -1,12 +1,18 @@
 <?php
-/*
-* @class: activeCalendar
-* @project: Active Calendar Class
-* @version: 1.0.5 (stable);
-* @author: Giorgos Tsiledakis;
-* @date: 2005-7-31;
-* @copyright: Giorgos Tsiledakis;
-* @license: GNU LESSER GENERAL PUBLIC LICENSE;
+/**
+ * @package se.anykey.activecalendar
+ */
+
+/**
+* @class activeCalendar
+* @project Active Calendar Class
+* @version 1.0.5 (stable);
+* @author Giorgos Tsiledakis;
+* @date 2005-7-31;
+* @copyright Giorgos Tsiledakis;
+* @license GNU LESSER GENERAL PUBLIC LICENSE;
+* @package se.anykey.activecalendar
+*
 * Support, feature requests and bug reports please at : http://www.micronetwork.de/activecalendar/
 * Special thanks to Corissia S.A (http://www.corissia.com) for the permission to publish the source code
 * Thanks to Maik Lindner (http://nifox.com) for his help developing this class

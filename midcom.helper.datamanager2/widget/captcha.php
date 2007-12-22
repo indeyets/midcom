@@ -56,6 +56,7 @@ require_once('Text/Password.php');
  * </code>
  *
  * @todo Enable multiple captchas per page.
+ * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_widget_captcha extends midcom_helper_datamanager2_widget
 {

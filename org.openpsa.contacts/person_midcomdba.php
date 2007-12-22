@@ -1,5 +1,9 @@
 <?php
 /**
+ * @package org.openpsa.contacts
+ */
+
+/**
  * MidCOM wrapped access to org_openpsa_person plus some utility methods
  * @package org.openpsa.contacts
  */
@@ -145,7 +149,7 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
             debug_pop();
             return false;
         }
-        
+
         if (!isset($GLOBALS['org_openpsa_contacts_person__verify_privileges']))
         {
             $GLOBALS['org_openpsa_contacts_person__verify_privileges'] = array();
@@ -275,7 +279,7 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
         // FIXME: Call duplicate checker's dependency handling methods
         return parent::_on_deleting();
     }
-    
+
     function get_label()
     {
     	if ($this->rname)
@@ -286,10 +290,10 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
     	{
     		$label = $this->username;
     	}
-    	
+
     	return $label;
     }
-    
+
     function get_label_property()
     {
     	if ($this->rname)
@@ -300,7 +304,7 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
     	{
     		$property = 'username';
     	}
-    	
+
     	return $property;
     }
 

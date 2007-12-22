@@ -9,6 +9,10 @@
  * @copyright Nemein Oy, http://www.nemein.com
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
+
+/**
+ * @package org.openpsa.helpers
+ */
 class org_openpsa_helpers_vxparser
 {
     /**
@@ -23,7 +27,7 @@ class org_openpsa_helpers_vxparser
      * charset to use
      */
     var $charset = 'utf-8';
-    
+
     /**
      * Used then constructor decoding
      * @access private

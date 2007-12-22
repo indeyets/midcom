@@ -56,8 +56,6 @@
  * @see net_nemein_payment_factory
  * @package net.nemein.payment
  */
-
-
 class net_nemein_payment_handler extends midcom_baseclasses_components_purecode
 {
     /**

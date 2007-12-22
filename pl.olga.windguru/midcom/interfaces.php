@@ -6,17 +6,17 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
-/**
- * This is the interface class for pl.olga.windguru
- *
- * @package pl.olga.windguru
- */
 
 /** @ ignore */
 define('WG_STATUS_NONE',100);
 define('WG_STATUS_GFS',3);
 define('WG_STATUS_NWW3',10);
 
+/**
+ * This is the interface class for pl.olga.windguru
+ *
+ * @package pl.olga.windguru
+ */
 class pl_olga_windguru_interface extends midcom_baseclasses_components_interface
 {
     /**

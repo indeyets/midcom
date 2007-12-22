@@ -20,7 +20,7 @@
  class midcom_services_rcs_config
  {
     /**
-     * The array of configruationoptions
+     * The array of configuration options
      * @var array
      * @access public
      */
@@ -46,7 +46,7 @@
 
     /**
      *
-     * This method should return an array() of configoptions.
+     * This method should return an array() of config options.
      */
     function _get_config()
     {

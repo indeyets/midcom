@@ -1,6 +1,6 @@
 <?php
 /**
- * @package net.nehmer.static
+ * @package pl.olga.mnogosearch
  * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: viewer.php 4153 2006-09-20 18:28:00Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org
@@ -14,7 +14,7 @@
  * It incorporates all of the goodies current MidCOM has to offer and can serve as an
  * example component therefore.
  *
- * @package net.nehmer.static
+ * @package pl.olga.mnogosearch
  */
 
 class pl_olga_mnogosearch_viewer extends midcom_baseclasses_components_request

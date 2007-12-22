@@ -1,11 +1,15 @@
 <?php
+/**
+ * This is some kind of a wrapper for the contactcrabber.
+ *
+ * @package com.magnettechnologies.contactgrabber
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
 /**
-    * This is some kind of a wrapper for the contactcrabber.
-    */
-
-/**
-    * Contact Grabber 
+    * Contact Grabber
     * Version 0.3
     * Released 9th May, 2007
     * Author: Magnet Technologies, vishal.kothari@magnettechnologies.com
@@ -25,9 +29,9 @@
     * You should have received a copy of the GNU General Public License
     * along with this program; if not, write to the Free Software
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+    *
+    * @package com.magnettechnologies.contactgrabber
     **/
-
-
 class com_magnettechnologies_contactgrabber extends midcom_baseclasses_components_purecode
 {
 
@@ -60,13 +64,13 @@ class com_magnettechnologies_contactgrabber extends midcom_baseclasses_component
     {
         if(   isset($_POST['domain'])
            && isset($_POST['username'])
-           && isset($_POST['password'])) 
+           && isset($_POST['password']))
         {
             if($_POST['domain']=="rediff.com")
             {
                 require("lib/rediff/grabRediff.class.php");
                 $this->_email = $_POST['username'];
-                $this->_resource_obj = new rediff();		
+                $this->_resource_obj = new rediff();
             }
 
             if($_POST['domain']=="gmail.com")
@@ -139,14 +143,14 @@ class com_magnettechnologies_contactgrabber extends midcom_baseclasses_component
     function show_search_form()
     {
         midcom_show_style('search-form');
-        
+
         /*
             <li class="ay" id="itab_item_yahoo"><a href="#invite_yahoo"></a></li>
             ---
-            <li class="ay" id="itab_item_myspace"><a href="#invite_myspace"></a></li>            
+            <li class="ay" id="itab_item_myspace"><a href="#invite_myspace"></a></li>
             <li class="ay" id="itab_item_hotmail"><a href="#invite_hotmail"></a></li>
             ----
-            
+
             <div class="tabs_content" id="invite_yahoo">
                 <h2>Invite your Yahoo friends</h2>
                 <div class="invite_login_form">
@@ -181,7 +185,7 @@ class com_magnettechnologies_contactgrabber extends midcom_baseclasses_component
                 <div class="description">
                     <?php echo $_MIDCOM->i18n->get_string('no details are stored', 'com.magnettechnologies.contactgrabber'); ?>
                 </div>
-            </div>          
+            </div>
             <div class="tabs_content" id="invite_hotmail" style="display: none;">
                 <h2>Invite your Hotmail friends</h2>
                 <div class="invite_login_form">

@@ -1,15 +1,21 @@
 <?php
+/**
+ * @package net.nemein.bannedwords
+ */
 
-class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_handler 
+/**
+ * @package net.nemein.bannedwords
+ */
+class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_handler
 {
     var $_banned_objects = null;
 
-    var $_lang_banned_objects = null; 
+    var $_lang_banned_objects = null;
 
     var $_sitegroup = null;
-    
+
     var $_controller = null;
-    
+
     var $_schemadb = null;
 
     var $_banned = null;
@@ -80,7 +86,7 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
 	        'Failed to create a new word, cannot continue. Last Midgard error was: '. mgd_errstr());
 	    // This will exit.
 	}
-	
+
 	return $this->_banned;
     }
 
@@ -110,10 +116,10 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
 		'fixed_args' => 'confirmdelete',
 		'variable_args' => 1,
 	    ),
-	    
+
 	);
     }
-    
+
     function _handler_manage($handler_id, $args, &$data)
     {
         $this->_content_topic->require_do('midgard:create');
@@ -157,12 +163,12 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
         {
             $this->_lang_banned_objects = array();
         }
-        
+
     	foreach($this->_lang_banned_objects as $lang => $lang_banned)
     	{
-    	    $this->_request_data['language'] = $lang; 
+    	    $this->_request_data['language'] = $lang;
                 midcom_show_style('net_nemein_bannedwords_wordlist_start');
-	    
+
     	    foreach($lang_banned as $banned)
     	    {
                     $this->_request_data['banned_object'] = $banned;
@@ -196,7 +202,7 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
         $this->_prepare_request_data();
 
         return true;
-    } 
+    }
 
     function _show_edit($handler_id, &$data)
     {
@@ -236,7 +242,7 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
 
     function _show_confirmdelete($handler_id, &$data)
     {
-        midcom_show_style('net_nemein_bannedwords_word_confirmdelete');    
+        midcom_show_style('net_nemein_bannedwords_word_confirmdelete');
     }
 }
 

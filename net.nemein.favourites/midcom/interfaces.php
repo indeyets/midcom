@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package net.nemein.favourites
+ */
 
 /**
  * Favourites MidCOM interface class.
@@ -8,7 +11,7 @@ class net_nemein_favourites_interface extends midcom_baseclasses_components_inte
 {
    /**
     * Constructor.
-    * 
+    *
     * Nothing fancy, loads all script files and the datamanager library.
     */
     function net_nemein_favourites_interface()
@@ -19,7 +22,7 @@ class net_nemein_favourites_interface extends midcom_baseclasses_components_inte
         $this->_autoload_files = array
         (
             'favourite.php',
-            'viewer.php', 
+            'viewer.php',
             'navigation.php',
             'admin.php',
         );

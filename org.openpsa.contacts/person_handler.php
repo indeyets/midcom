@@ -9,6 +9,8 @@
 
 /**
  * org.openpsa.contacts person handler and viewer class.
+ *
+ * @package org.openpsa.contacts
  */
 class org_openpsa_contacts_person_handler
 {

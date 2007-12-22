@@ -1,7 +1,13 @@
 <?php
+/**
+ * @package org.openpsa.calendar
+ * @author Nemein Oy, http://www.nemein.com/
+ * @copyright Nemein Oy, http://www.nemein.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
 
 /**
- * MidCOM wrappper for org_openpsa_event with various helper functions
+ * MidCOM wrapper for org_openpsa_event with various helper functions
  * refactored from OpenPSA 1.x calander
  * TODO: Figure out a good way to always use UTC for internal time storage
  * @package org.openpsa.calendar
@@ -954,7 +960,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         $modified_events = array();
 
         /**
-         * Look for duplicate events only if we have participants or resources, otherwise we incorrectly get all events at 
+         * Look for duplicate events only if we have participants or resources, otherwise we incorrectly get all events at
          * the same timeframe as duplicates since there are no participant constraints to narrow things down
          */
         if (!empty($this->participants))

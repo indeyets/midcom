@@ -4,6 +4,8 @@
  */
 /**
  * Pages QB resultsets
+ *
+ * @package org.openpsa.qbpager
  */
 class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
 {

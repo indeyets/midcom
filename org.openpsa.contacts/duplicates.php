@@ -1,5 +1,9 @@
 <?php
 /**
+ * @package org.openpsa.contacts
+ */
+
+/**
  * Search for duplicate persons and groups in database
  * @package org.openpsa.contacts
  */

@@ -1,41 +1,45 @@
 <?php
 /**
- * Created on 2006-Sep-Sun
  * @author tarjei huse
  * @package midcom.admin.folder
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
- * 
+ *
  */
 
-class midcom_admin_folder_handler_index  extends midcom_baseclasses_components_handler 
+/**
+ * Created on 2006-Sep-Sun
+ *
+ * @package midcom.admin.folder
+ */
+class midcom_admin_folder_handler_index  extends midcom_baseclasses_components_handler
 {
     /*
      * The midcom_baseclasses_components_handler class defines a bunch of helper vars
      * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
      */
-    
+
     /**
      * Simple default constructor.
      */
     function midcom_admin_folder_handler_index()
     {
         parent::midcom_baseclasses_components_handler();
-    }    
+    }
     /**
-     * _on_initialize is called by midcom on creation of the handler. 
+     * _on_initialize is called by midcom on creation of the handler.
      */
     function _on_initialize()
     {
     }
-    
+
     /**
-     * The handler for the index article. 
+     * The handler for the index article.
      * @param mixed $handler_id the array key from the requestarray
      * @param array $args the arguments given to the handler
-     * 
+     *
      */
-    function _handler_index ($handler_id, $args) 
+    function _handler_index ($handler_id, $args)
     {
         $this->_request_data['name']  = "midcom.admin.folder";
         // the handler must return true
@@ -51,19 +55,19 @@ class midcom_admin_folder_handler_index  extends midcom_baseclasses_components_h
         /**
          * Example of getting a config var.
          */
-        $this->_request_data['sort_order'] = $this->_config->get('sort_order'); 
+        $this->_request_data['sort_order'] = $this->_config->get('sort_order');
         return true;
     }
-    
+
     /**
      * This function does the output.
-     *  
+     *
      */
     function _show_index() {
         // hint: look in the style/index.php file to see what happens here.
         midcom_show_style('index');
     }
-    
+
     /**
      * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.

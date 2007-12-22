@@ -11,6 +11,8 @@
  * org.openpsa.directmarketing site interface class.
  *
  * Direct marketing and mass mailing lists
+ *
+ * @package org.openpsa.directmarketing
  */
 class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_request
 {
@@ -172,7 +174,7 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
             'variable_args' => 1,
             'handler' => array('org_openpsa_directmarketing_handler_message_admin', 'edit'),
         );
-        
+
         // Match /message/delete/<message GUID>
         $this->_request_switch['message_delete'] = array(
             'fixed_args' => array('message', 'delete'),
@@ -207,7 +209,7 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
             'handler' => array('org_openpsa_directmarketing_handler_subscriber', 'unsubscribe'),
             'variable_args' => 1,
         );
-        
+
         // Match /campaign/unsubscribe/ajax/<membership GUID>
         $this->_request_switch['subscriber_unsubscribe'] = array(
             'fixed_args' => Array('campaign','unsubscribe', 'ajax'),
@@ -229,7 +231,7 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
             'fixed_args' => array('campaign', 'edit_query'),
             'variable_args' => 1,
         );
-        
+
         // Match /campaign/edit_query/<campaign GUID>
         $this->_request_switch['edit_campaign_query_advanced'] = array
         (
@@ -245,7 +247,7 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
             'fixed_args' => array('campaign', 'edit'),
             'variable_args' => 1,
         );
-       
+
         // Match /campaign/delete/<campaign GUID>
         $this->_request_switch['delete_campaign'] = array
         (
@@ -253,7 +255,7 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
             'fixed_args' => array('campaign', 'delete'),
             'variable_args' => 1,
         );
-        
+
         // Match /campaign/<campaign GUID>
         $this->_request_switch['view_campaign'] = array
         (
@@ -339,7 +341,7 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
         }
         debug_pop();
     }
-    
+
     /**
      * Populates the node toolbar depending on the users rights.
      *
@@ -382,7 +384,7 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
             );
         }
     }
-    
+
     /**
      * The handle callback populates the toolbars.
      */
@@ -392,7 +394,7 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
         $this->_request_data['schemadb_message'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_message'));
 
         $this->_populate_node_toolbar();
-        
+
         return true;
     }
 

@@ -12,6 +12,7 @@
  * @license http://creativecommons.org/licenses/by-sa/2.0/ca
  */
 
+/** @ignore */
 // PEAR XML_RPC package
 require_once 'XML/RPC.php';
 
@@ -52,11 +53,11 @@ class org_routamc_positioning_importer_plazes extends org_routamc_positioning_im
             }
         }
     }
-    
+
     function _prepare_plazes_params($plazes_username, $plazes_password)
     {
         $plazes_password_md5 = md5("PLAZES{$plazes_password}");
-        
+
         // These are the required XML-RPC parameters
         $params = array
         (
@@ -64,35 +65,35 @@ class org_routamc_positioning_importer_plazes extends org_routamc_positioning_im
             new XML_RPC_Value($plazes_username, 'string'),
             new XML_RPC_Value($plazes_password_md5, 'string')
         );
-        
+
         return $params;
     }
 
-    function _parse_w3cdtf($date_str) 
+    function _parse_w3cdtf($date_str)
     {
-        
+
         # regex to match wc3dtf
         $pat = "/(\d{4})(\d{2})(\d{2})T(\d{2}):(\d{2}):((\d{2}))?(?:([-+])(\d{2}):?(\d{2})|(Z))/";
-        
-        if ( preg_match( $pat, $date_str, $match ) ) 
+
+        if ( preg_match( $pat, $date_str, $match ) )
         {
-            list( $year, $month, $day, $hours, $minutes, $seconds) = 
+            list( $year, $month, $day, $hours, $minutes, $seconds) =
                 array( $match[1], $match[2], $match[3], $match[4], $match[5], $match[6]);
-            
+
             # calc epoch for current date assuming GMT
             $epoch = gmmktime( $hours, $minutes, $seconds, $month, $day, $year);
-            
+
             $offset = 0;
-            if ( $match[10] == 'Z' ) 
+            if ( $match[10] == 'Z' )
             {
                 # zulu time, aka GMT
             }
-            else 
+            else
             {
                 $tz_mod = $match[8];
                 $tz_hour = $match[9];
                 $tz_min = $match[10];
-                
+
                 # zero out the variables
                 if (!$tz_hour)
                 {
@@ -102,22 +103,22 @@ class org_routamc_positioning_importer_plazes extends org_routamc_positioning_im
                 {
                     $tz_min = 0;
                 }
-            
+
                 $offset_secs = (($tz_hour * 60) + $tz_min) * 60;
-                
+
                 # is timezone ahead of GMT?  then subtract offset
                 #
-                if ( $tz_mod == '+' ) 
+                if ( $tz_mod == '+' )
                 {
                     $offset_secs = $offset_secs * -1;
                 }
-                
+
                 $offset = $offset_secs;
             }
             $epoch = $epoch + $offset;
             return $epoch;
         }
-        else 
+        else
         {
             return -1;
         }
@@ -126,7 +127,7 @@ class org_routamc_positioning_importer_plazes extends org_routamc_positioning_im
     function _fetch_plazes_positions($plazes_username, $plazes_password, $days = 0)
     {
         $positions = array();
-    
+
         $params = $this->_prepare_plazes_params($plazes_username, $plazes_password);
         $params[] = new XML_RPC_Value($days, 'int');
 
@@ -150,7 +151,7 @@ class org_routamc_positioning_importer_plazes extends org_routamc_positioning_im
             $results = $resp->value();
 
             $trazes = @XML_RPC_decode($results);
-            
+
             // Quick-and-dirty timezone handling since Plazes doesn't return timezone information like they should
             // http://wwp.greenwichmeantime.com/time-zone/rules/eu.htm
             $month = (int) date('m');
@@ -165,7 +166,7 @@ class org_routamc_positioning_importer_plazes extends org_routamc_positioning_im
                 // Plazes is in CEST
                 $timezone = '+0200';
             }
-            
+
             if (count($trazes) > 0)
             {
                 foreach ($trazes as $traze)
@@ -262,9 +263,9 @@ class org_routamc_positioning_importer_plazes extends org_routamc_positioning_im
 
         // Try to create the entry
         $stat = $this->log->create();
-        
+
         $this->log->parameter('org.routamc.positioning:plazes', 'plaze_key', $position['plaze']);
-        
+
         $this->error = mgd_errstr();
         return $stat;
     }

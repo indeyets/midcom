@@ -1,11 +1,16 @@
 <?php
 /**
- * Created on 2006-Oct-Thu
  * @package org.routamc.statusmessage
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  *
  */
+
+/**
+  * Created on 2006-Oct-Thu
+  *
+  * @package org.routamc.statusmessage
+  */
 class org_routamc_statusmessage_handler_list extends midcom_baseclasses_components_handler
 {
     /**
@@ -101,9 +106,9 @@ class org_routamc_statusmessage_handler_list extends midcom_baseclasses_componen
 
         $qb->add_order('metadata.published', 'DESC');
         $qb->set_limit(1);
-        
+
         $data['messages'] = $qb->execute();
-        
+
         if (count($data['messages']) == 0)
         {
             return false;
@@ -119,7 +124,7 @@ class org_routamc_statusmessage_handler_list extends midcom_baseclasses_componen
         $_MIDCOM->cache->content->content_type('text/plain');
         $_MIDCOM->header('Content-type: text/plain');
 
-        
+
         $_MIDCOM->skip_page_style = true;
 
         return true;
@@ -181,7 +186,7 @@ class org_routamc_statusmessage_handler_list extends midcom_baseclasses_componen
     {
         $this->_show_statusmessages($handler_id, &$data);
     }
-    
+
     /**
      * The handler for displaying a messagegrapher's statusmessage
      * @param mixed $handler_id the array key from the requestarray
@@ -205,7 +210,7 @@ class org_routamc_statusmessage_handler_list extends midcom_baseclasses_componen
         {
             $data['view_title'] = $this->_l10n->get('latest messages');
             $data['user_url'] = 'all';
-            
+
             if ($handler_id == 'list_latest_front')
             {
                 $data['limit'] = 10;
@@ -227,7 +232,7 @@ class org_routamc_statusmessage_handler_list extends midcom_baseclasses_componen
 
         $qb->add_order('metadata.published', 'DESC');
         $qb->set_limit($data['limit']);
-        
+
         $data['messages'] = $qb->execute();
 
         // Make messages AJAX-editable
@@ -252,7 +257,7 @@ class org_routamc_statusmessage_handler_list extends midcom_baseclasses_componen
      */
     function _handler_between($handler_id, $args, &$data)
     {
-        // TODO: Check format as YYYY-MM-DD via regexp    
+        // TODO: Check format as YYYY-MM-DD via regexp
         $data['from_time'] = @strtotime($args[0]);
         $data['to_time'] = @strtotime($args[1]);
         if (   !$data['from_time']
@@ -260,7 +265,7 @@ class org_routamc_statusmessage_handler_list extends midcom_baseclasses_componen
         {
             return false;
         }
-    
+
         $data['view_title'] = sprintf($this->_l10n->get('messages from %s - %s'), strftime('%x', $data['from_time']), strftime('%x', $data['to_time']));
         $qb =& $this->_prepare_message_qb();
         $qb->add_constraint('metadata.published', '>=', $data['from_time']);

@@ -197,7 +197,7 @@
  *
  * Validation is a new feature in MidCom 1.4.0. The implementation is based on
  * the Pear package HTML_Quickform so this must be installed for the
- * validationcode to work. If HTML_Quickform is not installed the field will
+ * validation code to work. If HTML_Quickform is not installed the field will
  * just not be validated - MidCom will just save it.
  *
  * A larger manual on HTML_Quickform is found here:
@@ -211,7 +211,7 @@
  *     '&lt;type&gt;' =&gt; array (
  *         'message' =&gt; 'Some message to the user' ,
  *         ['format' =&gt; 'string' , ]
- *         ['function' =&gt; 'functionname'
+ *         ['function' =&gt; 'function name'
  *         [ 'object' =&gt; 'classname',] ]
  *     )
  * )
@@ -219,11 +219,11 @@
  *
  * As you see, the variables follow HTML_Quickform quite closely.
  *
- * You may also write your own validationfunctions by setting the function
+ * You may also write your own validation functions by setting the function
  * parameter. If you function is part of a class you also have to set the
  * class-parameter.
  *
- * <b>Localizaion support:</b>
+ * <b>Localization support:</b>
  *
  * The description and helptext of each field and all
  * fieldgroup titles are automatically localized using the l10db of either the current
@@ -409,7 +409,7 @@ class midcom_helper_datamanager {
     var $_ourlock;
 
     /**
-     * Pointer to a RuleRegistry singletonobject.
+     * Pointer to a RuleRegistry singleton object.
      *
      * @var ???
      * @todo tarjei: Complete documentation
@@ -426,7 +426,7 @@ class midcom_helper_datamanager {
      * - _schema contains the name of the data schema in use.
      * - _storage_type contains the name of the table in which we are stored (WARNING, this value will be deprecated
      *   during the DBA updates)
-     * - _storage_id and _storage_guid hold the ID and GUID respecitvly of the storage object.
+     * - _storage_id and _storage_guid hold the ID and GUID respectively of the storage object.
      *
      * @var Array
      */

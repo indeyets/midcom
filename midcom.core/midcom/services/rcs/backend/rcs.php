@@ -2,17 +2,21 @@
 /**
  * Created on Aug 16, 2005
  * @author tarjei huse
- * @package no.bergfald.rcs
+ * @package midcom.services.rcs
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
-class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend 
+
+/**
+ * @package midcom.services.rcs
+ */
+class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
 {
     /**
      * GUID of the current object
      */
     var $_guid;
-    
+
     /**
      * Cached revision history for the object
      */
@@ -23,7 +27,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         $this->_guid = $object->guid;
         parent::midcom_services_rcs_backend($object, $config);
     }
-    
+
     function _generate_rcs_filename($object)
     {
         if (!isset($object->guid))
@@ -52,16 +56,16 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
             // Append language code to the filename
             $filename .= '_' . $_MIDCOM->i18n->get_content_language();
         }
-        
+
         return $filename;
     }
-    
+
     /**
      * Save a new revision
      * @param object object to be saved
      * @return boolean true on success.
      */
-    function update(&$object, $updatemessage = null) 
+    function update(&$object, $updatemessage = null)
     {
         // Store user idenfitier and IP address to the update string
         if ($_MIDCOM->auth->user)
@@ -72,31 +76,31 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         {
             $update_string = "NOBODY|{$_SERVER['REMOTE_ADDR']}";
         }
-        
+
         // Generate update message if needed
         if (!$updatemessage)
         {
-            if ($_MIDCOM->auth->user !== null) 
+            if ($_MIDCOM->auth->user !== null)
             {
                 $updatemessage = sprintf("Updated on %s by %s", date("D d.M Y",time()), $_MIDCOM->auth->user->name);
-            } 
-            else 
+            }
+            else
             {
                 $updatemessage = sprintf("Updated on %s.", date("D d.M Y",time()));
             }
         }
         $update_string .= "|{$updatemessage}";
-        
+
         $result = $this->rcs_update(&$object, $update_string);
-        
+
         // The methods return basically what the RCS unix level command returns, so nonzero value is error and zero is ok...
-        if ($result > 0 ) 
-        { 
+        if ($result > 0 )
+        {
             return false;
-        } 
-        return true;     
+        }
+        return true;
     }
-    
+
     /**
      * This function takes an object and updates it to RCS, it should be
      * called just before $object->update(), if the type parameter is omitted
@@ -111,12 +115,12 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
      *      nonzero on error in one of the commands.
      */
     function rcs_update ($object, $message)
-    {  
+    {
         $status = null;
 
         $guid = $object->guid;
 
-        if (!($guid <> "")) 
+        if (!($guid <> ""))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Missing GUID, returning error");
@@ -156,12 +160,12 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
     * Get the object of a revision
     * @param string object guid (or other identifier)
     * @param string revision identifier of revision wanted
-    * @return array arrray representation of the object 
+    * @return array arrray representation of the object
     */
-    function get_revision( $revision) 
+    function get_revision( $revision)
     {
         $object = $_MIDCOM->dbfactory->get_object_by_guid($this->_guid);
-        
+
         $filepath = $this->_generate_rcs_filename($object);
         $return = array();
         if (is_null($filepath))
@@ -169,77 +173,77 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
             return $return;
         }
 
-        
+
         // , must become . to work. Therefore this:
         str_replace(',', '.', $revision );
         // this seems to cause problems:
         //settype ($revision, "float");
-        
+
         $command = 'co -q -f -r' . escapeshellarg(trim($revision)) .  " {$filepath} 2>/dev/null";
         $output = null;
         $status = null;
         unset($output);
         unset ($status);
         exec ($command, $output, $status);
-         
+
         $data = $this->rcs_readfile($this->_guid);
-        
+
         $revision = $this->rcs_data2object($data);
-       
+
         $command = "rm -f {$filepath}";
         $output = null;
         $status = null;
         exec ($command, $output, $status);
-        
+
         return $revision;
     }
-    
-    
+
+
     /**
      * Check if a revision exists
      * @param string  version
      * @return booleann true if exists
      */
-    function version_exists($version) 
+    function version_exists($version)
     {
         $history = $this->list_history();
         return array_key_exists($version,$history);
     }
-    
-    /** 
+
+    /**
      * Get the previous versionID
      * @param string verison
      * @return string versionid before this one or empty string.
      */
-    function get_prev_version($version) 
+    function get_prev_version($version)
     {
         $versions = $this->list_history_numeric();
-        
+
         if (   !in_array($version, $versions)
             || $version === end($versions))
         {
             return '';
         }
-        
+
         $mode = end($versions);
-        
+
         while( $mode
             && $mode !== $version)
         {
             $mode = prev($versions);
-            
+
             if ($mode === $version)
             {
                 return next($versions);
             }
         }
-        
+
         return '';
     }
-    
+
     /**
      * Mirror method for get_prev_version()
-     * 
+     *
      * @access public
      * @param string $version
      * @return mixed
@@ -249,43 +253,43 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         return $this->get_prev_version($version);
     }
 
-    /** 
+    /**
      * Get the previous versionID
      * @param string verison
      * @return string versionid before this one or empty string.
      */
-    function get_next_version($version) 
+    function get_next_version($version)
     {
         $versions = $this->list_history_numeric();
-        
+
         if (   !in_array($version, $versions)
             || $version === current($versions))
         {
             return '';
         }
-        
+
         $mode = current($versions);
-        
+
         while( $mode
             && $mode !== $version)
         {
             $mode = next($versions);
-            
+
             if ($mode === $version)
             {
                 return prev($versions);
             }
         }
-        
+
         return '';
     }
-    
+
     /**
-     * This function returns a list of the revisions as a 
+     * This function returns a list of the revisions as a
      * key => value par where the key is the index of thhe revision
      * and the value is the revision id.
      * Order: revision 0 is the newest.
-     * @return array 
+     * @return array
      * @access public
      */
     function list_history_numeric()
@@ -293,7 +297,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         $revs = $this->list_history();
         $i = 0;
         $revisions = array();
-        foreach($revs as $id => $desc) 
+        foreach($revs as $id => $desc)
         {
             $revisions[$i] = $id;
             $i++;
@@ -313,12 +317,12 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         {
             return array();
         }
-        
+
         return $this->rcs_gethistory($filepath);
     }
-    
+
     /* it is debatable to move this into the object when it resides nicely in a libary... */
-    
+
     function rcs_parse_history_entry($entry)
     {
         // Create the empty history array
@@ -330,11 +334,11 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
             'ip'       => null,
             'message'  => null,
         );
-        
+
         // Revision number is in format
         // revision 1.11
         $history['revision'] = substr($entry[0], 9);
-        
+
         // Entry metadata is in format
         // date: 2006/01/10 09:40:49;  author: www-data;  state: Exp;  lines: +2 -2
         // NOTE: Time here appears to be stored as UTC according to http://parand.com/docs/rcs.html
@@ -348,10 +352,10 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
             }
             elseif (substr($metadata, 0, 6) == 'lines:')
             {
-                $history['lines'] = substr($metadata, 7);            
+                $history['lines'] = substr($metadata, 7);
             }
         }
-        
+
         // Entry message is in format
         // user:27b841929d1e04118d53dd0a45e4b93a|84.34.133.194|Updated on Tue 10.Jan 2006 by admin kw
         $message_array = explode('|', $entry[2]);
@@ -372,9 +376,9 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
     }
 
     /*
-     * the functions below are mostly rcs functions moved into the class. Someday I'll get rid of the 
-     * old files.... 
-     * 
+     * the functions below are mostly rcs functions moved into the class. Someday I'll get rid of the
+     * old files....
+     *
      */
     /**
      * Get a list of the obejcts history
@@ -386,7 +390,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         $history = $this->rcs_exec('rlog "' . $what . ',v"');
         $revisions = array();
         $lines = explode("\n", $history);
-        
+
         for ($i = 0; $i < count($lines); $i++)
         {
             if (substr($lines[$i], 0, 9) == "revision ")
@@ -395,13 +399,13 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
                 $history_entry[1] = $lines[$i+1];
                 $history_entry[2] = $lines[$i+2];
                 $history = $this->rcs_parse_history_entry($history_entry);
-                
+
                 $revisions[$history['revision']] = $history;
-                
+
                 $i += 3;
-                
-                while (   $i < count($lines) 
-                       && substr($lines[$i], 0, 4) != '----' 
+
+                while (   $i < count($lines)
+                       && substr($lines[$i], 0, 4) != '----'
                        && substr($lines[$i], 0, 5) != '=====')
                 {
                      $i++;
@@ -410,7 +414,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         }
         return $revisions;
     }
-    
+
     /**
      * execute a command
      * @param string command
@@ -422,11 +426,11 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         $ret = "";
         while ($reta = fgets($fh, 1024))
             $ret .= $reta;
-        
+
         pclose($fh);
         return $ret;
     }
-     
+
     /**
      * Writes $data to file $guid, does not return anything.
      */
@@ -446,28 +450,28 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         fwrite ($fp, $data);
         fclose ($fp);
     }
-    
+
     /**
      * Reads data from file $guid and returns it.
      * @param string guid
      * @return string xml representation of guid
      */
-     
+
     function rcs_readfile ($guid)
     {
-        
+
         $object = $_MIDCOM->dbfactory->get_object_by_guid($guid);
         $filename = $this->_generate_rcs_filename($object);
         if (is_null($filename))
         {
             return '';
         }
-        
-        if (!file_exists($filename)) 
+
+        if (!file_exists($filename))
         {
             return '';
         }
-        
+
         $fd = fopen ($filename, "r");
         $data = fread ($fd, filesize ($filename));
         fclose ($fd);
@@ -475,16 +479,16 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
     }
 
     /**
-     * rcs_data2object 
-     * @param string xmldata 
+     * rcs_data2object
+     * @param string xmldata
      * @return array of attribute=> value pairs.
      */
     function rcs_data2object($data)
     {
-        require_once(MIDCOM_ROOT . '/midcom/helper/xml/objectmapper.php');              
+        require_once(MIDCOM_ROOT . '/midcom/helper/xml/objectmapper.php');
         $mapper = new midcom_helper_xml_objectmapper();
-        
-        return $mapper->data2array($data);        
+
+        return $mapper->data2array($data);
         /*
         if (strpos($data, '<array>')) {
             $result = $unserializer->unserialize( $data );
@@ -496,16 +500,16 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         }
         */
         //return array();
-        
-    }    
+
+    }
     /**
      * Make xml out of an object.
      * @param object
      * @return xmldata
      */
-    function rcs_object2data($object) 
+    function rcs_object2data($object)
     {
-        
+
         if (!is_object($object))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -525,30 +529,30 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         return false;
     }
 
-    
+
     /**
      * This function takes an object and adds it to RCS, it should be
      * called just after $object->create(). Remember that you first need
-     * to mgd_get the object since $object->create() returns only the id, 
+     * to mgd_get the object since $object->create() returns only the id,
      * one way of doing this is:
      * @param object object to be saved
      * @param string changelog comment.-
      * @return int :
      *      0 on success
      *      3 on missing object->guid
-     *      nonzero on error in one of the commands. 
+     *      nonzero on error in one of the commands.
      */
-     
+
     function rcs_create($object, $description)
     {
         $output = null;
         $status = null;
         $guid = $object->guid;
-        
+
         $type = $object->__table__;
-   
+
         $data = $this->rcs_object2data($object, $type);
-     
+
         $this->rcs_writefile($guid, $data);
         $filepath = $this->_generate_rcs_filename($object);
         if (is_null($filepath))
@@ -558,17 +562,17 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
 
         $command = 'ci -q -i -t-' . escapeshellarg($description) . " {$filepath}";
         $status = $this->exec($command);
-        
+
         $filename = $filepath . ",v";
-        
+
         if (file_exists($filename))
         {
             chmod ($filename, 0770);
         }
         return $status;
     }
-    
-    function exec($command) 
+
+    function exec($command)
     {
         $status = null;
         $output = null;
@@ -580,7 +584,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         debug_add("Executing '{$command}'");
         debug_pop();
 
-        @exec($command, $output, $status);                
+        @exec($command, $output, $status);
 
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("Got return status {$status}");
@@ -607,52 +611,52 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
 
     /**
      * Get a html diff between two versions.
-     * 
+     *
      * @param string latest_revision id of the latest revision
      * @param string oldest_revision id of the oldest revision
      * @access public
      * @return array array with the original value, the new value and a diff -u
-     */    
-    function get_diff($oldest_revision, $latest_revision, $renderer_style = 'inline') 
+     */
+    function get_diff($oldest_revision, $latest_revision, $renderer_style = 'inline')
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         $oldest = $this->get_revision($oldest_revision);
         $newest = $this->get_revision($latest_revision);
-        
+
         $return = array();
-       
-        foreach ($oldest as $attribute => $oldest_value) 
+
+        foreach ($oldest as $attribute => $oldest_value)
         {
-            
+
             if (!array_key_exists($attribute, $newest))
             {
                 continue;
                 // This isn't in the newer version, skip
             }
-            
+
             if (is_array($oldest_value))
             {
                 continue;
                 // Skip
             }
-            
+
             $return[$attribute] = array
             (
-                'old' => $oldest_value, 
+                'old' => $oldest_value,
                 'new' => $newest[$attribute]
             );
-            
-            if ($oldest_value != $newest[$attribute]) 
+
+            if ($oldest_value != $newest[$attribute])
             {
-                if (class_exists('Text_Diff')) 
+                if (class_exists('Text_Diff'))
                 {
-                
+
                     $lines1 = explode ("\n", $oldest_value);
                     $lines2 = explode ("\n", $newest[$attribute]);
-                
+
                     $diff = &new Text_Diff($lines1, $lines2);
-                    
+
                     if ($renderer_style == 'unified')
                     {
                         $renderer = &new Text_Diff_Renderer_unified();
@@ -661,12 +665,12 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
                     {
                         $renderer = &new Text_Diff_Renderer_inline();
                     }
-                
-                    if (!$diff->isEmpty()) 
+
+                    if (!$diff->isEmpty())
                     {
                         // Run the diff
                         $return[$attribute]['diff'] = $renderer->render($diff);
-                        
+
                         if ($renderer_style == 'inline')
                         {
                             // Mofify the output for nicer rendering
@@ -676,53 +680,53 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
                             $return[$attribute]['diff'] = str_replace('</ins>', '</span>', $return[$attribute]['diff']);
                         }
                     }
-                } 
+                }
                 elseif (!is_null($GLOBALS['midcom_config']['utility_diff']))
                 {
                     /* this doesnt work */
                     $command = $GLOBALS['midcom_config']['utility_diff'] . " -u <(echo \"{$oldest_value}\") <(echo \"{$newest[$attribute]}\")";
-                    
+
                     $output = array();
                     $result = shell_exec($command);
-                    
+
                         //$return[$attribute]['diff'] = implode ("\n", $output);
                         $return[$attribute]['diff'] = $command. "\n'".$result . "'";
-                    
+
                 } else {
                     $return[$attribute]['diff'] = "THIS IS AN OUTRAGE!";
                 }
             }
         }
-        
+
         debug_pop();
         return $return;
-    
+
     }
 
-    /** 
+    /**
      * Get the comment of one revision.
      * @param string revison id
      * @return string comment
      */
-    function get_comment($revision) 
+    function get_comment($revision)
     {
-        if (is_null($this->_history)) 
+        if (is_null($this->_history))
         {
             $this->_history = $this->list_history();
         }
-        return $this->_history[$revision];   
-    }   
-    
+        return $this->_history[$revision];
+    }
+
     /**
      * Restore an object to a certain revision.
-     * 
+     *
      * @param string id of revision to restore object to.
      * @return boolean true on success.
      */
-    function restore_to_revision($revision) 
+    function restore_to_revision($revision)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         $new = $this->get_revision($revision);
 
         $object = $_MIDCOM->dbfactory->get_object_by_guid($this->_guid);
@@ -734,37 +738,37 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         }
         $attributes = get_object_vars ($object);
         $revs = array();
-        
-        foreach ($new as $attribute => $value) 
+
+        foreach ($new as $attribute => $value)
         {
             if (is_object($object->$attribute))
             {
                 continue;
             }
-            if (trim($value) != "" && array_key_exists($attribute, $attributes) ) 
-            {        
-                if ($object->{$attribute} != '' && $object->$attribute != $value) 
+            if (trim($value) != "" && array_key_exists($attribute, $attributes) )
+            {
+                if ($object->{$attribute} != '' && $object->$attribute != $value)
                 {
                     $revs[] ="$attribute (old: {$object->$attribute} new: $value" ;
                     $object->{$attribute} = $value;
                 }
-                
-                if ($object->{$attribute} == '') 
+
+                if ($object->{$attribute} == '')
                 {
                     $revs[] ="$attribute (old: {$object->$attribute} new: $value" ;
-                    
+
                     $object->{$attribute} = $value;
                 }
-                
+
             }
-            
+
         }
 
         $this->error[] = join(", ", $revs);
-        
+
         // TODO: Set revision comment to "Reverted to revision {$revision}"
-        
-        if ($object->update()) 
+
+        if ($object->update())
         {
             return true;
         }
@@ -772,6 +776,6 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         debug_pop();
         return false;
     }
- 
+
 }
 ?>

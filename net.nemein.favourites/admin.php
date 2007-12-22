@@ -1,15 +1,18 @@
 <?php
+/**
+ * @package net.nemein.favourites
+ */
 
 /**
  * Forum AIS interface class.
- * 
+ *
  * @package net.nemein.favourites
  */
 class net_nemein_favourites_admin
 {
     var $_content_topic = null;
 
-    function __construct($topic, $config) 
+    function __construct($topic, $config)
     {
     }
 
@@ -21,12 +24,12 @@ class net_nemein_favourites_admin
 
     function get_add_link($objectType, $guid, $url = '', $link_for_anonymous = true)
     {
-        if (   empty($objectType) 
+        if (   empty($objectType)
             || empty($guid))
         {
             return false;
         }
-        
+
         if (empty($url))
         {
             $node = midcom_helper_find_node_by_component('net.nemein.favourites');
@@ -35,40 +38,40 @@ class net_nemein_favourites_admin
                 $url = $node[MIDCOM_NAV_FULLURL];
             }
         }
-        
+
         if (empty($url))
         {
             return false;
         }
-        
+
         $midcom_i18n =& $_MIDCOM->get_service('i18n');
         $l10n =& $midcom_i18n->get_l10n('net.nemein.favourites');
-        
+
         $qb = net_nemein_favourites_favourite_dba::new_query_builder();
         $qb->add_constraint('objectGuid', '=', $guid);
         $qb->add_constraint('bury', '=', false);
         $total_favs = $qb->count_unchecked();
-        
+
         $qb = net_nemein_favourites_favourite_dba::new_query_builder();
         $qb->add_constraint('objectGuid', '=', $guid);
         $qb->add_constraint('bury', '=', true);
         $total_buries = $qb->count_unchecked();
-        
+
         if (   !$_MIDCOM->auth->user
             && !$link_for_anonymous)
         {
             return "<span class=\"net_nemein_favourites\">". sprintf($l10n->get('%d favs'), $total_favs) . "</span>\n";
         }
-        
+
         // Check if user has already favorited this
         $qb = net_nemein_favourites_favourite_dba::new_query_builder();
-        
+
         if ($_MIDCOM->auth->user)
         {
             $qb->add_constraint('metadata.creator', '=', $_MIDCOM->auth->user->guid);
         }
 
-        $return_url = rawurlencode($_SERVER['REQUEST_URI']);        
+        $return_url = rawurlencode($_SERVER['REQUEST_URI']);
         $bury = array
         (
             'icon' => MIDCOM_STATIC_URL . '/net.nemein.favourites/not-buried.png',
@@ -81,7 +84,7 @@ class net_nemein_favourites_admin
             'title' => $l10n->get('add to favourites'),
             'url' => "{$url}create/{$objectType}/{$guid}/?return={$return_url}"
         );
-        
+
         $qb->add_constraint('objectGuid', '=', $guid);
         if (   $_MIDCOM->auth->user
             && $qb->count_unchecked() > 0)

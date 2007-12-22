@@ -8,6 +8,8 @@
 
 /**
  * MidCOM DBA wrapped access to org_openpsa_campaign object, with some utility methods
+ *
+ * @package org.openpsa.directmarketing
  */
 class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
 {
@@ -435,6 +437,8 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
 
 /**
  * Another wrap level
+ *
+ * @package org.openpsa.directmarketing
  */
 class org_openpsa_directmarketing_campaign extends midcom_org_openpsa_campaign
 {

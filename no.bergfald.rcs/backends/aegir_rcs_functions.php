@@ -1,4 +1,10 @@
 <?php
+/**
+ * @author tarjei huse
+ * @package no.bergfald.rcs
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
 /**
  * This code stores (in rcs)
@@ -236,7 +242,7 @@ function rcs_exec($command)
      while ($reta = fgets($fh, 1024))
      $ret .= $reta;
      pclose($fh);
-    
+
      return $ret;
     }
 /**
@@ -248,13 +254,13 @@ function rcs_gethistory($what)
     $history = rcs_exec('rlog "' . $what . ',v"');
      $revisions = array();
      $lines = explode("\n", $history);
-    
+
      for ($i = 0; $i < count($lines); $i++){
          if (substr($lines[$i], 0, 9) == "revision "){
              $currentrev = substr($lines[$i], 9);
-            
+
              $i += 2;
-            
+
              while ($i < count($lines) && substr($lines[$i], 0, 4) != '----' && substr($lines[$i], 0, 5) != '====='){
                  if (array_key_exists($currentrev, $revisions)){
                      $revisions[$currentrev] .= $lines[$i] . " ";
@@ -278,7 +284,7 @@ function rcs_checkout_nolock($what)
 function rcs_checkout_lock($what)
 {
      rcs_exec("rcs -u \"" . $what . ",v\" 2>/dev/null");
-    
+
      if (file_exists($what . ",v")){
          rcs_exec("co -l -p \"" . $what . ",v\" 2>/dev/null");
          }else{
@@ -290,14 +296,14 @@ function rcs_checkdiff($what, $version, $prevvers)
 {
      if (file_exists($what . ",v")){
          $curname = "";
-        
+
          unset($dataarray);
-        
+
          rcs_exec("rcs -u \"" . $what . ",v\" 2>/dev/null");
-        
+
          // $tempdata=explode("\n",rcs_exec("rcsdiff -r$prevvers -r$version --context=3 \"".$what.",v\" 2>/dev/null"));
         $tempdata = explode("\n", rcs_exec('rcsdiff -r' . $prevvers . ' -r' . $version . ' --unified=3 "' . $what . ',v" 2>/dev/null'));
-        
+
          for ($i = 0; $i < count($tempdata); $i++){
              // if (ereg("^\*\*\*\*\*\*\*\*\*\*\*\*\*",$tempdata[$i])) {
             // $curname="";
@@ -334,26 +340,26 @@ function rcs_checkdiff($what, $version, $prevvers)
 function rcs_checkout($what, $version)
 {
      global $xmlformat;
-    
+
      if (!file_exists($what . ",v"))
          return 0;
-    
+
      $curname = "";
-    
+
      if (isset($dataarray))
          unset($dataarray);
-    
+
      $tempdata = explode("\n", rcs_exec("co -p" . $version . " \"" . $what . ",v\" 2>/dev/null"));
      // NOW READ THE simple XML format!
     $status["block"] = "";
      $status["level"] = 0;
      $status["table"] = "";
-    
+
      for ($i = 0; $i < count($tempdata); $i++){
          // is it the start or end of a block
         if (isset($args))
              unset($args);
-        
+
          switch ($status["level"]){
          case 0: // then I only expect "<object>";
             if (eregi("^[ ]*<([a-z_]+) id=\"[a-z0-9-]+\" [a-z]+=\"[0-9]+\">", $tempdata[$i], $args)){
@@ -367,7 +373,7 @@ function rcs_checkout($what, $version)
                 $status["block"] = $args[1];
                  $status["level"] = 2;
                  $dataarray[$status["block"]] = $args[2] . "\n";
-                
+
                  // option for single line data!
                 if (ereg("\]\]></" . $status["block"] . ">$", $args[2])){
                      $tmp = ereg_replace("\]\]></" . $status["block"] . ">$", "", $args[2]);
@@ -386,7 +392,7 @@ function rcs_checkout($what, $version)
                      eregi("^[ ]*<([a-z]+)/>[ ]*$", $tempdata[$i], $args)
                     ){
                  $dataarray[$args[1]] = 0;
-                
+
                  if (in_array($xmlformat[$status["table"]][$args[1]], array("CDATA", "STR"))){
                      $dataarray[$args[1]] = "";
                      }
@@ -394,7 +400,7 @@ function rcs_checkout($what, $version)
                  $status["level"] = 0;
                  }
              break;
-        
+
          case 2:
              if (ereg("(.*)\]\]></" . $status["block"] . ">[ ]*$", $tempdata[$i], $args)){
                  $dataarray[$status["block"]] .= $args[1];
@@ -406,10 +412,10 @@ function rcs_checkout($what, $version)
              break;
              }
          }
-    
+
      if ($dataarray)
          return $dataarray;
-    
+
      return 0;
     }
 
@@ -425,22 +431,22 @@ function rcs_checkin($what, $message, $fileexists)
 function rcs_createfile($object, $parentobject = "")
 {
      global $xmlformat;
-    
+
      $thisdef = $xmlformat[$object -> __table__];
-    
+
      if (!$thisdef){
          echo "ERROR CREATING RCS FILE FROM OBJECT";
          return;
          }
-    
+
      if ($object -> guid()){
          $ret = "<" . $object -> __table__ . " id=\"" . $object -> guid() . "\" changed=\"" . date("YmdHis") . "\">\n";
          }else{
          $ret = "<" . $object -> __table__ . " id=\"" . $object -> id . "\" changed=\"" . date("YmdHis") . "\">\n";
          }
-    
+
      reset($thisdef);
-    
+
      while (list($k, $v) = each($thisdef)){
          switch ($v){
          case "STR":
@@ -450,7 +456,7 @@ function rcs_createfile($object, $parentobject = "")
                  $ret .= "<$k/>\n";
                  }
              break;
-        
+
          case "CDATA":
              if ($object -> $k){
                  $ret .= "<$k><!" . "[CDATA[" . $object -> $k . "]" . "]></$k>\n";
@@ -458,7 +464,7 @@ function rcs_createfile($object, $parentobject = "")
                  $ret .= "<$k/>\n";
                  }
              break;
-        
+
          case "PID":
              if ($object -> $k){
                  // get pid
@@ -469,15 +475,15 @@ function rcs_createfile($object, $parentobject = "")
                  $ret .= "<$k/>\n"; // ouch this would be a problem!
                  }
              break;
-        
+
          case "OID":
              $ret .= "<$k>" . $parentobject -> guid() . "</$k>\n";
              break;
-        
+
          case "PTABLE":
              $ret .= "<$k>" . $parentobject -> __table__ . "</$k>\n";
              break;
-        
+
          case "PSITEGROUP":
              if ($psitegroup){
                  $psitegroup = mgd_get_sitegroup($parentobject -> sitegroup);
@@ -486,29 +492,29 @@ function rcs_createfile($object, $parentobject = "")
                  $ret .= "<$k/>\n";
                  }
              break;
-        
+
          case "BLOB":
              $ret .= "<$k locid=\"" . $object -> $k . "\">\n";
-            
+
              $buffer = "";
              $fh = $filehandle = mgd_open_attachment($object -> id, "r");
              while (!feof($fh))
              $buffer .= fgets($fh, 4096);
-            
+
              $ret .= chunk_split(base64_encode($buffer));
              $ret .= "</$k>\n";
              break;
-        
+
          default:
              if (!$object -> $k){
                  $ret .= "<$k/>\n";
                  }else{
                  $func = "mgd_get_$v";
-                
+
                  if ($v == "grp")
                      $func = "mgd_get_group";
                  $link = $func($object -> $k);
-                
+
                  if ($link -> guid()){
                      $ret .= "<$k>" . $link -> guid() . "</$k>\n";
                      }else{
@@ -526,7 +532,7 @@ function rcs_createfile($object, $parentobject = "")
 function view_pwalk($thisid, $type, $oldname)
 {
      global $filetree, $filetreeid, $pos, $id;
-    
+
      if (in_array($type, array("page", "style", "snippetdir", "topic"))){
          $tmpfunc = "mgd_get_" . $type;
          if (!$thisid or !$p = $tmpfunc($thisid)){
@@ -534,14 +540,14 @@ function view_pwalk($thisid, $type, $oldname)
              }
          unset($tmpfunc);
          }
-    
-    
+
+
      if ($p -> id == $id && 0){
          $filetree[$pos] = str_replace("+", " ", urlencode($oldname));
          }else{
          $filetree[$pos] = str_replace("+", " ", urlencode($p -> name));
          }
-    
+
      $pos++;
      view_pwalk($p -> up, $type, $oldname);
     }
@@ -551,7 +557,7 @@ function view_pwalk($thisid, $type, $oldname)
 function rcs_getfilename($object)
 {
      global $rcsroot, $SERVER_NAME, $error_message;
-    
+
      if (!rcs_check_ci_file_exists()){
          $error_message = "please install rcs for this to work";
          return 0;
@@ -559,7 +565,7 @@ function rcs_getfilename($object)
          $error_message = "please install rcs for this to work";
          return 0;
          }
-    
+
      if (!rcs_check_exist()){
          $error_message = "please configure write access to $rcsroot<br>";
          $error_message .= "e.g. mkdir $rcsroot<br>";
@@ -574,7 +580,7 @@ function rcs_getfilename($object)
          $error_message .= "chown www-data www-data $rcsroot for Debian<br>";
          return 0;
          }
-    
+
      if ($object -> guid())
          return $rcsroot . "/" . $object -> guid();
      else

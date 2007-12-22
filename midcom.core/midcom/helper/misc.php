@@ -9,7 +9,7 @@
 
 /**
  * This helper function searche for a snippet either in the Filesystem
- * or in the database and returns its content or code-field, respecitvly.
+ * or in the database and returns its content or code-field, respectively.
  *
  * Prefix the snippet Path with 'file:' for retrieval of a file relative to
  * MIDCOM_ROOT; omit it to get the code field of a Snippet.
@@ -45,7 +45,7 @@ function midcom_get_snippet_content_graceful($path)
 
 /**
  * This helper function searche for a snippet either in the Filesystem
- * or in the database and returns its content or code-field, respecitvly.
+ * or in the database and returns its content or code-field, respectively.
  *
  * Prefix the snippet Path with 'file:' for retrieval of a file relative to
  * MIDCOM_ROOT; omit it to get the code field of a Snippet.

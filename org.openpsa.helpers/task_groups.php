@@ -8,6 +8,7 @@
  * @copyright Nemein Oy, http://www.nemein.com
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
+
 function org_openpsa_helpers_task_groups(&$task, $mode = 'id')
 {
     //TODO: Localize something for the empty choice ?

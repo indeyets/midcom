@@ -563,7 +563,7 @@ class midcom_baseclasses_components_interface
 
     /**
      * Relays the can_handle call to the component, instantinating a new AIS or Site
-     * class respecitvly. It will execute can_handle of that class, retruning its result
+     * class respectively. It will execute can_handle of that class, retruning its result
      * to MidCOM.
      *
      * @param MidgardTopic $current_object The topic in question.

@@ -52,7 +52,7 @@
  *   first array member must either contain the name of an existing class or a reference to
  *   an already instantiated class. This value has
  *   no default and must be set. The actual methods called will have either an _handle_ or _show_
- *   prefixed to the exec_handler value, respecitvly. See below for automatic handler instances,
+ *   prefixed to the exec_handler value, respectively. See below for automatic handler instances,
  *   the preferred way to set things up.
  *
  * Example:

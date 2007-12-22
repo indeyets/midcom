@@ -1,5 +1,7 @@
 <?php
 /**
+ * @package no.bergfald.rcs
+ *
  * GUID Based RCS functions for Midgard 1.4.1 (PHP4) and up
  * by Eero af Heurlin (eero.afheurlin@iki.fi), will
  * propably work with PHP3 as well but is not tested.

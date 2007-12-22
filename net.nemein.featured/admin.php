@@ -1,15 +1,18 @@
 <?php
+/**
+ * @package net.nemein.featured
+ */
 
 /**
  * Featured AIS interface class.
- * 
+ *
  * @package net.nemein.featured
  */
 class net_nemein_featured_admin extends midcom_baseclasses_components_request_admin
 {
     var $_content_topic = null;
 
-    function net_nemein_featured_admin($topic, $config) 
+    function net_nemein_featured_admin($topic, $config)
     {
          parent::midcom_baseclasses_components_request_admin($topic, $config);
     }
@@ -44,7 +47,7 @@ class net_nemein_featured_admin extends midcom_baseclasses_components_request_ad
 
         $midcom_i18n =& $_MIDCOM->get_service('i18n');
 	$l10n =& $midcom_i18n->get_l10n('net.nemein.featured');
-        
+
 	if (!$_MIDCOM->auth->user)
         {
 	    return true;
@@ -63,9 +66,9 @@ class net_nemein_featured_admin extends midcom_baseclasses_components_request_ad
 	echo $path;
 	$url = $node[MIDCOM_NAV_FULLURL];
 
-	echo "<span class=\"net_nemein_featured\">" . "<a href=\"{$url}manage/?featured_path={$path}&type={$objectType}\" 
+	echo "<span class=\"net_nemein_featured\">" . "<a href=\"{$url}manage/?featured_path={$path}&type={$objectType}\"
 	        class=\"net_nemein_featured_manage\">ADD</a></span>";
-    
+
         return true;
     }
 
@@ -81,7 +84,7 @@ class net_nemein_featured_admin extends midcom_baseclasses_components_request_ad
 
         $featured_objects = $qb->execute();
 
-	return $featured_objects; 
+	return $featured_objects;
     }
 
     function show_featured_items($topic_guid, $group_name = '', $substyle = array())
@@ -94,10 +97,10 @@ class net_nemein_featured_admin extends midcom_baseclasses_components_request_ad
 
 	    print_r($target_object);
 /*
-            // TODO: 
+            // TODO:
 	    if (array_key_exists($target_object->type, $substyle)
 	    {
-                
+
 	    }
 	    else
 	    {

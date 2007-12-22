@@ -1,5 +1,9 @@
 <?php
 /**
+ * @package org.openpsa.contacts
+ */
+
+/**
  * Helper to merge duplicate objects
  * @package org.openpsa.contacts
  */

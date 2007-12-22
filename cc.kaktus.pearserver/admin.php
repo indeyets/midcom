@@ -12,7 +12,7 @@
  *
  * Dummy class stub.
  *
- * @package cc.kaktus_pearserver
+ * @package cc.kaktus.pearserver
  */
 class cc_kaktus_pearserver_admin extends midcom_baseclasses_components_request_admin
 {

@@ -6,6 +6,9 @@
 * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
 */
 
+/**
+ * @package cc.kaktus.todo
+ */
 class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
 {
     /**

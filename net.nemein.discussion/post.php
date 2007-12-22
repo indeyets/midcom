@@ -1,7 +1,7 @@
 <?php
 /**
  * @package net.nemein.discussion
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id$
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,19 +9,21 @@
 
 /**
  * MidCOM DBA access to posts
- */ 
+ *
+ * @package net.nemein.discussion
+ */
 class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
 {
     function net_nemein_discussion_post_dba($id = null)
     {
         return parent::__net_nemein_discussion_post_dba($id);
     }
-        
+
     function get_label()
     {
         return $this->subject;
     }
-    
+
     /**
      * Marks the message as reported abuse
      */
@@ -31,7 +33,7 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
         {
             return false;
         }
-        
+
         // Set the status
         if ($this->can_do('net.nemein.discussion:moderation'))
         {
@@ -41,7 +43,7 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
         {
             $this->status = NET_NEMEIN_DISCUSSION_REPORTED_ABUSE;
         }
-        
+
         if ($this->update())
         {
             // Log who reported it
@@ -60,13 +62,13 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
         {
             return false;
         }
-        
+
         // Set the status
         if (!$this->can_do('net.nemein.discussion:moderation'))
         {
             return false;
         }
-        
+
         $this->status = NET_NEMEIN_DISCUSSION_ABUSE;
         if ($this->update())
         {
@@ -76,7 +78,7 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
         }
         return false;
     }
-    
+
     /**
      * Marks the message as confirmed junk (spam)
      */
@@ -86,13 +88,13 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
         {
             return false;
         }
-        
+
         // Set the status
         if (!$this->can_do('net.nemein.discussion:moderation'))
         {
             return false;
         }
-        
+
         $this->status = NET_NEMEIN_DISCUSSION_JUNK;
         if ($this->update())
         {
@@ -101,8 +103,8 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
             return true;
         }
         return false;
-    }    
-    
+    }
+
     /**
      * Marks the message as not abuse
      */
@@ -112,16 +114,16 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
         {
             return false;
         }
-        
+
         if (!$this->can_do('net.nemein.discussion:moderation'))
         {
             return false;
         }
-        
+
         // Set the status
         $this->status = NET_NEMEIN_DISCUSSION_MODERATED;
         $updated = $this->update();
-        
+
         if ($this->update())
         {
             // Log who reported it
@@ -129,8 +131,8 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
             return true;
         }
         return false;
-    }    
-    
+    }
+
     function get_logs()
     {
         $log_entries = array();
@@ -151,7 +153,7 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
                     $user =& $_MIDCOM->auth->get_user($log_details[0]);
                     $reporter = $user->name;
                 }
-                
+
                 $log_entries[$log_action[1]] = array
                 (
                     'action'   => $log_action[0],
@@ -163,7 +165,7 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
         }
         return $log_entries;
     }
-    
+
     function _log_moderation($action = 'marked_spam')
     {
         if ($_MIDCOM->auth->user)
@@ -178,7 +180,7 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
         $browser = str_replace(':', '_', $_SERVER['HTTP_USER_AGENT']);
         $this->parameter('net.nemein.discussion.log', "$action:".time(), "{$reporter}:{$_SERVER['REMOTE_ADDR']}:{$browser}");
     }
-    
+
     function _on_loaded()
     {
         if ($this->subject == '')
@@ -187,7 +189,7 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
         }
         return true;
     }
-    
+
     function _on_updated()
     {
         return $this->_update_thread_cache();
@@ -197,7 +199,7 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
     {
         return $this->_update_thread_cache();
     }
-    
+
     /**
      * Update the cached 'posts' and 'latestpost' attributes of the thread
      */
@@ -216,7 +218,7 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
                 $thread = $thread->get_parent();
             }
         }
-        
+
         $latest_post = new net_nemein_discussion_post_dba($thread->latestpost);
 
         $qb = net_nemein_discussion_post_dba::new_query_builder();
@@ -230,7 +232,7 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
                 $latest_post = $post;
             }
         }
-    
+
         if (   count($posts) != $thread->posts
             || $latest_post->id != $thread->latestpost)
         {
@@ -248,9 +250,9 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
                 $thread->update();
             }
         }
-        
+
         $_MIDCOM->auth->drop_sudo();
-        
+
         return true;
     }
 }

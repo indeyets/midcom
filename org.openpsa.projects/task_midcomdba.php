@@ -1,6 +1,14 @@
 <?php
 /**
+ * @package org.openpsa.projects
+ * @author Nemein Oy http://www.nemein.com/
+ * @copyright Nemein Oy http://www.nemein.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
+/**
  * Midcom wrapped access to the MgdSchema class, keep logic here
+ *
  * @package org.openpsa.projects
  */
 class midcom_org_openpsa_task extends __midcom_org_openpsa_task
@@ -570,7 +578,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
 
         $this->hourCache = $hours['reported'];
         $this->agreement = (int) $this->agreement;
-        
+
         if ($this->agreement)
         {
             // Copy this task's hours as base
@@ -618,7 +626,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
             'invoiced'    => 0,
             'invoiceable' => 0,
         );
-        
+
         // Check agreement for invoceability rules
         $invoice_approved = false;
         $invoice_enable = false;
@@ -1290,7 +1298,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
                 // We only invoice approved hours and this isn't. Skip
                 continue;
             }
-            
+
             $invoice_member = new org_openpsa_invoices_invoice_hour();
             $invoice_member->hourReport = $report->id;
             $invoice_member->invoice = $invoice->id;

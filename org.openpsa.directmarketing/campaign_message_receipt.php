@@ -8,6 +8,8 @@
 
 /**
  * MidCOM wrapped class for access to stored queries
+ *
+ * @package org.openpsa.directmarketing
  */
 class midcom_org_openpsa_campaign_message_receipt extends __midcom_org_openpsa_campaign_message_receipt
 {

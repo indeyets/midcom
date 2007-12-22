@@ -1,12 +1,21 @@
 <?php
 /**
+ * @package net.nemein.tag
+ * @author Henri Bergius, http://bergie.iki.fi
+ * @copyright Nemein Oy, http://www.nemein.com
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
  * MidCOM wrapped class for access to tags
+ *
+ * @package net.nemein.tag
  */
 class net_nemein_tag_dba extends __net_nemein_tag_dba
 {
     function net_nemein_tag_dba($id = null)
     {
-        $this->_use_rcs = false;    
+        $this->_use_rcs = false;
         return parent::__net_nemein_tag_dba($id);
     }
 
@@ -74,10 +83,10 @@ class net_nemein_tag_dba extends __net_nemein_tag_dba
             $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.tag', 'net.nemein.tag'), sprintf($_MIDCOM->i18n->get_string('tag "%s" is not valid. tags may not contain quotes', 'net.nemein.tag'), $tag), 'info');
             return false;
         }
-        
+
         return true;
     }
-    
+
     function _on_updating()
     {
         if (!$this->validate_tag($this->tag))
@@ -90,7 +99,7 @@ class net_nemein_tag_dba extends __net_nemein_tag_dba
         }
         return true;
     }
-    
+
     function _check_duplicates()
     {
         $qb = net_nemein_tag_dba::new_query_builder();

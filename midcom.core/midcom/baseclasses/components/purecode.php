@@ -40,7 +40,7 @@ class midcom_baseclasses_components_purecode
     /**
      * A handle to the i18n service.
      *
-     * @var midcom_helper_services_i18n
+     * @var midcom_services_i18n
      */
     var $_i18n = null;
 
@@ -69,7 +69,7 @@ class midcom_baseclasses_components_purecode
      * Internal helper, holds the name of the component. Should be used whenever the
      * components' name is required instead of hardcoding it.
      *
-     * This variable must be set before the basecalsses' constructor is called.
+     * This variable must be set before the baseclasses' constructor is called.
      *
      * @var string
      */

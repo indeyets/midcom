@@ -7,6 +7,7 @@
  * @copyright Nemein Oy, http://www.nemein.com
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
+
 function org_openpsa_helpers_projects($add_all = false, $display_tasks = false, $require_privileges = false)
 {
     //Make sure the class we need exists

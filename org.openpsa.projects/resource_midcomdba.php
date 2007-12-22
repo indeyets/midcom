@@ -1,6 +1,14 @@
 <?php
 /**
+ * @package org.openpsa.projects
+ * @author Nemein Oy http://www.nemein.com/
+ * @copyright Nemein Oy http://www.nemein.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
+/**
  * Midcom wrapped access to the MgdSchema class, keep logic here
+ *
  * @package org.openpsa.projects
  */
 class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resource

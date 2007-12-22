@@ -6,16 +6,15 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
-/**
- * Base davclass. Provides logging for all functions so I can see what is needed.
- *
- * @package midgard.webdav.styles
- *
- */
 
 /** @ignore */
 require 'HTTP/WebDAV/Server.php';
 
+/**
+ * Base davclass. Provides logging for all functions so I can see what is needed.
+ *
+ * @package midgard.webdav.styles
+ */
 class midgard_webdav_styles_dav extends HTTP_WebDAV_Server {
 
     var $style;

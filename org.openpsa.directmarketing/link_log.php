@@ -8,6 +8,8 @@
 
 /**
  * MidCOM wrapped class for access to stored queries
+ *
+ * @package org.openpsa.directmarketing
  */
 class midcom_org_openpsa_link_log extends __midcom_org_openpsa_link_log
 {
@@ -35,6 +37,8 @@ class midcom_org_openpsa_link_log extends __midcom_org_openpsa_link_log
 
 /**
  * Another wrap level
+ *
+ * @package org.openpsa.directmarketing
  */
 class org_openpsa_directmarketing_link_log extends midcom_org_openpsa_link_log
 {

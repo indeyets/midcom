@@ -8,8 +8,9 @@
 
 /**
  * MidCOM wrapped class for access to stored queries
+ *
+ * @package org.openpsa.calendar
  */
-
 class org_openpsa_calendar_event_resource_dba extends __org_openpsa_calendar_event_resource_dba
 {
     function org_openpsa_calendar_event_resource_dba($id = null)

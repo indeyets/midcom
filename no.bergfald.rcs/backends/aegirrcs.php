@@ -6,20 +6,23 @@
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
- 
+
+/**
+ * @package no.bergfald.rcs
+ */
 class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
-   
+
     /**
      * Default rcsroot
      */
     var $rcsroot = '';
-   
-    function no_bergfald_rcs_aegirrcs($guid) 
+
+    function no_bergfald_rcs_aegirrcs($guid)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         parent::no_bergfald_rcs($guid);
         $this->_probe_nemein_rcs();
-        
+
         if (   $_MIDGARD['config']['prefix'] == '/usr'
                     || $_MIDGARD['config']['prefix'] == '/usr/local')
         {
@@ -34,58 +37,58 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
         // HA! We're the libary now!'
         //require_once('nemein_rcs_functions.php');
         //require_once('aegir_rcs_functions.php');
-        
+
         debug_pop();
     }
 
-    
+
    /**
     * Get the object of a revision
     * @param string object guid (or other identifier)
     * @param string revision identifier of revision wanted
-    * @return array arrray representation of the object 
+    * @return array arrray representation of the object
     */
-    function get_revision( $revision) 
+    function get_revision( $revision)
     {
         $filepath = $this->rcsroot . '/' . $this->_guid;
         $return = array();
 
-        
+
         // , must become . to work. Therefore this:
         str_replace(',', '.', $revision );
         // this seems to cause problems:
         //settype ($revision, "float");
-        
+
         $command = "co -r" . trim($revision) .  " " . $filepath;
         $output = null;
         $status = null;
         unset($output);
         unset ($status);
         exec ($command, $output, $status);
-         
+
         $data = $this->rcs_readfile($this->_guid);
-        
+
         $revision = $this->rcs_data2object($data);
-       
+
         $command = "rm -f " . $filepath;
         $output = null;
         $status = null;
         exec ($command, $output, $status);
-        
+
         return $revision;
     }
-    
+
     /**
      * Restore an object to a certain revision.
-     * 
+     *
      * @param string id of revision to restore object to.
      * @return boolean true on success.
      */
-    
-    function restore_to_revision($revision) 
+
+    function restore_to_revision($revision)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         $new = $this->get_revision($revision);
         /* commented out for now  , it only returned null :/ */
         $object = $_MIDCOM->dbfactory->get_object_by_guid($this->_guid);
@@ -97,29 +100,29 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
         }
         $attributes = get_object_vars ($object);
         $revs = array();
-        
-        
+
+
         if(1) foreach ($new as $attribute => $value) {
             if (trim($value) != "" && array_key_exists($attribute, $attributes) ) {
-                        
+
                 if ($object->{$attribute} != "" && $object->$attribute != $value) {
                     $revs[] ="$attribute (old: {$object->$attribute} new: $value" ;
                     $object->{$attribute} = $value;
                 }
-                
+
                 if ($object->{$attribute} == '') {
                     $revs[] ="$attribute (old: {$object->$attribute} new: $value" ;
-                    
+
                     $object->{$attribute} = $value;
                 }
-                
+
             }
-            
+
         }
 
         $this->error[] = join( ", ", $revs);
-        
-        if ($object->update()) 
+
+        if ($object->update())
         {
             return $this->save_object(&$object, "Reverted to revision {$revision}");
         }
@@ -127,54 +130,54 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
         debug_pop();
         return false;
     }
-    
+
     /**
      * Save a new revision
      * @param object object to be saved
      * @return boolean true on success.
      */
-    function save_object(&$object, $updatemessage = null) 
+    function save_object(&$object, $updatemessage = null)
     {
         //todo: add time of day
         $update_string = "{$_MIDCOM->auth->user->id}|{$_SERVER['REMOTE_ADDR']}";
         if (!$updatemessage)
         {
-            if ($_MIDCOM->auth->user !== null) 
+            if ($_MIDCOM->auth->user !== null)
             {
                 $updatemessage = sprintf("Updated on %s by %s", date("D d.M Y",time()), $_MIDCOM->auth->user->name);
-            } 
-            else 
+            }
+            else
             {
                 $updatemessage = sprintf("Updated on %s.", date("D d.M Y",time()));
             }
         }
         $update_string .= "|{$updatemessage}";
         $result = $this->rcs_update(&$object, $update_string);
-        
-        
-        if ($result > 0 ) { 
+
+
+        if ($result > 0 ) {
             return false;
-        } 
-        return true;     
+        }
+        return true;
     }
-    
+
     /**
      * Check if a revision exists
      * @param string  version
      * @return booleann true if exists
      */
-    function version_exists($version) 
+    function version_exists($version)
     {
         $history = $this->list_history();
         return array_key_exists($version,$history);
     }
-    
-    /** 
+
+    /**
      * Get the previous versionID
      * @param string verison
      * @return string versionid before this one or empty string.
      */
-    function get_prev_version($version) 
+    function get_prev_version($version)
     {
         $versions = $this->list_history_numeric();
         for ($i = 0; $i < count($versions); $i++) {
@@ -191,7 +194,7 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
     /**
      * Get the next id
      */
-    function get_next_version($version) 
+    function get_next_version($version)
     {
         $versions = $this->list_history_numeric();
         for ($i = 0; $i < count($versions); $i++) {
@@ -206,11 +209,11 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
         return "";
     }
     /**
-     * This function returns a list of the revisions as a 
+     * This function returns a list of the revisions as a
      * key => value par where the key is the index of thhe revision
      * and the value is the revision id.
      * Order: revision 0 is the newest.
-     * @return array 
+     * @return array
      * @access public
      */
     function list_history_numeric()
@@ -223,7 +226,7 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
             $i++;
         }
         return $return;
-    
+
     }
     /**
      * Lists the number of changes that has been done to the object
@@ -238,19 +241,19 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
         debug_pop();
         return $this->rcs_gethistory($filepath);
     }
- 
-    function _probe_nemein_rcs() 
+
+    function _probe_nemein_rcs()
     {
-        
-    
-            
+
+
+
         debug_add ("Bergfald RCS interface: checking for /AegirCore/config/config");
         if (mgd_snippet_exists("/AegirCore/config/config")) {
-            
+
           debug_add ("Bergfald RCS interface: Including /AegirCore/config/config");
           mgd_include_snippet_php("/AegirCore/config/config");
         }
-    
+
         debug_add ("Bargfald RCS interface: Checking configuration");
         if (!isset($set) || !is_array($set) || !array_key_exists("rcsroot", $set)) {
             debug_add("NemeinRCS interface: Aegir rcsroot not set by Aegir, going to default");
@@ -258,25 +261,25 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
         } else {
             $this->rcsroot = $set['rcsroot'];
         }
-    
+
         if (!file_exists($set["rcsroot"])) {
             debug_add("Bergfald RCS interface: Aegir rcsroot directory ".$set["rcsroot"]." not found on system");
             return false;
         }
-    
+
         if (!is_writable($set["rcsroot"])) {
             debug_add("Bergfald RCS interface: Aegir rcsroot directory ".$set["rcsroot"]." is not writable by the Apache process");
             return false;
         }
-    
+
         debug_add("Bergfald RCS interface: Set rcsroot to " . $set["rcsroot"]);
-        
+
         $rcsroot = $set["rcsroot"];
         return $rcsroot;
     }
-    
+
     /* it is debatable to move this into the object when it resides nicely in a libary... */
-    
+
     function rcs_parse_history_entry($entry)
     {
         // Create the empty history array
@@ -288,11 +291,11 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
             'ip'       => null,
             'message'  => null,
         );
-        
+
         // Revision number is in format
         // revision 1.11
         $history['revision'] = substr($entry[0], 9);
-        
+
         // Entry metadata is in format
         // date: 2006/01/10 09:40:49;  author: www-data;  state: Exp;  lines: +2 -2
         $metadata_array = explode(';',$entry[1]);
@@ -305,10 +308,10 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
             }
             elseif (substr($metadata, 0, 6) == 'lines:')
             {
-                $history['lines'] = substr($metadata, 7);            
+                $history['lines'] = substr($metadata, 7);
             }
         }
-        
+
         // Entry message is in format
         // user:27b841929d1e04118d53dd0a45e4b93a|84.34.133.194|Updated on Tue 10.Jan 2006 by admin kw
         $message_array = explode('|', $entry[2]);
@@ -329,9 +332,9 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
     }
 
     /*
-     * the functions below are mostly rcs functions moved into the class. Someday I'll get rid of the 
-     * old files.... 
-     * 
+     * the functions below are mostly rcs functions moved into the class. Someday I'll get rid of the
+     * old files....
+     *
      */
     /**
      * Get a list of the obejcts history
@@ -343,7 +346,7 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
         $history = $this->rcs_exec('rlog "' . $what . ',v"');
         $revisions = array();
         $lines = explode("\n", $history);
-        
+
         for ($i = 0; $i < count($lines); $i++)
         {
             if (substr($lines[$i], 0, 9) == "revision ")
@@ -352,29 +355,29 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
                 $history_entry[1] = $lines[$i+1];
                 $history_entry[2] = $lines[$i+2];
                 $history = $this->rcs_parse_history_entry($history_entry);
-                
+
                 $revisions[$history['revision']] = $history;
-                
+
                 $i += 3;
-                
-                while (   $i < count($lines) 
-                       && substr($lines[$i], 0, 4) != '----' 
+
+                while (   $i < count($lines)
+                       && substr($lines[$i], 0, 4) != '----'
                        && substr($lines[$i], 0, 5) != '=====')
                 {
                      $i++;
                 }
             }
         }
-        
+
         /*foreach ($revisions as $revision_number => $revision)
         {
             $revisions['prev'] = $this->get_prev_version($revision_number);
             $revisions['next'] = $this->get_next_version($revision_number);
         }*/
-        
+
         return $revisions;
     }
-    
+
     /**
      * execute a command
      * @param string command
@@ -386,11 +389,11 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
         $ret = "";
         while ($reta = fgets($fh, 1024))
             $ret .= $reta;
-        
+
         pclose($fh);
         return $ret;
     }
-     
+
     /**
      * Writes $data to file $guid, does not return anything.
      */
@@ -399,22 +402,22 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
         if (!is_writable($this->rcsroot))
         {
             return false;
-        }    
+        }
         $filename = "{$this->rcsroot}/{$guid}";
         $fp = fopen ($filename, "w");
         fwrite ($fp, $data);
         fclose ($fp);
     }
-    
+
     /**
      * Reads data from file $guid and returns it.
      * @param string guid
      * @return string xml representation of guid
      */
-     
+
     function rcs_readfile ($guid)
     {
-        
+
         $filename = "{$this->rcsroot}/{$guid}";
         if (!file_exists($filename)) {
             return "";
@@ -426,16 +429,16 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
     }
 
     /**
-     * rcs_data2object 
-     * @param string xmldata 
+     * rcs_data2object
+     * @param string xmldata
      * @return array of attribute=> value pairs.
      */
     function rcs_data2object($data)
     {
-                      
+
         $mapper = new midcom_helper_xml_objectmapper();
 
-        return $mapper->data2array($data);        
+        return $mapper->data2array($data);
         /*
         if (strpos($data, '<array>')) {
             $result = $unserializer->unserialize( $data );
@@ -447,16 +450,16 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
         }
         */
         //return array();
-        
-    }    
+
+    }
     /**
      * Make xml out of an object.
      * @param object
      * @return xmldata
      */
-    function rcs_object2data($object) 
+    function rcs_object2data($object)
     {
-        
+
         if (!is_object($object))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -464,7 +467,7 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
             debug_pop();
             return false;
         }
-        
+
         $mapper = new midcom_helper_xml_objectmapper();
         $result = $mapper->object2data($object);
         if ($result) {
@@ -476,34 +479,34 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
         return false;
     }
 
-    
+
     /**
      * This function takes an object and adds it to RCS, it should be
      * called just after $object->create(). Remember that you first need
-     * to mgd_get the object since $object->create() returns only the id, 
+     * to mgd_get the object since $object->create() returns only the id,
      * one way of doing this is:
      * @param object object to be saved
      * @param string changelog comment.-
      * @return int :
      *      0 on success
      *      3 on missing object->guid
-     *      nonzero on error in one of the commands. 
+     *      nonzero on error in one of the commands.
      */
-     
+
     function rcs_create ($object, $description)
     {
         $output = null;
         $status = null;
         $guid = $object->guid;
-        
+
         $type = $object->__table__;
-   
+
         $data = $this->rcs_object2data($object, $type);
-     
+
         $this->rcs_writefile($guid, $data);
         $command = "ci -i -t-'{$description}' {$this->rcsroot}/{$guid}";
         exec ($command, $output, $status);
-        
+
         $filename = "{$this->rcsroot}/{$guid},v";
         chmod ($filename, 0770);
         return $status;
@@ -524,49 +527,49 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
      */
     function rcs_update ($object,$message = "Changed via Midgard")
     {
-        
+
         $output = null;
         $status = null;
         unset ($output);
         unset($status);
-     
+
         $guid = $object->guid;
-     
-    
+
+
         if (!($guid <> "")) {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Missing guid returning error");
             debug_pop();
             return 3;
         }
-    
-        
-     
+
+
+
         $rcsfilename = $this->rcsroot . "/" . $guid . ",v";
-     
+
         if (!file_exists($rcsfilename)){
             if ($this->rcs_create($object, $message)) {
                 return 0;
-            } 
+            }
             return 2;
         }
-    
+
         $command = "co -l " . $this->rcsroot . "/" . $guid;
         exec ($command, $output, $status);
-        
+
         $data = $this->rcs_object2data($object);
-        
-     
+
+
         $this->rcs_writefile($guid, $data);
         $command = "ci -m'" . $message . "' " . $this->rcsroot . "/" . $guid;
         unset ($output);
         unset ($status);
         exec ($command, $output, $status);
-    
+
         $filename = $this->rcsroot . "/" . $guid . ",v";
         chmod ($filename, 0770);
         return $status;
     }
-    
+
 }
 ?>

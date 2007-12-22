@@ -6,6 +6,10 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
 // TODO Hotfix
+
+/**
+ * @package org.openpsa.contacts
+ */
 class midcom_org_openpsa_organization extends __midcom_org_openpsa_organization
 {
     function midcom_org_openpsa_organization($id = null)

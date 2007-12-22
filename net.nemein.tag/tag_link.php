@@ -1,6 +1,15 @@
 <?php
 /**
+ * @package net.nemein.tag
+ * @author Henri Bergius, http://bergie.iki.fi
+ * @copyright Nemein Oy, http://www.nemein.com
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
  * MidCOM wrapped class for access to stored queries
+ *
+ * @package net.nemein.tag
  */
 class net_nemein_tag_link_dba extends __net_nemein_tag_link_dba
 {
@@ -9,7 +18,7 @@ class net_nemein_tag_link_dba extends __net_nemein_tag_link_dba
         $this->_use_rcs = false;
         return parent::__net_nemein_tag_link_dba($id);
     }
-    
+
     function get_parent_guid_uncached()
     {
         if (empty($this->fromGuid))
@@ -75,17 +84,17 @@ class net_nemein_tag_link_dba extends __net_nemein_tag_link_dba
             debug_pop();
             return false;
         }
-        
+
         return true;
     }
-    
+
     function _on_created()
     {
         if ($this->context == 'geo')
         {
             $this->_geotag();
         }
-        
+
         return parent::_on_created();
     }
 
@@ -107,14 +116,14 @@ class net_nemein_tag_link_dba extends __net_nemein_tag_link_dba
         }
         return true;
     }
-    
+
     function _on_updated()
     {
         if ($this->context == 'geo')
         {
             $this->_geotag();
         }
-        
+
         return parent::_on_updated();
     }
 
@@ -132,7 +141,7 @@ class net_nemein_tag_link_dba extends __net_nemein_tag_link_dba
 
         return $qb->count_unchecked();
     }
-    
+
     /**
      * Handle storing Flickr-style geo tags to org.routamc.positioning
      * storage should be to org_routamc_positioning_location_dba object
@@ -146,9 +155,9 @@ class net_nemein_tag_link_dba extends __net_nemein_tag_link_dba
         {
             return false;
         }
-        
+
         $_MIDCOM->load_library('org.routamc.positioning');
-        
+
         // Get all "geo" tags of the object
         $object = $_MIDCOM->dbfactory->get_object_by_guid($this->fromGuid);
         $geotags = net_nemein_tag_handler::get_object_machine_tags_in_context(&$object, 'geo');
@@ -159,9 +168,9 @@ class net_nemein_tag_link_dba extends __net_nemein_tag_link_dba
             'latitude'  => null,
             'altitude'  => null,
         );
-        
+
         foreach ($geotags as $key => $value)
-        {   
+        {
             switch ($key)
             {
                 case 'lon':
@@ -169,24 +178,24 @@ class net_nemein_tag_link_dba extends __net_nemein_tag_link_dba
                 case 'long':
                     $position['longitude'] = $value;
                     break;
-                    
+
                 case 'lat':
                     $position['latitude'] = $value;
                     break;
-                    
+
                 case 'alt':
                     $position['altitide'] = $value;
                     break;
             }
         }
-        
+
         if (   is_null($position['longitude'])
             || is_null($position['latitude']))
         {
             // Not enough information for positioning, we need both lon and lat
             return false;
         }
-        
+
         $object_location = new org_routamc_positioning_location_dba();
         $object_location->relation = ORG_ROUTAMC_POSITIONING_RELATION_IN;
         $object_location->parent = $this->fromGuid;
@@ -196,10 +205,10 @@ class net_nemein_tag_link_dba extends __net_nemein_tag_link_dba
         $object_location->longitude = $position['longitude'];
         $object_location->latitude = $position['latitude'];
         $object_location->altitude = $position['altitude'];
-        
+
         return $object_location->create();
     }
-    
+
     /**
      * By default all authenticated users should be able to do
      * whatever they wish with tag objects, later we can add

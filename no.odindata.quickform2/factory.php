@@ -6,6 +6,9 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/**
+ * @package no.odindata.quickform2
+ */
 class no_odindata_quickform2_factory
 {
 

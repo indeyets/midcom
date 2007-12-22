@@ -1,15 +1,23 @@
 <?php
 /**
- * MidCOM wrapped class for access to stored queries
+ * @package fi.mik.lentopaikkakisa
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
- 
+
+/**
+ * MidCOM wrapped class for access to stored queries
+ *
+ * @package fi.mik.lentopaikkakisa
+ */
 class fi_mik_flight_dba extends __fi_mik_flight_dba
 {
     function fi_mik_flight_dba($id = null)
     {
         return parent::__fi_mik_flight_dba($id);
     }
-    
+
     function get_parent_guid_uncached()
     {
         if ($this->pilot)
@@ -19,7 +27,7 @@ class fi_mik_flight_dba extends __fi_mik_flight_dba
         }
         return null;
     }
-    
+
     /**
      * Human-readable label for cases like Asgard navigation
      */

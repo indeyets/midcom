@@ -1,5 +1,9 @@
 ˆ<?php
-/* Copyright (c) 2006 Jukka Zitting <jz@yukatan.fi>
+/**
+ * @package org.openpsa.directmarketing
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ *
+ *  Copyright (c) 2006 Jukka Zitting <jz@yukatan.fi>
  * This file is part of OpenPSA.
  *
  * OpenPSA is free software; you can redistribute it and/or modify

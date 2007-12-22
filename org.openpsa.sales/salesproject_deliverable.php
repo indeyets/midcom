@@ -8,8 +8,9 @@
 
 /**
  * MidCOM wrapped class for access to stored queries
+ *
+ * @package org.openpsa.sales
  */
-
 class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_salesproject_deliverable
 {
     /**

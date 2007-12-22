@@ -9,6 +9,8 @@
 
 /**
  * org.openpsa.contacts group handler and viewer class.
+ *
+ * @package org.openpsa.contacts
  */
 class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
 {

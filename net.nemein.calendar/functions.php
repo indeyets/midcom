@@ -26,7 +26,7 @@ function net_nemein_calendar_functions_daylabel($label='start', $start, $end , $
     /**
      * Make double sure LC_TIME is set according to current language
      *
-     * This should not be neccessary, also there might be a case where someone
+     * This should not be necessary, also there might be a case where someone
      * wants to set LC_TIME but not set actual language, this will negate that attempt
      */
     $language = $_MIDCOM->i18n->get_current_language();

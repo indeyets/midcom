@@ -1,13 +1,15 @@
 <?php
-
 /**
- * These are custom Midgard formatter functions for 
- * filttering banned words
+ * @package net.nemein.bannedwords
  */
 
+/**
+ * These are custom Midgard formatter functions for
+ * filttering banned words
+ */
 function net_nemein_bannedwords_html_formatter($content)
 {
-    // TODO: should propably encode as html like the original :h 
+    // TODO: should propably encode as html like the original :h
 
     $banned = new net_nemein_bannedwords_handler();
     $processed_content = $banned->search_and_replace_html($content);

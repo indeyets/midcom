@@ -7,8 +7,9 @@
  */
 /**
  * MidCOM wrapped class for access to stored queries
+ *
+ * @package org.openpsa.contacts
  */
-
 class org_openpsa_contacts_buddy extends __org_openpsa_contacts_buddy
 {
     function org_openpsa_contacts_buddy($id = null)

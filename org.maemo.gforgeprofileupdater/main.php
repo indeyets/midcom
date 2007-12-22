@@ -1,6 +1,13 @@
 <?php
 /**
  * @package org.maemo.gforgeprofileupdater
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
+ * @package org.maemo.gforgeprofileupdater
  */
 class org_maemo_gforgeprofileupdater extends midcom_baseclasses_components_purecode
 {
@@ -9,7 +16,7 @@ class org_maemo_gforgeprofileupdater extends midcom_baseclasses_components_purec
     var $soap_username = false;
     var $soap_password = false;
 
-    var $_datamanager = null;    
+    var $_datamanager = null;
     var $_schema = null;
 
     var $_soap_client = false;
@@ -27,7 +34,7 @@ class org_maemo_gforgeprofileupdater extends midcom_baseclasses_components_purec
     {
         $this->_component = 'org.maemo.gforgeprofileupdater';
         parent::midcom_baseclasses_components_purecode();
-        
+
         $this->soap_wdsl = $this->_config->get('soap_wdsl');
         $this->soap_username = $this->_config->get('soap_username');
         $this->soap_password = $this->_config->get('soap_password');
@@ -117,7 +124,7 @@ class org_maemo_gforgeprofileupdater extends midcom_baseclasses_components_purec
         $c =& $this->_soap_client;
         $call_params = array_merge
         (
-            array('session_ser' => $this->_soap_session_id), 
+            array('session_ser' => $this->_soap_session_id),
             $params
         );
         // PEAR SOAP is not E_ALL compatible
@@ -190,7 +197,7 @@ class org_maemo_gforgeprofileupdater extends midcom_baseclasses_components_purec
     /**
      * Communicate profile updates to gforge server
      *
-     * @param 
+     * @param mixed $object object
      */
     function updated(&$object)
     {
@@ -211,7 +218,7 @@ class org_maemo_gforgeprofileupdater extends midcom_baseclasses_components_purec
             return false;
         }
 
-        // Populate changed values from DM2 
+        // Populate changed values from DM2
         $dm =& $this->_datamanager;
         $data_changed = false;
         // Can't foreach an object in all PHP4 versions, thus we use this approach
@@ -283,7 +290,7 @@ class org_maemo_gforgeprofileupdater extends midcom_baseclasses_components_purec
      */
     function deleted($object)
     {
-        /* no-op ATM, in the future we could check 
+        /* no-op ATM, in the future we could check
         if account exists in gforge and nuke it via SOAP but that's probably
         too risky */
         return true;

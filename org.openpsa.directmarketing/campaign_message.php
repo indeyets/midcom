@@ -8,6 +8,8 @@
 
 /**
  * Message class, handles storage of various messages and sending them out.
+ *
+ * @package org.openpsa.directmarketing
  */
 class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_message
 {

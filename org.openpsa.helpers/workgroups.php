@@ -7,6 +7,7 @@
  * @copyright Nemein Oy, http://www.nemein.com
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
+
 function org_openpsa_helpers_workgroups($add_me = 'last', $show_members = false)
 {
     //mgd_debug_start();

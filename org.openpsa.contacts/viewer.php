@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package org.openpsa.contacts
  * @author Nemein Oy http://www.nemein.com/
@@ -12,6 +11,8 @@
  * org.openpsa.contacts site interface class.
  *
  * Contact management, address book and user manager
+ *
+ * @package org.openpsa.contacts
  */
 class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
 {
@@ -83,12 +84,12 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
                 'fixed_args' => 'buddylist',
                 'handler' => Array('org_openpsa_contacts_handler_buddy_list', 'list'),
             );
-            
+
             // Match /buddylist/xml
             $this->_request_switch['buddylist_xml'] = array(
                 'fixed_args' => array('buddylist', 'xml'),
                 'handler' => Array('org_openpsa_contacts_handler_buddy_list', 'list'),
-            );            
+            );
 
             // Match /buddylist/add/<person guid>
             $this->_request_switch[] = array(
@@ -262,7 +263,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
         {
             $_MIDCOM->auth->require_valid_user();
         }
-    
+
         // Safety
         if (!class_exists('midcom_helper_datamanager2_schema'))
         {

@@ -6,12 +6,12 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+ /** @ignore */
+require('list.php');
 /**
  * Created on 2006-Oct-Thu
  * @package org.routamc.photostream
  */
- /** @ignore */
-require('list.php');
 class org_routamc_photostream_handler_feed extends org_routamc_photostream_handler_list
 {
     var $_feed;
@@ -37,7 +37,7 @@ class org_routamc_photostream_handler_feed extends org_routamc_photostream_handl
     }
 
     /**
-     * We override this to avoid unneccessary controller creations
+     * We override this to avoid unnecessary controller creations
      */
     function _prepare_ajax_controllers()
     {
