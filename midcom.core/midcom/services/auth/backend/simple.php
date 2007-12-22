@@ -14,15 +14,15 @@ require_once (MIDCOM_ROOT . '/midcom/services/auth/backend.php');
  * The simple auth backend uses cookies to store a session identifier which
  * consists of the midgard person GUID.
  *
- * The validity of the cookie will be conteolled by the configuration options
- * <em>auth_backend_simple_cookie_path</em> and <em>auth_backend_simple_cookie_domain</em>:
- * 
+ * The validity of the cookie will be controlled by the configuration options
+ * <i>auth_backend_simple_cookie_path</i> and <i>auth_backend_simple_cookie_domain</i>:
+ *
  * The path defaults to $_MIDGARD['self']. If the domain is set to null (the default),
- * no domain is specified in the cookie, making it a traditional site-specific session 
- * cookie. If it is set, the domain parameter of the cookie will be set accordingly. 
+ * no domain is specified in the cookie, making it a traditional site-specific session
+ * cookie. If it is set, the domain parameter of the cookie will be set accordingly.
  *
  * The basic cookie id (username prefix) is taken from the config option
- * <em>auth_backend_simple_cookie_id</em>, which defaults to the current host GUID.
+ * <i>auth_backend_simple_cookie_id</i>, which defaults to the current host GUID.
  *
  * @package midcom.services
  */
@@ -74,7 +74,7 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
         $data = explode('-', $_COOKIE[$this->_cookie_id]);
         if (count($data) != 2)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);        
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("The cookie data could not be parsed, assuming tampered session.",
                 MIDCOM_LOG_ERROR);
             debug_add('Killing the cookie...', MIDCOM_LOG_INFO);
@@ -90,7 +90,7 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
 
         if (! $this->user)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);        
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("The user ID {$user_id} is invalid, could not load the user from the database, assuming tampered session.",
                 MIDCOM_LOG_ERROR);
             debug_add('Killing the cookie...');
@@ -103,7 +103,7 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
 
         if (! $this->session_id)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);        
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("The session {$this->session_id} is invalid (usually this means an expired session).",
                 MIDCOM_LOG_ERROR);
             debug_add('Killing the cookie...');
@@ -114,7 +114,7 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
 
         if ($reset_cookie)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);        
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Re-Setting of session cookie requested, doing it', MIDCOM_LOG_INFO);
             debug_pop();
             $this->_set_cookie();

@@ -12,7 +12,7 @@
  *
  * The type lists all midgard groups in the system using a hierachical display.
  *
- * TODO: Child groups are listed in the form "$group, $childgroup". (The traditional
+ * @todo Child groups are listed in the form "$group, $childgroup". (The traditional
  * indented way isn't used, as this would hamper rendering in view mode; you couldn't
  * see the path there.)
  *

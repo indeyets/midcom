@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package org.openpsa.core
  * @author Nemein Oy http://www.nemein.com/
@@ -10,6 +9,8 @@
 
 /**
  * org.openpsa.core ACL synchronizer.
+ *
+ * @package org.openpsa.core
  */
 class org_openpsa_core_acl_synchronizer
 {

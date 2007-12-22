@@ -1,8 +1,7 @@
 <?php
 /**
- * @package midcom.db
+ * @package midcom
  * @author The Midgard Project, http://www.midgard-project.org
- * @version $Id:temporary_object.php 3765 2006-07-31 08:51:39 +0000 (Mon, 31 Jul 2006) tarjei $
  * @version $Id:temporary_object.php 3765 2006-07-31 08:51:39 +0000 (Mon, 31 Jul 2006) tarjei $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -100,10 +99,10 @@ class midcom_core_temporary_object extends __midcom_core_temporary_object
         $object->require_do('midgard:privileges');
         $object->require_do('midgard:parameters');
         $object->require_do('midgard:attachments');
-        
+
         // Copy parameters from temporary object
         $parameters = $this->list_parameters();
-        
+
         foreach ($parameters as $domain => $array)
         {
             foreach ($array as $name => $value)
@@ -111,7 +110,7 @@ class midcom_core_temporary_object extends __midcom_core_temporary_object
                 $object->set_parameter($domain, $name, $value);
             }
         }
-        
+
         // Move attachments from temporary object
         $attachments = $this->list_attachments();
         foreach ($attachments as $attachment)
@@ -121,7 +120,7 @@ class midcom_core_temporary_object extends __midcom_core_temporary_object
             $attachment->parent_guid = $object->guid;
             $attachment->update();
         }
-        
+
         // Privileges are moved using the DBA API as well.
         $privileges = $this->get_privileges();
         if ($privileges)

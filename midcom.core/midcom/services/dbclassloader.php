@@ -118,7 +118,7 @@
  * Then there is the (optional) <i>get_parent()</i> method: It is used in various places (for
  * example the ACL system) in MidCOM to find the logical parent of an object. By default this
  * method directly returns null indicating that there is no parent. You should override it
- * whereve you have a tree-like content structure so that MidCOM can correctly climb upwards.
+ * wherever you have a tree-like content structure so that MidCOM can correctly climb upwards.
  * If you have a parent only conditionally (e.g. there are root level objects), return NULL to
  * indicate no available parent.
  *
@@ -432,7 +432,7 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
         {
             $this->_class_definition_filename = MIDCOM_ROOT . $_MIDCOM->componentloader->path_to_snippetpath($component) . "/config/{$filename}";
         }
-        
+
     }
 
     /**
@@ -1008,23 +1008,23 @@ EOF;
     function _on_prepare_new_query_builder(&\$qb) {}
     function _on_process_query_result(&\$result) {}
     function _on_prepare_new_collector(&\$mc) {}
-    function _on_prepare_exec_collector(&\$mc) { return true; }    
+    function _on_prepare_exec_collector(&\$mc) { return true; }
     function _on_process_collector_result(&\$result) {}
     function _on_updated() {}
     function _on_updating() { return true; }
     function _on_imported() {}
     function _on_importing() { return true; }
-    
+
     // functions related to the rcs service.
     var \$_use_rcs = true;
     var \$_rcs_message = false;
-    function disable_rcs() { \$this->_use_rcs = false; }     
+    function disable_rcs() { \$this->_use_rcs = false; }
     function enable_rcs() { \$this->_use_rcs  = true; }
     function set_rcs_message(\$msg) { \$this->_rcs_message = \$msg; }
     function get_rcs_message() { return \$this->_rcs_message; }
-    
-    
-    
+
+
+
 EOF;
         $this->_class_string .= "\n    \n";
     }

@@ -212,9 +212,9 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
     /**
      * Shows all loaded groups.
      *
-     * The request data keys <em>category_list</em> and <em>type</em> are populated all the time,
+     * The request data keys <i>category_list</i> and <i>type</i> are populated all the time,
      * while iterating over the categories to show, a reference to the category_list entry that
-     * should be shown is added to the <em>category</em> entry.
+     * should be shown is added to the <i>category</i> entry.
      */
     function _show_list($handler_id, &$data)
     {
@@ -232,7 +232,7 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
      * categories filtered by a letter from the alphabet.
      *
      * As outlined in the components' main interface class, this code is optimized
-     * for a two level hierachy below the root category both to ease implementation and to keep
+     * for a two level hierarchy below the root category both to ease implementation and to keep
      * up the performance.
      */
     function _handler_list_alpha($handler_id, $args, &$data)
@@ -283,9 +283,9 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
     /**
      * Shows all loaded groups.
      *
-     * The request data keys <em>category_list</em> and <em>type</em> are populated all the time,
+     * The request data keys <i>category_list</i> and <i>type</i> are populated all the time,
      * while iterating over the categories to show, a reference to the category_list entry that
-     * should be shown is added to the <em>category</em> entry.
+     * should be shown is added to the <i>category</i> entry.
      */
     function _show_list_alpha($handler_id, &$data)
     {

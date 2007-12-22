@@ -196,19 +196,19 @@ class midcom_helper_nav
      * @param int	$root_node	The root node to use.
      * @return bool				True, if the node is a subnode of the root node, false otherwise.
      */
-    function is_node_in_tree ($node_id, $root_id) 
+    function is_node_in_tree ($node_id, $root_id)
     {
         //$topic = new midcom_db_topic();
         //return $topic->is_in_tree($root_id, $node_id);
         $qb = midcom_db_topic::new_query_builder();
         $qb->add_constraint('id', '=', $node_id);
         $qb->add_constraint('up', 'INTREE', $root_id);
-        
+
         if ($qb->count() > 0)
         {
             return true;
         }
-        
+
         return false;
     }
 
@@ -288,7 +288,7 @@ class midcom_helper_nav
                 $navorder = 'topicsfirst';
                 break;
         }
-        
+
         if (!class_exists('midcom_helper_itemlist'))
         {
             require(MIDCOM_ROOT . '/midcom/helper/itemlist.php');
@@ -446,7 +446,7 @@ class midcom_helper_nav
         if ($this->get_current_leaf() !== false)
         {
             $leaf = $this->get_leaf($this->get_current_leaf());
-            
+
             if (isset($leaf[MIDCOM_NAV_URL]))
             {
                 $url = $leaf[MIDCOM_NAV_URL];
@@ -579,7 +579,7 @@ class midcom_helper_nav
      * - MIDCOM_NAV_ID The Identifier of the structure used to build this entry, this is
      *   either a NAP node/leaf ID or the list key set by the component for custom data.
      * - 'napobject' This contains the original NAP object retrieved by the function.
-     *   Just in case you need more infromation then is available directly.
+     *   Just in case you need more information then is available directly.
      *
      * The entry of every level is indexed by its MIDCOM_NAV_ID, where custom keys preserve
      * their original key (as passed by the component) and prefixing it with 'custom-'. This
@@ -592,7 +592,7 @@ class midcom_helper_nav
      *
      * Custom elements are added to this array by using the MidCOM custom component context
      * at this time. You need to add a list with the same structure as above into the
-     * custom component context key <em>midcom.helper.nav.breadcrumb</em>. (This needs
+     * custom component context key <i>midcom.helper.nav.breadcrumb</i>. (This needs
      * to be an array always, even if you return only one element.)
      *
      * Note, that the URL you pass in that list is always prepended with the current anchor
@@ -620,7 +620,7 @@ class midcom_helper_nav
     {
         $prefix = $_MIDCOM->get_context_data($this->_contextid, MIDCOM_CONTEXT_ANCHORPREFIX);
         $result = Array();
-        
+
         if (! $id)
         {
             $curr_leaf = $this->get_current_leaf();
@@ -630,7 +630,7 @@ class midcom_helper_nav
         {
             $curr_leaf = $this->get_leaf($id);
             $curr_node = -1;
-            
+
             if (! $curr_leaf)
             {
                 $node = $this->get_node($id);
@@ -721,14 +721,14 @@ class midcom_helper_nav
             foreach ($customdata as $key => $entry)
             {
                 $id = "custom-{$key}";
-                
+
                 $url = "{$prefix}{$entry[MIDCOM_NAV_URL]}";
                 if (   substr($entry[MIDCOM_NAV_URL], 0, 1) == '/'
                     || preg_match('|^https?://|', $entry[MIDCOM_NAV_URL]))
                 {
                     $url = $entry[MIDCOM_NAV_URL];
                 }
-                
+
                 $result[$id] = Array
                 (
                     MIDCOM_NAV_URL => $url,

@@ -97,7 +97,7 @@ class org_openpsa_calendar_event_resource_dba extends __org_openpsa_calendar_eve
     }
 
     /**
-     * TODO: Send notification to resource owner
+     * @todo Send notification to resource owner
      */
     function notify($repeat_handler = 'this', $event = false)
     {

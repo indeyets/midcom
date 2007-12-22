@@ -257,7 +257,7 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
      * Privileges array definition. Indexes are the full privilege names (including the component
      * prefix), values are arrays holding the global / owner privilege default.
      *
-     * TODO: Complete documentation
+     * @todo Complete documentation
      *
      * @var Array
      */

@@ -198,7 +198,7 @@ class midcom_services_i18n
      * have to override it manually using midcom_services_i18n::set_charset()
      * after calling this method.
      *
-     * If <em>$switch_content_lang</em> is set, this call will also synchronize
+     * If <i>$switch_content_lang</i> is set, this call will also synchronize
      * the Midgard content language with the MidCOM language.
      *
      * @param string $lang	Language ISO 639-1 code

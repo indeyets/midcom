@@ -20,7 +20,7 @@
  *
  * <b>Checking whether a user is online</b>
  *
- * The is-user-online check requires the user to have the privilege <em>midcom:isonline</em>
+ * The is-user-online check requires the user to have the privilege <i>midcom:isonline</i>
  * set on the user which he is trying to check.
  *
  * @package midcom.services
@@ -47,7 +47,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
      * @var string
      */
     var $current_session_id = null;
-    
+
     var $auth = null;
 
     /**
@@ -164,7 +164,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
 
         if (! $result)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);        
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('No login sessions have been found in the database or the query to the database failed.', MIDCOM_LOG_INFO);
             debug_pop();
             return false;
@@ -179,7 +179,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
 
             if ($session->timestamp < $timed_out)
             {
-                debug_push_class(__CLASS__, __FUNCTION__);            
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("The session {$session->guid} (#{$session->id}) has timed out.", MIDCOM_LOG_INFO);
                 debug_pop();
                 $valid = false;
@@ -190,7 +190,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
                 && $session->guid == $sessionid
                 && $session->clientip != $clientip)
             {
-                debug_push_class(__CLASS__, __FUNCTION__);            
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("The session {$session->guid} (#{$session->id}) had mismatching client IP.", MIDCOM_LOG_INFO);
                 debug_add("Expected {$session->clientip}, got {$clientip}.");
                 debug_pop();
@@ -201,7 +201,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
             {
                 if (! $session->delete())
                 {
-                    debug_push_class(__CLASS__, __FUNCTION__);                
+                    debug_push_class(__CLASS__, __FUNCTION__);
                     debug_add("Failed to delete the invalid session {$session->guid} (#{$session->id}): " . mgd_errstr(), MIDCOM_LOG_INFO);
                     debug_pop();
                 }

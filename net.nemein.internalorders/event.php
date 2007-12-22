@@ -9,7 +9,7 @@
 
 /**
  * Calendar event abstraction class
- * TODO: Port to OpenPsa2 Calendar classes as soon as they handle repeats
+ * @todo Port to OpenPsa2 Calendar classes as soon as they handle repeats
  *
  * @package net.nemein.calendar
  */

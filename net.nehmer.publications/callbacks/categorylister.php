@@ -9,21 +9,21 @@
 
 /**
  * Publications Schema callback, retrieves a category listing from the database and makes it
- * availalble in a way compatible for the select DM2 type.
+ * available in a way compatible for the select DM2 type.
  *
  * It is only geared for places where you use fixed listings in the 'options' entry of the
- * corresponding category. It does <em>not</em> wrap any callbacks.
+ * corresponding category. It does <i>not</i> wrap any callbacks.
  *
  * The keys will automatically be merged with the category group identifier so that valid keys
- * for the cateogry field of the categorymap class are available.
+ * for the category field of the categorymap class are available.
  *
  * This call supports both callback-style and directly configured category list entries using
- * the configuration options 'options', 'options_callback' and 'options_callback_args'. 
- * 
+ * the configuration options 'options', 'options_callback' and 'options_callback_args'.
+ *
  * Optionally, you can have separate callbacks used for the category index on-site. This is
- * useful if you want to hide categories in the index but have them available for assignment 
+ * useful if you want to hide categories in the index but have them available for assignment
  * in DM2. If such prefixed keys are not found, the system reverts to the standard callbacks.
- * 
+ *
  * Note, that option_callback and option_callback_args always have to come in matching
  * pairs (even for site_ mode). There is no default for option_callback_args.
  *
@@ -71,13 +71,13 @@ class net_nehmer_publications_callbacks_categorylister extends midcom_baseclasse
      * Initializes the class to the category listing in the configuration. It does the necessary
      * postprocessing to move the configuration syntax to the rendering one.
      *
-     * If $sitelisting is true, the component is requesting the listing for the site category 
+     * If $sitelisting is true, the component is requesting the listing for the site category
      * index. In that case "site_" prefixed config options take precedence over the standard
      * option names to allow you to have limited category listings on-site.
      *
      * @param int $group The category group to list.
      * @param bool $sitelisting The callback is used to display the onsite listing instead of
-     *     the standard DM2 interface 
+     *     the standard DM2 interface
      */
     function net_nehmer_publications_callbacks_categorylister($group, $sitelisting = false)
     {
@@ -102,16 +102,16 @@ class net_nehmer_publications_callbacks_categorylister extends midcom_baseclasse
         if (   $sitelisting
             && array_key_exists('site_option_callback', $category_group_config))
         {
-            $this->_initialize_from_callback($category_group_config['site_option_callback'], 
+            $this->_initialize_from_callback($category_group_config['site_option_callback'],
                 $category_group_config['site_option_callback_args']);
         }
         else if (array_key_exists('option_callback', $category_group_config))
         {
-            $this->_initialize_from_callback($category_group_config['option_callback'], 
+            $this->_initialize_from_callback($category_group_config['option_callback'],
                 $category_group_config['option_callback_args']);
         }
         else if (   $sitelisting
-                 && array_key_exists('site_options', $category_group_config)) 
+                 && array_key_exists('site_options', $category_group_config))
         {
             $this->_initialize_from_options($category_group_config['site_options']);
         }

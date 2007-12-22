@@ -32,14 +32,14 @@
  * 
  * <b>Namespacing:</b>
  * 
- * Eache cache database in use has a name, which must consist only of characters valid for 
+ * Each cache database in use has a name, which must consist only of characters valid for 
  * file names on the current system. You may create any file or directory within the midcom
  * cache directory as long as you use your name as a prefix. 
  * 
  * If you want to stay on the safe side, only cache names using the characters matching the
  * regex class [a-zA-Z0-9._-] should be used. 
  * 
- * <b>General configutation directives:</b>
+ * <b>General configuration directives:</b>
  * 
  * - <i>string directory</i>: The subdirectory in the cache's base directory to use by this
  *   backend. This is automatically concatenated with the systemwide cache base directory.

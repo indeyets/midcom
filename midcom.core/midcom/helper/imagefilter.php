@@ -120,7 +120,7 @@ class midcom_helper_imagefilter
      * A return value of false will indicate some problem, see the
      * MidCOM Debug Log for details.
      *
-     * TODO: Use ImageMagick Identify to check for a valid image.
+     * @todo Use ImageMagick Identify to check for a valid image.
      *
      * @param string filename The file to be edited.
      * @returns true, if the file is valid, false otherwise.

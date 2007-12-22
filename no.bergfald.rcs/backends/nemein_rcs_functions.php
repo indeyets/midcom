@@ -38,7 +38,7 @@
  * Checks if $rcsroot is set, if not defaults to /var/rcs, note that
  * the apache user/group must have read and write rights to this
  * directory (it's best to have it as owner of the directory)
- * TODO: Fix this to it is within MIDCOM_ROOT or something.
+ * @todo Fix this to it is within MIDCOM_ROOT or something.
  */
 if (!array_key_exists('rcsroot', $GLOBALS)){
      $rcsroot = "/var/rcs";

@@ -66,7 +66,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
     /**
      * This is the renderer that quickform will use.
      *
-     * <em>It is set using the set_renderer() or create_renderer calls.</em>
+     * <i>It is set using the set_renderer() or create_renderer calls.</i>
      *
      * If the configuration option 'default_renderer' (and possibly 'default_renderer_src')
      * are set, the class will create instances of these renderers during startup, so that
@@ -833,7 +833,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
      * This function displays a quick view of the record, using some simple div based layout,
      * which can be formatted using CSS.
      *
-     * TODO: Make this better customizable
+     * @todo Make this better customizable
      * @todo Factor this out into a separate class This function should be deprecated.
      */
     function display_view()

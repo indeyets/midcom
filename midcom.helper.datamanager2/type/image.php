@@ -48,7 +48,7 @@ require_once('blobs.php');
  * the original image. If that image is not available, the generated main image is used
  * instead.
  *
- * Be aware that the type holds <em>no</em> safety code to guard against duplicate image
+ * Be aware that the type holds <i>no</i> safety code to guard against duplicate image
  * identifiers (e.g. defining a "main" image in the derived images list). The results
  * of such a configuration is undefined.
  *
@@ -72,7 +72,7 @@ require_once('blobs.php');
  *   defined derived images. This option may be null (the default) indicating no
  *   thumbnail.
  * - string output_mode Determines if $datamanager->convert_to_html() should return
- *   image as HTML tag ready to use (default) or array type containing all data about 
+ *   image as HTML tag ready to use (default) or array type containing all data about
  *   image and derived formats.
  *
  * <b>Implementation note:</b>
@@ -191,10 +191,10 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
     var $_pending_attachments = null;
 
     /**
-     * This option taken from data schema controls the way data is output. 
+     * This option taken from data schema controls the way data is output.
      * Either (default) preformatted <img> tag or plain array() type containing
      * obejct data
-     * 
+     *
      * @var string
      */
     var $output_mode = 'html';
@@ -330,7 +330,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
         if (array_key_exists('original', $this->attachments))
         {
             // Copy original as original
-            $att = $this->attachments['original'];  
+            $att = $this->attachments['original'];
         }
         else
         {
@@ -338,7 +338,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
             $att = $this->attachments['main']->id;
         }
         $src = $att->open('r');
-        
+
         // Create tmp file and copy by handles
         $this->_original_tmpname = tempnam($GLOBALS['midcom_config']['midcom_tempdir'], "midcom_helper_datamanager2_type_image");
         $dst = fopen($this->_original_tmpname, 'w+');
@@ -354,7 +354,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
             fwrite($dst, $buffer, 131072);
         }
         $att->close();
-        
+
         fclose($dst);
         $this->title = $this->attachments['main']->title;
         $this->_filename = $this->attachments['main']->name;
@@ -410,7 +410,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
     }
 
     /**
-     * Applies a given filter to all (except original) images in the type 
+     * Applies a given filter to all (except original) images in the type
      *
      * @param string $filter the midcom_helper_imagefilter filter chain to apply
      * @return boolean indicating success/failure
@@ -499,7 +499,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
 
         // Clean-up the temp file
         unlink($tmpfile);
-        
+
         debug_add("Applied filter '{$filter}' to image '{$identifier}'", MIDCOM_LOG_INFO);
         debug_pop();
         return true;
@@ -543,7 +543,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
             return false;
         }
         fclose($src);
-        
+
         // Failing these is bad, but it's too late now that we already have overwritten the actual image data...
         $this->_set_image_size($identifier, $file);
         $this->_update_attachment_info($identifier);
@@ -935,7 +935,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
                 break;
         }
         debug_add("\$conversion={$conversion}");
-        
+
         if (empty($conversion))
         {
             return true;
@@ -959,7 +959,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
     function convert_from_storage($source)
     {
         parent::convert_from_storage($source);
-        
+
         if (array_key_exists('main', $this->attachments))
         {
             $this->title = $this->attachments['main']->title;

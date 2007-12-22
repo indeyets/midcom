@@ -437,7 +437,7 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
     }
 
     /**
-     * TODO: Implement freezing and unfreezing
+     * @todo Implement freezing and unfreezing
      */
     function freeze()
     {

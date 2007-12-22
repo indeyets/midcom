@@ -188,7 +188,7 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
     /**
      * This function setts the correct Aegir navigationclass and
      * /or calls the defined callbacks from the request component.
-     * Todo: add a way to get a schema out of this.
+     * @todo add a way to get a schema out of this.
      */
     function _do_callbacks()
     {

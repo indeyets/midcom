@@ -1023,7 +1023,7 @@ if (!function_exists('midcom_helper_toc_formatter'))
      * What exactly it does is looks for all H<num> tags and converts them to named
      * anchors, and prepends a list of links to them to the start of HTML.
      *
-     * TODO: Parse the heading structure to create OL subtrees based on their relative levels
+     * @todo Parse the heading structure to create OL subtrees based on their relative levels
      */
     function midcom_helper_toc_formatter_prefix($level)
     {

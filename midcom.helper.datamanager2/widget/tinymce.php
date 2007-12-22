@@ -32,7 +32,7 @@ require_once('textarea.php');
  *   Any valid option for midcom_get_snippet_content() is allowed at this point.
  * - <i>string local_config:</i> Local configuration options which should overwrite the defaults
  *   from the config snippet. This defaults to an empty string.
- * - <i>boolean tinymce_use_compressor:</i> TinyMCE's PHP Compressor can help to reduce the page 
+ * - <i>boolean tinymce_use_compressor:</i> TinyMCE's PHP Compressor can help to reduce the page
  *   load time. Defaults to false.
  * - <i>theme</i> use this to change between a simple and an advanced (i.e. more buttons)
  *   configuration of tinymce. Valid values: simple, advanced and tiny. The systemwide default
@@ -56,7 +56,7 @@ require_once('textarea.php');
  * The following options must not be specified in any configuration: mode, elements, language
  *
  * Be aware that this must be valid javascript code to be inserted into the Init function. Especially
- * ensure that <em>all lines end with a comma</em> or the merging with the element-specific startup
+ * ensure that <i>all lines end with a comma</i> or the merging with the element-specific startup
  * code will fail. This is important for both the config-snippet and the local config!
  *
  * Example:
@@ -149,7 +149,7 @@ class midcom_helper_datamanager2_widget_tinymce extends midcom_helper_datamanage
     {
 
         $config = midcom_get_snippet_content_graceful($this->mce_config_snippet);
-        
+
         if (! $config)
         {
             $config = $this->_get_configuration();
@@ -159,8 +159,8 @@ class midcom_helper_datamanager2_widget_tinymce extends midcom_helper_datamanage
             $popup = $this->_get_imagepopup_jsstring();
             $config = str_replace('{$popup}', $popup, $config);
         }
-        
-        
+
+
         $language = $_MIDCOM->i18n->get_current_language();
         // fix to use the correct langcode for norwegian.
         if ($language == 'no')
@@ -177,7 +177,7 @@ class midcom_helper_datamanager2_widget_tinymce extends midcom_helper_datamanage
         {
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             $imagepopup_url = "plugin_imagepopup_popupurl: \"{$prefix}__ais/imagepopup/";
-            
+
             if ($this->_type->storage->object)
             {
                 // We have an existing object, link to "page attachments"
@@ -202,9 +202,9 @@ disk_cache : true,
 debug : false
 });
 EOT;
-        $_MIDCOM->add_jscript($script_gz);            
+        $_MIDCOM->add_jscript($script_gz);
         }
-               
+
         // Compute the final script:
         $script = <<<EOT
 tinyMCE.init({
@@ -225,7 +225,7 @@ EOT;
         $_MIDCOM->add_jscript($script);
     }
     /**
-     * Returns the string ,imagepopup that is added if we are editing a 
+     * Returns the string ,imagepopup that is added if we are editing a
      * saved object (and thus can add attachments)
      * @return string empty or containing ",imagepopup"
      */
@@ -254,11 +254,11 @@ EOT;
             $function = "_get_{$this->theme}_configuration";
             return $this->$function();
         }
-        if ($this->mcs_config_snippet != '') 
+        if ($this->mcs_config_snippet != '')
         {
             return $this->mcs_config_snippet;
         }
-        
+
         return $this->_get_advanced_configuration();
     }
 
@@ -280,7 +280,7 @@ EOT;
      */
     function _get_simple_configuration()
     {
-        $popup = $this->_get_imagepopup_jsstring();    
+        $popup = $this->_get_imagepopup_jsstring();
         return <<<EOT
 theme : "advanced",
 button_title_map : false,
@@ -299,7 +299,7 @@ EOT;
      */
     function _get_advanced_configuration ()
     {
-        $popup = $this->_get_imagepopup_jsstring();    
+        $popup = $this->_get_imagepopup_jsstring();
         return <<<EOT
 apply_source_formatting : true,
 theme : "advanced",

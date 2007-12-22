@@ -38,7 +38,7 @@
  *   is the default.
  * - <b>int variable_args:</b> Usually, there are a number of variables in the URL, like
  *   article IDs, or article names. This can be 0, indicating that no variable arguments are
- *   required, which is the default. For an unlimmited number of variable_args set it to -1. 
+ *   required, which is the default. For an unlimmited number of variable_args set it to -1.
  *
  * - <b>bool no_cache:</b> For those cases where you want to prevent a certain "type" of request
  *   being cached. Set to false by default.
@@ -224,11 +224,11 @@
  *
  * It must define an additional function, called get_plugin_handlers(). It has to return
  * an array of standard request handler declarations. Both handler identifiers and
- * argument lists are <em>relative</em> to the base URL of the plugin (see below),
+ * argument lists are <i>relative</i> to the base URL of the plugin (see below),
  * not to the component running the problem. You are thus completely location independent.
  * The handler callback must be statically callable.
  *
- * <em>Example: Plugin handler callback</em>
+ * <i>Example: Plugin handler callback</i>
  *
  * <code>
  * function get_plugin_handlers()
@@ -251,7 +251,7 @@
  * these two are specified. The request handlers obtained by the above callback are
  * automatically expanded to match the plugin namespace.
  *
- * <em>Example: Plugin registration</em>
+ * <i>Example: Plugin registration</i>
  *
  * <code>
  * $this->register_plugin_namespace
@@ -575,7 +575,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
         $this->_prepare_request_switch();
 
         foreach ($this->_request_switch as $key => $request)
-        {   
+        {
             $fixed_args_count = count($request['fixed_args']);
             $total_args_count = $fixed_args_count + $request['variable_args'];
 
@@ -592,7 +592,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
                     continue 2;
                 }
             }
-            
+
             // We have a match.
             $this->_handler =& $this->_request_switch[$key];
             $this->_handler['id'] = $key;
@@ -696,7 +696,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
         {
             $_MIDCOM->cache->content->expires($this->_handler['expires']);
         }
-        
+
         $this->_on_handled($this->_handler['id'], $this->_handler['args']);
 
         return $result;
@@ -791,7 +791,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
             debug_pop();
             return;
         }
-        
+
         if (empty($this->_handler['handler']))
         {
             return;
@@ -822,7 +822,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * can safely populate the request switch from here.
      *
      * You should not do anything else then general startup work, as this callback
-     * executes <em>before</em> the can_handle phase. You don't know at this point
+     * executes <i>before</i> the can_handle phase. You don't know at this point
      * whether you are even able to handle the request. Thus, anything that is specific
      * to your request (like HTML HEAD tag adds) must not be done here. Use _on_handle
      * instead.
@@ -834,8 +834,8 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
 
     /**
      * Component specific initialization code for the handle phase. AIS, for example, uses
-     * this to preapre the toolbar arrays. The name of the request handler is passed as an
-     * argumet to the event handler.
+     * this to prepare the toolbar arrays. The name of the request handler is passed as an
+     * argument to the event handler.
      *
      * If you discover that you cannot handle the request already at this stage, return false
      * and set the error variables accordingly. The reminder of the handle phase is skipped
@@ -857,7 +857,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
     {
         return true;
     }
-    
+
     public function _on_handled($handler, $args)
     {
     }
@@ -897,7 +897,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
     {
         return true;
     }
-    
+
     public function _on_shown($handler)
     {
     }
@@ -1130,9 +1130,9 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
             	),
             )
         );
-        
+
         // Centralized admin panel functionalities
-        
+
         // Load plugins registered via component manifests
         $manifest_plugins = array();
         $customdata = $_MIDCOM->componentloader->get_all_manifest_customdata('request_handler_plugin');
@@ -1145,7 +1145,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
         {
             $manifest_plugins["asgard_{$component}"] = $plugin_config;
         }
-        
+
         $hardcoded_plugins = array
         (
             'asgard' => array

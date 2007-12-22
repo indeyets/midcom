@@ -172,7 +172,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
     /**
      * This function setts the correct Aegir navigationclass and
      * /or calls the defined callbacks from the request component.
-     * Todo: add a way to get a schema out of this.
+     * @todo add a way to get a schema out of this.
      */
     function _do_callbacks() 
     {

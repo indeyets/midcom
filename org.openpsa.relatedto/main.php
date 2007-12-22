@@ -14,7 +14,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
     }
 
     /**
-     * Shorthand for creating a relatedto object. The <em>from</em> object is something that is related to the <em>to</em> object.
+     * Shorthand for creating a relatedto object. The <i>from</i> object is something that is related to the <em>to</em> object.
      * For example, if a task is created under a sales project, that task is the from object, and the sales project the to object.
      */
     function create_relatedto($from_obj, $from_component, $to_obj, $to_component, $status = ORG_OPENPSA_RELATEDTO_STATUS_CONFIRMED)

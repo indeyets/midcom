@@ -13,11 +13,11 @@
  * This service manages the toolbars used for the on-site administration system.
  * For each context, it provides the following set of toolbars:
  *
- * 1. The <em>Node</em> toolbar is applicable to the current
+ * 1. The <i>Node</i> toolbar is applicable to the current
  *    node, which is usually a topic. MidCOM places the topic management operations
  *    into this toolbar, where applicable.
  *
- * 2. The <em>View</em> toolbar is applicable to the specific view ("url"). Usually
+ * 2. The <i>View</i> toolbar is applicable to the specific view ("url"). Usually
  *    this maps to a single displayed object (see also the bind_to_object() member
  *    function). MidCOM places the object-specific management operations (like
  *    Metadata controls) into this toolbar, if it is bound to an object. Otherwise,
@@ -28,15 +28,15 @@
  * running on a given site, it will have its own set of toolbars for each instance.
  *
  * In addition, components my retrieve a third kind of toolbars, which are not under
- * the general control of MidCOM, the <em>Object</em> toolbars. They apply to a single
- * database object (like a bound <em>View</em> toolbar). The usage of this kind of
+ * the general control of MidCOM, the <i>Object</i> toolbars. They apply to a single
+ * database object (like a bound <i>View</i> toolbar). The usage of this kind of
  * toolbars is completely component-specific: It is recommended to use them only for
  * cases where multiple objects are displayed simultaneously. For example, the
  * index page of a Newsticker or Image Gallery might provide them.
  *
  *
  *
- * <strong>Implementation notes</strong>
+ * <b>Implementation notes</b>
  *
  * It has yet to prove if the toolbar system is yet needed for a dynamic_load environments.
  * The main reason for this is that dl'ed stuff is often quite tight in space and thus cannot
@@ -46,7 +46,7 @@
  * This could be different for portal applications, which display several components on the
  * welcome page, each with its own management options.
  *
- * <strong>Configuration</strong>
+ * <b>Configuration</b>
  * See midcom_config.php for configuration options.
  *
  * @package midcom.services
@@ -114,8 +114,8 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.dimensions-1.1.2.pack.js');
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.easydrag-1.3.js');
             //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/tags/jquery.bgiframe.min.js');
-            
-            
+
+
             $_MIDCOM->add_link_head(
                 array
                 (
@@ -125,11 +125,11 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                     'href'  => MIDCOM_STATIC_URL . '/midcom.services.toolbars/fancy.css',
                 )
             );
-            
-            $this->type = 'palette';            
-            
+
+            $this->type = 'palette';
+
             $config = "{}";
-            
+
             $script = "jQuery('body div.midcom_services_toolbars_fancy').midcom_services_toolbar({$config});";
             $_MIDCOM->add_jquery_state_script($script);
         }
@@ -144,10 +144,10 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                     'href'  => $GLOBALS['midcom_config']['toolbars_simple_css_path'],
                 )
             );
-            
+
             $this->type = 'normal';
         }
-        
+
         // We've included CSS and JS, path is clear for centralized mode
         $this->_enable_centralized = true;
     }
@@ -243,7 +243,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 $GLOBALS['midcom_config']['toolbars_view_style_class'],
                 $GLOBALS['midcom_config']['toolbars_view_style_id']
             );
-            
+
         $this->_toolbars[$context_id][MIDCOM_TOOLBAR_HOST] =
             new midcom_helper_toolbar
             (
@@ -295,7 +295,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         {
             $topic = $_MIDCOM->get_context_data($context_id, MIDCOM_CONTEXT_CONTENTTOPIC);
         }
-        
+
         if (!$topic)
         {
             return false;
@@ -341,7 +341,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/save-as.png',
                 )
             );
-            
+
             $toolbar->add_item
             (
                 array
@@ -352,7 +352,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                     MIDCOM_TOOLBAR_ACCESSKEY => 'o',
                 )
             );
-            
+
             $toolbar->add_item
             (
                 array
@@ -411,7 +411,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 );
             }
         }
-        
+
         if ($topic->can_do('midcom.admin.folder:template_management'))
         {
             if ($topic->style != '')
@@ -422,7 +422,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             {
                 $enabled = false;
             }
-            
+
             $toolbar->add_item
             (
                 array
@@ -433,9 +433,9 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                     MIDCOM_TOOLBAR_ACCESSKEY => 't',
                     MIDCOM_TOOLBAR_ENABLED => $enabled,
                 )
-            );            
+            );
         }
-        
+
         // TEMPORARY METADATA CODE END
         if (   $topic->can_do('midgard:create')
             && $topic->can_do('midcom.admin.folder:topic_management'))
@@ -462,9 +462,9 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 // for terminate d is used by everyone to go to the location bar
             ));
         }
-        
+
     }
-    
+
     /**
      * Adds the Host management commands to the specified toolbar.
      *
@@ -504,7 +504,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 )
             );
         }
-        
+
         $toolbar->add_item
         (
             array
@@ -518,7 +518,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         );
 
         if ($_MIDGARD['admin'] == true)
-        {            
+        {
             $toolbar->add_item
             (
                 array
@@ -539,8 +539,8 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 )
             );
         }
-        
-        
+
+
     }
 
 
@@ -572,7 +572,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         }
 
         $calling_componentname = $_MIDCOM->get_context_data($context_id, MIDCOM_CONTEXT_COMPONENT);
-        $has_documentation_file = true; 
+        $has_documentation_file = true;
         if ($has_documentation_file)
         {
             $toolbar->add_item
@@ -670,7 +670,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         {
             $toolbar->customdata['midcom_service_toolbars_bound_to_object'] = true;
         }
-        
+
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         if (!$prefix)
         {
@@ -736,7 +736,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             );
         }
         // TEMPORARY METADATA CODE END
-        
+
         if ($object->can_do('midgard:update'))
         {
             $toolbar->add_item
@@ -760,7 +760,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 )
             );
         }
-        
+
         if (   $GLOBALS['midcom_config']['midcom_services_rcs_enable']
             && $object->can_do('midgard:update'))
         {
@@ -846,7 +846,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
     {
         return $this->_render_toolbar(MIDCOM_TOOLBAR_VIEW, $context_id);
     }
-    
+
     /**
      * Renders the host toolbar for the indicated context. If the toolbar is undefined,
      * an empty string is returned. If you want to show the toolbar directly, look for
@@ -861,7 +861,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
     {
         return $this->_render_toolbar(MIDCOM_TOOLBAR_HOST, $context_id);
     }
-    
+
     /**
      * Renders the help toolbar for the indicated context. If the toolbar is undefined,
      * an empty string is returned. If you want to show the toolbar directly, look for
@@ -893,7 +893,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         }
         echo $this->render_node_toolbar();
     }
-    
+
     /**
      * Displays the host toolbar for the indicated context. If the toolbar is undefined,
      * an empty string is returned.
@@ -960,19 +960,19 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         }
 
         $this->_centralized_mode = true;
-        
+
         $enable_drag = false;
         $toolbar_style = "";
         $toolbar_class = "midcom_services_toolbars_simple";
-                    
+
         if ($_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_toolbars'))
         {
             $enable_drag = true;
             $toolbar_class = "midcom_services_toolbars_fancy";
             $toolbar_style = "display: none;";
-            
+
         }
-        
+
         echo "<div class=\"{$toolbar_class} type_{$this->type}\" style=\"{$toolbar_style}\">\n";
         echo "    <div class=\"logos\">\n";
         echo "        <a href=\"" . $_MIDCOM->get_page_prefix() . "midcom-exec-midcom/about.php\">\n";
@@ -1002,7 +1002,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             echo "     <div class=\"dragbar\"></div>\n";
         }
         echo "</div>\n";
-        
+
     }
 }
 

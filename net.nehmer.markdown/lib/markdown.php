@@ -457,7 +457,7 @@ function _HashHTMLBlocks_InMarkdown($text, $indent = 0,
             # Then match in it either a code block...
             preg_match('/^ {'.($indent+4).'}.*(?>\n {'.($indent+4).'}.*)*'.
                         '(?!\n)$/', $matches[1], $x) ||
-            # ...or unbalenced code span markers. (the regex matches balenced)
+            # ...or unbalanced code span markers. (the regex matches balanced)
             !preg_match('/^(?>[^`]+|(`+)(?>[^`]+|(?!\1[^`])`)*?\1(?!`))*$/s',
                          $matches[1])
             ))
@@ -585,7 +585,7 @@ function _HashHTMLBlocks_InHTML($text, $hash_function, $md_attr) {
 
         if (count($parts) < 3) {
             #
-            # End of $text reached with unbalenced tag(s).
+            # End of $text reached with unbalanced tag(s).
             # In that case, we return original text unchanged and pass the
             # first character as filtered to prevent an infinite loop in the
             # parent function.

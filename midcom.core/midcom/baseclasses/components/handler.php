@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package midcom.baseclasses
  * @author The Midgard Project, http://www.midgard-project.org
@@ -15,7 +14,7 @@
  * Use the various event handlers to customize startup.
  *
  * The basic idea is that you have separate instances of this type for the various
- * operations in your main viewer class. This avoides cluttering up the viewer class
+ * operations in your main viewer class. This avoids cluttering up the viewer class
  * and gives you better maintainability due to smaller code files.
  *
  * Under normal operation within the same component you don't need to think about any
@@ -24,15 +23,15 @@
  *
  * Noteworthy is the ability to export handlers for usage in other components in
  * both libraries and full components. To make the exported handler work correctly,
- * you need to set $this->_component to the corresponding value of the <em>exporting</em>
+ * you need to set $this->_component to the corresponding value of the <i>exporting</i>
  * component. In this case, the startup code will take the main l10n instance, the
- * component data storage and the configuration <em>from the exporting component.</em>
+ * component data storage and the configuration <i>from the exporting component.</i>
  * The configuration in this case is merged from the global defaults (constructed
  * during component/library startup) and the configuration parameters set on the topic
- * <em>where it is invoked.</em>
+ * <i>where it is invoked.</i>
  *
- * Note, that the export "mode" is only invoked <em>if and only if</em> the component of
- * the handler is <em>different</em> of the component of the main request class.
+ * Note, that the export "mode" is only invoked <i>if and only if</i> the component of
+ * the handler is <i>different</i> of the component of the main request class.
  *
  * @package midcom.baseclasses
  */
@@ -148,7 +147,7 @@ class midcom_baseclasses_components_handler
      * (or library) then the master class. Take this into account when getting the
      * component data storage, configuration and l10n instances. Configuration is merged
      * during runtime based on the system defaults and all parameters attached to the
-     * topic <em>we're currently operating on.</em>
+     * topic <i>we're currently operating on.</i>
      *
      * @param midcom_baseclasses_components_request $master A reference to the request class
      *     handling the request.

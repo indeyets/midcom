@@ -8,8 +8,9 @@
 
 /**
  * Dummy class stub. The admin class is rarely used these days.
+ *
+ * @package org.openpsa.products
  */
-
 class org_openpsa_products_admin extends midcom_baseclasses_components_request_admin
 {
 }

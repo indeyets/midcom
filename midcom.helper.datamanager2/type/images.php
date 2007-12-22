@@ -59,7 +59,7 @@ require_once('image.php');
  *
  * <b>Derived image naming warning</b>
  *
- * Be aware that the type holds <em>no</em> safety code to guard against duplicate image
+ * Be aware that the type holds <i>no</i> safety code to guard against duplicate image
  * identifiers (e.g. defining a "main" image in the derived images list). The results
  * of such a configuration is undefined.
  *
@@ -68,12 +68,12 @@ require_once('image.php');
  *
  * <b>Available configuration options:</b>
  *
- * - bool keep_original controls whether you want to keep the orginally uploaded
+ * - bool keep_original controls whether you want to keep the originally uploaded
  *   file available. This option is disabled by default.
  * - string filter_chain The filter chain used to render the main image. This chain
  *   empty (null) by default.
  * - Array derived_images A list of derived images to construct from the main image.
- *   This option consists of a list of identfier/filter chain declarations. They will
+ *   This option consists of a list of identifier/filter chain declarations. They will
  *   be constructed in order, each using a fresh copy of the (initially type-converted)
  *   original image. This options may be null (the default) indicating no derived
  *   images. Note, that the system will detect any explicit image type conversions
@@ -85,7 +85,7 @@ require_once('image.php');
  *   "thumbnail". This image will be constructed after constructing all explicitly
  *   defined derived images. This option may be null (the default) indicating no
  *   thumbnail.
- * - integer max_count Maximum number of images allowed for a field. Set this 
+ * - integer max_count Maximum number of images allowed for a field. Set this
  *
  * <b>Implementation note:</b>
  *
@@ -156,7 +156,7 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
 
     /**
      * Output mode
-     * 
+     *
      * @access public
      * @var string
      */
@@ -164,7 +164,7 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
 
     /**
      * Maximum amount of images allowed to be stored in the same field
-     * 
+     *
      * @access public
      * @var integer
      */
@@ -431,9 +431,9 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
                         debug_pop();
                         continue;
                     }
-                    
+
                     $title = ($main['description']) ? $main['description'] : $main['filename'];
-                
+
                     if (array_key_exists('thumbnail', $images))
                     {
                         $thumb = $images['thumbnail'];
@@ -598,7 +598,7 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
         {
             return strcasecmp($a['main']['filename'], $b['main']['filename']);
         }
-        // Try to read the sort values from some other key 
+        // Try to read the sort values from some other key
         if (   is_array($a)
             && is_array($b))
         {

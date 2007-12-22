@@ -1,5 +1,12 @@
 <?php
 /**
+ * @package org.openpsa.calendar
+ * @author Nemein Oy http://www.nemein.com/
+ * @copyright Nemein Oy http://www.nemein.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
+/**
  * OpenPSA group calendar
  *
  *

@@ -17,7 +17,7 @@ class org_openpsa_helpers_ajax extends midcom_baseclasses_components_purecode
 {
     /**
      * Character encoding to use for the XML messages
-     * TODO: determine on the fly
+     * @todo determine on the fly
      * @var String Character encoding
      */
     var $encoding = 'UTF-8';

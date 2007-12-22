@@ -37,7 +37,7 @@
  * <b>Privilege notes</b>
  *
  * All users that should be able to register need the midgard:create privilege on the event
- * in question. This <em>includes</em> anonymous users if the component is cleared for anonymous
+ * in question. This <i>includes</i> anonymous users if the component is cleared for anonymous
  * registration. Permissions are checked on a per-event level granularity.
  *
  * All registrations will have their owner privilege pointing to the associated person record.
@@ -49,7 +49,7 @@
  *
  * I recommend assigning the management group ownership privileges to the root event or at least
  * the event they should manage. From there the required privileges will then inherit down to the
- * event members. Owners will <em>not</em> receive the manage privilege automatically, it has to
+ * event members. Owners will <i>not</i> receive the manage privilege automatically, it has to
  * be granted manually.
  *
  * Upon approval of a registration, the system will revoke the ownership privilege of the

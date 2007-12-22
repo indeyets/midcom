@@ -45,7 +45,7 @@
  *
  * <b>Class parameters</b>
  *
- * TODO: Document
+ * @todo Document
  *
  * The following options can be used to parametrize the components startup and operation.
  * See the individual member documentation for now.

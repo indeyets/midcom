@@ -55,7 +55,7 @@ var focusField = 'hours';
 
 /**
  * Populate the table
- * TODO: Get data via AJAX or generate JS via PHP output?
+ * @todo Get data via AJAX or generate JS via PHP output?
  */
 var existingReports = {
     0: {

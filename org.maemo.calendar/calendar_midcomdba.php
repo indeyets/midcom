@@ -12,7 +12,7 @@ $_MIDCOM->componentloader->load('org.openpsa.calendar');
 /**
  * MidCOM wrapper for org_openpsa_event with various helper functions
  * refactored from OpenPSA 1.x calander
- * TODO: Figure out a good way to always use UTC for internal time storage
+ * @todo Figure out a good way to always use UTC for internal time storage
  * @package org.openpsa.calendar
  */
 class midcom_org_maemo_event extends midcom_org_openpsa_event

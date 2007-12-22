@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package net.nehmer.comments
  * @author The Midgard Project, http://www.midgard-project.org
@@ -13,7 +12,7 @@
  * Comments component.
  *
  * This is a component geared for communities offering a way to add comments on arbitrary
- * pages. It is primairly geared for dl'ed usage. Its regular welcome URL method only
+ * pages. It is primarily geared for dl'ed usage. Its regular welcome URL method only
  * shows the configuration interface, commenting the comments topic is prohibited as well.
  *
  * The component stores the data in its own table, indexed by the object guid they are
@@ -40,9 +39,8 @@
  *
  *
  *
- * TODO:
- * - Install instruction
- * - Approval
+ * @todo Install instruction
+ * @todo Approval
  *
  * @package net.nehmer.comments
  */
@@ -60,8 +58,8 @@ class net_nehmer_comments_interface extends midcom_baseclasses_components_interf
         $this->_component = 'net.nehmer.comments';
         $this->_autoload_files = array
         (
-            'viewer.php', 
-            'navigation.php', 
+            'viewer.php',
+            'navigation.php',
             'comment.php'
         );
         $this->_autoload_libraries = array
@@ -75,22 +73,22 @@ class net_nehmer_comments_interface extends midcom_baseclasses_components_interf
     /**
      * The delete handler will drop all entries associated with any deleted object
      * so that our DB is clean.
-     * 
+     *
      * Uses SUDO to ensure privileges.
      */
     function _on_watched_dba_delete($object)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         $sudo = $_MIDCOM->auth->request_sudo();
-        
+
         $result = net_nehmer_comments_comment::list_by_objectguid($object->guid);
-        
+
         foreach ($result as $comment)
         {
             $comment->delete();
         }
-        
+
         if ($sudo)
         {
             $_MIDCOM->auth->drop_sudo();

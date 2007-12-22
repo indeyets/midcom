@@ -13,7 +13,7 @@ require_once('blobs.php');
 /**
  * Datamanager 2 Video type.
  *
- * This type encaspulates a sinlge uploaded image along with an optional number of
+ * This type encaspulates a single uploaded image along with an optional number of
  * derived images like thumbnails. Both the main image and the derived thumbnails
  * will be ran through a defined filter chain. The originally uploaded file can be
  * kept optionally.
@@ -30,7 +30,7 @@ require_once('blobs.php');
  * available in the attachment identified as "thumbnail".
  *
  * The class uses the image filter system for the actual resizing and conversion work,
- * you need to specifiy all operations including resize operations in the filtering
+ * you need to specify all operations including resize operations in the filtering
  * chain declaration for the corresponding derived image.
  *
  * Regarding file type conversions: The original uploaded image will always be run through
@@ -48,7 +48,7 @@ require_once('blobs.php');
  * the original image. If that image is not available, the generated main image is used
  * instead.
  *
- * Be aware that the type holds <em>no</em> safety code to guard against duplicate image
+ * Be aware that the type holds <i>no</i> safety code to guard against duplicate image
  * identifiers (e.g. defining a "main" image in the derived images list). The results
  * of such a configuration is undefined.
  *
@@ -72,7 +72,7 @@ require_once('blobs.php');
  *   defined derived images. This option may be null (the default) indicating no
  *   thumbnail.
  * - string output_mode Determines if $datamanager->convert_to_html() should return
- *   image as HTML tag ready to use (default) or array type containing all data about 
+ *   image as HTML tag ready to use (default) or array type containing all data about
  *   image and derived formats.
  *
  * <b>Implementation note:</b>
@@ -198,10 +198,10 @@ class midcom_helper_datamanager2_type_video extends midcom_helper_datamanager2_t
     var $_pending_attachments_video = Array();
 
     /**
-     * This option taken from data schema controls the way data is output. 
+     * This option taken from data schema controls the way data is output.
      * Either (default) preformatted <img> tag or plain array() type containing
      * obejct data
-     * 
+     *
      * @var string
      */
     var $output_mode = 'html';
@@ -234,7 +234,7 @@ class midcom_helper_datamanager2_type_video extends midcom_helper_datamanager2_t
         if ($ret !== 0)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("image operations require imagefilter which requires ImageMagick, {$convert_cmd} 
+            debug_add("image operations require imagefilter which requires ImageMagick, {$convert_cmd}
         (part of ImageMagick suite) not found or executable", MIDCOM_LOG_ERROR);
             debug_pop();
             $return = false;
@@ -415,7 +415,7 @@ class midcom_helper_datamanager2_type_video extends midcom_helper_datamanager2_t
     }
 
     /**
-     * Applies a given filter to all (except original) images in the type 
+     * Applies a given filter to all (except original) images in the type
      *
      * @param string $filter the midcom_helper_imagefilter filter chain to apply
      * @return boolean indicating success/failure
@@ -504,7 +504,7 @@ class midcom_helper_datamanager2_type_video extends midcom_helper_datamanager2_t
 
         // Clean-up the temp file
         unlink($tmpfile);
-        
+
         debug_add("Applied filter '{$filter}' to image '{$identifier}'", MIDCOM_LOG_INFO);
         debug_pop();
         return true;
@@ -548,7 +548,7 @@ class midcom_helper_datamanager2_type_video extends midcom_helper_datamanager2_t
             return false;
         }
         fclose($src);
-        
+
         // Failing these is bad, but it's too late now that we already have overwritten the actual image data...
         $this->_set_image_size($identifier, $file);
         $this->_update_attachment_info($identifier);
@@ -616,7 +616,7 @@ class midcom_helper_datamanager2_type_video extends midcom_helper_datamanager2_t
         $this->_filename = $filename;
         $this->_original_tmpname = $tmpname;
         $this->_original_mimetype = $this->_get_mimetype($this->_original_tmpname);
-        
+
         $this->_filter = new midcom_helper_imagefilter();
 
         // 1st step: original image storage and auto-conversion..
@@ -625,7 +625,7 @@ class midcom_helper_datamanager2_type_video extends midcom_helper_datamanager2_t
             || ! $this->_auto_convert_to_web_type())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Failed to process the conversion batch 1 (save original & web conversion) for 
+            debug_add("Failed to process the conversion batch 1 (save original & web conversion) for
         the uploaded file {$filename} in {$tmpname}, aborting type processing.",
                 MIDCOM_LOG_ERROR);
             debug_pop();
@@ -691,7 +691,7 @@ class midcom_helper_datamanager2_type_video extends midcom_helper_datamanager2_t
         $this->_filename_video = $filename;
         $this->_original_tmpname_video = $tmpname;
         $this->_original_mimetype_video = $this->_get_mimetype($this->_original_tmpname_video);
-            
+
         // 1st step: original image storage and auto-conversion..
         if (   ! $this->_save_original_video())
         {
@@ -1163,7 +1163,7 @@ class midcom_helper_datamanager2_type_video extends midcom_helper_datamanager2_t
                 break;
         }
         debug_add("\$conversion={$conversion}");
-        
+
         if (empty($conversion))
         {
             return true;
@@ -1188,7 +1188,7 @@ class midcom_helper_datamanager2_type_video extends midcom_helper_datamanager2_t
     function convert_from_storage($source)
     {
         parent::convert_from_storage($source);
-        
+
         if (array_key_exists('main', $this->attachments))
         {
             $this->title = $this->attachments['main']->title;

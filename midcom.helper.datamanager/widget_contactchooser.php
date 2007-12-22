@@ -10,7 +10,7 @@
 /**
  * This is a widget to choose persons from org.openpsa.contacts
  *
- * TODO: Values display
+ * @todo Values display
  *
  * @package midcom.helper.datamanager
  */

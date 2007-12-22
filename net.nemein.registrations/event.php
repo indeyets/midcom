@@ -876,7 +876,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      * Internal helper, converts a DM2 instance to a string based representation suitable
      * for mailing.
      *
-     * TODO: This is a little bit of a hack, as it is currently difficult to
+     * @todo This is a little bit of a hack, as it is currently difficult to
      * get a plaint-text representation of a given datatype explicitly,
      * so this interface is used for a start (avoids arrays). Same is
      * true for the datamanager-completed field-definitions.

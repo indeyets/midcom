@@ -6,7 +6,7 @@
 /**
  * Interface to messto API for sending SMS, MMS, Wap-push etc
  *
- * TODO: Implement other methods than send_sms.
+ * @todo Implement other methods than send_sms.
  * @package org.openpsa.smslib
  */
 class org_openpsa_smslib_messto extends org_openpsa_smslib

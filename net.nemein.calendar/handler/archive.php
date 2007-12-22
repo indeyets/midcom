@@ -19,15 +19,15 @@ require_once('Calendar/Decorator/Textual.php');
 /**
  * Calendar Archive pages handler.
  *
- * Shows a monthly archive index using the between method to display the months. 
- * Note, that the code is optimized to not use any TREE methods when querying 
+ * Shows a monthly archive index using the between method to display the months.
+ * Note, that the code is optimized to not use any TREE methods when querying
  * events (since there are plenty of queries run until the index is complete). Instead,
- * in case of a list_from_master topic, the immediate subevents of the master event 
- * are queried once and then reused. This archive does <em>not</em> support event 
- * hirarchies any deeper then this one level.
+ * in case of a list_from_master topic, the immediate subevents of the master event
+ * are queried once and then reused. This archive does <i>not</i> support event
+ * hierarchies any deeper then this one level.
  *
  * <b>Requirements:</b>
- * 
+ *
  * - PEAR Calendar
  * - Midgard 1.8
  *
@@ -37,7 +37,7 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
 {
     /**
      * The master event to use in case we list from a common master or the root event
-     * in case we don't. 
+     * in case we don't.
      *
      * @var net_nemein_calendar_event_dba
      * @access private
@@ -61,15 +61,15 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
     }
 
     /**
-     * Returns a QB initialized to query all events matching the current topic 
+     * Returns a QB initialized to query all events matching the current topic
      * constraints.
-     * 
+     *
      * @return midcom_core_querybuilder The initialized QB instance.
      */
     function _get_events_qb()
     {
         $qb = net_nemein_calendar_event_dba::new_query_builder();
-        
+
         if ($this->_config->get('list_from_master'))
         {
             $qb->add_constraint('up', 'INTREE', $this->_request_data['master_event']);
@@ -78,13 +78,13 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
         {
             $qb->add_constraint('node', '=', $this->_request_data['content_topic']->id);
         }
-        
+
         $type_filter = $this->_config->get('type_filter_upcoming');
         if (!is_null($type_filter))
         {
             $qb->add_constraint('type', '=', (int) $type_filter);
         }
-        
+
         return $qb;
     }
 
@@ -100,12 +100,12 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
         {
             return false;
         }
-    
+
         $this->_compute_welcome_data();
         $_MIDCOM->set_26_request_metadata($this->get_last_modified(), $this->_topic->guid);
-        
+
         $this->_component_data['active_leaf'] = "{$this->_topic->id}_ARCHIVE";
-                
+
         return true;
     }
 
@@ -193,14 +193,14 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
             return Calendar_Factory::createByTimestamp('Month', time()+1);
         }
     }
-    
+
     /**
-     * Computes the last modified timestamp of the entire event tree. 
-     * 
+     * Computes the last modified timestamp of the entire event tree.
+     *
      * This is done under sudo if possible, to avoid problems arising if the last posting
      * is hidden. This keeps up performance, as an execute_unchecked() can be made in this case.
      * If sudo cannot be acquired, the system falls back to excute().
-     * 
+     *
      * @return int Last Modified timestamp
      */
     function get_last_modified()
@@ -208,7 +208,7 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
         $qb = $this->_get_events_qb();
         $qb->add_order('metadata.revised', 'DESC');
         $qb->set_limit(1);
-        
+
         if ($_MIDCOM->auth->request_sudo())
         {
             $result = $qb->execute_unchecked();
@@ -218,7 +218,7 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
         {
             $result = $qb->execute();
         }
-        
+
         if (! $result)
         {
             return time();
@@ -228,10 +228,10 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
             return strtotime($result[0]->metadata->revised);
         }
     }
-    
+
     /**
-     * Computes the number of events active in a given timeframe. 
-     * 
+     * Computes the number of events active in a given timeframe.
+     *
      * Note, that active not starting events are counted here, thus it is quite possible
      * that the same event is listed more then once in case it spans several months.
      *
@@ -246,9 +246,9 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
         $qb->add_constraint('end', '>', gmdate('Y-m-d H:i:s', $start));
         return $qb->count_unchecked();
     }
-    
+
     /**
-     * Computes the total number of events. 
+     * Computes the total number of events.
      *
      * @return int Event count
      */
@@ -257,10 +257,10 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
         $qb = $this->_get_events_qb();
         return $qb->count_unchecked();
     }
-    
+
     /**
      * Constructs a Link for a calendar to the given month.
-     * 
+     *
      * @param Calendar_Month $month The calendar month to link to.
      */
     function _get_calendar_monthlink($month)
@@ -273,7 +273,7 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
 
     /**
      * Constructs a Link for a calendar to the given Year.
-     * 
+     *
      * @param Calendar_Year $year The calendar year to link to.
      */
     function _get_calendar_yearlink($year)
@@ -307,20 +307,20 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
         // Second step of reqeust data: Years and months.
         $first_year = $first_month->thisYear();
         $last_year = $last_month->thisYear();
-        
+
         for ($year_nr = $first_year; $year_nr <= $last_year; $year_nr++)
         {
             $year = new Calendar_Year($year_nr);
             $year->build();
             $year_url = $this->_get_calendar_yearlink($year);
-            
+
             $year_count = $this->_compute_events_count_between(
                 $year->thisYear('timestamp'), $year->nextYear('timestamp'));
             $month_data = Array();
 
             // Loop over the months, start month is either first posting month
             // or January in all other cases.
-            $month = null;            
+            $month = null;
             if ($year_nr == $first_year)
             {
                 for ($i = 1; $i < $first_month->thisMonth(); $i++)
@@ -342,7 +342,7 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
                     'url' => $month_url,
                     'count' => $month_count,
                 );
-                
+
                 // Check for end month in end year
                 if (   $year_nr == $last_year
                     && $month->thisMonth() >= $last_month->thisMonth())
@@ -399,7 +399,7 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
     function _show_welcome($handler_id, &$data)
     {
         midcom_show_style('archive-start');
-        
+
         //reversing array to get descenting order in view
         if ($this->_config->get('archive_year_order') == 'DESC')
         {

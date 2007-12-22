@@ -103,7 +103,7 @@ class midcom_helper_replicator_transporter extends midcom_baseclasses_components
      * this way the queue manager knows to remove said item from the queue, any items left in the list
      * will be retried on next run.
      *
-     * TODO: How to let transport specify retry interval
+     * @todo How to let transport specify retry interval
      *
      **/
     function process(&$items)

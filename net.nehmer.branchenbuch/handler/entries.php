@@ -453,8 +453,8 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
     /**
      * Shows all entries in the category.
      *
-     * The current entry will be available in the <em>entry</em> key. An initialized datamamanger
-     * can be found in <em>entry_dm</em>.
+     * The current entry will be available in the <i>entry</i> key. An initialized datamamanger
+     * can be found in <i>entry_dm</i>.
      */
     function _show_list($handler_id, &$data)
     {
@@ -533,7 +533,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
 
             case 'entry_view_customsearch':
                 $this->_handler_list_load_searchhandler();
-                $this->_customsearch->prepare_query();                
+                $this->_customsearch->prepare_query();
                 $data['return_url'] = "{$prefix}entry/list/customsearch/{$this->_type->guid}.html";
                 $data['next_entry'] = $this->_customsearch->get_next($this->_entry->guid);
                 $data['previous_entry'] = $this->_customsearch->get_previous($this->_entry->guid);
@@ -575,7 +575,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
 
         return true;
     }
-    
+
     /**
      * Shows an entry.
      */
@@ -687,8 +687,8 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
     /**
      * Shows all list of all entries owned by the current user.
      *
-     * The current entry will be available in the <em>entry</em> key. An initialized datamamanger
-     * can be found in <em>entry_dm</em>.
+     * The current entry will be available in the <i>entry</i> key. An initialized datamamanger
+     * can be found in <i>entry_dm</i>.
      */
     function _show_list_self($handler_id, &$data)
     {

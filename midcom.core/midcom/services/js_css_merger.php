@@ -7,6 +7,9 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/**
+ * @package midcom.services
+ */
 class midcom_services_js_css_merger extends midcom_baseclasses_core_object
 {
     /**
@@ -57,7 +60,7 @@ class midcom_services_js_css_merger extends midcom_baseclasses_core_object
      * Cache can_merge results here
      */
     var $_can_merge_cache = array();
-    
+
     /**
      * Cache of local paths, keyed by given path
      */
@@ -500,14 +503,14 @@ class midcom_services_js_css_merger extends midcom_baseclasses_core_object
             debug_add('media is not set, using "all"');
             $media = 'all';
         }
-        
+
         debug_add("using media '{$media}' array for futher checks");
         if (!isset($this->_cssfiles[$media]))
         {
             $this->_cssfiles[$media] = array();
         }
         $files_per_media =& $this->_cssfiles[$media];
-        
+
         if (in_array($path, $files_per_media))
         {
             debug_add('already added, returning success');
@@ -795,7 +798,7 @@ class midcom_services_js_css_merger extends midcom_baseclasses_core_object
         $_MIDCOM->header('Content-Length: ' . strlen($data));
         // PONDER: Support ranges ("continue download") somehow ?
         $_MIDCOM->header('Accept-Ranges: none');
-        
+
         /* We want to cache these so lets override some things
         $_MIDCOM->cache->content->cache_control_headers();
         */

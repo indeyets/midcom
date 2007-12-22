@@ -12,7 +12,7 @@
  *
  * The type lists all midgard persons in the system using a hierachical display.
  *
- * TODO: Child persons are listed in the form "$person, $childperson". (The traditional
+ * @todo Child persons are listed in the form "$person, $childperson". (The traditional
  * indented way isn't used, as this would hamper rendering in view mode; you couldn't
  * see the path there.)
  *

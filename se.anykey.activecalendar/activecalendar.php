@@ -31,7 +31,7 @@
 * 2. Calendar with month's or year's view navigation controls
 * 3. Calendar with linkable days (url or javascript)
 * 4. Calendar with a date picker (year ot month mode)
-* 5. Calendar with event days (css configutation) and event links
+* 5. Calendar with event days (css configuration) and event links
 * 6. Calendar with optionally linkable event contents
 * The layout of can be configured using css, as the class generates various html classes
 * Please read the readme.html first and check the examples included in this package

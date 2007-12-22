@@ -270,7 +270,7 @@
  *
  * <b>Authentication</b>
  *
- * TODO: Fully document authentication.
+ * @todo Fully document authentication.
  *
  * Whenever the system successfully creates a new login session (during auth service startup),
  * it checks whether the key <i>midcom_services_auth_login_success_url</i> is present in the HTTP

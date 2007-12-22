@@ -515,7 +515,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
      * Creates random string of 8 characters
      *
      * Used to generate the random suffix to distinguish between instances
-     * TODO: Use together with hashed "password" to secure the searching interface
+     * @todo Use together with hashed "password" to secure the searching interface
      * @return string random string
      */
     function _create_random_suffix()

@@ -13,7 +13,7 @@
  * This service is used for passing messages from applications to the MidCOM
  * user.
  *
- * <strong>Displaying UI messages on site:</strong>
+ * <b>Displaying UI messages on site:</b>
  *
  * If you want the UI messages to be shown in your site, you must place
  * the following call inside the HTML BODY tags of your style:
@@ -22,7 +22,7 @@
  * $_MIDCOM->uimessages->show();
  * </code>
  *
- * <strong>Adding UI messages to show:</strong>
+ * <b>Adding UI messages to show:</b>
  *
  * Any MidCOM component can add its own UI messages to be displayed. The
  * messages also carry across a relocate() call so you can tell a document
@@ -30,7 +30,7 @@
  *
  * UI messages can be specified into the following types: <i>info</i>,
  * <i>ok</i>, <i>warning</i> and <i>error</i>.
- * 
+ *
  * To add a UI message, call the following:
  *
  * <code>
@@ -43,7 +43,7 @@
  * $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('net.nemein.wiki'), sprintf($this->_request_data['l10n']->get('page "%s" added'), $this->_wikiword), 'ok');
  * </code>
  *
- * <strong>Configuration:</strong>
+ * <b>Configuration:</b>
  *
  * See midcom_config.php for configuration options.
  *
@@ -66,15 +66,15 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
      * @access private
      */
     var $_allowed_types = Array();
-    
+
     /**
      * List of messages retrieved from session to avoid storing them again
      *
      * @var Array
      * @access private
      */
-    var $_messages_from_session = Array();    
-    
+    var $_messages_from_session = Array();
+
     /**
      * ID of the latest UI message added so we can auto-increment
      *
@@ -105,11 +105,11 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
     function initialize()
     {
         if ($_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_uimessages'))
-        {        
+        {
             // $_MIDCOM->enable_jquery();
-            // $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/jquery.midcom_services_uimessages.js');            
+            // $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/jquery.midcom_services_uimessages.js');
             // $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/metadata.js');
-            //             
+            //
             // $_MIDCOM->add_link_head(
             //     array
             //     (
@@ -119,7 +119,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
             //         'href'  => MIDCOM_STATIC_URL . '/midcom.services.uimessages/growl.css',
             //     )
             // );
-            // 
+            //
             // $config = "{}";
             // $script = "jQuery.midcom_services_uimessages({$config}, false);";
             // $_MIDCOM->add_jquery_state_script($script);
@@ -127,7 +127,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Prototype/prototype.js');
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Scriptaculous/scriptaculous.js');
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/protoGrowl.js');
-        
+
             $_MIDCOM->add_link_head(
                 array
                 (
@@ -148,7 +148,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
                     'media' => 'screen',
                     'href'  => MIDCOM_STATIC_URL . '/midcom.services.uimessages/simple.css',
                 )
-            );            
+            );
         }
 
         /* Sessions service now tries to be smarter about things
@@ -159,7 +159,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
             return true;
         }
         */
-    
+
         // Read messages from session
         $session = new midcom_service_session('midcom_services_uimessages');
         if ($session->exists('midcom_services_uimessages_stack'))
@@ -171,7 +171,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
             {
                 return false;
             }
-            
+
             foreach ($stored_messages as $message)
             {
                 $id = $this->add($message['title'], $message['message'], $message['type']);
@@ -179,20 +179,20 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
             }
         }
     }
-    
+
     function get_class_magic_default_privileges()
     {
         $privileges = parent::get_class_magic_default_privileges();
         //$privileges['EVERYONE']['midgard:read'] = MIDCOM_PRIVILEGE_DENY;
         return $privileges;
     }
-    
+
     /**
      * Store unshown UI messages from the stack to user session.
      */
     function store()
     {
-        //$this->add('MIDCOM', "Storing messages, latest id is {$this->_latest_message_id}...");    
+        //$this->add('MIDCOM', "Storing messages, latest id is {$this->_latest_message_id}...");
         if (count($this->_message_stack) == 0)
         {
             // No unshown messages
@@ -225,7 +225,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
         }
 
         $session = new midcom_service_session('midcom_services_uimessages');
-        
+
         // Check if some other request has added stuff to session as well
         if ($session->exists('midcom_services_uimessages_stack'))
         {
@@ -233,7 +233,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
             $messages_to_store = array_merge($old_stack, $messages_to_store);
         }
         $session->set('midcom_services_uimessages_stack', $messages_to_store);
-        $this->_message_stack = Array();           
+        $this->_message_stack = Array();
     }
 
     /**
@@ -251,13 +251,13 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
             debug_add("Message type {$type} is not allowed");
             return false;
         }
-    
+
         // Normalize the title and message contents
         $title = str_replace("'", '"', $title);
         $message = str_replace("'", '"', $message);
-        
+
         $this->_latest_message_id++;
-        
+
         // Append to message stack
         $this->_message_stack[$this->_latest_message_id] = Array(
             'title'   => $title,
@@ -266,7 +266,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
         );
         return $this->_latest_message_id;
     }
-    
+
     /**
      * Show the message stack via javascript calls or simple html
      */
@@ -290,9 +290,9 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
                     // }";
                     //echo "    jQuery('<div>').midcom_services_uimessage({$options}, {$data});";
                     echo "    new protoGrowl({type: '{$message['type']}', title: '{$message['title']}', message: '{$message['message']}'});\n";
-                    
+
                     //$this->_render_message($message);
-                    
+
                     // Remove the message from stack
                     unset($this->_message_stack[$id]);
                 }
@@ -308,7 +308,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
             }
         }
     }
-    
+
     /**
      * Show the message stack via simple html only
      */
@@ -319,7 +319,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
         {
             return $this->show();
         }
-        
+
         if (count($this->_message_stack) > 0)
         {
             echo "<div class=\"midcom_services_uimessages_holder\">\n";
@@ -338,18 +338,18 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
 
     /**
      * Render the message
-     */    
+     */
     function _render_message($message)
     {
         echo "<div class=\"midcom_services_uimessages_message msu_{$message['type']}\">";
 
-        echo "    <div class=\"midcom_services_uimessages_message_type\">{$message['type']}</div>";                
+        echo "    <div class=\"midcom_services_uimessages_message_type\">{$message['type']}</div>";
         echo "    <div class=\"midcom_services_uimessages_message_title\">{$message['title']}</div>";
         echo "    <div class=\"midcom_services_uimessages_message_msg\">{$message['message']}</div>";
-        
+
         echo "</div>\n";
     }
-    
+
 }
 
 ?>

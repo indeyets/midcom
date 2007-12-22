@@ -1,6 +1,6 @@
 <?php
 /**
- * @package midcom
+ * @package midcom.baseclasses
  * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: view.php,v 1.1 2006/05/10 13:00:45 rambo Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
@@ -10,10 +10,10 @@
 /**
  * Generic CSV export handler baseclass
  *
- * @package midcom
+ * @package midcom.baseclasses
  */
 class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasses_components_handler
-{    
+{
     /**
      * The Datamanager of the project to display.
      *
@@ -21,16 +21,16 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
      * @access private
      */
     var $_datamanager = null;
-    
+
     var $_schema = null;
-    
+
     var $_objects = array();
-    
+
     function midcom_baseclasses_components_handler_dataexport()
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Simple helper which references all important members to the request data listing
      * for usage within the style listing.
@@ -40,7 +40,7 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
         $this->_request_data['datamanager'] =& $this->_datamanager;
         $this->_request_data['objects'] =& $this->_objects;
     }
-    
+
     /**
      * Internal helper, loads the datamanager for the current article. Any error triggers a 500.
      *
@@ -62,7 +62,7 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
             // This will exit.
         }
     }
-    
+
     function _load_schemadb()
     {
         $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Method "_load_schemadb" must be overridden in implementation');
@@ -72,20 +72,20 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
     {
         $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Method "_load_data" must be overridden in implementation');
     }
-    
+
     function _handler_csv($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
-            
+
         //Disable limits
         @ini_set('memory_limit', -1);
         @ini_set('max_execution_time', 0);
-            
+
         $this->_load_datamanager($this->_load_schemadb());
         $this->_objects = $this->_load_data($handler_id);
-        
+
         $_MIDCOM->skip_page_style = true;
-        
+
         if (   !isset($args[0])
             || empty($args[0]))
         {
@@ -94,7 +94,7 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
             $_MIDCOM->relocate("{$_MIDGARD['uri']}/{$fname}");
             // This will exit
         }
-        
+
         $this->_init_csv_variables();
         $_MIDCOM->skip_page_style = true;
         //$_MIDCOM->cache->content->content_type('text/plain');
@@ -166,7 +166,7 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
             debug_pop();
         }
         /* END: Quick'n'Dirty on-the-fly charset conversion */
-        
+
         // Strings and numbers beginning with zero are quoted
         if (   (   !is_numeric($data)
                 || preg_match('/^[0+]/', $data))
@@ -229,7 +229,7 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
                 // Object failed to load, skip
                 continue;
             }
-            
+
             echo $this->_encode_csv($object->guid, true, false);
             $i = 0;
             foreach ($datamanager->schema->field_order as $fieldname)

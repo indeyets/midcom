@@ -319,7 +319,7 @@ debug_pop();
 $_MIDCOM->finish();
 
 /**
- * TODO: Reflectorize this
+ * @todo Reflectorize this
  */
 function resolve_path($object_id, $class, $title)
 {

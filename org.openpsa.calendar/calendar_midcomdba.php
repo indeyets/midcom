@@ -9,7 +9,7 @@
 /**
  * MidCOM wrapper for org_openpsa_event with various helper functions
  * refactored from OpenPSA 1.x calander
- * TODO: Figure out a good way to always use UTC for internal time storage
+ * @todo Figure out a good way to always use UTC for internal time storage
  * @package org.openpsa.calendar
  */
 class midcom_org_openpsa_event extends __midcom_org_openpsa_event
@@ -154,7 +154,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
     /**
      * Check wheter current user can edit this event
      *
-     * TODO: Deprecate this in favor of direct ACL calls
+     * @todo Deprecate this in favor of direct ACL calls
      */
     function can_edit()
     {
@@ -164,7 +164,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
     /**
      * Check whether current user can view this event
      *
-     * TODO: Deprecate this in favor of direct ACL calls
+     * @todo Deprecate this in favor of direct ACL calls
      */
     function can_view()
     {

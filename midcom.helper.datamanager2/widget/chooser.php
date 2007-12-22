@@ -1352,7 +1352,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
     }
     
     /**
-     * TODO: Implement freezing and unfreezing
+     * @todo Implement freezing and unfreezing
      */
     function freeze()
     {

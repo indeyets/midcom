@@ -106,6 +106,9 @@ class midgard_admin_sitegroup_creation_config
     }
 }
 
+/**
+ * @package midgard.admin.sitegroup
+ */
 class midgard_admin_sitegroup_creation_config_sitegroup extends midgard_admin_sitegroup_creation_config
 {
     /**
@@ -127,6 +130,9 @@ class midgard_admin_sitegroup_creation_config_sitegroup extends midgard_admin_si
 
 }
 
+/**
+ * @package midgard.admin.sitegroup
+ */
 class midgard_admin_sitegroup_creation_config_host extends midgard_admin_sitegroup_creation_config
 {
     /**
