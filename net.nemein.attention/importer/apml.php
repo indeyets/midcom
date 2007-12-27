@@ -73,7 +73,7 @@ class net_nemein_attention_importer_apml extends net_nemein_attention_importer
                         $concept->metadata->published = $value;
                         break;
                     case 'from':
-                        $concept->from = $value;
+                        $concept->source = $value;
                         break;
                     default:
                         // Fall back to params
