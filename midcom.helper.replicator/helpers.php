@@ -1,17 +1,19 @@
 <?php
 /**
- * @package midcom.helper.replicator
- * @author The Midgard Project, http://www.midgard-project.org
- * @copyright The Midgard Project, http://www.midgard-project.org
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
- */
+* @package midcom.helper.replicator
+* @author The Midgard Project, http://www.midgard-project.org
+* @version $Id: viewer.php 3975 2006-09-06 17:36:03Z bergie $
+* @copyright The Midgard Project, http://www.midgard-project.org
+* @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+*/
 
 /**
  * Workaround for Zend bug regarding object handling inside methods
  *
  * Manifests as "Wrong parameter count for serialize()" when you call
  * it (otherwise properly) inside MidCOM application
- *
+ * 
+ * @package midcom.helper.replicator
  * @param midgard_object $object reference to an object
  * @return string object serialized (or false in case of failure)
  */
@@ -26,7 +28,8 @@ function midcom_helper_replicator_serialize(&$object)
  * Serves two purposes
  *  1. API has changed between 1.8.2 and 1.8.3
  *  2. see midcom_helper_replicator_serialize
- *
+ * 
+ * @package midcom.helper.replicator
  * @param midgard_attachment $object reference to attachment object
  * @return string blob serialized (or false in case of failure)
  * @see midcom_helper_replicator_serialize
@@ -47,7 +50,8 @@ function midcom_helper_replicator_serialize_blob(&$object)
  *
  * Manifests as "PHP object des not have __res property" when you call
  * it (otherwise properly) inside MidCOM application
- *
+ * 
+ * @package midcom.helper.replicator
  * @param string $xml reference to importable XML
  * @param boolean $use_force whether to use force
  * @return array of objects unserialized from XML (or false for failure)
@@ -55,7 +59,11 @@ function midcom_helper_replicator_serialize_blob(&$object)
  */
 function midcom_helper_replicator_unserialize(&$xml, $use_force = false)
 {
-    return midgard_replicator::unserialize($xml, $use_force);
+    if ($use_force)
+    {
+        return midgard_replicator::unserialize($xml, $use_force);
+    }
+    return midgard_replicator::unserialize($xml);
 }
 
 /**
@@ -63,19 +71,25 @@ function midcom_helper_replicator_unserialize(&$xml, $use_force = false)
  *
  * Manifests as "Wrong parameter count for import_object()" when you call
  * it (otherwise properly) inside MidCOM application
- *
+ * 
+ * @package midcom.helper.replicator
  * @param midgard_object $object reference to an object
  * @param boolean $use_force whether to use force
  * @return boolean indicating success/failure
  */
 function midcom_helper_replicator_import_object(&$object, $use_force = false)
 {
-    return midgard_replicator::import_object($object, $use_force);
+    if ($use_force)
+    {
+        return midgard_replicator::import_object($object, $use_force);
+    }
+    return midgard_replicator::import_object($object);
 }
 
 /**
  * Workaround for Zend bug regarding object handling inside methods
  *
+ * @package midcom.helper.replicator
  * @param string $xml reference to importable XML
  * @param boolean $use_force whether to use force
  * @return boolean indicating success/failure
@@ -83,8 +97,10 @@ function midcom_helper_replicator_import_object(&$object, $use_force = false)
  */
 function midcom_helper_replicator_import_from_xml(&$xml, $use_force = false)
 {
-    return midgard_replicator::import_from_xml($xml, $use_force);
+    if ($use_force)
+    {
+        return midgard_replicator::import_from_xml($xml, $use_force);
+    }
+    return midgard_replicator::import_from_xml($xml);
 }
-
-
 ?>
