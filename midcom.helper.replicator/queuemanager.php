@@ -350,11 +350,264 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         }
         return $queue_path;
     }
-    
+
+    function _process_queue_queuepath_sanitychecks(&$queue_name, &$subscription_path)
+    {
+        if (   $queue_name == '.'
+            || $queue_name == '..')
+        {
+            // Skip the . and .. entries (which are always present)
+            return false;
+        }
+        // Sanity check the subdir name
+        if (!is_numeric($queue_name))
+        {
+            // Nonnumeric paths are not our queues
+            debug_add("Weird queue name '{$queue_name}' in path '{$subscription_path}'", MIDCOM_LOG_WARN);
+            return false;
+        }
+        // Sanity check path
+        $queue_path = "{$subscription_path}/{$queue_name}";
+        if (!is_dir($queue_path))
+        {
+            debug_add("Queue path '{$queue_path}' is not a directory, skipping", MIDCOM_LOG_ERROR);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Helper for process_queue, quarantines failed items
+     */
+    function _process_queue_quarantines(&$items, &$items_paths, &$subscription)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        foreach ($items_paths as $item_key => $item_path)
+        {
+            if (array_key_exists($item_key, $items))
+            {
+                // Item still in array (transporter should remove each key as it's transported properly)
+                debug_add("Transporter left key '{$item_key}' into items, quarantineing '{$item_path}'", MIDCOM_LOG_INFO);
+                $quarantine_path = $this->_get_subscription_quarantine_queuedir($subscription);
+                if (!is_dir($quarantine_path))
+                {
+                    // Could not get valid dir
+                    continue;
+                }
+                $quarantine_filepath = $quarantine_path . '/' . basename($item_path);
+                $output = array();
+                $code = 0;
+                exec("mv {$item_path} {$quarantine_filepath}", $output, $code);
+                if ($code != 0)
+                {
+                    debug_add("Failed to quarantine '{$item_path}' as '{$quarantine_filepath}'", MIDCOM_LOG_ERROR);
+                }
+                else
+                {
+                    debug_add("Quarantined '{$item_path}' as '{$quarantine_filepath}'", MIDCOM_LOG_INFO);
+                }
+                // TODO: create notice
+                continue;
+            }
+            if (!unlink($item_path))
+            {
+                debug_add("Could not remove file '{$item_path}'", MIDCOM_LOG_ERROR);
+                continue;
+            }
+            $GLOBALS['midcom_helper_replicator_logger']->log("File {$item_path} removed from queue \"{$subscription->title}\"");
+        }
+        debug_pop();
+    }
+
+    /**
+     * Helper for process_queue, gets items for given queue directory pointer
+     */
+    function _process_queue_get_items(&$dp_queue, &$queue_path, &$subscription)
+    {
+        // Start crunching each file into key => XML array
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $items = array();
+        $items_paths = array();
+        $items_sort = array();
+        $GLOBALS['_process_queue_get_items__items_sort'] =& $items_sort;
+        while (($queue_item = readdir($dp_queue)) !== false)
+        {
+            if (   $queue_item == '.'
+                || $queue_item == '..'
+                || $queue_item == 'quarantine')
+            {
+                // Skip the . and .. entries (which are always present) & old style quarantine dir
+                continue;
+            }
+            $item_path = "{$queue_path}/{$queue_item}";
+            if (   !is_readable($item_path)
+                || !is_file($item_path))
+            {
+                // PANIC: Could not read queue item
+                debug_add("Cannot open file '{$item_path}' for reading", MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;
+            }
+
+            // reset time limit counter while reading files
+            set_time_limit(30);
+
+            // Separate the indexing prefix from key in item filename
+            $item_key = substr($queue_item, 11);
+            $items_sort[$item_key] = (int)substr($queue_item, 0, 10);
+            // Read item
+            $items[$item_key] = file_get_contents($item_path);
+            if ($items[$item_key] === false)
+            {
+                unset($items[$item_key]);
+                debug_add("Could not read file '{$item_path}'", MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;
+            }
+            $GLOBALS['midcom_helper_replicator_logger']->log("Read {$item_key} from queue \"{$subscription->title}\" file {$item_path}");
+            $items_paths[$item_key] = $item_path;
+            unset($item_key, $item_path);
+        }
+        unset($queue_item);
+        // reset time limit counter to config value
+        set_time_limit(ini_get('max_execution_time'));
+
+        // Sort the arrays, readdir may return the files in "weird" order
+        uksort($items, array($this, '_process_queue_sort_items'));
+        uksort($items_paths, array($this, '_process_queue_sort_items'));
+        debug_print_r('items_sort', $items_sort);
+        debug_print_r('items_paths', $items_paths);
+        reset($items);
+        reset($items_paths);
+        debug_pop();
+        return array($items, $items_paths);
+    }
+
+    /**
+     * Helper for _process_queue_get_items, to sort the arrays
+     */
+    function _process_queue_sort_items($a, $b)
+    {
+        $items_sort =& $GLOBALS['_process_queue_get_items__items_sort'];
+        $av = $items_sort[$a];
+        $bv = $items_sort[$b];
+        if ($av > $bv)
+        {
+            return 1;
+        }
+        if ($av < $bv)
+        {
+            return -1;
+        }
+        return 0;
+    }
+
+    /**
+     * Helper for process_queue, processes given queue of given subscription
+     */
+    function _process_queue_queuepath(&$queue_name, &$subscription_path, &$subscription)
+    {
+        if (!$this->_process_queue_queuepath_sanitychecks($queue_name, $subscription_path))
+        {
+            return;
+        }
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $queue_path = "{$subscription_path}/{$queue_name}";
+
+        // Open handle
+        $dp_queue = opendir($queue_path);
+        if (!$dp_queue)
+        {
+            debug_add("Cannot open queue path '{$queue_path}' for reading", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return;
+        }
+
+        // Get us the transporter
+        $transporter = midcom_helper_replicator_transporter::create($subscription);
+        if (!is_a($transporter, 'midcom_helper_replicator_transporter'))
+        {
+            debug_add("Could not instantiate transporter for subscription {$subscription->guid}", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return;
+        }
+
+        /**
+         * TODO: Read only X items to memory at a time ?
+         */
+        $items_ret = $this->_process_queue_get_items($dp_queue, $queue_path, $subscription);
+        if ($items_ret === false)
+        {
+            closedir($dp_queue);
+            debug_add("Fatal error while reading items in {$queue_name}", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        $items =& $items_ret[0];
+        $items_paths =& $items_ret[1];
+
+        closedir($dp_queue);
+
+        if (!$transporter->process($items))
+        {
+            // Transporter returned error, skip removal of files
+            $GLOBALS['midcom_helper_replicator_logger']->log("Got error \"{$transporter->error}\" from transporter for queue \"{$subscription->title}\".", MIDCOM_LOG_ERROR);
+            $GLOBALS['midcom_helper_replicator_logger']->log("Saving queue for later retry.", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return;
+        }
+
+        // Remove files transported correctly, quarantine problematic files
+        $this->_process_queue_quarantines($items, $items_paths, $subscription);
+        unset($items, $items_paths, $items_ret);
+        /**
+         * /TODO: Read only X items to memory at a time ?
+         */
+
+        // Check if the queue_dir has any more items left, if not rmdir it
+        $this->_rm_empty_dir($queue_path);
+
+        debug_pop();
+        return true;
+    }
+
+    /**
+     * Helper for process_queue, processes given subscriptions queues
+     */
+    function _process_queue_subscription(&$subscription)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $subscription_path = $this->_get_subscription_basedir($subscription);
+        if ($subscription_path === false)
+        {
+            debug_add('Could not get base dir for subscription', MIDCOM_LOG_ERROR);
+            return;
+        }
+        $dp_queues = opendir($subscription_path);
+        if (!$dp_queues)
+        {
+            debug_add("Could not open dir '{$subscription_path}' for reading", MIDCOM_LOG_ERROR);
+            return;
+        }
+        // TODO: refactor these loops to separate methods
+        while (($queue_name = readdir($dp_queues)) !== false)
+        {
+            if ($this->_process_queue_queuepath($queue_name, $subscription_path, $subscription) === false)
+            {
+                // If the method returns strict boolean false then something failed fatally and we abort
+                debug_add("Processing queue {$queue_name} for {$subscription->title} failed fatally", MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;
+            }
+        }
+        closedir($dp_queues);
+        debug_pop();
+        return true;
+    }
+
     /**
      * This method will process all unprocessed items in queues and send them via the
      * appropriate transporters.
-     * @todo refactor to smaller methods
      */
     function process_queue()
     {
@@ -365,149 +618,14 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         $subscriptions = $qb->execute();
         foreach ($subscriptions as $subscription)
         {
-            $subscription_path = $this->_get_subscription_basedir($subscription);
-            if ($subscription_path === false)
+            if ($this->_process_queue_subscription($subscription) === false)
             {
-                debug_add('Could not get base dir for subscription', MIDCOM_LOG_ERROR);
-                continue;
+                // If the method returns strict boolean false then something failed fatally and we abort
+                debug_add("Processing subscription {$subscription->title} failed fatally", MIDCOM_LOG_ERROR);
+                debug_pop();
+                $GLOBALS['midcom_helper_replicator_logger']->pop_prefix();
+                return false;
             }
-            $dp_queues = opendir($subscription_path);
-            if (!$dp_queues)
-            {
-                debug_add("Could not open dir '{$subscription_path}' for reading", MIDCOM_LOG_ERROR);
-                continue;
-            }
-            // TODO: refactor these loops to separate methods
-            while (($queue_name = readdir($dp_queues)) !== false)
-            {
-                if (   $queue_name == '.'
-                    || $queue_name == '..')
-                {
-                    // Skip the . and .. entries (which are always present)
-                    continue;
-                }
-                // Sanity check the subdir name
-                if (!is_numeric($queue_name))
-                {
-                    // Nonnumeric paths are not our queues
-                    debug_add("Weird queue name '{$queue_name}' in path '{$subscription_path}'", MIDCOM_LOG_WARN);
-                    continue;
-                }
-                // Sanity check path
-                $queue_path = "{$subscription_path}/{$queue_name}";
-                if (!is_dir($queue_path))
-                {
-                    debug_add("Queue path '{$queue_path}' is not a directory, skipping", MIDCOM_LOG_ERROR);
-                    continue;
-                }
-                // Open handle
-                $dp_queue = opendir($queue_path);
-                if (!$dp_queue)
-                {
-                    debug_add("Cannot open queue path '{$queue_path}' for reading", MIDCOM_LOG_ERROR);
-                    continue;
-                }
-
-                // Get us the transporter
-                $transporter = midcom_helper_replicator_transporter::create($subscription);
-                if (!is_a($transporter, 'midcom_helper_replicator_transporter'))
-                {
-                    debug_add("Could not instantiate transporter for subscription {$subscription->guid}", MIDCOM_LOG_ERROR);
-                    continue;
-                }
-
-                // Start crunching each file into key => XML array
-                $items = array();
-                $items_paths = array();
-                while (($queue_item = readdir($dp_queue)) !== false)
-                {
-                    if (   $queue_item == '.'
-                        || $queue_item == '..'
-                        || $queue_item == 'quarantine')
-                    {
-                        // Skip the . and .. entries (which are always present) & old style quarantine dir
-                        continue;
-                    }
-                    $item_path = "{$queue_path}/{$queue_item}";
-                    if (   !is_readable($item_path)
-                        || !is_file($item_path))
-                    {
-                        // PANIC: Could not read queue item
-                        debug_add("Cannot open file '{$item_path}' for reading", MIDCOM_LOG_ERROR);
-                        debug_pop();
-                        $GLOBALS['midcom_helper_replicator_logger']->pop_prefix();
-                        return false;
-                    }
-                    // Separate the indexing prefix from key in item filename
-                    $item_key = substr($queue_item, 11);
-                    // Read item
-                    $items[$item_key] = file_get_contents($item_path);
-                    if ($items[$item_key] === false)
-                    {
-                        unset($items[$item_key]);
-                        debug_add("Could not read file '{$item_path}'", MIDCOM_LOG_ERROR);
-                        debug_pop();
-                        $GLOBALS['midcom_helper_replicator_logger']->pop_prefix();
-                        return false;
-                    }
-                    $GLOBALS['midcom_helper_replicator_logger']->log("Read {$item_key} from queue \"{$subscription->title}\" file {$item_path}");
-                    $items_paths[$item_key] = $item_path;
-                    unset($item_key, $item_path);
-                }
-                unset($queue_item);
-                closedir($dp_queue);
-
-                if (!$transporter->process($items))
-                {
-                    // Transporter returned error, skip removal of files
-                    $GLOBALS['midcom_helper_replicator_logger']->log("Got error \"{$transporter->error}\" from transporter for queue \"{$subscription->title}\".", MIDCOM_LOG_ERROR);
-                    $GLOBALS['midcom_helper_replicator_logger']->log("Saving queue for later retry.", MIDCOM_LOG_ERROR);
-                    continue;
-                }
-
-                // Remove files transported correctly
-                foreach ($items_paths as $item_key => $item_path)
-                {
-                    if (array_key_exists($item_key, $items))
-                    {
-                        // Item still in array (transporter should remove each key as it's transported properly)
-                        debug_add("Transporter left key '{$item_key}' into items, quarantineing '{$item_path}'", MIDCOM_LOG_INFO);
-                        $quarantine_path = $this->_get_subscription_quarantine_queuedir($subscription);
-                        if (!is_dir($quarantine_path))
-                        {
-                            // Could not get valid dir
-                            continue;
-                        }
-                        $quarantine_filepath = $quarantine_path . '/' . basename($item_path);
-                        $output = array();
-                        $code = 0;
-                        exec("mv {$item_path} {$quarantine_filepath}", $output, $code);
-                        if ($code != 0)
-                        {
-                            debug_add("Failed to quarantine '{$item_path}' as '{$quarantine_filepath}'", MIDCOM_LOG_ERROR);
-                        }
-                        else
-                        {
-                            debug_add("Quarantined '{$item_path}' as '{$quarantine_filepath}'", MIDCOM_LOG_INFO);
-                        }
-                        // TODO: create notice
-                        continue;
-                    }
-                    if (!unlink($item_path))
-                    {
-                        debug_add("Could not remove file '{$item_path}'", MIDCOM_LOG_ERROR);
-                        continue;
-                    }
-                    $GLOBALS['midcom_helper_replicator_logger']->log("File {$item_path} removed from queue \"{$subscription->title}\"");
-                }
-
-                // Check if the queue_dir has any more items left, if not rmdir it
-                $this->_rm_empty_dir($queue_path);
-
-                unset($items, $item_paths);
-            }
-            closedir($dp_queues);
-
         }
         debug_pop();
         $GLOBALS['midcom_helper_replicator_logger']->pop_prefix();
@@ -518,7 +636,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
     {
         if (!is_dir($dir))
         {
-            // Directory does not exist
+            // Directoty does not exist
             return true;
         }
         $dp = opendir($dir);
