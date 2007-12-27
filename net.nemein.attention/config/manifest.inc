@@ -1,5 +1,5 @@
 'name' => 'net.nemein.attention',
-'icon' => 'net.nemein.attention/apml.png',
+'icon' => 'net.nemein.attention/apml-icon-16x16.png',
 'purecode' => true,
 'version' => '0.0.1',
 'state' => 'devel',
