@@ -97,7 +97,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
     {
         if (   $this->_config->get('ratings_enable')
             && ( $this->_config->get('ratings_cache_to_object')
-		|| $this->_config->get('comment_count_cache_to_object'))   )
+        || $this->_config->get('comment_count_cache_to_object'))   )
         {
             // Handle ratings
             $comments = net_nehmer_comments_comment::list_by_objectguid($this->_objectguid);
@@ -144,7 +144,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             {
                 $metadata = midcom_helper_metadata::retrieve($this->_objectguid);
                 $metadata->set($parent_property, count($comments));
-			}
+            }
             else
             {
                 $parent_object = $_MIDCOM->dbfactory->get_object_by_guid($this->_objectguid);
