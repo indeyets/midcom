@@ -82,6 +82,11 @@ class net_nemein_alphabeticalindex_handler_admin extends midcom_baseclasses_comp
             }
         }
         
+        $topic = new midcom_db_topic($this->_topic->id);
+        if ($topic) {
+            $topic->update();
+        }
+        
         return true;
     }
     
@@ -125,6 +130,11 @@ class net_nemein_alphabeticalindex_handler_admin extends midcom_baseclasses_comp
         }
         
         $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.alphabeticalindex', 'net.nemein.alphabeticalindex'), $_MIDCOM->i18n->get_string('Alphabetical index has been cleared', 'net.nemein.alphabeticalindex'), 'ok');
+
+        $topic = new midcom_db_topic($this->_topic->id);
+        if ($topic) {
+            $topic->update();
+        }
         
         return true;
     }

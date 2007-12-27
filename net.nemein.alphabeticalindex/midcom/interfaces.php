@@ -100,6 +100,7 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
        	       	if ($list_id == 0) {
        	       	    continue;
        	       	}
+       	       	$topic = new midcom_db_topic($list_id);
        	       	
                 $item = new net_nemein_alphabeticalindex_item();            
                 $item->title = $title;
@@ -108,6 +109,10 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
                 $item->node = $list_id;
                 if ($item->create())
                 {
+                    if ($topic) {
+                        $topic->update();
+                    }
+                    
                     $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.alphabeticalindex', 'net.nemein.alphabeticalindex'), sprintf($_MIDCOM->i18n->get_string('item %s has been added to alphabetical index', 'net.nemein.alphabeticalindex'), $item->title), 'ok');
                 }                
             }
@@ -152,7 +157,8 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
                 $list_id = (int) $list_id;
        	       	if ($list_id == 0) {
        	       	    continue;
-       	       	}
+       	       	}       	       	
+       	       	$topic = new midcom_db_topic($list_id);
        	       	
                 $qb = net_nemein_alphabeticalindex_item::new_query_builder();
                 $qb->add_constraint('objectGuid', '=', $object->guid);
@@ -168,7 +174,11 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
                     }
                     $item->node = $list_id;
                     $item->update();
-
+                    
+                    if ($topic) {
+                        $topic->update();
+                    }
+                    
                     $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.alphabeticalindex', 'net.nemein.alphabeticalindex'), sprintf($_MIDCOM->i18n->get_string('item %s has been updated in alphabetical index', 'net.nemein.alphabeticalindex'), $item->title), 'ok');
                 }
                 else
@@ -245,6 +255,11 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
             foreach ($lists as $list_id)
             {
                 $list_id = (int) $list_id;
+       	       	if ($list_id == 0) {
+       	       	    continue;
+       	       	}
+                $topic = new midcom_db_topic($list_id);
+                
                 $qb = net_nemein_alphabeticalindex_item::new_query_builder();
                 $qb->add_constraint('objectGuid', '=', $object->guid);
                 if (! $skip_status)
@@ -260,11 +275,16 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
                         if ($item->delete())
                         {
                             $object->set_parameter('net.nemein.alphabeticalindex:show_in_list','status', false);
+                            
+                            if ($topic) {
+                                $topic->update();
+                            }
+                                                        
                             $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.alphabeticalindex', 'net.nemein.alphabeticalindex'), sprintf($_MIDCOM->i18n->get_string('item %s has been deleted from alphabetical index', 'net.nemein.alphabeticalindex'), $title), 'ok');
                         }
                     }
                 }                
-            }            
+            }
         }
 
         // debug_pop();
@@ -283,7 +303,6 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
         
         return $title;
     }
-
 
 }
 ?>
