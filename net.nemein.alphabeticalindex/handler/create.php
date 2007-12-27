@@ -188,9 +188,10 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
 
                         $qb = net_nemein_alphabeticalindex_item::new_query_builder();
                         $qb->add_constraint('objectGuid', '=', $object->guid);
-                        $qb->add_constraint('node', '=', $this->_topic->id);
-                        
-                        if ($qb->count_unchecked() == 0)
+                        $qb->add_constraint('node.id', '=', $this->_topic->id);
+
+                        $results = $qb->execute();
+                        if (count($results) <= 0)
                         {
                             $item = new net_nemein_alphabeticalindex_item();            
                             $item->title = $object->title;
@@ -205,6 +206,10 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
                             }
                             
                             $this->_item =& $item;
+                        }
+                        else
+                        {
+                            $this->_item =& $results[0];
                         }
                     }
                 }
@@ -221,7 +226,9 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
                         $qb = net_nemein_alphabeticalindex_item::new_query_builder();
                         $qb->add_constraint('objectGuid', '=', $object->guid);
                         $qb->add_constraint('node.id', '=', $this->_topic->id);
-                        if ($qb->count() == 0)
+                        
+                        $results = $qb->execute();
+                        if (count($results) <= 0)
                         {
                             $item = new net_nemein_alphabeticalindex_item();            
                             $item->title = $object->extra;
@@ -236,6 +243,10 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
                             }
                             
                             $this->_item =& $item;
+                        }
+                        else
+                        {
+                            $this->_item =& $results[0];
                         }
                     }
                 }
