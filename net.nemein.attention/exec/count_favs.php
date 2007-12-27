@@ -88,12 +88,12 @@ foreach ($favs as $fav)
             if (substr($category, 0, 5) == 'feed:')
             {
                 // RSS feed information, can be used for "sources" handling
-                $feed_url = $feed_categories[$category];
-                if (!isset($feed_url))
+                if (!isset($feed_categories[$category]))
                 {
                     // Deleted feed, skip
                     continue;
                 }
+                $feed_url = $feed_categories[$category];
                 
                 if (!isset($sources[$feed_url]))
                 {

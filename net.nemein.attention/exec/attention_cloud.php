@@ -4,6 +4,10 @@ $_MIDCOM->auth->require_valid_user();
 <html>
     <head>
         <style>
+            body
+            {
+                font-size: 0.8em;
+            }
             ul.cloud
             {
                 margin: 0px;
