@@ -91,46 +91,63 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
             'midcom_helper_replicator_use_force' => (int)$this->use_force,
         );
         $response = $client->post($this->url, $post_vars);
-        if (   $response === false
-            || stristr($response, 'error'))
+        if (   $response !== false
+            && stristr($response, 'error') === false)
         {
-            if ($response)
-            {
-                $error_string = strip_tags(str_replace("\n", ' ', $response));
-                $response_body = $response;
-            }
-            else
-            {
-                $error_string = $client->error;
-                $reponse_body = $client->_client->getResponseBody();
-            }
-            if (   $error_string === 'Malformed response.'
-                && $retry_count < 5)
-            {
-                // Likely the remote end segfaulted, recursing to retry up-to 5 times
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Remote returned malformed response, most likely segfault, retry_count={$retry_count}", MIDCOM_LOG_INFO);
-                debug_pop();
-                usleep(250000); // 0.25 second delay
-                if ($this->_post_item($key, $items, $retry_count+1))
-                {
-                    debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add("Malformed response retry succeeded on count {$retry_count}", MIDCOM_LOG_INFO);
-                    debug_pop();
-                    return true;
-                }
-            }
-            $msg = "Failed to send key {$key}, error: {$error_string}";
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add($msg, MIDCOM_LOG_WARN);
-            debug_print_r('Response body: ', $response_body);
-            unset($response_body);
-            debug_pop();
-            $GLOBALS['midcom_helper_replicator_logger']->log($msg, MIDCOM_LOG_WARN);
-            unset($msg);
-            return false;
+            // Key sent OK.
+            return true;
         }
-        return true;
+
+        /**
+         * Sending failed
+         *
+         * Start doing the moves
+         */
+
+        // Get error message
+        if ($response)
+        {
+            // non-empty response body, means we found 'error' as a string there
+            $error_string = strip_tags(str_replace("\n", ' ', $response));
+            $response_body = $response;
+        }
+        else
+        {
+            // empty response body, we failed earlier, get error message from http_request and what little body we might have
+            $error_string = $client->error;
+            $reponse_body = $client->_client->getResponseBody();
+        }
+
+        // Special case for remote end segfaults
+        if (   $error_string === 'Malformed response.'
+            && $retry_count < 5)
+        {
+            // Likely the remote end segfaulted, recursing to retry up-to 5 times
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Remote returned malformed response, most likely segfault, retry_count={$retry_count}", MIDCOM_LOG_INFO);
+            debug_pop();
+            usleep(250000); // 0.25 second delay
+            if ($this->_post_item($key, $items, $retry_count+1))
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Malformed response retry succeeded on count {$retry_count}", MIDCOM_LOG_INFO);
+                debug_pop();
+                return true;
+            }
+        }
+
+        // TODO: Other immediate retries ??
+
+        // Log the failure details
+        $msg = "Failed to send key {$key}, error: {$error_string}";
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add($msg, MIDCOM_LOG_WARN);
+        debug_print_r('Response body: ', $response_body);
+        unset($response_body);
+        debug_pop();
+        $GLOBALS['midcom_helper_replicator_logger']->log($msg, MIDCOM_LOG_WARN);
+        unset($msg);
+        return false;
     }
 
     function _real_process(&$items, $retry_count = 0)
