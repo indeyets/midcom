@@ -3,9 +3,9 @@
     <type name="net_nemein_favourites_favourite" table="net_nemein_favourites_favourite">
         <property name="id" type="integer" primaryfield="id" />
 
-        <property name="objectType" type="text"/>
-        <property name="objectGuid" type="text"/>
-        <property name="objectTitle" type="text"/>
+        <property name="objectType" type="string"/>
+        <property name="objectGuid" type="string"/>
+        <property name="objectTitle" type="string"/>
         <property name="bury" type="boolean"/>
 
     </type>
