@@ -21,6 +21,14 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
      * @access private
      */
     var $_datamanager = null;
+    
+    /**
+     * Navigation helper class
+     * 
+     * @access private
+     * @var midcom_helper_nav
+     */
+    var $_nap = null;
 
     /**
      * Simple default constructor.
@@ -58,8 +66,6 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
      */
     function _can_handle_view($handler_id, $args, &$data)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        
         // Prevent URL hijacking
         $qb = midcom_db_topic::new_query_builder();
         $qb->add_constraint('name', '=', (string) $args[0]);
@@ -130,31 +136,42 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
             $data['event'] = new net_nemein_calendar_event_dba($data['event']->guid);
         }
         
-        if ($data['event']->node == $data['content_topic']->id)
+        $node_url = '';
+        
+        if ($data['event']->node !== $data['content_topic']->id)
         {
-            $this->_view_toolbar->add_item
-            (
-                array
-                (
-                    MIDCOM_TOOLBAR_URL => "edit/{$data['event']->guid}/",
-                    MIDCOM_TOOLBAR_LABEL => $data['l10n_midcom']->get('edit'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
-                    MIDCOM_TOOLBAR_ENABLED => $data['event']->can_do('midgard:update'),
-                    MIDCOM_TOOLBAR_ACCESSKEY => 'e',
-                )
-            );
-            $this->_view_toolbar->add_item
-            (
-                array
-                (
-                    MIDCOM_TOOLBAR_URL => "delete/{$data['event']->guid}/",
-                    MIDCOM_TOOLBAR_LABEL => $data['l10n_midcom']->get('delete'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
-                    MIDCOM_TOOLBAR_ENABLED => $data['event']->can_do('midgard:delete'),
-                    MIDCOM_TOOLBAR_ACCESSKEY => 'd',
-                )
-            );
+            if (!$this->_nap)
+            {
+                $this->_nap = new midcom_helper_nav();
+            }
+            
+            $node = $this->_nap->get_node($data['event']->node);
+            
+            $node_url = $node[MIDCOM_NAV_FULLURL];
         }
+        
+        $this->_view_toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "{$node_url}edit/{$data['event']->guid}/",
+                MIDCOM_TOOLBAR_LABEL => $data['l10n_midcom']->get('edit'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                MIDCOM_TOOLBAR_ENABLED => $data['event']->can_do('midgard:update'),
+                MIDCOM_TOOLBAR_ACCESSKEY => 'e',
+            )
+        );
+        $this->_view_toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "{$node_url}delete/{$data['event']->guid}/",
+                MIDCOM_TOOLBAR_LABEL => $data['l10n_midcom']->get('delete'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                MIDCOM_TOOLBAR_ENABLED => $data['event']->can_do('midgard:delete'),
+                MIDCOM_TOOLBAR_ACCESSKEY => 'd',
+            )
+        );
         
         $this->_load_datamanager();
 
