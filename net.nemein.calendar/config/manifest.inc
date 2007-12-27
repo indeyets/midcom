@@ -1,6 +1,6 @@
 'name' => 'net.nemein.calendar',
 'purecode' => false,
-'version' => '2.0.0beta5',
+'version' => '2.0.0beta7',
 'state' => 'beta',
 'privileges' => array (),
 'class_definitions' => array
