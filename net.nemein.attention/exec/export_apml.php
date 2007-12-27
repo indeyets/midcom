@@ -2,14 +2,18 @@
 $_MIDCOM->auth->require_valid_user();
 $_MIDCOM->header('content-type: text/xml');
 
-echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-echo "<APML xmlns=\"http://www.apml.org/apml-0.6\" version=\"0.6\">\n";
-echo "<Head>\n";
-echo "    <Title>APML for {$_MIDCOM->auth->user->name}</Title>\n";
-echo "    <Generator>Midgard " . mgd_version() . "</Generator>\n";
-echo "    <DateCreated>" . date('c') . "</DateCreated>\n";
-echo "</Head>\n";
-echo "<Body>\n";
+$apml = new SimpleXMLElement('<APML></APML>');
+$apml->addAttribute('xmlns', 'http://www.apml.org/apml-0.6');
+$apml->addAttribute('version', '0.6');
+
+// APML headers
+$head = $apml->addChild('Head');
+$head->addChild('Title', "APML for {$_MIDCOM->auth->user->name}");
+$head->addChild('Generator', "Midgard/" . mgd_version() . ' MidCOM/' . $GLOBALS['midcom_version'] . ' PHP/' . phpversion());
+$head->addChild('DateCreated', date('c'));
+
+// APML content
+$body = $apml->addChild('Body');
 
 $qb = net_nemein_attention_concept_dba::new_query_builder();
 $qb->add_constraint('person', '=', $_MIDGARD['user']);
@@ -22,10 +26,7 @@ if (isset($_GET['profile']))
 }
 
 $concepts = $qb->execute();
-$lastprofile = 'default';
-$inprofile = false;
-$inimplicit = false;
-$inexplicit = false;
+$profiles = array();
 foreach ($concepts as $concept)
 {
     if (empty($concept->profile))
@@ -33,74 +34,35 @@ foreach ($concepts as $concept)
         $concept->profile = 'default';
     }
     
-    if ($concept->profile != $lastprofile)
+    if (!isset($profiles[$concept->profile]))
     {
-        if ($inprofile)
-        {
-            if ($inimplicit)
-            {
-                echo "            </Concepts>\n";
-                echo "        </ImplicitData>\n";
-                $inimplicit = false;
-            }
-            
-            if ($inexplicit)
-            {
-                echo "            </Concepts>\n";
-                echo "        </ExplicitData>\n";
-                $inexplicit = false;
-            }
-            
-            echo "    </Profile>\n";
-        }
-        
-        echo "    <Profile name=\"{$concept->profile}\">\n";
-        $inprofile = true;
-        $lastprofile = $concept->profile;
+        $profiles[$concept->profile] = $body->addChild('Profile');
+        $profiles[$concept->profile]->addAttribute('name', $concept->profile);
     }
     
-    if (   !$concept->explicit
-        && !$inimplicit)
+    $data_attribute = 'ImplicitData';
+    if ($concept->explicit)
     {
-        echo "        <ImplicitData>\n";
-        echo "            <Concepts>\n";
-        $inimplicit = true;
+        $data_attribute = 'ExplicitData';
+    }
+    if (!isset($profiles[$concept->profile]->$data_attribute))
+    {
+        $profiles[$concept->profile]->addChild($data_attribute);
+    }
+    $data =& $profiles[$concept->profile]->$data_attribute;
+    
+    if (!isset($data->Concepts))
+    {
+        $data->addChild('Concepts');
     }
     
-    if (   $concept->explicit
-        && $inimplicit)
-    {
-        echo "            </Concepts>\n";
-        echo "        </ImplicitData>\n";
-        $inimplicit = false;
-    }
-    
-    if (   $concept->explicit
-        && !$inexplicit)
-    { 
-        echo "        <ExplicitData>\n";
-        echo "            <Concepts>\n";
-        $inexplicit = true;
-    }
-
-    echo "                <Concept key=\"{$concept->concept}\" value=\"{$concept->value}\" from=\"{$concept->source}\" updated=\"" . date('c', $concept->metadata->published) . "\"/>\n";
+    // And then actually add the concept
+    $concept_element = $data->Concepts->addChild('Concept');
+    $concept_element->addAttribute('key', $concept->concept);
+    $concept_element->addAttribute('value', $concept->value);
+    $concept_element->addAttribute('from', $concept->source);
+    $concept_element->addAttribute('updated', date('c', $concept->metadata->published));
 }
 
-if ($inprofile)
-{
-    if ($inimplicit)
-    {
-        echo "            </Concepts>\n";
-        echo "        </ImplicitData>\n";
-    }
-    if ($inexplicit)
-    {
-        echo "            </Concepts>\n";
-        echo "        </ExplicitData>\n";
-    }
-    echo "    </Profile>\n";
-}
-
-echo "</Body>\n";
-echo "</APML>\n";
+echo $apml->asXml();
 ?>
