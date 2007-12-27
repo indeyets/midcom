@@ -132,3 +132,4 @@ class net_nemein_attention_importer_apml extends net_nemein_attention_importer
         return true;
     }
 }
+?>
