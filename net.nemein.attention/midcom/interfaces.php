@@ -26,6 +26,7 @@ class net_nemein_attention_interface extends midcom_baseclasses_components_inter
         // Load all mandatory class files of the component here
         $this->_autoload_files = array
         (
+            'click.php',
             'concept.php',
             'importer.php',
             'source.php',

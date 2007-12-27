@@ -54,6 +54,8 @@
 
     <!-- AttentionTrust.org clickstream item, see http://wiki.attentiontrust.org/extension/spec -->
     <type name="net_nemein_attention_click" table="net_nemein_attention_click" parent="midgard_person" parentfield="person">
+        <property name="id" type="integer" primaryfield="id"/>
+        
         <!-- Clicks are always specific to a person -->
         <property name="person" link="midgard_person:id" reverse="no" type="integer" parentfield="person"/>
     
