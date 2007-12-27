@@ -88,7 +88,7 @@ foreach ($favs as $fav)
             if (substr($category, 0, 5) == 'feed:')
             {
                 // RSS feed information, can be used for "sources" handling
-                $feed_url = str_replace('&', '&amp;', $feed_categories[$category]);
+                $feed_url = $feed_categories[$category];
                 if (!isset($feed_url))
                 {
                     // Deleted feed, skip
@@ -181,7 +181,11 @@ foreach ($sources as $source => $score)
     {
         $score = -1;
     }
-    echo "<li>{$source}: {$score}</li>\n";
+    $object = net_nemein_attention_source_dba::get_source($source, $_MIDGARD['user'], 'web');
+    $object->source = $_SERVER['SERVER_NAME'];
+    $object->value = $score;
+    $object->update();
+    echo "<li>" . str_replace('&', '&amp;', $source) . ": {$score}</li>\n";
 }
 echo "</ul>\n";
 ?>

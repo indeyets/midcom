@@ -23,4 +23,32 @@
         <!-- Concepts can be implicit or explicit -->
         <property name="explicit" type="boolean"/>
     </type>
+    
+    <!-- APML source -->
+    <type name="net_nemein_attention_source" table="net_nemein_attention_source" parent="midgard_person" parentfield="person">
+        <property name="id" type="integer" primaryfield="id"/>
+        
+        <!-- Sources are always specific to a person -->
+        <property name="person" link="midgard_person:id" reverse="no" type="integer" parentfield="person"/>
+        
+        <!-- Sources can belong to a single profile at time -->
+        <property name="profile" type="string"/>
+                
+        <!-- The following fields correspond to attributes of an APML source element:
+             
+             * title: "name" of APML source
+             * url: "key" of APML source
+             * type: MIME "type" of APML source
+             * value: "value" of APML source
+             * source: "from" URL 
+        -->
+        <property name="title" type="string"/>
+        <property name="url" type="string"/>
+        <property name="type" type="string"/>
+        <property name="value" type="float"/>
+        <property name="source" type="string"/>
+        
+        <!-- Sources can be implicit or explicit -->
+        <property name="explicit" type="boolean"/>
+    </type>
 </Schema>

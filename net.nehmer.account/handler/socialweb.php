@@ -160,7 +160,6 @@ class net_nehmer_account_handler_socialweb extends midcom_baseclasses_components
                 // Skip
                 continue;
             }
-        
             foreach ($settings as $label => $field_config)
             {
                 if (!isset($field_config['type']))

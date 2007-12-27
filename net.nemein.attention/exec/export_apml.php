@@ -15,42 +15,47 @@ $head->addChild('DateCreated', date('c'));
 // APML content
 $body = $apml->addChild('Body');
 
+function net_nemein_attention_apml_prepare_data($apml, $profile, $explicit = false)
+{
+    static $profiles = array();
+    if (!isset($profiles[$profile]))
+    {
+        $profiles[$profile] = $apml->Body->addChild('Profile');
+        $profiles[$profile]->addAttribute('name', $profile);
+    }
+    
+    $data_attribute = 'ImplicitData';
+    if ($explicit)
+    {
+        $data_attribute = 'ExplicitData';
+    }
+    if (!isset($profiles[$profile]->$data_attribute))
+    {
+        $profiles[$profile]->addChild($data_attribute);
+    }
+    $data =& $profiles[$profile]->$data_attribute;
+    
+    return $data;
+}
+
+// List concepts
 $qb = net_nemein_attention_concept_dba::new_query_builder();
 $qb->add_constraint('person', '=', $_MIDGARD['user']);
 $qb->add_order('profile');
 $qb->add_order('explicit', 'ASC');
-
 if (isset($_GET['profile']))
 {
     $qb->add_constraint('profile', '=', $_GET['profile']);
 }
-
 $concepts = $qb->execute();
-$profiles = array();
 foreach ($concepts as $concept)
 {
-    if (empty($concept->profile))
+    // Prepare the XML data
+    if (!$concept->profile)
     {
         $concept->profile = 'default';
     }
-    
-    if (!isset($profiles[$concept->profile]))
-    {
-        $profiles[$concept->profile] = $body->addChild('Profile');
-        $profiles[$concept->profile]->addAttribute('name', $concept->profile);
-    }
-    
-    $data_attribute = 'ImplicitData';
-    if ($concept->explicit)
-    {
-        $data_attribute = 'ExplicitData';
-    }
-    if (!isset($profiles[$concept->profile]->$data_attribute))
-    {
-        $profiles[$concept->profile]->addChild($data_attribute);
-    }
-    $data =& $profiles[$concept->profile]->$data_attribute;
-    
+    $data =& net_nemein_attention_apml_prepare_data($apml, $concept->profile, $concept->explicit);
     if (!isset($data->Concepts))
     {
         $data->addChild('Concepts');
@@ -62,6 +67,48 @@ foreach ($concepts as $concept)
     $concept_element->addAttribute('value', $concept->value);
     $concept_element->addAttribute('from', $concept->source);
     $concept_element->addAttribute('updated', date('c', $concept->metadata->published));
+}
+
+// List sources
+$qb = net_nemein_attention_source_dba::new_query_builder();
+$qb->add_constraint('person', '=', $_MIDGARD['user']);
+$qb->add_order('profile');
+$qb->add_order('explicit', 'ASC');
+if (isset($_GET['profile']))
+{
+    $qb->add_constraint('profile', '=', $_GET['profile']);
+}
+$sources = $qb->execute();
+foreach ($sources as $source)
+{
+    // Prepare the XML data
+    if (!$source->profile)
+    {
+        $source->profile = 'default';
+    }
+    $data =& net_nemein_attention_apml_prepare_data($apml, $source->profile, $source->explicit);
+    if (!isset($data->Sources))
+    {
+        $data->addChild('Sources');
+    }
+    
+    // And then actually add the source
+    $source_element = $data->Sources->addChild('Source');
+    $source_element->addAttribute('key', $source->url);
+    $source_element->addAttribute('value', $source->value);
+    $source_element->addAttribute('from', $source->source);
+    
+    if ($source->type)
+    {
+        $source_element->addAttribute('type', $source->type);
+    }
+    
+    if ($source->title)
+    {
+        $source_element->addAttribute('name', $source->title);
+    }
+    
+    $source_element->addAttribute('updated', date('c', $source->metadata->published));
 }
 
 echo $apml->asXml();

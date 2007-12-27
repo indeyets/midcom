@@ -1,17 +1,13 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE fi
 
 ---STRING delicious_username
-del.icio.us username
+del.icio.us -käyttäjätunnus
 ---STRINGEND
 
 ---STRING lastfm_username
-Last.fm username
----STRINGEND
-
----STRING net.nemein.attention
-Attention Profiling Toolkit
+Last.fm -käyttäjätunnus
 ---STRINGEND
 

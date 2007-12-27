@@ -28,6 +28,7 @@ class net_nemein_attention_interface extends midcom_baseclasses_components_inter
         (
             'concept.php',
             'importer.php',
+            'source.php',
         );
     }
 

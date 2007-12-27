@@ -36,11 +36,8 @@ class net_nemein_attention_concept_dba extends __net_nemein_attention_concept_db
             $concept->person = $person_id;
             $concept->profile = $profile;
             $concept->explicit = $explicit;
-            mgd_debug_start();
             if (!$concept->create())
             {
-                mgd_debug_stop();
-                die(mgd_errstr());
                 // TODO: Exception
                 return null;
             }

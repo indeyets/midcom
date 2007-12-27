@@ -24,5 +24,29 @@
         'org.openpsa.httplib' => array(),
     ),
 ),
+'customdata' => array 
+(
+    'net.nehmer.account.socialweb' => array
+    (
+        'delicious_username' => array
+        (
+            'storage' => array
+            (
+                'location'   => 'configuration',
+                'domain' => 'net.nemein.attention:delicious',
+                'name'   => 'username',
+            ),
+        ),
+        'lastfm_username' => array
+        (
+            'storage' => array
+            (
+                'location'   => 'configuration',
+                'domain' => 'net.nemein.attention:lastfm',
+                'name'   => 'username',
+            ),
+        ),
+    ), 
+),
 
 
