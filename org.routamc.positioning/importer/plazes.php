@@ -42,13 +42,12 @@ class org_routamc_positioning_importer_plazes extends org_routamc_positioning_im
         $qb = new MidgardQueryBuilder('midgard_parameter');
         $qb->add_constraint('domain', '=','org.routamc.positioning:plazes');
         $qb->add_constraint('name', '=','username');
-        $qb->add_constraint('tablename', '=', 'person');
         $accounts = $qb->execute();
         if (count($accounts) > 0)
         {
             foreach ($accounts as $account_param)
             {
-                $user = new midcom_db_person($account_param->oid);
+                $user = new midcom_db_person($account_param->parentguid);
                 $this->get_plazes_location($user, true);
             }
         }

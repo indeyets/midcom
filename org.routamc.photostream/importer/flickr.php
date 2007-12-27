@@ -39,13 +39,12 @@ class org_routamc_photostream_importer_flickr extends org_routamc_photostream_im
         $qb = new MidgardQueryBuilder('midgard_parameter');
         $qb->add_constraint('domain', '=','org.routamc.photostream:flickr');
         $qb->add_constraint('name', '=','username');
-        $qb->add_constraint('tablename', '=', 'person');
         $accounts = $qb->execute();
         if (count($accounts) > 0)
         {
             foreach ($accounts as $account_param)
             {
-                $user = new midcom_db_person($account_param->oid);
+                $user = new midcom_db_person($account_param->parentguid);
                 $this->get_flickr_photos($user, true);
             }
         }

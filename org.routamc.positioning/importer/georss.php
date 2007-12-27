@@ -32,13 +32,12 @@ class org_routamc_positioning_importer_georss extends org_routamc_positioning_im
         $qb = new MidgardQueryBuilder('midgard_parameter');
         $qb->add_constraint('domain', '=','org.routamc.positioning:georss');
         $qb->add_constraint('name', '=','georss_url');
-        $qb->add_constraint('tablename', '=', 'person');
         $accounts = $qb->execute();
         if (count($accounts) > 0)
         {
             foreach ($accounts as $account_param)
             {
-                $user = new midcom_db_person($account_param->oid);
+                $user = new midcom_db_person($account_param->parentguid);
                 $this->get_georss_location($user, true);
             }
         }
