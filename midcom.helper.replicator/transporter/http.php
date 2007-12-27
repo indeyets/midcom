@@ -12,17 +12,18 @@
  */
 class midcom_helper_replicator_transporter_http extends midcom_helper_replicator_transporter
 {
-
+    var $_client = false;
     var $url = false;
     var $_username = false;
     var $_password = false;
     var $use_force = false;
 
-
     function midcom_helper_replicator_transporter_http($subscription)
     {
          $ret = parent::midcom_helper_replicator_transporter($subscription);
-         if (!$this->_read_configuration_data())
+         $_MIDCOM->componentloader->load_graceful('org.openpsa.httplib');
+         if (   !class_exists('org_openpsa_httplib')
+             || !$this->_read_configuration_data())
          {
             $x = false;
             return $x;
@@ -77,6 +78,97 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
         return $_MIDCOM->load_library('org.openpsa.httplib');
     }
 
+    function _post_item(&$key, &$items, $retry_count = 0)
+    {
+        $data =& $items[$key];
+        $this->_client = new org_openpsa_httplib();
+        $client =& $this->_client;
+        $client->basicauth['user'] = $this->_username;
+        $client->basicauth['password'] = $this->_password;
+        $post_vars = array
+        (
+            'midcom_helper_replicator_import_xml' => &$data,
+            'midcom_helper_replicator_use_force' => (int)$this->use_force,
+        );
+        $response = $client->post($this->url, $post_vars);
+        if (   $response === false
+            || stristr($response, 'error'))
+        {
+            if ($response)
+            {
+                $error_string = strip_tags(str_replace("\n", ' ', $response));
+                $response_body = $response;
+            }
+            else
+            {
+                $error_string = $client->error;
+                $reponse_body = $client->_client->getResponseBody();
+            }
+            if (   $error_string === 'Malformed response.'
+                && $retry_count < 5)
+            {
+                // Likely the remote end segfaulted, recursing to retry up-to 5 times
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Remote returned malformed response, most likely segfault, retry_count={$retry_count}", MIDCOM_LOG_INFO);
+                debug_pop();
+                usleep(250000); // 0.25 second delay
+                if ($this->_post_item($key, $items, $retry_count+1))
+                {
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("Malformed response retry succeeded on count {$retry_count}", MIDCOM_LOG_INFO);
+                    debug_pop();
+                    return true;
+                }
+            }
+            $msg = "Failed to send key {$key}, error: {$error_string}";
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add($msg, MIDCOM_LOG_WARN);
+            debug_print_r('Response body: ', $response_body);
+            unset($response_body);
+            debug_pop();
+            $GLOBALS['midcom_helper_replicator_logger']->log($msg, MIDCOM_LOG_WARN);
+            unset($msg);
+            return false;
+        }
+        return true;
+    }
+
+    function _real_process(&$items, $retry_count = 0)
+    {
+        foreach ($items as $key => $data)
+        {
+            if (!$this->_post_item(&$key, &$items))
+            {
+                /**
+                 * PONDER: try next items in queue (some of them might depend on this) or just return ?
+                 * (NOTE: with true, because otherwise none of the previous items are removed from queue)
+                 */
+                 continue;
+            }
+            $GLOBALS['midcom_helper_replicator_logger']->log("Succesfully sent key {$key}", MIDCOM_LOG_INFO);
+            unset($items[$key]);
+        }
+        unset($key, $data);
+        
+        if (   !empty($items)
+            && $retry_count < 3)
+        {
+            /**
+             * Recursing retries 
+             *
+             *  - There might be some dependencies that couldn't get queued in correct order for some reason
+             *  - There might have been some temporary error that _post_item would not catch correctly
+             */
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add(sprintf('We still have %d items left, retrying (retry_count=%d)', count($items), $retry_count), MIDCOM_LOG_INFO);
+            debug_pop();
+            usleep(1500000); // 1.5 second delay
+            return $this->_real_process($items, $retry_count+1);
+        }
+
+        return true;
+    }
+
     /**
      * Main entry point for processing the items received from queue manager
      */
@@ -85,42 +177,9 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
         $GLOBALS['midcom_helper_replicator_logger']->push_prefix(__CLASS__ . '::' . __FUNCTION__);
         // POST each item as midcom_helper_replicator_import_xml
         $GLOBALS['midcom_helper_replicator_logger']->log(sprintf('Sending %d keys to %s', count($items), $this->url), MIDCOM_LOG_INFO);
-        foreach ($items as $key => $data)
-        {
-            $client = new org_openpsa_httplib();
-            $client->basicauth['user'] = $this->_username;
-            $client->basicauth['password'] = $this->_password;
-            $post_vars = array
-            (
-                'midcom_helper_replicator_import_xml' => &$data,
-                'midcom_helper_replicator_use_force' => (int)$this->use_force,
-            );
-            $response = $client->post($this->url, $post_vars);
-            if (   $response === false
-                || stristr($response, 'error'))
-            {
-                if ($response)
-                {
-                    $error_string = strip_tags(str_replace("\n", ' ', $response));
-                }
-                else
-                {
-                    $error_string = $client->error;
-                }
-                $GLOBALS['midcom_helper_replicator_logger']->log("Failed to send key {$key}, error: {$error_string}", MIDCOM_LOG_WARN);
-                /**
-                 * PONDER: try next items in queue (some of them might have depended on this
-                 * or just return (NOTE: with true, because otherwise previous items are not removed from queue)
-                 */
-                continue;
-            }
-            $GLOBALS['midcom_helper_replicator_logger']->log("Succesfully sent key {$key}", MIDCOM_LOG_INFO);
-            unset($items[$key]);
-        }
-        unset($key, $data);
-
+        $ret = $this->_real_process($items);
         $GLOBALS['midcom_helper_replicator_logger']->pop_prefix();
-        return true;
+        return $ret;
     }
 
     function get_information()

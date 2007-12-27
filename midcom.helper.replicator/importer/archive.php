@@ -201,6 +201,8 @@ class midcom_helper_replicator_importer_archive extends midcom_helper_replicator
             }
             $files[] = $filepath;
         }
+        // readdir may return files in "funny" order (compared to ls etc)
+        sort($files);
     }
 
 }
