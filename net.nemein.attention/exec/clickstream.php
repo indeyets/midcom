@@ -22,7 +22,9 @@ if (!isset($transaction->url))
     $this->generate_error(MIDCOM_ERRCRIT, 'No click URL defined');
 }
 
-$recordguid = (string) $attrs['recorderGUID'] . '_' . md5((string) $transaction->url);
+$recordguid = (string) $attrs['recorderGUID'] . '_' . md5((string) $transaction->url) . '_' . md5((string) $transaction->date);
+$recordguid = str_replace('{', '', $recordguid);
+$recordguid = str_replace('}', '', $recordguid);
 $qb = net_nemein_attention_click_dba::new_query_builder();
 $qb->add_constraint('person', '=', $_MIDGARD['user']);
 $qb->add_constraint('name', '=', $recordguid);
@@ -31,7 +33,7 @@ if (count($clickstreams) == 0)
 {
     $click = new net_nemein_attention_click_dba();
     $click->person = $_MIDGARD['user'];
-    $click->guid = $recordguid;
+    $click->name = $recordguid;
     if (!$click->create())
     {
         $this->generate_error(MIDCOM_ERRCRIT, 'Failed creating click: ' . mgd_errstr());
