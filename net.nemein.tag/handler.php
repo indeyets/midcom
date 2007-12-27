@@ -257,9 +257,14 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
      */
     function get_object_tags(&$object)
     {
+        return net_nemein_tag_handler::get_tags_by_guid($object->guid);
+    }
+    
+    function get_tags_by_guid($guid)
+    {
         $tags = array();
         $qb = net_nemein_tag_link_dba::new_query_builder();
-        $qb->add_constraint('fromGuid', '=', $object->guid);
+        $qb->add_constraint('fromGuid', '=', $guid);
         if (class_exists('midgard_query_builder'))
         {
             // 1.8 branch allows ordering by linked properties
@@ -281,7 +286,7 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
             $tags[$tagname] = $tag->url;
         }
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_print_r("Tags for {$object->guid}: ", $tags);
+        debug_print_r("Tags for {$guid}: ", $tags);
         debug_pop();
         return $tags;
     }
