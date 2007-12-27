@@ -475,8 +475,7 @@ class fi_protie_navigation
 
             $selected = '';
             $active = '';
-            $component = '';
-            $url_name_to_class = '';
+            
             $first_last = '';
             $has_children = '';
 
@@ -519,8 +518,8 @@ class fi_protie_navigation
             {
                 $component = str_replace('.', '_', $item[MIDCOM_NAV_COMPONENT]);
             }
-
-            $this->_display_element($item, $indent, $active, $selected, $component, $url_name_to_class, $first_last, $has_children);
+            
+            $this->_display_element($item, $indent, $active, $selected, $component, $first_last, $has_children);
         }
         echo "{$indent}</ul>\n";
     }
@@ -569,7 +568,6 @@ class fi_protie_navigation
             $selected = '';
             $active = '';
             $component = '';
-            $url_name_to_class = '';
             $first_last = '';
             $has_children = '';
 
@@ -633,20 +631,14 @@ class fi_protie_navigation
                 }
             }
 
-            $this->_display_element($item, $indent, $active, $selected, $component, $url_name_to_class, $first_last, $has_children);
+            $this->_display_element($item, $indent, $active, $selected, $component, $first_last, $has_children);
         }
 
         echo "{$indent}</ul>\n";
     }
 
-    function _display_element($item, $indent, $active, $selected, $component, $url_name_to_class, $first_last, $has_children)
+    function _display_element($item, $indent, $active, $selected, $component, $first_last, $has_children)
     {
-        // Check if user has requested URL name to be included in class
-        if ($this->url_name_to_class)
-        {
-            $url_name_to_class = ereg_replace('\.|/', '', $item[MIDCOM_NAV_URL]);
-        }
-
         $css_class = $selected;
 
         // Check if the class is active
@@ -662,13 +654,14 @@ class fi_protie_navigation
         }
 
         // Check if the URL name is supposed to be drawn
-        if ($url_name_to_class !== '')
+        if ($this->url_name_to_class)
         {
-            $css_class .= ' '.$url_name_to_class;
+            $css_class .= str_replace('/', '', " {$item[MIDCOM_NAV_URL]}");
         }
 
          // Check if the first or last is supposed to be drawn
-        if ($this->first_and_last_to_class && $first_last !== '')
+        if (   $this->first_and_last_to_class
+            && $first_last !== '')
         {
             $css_class .= ' '.$first_last;
         }
@@ -700,8 +693,8 @@ class fi_protie_navigation
 
         $get_params = $this->_get_parameter_string();
 
-        echo "{$indent}  <li{$class}>\n";
-        echo "{$indent}    <a href=\"{$item[MIDCOM_NAV_FULLURL]}{$get_params}\">{$item[MIDCOM_NAV_NAME]}</a>\n";
+        echo "{$indent}    <li{$class}>\n";
+        echo "{$indent}        <a href=\"{$item[MIDCOM_NAV_FULLURL]}{$get_params}\">{$item[MIDCOM_NAV_NAME]}</a>\n";
 
         // If either of the follow nodes switches is on, follow all the nodes
         if (   $item[MIDCOM_NAV_TYPE] === 'node'
@@ -714,12 +707,12 @@ class fi_protie_navigation
                     && in_array($item[MIDCOM_NAV_ID], $this->node_path)))
             {
                 $this->_level++;
-                $this->_list_child_elements($item[MIDCOM_NAV_ID], "{$indent}    ");
+                $this->_list_child_elements($item[MIDCOM_NAV_ID], "{$indent}        ");
                 $this->_level--;
             }
         }
 
-        echo "{$indent}  </li>\n";
+        echo "{$indent}    </li>\n";
     }
 
     /**
