@@ -294,3 +294,7 @@ div.midcom_helper_datamanager2_widget_image_actions_container ul.midcom_helper_d
     padding: 2px;
 }
 
+form.datamanager2 tr
+{
+  vertical-align: top;
+}
