@@ -27,6 +27,11 @@ $_MIDCOM->auth->require_valid_user();
                 font-size: larger;
                 font-style: normal;
             }
+            ul.cloud li small
+            {
+                -moz-opacity: 0.8;
+                text-decoration: line-through;
+            }
         </style>
     </head>
     <body>

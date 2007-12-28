@@ -43,10 +43,22 @@ class net_nemein_attention_exporter_cloud extends net_nemein_attention_exporter
             $percentage = round($concept->value * 100);
             
             $vals = (int) ($concept->value * 100) / 20;
-            while ($vals > 0)
+            
+            if ($vals > 0)
             {
-                $vals--;
-                $key = "<em>{$key}</em>";
+                while ($vals > 0)
+                {
+                    $vals--;
+                    $key = "<em>{$key}</em>";
+                }
+            }
+            else
+            {
+                while ($vals < 0)
+                {
+                    $vals++;
+                    $key = "<small>{$key}</small>";
+                }
             }
         
             $cloud .= "    <li title=\"{$concept->value} ({$percentage}%) score for {$concept->concept}\">{$key}</li>\n";
