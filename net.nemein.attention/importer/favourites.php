@@ -15,7 +15,7 @@
 class net_nemein_attention_importer_favourites extends net_nemein_attention_importer
 {
     var $feed_categories = array();
-
+    
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      */
