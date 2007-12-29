@@ -270,7 +270,7 @@ class midcom_services_cache_backend
      * function executes.
      * 
      * @param string $key The key to check for.
-     * @return bool Indicating existance.
+     * @return bool Indicating existence.
      */
     function _exists($key) { die ("The method " . __CLASS__ . "::" . __FUNCTION__ . " must be implemented."); }
     
@@ -373,7 +373,7 @@ class midcom_services_cache_backend
      * and closed automatically again afterwards.
      * 
      * @param string $key The key to check for.
-     * @return bool Indicating existance.
+     * @return bool Indicating existence.
      */
     function exists($key)
     {

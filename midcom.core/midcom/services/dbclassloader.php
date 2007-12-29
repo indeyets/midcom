@@ -36,7 +36,7 @@
  * The class loader does not require much information when generating the intermediate classes:
  * An example declaration looks like this:
  *
- * <pre>
+ * <code>
  * Array
  * (
  *     'table' => 'article',
@@ -44,7 +44,7 @@
  *     'new_class_name' => 'midgard_article',
  *     'midcom_class_name' => 'midcom_baseclasses_database_article'
  * )
- * </pre>
+ * </code>
  *
  * As for the parameters:
  *
@@ -54,10 +54,10 @@
  * argument is checked for basic sanity (basically, only alphanumeric characters, underscores
  * and dashes are allowed).
  *
- * <i>old_class_name</i> is a compatibilty value as well, and should take the name of the
+ * <i>old_class_name</i> is a compatibility value as well, and should take the name of the
  * original Midgard class that was used to work, with this type. If there is no such type,
  * set it to null which is the default if and only if this key is omitted in the declaration.
- * If specified the class is checked for existance when the file is being loaded.
+ * If specified the class is checked for existence when the file is being loaded.
  *
  * <i>new_class_name</i> is the MgdSchema class name from that you want to use. This argument
  * is mandatory, and the class specified must exist.
@@ -74,7 +74,7 @@
  * It is possible to specify more than one class in a single class definition file, and it
  * is recommended that you take advantage of this feature for performance reasons:
  *
- * <pre>
+ * <code>
  * Array
  * (
  *     //...
@@ -83,7 +83,7 @@
  * (
  *     //...
  * ),
- * </pre>
+ * </code>
  *
  * Place a simple text file with exactly the declarations into the config directory of your
  * component or shared library, and add the files' name to the _autoload_class_definitions
@@ -99,7 +99,7 @@
  * The <i>constructor</i> part is relatively trivial. Consider the article example above, the
  * subclass constructor looks like this:
  *
- * <pre>
+ * <code>
  * class midcom_baseclasses_database_article
  *     extends __midcom_baseclasses_database_article
  * {
@@ -110,7 +110,7 @@
  *
  *     // ...
  * }
- * </pre>
+ * </code>
  *
  * Be sure to take and pass the $id parameter to the parent class, it will automatically load
  * the object identified by the id <i>or</i> GUID passed.
@@ -124,7 +124,7 @@
  *
  * For example:
  *
- * <pre>
+ * <code>
  * class midcom_baseclasses_database_article
  *     extends __midcom_baseclasses_database_article
  * {
@@ -151,7 +151,7 @@
  *         return $parent;
  *     }
  * }
- * </pre>
+ * </code>
  *
  * As you can see, this is not that hard. The only rule is that you always have to return either
  * null (no parent) or a MidCOM DB type.
@@ -201,7 +201,7 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
     var $_class_definition_filename = '';
 
     /**
-     * Temporary variable during class cosntruction, stores the
+     * Temporary variable during class construction, stores the
      * class definition that is currently processed.
      *
      * @var Array
@@ -440,7 +440,7 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
      * returns its contents. The source must be stored in the $_class_definition_filename
      * member.
      *
-     * It will translate component and filename into a full path and deliveres
+     * It will translate component and filename into a full path and delivers
      * the contents verbatim.
      *
      * @return string The contents of the file.
@@ -466,7 +466,7 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
      *     (Used to cache the loaded class registrations as well.)
      * @param string $component The name of the component that is assigned to handle the
      *     classes.
-     * @return string The code for these classes sourrounded by php opening and closing tags.
+     * @return string The code for these classes surrounded by php opening and closing tags.
      */
     function _process_class_definition_list($definition_list, $definition_source, $component)
     {
@@ -483,7 +483,7 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
     }
 
     /**
-     * Generates a small block at the end of the script which registeres the original definitions
+     * Generates a small block at the end of the script which registers the original definitions
      * with ourselves, so that we don't have to eval this all the time.
      *
      * @param string $definition_source The source which has been parsed to the definition list.
@@ -523,7 +523,7 @@ EOF;
      * The generic by-GUID loader and the class conversion tools in the dbfactory
      * require this information to be able to load the required components on-demand.
      *
-     * @param Array $data The list of classes which have beeen loaded along with the metainformation.
+     * @param Array $data The list of classes which have been loaded along with the metainformation.
      */
     function _register_loaded_classes($data)
     {
@@ -744,7 +744,7 @@ EOF;
         {
             $target_property = $reflector->get_link_target($up_property);
             /**
-             * Taken out from the generated code as this will cause infite loop in ACL resolving, using direct QB in stead
+             * Taken out from the generated code as this will cause infinite loop in ACL resolving, using direct QB in stead
              * (when instantiating the parent ACLs will be checked in any case)
              *
             \$mc = {$this->_class_definition['midcom_class_name']}::new_collector('{$target_property}', \$this->{$up_property});
@@ -775,7 +775,7 @@ EOF;
             $target_property = $reflector->get_link_target($parent_property);
             $target_class = $reflector->get_link_name($parent_property);
             /**
-             * Taken out from the generated code as this will cause infite loop in ACL resolving, using direct QB in stead
+             * Taken out from the generated code as this will cause infinite loop in ACL resolving, using direct QB in stead
              * (when instantiating the parent ACLs will be checked in any case)
              *
             \$dummy_object = new {$target_class}();
@@ -982,7 +982,7 @@ EOF;
             }
         }
 
-        // Add the generateor metadata revision
+        // Add the generator metadata revision
         $revision = substr($this->_cvs_revision, 11, -2);
         $this->_class_string .= "    var \$__midcom_generator__ = 'midcom_services_dbclassloader';\n";
         $this->_class_string .= "    var \$__midcom_generator_version__ = '{$revision}';\n";
@@ -1193,7 +1193,7 @@ EOF;
      * retrieved by the GUID object getter.
      *
      * @param string $classname The name of the MidCOM DBA class that must be available.
-     * @return bool Indicating success. False is retured only if you are requesting unknown
+     * @return bool Indicating success. False is returned only if you are requesting unknown
      * 	   classes and the like. Component loading failure will result in an HTTP 500, as
      *     always.
      */

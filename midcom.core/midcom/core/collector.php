@@ -17,7 +17,7 @@
  * It essentially wraps the calls to midcom_helper__dbfactory::new_collector()
  * and midcom_helper__dbfactory::exec_collector().
  *
- * Normally you should never have to create an instance of this type direectly,
+ * Normally you should never have to create an instance of this type directly,
  * instead use the get_new_mc() method available in the MidCOM DBA API or the
  * midcom_helper__dbfactory::new_collector() method which is still available.
  *
@@ -132,7 +132,7 @@ class midcom_core_collector
         }
         else
         {
-            // Validate the class, we check for a single callback representativly only
+            // Validate the class, we check for a single callback representatively only
             if (! in_array('_on_prepare_new_collector', get_class_methods($classname)))
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
@@ -160,7 +160,7 @@ class midcom_core_collector
 
         $this->_mc = new midgard_collector($baseclass, $domain, $value);
         $this->_real_class = $classname;
-        
+
         // MidCOM's collector always uses the GUID as the key for ACL purposes
         $this->_mc->set_key_property('guid');
         if (   $GLOBALS['midcom_config']['i18n_multilang_strict']
@@ -174,7 +174,7 @@ class midcom_core_collector
     }
 
     /**
-     * The initialization routin executes the _on_prepare_new_collector callback on the class.
+     * The initialization routine executes the _on_prepare_new_collector callback on the class.
      * This cannot be done in the constructor due to the reference to $this that is used.
      */
     function initialize()
@@ -218,7 +218,7 @@ class midcom_core_collector
     {
         return $this->_mc->execute();
     }
-    
+
     /**
      * Resets some internal variables for re-execute
      */
@@ -293,7 +293,7 @@ class midcom_core_collector
             {
                 // TODO: Implement
             }
-            
+
             // Register the GUID as loaded in this request
             $_MIDCOM->cache->content->register($object_guid);
 
@@ -311,7 +311,7 @@ class midcom_core_collector
     {
         /**
          * PONDER: Should we implement the moving window limit/offset handling here as well ?
-         * probably it's not worth the effort since we're not actually instantiating objects 
+         * probably it's not worth the effort since we're not actually instantiating objects
          * so many of the inefficencies related to that are avoided.
          * @see midcom_core_querybuilder::execute_windowed
          */
@@ -370,7 +370,7 @@ class midcom_core_collector
 
         return $newresult;
     }
-    
+
     function get_subkey($key, $property)
     {
         if (!$_MIDCOM->auth->can_do_byguid('midgard:read', $key, $this->_real_class))
@@ -380,7 +380,7 @@ class midcom_core_collector
         }
         return $this->_mc->get_subkey($key, $property);
     }
-    
+
     function get($key)
     {
         if (!$_MIDCOM->auth->can_do_byguid('midgard:read', $key, $this->_real_class))
@@ -390,7 +390,7 @@ class midcom_core_collector
         }
         return $this->_mc->get($key);
     }
-    
+
     function destroy()
     {
         return $this->_mc->destroy();
@@ -487,11 +487,11 @@ class midcom_core_collector
     }
 
     /**
-     * Creates a new logical group within the query. They are set in parantheses in the final
+     * Creates a new logical group within the query. They are set in parentheses in the final
      * SQL and will thus be evaluated with precedence over the normal out-of-group constraints.
      *
      * While the call lets you decide whether all constraints within the group are AND'ed or OR'ed,
-     * only OR constraints make logcially sense in this context, which is why this proxy function
+     * only OR constraints make logically sense in this context, which is why this proxy function
      * sets 'OR' as the default operator.
      *
      * @param string $operator One of 'OR' or 'AND' denoting the logical operation with which all
@@ -542,7 +542,7 @@ class midcom_core_collector
     }
 
     /**
-     * Returns only objects that are availble in the specified language. This will
+     * Returns only objects that are available in the specified language. This will
      * disable the automatic fallback to the default language which would be in place
      * otherwise.
      *
@@ -553,7 +553,7 @@ class midcom_core_collector
         $this->_reset();
         $this->_mc->set_lang($language);
     }
-    
+
     function set_key_property($property, $value = null)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -562,7 +562,7 @@ class midcom_core_collector
 
         return false;
     }
-    
+
     function add_value_property($property)
     {
         return $this->_mc->add_value_property($property);

@@ -47,7 +47,7 @@ class net_nehmer_branchenbuch_handler_admin_manage extends midcom_baseclasses_co
     }
 
     /**
-     * Shows all loaded groups, it uses a set of recursivly called functions for this.
+     * Shows all loaded groups, it uses a set of recursively called functions for this.
      * The code is not styleable.
      */
     function _show_list($handler_id, &$data)

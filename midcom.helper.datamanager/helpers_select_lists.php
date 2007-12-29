@@ -78,7 +78,7 @@ function midcom_helper_datamanager__selectlist_allgroups_recursor($up, $spacer, 
 }
 
 /**
- * Lists all groups recursivly, using four spaces to indent subgroups.
+ * Lists all groups recursively, using four spaces to indent subgroups.
  *
  * A no-selection element is added ontop of the list having an empty
  * string as key.

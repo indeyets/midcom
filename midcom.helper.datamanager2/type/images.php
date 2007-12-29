@@ -127,7 +127,7 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
      * The main purpose of this member is for easier mapping between blobs and images.
      *
      * The array is indexed by attachment identifier and contains Arrays containing image
-     * identifier and derived image name consecutivly (without any special indexes).
+     * identifier and derived image name consecutively (without any special indexes).
      *
      * Updates are done on load of the types' data and on every attachment add/delete
      * operation.

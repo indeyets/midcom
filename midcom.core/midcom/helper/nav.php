@@ -306,7 +306,7 @@ class midcom_helper_nav
      * The code is optimized trying to avoid a full-scan if possible. To do this it
      * will treat topic and article guids specially: In both cases the system will
      * translate it using the topic id into a node id and scan only that part of the
-     * tree non-recursivly.
+     * tree non-recursively.
      *
      * A full scan of the NAP data is only done if another MidgardObject is used.
      *

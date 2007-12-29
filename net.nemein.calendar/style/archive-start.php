@@ -12,7 +12,7 @@ if ($data['first_event'])
         strftime('%x', strtotime($data['first_event']->start)));
 }
 
-$summary .= ' ' . $data['l10n']->get('numbers in parantheses show ongoing events.')
+$summary .= ' ' . $data['l10n']->get('numbers in parentheses show ongoing events.')
 ?>
 
 <h1><?php echo $data['topic']->extra; ?>: <?php $data['l10n']->show('archive'); ?></h1>

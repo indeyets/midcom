@@ -8,7 +8,7 @@
  */
 
 /**
- * TAViewer index page handler
+ * n.n.static index page handler
  *
  * @package net.nehmer.static
  */

@@ -46,7 +46,7 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
     {
         $this->_dirname = "{$this->_cache_dir}{$this->_name}/";
         
-        // Check for file existance.
+        // Check for file existence.
         if (! file_exists($this->_dirname))
         {
             mkdir($this->_dirname);

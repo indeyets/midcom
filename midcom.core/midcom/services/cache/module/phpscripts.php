@@ -50,7 +50,7 @@ class midcom_services_cache_module_phpscripts extends midcom_services_cache_modu
     var $_cache_dir;
     
     /**
-     * Initializes the cache module, verifying the existance of the script cache 
+     * Initializes the cache module, verifying the existence of the script cache 
      * directory.
      */
     function _on_initialize()

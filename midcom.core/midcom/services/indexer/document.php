@@ -602,7 +602,7 @@ class midcom_services_indexer_document
     }
 
     /**
-     * This is a small helper that converts HTML to plain text (relativly simple):
+     * This is a small helper that converts HTML to plain text (relatively simple):
      *
      * Basically, JavaScript blocks and
      * HTML Tags are stripped, and all HTML Entities

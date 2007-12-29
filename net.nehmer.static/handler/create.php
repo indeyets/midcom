@@ -8,11 +8,10 @@
  */
 
 /**
- * TAViewer create page handler
+ * n.n.static create page handler
  *
  * @package net.nehmer.static
  */
-
 class net_nehmer_static_handler_create extends midcom_baseclasses_components_handler
 {
     /**
@@ -104,7 +103,7 @@ class net_nehmer_static_handler_create extends midcom_baseclasses_components_han
     /**
      * Loads and prepares the schema database.
      *
-     * Special treatement is done for the name field, which is set readonly for non-creates
+     * Special treatment is done for the name field, which is set readonly for non-creates
      * if the simple_name_handling config option is set. (using an auto-generated urlname based
      * on the title, if it is missing.)
      *
@@ -179,17 +178,17 @@ class net_nehmer_static_handler_create extends midcom_baseclasses_components_han
             {
                 // mgd_include_snippet($this->_config->get('callback_snippet'));
                 $eval = midcom_get_snippet_content($this->_config->get('callback_snippet'));
-                
+
                 if ($eval)
                 {
                     eval($eval);
                 }
             }
-            
+
             $callback = $this->_config->get('callback_function');
             $callback($this->_article, $this->_content_topic);
         }
-        
+
         return $this->_article;
     }
 

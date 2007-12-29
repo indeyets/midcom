@@ -46,7 +46,7 @@ require_once('select.php');
  * Quick SQL LIKE cheatsheet: '%' matches any number of characters, even zero characters,
  * '_' matches exactly one character.
  *
- * When starting up, the type will only validate the existance of the mapping class. The
+ * When starting up, the type will only validate the existence of the mapping class. The
  * members specified will not be checked for performance reasons. In case something
  * wrong is specified there, it will surface during runtime, as invalid mapping entries
  * will be silently ignored (and thus saving won't work).

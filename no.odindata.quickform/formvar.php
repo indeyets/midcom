@@ -10,7 +10,7 @@
 /**
  * midcom_helper_datamanager_getvar
  * 
- * this class extends DM and only implements one functon that, when it is perfect
+ * this class extends DM and only implements one function that, when it is perfect
  * should be ported back to dm.
  * @package no.odindata.quickform
  */

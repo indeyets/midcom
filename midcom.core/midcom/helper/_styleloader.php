@@ -657,7 +657,7 @@ class midcom_helper__styleloader {
 
 
     /**
-     * Gets the component styledir assosiated with the topics
+     * Gets the component styledir associated with the topics
      * component.
      *
      * @param MidgardTopic $topic the current componenttopic.

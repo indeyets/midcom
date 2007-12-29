@@ -93,7 +93,7 @@ class midcom_core_querybuilder_cached
  * It essentially wraps the calls to midcom_helper__dbfactory::new_query_builder()
  * and midcom_helper__dbfactory::exec_query_builder().
  *
- * Normally you should never have to create an instance of this type direectly,
+ * Normally you should never have to create an instance of this type directly,
  * instead use the get_new_qb() method available in the MidCOM DBA API or the
  * midcom_helper__dbfactory::new_query_builder() method which is still available.
  *
@@ -224,7 +224,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         }
         else
         {
-            // Validate the class, we check for a single callback representativly only
+            // Validate the class, we check for a single callback representatively only
             if (! in_array('_on_prepare_new_query_builder', get_class_methods($classname)))
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
@@ -260,7 +260,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     }
 
     /**
-     * The initialization routin executes the _on_prepare_new_querybuilder callback on the class.
+     * The initialization routine executes the _on_prepare_new_querybuilder callback on the class.
      * This cannot be done in the constructor due to the reference to $this that is used.
      */
     function initialize()
@@ -768,11 +768,11 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     }
 
     /**
-     * Creates a new logical group within the query. They are set in parantheses in the final
+     * Creates a new logical group within the query. They are set in parentheses in the final
      * SQL and will thus be evaluated with precedence over the normal out-of-group constraints.
      *
      * While the call lets you decide whether all constraints within the group are AND'ed or OR'ed,
-     * only OR constraints make logcially sense in this context, which is why this proxy function
+     * only OR constraints make logically sense in this context, which is why this proxy function
      * sets 'OR' as the default operator.
      *
      * @param string $operator One of 'OR' or 'AND' denoting the logical operation with which all
@@ -823,7 +823,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     }
 
     /**
-     * Returns only objects that are availble in the specified language. This will
+     * Returns only objects that are available in the specified language. This will
      * disable the automatic fallback to the default language which would be in place
      * otherwise.
      *

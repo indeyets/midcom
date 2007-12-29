@@ -110,7 +110,7 @@ class midcom_baseclasses_components_navigation
     /**
      * Leaf listing function, the default implementation returns an empty array indicating
      * no leaves. Note, that the active leaf index set by the other parts of the component
-     * must match one leav out of this list.
+     * must match one leaf out of this list.
      *
      * Here are some code fragments, that you usually connect through some kind of
      * while $articles->fetch() loop:
@@ -164,7 +164,7 @@ class midcom_baseclasses_components_navigation
      * ?>
      * </code>
      *
-     * @return Array NAP compilant list of leaves.
+     * @return Array NAP compliant list of leaves.
      */
     public function get_leaves()
     {
@@ -198,7 +198,7 @@ class midcom_baseclasses_components_navigation
      *
      * @param Array $toolbar Set this parameter in child classes calling this base method to add a toolbar to the default node listing.
      *   This parameter is not set by the framework and can safely be omitted in the average base class.
-     * @return Array NAP compilant node declaration
+     * @return Array NAP compliant node declaration
      */
     public function get_node($toolbar = null)
     {
@@ -206,7 +206,7 @@ class midcom_baseclasses_components_navigation
         {
             return null;
         }
-            
+
         return array (
             MIDCOM_NAV_URL => '',
             MIDCOM_NAV_NAME => $this->_topic->extra,
@@ -225,7 +225,7 @@ class midcom_baseclasses_components_navigation
      * topic in question. It calls the event handler _on_set_object after initializing
      * everything in case you need to do some custom initializations as well.
      *
-     * @param MidgardTopic $topic The topic to pocess.
+     * @param MidgardTopic $topic The topic to process.
      * @param bool Indicating success.
      */
     public function set_object($topic)

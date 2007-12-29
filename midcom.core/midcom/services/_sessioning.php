@@ -129,7 +129,7 @@ class midcom_service__sessioning
      * Returns a value from the session.
      *
      * Returns null if the key
-     * is non-existent. Note, that this is not necessarily a valid non-existance
+     * is non-existent. Note, that this is not necessarily a valid non-existence
      * check, as the sessioning system does allow null values. Use the exists function
      * if unsure.
      *
@@ -159,7 +159,7 @@ class midcom_service__sessioning
     /**
      * Removes the value associated with the specified key. Returns null if the key
      * is non-existent or the value of the key just removed otherwise. Note, that
-     * this is not necessarily a valid non-existance check, as the sessioning
+     * this is not necessarily a valid non-existence check, as the sessioning
      * system does allow null values. Use the exists function if unsure.
      *
      * @param string $domain	The domain in which to search for the key.

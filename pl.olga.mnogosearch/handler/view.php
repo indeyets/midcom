@@ -8,7 +8,7 @@
  */
 
 /**
- * TAViewer index page handler
+ * p.v.www index page handler
  *
  * @package pl.vox.www
  */

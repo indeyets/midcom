@@ -69,7 +69,7 @@ class midcom_helper_datamanager2_baseclasses_filter extends midcom_baseclasses_c
 
     /**
      * Actual callback. Be aware, that QF might call this more then once for a single schema
-     * field, since it calls it recursivly and form-element-wise.
+     * field, since it calls it recursively and form-element-wise.
      *
      * @param mixed $input The form values which should be filtered.
      * @return mixed The filtered values.

@@ -8,7 +8,7 @@
  */
 
 /**
- * TAViewer NAP interface class
+ * n.n.static NAP interface class
  *
  * This class has been rewritten for MidCOM 2.6 utilizing all of the currently
  * available state-of-the-art technology.

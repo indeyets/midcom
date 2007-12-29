@@ -9,7 +9,7 @@
  */
 
 /**
- * TAViewer MidCOM interface class.
+ * p.o.mnogosearch MidCOM interface class.
  *
  * Compatibility Notes:
  *

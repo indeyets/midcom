@@ -9,7 +9,7 @@
  */
 
 /**
- * TAViewer MidCOM interface class.
+ * n.n.static MidCOM interface class.
  *
  * Compatibility Notes:
  *

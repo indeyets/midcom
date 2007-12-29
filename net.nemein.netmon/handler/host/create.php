@@ -83,7 +83,7 @@ class net_nemein_netmon_handler_host_create extends midcom_baseclasses_component
     /**
      * Loads and prepares the schema database.
      *
-     * Special treatement is done for the name field, which is set readonly for non-creates
+     * Special treatment is done for the name field, which is set readonly for non-creates
      * if the simple_name_handling config option is set. (using an auto-generated urlname based
      * on the title, if it is missing.)
      *

@@ -168,7 +168,7 @@ class installMidcom extends Task
         $this->exec_command($command);
     }
     /**
-     * returns a list of subdirectories and files as an assosiative 
+     * returns a list of subdirectories and files as an associative 
      * array
      * dirname => dirname 
      */

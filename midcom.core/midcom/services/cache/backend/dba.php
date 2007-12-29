@@ -107,7 +107,7 @@ class midcom_services_cache_backend_dba extends midcom_services_cache_backend
         }
         $this->_filename = "{$this->_cache_dir}{$this->_name}.{$this->_handler}";
         
-        // Check for file existance by opening it once for write access.
+        // Check for file existence by opening it once for write access.
         if (! file_exists($this->_filename))
         {
             $handle = dba_open($this->_filename, 'c', $this->_handler);

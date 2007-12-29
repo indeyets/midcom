@@ -8,7 +8,7 @@
  */
 
 /**
- * TAViewer Autoindex page handler
+ * n.n.static Autoindex page handler
  *
  * @package net.nehmer.static
  */
@@ -90,7 +90,7 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
     }
 
     /**
-     * Displays the autoindex of the Taviewer. This is a list of all articles and attachments on
+     * Displays the autoindex of the n.n.static. This is a list of all articles and attachments on
      * the current topic.
      *
      * The globals view_title, view_l10n and view_l10n_midcom are populated for compatibility reasons

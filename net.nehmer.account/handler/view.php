@@ -99,7 +99,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
     var $_view_self = false;
 
     /**
-     * This is true if we are in the quick-view mode, which displays only the administrativly
+     * This is true if we are in the quick-view mode, which displays only the administratively
      * assigned fields, along with a link to the full profile view. This makes live a bit
      * easier when including profiles in other components.
      *

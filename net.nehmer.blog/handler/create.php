@@ -8,7 +8,7 @@
  */
 
 /**
- * TAViewer create page handler
+ * n.n.blog create page handler
  *
  * @package net.nehmer.blog
  */
@@ -95,7 +95,7 @@ class net_nehmer_blog_handler_create extends midcom_baseclasses_components_handl
     /**
      * Loads and prepares the schema database.
      *
-     * Special treatement is done for the name field, which is set readonly for non-creates
+     * Special treatment is done for the name field, which is set readonly for non-creates
      * if the simple_name_handling config option is set. (using an auto-generated urlname based
      * on the title, if it is missing.)
      *

@@ -554,7 +554,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
         {
             $qb->begin_group('OR');
         }
-        // TODO: Refactor so that check for existance of parameter constraints first and then be smarter about the PHP constraints
+        // TODO: Refactor so that check for existence of parameter constraints first and then be smarter about the PHP constraints
         foreach ($constraints as $constraint)
         {
             debug_add("checking constraint\n===\n" . sprint_r($constraint) . "===\n");

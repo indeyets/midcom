@@ -8,7 +8,7 @@
  */
 
 /**
- * TAViewer AIS interface class
+ * n.n.publications AIS interface class
  *
  * Empty stub class.
  *

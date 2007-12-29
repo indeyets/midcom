@@ -229,7 +229,7 @@ class midcom_baseclasses_components_interface
     /**
      * This is used during initialization when loading the default configurations
      * from the filesystem ($prefix/config/$name.inc) and the snippetdirs
-     * ($GLOBALS['midcom_config']['midcom_sgconfig_basedir']/$component/$name). 
+     * ($GLOBALS['midcom_config']['midcom_sgconfig_basedir']/$component/$name).
      * They will be merged and placed into the
      * component data store under a key with the same name then the snippet as
      * a midcom_helper_configuration object.
@@ -670,7 +670,7 @@ class midcom_baseclasses_components_interface
     /**
      * Relays the get_node call to the NAP instance.
      *
-     * @return Array A NAP compilant NODE structure.
+     * @return Array A NAP compliant NODE structure.
      */
     public function get_node()
     {
@@ -681,7 +681,7 @@ class midcom_baseclasses_components_interface
     /**
      * Relays the get_leaves call to the NAP instance.
      *
-     * @return Array An Array of NAP compilant leaf structures.
+     * @return Array An Array of NAP compliant leaf structures.
      */
     public function get_leaves()
     {
@@ -789,7 +789,7 @@ class midcom_baseclasses_components_interface
      * leading slash must be returned (f.x. 'article.html'), empty strings ('') are allowed
      * indicating root page access. If the GUID is invalid, null will be returned.
      *
-     * This call is realyed to the component using the event handler _on_resolve_permalink().
+     * This call is relayed to the component using the event handler _on_resolve_permalink().
      * Before that it will deduce the active configuration for the given topic.
      *
      * Note, that this is the only event handler which has some kind of default implementation,
@@ -959,13 +959,13 @@ class midcom_baseclasses_components_interface
     }
 
     /**
-     * Verif an indexer document's permissions. This is used for custom, advanced access control
+     * Verify an indexer document's permissions. This is used for custom, advanced access control
      * within a components domain.
      *
      * The topic and configuration objects are passed for ease of use and performance, as they have already
      * been prepared by the framework.
      *
-     * Usally, you want to limit the visibility of a
+     * Usually, you want to limit the visibility of a
      * document in the search result. You can do this by returning false in this function, the indexer
      * will then skip this object before returning the resultset to the callee.
      * You may modify the document that has been passed, to limit the information available to the client,
@@ -1005,7 +1005,7 @@ class midcom_baseclasses_components_interface
      * leading slash must be returned (f.x. 'article.html'), empty strings ('') are allowed
      * indicating root page access. If the GUID is invalid, null will be returned.
      *
-     * This call is realyed to the component using the event handler _on_resolve_permalink().
+     * This call is relayed to the component using the event handler _on_resolve_permalink().
      * Before that it will deduce the active configuration for the given topic.
      *
      * The information you return with this call (if no-null) will be considered cacheable by
@@ -1013,7 +1013,7 @@ class midcom_baseclasses_components_interface
      * is stable or that you configure the content cache accordingly if you have a match.
      * The hard way is setting the no_cache flag in cases where you need full flexibility, but
      * this should be avoided for the sake of performance if somehow possible. The more
-     * sophisticated alternative is therefore to selectivly invalidate all GUIDs that have
+     * sophisticated alternative is therefore to selectively invalidate all GUIDs that have
      * their Permalink lookup affected.
      *
      * <b>Important Note:</b>

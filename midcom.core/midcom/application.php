@@ -2290,7 +2290,7 @@ class midcom_application
             $expire = (int) $expire;
         }
         // This is necessary, as the internal date representation is not HTTP
-        // standard compilant. :-(
+        // standard compliant. :-(
         $lastmod = strtotime($snippet->revised);
 
         $this->header("Last-Modified: " . gmdate("D, d M Y H:i:s", $lastmod) . ' GMT');

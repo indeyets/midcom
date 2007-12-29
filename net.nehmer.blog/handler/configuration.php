@@ -11,7 +11,7 @@
 require_once(MIDCOM_ROOT . '/midcom/core/handler/configdm.php');
 
 /**
- * TAViewer component configuration screen.
+ * n.n.blog component configuration screen.
  *
  * This class extends the standard configdm mechanism as we need a few hooks for the
  * symlink topic stuff.

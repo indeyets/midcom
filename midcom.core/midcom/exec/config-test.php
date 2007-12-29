@@ -386,7 +386,7 @@ $cmd = "{$GLOBALS['midcom_config']['utility_imagemagick_base']}identify -version
 exec ($cmd, $output, $result);
 if ($result != 0)
 {
-    println('External Utility: ImageMagick', ERROR, 'The existance ImageMagick toolkit could not be verified, it is required for all kinds of image processing in MidCOM.'); 
+    println('External Utility: ImageMagick', ERROR, 'The existence ImageMagick toolkit could not be verified, it is required for all kinds of image processing in MidCOM.'); 
 }
 else
 {
